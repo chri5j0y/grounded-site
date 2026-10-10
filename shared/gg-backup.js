@@ -177,7 +177,7 @@
         }).join('');
       }
       if (plan.fg) rows += '<h3>Field Guide</h3>' + (plan.fg.state === 'same' ? box('fg', false, 'Field Guide records', 'Already the same on this device.', true) :
-        box('fg', true, 'Field Guide records', plan.fg.state === 'new' ? 'Added, locked with the passcode it was made with.' : 'Merged: nothing on this device is lost. The Field Guide asks for this backup\'s passcode to finish.'));
+        box('fg', true, 'Field Guide records', plan.fg.state === 'new' ? 'Added, locked with the passcode it was made with.' : 'Merged: everything on this device stays. The Field Guide asks for this backup\'s passcode to finish.'));
       if (plan.hw) rows += '<h3>Heartwood</h3>' + (plan.hw.state === 'same' ? box('hw', false, 'Your Heartwood answers', 'Already the same on this device.', true)
         : plan.hw.state === 'new' ? box('hw', true, 'Your Heartwood answers', 'Added, each partner still locked with their own passcode and Root Words.')
         : box('hw', false, 'Your Heartwood answers', 'This device has its own Heartwood answers. Check this to use the backup\'s copy instead of this device\'s.'));

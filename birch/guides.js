@@ -679,7 +679,7 @@ const LC_TOPICS = [
    "feel": "They may be proud and exhausted in the same week. Many young adults feel they have to look like they know everything, and quietly worry they're behind. Some are stuck in a job that pays the bills and fits nothing else, and feel judged for it. Some are working shifts that scramble sleep and friendships. If something at work feels wrong, like missing pay, unsafe tasks, or a boss or coworker crossing a line, they may not be sure it's okay to speak up. They're an adult now, and they want to be treated like one.",
    "say": [
     "“What's the best part of the job so far? What's the hardest?”",
-    "“You don't have to have it figured out in the first month.”",
+    "“Figuring it out takes more than a month.”",
     "“Want to think through how to ask your manager about that?”",
     "“If anything at work ever feels wrong or unsafe, I'm here to talk it through.”"
    ],
@@ -1954,7 +1954,7 @@ const LC_TOPICS = [
     "Notice the seasons that bring loneliness: a move, a new job, a breakup, a graduation, coming home from service, a new baby.",
     "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now: call or text 988 together, or chat at 988lifeline.org."
    ],
-   "you": "You can't be someone's only connection, and you don't have to be. Your steady contact is real connection, and helping them build more than one is the goal. Keep reaching out even when they're slow to answer."
+   "you": "You can be one connection among many. Your steady contact is real connection, and helping them build more than one is the goal. Keep reaching out even when they're slow to answer."
   },
   "faith": "If faith is part of your life, a faith community can be a place to belong without having to earn it: a young adult group, a serving team, a small group, or simply showing up each week. Some people find comfort in prayer on a lonely night, or in feeling known and loved by God when no one else seems to notice. If a faith community feels far or has hurt you, a chaplain or a different congregation may be a better door. If faith isn't part of your life, a group built around a shared purpose can offer the same welcome.",
   "practices": [
@@ -2007,7 +2007,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Most people now date longer before settling down than people did a generation ago. Years of meeting people, trying, and starting over are a normal part of this stage.",
-   "There is no deadline. Being single, dating a lot, or taking a break are all fine ways to spend these years.",
+   "Take the time you need. Being single, dating a lot, or taking a break are all fine ways to spend these years.",
    "Knowing what you value helps you choose well: how you want to feel with someone, not only what they look like on a screen.",
    "Healthy dating feels safe, honest, and respectful, at your own pace. Love Is Respect helps people 13 to 26 with questions about any relationship, any time."
   ],
@@ -2028,7 +2028,7 @@ const LC_TOPICS = [
     "Keeping your own friends, routines, and goals while you date. A good partner adds to your life without shrinking it."
    ],
    "tell": [
-    "“There's no deadline on finding someone.”",
+    "“Finding someone happens on your own timeline.”",
     "“A no from someone else isn't a verdict on me.”",
     "“I get to go at my own pace.”",
     "“I'm looking for someone who's good to me, and good for me.”"
@@ -2039,9 +2039,9 @@ const LC_TOPICS = [
    "feel": "They may be hopeful, discouraged, or tired of the whole thing. They may feel pressure, including from family, to find someone, or embarrassed if they never have. They may not want to talk about dating with you at all, and as an adult, that's their choice. If you have opinions about who they're seeing, they may already sense it.",
    "say": [
     "“How are you feeling about dating these days?”",
-    "“There's no rush. Your timeline is yours.”",
+    "“Take your time. Your timeline is yours.”",
     "“What do you like about them?”",
-    "“If anything ever feels off, I'm here, no judgment.”"
+    "“If anything ever feels off, I'm here, and I'll listen with kindness.”"
    ],
    "avoid": [
     "“So when are you going to settle down?” or questions about marriage and kids at every visit.",
@@ -2210,7 +2210,7 @@ const LC_TOPICS = [
    "Abuse is a pattern of control: someone using fear, guilt, threats, money, or force to have power over you. It is never your fault.",
    "It often starts young. More than 70 percent of women and more than 60 percent of men who have been hurt by a partner were first hurt before age 25.",
    "Abuse can be emotional, digital, financial, sexual, or physical. Any of these counts, with or without marks.",
-   "You don't have to figure it out alone. Love Is Respect helps people 13 to 26 by call, text, or chat, any time. Danger right now: 911."
+   "Others can help you figure it out. Love Is Respect helps people 13 to 26 by call, text, or chat, any time. Danger right now: 911."
   ],
   "feel": "It might not have started this way. At first the attention felt amazing: constant texts, wanting to be together all the time. Then it shifted. Now they check your phone, want your passwords, or track your location. They get angry when you see certain friends or family, control the money, tell you what to wear, or put you down and call it a joke. Maybe they've pushed or grabbed you, pressured you into things you didn't want, or threatened to hurt themselves if you leave. If you live together, share a lease, or depend on them for a ride or money, leaving can feel impossible. You might feel confused, because they can also be sweet and say they're sorry. You might feel embarrassed, protective of them, or scared of what happens if you tell. If you feel afraid, or like you're walking on eggshells, that feeling is worth listening to.",
   "self": {
@@ -2241,7 +2241,7 @@ const LC_TOPICS = [
    "say": [
     "“I believe you. Thank you for telling me.”",
     "“This is not your fault. No one deserves to be treated that way.”",
-    "“You don't have to decide anything right now. I'm with you.”",
+    "“Decisions can wait for now. I'm with you.”",
     "“What would help you feel safer?”"
    ],
    "avoid": [
@@ -2504,7 +2504,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "You're not alone in this. In one national survey, about 1 in 4 American adults said they had cut off contact with a family member.",
+   "We're with you in this. In one national survey, about 1 in 4 American adults said they had cut off contact with a family member.",
    "Some distance protects you, and some distance can be repaired. Both are real, and you get to take your time figuring out which this is.",
    "Estrangement is a grief with no funeral. Holidays, birthdays, and milestones can hurt the most, so plan for them.",
    "If family has hurt or threatened you, your safety comes first. Help is there any time: Day One in Minnesota, the National Domestic Violence Hotline, and 911 in danger."
@@ -2633,7 +2633,7 @@ const LC_TOPICS = [
     "If you're pregnant and feeling overwhelmed, anxious, or low, the National Maternal Mental Health Hotline is there by call or text, any time, in English and Spanish."
    ],
    "tell": [
-    "“I don't have to know everything today.”",
+    "“Today, I only need the next step.”",
     "“All my feelings are allowed.”",
     "“I deserve support and honest answers.”",
     "“No one gets to pressure me.”"
@@ -2645,7 +2645,7 @@ const LC_TOPICS = [
    "say": [
     "“Thank you for telling me.”",
     "“I'm here. What do you need from me right now?”",
-    "“You don't have to figure it all out tonight.”",
+    "“Tonight, one small step is enough.”",
     "“I care about you, and that doesn't change.”"
    ],
    "avoid": [
@@ -2747,7 +2747,7 @@ const LC_TOPICS = [
     "“You're a good parent. I can see how much you love them.”",
     "“How are you really doing?”",
     "“What would help most this week?”",
-    "“You don't have to do this alone.”"
+    "“I'm with you in this.”"
    ],
    "avoid": [
     "Comments about their age, or “you should have waited.”",
@@ -3075,7 +3075,7 @@ const LC_TOPICS = [
    ],
    "you": "Their anxiety can stir up your own. Keep your own sleep, movement, and people. You are a companion, not a cure. If they use Birch, they choose what to share with you; their answers stay on their own device."
   },
-  "faith": "If faith is part of your life, you may find steadiness in a breath prayer, a psalm or sacred text, or a practice of handing over what you can't control. You don't have to feel peaceful to reach for peace. If faith isn't part of your life, music, time outside, or a few slow breaths can do the same steadying work.",
+  "faith": "If faith is part of your life, you may find steadiness in a breath prayer, a psalm or sacred text, or a practice of handing over what you can't control. You can reach for peace from right where you are. If faith isn't part of your life, music, time outside, or a few slow breaths can do the same steadying work.",
   "practices": [
    "bark|Slow Exhale",
    "bark|Five Senses Pause",
@@ -3136,7 +3136,7 @@ const LC_TOPICS = [
     "Morning daylight and a steady wake time, even on days off.",
     "Being around people, even without talking much: a meal with a roommate, sitting with a friend, staying on the team or in the group.",
     "Doing one thing you used to enjoy, for ten minutes, before you feel like it. Feeling often follows doing.",
-    "Going easy on alcohol and cannabis. They can feel like relief and then deepen the low.",
+    "Setting alcohol and cannabis aside. They can feel like relief and then deepen the low.",
     "Comparing yourself with your own last month, not with someone else's highlights. Everyone's timeline is different."
    ],
    "tell": [
@@ -3218,7 +3218,7 @@ const LC_TOPICS = [
    "Early help changes the course. People who get treatment soon after first signs tend to do better, and there are programs built for exactly this.",
    "You don't have to know what it is. Noticing and telling a doctor or counselor is enough of a first step."
   ],
-  "feel": "Something feels off and it's hard to name. Maybe your thoughts are moving too fast, or too slowly, or don't line up the way they used to. Maybe you've barely slept for days and don't feel tired, or you feel like your mind is on fire with ideas. Maybe sounds seem louder, people seem to be watching or talking about you, or you've heard or seen things others don't seem to notice. You might be pulling away from people, missing shifts or classes, or finding it hard to keep up with things that used to be easy. It can be frightening, or it can feel like everyone else is the one who's changed. Either way, you're not alone, and help works best early.",
+  "feel": "Something feels off and it's hard to name. Maybe your thoughts are moving too fast, or too slowly, or don't line up the way they used to. Maybe you've barely slept for days and don't feel tired, or you feel like your mind is on fire with ideas. Maybe sounds seem louder, people seem to be watching or talking about you, or you've heard or seen things others don't seem to notice. You might be pulling away from people, missing shifts or classes, or finding it hard to keep up with things that used to be easy. It can be frightening, or it can feel like everyone else is the one who's changed. Either way, we're with you, and help works best early.",
   "self": {
    "first": [
     "Write down what you've noticed and roughly when it started: sleep, thoughts, mood, anything that seems different. A few lines in your phone is enough.",
@@ -3235,7 +3235,7 @@ const LC_TOPICS = [
    ],
    "tell": [
     "“Noticing early is a strength.”",
-    "“I don't have to figure out what this is by myself.”",
+    "“I can figure out what this is with help.”",
     "“Getting help now is how I protect my future.”"
    ],
    "people": "Try: “Something's been off with me lately: my sleep, my thoughts, how I'm feeling. Can I show you what I've noticed? I'd like help getting it checked.”"
@@ -3327,7 +3327,7 @@ const LC_TOPICS = [
    "helps": [
     "Taking a break for a few weeks to see how your sleep, mood, money, and anxiety change.",
     "Trying another tool first when a hard feeling hits: a walk, a shower, music, a call to a friend, slow breathing.",
-    "Keeping a drink of your own in your hand, and going with a friend who has your back.",
+    "Keeping a drink of your own in your hand, like sparkling water, and going with a friend who has your back.",
     "Stepping back from strong or daily cannabis, especially if it's started to make you anxious, paranoid, or low. Heavy use of high-potency cannabis is linked with a higher risk of psychosis.",
     "Carrying naloxone if you or people around you use opioids or pills from anywhere but a pharmacy. It's sold over the counter.",
     "Talking with a doctor honestly. Treatment works, and there are options, including support groups, counseling, and medicine for some substances."
@@ -3436,7 +3436,7 @@ const LC_TOPICS = [
     "Choosing who's on your team. As an adult, you decide whether family, a partner, or a friend is part of treatment, and many people find it helps."
    ],
    "tell": [
-    "“This is an illness. It's not my fault, and I don't have to fight it alone.”",
+    "“This is an illness. It's not my fault, and others can help me fight it.”",
     "“The rules feel safe, but they aren't keeping me safe.”",
     "“My body deserves to be fed, even when my thoughts say otherwise.”"
    ],
@@ -3623,7 +3623,7 @@ const LC_TOPICS = [
     "Keeping your plan where you can find it fast: in your phone, in Birch, or on paper in your wallet.",
     "Sharing your plan with one person you trust, so they know what helps and how to reach you.",
     "A counselor, therapist, or doctor. Thoughts of suicide respond to treatment, even if you've tried before. If you're in school, campus counseling is a good place to start.",
-    "Less alcohol and other drugs on hard nights. They make waves bigger and choices faster.",
+    "Setting alcohol and other drugs aside on hard nights. They make waves bigger and choices faster.",
     "Your reasons, big or small: a person, a pet, a plan for next month, a song you want to hear again.",
     "Getting through the next hour, then the next. Waves pass, even very big ones."
    ],
@@ -3656,7 +3656,7 @@ const LC_TOPICS = [
     "Help them write a safety plan, in their words, and ask whether they'd like you to keep a copy.",
     "Check in often, warmly and briefly, by text or in person. Watch for warning signs: talk of being a burden, giving things away, saying goodbye, heavy drinking or drug use, or a sudden calm after a hard stretch."
    ],
-   "you": "Hearing that someone you love has thought about suicide is frightening. You don't have to carry it alone. Call or text 988 for guidance any time, for them or for yourself, and lean on your own people. You are a lifeline, not a therapist, and getting them to help is the work."
+   "you": "Hearing that someone you love has thought about suicide is frightening. Others can help you carry it. Call or text 988 for guidance any time, for them or for yourself, and lean on your own people. You are a lifeline, not a therapist, and getting them to help is the work."
   },
   "faith": "If faith is part of your life, notice what it's like for you right now: a comfort, a source of hard questions, or both. Some people find honest words with God, or whatever they hold sacred, help them hold on. Others carry fear of being judged, and that weight deserves a kind listener too. A faith leader you trust can be one of the people on your plan. If faith isn't part of your life, your reasons and your people are what you hold on to.",
   "practices": [
@@ -3716,7 +3716,7 @@ const LC_TOPICS = [
    "Listen more than you talk, and connect them with help today. You're a bridge to help, not their only lifeline.",
    "A friend's safety comes before a promise to keep a secret. And carrying this is heavy, so bring in support for yourself, too."
   ],
-  "feel": "Maybe a friend said something that stuck: a joke about not being around, a late-night message that sounded like goodbye, a post that worried you. Maybe it was a roommate, a partner, a coworker, or someone you mostly know online. You might feel scared, helpless, unsure whether you're overreacting, or afraid that saying the wrong thing will make it worse. You might feel the weight of being the one they told. Noticing and caring is already a lot. You don't need to be an expert to help.",
+  "feel": "Maybe a friend said something that stuck: a joke about not being around, a late-night message that sounded like goodbye, a post that worried you. Maybe it was a roommate, a partner, a coworker, or someone you mostly know online. You might feel scared, helpless, unsure whether you're overreacting, or afraid that saying the wrong thing will make it worse. You might feel the weight of being the one they told. Noticing and caring is already a lot. Anyone who cares can help.",
   "self": {
    "first": [
     "If they may act on it right now, stay with them if it's safe, and call 911. If they're somewhere else, call 911 and say where they are.",
@@ -3732,7 +3732,7 @@ const LC_TOPICS = [
     "Following up in the days and weeks after. A short text counts."
    ],
    "tell": [
-    "“I can't fix this alone, and I don't have to.”",
+    "“I can lean on others to help with this.”",
     "“Getting them to help is what a good friend does.”",
     "“Their choices are not my fault. Caring and acting is my part.”"
    ],
@@ -3742,7 +3742,7 @@ const LC_TOPICS = [
    "feel": "A young adult carrying a friend's crisis may be scared, exhausted, and unsure whether they did enough. They may feel bound by a promise of secrecy, or guilty for telling. If they've lost someone to suicide before, or have had hard thoughts themselves, it can hit close to home. They're an adult, and they're also carrying something heavy.",
    "say": [
     "“Thank you for telling me. You did the right thing.”",
-    "“You don't have to carry this by yourself. Let's figure out the next step together.”",
+    "“Others can help you carry this. Let's figure out the next step together.”",
     "“How are you doing with all of this?”",
     "“Their safety matters more than a secret, and so does yours.”"
    ],
@@ -3831,7 +3831,7 @@ const LC_TOPICS = [
     "Ways through a hard moment that don't hurt your body: call or text someone, walk, write, draw, or play music loud.",
     "A plan for hard moments, made on an okay day: your warning signs, what you can do instead, who you can reach, and help lines. Birch has one, My Safety Plan.",
     "A counselor or therapist. Therapies that teach skills for big feelings, like DBT, are built for exactly this. Campus counseling, a clinic, or your doctor can help you find one.",
-    "Less alcohol and other drugs on hard nights. They lower the brakes when urges are strong.",
+    "Setting alcohol and other drugs aside on hard nights. They lower the brakes when urges are strong.",
     "Being kind to yourself after a setback. You can start again the same day."
    ],
    "tell": [
@@ -3969,7 +3969,7 @@ const LC_TOPICS = [
     "Let them make the choices: who knows, what happens next, and when to talk. They're an adult, and having choices back is part of healing.",
     "Stay close in the weeks after. Watch for sleep trouble, pulling away, heavier drinking, or talk of not wanting to be alive, and call or text 988 together if it comes."
    ],
-   "you": "Hearing this can bring up rage, grief, guilt, or memories of your own. Those are real. Find your own support, through RAINN, Day One, or a counselor, without sharing their story. You don't need perfect words. Believing them is the most important thing you'll do."
+   "you": "Hearing this can bring up rage, grief, guilt, or memories of your own. Those are real. Find your own support, through RAINN, Day One, or a counselor, without sharing their story. Simple words are enough. Believing them is the most important thing you'll do."
   },
   "faith": "If faith is part of your life, notice what it's like for you now: a comfort, a complication, or both. Some people hear messages that leave them feeling ashamed or blamed. What happened was done to you, and many traditions teach that those who are harmed are beloved and never to blame. If a faith community has minimized harm, that is a failure of the community. Some people find prayer, a trusted faith leader, or their community a real source of strength while they heal. If faith isn't part of your life, you still deserve people and places that help you feel safe and whole.",
   "practices": [
@@ -3987,7 +3987,7 @@ const LC_TOPICS = [
    "If it was someone you're dating or with: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time. Or the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
    "If intimate images were taken or shared: StopNCII (stopncii.org) for adults, or Take It Down (takeitdown.ncmec.org) for images from before you were 18.",
    "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
-   "In Birch, if you answer that someone is hurting you, Birch shows you outside help right away. Nothing is sent to anyone, and a helper never sees that answer."
+   "In Birch, if you answer that someone is hurting you, Birch shows you outside help right away. Everything stays on your device, and that answer stays just for you, even with a helper."
   ],
   "more": [
    [
@@ -4119,7 +4119,7 @@ const LC_TOPICS = [
    "leaves"
   ],
   "quick": [
-   "Many people find their pornography use harder to control than they want. You are not alone, and it is something you can work on.",
+   "Many people find their pornography use harder to control than they want. Many people share this, and it is something you can work on.",
    "Shame tends to feed the cycle. Honesty, support, and meeting the need underneath help break it.",
    "Look for help that fits your values: a counselor, a support group, a faith leader if faith is part of your life, or a friend who can keep you honest.",
    "Anything involving minors, or anyone who didn't agree, is deeply harmful and illegal to share. Stop, report it, and get help now."
@@ -4411,7 +4411,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "Losing a parent, a friend, or someone your age can shake your whole sense of how the world works. There's no right way or right timeline to grieve.",
+   "Losing a parent, a friend, or someone your age can shake your whole sense of how the world works. Grief has its own shape and its own timeline.",
    "Grief can look like sadness, anger, numbness, guilt, relief, trouble focusing, or getting very busy. All of it is normal.",
    "Many people your age haven't been through a big loss yet, so friends may not know what to say. Look for at least one person who can sit with it.",
    "After a death by suicide or overdose, grief often carries extra questions and guilt. It was not your fault. If you start having thoughts of not wanting to be here, call or text 988."
@@ -4433,7 +4433,7 @@ const LC_TOPICS = [
     "After a suicide loss, a group for suicide loss survivors, and saying it plainly when you're ready: they died by suicide."
    ],
    "tell": [
-    "“There's no deadline on this.”",
+    "“Take all the time you need.”",
     "“I can love them and still be angry, or relieved.”",
     "“It was not my fault.”"
    ],
@@ -4531,7 +4531,7 @@ const LC_TOPICS = [
    ],
    "tell": [
     "“My questions are welcome.”",
-    "“I don't have to have it figured out today.”",
+    "“I can figure it out over time.”",
     "“I can choose this for myself, at my own pace.”"
    ],
    "people": "Try, to a friend: “I've been thinking a lot about faith lately. Can I talk it through with you, without either of us trying to win?” To family: “My faith is changing in some ways. I still love you, and I want us to stay close.”"
@@ -4557,7 +4557,7 @@ const LC_TOPICS = [
     "If they want a faith voice, help them find one who can sit with questions: a chaplain, a campus minister, a spiritual director.",
     "If faith questions come tangled with deep sadness, fear, or hopelessness, encourage a counselor who respects faith."
    ],
-   "you": "Watching someone you love take a different path than you hoped can stir grief or fear. You don't have to settle their questions to be a good companion. Your love can outlast any disagreement."
+   "you": "Watching someone you love take a different path than you hoped can stir grief or fear. A good companion walks with the questions. Your love can outlast any disagreement."
   },
   "faith": "This guide's topic is faith, so it sits at the center here. Many traditions include deep doubt among their saints and teachers, and see wrestling as a form of faithfulness. Many young adults find faith grows stronger, changes shape, or rests for a while, and some find it again later in a new community. What matters most is whether faith is a resource for you or a source of stress, and what helps you live well. Grounded welcomes all faith traditions and everything in-between.",
   "practices": [
@@ -5035,7 +5035,7 @@ const LC_TOPICS = [
     "“A smaller version still counts.”",
     "“My worth isn't measured by what my body can do today.”"
    ],
-   "people": "Try, to a friend: “I live with a health condition that limits my energy. If I cancel, it's not about you. Can we plan things that can flex, like a movie at my place?” To a boss or instructor: “I have a condition that flares. Could we plan now for what happens on a flare day?” To a doctor: “The fatigue is affecting my work and my sleep. Here's what I've tracked this month.”"
+   "people": "Try, to a friend: “I live with a health condition that limits my energy. If I cancel, it's not about you. Can we plan things that can flex, like tea at my place?” To a boss or instructor: “I have a condition that flares. Could we plan now for what happens on a flare day?” To a doctor: “The fatigue is affecting my work and my sleep. Here's what I've tracked this month.”"
   },
   "helper": {
    "feel": "A parent, partner, roommate, or friend may see someone who looks fine and still can't make it through the day. It can be confusing when they're full of energy one day and in bed the next. They may feel guilty, misunderstood, or afraid of being a burden. What helps most is believing them, and helping them pace instead of push.",
@@ -5133,7 +5133,7 @@ const LC_TOPICS = [
     "A steady rhythm: the same wake time, regular meals, daylight, and movement your body likes. Sleep is often the first thing to shift.",
     "Staying connected with your treatment team, and being honest with them about side effects or skipped doses. Decisions about medicine belong to you and your prescriber, together.",
     "Peer support from people who live with a mental health condition too, like NAMI's Peer-to-Peer classes or a local support group.",
-    "Going easy on alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
+    "Setting aside alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
     "Purpose, at your own pace: school, work, volunteering, or something you make. Your school's disability services office and work accommodations can help.",
     "Choosing who to tell, and how much. You can name it, or simply say you have a health condition you manage.",
     "Your own words for it. Some say “I live with bipolar disorder,” some say “I have a mental illness.” Use what fits you."
@@ -5150,7 +5150,7 @@ const LC_TOPICS = [
    "say": [
     "“You're still you. I'm here for the long haul.”",
     "“What would you like me to do if I notice your warning signs?”",
-    "“How are you doing, really? No fixing, just listening.”",
+    "“How are you doing, really? Just listening.”",
     "“I'm proud of how you're taking care of yourself.”"
    ],
    "avoid": [
@@ -5377,7 +5377,7 @@ const LC_TOPICS = [
     "Learn some sign language if they use it, especially family members.",
     "Back them up when they ask for access, and let them lead."
    ],
-   "you": "You don't have to get it perfect. Asking how they like to communicate, and remembering, says a lot. If they use Birch, they choose what to share with you."
+   "you": "Good enough is plenty. Asking how they like to communicate, and remembering, says a lot. If they use Birch, they choose what to share with you."
   },
   "faith": "If faith is part of your life, it's fair to ask your community for what helps you take part: an interpreter, captions on a livestream, printed words, or a Deaf congregation or ministry. If faith isn't part of your life, any community where you can communicate fully can be a place to belong.",
   "practices": [

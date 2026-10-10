@@ -419,7 +419,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Bring the routines along.",
       "body": "Routines are what make a new house feel like home.",
-      "say": "Everyday family routines and rituals help children feel secure, and they can travel. Bedtime stories, Friday pizza, a blessing at the door. Set up the bedtime routine on the very first night, even before the boxes are unpacked."
+      "say": "Everyday family routines and rituals help children feel secure, and they can travel. Bedtime stories, Friday soup night, a blessing at the door. Set up the bedtime routine on the very first night, even before the boxes are unpacked."
      },
      {
       "k": "big",
@@ -516,7 +516,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You never have to choose.",
+      "h": "You get to love both.",
       "sub": "Love has room for everyone.",
       "say": "Here is something important. You never have to choose between the people you love. You can love your mom, your dad, and someone new too. Love has room for everyone. And you don't have to love anyone right away. It's okay to take your time."
      },
@@ -1304,7 +1304,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Steady is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't need to be perfect. Steady, honest, and present is enough. Look after your own rest and support too. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Steady, honest, and present is enough. Look after your own rest and support too. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -1471,7 +1471,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Families get through this together.",
       "body": "Talk openly. Keep routines that bend. Lean on others.",
-      "say": "Families tend to come through hard seasons better when they talk openly, keep routines that can bend, and lean on others for help. You don't need to be strong all the time. You need a few anchors, and a circle."
+      "say": "Families tend to come through hard seasons better when they talk openly, keep routines that can bend, and lean on others for help. You can let others be strong for you sometimes. You need a few anchors, and a circle."
      },
      {
       "k": "big",
@@ -1508,7 +1508,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Steady and honest is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't do all of this alone, and you don't have to. Steady and honest is enough. The full guide has more, whenever you want it."
+      "say": "Others can share all of this with you. Steady and honest is enough. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -1822,7 +1822,7 @@ window.GG_LEARN_GUIDES.grove = {
        "I love you.",
        "Being here is enough."
       ],
-      "say": "Here are words we can say to the one we love. Thank you. I love you. And to each other, being here is enough. You don't need perfect words. Being close says a lot."
+      "say": "Here are words we can say to the one we love. Thank you. I love you. And to each other, being here is enough. Simple words are enough. Being close says a lot."
      },
      {
       "k": "big",
@@ -1936,7 +1936,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Presence is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to do this perfectly. Let hospice carry what it can, and take turns resting. Your presence is enough. Willow is there for the person in hospice and the people who love them. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Let hospice carry what it can, and take turns resting. Your presence is enough. Willow is there for the person in hospice and the people who love them. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -2593,7 +2593,7 @@ window.GG_LEARN_GUIDES.grove = {
        "Mixed up",
        "Not much at all"
       ],
-      "say": "When someone dies, people feel lots of things. Sad. Mad. Scared. Mixed up. Some people don't feel much at all at first. All of these are okay. There is no wrong way to miss someone."
+      "say": "When someone dies, people feel lots of things. Sad. Mad. Scared. Mixed up. Some people don't feel much at all at first. All of these are okay. Every way of missing someone is okay."
      },
      {
       "k": "big",
@@ -2686,7 +2686,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "When Someone in Our Family Dies",
       "sub": "For the Leader",
-      "say": "If you are the grown-up helping your family through a death, this is for you. You don't need perfect words. You need true ones, and you need to stay close."
+      "say": "If you are the grown-up helping your family through a death, this is for you. Simple words are enough. You need true ones, and you need to stay close."
      },
      {
       "k": "big",
@@ -3041,7 +3041,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Find your own hour.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Find your own hour to grieve, with a friend who will let you talk about the person you miss. The holiday doesn't have to be perfect. It only has to be yours. The full guide has more, whenever you want it."
+      "say": "Find your own hour to grieve, with a friend who will let you talk about the person you miss. A simple holiday is a good holiday. It only has to be yours. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4196,7 +4196,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "You are allowed to grieve.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You are allowed to grieve. Calm sadness in front of your class teaches students that grief is safe. Lean on your colleagues, the crisis team, and your school counselors. You are not alone in this. The full guide has more, whenever you want it."
+      "say": "You are allowed to grieve. Calm sadness in front of your class teaches students that grief is safe. Lean on your colleagues, the crisis team, and your school counselors. We're with you in this. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4436,7 +4436,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Calm voice. Steady routine. A path to help.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Emergencies shake adults too. Talk with a colleague after school. You don't need perfect words. A calm voice, a steady routine, and a path to the counselors is enough. The full guide has more, whenever you want it."
+      "say": "Emergencies shake adults too. Talk with a colleague after school. Simple words are enough. A calm voice, a steady routine, and a path to the counselors is enough. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -4663,7 +4663,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "If the illness grows very serious",
       "sub": "Your school's plan and counselors guide you.",
-      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. You don't have to figure that out alone. Danger right now, call 911."
+      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. Others can help you figure that out. Danger right now, call 911."
      },
      {
       "k": "big",
@@ -5446,7 +5446,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "flow",
-      "h": "Don't skip the ending",
+      "h": "Stay for the ending",
       "steps": [
        [
         "End well",
@@ -5554,7 +5554,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "flow",
-      "h": "Don't skip the ending",
+      "h": "Stay for the ending",
       "steps": [
        [
         "End well",
@@ -5853,7 +5853,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "Often at the same time.",
-      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You don't have to carry all of it alone."
+      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You can share the weight of it."
      },
      {
       "k": "points",
@@ -5892,7 +5892,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"They are in a better place, so don't be sad.\"",
        "Details the family did not share"
       ],
-      "say": "Some words, meant kindly, wound. It was all part of the plan. They're in a better place, so don't be sad. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and there's no right way to feel."
+      "say": "Some words, meant kindly, wound. It was all part of the plan. They're in a better place, so don't be sad. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and every feeling is welcome."
      },
      {
       "k": "big",
@@ -5939,7 +5939,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Don't speculate, and don't treat it as shameful. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
      },
      {
       "k": "big",
@@ -5961,7 +5961,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "Often at the same time.",
-      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You don't have to carry all of it alone."
+      "say": "You may be grieving and leading at the same time. The family needs you, the community looks to you for words, and you may hear the hardest questions. Why did this happen? What do we tell the kids? You can share the weight of it."
      },
      {
       "k": "points",
@@ -6000,7 +6000,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"At least they lived a long life.\"",
        "Details the family did not share"
       ],
-      "say": "Some words, meant kindly, wound. Everything happens for a reason. At least they lived a long life. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and there's no right way to feel."
+      "say": "Some words, meant kindly, wound. Everything happens for a reason. At least they lived a long life. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and every feeling is welcome."
      },
      {
       "k": "big",
@@ -6047,7 +6047,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Don't speculate, and don't treat it as shameful. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
      },
      {
       "k": "big",
@@ -6891,8 +6891,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Endings deserve their own time.",
-      "sub": "Let's not rush this one.",
-      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's not rush this one. Let's end it together, on purpose."
+      "sub": "Let's take this one slowly.",
+      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's take this one slowly. Let's end it together, on purpose."
      },
      {
       "k": "words",
@@ -6999,8 +6999,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Endings deserve their own time.",
-      "sub": "Let's not rush this one.",
-      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's not rush this one. Let's end it together, on purpose."
+      "sub": "Let's take this one slowly.",
+      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's take this one slowly. Let's end it together, on purpose."
      },
      {
       "k": "words",
@@ -7417,9 +7417,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "No one walks alone here.",
+      "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, no one walks alone. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
      }
     ],
     "plainScenes": [
@@ -7511,9 +7511,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "No one walks alone here.",
+      "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, no one walks alone. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -7546,9 +7546,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You don't have to be an expert.",
+      "h": "Caring is enough to start.",
       "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "You don't have to be a crisis expert. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -7609,7 +7609,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"Just pray more.\"",
        "Details in the prayer chain"
       ],
-      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. Just pray more, which can sound like the crisis is their fault. And details shared in the prayer chain without permission. Instead try, I'm glad you told me. You don't have to go through this alone."
+      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. Just pray more, which can sound like the crisis is their fault. And details shared in the prayer chain without permission. Instead try, I'm glad you told me. Others can walk through this with you."
      },
      {
       "k": "flow",
@@ -7647,7 +7647,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Get support for yourself too.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. You don't have to carry this alone, and you shouldn't. The full guide has more, whenever you want it."
+      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. Let others help you carry this. The full guide has more, whenever you want it."
      }
     ],
     "plainScenes": [
@@ -7661,9 +7661,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You don't have to be an expert.",
+      "h": "Caring is enough to start.",
       "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "You don't have to be a crisis expert. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -7724,7 +7724,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"You just need to try harder.\"",
        "Details in a group message"
       ],
-      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. You just need to try harder, which can sound like the crisis is their fault. And details shared in a group message without permission. Instead try, I'm glad you told me. You don't have to go through this alone."
+      "say": "Some words make a crisis harder. I promise I won't tell anyone, when there's danger. You can't keep that promise. You just need to try harder, which can sound like the crisis is their fault. And details shared in a group message without permission. Instead try, I'm glad you told me. Others can walk through this with you."
      },
      {
       "k": "flow",
@@ -7762,7 +7762,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Get support for yourself too.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. You don't have to carry this alone, and you shouldn't. The full guide has more, whenever you want it."
+      "say": "After a crisis, talk it through with a supervisor, a peer leader, or a mental health professional. Let others help you carry this. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -8360,10 +8360,10 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Words we can say together",
       "items": [
        "We miss them. They were one of us.",
-       "There's no right way to grieve this.",
+       "Each of us grieves this in our own way.",
        "We'll remember them together."
       ],
-      "say": "Here are words we can say together. We miss them. They were one of us. There's no right way to grieve this. We'll remember them together."
+      "say": "Here are words we can say together. We miss them. They were one of us. Each of us grieves this in our own way. We'll remember them together."
      },
      {
       "k": "big",
@@ -8398,7 +8398,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Grieving and leading.",
       "sub": "One of the hardest things a lead does.",
-      "say": "You may be grieving, and also responsible for telling the team, talking with the family, handling the work, and answering leadership. Leading a team through a death is one of the hardest things a lead does. You don't have to do it perfectly. Do it with care and in person."
+      "say": "You may be grieving, and also responsible for telling the team, talking with the family, handling the work, and answering leadership. Leading a team through a death is one of the hardest things a lead does. Good enough is plenty. Do it with care and in person."
      },
      {
       "k": "flow",
@@ -8453,7 +8453,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If it was a suicide",
       "body": "Follow the family. No speculation. Watch for risk.",
-      "say": "If the death was by suicide, follow the family's lead on what is said. Don't speculate, and don't share details. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea. Then call or text nine eight eight together."
+      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea. Then call or text nine eight eight together."
      },
      {
       "k": "big",
@@ -8536,7 +8536,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Like we cannot do it well"
        ]
       ],
-      "say": "Burnout has three signs. Exhaustion that a weekend doesn't fix. Feeling distant from the work, cynical, numb, or short with people. And feeling like we can't do it well anymore. If those sound familiar, we're not alone, and we're not failing."
+      "say": "Burnout has three signs. Exhaustion that a weekend doesn't fix. Feeling distant from the work, cynical, numb, or short with people. And feeling like we can't do it well anymore. If those sound familiar, many families feel this, and we're doing our best."
      },
      {
       "k": "big",

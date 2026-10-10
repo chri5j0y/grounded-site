@@ -108,13 +108,13 @@ const CHAPTERS = [
       { id: 'becoming-2', t: 'Something about you that has changed in the last year or two.', help: 'A view, a habit, a friendship, how you handle stress, what you care about.' },
       { id: 'becoming-3', t: 'Something you\'re proud of that nobody handed you a trophy for.', help: 'Getting through a hard stretch counts. So does showing up for someone.' },
       { id: 'becoming-4', t: 'What people count on you for.', help: 'Fixing things, listening, making people laugh, getting the job done, keeping calm.' },
-      { id: 'becoming-5', t: 'Something you\'re still figuring out.', help: 'There is no deadline. Searching is a normal part of these years.' },
-      { id: 'becoming-6', t: 'Where you live by your own choices, and where you still follow someone else\'s script.', help: 'No judgment either way. Just notice. Is there room to choose a little more of your own?' },
+      { id: 'becoming-5', t: 'Something you\'re still figuring out.', help: 'Take the time you need. Searching is a normal part of these years.' },
+      { id: 'becoming-6', t: 'Where you live by your own choices, and where you still follow someone else\'s script.', help: 'Every answer is welcome. Just notice. Is there room to choose a little more of your own?' },
       { id: 'becoming-7', t: 'Where you feel behind, and what one next step would look like.', help: 'Everyone\'s timeline is different. Comparing is easy; one small step is more useful.', care: 1 },
       { id: 'becoming-8', t: 'Who you want to be in five years.', help: 'Not what you want to have. Who you want to be: how you treat people, how you spend your days.' }
     ] },
   { id: 'values', title: 'What Matters Most to Me', optIn: false,
-    lead: 'Values are what you care about enough to act on. There are no right answers here, only yours.',
+    lead: 'Values are what you care about enough to act on. The right answers here are yours.',
     prompts: [
       { id: 'values-1', t: 'The values you want to live by.', help: 'Honesty, fairness, family, hard work, kindness, adventure, loyalty, service, courage. Pick a few, or write your own.' },
       { id: 'values-2', t: 'A time you stood by what you value when it cost you something.', help: 'Big or small. What did you do, and what did it teach you?' },
@@ -129,7 +129,7 @@ const CHAPTERS = [
     prompts: [
       { id: 'work-1', t: 'What you spend most of your days doing right now.', help: 'School, a job, two jobs, training, service, caring for someone, looking for what is next. All of it counts.' },
       { id: 'work-2', t: 'What you like about it, and what drains you.', help: 'Write both. They point toward what fits you.' },
-      { id: 'work-3', t: 'Work you would like to try, learn, or grow into.', help: 'Curious is enough. You do not have to choose yet.' },
+      { id: 'work-3', t: 'Work you would like to try, learn, or grow into.', help: 'Curious is enough. You can choose later.' },
       { id: 'work-4', t: 'What you want from work besides a paycheck.', help: 'To learn, to help people, to build things, steady hours, a good team, time for the people you love.' },
       { id: 'work-5', t: 'One skill, license, or credential that would open a door.', help: 'What it costs, how long it takes, and who could tell you more.' },
       { id: 'work-6', t: 'Someone who does work you are curious about, and one question you could ask them.', help: 'Most people are glad to talk about their work for ten minutes.' },
@@ -139,7 +139,7 @@ const CHAPTERS = [
   { id: 'money', title: 'Money and My Plan', optIn: false,
     lead: 'Money is a skill, and nobody is born knowing it. Nothing here asks how much you have. Wherever you are starting from is a fine place to start.',
     prompts: [
-      { id: 'money-1', t: 'What money means to you.', help: 'Security, freedom, helping family, fun, worry. There is no right answer.', care: 1 },
+      { id: 'money-1', t: 'What money means to you.', help: 'Security, freedom, helping family, fun, worry. Every answer is welcome.', care: 1 },
       { id: 'money-2', t: 'Your money picture, in a sentence or two.', help: 'What comes in, what goes out, and what you owe, if anything. Only what you want to write.', care: 1 },
       { id: 'money-3', t: 'Something you are saving toward, or would like to.', help: 'A cushion for surprises, a car, rent, a trip, school, a ring, a move.' },
       { id: 'money-4', t: 'One money habit that is working, and one you want to change.', help: 'Keep it to one of each. Small changes last.' },
@@ -162,9 +162,9 @@ const CHAPTERS = [
     prompts: [
       { id: 'health-1', t: 'How your body has been feeling lately.', help: 'Energy, sleep, aches, appetite. Just notice.' },
       { id: 'health-2', t: 'What helps you sleep, and what gets in the way.', help: 'Shift work, screens, roommates, a baby, worry, a late job. Write what is real for you.' },
-      { id: 'health-3', t: 'How you eat in a normal week, and one small change you would like.', help: 'No rules here. One change you can keep beats a big plan.' },
+      { id: 'health-3', t: 'How you eat in a normal week, and one small change you would like.', help: 'Start small. One change you can keep beats a big plan.' },
       { id: 'health-4', t: 'Movement you enjoy, or would like to try.', help: 'Walking, a gym, a team, a bike, dancing, stretching after a shift. Seated and gentle ways count too.' },
-      { id: 'health-5', t: 'What you reach for when stress runs high.', help: 'The helpful and the less helpful. Both are worth noticing, without shame.', care: 1 },
+      { id: 'health-5', t: 'What you reach for when stress runs high.', help: 'The helpful and the less helpful. Both are worth noticing, with kindness.', care: 1 },
       { id: 'health-6', t: 'Signs you are running low, and what you will do when you notice them.', help: 'Sleeping too much or too little, skipping meals, pulling away from people. Name one thing that helps.', care: 1 },
       { id: 'health-7', t: 'Questions you want to ask a doctor, a dentist, or a counselor.', help: 'Write them down now so they are ready when you are in the room.' }
     ] },
@@ -188,7 +188,7 @@ const CHAPTERS = [
       { id: 'faith-1', t: 'What helps you feel grounded and at peace.', help: 'Prayer, worship, scripture, quiet, being outside, music, time with people you love.', plainHelp: 'Quiet, being outside, music, a walk, time with people you love.' },
       { id: 'faith-2', t: 'A practice that is yours, chosen for yourself.', help: 'Whether you grew up with it or found it on your own. What does it give you?' },
       { id: 'faith-3', t: 'How your faith has changed since you were younger.', plain: 'How what gives you meaning has changed since you were younger.', help: 'Deeper, quieter, questioned, set aside, found again. All of these are real.' },
-      { id: 'faith-4', t: 'A big question about life, meaning, or faith that you are carrying.', plain: 'A big question about life or meaning that you are carrying.', help: 'Questions are welcome here. They do not need answers yet.' },
+      { id: 'faith-4', t: 'A big question about life, meaning, or faith that you are carrying.', plain: 'A big question about life or meaning that you are carrying.', help: 'Questions are welcome here. Answers can come later.' },
       { id: 'faith-5', t: 'Whether faith feels like a source of strength right now, a source of stress, or some of both.', plain: 'Whether what you were taught about how to live feels like a source of strength right now, a source of stress, or some of both.', help: 'Only what you want to write. Your experience matters, and you can talk it through with someone you trust.', care: 1 },
       { id: 'faith-6', t: 'A community where you feel you belong, or one you would like to find.', help: 'A congregation, a small group, a service team, friends who share what matters to you.', plainHelp: 'A service team, a group, a circle of friends who share what matters to you.' },
       { id: 'faith-7', t: 'How what you believe or value shapes your work and the way you treat people.', plain: 'How what you value shapes your work and the way you treat people.', help: 'The choices you make, the way you serve, the people you show up for.' },
@@ -208,7 +208,7 @@ const CHAPTERS = [
     lead: 'What you wrote in Pine\'s Next Steps, carried here when you started Birch. Pine keeps its own copy. Read it, and keep writing.',
     prompts: [
       { id: 'fromPine-1', t: 'Reading this now, what still fits?', help: 'The values, plans, and people that still feel true.' },
-      { id: 'fromPine-2', t: 'What has changed since you wrote it.', help: 'Plans change, and so do people. That is growth, not failure.' },
+      { id: 'fromPine-2', t: 'What has changed since you wrote it.', help: 'Plans change, and so do people. That is growth.' },
       { id: 'fromPine-3', t: 'A step from back then that you took, or one you still want to take.', help: 'Count the ones you took. Pick one for now, if you like.', when: 1 }
     ] }
 ];
@@ -285,7 +285,7 @@ const SKILLS = {
 
 const INTRO = [
   'Groundwork is your private notebook for who you are becoming and the life you are building, plus Skills I\'ve Got, a checklist of practical skills you mark at your own pace.',
-  'Pick any chapter and any prompt. Skip whatever you like. Nothing is due, and nothing here is graded.',
+  'Pick any chapter and any prompt. Skip whatever you like. Go at your own pace: every page here is simply yours.',
   'Every path counts: work, school, a trade, an apprenticeship, the military, service, parenting, caring for someone, or time between things. You can change your mind as often as you need to.',
   'Your notebook stays on this device, locked with your passcode, so only you can open it. You decide what to print or share, and with whom.',
   'If you started in Pine, what you wrote in Next Steps is here too, in its own chapter.'

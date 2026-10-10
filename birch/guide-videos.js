@@ -1573,7 +1573,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Ask, then listen.",
-      "sub": "One question, and no advice yet.",
+      "sub": "One question, and advice can wait.",
       "say": "Think of one question about their work that has nothing to do with money or plans. Something like, what was the best part of your week? Say your question out loud, and picture yourself just listening to the answer.",
       "beats": [
        "Think of one question about their work that has nothing to do with money or plans.",
@@ -1589,10 +1589,10 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Words that help",
       "items": [
        "What's the best part so far?",
-       "You don't have to have it figured out yet.",
+       "Figuring it out takes time.",
        "Want to think through how to ask?"
       ],
-      "say": "Here are words that help. What's the best part so far, and what's the hardest? You don't have to have it figured out in the first month. And, want to think through how to ask your manager about that? Practicing a hard ask with you makes it easier to say for real."
+      "say": "Here are words that help. What's the best part so far, and what's the hardest? Figuring it out takes more than a month. And, want to think through how to ask your manager about that? Practicing a hard ask with you makes it easier to say for real."
      },
      {
       "k": "points",
@@ -2344,7 +2344,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Student Loans and Other Debt",
     "sideName": "For the Helper",
     "mins": 3,
-    "blurb": "For the parent, partner, or friend beside someone in debt: calm company, clear terms, and no lectures.",
+    "blurb": "For the parent, partner, or friend beside someone in debt: calm company, clear terms, and kindness.",
     "sources": [],
     "scenes": [
      {
@@ -2689,7 +2689,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "There is no right timeline.",
+      "h": "Your timeline is your own.",
       "sub": "Out, back, and out again is common.",
       "say": "There's no right age to do this. More than half of eighteen to twenty four year olds still live with a parent, and plenty of people move out, move back, and move out again. You're not behind, and you're not ahead. You're on your own path."
      },
@@ -2930,7 +2930,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Not best friends? That works.",
+      "h": "Friendly is enough.",
       "sub": "Respect and fairness are enough.",
       "say": "Good roommates don't have to be best friends. You might share a lot, or very little. Respect, fairness, and clear expectations are enough for a peaceful home. And if you moved in with a close friend, a clear plan can protect the friendship too."
      },
@@ -3542,7 +3542,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "You're not the only one.",
+      "h": "Many people share this.",
       "sub": "Loneliness is common at this age.",
       "say": "If you feel lonely, you're far from the only one. Research finds young adults are among the loneliest people in the country. It's not a sign something is wrong with you. It's a sign to build connection on purpose."
      },
@@ -3597,7 +3597,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "card",
-      "title": "If the lonely does not lift",
+      "title": "If the lonely stays",
       "body": "A low that lasts months: a doctor or counselor. Not wanting to live: call or text 988. Danger: 911.",
       "say": "If loneliness or a low mood hasn't lifted after a few months, or it's keeping you from sleep or work, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
      },
@@ -3910,7 +3910,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady help, honest limits.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't fix everything, and you don't have to. Steady, honest help matters more than big promises. The full guide has more, whenever you want it."
+      "say": "Do what you can. Steady, honest help matters more than big promises. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4352,7 +4352,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady contact is real connection.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't be their only connection, and you don't have to be. Your steady contact is real connection. Keep reaching out, even when they're slow to answer. The full guide has more, whenever you want it."
+      "say": "You can be one connection among many. Your steady contact is real connection. Keep reaching out, even when they're slow to answer. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4368,7 +4368,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Dating and Finding Someone",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the young adult dating or hoping to: there is no deadline, your values are your guide, and healthy feels safe.",
+    "blurb": "For the young adult dating or hoping to: your timeline is your own, your values are your guide, and healthy feels safe.",
     "sources": [
      "arnett"
     ],
@@ -4383,9 +4383,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "There's no deadline.",
+      "h": "Your timeline is your own.",
       "sub": "People find each other at every age.",
-      "say": "Let's start here. Most people now date longer before settling down than people did a generation ago. Years of meeting people, trying, and starting over are a normal part of this stage. Being single, dating a lot, or taking a break are all fine. There's no deadline."
+      "say": "Let's start here. Most people now date longer before settling down than people did a generation ago. Years of meeting people, trying, and starting over are a normal part of this stage. Being single, dating a lot, or taking a break are all fine. Your timeline is your own."
      },
      {
       "k": "points",
@@ -4526,7 +4526,7 @@ window.GG_LEARN_GUIDES.birch = {
        "What do you like about them?",
        "If anything feels off, I'm here."
       ],
-      "say": "Here are words that help. How are you feeling about dating these days? What do you like about them? And, if anything ever feels off, I'm here, no judgment."
+      "say": "Here are words that help. How are you feeling about dating these days? What do you like about them? And, if anything ever feels off, I'm here, and I'll listen with kindness."
      },
      {
       "k": "words",
@@ -4603,7 +4603,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Breakups",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the young adult going through a breakup: this hurts because it mattered, and it will not always feel this heavy.",
+    "blurb": "For the young adult going through a breakup: this hurts because it mattered, and this heaviness will ease.",
     "sources": [
      "rhoades11"
     ],
@@ -4703,9 +4703,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "It will not always feel this heavy.",
+      "h": "This heaviness will ease.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hearts heal, slowly, with time, people, and small steps. You were you before this relationship, and you're still you. It will not always feel this heavy. The full guide has more, whenever you want it."
+      "say": "Hearts heal, slowly, with time, people, and small steps. You were you before this relationship, and you're still you. This heaviness will ease. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -4980,9 +4980,9 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        "I believe you.",
        "This is not your fault.",
-       "You don't have to decide anything right now."
+       "Decisions can wait for now."
       ],
-      "say": "If they tell you, the first words matter most. I believe you. This is not your fault. And, you don't have to decide anything right now. I'm with you."
+      "say": "If they tell you, the first words matter most. I believe you. This is not your fault. And, decisions can wait for now. I'm with you."
      },
      {
       "k": "words",
@@ -5035,8 +5035,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Privacy, and urgent help",
-      "body": "Birch shows outside help, never an alert. Helpers never see safety answers. Hopeless: 988, together.",
-      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Helpers never see safety answers. That keeps them safe to answer honestly, so your warmth matters even more. If they seem hopeless, call or text nine eight eight together."
+      "body": "Birch shows outside help, never an alert. Safety answers stay just for you. Hopeless: 988, together.",
+      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Safety answers stay just for you. That keeps them safe to answer honestly, so your warmth matters even more. If they seem hopeless, call or text nine eight eight together."
      },
      {
       "k": "big",
@@ -5803,7 +5803,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "card",
-      "title": "No one gets to pressure you.",
+      "title": "Your choices are yours.",
       "body": "In any direction. Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
       "say": "One thing is true for everyone. No one gets to pressure, threaten, or force you about a pregnancy, in any direction. Not a partner, not family, not anyone. If that's happening, Love Is Respect and Day One are there by phone or text, any time. If you're in danger, call nine one one."
      },
@@ -5817,11 +5817,11 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "words",
       "h": "Words to keep",
       "items": [
-       "I don't have to know everything today.",
+       "Today, I only need the next step.",
        "All my feelings are allowed.",
        "I deserve support and honest answers."
       ],
-      "say": "Here are words to keep. I don't have to know everything today. All my feelings are allowed. And I deserve support and honest answers."
+      "say": "Here are words to keep. Today, I only need the next step. All my feelings are allowed. And I deserve support and honest answers."
      },
      {
       "k": "big",
@@ -5861,9 +5861,9 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        "Thank you for telling me.",
        "What do you need from me right now?",
-       "You don't have to figure it all out tonight."
+       "Tonight, one small step is enough."
       ],
-      "say": "Here are words that help. Thank you for telling me. I'm here, so what do you need from me right now? And, you don't have to figure it all out tonight."
+      "say": "Here are words that help. Thank you for telling me. I'm here, so what do you need from me right now? And, tonight, one small step is enough."
      },
      {
       "k": "words",
@@ -5986,7 +5986,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Friends, family, the other parent"
        ]
       ],
-      "say": "Young parents juggle a lot. Sleep, in short pieces. Money, for diapers, rent, and child care. Work or school, and plans that had to shift. And people. Friends whose lives look different now. Family with help and opinions. And a relationship with the baby's other parent that may be close, complicated, or over. You don't have to carry all of it alone."
+      "say": "Young parents juggle a lot. Sleep, in short pieces. Money, for diapers, rent, and child care. Work or school, and plans that had to shift. And people. Friends whose lives look different now. Family with help and opinions. And a relationship with the baby's other parent that may be close, complicated, or over. You can share the weight of it."
      },
      {
       "k": "flow",
@@ -6542,7 +6542,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Pregnancy or Infant Loss",
       "sub": "For the Helper",
-      "say": "This is for the partner, parent, friend, or mentor of a young adult who has lost a pregnancy or a baby. You don't need perfect words. You need to show up."
+      "say": "This is for the partner, parent, friend, or mentor of a young adult who has lost a pregnancy or a baby. Simple words are enough. You need to show up."
      },
      {
       "k": "big",
@@ -6759,7 +6759,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You can do hard things nervous.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to wait until you feel calm to live your life. You can do hard things nervous. The full guide has more, whenever you want it."
+      "say": "You can live your life before you feel calm. You can do hard things nervous. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -7085,7 +7085,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Write a text with no question in it.",
-      "sub": "Nothing they have to answer.",
+      "sub": "A note to simply receive.",
       "say": "Let's try something. Open your messages and pick them. Write a short text with no question in it, like, thinking of you, no need to reply. Send it now, or save it for today.",
       "beats": [
        "Let's try something.",
@@ -7346,8 +7346,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Calm, simple, and on their side.",
-      "sub": "Do not argue with what they believe.",
-      "say": "Your tone matters most. Keep it calm and simple: a quiet room, short sentences, one choice at a time. Don't argue about whether a voice or a fear is real. Talk about the stress and the feeling instead. That sounds frightening. You're safe with me right now."
+      "sub": "Listen calmly to what they believe, and focus on how they feel.",
+      "say": "Your tone matters most. Keep it calm and simple: a quiet room, short sentences, one choice at a time. Speak to the feeling, rather than debating whether a voice or a fear is real. Talk about the stress and the feeling instead. That sounds frightening. You're safe with me right now."
      },
      {
       "k": "big",
@@ -7444,7 +7444,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Less drinking. More weed.",
       "sub": "You decide what fits your life.",
-      "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. Cannabis use is at a record high. So whatever you choose, you're not alone, and you're the one who decides."
+      "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. Cannabis use is at a record high. So whatever you choose, we're with you, and you're the one who decides."
      },
      {
       "k": "big",
@@ -7739,13 +7739,13 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Speak to yourself like a friend.",
       "sub": "A hand on your chest, one kind line.",
-      "say": "Let's try something. Rest one hand on your chest, or wherever feels steady. Take one slow breath. Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+      "say": "Let's try something. Rest one hand on your chest, or wherever feels steady. Take one slow breath. Now say quietly to yourself: this is an illness, it's not my fault, and others can help me fight it.",
       "beats": [
        "Let's try something.",
        "Rest one hand on your chest, or wherever feels steady.",
        "Take one slow breath.",
        {
-        "t": "Now say quietly to yourself: this is an illness, it's not my fault, and I don't have to fight it alone.",
+        "t": "Now say quietly to yourself: this is an illness, it's not my fault, and others can help me fight it.",
         "w": 12
        }
       ]
@@ -7785,7 +7785,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Your body deserves to be fed.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your body deserves to be fed, even when your thoughts say otherwise. You don't have to fight this alone. The full guide has more, whenever you want it."
+      "say": "Your body deserves to be fed, even when your thoughts say otherwise. Others can help you fight this. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -8044,11 +8044,11 @@ window.GG_LEARN_GUIDES.birch = {
         "Work, marketplace, public"
        ],
        [
-        "Do not wait",
+        "Act right away",
         "The window is limited"
        ]
       ],
-      "say": "Before you turn twenty six, set a reminder a few months ahead. Look at your options: a plan through work, the marketplace, or public programs. In Minnesota, MNsure can help you compare. Don't wait, because the window to sign up after coverage ends is limited.",
+      "say": "Before you turn twenty six, set a reminder a few months ahead. Look at your options: a plan through work, the marketplace, or public programs. In Minnesota, MNsure can help you compare. Act soon, because the window to sign up after coverage ends is limited.",
       "cue": {
        "at": [
         0,
@@ -8191,7 +8191,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Thoughts of Suicide, and a Safety Plan",
     "sideName": "For You",
     "mins": 5,
-    "blurb": "For the young adult having thoughts of suicide: you are not alone, help is here now, and a safety plan helps.",
+    "blurb": "For the young adult having thoughts of suicide: people are with you, help is here now, and a safety plan helps.",
     "sources": [
      "nsduh24",
      "stanley",
@@ -8204,7 +8204,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Thoughts of Suicide, and a Safety Plan",
       "sub": "For You",
-      "say": "If you've been having thoughts of suicide, or of not wanting to be alive, this is for you. You're not alone, and help is here right now."
+      "say": "If you've been having thoughts of suicide, or of not wanting to be alive, this is for you. People are with you, and help is here right now."
      },
      {
       "k": "card",
@@ -8286,8 +8286,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "In your Birch check-in",
-      "body": "Help shows right away. Nothing is sent to anyone. Helpers never see safety answers.",
-      "say": "If you answer the safety question in your Birch check-in, Birch shows you help right away. Your answers stay on your device. Nothing is sent to anyone, and a helper you chose never sees safety answers. So reaching out is yours to do, and these lines are ready when you are."
+      "body": "Help shows right away. Everything stays on your device. Safety answers stay just for you.",
+      "say": "If you answer the safety question in your Birch check-in, Birch shows you help right away. Your answers stay on your device. Everything stays on your device, and safety answers stay just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
      },
      {
       "k": "big",
@@ -8463,7 +8463,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You are a lifeline.",
       "sub": "988 is there for you too.",
-      "say": "This is frightening, and you don't have to carry it alone. Call or text nine eight eight for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
+      "say": "This is frightening, and others can help you carry it. Call or text nine eight eight for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
      }
     ],
     "crisis": [
@@ -8497,7 +8497,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "When a Friend Is Thinking About Suicide",
       "sub": "For You",
-      "say": "If you're worried a friend, a roommate, a partner, or a coworker may be thinking about suicide, this is for you. You don't need to be an expert to help."
+      "say": "If you're worried a friend, a roommate, a partner, or a coworker may be thinking about suicide, this is for you. Anyone who cares can help."
      },
      {
       "k": "card",
@@ -8682,10 +8682,10 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "words",
       "h": "Words that help",
       "items": [
-       "You don't have to carry this by yourself.",
+       "Others can help you carry this.",
        "How are you doing with all of this?"
       ],
-      "say": "Some words help. You don't have to carry this by yourself. And then, later, how are you doing with all of this? Leave out stay out of it, and that's not your problem. And leave out blame, if things got harder. They did what they could."
+      "say": "Some words help. Others can help you carry this. And then, later, how are you doing with all of this? Leave out stay out of it, and that's not your problem. And leave out blame, if things got harder. They did what they could."
      },
      {
       "k": "big",
@@ -8711,7 +8711,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Steady presence helps most.",
       "sub": "988 is there for you, too.",
-      "say": "You don't need the right words for every moment. Staying close, sharing the weight, and pointing toward help is most of what helps. Call or text nine eight eight any time, for them, or for you."
+      "say": "Simple words are enough. Staying close, sharing the weight, and pointing toward help is most of what helps. Call or text nine eight eight any time, for them, or for you."
      }
     ],
     "crisis": [
@@ -8732,7 +8732,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Self-Harm",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the young adult who hurts themselves when feelings get too big: you are not alone, and help works.",
+    "blurb": "For the young adult who hurts themselves when feelings get too big: we're with you, and help works.",
     "sources": [
      "cornellsirr"
     ],
@@ -8743,7 +8743,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Self-Harm",
       "sub": "For You",
-      "say": "If you've been hurting yourself on purpose when feelings get too big, this is for you. You're not alone, and you deserve help."
+      "say": "If you've been hurting yourself on purpose when feelings get too big, this is for you. We're with you, and you deserve help."
      },
      {
       "k": "card",
@@ -8821,8 +8821,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your Birch check-in is yours.",
-      "body": "Answers stay on your device. Nothing is sent to anyone.",
-      "say": "Your Birch check-in is yours. Answers stay on your device, nothing is sent to anyone, and a helper never sees safety answers. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
+      "body": "Answers stay on your device. Everything stays on your device.",
+      "say": "Your Birch check-in is yours. Answers stay on your device, and safety answers stay just for you, even with a helper. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
      },
      {
       "k": "big",
@@ -9217,7 +9217,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Believing them comes first.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't need perfect words. Believing them is the most important thing you'll do. The full guide has more, whenever you want it."
+      "say": "Simple words are enough. Believing them is the most important thing you'll do. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -9356,9 +9356,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "One bad night does not decide your life.",
+      "h": "Your life is bigger than one bad night.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "One bad night online does not get to decide your life. You are the one being harmed, and you are not alone. The full guide has more, whenever you want it."
+      "say": "Your life is bigger than one bad night online. You are the one being harmed, and people are ready to help. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -9530,7 +9530,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Pornography That's Hard to Stop",
       "sub": "For You",
-      "say": "If watching porn has become harder to stop than you want, this is for you. You're not alone, and nothing here is about shaming you."
+      "say": "If watching porn has become harder to stop than you want, this is for you. We're with you, and everything here is said with kindness."
      },
      {
       "k": "big",
@@ -9755,13 +9755,13 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Couples counseling, when you are ready",
       "body": "Talk it through with someone trained to help you both.",
-      "say": "If you're a couple, a couples counselor can help you both talk it through, when you're ready. There's no deadline. Take the time you need, and lean on someone safe for yourself along the way."
+      "say": "If you're a couple, a couples counselor can help you both talk it through, when you're ready. Your timeline is your own. Take the time you need, and lean on someone safe for yourself along the way."
      },
      {
       "k": "big",
       "h": "Honest, kind, and steady.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to fix this, and you're not their monitor. Being honest, kind, and steady is what helps most. The full guide has more, whenever you want it."
+      "say": "Your role is to be honest, kind, and steady, and that is what helps most. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -9873,7 +9873,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Hard weeks pass.",
       "sub": "One week is not the whole story.",
-      "say": "Training and the first year are built to stretch you. A hard week doesn't mean you chose wrong, and it doesn't have to be carried alone. Keep at least one person, inside or outside your unit, you can be honest with."
+      "say": "Training and the first year are built to stretch you. A hard week doesn't mean you chose wrong, and others can help carry it. Keep at least one person, inside or outside your unit, you can be honest with."
      },
      {
       "k": "big",
@@ -9988,7 +9988,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Coming Home From Service",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For a young veteran or service member coming home: it's a real change, and you don't have to figure it out alone.",
+    "blurb": "For a young veteran or service member coming home: it's a real change, and others can help you figure it out.",
     "sources": [
      "pewvets11",
      "litz"
@@ -10062,7 +10062,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You're on a different road.",
       "sub": "Not a slower one.",
-      "say": "It can feel like your friends got a head start while you served. You're not behind. You're on a different road, and you bring skills, discipline, and experience most people your age don't have yet."
+      "say": "It can feel like your friends got a head start while you served. You're right on time for you. You're on a different road, and you bring skills, discipline, and experience most people your age don't have yet."
      },
      {
       "k": "big",
@@ -10131,7 +10131,7 @@ window.GG_LEARN_GUIDES.birch = {
        "You seem fine, so you're fine.",
        "So what are you going to do now?"
       ],
-      "say": "Some questions land hard. Never ask if they killed anyone, or press for stories. Don't assume every veteran has deep trauma, or that they're fine because they look fine. And hold off on rushing them toward the next plan before they've landed."
+      "say": "Some questions land hard. Never ask if they killed anyone, or press for stories. Let each veteran show you how they're doing: some carry deep trauma, and some who look fine are carrying more than they show. And hold off on rushing them toward the next plan before they've landed."
      },
      {
       "k": "points",
@@ -10182,7 +10182,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
     "sideName": "For You",
     "mins": 3,
-    "blurb": "For a young adult grieving a parent, a friend, or someone their age: there's no right way, and you don't have to do it alone.",
+    "blurb": "For a young adult grieving a parent, a friend, or someone their age: grief takes its own shape, and others can walk it with you.",
     "sources": [
      "dougy"
     ],
@@ -10206,7 +10206,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Relief",
        "Can't focus"
       ],
-      "say": "Grief can look like sadness that comes in waves. It can look like numbness, anger, or guilt. Some people feel relief after a long illness, then feel bad about the relief. Many can't focus, can't sleep, or keep extra busy. All of this is normal. There's no right way, and no deadline."
+      "say": "Grief can look like sadness that comes in waves. It can look like numbness, anger, or guilt. Some people feel relief after a long illness, then feel bad about the relief. Many can't focus, can't sleep, or keep extra busy. All of this is normal. Grief takes its own shape and its own time."
      },
      {
       "k": "big",
@@ -10290,7 +10290,7 @@ window.GG_LEARN_GUIDES.birch = {
       "eyebrow": "When Life Changes",
       "h": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
       "sub": "For the Helper",
-      "say": "If a young adult you love is grieving a parent, a friend, or someone their age, this is for you. You don't need perfect words. You need to show up, and keep showing up."
+      "say": "If a young adult you love is grieving a parent, a friend, or someone their age, this is for you. Simple words are enough. You need to show up, and keep showing up."
      },
      {
       "k": "big",
@@ -10415,7 +10415,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Carry one question.",
-      "sub": "No answer needed today.",
+      "sub": "Answers can wait.",
       "say": "Think of one question about faith or meaning you are carrying right now. Put it into words, just as it is, without needing an answer. Say it to yourself once, then let it rest beside you while you take three slow breaths.",
       "beats": [
        "Think of one question about faith or meaning you are carrying right now.",
@@ -10463,7 +10463,7 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Boundaries respected",
-        "No pressure to give more"
+        "Give what you choose"
        ],
        [
         "Leaders accountable",
@@ -10583,7 +10583,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Stay close, whatever they conclude.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to settle their questions to be a good companion. Stay close, whatever they conclude. The full guide has more, whenever you want it."
+      "say": "A good companion walks with the questions. Stay close, whatever they conclude. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -10817,7 +10817,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "You're not behind.",
+      "h": "You're right on time for you.",
       "sub": "Purpose takes shape over years.",
       "say": "It can look like everyone else has it figured out. Most people's paths are much less straight than they look from the outside. Researchers who study meaning find that searching for it and having it are two different things, and many people are doing both at once. Purpose usually takes shape over years, through trying things."
      },
@@ -10894,7 +10894,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "A season, not a sentence.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "This is a season, not a sentence. You don't need the whole map to take the next step. The full guide has more, whenever you want it."
+      "say": "This is a season, not a sentence. The next step is enough to start. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -11333,7 +11333,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Your worth is not your output.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Planning around your body is wise, not weak. Your worth isn't measured by pushing through pain. The full guide has more, whenever you want it."
+      "say": "Planning around your body is wise, not weak. Your worth is in who you are. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -11550,7 +11550,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Can we plan something that can flex?",
        "Here's what I've tracked."
       ],
-      "say": "You might tell a friend: if I cancel, it's not about you. Can we plan something that can flex, like a movie at my place? And at your next appointment: here's what I've tracked this month."
+      "say": "You might tell a friend: if I cancel, it's not about you. Can we plan something that can flex, like tea at my place? And at your next appointment: here's what I've tracked this month."
      },
      {
       "k": "big",
@@ -11762,7 +11762,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Protect the steady things.",
       "sub": "Sleep, rhythm, and going easy on substances.",
-      "say": "Protect the steady things. A regular wake time, meals, and daylight. Sleep is often the first thing to shift. And go easy on alcohol, cannabis, and other drugs, which can make symptoms harder to manage."
+      "say": "Protect the steady things. A regular wake time, meals, and daylight. Sleep is often the first thing to shift. And set aside alcohol, cannabis, and other drugs, which can make symptoms harder to manage."
      },
      {
       "k": "card",
@@ -12318,7 +12318,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Ask. Remember. Make room.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to get it perfect. Asking how they like to communicate, and remembering, says a lot. The full guide has more, whenever you want it."
+      "say": "Good enough is plenty. Asking how they like to communicate, and remembering, says a lot. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -13068,8 +13068,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Ask about experience.",
-      "sub": "Never argue belief.",
-      "say": "Start with their experience, not with answers. You might ask: has your faith been more of a comfort or a struggle lately? Then listen. They may have deep faith, have stepped away, or be somewhere in-between. Never try to argue them into belief, or out of it."
+      "sub": "Respect their belief.",
+      "say": "Start with their experience, not with answers. You might ask: has your faith been more of a comfort or a struggle lately? Then listen. They may have deep faith, have stepped away, or be somewhere in-between. Let their belief be their own, whatever it is."
      },
      {
       "k": "words",
@@ -13125,7 +13125,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Hold the hard questions.",
-      "sub": "Without rushing to answer.",
+      "sub": "Take your time to answer.",
       "say": "If they ask why, you don't have to have an answer. Listening, staying, and saying, your questions are welcome with me, often helps more than any explanation. Many traditions have honest words for lament, and they can hold both of you."
      },
      {

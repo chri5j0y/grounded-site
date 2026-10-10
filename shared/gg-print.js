@@ -13,7 +13,9 @@
                                 The Grove by kind (GWG BLD 776): GGPrint.flyer('grove', 'faith' | 'team' | 'classroom').
                                 The Classroom flyer is kept for later: nothing links to it until the attorney answers
                                 the PPRA question about classroom check-ins (grove-plan.md Section 14).
-   Every print carries a small QR code with only a page address on it, never a person's name.
+   - GGPrint.takeHome(m)        the Take-Home Sheet after a Guide visit (GWG BLD 782), see below.
+   Every print carries a small QR code with only a page address on it, never a person's name, except the Take-Home
+   Sheet's Bring It Home code, which carries the family's own visit card (only what the sheet already shows).
    Wording rule: Certificate of Completion, never "certified." Grow With Grounded is not an accrediting body.
    ===================================================================== */
 (function () {
@@ -92,10 +94,11 @@
     '.bar button{min-height:44px;padding:8px 16px;border-radius:10px;border:1.5px solid #D9A847;background:transparent;color:#F6EFE2;font:inherit;font-weight:600;cursor:pointer;}',
     '.bar button.pri{background:#D9A847;color:#2E2118;}.bar button[aria-pressed="true"]{background:#F6EFE2;color:#2E2118;border-color:#F6EFE2;}',
     '.tip{padding:8px 14px;font-size:14px;color:#5A4B3F;text-align:center;}',
-    '.fit{margin:14px auto 40px;transform-origin:top left;}',
-    '.sheet{background:#FFFCF6;position:relative;overflow:hidden;box-shadow:0 2px 14px rgba(44,24,16,.18);}',
+    '.fit{margin:14px auto 40px;overflow:hidden;}',
+    '.sheet{background:#FFFCF6;position:relative;overflow:hidden;box-shadow:0 2px 14px rgba(44,24,16,.18);transform-origin:top left;}',
+    '@media (prefers-color-scheme:dark){body{background:#1F1A14;}.tip{color:#C2B6A4;}}',
     '.serif{font-family:"Cormorant Garamond",Georgia,serif;}.cond{font-family:"Barlow Condensed","Arial Narrow",sans-serif;}',
-    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0 !important;transform:none !important;width:auto !important;height:auto !important;}.sheet{box-shadow:none;}}'
+    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0 !important;transform:none !important;width:auto !important;height:auto !important;overflow:visible !important;}.sheet{box-shadow:none;transform:none !important;}}'
   ].join('\n');
 
   // Opens the print page in a new tab, so there is a preview to check before printing.
@@ -103,17 +106,17 @@
     var sizes = o.sizes || [o.size], cur = sizes[0];
     var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(o.title) + '</title>'
       + '<link rel="stylesheet" href="' + A('/fonts/fonts.css') + '"><style id="pg">@page{size:' + cur.page + ';margin:0;}</style><style>' + BASE + '\n' + o.css + '</style></head><body>'
-      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + '<button class="pri" id="go">Print or Save as PDF</button></div>'
-      + '<div class="tip">To keep a copy, choose Save as PDF in the print window. ' + esc(o.tip || '') + '</div>'
+      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + (o.acts || []).map(function (a) { return '<button type="button" id="' + a[0] + '">' + esc(a[1]) + '</button>'; }).join('') + '<button class="pri" id="go">' + esc(o.printLabel || 'Print or Save as PDF') + '</button></div>'
+      + '<div class="tip" id="tip" role="status">' + (o.tipFull ? esc(o.tipFull) : 'To keep a copy, choose Save as PDF in the print window. ' + esc(o.tip || '')) + '</div>'
       + '<div class="fit" id="fit"><div class="sheet ' + (cur.cls || '') + '" id="sheet" style="width:' + cur.w + 'in;height:' + cur.h + 'in">' + o.body + '</div></div>'
       + '<script>(function(){var S=' + JSON.stringify(sizes) + ',sh=document.getElementById("sheet"),fit=document.getElementById("fit");'
-      + 'function scale(){var w=sh.offsetWidth,h=sh.offsetHeight,k=Math.min(1,(window.innerWidth-28)/w);fit.style.width=w+"px";fit.style.height=(h*k)+"px";fit.style.transform="scale("+k+")";fit.style.marginLeft=Math.max(14,(window.innerWidth-w*k)/2)+"px";}'
+      + 'function scale(){var w=sh.offsetWidth,h=sh.offsetHeight,k=Math.min(1,(document.documentElement.clientWidth-28)/w);fit.style.width=(w*k)+"px";fit.style.height=(h*k)+"px";sh.style.transform="scale("+k+")";fit.style.marginLeft=Math.max(14,(document.documentElement.clientWidth-w*k)/2)+"px";}'
       + 'document.querySelectorAll("[data-size]").forEach(function(b){b.onclick=function(){var s=S[+b.getAttribute("data-size")];document.getElementById("pg").textContent="@page{size:"+s.page+";margin:0;}";sh.style.width=s.w+"in";sh.style.height=s.h+"in";sh.className="sheet "+(s.cls||"");document.querySelectorAll("[data-size]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});scale();};});'
       + 'function ready(){return Promise.all(Array.prototype.map.call(document.images,function(i){return i.complete?0:new Promise(function(r){i.addEventListener("load",r);i.addEventListener("error",r);});}));}'
       + 'document.getElementById("go").onclick=function(){ready().then(function(){window.print();});};window.addEventListener("resize",scale);scale();'
       + 'if(document.fonts&&document.fonts.ready)document.fonts.ready.then(scale);'
       + 'var n=document.querySelector("[data-fitname]");if(n){var f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth&&f>14){f-=1;n.style.fontSize=f+"px";}}'
-      + '})();<\/script></body></html>';
+      + '})();<\/script>' + (o.js ? '<script>' + o.js + '<\/script>' : '') + '</body></html>';
     var w = o.win && !o.win.closed ? o.win : null;
     if (!w) { try { w = window.open('', '_blank'); } catch (e) { w = null; } }
     if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); try { w.focus(); } catch (e) {} return w; }
@@ -278,5 +281,231 @@
     });
   }
 
-  window.GGPrint = { certificate: certificate, poster: poster, flyer: flyer, trees: T, groveKinds: GK };
+  /* ---------------- the Take-Home Sheet (GWG BLD 782) ----------------
+     One shared, one-page sheet for every Guide visit (Maple, Aspen, Pine, Birch, Oak, Sequoia, Willow, The Grove), in the
+     website's look: the app's painting, the visit in words and light, the plan and practices, Bring It Home (a QR code of
+     the visit's own Send link, with its code beside it when it has one), Meet the app (a QR code that opens the app's
+     promo video, /<app>/#watch), help lines, and Who We Are. Made on this device; nothing is sent anywhere.
+     GGPrint.takeHome(m)            opens the print page (Print, Save as PDF, Send by Email, Send by Text)
+     GGPrint.takeHomePdf(m)         a Promise of the one-page PDF Blob (needs gg-pdf.js)
+     GGPrint.sendTakeHome(m, how)   how 'save', 'email', or 'text': the share sheet with the PDF where the device has one
+                                    (iPhone, iPad, Mac Safari); otherwise the PDF downloads and a ready email or text opens
+     GGPrint.warmTakeHome(tree)     loads the painting and photos ahead, so a tap can share right away
+     m {tree, title, sub, lead, kid, mode 'words' | 'strong' | 'none', parts [{key, part, name, color, lv}], treeTitle,
+        sec [{h, p, li, items [{t, tag, color, how, when}]}], after, close, help {h, li}, home {url, code, codeLabel, how, note},
+        homeNote {h, p}, foot, file, subject, words {strong, steady, edge}} */
+  var TH_APP = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
+  var TH_KIND = { maple: 'kids', aspen: 'kids', willow: 'gentle' };
+  var TH_WHO = { h: 'Who We Are',
+    p: 'We are Chris and Kayti Joy, of Saint Cloud, Minnesota. We lead ceremonies for life\'s big days and offer The Grounded Marriage for couples. We walk with people through end-of-life support, grief and caregiver support, and spiritual guidance, and we offer speaking and training for teams. All faith traditions and everything in-between are welcome here. We would love to hear from you.',
+    contact: 'growwithgrounded.com  ·  hello@growwithgrounded.com' };
+  var TH_WORDS = { strong: 'Strength', steady: 'Steady', edge: 'Growing Edge' };
+  function thWatchUrl(tr) { return SITE + (T[tr] ? T[tr].path : '/') + '#watch'; }
+  function thModel(m) {
+    var tr = T[m.tree] ? m.tree : 'oak', t = T[tr], app = TH_APP[tr], kind = m.kind || TH_KIND[tr] || 'adult', W = Object.assign({}, TH_WORDS, m.words || {});
+    var lights = [], key = '';
+    if (m.mode !== 'none' && (m.parts || []).length) {
+      lights = m.parts.map(function (p) {
+        var lv = p.lv === 'care' ? 'edge' : p.lv;
+        if (m.mode === 'strong') return { part: p.part, name: p.name, color: p.color, lv: lv === 'strong' ? 'strong' : 'soft', word: lv === 'strong' ? (m.strongWord || 'Growing strong') : '' };
+        return { part: p.part, name: p.name, color: p.color, lv: W[lv] ? lv : 'soft', word: W[lv] || '' };
+      });
+      key = m.mode === 'strong' ? (m.treeKey || 'The brightest lights are growing strong today. Every part keeps growing with a little tending.')
+        : (m.treeKey || 'A ' + W.strong + ' glows full and warm. Steady glows softly. A ' + W.edge + ' is new green light, where you are growing next.');
+    }
+    return {
+      tree: tr, app: app, kind: kind, color: t.color, ink: t.ink || t.color,
+      eyebrow: m.eyebrow || 'Take-Home Sheet', title: m.title || 'From Today\'s ' + app + ' Visit', sub: m.sub || '', lead: m.lead || '', kid: m.kid || '',
+      treeLights: lights.length ? { title: m.treeTitle || 'Your Tree Today', lights: lights, key: key } : null,
+      sec: (m.sec || []).filter(function (s) { return s && ((s.p || []).length || (s.li || []).length || (s.items || []).length); }),
+      after: m.after || [], close: m.close || '',
+      home: m.home && m.home.url ? { title: m.home.title || 'Bring It Home', url: m.home.url, code: m.home.code || '', codeLabel: m.home.codeLabel || 'Your code',
+        how: m.home.how || ['Scan this with a phone or tablet.', app + ' opens and asks whose tree it is.', 'Your results and growth plan are there, ready for tending. Others in the family can start their own tree too.'],
+        note: m.home.note == null ? 'The code carries only what is on this page, and it stays on your own device.' : m.home.note } : null,
+      homeNote: m.homeNote || null,
+      watch: { title: 'Meet ' + app, url: thWatchUrl(tr), line: 'Scan to watch a short video about ' + app + '.', short: short(SITE + t.path) },
+      help: m.help && (m.help.li || []).length ? { h: m.help.h || 'Help Any Time', li: m.help.li } : null,
+      who: TH_WHO, foot: m.foot || ('Grow With Grounded ' + app + '. Grow With Grounded\u2122 is a trademark of Grow With Grounded LLC. growwithgrounded.com'),
+      file: m.file || (tr + '-take-home.pdf'),
+      subject: m.subject || ('Your take-home sheet from today\'s ' + app + ' visit'),
+      body: m.body || ('Hello,\n\nHere is your take-home sheet from today\'s ' + app + ' visit: what we saw together, your growth plan, and a code to bring it home to ' + app + '.\n\nWith warmth,\nGrow With Grounded'),
+      sms: m.sms || ('Here is your take-home sheet from today\'s ' + app + ' visit. The PDF is attached.')
+    };
+  }
+  function thParts(n) {
+    var L = n.treeLights; if (!L) return '';
+    return '<section class="th-tree"><h2 class="serif">' + esc(L.title) + '</h2><div class="th-lights">' + L.lights.map(function (x) {
+      return '<div class="th-l th-' + x.lv + '" style="--p:' + esc(x.color || '#8B5E1A') + '"><i aria-hidden="true"></i><div><b>' + esc(x.part) + '</b>' + (x.word ? '<span>' + esc(x.word) + '</span>' : '<span class="th-nm">' + esc(x.name || '') + '</span>') + '</div></div>';
+    }).join('') + '</div>' + (L.key ? '<p class="th-key">' + esc(L.key) + '</p>' : '') + '</section>';
+  }
+  function thSec(s) {
+    return '<section class="th-sec">' + (s.h ? '<h2 class="serif">' + esc(s.h) + '</h2>' : '')
+      + (s.p || []).map(function (x) { return '<p>' + esc(x) + '</p>'; }).join('')
+      + (s.items || []).map(function (it) { return '<div class="th-step" style="--p:' + esc(it.color || 'var(--c)') + '"><b>' + esc(it.t) + '</b>' + (it.tag ? '<em>' + esc(it.tag) + '</em>' : '') + (it.how ? '<p>' + esc(it.how) + '</p>' : '') + (it.when ? '<p class="th-when">' + esc(it.when) + '</p>' : '') + '</div>'; }).join('')
+      + ((s.li || []).length ? '<ul>' + s.li.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : '') + '</section>';
+  }
+  function thQR(u, label, big) {
+    var s = ''; try { if (window.GGQR && GGQR.svg) s = GGQR.svg(u, { label: label, border: 2, ecc: u.length > 700 ? 'L' : '' }); } catch (e) { s = ''; }
+    return s;
+  }
+  function thBody(n) {
+    var tr = n.tree, hx = HX[tr] == null ? 50 : HX[tr];
+    var hero = '<div class="th-hero"><img class="th-paint" src="' + A('/shared/heroes/' + tr + '-wide.webp') + '" alt="" style="object-position:' + hx + '% 58%"><div class="th-shade"></div>'
+      + '<div class="th-id"><img class="th-mark" src="' + A('/shared/marks/' + tr + '.svg') + '" alt=""><div><div class="th-eb cond">' + esc(n.eyebrow.toUpperCase()) + ' · ' + esc(n.app.toUpperCase()) + ' BY GROW WITH GROUNDED</div><h1 class="serif">' + esc(n.title) + '</h1>' + (n.sub ? '<div class="th-sub">' + esc(n.sub) + '</div>' : '') + '</div></div></div>';
+    var main = '<div class="th-main">' + (n.lead ? '<p class="th-lead serif">' + esc(n.lead) + '</p>' : '') + (n.kid ? '<p class="th-kid">' + esc(n.kid) + '</p>' : '')
+      + thParts(n) + n.sec.map(thSec).join('') + n.after.map(function (x) { return '<p class="th-after">' + esc(x) + '</p>'; }).join('') + (n.close ? '<p class="th-close serif">' + esc(n.close) + '</p>' : '') + '</div>';
+    var side = '<aside class="th-side">';
+    if (n.home) side += '<div class="th-card th-home" data-qr="home"><h3 class="serif">' + esc(n.home.title) + '</h3><div class="th-qr" data-url="' + esc(n.home.url) + '">' + thQR(n.home.url, 'QR code: ' + n.home.title, true) + '</div>'
+      + (n.home.code ? '<div class="th-code"><span>' + esc(n.home.codeLabel) + '</span><b>' + esc(n.home.code) + '</b></div>' : '')
+      + '<ol>' + n.home.how.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' + (n.home.note ? '<p class="th-note">' + esc(n.home.note) + '</p>' : '') + '</div>';
+    else if (n.homeNote) side += '<div class="th-card th-home"><h3 class="serif">' + esc(n.homeNote.h) + '</h3><p>' + esc(n.homeNote.p) + '</p></div>';
+    side += '<div class="th-card th-watch" data-qr="watch"><div class="th-qr" data-url="' + esc(n.watch.url) + '">' + thQR(n.watch.url, 'QR code: ' + n.watch.title) + '</div><div><h3 class="serif">' + esc(n.watch.title) + '</h3><p>' + esc(n.watch.line) + '</p><span>' + esc(n.watch.short) + '</span></div></div>';
+    if (n.help) side += '<div class="th-card th-help"><h3 class="serif">' + esc(n.help.h) + '</h3><ul>' + n.help.li.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    side += '</aside>';
+    var who = '<div class="th-who"><span class="th-pics"><img src="' + A('/kayti-joy-avatar.jpg') + '" alt="Kayti Joy"><img src="' + A('/chris.jpg') + '" alt="Chris Joy"></span><div><h3 class="serif">' + esc(n.who.h) + '</h3><p>' + esc(n.who.p) + '</p><p class="th-contact">' + esc(n.who.contact) + '</p></div><img class="th-logo" src="' + A('/favicon.svg') + '" alt=""></div>';
+    return '<div class="th th-' + n.kind + (n.title.length > 24 ? ' th-long' : '') + '" style="--c:' + n.color + ';--ink2:' + n.ink + '">' + hero + '<div class="th-body" data-fit>' + main + side + '</div>' + who + '<div class="th-foot">' + esc(n.foot) + '</div></div>';
+  }
+  var TH_CSS = [
+    '.th{position:absolute;inset:0;display:flex;flex-direction:column;--z:1;color:#2C1810;}',
+    '.th-hero{position:relative;height:2.08in;flex:none;overflow:hidden;background:var(--c);}',
+    '.th-paint{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}',
+    '.th-shade{position:absolute;inset:0;background:linear-gradient(90deg,rgba(22,13,6,.72) 0%,rgba(22,13,6,.5) 45%,rgba(22,13,6,.05) 80%),linear-gradient(0deg,rgba(22,13,6,.35),rgba(22,13,6,0) 55%);}',
+    '.th-id{position:absolute;left:0.55in;right:0.55in;bottom:0.3in;display:flex;align-items:center;gap:0.2in;color:#fff;}',
+    '.th-mark{width:0.86in;height:0.86in;border-radius:0.18in;box-shadow:0 2px 10px rgba(0,0,0,.35);flex:none;}',
+    '.th-eb{font-size:8.5pt;letter-spacing:2.4px;font-weight:700;color:#FBE8C4;}',
+    '.th h1{font-size:31pt;font-weight:600;line-height:1.02;margin:3px 0 0;color:#fff;}.th-long h1{font-size:24pt;}',
+    '.th-sub{font-size:11.5pt;color:#FFF6E6;margin-top:4px;}',
+    '.th-body{flex:1;min-height:0;overflow:hidden;display:grid;grid-template-columns:1fr 2.62in;gap:0.24in;padding:0.2in 0.55in 0.14in;}',
+    '.th-main{min-width:0;}',
+    '.th-lead{font-size:calc(13.5pt * var(--z));font-style:italic;line-height:1.3;margin:0;color:#4A3B30;}',
+    '.th-kid{margin:calc(9px * var(--z)) 0 0;padding:calc(7px * var(--z)) 12px;border-left:4px solid var(--c);background:#FBF3E4;border-radius:0 12px 12px 0;font-weight:600;font-size:calc(11pt * var(--z));line-height:1.35;}',
+    '.th h2{font-size:calc(15pt * var(--z));font-weight:700;color:var(--ink2);margin:calc(12px * var(--z)) 0 calc(4px * var(--z));line-height:1.1;}',
+    '.th-lights{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(7px * var(--z)) 10px;}',
+    '.th-l{display:flex;align-items:center;gap:9px;min-width:0;}',
+    '.th-l i{flex:none;width:calc(0.3in * var(--z));height:calc(0.3in * var(--z));border-radius:50%;border:1.5px solid var(--p);margin:4px;}',
+    '.th-strong i{background:radial-gradient(circle at 42% 40%,#FFF6D6 0%,#F4C860 42%,#D99A2B 80%);box-shadow:0 0 9px 4px rgba(242,186,74,.6);}',
+    '.th-steady i{background:radial-gradient(circle at 42% 40%,#FFFBEF 0%,#F3DDA6 55%,#E2C27E 100%);box-shadow:0 0 5px 1px rgba(226,194,126,.5);}',
+    '.th-edge i{background:radial-gradient(circle at 42% 40%,#F4FCE8 0%,#B9DE8A 50%,#7FB24E 100%);box-shadow:0 0 7px 2px rgba(140,200,90,.55);}',
+    '.th-soft i{background:radial-gradient(circle at 42% 40%,#FFFDF7 0%,#F1E9D8 70%,#E4D8C0 100%);}',
+    '.th-l b{display:block;font-size:calc(10.5pt * var(--z));line-height:1.15;}.th-l span{display:block;font-size:calc(9pt * var(--z));color:#5A4B3F;line-height:1.2;}.th-l .th-nm{color:#7A6A5D;}',
+    '.th-key{font-size:calc(8.5pt * var(--z));font-style:italic;color:#6B5A4D;margin:calc(5px * var(--z)) 0 0;line-height:1.3;}',
+    '.th-sec p{font-size:calc(10pt * var(--z));line-height:1.38;margin:calc(3px * var(--z)) 0 0;}',
+    '.th-sec ul{margin:calc(3px * var(--z)) 0 0;padding-left:1.1em;font-size:calc(10pt * var(--z));line-height:1.38;}',
+    '.th-step{border-left:3.5px solid var(--p);padding:calc(1px * var(--z)) 0 calc(1px * var(--z)) 10px;margin-top:calc(6px * var(--z));}',
+    '.th-step b{font-size:calc(10.5pt * var(--z));}.th-step em{font-style:normal;font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:calc(7.8pt * var(--z));color:var(--p);margin-left:8px;}',
+    '.th-step p{margin:calc(1px * var(--z)) 0 0;color:#4A3B30;font-size:calc(9.5pt * var(--z));line-height:1.34;}.th-step .th-when{font-style:italic;}',
+    '.th-after{font-size:calc(9.5pt * var(--z));font-weight:600;line-height:1.35;margin:calc(8px * var(--z)) 0 0;}',
+    '.th-close{font-size:calc(13pt * var(--z));font-style:italic;color:var(--ink2);margin:calc(12px * var(--z)) 0 0;line-height:1.3;}',
+    '.th-side{display:flex;flex-direction:column;gap:0.12in;min-width:0;}',
+    '.th-card{background:#F6EEDB;border-top:3px solid var(--c);border-radius:0 0 10px 10px;padding:0.1in 0.13in 0.12in;}',
+    '.th h3{font-size:14pt;font-weight:700;color:var(--ink2);margin:0 0 4px;line-height:1.1;}',
+    '.th-home .th-qr{background:#fff;border-radius:6px;padding:4px;width:calc(1.95in * (0.4 + 0.6 * var(--z)));margin:4px auto 0;}.th-home .th-qr svg{display:block;width:100%;height:auto;}',
+    '.th-code{display:flex;align-items:baseline;gap:8px;justify-content:center;margin-top:6px;}.th-code span{font-size:8.5pt;color:#6B5A4D;}.th-code b{font-family:"Barlow Condensed","Arial Narrow",sans-serif;font-size:17pt;letter-spacing:2.5px;}',
+    '.th-home ol{margin:6px 0 0;padding-left:1.2em;font-size:calc(8.6pt * var(--z));line-height:1.3;}.th-home p{font-size:calc(9pt * var(--z));line-height:1.35;margin:2px 0 0;}.th-home .th-note{font-size:calc(7.6pt * var(--z));color:#6B5A4D;font-style:italic;margin-top:5px;}',
+    '.th-watch{display:flex;gap:0.12in;align-items:center;}.th-watch .th-qr{flex:none;width:0.95in;background:#fff;border-radius:6px;padding:3px;}.th-watch .th-qr svg{display:block;width:100%;height:auto;}',
+    '.th-watch p{font-size:8.8pt;line-height:1.3;margin:0;}.th-watch>div{min-width:0;}.th-watch span{display:block;font-size:7.2pt;color:#6B5A4D;margin-top:3px;overflow-wrap:anywhere;}',
+    '.th-help ul{margin:0;padding-left:1.05em;font-size:calc(8.2pt * var(--z));line-height:1.3;}.th-help li{margin-top:2px;}',
+    '.th-who{flex:none;display:flex;align-items:center;gap:0.2in;background:#F2ECE0;border-top:1px solid #E3D8C4;padding:0.14in 0.55in;}',
+    '.th-pics{flex:none;display:flex;}.th-pics img{width:0.62in;height:0.62in;border-radius:50%;object-fit:cover;border:2px solid #FFFCF6;}.th-pics img+img{margin-left:-0.16in;}',
+    '.th-who h3{color:#8B5E1A;font-size:13pt;margin:0;}.th-who p{font-size:8.6pt;line-height:1.35;margin:2px 0 0;}.th-who .th-contact{font-weight:700;color:#8B5E1A;font-size:9pt;margin-top:3px;}',
+    '.th-logo{flex:none;width:0.5in;height:auto;opacity:.9;}',
+    '.th-foot{flex:none;font-size:7.4pt;color:#7A6A5D;padding:0.07in 0.55in 0.16in;background:#F2ECE0;}',
+    // Maple and Aspen, gentle for a grown-up and a child: rounder, warmer, with the tree's own leaf.
+    '.th-kids .th-card{border-radius:14px;border-top:0;border:2px solid var(--c);background:#FFF7EA;}.th-kids .th-mark{border-radius:50%;}',
+    '.th-kids .th-step{border-left:0;padding-left:0;}.th-kids .th-step b:before{content:"";display:inline-block;width:9px;height:9px;border-radius:50%;background:var(--p);margin-right:7px;vertical-align:1px;}',
+    // Willow, gentle: softer color, no levels.
+    '.th-gentle .th-card{background:#F3F1F6;}.th-gentle .th-shade{background:linear-gradient(90deg,rgba(36,32,48,.66) 0%,rgba(36,32,48,.4) 50%,rgba(36,32,48,0) 82%);}'
+  ].join('\n');
+  // The print page's own script: fits the sheet to one page, and sends the PDF the opener hands it (window.__ggTH).
+  function thPageJs() {
+    return '(function(){var sh=document.getElementById("sheet"),th=sh.querySelector(".th"),b=sh.querySelector("[data-fit]");'
+      + 'function over(){return b.scrollHeight>b.clientHeight+1||Array.prototype.some.call(b.children,function(c){return c.scrollHeight>c.clientHeight+1||c.offsetTop+c.offsetHeight>b.clientHeight+b.offsetTop+1;});}'
+      + 'function fit(){if(!th||!b)return;var z=1;th.style.setProperty("--z",1);while(over()&&z>0.62){z-=0.03;th.style.setProperty("--z",z.toFixed(2));}}'
+      + 'fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);window.addEventListener("load",fit);'
+      + 'var tip=document.getElementById("tip"),D=' + deliver.toString() + ';'
+      + 'function go(how){var X=window.__ggTH;if(!X){tip.textContent="Getting the PDF ready. Tap again in a moment.";return;}'
+      + 'D(window,X.blob,X.meta,how).then(function(r){if(r==="saved")tip.textContent="Saved as "+X.meta.file+".";else if(r==="opened")tip.textContent="Saved as "+X.meta.file+". Attach it to the "+(how==="email"?"email":"text")+" that just opened.";else if(r==="shared")tip.textContent="Sent.";});}'
+      + '[["th-pdf","save"],["th-mail","email"],["th-text","text"]].forEach(function(x){var e=document.getElementById(x[0]);if(e)e.onclick=function(){go(x[1]);};});'
+      + '})();';
+  }
+  // One way to send, used by the Field Guide and by the print page (W is the window the tap happened in).
+  function deliver(W, blob, M, how) {
+    var nav = W.navigator, f = null;
+    try { f = new W.File([blob], M.file, { type: 'application/pdf' }); } catch (e) { f = null; }
+    var touch = (nav.maxTouchPoints || 0) > 0, can = false;
+    try { can = !!(f && nav.canShare && nav.canShare({ files: [f] })); } catch (e) { can = false; }
+    function save() { var a = W.document.createElement('a'); a.href = W.URL.createObjectURL(blob); a.download = M.file; a.style.display = 'none'; W.document.body.appendChild(a); a.click(); setTimeout(function () { try { W.URL.revokeObjectURL(a.href); a.remove(); } catch (e) {} }, 4000); }
+    function open(u) { W.__ggLastUrl = u; var a = W.document.createElement('a'); a.href = u; a.style.display = 'none'; W.document.body.appendChild(a); a.click(); a.remove(); }
+    function fallback() {
+      save();
+      if (how === 'email') open('mailto:?subject=' + encodeURIComponent(M.subject) + '&body=' + encodeURIComponent(M.body + '\n\n(The PDF is attached.)'));
+      else if (how === 'text') open('sms:?&body=' + encodeURIComponent(M.sms));
+      return how === 'save' ? 'saved' : 'opened';
+    }
+    if (can && (how !== 'save' || touch)) {
+      var d = { files: [f], title: M.title };
+      if (how === 'email') d.text = M.body; else if (how === 'text') d.text = M.sms;
+      return nav.share(d).then(function () { return 'shared'; }, function (e) { return e && e.name === 'AbortError' ? 'cancel' : fallback(); });
+    }
+    return Promise.resolve(fallback());
+  }
+  // The painting (with its mark and shade baked in) and Chris and Kayti's photos, as JPEGs for the PDF, kept once loaded.
+  var ART = {};
+  function needPdf() {
+    return new Promise(function (ok) {
+      if (window.ggTakeHomePdf) return ok();
+      var s = document.createElement('script'); s.src = A('/shared/gg-pdf.js?v=b782'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
+    });
+  }
+  function loadImg(u) { return new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = u; }); }
+  function warm(tr) {
+    tr = T[tr] ? tr : 'oak';
+    if (ART[tr]) return ART[tr];
+    ART[tr] = Promise.all([needPdf(), needQR(), loadImg(A('/shared/marks/' + tr + '.svg'))]).then(function (r) {
+      var mk = r[2];
+      if (!window.ggPdfImage) return {};
+      var shade = function (g, w, h) {
+        var lg = g.createLinearGradient(0, 0, w, 0); lg.addColorStop(0, tr === 'willow' ? 'rgba(36,32,48,.66)' : 'rgba(22,13,6,.72)'); lg.addColorStop(0.45, tr === 'willow' ? 'rgba(36,32,48,.42)' : 'rgba(22,13,6,.5)'); lg.addColorStop(0.8, 'rgba(22,13,6,.04)'); lg.addColorStop(1, 'rgba(22,13,6,0)');
+        g.fillStyle = lg; g.fillRect(0, 0, w, h);
+        var bg = g.createLinearGradient(0, h, 0, h * 0.45); bg.addColorStop(0, 'rgba(22,13,6,.35)'); bg.addColorStop(1, 'rgba(22,13,6,0)'); g.fillStyle = bg; g.fillRect(0, 0, w, h);
+        if (mk) { try { g.save(); g.shadowColor = 'rgba(0,0,0,.35)'; g.shadowBlur = 10; g.drawImage(mk, 80, 92, 124, 124); g.restore(); } catch (e) {} }
+      };
+      return Promise.all([
+        ggPdfImage(A('/shared/heroes/' + tr + '-wide.webp'), 1224, 300, { x: (HX[tr] == null ? 50 : HX[tr]) / 100, y: 0.58, paint: shade, q: 0.84 }),
+        ggPdfImage(A('/kayti-joy-avatar.jpg'), 176, 176, { y: 0.35 }), ggPdfImage(A('/chris.jpg'), 176, 176, { y: 0.35 })
+      ]).then(function (x) { return { hero: x[0], pics: x[1] && x[2] ? [x[1], x[2]] : null }; });
+    });
+    return ART[tr];
+  }
+  function pdfNow(n, art) { return window.ggTakeHomePdf ? window.ggTakeHomePdf(n, art || {}) : null; }
+  function takeHomePdf(m) { var n = thModel(m); return warm(n.tree).then(function (art) { return pdfNow(n, art); }); }
+  function meta(n) { return { file: n.file, title: n.title, subject: n.subject, body: n.body, sms: n.sms }; }
+  // Send from the page the guide is on. When the art is already loaded, the share sheet opens inside the tap.
+  function sendTakeHome(m, how) {
+    var n = thModel(m), W = window, tr = n.tree;
+    var go = function (art) {
+      var blob = pdfNow(n, art); if (!blob) return Promise.resolve('none');
+      var CAP = window.Capacitor;
+      if (CAP && CAP.isNativePlatform && CAP.isNativePlatform() && window.GGApp && GGApp.share) return Promise.resolve(GGApp.share(blob, n.file, n.title)).then(function () { return 'shared'; });
+      return deliver(W, blob, meta(n), how);
+    };
+    if (ART[tr] && ART[tr].done) return go(ART[tr].done);
+    return warm(tr).then(function (art) { ART[tr].done = art; return go(art); });
+  }
+  function warmTakeHome(tr) { return warm(tr).then(function (art) { if (ART[T[tr] ? tr : 'oak']) ART[T[tr] ? tr : 'oak'].done = art; return art; }); }
+  function takeHome(m) {
+    var win = pre();
+    return Promise.all([Promise.resolve(m), needQR()]).then(function (r) {
+      if (!r[0]) { try { if (win) win.close(); } catch (e) {} return null; }
+      var n = thModel(r[0]);
+      var w = page({ win: win, title: n.title, size: LETTER, body: thBody(n), css: TH_CSS, printLabel: 'Print',
+        acts: [['th-pdf', 'Save as PDF'], ['th-mail', 'Send by Email'], ['th-text', 'Send by Text']],
+        tipFull: 'One page, ready to print or send. Save as PDF keeps a copy; Send by Email or Text attaches the PDF.', js: thPageJs() });
+      warm(n.tree).then(function (art) { ART[n.tree].done = art; var blob = pdfNow(n, art); if (w && blob) { try { w.__ggTH = { blob: blob, meta: meta(n) }; } catch (e) {} } });
+      return w;
+    });
+  }
+
+  window.GGPrint = { certificate: certificate, poster: poster, flyer: flyer, trees: T, groveKinds: GK,
+    takeHome: takeHome, takeHomePdf: takeHomePdf, sendTakeHome: sendTakeHome, warmTakeHome: warmTakeHome, takeHomeModel: thModel, takeHomeHTML: function (m) { return { body: thBody(thModel(m)), css: TH_CSS }; }, watchUrl: thWatchUrl };
 })();

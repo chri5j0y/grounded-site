@@ -8,7 +8,7 @@
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
 window.GG_LEARN_GUIDES.pine = {
  "title": "When Life Changes",
- "intro": "Two short videos for every guide. For You, if this is what you are facing. For the Grown-up, if you are walking beside a teen who is. Nothing to finish, and a quiet check marks the ones you have watched.",
+ "intro": "Two short videos for every guide. For You, if this is what you are facing. For the Grown-up, if you are walking beside a teen who is. Watch at your own pace, and a quiet check marks the ones you have watched.",
  "rings": [
   [
    "pn-school",
@@ -315,9 +315,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You are not the only one.",
+      "h": "Others have been here too.",
       "sub": "Perfectionism has been rising for years.",
-      "say": "If that sounds like you, you're far from alone. Perfectionism has been rising among young people for decades, especially the feeling that others expect you to be perfect. That's not a flaw in you. It's a heavy load that a lot of people your age are carrying, and it can loosen."
+      "say": "If that sounds like you, many others share this. Perfectionism has been rising among young people for decades, especially the feeling that others expect you to be perfect. That's not a flaw in you. It's a heavy load that a lot of people your age are carrying, and it can loosen."
      },
      {
       "k": "points",
@@ -417,9 +417,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Your worth was never a grade.",
+      "h": "Your worth is bigger than a grade.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Keep caring. Keep resting. Your worth was never a grade. The full guide has more, whenever you want it."
+      "say": "Keep caring. Keep resting. Your worth is bigger than a grade. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -1029,8 +1029,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "big",
       "h": "So what's the plan?",
-      "sub": "Not knowing yet is normal.",
-      "say": "So what's the plan? You'll hear that question a lot. Some classmates seem sure. You might not be. Or your idea might not be the one your family expects. Not knowing yet is normal, and so is changing your mind later."
+      "sub": "Still figuring it out is normal.",
+      "say": "So what's the plan? You'll hear that question a lot. Some classmates seem sure. You might not be. Or your idea might not be the one your family expects. Still figuring it out is normal, and so is changing your mind later."
      },
      {
       "k": "points",
@@ -1716,7 +1716,7 @@ window.GG_LEARN_GUIDES.pine = {
       "eyebrow": "When Life Changes",
       "h": "Feeling Lonely or Left Out",
       "sub": "For You",
-      "say": "If you've been feeling lonely, left out, or invisible lately, this is for you. You're not the only one, even if it feels that way."
+      "say": "If you've been feeling lonely, left out, or invisible lately, this is for you. Others have been here too, even if it feels that way."
      },
      {
       "k": "big",
@@ -1923,7 +1923,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Bullying, in Person and Online",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the teen being bullied, in person or online: it is not your fault, and you do not have to handle it alone.",
+    "blurb": "For the teen being bullied, in person or online: it is not your fault, and others can help you handle it.",
     "sources": [
      "yrbs23",
      "cdcbully23"
@@ -1935,7 +1935,7 @@ window.GG_LEARN_GUIDES.pine = {
       "eyebrow": "When Life Changes",
       "h": "Bullying, in Person and Online",
       "sub": "For You",
-      "say": "If someone is bullying you, at school, online, or both, this is for you. Or if you're watching it happen to someone else. Either way, you're not alone in this."
+      "say": "If someone is bullying you, at school, online, or both, this is for you. Or if you're watching it happen to someone else. Either way, you have people with you in this."
      },
      {
       "k": "big",
@@ -2000,9 +2000,9 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        "This is about their choices, not my worth.",
        "Telling isn't snitching.",
-       "I don't have to handle this alone."
+       "Others can help me handle this."
       ],
-      "say": "Bullying puts a cruel voice in your head. You get to answer it. Here are words to keep. This is about their choices, not my worth. Telling isn't snitching. It's getting help for something wrong. And, I don't have to handle this alone."
+      "say": "Bullying puts a cruel voice in your head. You get to answer it. Here are words to keep. This is about their choices, not my worth. Telling isn't snitching. It's getting help for something wrong. And, others can help me handle this."
      },
      {
       "k": "card",
@@ -2143,7 +2143,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "There is no deadline.",
+      "h": "Take all the time you need.",
       "sub": "Now, later, or not yet are all normal.",
       "say": "Let's clear something up first. There's no right age and no timeline. Some people date in high school, some don't, and both are completely normal. You get to go at your own pace, and you never owe anyone a relationship."
      },
@@ -2195,7 +2195,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Your no is a full sentence.",
+      "h": "Your no is complete.",
       "sub": "And anyone can change their mind.",
       "say": "Here's a big one. A yes has to be freely given. You can say no, and you can change your mind at any time, about anything. So can they. Pressure is never part of love. And anyone who asks for private pictures, or pushes you after you've said no, is showing you who they are."
      },
@@ -2297,7 +2297,7 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        [
         "Use what is around you",
-        "A show, a song, a friend"
+        "A song, a story, a friend"
        ],
        [
         "Name green flags",
@@ -2312,7 +2312,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Then listen"
        ]
       ],
-      "say": "The best time to talk is before there's a specific person. Use what's around you, a show, a song, a friend's situation. Name the green flags, respect, trust, honesty, and room to be yourself. Name the red flags, phone checking, jealousy, control, and pressure for pictures. Then ask what they think, and really listen."
+      "say": "The best time to talk is before there's a specific person. Use what's around you, a song, a story, a friend's situation. Name the green flags, respect, trust, honesty, and room to be yourself. Name the red flags, phone checking, jealousy, control, and pressure for pictures. Then ask what they think, and really listen."
      },
      {
       "k": "flow",
@@ -2359,7 +2359,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Breakups",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the teen going through a breakup: this hurts because it mattered, and it will not always feel this heavy.",
+    "blurb": "For the teen going through a breakup: this hurts because it mattered, and this heaviness will ease.",
     "sources": [
      "monroe99"
     ],
@@ -2445,9 +2445,9 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        "This hurts because it mattered.",
        "I was me before this, and I'm still me.",
-       "It won't always feel this heavy."
+       "This heaviness will ease."
       ],
-      "say": "Here are words to keep. This hurts because it mattered. I was me before this relationship, and I'm still me. And, it won't always feel this heavy."
+      "say": "Here are words to keep. This hurts because it mattered. I was me before this relationship, and I'm still me. And, this heaviness will ease."
      },
      {
       "k": "card",
@@ -2463,9 +2463,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "It will not always feel this heavy.",
+      "h": "This heaviness will ease.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hearts heal, slowly, with time, people, and small steps. It will not always feel this heavy. The full guide has more, whenever you want it."
+      "say": "Hearts heal, slowly, with time, people, and small steps. This heaviness will ease. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -2519,11 +2519,11 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Plan one side-by-side thing.",
       "sub": "Say what, and say when.",
-      "say": "Let's plan one now. Think of something easy you could do side by side this week. A drive, a favorite meal, a walk, a show. Say out loud what it is, and when.",
+      "say": "Let's plan one now. Think of something easy you could do side by side this week. A drive, a favorite meal, a walk, a game. Say out loud what it is, and when.",
       "beats": [
        "Let's plan one now.",
        "Think of something easy you could do side by side this week.",
-       "A drive, a favorite meal, a walk, a show.",
+       "A drive, a favorite meal, a walk, a game.",
        {
         "t": "Say out loud what it is, and when.",
         "w": 10
@@ -2594,15 +2594,15 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Love does not come with fear.",
+      "h": "Love feels safe.",
       "sub": "It is never your fault.",
-      "say": "Let's start here. Dating abuse is never your fault. It's a pattern where someone uses fear, guilt, pressure, or force to have power over you. You never have to earn kindness. And love doesn't come with fear."
+      "say": "Let's start here. Dating abuse is never your fault. It's a pattern where someone uses fear, guilt, pressure, or force to have power over you. You never have to earn kindness. And love feels safe."
      },
      {
       "k": "big",
       "h": "About 1 in 10 who date",
       "sub": "Physically hurt by a partner in a year.",
-      "say": "It's more common than people think. About one in ten high schoolers who date were physically hurt on purpose by someone they were dating, in just the past year. Many more deal with control, threats, and pressure that leave no marks. So if this is happening to you, you are not the only one."
+      "say": "It's more common than people think. About one in ten high schoolers who date were physically hurt on purpose by someone they were dating, in just the past year. Many more deal with control, threats, and pressure that leave no marks. So if this is happening to you, others have been here too."
      },
      {
       "k": "points",
@@ -2909,7 +2909,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Heavy, or not safe? Reach out.",
+      "title": "Heavy, or unsafe? Reach out.",
       "body": "Two weeks or more: tell a counselor. Not wanting to live: call or text 988. Someone hurting you: Childhelp 1-800-422-4453. Danger: 911.",
       "say": "If you feel low for two weeks or more, tell a counselor, a doctor, or another adult you trust. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If fighting at home turns physical, or anyone is hurting you, call or text Childhelp, and if you're in danger, call nine one one."
      },
@@ -3065,7 +3065,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Guilty for not liking them",
        "Squeezed for space"
       ],
-      "say": "Here are some feelings teens often have. Pushed aside. Disloyal to your other parent for liking a stepparent. Guilty for not liking them. Squeezed for space, time, or attention. If any of these fit, you're not the only one."
+      "say": "Here are some feelings teens often have. Pushed aside. Disloyal to your other parent for liking a stepparent. Guilty for not liking them. Squeezed for space, time, or attention. If any of these fit, others have been here too."
      },
      {
       "k": "big",
@@ -3124,7 +3124,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Not safe at home? Reach out.",
+      "title": "Unsafe at home? Reach out.",
       "body": "Anyone hurting you: Childhelp, call or text 1-800-422-4453. Danger: 911. Not wanting to live: call or text 988.",
       "say": "If anyone in your home hurts you, touches you in a way that isn't okay, or makes you feel unsafe, call or text Childhelp, and tell an adult outside your home, like a counselor or coach. If you're in danger, call nine one one. If you ever think about not wanting to be alive, call or text nine eight eight."
      },
@@ -3280,7 +3280,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Left out of the old chat",
        "Angry no one asked me"
       ],
-      "say": "In the first months, many teens feel excited and lonely in the same hour. Lunch can be the hardest part of the day. The old group chat keeps going without you. And you might be angry that no one asked you. If that's you, you're not alone in it."
+      "say": "In the first months, many teens feel excited and lonely in the same hour. Lunch can be the hardest part of the day. The old group chat keeps going without you. And you might be angry that no one asked you. If that's you, you have people with you in it."
      },
      {
       "k": "big",
@@ -3690,7 +3690,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "A Family Member's Drinking or Drug Use",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the teen living with someone's drinking or drug use: you didn't cause it, and you don't have to carry it alone.",
+    "blurb": "For the teen living with someone's drinking or drug use: you didn't cause it, and others can help you carry it.",
     "sources": [
      "sevencs",
      "mccabe25"
@@ -3706,9 +3706,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You are far from alone.",
+      "h": "Many others share this.",
       "sub": "About 1 in 4 kids lives with this.",
-      "say": "You are far from alone. Researchers estimate that about one in four kids in the US lives with a parent who has a drinking or drug problem. That's a lot of teens walking into school carrying the same thing you are."
+      "say": "Many others share this. Researchers estimate that about one in four kids in the US lives with a parent who has a drinking or drug problem. That's a lot of teens walking into school carrying the same thing you are."
      },
      {
       "k": "words",
@@ -3775,7 +3775,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Not safe? Reach out.",
+      "title": "Unsafe? Reach out.",
       "body": "Someone hurting you: Childhelp, call or text 1-800-422-4453. Danger: 911. Not wanting to live: call or text 988.",
       "say": "If anyone is hurting you, or you're being left without food or safety, call or text Childhelp, any time. In Pine, that help comes straight to you, not to a family alert. If you're in danger, call nine one one. If you ever think about not wanting to be alive, call or text nine eight eight."
      },
@@ -3866,7 +3866,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "big",
       "h": "Ask for one kind of help.",
-      "sub": "You are not meant to do this alone.",
+      "sub": "You are meant to have help with this.",
       "say": "You need support too. Take a moment. Think of one person who could help you, or your teen, this week. Name the one specific thing you'll ask them for.",
       "beats": [
        "You need support too.",
@@ -3919,9 +3919,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You are not the only one.",
+      "h": "Others have been here too.",
       "sub": "More than 5 million kids in the US.",
-      "say": "It can feel like a secret no one else carries. But more than five million kids in the US have had a parent in jail or prison at some point. Some of them are probably in your school. You are not the only one."
+      "say": "It can feel like a secret no one else carries. But more than five million kids in the US have had a parent in jail or prison at some point. Some of them are probably in your school. Others have been here too."
      },
      {
       "k": "words",
@@ -4556,7 +4556,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Your whole world shifted.",
       "sub": "And the bell still rings.",
-      "say": "When a parent or sibling dies, your whole world shifts. And somehow the bell still rings, the homework still comes, and people expect you to show up. It makes sense if that feels unreal. You're not the only one, either. By age 18, about 1 in 11 young people in this country have had a parent or sibling die."
+      "say": "When a parent or sibling dies, your whole world shifts. And somehow the bell still rings, the homework still comes, and people expect you to show up. It makes sense if that feels unreal. Others have been here too. By age 18, about 1 in 11 young people in this country have had a parent or sibling die."
      },
      {
       "k": "words",
@@ -4568,7 +4568,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Guilty",
        "Strangely okay"
       ],
-      "say": "You might feel crushed, numb, angry, or guilty. Some days you might feel strangely okay, and then feel bad about that. All of it is grief. There's no right way to do this, and no deadline."
+      "say": "You might feel crushed, numb, angry, or guilty. Some days you might feel strangely okay, and then feel bad about that. All of it is grief. Everyone does this in their own way and their own time."
      },
      {
       "k": "big",
@@ -4635,7 +4635,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You don't have to carry this alone.",
+      "h": "Others can help you carry this.",
       "sub": "A teen grief group, a counselor, one trusted adult.",
       "say": "Many hospices and grief centers have groups just for teens, and some offer grief camps. Being with people who get it can be a huge relief. A counselor can help too, especially if grief stays heavy for months. Even one trusted adult you can text on a bad night makes a difference."
      },
@@ -5004,14 +5004,14 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "words",
-      "h": "There is no right amount of sad",
+      "h": "Any amount of sad is okay",
       "items": [
        "Heartbroken",
        "Relieved",
        "Numb",
        "Not as sad as I expected"
       ],
-      "say": "You might feel heartbroken. After a long illness, you might feel relieved that they aren't suffering anymore. Some people feel numb, or not as sad as they expected, and worry about that. There's no right amount of sad. Whatever you feel is okay."
+      "say": "You might feel heartbroken. After a long illness, you might feel relieved that they aren't suffering anymore. Some people feel numb, or not as sad as they expected, and worry about that. Any amount of sad is okay. Whatever you feel is okay."
      },
      {
       "k": "big",
@@ -5095,7 +5095,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Often a first close loss.",
       "sub": "They may feel a lot, or less than expected.",
-      "say": "For many teens, a grandparent's death is their first close loss. Some feel it deeply. Others feel less than they expected and quietly worry about that. Let them know there's no right amount of sad. If the grandparent raised them or lived with them, treat it like the loss of a parent."
+      "say": "For many teens, a grandparent's death is their first close loss. Some feel it deeply. Others feel less than they expected and quietly worry about that. Let them know any amount of sad is okay. If the grandparent raised them or lived with them, treat it like the loss of a parent."
      },
      {
       "k": "points",
@@ -5433,7 +5433,7 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        [
         "One thing that is yours",
-        "Practice, a game, a show, a walk"
+        "Practice, a game, music, a walk"
        ],
        [
         "One friend who knows",
@@ -5448,7 +5448,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Stress lives in the body"
        ]
       ],
-      "say": "Keeping some of your own life going is healthy. It is not selfish. Keep one thing that is yours this week. Let one friend know what's going on, so you aren't carrying it alone at school. Tell a counselor or a teacher, so they can give you room on the hard days. And sleep and move when you can, because stress lives in your body too."
+      "say": "Keeping some of your own life going is healthy. It is not selfish. Keep one thing that is yours this week. Let one friend know what's going on, so someone at school helps you carry it. Tell a counselor or a teacher, so they can give you room on the hard days. And sleep and move when you can, because stress lives in your body too."
      },
      {
       "k": "big",
@@ -5581,11 +5581,11 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Set aside one hour for your teen.",
       "sub": "Just the two of you, this week.",
-      "say": "Take a moment. Think of one hour this week that could belong only to your teen. A drive, a meal out, a walk, a show they love. Pick the day, and put it in your phone now.",
+      "say": "Take a moment. Think of one hour this week that could belong only to your teen. A drive, a meal together, a walk, music they love. Pick the day, and put it in your phone now.",
       "beats": [
        "Take a moment.",
        "Think of one hour this week that could belong only to your teen.",
-       "A drive, a meal out, a walk, a show they love.",
+       "A drive, a meal together, a walk, music they love.",
        {
         "t": "Pick the day, and put it in your phone now.",
         "w": 12
@@ -6015,7 +6015,7 @@ window.GG_LEARN_GUIDES.pine = {
        "A lot of what you see online is edited.",
        "How do you feel after you scroll?"
       ],
-      "say": "Here are words that help. Praise who they are and what they do, like, I love how you laugh with your brother. Name what's true about feeds: a lot of what you see online is edited, and it's hard not to compare anyway. And ask, without judging, how do you feel after you scroll? Better, worse, or about the same?"
+      "say": "Here are words that help. Praise who they are and what they do, like, I love how you laugh with your brother. Name what's true about feeds: a lot of what you see online is edited, and it's hard not to compare anyway. And ask, with curiosity, how do you feel after you scroll? Better, worse, or about the same?"
      },
      {
       "k": "words",
@@ -6069,7 +6069,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Make home a place without grades.",
+      "h": "Make home a place to rest from grades.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Make home a place where bodies aren't graded, and where your teen is loved for who they are. The full guide has more, whenever you want it."
      }
@@ -6175,9 +6175,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You don't have to fight it alone.",
+      "h": "Others can help you fight it.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "This isn't your fault, and you don't have to fight it alone. Your body needs fuel to do the things you love. The full guide has more, whenever you want it."
+      "say": "This isn't your fault, and others can help you fight it. Your body needs fuel to do the things you love. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -6254,7 +6254,7 @@ window.GG_LEARN_GUIDES.pine = {
        "We're going to the doctor to check how your body is doing.",
        "This isn't your fault."
       ],
-      "say": "Here are words that help. I love you, and I'm worried about how stressful eating has gotten. We're going to the doctor to check how your body is doing. And, this isn't your fault, and you don't have to fight it alone. Expect pushback or anger. That is often the illness talking."
+      "say": "Here are words that help. I love you, and I'm worried about how stressful eating has gotten. We're going to the doctor to check how your body is doing. And, this isn't your fault, and others can help you fight it. Expect pushback or anger. That is often the illness talking."
      },
      {
       "k": "words",
@@ -6366,7 +6366,7 @@ window.GG_LEARN_GUIDES.pine = {
       "steps": [
        [
         "A day or two quieter",
-        "Rest, less screen time"
+        "Rest, unplugged time"
        ],
        [
         "Back to school",
@@ -6413,7 +6413,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Your worth isn't your stats.",
+      "h": "Your worth is bigger than your stats.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Your worth was never about how you play. Take the time to heal well. The full guide has more, whenever you want it."
      }
@@ -6992,7 +6992,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "big",
       "h": "What you do teaches most.",
-      "sub": "Without shame.",
+      "sub": "With kindness.",
       "say": "Teens notice how the adults around them use alcohol, nicotine, and medicine. That's not a reason for shame. It's one more way to help. If someone in your family struggles with drinking or drugs, support is there for you too."
      },
      {
@@ -7357,9 +7357,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You're not the only one.",
+      "h": "Others have been here too.",
       "sub": "About 4 in 10 high schoolers.",
-      "say": "You're not the only one. In a recent national survey, about four in ten high schoolers said they'd felt sad or hopeless almost every day for at least two weeks. Depression isn't weakness or laziness. It's a health problem, and it responds to help."
+      "say": "Others have been here too. In a recent national survey, about four in ten high schoolers said they'd felt sad or hopeless almost every day for at least two weeks. Depression isn't weakness or laziness. It's a health problem, and it responds to help."
      },
      {
       "k": "flow",
@@ -7416,7 +7416,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "If hope feels gone",
       "body": "Call or text 988. Text HOME to 741741. Danger right now: 911.",
-      "say": "Sometimes depression brings thoughts of not wanting to be alive. If that's happening, you're not alone, and it's safe to say so. Call or text 988, any time, or text HOME to 741741. Tell an adult you trust today. If you're in danger right now, call 911."
+      "say": "Sometimes depression brings thoughts of not wanting to be alive. If that's happening, you have people with you, and it's safe to say so. Call or text 988, any time, or text HOME to 741741. Tell an adult you trust today. If you're in danger right now, call 911."
      },
      {
       "k": "big",
@@ -7583,7 +7583,7 @@ window.GG_LEARN_GUIDES.pine = {
       "eyebrow": "When Life Changes",
       "h": "Self-Harm",
       "sub": "For You",
-      "say": "If you've been hurting yourself on purpose when feelings get too big, this is for you. You're not in trouble, and you're not alone."
+      "say": "If you've been hurting yourself on purpose when feelings get too big, this is for you. You're not in trouble, and you have people with you."
      },
      {
       "k": "card",
@@ -7730,9 +7730,9 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        "I'm not mad. I'm here, and I want to understand.",
        "What was happening right before?",
-       "You don't have to stop alone."
+       "Others can help you stop."
       ],
-      "say": "Start gently. I'm not mad. I'm here, and I want to understand. Later, ask, what was happening right before? And tell them, you don't have to stop alone. We'll get help together."
+      "say": "Start gently. I'm not mad. I'm here, and I want to understand. Later, ask, what was happening right before? And tell them, I'll help you stop. We'll get help together."
      },
      {
       "k": "big",
@@ -7823,7 +7823,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Thoughts of Suicide, and Making a Safety Plan",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the high schooler having thoughts of suicide: you are not alone, help is here now, and a safety plan helps.",
+    "blurb": "For the high schooler having thoughts of suicide: you have people with you, help is here now, and a safety plan helps.",
     "sources": [
      "stanley",
      "gould05"
@@ -7835,7 +7835,7 @@ window.GG_LEARN_GUIDES.pine = {
       "eyebrow": "When Life Changes",
       "h": "Thoughts of Suicide, and Making a Safety Plan",
       "sub": "For You",
-      "say": "If you've been having thoughts of suicide, or of not wanting to be alive, this is for you. You're not alone, and help is here right now."
+      "say": "If you've been having thoughts of suicide, or of not wanting to be alive, this is for you. You have people with you, and help is here right now."
      },
      {
       "k": "card",
@@ -8100,7 +8100,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "You are a lifeline.",
       "sub": "988 is there for you too.",
-      "say": "This is frightening, and you don't have to carry it alone. Call or text 988 for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
+      "say": "This is frightening, and others can help you carry it. Call or text 988 for guidance any time, for them or for you. You are a lifeline. Getting them to help is the work, and you're doing it."
      }
     ],
     "crisis": [
@@ -8138,7 +8138,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Your problems don't have to be big.",
+      "h": "Every problem is worth talking about.",
       "sub": "Wanting help is enough.",
       "say": "A lot of teens wait because they wonder if their problems are bad enough. You don't have to be in crisis to talk to someone. Stress, sadness, worry, family stuff, a breakup, or just not feeling like yourself all count. Wanting help is reason enough."
      },
@@ -8471,7 +8471,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "One bad night does not decide your life.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "One bad night online does not get to decide your life. You are not in trouble, and you are not alone. The full guide has more, whenever you want it."
+      "say": "One bad night online does not get to decide your life. You are not in trouble, and you have people with you. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -8784,14 +8784,14 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Share your values",
-        "Warmly, without shame"
+        "Warmly and kindly"
        ],
        [
         "Return to it",
         "Many small talks"
        ]
       ],
-      "say": "Keep it short and calm. A few minutes is plenty. Ask what they think, then listen. Share your family's values warmly, without shame. And come back to it. Many small talks do more than one big one. Talk about respect and consent, and explain that sharing or keeping sexual images of anyone under eighteen can bring serious legal trouble, even between teens."
+      "say": "Keep it short and calm. A few minutes is plenty. Ask what they think, then listen. Share your family's values warmly and kindly. And come back to it. Many small talks do more than one big one. Talk about respect and consent, and explain that sharing or keeping sexual images of anyone under eighteen can bring serious legal trouble, even between teens."
      },
      {
       "k": "points",
@@ -8820,7 +8820,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "It is not too late to start.",
+      "h": "Any day is a good day to start.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "It isn't too late to start, even if they're seventeen. One calm, honest conversation does more than a perfect one you never have. The full guide has more, whenever you want it."
      }
@@ -8873,7 +8873,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Why don't I look like that?",
        "Their life is so much better."
       ],
-      "say": "Comparison sounds like this. Everyone was there but me. Why don't I look like that? Their life is so much better. Remember, you're comparing your ordinary day to someone else's best moment, picked, edited, and filtered. Many teens say social media makes them feel worse about their bodies. You're not alone in that."
+      "say": "Comparison sounds like this. Everyone was there but me. Why don't I look like that? Their life is so much better. Remember, you're comparing your ordinary day to someone else's best moment, picked, edited, and filtered. Many teens say social media makes them feel worse about their bodies. You have people with you in that."
      },
      {
       "k": "card",
@@ -8927,7 +8927,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Your worth is not a number.",
+      "h": "Your worth is bigger than a number.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Your worth isn't a number of likes or followers. You get to be in charge of your phone. The full guide has more, whenever you want it."
      }
@@ -9027,7 +9027,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Adjust in a month"
        ]
       ],
-      "say": "Build a family plan together. Ask first what works for them and what doesn't. Agree on a few rules, like phone-free meals, phones charging outside bedrooms overnight, and an off time for everyone. Everyone follows them, adults included. Then check back in a month and adjust."
+      "say": "Build a family plan together. Ask first what works for them and what doesn't. Agree on a few rules, like unplugged meals, phones charging outside bedrooms overnight, and an off time for everyone. Everyone follows them, adults included. Then check back in a month and adjust."
      },
      {
       "k": "points",
@@ -9892,7 +9892,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Right now, you are here.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Notice that you're breathing, and you're here. You don't have to carry this alone. The full guide has more, whenever you want it."
+      "say": "Notice that you're breathing, and you're here. Others can help you carry this. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -10303,7 +10303,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Money stress is real.",
       "sub": "Talk with someone you trust.",
-      "say": "Some teens carry real money stress: a family bill, a debt, a parent out of work. If that's you, you don't have to carry it alone. Talk with a parent, a school counselor, or another adult you trust. If it ever starts to feel hopeless, call, text, or chat nine eight eight, any time."
+      "say": "Some teens carry real money stress: a family bill, a debt, a parent out of work. If that's you, others can help you carry it. Talk with a parent, a school counselor, or another adult you trust. If it ever starts to feel hopeless, call, text, or chat nine eight eight, any time."
      },
      {
       "k": "big",
@@ -10599,7 +10599,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Stay close without fixing.",
+      "h": "Stay close and listen.",
       "sub": "Notice the urge, and let it go.",
       "say": "Picture them telling you a question that worries you a little. Notice where your body tightens. Let your shoulders drop, and breathe out slowly. Say quietly to yourself: I can stay close without having every answer.",
       "beats": [
@@ -10899,7 +10899,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "It's okay not to know yet.",
+      "h": "It's okay to still be finding out.",
       "sub": "Purpose grows over time.",
       "say": "People keep asking what you want to do with your life. If you don't know, you're in good company. Research on young people finds purpose takes shape slowly, across the high school years and beyond. Most adults you admire took detours to find theirs."
      },
@@ -11889,7 +11889,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Meet them in their world.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "When you meet your teen in their world, with their language, their people, and a room that works, they don't have to carry it alone. The full guide has more, whenever you want it."
+      "say": "When you meet your teen in their world, with their language, their people, and a room that works, they have help carrying it. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -12160,9 +12160,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You don't have to perform all day.",
+      "h": "You get to rest from performing.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to perform all day. You get to be yourself, and the people worth having around will like that person. The full guide has more, whenever you want it."
+      "say": "You get to rest from performing. You get to be yourself, and the people worth having around will like that person. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -12303,12 +12303,12 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Plan one thing to look forward to.",
       "sub": "Small is perfect.",
-      "say": "Let's plan something good. Think about the next few days. What's one small thing you could look forward to? A show, a visit, a favorite food, a game with a friend. Picture it clearly, then say it out loud.",
+      "say": "Let's plan something good. Think about the next few days. What's one small thing you could look forward to? A song, a visit, a favorite food, a game with a friend. Picture it clearly, then say it out loud.",
       "beats": [
        "Let's plan something good.",
        "Think about the next few days.",
        "What's one small thing you could look forward to?",
-       "A show, a visit, a favorite food, a game with a friend.",
+       "A song, a visit, a favorite food, a game with a friend.",
        {
         "t": "Picture it clearly, then say it out loud.",
         "w": 10
@@ -12332,7 +12332,7 @@ window.GG_LEARN_GUIDES.pine = {
         "At your energy level"
        ]
       ],
-      "say": "Staying connected helps, even in small ways. A text, a video call, a game online. Decide who you want to tell, and how much. A short version for most people, and a longer one for close friends, works well. And keep up with school in a way that fits your energy."
+      "say": "Staying connected helps, even in small ways. A text, a video call, a card in the mail. Decide who you want to tell, and how much. A short version for most people, and a longer one for close friends, works well. And keep up with school in a way that fits your energy."
      },
      {
       "k": "card",
@@ -12662,7 +12662,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You're not the only one.",
+      "h": "Others have been here too.",
       "say": "Millions of teens help care for someone in their family. Meals, medicine reminders, rides, watching a sibling, keeping the house running. You might not even call it caregiving. It's just what you do. And it matters."
      },
      {
@@ -13002,7 +13002,7 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You do not need every answer.",
+      "h": "Staying close matters more than answers.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "You may have your own questions about why your child is hurting. You don't need every answer. Staying close and curious matters more than any one conversation. The full guide has more, whenever you want it."
      }

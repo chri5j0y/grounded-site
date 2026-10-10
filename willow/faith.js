@@ -248,7 +248,7 @@ const CHANGED = [
   [`"I'm not sure I believe anymore."`, `Doubt`, `Doubt is welcome here. Questions are not a failure of faith. Many saints had more questions than answers.`],
   [`"God left me." "God is punishing me."`, `Divine struggle`, `Listen first. Don't defend God. The Psalms are full of people yelling at God, and God stayed.`],
   [`"Life doesn't feel like it means anything."`, `Ultimate meaning`, `Meaning-centered prompts: what you gave, how you face this, what you still love.`],
-  [`"I've done things I can't take back."`, `Moral struggle`, `Guilt points to repair (the Four Things). Shame gets met with worth and company. Not the mistake. The recovery.`]
+  [`"I've done things I can't take back."`, `Moral struggle`, `Guilt points to repair (the Four Things). Shame gets met with worth and company. The recovery matters most.`]
 ];
 const HOME = `Some people want to return to the faith they left. Welcome them with no "I told you so" from anyone. Find their kind of clergy fast. A Catholic who left 40 years ago may want Confession today, and that is a gift, not a failure.`;
 const WOUNDS = `Rejection over divorce, sexuality, or a pregnancy. Clergy abuse. Being shamed from a pulpit. Boarding schools for Native families. Never ask for details. Believe them, and protect them from anyone who'd add to it.`;

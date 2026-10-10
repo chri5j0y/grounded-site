@@ -118,7 +118,7 @@ const Q = {
     leaves: [
       ['Do you usually get enough sleep to feel rested?', 'Most kids this age need 9 to 12 hours. Keeping phones out of the bedroom at night helps a lot.'],
       ['Do you move your body in ways you enjoy, like sports, biking, or dancing?', 'Ask what kind of moving is the most fun, and do it together this week.'],
-      ['Do you feel bad about how your body looks?', 'If yes, listen without judging. Keep the talk about strength and energy, not weight. Watch for skipped meals, and talk with their doctor if you\'re concerned.', 'r'],
+      ['Do you feel bad about how your body looks?', 'If yes, listen with an open heart. Keep the talk about strength and energy, not weight. Watch for skipped meals, and talk with their doctor if you\'re concerned.', 'r'],
       ['If someone offered you a vape, do you know what you\'d say or do?', 'Practice a few easy ways out together, like "No thanks, I have a game." Let them use you as the excuse any time.'],
       ['Do you spend time outside most days?', 'Get outside together, even for ten minutes. Daylight helps sleep and mood.'],
       ['Do you feel tired during the day, even after sleeping?', 'Look at bedtime, screens at night, and the morning rush. If it keeps up, mention it to their doctor.', 'r']
@@ -168,7 +168,7 @@ const Q = {
     leaves: [
       ['Do you usually get enough sleep to think clearly and feel good?', 'Most kids this age need 9 to 12 hours. Keep phones out of the bedroom at night.'],
       ['Do you do something active most days?', 'Help them find a sport or activity they enjoy, even a daily walk.'],
-      ['Do you feel stressed or upset about food, eating, or how your body looks?', 'If yes, listen without judging. Keep it about energy and strength, not weight. Watch for skipped meals or big changes, and talk with their doctor if you\'re concerned.', 'r'],
+      ['Do you feel stressed or upset about food, eating, or how your body looks?', 'If yes, listen with an open heart. Keep it about energy and strength, not weight. Watch for skipped meals or big changes, and talk with their doctor if you\'re concerned.', 'r'],
       ['If someone offered you a vape or something to drink, do you know how you\'d get out of it?', 'Practice a few easy ways out together. Let them use you as the excuse, and promise a no-questions ride home if they ever need one.'],
       ['Do you eat regular meals that keep your energy up during the day?', 'Keep it about energy, not weight. Make breakfast and snacks easy to grab.'],
       ['Do you scroll or watch screens for hours without meaning to?', 'Ask how they feel after a long scroll. Agree on unplugged times together, and keep them yourself.', 'r']
@@ -456,7 +456,7 @@ const SAFETY = {
     ['Sometimes when life is really hard, people think about hurting themselves or not wanting to be alive. Have you had thoughts like that lately?', 'self']
   ],
   answers: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure']],
-  intro: 'These help make sure you\'re safe. There\'s no wrong answer, and you can skip if you want.'
+  intro: 'These help make sure you\'re safe. Every answer is welcome, and you can skip if you want.'
 };
 
 /* The questions ready to ask: the wording ('faith', the default, or 'plain') and,

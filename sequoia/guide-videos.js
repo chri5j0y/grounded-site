@@ -342,9 +342,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Purpose doesn't have to be big.",
+      "h": "Purpose can be small.",
       "sub": "A reason to get up counts.",
-      "say": "Here is some good news. Research with older adults keeps finding that a sense of purpose goes with a longer, healthier life. And purpose doesn't have to be big. A friend who will call. A plant that needs water. A grandchild who wants your recipe. A reason to get up in the morning counts."
+      "say": "Here is some good news. Research with older adults keeps finding that a sense of purpose goes with a longer, healthier life. And purpose can be small. A friend who will call. A plant that needs water. A grandchild who wants your recipe. A reason to get up in the morning counts."
      },
      {
       "k": "big",
@@ -1305,7 +1305,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "eyebrow": "When Life Changes",
       "h": "Losing a Spouse or Partner",
       "sub": "For the Helper",
-      "say": "If someone you love has lost their husband, wife, or partner, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. You don't need perfect words. You need to keep showing up."
+      "say": "If someone you love has lost their husband, wife, or partner, this is for you. Maybe it's your mom or dad, a friend, or a neighbor. Simple words are enough. You need to keep showing up."
      },
      {
       "k": "big",
@@ -1827,7 +1827,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "You may be grieving too.",
       "sub": "Find support of your own.",
-      "say": "If this was your brother, your sister, or your own child, you are grieving too. You do not have to be the strong one all the time. Find support of your own, and let more than one person share the walk."
+      "say": "If this was your brother, your sister, or your own child, you are grieving too. You can let others be strong for you sometimes. Find support of your own, and let more than one person share the walk."
      },
      {
       "k": "big",
@@ -2482,10 +2482,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Let them bring something",
-        "A dish, a story, a toast"
+        "A dish, a story, a blessing"
        ]
       ],
-      "say": "Respect their choices. Ask, then follow their lead. Some want a full table, and some want a quiet day with one good call. Invite, but never insist. A no this year can be a yes next year. And let them bring something: a dish, a story, a toast. Being needed is part of belonging."
+      "say": "Respect their choices. Ask, then follow their lead. Some want a full table, and some want a quiet day with one good call. Invite, but never insist. A no this year can be a yes next year. And let them bring something: a dish, a story, a blessing. Being needed is part of belonging."
      },
      {
       "k": "big",
@@ -2635,7 +2635,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Another pet, in your own time.",
       "sub": "You decide what fits your life now.",
-      "say": "There is no deadline to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor. If you have thoughts of ending your life, call or text 988, any time."
+      "say": "Take all the time you need to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor. If you have thoughts of ending your life, call or text 988, any time."
      },
      {
       "k": "big",
@@ -4298,10 +4298,10 @@ window.GG_LEARN_GUIDES.sequoia = {
       "h": "Words that help",
       "items": [
        "What would help most today?",
-       "Take your time. I'm in no hurry.",
+       "Take your time. I have all the time you need.",
        "You decide, and I'll help."
       ],
-      "say": "Here are words that help. What would help most today? Take your time. I'm in no hurry. And, you decide, and I'll help. Words like these keep them in charge of their own life."
+      "say": "Here are words that help. What would help most today? Take your time. I have all the time you need. And, you decide, and I'll help. Words like these keep them in charge of their own life."
      },
      {
       "k": "words",
@@ -4919,7 +4919,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "card",
-      "title": "You don't have to figure it out alone.",
+      "title": "Others can help you figure it out.",
       "body": "Alzheimer's Association Helpline: 1-800-272-3900, any time.",
       "say": "The Alzheimer's Association Helpline is there any time, day or night, at 1 800 272 3900. You can call for yourself, not only for your family. Many communities have groups for people who are newly diagnosed, where you can talk with others who understand. And if the news ever brings thoughts of not wanting to live, call or text 988."
      },
@@ -5034,7 +5034,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Walk beside them.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You don't have to have the answers. Walk beside them, keep them in their own life, and look after yourself along the way. The full guide has more, whenever you want it."
+      "say": "Your presence matters more than answers. Walk beside them, keep them in their own life, and look after yourself along the way. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -5552,7 +5552,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "eyebrow": "When Life Changes",
       "h": "When Old Memories Return",
       "sub": "For You",
-      "say": "If memories from long ago have been coming back lately, maybe from a war, a hard childhood, or a loss you thought was behind you, this is for you. You are not alone in this."
+      "say": "If memories from long ago have been coming back lately, maybe from a war, a hard childhood, or a loss you thought was behind you, this is for you. We're with you in this."
      },
      {
       "k": "big",
@@ -5643,8 +5643,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "You have carried this a long time.",
-      "sub": "You don't have to carry it alone.",
-      "say": "You have carried these memories a long time. You don't have to carry them alone now. The full guide has more, whenever you want it."
+      "sub": "Others can help you carry it.",
+      "say": "You have carried these memories a long time. Others can help you carry them now. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -5923,9 +5923,9 @@ window.GG_LEARN_GUIDES.sequoia = {
       "items": [
        "Tell me about this room.",
        "What do you most want to bring?",
-       "There's no rush. We can do one room today."
+       "Take your time. We can do one room today."
       ],
-      "say": "Here are words that help. Tell me about this room. Then listen, even to a story you've heard before. What do you most want to bring? That keeps the choice in their hands. And, there's no rush. We can do one room today."
+      "say": "Here are words that help. Tell me about this room. Then listen, even to a story you've heard before. What do you most want to bring? That keeps the choice in their hands. And, take your time. We can do one room today."
      },
      {
       "k": "words",
@@ -6487,7 +6487,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "points",
-      "h": "Help many people never hear about",
+      "h": "Help worth knowing about",
       "items": [
        [
         "Food",
@@ -7067,7 +7067,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Practice the invitation.",
-      "sub": "Open, warm, no pressure.",
+      "sub": "Open, warm, and easy.",
       "say": "Let's practice. Picture sitting with them somewhere quiet. Let your voice be warm and unhurried. Now say out loud: when you're ready, I'd love to hear what matters most to you.",
       "beats": [
        "Let's practice.",
@@ -8096,7 +8096,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "card",
       "title": "Your security matters too.",
       "body": "Pause before giving money you may need. Pressured or frightened: MAARC, 1-844-880-1574.",
-      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, you don't have to carry that alone. In Minnesota, call MAARC, at 1 844 880 1574, any time."
+      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, others can help you carry that. In Minnesota, call MAARC, at 1 844 880 1574, any time."
      },
      {
       "k": "card",
@@ -8537,9 +8537,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "It's never too late for joy.",
+      "h": "Joy is always within reach.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Whether you're dating, falling in love, or happily on your own, your heart is still growing. It's never too late for joy. The full guide has more, whenever you want it."
+      "say": "Whether you're dating, falling in love, or happily on your own, your heart is still growing. Joy is always within reach. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -8776,7 +8776,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "title": "Divorce Late in Life",
     "sideName": "For the Helper",
     "mins": 4,
-    "blurb": "For the grown child, friend, or sibling of an older adult going through divorce: steady support, no sides required.",
+    "blurb": "For the grown child, friend, or sibling of an older adult going through divorce: steady support for everyone.",
     "sources": [
      "linpc"
     ],
@@ -9376,7 +9376,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "You don't have to be their only thread.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, share the visits with others, and look after your own heart too. The full guide has more, whenever you want it."
+      "say": "You can be one connection among many. Help them build more than one thread, share the visits with others, and look after your own heart too. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -9494,7 +9494,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "It is never too late for a friend.",
+      "h": "A new friend can come at any age.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "It is never too late for a new friend, or for an old friendship to grow deeper. The full guide has more, whenever you want it."
      }
@@ -9594,7 +9594,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Keep your own friends close.",
       "sub": "They steady you too.",
-      "say": "You can't be their whole circle, and you don't need to be. Every friendship they keep shares the load. Keep your own friends close too. They steady you for the long road. If you notice them pulling away from everyone, with low mood that lasts, encourage a talk with their doctor."
+      "say": "You can be one part of their circle. Every friendship they keep shares the load. Keep your own friends close too. They steady you for the long road. If you notice them pulling away from everyone, with low mood that lasts, encourage a talk with their doctor."
      },
      {
       "k": "big",
@@ -9820,7 +9820,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "Veteran families can reach out for support.",
-      "say": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA and Vet Centers. You don't need the right words. Steady interest and respect are enough."
+      "say": "What they carry can stir your own feelings. Veteran families can reach out for support too, through the VA and Vet Centers. Simple words are enough. Steady interest and respect are enough."
      },
      {
       "k": "big",
@@ -10338,7 +10338,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Thinking about death is part of a long life.",
-      "sub": "It is not giving up.",
+      "sub": "It is an act of love.",
       "say": "Many older adults think about death more often now: after friends die, after a diagnosis, or on a quiet evening. That is natural. Thinking about it is not giving up on life. For many people, it brings a clearer sense of what matters most."
      },
      {
@@ -10570,7 +10570,7 @@ window.GG_LEARN_GUIDES.sequoia = {
        "Chances not taken",
        "Time lost with family"
       ],
-      "say": "People carry many kinds of regret. Words said, or never said. A choice that hurt someone. Chances not taken. Time lost with family. Research finds that over the long run, many people regret what they did not do even more than what they did. Whatever yours is, you are not alone."
+      "say": "People carry many kinds of regret. Words said, or never said. A choice that hurt someone. Chances not taken. Time lost with family. Research finds that over the long run, many people regret what they did not do even more than what they did. Whatever yours is, many share it."
      },
      {
       "k": "points",
@@ -10810,7 +10810,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Your words can be a gift.",
       "sub": "For you, and for those who come after.",
-      "say": "Research with people near the end of life finds that telling their story, and shaping it into words for their family, felt meaningful to them. Their families treasured those words afterward. You do not need to be near the end to begin. You only need one story."
+      "say": "Research with people near the end of life finds that telling their story, and shaping it into words for their family, felt meaningful to them. Their families treasured those words afterward. You can begin at any time. You only need one story."
      },
      {
       "k": "big",
@@ -10934,8 +10934,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Their words, their pace.",
-      "sub": "Not a task to finish.",
-      "say": "Try not to treat it as a task to finish before it's too late. Rushing can make it feel like a goodbye. Let it be a conversation you return to. If memory is changing, enjoy the telling more than the details, and write it as told to you."
+      "sub": "A conversation to return to.",
+      "say": "Let it unfold slowly, at its own pace. Rushing can make it feel like a goodbye. Let it be a conversation you return to. If memory is changing, enjoy the telling more than the details, and write it as told to you."
      },
      {
       "k": "big",
@@ -11666,8 +11666,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "You may be growing older too.",
-      "sub": "No one person carries it all.",
-      "say": "You may be one of the people they count on most, and you may be growing older too. Keep your own rest and your own people. No one person should carry it all."
+      "sub": "Share the carrying.",
+      "say": "You may be one of the people they count on most, and you may be growing older too. Keep your own rest and your own people. Share the carrying with others."
      },
      {
       "k": "big",
@@ -11706,7 +11706,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "One of the heaviest questions.",
       "sub": "You don't have to answer it all at once.",
-      "say": "Who will help my child when I can't? It's one of the heaviest questions a parent can carry. You may have carried it quietly for years. You don't have to answer it alone, and you don't have to answer it all at once."
+      "say": "Who will help my child when I can't? It's one of the heaviest questions a parent can carry. You may have carried it quietly for years. Others can help you answer it, a little at a time."
      },
      {
       "k": "words",
@@ -12241,7 +12241,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Let your shoulders drop.",
-      "sub": "Natural breath. Never forced.",
+      "sub": "Natural breath, easy and soft.",
       "beats": [
        "Sit back and let your shoulders drop.",
        "Let your hands rest.",
@@ -12327,11 +12327,11 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "words",
       "h": "Words that help",
       "items": [
-       "I'm here. No rush.",
+       "I'm here. Take your time.",
        "What does your plan say?",
        "Would shorter work better today?"
       ],
-      "say": "Words that help. I'm here. No rush. What does your plan say to do? And, would a shorter visit work better today? Calm, simple words help more than many words."
+      "say": "Words that help. I'm here. Take your time. What does your plan say to do? And, would a shorter visit work better today? Calm, simple words help more than many words."
      },
      {
       "k": "big",
@@ -12341,11 +12341,11 @@ window.GG_LEARN_GUIDES.sequoia = {
        "Picture them catching their breath beside you.",
        "Let your own shoulders drop.",
        {
-        "t": "Now say it out loud, slowly and softly: I'm here. No rush. Take your time.",
+        "t": "Now say it out loud, slowly and softly: I'm here. Take your time. I'm with you.",
         "w": 10
        }
       ],
-      "say": "Picture them catching their breath beside you. Let your own shoulders drop. Now say it out loud, slowly and softly: I'm here. No rush. Take your time."
+      "say": "Picture them catching their breath beside you. Let your own shoulders drop. Now say it out loud, slowly and softly: I'm here. Take your time. I'm with you."
      },
      {
       "k": "words",
@@ -12403,9 +12403,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "I'm here. No rush.",
+      "h": "I'm here. Take your time.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "I'm here. No rush. Sometimes that's the most helpful thing you can say. The full guide has more, whenever you want it."
+      "say": "I'm here. Take your time. Sometimes that's the most helpful thing you can say. The full guide has more, whenever you want it."
      }
     ]
    }

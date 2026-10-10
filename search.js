@@ -187,7 +187,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b777'), load('/birch/guides.js?v=b772'), load('/oak/guides.js?v=b772'), load('/sequoia/guides.js?v=b757'), load('/willow/guides.js?v=cn2'), load('/grove/guides.js?v=b777'), loadGrove(), loadBooks()
+      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b782'), load('/birch/guides.js?v=b782'), load('/oak/guides.js?v=b782'), load('/sequoia/guides.js?v=b782'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b782'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -437,24 +437,24 @@
     });
     var n = local.length + groups.reduce(function (s, g) { return s + g.items.length; }, 0);
     var html = crisisHTML(r.p.raw);
-    if (r.partial && n) html += '<p class="ss-note">Nothing matched every word, so here is what matched some of them.</p>';
+    if (r.partial && n) html += '<p class="ss-note">Here is what matched some of your words.</p>';
     if (here && local.length) {
       var lab = opts.localLabel || 'In ' + (APPNAME[here] || here);
       html += opts.localHTML ? '<div class="ss-group ss-local"><h4>' + esc(lab) + ' <span>' + local.length + '</span></h4>' + opts.localHTML(local) + '</div>'
                              : groupHTML('local', local, lab, state, opts);
     } else if (here) {
-      html += '<p class="ss-note">' + (opts.localNone ? esc(opts.localNone) : 'Nothing in ' + esc(APPNAME[here] || here)) + ' for &ldquo;' + esc(q.trim()) + '.&rdquo;' + (groups.length ? ' Here is what the rest of Grow With Grounded has.' : '') + '</p>';
+      html += '<p class="ss-note">' + (opts.localNone ? esc(opts.localNone) + ' for &ldquo;' + esc(q.trim()) + '.&rdquo;' : 'For &ldquo;' + esc(q.trim()) + ',&rdquo; the best matches are beyond ' + esc(APPNAME[here] || here) + '.') + (groups.length ? ' Here is what the rest of Grow With Grounded has.' : '') + '</p>';
     }
     if (groups.length) {
       if (here) html += '<h3 class="ss-more-h">More from Grow With Grounded</h3>';
       groups.forEach(function (g) { html += groupHTML(g.type, g.items, NAMES[g.type], state, opts); });
     }
     if (!n) {
-      html += '<div class="ss-empty"><p><b>Nothing matches &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
+      html += '<div class="ss-empty"><p><b>Let&rsquo;s look another way for &ldquo;' + esc(q.trim()) + '.&rdquo;</b> Try one simple word, like grief, bullying, sleep, or worry. Or browse When Life Changes: ' +
         '<a class="text-link" href="/maple/#life">for kids, K to 5</a>, <a class="text-link" href="/aspen/#life">for grades 6 to 8</a>, <a class="text-link" href="/pine/#life">for grades 9 to 12</a>, <a class="text-link" href="/birch/#life">for ages 18 to 26</a>, <a class="text-link" href="/oak/#life">for adults</a>, <a class="text-link" href="/sequoia/#life">for older adults</a>, <a class="text-link" href="/willow/#guides">at the end of life</a>, or <a class="text-link" href="/grove/#life">for families and groups</a>.</p></div>';
     }
     panel.innerHTML = html;
-    if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'No results';
+    if (statusEl) statusEl.textContent = n ? n + (n === 1 ? ' result' : ' results') : 'Try another word';
     return n;
   }
   function wire(panel, again) {

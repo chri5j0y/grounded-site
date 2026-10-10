@@ -167,7 +167,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Losing a role can feel like losing a piece of yourself. That grief is real.",
-   "Purpose doesn't need to be big. A reason to get up in the morning counts.",
+   "Purpose can be small. A reason to get up in the morning counts.",
    "Purpose is usually found in doing, one small step at a time, more than in thinking.",
    "Roles change shape. Your gifts, your love, and your know-how come with you."
   ],
@@ -186,7 +186,7 @@ const LC_TOPICS = [
     "Spending time with others who are also starting a new chapter."
    ],
    "tell": [
-    "“Purpose doesn't have to be big to be real.”",
+    "“Purpose can be small and still be real.”",
     "“Being needed can look different now and still count.”",
     "“I don't need the whole map to take the next step.”"
    ],
@@ -548,7 +548,7 @@ const LC_TOPICS = [
     "Learning one task your partner used to handle, at your own pace, with help."
    ],
    "tell": [
-    "“There is no right way or timeline to grieve.”",
+    "“Grief has its own shape and its own timeline.”",
     "“Looking after myself honors the life we shared.”",
     "“Feeling joy again does not mean I have forgotten.”"
    ],
@@ -1063,7 +1063,7 @@ const LC_TOPICS = [
    "Grief for a pet is real grief. You lost daily company and part of the shape of your day.",
    "For many older adults, a pet is a reason to get up, a reason to walk, and someone to talk to. Expect to feel the loss in every hour.",
    "Choosing a peaceful death, or a new home for a pet you could no longer keep, is an act of love.",
-   "There is no deadline to decide about another animal. You choose what fits your life now."
+   "Take all the time you need to decide about another animal. You choose what fits your life now."
   ],
   "feel": "The house is too quiet. You still listen for paws on the floor, or reach for the food bowl at the usual time. Mornings may feel pointless without someone waiting for you. You may feel guilty about a decision, or embarrassed by how much it hurts. If a move or your health meant giving your pet a new home, you may grieve someone who is still alive.",
   "self": {
@@ -1730,7 +1730,7 @@ const LC_TOPICS = [
    "feel": "They may feel weak, foggy, or embarrassed to need help, and worried about losing their independence. Some hide how hard it is so they won't be a bother.",
    "say": [
     "“What would help most today?”",
-    "“Take your time. I'm in no hurry.”",
+    "“Take your time. I have all the time you need.”",
     "“You decide, and I'll help.”"
    ],
    "avoid": [
@@ -1973,7 +1973,7 @@ const LC_TOPICS = [
    "A diagnosis names an illness. It doesn't name you. Your history, humor, values, and love come with you.",
    "Many people live well for years after a diagnosis, especially when they stay active and connected.",
    "Now is the best time to plan, while you can say clearly what you want.",
-   "You don't have to figure this out alone. The Alzheimer's Association Helpline is there any time: 1-800-272-3900."
+   "Others can help you figure this out. The Alzheimer's Association Helpline is there any time: 1-800-272-3900."
   ],
   "feel": "Fear, grief, anger, or numbness. Some people feel relief at finally having a name for what they noticed. You may worry about becoming a burden, losing your independence, or how people will treat you now. Some days the news feels far away, and some days it is all you can think about. All of it is normal.",
   "self": {
@@ -2210,7 +2210,7 @@ const LC_TOPICS = [
    ],
    "you": "Their worry can stir up yours, especially when you live far away. Keep your own practices, and remember you can be steady without solving everything."
   },
-  "faith": "If faith is part of your life, many traditions hold words for anxious hearts: a breath prayer, a psalm or prayer known by heart, a practice of handing over what you can't control. You don't have to feel peaceful to reach for peace. If faith isn't part of your life, a quiet moment with music or nature can do the same steadying work.",
+  "faith": "If faith is part of your life, many traditions hold words for anxious hearts: a breath prayer, a psalm or prayer known by heart, a practice of handing over what you can't control. You can reach for peace from right where you are. If faith isn't part of your life, a quiet moment with music or nature can do the same steadying work.",
   "practices": [
    "bark|Worry Window",
    "bark|Five Senses Pause",
@@ -2280,7 +2280,7 @@ const LC_TOPICS = [
    "tell": [
     "“I am here, today, and I am safe right now.”",
     "“This is a memory. It is not happening now.”",
-    "“I carried this a long time. I don't have to carry it alone.”"
+    "“I carried this a long time. Others can help me carry it now.”"
    ],
    "people": "Try: “Some old memories have been coming back lately. I don't need to talk about the details. I just wanted you to know, and it helps to have you near.”"
   },
@@ -2386,7 +2386,7 @@ const LC_TOPICS = [
     "“What do you most want to bring with you?”",
     "“Tell me about this room.”",
     "“What would help the new place feel like home?”",
-    "“There's no rush today. We can do one room.”"
+    "“Take your time today. We can do one room.”"
    ],
    "avoid": [
     "“It's just a house.”",
@@ -2745,7 +2745,7 @@ const LC_TOPICS = [
     "If money is gone or going: call your bank or card company right away, using the number on your card.",
     "Stop all contact with the scammer. Don't send more money, even to get money back.",
     "Call the National Elder Fraud Hotline, 1-833-372-8311, weekdays, for help with next steps and reporting.",
-    "Tell one person you trust. You don't have to sort it out alone."
+    "Tell one person you trust. Others can help you sort it out."
    ],
    "helps": [
     "A rule you keep every time: no money talk on a call you didn't make. Hang up, and call back on a number you know.",
@@ -3839,7 +3839,7 @@ const LC_TOPICS = [
     "Help with what makes going out hard: a ride, a hearing check, setting up video calls.",
     "Notice the moments that raise the risk: losing a spouse, giving up driving, a move, a hospital stay."
    ],
-   "you": "You can't be someone's only connection, and you don't need to be. Help them build more than one thread, and share the calls and visits with others. Your steady presence matters more than any single grand plan."
+   "you": "You can be one connection among many. Help them build more than one thread, and share the calls and visits with others. Your steady presence matters more than any single grand plan."
   },
   "faith": "For many people, a faith community is a ready circle of belonging: a coffee hour, a small group, a choir, a prayer chain, a visit from a chaplain. Many congregations offer rides or bring worship home for those who can't travel. If faith isn't part of your life, clubs, classes, and volunteer teams offer the same steady faces.",
   "practices": [
@@ -3938,7 +3938,7 @@ const LC_TOPICS = [
     "Ask about their friends by name, and remember the news.",
     "When their friend is ill, offer to drive them for a visit, and let them decide how long to stay."
    ],
-   "you": "You can't be their friend circle, and you don't need to be. Supporting their friendships takes some weight off you. Keep your own friends close too: they steady you for the long road."
+   "you": "You can be one friend among many. Supporting their friendships takes some weight off you. Keep your own friends close too: they steady you for the long road."
   },
   "faith": "For many people, a faith community is where friendships grow: a small group, a choir, a coffee hour, a visiting team. Many traditions honor visiting the sick and the homebound as a sacred act, and a friend's visit can be one of the most faithful things in a week. If faith isn't part of your life, any group that meets often and shares a purpose can hold the same kind of friendship.",
   "practices": [
@@ -4386,7 +4386,7 @@ const LC_TOPICS = [
    "Make amends where it is safe and wise. Where it is not, a letter you keep or a kindness to someone else can carry them.",
    "Letting go of what cannot be undone, and turning toward what is still in reach, helps peace grow."
   ],
-  "feel": "Old moments come back in the quiet hours: words said or never said, a choice that hurt someone, a child you wish you had parented differently, a chance you didn't take, time lost to work, drinking, or anger. Some regrets feel hot and sharp. Others feel like a long ache for a road not taken. You may feel guilt, shame, sadness, or a sense that it is too late. You are not alone. Many people carry something as they look back on a long life.",
+  "feel": "Old moments come back in the quiet hours: words said or never said, a choice that hurt someone, a child you wish you had parented differently, a chance you didn't take, time lost to work, drinking, or anger. Some regrets feel hot and sharp. Others feel like a long ache for a road not taken. You may feel guilt, shame, sadness, or a sense that it is too late. Many people feel this. Many people carry something as they look back on a long life.",
   "self": {
    "first": [
     "Write the regret down in a sentence or two. Naming it plainly often makes it smaller.",
@@ -4871,7 +4871,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "“Who will help my child when I can't?” is one of the heaviest questions a parent can carry. You don't have to answer it alone, or all at once.",
+   "“Who will help my child when I can't?” is one of the heaviest questions a parent can carry. Others can help you answer it, a little at a time.",
    "Plan with your son or daughter, not only for them. Their wishes, likes, and voice come first.",
    "Write down what you know: routines, health, likes, fears, and the people who matter to them.",
    "Ask about planning help: The Arc's Center for Future Planning, your county case manager, and a lawyer who knows disability planning.",
@@ -5101,7 +5101,7 @@ const LC_TOPICS = [
   "helper": {
    "feel": "They may feel frightened when breath runs short, embarrassed about oxygen in public, and tired of how much effort small things take. Many play down symptoms so no one will worry.",
    "say": [
-    "“I'm here. No rush.”",
+    "“I'm here. Take your time.”",
     "“What does your plan say to do?”",
     "“Would a shorter visit work better today?”",
     "“Is there anything you've stopped doing that you miss?”"

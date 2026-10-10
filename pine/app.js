@@ -145,7 +145,7 @@ const PARTS = {
     part: 'Trunk', icon: 'trunk',
     treeLabel: 'What the trunk does for a pine', youLabel: 'What your trunk does for you',
     tree: 'A pine grows straight toward the light, adding a ring every year. The trunk carries everything the tree is becoming.',
-    you: 'Your trunk is purpose: what you care about, what you are good at, and where you might be headed. You do not need it all figured out. A direction is enough.',
+    you: 'Your trunk is purpose: what you care about, what you are good at, and where you might be headed. A direction is enough.',
     health: ['You know what you care about enough to stand up for.', 'You can name something you are good at, or getting better at.', 'You have a next step, even a small one.'],
     stress: ['Days feel like going through the motions.', 'Other people\'s plans for you feel louder than your own.', 'The future feels like pressure instead of possibility.']
   },
@@ -153,7 +153,7 @@ const PARTS = {
     part: 'Bark', icon: 'bark',
     treeLabel: 'What bark does for a pine', youLabel: 'What your bark does for you',
     tree: 'Pine bark is thick and plated. It takes the hits, seals its wounds with sap, and keeps growing around old scars.',
-    you: 'Your bark is your mind and feelings: how you handle stress, mistakes, and big feelings. Strong bark is not about never getting hurt. It is about healing well.',
+    you: 'Your bark is your mind and feelings: how you handle stress, mistakes, and big feelings. Strong bark is about healing well.',
     health: ['You have real ways to calm down when stress climbs.', 'You can make a mistake and keep going.', 'You can name what you are feeling.'],
     stress: ['Worry or sadness has settled in and stayed.', 'You are hard on yourself most of the time.', 'Stress shows up as headaches, snapping at people, or shutting down.']
   },
@@ -169,7 +169,7 @@ const PARTS = {
     part: 'Leaves', icon: 'leaf',
     treeLabel: 'What needles do for a pine', youLabel: 'What your leaves do for you',
     tree: 'A pine\'s needles stay green all winter. They turn light into energy for the whole tree, and they are the first place stress shows.',
-    you: 'Your leaves are your body: Move, Rest, and Nourish. Sleep, movement, food, and your phone all live here. This part asks about what your body allows, never about looking a certain way.',
+    you: 'Your leaves are your body: Move, Rest, and Nourish. Sleep, movement, food, and your phone all live here. This part asks about what your body allows and how it feels.',
     health: ['You get enough sleep most nights.', 'You move in ways you enjoy.', 'You eat real meals that give you energy.'],
     stress: ['You run on too little sleep.', 'Your phone keeps you up or keeps you scrolling.', 'You skip meals or feel bad about your body.']
   },
@@ -772,7 +772,7 @@ function interpretResults(scores, unsure) {
   const care = entries.filter(e => e.score < 5).length, strong = entries.filter(e => e.score >= 8).length;
   const verb = d => ['trunk', 'bark', 'fruit'].includes(d.key) ? 'is' : 'are';
   let overall;
-  if (!care && strong >= 4) overall = 'Your tree is strong across most parts. The work now is keeping it growing, not fixing it.';
+  if (!care && strong >= 4) overall = 'Your tree is strong across most parts. The work now is keeping it growing.';
   else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. That is normal, and you can work with it. Tending your growing edges takes pressure off the parts holding the most.';
   else overall = 'Several parts of your tree are running low right now, so the healthy parts have less to draw on. This is a good moment to be honest about where you need support, and to talk with a trusted adult, a school counselor, or a counselor alongside Pine.';
   return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) ${verb(strongest)} the healthiest part of your tree right now, a real strength to lean on. Your biggest growing edge is your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}), where your next growth begins. ${overall}`;
@@ -1065,7 +1065,7 @@ function lcDetail(mode, t) {
     : `
       <h3>What they may be carrying</h3><p>${lcEsc(t.feel)} ${lcEsc(hp.feel)}</p>
       <h3>What to say</h3><div class="lc-say">${(hp.say || []).map(x => `<p>${lcEsc(x)}</p>`).join('')}</div>
-      <div class="lc-two"><div><b>What not to say or do</b>${lcList(hp.avoid)}</div><div><b>Practical ways to help</b>${lcList(hp.help)}</div></div>
+      <div class="lc-two"><div><b>What to leave out</b>${lcList(hp.avoid)}</div><div><b>Practical ways to help</b>${lcList(hp.help)}</div></div>
       <h3>Looking after yourself as the grown-up</h3><p>${lcEsc(hp.you)}</p>`;
   return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
@@ -1218,14 +1218,14 @@ function checkMiles(s, quiet) {
 }
 function todayKindHtml(s) {
   const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0, paused = pnPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Nothing will be lost.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you grew stays.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length;
   const trouble = PART_ORDER.filter(k => hardyDays(s, k));
   checkMiles(s, true);
   return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
     <div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
     <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
-    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? (paused ? 'Hardy is resting for now, and nothing shows trouble.' : 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="text-btn" onclick="GGTend.openSettings('pn-set-game')">Change</button></p>
+    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? (paused ? 'Hardy is resting for now, and every part stays clear.' : 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="text-btn" onclick="GGTend.openSettings('pn-set-game')">Change</button></p>
     ${trouble.length ? `<p class="pn-trouble">${trouble.map(k => escapeHtml(DOMAIN_BY_KEY[k].part)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + setupCardHtml() + bringOakHtml() + movingOnHtml(true);
 }
@@ -1248,7 +1248,7 @@ function persistTend() { return PROF && window.GGP ? GGP.save(PROF.id) : Promise
 function setPnMode(m) {
   const s = window.GGTend && GGTend.state(); if (!s) { showToast('Open your profile first.'); return; }
   const R = pnRec(s); R.mode = m === 'hardy' ? 'hardy' : 'steady'; if (R.mode === 'hardy') R.hardyFrom = todayKey();
-  persistTend().then(() => { showToast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and nothing is lost.'); GGTend.render(); reopenSettings('pn-set-game'); });
+  persistTend().then(() => { showToast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and everything you grew stays.'); GGTend.render(); reopenSettings('pn-set-game'); });
 }
 
 // The simple graph: days tended each week, and each part's level at each check-in.
@@ -1415,7 +1415,7 @@ function vcCheck(force) {
   VC_ASKED = who;
   const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Pine Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
     <p class="ggx-small">You can remove it any time.</p>`;
-  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was not added.'); } };
+  const drop = { t: "Skip for Now", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was set aside.'); } };
   const later = { t: 'Not Now', kind: 'line', fn: () => {} };
   if (!PROF) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
@@ -1641,7 +1641,7 @@ function pnProfileHtml() {
   return `<section><h3>Your Profile</h3><p class="gt-who">${GGAv.html(a.avatar, a.name, 44)}<b>${escapeHtml(a.name)}</b> <span class="gt-small">${gradeNow() ? 'Grade ' + escapeHtml(gradeNow()) : 'Grade not set'}</span></p>
     <div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();askGrade(true)">Change grade</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();GGP.manage()">Picture, passcode, and more</button><button class="btn btn-secondary btn-sm" onclick="pnSwitch()">Switch person</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profLock()">Lock</button></div>
     ${oakN && !rec().oakBrought ? `<p class="gt-small">You have ${oakN} check-in${oakN === 1 ? '' : 's'} in Oak. <button type="button" class="text-btn" onclick="GGTend.closeSettings();bringOak()">Bring them into Pine</button></p>` : ''}
-    <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so no one sees anyone else's.</p></section>`;
+    <p class="gt-small">Everyone on this device can have their own tree. Switching locks yours first, so each tree stays private.</p></section>`;
 }
 function pnSettingsHtml() {
   const s = window.GGTend && GGTend.state(), open = !!PROF, plain = isPlain(), mode = pnMode(s);
@@ -1652,10 +1652,10 @@ function pnSettingsHtml() {
     <section id="pn-set-sens"><h3>Optional Questions</h3><p class="gt-small">Two extra questions: one about pressure to vape, drink, or use drugs to cope, and one about pressure or control from someone you are close to. They never count toward a score, never send a note to anyone, and are never shared. Only you can turn them on.</p>
       <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional questions</label></section>
     <section id="pn-set-life"><div id="pn-life-host"><h3>Health and Ability</h3></div></section>
-    <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>${hardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and nothing is ever lost. Rest Week on Today holds your tree still any time.</p>' : ''}
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and nothing is ever lost.</span></label>
+    <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>${hardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and everything you grew stays. Rest Week on Today holds your tree still any time.</p>' : ''}
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and everything you grew stays.</span></label>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b>${hardyRests() ? `Here whenever you want it. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.` : `A little more challenge. A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.`}</span></label>
-      <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
+      <p class="gt-small">Your tree grows at your own pace, just for you. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     <section class="asp-see" id="pn-see"><h3>What Your Grown-up Can See</h3>${PN_SEE}</section>
     ${pnBirthdayHtml()}${movingOnHtml(false)}`;
 }
@@ -1775,7 +1775,7 @@ function renderNext() {
   const L = nsRec();
   if (!L) {
     el.innerHTML = `<div class="section-title">Next Steps</div>${(NS.intro || []).slice(0, 3).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-      <div class="gt-card gt-empty"><h2>Your notebook is kept in your profile</h2><p>Next Steps is saved inside your own profile on this device, locked with a passcode only you know, so no one else can read it.</p><div class="btn-row"><button class="btn btn-primary" onclick="${pineWho().length ? 'pnOpenAny()' : 'profCreateDialog()'}">${pineWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
+      <div class="gt-card gt-empty"><h2>Your notebook is kept in your profile</h2><p>Next Steps is saved inside your own profile on this device, locked with a passcode only you know, so it stays yours alone.</p><div class="btn-row"><button class="btn btn-primary" onclick="${pineWho().length ? 'pnOpenAny()' : 'profCreateDialog()'}">${pineWho().length ? 'Open my profile' : 'Create my profile'}</button></div></div>`;
     return;
   }
   const c = NX.ch && nsChapter(NX.ch);
@@ -1783,7 +1783,7 @@ function renderNext() {
   const total = (NS.chapters || []).reduce((t, ch) => t + nsWritten(ch, L), 0);
   el.innerHTML = `<div class="section-title">Next Steps</div>
     ${(NS.intro || []).map(t => `<p class="lead">${escapeHtml(t)}</p>`).join('')}
-    <p class="sq-legcount">${total ? `${total} ${total === 1 ? 'page' : 'pages'} written so far.` : 'Nothing written yet. One prompt is enough to start.'}</p>
+    <p class="sq-legcount">${total ? `${total} ${total === 1 ? 'page' : 'pages'} written so far.` : 'One prompt is enough to start.'}</p>
     <div class="sq-chapters">${(NS.chapters || []).map(ch => { const n = nsWritten(ch, L), closed = ch.optIn && !L.opened[ch.id];
       return `<button type="button" class="sq-chapter${closed ? ' closed' : ''}" onclick="nsOpen('${ch.id}')"><b>${escapeHtml(nsT(ch, 'title'))}</b><span>${closed ? 'Opens only when you choose' : n ? n + ' of ' + (ch.prompts || []).length + ' written' : (ch.prompts || []).length + ' prompts'}</span></button>`; }).join('')}</div>
     <div class="btn-row"><button class="btn btn-primary" onclick="nsPickBook()">Save or Print My Notebook</button></div>
@@ -1917,7 +1917,7 @@ function renderSaveBox() {
   box.innerHTML = `
     <div class="save-box">
       <div class="save-box-title">Save your results</div>
-      <p>Nothing is stored until you choose to save. Your own profile keeps your check-ins on this device, locked with your passcode, so you can watch your tree grow. Or save them to a file locked with a passcode you choose.</p>
+      <p>You choose when to save. Your own profile keeps your check-ins on this device, locked with your passcode, so you can watch your tree grow. Or save them to a file locked with a passcode you choose.</p>
       <p style="margin-top:8px;"><strong>${status}</strong></p>
       <div class="btn-row">
         <button class="btn btn-primary" onclick="profCreateDialog()">Save to my own profile</button>
@@ -1937,7 +1937,7 @@ function renderProgress() {
   if (!list.length) { container.innerHTML = '<p style="color:var(--ink-soft);">Load your file to see your progress, or take the check-in to start.</p>'; return; }
   renderHistoryChartAndTable(container, list);
   container.insertAdjacentHTML('afterbegin', graphCardHtml());
-  if (pending) container.insertAdjacentHTML('afterbegin', '<div class="privacy-note"><strong>Your latest result is not saved yet.</strong> Use Save My Results to add it.</div>');
+  if (pending) container.insertAdjacentHTML('afterbegin', '<div class="privacy-note"><strong>Keep your latest result.</strong> Use Save My Results to add it.</div>');
 }
 
 // ---------- CHART + TABLE ----------

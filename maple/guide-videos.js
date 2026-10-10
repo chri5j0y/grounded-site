@@ -11,7 +11,7 @@
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
 window.GG_LEARN_GUIDES.maple = {
 "title": "When Life Changes",
-"intro": "Two short videos for every guide. For You, for the child going through it. For the Grown-up, for the parent or helper beside them. Nothing to finish, and a quiet check marks the ones you have watched.",
+"intro": "Two short videos for every guide. For You, for the child going through it. For the Grown-up, for the parent or helper beside them. Watch at your own pace, and a quiet check marks the ones you have watched.",
 "rings": [
 [
 "mp-inside",
@@ -859,7 +859,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Sadness That Lingers",
 "sub": "For You",
-"say": "If you've been feeling sad for a while, this is for you. Lots of kids feel sad sometimes. You don't have to feel it all alone."
+"say": "If you've been feeling sad for a while, this is for you. Lots of kids feel sad sometimes. People who love you can help you hold it."
 },
 {
 "k": "words",
@@ -1009,7 +1009,7 @@ window.GG_LEARN_GUIDES.maple = {
 "\"It's not your fault.\"",
 "\"Feelings change, even the heavy ones.\""
 ],
-"say": "Clear some time with no rush and no phones. Then try: you've seemed sad lately, and I care about that. Want to tell me about it? If they ask why they feel sad for no reason: sometimes sadness sneaks in even when we can't name why. It's not your fault. If they ask whether they'll always feel this way: no. Feelings change, even the heavy ones. I'm going to help you."
+"say": "Clear some unhurried, unplugged time. Then try: you've seemed sad lately, and I care about that. Want to tell me about it? If they ask why they feel sad for no reason: sometimes sadness sneaks in even when we can't name why. It's not your fault. If they ask whether they'll always feel this way: no. Feelings change, even the heavy ones. I'm going to help you."
 },
 {
 "k": "card",
@@ -1062,11 +1062,11 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Picture sitting close.",
 "sub": "Then say it out loud.",
-"say": "Take a breath. Picture your child on a hard day. Picture sitting close to them, with no rush. Now say, out loud: you've seemed sad lately, and I care about that.",
+"say": "Take a breath. Picture your child on a hard day. Picture sitting close to them, taking your time. Now say, out loud: you've seemed sad lately, and I care about that.",
 "beats": [
 "Take a breath.",
 "Picture your child on a hard day.",
-"Picture sitting close to them, with no rush.",
+"Picture sitting close to them, taking your time.",
 {
 "t": "Now say, out loud: you've seemed sad lately, and I care about that.",
 "w": 10
@@ -1115,7 +1115,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Bedtime Fears and Nightmares",
 "sub": "For You",
-"say": "If nighttime feels scary, or you've had bad dreams, this is for you. Lots of kids feel scared at night. You are not the only one."
+"say": "If nighttime feels scary, or you've had bad dreams, this is for you. Lots of kids feel scared at night. You're in good company."
 },
 {
 "k": "words",
@@ -1377,13 +1377,13 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Feeling Different",
 "sub": "For You",
-"say": "If you ever feel different from the other kids, this is for you. Lots of kids feel that way sometimes. You are not alone."
+"say": "If you ever feel different from the other kids, this is for you. Lots of kids feel that way sometimes. You're in good company."
 },
 {
 "k": "big",
-"h": "Nobody is exactly like anybody else.",
+"h": "Everybody is one of a kind.",
 "sub": "Your differences are part of you.",
-"say": "Here is something true. Nobody is exactly like anybody else. Not one person in the whole world. Your differences are part of what makes you, you."
+"say": "Here is something true. Everybody is one of a kind. There is only one you in the whole world. Your differences are part of what makes you, you."
 },
 {
 "k": "words",
@@ -1503,11 +1503,11 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "words",
 "h": "If they ask",
 "items": [
-"\"Nobody is exactly like anybody else.\"",
+"\"Everybody is one of a kind.\"",
 "\"You are exactly who you are meant to be.\"",
 "\"And you're still growing.\""
 ],
-"say": "If they ask, why am I not like the other kids, you can say, nobody is exactly like anybody else. Your differences are part of what makes you, you, and the right friends will love that. If they ask, is something wrong with me? No. You are exactly who you are meant to be, and you're still growing."
+"say": "If they ask, why am I not like the other kids, you can say, everybody is one of a kind. Your differences are part of what makes you, you, and the right friends will love that. If they ask, is something wrong with me? No. You are exactly who you are meant to be, and you're still growing."
 },
 {
 "k": "big",
@@ -2005,7 +2005,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Someone They Love Is Dying",
 "sub": "For the Grown-up",
-"say": "When someone your child loves is dying, this is for you. You may be stretched very thin right now. You don't have to do this perfectly."
+"say": "When someone your child loves is dying, this is for you. You may be stretched very thin right now. Good enough is plenty."
 },
 {
 "k": "big",
@@ -2404,7 +2404,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Someone Died by Suicide",
 "sub": "For You",
-"say": "If someone you love died by suicide, this is for you. I am so sorry. You are not alone."
+"say": "If someone you love died by suicide, this is for you. I am so sorry. You have people with you."
 },
 {
 "k": "card",
@@ -2648,7 +2648,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Losing a Baby in the Family",
 "sub": "For You",
-"say": "If a baby in your family died, this is for you. I am so sorry. This is a sad time, and you are not alone."
+"say": "If a baby in your family died, this is for you. I am so sorry. This is a sad time, and you have people with you."
 },
 {
 "k": "big",
@@ -2851,7 +2851,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Your love holds them.",
 "sub": "Help is there for whole families.",
-"say": "You don't have to walk through this alone. Share Pregnancy and Infant Loss Support offers help for whole families. If grief or worry stays heavy, talk with your doctor, your child's pediatrician, or a counselor. Your love holds your child, and holds the baby too."
+"say": "Others can help you walk through this. Share Pregnancy and Infant Loss Support offers help for whole families. If grief or worry stays heavy, talk with your doctor, your child's pediatrician, or a counselor. Your love holds your child, and holds the baby too."
 }
 ]
 }
@@ -3221,7 +3221,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Serious Illness in the Family",
 "sub": "For the Grown-up",
-"say": "When someone in your family is seriously ill, this is for you. You may be worried, tired, and stretched thin. You don't have to do this perfectly."
+"say": "When someone in your family is seriously ill, this is for you. You may be worried, tired, and stretched thin. Good enough is plenty."
 },
 {
 "k": "big",
@@ -3336,7 +3336,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "You are not alone in this.",
+"title": "You have people with you in this.",
 "body": "The school, a child life specialist, your faith community.",
 "say": "Decide who will update the school, so a teacher can offer flexibility on homework. Many hospitals have child life specialists who help children of patients. Ask. If your family prays, praying for the person, or asking your faith community to pray, can help kids feel they are doing something meaningful. And look after yourself too. You matter here as well."
 },
@@ -3413,14 +3413,14 @@ window.GG_LEARN_GUIDES.maple = {
 ],
 [
 "Make a choice",
-"Which arm, which movie"
+"Which arm, which song"
 ],
 [
 "Tell someone",
 "When something hurts or feels scary"
 ]
 ],
-"say": "Some things can help. Bring a buddy from home, like a stuffed animal or a blanket. Make choices when you can, like which arm, or which movie. And tell a grown-up when something hurts or feels scary. Telling is brave.",
+"say": "Some things can help. Bring a buddy from home, like a stuffed animal or a blanket. Make choices when you can, like which arm, or which song. And tell a grown-up when something hurts or feels scary. Telling is brave.",
 "cue": {
 "at": [
 1,
@@ -3476,7 +3476,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Their Own Illness or Hospital Stay",
 "sub": "For the Grown-up",
-"say": "When your child is sick, or headed to the hospital, this is for you. Your own worry is real too. You don't have to do this perfectly."
+"say": "When your child is sick, or headed to the hospital, this is for you. Your own worry is real too. Good enough is plenty."
 },
 {
 "k": "big",
@@ -3552,7 +3552,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Count down or track days"
 ]
 ],
-"say": "What helps. Pack comfort items: a stuffed animal, a blanket, a favorite book. Offer choices wherever you can: which arm, which toy, which movie. Try medical play at home with a toy doctor kit. And use a calendar to count down, or to track treatment days.",
+"say": "What helps. Pack comfort items: a stuffed animal, a blanket, a favorite book. Offer choices wherever you can: which arm, which toy, which song. Try medical play at home with a toy doctor kit. And use a calendar to count down, or to track treatment days.",
 "cue": {
 "at": [
 1,
@@ -3729,13 +3729,13 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "A Family Member's Mental Health Struggle",
 "sub": "For the Grown-up",
-"say": "When someone in your family is struggling with their mental health, this is for you. Maybe it's your partner, your child's grandparent, or you. You don't have to do this perfectly, and you don't have to do it alone."
+"say": "When someone in your family is struggling with their mental health, this is for you. Maybe it's your partner, your child's grandparent, or you. Good enough is plenty, and others can walk with you."
 },
 {
 "k": "big",
 "h": "Kids notice. Name it simply.",
 "sub": "An illness in how someone thinks and feels.",
-"say": "Kids notice when a parent is struggling, even when no one says a word. Name it simply: an illness in how someone thinks and feels. Talk about it like any other illness, with hope and without shame."
+"say": "Kids notice when a parent is struggling, even when no one says a word. Name it simply: an illness in how someone thinks and feels. Talk about it like any other illness, with hope and kindness."
 },
 {
 "k": "points",
@@ -3952,7 +3952,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "You never have to keep this secret.",
+"title": "You can always talk about this.",
 "body": "Tell a parent, a grandparent, a teacher, or your school counselor.",
 "say": "You never have to keep this a secret, even if someone asks you to. Grown-ups do the watching and the fixing. Your job is to be a kid. Tell a safe grown-up: a parent, a grandparent, a teacher, or your school counselor. If anyone hurts you, tell a safe grown-up, and keep telling until someone helps. It is never your fault."
 },
@@ -4242,7 +4242,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "A Grandparent with Dementia",
 "sub": "For the Grown-up",
-"say": "When a grandparent your child loves has dementia, this is for you. You may be grieving too, for your own parent, a little at a time. You don't have to do this perfectly."
+"say": "When a grandparent your child loves has dementia, this is for you. You may be grieving too, for your own parent, a little at a time. Good enough is plenty."
 },
 {
 "k": "points",
@@ -4770,7 +4770,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Worries About Food and Eating",
 "sub": "For the Grown-up",
-"say": "If you're worried about how a child you love is eating, this is for you. You don't have to be sure before you ask for help, and you don't have to do this alone."
+"say": "If you're worried about how a child you love is eating, this is for you. You can ask for help before you're sure, and others can walk with you."
 },
 {
 "k": "points",
@@ -5015,9 +5015,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "You are not alone.",
+"h": "You have people with you.",
 "sub": "Your grown-ups are right here.",
-"say": "Scary feelings get smaller with time, and with people who love you. Tell a parent, a grandparent, a teacher, or your school counselor how you're doing. You can ask questions any time. You are not alone."
+"say": "Scary feelings get smaller with time, and with people who love you. Tell a parent, a grandparent, a teacher, or your school counselor how you're doing. You can ask questions any time. You have people with you."
 }
 ]
 },
@@ -5230,7 +5230,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Older kids too",
 "It runs in families"
 ],
-"say": "Lots of kids wet the bed, in kindergarten, in first grade, and older too. It often runs in families. Maybe someone in your family wet the bed when they were little. You are not the only one."
+"say": "Lots of kids wet the bed, in kindergarten, in first grade, and older too. It often runs in families. Maybe someone in your family wet the bed when they were little. You're in good company."
 },
 {
 "k": "card",
@@ -5477,7 +5477,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Divorce or Separation",
 "sub": "For You",
-"say": "If your parents are splitting up, or living in two different homes, this is for you. Lots of kids go through this. You are not alone."
+"say": "If your parents are splitting up, or living in two different homes, this is for you. Lots of kids go through this. You're in good company."
 },
 {
 "k": "big",
@@ -5499,8 +5499,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "You can love them both.",
-"body": "You never have to pick.",
-"say": "Grown-ups can stop living together. They don't stop being your parents. You can love both of them, and you never have to pick a side. Loving one never takes love away from the other."
+"body": "You get to love both.",
+"say": "Grown-ups can stop living together. They don't stop being your parents. You can love both of them, always. Loving one leaves plenty of love for the other."
 },
 {
 "k": "points",
@@ -5960,7 +5960,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Love grows.",
 "sub": "There is always room for them.",
-"say": "And look after yourself too. Rest when you can, and ask for help. You don't have to do this perfectly. Love grows, and there is always room for the child who was here first."
+"say": "And look after yourself too. Rest when you can, and ask for help. Good enough is plenty. Love grows, and there is always room for the child who was here first."
 }
 ]
 }
@@ -6008,7 +6008,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Nobody is being replaced.",
+"title": "Everyone keeps their place.",
 "body": "Your parents are still your parents.",
 "say": "Here is something important. A new grown-up is not taking anyone's place. Your parents are still your parents. A stepparent is one more person who cares about you."
 },
@@ -6378,7 +6378,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Ups and downs at each stage"
 ]
 ],
-"say": "Young children don't understand time well. Three months means little, so make it something they can see, like a paper chain or a jar of treats to count down. Older children may worry about the parent's safety, or feel extra responsible at home. Gently hand that job back to the grown-ups. At every age, expect ups and downs at leaving, in the middle, and at coming home.",
+"say": "Young children don't understand time well. Three months means little, so make it something they can see, like a paper chain or a jar of marbles to count down. Older children may worry about the parent's safety, or feel extra responsible at home. Gently hand that job back to the grown-ups. At every age, expect ups and downs at leaving, in the middle, and at coming home.",
 "cue": {
 "at": [
 0,
@@ -6476,7 +6476,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "You are not alone in this.",
+"title": "You have people with you in this.",
 "body": "A teacher. The school counselor. Military OneSource.",
 "say": "Let your child's teacher know, so school can watch for stress around news events. Military families can reach Military OneSource for counseling. Some families pray for the away parent each night, and it can give children a way to feel close. And look after yourself too. Your steadiness is a gift to your child."
 },
@@ -6566,8 +6566,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "You choose who to tell.",
-"body": "You never have to feel ashamed.",
-"say": "You don't have to tell everyone. You can choose who to tell. And you never have to feel ashamed. This is not a secret you have to carry by yourself."
+"body": "You can hold your head high.",
+"say": "You don't have to tell everyone. You can choose who to tell. And you can hold your head high. This is not a secret you have to carry by yourself."
 },
 {
 "k": "big",
@@ -6749,7 +6749,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "You don't have to do this alone.",
+"title": "Others can walk with you.",
 "body": "A teacher. The school counselor. A child counselor.",
 "say": "Let your child's teacher know privately, and be ready for Father's Day or Mother's Day projects to sting. If you see big changes in behavior, or signs of shame and withdrawal, reach out to the school counselor or a child counselor. Many traditions speak of mercy and restoration, and a child can hold both love for a parent and the truth about their choices. And find support for yourself too."
 },
@@ -7137,7 +7137,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Simple truth, without adult details.",
+"title": "Simple truth, at their level.",
 "body": "Decide first what stays between grown-ups.",
 "say": "Before you talk, decide what your child needs to know, and what stays between the grown-ups. Kids need simple truth. They don't need the numbers, the bills, or the fear. Then pick a calm moment, not right after a hard phone call."
 },
@@ -7210,7 +7210,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Help is close by.",
 "body": "Dial 211. Ask the school counselor.",
-"say": "You don't have to carry this alone. Dialing 211 connects families with local help for food, rent, and utilities. The school counselor often knows quiet ways to help, like field trip costs. Many faith communities quietly help families in hard seasons too. Talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
+"say": "Others can help you carry this. Dialing 211 connects families with local help for food, rent, and utilities. The school counselor often knows quiet ways to help, like field trip costs. Many faith communities quietly help families in hard seasons too. Talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
 },
 {
 "k": "big",
@@ -7448,7 +7448,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Help is close by.",
 "body": "Call 211. Ask for the school liaison.",
-"say": "You don't have to do this alone. Call 211 for local housing help. Faith communities often offer practical help and belonging when a family is between homes. And talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
+"say": "Others can walk with you. Call 211 for local housing help. Faith communities often offer practical help and belonging when a family is between homes. And talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
 },
 {
 "k": "big",
@@ -7666,7 +7666,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Not a messenger. Not a confidant.",
+"title": "Let them be the child.",
 "body": "Keep kids out of the middle.",
 "say": "One thing to leave out. Using kids as messengers, or as confidants about the other grown-up. Tell your mom she needs to call me. Or, your dad never listens. It puts a child in the middle of grown-up problems. Bring those to another adult you trust."
 },
@@ -8013,7 +8013,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Tell a safe grown-up.",
 "body": "You won't be in trouble for telling.",
-"say": "So tell a safe grown-up. A parent, a grandparent, your teacher, or your school counselor. You won't be in trouble for telling. Telling is brave. If anyone hurts you, tell, and keep telling until someone helps. Fixing it is a grown-up job, so you never have to handle it alone."
+"say": "So tell a safe grown-up. A parent, a grandparent, your teacher, or your school counselor. You won't be in trouble for telling. Telling is brave. If anyone hurts you, tell, and keep telling until someone helps. Fixing it is a grown-up job, so others can help you handle it."
 },
 {
 "k": "points",
@@ -8060,8 +8060,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "big",
 "h": "You deserve to feel safe.",
-"sub": "You never have to handle it alone.",
-"say": "You deserve to feel safe at school, on the bus, and everywhere you go. And kindness is still strong. You never have to handle this alone."
+"sub": "Others can help you handle it.",
+"say": "You deserve to feel safe at school, on the bus, and everywhere you go. And kindness is still strong. Others can help you handle this."
 }
 ]
 },
@@ -8551,7 +8551,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "One good friend is a lot.",
-"body": "You do not need lots of friends.",
+"body": "One good friend is plenty.",
 "say": "You don't need to have lots of friends. One good friend is a lot. And if you feel left out day after day, or someone keeps being mean, tell a parent, a teacher, or your school counselor. They can help."
 },
 {
@@ -8992,7 +8992,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "School and Test Worries",
 "sub": "For You",
-"say": "If school feels hard sometimes, or tests make you feel worried, this is for you. Lots of kids feel this way. You are not alone."
+"say": "If school feels hard sometimes, or tests make you feel worried, this is for you. Lots of kids feel this way. You're in good company."
 },
 {
 "k": "words",
@@ -9060,9 +9060,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "One test doesn't decide who you are.",
+"h": "You are more than one test.",
 "sub": "Trying and learning is what counts.",
-"say": "One test doesn't decide who you are. You are loved for who you are, not for your grades. Keep trying, keep learning, and keep telling your grown-ups how you feel."
+"say": "You are more than one test. You are loved for who you are, not for your grades. Keep trying, keep learning, and keep telling your grown-ups how you feel."
 }
 ]
 },
@@ -9130,9 +9130,9 @@ window.GG_LEARN_GUIDES.maple = {
 "items": [
 "\"What part feels hardest?\"",
 "\"You don't know it yet.\"",
-"\"One test doesn't decide who you are.\""
+"\"You are more than one test.\""
 ],
-"say": "Words that help. You seem stressed about the spelling test. What part feels hardest? Use the word yet: you don't know it yet. And if they ask what happens if they fail, try this: then we learn what to practice next. One test doesn't decide who you are."
+"say": "Words that help. You seem stressed about the spelling test. What part feels hardest? Use the word yet: you don't know it yet. And if they ask what happens if they fail, try this: then we learn what to practice next. You are more than one test."
 },
 {
 "k": "flow",
@@ -9197,7 +9197,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "Effort, not perfect.",
+"h": "Effort counts most.",
 "sub": "Celebrate progress, however small.",
 "say": "Praise effort, use the word yet, and keep your own pressure low. Celebrate progress, however small. That's how kids learn to try without fear."
 }
@@ -9669,7 +9669,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Made together"
 ],
 [
-"Device-free bedtime",
+"Unplugged bedtime",
 "Chargers outside bedrooms"
 ],
 [
@@ -9677,7 +9677,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Online life is real life"
 ]
 ],
-"say": "What helps most over time. Make a family tech plan together, so everyone knows the rules ahead of time. Keep bedtime device-free, with chargers outside the bedrooms. And keep checking in about online life, because for kids, online life is real life. Families can talk about living their values everywhere: kindness online is still kindness.",
+"say": "What helps most over time. Make a family tech plan together, so everyone knows the rules ahead of time. Keep bedtime unplugged, with chargers outside the bedrooms. And keep checking in about online life, because for kids, online life is real life. Families can talk about living their values everywhere: kindness online is still kindness.",
 "cue": {
 "at": [
 1,
@@ -10560,9 +10560,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "You are not alone.",
+"h": "You have people with you.",
 "sub": "Your grown-ups are right here.",
-"say": "Sad things can happen, and helpers come. Your grown-ups are right here with you. You are not alone."
+"say": "Sad things can happen, and helpers come. Your grown-ups are right here with you. You have people with you."
 }
 ]
 },
@@ -10797,9 +10797,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "You are not alone.",
+"h": "You have people with you.",
 "sub": "Lots of people are helping.",
-"say": "Things can be lost in a fire, and your feelings matter. Your grown-ups are right here, and lots of people are helping. You are not alone."
+"say": "Things can be lost in a fire, and your feelings matter. Your grown-ups are right here, and lots of people are helping. You have people with you."
 }
 ]
 },
@@ -11039,9 +11039,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "You are not alone.",
+"h": "You have people with you.",
 "sub": "Lots of people help keep you safe.",
-"say": "You are not alone with this. Lots of people are helping to keep you safe, and the grown-ups who love you are right here."
+"say": "You have people with you in this. Lots of people are helping to keep you safe, and the grown-ups who love you are right here."
 }
 ]
 },
@@ -11830,7 +11830,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "big",
 "h": "Your grown-ups keep taking care of you.",
-"sub": "No matter who wins.",
+"sub": "Whoever wins.",
 "say": "If you feel worried, tell a grown-up who takes care of you: a parent, a grandparent, a teacher, or your school counselor. Whatever happens in an election, the grown-ups in your life will keep taking care of you. Different ideas, kind hearts."
 }
 ]
@@ -12464,7 +12464,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "When a Child Faces or Sees Prejudice",
 "sub": "For You",
-"say": "If someone said or did something unfair to you because of who you are, or you saw it happen to someone else, this is for you. You are not alone."
+"say": "If someone said or did something unfair to you because of who you are, or you saw it happen to someone else, this is for you. You have people with you."
 },
 {
 "k": "words",
@@ -13280,8 +13280,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "big",
 "h": "When storms come, helpers come too.",
-"sub": "You are loved, and you are not alone.",
-"say": "When big storms come, helpers come too. Lots of people are working to keep kids safe. You are loved, and you are not alone."
+"sub": "You are loved, and you are held.",
+"say": "When big storms come, helpers come too. Lots of people are working to keep kids safe. You are loved, and you are held."
 }
 ]
 },
@@ -13525,8 +13525,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "big",
 "h": "Helpers are working hard.",
-"sub": "You are loved, and you are not alone.",
-"say": "Lots of people are working to help everyone stay well. You can wash your hands and ask your questions, and your grown-ups will take care of the rest. You are loved, and you are not alone."
+"sub": "You are loved, and you are held.",
+"say": "Lots of people are working to help everyone stay well. You can wash your hands and ask your questions, and your grown-ups will take care of the rest. You are loved, and you are held."
 }
 ]
 },
@@ -13692,7 +13692,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "When a Child Tells You Someone Hurt Them",
 "sub": "For You",
-"say": "If someone hurt you, or touched you in a way that is not okay, this is for you. You are not in trouble, and you are not alone."
+"say": "If someone hurt you, or touched you in a way that is not okay, this is for you. You are not in trouble, and you have people with you."
 },
 {
 "k": "big",
@@ -14833,7 +14833,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Self-Harm: When a Child Hurts Themselves",
 "sub": "For You",
-"say": "If you have been hurting your own body on purpose when feelings get too big, this is for you. You are not in trouble, and you are not alone."
+"say": "If you have been hurting your own body on purpose when feelings get too big, this is for you. You are not in trouble, and you have people with you."
 },
 {
 "k": "card",
@@ -15582,7 +15582,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Plan, instead of no.",
+"title": "Plan for a yes.",
 "body": "Parties, sports, and sleepovers, with a plan.",
 "say": "Worry can make us say no to everything. Try planning instead. A safe snack for the party. A coach who knows the plan. A sleepover with a call at bedtime. Ordinary days of play and friends are part of growing well."
 },
@@ -16007,7 +16007,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Never say never mind.",
+"title": "Always say it again.",
 "body": "Repeat it, or write it. They deserve the whole joke.",
 "say": "When your child misses something, it's tempting to say never mind, it doesn't matter. To a child, that says they don't matter. Repeat it, sign it, or write it down. They deserve the whole joke, and the whole conversation."
 },
@@ -17141,9 +17141,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "You are not alone.",
+"h": "You have people with you.",
 "sub": "Bring your questions any time.",
-"say": "Nobody knows every answer. But you are not alone with your questions. Bring them to a grown-up who loves you, any time."
+"say": "Nobody knows every answer. But you have people to wonder with. Bring them to a grown-up who loves you, any time."
 }
 ]
 },
@@ -17223,7 +17223,7 @@ window.GG_LEARN_GUIDES.maple = {
 "items": [
 [
 "A comfort",
-"You are loved, you are not alone"
+"You are loved, you are held"
 ],
 [
 "A weight",
@@ -17234,7 +17234,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Your tradition, with gentleness"
 ]
 ],
-"say": "If your family has faith, it can be a deep comfort here, when it says you are loved and you are not alone. It weighs on a child when it sounds like blame, a test, or a punishment. Answer in your own tradition's words, with gentleness, and never present God as the judge of a child's body.",
+"say": "If your family has faith, it can be a deep comfort here, when it says you are loved and you are held. It weighs on a child when it sounds like blame, a test, or a punishment. Answer in your own tradition's words, with gentleness, and never present God as the judge of a child's body.",
 "cue": {
 "at": [
 0,
@@ -17276,9 +17276,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "Loved, and not alone.",
+"h": "Loved, and held.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Listen first, say it isn't their fault, and stay close in the not knowing. Your child is loved, and not alone. The full guide has more, whenever you want it."
+"say": "Listen first, say it isn't their fault, and stay close in the not knowing. Your child is loved, and held. The full guide has more, whenever you want it."
 }
 ]
 }

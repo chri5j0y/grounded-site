@@ -284,7 +284,192 @@
     return fromEl(d.body, opts);
   }
 
+  /* ---------- the Take-Home Sheet as a designed one-page PDF (GWG BLD 782) ----------
+     ggTakeHomePdf(n, art) returns a PDF Blob: the app's painting across the top (baked into a JPEG with its mark and a
+     soft shade, art.hero), the visit in words and light, the plan, Bring It Home and Meet the app QR codes, help lines,
+     and Who We Are with Chris and Kayti's photos (art.pics). n is the model from GGPrint.takeHomeModel. Text shrinks a
+     little at a time until everything fits on one page. ggPdfImage(url, w, h, o) makes the JPEGs it needs. */
+  function jpegFrom(canvas, q) {
+    var b64 = canvas.toDataURL('image/jpeg', q || 0.86).split(',')[1], bin = atob(b64);
+    return { data: bin, w: canvas.width, h: canvas.height };
+  }
+  function ggPdfImage(url, w, h, o) {
+    o = o || {};
+    return new Promise(function (ok) {
+      var im = new Image(); im.decoding = 'async';
+      im.onload = function () {
+        try {
+          var c = document.createElement('canvas'); c.width = w; c.height = h;
+          var g = c.getContext('2d'), iw = im.naturalWidth || im.width, ih = im.naturalHeight || im.height;
+          g.fillStyle = o.bg || '#FFFCF6'; g.fillRect(0, 0, w, h);
+          var k = Math.max(w / iw, h / ih), sw = w / k, sh = h / k, px = o.x == null ? 0.5 : o.x, py = o.y == null ? 0.5 : o.y;
+          g.drawImage(im, Math.max(0, (iw - sw) * px), Math.max(0, (ih - sh) * py), sw, sh, 0, 0, w, h);
+          if (o.paint) o.paint(g, w, h);
+          ok(jpegFrom(c, o.q));
+        } catch (e) { ok(null); }
+      };
+      im.onerror = function () { ok(null); };
+      im.src = url;
+    });
+  }
+  function ggTakeHomePdf(n, art) {
+    art = art || {};
+    var PW = 612, PH = 792, X0 = 40, XR = PW - 40, GAP = 18, SIDE = 186, MW = XR - X0 - SIDE - GAP, SX = XR - SIDE;
+    var C = rgb(n.color, [0.545, 0.369, 0.102]), INK = [0.173, 0.094, 0.063], SOFT = [0.36, 0.3, 0.26], WHITE = [1, 1, 1];
+    var CREAM = [0.965, 0.933, 0.859], DEEP = [0.949, 0.925, 0.878], GOLD = [0.545, 0.369, 0.102], RULE = [0.89, 0.85, 0.77];
+    var HERO = 150, WHO_T = 150, WHO_B = 58, TOP = PH - HERO - 16, BOT = WHO_T + 12;
+    function mix(a, b, t) { return [0, 1, 2].map(function (i) { return +(a[i] + (b[i] - a[i]) * t).toFixed(3); }); }
+    function circ(cx, cy, r) {
+      var k = r * 0.5523;
+      return (cx + r).toFixed(2) + ' ' + cy.toFixed(2) + ' m ' + (cx + r).toFixed(2) + ' ' + (cy + k).toFixed(2) + ' ' + (cx + k).toFixed(2) + ' ' + (cy + r).toFixed(2) + ' ' + cx.toFixed(2) + ' ' + (cy + r).toFixed(2) + ' c '
+        + (cx - k).toFixed(2) + ' ' + (cy + r).toFixed(2) + ' ' + (cx - r).toFixed(2) + ' ' + (cy + k).toFixed(2) + ' ' + (cx - r).toFixed(2) + ' ' + cy.toFixed(2) + ' c '
+        + (cx - r).toFixed(2) + ' ' + (cy - k).toFixed(2) + ' ' + (cx - k).toFixed(2) + ' ' + (cy - r).toFixed(2) + ' ' + cx.toFixed(2) + ' ' + (cy - r).toFixed(2) + ' c '
+        + (cx + k).toFixed(2) + ' ' + (cy - r).toFixed(2) + ' ' + (cx + r).toFixed(2) + ' ' + (cy - k).toFixed(2) + ' ' + (cx + r).toFixed(2) + ' ' + cy.toFixed(2) + ' c';
+    }
+    // Light, as on the painting (BLD 780): a Strength glows full and warm, Steady glows softly, a Growing Edge is new green light.
+    var LIGHT = { strong: [[1, 0.953, 0.769], [0.949, 0.765, 0.353], [0.851, 0.604, 0.169], 1.9], steady: [[1, 0.973, 0.902], [0.953, 0.867, 0.651], [0.886, 0.761, 0.494], 1.45],
+      edge: [[0.949, 0.984, 0.894], [0.725, 0.871, 0.541], [0.498, 0.698, 0.306], 1.7], soft: [[1, 0.992, 0.965], [0.937, 0.902, 0.824], [0.88, 0.84, 0.76], 1.25] };
+    function glow(ops, cx, cy, r, lv, ring) {
+      var L = LIGHT[lv] || LIGHT.soft, bg = [1, 0.988, 0.965], outer = r * L[3], steps = 9, i;
+      for (i = steps; i >= 1; i--) { var rr = r + (outer - r) * i / steps; ops.push(mix(bg, L[1], 0.55 * (1 - i / steps)).join(' ') + ' rg ' + circ(cx, cy, rr) + ' f'); }
+      for (i = 0; i <= 6; i++) { var t = i / 6; ops.push(mix(L[2], L[0], t).join(' ') + ' rg ' + circ(cx + r * 0.12 * t, cy + r * 0.12 * t, r * (1 - 0.72 * t)) + ' f'); }
+      if (ring) ops.push(ring.join(' ') + ' RG 1.2 w ' + circ(cx, cy, r) + ' S');
+    }
+    function lay(z) {
+      var ops = [], fits = true;
+      function T(t, x, yy, f, size, col, tc) { t = text(t); if (!t) return; ops.push('BT ' + col.join(' ') + ' rg /' + f + ' ' + size.toFixed(2) + ' Tf ' + (tc || 0) + ' Tc ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' Td (' + escp(t) + ') Tj ET'); }
+      function R(x, yy, w, h, fill) { ops.push(fill.join(' ') + ' rg ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' ' + w.toFixed(1) + ' ' + h.toFixed(1) + ' re f'); }
+      function para(t, x, yy, w, f, size, col, lh, bold) { var ls = wrap(text(t), size, bold, w); ls.forEach(function (l, i) { T(l, x, yy - i * size * lh, f, size, col); }); return ls.length * size * lh; }
+      function qrAt(url, x, top, size) {
+        var mx = null; try { mx = window.GGQR && GGQR.matrix ? GGQR.matrix(url, { ecc: url.length > 700 ? 'L' : '' }) : null; } catch (e) { mx = null; }
+        if (!mx) return 0;
+        var cnt = mx.length, cell = size / cnt;
+        R(x - 4, top - size - 4, size + 8, size + 8, WHITE);
+        for (var r = 0; r < cnt; r++) { var run = -1; for (var c = 0; c <= cnt; c++) { var on = c < cnt && mx[r][c]; if (on && run < 0) run = c; if (!on && run >= 0) { ops.push('0 0 0 rg ' + (x + run * cell).toFixed(2) + ' ' + (top - (r + 1) * cell).toFixed(2) + ' ' + ((c - run) * cell + 0.04).toFixed(2) + ' ' + (cell + 0.04).toFixed(2) + ' re f'); run = -1; } } }
+        return size;
+      }
+      R(0, 0, PW, PH, [1, 0.988, 0.965]);
+      // the painting, with its mark and shade baked in
+      if (art.hero) ops.push('q ' + PW + ' 0 0 ' + HERO + ' 0 ' + (PH - HERO) + ' cm /Im1 Do Q'); else R(0, PH - HERO, PW, HERO, C);
+      var hx = art.hero ? 118 : X0;
+      T(fit(text(n.eyebrow.toUpperCase() + ' \u00B7 ' + String(n.app).toUpperCase() + ' BY GROW WITH GROUNDED'), 8.5, true, PW - hx - 60), hx, PH - 58, 'F2', 8.5, [1, 0.94, 0.82], 1.2);
+      var ts = 30; while (ts > 18 && width(text(n.title), ts, true) > PW - hx - 40) ts -= 1;
+      T(n.title, hx, PH - 90, 'F4', ts, WHITE);
+      if (n.sub) T(fit(text(n.sub), 11.5, false, PW - hx - 40), hx, PH - 110, 'F1', 11.5, [1, 0.97, 0.9]);
+      // the main column
+      var y = TOP, s = function (v) { return v * z; };
+      // flow: the next lines of text, gap points below the last baseline; y ends on the last line's baseline.
+      function flow(t, x, w, f, size, col, lh, gap, bold) { var ls = wrap(text(t), size, bold, w); y -= gap + size; ls.forEach(function (l, i) { T(l, x, y - i * size * lh, f, size, col); }); y -= (ls.length - 1) * size * lh; return ls.length; }
+      if (n.lead) flow(n.lead, X0, MW, 'F5', s(13), INK, 1.3, 0);
+      if (n.kid) { var k0 = y; flow(n.kid, X0 + 12, MW - 14, 'F2', s(11), INK, 1.35, s(10), true); R(X0, y - s(4), 3, k0 - y - s(6), C); }
+      if (n.treeLights && n.treeLights.lights.length) {
+        y -= s(26); T(n.treeLights.title, X0, y, 'F4', s(15), C);
+        var cw = MW / 3, rr = s(10.5), rowH = s(38);
+        n.treeLights.lights.forEach(function (L, i) {
+          var cx = X0 + (i % 3) * cw, cy = y - s(10) - rr - Math.floor(i / 3) * rowH;
+          glow(ops, cx + rr + 4, cy, rr, L.lv, rgb(L.color, null));
+          T(fit(text(L.part), s(10.5), true, cw - rr * 2 - 16), cx + rr * 2 + 14, cy + (L.word ? s(2) : -s(3.5)), 'F2', s(10.5), INK);
+          if (L.word) T(fit(text(L.word), s(9), false, cw - rr * 2 - 16), cx + rr * 2 + 14, cy - s(9.5), 'F1', s(9), SOFT);
+        });
+        y -= s(10) + Math.ceil(n.treeLights.lights.length / 3) * rowH - s(6);
+        if (n.treeLights.key) flow(n.treeLights.key, X0, MW, 'F3', s(8.5), SOFT, 1.3, s(2));
+      }
+      (n.sec || []).forEach(function (sc) {
+        if (sc.h) { y -= s(24); T(sc.h, X0, y, 'F4', s(13.5), C); }
+        (sc.p || []).forEach(function (t, i) { flow(t, X0, MW, 'F1', s(10), INK, 1.35, s(i ? 5 : 4)); });
+        (sc.items || []).forEach(function (it) {
+          y -= s(8); var top = y;
+          var tagW = it.tag ? width(text(it.tag).toUpperCase(), s(7.5), true) + 10 : 0, nm = fit(text(it.t), s(10.5), true, MW - 14 - tagW);
+          y -= s(10.5); T(nm, X0 + 10, y, 'F2', s(10.5), INK);
+          if (it.tag) T(text(it.tag).toUpperCase(), X0 + 10 + width(nm, s(10.5), true) + 8, y + s(0.5), 'F2', s(7.5), rgb(it.color, C), 0.8);
+          if (it.how) flow(it.how, X0 + 10, MW - 12, 'F1', s(9.5), SOFT, 1.32, s(3));
+          if (it.when) flow(it.when, X0 + 10, MW - 12, 'F3', s(9.5), SOFT, 1.32, s(3));
+          R(X0, y - s(4), 3, top - y + s(2), rgb(it.color, C));
+          y -= s(2);
+        });
+        (sc.li || []).forEach(function (t) { var t0 = y; flow(t, X0 + 12, MW - 12, 'F1', s(10), INK, 1.35, s(4)); T('\x95', X0 + 2, y + (t0 - y > s(14) ? 0 : 0) + (wrap(text(t), s(10), false, MW - 12).length - 1) * s(10) * 1.35, 'F1', s(10), C); });
+      });
+      (n.after || []).forEach(function (t) { flow(t, X0, MW, 'F2', s(9.5), INK, 1.32, s(10), true); });
+      if (n.close) flow(n.close, X0, MW, 'F5', s(12.5), C, 1.3, s(16));
+      if (y < BOT) fits = false;
+      // the side column
+      var sy = TOP;
+      function card(h) { R(SX, sy - h, SIDE, h, CREAM); R(SX, sy - 3, SIDE, 3, C); }
+      if (n.home) {
+        var H = n.home, qs = H.url.length > 300 ? SIDE - 24 : 132, lines = [];
+        var hh = 16 + 16 + 8 + qs + 10 + (H.code ? 26 : 0) + 6;
+        (H.how || []).forEach(function (t, i) { var ls = wrap(text((i + 1) + '. ' + t), s(8.5), false, SIDE - 24); lines = lines.concat(ls); });
+        var nl = H.note ? wrap(text(H.note), s(7.5), false, SIDE - 24) : [];
+        hh += lines.length * s(11) + (nl.length ? nl.length * s(9.5) + 6 : 0) + 8;
+        card(hh); var cy0 = sy - 22;
+        T(H.title, SX + 12, cy0, 'F4', 14, C); cy0 -= 8;
+        qrAt(H.url, SX + (SIDE - qs) / 2, cy0 - 6, qs); cy0 -= qs + 20;
+        if (H.code) { var cl = text(H.codeLabel || 'Your code'); T(cl, SX + 12, cy0, 'F1', 8.5, SOFT); T(H.code, SX + 14 + width(cl, 8.5, false), cy0 - 1, 'F2', 15, INK, 1.5); cy0 -= 22; }
+        lines.forEach(function (l) { T(l, SX + 12, cy0, 'F1', s(8.5), INK); cy0 -= s(11); });
+        if (nl.length) { cy0 -= 3; nl.forEach(function (l) { T(l, SX + 12, cy0, 'F3', s(7.5), SOFT); cy0 -= s(9.5); }); }
+        sy -= hh + 12;
+      } else if (n.homeNote) {
+        var hn = wrap(text(n.homeNote.p), 8.5, false, SIDE - 24), hnh = 34 + hn.length * 11 + 6;
+        card(hnh); T(n.homeNote.h, SX + 12, sy - 22, 'F4', 14, C); hn.forEach(function (l, i) { T(l, SX + 12, sy - 38 - i * 11, 'F1', 8.5, INK); });
+        sy -= hnh + 12;
+      }
+      if (n.watch) {
+        var W = n.watch, wq = 66, wl = wrap(text(W.line), 8.5, false, SIDE - wq - 34), wh = Math.max(wq + 26, 30 + wl.length * 11 + 14);
+        card(wh); qrAt(W.url, SX + 14, sy - 14, wq);
+        T(W.title, SX + wq + 28, sy - 24, 'F4', 13, C);
+        wl.forEach(function (l, i) { T(l, SX + wq + 28, sy - 38 - i * 11, 'F1', 8.5, INK); });
+        T(fit(text(W.short), 6.8, false, SIDE - wq - 36), SX + wq + 28, sy - 42 - wl.length * 11, 'F1', 6.8, SOFT);
+        sy -= wh + 12;
+      }
+      if (n.help) {
+        var hl = []; (n.help.li || []).forEach(function (t) { hl.push(wrap(text(t), s(8), false, SIDE - 30)); });
+        var hh2 = 32 + hl.reduce(function (a, l) { return a + l.length * s(8) * 1.3 + s(3); }, 0) + 6;
+        card(hh2); T(n.help.h, SX + 12, sy - 22, 'F4', 13, C);
+        var hy = sy - 36; hl.forEach(function (ls) { T('\x95', SX + 12, hy, 'F1', s(8), C); ls.forEach(function (l) { T(l, SX + 20, hy, 'F1', s(8), INK); hy -= s(8) * 1.3; }); hy -= s(3); });
+        sy -= hh2;
+      }
+      if (sy < BOT) fits = false;
+      // Who We Are
+      R(0, WHO_B, PW, WHO_T - WHO_B, DEEP); R(0, WHO_T - 1, PW, 1, RULE);
+      var wx = X0;
+      if (art.pics) { ops.push('q ' + circ(X0 + 22, (WHO_T + WHO_B) / 2 + 6, 22) + ' W n 44 0 0 44 ' + X0 + ' ' + ((WHO_T + WHO_B) / 2 - 16) + ' cm /Im2 Do Q'); ops.push('q ' + circ(X0 + 56, (WHO_T + WHO_B) / 2 - 10, 22) + ' W n 44 0 0 44 ' + (X0 + 34) + ' ' + ((WHO_T + WHO_B) / 2 - 32) + ' cm /Im3 Do Q'); ops.push('1 0.988 0.965 RG 2 w ' + circ(X0 + 56, (WHO_T + WHO_B) / 2 - 10, 22) + ' S'); wx = X0 + 96; }
+      var who = n.who, wy = WHO_T - 24;
+      T(who.h, wx, wy, 'F4', 14, GOLD); wy -= 14;
+      wrap(text(who.p), 9, false, XR - wx).forEach(function (l) { T(l, wx, wy, 'F1', 9, INK); wy -= 11.6; });
+      T(who.contact, wx, wy - 2, 'F2', 9, GOLD);
+      // the footer
+      T(fit(text(n.foot || ''), 7.5, false, PW - 80), X0, 36, 'F1', 7.5, [0.45, 0.42, 0.4]);
+      return { ops: ops, fits: fits };
+    }
+    var z = 1, out = lay(z);
+    while (!out.fits && z > 0.66) { z -= 0.04; out = lay(z); }
+    var body = out.ops.join('\n');
+    var objs = [], add = function (o) { objs.push(o); return objs.length; };
+    var cat = add(''), pgs = add('');
+    var fonts = [['F1', 'Helvetica'], ['F2', 'Helvetica-Bold'], ['F3', 'Helvetica-Oblique'], ['F4', 'Times-Bold'], ['F5', 'Times-Italic']].map(function (f) { return '/' + f[0] + ' ' + add('<< /Type /Font /Subtype /Type1 /BaseFont /' + f[1] + ' /Encoding /WinAnsiEncoding >>') + ' 0 R'; }).join(' ');
+    var xo = [];
+    [['Im1', art.hero], ['Im2', art.pics && art.pics[0]], ['Im3', art.pics && art.pics[1]]].forEach(function (x) {
+      if (!x[1]) return;
+      var id = add('<< /Type /XObject /Subtype /Image /Width ' + x[1].w + ' /Height ' + x[1].h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + x[1].data.length + ' >>\nstream\n' + x[1].data + '\nendstream');
+      xo.push('/' + x[0] + ' ' + id + ' 0 R');
+    });
+    var cs = add('<< /Length ' + body.length + ' >>\nstream\n' + body + '\nendstream');
+    var pg = add('<< /Type /Page /Parent ' + pgs + ' 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /Font << ' + fonts + ' >>' + (xo.length ? ' /XObject << ' + xo.join(' ') + ' >>' : '') + ' >> /Contents ' + cs + ' 0 R >>');
+    objs[cat - 1] = '<< /Type /Catalog /Pages ' + pgs + ' 0 R >>';
+    objs[pgs - 1] = '<< /Type /Pages /Kids [' + pg + ' 0 R] /Count 1 >>';
+    var info = add('<< /Title (' + escp(text(n.title || 'Take-Home Sheet')) + ') /Creator (Grow With Grounded) >>');
+    var pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n', offs = [];
+    objs.forEach(function (o, i) { offs.push(pdf.length); pdf += (i + 1) + ' 0 obj\n' + o + '\nendobj\n'; });
+    var xr = pdf.length;
+    pdf += 'xref\n0 ' + (objs.length + 1) + '\n0000000000 65535 f \n' + offs.map(function (v) { return String(v).padStart(10, '0') + ' 00000 n \n'; }).join('') + 'trailer\n<< /Size ' + (objs.length + 1) + ' /Root ' + cat + ' 0 R /Info ' + info + ' 0 R >>\nstartxref\n' + xr + '\n%%EOF';
+    var bytes = new Uint8Array(pdf.length); for (var i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
+    var blob = new Blob([bytes], { type: 'application/pdf' }); blob.fitScale = z;
+    return blob;
+  }
+
   window.ggPdf = ggPdf;
+  window.ggTakeHomePdf = ggTakeHomePdf;
+  window.ggPdfImage = ggPdfImage;
   window.ggPdfText = text;
   window.ggSheetBlocks = sheetBlocks;
   window.ggSheetHTML = sheetHTML;

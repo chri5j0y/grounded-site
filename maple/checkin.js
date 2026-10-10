@@ -65,7 +65,7 @@ const Q = {
       ['Do you feel loved at home?', 'Ask: "How do you know someone loves you?" Listen for the small things.'],
       ['Do you feel safe when you go to sleep at night?', 'If not, ask what feels scary at night. A night light, a song, or a bedtime prayer can help.'],
       ['Do you have a quiet time, like a prayer or a hug before bed?', 'Share one quiet practice from your own family, like a prayer, a song, or a blessing.'],
-      ['Do you feel all alone inside?', 'If yes, stay close and say: "You are not alone. I am right here." Then ask when it feels that way.', 'r', 'alone']
+      ['Do you feel all alone inside?', 'If yes, stay close and say: "You have people with you. I am right here." Then ask when it feels that way.', 'r', 'alone']
     ],
     trunk: [
       ['Do you like being you?', 'Tell them one thing you love about who they are.'],
@@ -284,7 +284,7 @@ const Q = {
       ['Do you get enough sleep to feel good and think clearly?', 'Keep phones and tablets out of the bedroom at night.'],
       ['Do you do something active most days?', 'Help them find a sport or activity they enjoy.'],
       ['Do you eat in a way that gives you energy?', 'Keep it about energy and strength, not weight.'],
-      ['Do you worry about how your body looks?', 'If yes, listen without judging, and watch for skipped meals. Talk with their doctor if you are concerned.', 'r']
+      ['Do you worry about how your body looks?', 'If yes, listen with an open heart, and watch for skipped meals. Talk with their doctor if you are concerned.', 'r']
     ],
     fruit: [
       ['Are you looking forward to growing up?', 'Ask what they look forward to most about getting older.'],

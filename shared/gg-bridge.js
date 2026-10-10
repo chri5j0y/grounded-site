@@ -126,7 +126,7 @@
       '<p style="text-align:center;margin:12px 0"><span style="display:inline-block;font:700 24px/1.3 Barlow,system-ui,sans-serif;letter-spacing:.5px;padding:8px 16px;border:2px dashed currentColor;border-radius:12px">' + esc(o.code) + '</span></p>' +
       '<p class="ggx-small">' + esc(o.small) + '</p>';
     var copyLink = function () {
-      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(o.link).then(function () { note('Link copied. Say the code out loud, or by phone. Never send it with the link.'); }, function () { note('Copy did not work on this device.'); });
+      if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(o.link).then(function () { note('Link copied. Say the code out loud, or by phone. Send it separately from the link.'); }, function () { note('Copy did not work on this device.'); });
       else note('Copy did not work on this device.');
     };
     var note = function (m) { if (window.GGApp && GGApp.toast) GGApp.toast(m); };

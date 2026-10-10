@@ -171,7 +171,7 @@
   function blankVault() { return { v: 1, keys: {}, email: '', stories: { saved: {}, read: {} } }; }
 
   /* ---------- Root Words (GWG BLD 780) ---------- */
-  var ROOT_SRC = '/shared/gg-rootwords.js?v=b780', rootP = null;
+  var ROOT_SRC = '/shared/gg-rootwords.js?v=b782', rootP = null;
   function needRoot() {
     if (window.GGRoot) return Promise.resolve(window.GGRoot);
     if (!rootP) rootP = new Promise(function (ok, no) {
@@ -415,7 +415,7 @@
   function loadAvatars(cb) {
     if (window.GGAv) { cb && cb(); return; }
     var s = document.querySelector('script[data-ggav]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-avatars.js'; s.setAttribute('data-ggav', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-avatars.js?v=b782'; s.setAttribute('data-ggav', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { paintAll(); cb && cb(); });
   }
   function toast(msg) {
@@ -477,8 +477,8 @@
         ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '');
     var what = age === 'pine'
-      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended, and will be alerted if a safety answer needs attention. The grown-up will never see answers or journal entries. Those are locked with the teen\'s own passcode.</div>'
-      : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so no child is ever alone with something hard.</div>';
+      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended, and will be alerted if a safety answer needs attention. Answers and journal entries stay private to the teen, locked with the teen\'s own passcode.</div>'
+      : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so every child has someone beside them when something is hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
       '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am ' + esc(kidName || 'this child') + '\'s parent, guardian, or another responsible grown-up. I have read and agree to the ' + TERMS_LINKS + ' on their behalf.</span></label>';
   }
@@ -595,7 +595,7 @@
         var minor = isMinor(st.age);
         d.show('<h2 id="ggp-title">One last step</h2>' +
           '<p>Grounded tools are for reflection and growth. They are not therapy, medical care, or a crisis service. If you or someone you love is in crisis, call or text 988 any time.</p>' +
-          '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. We never see it.</p>' +
+          '<p class="ggp-small">Everything saved in this profile stays on this device, locked with ' + (st.age === 'maple' ? 'the picture code' : 'the passcode') + '. It stays with you.</p>' +
           (minor ? grownBlock(st.name, st.age)
             : other ? '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older. I am setting this up with ' + esc(st.name) + ', or for them with their permission or as someone who cares for them, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>'
             : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am 18 or older, and I have read and agree to the ' + TERMS_LINKS + '.</span></label>') +
@@ -837,7 +837,7 @@
             '<div id="ggp-treepick"' + (band ? '' : ' hidden') + '><label class="ggp-l" for="ggp-tree">Tree</label><select id="ggp-tree">' + (BAND[band] || []).map(function (x) { return '<option value="' + x + '"' + (t === x ? ' selected' : '') + '>' + TREE[x].tool + ' (' + TREE[x].who + ')</option>'; }).join('') + '</select><span class="ggp-small">Sets where My tree opens. Check-ins already saved stay where they are.</span></div>'; })() : '') +
         (isAdult ? '<label class="ggp-l" for="ggp-email">Email, optional</label><input type="email" id="ggp-email" value="' + esc(v.email || '') + '" placeholder="Fills in contact forms on this site"><span class="ggp-small">It stays in your locked profile and is only sent if you send a form.</span>' : '') +
         '<div class="ggp-row"><button type="button" class="ggp-b ggp-go" data-save>Save changes</button></div>' +
-        (cur.id === id || grownOpens(p.age) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>' + (grownOpens(p.age) ? 'Their Health and Ability' : 'Health and Ability') + '</b></p><p class="ggp-small">' + (grownOpens(p.age) ? 'Set it together with ' + esc(p.name) + ', so guides and practices that fit show first. It stays locked in this profile, and changes nothing about questions or scores.' : 'Choose what is part of your life right now, so guides and practices that fit show first. It stays locked in your profile, and changes nothing about questions or scores.') + '</p><button type="button" class="ggp-link" data-life>' + (grownOpens(p.age) ? 'Open Their Health and Ability' : 'Open Health and Ability') + '</button>' : '') +
+        (cur.id === id || grownOpens(p.age) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>' + (grownOpens(p.age) ? 'Their Health and Ability' : 'Health and Ability') + '</b></p><p class="ggp-small">' + (grownOpens(p.age) ? 'Set it together with ' + esc(p.name) + ', so guides and practices that fit show first. It stays locked in this profile, and questions and scores stay the same.' : 'Choose what is part of your life right now, so guides and practices that fit show first. It stays locked in your profile, and questions and scores stay the same.') + '</p><button type="button" class="ggp-link" data-life>' + (grownOpens(p.age) ? 'Open Their Health and Ability' : 'Open Health and Ability') + '</button>' : '') +
         (cur.id === id && rootOk(p) ? '<hr class="ggp-sep"><p style="margin:0 0 4px"><b>Keep It Safe</b></p><p class="ggp-small">' + (v.rootWords ? 'Your 12 Root Words open your profile if the passcode is ever forgotten. See them again after your passcode.' : 'Make 12 Root Words that open your profile if the passcode is ever forgotten. Nothing leaves this device.') + ' A backup file keeps everything for a lost or broken phone.</p>' +
           '<div style="display:flex;flex-wrap:wrap;gap:8px;margin-top:8px"><button type="button" class="ggp-b" data-rw>' + (v.rootWords ? 'See My Root Words' : 'Make My Root Words') + '</button><button type="button" class="ggp-b" data-bkall>Save a Backup</button></div>' +
           (v.rootWords ? '<p class="ggp-small" style="margin-top:8px"><button type="button" class="ggp-link" data-rwnew>Make a new set of Root Words</button></p>' : '') : '') +
@@ -1036,7 +1036,7 @@
   function backupGo(act, opts) {
     var run = function () { if (window.GGBackup) GGBackup[act](opts); };
     if (window.GGBackup) return run();
-    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=b780'; s.onload = run;
+    var s = document.createElement('script'); s.src = HOME + '/shared/gg-backup.js?v=b782'; s.onload = run;
     s.onerror = function () { toast('The backup tool could not load. Check the connection and try again.'); };
     document.head.appendChild(s);
   }
@@ -1046,7 +1046,7 @@
   function lifeGo(fn) {
     if (window.GGLife) return fn();
     var s = document.querySelector('script[data-gglife]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=lf1'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b782'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { if (window.GGLife) fn(); });
     s.addEventListener('error', function () { toast('That could not load. Check the connection and try again.'); });
   }
@@ -1306,7 +1306,7 @@
     // whose: 'your' (the default) or a child's name for a grown-up reading.
     stayNote: function (date, tree, start, whose) {
       var d = String(date || '').slice(0, 10), t = /^\d{4}-\d{2}-\d{2}$/.test(d) ? new Date(d + 'T12:00:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : '';
-      return '<p class="gt-small gg-stay-note"><b>' + esc(tree) + ' stays ' + (whose ? esc(whose) + '\'s' : 'your') + ' tree' + (t ? ', chosen ' + esc(t) : '') + '.</b> Today will not ask again. ' + esc(start) + ' is right here whenever it fits.</p>';
+      return '<p class="gt-small gg-stay-note"><b>' + esc(tree) + ' stays ' + (whose ? esc(whose) + '\'s' : 'your') + ' tree' + (t ? ', chosen ' + esc(t) : '') + '.</b> Today will let it rest. ' + esc(start) + ' is right here whenever it fits.</p>';
     }
   };
 

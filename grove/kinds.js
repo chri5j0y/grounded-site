@@ -133,7 +133,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "classroom": [
@@ -171,7 +171,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "faith": [
@@ -205,7 +205,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "group": [
@@ -235,7 +235,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ],
   "team": [
@@ -265,7 +265,7 @@ window.GROVE_KINDS = {
    },
    {
     "id": "none",
-    "label": "Nothing Big"
+    "label": "A Steady Season"
    }
   ]
  },
@@ -425,7 +425,7 @@ window.GROVE_KINDS = {
      "q": "We celebrate good moments, big and small.",
      "kid": "Do we celebrate happy things together?",
      "why": "Celebrating helps a family notice and remember the good.",
-     "tip": "Small celebrations count: a cheer, a favorite dessert, a high five."
+     "tip": "Small celebrations count: a cheer, a favorite song, a high five."
     },
     {
      "q": "When something hard happens, we believe we'll get through it together.",
@@ -617,7 +617,7 @@ window.GROVE_KINDS = {
      "plain": "Our time together helps us feel steady and grounded.",
      "kid": "Do you feel calm and happy when we're together here?",
      "why": "Gathering is meant to steady people, and it helps to ask whether it does.",
-     "tip": "Let people answer from their own experience. There are no wrong answers."
+     "tip": "Let people answer from their own experience. Every answer is welcome."
     },
     {
      "q": "Our worship or shared practice feels meaningful to us.",
@@ -767,7 +767,7 @@ window.GROVE_KINDS = {
      "q": "We celebrate milestones and good moments together.",
      "kid": "Do we celebrate happy things together here?",
      "why": "Celebrating helps a community remember the good.",
-     "tip": "Small celebrations count: a cheer, a cake, a thank you."
+     "tip": "Small celebrations count: a cheer, a song, a thank you."
     },
     {
      "q": "When hard things happen, we hold on to hope together.",
@@ -1078,15 +1078,15 @@ window.GROVE_KINDS = {
  "results": {
   "intro": "Here is what you saw together today. Start with your Shared Strengths, then look at where you want to grow.",
   "oneShape": {
-   "family": "No family is strong in all six. Every grove has its own shape.",
-   "classroom": "No class is strong in all six. Every grove has its own shape.",
-   "faith": "No community is strong in all six. Every grove has its own shape.",
-   "group": "No group is strong in all six. Every grove has its own shape.",
-   "team": "No team is strong in all six. Every grove has its own shape."
+   "family": "Every family has parts still growing. Every grove has its own shape.",
+   "classroom": "Every class has parts still growing. Every grove has its own shape.",
+   "faith": "Every community has parts still growing. Every grove has its own shape.",
+   "group": "Every group has parts still growing. Every grove has its own shape.",
+   "team": "Every team has parts still growing. Every grove has its own shape."
   },
   "talkIntro": "You saw these differently. That is good news: it means everyone spoke. Pick one to talk about this week, gently, with no one needing to be right.",
   "talkLead": "Talk about: ",
-  "noEdges": "Nothing stood out as a Growing Edge today. Choose any part you would like to grow, or keep tending what is already working.",
+  "noEdges": "Every part looks steady today. Choose any part you would like to grow, or keep tending what is already working.",
   "quickLine": "A quick check-in is a short look. Your full check-in at week 12 shows the whole shape of your grove.",
   "strength": {
    "roots": {
@@ -2061,7 +2061,7 @@ window.GROVE_KINDS = {
     "group"
    ],
    "name": "Make and Give",
-   "text": "Make something together for people who could use a lift: cards, blankets, or treats for a care home or hospital.",
+   "text": "Make something together for people who could use a lift: cards, blankets, or flowers for a care home or hospital.",
    "kid": "Make something to give to someone who needs cheering up.",
    "steps": "Choose who it's for.|Gather simple supplies.|Make it together.|Deliver it, or send it with someone who can.",
    "life": [
@@ -2149,10 +2149,10 @@ window.GROVE_KINDS = {
     "group",
     "team"
    ],
-   "name": "Stop Doing List",
-   "text": "Name one thing to stop doing for a season, so what matters most has room.",
-   "kid": "Pick one thing we can stop doing so we have more time together.",
-   "steps": "List what fills your time together.|Ask: what could we stop for now?|Choose one thing to set down.|Notice what grows in its place.",
+   "name": "Set-Down List",
+   "text": "Name one thing to set down for a season, so what matters most has room.",
+   "kid": "Pick one thing we can set down so we have more time together.",
+   "steps": "List what fills your time together.|Ask: what could we set down for now?|Choose one thing to set down.|Notice what grows in its place.",
    "lever": "lighten"
   },
   {
@@ -2482,7 +2482,7 @@ window.GROVE_KINDS = {
    "name": "Feelings Check with Colors",
    "text": "Each student points to a color that shows how they're arriving today, with no explaining needed.",
    "kid": "Point to the color that shows how you feel.",
-   "steps": "Post four colors: blue, green, yellow, and red.|Each student points to one, or passes.|No one has to explain.|Notice the room and adjust the day.",
+   "steps": "Post four colors: blue, green, yellow, and red.|Each student points to one, or passes.|Everyone is welcome as they are.|Notice the room and adjust the day.",
    "life": [
     "autism",
     "hearing"
@@ -2546,7 +2546,7 @@ window.GROVE_KINDS = {
    "name": "Listening Round",
    "text": "One person shares, and everyone else listens without advice unless it's asked for.",
    "kid": "When someone talks, we just listen.",
-   "steps": "Choose one person to share.|Everyone else listens fully.|No advice unless they ask.|Thank them for sharing.",
+   "steps": "Choose one person to share.|Everyone else listens fully.|Save advice for when they ask.|Thank them for sharing.",
    "lever": "support"
   },
   {
@@ -2702,7 +2702,7 @@ window.GROVE_KINDS = {
    "name": "Tears Are Welcome",
    "text": "Keep tissues close and say plainly that tears are welcome here.",
    "kid": "It's okay to cry here.",
-   "steps": "Set tissues where everyone can reach them.|Say out loud: tears are welcome here.|When someone cries, stay with them.|No rushing and no fixing.",
+   "steps": "Set tissues where everyone can reach them.|Say out loud: tears are welcome here.|When someone cries, stay with them.|Stay slow and simply listen.",
    "life": [
     "close",
     "serious"
@@ -2975,9 +2975,9 @@ window.GROVE_KINDS = {
     "faith"
    ],
    "name": "Neighbors Night",
-   "text": "Invite neighbors or another family over for a simple meal or dessert.",
+   "text": "Invite neighbors or another family over for a simple meal.",
    "kid": "Invite a neighbor over to visit.",
-   "steps": "Choose who to invite.|Keep it simple: soup, popcorn, or dessert.|Spend the evening together.|Ask them to come again."
+   "steps": "Choose who to invite.|Keep it simple: soup, bread, or a bowl of fruit.|Spend the evening together.|Ask them to come again."
   },
   {
    "id": "story-time",
@@ -3999,7 +3999,7 @@ window.GROVE_KINDS = {
    ],
    "name": "Team Lunch",
    "text": "Eat lunch together once a month.",
-   "steps": "Pick a day.|Bring lunch or order in.|Sit together.|No work talk for the first half."
+   "steps": "Pick a day.|Bring lunch or order in.|Sit together.|Save work talk for the second half."
   },
   {
    "id": "protect-days-off",
@@ -4170,7 +4170,7 @@ window.GROVE_KINDS = {
     "team"
    ],
    "name": "Laugh Together",
-   "text": "Share something funny: a joke, a story, or a silly video.",
+   "text": "Share something funny: a joke, a story, or a silly song.",
    "kid": "Tell a joke!",
    "steps": "Everyone brings one funny thing.|Take turns sharing.|Laugh together.|Pick a favorite."
   },
@@ -4362,7 +4362,7 @@ window.GROVE_KINDS = {
     "team"
    ],
    "name": "Celebrate Together",
-   "text": "Mark wins with a small celebration: a cake, a cheer, or a walk.",
+   "text": "Mark wins with a small celebration: a song, a cheer, or a walk.",
    "steps": "Notice the win.|Plan something small.|Celebrate together.|Say what made it possible."
   },
   {

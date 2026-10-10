@@ -56,7 +56,7 @@ const Q = {
   roots: [
     { t: `Felt that your faith, your spirit, or what grounds you gave you the strength and comfort you need?`,
       why: `This is one of the best single questions for noticing when the spirit needs care.`,
-      tip: `If rarely, ask gently: has it gone quiet, become a weight, or never been a source? Don't assume which.`,
+      tip: `If rarely, ask gently: has it gone quiet, become a weight, or never been a source? Ask which.`,
       anchor: 1,
       none: `Felt that what grounds you (love, nature, your values) gave you the strength and comfort you need?` },
     { t: `Found comfort in a prayer, ritual, song, or practice that matters to you?`,
@@ -99,7 +99,7 @@ const Q = {
       tip: `Offer help writing or recording them. Forgiveness is never forced, and never toward someone unsafe.` },
     { t: `Felt like a burden to the people caring for you?`, r: 1, flag: 'burden',
       why: `Most people near the end feel this sometimes. Your family usually sees it differently.`,
-      tip: `Don't argue it away. Ask what being cared for is like. Name receiving care as part of love. Listen for a wish to hasten death.` }
+      tip: `Let it stand, and listen. Ask what being cared for is like. Name receiving care as part of love. Listen for a wish to hasten death.` }
   ],
   leaves: [
     { t: `Felt comfortable enough in your body to rest?`, s: 'comfort',
@@ -114,14 +114,14 @@ const Q = {
   ],
   fruit: [
     { t: `Felt hopeful about something, even something small?`,
-      why: `Hope changes shape near the end. It doesn't have to disappear.`,
+      why: `Hope changes shape near the end. It can stay with you.`,
       tip: `Ask what they're hoping for now: peace, a visit, a good day, what comes after.` },
     { t: `Felt ready, or getting ready, for what's ahead?`,
       why: `Readiness grows a little at a time.`,
       tip: `Ask which part feels unready: affairs, people, or spirit.` },
     { t: `Felt hopeless, or wished it would all end soon?`, r: 1, flag: 'end',
       why: `Many people near the end feel this. You can say it out loud here.`,
-      tip: `Don't panic and don't argue. Explore what it means: relief, suffering, readiness, or thoughts of ending life. The safety step follows.` }
+      tip: `Stay calm and curious. Explore what it means: relief, suffering, readiness, or thoughts of ending life. The safety step follows.` }
   ]
 };
 
@@ -162,7 +162,7 @@ const HELPER = {
 // Flags are never lost. The person sees help right away; a guide sees the flag.
 const FLAGS = {
   struggle: { who: 'person', on: ['often', 'always'], title: `Spiritual struggle`,
-    note: `Feeling far from what you hold sacred is common, and you don't have to sort it out alone. A chaplain can sit with this.`,
+    note: `Feeling far from what you hold sacred is common, and others can help you sort it out. A chaplain can sit with this.`,
     guide: `Spiritual struggle. Use the struggle-type picker.` },
   regret: { who: 'person', on: ['often', 'always'], title: `Regret`,
     note: `Some regrets can still be repaired. Some can be set down. Both are possible here.`,
@@ -227,7 +227,7 @@ const GUIDE = {
   pc6: { roots: `Religious or spiritual struggle`, trunk: `Meaning in suffering; integrity and legacy`, bark: `Fear about dying or death`, branches: `Relationships`, fruit: `Treatment decisions` },
   struggles: [
     ['divine', `Divine`, `"God abandoned me." "Why is God punishing me?"`, `Tell me about you and God these days.`, `Don't defend God. Lament is prayer. The Psalms yell at God too.`],
-    ['doubt', `Doubt`, `"I don't know what I believe anymore."`, `What are the questions that won't let go?`, `Welcome questions. Don't rush to answers.`],
+    ['doubt', `Doubt`, `"I don't know what I believe anymore."`, `What are the questions that won't let go?`, `Welcome questions. Let answers come slowly.`],
     ['interpersonal', `Interpersonal`, `"The church hurt me."`, `What happened, if you want to tell me?`, `The church is not God. Believe them. Protect them from more harm.`],
     ['moral', `Moral`, `"I've done things I can't take back."`, `What do you carry that feels heaviest?`, `Sort guilt (repair) from shame (worth). Offer confession or blessing in their tradition.`],
     ['meaning', `Ultimate meaning`, `"What was it all for?"`, `Where has your life mattered, even in small ways?`, `Meaning-centered work: what you gave, how you face this, what you create, what you still love.`],

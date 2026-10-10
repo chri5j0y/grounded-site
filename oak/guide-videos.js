@@ -69,7 +69,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Anxiety That Won't Settle",
 "sub": "For You",
-"say": "If your mind won't stop racing, or dread keeps showing up even when nothing is wrong, this is for you. You are not overreacting, and you are not alone."
+"say": "If your mind won't stop racing, or dread keeps showing up even when nothing is wrong, this is for you. Your feelings make sense, and we're with you."
 },
 {
 "k": "big",
@@ -271,7 +271,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady, kind, and close by.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to make the fear go away. Be steady, be kind, and stay close by. The full guide has more, whenever you want it."
+"say": "Your part is simple: be steady, be kind, and stay close by. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -386,7 +386,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Small steps still count.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to fix all of it today. One small caring thing is enough for now. Small steps still count."
+"say": "Take it one piece at a time. One small caring thing is enough for now. Small steps still count."
 }
 ]
 },
@@ -494,7 +494,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Keep showing up.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to say the perfect thing. Keep reaching, keep asking, and keep showing up. The full guide has more, whenever you want it."
+"say": "A simple, kind word is enough. Keep reaching, keep asking, and keep showing up. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -734,7 +734,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "You can't be anyone's only connection.",
 "sub": "Help them build more than one.",
-"say": "You can't be someone's only connection, and you don't have to be. Keep your own people and your own rest. Sharing them is part of what helps."
+"say": "You can be one connection among many. Keep your own people and your own rest. Sharing them is part of what helps."
 },
 {
 "k": "big",
@@ -875,7 +875,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Rest is part of the work.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Rest isn't a reward for finishing. It is part of the work. You are more than what you produce. The full guide has more, whenever you want it."
+"say": "Rest is part of the work itself. You are more than what you produce. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -1570,7 +1570,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "One small step is enough for today.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need the whole map. One small step is enough for today. The full guide has more, whenever you want it."
+"say": "One small step is enough for today. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -1837,9 +1837,9 @@ window.GG_LEARN_GUIDES.oak = {
 "items": [
 "I'm so glad you're safe.",
 "You can tell me as much or as little as you want.",
-"You don't have to talk. I'll be right here."
+"Quiet is welcome too. I'll be right here."
 ],
-"say": "Here are words that help. I'm so glad you're safe. You can tell me as much or as little as you want. You don't have to talk. I'll be right here."
+"say": "Here are words that help. I'm so glad you're safe. You can tell me as much or as little as you want. Quiet is welcome too. I'll be right here."
 },
 {
 "k": "points",
@@ -1886,11 +1886,11 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Picture sitting with them.",
-"sub": "Nothing to fix.",
-"say": "Take a moment. Picture yourself sitting beside them, with nothing to fix. Now say it softly: you can tell me as much or as little as you want.",
+"sub": "Presence is enough.",
+"say": "Take a moment. Picture yourself sitting beside them, simply present. Now say it softly: you can tell me as much or as little as you want.",
 "beats": [
 "Take a moment.",
-"Picture yourself sitting beside them, with nothing to fix.",
+"Picture yourself sitting beside them, simply present.",
 {
 "t": "Now say it softly: you can tell me as much or as little as you want.",
 "w": 10
@@ -1913,7 +1913,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady presence is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need the right words. Steady presence is enough, and it matters more than you know. The full guide has more, whenever you want it."
+"say": "Simple words are enough. Steady presence is enough, and it matters more than you know. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -2275,7 +2275,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Your Spouse or Partner Died",
 "sub": "For the Helper",
-"say": "When someone you know has lost their husband, wife, or partner, this is for you. You don't need perfect words. You need to keep showing up."
+"say": "When someone you know has lost their husband, wife, or partner, this is for you. Simple words are enough. You need to keep showing up."
 },
 {
 "k": "big",
@@ -2618,9 +2618,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "There is no timeline.",
+"h": "Grief keeps its own time.",
 "sub": "One hour at a time is enough.",
-"say": "This is one of the deepest losses a person can face. It can feel unbearable, disorienting, even physically painful. You may feel the whole world should have stopped. There is no timeline for this, and no right way through it. One hour at a time is enough."
+"say": "This is one of the deepest losses a person can face. It can feel unbearable, disorienting, even physically painful. You may feel the whole world should have stopped. This takes its own time, and your way through it is your own. One hour at a time is enough."
 },
 {
 "k": "words",
@@ -2972,7 +2972,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Their grief is real, even when it's quiet.",
-"say": "Their grief may be invisible to most of the people around them. Few people met the baby, and the world moves on fast. They may be hurt by silence. You don't need perfect words. Your part is to notice, and to say so."
+"say": "Their grief may be invisible to most of the people around them. Few people met the baby, and the world moves on fast. They may be hurt by silence. Simple words are enough. Your part is to notice, and to say so."
 },
 {
 "k": "words",
@@ -3157,7 +3157,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "If your faith brings fear",
 "body": "Many traditions today speak of mercy. A trusted faith leader can help.",
-"say": "If your faith brings fear about what this death means, you are not alone. Many traditions today speak of mercy, and understand suicide as the result of illness. A trusted faith leader can sit with that question with you."
+"say": "If your faith brings fear about what this death means, many people of faith have felt this too. Many traditions today speak of mercy, and understand suicide as the result of illness. A trusted faith leader can sit with that question with you."
 },
 {
 "k": "card",
@@ -3193,7 +3193,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Many survivors say the silence hurts most.",
-"say": "Many survivors say the silence hurts most. People avoid them, or avoid the name, because they don't know what to say. You don't need perfect words. Your part is to show up, and stay."
+"say": "Many survivors say the silence hurts most. People avoid them, or avoid the name, because they don't know what to say. Simple words are enough. Your part is to show up, and stay."
 },
 {
 "k": "words",
@@ -3348,7 +3348,7 @@ window.GG_LEARN_GUIDES.oak = {
 "I love you.",
 "Goodbye."
 ],
-"say": "Say what matters while you can. Thank you. I'm sorry. I forgive you. I love you. And, when it's time, goodbye. You don't need perfect words. Even one of these, said plainly, can mean everything."
+"say": "Say what matters while you can. Thank you. I'm sorry. I forgive you. I love you. And, when it's time, goodbye. Simple words are enough. Even one of these, said plainly, can mean everything."
 },
 {
 "k": "big",
@@ -3402,7 +3402,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Being here is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You can't do this perfectly. Nobody can. You can grieve and hope at the same time. Being here is enough. The full guide has more, whenever you want it."
+"say": "Everyone does this imperfectly, and that's human. You can grieve and hope at the same time. Being here is enough. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -3516,7 +3516,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Show up. Stay close.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need to fix anything. Show up, stay close, and keep coming back. The full guide has more, whenever you want it."
+"say": "Your presence is what matters. Show up, stay close, and keep coming back. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -3754,7 +3754,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Be patient. Stay close.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Be patient, and stay close. You don't need the right words. You only need to keep showing up. The full guide has more, whenever you want it."
+"say": "Be patient, and stay close. Simple words are enough. You only need to keep showing up. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -4112,7 +4112,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Be gentle with the empty routines.",
 "sub": "Walk the old route, or a new one.",
-"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. There is no deadline for deciding about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988."
+"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. Take all the time you need to decide about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988."
 },
 {
 "k": "big",
@@ -4345,8 +4345,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Hope can change shape.",
-"sub": "It doesn't have to disappear.",
-"say": "Hope can change shape. At first, it may be all about the test results. Over time, it can grow to hold other things too: a good day, time with the people you love, comfort, something you still want to do. Hope doesn't have to disappear."
+"sub": "It can stay with you.",
+"say": "Hope can change shape. At first, it may be all about the test results. Over time, it can grow to hold other things too: a good day, time with the people you love, comfort, something you still want to do. Hope can change shape and stay."
 },
 {
 "k": "big",
@@ -4377,7 +4377,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "A Hard Diagnosis",
 "sub": "For the Helper",
-"say": "When someone you care about has had a hard diagnosis, this is for you. You don't need the right words. You need to stay close."
+"say": "When someone you care about has had a hard diagnosis, this is for you. Simple words are enough. You need to stay close."
 },
 {
 "k": "big",
@@ -4460,7 +4460,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Stay close.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to fix this. Stay close, and keep showing up. The full guide has more, whenever you want it."
+"say": "Your part is to stay close, and keep showing up. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -4486,7 +4486,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Chronic Illness or Pain",
 "sub": "For You",
-"say": "If you live with an illness or pain that doesn't go away, this is for you. You don't have to explain yourself here."
+"say": "If you live with an illness or pain that doesn't go away, this is for you. You're welcome here as you are."
 },
 {
 "k": "big",
@@ -4503,7 +4503,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Fighting the system",
 "Not being seen"
 ],
-"say": "You may be tired of explaining. Tired of being tired. Frustrated with your body, and with the systems that are supposed to help. And lonely, when the people around you can't see your pain. All of that is real, and you are not alone in it."
+"say": "You may be tired of explaining. Tired of being tired. Frustrated with your body, and with the systems that are supposed to help. And lonely, when the people around you can't see your pain. All of that is real, and many people share it."
 },
 {
 "k": "points",
@@ -4585,7 +4585,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Rest is part of the work.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Rest is part of living well with this, not a failure. Your life still has meaning. The full guide has more, whenever you want it."
+"say": "Rest is part of living well with this. Your life still has meaning. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -4762,7 +4762,7 @@ window.GG_LEARN_GUIDES.oak = {
 "I love you.",
 "Goodbye."
 ],
-"say": "Say what matters while you can. Thank you. I'm sorry. I forgive you. I love you. And, when it's time, goodbye. You don't need perfect words. Even one of these, said plainly, can mean everything."
+"say": "Say what matters while you can. Thank you. I'm sorry. I forgive you. I love you. And, when it's time, goodbye. Simple words are enough. Even one of these, said plainly, can mean everything."
 },
 {
 "k": "story",
@@ -4917,7 +4917,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Listen. Follow. Stay.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to make this easier. Listen, follow their lead, and stay. The full guide has more, whenever you want it."
+"say": "Your part is simple: listen, follow their lead, and stay. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -4949,8 +4949,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Planning ahead is an act of love.",
-"sub": "It is not giving up.",
-"say": "Planning ahead is an act of love, not giving up. When your wishes are clear, the people you love don't have to guess in the hardest hours of their lives. Many people wait for a crisis, when it's much harder. You can give this gift now, while it's calm."
+"sub": "It is an act of love.",
+"say": "Planning ahead is an act of love. When your wishes are clear, the people you love don't have to guess in the hardest hours of their lives. Many people wait for a crisis, when it's much harder. You can give this gift now, while it's calm."
 },
 {
 "k": "points",
@@ -4998,7 +4998,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Choose your agent with care.",
 "body": "Someone who will honor your wishes, even when it is hard.",
-"say": "Choose your agent with care. It may not be the person closest to you. It's the person who will speak your wishes clearly, even when they're hard to hear, and even when family disagrees. Then ask them. Don't assume they know."
+"say": "Choose your agent with care. It may not be the person closest to you. It's the person who will speak your wishes clearly, even when they're hard to hear, and even when family disagrees. Then ask them, and tell them plainly."
 },
 {
 "k": "big",
@@ -5051,7 +5051,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "One honest conversation is a good start.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to finish it all today. One honest conversation, or one page, is a good start. It's a gift to the people you love, and a kind of peace for you. The full guide has more, whenever you want it."
+"say": "One piece at a time is plenty. One honest conversation, or one page, is a good start. It's a gift to the people you love, and a kind of peace for you. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -5164,9 +5164,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "Ask now, so you never have to guess.",
+"h": "Ask now, so you'll know.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Ask now, so you never have to guess. Listening to their wishes today is a way of loving them later. The full guide has more, whenever you want it."
+"say": "Ask now, so you'll know. Listening to their wishes today is a way of loving them later. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -5285,9 +5285,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "I don't have to do this perfectly.",
+"h": "Good enough is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "No one does this perfectly. You don't have to either. Being here is enough. The full guide has more, whenever you want it."
+"say": "Everyone does this imperfectly, and that's okay. Being here is enough. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -5409,7 +5409,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Quiet, steady, and close.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need the right words. Be quiet, steady, and close, and keep showing up. The full guide has more, whenever you want it."
+"say": "Simple words are enough. Be quiet, steady, and close, and keep showing up. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -5437,9 +5437,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
+"h": "Take your time.",
 "sub": "You only have to do today.",
-"say": "First, take a breath. There is no rush. You don't have to do everything right away. You only have to do today."
+"say": "First, take a breath. Take your time. You don't have to do everything right away. You only have to do today."
 },
 {
 "k": "points",
@@ -5663,7 +5663,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Your steady presence is a gift.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You can't fix this. You don't need to. Your steady presence is a gift. Show up, then keep showing up. The full guide has more, whenever you want it."
+"say": "Your steady presence is the gift. Show up, then keep showing up. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -7068,11 +7068,11 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Picture sitting with them.",
-"sub": "Nothing to fix.",
-"say": "Take a moment. Picture yourself sitting beside them, with nothing to fix. Now say it softly: what would help most this week?",
+"sub": "Presence is enough.",
+"say": "Take a moment. Picture yourself sitting beside them, simply present. Now say it softly: what would help most this week?",
 "beats": [
 "Take a moment.",
-"Picture yourself sitting beside them, with nothing to fix.",
+"Picture yourself sitting beside them, simply present.",
 {
 "t": "Now say it softly: what would help most this week?",
 "w": 10
@@ -7101,7 +7101,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady presence is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need the right words. Gladness, practical help, and steady presence are enough. The full guide has more, whenever you want it."
+"say": "Simple words are enough. Gladness, practical help, and steady presence are enough. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -7128,7 +7128,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Pornography That's Hard to Stop",
 "sub": "For You",
-"say": "If you've been caught in a cycle with pornography, wanting to stop and finding it hard to, this is for you. You are not alone, and you can find a way forward."
+"say": "If you've been caught in a cycle with pornography, wanting to stop and finding it hard to, this is for you. Help is here, and you can find a way forward."
 },
 {
 "k": "points",
@@ -7709,7 +7709,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Divorce or a Breakup",
 "sub": "For the Helper",
-"say": "When someone you care about is going through a divorce or a breakup, this is for you. You don't need the right words. You need to keep showing up."
+"say": "When someone you care about is going through a divorce or a breakup, this is for you. Simple words are enough. You need to keep showing up."
 },
 {
 "k": "big",
@@ -8160,9 +8160,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "What they did does not define you.",
+"h": "Who you are is yours to define.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "What they did does not define you. You can heal from this, at your own pace. The full guide has more, whenever you want it."
+"say": "Who you are is yours to define. You can heal from this, at your own pace. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -8991,7 +8991,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "A new season can be full of meaning.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Grieve the season that ended, and give the next one time. A new season can be full of meaning, even if you can't see its shape yet. The full guide has more, whenever you want it."
+"say": "Grieve the season that ended, and give the next one time. A new season can be full of meaning, even before you can see its shape. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -9102,7 +9102,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Celebrate and grieve with them.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Celebrate and grieve with them, and keep showing up while the new season takes shape. You don't need the right words. The full guide has more, whenever you want it."
+"say": "Celebrate and grieve with them, and keep showing up while the new season takes shape. Simple words are enough. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -9356,7 +9356,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady company is the gift.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need answers. Keep showing up, keep their story private, and keep reminding them who they are. Steady company is the gift. The full guide has more, whenever you want it."
+"say": "Keep showing up, keep their story private, and keep reminding them who they are. Steady company is the gift. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -10218,7 +10218,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "One bill at a time.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to fix it all tonight. One honest look, one call, one bill at a time. This is a hard season, and seasons change. The full guide has more, whenever you want it."
+"say": "Tonight, start small: one honest look, one call, one bill at a time. This is a hard season, and seasons change. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -10250,10 +10250,10 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Words that help",
 "items": [
 "Thanks for telling me.",
-"You're not alone in this.",
+"We're with you in this.",
 "What would help most this week?"
 ],
-"say": "Here are words that help. Thanks for telling me. You're not alone in this. And later, what would help most this week?"
+"say": "Here are words that help. Thanks for telling me. We're with you in this. And later, what would help most this week?"
 },
 {
 "k": "points",
@@ -10331,9 +10331,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "You're not alone in this.",
+"h": "We're with you in this.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Thanks for telling me. You're not alone in this. Those words can open the door to everything else. The full guide has more, whenever you want it."
+"say": "Thanks for telling me. We're with you in this. Those words can open the door to everything else. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -10361,7 +10361,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "A threshold, not a finish line.",
+"h": "A threshold, and a new beginning.",
 "sub": "Freedom and loss can come together.",
 "say": "Retirement is a threshold, not a finish line. It can bring freedom and loss in the same week. No alarm clock, and no one waiting on you at work. More time, and fewer reasons to get out of the house. Both can be true at once."
 },
@@ -10422,7 +10422,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Try saying this",
 "body": "\"I'm figuring out this new season. Want to join me for something new?\"",
-"say": "You don't have to figure this out alone. Try saying to a friend: I'm figuring out this new season. Want to join me for something new? Most people are glad to be asked."
+"say": "Others can help you figure this out. Try saying to a friend: I'm figuring out this new season. Want to join me for something new? Most people are glad to be asked."
 },
 {
 "k": "words",
@@ -11326,14 +11326,14 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Something to tell yourself",
 "items": [
 "My questions are welcome.",
-"I don't have to have it figured out today."
+"I can figure it out over time."
 ],
 "sub": "Out loud, or quietly.",
-"say": "Here are two things you can tell yourself. My questions are welcome. I don't have to have it figured out today. Pick the one you need most, and say it now, out loud or quietly.",
+"say": "Here are two things you can tell yourself. My questions are welcome. I can figure it out over time. Pick the one you need most, and say it now, out loud or quietly.",
 "beats": [
 "Here are two things you can tell yourself.",
 "My questions are welcome.",
-"I don't have to have it figured out today.",
+"I can figure it out over time.",
 {
 "t": "Pick the one you need most, and say it now, out loud or quietly.",
 "w": 10
@@ -11375,7 +11375,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "A Crisis of Faith",
 "sub": "For the Helper",
-"say": "When someone you care about is wrestling with their faith, this is for you. You don't have to resolve their questions to be a good companion."
+"say": "When someone you care about is wrestling with their faith, this is for you. A good companion walks with the questions."
 },
 {
 "k": "big",
@@ -11469,7 +11469,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Stay close. That is enough.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't need the answers. Stay in relationship. That is enough. The full guide has more, whenever you want it."
+"say": "Stay in relationship. That is enough. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -11914,7 +11914,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Companionship is the gift.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to bring the sacred close again. Sit with them. Companionship is the gift. The full guide has more, whenever you want it."
+"say": "Simply sit with them. Companionship is the gift. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -11941,7 +11941,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Moral Injury",
 "sub": "For You",
-"say": "If you carry something from your work, your service, or your life that goes against your deepest values, this is for you. Veterans, nurses, doctors, first responders, and many others carry this. You are not alone with it."
+"say": "If you carry something from your work, your service, or your life that goes against your deepest values, this is for you. Veterans, nurses, doctors, first responders, and many others carry this. Others can carry it with you."
 },
 {
 "k": "big",
@@ -12467,9 +12467,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "Don't rush someone's healing.",
+"h": "Let healing take its own time.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Healing takes the time it takes. Don't rush someone's healing. Walk beside it. The full guide has more, whenever you want it."
+"say": "Healing takes the time it takes. Let healing take its own time. Walk beside it. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -13063,7 +13063,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "You are not alone",
+"title": "We're with you",
 "body": "\"I'm worried about my family's safety. Can you be one of our emergency contacts?\"",
 "say": "Stay connected. Community groups and accompaniment programs can walk with you. And you can ask someone you trust: I'm worried about my family's safety. Can you be one of our emergency contacts? If the fear begins to take over your days, a counselor can help. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
 },
@@ -13248,7 +13248,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Tell one person.",
 "body": "Try: \"I'm shaken by what happened. Can we talk?\"",
-"say": "You don't have to carry this alone. Try saying this to someone you trust. I'm shaken by what happened. Can we talk? Putting what you feel into words can help it settle a little."
+"say": "Others can help you carry this. Try saying this to someone you trust. I'm shaken by what happened. Can we talk? Putting what you feel into words can help it settle a little."
 },
 {
 "k": "points",
@@ -13303,7 +13303,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Violence in Your Community",
 "sub": "For the Helper",
-"say": "This is for anyone checking on someone shaken by violence in their community. You don't need the right words. You need to be steady, and to show up."
+"say": "This is for anyone checking on someone shaken by violence in their community. Simple words are enough. You need to be steady, and to show up."
 },
 {
 "k": "big",
@@ -13429,7 +13429,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Safety first, then basic needs.",
 "body": "Danger now: 911. The American Red Cross and local agencies can help.",
-"say": "First things first. If you are in danger right now, call 911. Then come basic needs: a safe place to sleep, water, food, medicine, and a way to stay in touch. The American Red Cross and local agencies can help with those. You don't have to figure it out alone."
+"say": "First things first. If you are in danger right now, call 911. Then come basic needs: a safe place to sleep, water, food, medicine, and a way to stay in touch. The American Red Cross and local agencies can help with those. Others can help you figure it out."
 },
 {
 "k": "big",
@@ -13906,7 +13906,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Tell one person.",
 "body": "Try: \"Something happened today that really hurt. Can I tell you about it?\"",
-"say": "You don't have to carry this alone. Try saying this to someone you trust. Something happened today that really hurt. Can I tell you about it?"
+"say": "Others can help you carry this. Try saying this to someone you trust. Something happened today that really hurt. Can I tell you about it?"
 },
 {
 "k": "big",
@@ -13943,7 +13943,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Facing Prejudice",
 "sub": "For the Helper",
-"say": "This is for anyone standing beside someone who has faced prejudice. You don't need perfect words. You need to believe them."
+"say": "This is for anyone standing beside someone who has faced prejudice. Simple words are enough. You need to believe them."
 },
 {
 "k": "big",
@@ -14101,7 +14101,7 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "Go where people are",
-"You don't have to be alone"
+"Others are with you"
 ],
 [
 "Tell one person today",
@@ -14123,7 +14123,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "This feeling is real, and it can change.",
 "sub": "988: call or text, any time. Danger right now: 911.",
-"say": "This feeling is real, and it can change. When you're ready, a doctor or counselor can help, even if you've tried before. Right now, you only need to stay safe. Call or text 988, any time. If you are in danger right now, call 911. You don't have to carry this alone."
+"say": "This feeling is real, and it can change. When you're ready, a doctor or counselor can help, even if you've tried before. Right now, you only need to stay safe. Call or text 988, any time. If you are in danger right now, call 911. Others can help you carry this."
 }
 ],
 "crisis": [
@@ -14150,7 +14150,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "When You're Thinking About Suicide",
 "sub": "For the Helper",
-"say": "This is for anyone beside someone who is thinking about suicide. You don't need to be an expert to help."
+"say": "This is for anyone beside someone who is thinking about suicide. Anyone who cares can help."
 },
 {
 "k": "card",
@@ -14211,9 +14211,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "You are not the only lifeline.",
+"h": "You are one of many lifelines.",
 "sub": "988 is there for you too.",
-"say": "You are not the only lifeline. Bring in other people you both trust, and get support for yourself too. 988 is there for you as well, call or text, any time. If there is danger right now, call 911."
+"say": "You are one of many lifelines. Bring in other people you both trust, and get support for yourself too. 988 is there for you as well, call or text, any time. If there is danger right now, call 911."
 }
 ],
 "crisis": [
@@ -14255,12 +14255,12 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "You don't need to be an expert.",
-"say": "You may feel scared, helpless, or afraid of saying the wrong thing. Take a breath. You don't need to be an expert. Put your feet on the floor. Breathe in slowly, and let it out even slower.",
+"h": "Caring is enough to start.",
+"say": "You may feel scared, helpless, or afraid of saying the wrong thing. Take a breath. Caring is enough to start. Put your feet on the floor. Breathe in slowly, and let it out even slower.",
 "beats": [
 "You may feel scared, helpless, or afraid of saying the wrong thing.",
 "Take a breath.",
-"You don't need to be an expert.",
+"Caring is enough to start.",
 "Put your feet on the floor.",
 {
 "t": "Breathe in slowly, and let it out even slower.",
@@ -14332,8 +14332,8 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "I can't fix this alone, and I don't have to.",
-"say": "Bring in other trusted people, so you are not the only lifeline. Say it to yourself now. I can't fix this alone, and I don't have to."
+"h": "I can lean on others to help with this.",
+"say": "Bring in other trusted people, so you are not the only lifeline. Say it to yourself now. I can lean on others to help with this."
 },
 {
 "k": "big",
@@ -14562,9 +14562,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "You don't have to win. Keep everyone safe.",
+"h": "Choose safety over winning. Keep everyone safe.",
 "sub": "Unsafe: leave and call 911. Thoughts of suicide: 988.",
-"say": "You don't have to win. Keep everyone safe, you included. If you feel unsafe, leave and call 911. For thoughts of suicide, call or text 988."
+"say": "Choose safety over winning. Keep everyone safe, you included. If you feel unsafe, leave and call 911. For thoughts of suicide, call or text 988."
 }
 ],
 "crisis": [
@@ -14765,7 +14765,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Tell one trusted person.",
 "body": "Try: \"Things at home aren't safe. I need help thinking this through.\"",
-"say": "You don't have to figure this out alone. Try telling one trusted person. Things at home aren't safe. I need help thinking this through."
+"say": "Others can help you figure this out. Try telling one trusted person. Things at home aren't safe. I need help thinking this through."
 },
 {
 "k": "big",
@@ -14940,7 +14940,7 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "Your own pace",
-"No deadline for healing"
+"Healing takes its own time"
 ],
 [
 "A trauma-informed counselor",
@@ -15061,7 +15061,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "I believe you.",
 "sub": "RAINN: 1-800-656-4673.",
-"say": "You don't need perfect words. I believe you is a strong place to start. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
+"say": "Simple words are enough. I believe you is a strong place to start. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
 }
 ],
 "crisis": [
@@ -15218,7 +15218,7 @@ window.GG_LEARN_GUIDES.oak = {
 "items": [
 [
 "Reporting is their choice",
-"No pressure either way"
+"Their choice, either way"
 ],
 [
 "Questions about blame",
@@ -15229,7 +15229,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Even toward the person who hurt them"
 ]
 ],
-"say": "Let them choose. Reporting is their choice, with no pressure either way. Leave out any question about what they were wearing or drinking. And ask before you act, even toward the person who hurt them."
+"say": "Let them choose. Reporting is their choice, and you support either one. Leave out any question about what they were wearing or drinking. And ask before you act, even toward the person who hurt them."
 },
 {
 "k": "points",
@@ -15259,7 +15259,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "I believe you.",
 "sub": "RAINN: 1-800-656-4673, any time.",
-"say": "Hearing this can be very hard. Get support for yourself too, without sharing their story. You don't need perfect words. I believe you is the place to start. RAINN is there any time, at 1-800-656-4673."
+"say": "Hearing this can be very hard. Get support for yourself too, without sharing their story. Simple words are enough. I believe you is the place to start. RAINN is there any time, at 1-800-656-4673."
 }
 ],
 "crisis": [
@@ -15355,7 +15355,7 @@ window.GG_LEARN_GUIDES.oak = {
 "I've been hurting myself when things get bad.",
 "I want help stopping."
 ],
-"say": "It tends to get harder to stop over time, and you don't have to stop alone. Tell one safe person: a friend, a doctor, or a counselor. You can borrow these words. I've been hurting myself when things get bad. I want help stopping."
+"say": "It tends to get harder to stop over time, and others can help you stop. Tell one safe person: a friend, a doctor, or a counselor. You can borrow these words. I've been hurting myself when things get bad. I want help stopping."
 },
 {
 "k": "big",
@@ -15628,7 +15628,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Rest is part of living well.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Rest is part of living well, never a failure. Go gently with the body you have today. The full guide has more, whenever you want it."
+     "say": "Rest is part of living well. Go gently with the body you have today. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -16386,7 +16386,7 @@ window.GG_LEARN_GUIDES.oak = {
     },
     {
      "k": "big",
-     "h": "You don't have to do this alone.",
+     "h": "Others can walk this with you.",
      "say": "Find one parent who has walked a similar road. In Minnesota, PACER Center helps families of children with any disability. Plan one break for yourself this month, even an hour. Rest and help are part of raising your child well."
     },
     {
@@ -17363,9 +17363,9 @@ window.GG_LEARN_GUIDES.oak = {
     },
     {
      "k": "big",
-     "h": "A hard stretch is not the end of your story.",
+     "h": "A hard stretch is one chapter of your story.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "A hard stretch is not the end of your story. Keep building, one piece at a time. The full guide has more, whenever you want it."
+     "say": "A hard stretch is one chapter of your story. Keep building, one piece at a time. The full guide has more, whenever you want it."
     }
    ]
   },

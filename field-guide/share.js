@@ -69,7 +69,7 @@ const SVC_FAM = [
   {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services.html#marriage'},
   {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services.html#celebrations'},
   {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, bedside blessings, and pregnancy and infant loss.', url: 'growwithgrounded.com/services.html#farewells'},
-  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'You\'re not alone.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services.html#hard-seasons'},
+  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services.html#hard-seasons'},
   {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services.html#growth'},
   {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services.html#for-teams'}
 ];
@@ -125,7 +125,7 @@ const ORGS = ORG_AUD.map(a => Object.assign({svc: 'org', mark: 'favicon.svg', co
 // QR code to growwithgrounded.com/grove. hold: kept for later. The Classroom kind waits on the attorney's answer about
 // classroom check-ins (PPRA) before it is offered to schools, so its words stay general (classes, co-ops, youth programs)
 // and the builder shows a hold note whenever it is chosen.
-const GROVE_URL = 'growwithgrounded.com/grove', GROVE_LINE = 'The Grove\u2122 by Grow With Grounded\u2122. It opens in any browser, with no account.';
+const GROVE_URL = 'growwithgrounded.com/grove', GROVE_LINE = 'The Grove\u2122 by Grow With Grounded\u2122. It opens in any browser, and everything stays on your device.';
 const GROVE_AUD = [
   {id: 'grove-congregations', name: 'Congregations',
     headline: 'Grow together as a community.', tagline: 'A Faith Community grove for a congregation, a class, a youth group, or a ministry team.',

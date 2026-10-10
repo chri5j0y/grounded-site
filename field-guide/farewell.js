@@ -817,7 +817,7 @@ function inSvc(p){ const c = cerBind(); return c && hasSvc(p) ? c.inService(p.sv
 function lbPrev(p, k, x){
   const bible = (CER() && hasSvc(p) && CER().get(p.svc) || {}).bible || 'kjv';
   if (k === 'reading'){ const b = rBody(x, bible);
-    return `<div class="fw-prev">${x.bring ? `<p class="fw-note2"><b>Text not included.</b> Bring your own copy; it prints with this credit line.</p>` : `<div class="fw-words fw-read">${esc(b.text)}</div>`}${x.source ? `<p class="fw-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="fw-sub">${esc(x.note)}</p>` : ''}</div>`; }
+    return `<div class="fw-prev">${x.bring ? `<p class="fw-note2"><b>Bring your own copy.</b> It prints with this credit line.</p>` : `<div class="fw-words fw-read">${esc(b.text)}</div>`}${x.source ? `<p class="fw-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="fw-sub">${esc(x.note)}</p>` : ''}</div>`; }
   return `<div class="fw-prev">${x.by ? `<p><b>${esc(x.by)}</b></p>` : ''}${x.about ? `<p>${esc(rfill(x.about, p))}</p>` : ''}${arr(x.how).length ? `<div class="fw-lbl">How it goes</div><ol>${x.how.map(h => `<li>${esc(rfill(h, p))}</li>`).join('')}</ol>` : ''}${arr(x.needs).length ? `<div class="fw-lbl">What to bring</div><ul>${x.needs.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
     <p class="fw-sub">${[x.minutes ? 'About ' + x.minutes + ' minutes' : '', momentsOf(k, x).length ? 'Fits: ' + momentsOf(k, x).map(m => (MOMS.find(z => z[0] === m) || [m, m])[1]).join(', ') : '', faithKind(k, x) === 'faith' ? 'Faith' : faithKind(k, x) === 'plain' ? 'Plain' : 'Faith or plain'].filter(Boolean).join(' · ')}</p>${x.source ? `<p class="fw-src">${esc(x.source)}</p>` : ''}</div>`;
 }

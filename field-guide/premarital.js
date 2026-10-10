@@ -254,6 +254,7 @@ function vHome(){
   const P = pm(), L = list().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
   return `<div class="page-head"><div class="eyebrow">${esc(P.program || 'Grow With Grounded')}</div><h1>${esc(P.title || 'Premarital Sessions')}</h1><p>${esc(P.lead || '')}</p></div>
   ${window.GGHw && GGHw.openView ? GGHw.openView() : '' /* GWG BLD 773 hook: Open Heartwood (Staff and Founders) */}
+  ${avReader() /* GWG BLD 782: After the Vows cards */}
   <div class="card"><h2 style="margin-bottom:4px">Add a Couple</h2>
     <div class="pm-g3"><div><label class="f" for="pm-a">First Partner</label><input type="text" id="pm-a" autocomplete="off" placeholder="First name"></div>
     <div><label class="f" for="pm-b">Second Partner</label><input type="text" id="pm-b" autocomplete="off" placeholder="First name"></div>
@@ -630,6 +631,53 @@ async function weekIn(c){
   }
 }
 
+// ---------- After the Vows cards (GWG BLD 782) ----------
+// Couples with After the Vows (a wedding, elopement, or vow renewal; heartwood/ in After the Vows mode) have no
+// premarital couple here. A Week Card (no session) or a check-in card they share opens on the Premarital home to read
+// with them, read only, held only while the Field Guide is open, and never saved with your records.
+function avShow(A){
+  const w = A.card, br = t => esc(t).replace(/\n/g, '<br>'), ul = a => `<ul class="pm-ul">${a.map(t => `<li>${esc(t)}</li>`).join('')}</ul>`;
+  const close = `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-pm="avx">Close This Card</button></div>`;
+  if (A.kind === 'week'){
+    const who = w.m === 'one' && w.to ? esc(w.n) + ' and ' + esc(w.to) : esc(w.n);
+    return `<div class="pm-wk1"><h3 style="margin-top:4px">Their Week Card</h3><p class="muted" style="font-size:15px">From ${who}, made ${esc(nice(w.on))}. The couple said yes to sharing it.</p>
+      ${w.q ? `<h4>Their Question</h4><p class="pm-quote">${br(w.q)}</p>` : ''}${w.vid.length ? `<h4>Videos Watched</h4>${ul(w.vid)}` : ''}${w.pr.length ? `<h4>Practices Tried</h4>${ul(w.pr)}` : ''}
+      ${w.wb.length ? `<h4>From The Couple Workbook</h4>${w.wb.map(y => `<div class="pm-wkwb"><b>${esc(y.t)}</b> <small class="muted">${esc(y.w)}</small><p>${br(y.a)}</p></div>`).join('')}` : ''}${close}</div>`;
+  }
+  const R = mRound(w.k), qs = R && Array.isArray(R.questions) ? R.questions : [], ids = qs.length ? qs.map(q => q.id) : Object.keys(w.r), qt = id => (qs.find(q => q.id === id) || {}).text || 'Question ' + id;
+  return `<div class="pm-wk1"><h3 style="margin-top:4px">${esc(mName(w.k))}</h3><p class="muted" style="font-size:15px">From ${esc(w.n)}${w.to ? ' for ' + esc(w.to) : ''}. The couple said yes to sharing it.</p>
+    ${qs.length ? '' : loadingNote('the check-in questions')}
+    ${ids.map(id => { const t = String(w.r[id] || '').trim(); return `<div class="pm-qa"><p>${esc(qt(id))}</p><p class="pm-quote">${t ? br(t) : '<span class="muted">Left blank.</span>'}</p></div>`; }).join('')}${close}</div>`;
+}
+function avReader(){
+  if (!window.GGHw) return '';
+  const A = S.av, open = !!(S.avErr || A);
+  return `<details class="card pm-det pm-week pm-av"${open ? ' open' : ''}><summary><h3>After the Vows Cards</h3></summary>
+    <p class="muted" style="font-size:15px">For couples with After the Vows, from a wedding, elopement, or vow renewal: open a Week Card or check-in card they shared, and read it together. It shows here while the Field Guide is open, and stays out of your saved records.</p>
+    ${A ? avShow(A) : ''}
+    <p class="muted" style="font-size:15px">${esc(PASTE_TIP)}</p><label class="f" for="pm-avl">Card Link</label>${pasteBox('pm-avl', 'Paste a Week Card or check-in card link, or the whole email or text')}
+    <label class="f" for="pm-avw">Their Shared Word</label><input type="password" id="pm-avw" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="The couple types it">
+    <label class="pm-yes"><input type="checkbox" id="pm-avy"> <span>The couple said yes to sharing this card with us.</span></label>
+    ${S.avErr ? `<p class="pm-err" role="alert">${esc(S.avErr)}</p>` : ''}
+    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-pm="avin"${S.avBusy ? ' disabled' : ''}>${S.avBusy ? 'Opening' : 'Open Their Card'}</button></div>
+    <p class="muted" style="font-size:14px;margin-top:10px">The word is used once to open the card and is never kept.</p></details>`;
+}
+async function avIn(){
+  const t = val('pm-avl'), word = val('pm-avw'), yes = (document.getElementById('pm-avy') || {}).checked, wc = weekCodeOf(t), mc = wc ? '' : mCodeOf(t);
+  S.avErr = '';
+  if (!t.trim()){ S.avErr = 'Paste the card link first.'; rerender(true); return; }
+  if (!wc && !mc){ S.avErr = 'That link does not look like a Week Card or check-in card from Heartwood. Copy it again from their phone.'; rerender(true); return; }
+  if (!word.trim()){ S.avErr = 'The couple types their shared word to open the card.'; rerender(true); return; }
+  if (!yes){ S.avErr = 'Check the box once the couple says yes to sharing this card.'; rerender(true); return; }
+  S.avBusy = true; rerender(true);
+  try {
+    const w = wc ? await readWeek(wc, word) : await readM(mc, word);
+    S.av = {kind: wc ? 'week' : 'm', card: w}; S.avBusy = false; rerender(true); toast('Their card is open.');
+  } catch (e){
+    S.avBusy = false; S.avErr = e && e.message === 'word' ? 'That word did not open the card. Let the couple try again.' : 'That card could not be read. The couple can make a fresh one.'; rerender(true);
+  }
+}
+
 // ---------- the Educator's Statement ----------
 const invLine = () => pm().statement.inventory || FB.statement.inventory;
 function stmtDefaults(c){
@@ -810,7 +858,7 @@ async function pasteInto(id){
   try { if (!navigator.clipboard || !navigator.clipboard.readText) return by(); t = await navigator.clipboard.readText(); } catch (e) { return by(); }
   if (!String(t).trim()){ by(); return; }
   el.value = t;
-  const found = id === 'pm-wl' ? weekCodeOf(t) : id === 'pm-ml' ? mCodeOf(t) : codeOf(t);
+  const found = id === 'pm-wl' ? weekCodeOf(t) : id === 'pm-ml' ? mCodeOf(t) : id === 'pm-avl' ? (weekCodeOf(t) || mCodeOf(t)) : codeOf(t);
   toast(found ? 'Pasted. The link is in.' : (id === 'pm-wl' ? 'Pasted, but no Week Card link was found in it.' : id === 'pm-ml' ? 'Pasted, but no check-in card link was found in it.' : 'Pasted, but no card link was found in it.'));
 }
 
@@ -840,6 +888,9 @@ function act(k, v){
     case 'add': { const a = val('pm-a').trim(), b = val('pm-b').trim(); if (!a || !b){ toast('Add both first names.'); return; } const x = newCouple(a, b, val('pm-w'), val('pm-p') || 'full'); list().push(x); keep(x); S.id = x.id; toast('Couple added.'); goView('sessions'); return; }
     case 'open': S.id = v; goView('sessions'); return;
     case 'del': { const x = list().find(y => y.id === v); if (!x || !confirm('Delete ' + names(x) + '? This removes their sessions, log, and card from this device.')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.pm = d.deleted.pm || {}; d.deleted.pm[x.id] = Date.now(); d.pm.couples = list().filter(y => y !== x); CTX.save(); toast('Deleted.'); rerender(true); return; }
+    case 'avin': avIn(); return;
+    case 'avx': S.av = null; S.avErr = ''; rerender(true); return;
+    case 'paste': pasteInto(v); return;
     case 'copylink': copyText(pm().app.link || APP_LINK); if (c){ c.pre = c.pre || {}; if (!c.pre.link){ c.pre.link = Date.now(); keep(c); rerender(true); } } return;
   }
   if (!c) return;
@@ -963,7 +1014,7 @@ const API = window.GGPm = {
   // ctx: {lib, field, data, save}. A different DATA (another unlock) starts fresh at the couples list.
   view(ctx){
     ctx = ctx || {};
-    if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; }
+    if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; S.av = null; S.avErr = ''; }
     CTX = {lib: ctx.lib || null, field: ctx.field || null, data: ctx.data || null, save: typeof ctx.save === 'function' ? ctx.save : () => {}};
     needM();
     return `<div id="pm-root">${inner()}</div>`;
