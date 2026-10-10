@@ -1886,11 +1886,11 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Picture sitting with them.",
-"sub": "Nothing to fix.",
-"say": "Take a moment. Picture yourself sitting beside them, with nothing to fix. Now say it softly: you can tell me as much or as little as you want.",
+"sub": "Presence is enough.",
+"say": "Take a moment. Picture yourself sitting beside them, simply present. Now say it softly: you can tell me as much or as little as you want.",
 "beats": [
 "Take a moment.",
-"Picture yourself sitting beside them, with nothing to fix.",
+"Picture yourself sitting beside them, simply present.",
 {
 "t": "Now say it softly: you can tell me as much or as little as you want.",
 "w": 10
@@ -2618,7 +2618,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "There is no timeline.",
+"h": "Grief keeps its own time.",
 "sub": "One hour at a time is enough.",
 "say": "This is one of the deepest losses a person can face. It can feel unbearable, disorienting, even physically painful. You may feel the whole world should have stopped. This takes its own time, and your way through it is your own. One hour at a time is enough."
 },
@@ -4949,8 +4949,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Planning ahead is an act of love.",
-"sub": "It is not giving up.",
-"say": "Planning ahead is an act of love, not giving up. When your wishes are clear, the people you love don't have to guess in the hardest hours of their lives. Many people wait for a crisis, when it's much harder. You can give this gift now, while it's calm."
+"sub": "It is an act of love.",
+"say": "Planning ahead is an act of love. When your wishes are clear, the people you love don't have to guess in the hardest hours of their lives. Many people wait for a crisis, when it's much harder. You can give this gift now, while it's calm."
 },
 {
 "k": "points",
@@ -7068,11 +7068,11 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Picture sitting with them.",
-"sub": "Nothing to fix.",
-"say": "Take a moment. Picture yourself sitting beside them, with nothing to fix. Now say it softly: what would help most this week?",
+"sub": "Presence is enough.",
+"say": "Take a moment. Picture yourself sitting beside them, simply present. Now say it softly: what would help most this week?",
 "beats": [
 "Take a moment.",
-"Picture yourself sitting beside them, with nothing to fix.",
+"Picture yourself sitting beside them, simply present.",
 {
 "t": "Now say it softly: what would help most this week?",
 "w": 10

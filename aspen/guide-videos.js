@@ -366,14 +366,14 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "Any way you feel is okay",
+"h": "Every feeling is welcome",
 "items": [
 "Sad",
 "Angry",
 "Numb",
 "Fine, then not fine"
 ],
-"say": "Any way you feel is okay. You might be sad, angry, or numb. You might feel fine one minute and flattened the next. Trouble focusing or sleeping is normal for a while."
+"say": "Every feeling is welcome. You might be sad, angry, or numb. You might feel fine one minute and flattened the next. Trouble focusing or sleeping is normal for a while."
 },
 {
 "k": "card",
@@ -492,11 +492,11 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "words",
 "h": "Words that help",
 "items": [
-"\"Any way you feel is okay.\"",
+"\"Every feeling is welcome.\"",
 "\"You don't have to be strong for me.\"",
 "\"We can be sad together.\""
 ],
-"say": "Words that help. Any way you feel is okay. Whatever you feel is okay with me. You don't have to be strong for me. We can be sad together. And say the person's name, and share memories. It tells them it's okay to talk. Then let them choose when, without pushing."
+"say": "Words that help. Every feeling is welcome. Whatever you feel is okay with me. You don't have to be strong for me. We can be sad together. And say the person's name, and share memories. It tells them it's okay to talk. Then let them choose when, without pushing."
 },
 {
 "k": "story",
@@ -7975,7 +7975,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Look at what gaming replaces.",
 "sub": "Look at what it pushes out.",
-"say": "Look at what gaming replaces:  sleep, homework, meals, movement, and time with family. That turns a fight about gaming into a plan for what matters."
+"say": "Look at what gaming replaces: sleep, homework, meals, movement, and time with family. That turns a fight about gaming into a plan for what matters."
 },
 {
 "k": "flow",
@@ -11441,7 +11441,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "What was happening right before?",
 "Others can help you stop."
 ],
-"say": "Start gently. I noticed the marks. You're not in trouble. I want to understand. Later, ask, what was happening right before? And tell them, others can help you stop. We'll get help together."
+"say": "Start gently. I noticed the marks. You're not in trouble. I want to understand. Later, ask, what was happening right before? And tell them, I'll help you stop. We'll get help together."
 },
 {
 "k": "big",

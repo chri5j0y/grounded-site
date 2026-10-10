@@ -516,7 +516,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "You never have to choose.",
+      "h": "You get to love both.",
       "sub": "Love has room for everyone.",
       "say": "Here is something important. You never have to choose between the people you love. You can love your mom, your dad, and someone new too. Love has room for everyone. And you don't have to love anyone right away. It's okay to take your time."
      },
@@ -6891,8 +6891,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Endings deserve their own time.",
-      "sub": "Let's not rush this one.",
-      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's not rush this one. Let's end it together, on purpose."
+      "sub": "Let's take this one slowly.",
+      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's take this one slowly. Let's end it together, on purpose."
      },
      {
       "k": "words",
@@ -6999,8 +6999,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Endings deserve their own time.",
-      "sub": "Let's not rush this one.",
-      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's not rush this one. Let's end it together, on purpose."
+      "sub": "Let's take this one slowly.",
+      "say": "Every group has a beginning, a middle, and an end. The ending matters as much as the beginning. Groups that end well carry their gifts forward. So let's take this one slowly. Let's end it together, on purpose."
      },
      {
       "k": "words",
@@ -7417,9 +7417,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "No one walks alone here.",
+      "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, no one walks alone. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
      }
     ],
     "plainScenes": [
@@ -7511,9 +7511,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "No one walks alone here.",
+      "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, no one walks alone. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [

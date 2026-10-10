@@ -2002,7 +2002,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Telling isn't snitching.",
        "Others can help me handle this."
       ],
-      "say": "Bullying puts a cruel voice in your head. You get to answer it. Here are words to keep. This is about their choices, not my worth. Telling isn't snitching. It's getting help for something wrong. And, Others can help me handle this."
+      "say": "Bullying puts a cruel voice in your head. You get to answer it. Here are words to keep. This is about their choices, not my worth. Telling isn't snitching. It's getting help for something wrong. And, others can help me handle this."
      },
      {
       "k": "card",
@@ -7732,7 +7732,7 @@ window.GG_LEARN_GUIDES.pine = {
        "What was happening right before?",
        "Others can help you stop."
       ],
-      "say": "Start gently. I'm not mad. I'm here, and I want to understand. Later, ask, what was happening right before? And tell them, others can help you stop. We'll get help together."
+      "say": "Start gently. I'm not mad. I'm here, and I want to understand. Later, ask, what was happening right before? And tell them, I'll help you stop. We'll get help together."
      },
      {
       "k": "big",

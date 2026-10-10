@@ -34,13 +34,20 @@
    partner's answers, and the other partner's stay. Clear Everything still clears both.
    Save a Backup and Load a Backup use the one Grow With Grounded Backup (shared/gg-backup.js). A gentle note, once
    each (st.ks), after a partner finishes Before the Vows and after a first After the Vows check-in.
+   After the Vows (GWG BLD 782): when open.js says window.HW_MODE is 'atv' (an After the Vows invite, for couples Chris
+   and Kayti marry, and married couples), Heartwood shows only the After the Vows side: Practices for Two, the Monthly
+   Check-in for Two, the First-Year Check-in, the Week Card (to Chris and Kayti, no session), Your Tree, Then Your Grove,
+   and the Learn videos named in GM_AFTER.atv.videos. The check-in, Talk About This, Strengths and Growing Edges, The
+   Couple Workbook, and The Money Map stay out of sight. Setup asks names, devices, faith backgrounds with Faith or Plain
+   wording for the practices, and an optional wedding date. Root Words, the one partner reset, Save a Backup, and the
+   gentle reminders work the same. A full invite ('full') keeps everything, as before.
    Saved on this device: gg_hw_v1 (gg_gm_v1 and the older gg_btv_v1 are read forward once, then removed); the sample
    keeps its own gg_hw_sample_v1, so sample answers never mix with Heartwood's. Learn progress: gg-learn:hw
    (gg-learn:gm and gg-learn:btv are read forward). A card made in the sample carries q 900 or more, and Heartwood
    and the sample each open only their own cards, since a card's answers follow the order of the questions. */
 (function () {
   'use strict';
-  var SAMPLE = !!window.HW_SAMPLE;
+  var SAMPLE = !!window.HW_SAMPLE, ATV = !SAMPLE && window.HW_MODE === 'atv';
   var KEY = SAMPLE ? 'gg_hw_sample_v1' : 'gg_hw_v1', GMKEY = 'gg_gm_v1', OLDKEY = 'gg_btv_v1', PEND = 'gg-gm-in', PENDM = 'gg-gm-min';
   var C = window.GMCore;
   var subtle = window.crypto && crypto.subtle, enc = new TextEncoder(), dec = new TextDecoder();
@@ -51,6 +58,11 @@
   var Q = window.BTV_Q || { version: 0, areas: [], questions: [], scale: [], safety: {} };
   var AREAS = Q.areas, QS = Q.questions, SCALE = Q.scale, SAFETY = Q.safety || {};
   var F = window.GM_FAITH || null, RS = window.GM_RESULTS || null, WB = window.GM_WB || null, MN = window.GM_MONEY || null, PR = window.GM_PR || null, AF = window.GM_AFTER || null;
+  // After the Vows wording and videos (GM_AFTER.atv, GWG BLD 782), with fallbacks for content sealed before it.
+  var AV = AF && AF.atv && typeof AF.atv === 'object' ? AF.atv : {};
+  var ATV_VIDS = Array.isArray(AV.videos) && AV.videos.length ? AV.videos : ['btv-differ', 'btv-keep', 'gm-k-listen', 'gm-k-pause', 'gm-k-repair', 'gm-k-close'];
+  function avText(k, d) { return typeof AV[k] === 'string' && AV[k] ? AV[k] : d; }
+  var LEADERS = ATV ? 'Chris and Kayti' : 'your leaders';
   var TG = (window.GM_TOGETHER && typeof window.GM_TOGETHER === 'object') ? window.GM_TOGETHER : null;
   var TWOQ = (F && F.two && Array.isArray(F.two.questions)) ? F.two.questions : [];
   var TWO_AREA = { id: 'two', name: 'Two Traditions, One Home', lead: F && F.two ? F.two.lead : '' };
@@ -102,7 +114,7 @@
   function fix() { if (!st || !st.s) return; var s = st.s; s.fb = s.fb || { a: '', b: '' }; s.fwp = s.fwp || { a: '', b: '' }; st.p = st.p || {}; }
   fix();
   var KEYS = {}, DATA = {}, SAFE = {}, PARTNER_IN = null, RAWS = {};
-  var V = { view: 'welcome', side: 'before', who: null, area: 0 };
+  var V = { view: 'welcome', side: ATV ? 'after' : 'before', who: null, area: 0 };
   function setup() { return st && st.s; }
   function nm(w) { return setup() ? st.s[w] : ''; }
   function other(w) { return w === 'a' ? 'b' : 'a'; }
@@ -112,7 +124,7 @@
   function twoOn() { var s = setup(); return !!(s && TWOQ.length && known(s.fb.a) && known(s.fb.b) && s.fb.a !== s.fb.b); }
   function areasFor() { return twoOn() ? AREAS.concat([TWO_AREA]) : AREAS; }
   function extra() { return twoOn() ? [{ area: TWO_AREA, qs: TWOQ }] : []; }
-  function afterOpen() { var s = setup(); return !!(s && (s.wed || (s.wd && today() >= s.wd))); }
+  function afterOpen() { var s = setup(); return !!(s && (ATV || s.wed || (s.wd && today() >= s.wd))); }
   function dataOf(w) { var d = DATA[w]; d.ans = d.ans || {}; d.wb = d.wb || {}; d.mo = d.mo || {}; d.mp = d.mp || {}; return d; }
 
   /* ---------- a small dialog for passcodes and the shared word ---------- */
@@ -141,7 +153,7 @@
       setTimeout(function () { var f = back.querySelector('input') || back.querySelector('[data-d^="c:"]'); if (f) f.focus(); }, 30);
     });
   }
-  var PASS_NOTE = 'Grow With Grounded never sees it and cannot recover it. Next you get 12 Root Words that open your answers if it is ever forgotten.';
+  var PASS_NOTE = 'It stays with you alone. Next you get 12 Root Words, which open your answers again if it is ever forgotten.';
   /* ---------- Root Words (GWG BLD 780) ---------- */
   var rootP = null;
   function needRoot() {
@@ -171,7 +183,7 @@
   }
   function rootShow(w, words, again) {
     return needRoot().then(function (R) {
-      return R.show({ words: words, who: nm(w), again: again, title: nm(w) + ', Your Root Words', lead: 'If you ever forget your Heartwood passcode, these 12 words open your answers again, so you can choose a new passcode. They are yours alone, so ' + nm(other(w)) + ' keeps their own.' });
+      return R.show({ words: words, who: nm(w), again: again, title: nm(w) + ', Your Root Words', lead: 'If you ever forget your ' + (ATV ? 'After the Vows' : 'Heartwood') + ' passcode, these 12 words open your answers again, so you can choose a new passcode. They are yours alone, so ' + nm(other(w)) + ' keeps their own.' });
     }, function () {});
   }
   function newPass(w) {
@@ -218,12 +230,12 @@
   function forgot(w, why) {
     var bx = box(w), has = !!(bx && bx.rw && bx.wrap);
     return ask({ title: 'Forgot your passcode, ' + nm(w) + '?', lead: (has ? 'Your Root Words open your answers again, with everything in them. Then you choose a new passcode. ' : 'Your answers are locked with a passcode only you know, so no one, including us, can open them without it. ') +
-      'Or start fresh: only ' + nm(w) + '’s answers, workbook, and check-ins are cleared. ' + nm(other(w)) + '’s stay just as they are.',
+      'Or start fresh: only ' + nm(w) + '’s ' + (ATV ? 'check-ins are' : 'answers, workbook, and check-ins are') + ' cleared. ' + nm(other(w)) + '’s stay just as they are.',
       fields: [], ok: '', choices: (has ? [['root', 'Use My Root Words', true]] : []).concat([['fresh', 'Start Fresh for ' + nm(w) + ' Only', !has]]) })
       .then(function (c) {
         if (c === 'root') return rootOpen(w).then(function (ok) { return ok || unlock(w, why); });
         if (c === 'fresh') {
-          if (!window.confirm('Start fresh for ' + nm(w) + ' only? ' + nm(w) + '’s answers, workbook, check-ins' + (st.s.mk === w ? ', The Money Map' : '') + (st.s.mode === 'two' ? ', and the card opened from ' + nm(other(w)) : '') + ' are cleared from this device. ' + nm(other(w)) + '’s stay. It cannot be undone.')) return false;
+          if (!window.confirm('Start fresh for ' + nm(w) + ' only? ' + nm(w) + '’s ' + (ATV ? 'check-ins' : 'answers, workbook, check-ins') + (st.s.mk === w ? ', The Money Map' : '') + (st.s.mode === 'two' ? ', and the card opened from ' + nm(other(w)) : '') + ' are cleared from this device. ' + nm(other(w)) + '’s stay. It cannot be undone.')) return false;
           delete st.p[w]; if (st.s.mk === w) delete st.s.mk; delete KEYS[w]; delete DATA[w]; delete RAWS[w]; persist();
           return newPass(w).then(function (ok) { if (ok) say('A fresh start for ' + nm(w) + '. ' + nm(other(w)) + '’s answers are still here.'); return ok; });
         }
@@ -390,10 +402,17 @@
 
   function vWelcome() {
     var pc = pendingCard();
+    if (ATV) {
+      var W = Array.isArray(AV.welcome) && AV.welcome.length ? AV.welcome : ['After the Vows is a private place for the two of you, for your first year together and beyond.', 'Inside: Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, a Week Card to share with Chris and Kayti when you like, and short videos in Learn.'];
+      return '<div class="ff-card gold"><h2>Welcome</h2>' + W.map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') +
+        '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
+        '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
+        (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
+    }
     return '<div class="ff-card gold"><h2>Welcome</h2>' +
       '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, and your First-Year Check-in.</p>' +
-      '<p>It is a conversation tool, not a test: there is nothing to pass and nothing to score. Every answer is simply a place to start talking.</p>' +
-      '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays on this device. Nothing is sent anywhere.</span></p>' +
+      '<p>It is a conversation tool. Every answer is simply a place to start talking.</p>' +
+      '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
       '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
       (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
@@ -425,13 +444,24 @@
       '<label><input type="radio" name="btv-me" value="a"' + (s.me !== 'b' ? ' checked' : '') + '><span><b id="btv-me-a">' + esc(s.a || 'The first partner') + '</b></span></label>' +
       '<label><input type="radio" name="btv-me" value="b"' + (s.me === 'b' ? ' checked' : '') + '><span><b id="btv-me-b">' + esc(s.b || 'The second partner') + '</b></span></label></fieldset>' +
       (locked ? '<p class="ff-sub">Answers are already locked on this device. To change the names or devices, use Clear Everything below.</p>' : '') +
-      (F ? '<div class="gm-set"><h3>Faith Backgrounds</h3><p class="btv-small">' + esc(F.lead || 'Optional, and you can change it any time.') + ' When your two backgrounds differ, a short set of questions for a home that honors both is added for each of you.</p><div class="ff-grid">' + faithSelect('a', s.fb.a) + faithSelect('b', s.fb.b) + '</div></div>' : '') +
-      '<div class="gm-set"><h3>Your Wedding Day</h3><p class="btv-small">After the Vows opens on this date. Optional, and kept only on this device.</p><div class="ff-grid"><label class="ff-f"><span class="l">Wedding date</span><input type="date" id="gm-wd" value="' + esc(s.wd || '') + '"></label></div>' +
-      '<label class="gm-check"><input type="checkbox" id="gm-wed"' + (s.wed ? ' checked' : '') + '><span>We’re married. Open After the Vows now.</span></label></div>' +
+      (ATV ? atvFaithSet(s) : F ? '<div class="gm-set"><h3>Faith Backgrounds</h3><p class="btv-small">' + esc(F.lead || 'Optional, and you can change it any time.') + ' When your two backgrounds differ, a short set of questions for a home that honors both is added for each of you.</p><div class="ff-grid">' + faithSelect('a', s.fb.a) + faithSelect('b', s.fb.b) + '</div></div>' : '') +
+      (ATV ? '<div class="gm-set"><h3>Your Wedding Day</h3><p class="btv-small">Optional, and kept only on this device. Your First-Year Check-in comes around your first anniversary.</p><div class="ff-grid"><label class="ff-f"><span class="l">Wedding date</span><input type="date" id="gm-wd" value="' + esc(s.wd || '') + '"></label></div></div>'
+        : '<div class="gm-set"><h3>Your Wedding Day</h3><p class="btv-small">After the Vows opens on this date. Optional, and kept only on this device.</p><div class="ff-grid"><label class="ff-f"><span class="l">Wedding date</span><input type="date" id="gm-wd" value="' + esc(s.wd || '') + '"></label></div>' +
+      '<label class="gm-check"><input type="checkbox" id="gm-wed"' + (s.wed ? ' checked' : '') + '><span>We’re married. Open After the Vows now.</span></label></div>') +
       keepSafeHtml() +
       '<div class="ff-row">' + btn('setup-save', 'Save and Continue') + btn('welcome', 'Back', sec()) + '<span class="ff-status" id="btv-st" role="status" aria-live="polite"></span></div></div>';
   }
-  function status(w) { var b = box(w); return !b ? 'Not started yet' : b.done ? 'Finished' : 'Started'; }
+  // After the Vows: faith backgrounds and each partner's Faith or Plain wording for the practices (no check-in to choose it in).
+  function atvFaithSet(s) {
+    var fwp = s.fwp || { a: '', b: '' };
+    var pick = function (w) {
+      return '<fieldset class="btv-choice gm-fwp"><legend id="gm-fwl-' + w + '">' + esc(nm(w) || (w === 'a' ? 'First partner' : 'Second partner')) + '’s wording</legend>' +
+        [['plain', 'Plain'], ['faith', 'Faith']].map(function (o) { return '<label><input type="radio" name="gm-fwp-' + w + '" value="' + o[0] + '"' + ((fwp[w] || 'plain') === o[0] ? ' checked' : '') + '><span><b>' + o[1] + '</b></span></label>'; }).join('') + '</fieldset>';
+    };
+    return '<div class="gm-set"><h3>Faith and Wording</h3><p class="btv-small">Optional, and you can change it any time. Choose Faith wording to see a Faith line in Practices for Two, shaped by your background if you name one.</p>' +
+      '<div class="ff-grid">' + (F && Array.isArray(F.list) ? faithSelect('a', s.fb.a) + faithSelect('b', s.fb.b) : '') + pick('a') + pick('b') + '</div></div>';
+  }
+  function status(w) { var b = box(w); return !b ? 'Ready to start' : b.done ? 'Finished' : 'Started'; }
   function vHub() {
     var s = st.s, h = '', both;
     if (s.mode === 'one') {
@@ -449,7 +479,7 @@
       h += '<div class="ff-card"><h2>' + esc(nm(me)) + '’s Check-in</h2><p class="ff-sub">On this device: ' + esc(nm(me)) + '. ' + esc(theirs) + ' answers on their own device.</p>' +
         '<div class="btv-who"><div class="btv-person' + (done ? ' done' : '') + '"><h3>Your answers</h3><p>' + status(me) + '</p>' +
         (done ? (twoOn() ? btn('answer-two', 'Answer the Two Traditions Questions', { w: me, cls: 'btn-secondary ff-sm' }) : '') : btn('answer', b ? 'Keep Going' : 'Start', { w: me, cls: 'btn-primary ff-sm' })) + '</div>' +
-        '<div class="btv-person"><h3>' + esc(theirs) + '’s card</h3><p>' + (PARTNER_IN ? 'Open. It joins your answers when you start.' : (b && b.got) ? 'Opened and kept with your answers' : pc ? 'Waiting to be opened' : 'Not here yet') + '</p>' +
+        '<div class="btv-person"><h3>' + esc(theirs) + '’s card</h3><p>' + (PARTNER_IN ? 'Open. It joins your answers when you start.' : (b && b.got) ? 'Opened and kept with your answers' : pc ? 'Waiting to be opened' : 'Opens here when ' + esc(theirs) + ' sends it') + '</p>' +
         (pc && !PARTNER_IN ? btn('open-pending', 'Open the Card', sec()) : '') + '</div></div>' +
         (done ? '<div class="ff-row">' + btn('talk', 'Open Talk About This') + (RS ? btn('results', 'Strengths and Growing Edges', { cls: 'btn-secondary' }) : '') + btn('make-card', 'Make a Card for ' + esc(theirs), { cls: 'btn-secondary' }) + '</div>' +
           '<div class="btv-paste"><label class="ff-f"><span class="l">Got a link from ' + esc(theirs) + '?</span><span class="h">Scan their QR code with this device’s camera, or paste their link here.</span><input id="btv-paste" autocomplete="off" placeholder="Paste the link"></label><div class="ff-row">' + btn('paste', 'Open This Card', sec()) + '</div></div>'
@@ -524,7 +554,7 @@
     var w = V.who, o = other(w), od = box(o) && box(o).done;
     return '<div class="ff-card gold"><h2>Thank You, ' + esc(nm(w)) + '</h2><p>Your answers are locked with your passcode.</p>' +
       (oneDevice() ? (od ? '<p>You have both finished. Sit together, and open Talk About This.</p><div class="ff-row">' + btn('talk', 'Open Talk About This') + '</div>'
-        : '<p><b>Now hand the device to ' + esc(nm(o)) + '.</b> Their turn starts with their own passcode, and your answers stay hidden.</p><div class="ff-row">' + btn('answer', 'Start ' + esc(nm(o)) + '’s Turn', { w: o }) + btn('hub', 'Not Yet', sec()) + '</div>')
+        : '<p><b>Now hand the device to ' + esc(nm(o)) + '.</b> Their turn starts with their own passcode, and your answers stay hidden.</p><div class="ff-row">' + btn('answer', 'Start ' + esc(nm(o)) + '’s Turn', { w: o }) + btn('hub', 'Later', sec()) + '</div>')
         : '<div class="ff-row">' + btn('hub', 'Continue') + '</div>') + '</div>';
   }
   // Email and Text to Chris and Kayti (GWG BLD 773): the couple's own mail or messages app opens with the link.
@@ -541,7 +571,7 @@
     var text = 'sms:' + GG_SMS + '?&body=' + encodeURIComponent(sms);
     return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email to Chris and Kayti</a>' +
       '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text to Chris and Kayti</a></div>' +
-      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, never in the message.</p>' +
+      '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, apart from the message.</p>' +
       '<details class="btv-more gm-mailcopy"><summary>Email did not open? Copy the message</summary>' +
       '<p class="btv-small">Send it to <b>' + esc(GG_MAIL) + '</b> from any email you use.</p>' +
       '<textarea readonly rows="7" aria-label="The message to copy">' + esc('To: ' + GG_MAIL + '\nSubject: ' + sub + '\n\n' + body) + '</textarea>' +
@@ -555,7 +585,7 @@
       '<label class="ff-f"><span class="l">The link</span><input id="btv-link" readonly value="' + esc(link) + '"></label>' +
       sendBits(link, kind) +
       '<div class="ff-row">' + btn('copy', 'Copy the Link', sec()) + '<span class="ff-status" id="btv-cst" role="status" aria-live="polite"></span></div>' +
-      '<p class="btv-small">' + small + ' Share the word in person, never in the same message as the link. Nothing is uploaded: the card rides after the # in the link, the part a browser never sends to any server.</p>' +
+      '<p class="btv-small">' + small + ' Share the word in person, apart from the message with the link. The card rides after the # in the link, the part a browser keeps to itself, so it stays private.</p>' +
       '<div class="ff-row">' + btn(V.side === 'after' ? 'after' : 'hub', 'Done') + '</div></div>';
   }
   function vCard(code) {
@@ -687,7 +717,7 @@
       }).join('');
       if (rows) { any = true; h += '<section class="ff-card"><h3>' + esc(ch.title) + '</h3>' + rows + '</section>'; }
     });
-    if (!any) h += '<div class="ff-card"><p>Nothing to read together yet. In the workbook, choose Show My Partner on an exercise you would like to share.</p></div>';
+    if (!any) h += '<div class="ff-card"><p>Read Together fills in as you go. In the workbook, choose Show My Partner on an exercise you would like to share.</p></div>';
     return h;
   }
 
@@ -797,10 +827,10 @@
   function roundStatus(k) {
     var s = st.s;
     if (oneDevice()) return '<div class="btv-who">' + ['a', 'b'].map(function (w) {
-      var dn = rdone(w, k); return '<div class="btv-person' + (dn ? ' done' : '') + '"><h3>' + esc(nm(w)) + '</h3><p>' + (dn ? 'Answered' : 'Not yet') + '</p>' + btn('round', dn ? 'Change My Answers' : 'Answer', { w: w, k: k, cls: dn ? 'btn-secondary ff-sm' : 'btn-primary ff-sm' }) + '</div>'; }).join('') + '</div>' +
+      var dn = rdone(w, k); return '<div class="btv-person' + (dn ? ' done' : '') + '"><h3>' + esc(nm(w)) + '</h3><p>' + (dn ? 'Answered' : 'Ready to answer') + '</p>' + btn('round', dn ? 'Change My Answers' : 'Answer', { w: w, k: k, cls: dn ? 'btn-secondary ff-sm' : 'btn-primary ff-sm' }) + '</div>'; }).join('') + '</div>' +
       (rdone('a', k) && rdone('b', k) ? '<div class="ff-row">' + btn('round-read', 'Read Them Side by Side', { k: k }) + '</div>' : '<p class="btv-small">When you have both answered, sit together and read them side by side.</p>');
     var me = s.me, dn = rdone(me, k), theirs = esc(nm(other(me)));
-    return '<div class="btv-who"><div class="btv-person' + (dn ? ' done' : '') + '"><h3>Your answers</h3><p>' + (dn ? 'Answered' : 'Not yet') + '</p>' + btn('round', dn ? 'Change My Answers' : 'Answer', { w: me, k: k, cls: 'btn-primary ff-sm' }) + '</div>' +
+    return '<div class="btv-who"><div class="btv-person' + (dn ? ' done' : '') + '"><h3>Your answers</h3><p>' + (dn ? 'Answered' : 'Ready to answer') + '</p>' + btn('round', dn ? 'Change My Answers' : 'Answer', { w: me, k: k, cls: 'btn-primary ff-sm' }) + '</div>' +
       '<div class="btv-person"><h3>' + theirs + '’s answers</h3><p>' + (box(me) && box(me).m && box(me).m[k] ? 'Opened and kept with your answers' : 'Their check-in card opens here') + '</p></div></div>' +
       (dn ? '<div class="ff-row">' + btn('round-card', 'Make a Card for ' + theirs, { k: k, cls: 'btn-secondary' }) + btn('round-read', 'Read Them Side by Side', { k: k, cls: 'btn-secondary' }) + '</div>' : '') +
       '<div class="btv-paste"><label class="ff-f"><span class="l">Got a check-in link from ' + theirs + '?</span><input id="gm-mpaste" autocomplete="off" placeholder="Paste the link"></label><div class="ff-row">' + btn('mpaste', 'Open This Check-in', sec()) + '</div></div>';
@@ -814,8 +844,8 @@
       if (PR) h += '<div class="ff-card sage"><h2>' + esc(PR.title) + '</h2>' + (PR.lead ? '<p class="ff-sub">' + esc(PR.lead) + '</p>' : '') + '<div class="ff-row">' + btn('pr', 'Open Practices for Two', sec()) + '</div></div>';
       return h + tgHtml();
     }
-    var k = monthKey(), M = AF.monthly, Y = AF.firstYear;
-    h += '<div class="ff-card gold"><h2>After the Vows</h2>' + (AF.lead ? '<p>' + esc(AF.lead) + '</p>' : '') + '</div>';
+    var k = monthKey(), M = AF.monthly, Y = AF.firstYear, lead = ATV ? avText('lead', AF.lead) : AF.lead;
+    h += '<div class="ff-card gold"><h2>After the Vows</h2>' + (lead ? '<p>' + esc(lead) + '</p>' : '') + '</div>';
     if (PR) h += '<div class="ff-card sage"><h2>' + esc(PR.title) + '</h2>' + (PR.lead ? '<p class="ff-sub">' + esc(PR.lead) + '</p>' : '') + '<div class="ff-row">' + btn('pr', 'Open Practices for Two', sec()) + '</div></div>';
     h += '<div class="ff-card"><h2>' + esc(M.title) + '</h2>' + (M.lead ? '<p class="ff-sub">' + esc(M.lead) + '</p>' : '') + '<p class="btv-k">' + esc(monthName(k)) + '</p>' + roundStatus(k);
     var past = {}; ['a', 'b'].forEach(function (w) { var b = box(w); if (b && b.r) Object.keys(b.r).forEach(function (x) { if (x !== 'fy' && x !== k) past[x] = 1; }); });
@@ -823,8 +853,15 @@
     if (pk.length) h += '<details class="btv-more"><summary>Earlier Months (' + pk.length + ')</summary><div class="ff-row">' + pk.map(function (x) { return btn('round-read', esc(monthName(x)), { k: x, cls: 'btn-secondary ff-sm' }); }).join('') + '</div></details>';
     h += '</div>';
     h += '<div class="ff-card"><h2>' + esc(Y.title) + '</h2>' + (Y.lead ? '<p class="ff-sub">' + esc(Y.lead) + '</p>' : '') + roundStatus('fy') +
-      '<div class="btv-note"><p>' + esc(Y.invite) + '</p><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Sessions">Book Your First-Year Check-in</a></div></div>';
+      '<div class="btv-note"><p>' + esc(fyInvite()) + '</p>' + bookBtn() + '</div></div>';
+    if (ATV) return h + weekHub() + tgHtml() + '<div class="ff-row">' + btn('setup', 'Names and Settings', sec()) + '</div>';
     return h + tgHtml();
+  }
+  // The First-Year Check-in invite: part of The Grounded Marriage, or (After the Vows) a time with Chris and Kayti.
+  function fyInvite() { return ATV ? avText('invite', 'Around your first anniversary, you are welcome to sit down with Chris and Kayti for a First-Year Check-in. Bring your answers, and we will look back and ahead together.') : AF.firstYear.invite; }
+  function bookBtn() {
+    var plan = ATV ? avText('bookPlan', 'Spiritual Guidance') : 'Premarital Sessions', label = ATV ? avText('book', 'Ask About a First-Year Check-in') : 'Book Your First-Year Check-in';
+    return '<a class="btn btn-primary ff-sm" href="/contact.html#plan=' + encodeURIComponent(plan) + '">' + esc(label) + '</a>';
   }
   function vRound() {
     var w = V.who, k = V.rk, R = roundOf(k), d = dataOf(w), e = d.mo[k] || { r: {} };
@@ -840,9 +877,9 @@
       qs.map(function (q) {
         return '<section class="ff-card"><h3 class="gm-qh">' + esc(q.text) + '</h3><div class="btv-who">' + cols.map(function (c) {
           var t = c[1] ? String(c[1][q.id] || '').trim() : null;
-          return '<div class="btv-person"><h3>' + esc(c[0]) + '</h3><p>' + (t ? esc(t) : t === null ? '<span class="btv-small">Their check-in card is not here yet.</span>' : '<span class="btv-small">Left blank.</span>') + '</p></div>'; }).join('') + '</div></section>';
+          return '<div class="btv-person"><h3>' + esc(c[0]) + '</h3><p>' + (t ? esc(t) : t === null ? '<span class="btv-small">Their check-in card opens here when it arrives.</span>' : '<span class="btv-small">Left blank.</span>') + '</p></div>'; }).join('') + '</div></section>';
       }).join('') + (R.close ? '<div class="ff-card sage"><p>' + esc(R.close) + '</p></div>' : '') +
-      (k === 'fy' && AF.firstYear.invite ? '<div class="ff-card"><p>' + esc(AF.firstYear.invite) + '</p><div class="ff-row"><a class="btn btn-primary ff-sm" href="/contact.html#plan=Premarital%20Sessions">Book Your First-Year Check-in</a></div></div>' : '');
+      (k === 'fy' && fyInvite() ? '<div class="ff-card"><p>' + esc(fyInvite()) + '</p><div class="ff-row">' + bookBtn() + '</div></div>' : '');
   }
   function vMCard(code) {
     var theirs = esc(nm(other(st.s.me)));
@@ -929,6 +966,9 @@
   function weekReady() { var ws = weekWho(); return ws.length && ws.every(function (w) { return !!DATA[w]; }); }
   function weekHub() {
     var two = !oneDevice();
+    if (ATV) return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">' + esc(avText('week', 'Whenever you like, share a short card with Chris and Kayti: the videos you watched, the practices you tried, and one question on your heart.')) + '</p>' +
+      '<p class="btv-small">It is your choice, and it is locked with your shared word, which you tell Chris and Kayti in person' + (two ? '. Each of you can make one from your own device' : '') + '.</p>' +
+      '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
     return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">Before each session, you can choose to share a short card with your leaders: the videos you watched, the practices you tried, any workbook answers you marked Share With Our Leaders, and one question you want to talk about.</p>' +
       '<p class="btv-small">It is your choice, and it is locked with your shared word. You open it with your leaders at your session' + (two ? ', and each of you can make one from your own device' : '') + '.</p>' +
       '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
@@ -944,23 +984,23 @@
     var vids = []; if (L) L.tracks.forEach(function (tr) { tr.lessons.forEach(function (l) { if (D.done[l.id]) vids.push({ id: l.id, title: l.title, on: String(D.done[l.id]) >= cut }); }); });
     var prs = []; (PR ? PR.items : []).forEach(function (p) { prs.push({ id: 'p-' + p.id, title: p.title }); });
     ((TG && Array.isArray(TG.practices)) ? TG.practices : []).forEach(function (p) { if (p && p.title && p.id) prs.push({ id: 't-' + p.id, title: p.title }); });
-    var wbs = []; weekWho().forEach(function (w) { (WB ? WB.chapters : []).forEach(function (ch) { ch.exercises.forEach(function (ex) { var e = DATA[w].wb[ex.id]; if (e && e.ld && hasWords(e)) wbs.push({ id: w + '-' + ex.id, w: nm(w), t: ex.title, a: wbText(ex, e) }); }); }); });
+    var wbs = []; if (!ATV) weekWho().forEach(function (w) { (WB ? WB.chapters : []).forEach(function (ch) { ch.exercises.forEach(function (ex) { var e = DATA[w].wb[ex.id]; if (e && e.ld && hasWords(e)) wbs.push({ id: w + '-' + ex.id, w: nm(w), t: ex.title, a: wbText(ex, e) }); }); }); });
     return { vids: vids, prs: prs, wbs: wbs };
   }
   function vWeek() {
     var I = weekItems(), two = !oneDevice();
     var row = function (kind, it, checked, small) { return '<label><input type="checkbox" data-wk="' + kind + '" value="' + esc(it.id) + '"' + (checked ? ' checked' : '') + '><span>' + esc(it.title || it.t) + (small ? '<small>' + small + '</small>' : '') + '</span></label>'; };
     var sel = '<option value="">Our next session</option>' + [1, 2, 3, 4, 5, 6].map(function (n) { return '<option value="' + n + '">Session ' + n + '</option>'; }).join('') + [1, 2, 3].map(function (n) { return '<option value="e' + n + '">Essentials Session ' + n + '</option>'; }).join('');
-    return '<div class="ff-card gm-wk"><h2>Make a Week Card</h2><p class="ff-sub">Choose what to share with your leaders this week. Only what you check goes on the card.</p>' +
-      '<div class="ff-grid"><label class="ff-f"><span class="l">For which session?</span><select id="gm-wk-s">' + sel + '</select></label></div>' +
+    return '<div class="ff-card gm-wk"><h2>Make a Week Card</h2><p class="ff-sub">Choose what to share with ' + LEADERS + (ATV ? '' : ' this week') + '. Only what you check goes on the card.</p>' +
+      (ATV ? '' : '<div class="ff-grid"><label class="ff-f"><span class="l">For which session?</span><select id="gm-wk-s">' + sel + '</select></label></div>') +
       '<h3>Videos You Watched</h3>' + (I.vids.length ? '<div class="gm-wk-list">' + I.vids.map(function (v) { return row('vid', v, v.on); }).join('') + '</div>' : '<p class="btv-small">Videos you finish in Learn show here.</p>') +
       '<h3>Practices You Tried</h3>' + (I.prs.length ? '<div class="gm-wk-list">' + I.prs.map(function (p) { return row('pr', p, false); }).join('') + '</div>' : '<p class="btv-small">Practices for Two show here.</p>') +
-      '<h3>From The Couple Workbook</h3>' + (I.wbs.length ? '<div class="gm-wk-list">' + I.wbs.map(function (x) { return row('wb', x, true, esc(x.w) + ': ' + esc(x.a.length > 140 ? x.a.slice(0, 140) + '...' : x.a)); }).join('') + '</div>'
-        : '<p class="btv-small">In The Couple Workbook, choose Share With Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>') +
-      '<h3>One Question</h3><label class="ff-f"><span class="h">One question you want to talk about at your session, if you like.</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
-      '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with our leaders.' : 'We both say yes to sharing this card with our leaders.') + '</span></label>' +
+      (ATV ? '' : '<h3>From The Couple Workbook</h3>' + (I.wbs.length ? '<div class="gm-wk-list">' + I.wbs.map(function (x) { return row('wb', x, true, esc(x.w) + ': ' + esc(x.a.length > 140 ? x.a.slice(0, 140) + '...' : x.a)); }).join('') + '</div>'
+        : '<p class="btv-small">In The Couple Workbook, choose Share With Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>')) +
+      '<h3>One Question</h3><label class="ff-f"><span class="h">' + (ATV ? 'One question you would like to talk about with Chris and Kayti, if you like.' : 'One question you want to talk about at your session, if you like.') + '</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
+      '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with ' : 'We both say yes to sharing this card with ') + (ATV ? 'Chris and Kayti' : 'our leaders') + '.</span></label>' +
       '<div class="ff-row">' + btn('wk-make', 'Lock and Make the Card') + btn('leave-talk', 'Lock and Close', sec()) + '<span class="ff-status" id="gm-wkst" role="status" aria-live="polite"></span></div>' +
-      '<p class="btv-small">Nothing is sent anywhere. The card rides in a link you bring to your leaders, and it opens only with your shared word.</p></div>';
+      '<p class="btv-small">The card rides in a link you send or bring to ' + LEADERS + ', and it opens only with your shared word. Everything else stays on this device.</p></div>';
   }
   function makeWeek() {
     var msg = $('gm-wkst'), W = C.week;
@@ -972,14 +1012,14 @@
       vid: pick(I.vids, on('vid')).map(function (x) { return x.title; }), pr: pick(I.prs, on('pr')).map(function (x) { return x.title; }),
       wb: pick(I.wbs, on('wb')).map(function (x) { return { w: x.w, t: x.t, a: x.a.slice(0, W.LIM.ans) }; }).slice(0, W.LIM.wb), q: String(($('gm-wk-q') || {}).value || '').trim().slice(0, W.LIM.q) };
     if (!card.vid.length && !card.pr.length && !card.wb.length && !card.q) { if (msg) msg.textContent = 'Choose at least one thing to share, or write your question.'; return; }
-    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. At your session, you type it into your leaders’ Field Guide to open the card. Capital letters do not matter.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
+    ask({ title: 'Choose a shared word', lead: 'The Week Card is locked with a word or short phrase only the two of you know. ' + (ATV ? 'When you meet, you type it into Chris and Kayti’s Field Guide to open the card.' : 'At your session, you type it into your leaders’ Field Guide to open the card.') + ' Capital letters do not matter.', fields: ['Shared word', 'Shared word again'], ok: 'Make the Card',
       check: function (v) { return v[0].trim().length < 4 ? 'Use at least 4 letters. Longer is safer.' : v[0].trim().toLowerCase() !== v[1].trim().toLowerCase() ? 'The two words are different.' : ''; } })
       .then(function (v) { if (!v) return; return W.make(card, v[0]).then(function (code) { go('wcard', { code: code }); }); })
       .catch(function () { if (msg) msg.textContent = 'The card could not be made. Try again.'; });
   }
   function vWCard(code) {
-    return cardView(C.week.link(code), 'Your Week Card', 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
-      'The card carries your first names, the videos, practices, and workbook answers you chose, and your question, locked with your shared word. Nothing else from the app goes on it.', 'QR code for your Week Card', 'week');
+    return cardView(C.week.link(code), 'Your Week Card', ATV ? 'Send this link to Chris and Kayti, or bring it when you meet. There, you type your shared word into their Field Guide to open it.' : 'Send this link to your leaders, or bring it to your session. There, you type your shared word into their Field Guide to open it.',
+      'The card carries your first names, the ' + (ATV ? 'videos and practices' : 'videos, practices, and workbook answers') + ' you chose, and your question, locked with your shared word. Everything else stays in the app.', 'QR code for your Week Card', 'week');
   }
 
   /* ---------- render ---------- */
@@ -988,6 +1028,9 @@
     var el = $('gm-app'); if (!el) return;
     if (!subtle) { el.innerHTML = '<div class="ff-card"><p>This browser cannot lock answers. Try a current version of Safari, Chrome, Edge, or Firefox.</p></div>'; return; }
     var v = V.view, h;
+    // After the Vows (GWG BLD 782): only its own views; Before the Vows views lead back to After the Vows.
+    if (ATV && { hub: 1, answer: 1, safety: 1, safehelp: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1 }[v]) v = V.view = setup() ? 'after' : 'welcome';
+    if (ATV && !setup() && v !== 'welcome' && v !== 'setup' && v !== 'pr' && v !== 'prone') v = V.view = 'welcome';
     var needOne = { answer: 1, safety: 1, safehelp: 1, wb: 1, wbch: 1, money: 1, round: 1 };
     if (needOne[v] && !DATA[V.who]) v = V.view = setup() ? (V.side === 'after' ? 'after' : 'hub') : 'welcome';
     if (v === 'talk' || v === 'results' || v === 'wbread' || v === 'roundread') {
@@ -1011,14 +1054,14 @@
     else if (v === 'after') h = vAfter();
     else if (v === 'round') h = vRound();
     else if (v === 'mcard') h = vMCard(V.code);
-    else if (v === 'week') h = weekReady() ? vWeek() : (V.view = 'hub', vHub());
+    else if (v === 'week') h = weekReady() ? vWeek() : ATV ? (V.view = 'after', vAfter()) : (V.view = 'hub', vHub());
     else if (v === 'wcard') h = vWCard(V.code);
     else h = vWelcome();
     el.innerHTML = '<p class="btv-say" id="btv-say" role="status" aria-live="polite"></p>' + h;
     tabMark();
     var hp = $('btv-help'); if (hp) hp.focus();
   }
-  function go(view, extra) { V.view = view; if (extra) for (var k in extra) V[k] = extra[k]; if (BEFORE_VIEWS[view]) V.side = 'before'; if (view === 'after' || view === 'round' || view === 'roundread' || view === 'mcard') V.side = 'after'; render(); top(); }
+  function go(view, extra) { V.view = view; if (extra) for (var k in extra) V[k] = extra[k]; if (BEFORE_VIEWS[view]) V.side = 'before'; if (view === 'after' || view === 'round' || view === 'roundread' || view === 'mcard') V.side = 'after'; if (ATV) V.side = 'after'; render(); top(); }
   function home() { return V.side === 'after' ? 'after' : (setup() ? 'hub' : 'welcome'); }
 
   /* ---------- actions ---------- */
@@ -1056,14 +1099,15 @@
     }
     st.s.fb = { a: faithItem(fa) ? fa : '', b: faithItem(fbb) ? fbb : '' };
     st.s.wd = wd; st.s.wed = wed;
-    persist(); go('hub');
+    if (ATV) ['a', 'b'].forEach(function (w) { var r = document.querySelector('input[name="gm-fwp-' + w + '"]:checked'); if (r) st.s.fwp[w] = r.value === 'faith' ? 'faith' : 'plain'; });
+    persist(); go(ATV ? 'after' : 'hub');
   }
   function exById(id) { var f = null; (WB ? WB.chapters : []).forEach(function (ch) { ch.exercises.forEach(function (ex) { if (ex.id === id) f = ex; }); }); return f; }
   document.addEventListener('click', function (e) {
     var b = e.target.closest && e.target.closest('[data-act]'); if (!b || !$('gm-app') || !$('gm-app').contains(b) && !b.closest('.btv-clear')) return;
     var a = b.getAttribute('data-act'), w = b.getAttribute('data-w'), k = b.getAttribute('data-k');
     if (a === 'copy-mail') { var box = b.closest('.gm-mailcopy'), ta = box && box.querySelector('textarea'), cs = box && box.querySelector('.gm-cpst'); if (ta) copyText(ta.value, function (ok) { if (cs) cs.textContent = ok ? 'Copied. Paste it into a new email to ' + GG_MAIL + '.' : 'Select the text above and copy it.'; if (!ok) { ta.focus(); ta.select(); } }); return; }
-    if (a === 'start') go(setup() ? 'hub' : 'setup');
+    if (a === 'start') go(setup() ? (ATV ? 'after' : 'hub') : 'setup');
     else if (a === 'welcome') go(setup() ? home() : 'welcome');
     else if (a === 'setup') go('setup');
     else if (a === 'hub') { saveAll().then(function () { lockAll(); go('hub'); }); }
@@ -1106,7 +1150,7 @@
     else if (a === 'results') startTalk('results');
     else if (a === 'results-open') go('results');
     else if (a === 'talk-open') go('talk');
-    else if (a === 'leave-talk') { saveAll().then(function () { lockAll(); go('hub'); say('Locked. Each passcode opens it again.'); }); }
+    else if (a === 'leave-talk') { saveAll().then(function () { lockAll(); go(ATV ? 'after' : 'hub'); say('Locked. Each passcode opens it again.'); }); }
     else if (a === 'print') printTalk();
     else if (a === 'print-results') printResults();
     else if (a === 'make-card') {
@@ -1178,11 +1222,11 @@
     else if (a === 'hw-load') backupGo('pick');
     else if (a === 'rw-see' && w) rootSee(w);
     else if (a === 'clear') {
-      if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
+      if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : ATV ? 'Clear Everything? This removes both of your check-ins and any card from this device, and After the Vows will ask for your code again. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
       try { localStorage.removeItem(KEY); localStorage.removeItem(GMKEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
       // Heartwood's key and invite leave this device too, so the code is needed to open it again (GWG BLD 772).
       if (!SAMPLE && window.HWOpen) HWOpen.forget();
-      st = null; lockAll(); PARTNER_IN = null; V.side = 'before'; go('welcome'); say('Cleared from this device.');
+      st = null; lockAll(); PARTNER_IN = null; V.side = ATV ? 'after' : 'before'; go('welcome'); say('Cleared from this device.');
     }
   });
   document.addEventListener('change', function (e) {
@@ -1194,7 +1238,7 @@
   });
   document.addEventListener('input', function (e) {
     var t = e.target;
-    if (t.id === 'btv-na' || t.id === 'btv-nb') { var k = t.id === 'btv-na' ? 'a' : 'b', el = $('btv-me-' + k), nmv = fname(t.value) || (k === 'a' ? 'The first partner' : 'The second partner'); if (el) el.textContent = nmv; var fl = $('gm-fl-' + k); if (fl) fl.textContent = (fname(t.value) || (k === 'a' ? 'First partner' : 'Second partner')) + '’s faith background'; }
+    if (t.id === 'btv-na' || t.id === 'btv-nb') { var k = t.id === 'btv-na' ? 'a' : 'b', el = $('btv-me-' + k), nmv = fname(t.value) || (k === 'a' ? 'The first partner' : 'The second partner'); if (el) el.textContent = nmv; var fl = $('gm-fl-' + k); if (fl) fl.textContent = (fname(t.value) || (k === 'a' ? 'First partner' : 'Second partner')) + '’s faith background'; var wl = $('gm-fwl-' + k); if (wl) wl.textContent = (fname(t.value) || (k === 'a' ? 'First partner' : 'Second partner')) + '’s wording'; }
     if (t.hasAttribute && t.hasAttribute('data-wb') && DATA[V.who]) { var ex = exById(t.getAttribute('data-wb')); if (ex) { var en = exEntry(DATA[V.who], ex); en.t = en.t || []; en.t[+t.getAttribute('data-k')] = t.value.slice(0, 4000); saveSoon(V.who); } }
     if (t.hasAttribute && t.hasAttribute('data-mv') && DATA[V.who]) { mm().v[t.getAttribute('data-mv')] = t.value.slice(0, 20); saveSoon(V.who); var tot = $('gm-tot'); if (tot) tot.outerHTML = totalsHtml(); }
     if (t.hasAttribute && t.hasAttribute('data-mg') && DATA[V.who]) { mm().g[+t.getAttribute('data-mg')] = t.value.slice(0, 2000); saveSoon(V.who); }
@@ -1218,15 +1262,21 @@
     $('gm-app').hidden = which === 'learn'; $('gm-learn').hidden = which !== 'learn';
     if (which === 'learn') { tabMark(); return learnOpen(); }
     if (CTL) { CTL.stop(); CTL = null; }
-    saveAll().then(function () { lockAll(); V.side = which; go(which === 'after' ? 'after' : (setup() ? 'hub' : 'welcome')); });
+    saveAll().then(function () { lockAll(); V.side = ATV ? 'after' : which; go(which === 'after' ? (ATV && !setup() ? 'welcome' : 'after') : (setup() ? 'hub' : 'welcome')); });
   }
 
   /* ---------- Learn (lessons played by shared/gg-learn.js) ---------- */
   function learnData() {
     var L = window.GG_LEARN_GM; if (!L) return null;
     var tracks = Array.isArray(L.tracks) ? L.tracks : Array.isArray(L.lessons) ? [{ id: 'gm-you', title: L.title || 'For You', lessons: L.lessons }] : [];
+    // After the Vows: only the videos named in GM_AFTER.atv.videos, numbered in order.
+    if (ATV) tracks = tracks.map(function (t) {
+      var c = {}; for (var k in t) c[k] = t[k];
+      c.lessons = (Array.isArray(t.lessons) ? t.lessons : []).filter(function (l) { return l && ATV_VIDS.indexOf(l.id) >= 0; });
+      return c;
+    });
     tracks = tracks.filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
-    return tracks.length ? { title: L.title || 'Learn', intro: L.intro || '', tracks: tracks } : null;
+    return tracks.length ? { title: L.title || 'Learn', intro: ATV ? avText('learnIntro', 'Short videos for the two of you, narrated aloud. Watch them together, side by side.') : (L.intro || ''), tracks: tracks } : null;
   }
   var LKEY = 'gg-learn:hw', CTL = null;
   function lload() {
@@ -1245,8 +1295,8 @@
     el.innerHTML = '<div class="ff-card"><h2>' + esc(L.title) + '</h2>' + (L.intro ? '<p class="ff-sub">' + esc(L.intro) + '</p>' : '') + '</div>' +
       (window.GGLearn && GGLearn.voiceCard ? '<div class="btv-voice">' + GGLearn.voiceCard() + '</div>' : '') +
       L.tracks.map(function (t) {
-        return '<div class="ff-card"><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ff-sub">' + esc(t.who) + '</p>' : '') + '<div class="btv-lessons">' + t.lessons.map(function (l) {
-          return '<button type="button" class="btv-lesson' + (D.done[l.id] ? ' done' : '') + '" data-lesson="' + esc(l.id) + '"><span class="btv-ln">' + (D.done[l.id] ? '&#10003;' : esc(String(l.n || ''))) + '</span><span><b>' + esc(l.title) + '</b>' + (l.blurb ? '<small>' + esc(l.blurb) + '</small>' : '') + (l.mins ? '<small>' + esc(l.mins) + ' min</small>' : '') + '</span></button>';
+        return '<div class="ff-card"><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ff-sub">' + esc(t.who) + '</p>' : '') + '<div class="btv-lessons">' + t.lessons.map(function (l, li) {
+          return '<button type="button" class="btv-lesson' + (D.done[l.id] ? ' done' : '') + '" data-lesson="' + esc(l.id) + '"><span class="btv-ln">' + (D.done[l.id] ? '&#10003;' : esc(String(ATV ? li + 1 : (l.n || '')))) + '</span><span><b>' + esc(l.title) + '</b>' + (l.blurb ? '<small>' + esc(l.blurb) + '</small>' : '') + (l.mins ? '<small>' + esc(l.mins) + ' min</small>' : '') + '</span></button>';
         }).join('') + '</div></div>';
       }).join('');
   }
@@ -1271,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b781', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b782', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b781', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
@@ -1293,9 +1343,10 @@
   }
 
   /* ---------- start ---------- */
+  if (ATV && window.HWChrome) window.HWChrome('atv', AV);
   var wk0 = weekHash(true);
   takeHash();
-  if (st && st.s) V.view = 'hub';
+  if (st && st.s) V.view = ATV ? 'after' : 'hub';
   var pc0 = pendingCard(), pm0 = pendingM();
   if (pc0 && st && st.s) { st.inCard = pc0; persist(); try { sessionStorage.removeItem(PEND); } catch (e) {} }
   if (pm0 && st && st.s) { st.inM = pm0; persist(); try { sessionStorage.removeItem(PENDM); } catch (e) {} }
@@ -1306,5 +1357,5 @@
   if (wk0) setTimeout(function () { say(WEEK_HERE); }, 60);
   if (pc0) setTimeout(function () { openCard(pendingCard() || pc0); }, 200);
   else if (pm0) setTimeout(function () { openM(pendingM() || pm0); }, 200);
-  window.GGGM = { state: function () { return st; }, view: function () { return V; }, Q: Q, sample: SAMPLE };
+  window.GGGM = { state: function () { return st; }, view: function () { return V; }, Q: Q, sample: SAMPLE, atv: ATV };
 })();

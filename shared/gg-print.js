@@ -92,10 +92,11 @@
     '.bar button{min-height:44px;padding:8px 16px;border-radius:10px;border:1.5px solid #D9A847;background:transparent;color:#F6EFE2;font:inherit;font-weight:600;cursor:pointer;}',
     '.bar button.pri{background:#D9A847;color:#2E2118;}.bar button[aria-pressed="true"]{background:#F6EFE2;color:#2E2118;border-color:#F6EFE2;}',
     '.tip{padding:8px 14px;font-size:14px;color:#5A4B3F;text-align:center;}',
-    '.fit{margin:14px auto 40px;transform-origin:top left;}',
-    '.sheet{background:#FFFCF6;position:relative;overflow:hidden;box-shadow:0 2px 14px rgba(44,24,16,.18);}',
+    '.fit{margin:14px auto 40px;overflow:hidden;}',
+    '.sheet{background:#FFFCF6;position:relative;overflow:hidden;box-shadow:0 2px 14px rgba(44,24,16,.18);transform-origin:top left;}',
+    '@media (prefers-color-scheme:dark){body{background:#1F1A14;}.tip{color:#C2B6A4;}}',
     '.serif{font-family:"Cormorant Garamond",Georgia,serif;}.cond{font-family:"Barlow Condensed","Arial Narrow",sans-serif;}',
-    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0 !important;transform:none !important;width:auto !important;height:auto !important;}.sheet{box-shadow:none;}}'
+    '@media print{.bar,.tip{display:none !important;}body{background:none;}.fit{margin:0 !important;transform:none !important;width:auto !important;height:auto !important;overflow:visible !important;}.sheet{box-shadow:none;transform:none !important;}}'
   ].join('\n');
 
   // Opens the print page in a new tab, so there is a preview to check before printing.
@@ -103,17 +104,17 @@
     var sizes = o.sizes || [o.size], cur = sizes[0];
     var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(o.title) + '</title>'
       + '<link rel="stylesheet" href="' + A('/fonts/fonts.css') + '"><style id="pg">@page{size:' + cur.page + ';margin:0;}</style><style>' + BASE + '\n' + o.css + '</style></head><body>'
-      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + '<button class="pri" id="go">Print or Save as PDF</button></div>'
-      + '<div class="tip">To keep a copy, choose Save as PDF in the print window. ' + esc(o.tip || '') + '</div>'
+      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + (o.acts || []).map(function (a) { return '<button type="button" id="' + a[0] + '">' + esc(a[1]) + '</button>'; }).join('') + '<button class="pri" id="go">' + esc(o.printLabel || 'Print or Save as PDF') + '</button></div>'
+      + '<div class="tip" id="tip" role="status">' + (o.tipFull ? esc(o.tipFull) : 'To keep a copy, choose Save as PDF in the print window. ' + esc(o.tip || '')) + '</div>'
       + '<div class="fit" id="fit"><div class="sheet ' + (cur.cls || '') + '" id="sheet" style="width:' + cur.w + 'in;height:' + cur.h + 'in">' + o.body + '</div></div>'
       + '<script>(function(){var S=' + JSON.stringify(sizes) + ',sh=document.getElementById("sheet"),fit=document.getElementById("fit");'
-      + 'function scale(){var w=sh.offsetWidth,h=sh.offsetHeight,k=Math.min(1,(window.innerWidth-28)/w);fit.style.width=w+"px";fit.style.height=(h*k)+"px";fit.style.transform="scale("+k+")";fit.style.marginLeft=Math.max(14,(window.innerWidth-w*k)/2)+"px";}'
+      + 'function scale(){var w=sh.offsetWidth,h=sh.offsetHeight,k=Math.min(1,(document.documentElement.clientWidth-28)/w);fit.style.width=(w*k)+"px";fit.style.height=(h*k)+"px";sh.style.transform="scale("+k+")";fit.style.marginLeft=Math.max(14,(document.documentElement.clientWidth-w*k)/2)+"px";}'
       + 'document.querySelectorAll("[data-size]").forEach(function(b){b.onclick=function(){var s=S[+b.getAttribute("data-size")];document.getElementById("pg").textContent="@page{size:"+s.page+";margin:0;}";sh.style.width=s.w+"in";sh.style.height=s.h+"in";sh.className="sheet "+(s.cls||"");document.querySelectorAll("[data-size]").forEach(function(x){x.setAttribute("aria-pressed",x===b?"true":"false");});scale();};});'
       + 'function ready(){return Promise.all(Array.prototype.map.call(document.images,function(i){return i.complete?0:new Promise(function(r){i.addEventListener("load",r);i.addEventListener("error",r);});}));}'
       + 'document.getElementById("go").onclick=function(){ready().then(function(){window.print();});};window.addEventListener("resize",scale);scale();'
       + 'if(document.fonts&&document.fonts.ready)document.fonts.ready.then(scale);'
       + 'var n=document.querySelector("[data-fitname]");if(n){var f=parseFloat(getComputedStyle(n).fontSize);while(n.scrollWidth>n.clientWidth&&f>14){f-=1;n.style.fontSize=f+"px";}}'
-      + '})();<\/script></body></html>';
+      + '})();<\/script>' + (o.js ? '<script>' + o.js + '<\/script>' : '') + '</body></html>';
     var w = o.win && !o.win.closed ? o.win : null;
     if (!w) { try { w = window.open('', '_blank'); } catch (e) { w = null; } }
     if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); try { w.focus(); } catch (e) {} return w; }

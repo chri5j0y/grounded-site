@@ -523,7 +523,7 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "big",
 "h": "Make the return easy.",
 "say": "Make the return easy. Coming back isn't a test to pass, and even a gentle I told you so can close a door that took years to open. Welcome them the way you would want to be welcomed.",
-"sub": "Open arms, no tests."
+"sub": "Open arms, easy welcome."
 },
 {
 "k": "story",
@@ -1839,7 +1839,7 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "It's not too late to say it.",
+"h": "There's still time to say it.",
 "sub": "The full guide has more, whenever you want it.",
 "say": "A letter, a call, a recorded message. It is not too late to say it. A chaplain can help you find the words. The full guide has more."
 }
@@ -3182,7 +3182,7 @@ window.GG_LEARN_GUIDES.willow = {
 "k": "big",
 "h": "Take your time.",
 "say": "Take your time. Nothing has to happen right away. You can take all the time you need.",
-"sub": "Nothing has to happen right away."
+"sub": "Everything can wait a little while."
 },
 {
 "k": "breathe",

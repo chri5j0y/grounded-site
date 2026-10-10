@@ -6487,7 +6487,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "points",
-      "h": "Help many people never hear about",
+      "h": "Help worth knowing about",
       "items": [
        [
         "Food",
@@ -8537,9 +8537,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "It's never too late for joy.",
+      "h": "Joy is always within reach.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Whether you're dating, falling in love, or happily on your own, your heart is still growing. It's never too late for joy. The full guide has more, whenever you want it."
+      "say": "Whether you're dating, falling in love, or happily on your own, your heart is still growing. Joy is always within reach. The full guide has more, whenever you want it."
      }
     ]
    },
@@ -8776,7 +8776,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "title": "Divorce Late in Life",
     "sideName": "For the Helper",
     "mins": 4,
-    "blurb": "For the grown child, friend, or sibling of an older adult going through divorce: steady support, no sides required.",
+    "blurb": "For the grown child, friend, or sibling of an older adult going through divorce: steady support for everyone.",
     "sources": [
      "linpc"
     ],
@@ -9494,7 +9494,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "It is never too late for a friend.",
+      "h": "A new friend can come at any age.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "It is never too late for a new friend, or for an old friendship to grow deeper. The full guide has more, whenever you want it."
      }
@@ -10338,7 +10338,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Thinking about death is part of a long life.",
-      "sub": "It is not giving up.",
+      "sub": "It is an act of love.",
       "say": "Many older adults think about death more often now: after friends die, after a diagnosis, or on a quiet evening. That is natural. Thinking about it is not giving up on life. For many people, it brings a clearer sense of what matters most."
      },
      {
@@ -10934,8 +10934,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Their words, their pace.",
-      "sub": "Not a task to finish.",
-      "say": "Try not to treat it as a task to finish before it's too late. Rushing can make it feel like a goodbye. Let it be a conversation you return to. If memory is changing, enjoy the telling more than the details, and write it as told to you."
+      "sub": "A conversation to return to.",
+      "say": "Let it unfold slowly, at its own pace. Rushing can make it feel like a goodbye. Let it be a conversation you return to. If memory is changing, enjoy the telling more than the details, and write it as told to you."
      },
      {
       "k": "big",
@@ -11666,8 +11666,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "You may be growing older too.",
-      "sub": "No one person carries it all.",
-      "say": "You may be one of the people they count on most, and you may be growing older too. Keep your own rest and your own people. No one person should carry it all."
+      "sub": "Share the carrying.",
+      "say": "You may be one of the people they count on most, and you may be growing older too. Keep your own rest and your own people. Share the carrying with others."
      },
      {
       "k": "big",
@@ -12241,7 +12241,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Let your shoulders drop.",
-      "sub": "Natural breath. Never forced.",
+      "sub": "Natural breath, easy and soft.",
       "beats": [
        "Sit back and let your shoulders drop.",
        "Let your hands rest.",

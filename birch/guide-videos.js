@@ -1573,7 +1573,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Ask, then listen.",
-      "sub": "One question, and no advice yet.",
+      "sub": "One question, and advice can wait.",
       "say": "Think of one question about their work that has nothing to do with money or plans. Something like, what was the best part of your week? Say your question out loud, and picture yourself just listening to the answer.",
       "beats": [
        "Think of one question about their work that has nothing to do with money or plans.",
@@ -2344,7 +2344,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Student Loans and Other Debt",
     "sideName": "For the Helper",
     "mins": 3,
-    "blurb": "For the parent, partner, or friend beside someone in debt: calm company, clear terms, and no lectures.",
+    "blurb": "For the parent, partner, or friend beside someone in debt: calm company, clear terms, and kindness.",
     "sources": [],
     "scenes": [
      {
@@ -2930,7 +2930,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Not best friends? That works.",
+      "h": "Friendly is enough.",
       "sub": "Respect and fairness are enough.",
       "say": "Good roommates don't have to be best friends. You might share a lot, or very little. Respect, fairness, and clear expectations are enough for a peaceful home. And if you moved in with a close friend, a clear plan can protect the friendship too."
      },
@@ -3542,7 +3542,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "You're not the only one.",
+      "h": "Many people share this.",
       "sub": "Loneliness is common at this age.",
       "say": "If you feel lonely, you're far from the only one. Research finds young adults are among the loneliest people in the country. It's not a sign something is wrong with you. It's a sign to build connection on purpose."
      },
@@ -3597,7 +3597,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "card",
-      "title": "If the lonely does not lift",
+      "title": "If the lonely stays",
       "body": "A low that lasts months: a doctor or counselor. Not wanting to live: call or text 988. Danger: 911.",
       "say": "If loneliness or a low mood hasn't lifted after a few months, or it's keeping you from sleep or work, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
      },
@@ -4603,7 +4603,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Breakups",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the young adult going through a breakup: this hurts because it mattered, and it will not always feel this heavy.",
+    "blurb": "For the young adult going through a breakup: this hurts because it mattered, and this heaviness will ease.",
     "sources": [
      "rhoades11"
     ],
@@ -4703,7 +4703,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "It will not always feel this heavy.",
+      "h": "This heaviness will ease.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Hearts heal, slowly, with time, people, and small steps. You were you before this relationship, and you're still you. It will not always feel this heavy. The full guide has more, whenever you want it."
      }
@@ -5803,7 +5803,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "card",
-      "title": "No one gets to pressure you.",
+      "title": "Your choices are yours.",
       "body": "In any direction. Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
       "say": "One thing is true for everyone. No one gets to pressure, threaten, or force you about a pregnancy, in any direction. Not a partner, not family, not anyone. If that's happening, Love Is Respect and Day One are there by phone or text, any time. If you're in danger, call nine one one."
      },
@@ -7085,7 +7085,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Write a text with no question in it.",
-      "sub": "Nothing they have to answer.",
+      "sub": "A note to simply receive.",
       "say": "Let's try something. Open your messages and pick them. Write a short text with no question in it, like, thinking of you, no need to reply. Send it now, or save it for today.",
       "beats": [
        "Let's try something.",
@@ -10062,7 +10062,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "You're on a different road.",
       "sub": "Not a slower one.",
-      "say": "It can feel like your friends got a head start while you served. You're not behind. You're on a different road, and you bring skills, discipline, and experience most people your age don't have yet."
+      "say": "It can feel like your friends got a head start while you served. You're right on time for you. You're on a different road, and you bring skills, discipline, and experience most people your age don't have yet."
      },
      {
       "k": "big",
@@ -10415,7 +10415,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Carry one question.",
-      "sub": "No answer needed today.",
+      "sub": "Answers can wait.",
       "say": "Think of one question about faith or meaning you are carrying right now. Put it into words, just as it is, without needing an answer. Say it to yourself once, then let it rest beside you while you take three slow breaths.",
       "beats": [
        "Think of one question about faith or meaning you are carrying right now.",
@@ -10817,7 +10817,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "You're not behind.",
+      "h": "You're right on time for you.",
       "sub": "Purpose takes shape over years.",
       "say": "It can look like everyone else has it figured out. Most people's paths are much less straight than they look from the outside. Researchers who study meaning find that searching for it and having it are two different things, and many people are doing both at once. Purpose usually takes shape over years, through trying things."
      },
@@ -13068,8 +13068,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Ask about experience.",
-      "sub": "Never argue belief.",
-      "say": "Start with their experience, not with answers. You might ask: has your faith been more of a comfort or a struggle lately? Then listen. They may have deep faith, have stepped away, or be somewhere in-between. Never try to argue them into belief, or out of it."
+      "sub": "Respect their belief.",
+      "say": "Start with their experience, not with answers. You might ask: has your faith been more of a comfort or a struggle lately? Then listen. They may have deep faith, have stepped away, or be somewhere in-between. Let their belief be their own, whatever it is."
      },
      {
       "k": "words",
@@ -13125,7 +13125,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Hold the hard questions.",
-      "sub": "Without rushing to answer.",
+      "sub": "Take your time to answer.",
       "say": "If they ask why, you don't have to have an answer. Listening, staying, and saying, your questions are welcome with me, often helps more than any explanation. Many traditions have honest words for lament, and they can hold both of you."
      },
      {

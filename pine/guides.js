@@ -2051,7 +2051,7 @@ const LC_TOPICS = [
    "feel": "A teen who has lost a parent or sibling may look fine one minute and fall apart the next. Many hide their grief to protect the parent who's still here, or because they don't want to stand out at school. Some feel guilt, some anger, some numbness. After a sibling dies, teens often feel forgotten while the adults grieve. Grief can come back in new ways at each milestone, years later.",
    "say": [
     "“I'm so sorry. Tell me about her, if you want to.”",
-    "“Any way you feel is okay. Whatever you're feeling is okay with me.”",
+    "“Every feeling is welcome. Whatever you're feeling is okay with me.”",
     "“What's the hardest time of day right now?”",
     "“I'm here, and I'm not going anywhere.”"
    ],
@@ -2244,7 +2244,7 @@ const LC_TOPICS = [
    "feel": "For many teens, a grandparent's death is the first close loss. Some feel it deeply, especially if the grandparent raised them, lived with them, or was a steady adult in their life. Others feel less than they expected and quietly worry about that. Teens often notice a parent's grief and may hide their own so they won't add to it. If they missed visits or felt awkward during a long illness, guilt may come later.",
    "say": [
     "“I'm so sorry about Grandma. What do you remember most about her?”",
-    "“Any way you feel is okay. Whatever you feel is okay.”",
+    "“Every feeling is welcome. Whatever you feel is okay.”",
     "“Would you like to have a part in the service? It's okay if you don't.”",
     "“I miss him too. Can we talk about him sometimes?”"
    ],
@@ -2708,7 +2708,7 @@ const LC_TOPICS = [
     "Moving for fun and strength, not to earn or burn food."
    ],
    "tell": [
-    "“This is an illness. It's not my fault, and Others can help me fight it.”",
+    "“This is an illness. It's not my fault, and others can help me fight it.”",
     "“The rules feel safe, but they aren't keeping me safe.”",
     "“My body needs fuel to do the things I love.”"
    ],
@@ -3301,7 +3301,7 @@ const LC_TOPICS = [
    "say": [
     "“I'm not mad. I'm here, and I want to understand.”",
     "“What was happening right before?”",
-    "“Others can help you stop. We'll get help together.”",
+    "“I'll help you stop. We'll get help together.”",
     "“Are you thinking about killing yourself?” Asking plainly is safe, and it doesn't put the idea in their head."
    ],
    "avoid": [

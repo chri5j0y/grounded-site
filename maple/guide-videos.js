@@ -859,7 +859,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Sadness That Lingers",
 "sub": "For You",
-"say": "If you've been feeling sad for a while, this is for you. Lots of kids feel sad sometimes. Others can help you hold it all."
+"say": "If you've been feeling sad for a while, this is for you. Lots of kids feel sad sometimes. People who love you can help you hold it."
 },
 {
 "k": "words",
@@ -1115,7 +1115,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Bedtime Fears and Nightmares",
 "sub": "For You",
-"say": "If nighttime feels scary, or you've had bad dreams, this is for you. Lots of kids feel scared at night. Others have been here too."
+"say": "If nighttime feels scary, or you've had bad dreams, this is for you. Lots of kids feel scared at night. You're in good company."
 },
 {
 "k": "words",
@@ -1377,7 +1377,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Feeling Different",
 "sub": "For You",
-"say": "If you ever feel different from the other kids, this is for you. Lots of kids feel that way sometimes. You have people with you."
+"say": "If you ever feel different from the other kids, this is for you. Lots of kids feel that way sometimes. You're in good company."
 },
 {
 "k": "big",
@@ -4770,7 +4770,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Worries About Food and Eating",
 "sub": "For the Grown-up",
-"say": "If you're worried about how a child you love is eating, this is for you. You don't have to be sure before you ask for help, and others can walk with you."
+"say": "If you're worried about how a child you love is eating, this is for you. You can ask for help before you're sure, and others can walk with you."
 },
 {
 "k": "points",
@@ -5230,7 +5230,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Older kids too",
 "It runs in families"
 ],
-"say": "Lots of kids wet the bed, in kindergarten, in first grade, and older too. It often runs in families. Maybe someone in your family wet the bed when they were little. Others have been here too."
+"say": "Lots of kids wet the bed, in kindergarten, in first grade, and older too. It often runs in families. Maybe someone in your family wet the bed when they were little. You're in good company."
 },
 {
 "k": "card",
@@ -5477,7 +5477,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "Divorce or Separation",
 "sub": "For You",
-"say": "If your parents are splitting up, or living in two different homes, this is for you. Lots of kids go through this. You have people with you."
+"say": "If your parents are splitting up, or living in two different homes, this is for you. Lots of kids go through this. You're in good company."
 },
 {
 "k": "big",
@@ -8992,7 +8992,7 @@ window.GG_LEARN_GUIDES.maple = {
 "eyebrow": "When Life Changes",
 "h": "School and Test Worries",
 "sub": "For You",
-"say": "If school feels hard sometimes, or tests make you feel worried, this is for you. Lots of kids feel this way. You have people with you."
+"say": "If school feels hard sometimes, or tests make you feel worried, this is for you. Lots of kids feel this way. You're in good company."
 },
 {
 "k": "words",
@@ -17234,7 +17234,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Your tradition, with gentleness"
 ]
 ],
-"say": "If your family has faith, it can be a deep comfort here, when it says you are loved and you have people with you. It weighs on a child when it sounds like blame, a test, or a punishment. Answer in your own tradition's words, with gentleness, and never present God as the judge of a child's body.",
+"say": "If your family has faith, it can be a deep comfort here, when it says you are loved and you are held. It weighs on a child when it sounds like blame, a test, or a punishment. Answer in your own tradition's words, with gentleness, and never present God as the judge of a child's body.",
 "cue": {
 "at": [
 0,
