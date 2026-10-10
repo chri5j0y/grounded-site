@@ -391,6 +391,8 @@
       var fdone = trackDone(tr, done), fc = !!cfg.cert && fdone;
       return { ok: true, fg: true, eyebrow: fdone ? 'Ring Complete' : 'For Guides', h: fdone ? 'That\'s every video in ' + (tr.ring || 'this ring') + '.' : 'That\'s the video. Well done.', sub: fc ? 'Your Certificate of Completion is ready.' : nl ? 'Up next: ' + nl.title : 'The full section is here whenever you want it.', count: '', say: fdone ? 'That\'s every video in this ring. Well done. Your certificate is ready whenever you want it.' : 'That\'s the video. Well done. The full section is here whenever you want it.', next: nl ? { l: nl, t: tr } : null, cert: fc };
     }
+    // Promo page videos (shared/page-videos.js sets promo: true; Chris, October 10, 2026): a warm thank you to close.
+    if (tr && tr.promo) return { ok: true, support: true, eyebrow: 'Grow With Grounded', h: 'Thank you for watching.', sub: 'We would be glad to walk with you.', count: '', say: 'Thank you for watching. We would be glad to walk with you.', next: null, cert: false };
     if (tr && tr.kind === 'support') return { ok: true, support: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: nx ? 'Another one, if it helps: ' + nx.l.title : 'Come back anytime.', count: '', say: 'Take all the time you need. This is here whenever you need it.', next: nx, cert: false };
     var upnext = nx ? 'Up next: ' + (nx.t !== tr ? nx.t.title + ', ' : '') + 'Lesson ' + (nx.l.n || '') + ', ' + nx.l.title : '';
     var certLine = cert ? ' Your certificate is ready whenever you want it.' : '';

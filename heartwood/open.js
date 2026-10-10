@@ -167,7 +167,7 @@
   function gate(err) {
     note('');
     var el = $('gm-app'); if (!el) return;
-    var atv = hintAtv(), name = atv ? 'After the Vows' : 'Heartwood';
+    var atv = hintAtv(), name = 'Heartwood';
     if (atv && window.HWChrome) window.HWChrome('atv');
     el.innerHTML = '<div class="ff-card gold hw-gate"><h2>Open ' + name + '</h2>' +
       '<p>Type the code Chris and Kayti gave you. Each of you opens this same link on your own phone, and types the same code.</p>' +
@@ -182,7 +182,7 @@
     if (busy) return; var f = $('hw-code'), err = $('hw-err'), go = $('hw-go'), code = f ? f.value : '';
     if (normCode(code).length < 6) { if (err) err.textContent = 'Type the whole code, letters and numbers. Spaces and dashes do not matter.'; return; }
     busy = true; if (go) { go.disabled = true; go.textContent = 'Opening...'; } if (err) err.textContent = '';
-    var done = function (m) { busy = false; if (go) { go.disabled = false; go.textContent = 'Open ' + (hintAtv() ? 'After the Vows' : 'Heartwood'); } if (m && err) err.textContent = m; if (m && f) { f.focus(); f.select(); } };
+    var done = function (m) { busy = false; if (go) { go.disabled = false; go.textContent = 'Open Heartwood'; } if (m && err) err.textContent = m; if (m && f) { f.focus(); f.select(); } };
     unwrap(savedInvite(), code).then(function (u) {
       return openLib(u.key, LIBNOW).then(function (data) { return putKey(u.key, u.mode).then(function () { done(''); start(data, false, u.mode); }); },
         function () { done('This invite is from an earlier Heartwood. Ask Chris and Kayti for a new invite link and code.'); });
@@ -205,17 +205,18 @@
     if (mode !== 'atv') return;
     av = av && typeof av === 'object' ? av : {};
     var t = function (k, d) { return typeof av[k] === 'string' && av[k] ? av[k] : d; };
-    var title = t('title', 'After the Vows'), q = function (s) { return document.querySelector(s); };
-    document.title = title + ' | Grow With Grounded';
+    // The app keeps its name, Heartwood; After the Vows names this version (Chris, "1", October 10, 2026).
+    var title = 'Heartwood', q = function (s) { return document.querySelector(s); };
+    document.title = 'Heartwood: After the Vows | Grow With Grounded';
     var h = $('gm-title'); if (h) h.textContent = title;
-    var eb = q('.gm-eb'); if (eb) eb.textContent = t('eyebrow', 'Heartwood');
+    var eb = q('.gm-eb'); if (eb) eb.textContent = 'After the Vows';
     var sub = q('.gm-sub'); if (sub) sub.textContent = t('sub', 'Your private app for your first year together: Practices for Two, check-ins for two, and short videos to watch side by side.');
-    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc(t('way', 'After the Vows comes with every wedding, elopement, and vow renewal with Chris and Kayti.')) + '</a>';
+    var way = q('.gm-way'); if (way) way.innerHTML = '<a href="/weddings.html">' + esc('Heartwood: After the Vows comes with every wedding, elopement, and vow renewal with Chris and Kayti.') + '</a>';
     var tabs = $('gm-tabs');
     if (tabs) { tabs.setAttribute('aria-label', title); var bv = tabs.querySelector('[data-tab="before"]'); if (bv) bv.hidden = true; }
     var app = $('gm-app'); if (app) app.setAttribute('aria-label', title);
     var more = $('hw-more'); if (more) more.innerHTML = 'Chris and Kayti offer ceremonies and The Grounded Marriage for couples of all faith traditions and everything in-between. <a class="text-link" href="/contact.html">Say Hello to Chris and Kayti</a>.';
-    var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to After the Vows from this device.';
+    var cl = $('hw-clear-p'); if (cl) cl.textContent = 'Done, or using a shared device? Clear Everything removes both partners’ check-ins, any card, and the key to Heartwood from this device.';
   };
 
   window.HWOpen = {

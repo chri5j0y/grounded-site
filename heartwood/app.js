@@ -403,7 +403,7 @@
   function vWelcome() {
     var pc = pendingCard();
     if (ATV) {
-      var W = Array.isArray(AV.welcome) && AV.welcome.length ? AV.welcome : ['After the Vows is a private place for the two of you, for your first year together and beyond.', 'Inside: Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, a Week Card to share with Chris and Kayti when you like, and short videos in Learn.'];
+      var W = Array.isArray(AV.welcome) && AV.welcome.length ? AV.welcome : ['Heartwood is a private place for the two of you, for your first year together and beyond.', 'Inside: Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, a Week Card to share with Chris and Kayti when you like, and short videos in Learn.'];
       return '<div class="ff-card gold"><h2>Welcome</h2>' + W.map(function (t) { return '<p>' + esc(t) + '</p>'; }).join('') +
         '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
         '<div class="ff-row">' + btn('start', setup() ? 'Continue' : 'Get Started') + '</div>' +
@@ -1222,7 +1222,7 @@
     else if (a === 'hw-load') backupGo('pick');
     else if (a === 'rw-see' && w) rootSee(w);
     else if (a === 'clear') {
-      if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : ATV ? 'Clear Everything? This removes both of your check-ins and any card from this device, and After the Vows will ask for your code again. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
+      if (!window.confirm(SAMPLE ? 'Clear Everything? This removes everything you wrote in the sample from this device. It cannot be undone.' : ATV ? 'Clear Everything? This removes both of your check-ins and any card from this device, and Heartwood will ask for your code again. It cannot be undone.' : 'Clear Everything? This removes both of your answers, your workbook, The Money Map, your check-ins, and any card from this device, and Heartwood will ask for your code again. It cannot be undone.')) return;
       try { localStorage.removeItem(KEY); localStorage.removeItem(GMKEY); localStorage.removeItem(OLDKEY); sessionStorage.removeItem(PEND); sessionStorage.removeItem(PENDM); } catch (er) {}
       // Heartwood's key and invite leave this device too, so the code is needed to open it again (GWG BLD 772).
       if (!SAMPLE && window.HWOpen) HWOpen.forget();
@@ -1321,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b782', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b782', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b782', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b783', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
