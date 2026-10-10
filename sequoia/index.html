@@ -1083,7 +1083,6 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
     <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for older adults, 60 and up.</p>
     <div class="gg-hero-actions"><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');scrollToViewTop('client-intro',true,true)">How it works</button></div>
     <p class="gg-hero-pro">Helping a parent, a spouse, or a friend? They can add you as a helper in their own Sequoia settings.</p>
-    <div id="hero-tree-slot" hidden></div>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
 </section>
@@ -1112,10 +1111,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <p class="lead">A person is a lot like a tree. Sequoias are among the oldest living things on earth, and they keep growing all their lives. Sequoia looks at all six parts of you, from root to fruit.</p>
 
   <div class="section-title">The six parts of your tree</div>
-  <div class="parts-layout">
-    <div class="parts-tree"><div id="about-tree-slot"></div><p class="parts-tree-hint">Tap any part of the tree.</p></div>
-    <div id="about-part-cards"></div>
-  </div>
+  <div id="about-tree-slot" class="about-art"></div>
 
   <div class="section-title">Made for later life</div>
   <p class="lead">Larger text from the start, one question on the screen at a time, practices that work seated, standing, or in bed, and a Legacy Book for the stories you want to pass on. Read aloud is in every check-in and guide. Everything stays on this device, locked in your profile.</p>
@@ -1209,8 +1205,9 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
 <script src="/shared/gg-journey.js?v=r6o"></script>
 <script src="/shared/gg-library.js?v=b780"></script>
 <script src="/shared/gg-tend.js?v=b770"></script>
+<script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/sequoia/guides.js?v=b757"></script>
-<script src="/sequoia/app.js?v=b779n"></script>
+<script src="/sequoia/app.js?v=b780"></script>
 <script>
 /* Read aloud, built in like Oak, a little slower by default */
 (function () {
