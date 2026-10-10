@@ -43,7 +43,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'ln45';
+  var V = 'ln46';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -253,7 +253,7 @@
      and its sentence (clipName), so a wording change asks for a new clip, and the closing lines and quiz replies are
      shared by every video in that voice. REC.round names the recording round that plays; empty plays device voices.
      A missing clip falls back to the device voice for that sentence. Page videos keep their own clips (audio: 'pv').
-     The Voice Setup video, the Field Guide, and every sealed video keep device voices (no app, or not opened here).
+     The Voice Setup video keeps device voices. Sealed videos play locked clips instead (cfg.sealed, BLD 781, below).
      VOICES: each app's voice, with the tracks and the guide side (helper: For the Grown-up, For the Helper, For the
      Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'jenny'). */
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
@@ -280,6 +280,52 @@
     return voice + '/' + (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
   }
   function clipUrl(voice, text) { return REC.base + REC.round + '/' + clipName(voice, text) + '.mp3'; }
+  /* ---------------- locked clips for the sealed videos (BLD 781) ----------------
+     Sealed videos (the Field Guide's For Guides videos, Guide trainings, and Learn, and Heartwood's Learn) play recorded
+     clips that are locked: each one is encrypted (AES-GCM 256) with the audio key kept inside the sealed library the
+     lesson came from, so anyone without a code gets only unreadable files. The caller passes cfg.sealed = {key: the
+     library's audio object {v, round, folder, key}, voice: 'brian' or 'jenny'}. The 32 key bytes are used twice: to
+     unlock (AES-GCM) and to name (HMAC SHA-256). A clip's name is the lowercase hex of the first 16 bytes of
+     HMAC(key, voice + '|' + sentence), the exact sentence the player speaks, at <REC.base><round>/<folder>/<name>.bin;
+     the file is a 12-byte IV, then the AES-GCM ciphertext (with its tag) of the mp3. A library without audio, a missing
+     or locked clip, or a browser without WebCrypto plays the device voice (for that sentence only). */
+  var SKEYS = {};
+  function sealedOk(s) {
+    var k = s && s.key;
+    return !!(k && typeof k.key === 'string' && /^[a-z0-9]+$/i.test(String(k.round || '')) && /^[a-z0-9]+$/i.test(String(k.folder || '')) && (s.voice === 'brian' || s.voice === 'jenny')
+      && window.crypto && crypto.subtle && window.TextEncoder && window.fetch && window.Blob && window.URL && URL.createObjectURL);
+  }
+  function sealedKeys(k) {
+    if (!SKEYS[k.key]) SKEYS[k.key] = Promise.resolve().then(function () {
+      var raw = Uint8Array.from(atob(k.key), function (c) { return c.charCodeAt(0); });
+      if (raw.length !== 32) throw new Error('key');
+      return Promise.all([crypto.subtle.importKey('raw', raw, { name: 'AES-GCM' }, false, ['decrypt']), crypto.subtle.importKey('raw', raw, { name: 'HMAC', hash: 'SHA-256' }, false, ['sign'])]);
+    });
+    return SKEYS[k.key];
+  }
+  function sealedName(k, voice, text) {
+    return sealedKeys(k).then(function (ks) { return crypto.subtle.sign('HMAC', ks[1], new TextEncoder().encode(voice + '|' + text)); }).then(function (sig) {
+      return Array.prototype.map.call(new Uint8Array(sig).slice(0, 16), function (b) { return (b < 16 ? '0' : '') + b.toString(16); }).join('');
+    });
+  }
+  // Resolves a Blob URL of the unlocked mp3, or rejects (no clip, wrong key, no WebCrypto).
+  function sealedClip(k, voice, text) {
+    return sealedName(k, voice, text).then(function (n) { return fetch(REC.base + k.round + '/' + k.folder + '/' + n + '.bin'); })
+      .then(function (r) { if (!r.ok) throw new Error('clip ' + r.status); return r.arrayBuffer(); })
+      .then(function (buf) { if (buf.byteLength < 29) throw new Error('clip'); return sealedKeys(k).then(function (ks) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.slice(0, 12) }, ks[0], buf.slice(12)); }); })
+      .then(function (mp3) { return URL.createObjectURL(new Blob([mp3], { type: 'audio/mpeg' })); });
+  }
+  // A moment of silence, played on the first tap, so Safari lets the one audio element play the locked clips that
+  // arrive after the tap (a clip that is fetched and unlocked first misses the tap itself).
+  var SILENT = null;
+  function silent() {
+    if (SILENT) return SILENT;
+    var n = 400, b = new Uint8Array(44 + n), d = new DataView(b.buffer), w = function (o, t) { for (var i = 0; i < t.length; i++) b[o + i] = t.charCodeAt(i); };
+    w(0, 'RIFF'); d.setUint32(4, 36 + n, true); w(8, 'WAVEfmt '); d.setUint32(16, 16, true); d.setUint16(20, 1, true); d.setUint16(22, 1, true);
+    d.setUint32(24, 8000, true); d.setUint32(28, 8000, true); d.setUint16(32, 1, true); d.setUint16(34, 8, true); w(36, 'data'); d.setUint32(40, n, true);
+    for (var i = 44; i < b.length; i++) b[i] = 128;
+    return (SILENT = 'data:audio/wav;base64,' + btoa(String.fromCharCode.apply(null, b)));
+  }
   function speak(t, onend) { try { if (window.GGRead && GGRead.available) { GGRead.say(t, onend ? { onend: onend } : undefined); return true; } } catch (e) {} return false; }
   /* ---------------- beats (Learn Voice build, October 2026) ----------------
      Narration is spoken one sentence at a time with a real pause between, and each bullet, step, or card
@@ -514,8 +560,10 @@
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
     // A lesson with recorded voices keeps only the Speed choice: the device voice menu, Get a Better Voice, and Voice Check step aside.
     var rec = l.audio ? '' : recVoice(cfg);
-    if (l.audio || rec) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
-    if (l.audio || rec) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
+    // Locked clips (BLD 781) when the lesson has no public recording and the caller gave its library's audio key.
+    var SK = l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
+    if (recd) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
+    if (recd) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
@@ -641,6 +689,7 @@
       // A recorded clip for this sentence, when a lesson has them: a page video's own folder (audio: 'pv', BLD 777),
       // or the recording round in this lesson's voice (BLD 778).
       function clip(i, fin) {
+        if (SK) { sealedPlay(B[i].t, t, fin); sealedAhead(i); return true; }
         var src = l.audio ? url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3') : rec ? clipUrl(rec, B[i].t) : '';
         return play(src, B[i].t, t, fin);
       }
@@ -669,7 +718,40 @@
     // A quiz's "That's it." and its why, sentence by sentence in the lesson's recorded voice.
     function recSay(text, t, fin) {
       var L = beatsOf({ say: text }), k = 0;
-      (function next() { if (t !== P.tok) return; if (k >= L.length) return fin(); var x = L[k++].t; play(clipUrl(rec, x), x, t, function () { setTimeout(next, GAP); }); })();
+      (function next() { if (t !== P.tok) return; if (k >= L.length) return fin(); var x = L[k++].t, f = function () { setTimeout(next, GAP); }; if (SK) sealedPlay(x, t, f); else play(clipUrl(rec, x), x, t, f); })();
+    }
+    // Locked clips (BLD 781): each sentence is fetched and unlocked once per player, kept as a Blob URL until the player stops.
+    P.clips = {};
+    function sealedGet(text) { if (!P.clips[text]) P.clips[text] = sealedClip(SK.key, SK.voice, text).then(null, function () { return null; }); return P.clips[text]; }
+    // While one sentence plays, the next one (or the next scene's first, or a question's reply) is fetched and unlocked.
+    function sealedAhead(i) {
+      var nx = P.B[i + 1];
+      if (nx) sealedGet(nx.t);
+      else if (P.i + 1 < N - 1) { var b0 = beatsOf(l.scenes[P.i + 1])[0]; if (b0) sealedGet(b0.t); }
+      if (P.sc && P.sc.k === 'quiz') beatsOf({ say: "That's it. " + (P.sc.why || '') }).slice(0, 2).forEach(function (b) { sealedGet(b.t); });
+    }
+    function sealedPlay(text, t, fin) {
+      var sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, est = Math.max(1400, text.split(/\s+/).length * 60000 / (165 * sp)), gone = false;
+      function voice() {
+        if (gone || t !== P.tok) return; gone = true; clearTimeout(P.cw);
+        var spoke = speak(text, fin);
+        P.cw = setTimeout(function () { if (t === P.tok) fin(); }, spoke ? est * 2.4 + 2500 : est);
+      }
+      // A clip that has not arrived in 8 seconds gives way to the device voice for this sentence.
+      clearTimeout(P.cw); P.cw = setTimeout(voice, 8000);
+      sealedGet(text).then(function (u) {
+        if (gone || t !== P.tok) return;
+        if (!u) return voice();
+        gone = true; clearTimeout(P.cw);
+        if (!play(u, text, t, fin)) { gone = false; voice(); }
+      });
+      return true;
+    }
+    function sealedFree() { var C = P.clips; P.clips = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
+    // The first tap plays a moment of silence on the one audio element, so it may play the clips that follow.
+    function unlock() {
+      if (!SK || P.unl || !window.Audio) return; P.unl = true;
+      try { var a = P.el || (P.el = new Audio()); a.onended = a.onerror = a.onloadedmetadata = null; a.src = silent(); var pr = a.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
     }
     function answer(v) {
       var sc = l.scenes[P.i], ok = +v === sc.right, fb = $('.ggl-fb', host);
@@ -677,12 +759,12 @@
       if (!ok) { fb.innerHTML = '<p class="ln-no"><b>Not quite.</b> Try another answer.</p>'; return; }
       answered = true; finish();
       fb.innerHTML = '<p class="ln-yes"><b>That\'s it.</b> ' + esc(sc.why || '') + '</p>';
-      stopTimers(); var t = P.tok, said = false, spoke = rec && window.Audio ? (recSay("That's it. " + (sc.why || ''), t, function () { said = true; }), 'rec') : speak("That's it. " + (sc.why || '')), start = Date.now();
+      stopTimers(); var t = P.tok, said = false, spoke = (rec || SK) && window.Audio ? (recSay("That's it. " + (sc.why || ''), t, function () { said = true; }), 'rec') : speak("That's it. " + (sc.why || '')), start = Date.now();
       // Then roll on to the next scene (the closing breath, then the closing scene), so the lesson always ends with what comes next.
       P.tick = setInterval(function () {
         if (t !== P.tok) return clearInterval(P.tick);
         var busy = spoke === 'rec' ? !said : spoke && window.speechSynthesis && speechSynthesis.speaking;
-        if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) show(Math.min(P.i + 1, N - 1)); }, 1100); }
+        if (!busy && Date.now() - start > (spoke ? 1500 : 4000)) { clearInterval(P.tick); P.nx = setTimeout(function () { if (t === P.tok) { setPlay(true); show(Math.min(P.i + 1, N - 1)); } }, 1100); }
       }, 200);
     }
     /* Read Instead: the full script as text (every sentence, the pause-and-do moments, the question, and the sources) */
@@ -724,12 +806,13 @@
     function onClick(ev) {
       var b = ev.target.closest('[data-g]'); if (!b || !host.contains(b)) return;
       var g = b.getAttribute('data-g');
+      unlock();
       if (g === 'play') {
         if (P.playing) setPlay(false);
         else {
           var go = function () { setPlay(true); if (P.i < N - 1 && P.B && (P.b > 0 || P.ph === 'wait')) { stopTimers(); run(P.tok); } else show(P.i >= N - 1 ? 0 : P.i); };
           // Recorded voices (audio) need no Voice Check first.
-          if (!l.audio && !rec && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
+          if (!recd && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
         }
       }
       else if (g === 'read') readToggle($('.ln-read', host).hidden);
@@ -750,12 +833,12 @@
     function onKey(e) {
       if (CUR !== ctl || !host.isConnected || /input|textarea|select/i.test((e.target && e.target.tagName) || '')) return;
       if (e.key === ' ' && !(e.target && e.target.closest && e.target.closest('button'))) { e.preventDefault(); $('[data-g="play"]', host).click(); }
-      else if (e.key === 'ArrowRight') show(P.i + 1); else if (e.key === 'ArrowLeft') show(P.i - 1);
+      else if (e.key === 'ArrowRight') { unlock(); show(P.i + 1); } else if (e.key === 'ArrowLeft') { unlock(); show(P.i - 1); }
     }
     host.addEventListener('click', onClick);
     document.addEventListener('keydown', onKey);
     window.addEventListener('resize', fit);
-    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
+    var ctl = { stop: function () { setPlay(false); stopTimers(); hush(); bgStop(300); sealedFree(); host.removeEventListener('click', onClick); document.removeEventListener('keydown', onKey); window.removeEventListener('resize', fit); if (CUR === ctl) CUR = null; }, show: show };
     CUR = ctl;
     fit();
     var at = Math.max(0, Math.min((cfg.at || 0), N - 2));
@@ -1030,5 +1113,5 @@
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, sealedName: sealedName, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();

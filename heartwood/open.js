@@ -120,6 +120,8 @@
   function start(data, sample) {
     if (started) return; started = true;
     GLOBALS.forEach(function (g) { window[g] = data && data[g] ? data[g] : undefined; });
+    // Locked clips (GWG BLD 781): the audio key sealed at data.audio, for Heartwood's Learn videos (app.js). Never in the sample.
+    window.HW_AUDIO = !sample && data && data.audio && typeof data.audio === 'object' ? data.audio : undefined;
     window.HW_SAMPLE = !!sample;
     note(sample ? sampleNote() : '');
     var s = document.createElement('script'); s.src = APP; s.onerror = function () { msg('<p>Heartwood could not load. Check the connection and try again.</p>'); };

@@ -1256,6 +1256,9 @@
     el.innerHTML = '<button type="button" class="btn btn-secondary ff-sm" data-lback="1">&larr; All Lessons</button><div class="btv-eb">' + esc(f.t.title) + '</div><h2 class="btv-lh">' + esc(f.l.title) + '</h2><div id="gm-player"></div><div class="btv-lsrc">' + (window.GGSources ? GGSources.lesson('', f.l) : '') + '</div>';
     CTL = GGLearn.player($('gm-player'), {
       app: 'gm', lesson: f.l, track: f.t, tracks: L.tracks, done: D.done, at: D.at[f.l.id] || 0, accent: '#3F5F86', mark: { name: 'Heartwood' },
+      // Locked clips (GWG BLD 781): Jenny's recorded clips, unlocked with the audio key sealed in Heartwood's content (data.audio,
+      // handed over by open.js as window.HW_AUDIO). Without it (the sample, or content sealed before) the device voice plays.
+      sealed: window.HW_AUDIO && typeof window.HW_AUDIO.key === 'string' ? { key: window.HW_AUDIO, voice: 'jenny' } : null,
       onAt: function (i) { var d = lload(); d.at[f.l.id] = i; lkeep(d); },
       onDone: function (lid) { var d = lload(); if (!d.done[lid]) { d.done[lid] = today(); lkeep(d); } D.done[lid] = d.done[lid]; },
       open: function (nid) { learnPlay(nid); },
@@ -1268,7 +1271,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b780a', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=vc3', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b781', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
