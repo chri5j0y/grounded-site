@@ -76,19 +76,22 @@ window.PAGE_VIDEOS = {
   var OPEN = null;
   // Browser Back closes the video and stays on the page (GWG BLD 780): opening adds one history entry at the same
   // address ({ggPageVideo: key}); closing with the button, Escape, or Back to the Page steps back over it, so none is
-  // left behind. A popstate that belongs to the video stops here (capture), so a page's own routing never sees it.
+  // left behind. A popstate that belongs to the video stops here when this listener runs first; the apps' own popstate
+  // handlers also ask GGHistOwn(e) first and step aside (a browser may run their listener before this one).
   var SKIP = false, SKIP_T = 0;
+  window.GGHistOwn = window.GGHistOwn || function (e) { if (!e || e.type !== 'popstate') return false; var st = e.state; return !!(window.GG_HIST_SKIP || (st && (st.ggLearn || st.ggPageVideo)) || document.querySelector('.ggl-app')); };
+  function skip(on) { SKIP = on; window.GG_HIST_SKIP = on; clearTimeout(SKIP_T); if (on) SKIP_T = setTimeout(function () { skip(false); }, 800); }
   function pvState(key) { var s = {}, h = history.state; if (h && typeof h === 'object') for (var k in h) if (k !== 'ggLearn' && k !== 'ggLesson') s[k] = h[k]; s.ggPageVideo = key; return s; }
   window.addEventListener('popstate', function (e) {
     var k = e.state && e.state.ggPageVideo;
-    if (SKIP) { SKIP = false; clearTimeout(SKIP_T); e.stopImmediatePropagation(); return; }
+    if (SKIP) { skip(false); e.stopImmediatePropagation(); return; }
     if (OPEN && k !== OPEN.key) { e.stopImmediatePropagation(); OPEN.hist = false; close(); return; }
-    if (!OPEN && k) { e.stopImmediatePropagation(); try { history.back(); } catch (x) {} } // Forward onto an old video entry: step off it
+    if (!OPEN && k) { e.stopImmediatePropagation(); skip(true); try { history.back(); } catch (x) { skip(false); } } // Forward onto an old video entry: step off it
   }, true);
   function close(keep) {
     if (!OPEN) return;
     var o = OPEN; OPEN = null;
-    if (o.hist && !keep) { SKIP = true; clearTimeout(SKIP_T); SKIP_T = setTimeout(function () { SKIP = false; }, 800); try { history.back(); } catch (e) { SKIP = false; } }
+    if (o.hist && !keep) { skip(true); try { history.back(); } catch (e) { skip(false); } }
     try { if (o.ctl) o.ctl.stop(); } catch (e) {}
     if (o.mo) o.mo.disconnect();
     document.removeEventListener('keydown', onKey, true);
