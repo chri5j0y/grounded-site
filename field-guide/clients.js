@@ -359,7 +359,7 @@ function waBlk(f){ const W = cfg().writingAssistant, w = (f.privacy || {}).wa ||
     <div class="fw-chips" role="group" aria-label="Their answer">${[['yes', 'Yes'], ['no', 'No, Thank You']].map(([k, l]) => `<button type="button" class="chip" data-cla="wa" data-clv="${k}" aria-pressed="${w.ans === k}"${fk('wa|' + k)}>${l}</button>`).join('')}</div>
     <div class="fw-who"><span class="fw-lbl">How</span>${WA_HOW.map(([k, l]) => `<button type="button" class="chip fw-sm" data-cla="wa-how" data-clv="${k}" aria-pressed="${w.how === k}"${fk('wah|' + k)}>${l}</button>`).join('')}</div>
     ${w.ans ? `<p class="cl-ok" role="status">Writing help: ${w.ans === 'yes' ? 'yes' : 'no'}${w.how ? ', ' + esc((WA_HOW.find(x => x[0] === w.how) || ['', w.how])[1].toLowerCase()) : ''}, ${esc(nice(w.date))}. Saved with the file.</p>` : ''}`, W.sub); }
-const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${noticeItems().map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What We Never Keep</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
+const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${noticeItems().map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What Stays With You</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
 const V = {};
 V[1] = f => sayBox(STEP(1).say, '', f) +
   (saved(f) ? '' : `<div class="cl-banner" role="note">Nothing is saved yet. Record their yes below, and the file is saved, encrypted on this device.</div>`) +

@@ -1430,7 +1430,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b776').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b782').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */

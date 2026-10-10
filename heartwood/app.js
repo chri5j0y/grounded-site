@@ -369,7 +369,7 @@
   function pendingM() { var c = ''; try { c = sessionStorage.getItem(PENDM) || ''; } catch (e) {} return c || (st && st.inM) || ''; }
   function dropM() { try { sessionStorage.removeItem(PENDM); } catch (e) {} if (st && st.inM) { delete st.inM; persist(); } }
   function openM(code) {
-    if (!setup() || st.s.mode !== 'two') { say('Set up Heartwood on two devices first, then open this check-in card.'); return Promise.resolve(); }
+    if (!setup() || st.s.mode !== 'two') { say('Set up ' + (ATV ? 'After the Vows' : 'Heartwood') + ' on two devices first, then open this check-in card.'); return Promise.resolve(); }
     var got = null, me = st.s.me;
     return ask({ title: 'Open your partner’s check-in', lead: 'Type the word the two of you chose for this check-in.', fields: ['Your shared word'], ok: 'Open',
       verify: function (v) { return mread(code, v[0]).then(function (c) { if (!c) return 'This card is not one Heartwood can read.'; got = c; return true; }, function () { return 'That word does not open this card. Try again.'; }); } })

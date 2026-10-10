@@ -132,7 +132,7 @@ const DEF = {
   repeatVows: {faith: 'In the Name of God, I, [Partner 1 Full], take you, [Partner 2 Full], to be my partner in marriage, to have and to hold from this day forward, for better, for worse, for richer, for poorer, in sickness and in health, to love and to cherish, until we are parted by death. This is my solemn vow.',
     plain: 'I, [Partner 1 Full], choose you, [Partner 2 Full], to be my partner in life. I promise to love you, to be honest with you, to stand by you in good times and hard ones, and to keep choosing you, every day.'},
   attire: {title: 'What to Wear', say: 'Some couples love a formal day, and some want everyone relaxed and comfortable. What feels right for the two of you?', sub: 'Tap one for the guests, one for the wedding party, and one for what I will wear.',
-    guests: {title: 'How Will Guests Dress?', items: L2(['formal', 'Formal'], ['cocktail', 'Cocktail'], ['dressy', 'Dress Casual'], ['relaxed', 'Relaxed and Comfortable'], ['outdoor', 'Ready for Outdoors'])},
+    guests: {title: 'How Will Guests Dress?', items: L2(['formal', 'Formal'], ['cocktail', 'Semi-Formal'], ['dressy', 'Dress Casual'], ['relaxed', 'Relaxed and Comfortable'], ['outdoor', 'Ready for Outdoors'])},
     party: {title: 'The Wedding Party', items: L2(['matching', 'Matching'], ['color', 'One Color, Their Own Style'], ['own', 'Their Own Choice'])},
     chris: {title: 'What I Will Wear', items: L2(['suit', 'A Suit'], ['dresscasual', 'Dress Casual'], ['chaplain', 'My Normal Chaplain Clothes'])},
     chrisLine: '[Chris] will wear [Wear].', guestLine: 'Guests: [Dress].', partyLine: 'Wedding party: [Party].',
@@ -642,7 +642,7 @@ const rfill = (t, p) => fill(String(t || '').replace(/\[Name\]/g, '[Couple]'), p
 function lbPrev(p, k, x){
   const bible = (CER() && hasSvc(p) && CER().get(p.svc) || {}).bible || 'kjv';
   if (k === 'reading'){ const b = rBody(x, bible);
-    return `<div class="wd-prev">${x.bring ? `<p class="wd-note2"><b>Text not included.</b> Bring your own copy; it prints with this credit line.</p>` : `<div class="wd-words wd-read">${esc(b.text)}</div>`}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}</div>`; }
+    return `<div class="wd-prev">${x.bring ? `<p class="wd-note2"><b>Bring your own copy.</b> It prints with this credit line.</p>` : `<div class="wd-words wd-read">${esc(b.text)}</div>`}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}</div>`; }
   return `<div class="wd-prev">${x.by ? `<p><b>${esc(x.by)}</b></p>` : ''}${x.about ? `<p>${esc(rfill(x.about, p))}</p>` : ''}${arr(x.how).length ? `<div class="wd-lbl">How it goes</div><ol>${x.how.map(h => `<li>${esc(rfill(h, p))}</li>`).join('')}</ol>` : ''}${arr(x.needs).length ? `<div class="wd-lbl">What to bring</div><ul>${x.needs.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
     <p class="wd-sub">${[x.minutes ? 'About ' + x.minutes + ' minutes' : '', momentsOf(k, x).length ? 'Fits: ' + momentsOf(k, x).map(momName).join(', ') : '', faithKind(k, x) === 'faith' ? 'Faith' : faithKind(k, x) === 'plain' ? 'Plain' : 'Faith or plain'].filter(Boolean).join(' · ')}</p>${x.note ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}</div>`;
 }

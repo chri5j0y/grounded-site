@@ -645,10 +645,10 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
-<script src="share.js?v=b776"></script>
+<script src="share.js?v=b782"></script>
 <script src="ceremonies.js?v=b770"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b770"></script>
+<script src="farewell.js?v=b782"></script>
 <script src="wedding.js?v=b782"></script>
 <script src="premarital.js?v=b782"></script>
 <script src="clients.js?v=b782"></script>
@@ -1320,7 +1320,7 @@ function vLibrary(){
   if (sub === 'services') body = LIB.services.map(s => `<div class="card"><div class="eyebrow">${esc(s.short)}</div><h3>${esc(s.title)}</h3><p class="purpose" style="font-size:19px;margin:4px 0 10px">${esc(s.promise)}</p>
       <div class="grid g2"><div><h4>What's included</h4><ul class="checklist">${s.included.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
       <div><h4>Rates</h4>${s.rates.map(r => `<div class="rate"><span>${esc(r[0])}</span><b>${esc(r[1])}</b></div>`).join('')}${s.care ? `<p class="tipbox">${esc(s.care)}</p>` : ''}</div></div></div>`).join('')
-      + `<div class="card"><h3>Cost is never a wall</h3>${LIB.access.map(a => `<p style="margin-top:8px"><b>${esc(a[0])}</b> ${esc(a[1])}</p>`).join('')}<p style="margin-top:8px"><b>Travel.</b> ${esc(LIB.travel)}</p></div>`;
+      + `<div class="card"><h3>A way in for every budget</h3>${LIB.access.map(a => `<p style="margin-top:8px"><b>${esc(a[0])}</b> ${esc(a[1])}</p>`).join('')}<p style="margin-top:8px"><b>Travel.</b> ${esc(LIB.travel)}</p></div>`;
   if (sub === 'policies') body = LIB.policies.map(p => `<div class="card"><h3>${esc(p[0])}</h3><p style="margin-top:6px">${mark(p[1])}</p></div>`).join('');
   if (sub === 'docs') body = (V.doc ? docForm(LIB.docs.find(d => d.id === V.doc)) : LIB.docs.map(d => `<button class="gitem" data-act="doc" data-v="${d.id}"><span class="qi">${icon('print')}</span><span><b>${esc(d.title)}</b><small>${esc(d.for)}</small></span><span class="arr">&rsaquo;</span></button>`).join(''));
   if (sub === 'emails') body = LIB.emails.map(e => `<div class="card email" id="em-${e.id}"><div class="spread"><h3>${esc(e.title)}</h3><button class="btn btn-line btn-sm" data-act="copy-email" data-v="${e.id}">${icon('copy')} Copy</button></div><p class="muted" style="margin-top:4px">Subject: ${esc(e.subject)}</p><pre>${esc(e.body)}</pre></div>`).join('');
@@ -1639,7 +1639,7 @@ function vFounder(){
   const shownH = `  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
     <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="fdr-hide">Done</button></div></div>` : ''}`;
-  const setupH = `  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>This device can't open Staff yet</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
+  const setupH = `  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>Open Staff on this device</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
     <label class="f" for="fdr-sc">Staff code</label><input type="password" id="fdr-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
     <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Guide libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}`;
@@ -2282,7 +2282,7 @@ function vSTVisit(){
   const demo = V.stv === 'demo', c = demo ? s.person : CL(s.clientId), me = stIsMe(c), S = STG(), sf = s.safety || {};
   const back = demo ? `<button class="linkbtn" data-tab="oak">Back to Oak Guide</button>` : `<button class="linkbtn" data-act="st-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the handout or copy the note to see how they look.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Oak' : ''}</p></div>
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
   ${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? '<div class="card"><p class="muted">This visit used the questions from before the session 22 update. It stays here, but it isn\'t compared with newer visits.</p></div>' : ''}
@@ -2431,7 +2431,7 @@ function stSaveRun(){
     safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
     std:ST_STD, flags:stRunFlags(r), yes:r.yes || '', own:r.own || '', notSup:!!r.notSup};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'oak', stv:'demo', stDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'oak', stv:'demo', stDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
   save(); go('oak', {stv:s.id}); toast('Visit saved.');
@@ -2881,7 +2881,7 @@ function vSQVisit(){
   const demo = V.sqv === 'demo', c = demo ? s.person : CL(s.clientId), me = sqIsMe(c), S = SQG(), sf = s.safety || {};
   const back = demo ? `<button class="linkbtn" data-tab="sequoia">Back to Sequoia Guide</button>` : `<button class="linkbtn" data-act="sq-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Print the take-home sheet or copy the note to see how they look.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'helper' ? ' &middot; Helper questions' : ''}${s.by && s.set !== 'helper' && s.visit !== 'open' ? ' &middot; ' + esc(sqByName(s.by)) : ''}</div><h1>${esc(sqVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}</p></div>
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
   ${s.by === 'observed' ? '<div class="card"><p class="muted">Answered from what was seen, not in their own voice. It is kept here, and it doesn\'t add a ring to their tree.</p></div>' : ''}
@@ -3058,7 +3058,7 @@ function sqSaveRun(){
     safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
     std:(SQC && SQC.version) || 1, flags:sqRunFlags(r), yes:r.yes || '', own:r.own || ''};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'sequoia', sqv:'demo', sqDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'sequoia', sqv:'demo', sqDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
   save(); go('sequoia', {sqv:s.id}); toast('Visit saved.');
@@ -3810,7 +3810,7 @@ const fgVisitUrl = (card, tree) => window.GGApp && GGApp.visit && card && (card.
 const fgSendBtn = (act, tree) => `<button class="btn btn-line" data-act="${act}">${icon(tree === 'oak' ? 'tree' : tree)} Send to Their Own ${FG_VTREE[tree]}</button>`;
 function fgVisitSend(card, tree){
   const T = FG_VTREE[tree] || 'tree', u = fgVisitUrl(card, tree);
-  if (!u) return toast('There is nothing to send yet. Pick something to try, or mark a part as strong.');
+  if (!u) return toast('Pick something to try, or mark a part as strong, and the card is ready to send.');
   const svg = window.GGQR ? GGQR.svg(u, {label:'QR code for their own ' + T}) : '', who = card.n ? esc(card.n) + "'s" : 'their';
   GGApp.dialog({title:'Send to Their Own ' + T, html:(svg ? `<div class="ggx-qr">${svg}</div>` : '') + `<p>Scan this with the phone or tablet that holds ${who} own ${T}. It opens ${T} and asks whose tree it's for.</p>
     <p class="ggx-small">It carries only their first name, the date, what's growing strong, and up to four practices to try.${card.pl ? ` It also keeps Plain wording on in their ${T}, as your organization asks.` : ''} If the device is shared with family, anyone who can open the tree can see the card, and it can be removed any time.</p>`,
@@ -4318,7 +4318,7 @@ function spRepDraw(){
 function spRepSave(){
   const r = REP; if (!r) return;
   if (!r.raised) return alert('Choose who raised it.');
-  if (r.demo){ spRepClose(); toast('Demo. Nothing was saved.'); return; }
+  if (r.demo){ spRepClose(); toast('Demo. A practice run, and your records stay as they were.'); return; }
   const ct = spCounty(r.county), own = DATA.settings.spOwnCounty || {};
   const due = r.state === 'MN' && r.how !== 'online' && r.at && !r.written ? spDue(r.at) : null;
   const s = {id:uid(), u:Date.now(), kind:'spr', tool:r.tool, clientId:r.cid, visitId:r.visitId, date:today(), raised:r.raised, words:r.words, what:r.what, at:r.at, how:r.how,
@@ -4458,7 +4458,7 @@ function vSPVisit(){
   const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : spReports(c ? c.id : null).filter(r => r.visitId === s.id);
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(spGradeName(s.grade))} &middot; ${esc(fgWordName(s.wording, s.plainLock))}${s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</div><h1>${esc(spVisitName(s.visit))}</h1>
    <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the child stopped the visit' : ''}</p></div>
   <div class="card"><p><b>Child's yes:</b> Yes &middot; <b>Room:</b> ${esc(((room.where.find(o => o[0] === (s.room || {}).where) || [])[1]) || '')}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p>
@@ -4657,7 +4657,7 @@ function spSaveRun(){
     flags:spFlags(r), told:r.told, talkHome:r.talkHome, share:r.share, tryh:r.tryh, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || [],
     wording:r.wording, plainLock:!!r.plainLock, impr:r.impr, tags:r.tags, did:r.did, refs:r.refs, summary:r.summary};
   spKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'maple', spv:'demo', spDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'maple', spv:'demo', spDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); if (!c.sp.plainLock) c.sp.wording = r.wording; }
   save(); go('maple', {spv:s.id}); toast('Visit saved.');
@@ -5210,7 +5210,7 @@ function vSAVisit(){
   const idxs = saIdx(s), room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : saReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, sq = sens.asked ? saSensQ(s.grade) : null;
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(saGradeName(s.grade))} &middot; ${esc(fgWordName(s.wording, s.plainLock))}${!saCur(s) ? ' &middot; earlier questions' : ''}</div><h1>${esc(saVisitName(s.visit))}</h1>
    <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the student stopped the visit' : ''}</p></div>
   <div class="card"><p><b>Promise read:</b> ${s.promise ? 'Yes' : 'Not marked'} &middot; <b>Student's yes:</b> Yes &middot; <b>Who could see in:</b> ${esc(saWhere(s))}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p>
@@ -5474,7 +5474,7 @@ function saStop(fromKid){
 function saSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = saRunAsVisit();
   saKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'aspen', sav:'demo', saDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'aspen', sav:'demo', saDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); if (!c.sa.plainLock) c.sa.wording = r.wording; }
   save(); go('aspen', {sav:s.id}); toast('Visit saved.');
@@ -6100,7 +6100,7 @@ function vPNVisit(){
   const room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '', reps = demo ? [] : pnReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, open = s.visit === 'open';
   const flagged = pnAllFlags(s);
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''} &middot; ${esc(pnGradeName(s.grade))} &middot; ${esc(pnWordName(s.wording))}${!pnCur(s) ? ' &middot; earlier questions' : ''}</div><h1>${esc(pnVisitName(s.visit))}</h1>
    <p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; the student stopped the visit' : ''}</p></div>
   <div class="card"><p><b>Promise read:</b> ${s.promise ? 'Yes' : 'Not marked'} &middot; <b>Student's yes:</b> Yes &middot; <b>Who could see in:</b> ${esc(pnWhere(s))}${((s.room || {}).who || []).length ? ' (' + s.room.who.map(w => ((room.who.find(o => o[0] === w) || [])[1] || w)).join(', ') + ')' : ''} &middot; <b>Screen:</b> ${esc(scr)}</p></div>
@@ -6402,7 +6402,7 @@ function pnStop(fromKid){
 function pnSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = pnRunAsVisit();
   pnKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'pine', pnv:'demo', pnDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'pine', pnv:'demo', pnDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); c.pn.grade = r.grade; c.pn.wording = r.wording; if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
   save(); go('pine', {pnv:s.id}); toast('Visit saved.');
@@ -7014,7 +7014,7 @@ function vBRVisit(){
   const back = demo ? `<button class="linkbtn" data-act="br-home">Back to Birch Guide</button>` : `<button class="linkbtn" data-act="br-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'person')}</button>`;
   const youth = s.youth === 'yes' ? `<b>Youth setting:</b> yes &middot; <b>Room:</b> ${esc(brWhere(s))}` : s.youth === 'no' ? '<b>Youth setting:</b> no' : '';
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were. Make the take-home sheet or copy the note to see how they look.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.visit !== 'open' && !s.notToday ? ' &middot; ' + esc(brWordName(s.wording)) : ''}${(s.season || []).length ? ' &middot; ' + esc(brSeasonNames(s.season).join(', ')) : ''}</div><h1>${esc(brVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; they chose to stop, and that was honored' : ''}</p></div>
   ${me ? '' : `<div class="card"><p><b>Their yes:</b> ${s.notToday ? 'Not today' : 'Yes'}${youth ? ' &middot; ' + youth : ''}</p></div>`}
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}` : `
@@ -7283,7 +7283,7 @@ function brStop(){
 function brSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId), s = brRunAsVisit();
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; V = {tab:'birch', brv:'demo', brDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; V = {tab:'birch', brv:'demo', brDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   DATA.sessions.push(s); DATA.draft = null;
   if (c){ touch(c); c.last = today(); c.br.wording = r.wording; c.br.season = r.season.slice(); c.br.youth = r.youth; if (r.fdate) (c.followups = c.followups || []).push({date:r.fdate, text:r.ftext || 'Follow up', done:false}); }
   save(); go('birch', {brv:s.id}); toast('Visit saved.');
@@ -7688,7 +7688,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=tc2', '../willow/practices.js?v=tc2'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b782', '../willow/practices.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -8388,7 +8388,7 @@ function vWLVisit(){
   const plans = wlVisitPlans(s, c);
   const tries = wlTries(s), struggles = (s.struggles || []).map(id => C.guide.struggles.find(x => x[0] === id)).filter(Boolean);
   return `${back}
-  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">Nothing here is saved.</span></div>' : ''}
+  ${demo ? '<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><b>Demo visit.</b> <span class="muted">A practice run: your records stay as they were.</span></div>' : ''}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${shared ? '' : ' &middot; ' + esc(wlRoleName(s.setting))}</div><h1>${esc(wlVisitName(s.visit))}</h1>
    <p>${esc(c ? c.name : '')}${byName ? ' &middot; ' + esc(byName) : ''}${s.helper ? ' (' + esc(s.helper) + ')' : ''}${shared && s.quick ? ' &middot; quick check-in' : shared ? ' &middot; full check-in' : ''}</p></div>
   ${shared ? `<div class="card"><p class="muted">${esc(S.bridge.sharedNote)}</p></div>` : ''}
@@ -8775,7 +8775,7 @@ function wlSaveRun(){
     safety:r.safety, struggles:r.struggles, guilt:r.guilt, hopeAsked:r.hopeAsked, tags:r.tags, did:r.did, refs:r.refs, tryp:r.tryp,
     plans:newPlans.map(p => p.id).concat(touched), summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  if (r.demo){ s.person = c; s.planList = newPlans; V = {tab:'willow', wlv:'demo', wlDemo:s}; render(); toast('Demo finished. Nothing was saved.'); return; }
+  if (r.demo){ s.person = c; s.planList = newPlans; V = {tab:'willow', wlv:'demo', wlDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   const w = c.wl;
   if (useFaith && (r.faith.trad || r.faith.own)) w.faith = Object.assign({}, r.faith, {date:today(), src:'guide'});
   else if (w.faith && r.faithCheck === 'same') w.faith.date = today();
@@ -8892,7 +8892,7 @@ function wlAct(a, v, t){
     case 'wl-import': go('willow', {wli:{token:window.GGBridge ? GGBridge.pending('guide') : '', link:'', code:'', err:''}, wlp:v || null}); return true;
     case 'wl-imp-open': wlImpOpen(); return true;
     case 'wl-imp-save': wlImpSave(); return true;
-    case 'wl-imp-drop': if (window.GGBridge) GGBridge.clear('guide'); go('willow'); toast('Thrown away. Nothing was saved.'); return true;
+    case 'wl-imp-drop': if (window.GGBridge) GGBridge.clear('guide'); go('willow'); toast('Thrown away. Your records stay as they were.'); return true;
     case 'wl-mhome': lnStop(); V = {tab:'willow', wlm:1}; render(); return true;
     case 'wl-ml': if (!wlmOpen(+v)) return true; lnStop(); V = {tab:'willow', wlm:1, wlml:+v}; render(); return true;
     case 'wl-mread': { const d = wlmData(), id = WLM().lessons[+v].id; if (!d.lessons[id]){ d.lessons[id] = today(); d.how[id] = 'read'; } save(); render(); return true; }
@@ -8992,7 +8992,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b772', '../willow/guides.js?v=cn2', '../sequoia/guides.js?v=b757', '../pine/guides.js?v=b782', '../birch/guides.js?v=b772'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b782', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b782', '../pine/guides.js?v=b782', '../birch/guides.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -10505,7 +10505,7 @@ function dkSlideHTML(s, d, n, of){
 function vDK(){
   const L = DKL();
   const head = `<div class="page-head"><div class="eyebrow">Present &middot; Staff and Founders</div><h1>${esc(L ? L.title : 'Present')}</h1><p>${esc(L ? L.lead : 'Talks and decks for every tree.')}</p></div>`;
-  if (!L) return head + `<div class="card"><h3>Not in this library yet</h3><p class="muted">The slides live in the Staff library. On a Founder device, open Founder, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
+  if (!L) return head + `<div class="card"><h3>The slides come with the Staff library</h3><p class="muted">The slides live in the Staff library. On a Founder device, open Founder, then Update a Library, and choose the presentations update file. Seal it and upload lib-staff.js.</p></div>`;
   const d = dkCur();
   if (V.dke && d) return dkEditHTML(d);
   const sel = V.dks = V.dks || Object.assign({deck: 'grounded', aud: 'hospice', fmt: 's', mode: 'live'}, DATA.settings.dkLast || {});
