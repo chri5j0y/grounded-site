@@ -419,7 +419,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Bring the routines along.",
       "body": "Routines are what make a new house feel like home.",
-      "say": "Everyday family routines and rituals help children feel secure, and they can travel. Bedtime stories, Friday pizza, a blessing at the door. Set up the bedtime routine on the very first night, even before the boxes are unpacked."
+      "say": "Everyday family routines and rituals help children feel secure, and they can travel. Bedtime stories, Friday soup night, a blessing at the door. Set up the bedtime routine on the very first night, even before the boxes are unpacked."
      },
      {
       "k": "big",
@@ -2593,7 +2593,7 @@ window.GG_LEARN_GUIDES.grove = {
        "Mixed up",
        "Not much at all"
       ],
-      "say": "When someone dies, people feel lots of things. Sad. Mad. Scared. Mixed up. Some people don't feel much at all at first. All of these are okay. There is no wrong way to miss someone."
+      "say": "When someone dies, people feel lots of things. Sad. Mad. Scared. Mixed up. Some people don't feel much at all at first. All of these are okay. Every way of missing someone is okay."
      },
      {
       "k": "big",
@@ -4196,7 +4196,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "You are allowed to grieve.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You are allowed to grieve. Calm sadness in front of your class teaches students that grief is safe. Lean on your colleagues, the crisis team, and your school counselors. You are not alone in this. The full guide has more, whenever you want it."
+      "say": "You are allowed to grieve. Calm sadness in front of your class teaches students that grief is safe. Lean on your colleagues, the crisis team, and your school counselors. We're with you in this. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -5446,7 +5446,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "flow",
-      "h": "Don't skip the ending",
+      "h": "Stay for the ending",
       "steps": [
        [
         "End well",
@@ -5554,7 +5554,7 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "flow",
-      "h": "Don't skip the ending",
+      "h": "Stay for the ending",
       "steps": [
        [
         "End well",
@@ -5892,7 +5892,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"They are in a better place, so don't be sad.\"",
        "Details the family did not share"
       ],
-      "say": "Some words, meant kindly, wound. It was all part of the plan. They're in a better place, so don't be sad. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and there's no right way to feel."
+      "say": "Some words, meant kindly, wound. It was all part of the plan. They're in a better place, so don't be sad. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and every feeling is welcome."
      },
      {
       "k": "big",
@@ -5939,7 +5939,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Don't speculate, and don't treat it as shameful. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
      },
      {
       "k": "big",
@@ -6000,7 +6000,7 @@ window.GG_LEARN_GUIDES.grove = {
        "\"At least they lived a long life.\"",
        "Details the family did not share"
       ],
-      "say": "Some words, meant kindly, wound. Everything happens for a reason. At least they lived a long life. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and there's no right way to feel."
+      "say": "Some words, meant kindly, wound. Everything happens for a reason. At least they lived a long life. And details of the death that the family didn't choose to share. Instead try, we're going to take time to grieve together, and every feeling is welcome."
      },
      {
       "k": "big",
@@ -6047,7 +6047,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Don't speculate, and don't treat it as shameful. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
      },
      {
       "k": "big",
@@ -8360,10 +8360,10 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Words we can say together",
       "items": [
        "We miss them. They were one of us.",
-       "There's no right way to grieve this.",
+       "Each of us grieves this in our own way.",
        "We'll remember them together."
       ],
-      "say": "Here are words we can say together. We miss them. They were one of us. There's no right way to grieve this. We'll remember them together."
+      "say": "Here are words we can say together. We miss them. They were one of us. Each of us grieves this in our own way. We'll remember them together."
      },
      {
       "k": "big",
@@ -8453,7 +8453,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If it was a suicide",
       "body": "Follow the family. No speculation. Watch for risk.",
-      "say": "If the death was by suicide, follow the family's lead on what is said. Don't speculate, and don't share details. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea. Then call or text nine eight eight together."
+      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea. Then call or text nine eight eight together."
      },
      {
       "k": "big",
@@ -8536,7 +8536,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Like we cannot do it well"
        ]
       ],
-      "say": "Burnout has three signs. Exhaustion that a weekend doesn't fix. Feeling distant from the work, cynical, numb, or short with people. And feeling like we can't do it well anymore. If those sound familiar, we're not alone, and we're not failing."
+      "say": "Burnout has three signs. Exhaustion that a weekend doesn't fix. Feeling distant from the work, cynical, numb, or short with people. And feeling like we can't do it well anymore. If those sound familiar, many families feel this, and we're doing our best."
      },
      {
       "k": "big",

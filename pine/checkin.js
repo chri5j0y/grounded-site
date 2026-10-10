@@ -310,7 +310,7 @@ const Q = {
       tip: 'Keep it about energy, never weight or looks. Make breakfast and snacks easy to grab. If food starts to feel like rules they can\'t break, talk with their doctor.',
       why: 'Regular meals keep your energy, mood, and focus steady through the day.' },
     { t: 'Felt okay in your own body?',
-      tip: 'Keep the talk about strength, energy, and health, never weight or looks. Listen without judging.',
+      tip: 'Keep the talk about strength, energy, and health, never weight or looks. Listen with an open heart.',
       why: 'Lots of teens say social media makes them feel worse about their bodies. How your body feels and what it can do matter more than how it looks online.',
       src: ['sgsocial23'] },
     { t: 'Felt ready to say no, with an easy way out, if someone offered you a vape, a drink, or drugs?',
@@ -413,7 +413,7 @@ const ALERT_TOLD = 'A grown-up you chose will get a quiet note to check in with 
 // now is asked only after a yes or not sure to the self question; a yes
 // to it opens the calm card at the top.
 const SAFETY = {
-  intro: 'A lot of people your age go through really heavy stretches. These two questions help make sure you\'re okay. There\'s no wrong answer, and you can skip.',
+  intro: 'A lot of people your age go through really heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
   questions: [
     ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at school, online, or in a relationship?', 'safe'],
     ['Over the past few weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']

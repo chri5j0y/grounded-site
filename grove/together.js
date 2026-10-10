@@ -127,7 +127,7 @@ const P = [
 { id:"look-forward", part:"fruit", name:"Something to Look Forward To",
   text:"Plan one small thing to look forward to this week, together.",
   kid:"Plan something fun to look forward to.",
-  steps:"Everyone suggests one small thing: a picnic, a movie, pancakes.|Choose one together.|Put it on the calendar where everyone can see it." },
+  steps:"Everyone suggests one small thing: a picnic, a board game, pancakes.|Choose one together.|Put it on the calendar where everyone can see it." },
 { id:"good-news-round", part:"fruit", name:"Good News Round",
   text:"Each person shares one good thing that happened this week.",
   kid:"Tell one good thing that happened this week.",
@@ -135,7 +135,7 @@ const P = [
 { id:"secret-kindness", part:"fruit", name:"Secret Kindness",
   text:"Each person does one secret kind thing for someone in the family.",
   kid:"Do a secret kind thing for someone in your family.",
-  steps:"Everyone picks someone.|Do one kind thing without telling: make their bed, leave a note, share a treat.|At the end of the week, guess who did what." },
+  steps:"Everyone picks someone.|Do one kind thing without telling: make their bed, leave a note, pick them a flower.|At the end of the week, guess who did what." },
 { id:"remember-together", part:"fruit", name:"Remember Together",
   text:"Look at old photos and tell the story of a good day.",
   kid:"Look at old pictures and tell a happy story.",
@@ -153,7 +153,7 @@ P.forEach(p => { const b = LIFE_T[p.id]; if (b) { p.life = b[0].slice(); if (b[1
 /* LIFE end */
 const FEATURED = ["gratitude-round", "early-night", "family-walk", "family-reset", "feelings-weather", "reach-out-together",
   "quiet-minute", "phones-down-dinner", "family-words", "rose-and-thorn", "look-forward", "remember-together"];
-const THEMES = ["Start where you are", "Rest and limits", "The body knows", "When you miss a day", "What you carry", "Don't wait on people",
+const THEMES = ["Start where you are", "Rest and limits", "The body knows", "When you miss a day", "What you carry", "Reach toward people",
   "Spirit, any way you come", "Practices that hold", "You get a say", "Love between us", "Hope that shows up", "Holding on and letting go"];
 return { practices: P, featured: FEATURED, themes: THEMES };
 })();

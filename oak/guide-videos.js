@@ -69,7 +69,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Anxiety That Won't Settle",
 "sub": "For You",
-"say": "If your mind won't stop racing, or dread keeps showing up even when nothing is wrong, this is for you. You are not overreacting, and you are not alone."
+"say": "If your mind won't stop racing, or dread keeps showing up even when nothing is wrong, this is for you. Your feelings make sense, and we're with you."
 },
 {
 "k": "big",
@@ -2620,7 +2620,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "There is no timeline.",
 "sub": "One hour at a time is enough.",
-"say": "This is one of the deepest losses a person can face. It can feel unbearable, disorienting, even physically painful. You may feel the whole world should have stopped. There is no timeline for this, and no right way through it. One hour at a time is enough."
+"say": "This is one of the deepest losses a person can face. It can feel unbearable, disorienting, even physically painful. You may feel the whole world should have stopped. This takes its own time, and your way through it is your own. One hour at a time is enough."
 },
 {
 "k": "words",
@@ -3157,7 +3157,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "If your faith brings fear",
 "body": "Many traditions today speak of mercy. A trusted faith leader can help.",
-"say": "If your faith brings fear about what this death means, you are not alone. Many traditions today speak of mercy, and understand suicide as the result of illness. A trusted faith leader can sit with that question with you."
+"say": "If your faith brings fear about what this death means, many people of faith have felt this too. Many traditions today speak of mercy, and understand suicide as the result of illness. A trusted faith leader can sit with that question with you."
 },
 {
 "k": "card",
@@ -4112,7 +4112,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Be gentle with the empty routines.",
 "sub": "Walk the old route, or a new one.",
-"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. There is no deadline for deciding about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988."
+"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. Take all the time you need to decide about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988."
 },
 {
 "k": "big",
@@ -4503,7 +4503,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Fighting the system",
 "Not being seen"
 ],
-"say": "You may be tired of explaining. Tired of being tired. Frustrated with your body, and with the systems that are supposed to help. And lonely, when the people around you can't see your pain. All of that is real, and you are not alone in it."
+"say": "You may be tired of explaining. Tired of being tired. Frustrated with your body, and with the systems that are supposed to help. And lonely, when the people around you can't see your pain. All of that is real, and many people share it."
 },
 {
 "k": "points",
@@ -4998,7 +4998,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Choose your agent with care.",
 "body": "Someone who will honor your wishes, even when it is hard.",
-"say": "Choose your agent with care. It may not be the person closest to you. It's the person who will speak your wishes clearly, even when they're hard to hear, and even when family disagrees. Then ask them. Don't assume they know."
+"say": "Choose your agent with care. It may not be the person closest to you. It's the person who will speak your wishes clearly, even when they're hard to hear, and even when family disagrees. Then ask them, and tell them plainly."
 },
 {
 "k": "big",
@@ -5437,9 +5437,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
+"h": "Take your time.",
 "sub": "You only have to do today.",
-"say": "First, take a breath. There is no rush. You don't have to do everything right away. You only have to do today."
+"say": "First, take a breath. Take your time. You don't have to do everything right away. You only have to do today."
 },
 {
 "k": "points",
@@ -7128,7 +7128,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Pornography That's Hard to Stop",
 "sub": "For You",
-"say": "If you've been caught in a cycle with pornography, wanting to stop and finding it hard to, this is for you. You are not alone, and you can find a way forward."
+"say": "If you've been caught in a cycle with pornography, wanting to stop and finding it hard to, this is for you. Help is here, and you can find a way forward."
 },
 {
 "k": "points",
@@ -10250,10 +10250,10 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Words that help",
 "items": [
 "Thanks for telling me.",
-"You're not alone in this.",
+"We're with you in this.",
 "What would help most this week?"
 ],
-"say": "Here are words that help. Thanks for telling me. You're not alone in this. And later, what would help most this week?"
+"say": "Here are words that help. Thanks for telling me. We're with you in this. And later, what would help most this week?"
 },
 {
 "k": "points",
@@ -10331,9 +10331,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "You're not alone in this.",
+"h": "We're with you in this.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Thanks for telling me. You're not alone in this. Those words can open the door to everything else. The full guide has more, whenever you want it."
+"say": "Thanks for telling me. We're with you in this. Those words can open the door to everything else. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -11941,7 +11941,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Moral Injury",
 "sub": "For You",
-"say": "If you carry something from your work, your service, or your life that goes against your deepest values, this is for you. Veterans, nurses, doctors, first responders, and many others carry this. You are not alone with it."
+"say": "If you carry something from your work, your service, or your life that goes against your deepest values, this is for you. Veterans, nurses, doctors, first responders, and many others carry this. Others can carry it with you."
 },
 {
 "k": "big",
@@ -12467,9 +12467,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "Don't rush someone's healing.",
+"h": "Let healing take its own time.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Healing takes the time it takes. Don't rush someone's healing. Walk beside it. The full guide has more, whenever you want it."
+"say": "Healing takes the time it takes. Let healing take its own time. Walk beside it. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -13063,7 +13063,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "You are not alone",
+"title": "We're with you",
 "body": "\"I'm worried about my family's safety. Can you be one of our emergency contacts?\"",
 "say": "Stay connected. Community groups and accompaniment programs can walk with you. And you can ask someone you trust: I'm worried about my family's safety. Can you be one of our emergency contacts? If the fear begins to take over your days, a counselor can help. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
 },
@@ -14940,7 +14940,7 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "Your own pace",
-"No deadline for healing"
+"Healing takes its own time"
 ],
 [
 "A trauma-informed counselor",
@@ -15218,7 +15218,7 @@ window.GG_LEARN_GUIDES.oak = {
 "items": [
 [
 "Reporting is their choice",
-"No pressure either way"
+"Their choice, either way"
 ],
 [
 "Questions about blame",
@@ -15229,7 +15229,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Even toward the person who hurt them"
 ]
 ],
-"say": "Let them choose. Reporting is their choice, with no pressure either way. Leave out any question about what they were wearing or drinking. And ask before you act, even toward the person who hurt them."
+"say": "Let them choose. Reporting is their choice, and you support either one. Leave out any question about what they were wearing or drinking. And ask before you act, even toward the person who hurt them."
 },
 {
 "k": "points",

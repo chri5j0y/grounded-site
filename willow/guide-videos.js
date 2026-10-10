@@ -436,7 +436,7 @@ window.GG_LEARN_GUIDES.willow = {
 {
 "k": "big",
 "h": "What would coming back look like for you?",
-"say": "Take a moment with this question. What would coming back look like for you? A prayer, a priest, a hymn, a quiet word with God? There is no wrong answer.",
+"say": "Take a moment with this question. What would coming back look like for you? A prayer, a priest, a hymn, a quiet word with God? Every answer is welcome.",
 "beats": [
 "Take a moment with this question.",
 "What would coming back look like for you?",
@@ -444,7 +444,7 @@ window.GG_LEARN_GUIDES.willow = {
 "t": "A prayer, a priest, a hymn, a quiet word with God?",
 "w": 12
 },
-"There is no wrong answer."
+"Every answer is welcome."
 ]
 },
 {
@@ -2490,7 +2490,7 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "words",
-"h": "Ask. Don't correct.",
+"h": "Ask, and go gently.",
 "items": [
 "Who's here?",
 "What are they saying?",
@@ -3180,8 +3180,8 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
-"say": "There is no rush. Nothing has to happen right away. You can take all the time you need.",
+"h": "Take your time.",
+"say": "Take your time. Nothing has to happen right away. You can take all the time you need.",
 "sub": "Nothing has to happen right away."
 },
 {
@@ -3260,18 +3260,18 @@ window.GG_LEARN_GUIDES.willow = {
 },
 {
 "k": "big",
-"h": "There is no rush.",
-"say": "Help the family know there is no rush. Nothing has to happen right away. The hour is theirs."
+"h": "Take your time.",
+"say": "Help the family know they can take their time. Nothing has to happen right away. The hour is theirs."
 },
 {
 "k": "words",
 "h": "Words for the hour",
 "items": [
 "Take all the time you need.",
-"There's no rush.",
+"Take your time.",
 "Would you like to sit with her?"
 ],
-"say": "Here are words for the hour. Take all the time you need. There's no rush. Would you like to sit with her?"
+"say": "Here are words for the hour. Take all the time you need. Take your time. Would you like to sit with her?"
 },
 {
 "k": "points",

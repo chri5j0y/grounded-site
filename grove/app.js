@@ -502,7 +502,7 @@ function famIntake() {
   if (have && have.u >= c.m) { famAdd(c); return; }
   const ask = have ? `Update ${c.n}'s tree in your grove?` : `Add ${c.n}'s tree to your grove?`;
   const html = `<p>${esc(c.n)} shared their ${FAM_TOOL[c.t]} tree: how it looks, whether they tended today, and days tended this week. It stays on this device, in your grove.</p><p class="ggx-small">It doesn't update by itself. ${esc(c.n)} can share again any time.</p>`;
-  if (GGApp.dialog) GGApp.dialog({ title: ask, html, buttons: [{ t: have ? 'Update Their Tree' : 'Add to My Grove', kind: 'main', fn: () => famAdd(c) }, { t: 'Not Now', kind: 'quiet' }] });
+  if (GGApp.dialog) GGApp.dialog({ title: ask, html, buttons: [{ t: have ? 'Update Their Tree' : 'Add to My Grove', kind: 'main', fn: () => famAdd(c) }, { t: 'Maybe Later', kind: 'quiet' }] });
   else if (confirm(ask)) famAdd(c);
 }
 
@@ -628,7 +628,7 @@ function groveToday() {
     : done ? (lvl === 2 ? 'The sun is finding the grove again. Welcome back.' : 'The light is coming in. The grove is warming up.')
     : lvl === 0 ? (hr < 12 ? 'Good morning.' : hr < 17 ? 'Good afternoon.' : 'Good evening.') + ' The grove is ready for today.'
     : lvl === 1 ? 'The grove is waiting in the morning mist. One practice brings the sun.'
-    : 'The grove has been resting in the mist. Nothing is lost. One practice brings the sun.';
+    : 'The grove has been resting in the mist. Everything is kept. One practice brings the sun.';
   return { light, line, done, parts: [...parts], K };
 }
 function groveTodayHtml() {
@@ -1417,7 +1417,7 @@ function printWhat(id, ciId) {
     return printDoc(W('print.agreementsTitle', 'Group Agreements'), `<ul class="big">${list.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`);
   }
   if (id === 'notice') {
-    const t = W('print.notice', 'Our class is using The Grove by Grow With Grounded this year, a short weekly circle about our class life together: how we listen, how we include each other, and how we take good breaks.\n\nThe class answers together, out loud, with one shared answer. No student\'s own answer is asked for, entered, or saved, and no names are kept. Questions are about class life only.\n\nEverything stays on the teacher\'s device. Nothing is sent anywhere.\n\nQuestions are welcome. Please reach out to the teacher any time.');
+    const t = W('print.notice', 'Our class is using The Grove by Grow With Grounded this year, a short weekly circle about our class life together: how we listen, how we include each other, and how we take good breaks.\n\nThe class answers together, out loud, with one shared answer. No student\'s own answer is asked for, entered, or saved, and no names are kept. Questions are about class life only.\n\nEverything stays private on the teacher\'s device.\n\nQuestions are welcome. Please reach out to the teacher any time.');
     return printDoc(W('print.noticeTitle', 'Classroom Family Notice'), String(t).split(/\n\n/).map(x => `<p class="big">${esc(x)}</p>`).join(''));
   }
   if (id === 'home') {
@@ -1471,7 +1471,7 @@ function viewHow() {
     <h3>What stays private</h3>
     <p>The check-ins, the plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on by default. The Grove never sees anyone's own answers, levels, notes, or journal from their tree app. In a Family grove it sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended.</p>
     <p>For kids and teens, the grown-ups who agreed for them get a quiet alert here if a check-in asks for a caring conversation. Never the answers.</p>
-    <p>Everything stays on this device. Nothing is sent anywhere.</p>
+    <p>Everything stays private, right here on this device.</p>
     <h3>Share to Family</h3>
     <p>Family on other phones can still grow side by side. Each person opens their own tree app and taps Share to Family, then sends the link or QR code. Open it here, and their tree stands in your grove. In a Faith Community or Small Group grove, members may share their tree the same way, if they choose.</p>
     <h3>Keeping it safe</h3>

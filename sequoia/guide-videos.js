@@ -2482,10 +2482,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Let them bring something",
-        "A dish, a story, a toast"
+        "A dish, a story, a blessing"
        ]
       ],
-      "say": "Respect their choices. Ask, then follow their lead. Some want a full table, and some want a quiet day with one good call. Invite, but never insist. A no this year can be a yes next year. And let them bring something: a dish, a story, a toast. Being needed is part of belonging."
+      "say": "Respect their choices. Ask, then follow their lead. Some want a full table, and some want a quiet day with one good call. Invite, but never insist. A no this year can be a yes next year. And let them bring something: a dish, a story, a blessing. Being needed is part of belonging."
      },
      {
       "k": "big",
@@ -2635,7 +2635,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Another pet, in your own time.",
       "sub": "You decide what fits your life now.",
-      "say": "There is no deadline to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor. If you have thoughts of ending your life, call or text 988, any time."
+      "say": "Take all the time you need to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor. If you have thoughts of ending your life, call or text 988, any time."
      },
      {
       "k": "big",
@@ -4298,10 +4298,10 @@ window.GG_LEARN_GUIDES.sequoia = {
       "h": "Words that help",
       "items": [
        "What would help most today?",
-       "Take your time. I'm in no hurry.",
+       "Take your time. I have all the time you need.",
        "You decide, and I'll help."
       ],
-      "say": "Here are words that help. What would help most today? Take your time. I'm in no hurry. And, you decide, and I'll help. Words like these keep them in charge of their own life."
+      "say": "Here are words that help. What would help most today? Take your time. I have all the time you need. And, you decide, and I'll help. Words like these keep them in charge of their own life."
      },
      {
       "k": "words",
@@ -5552,7 +5552,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "eyebrow": "When Life Changes",
       "h": "When Old Memories Return",
       "sub": "For You",
-      "say": "If memories from long ago have been coming back lately, maybe from a war, a hard childhood, or a loss you thought was behind you, this is for you. You are not alone in this."
+      "say": "If memories from long ago have been coming back lately, maybe from a war, a hard childhood, or a loss you thought was behind you, this is for you. We're with you in this."
      },
      {
       "k": "big",
@@ -5923,9 +5923,9 @@ window.GG_LEARN_GUIDES.sequoia = {
       "items": [
        "Tell me about this room.",
        "What do you most want to bring?",
-       "There's no rush. We can do one room today."
+       "Take your time. We can do one room today."
       ],
-      "say": "Here are words that help. Tell me about this room. Then listen, even to a story you've heard before. What do you most want to bring? That keeps the choice in their hands. And, there's no rush. We can do one room today."
+      "say": "Here are words that help. Tell me about this room. Then listen, even to a story you've heard before. What do you most want to bring? That keeps the choice in their hands. And, take your time. We can do one room today."
      },
      {
       "k": "words",
@@ -7067,7 +7067,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Practice the invitation.",
-      "sub": "Open, warm, no pressure.",
+      "sub": "Open, warm, and easy.",
       "say": "Let's practice. Picture sitting with them somewhere quiet. Let your voice be warm and unhurried. Now say out loud: when you're ready, I'd love to hear what matters most to you.",
       "beats": [
        "Let's practice.",
@@ -10570,7 +10570,7 @@ window.GG_LEARN_GUIDES.sequoia = {
        "Chances not taken",
        "Time lost with family"
       ],
-      "say": "People carry many kinds of regret. Words said, or never said. A choice that hurt someone. Chances not taken. Time lost with family. Research finds that over the long run, many people regret what they did not do even more than what they did. Whatever yours is, you are not alone."
+      "say": "People carry many kinds of regret. Words said, or never said. A choice that hurt someone. Chances not taken. Time lost with family. Research finds that over the long run, many people regret what they did not do even more than what they did. Whatever yours is, many share it."
      },
      {
       "k": "points",
@@ -12327,11 +12327,11 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "words",
       "h": "Words that help",
       "items": [
-       "I'm here. No rush.",
+       "I'm here. Take your time.",
        "What does your plan say?",
        "Would shorter work better today?"
       ],
-      "say": "Words that help. I'm here. No rush. What does your plan say to do? And, would a shorter visit work better today? Calm, simple words help more than many words."
+      "say": "Words that help. I'm here. Take your time. What does your plan say to do? And, would a shorter visit work better today? Calm, simple words help more than many words."
      },
      {
       "k": "big",
@@ -12341,11 +12341,11 @@ window.GG_LEARN_GUIDES.sequoia = {
        "Picture them catching their breath beside you.",
        "Let your own shoulders drop.",
        {
-        "t": "Now say it out loud, slowly and softly: I'm here. No rush. Take your time.",
+        "t": "Now say it out loud, slowly and softly: I'm here. Take your time. I'm with you.",
         "w": 10
        }
       ],
-      "say": "Picture them catching their breath beside you. Let your own shoulders drop. Now say it out loud, slowly and softly: I'm here. No rush. Take your time."
+      "say": "Picture them catching their breath beside you. Let your own shoulders drop. Now say it out loud, slowly and softly: I'm here. Take your time. I'm with you."
      },
      {
       "k": "words",
@@ -12403,9 +12403,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "I'm here. No rush.",
+      "h": "I'm here. Take your time.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "I'm here. No rush. Sometimes that's the most helpful thing you can say. The full guide has more, whenever you want it."
+      "say": "I'm here. Take your time. Sometimes that's the most helpful thing you can say. The full guide has more, whenever you want it."
      }
     ]
    }

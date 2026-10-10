@@ -205,7 +205,7 @@ const TOPICS = [
   "quick": [
    "A move is a big change, even a happy one. Saying goodbye to a place is a real loss.",
    "Children do best when they know early, get a say in small things, and can say goodbye on purpose.",
-   "Routines that travel with you, like bedtime, Friday pizza, or a family blessing, make a new place feel like home faster.",
+   "Routines that travel with you, like bedtime, Friday soup night, or a family blessing, make a new place feel like home faster.",
    "Feeling at home usually takes months, not weeks. Slow is normal."
   ],
   "feel": "Boxes in every room, a calendar full of lasts, and a lot of unknowns. Some family members may be excited and some may be sad or angry about the same move. Kids may worry about a new school, leaving friends, or whether their room will feel like theirs. Grown-ups juggle money, paperwork, and a hundred decisions while trying to stay patient. A move for a new job, a military order, a divorce, a lost home, or to live near family each brings its own mix of hope and grief. After the move, the first weeks can be lonely and tiring, even when the new place is good. All of this is part of carrying a family from one home to the next.",
@@ -746,7 +746,7 @@ const TOPICS = [
   "together": {
    "first": [
     "Before the parent leaves, talk together about how you'll stay in touch: calls, messages, videos, letters, or a shared journal.",
-    "Make a countdown everyone can see, like a paper chain, a jar of treats, or a map with pins.",
+    "Make a countdown everyone can see, like a paper chain, a jar of notes, or a map with pins.",
     "Keep routines steady: bedtime, meals, school, chores, and family traditions.",
     "Let the school know, with the family's okay, so teachers understand a hard day."
    ],
@@ -1748,7 +1748,7 @@ const TOPICS = [
    "group:loss"
   ],
   "quick": [
-   "When someone in the family dies, everyone grieves, and everyone grieves differently. There is no right way and no deadline.",
+   "When someone in the family dies, everyone grieves, and everyone grieves differently. Grief has its own shape and its own time.",
    "Use real words: died and dead. Gentle phrases like went to sleep or we lost him can confuse and frighten children.",
    "Grieving together helps: saying their name, telling the stories, and keeping a few small routines.",
    "Children grieve in bursts, sad one minute and playing the next. Grown-ups need support of their own, too."
@@ -1787,7 +1787,7 @@ const TOPICS = [
    "feel": "You may be leading your family through this while grieving yourself. Children watch the grown-ups to learn whether it is safe to grieve here. Young children may not understand that death is permanent and may ask when the person is coming back. Older children often worry about who else might die, and some hide their feelings to protect you. Teens may grieve with friends more than at home. Grief often comes back at birthdays, holidays, and milestones, sometimes years later.",
    "say": [
     "“I'm sad too. It's okay to cry together.”",
-    "“What questions do you have? There's no wrong question.”",
+    "“What questions do you have? Every question is welcome.”",
     "“What do you remember about her? Tell me.”",
     "“What would help you today?”"
    ],
@@ -1905,7 +1905,7 @@ const TOPICS = [
   "quick": [
    "The first holidays after a death are often hard, and the days before can be harder than the day itself. Planning ahead together helps.",
    "Keep some traditions, change some, and add one that honors the person who died.",
-   "Let everyone, kids included, help decide. There is no right way to do this year.",
+   "Let everyone, kids included, help decide. You can do this year in your own way.",
    "Joy and sadness can sit at the same table. Both are welcome."
   ],
   "feel": "The decorations come out and someone's ornament is in the box. The recipe is in their handwriting. The music in every store is cheerful, and the calendar fills with parties. Some of us want everything exactly the same; some want to skip the whole season; some want to go away. Children may be excited and then feel guilty for being excited. Grown-ups may dread the day for weeks, then find the day itself gentler than they feared, or harder. Families often argue about the plan, because each person is protecting something they love.",
@@ -1917,7 +1917,7 @@ const TOPICS = [
     "Tell extended family and hosts what you've decided, so no one is surprised."
    ],
    "helps": [
-    "One new ritual that honors the person: a lit candle, their favorite dish, a toast, an ornament, or a gift to a cause they loved.",
+    "One new ritual that honors the person: a lit candle, their favorite dish, a moment of thanks, an ornament, or a gift to a cause they loved.",
     "Saying their name at the table, and telling one story about them.",
     "A smaller, simpler holiday this year: fewer events, more rest.",
     "A plan for the day after, which is often harder than people expect.",
@@ -1934,7 +1934,7 @@ const TOPICS = [
   "kids": [
    "“This holiday might feel different without Grandma. It's okay to feel sad and happy on the same day.”",
    "“What's one thing you want to keep doing, like we always did?”",
-   "“Let's make something for her: a drawing, a card, or a cookie she liked.”",
+   "“Let's make something for her: a drawing, a card, or a recipe she liked.”",
    "“If you need a quiet break, tell me, and we'll find a cozy spot.”"
   ],
   "leader": {
@@ -3552,7 +3552,7 @@ const TOPICS = [
    "feel": "You may be grieving and leading at the same time. People will look to you for words, the family will need you, and the community will need ways to grieve together. You may also be the one who hears hard questions: why this happened, whether God was in it, what to say to the kids.",
    "say": [
     "“We're going to take time to grieve together.”",
-    "“There's no right way to feel about this.”",
+    "“Every feeling about this is okay.”",
     "“Here's what the family has asked for.”",
     "“If this brings up other losses for you, that's okay. Come talk to me.”"
    ],
@@ -3618,7 +3618,7 @@ const TOPICS = [
     "feel": "You may be grieving and leading at the same time. People will look to you for words, the family will need you, and the group will need ways to grieve together. You may also hear hard questions: why this happened, what it means, what to say to the kids.",
     "say": [
      "“We're going to take time to grieve together.”",
-     "“There's no right way to feel about this.”",
+     "“Every feeling about this is okay.”",
      "“Here's what the family has asked for.”",
      "“If this brings up other losses for you, that's okay. Come talk to me.”"
     ],
@@ -4481,7 +4481,7 @@ const TOPICS = [
     "“That was a hard death. How is everyone doing with it?”",
     "“Who needs to step away? I'll cover.”",
     "“What do we need tonight, and what do we need this week?”",
-    "“There's no wrong way to react to this.”"
+    "“Every way you react to this is okay.”"
    ],
    "avoid": [
     "Moving straight to the next task with no pause at all.",
@@ -4741,7 +4741,7 @@ const TOPICS = [
    ],
    "say": [
     "“We miss them. They were one of us.”",
-    "“There's no right way to grieve this.”",
+    "“Each of us grieves this in our own way.”",
     "“We'll remember them together.”"
    ],
    "people": "Try, to a close work friend: “I know you two were close. How are you holding up?” To the team: “Want to share a story about her at lunch?” To the family, in a card: “He made our team better. Here's one thing I'll always remember about him.”"

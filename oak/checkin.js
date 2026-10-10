@@ -81,7 +81,7 @@ const Q = {
       tip: 'Take the wound seriously and do not explain it away. If a person or group is still causing harm, help them get safe.',
       why: 'Religious hurt is common and painful. It matters here, whatever you believe now.' },
     { t: 'Carried guilt or shame that felt heavy on your spirit?', r: 1,
-      tip: 'Do not rush to reassure. Ask what it is about, if they want to say. Offer their own tradition\'s ways of release, or a faith leader they trust.',
+      tip: 'Listen first, and reassure later. Ask what it is about, if they want to say. Offer their own tradition\'s ways of release, or a faith leader they trust.',
       why: 'Guilt and shame can choke the roots. They can also be set down, with help.' }
   ],
   trunk: [
@@ -104,7 +104,7 @@ const Q = {
       tip: 'Invite a little life review if there is time. Ask which chapter they are in now.',
       why: 'When the story hangs together, hard chapters become part of a whole.' },
     { t: 'Felt empty or adrift, without a sense of purpose?', r: 1,
-      tip: 'Do not hurry to hand them a purpose. Ask when they last felt it, and what has changed.',
+      tip: 'Let them find their own purpose, at their own pace. Ask when they last felt it, and what has changed.',
       why: 'Feeling adrift is a sign the trunk needs tending. It is often a season, not forever.' },
     { t: 'Carried something you did, saw, or couldn\'t prevent that goes against your values?', r: 1,
       tip: 'This can be moral injury. Listen without judging. Their own faith leader, a chaplain, or a counselor can help them carry it.',
@@ -114,7 +114,7 @@ const Q = {
     { t: 'Been kind to yourself when you struggled?',
       tip: 'Ask how they would talk to a friend in the same spot. Then how they talk to themselves.',
       why: 'Self-kindness helps you bounce back. It is a skill, and it can grow.' },
-    { t: 'Remembered that others struggle too, and you\'re not alone in it?',
+    { t: 'Remembered that others struggle too, and that you\'re in good company?',
       tip: 'Normalize gently, without shrinking their pain.',
       why: 'Knowing others struggle too softens shame and isolation.' },
     { t: 'Been able to name a strong feeling and ride it out?',
@@ -127,7 +127,7 @@ const Q = {
       tip: 'Ask when they last felt fully there. It is often a clue to what restores them.',
       why: 'Presence gives the mind a rest from replaying and worrying.' },
     { t: 'Been hard on yourself, with a harsh inner voice?', r: 1,
-      tip: 'Ask what the voice says. Do not argue with it. Ask whose voice it sounds like.',
+      tip: 'Ask what the voice says, and listen calmly. Ask whose voice it sounds like.',
       why: 'A harsh inner voice wears down the bark that protects you.' },
     { t: 'Gotten stuck replaying problems over and over?', r: 1,
       tip: 'Ask what they replay most. Offer one small way to step out of the loop, like a walk or a written list.',
@@ -241,7 +241,7 @@ const STAFF = {
       tip: 'Listen. Dryness is common in helping work and is not a failure.',
       why: 'Spiritual dryness is a sign your roots need water, not that you are failing.' },
     { t: 'Felt your faith or spirit strained by what you have seen at work?', r: 1,
-      tip: 'Do not defend or explain. Ask what they saw that stays with them.',
+      tip: 'Listen, and let it stand. Ask what they saw that stays with them.',
       why: 'What you witness can shake your spirit. It deserves attention.' }
   ],
   trunk: [

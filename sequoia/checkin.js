@@ -150,11 +150,11 @@ const Q = {
       tip: 'Ask what they value most, then where life lines up with it today and where it does not.',
       why: 'Living by your values brings a steadiness nothing else can.' },
     { t: 'Felt you had no place or use anymore?', r: 1,
-      tip: 'Do not hurry to hand them a purpose. Ask what they used to do that mattered, and what part of it could still fit now. Volunteering often helps.',
+      tip: 'Let them find their own purpose, at their own pace. Ask what they used to do that mattered, and what part of it could still fit now. Volunteering often helps.',
       why: 'Losing a role can feel like losing your place. Volunteering and new roles are linked with better well-being in later life.',
       src: ['retire', 'anderson'] },
     { t: 'Felt like a burden to the people around you?', r: 1,
-      tip: 'Do not argue it away. Ask what being helped is like for them. Feeling like a burden can travel with hopelessness, so listen closely and move to the safety step if you hear it.',
+      tip: 'Let it stand, and listen. Ask what being helped is like for them. Feeling like a burden can travel with hopelessness, so listen closely and move to the safety step if you hear it.',
       why: 'Many older adults feel this at times. You matter to people, even when it is hard to see.' }
   ],
   bark: [
@@ -297,7 +297,7 @@ const HELPER = {
       tip: 'Let them name it: God, love, family, community, or something else.',
       why: 'Feeling held makes the load easier to carry.' },
     { t: 'Brought your honest questions about what is happening, instead of pushing them down?',
-      tip: 'Questions like "why is this happening" are welcome. Do not rush to answers.',
+      tip: 'Questions like "why is this happening" are welcome. Let answers come slowly.',
       why: 'Questions that get room are lighter to carry than questions held in.' },
     { t: 'Found meaning in the small acts of helping?',
       tip: 'Ask about one small moment that felt like it mattered.',

@@ -10,7 +10,7 @@
    Under all of them: name the feeling first, then talk.
    ===================================================================== */
 (function(){
-const LABELS = { you: `For You`, helper: `For the Helper`, what: `What's happening`, say: `Say`, dont: `Don't say`, helps: `What helps`, pro: `For chaplains and doulas`, faith: `Faith notes`, know: `What we know`, means: `What it may mean` };
+const LABELS = { you: `For You`, helper: `For the Helper`, what: `What's happening`, say: `Say`, dont: `Words to set aside`, helps: `What helps`, pro: `For chaplains and doulas`, faith: `Faith notes`, know: `What we know`, means: `What it may mean` };
 const RINGS = [['spirit', `The Spirit and the People`], ['last', `The Last Days and After`]];
 const FOOT = `When you're worried, call your hospice nurse. They're there day and night.`;
 const TOOL = `Name the feeling first, then talk. "I wish... I worry... I wonder..." works almost everywhere.`;
@@ -43,7 +43,7 @@ const G = [
     parts: [
       ['what', `Usually one of three things: hurt by people, doubt, or feeling abandoned by God.`],
       ['say', `"Being hurt by a church is not the same as being far from God." "Questions aren't the opposite of faith." "The door is open. Nobody's keeping score."`],
-      ['dont', `"I told you so," or anything close to it. Don't make the return a test.`],
+      ['dont', `"I told you so," or anything close to it. Make the return easy.`],
       ['helps', `Finding their kind of clergy fast. A Catholic who left 40 years ago may want Confession today.`],
       ['you', `If you're the one who stepped away: the door is open, and nobody is keeping score. Being hurt by a church is different from being far from God. Ask your hospice to help find the kind of clergy you trust, ask for the rite you remember (confession, communion, a blessing), or start with one prayer in your own words. You're welcome just as you are.`],
       ['pro', `Use the struggle-type picker. The church is the people, not the building or the brand.`]
@@ -53,7 +53,7 @@ const G = [
     parts: [
       ['what', `Fear of judgment, or fear of not existing. Both are old human fears.`],
       ['say', `"What do you picture when you're afraid?" Then listen all the way to the end.`],
-      ['dont', `"Don't worry about that." Don't argue them out of it.`],
+      ['dont', `"Don't worry about that." Let their worry be heard.`],
       ['helps', `Their own tradition's word of mercy, from their own clergy if they want. For those who fear nothing after: what continues in the people they loved, and in the earth.`],
       ['you', `If you're the one who is afraid: fear near the end is human, and it isn't a lack of faith. Notice what you picture when you're afraid, and tell someone you trust. If a specific regret sits underneath, saying it out loud often brings relief. Ask for your own tradition's word of mercy, a rite of your faith, or simply company; and breathe slowly, in for four and out for six.`],
       ['pro', `Fear of judgment often sits on top of a specific guilt. Gently ask what it's about.`],
@@ -74,7 +74,7 @@ const G = [
     parts: [
       ['what', `Most people near the end feel this sometimes, and it rises as death gets closer. It's tied to loss of dignity and a wish to hasten death.`],
       ['say', `"It's hard to be on this side of the caring." "Your family's caring for you because they love you. You let them. That's a gift too."`],
-      ['dont', `"You're not a burden" (it argues with their feeling). Don't brush it off.`],
+      ['dont', `"You're not a burden" (it argues with their feeling). Take it seriously.`],
       ['helps', `Family saying one specific thank-you to them. Letting them still give something: a blessing, advice, a story.`],
       ['you', `If you feel like a burden: it's hard to be on this side of the caring, and that loss is real. When you let people care for you, you give them a way to love you back. You still have much to give: words for each person, a story from your life, your advice, one specific thank-you. If the feeling gets heavy, tell your hospice team.`],
       ['pro', `Always ask about a wish to hasten death when burden is high.`]
@@ -84,7 +84,7 @@ const G = [
     parts: [
       ['what', `Usually not suicide. It's most often relief, exhaustion, readiness, or a cry for help with suffering. Asking about it doesn't cause harm.`],
       ['say', `"Thank you for telling me." "What's making it hardest right now?" "Is it more that you're ready, or that it hurts too much?"`],
-      ['dont', `"Don't talk like that." Don't panic.`],
+      ['dont', `"Don't talk like that." Stay calm.`],
       ['helps', `Tell the hospice nurse. Treat what can be treated. Make room for readiness as peace.`],
       ['you', `If you're the one feeling it: you can say it, and it deserves to be heard. Ask yourself whether it's closer to ready, tired, or hurting, and tell your hospice nurse; pain, breathlessness, and worry can often be eased. Readiness can be peace. If you're thinking about ending your life yourself, tell your hospice team right away or call or text 988. In danger now, call 911.`],
       ['pro', `The safety step separates readiness from a plan to end life. Aid in dying is not legal in Minnesota. If asked, stay neutral and loop in the team.`]
@@ -205,10 +205,10 @@ const G = [
   { id: 'firsthour', ring: 'last', title: `The first hour after death`, story: ``,
     keys: `what to do after death, who to call, they died, funeral home, first hour`,
     parts: [
-      ['helps', `No rush. Nothing has to happen right away. Call the hospice, not 911. Sit. Hold their hand. Say goodbye. Let the kids come in if they want. Do your tradition's ritual: prayers, washing, the Shahada, chanting, keeping the body undisturbed, a shomer. Check the tradition card. The hospice nurse comes to confirm the death and help with the next steps, including the funeral home.`],
+      ['helps', `Take your time. Everything can wait a little while. Call the hospice, not 911. Sit. Hold their hand. Say goodbye. Let the kids come in if they want. Do your tradition's ritual: prayers, washing, the Shahada, chanting, keeping the body undisturbed, a shomer. Check the tradition card. The hospice nurse comes to confirm the death and help with the next steps, including the funeral home.`],
       ['say', `"Take all the time you need."`],
-      ['helper', `If you're with the family: tell them there is no rush. Make the call to the hospice, not 911. Ask what matters to them in this hour, welcome the kids if they want to come in, and keep the room calm. Water, a chair, and a hug go a long way.`],
-      ['pro', `Slow the room down: there is no rush, and the family can sit, touch, wash, or pray as their tradition asks. Check the tradition card, and offer to stay until the nurse arrives.`]
+      ['helper', `If you're with the family: tell them they can take their time. Make the call to the hospice, not 911. Ask what matters to them in this hour, welcome the kids if they want to come in, and keep the room calm. Water, a chair, and a hug go a long way.`],
+      ['pro', `Slow the room down: the family can take their time to sit, touch, wash, or pray as their tradition asks. Check the tradition card, and offer to stay until the nurse arrives.`]
     ] },
   { id: 'official', ring: 'last', title: `Making it official in Minnesota`, story: ``,
     keys: `health care directive, advance directive, health care agent, POA, POLST, DNR, Honoring Choices, Go Wish`,

@@ -461,7 +461,7 @@ const NEVER_SHARE = ['safety', 'flags', 'help', 'optional'];
 // with 988 and 911 at the top. Nothing here is ever sent to anyone or
 // shown to a helper.
 const SAFETY = {
-  intro: 'These years can bring some heavy stretches. These two questions help make sure you\'re okay. There\'s no wrong answer, and you can skip.',
+  intro: 'These years can bring some heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
   questions: [
     ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at work, online, or in a relationship?', 'safe'],
     ['In the past two weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']

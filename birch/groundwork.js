@@ -108,13 +108,13 @@ const CHAPTERS = [
       { id: 'becoming-2', t: 'Something about you that has changed in the last year or two.', help: 'A view, a habit, a friendship, how you handle stress, what you care about.' },
       { id: 'becoming-3', t: 'Something you\'re proud of that nobody handed you a trophy for.', help: 'Getting through a hard stretch counts. So does showing up for someone.' },
       { id: 'becoming-4', t: 'What people count on you for.', help: 'Fixing things, listening, making people laugh, getting the job done, keeping calm.' },
-      { id: 'becoming-5', t: 'Something you\'re still figuring out.', help: 'There is no deadline. Searching is a normal part of these years.' },
-      { id: 'becoming-6', t: 'Where you live by your own choices, and where you still follow someone else\'s script.', help: 'No judgment either way. Just notice. Is there room to choose a little more of your own?' },
+      { id: 'becoming-5', t: 'Something you\'re still figuring out.', help: 'Take the time you need. Searching is a normal part of these years.' },
+      { id: 'becoming-6', t: 'Where you live by your own choices, and where you still follow someone else\'s script.', help: 'Every answer is welcome. Just notice. Is there room to choose a little more of your own?' },
       { id: 'becoming-7', t: 'Where you feel behind, and what one next step would look like.', help: 'Everyone\'s timeline is different. Comparing is easy; one small step is more useful.', care: 1 },
       { id: 'becoming-8', t: 'Who you want to be in five years.', help: 'Not what you want to have. Who you want to be: how you treat people, how you spend your days.' }
     ] },
   { id: 'values', title: 'What Matters Most to Me', optIn: false,
-    lead: 'Values are what you care about enough to act on. There are no right answers here, only yours.',
+    lead: 'Values are what you care about enough to act on. The right answers here are yours.',
     prompts: [
       { id: 'values-1', t: 'The values you want to live by.', help: 'Honesty, fairness, family, hard work, kindness, adventure, loyalty, service, courage. Pick a few, or write your own.' },
       { id: 'values-2', t: 'A time you stood by what you value when it cost you something.', help: 'Big or small. What did you do, and what did it teach you?' },
@@ -139,7 +139,7 @@ const CHAPTERS = [
   { id: 'money', title: 'Money and My Plan', optIn: false,
     lead: 'Money is a skill, and nobody is born knowing it. Nothing here asks how much you have. Wherever you are starting from is a fine place to start.',
     prompts: [
-      { id: 'money-1', t: 'What money means to you.', help: 'Security, freedom, helping family, fun, worry. There is no right answer.', care: 1 },
+      { id: 'money-1', t: 'What money means to you.', help: 'Security, freedom, helping family, fun, worry. Every answer is welcome.', care: 1 },
       { id: 'money-2', t: 'Your money picture, in a sentence or two.', help: 'What comes in, what goes out, and what you owe, if anything. Only what you want to write.', care: 1 },
       { id: 'money-3', t: 'Something you are saving toward, or would like to.', help: 'A cushion for surprises, a car, rent, a trip, school, a ring, a move.' },
       { id: 'money-4', t: 'One money habit that is working, and one you want to change.', help: 'Keep it to one of each. Small changes last.' },

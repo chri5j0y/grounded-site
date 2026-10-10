@@ -11,7 +11,7 @@
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
 window.GG_LEARN_GUIDES.aspen = {
 "title": "When Life Changes",
-"intro": "Two short videos for every guide. For You, for the student going through it. For the Grown-up, for the parent or helper beside them. Nothing to finish, and a quiet check marks the ones you have watched.",
+"intro": "Two short videos for every guide. For You, for the student going through it. For the Grown-up, for the parent or helper beside them. Watch at your own pace, and a quiet check marks the ones you have watched.",
 "rings": [
 [
 "as-home",
@@ -366,18 +366,18 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "There is no right way to feel",
+"h": "Any way you feel is okay",
 "items": [
 "Sad",
 "Angry",
 "Numb",
 "Fine, then not fine"
 ],
-"say": "There's no right way to feel. You might be sad, angry, or numb. You might feel fine one minute and flattened the next. Trouble focusing or sleeping is normal for a while."
+"say": "Any way you feel is okay. You might be sad, angry, or numb. You might feel fine one minute and flattened the next. Trouble focusing or sleeping is normal for a while."
 },
 {
 "k": "card",
-"title": "You don't have to be strong for anyone.",
+"title": "You can be real with your feelings.",
 "body": "The grown-ups can carry the grown-up jobs.",
 "say": "Lots of kids your age hide their sadness to protect the grown-ups, or take on grown-up jobs. You don't have to carry that. You can be sad together."
 },
@@ -476,7 +476,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Permanent, and in bursts.",
 "sub": "Fine one minute, flattened the next.",
-"say": "Kids this age understand that death is permanent. They often grieve in bursts: fine one minute, flattened the next. Many hide it to protect the grown-ups, or quietly take on grown-up jobs, like watching younger siblings. Let them know they don't have to carry that."
+"say": "Kids this age understand that death is permanent. They often grieve in bursts: fine one minute, flattened the next. Many hide it to protect the grown-ups, or quietly take on grown-up jobs, like watching younger siblings. Let them know others can help carry that."
 },
 {
 "k": "words",
@@ -492,11 +492,11 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "words",
 "h": "Words that help",
 "items": [
-"\"There's no right way to feel.\"",
+"\"Any way you feel is okay.\"",
 "\"You don't have to be strong for me.\"",
 "\"We can be sad together.\""
 ],
-"say": "Words that help. There's no right way to feel. Whatever you feel is okay with me. You don't have to be strong for me. We can be sad together. And say the person's name, and share memories. It tells them it's okay to talk. Then let them choose when, without pushing."
+"say": "Words that help. Any way you feel is okay. Whatever you feel is okay with me. You don't have to be strong for me. We can be sad together. And say the person's name, and share memories. It tells them it's okay to talk. Then let them choose when, without pushing."
 },
 {
 "k": "story",
@@ -601,7 +601,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "A Parent or Grandparent Is Very Sick",
 "sub": "For You",
-"say": "If your parent or grandparent is very sick, this is for you. It's a lot to carry. You don't have to carry it alone."
+"say": "If your parent or grandparent is very sick, this is for you. It's a lot to carry. Others can help you carry it."
 },
 {
 "k": "words",
@@ -675,9 +675,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "You are not alone in this.",
+"h": "You have people with you in this.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Some days will be harder than others. You are not alone in this. The full guide has more, whenever you want it."
+"say": "Some days will be harder than others. You have people with you in this. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -908,7 +908,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "You're safe now.",
 "sub": "The shaky feeling eases, one day at a time.",
-"say": "You're safe now. The shaky feeling eases, one day at a time, and you don't have to carry it alone."
+"say": "You're safe now. The shaky feeling eases, one day at a time, and others can help you carry it."
 }
 ]
 },
@@ -1093,7 +1093,7 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "big",
 "h": "You can love both of them.",
-"sub": "You never have to pick.",
+"sub": "You get to love both.",
 "say": "You can love both of your parents, out loud. You never have to pick a side or a home. If you get stuck in the middle, like carrying a message, it's okay to say, I'd rather not be in the middle. Can you tell them yourself?"
 },
 {
@@ -1212,7 +1212,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "h": "Words that help",
 "items": [
 "\"You can love both of us.\"",
-"\"You never have to pick.\"",
+"\"You get to love both.\"",
 "\"What are you most wondering about?\""
 ],
 "say": "Here are words that help. You can love both of us. You never have to pick. And, what are you most wondering about? Then listen. They may feel angry, relieved, sad, or all three. Let them love both parents out loud."
@@ -1324,7 +1324,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "You don't have to love them right away.",
+"title": "Love can grow slowly.",
 "body": "Being kind is enough for now.",
 "say": "Here's something true. You don't have to love them right away. Being kind is enough for now. Families like this grow close over years, not weeks. And you get a say in what you call a stepparent. Talk it over with your parent."
 },
@@ -1750,7 +1750,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "Money Is Tight",
 "sub": "For You",
-"say": "If money is tight in your family right now, this is for you. Lots of families go through seasons like this, and you're not alone in it."
+"say": "If money is tight in your family right now, this is for you. Lots of families go through seasons like this, and you have people with you in it."
 },
 {
 "k": "big",
@@ -1781,7 +1781,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "If kids at school say something"
 ]
 ],
-"say": "A few things can help. If you're worried, ask a grown-up at home your question. They can give you a simple, honest answer. Find fun that costs little or nothing: a park, the library, a game night, a walk with a friend. And if kids at school say something that stings, tell a grown-up at home or the school counselor. You don't have to handle it alone."
+"say": "A few things can help. If you're worried, ask a grown-up at home your question. They can give you a simple, honest answer. Find fun that costs little or nothing: a park, the library, a game night, a walk with a friend. And if kids at school say something that stings, tell a grown-up at home or the school counselor. Others can help you handle it."
 },
 {
 "k": "big",
@@ -1818,7 +1818,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Your worth was never about money.",
+"h": "Your worth is in who you are.",
 "sub": "You are more than what your family has.",
 "say": "Families go through tight seasons, and many come out the other side. Your worth was never about money. You are so much more than what your family has."
 }
@@ -2199,7 +2199,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "A Parent Is Deployed or Far Away",
 "sub": "For You",
-"say": "If your mom or dad is deployed, or living and working far away for a while, this is for you. Lots of kids your age go through this. You're not the only one."
+"say": "If your mom or dad is deployed, or living and working far away for a while, this is for you. Lots of kids your age go through this. Others have been here too."
 },
 {
 "k": "big",
@@ -2274,7 +2274,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Tell a grown-up you trust.",
 "body": "A parent, a school counselor, a coach, a teacher, a relative.",
-"say": "Pick a grown-up you trust: the parent at home, a school counselor, a coach, a teacher, or a relative. Tell them how it's going, the good days and the hard ones. If the news scares you, talk with them about it. You don't have to figure this out alone."
+"say": "Pick a grown-up you trust: the parent at home, a school counselor, a coach, a teacher, or a relative. Tell them how it's going, the good days and the hard ones. If the news scares you, talk with them about it. Others can help you figure this out."
 },
 {
 "k": "big",
@@ -2499,7 +2499,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Ask for time together.",
 "body": "Try: \"Can we do something, just us, this week?\"",
-"say": "You still matter just as much. If you miss time with your parent, say so. Try this. Can we do something, just us, this week? A walk, a game, a snack run. Lots of grown-ups are glad when you ask."
+"say": "You still matter just as much. If you miss time with your parent, say so. Try this. Can we do something, just us, this week? A walk, a game, a bike ride. Lots of grown-ups are glad when you ask."
 },
 {
 "k": "card",
@@ -2742,21 +2742,21 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "You never have to keep this secret.",
+"title": "You can always talk about this.",
 "body": "Tell a parent, a school counselor, a coach, a teacher, a relative. You are not in trouble.",
 "say": "You never have to keep this a secret, even if someone asks you to. Telling a grown-up you trust is taking care of yourself, and you are not in trouble. Try the other parent, a relative, a school counselor, a teacher, or a coach. There are groups, like Alateen, for kids exactly like you."
 },
 {
 "k": "card",
-"title": "If you are ever not safe",
+"title": "Staying safe",
 "body": "Danger right now: call 911. Need to talk: call or text 988, any time.",
 "say": "If you ever feel unsafe at home, or someone is hurt, call 911. If you feel really low and need to talk, call or text 988, any time, day or night."
 },
 {
 "k": "big",
 "h": "You deserve to feel safe.",
-"sub": "You don't have to carry this alone.",
-"say": "You deserve to feel safe, and you deserve a life of your own. You didn't cause this, and you don't have to carry it alone."
+"sub": "Others can help you carry this.",
+"say": "You deserve to feel safe, and you deserve a life of your own. You didn't cause this, and others can help you carry it."
 }
 ]
 },
@@ -3897,7 +3897,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "flow",
-"h": "Coach, don't rescue",
+"h": "Coach, and let them lead",
 "steps": [
 [
 "Listen first",
@@ -4267,7 +4267,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Telling a grown-up is smart.",
 "sub": "You won't be in trouble for telling.",
-"say": "Lots of kids keep bullying to themselves. They worry it'll get worse, or that they'll lose their phone. Here's the truth. Telling a trusted grown-up is a smart, brave move. You won't be in trouble for telling. And getting help with this is a grown-up job, so you don't have to fix it alone."
+"say": "Lots of kids keep bullying to themselves. They worry it'll get worse, or that they'll lose their phone. Here's the truth. Telling a trusted grown-up is a smart, brave move. You won't be in trouble for telling. And getting help with this is a grown-up job, so others can help you fix it."
 },
 {
 "k": "points",
@@ -4744,7 +4744,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "Different",
 "Tired of being corrected"
 ],
-"say": "Middle school means more teachers, more homework, and more to keep track of. You might feel frustrated, or behind. You might feel different from your friends, or tired of hearing what you did wrong. Those feelings make sense. You're not lazy, and you're not alone."
+"say": "Middle school means more teachers, more homework, and more to keep track of. You might feel frustrated, or behind. You might feel different from your friends, or tired of hearing what you did wrong. Those feelings make sense. You're not lazy, and you have people with you."
 },
 {
 "k": "points",
@@ -4791,7 +4791,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Tell a grown-up what feels hard.",
 "body": "A parent, a teacher, or your school counselor.",
-"say": "You don't have to figure this out alone. Tell a parent, a teacher, or your school counselor which part of school feels hardest. Grown-ups can set up help at school, and you get to be part of the plan. You're old enough to learn what helps your brain."
+"say": "Others can help you figure this out. Tell a parent, a teacher, or your school counselor which part of school feels hardest. Grown-ups can set up help at school, and you get to be part of the plan. You're old enough to learn what helps your brain."
 },
 {
 "k": "card",
@@ -5714,9 +5714,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "No question is too weird.",
+"title": "Every question is welcome.",
 "body": "Ask a parent, a relative, your doctor, or the school nurse.",
-"say": "You'll probably have questions. No question is too weird. Ask a parent or a relative you trust, your doctor, or the school nurse or counselor. They've heard it all before, and they're glad when you ask."
+"say": "You'll probably have questions. Every question is welcome. Ask a parent or a relative you trust, your doctor, or the school nurse or counselor. They've heard it all before, and they're glad when you ask."
 },
 {
 "k": "big",
@@ -5780,7 +5780,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "items": [
 [
 "Car rides",
-"No eye contact needed"
+"Side by side feels easier"
 ],
 [
 "Side by side",
@@ -5979,7 +5979,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "This is not who you are.",
 "sub": "It's one thing your body is working on.",
-"say": "This is not who you are. It's one thing your body is still working on, and you don't have to handle it alone. Be gentle with yourself. The full guide has more, whenever you want it."
+"say": "This is not who you are. It's one thing your body is still working on, and others can help you handle it. Be gentle with yourself. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -6227,7 +6227,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Talk to someone you trust.",
 "body": "A parent, a relative, a coach, a teacher, your school counselor.",
-"say": "If comparing is making you feel bad most days, talk to a grown-up you trust: a parent, a relative, a coach, a teacher, or your school counselor. You don't have to sort it out alone."
+"say": "If comparing is making you feel bad most days, talk to a grown-up you trust: a parent, a relative, a coach, a teacher, or your school counselor. Others can help you sort it out."
 },
 {
 "k": "card",
@@ -6237,7 +6237,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Nobody else gets to be you.",
+"h": "Only you get to be you.",
 "sub": "And that isn't a contest.",
 "say": "There's only one you, with your own laugh, your own interests, and your own way of seeing things. Nobody else gets to be you. The full guide has more, whenever you want it."
 }
@@ -6307,7 +6307,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "Hobbies, humor, real people"
 ]
 ],
-"say": "Try cleaning up feeds together. Scroll side by side, without judging. Notice which accounts leave them feeling better or worse. Unfollow or mute the ones that make them feel worse. And add accounts tied to their hobbies, humor, and real people. Make it part of your family's media agreement, and clean up your own feed too.",
+"say": "Try cleaning up feeds together. Scroll side by side, with curiosity. Notice which accounts leave them feeling better or worse. Unfollow or mute the ones that make them feel worse. And add accounts tied to their hobbies, humor, and real people. Make it part of your family's media agreement, and clean up your own feed too.",
 "cue": {
 "at": [
 1,
@@ -6471,13 +6471,13 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Telling a grown-up is smart.",
 "sub": "Seeing something scary is not your fault.",
-"say": "Sometimes you'll see something scary or upsetting online. That's not your fault. Lots of kids keep quiet because they're afraid of losing their phone. Telling a grown-up you trust is a smart, brave move. Sorting it out is their job, so you don't have to handle it alone."
+"say": "Sometimes you'll see something scary or upsetting online. That's not your fault. Lots of kids keep quiet because they're afraid of losing their phone. Telling a grown-up you trust is a smart, brave move. Sorting it out is their job, so others can help you handle it."
 },
 {
 "k": "card",
 "title": "Make a phone agreement together.",
-"body": "Phone-free times. Charging outside your room. Rules for the grown-ups too.",
-"say": "Ask your family to make a phone agreement together. You can pick phone-free times, like dinner and homework. Phones can charge outside your bedroom at night, so you sleep better. Rules for the grown-ups belong in it too. And ask for one promise: telling them about something scary won't cost you your phone."
+"body": "Unplugged times. Charging outside your room. Rules for the grown-ups too.",
+"say": "Ask your family to make a phone agreement together. You can pick unplugged times, like dinner and homework. Phones can charge outside your bedroom at night, so you sleep better. Rules for the grown-ups belong in it too. And ask for one promise: telling them about something scary won't cost you your phone."
 },
 {
 "k": "big",
@@ -6535,7 +6535,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "h": "Make a phone agreement together",
 "steps": [
 [
-"Phone-free times",
+"Unplugged times",
 "Dinner, homework, bedtime"
 ],
 [
@@ -6551,7 +6551,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "Everyone keeps them"
 ]
 ],
-"say": "Make a phone agreement together. Plans made together work better than rules handed down. Choose phone-free times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night. Turn off autoplay and the notifications that keep pulling them back. And write in rules for yourself too.",
+"say": "Make a phone agreement together. Plans made together work better than rules handed down. Choose unplugged times, like dinner, homework, and bedtime. Charge phones outside the bedroom at night. Turn off autoplay and the notifications that keep pulling them back. And write in rules for yourself too.",
 "cue": {
 "at": [
 2,
@@ -6744,9 +6744,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "You are not alone in this.",
+"h": "You have people with you in this.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You are not alone, and you are not in trouble. Telling a grown-up is the bravest, smartest move. The full guide has more, whenever you want it."
+"say": "You have people with you, and you are not in trouble. Telling a grown-up is the bravest, smartest move. The full guide has more, whenever you want it."
 }
 ],
 "crisis": [
@@ -7961,7 +7961,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Teens need more sleep, not less.",
+"h": "Teens need more sleep.",
 "sub": "9 to 12 hours up to age 12. 8 to 10 from 13 on.",
 "say": "Kids need 9 to 12 hours of sleep a night up to age 12, and 8 to 10 hours from 13 on. Teens need more sleep, not less, even as their body clocks start to run later. A tired middle schooler can look moody, foggy, or anxious, when what they really need is rest."
 },
@@ -7973,9 +7973,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Gaming isn't the enemy.",
+"h": "Look at what gaming replaces.",
 "sub": "Look at what it pushes out.",
-"say": "Gaming isn't the enemy. Games can be creative, social, and fun. Look at what gaming replaces instead: sleep, homework, meals, movement, and time with family. That turns a fight about gaming into a plan for what matters."
+"say": "Look at what gaming replaces:  sleep, homework, meals, movement, and time with family. That turns a fight about gaming into a plan for what matters."
 },
 {
 "k": "flow",
@@ -8092,7 +8092,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "Your feed is not a mirror.",
+"title": "Your feed is a highlight reel.",
 "body": "Filters, angles, and best shots. Not real life.",
 "say": "A lot of what you see online is filtered, posed, or edited. People share their best angle on their best day. When you compare your real life to that, anyone would come up short. Your feed is not a mirror."
 },
@@ -8229,7 +8229,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "Try not to",
+"h": "Leave these out",
 "items": [
 "Comments on size or shape",
 "Praising weight loss",
@@ -8300,7 +8300,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "Eating, Food, and Weight Worries",
 "sub": "For You",
-"say": "If food, eating, or how your body looks has been on your mind a lot lately, this is for you. You are not in trouble, and you are not alone."
+"say": "If food, eating, or how your body looks has been on your mind a lot lately, this is for you. You are not in trouble, and you have people with you."
 },
 {
 "k": "big",
@@ -8656,7 +8656,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "Some things are never okay.",
+"title": "Some things always call for help.",
 "body": "An adult who flirts with you. Anyone asking for photos or secrets. Tell a grown-up.",
 "say": "Some things are never okay. An adult who shows romantic interest in you. Anyone who asks you for photos, or asks you to keep a secret. If that happens, tell a grown-up you trust. You won't be in trouble for telling."
 },
@@ -9106,7 +9106,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "You don't have to have it all figured out.",
+"title": "It's okay to still be figuring it out.",
 "body": "Nobody your age does. Most grown-ups are still learning too.",
 "say": "You don't have to have it all figured out. Nobody your age does. Honestly, most grown-ups are still figuring out some of it too."
 },
@@ -9210,7 +9210,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "words",
 "h": "Words that help",
 "items": [
-"\"You don't have to have it all figured out.\"",
+"\"It's okay to still be figuring it out.\"",
 "\"I love watching you discover what you're into.\"",
 "\"Here's something I've always admired about you.\""
 ],
@@ -9676,9 +9676,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "You are not alone in this.",
+"h": "You have people with you in this.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "You don't have to carry this feeling alone. Lots of people are looking out for you. The full guide has more, whenever you want it."
+"say": "Others can help you carry this feeling. Lots of people are looking out for you. The full guide has more, whenever you want it."
 }
 ]
 },
@@ -10312,7 +10312,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Listen. Plan. Stay close.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Listen first, make a plan, and stay close. You are not alone in this. The full guide has more, whenever you want it."
+"say": "Listen first, make a plan, and stay close. You have people with you in this. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -10419,7 +10419,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "You deserve to be treated fairly.",
 "sub": "Every day, everywhere.",
-"say": "You deserve to be treated fairly, every day, everywhere. Telling a grown-up is a strong thing to do. You don't have to carry this alone."
+"say": "You deserve to be treated fairly, every day, everywhere. Telling a grown-up is a strong thing to do. Others can help you carry this."
 }
 ]
 },
@@ -10571,7 +10571,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "A Death by Suicide in the Community",
 "sub": "For You",
-"say": "If someone in your school or community has died by suicide, this is for you. Whatever you are feeling right now, you are not alone."
+"say": "If someone in your school or community has died by suicide, this is for you. Whatever you are feeling right now, you have people with you."
 },
 {
 "k": "card",
@@ -10647,7 +10647,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Never keep it a secret.",
+"h": "Always tell a grown-up.",
 "sub": "Telling gets someone help.",
 "say": "And if a friend ever tells you they are thinking about suicide, never keep that secret. Tell a grown-up right away. Telling gets someone help."
 },
@@ -11037,7 +11037,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "Disaster Distress Helpline",
 "body": "Call or text 1-800-985-5990, any time.",
-"say": "You don't have to carry this alone. The Disaster Distress Helpline is there for kids and grown-ups, any time. Call or text 1-800-985-5990. If anyone is in danger right now, call 911."
+"say": "Others can help you carry this. The Disaster Distress Helpline is there for kids and grown-ups, any time. Call or text 1-800-985-5990. If anyone is in danger right now, call 911."
 },
 {
 "k": "big",
@@ -11293,7 +11293,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "eyebrow": "When Life Changes",
 "h": "Self-Harm and Cutting",
 "sub": "For You",
-"say": "If you have been hurting yourself on purpose when feelings get too big, this is for you. You are not in trouble, and you are not alone."
+"say": "If you have been hurting yourself on purpose when feelings get too big, this is for you. You are not in trouble, and you have people with you."
 },
 {
 "k": "card",
@@ -11359,7 +11359,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "I've been hurting myself, and I need help."
 ],
 "sub": "A parent, a counselor, a teacher, a coach.",
-"say": "Tell a trusted grown-up, today. A parent, a school counselor, a teacher, a coach, or a relative. You can borrow these words. I've been hurting myself, and I need help. Stopping can take a while, and you don't have to do it alone."
+"say": "Tell a trusted grown-up, today. A parent, a school counselor, a teacher, a coach, or a relative. You can borrow these words. I've been hurting myself, and I need help. Stopping can take a while, and others can walk with you."
 },
 {
 "k": "big",
@@ -11439,9 +11439,9 @@ window.GG_LEARN_GUIDES.aspen = {
 "items": [
 "I noticed the marks. You're not in trouble.",
 "What was happening right before?",
-"You don't have to stop alone."
+"Others can help you stop."
 ],
-"say": "Start gently. I noticed the marks. You're not in trouble. I want to understand. Later, ask, what was happening right before? And tell them, you don't have to stop alone. We'll get help together."
+"say": "Start gently. I noticed the marks. You're not in trouble. I want to understand. Later, ask, what was happening right before? And tell them, others can help you stop. We'll get help together."
 },
 {
 "k": "big",
@@ -11600,7 +11600,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "You are not in trouble.",
 "sub": "You did the right thing.",
-"say": "When you tell, you are not in trouble. You did the right thing. Now let the grown-ups help. Keeping your friend safe is a grown-up job, and you don't have to carry it alone."
+"say": "When you tell, you are not in trouble. You did the right thing. Now let the grown-ups help. Keeping your friend safe is a grown-up job, and others can help you carry it."
 },
 {
 "k": "big",
@@ -11762,7 +11762,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "School can work for your body.",
 "sub": "There are people whose job is to help.",
-"say": "Here's the main thing. School can work for your body. Some grown-ups at school are there to help with this. You don't have to figure it out alone."
+"say": "Here's the main thing. School can work for your body. Some grown-ups at school are there to help with this. Others can help you figure it out."
 },
 {
 "k": "points",
@@ -12164,7 +12164,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "Try not to say",
+"h": "Words to leave out",
 "items": [
 "\"You were fine yesterday.\"",
 "\"It's probably just stress.\"",
@@ -13024,7 +13024,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "You are not too much.",
+"h": "You are just right as you are.",
 "sub": "You are you.",
 "say": "You are not too much, and you are not too little. You are you, with a brain that notices things others miss."
 }
@@ -13348,7 +13348,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "Try not to say",
+"h": "Words to leave out",
 "items": [
 "\"You're the easy one.\"",
 "\"At least you're healthy.\"",
@@ -13461,7 +13461,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "card",
-"title": "Don't skip what keeps you well.",
+"title": "Keep up what keeps you well.",
 "body": "Ask a grown-up for a more private way.",
 "say": "Sometimes kids skip medicine or the nurse so nobody asks questions. That can make your body pay. Tell a grown-up you want more privacy. There's usually a quieter way."
 },
@@ -13568,7 +13568,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "points",
-"h": "Try not to",
+"h": "Leave these out",
 "items": [
 [
 "Tell for them",
@@ -13712,7 +13712,7 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "k": "big",
 "h": "Let the question be asked.",
-"say": "Why me? Is this fair? Did I do something wrong? Middle schoolers living with an illness or a disability often ask the biggest questions there are. The first gift is simple. Let the question be asked out loud, and don't rush to settle it."
+"say": "Why me? Is this fair? Did I do something wrong? Middle schoolers living with an illness or a disability often ask the biggest questions there are. The first gift is simple. Let the question be asked out loud, and take your time settling it."
 },
 {
 "k": "card",
@@ -13764,7 +13764,7 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "words",
-"h": "Try not to say",
+"h": "Words to leave out",
 "items": [
 "\"Everything happens for a reason.\"",
 "\"God only gives you what you can handle.\"",

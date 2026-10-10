@@ -219,7 +219,7 @@ const LC_TOPICS = [
   more: [L.lifeline, L.afsp, L.nami] },
 
 { id: "escalating", ring: "safety", title: "When someone is escalating", keys: "de-escalate deescalate de-escalation escalating escalation yelling screaming shouting agitated heated confrontation blowup blow up losing it angry person family member staff bedside hospital workplace coworker customer patient visitor", parts: ["bark", "branches"],
-  quick: ["Calm yourself first: slow breath, lower voice, relaxed hands. Your body sets the temperature of the room.", "Listen for the feeling under the words: fear, grief, exhaustion, or feeling unheard.", "Say less. Short, respectful sentences. Don't argue facts while feelings are this high.", "If there is a weapon, a threat, or you feel unsafe, leave and call 911."],
+  quick: ["Calm yourself first: slow breath, lower voice, relaxed hands. Your body sets the temperature of the room.", "Listen for the feeling under the words: fear, grief, exhaustion, or feeling unheard.", "Say less. Short, respectful sentences. Save the facts for when feelings settle.", "If there is a weapon, a threat, or you feel unsafe, leave and call 911."],
   feel: "A voice rises, a body tightens, someone moves toward you or starts pacing. You may feel your own heart pound, your face get hot, or an urge to fight back, freeze, or fix it fast. It can happen at home, at work, in a store, or at a bedside, where grief and fear often come out as anger at whoever is closest.",
   self: { first: ["Step back to give space, about two arm's lengths, and stand a little to the side, not face to face.", "Take one slow breath before you say anything.", "Lower your volume and slow your pace. People often match you without knowing it."],
     helps: ["Naming what you see: “You're really frustrated. This matters to you.”", "Offering a small choice: “Do you want to sit down, or step outside with me?”", "Setting one clear limit, calmly, if you need to: “I want to help. I can't keep talking while you're yelling at me.”"],
@@ -274,7 +274,7 @@ const LC_TOPICS = [
   feel: "The house is too quiet. You reach for your phone to tell them something. Meals, bedtime, and weekends feel strange. You may feel lost, angry, numb, or even relieved after a long illness, and all of it is normal.",
   self: { first: ["Take care of the basics: sleep, water, food, medicines.", "Let one trusted person help you track paperwork and deadlines.", "Say yes to company, even if you don't feel like talking."],
     helps: ["Talking about them by name.", "A grief group with others who have lost a partner.", "Small new routines for the hardest times of day."],
-    tell: ["“There is no right way or timeline to grieve.”", "“Feeling joy again doesn't mean I've forgotten them.”"],
+    tell: ["“Grief has its own shape and its own timeline.”", "“Feeling joy again doesn't mean I've forgotten them.”"],
     people: "Try: “What helps most is if you check on me on Sunday evenings. That's the hardest time.”" },
   helper: { feel: "They may be overwhelmed by paperwork and advice, and lonely once the funeral crowds leave.",
     say: ["“I'm so sorry. I loved how he laughed at his own jokes.”", "“I'm bringing dinner Tuesday. Is 5 okay?”"],
@@ -737,7 +737,7 @@ const LC_TOPICS = [
     tell: ["“This is a hard season, not my identity.”"],
     people: "Try: “We're struggling financially. I'm working on a plan, and I'd love someone to talk it through with.”" },
   helper: { feel: "They may be ashamed.",
-    say: ["“Thanks for telling me. You're not alone.”"],
+    say: ["“Thanks for telling me. I'm with you.”"],
     avoid: ["Lectures about past choices."],
     help: ["Groceries, rides, and resources."],
     you: "Be thoughtful about lending money; gifts are often kinder." },
@@ -859,7 +859,7 @@ const LC_TOPICS = [
     say: ["“Take the time you need.”"],
     avoid: ["“You just need to let it go.”"],
     help: ["Listen and honor the hurt."],
-    you: "Don't rush someone's healing." },
+    you: "Let healing take its own time." },
   faith: "Forgiveness is central to many traditions. So is justice. Both matter.",
   practices: ["fruit|Make Peace", "roots|Prayer", "trunk|Journal Often"],
   reach: ["Forgiveness tangled with ongoing abuse: safety comes first."],
@@ -1150,7 +1150,7 @@ const LC_TOPICS = [
   more: [L.ptsd, ['CDC HEADS UP: Concussion', 'https://www.cdc.gov/heads-up/'], ['Brain Injury Alliance of Minnesota', 'https://www.braininjurymn.org']], kids: "accident" },
 
 { id: "porn", ring: "health", title: "Pornography that’s hard to stop", keys: "porn pornography compulsive sexual behavior sex addiction lust partner found porn husband watches porn wife watches porn betrayal shame accountability", parts: ["roots", "bark", "branches"],
-  quick: ["Many people struggle with pornography use that feels out of their control. You are not alone.", "Shame tends to feed the cycle. Honesty and support help break it.", "Look for help that fits your values: a counselor, a faith leader, or a support group.", "Anything involving minors is illegal and deeply harmful. Stop, and get help now."],
+  quick: ["Many people struggle with pornography use that feels out of their control. Many people share this.", "Shame tends to feed the cycle. Honesty and support help break it.", "Look for help that fits your values: a counselor, a faith leader, or a support group.", "Anything involving minors is illegal and deeply harmful. Stop, and get help now."],
   feel: "A cycle of urges, use, and regret. Secrecy and shame. For a partner who found out: shock, hurt, and questions about your own worth.",
   self: { first: ["Tell one trusted person the truth.", "Add friction: filters, devices out of the bedroom, and no screens when you are alone and worn out.", "Notice what comes right before the urge: stress, loneliness, boredom, or late nights."],
     helps: ["A counselor experienced with compulsive sexual behavior.", "A support or accountability group, faith-based or not.", "Meeting the need underneath in better ways: rest, connection, movement, purpose."],
@@ -1440,7 +1440,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "“My kids need my love and presence, and I have both to give.”",
     "“Asking for help is part of good parenting.”"
    ],
-   "people": "Try, with your kids: “My body needs rest today. That's not because of anything you did. Want to pick a game we can play on the couch?”"
+   "people": "Try, with your kids: “My body needs rest today. That's not because of anything you did. Want to pick a game we can play at the table?”"
   },
   "helper": {
    "feel": "They may feel judged as a parent, worried about their kids, and torn between needing help and wanting to keep their place as the parent.",
@@ -1914,7 +1914,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "reach": [
    "Thoughts of suicide, or a mental health crisis: call or text 988, any time. Text MN to 741741. In danger right now, call 911.",
    "Information and peer support, for you or your family: NAMI HelpLine, 1-800-950-6264, or text \"helpline\" to 62640, weekdays 10 a.m. to 10 p.m. Eastern. Not a crisis line.",
-   "Warning signs returning, or side effects you can't live with: call your prescriber or treatment team soon. Don't stop a medicine on your own."
+   "Warning signs returning, or side effects you can't live with: call your prescriber or treatment team soon. Talk with your doctor before stopping a medicine."
   ],
   "more": [
    [

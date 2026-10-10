@@ -2007,7 +2007,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "Most people now date longer before settling down than people did a generation ago. Years of meeting people, trying, and starting over are a normal part of this stage.",
-   "There is no deadline. Being single, dating a lot, or taking a break are all fine ways to spend these years.",
+   "Take the time you need. Being single, dating a lot, or taking a break are all fine ways to spend these years.",
    "Knowing what you value helps you choose well: how you want to feel with someone, not only what they look like on a screen.",
    "Healthy dating feels safe, honest, and respectful, at your own pace. Love Is Respect helps people 13 to 26 with questions about any relationship, any time."
   ],
@@ -2028,7 +2028,7 @@ const LC_TOPICS = [
     "Keeping your own friends, routines, and goals while you date. A good partner adds to your life without shrinking it."
    ],
    "tell": [
-    "“There's no deadline on finding someone.”",
+    "“Finding someone happens on your own timeline.”",
     "“A no from someone else isn't a verdict on me.”",
     "“I get to go at my own pace.”",
     "“I'm looking for someone who's good to me, and good for me.”"
@@ -2039,9 +2039,9 @@ const LC_TOPICS = [
    "feel": "They may be hopeful, discouraged, or tired of the whole thing. They may feel pressure, including from family, to find someone, or embarrassed if they never have. They may not want to talk about dating with you at all, and as an adult, that's their choice. If you have opinions about who they're seeing, they may already sense it.",
    "say": [
     "“How are you feeling about dating these days?”",
-    "“There's no rush. Your timeline is yours.”",
+    "“Take your time. Your timeline is yours.”",
     "“What do you like about them?”",
-    "“If anything ever feels off, I'm here, no judgment.”"
+    "“If anything ever feels off, I'm here, and I'll listen with kindness.”"
    ],
    "avoid": [
     "“So when are you going to settle down?” or questions about marriage and kids at every visit.",
@@ -2504,7 +2504,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "You're not alone in this. In one national survey, about 1 in 4 American adults said they had cut off contact with a family member.",
+   "We're with you in this. In one national survey, about 1 in 4 American adults said they had cut off contact with a family member.",
    "Some distance protects you, and some distance can be repaired. Both are real, and you get to take your time figuring out which this is.",
    "Estrangement is a grief with no funeral. Holidays, birthdays, and milestones can hurt the most, so plan for them.",
    "If family has hurt or threatened you, your safety comes first. Help is there any time: Day One in Minnesota, the National Domestic Violence Hotline, and 911 in danger."
@@ -3136,7 +3136,7 @@ const LC_TOPICS = [
     "Morning daylight and a steady wake time, even on days off.",
     "Being around people, even without talking much: a meal with a roommate, sitting with a friend, staying on the team or in the group.",
     "Doing one thing you used to enjoy, for ten minutes, before you feel like it. Feeling often follows doing.",
-    "Going easy on alcohol and cannabis. They can feel like relief and then deepen the low.",
+    "Setting alcohol and cannabis aside. They can feel like relief and then deepen the low.",
     "Comparing yourself with your own last month, not with someone else's highlights. Everyone's timeline is different."
    ],
    "tell": [
@@ -3218,7 +3218,7 @@ const LC_TOPICS = [
    "Early help changes the course. People who get treatment soon after first signs tend to do better, and there are programs built for exactly this.",
    "You don't have to know what it is. Noticing and telling a doctor or counselor is enough of a first step."
   ],
-  "feel": "Something feels off and it's hard to name. Maybe your thoughts are moving too fast, or too slowly, or don't line up the way they used to. Maybe you've barely slept for days and don't feel tired, or you feel like your mind is on fire with ideas. Maybe sounds seem louder, people seem to be watching or talking about you, or you've heard or seen things others don't seem to notice. You might be pulling away from people, missing shifts or classes, or finding it hard to keep up with things that used to be easy. It can be frightening, or it can feel like everyone else is the one who's changed. Either way, you're not alone, and help works best early.",
+  "feel": "Something feels off and it's hard to name. Maybe your thoughts are moving too fast, or too slowly, or don't line up the way they used to. Maybe you've barely slept for days and don't feel tired, or you feel like your mind is on fire with ideas. Maybe sounds seem louder, people seem to be watching or talking about you, or you've heard or seen things others don't seem to notice. You might be pulling away from people, missing shifts or classes, or finding it hard to keep up with things that used to be easy. It can be frightening, or it can feel like everyone else is the one who's changed. Either way, we're with you, and help works best early.",
   "self": {
    "first": [
     "Write down what you've noticed and roughly when it started: sleep, thoughts, mood, anything that seems different. A few lines in your phone is enough.",
@@ -3327,7 +3327,7 @@ const LC_TOPICS = [
    "helps": [
     "Taking a break for a few weeks to see how your sleep, mood, money, and anxiety change.",
     "Trying another tool first when a hard feeling hits: a walk, a shower, music, a call to a friend, slow breathing.",
-    "Keeping a drink of your own in your hand, and going with a friend who has your back.",
+    "Keeping a drink of your own in your hand, like sparkling water, and going with a friend who has your back.",
     "Stepping back from strong or daily cannabis, especially if it's started to make you anxious, paranoid, or low. Heavy use of high-potency cannabis is linked with a higher risk of psychosis.",
     "Carrying naloxone if you or people around you use opioids or pills from anywhere but a pharmacy. It's sold over the counter.",
     "Talking with a doctor honestly. Treatment works, and there are options, including support groups, counseling, and medicine for some substances."
@@ -3623,7 +3623,7 @@ const LC_TOPICS = [
     "Keeping your plan where you can find it fast: in your phone, in Birch, or on paper in your wallet.",
     "Sharing your plan with one person you trust, so they know what helps and how to reach you.",
     "A counselor, therapist, or doctor. Thoughts of suicide respond to treatment, even if you've tried before. If you're in school, campus counseling is a good place to start.",
-    "Less alcohol and other drugs on hard nights. They make waves bigger and choices faster.",
+    "Setting alcohol and other drugs aside on hard nights. They make waves bigger and choices faster.",
     "Your reasons, big or small: a person, a pet, a plan for next month, a song you want to hear again.",
     "Getting through the next hour, then the next. Waves pass, even very big ones."
    ],
@@ -3831,7 +3831,7 @@ const LC_TOPICS = [
     "Ways through a hard moment that don't hurt your body: call or text someone, walk, write, draw, or play music loud.",
     "A plan for hard moments, made on an okay day: your warning signs, what you can do instead, who you can reach, and help lines. Birch has one, My Safety Plan.",
     "A counselor or therapist. Therapies that teach skills for big feelings, like DBT, are built for exactly this. Campus counseling, a clinic, or your doctor can help you find one.",
-    "Less alcohol and other drugs on hard nights. They lower the brakes when urges are strong.",
+    "Setting alcohol and other drugs aside on hard nights. They lower the brakes when urges are strong.",
     "Being kind to yourself after a setback. You can start again the same day."
    ],
    "tell": [
@@ -3987,7 +3987,7 @@ const LC_TOPICS = [
    "If it was someone you're dating or with: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time. Or the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
    "If intimate images were taken or shared: StopNCII (stopncii.org) for adults, or Take It Down (takeitdown.ncmec.org) for images from before you were 18.",
    "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
-   "In Birch, if you answer that someone is hurting you, Birch shows you outside help right away. Nothing is sent to anyone, and a helper never sees that answer."
+   "In Birch, if you answer that someone is hurting you, Birch shows you outside help right away. Everything stays on your device, and that answer stays just for you, even with a helper."
   ],
   "more": [
    [
@@ -4119,7 +4119,7 @@ const LC_TOPICS = [
    "leaves"
   ],
   "quick": [
-   "Many people find their pornography use harder to control than they want. You are not alone, and it is something you can work on.",
+   "Many people find their pornography use harder to control than they want. Many people share this, and it is something you can work on.",
    "Shame tends to feed the cycle. Honesty, support, and meeting the need underneath help break it.",
    "Look for help that fits your values: a counselor, a support group, a faith leader if faith is part of your life, or a friend who can keep you honest.",
    "Anything involving minors, or anyone who didn't agree, is deeply harmful and illegal to share. Stop, report it, and get help now."
@@ -4411,7 +4411,7 @@ const LC_TOPICS = [
    "bark"
   ],
   "quick": [
-   "Losing a parent, a friend, or someone your age can shake your whole sense of how the world works. There's no right way or right timeline to grieve.",
+   "Losing a parent, a friend, or someone your age can shake your whole sense of how the world works. Grief has its own shape and its own timeline.",
    "Grief can look like sadness, anger, numbness, guilt, relief, trouble focusing, or getting very busy. All of it is normal.",
    "Many people your age haven't been through a big loss yet, so friends may not know what to say. Look for at least one person who can sit with it.",
    "After a death by suicide or overdose, grief often carries extra questions and guilt. It was not your fault. If you start having thoughts of not wanting to be here, call or text 988."
@@ -4433,7 +4433,7 @@ const LC_TOPICS = [
     "After a suicide loss, a group for suicide loss survivors, and saying it plainly when you're ready: they died by suicide."
    ],
    "tell": [
-    "“There's no deadline on this.”",
+    "“Take all the time you need.”",
     "“I can love them and still be angry, or relieved.”",
     "“It was not my fault.”"
    ],
@@ -5035,7 +5035,7 @@ const LC_TOPICS = [
     "“A smaller version still counts.”",
     "“My worth isn't measured by what my body can do today.”"
    ],
-   "people": "Try, to a friend: “I live with a health condition that limits my energy. If I cancel, it's not about you. Can we plan things that can flex, like a movie at my place?” To a boss or instructor: “I have a condition that flares. Could we plan now for what happens on a flare day?” To a doctor: “The fatigue is affecting my work and my sleep. Here's what I've tracked this month.”"
+   "people": "Try, to a friend: “I live with a health condition that limits my energy. If I cancel, it's not about you. Can we plan things that can flex, like tea at my place?” To a boss or instructor: “I have a condition that flares. Could we plan now for what happens on a flare day?” To a doctor: “The fatigue is affecting my work and my sleep. Here's what I've tracked this month.”"
   },
   "helper": {
    "feel": "A parent, partner, roommate, or friend may see someone who looks fine and still can't make it through the day. It can be confusing when they're full of energy one day and in bed the next. They may feel guilty, misunderstood, or afraid of being a burden. What helps most is believing them, and helping them pace instead of push.",
@@ -5133,7 +5133,7 @@ const LC_TOPICS = [
     "A steady rhythm: the same wake time, regular meals, daylight, and movement your body likes. Sleep is often the first thing to shift.",
     "Staying connected with your treatment team, and being honest with them about side effects or skipped doses. Decisions about medicine belong to you and your prescriber, together.",
     "Peer support from people who live with a mental health condition too, like NAMI's Peer-to-Peer classes or a local support group.",
-    "Going easy on alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
+    "Setting aside alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
     "Purpose, at your own pace: school, work, volunteering, or something you make. Your school's disability services office and work accommodations can help.",
     "Choosing who to tell, and how much. You can name it, or simply say you have a health condition you manage.",
     "Your own words for it. Some say “I live with bipolar disorder,” some say “I have a mental illness.” Use what fits you."

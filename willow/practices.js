@@ -75,7 +75,7 @@ const BEDSIDE = [
   ['wh-restless', `When They're Restless`, `Soft voice, low light, familiar music. Call the hospice nurse.`, 'clinical'],
   ['wh-handoff', `Shift Handoff`, `Before you leave, add one line to "What helped today."`, 'wisdom'],
   ['wh-kids', `Kids Can Help`, `Let children draw, choose music, or tell a story to them.`, 'growing'],
-  ['wh-after', `The First Hour After`, `No rush. Sit. Say goodbye. Do your tradition's ritual. Call the hospice, not 911.`, 'clinical']
+  ['wh-after', `The First Hour After`, `Take your time. Sit. Say goodbye. Do your tradition's ritual. Call the hospice, not 911.`, 'clinical']
 ];
 
 const SELFCARE = [

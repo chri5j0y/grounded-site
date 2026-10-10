@@ -190,7 +190,7 @@
   }
   // What to say about the voice in use (Voice Check, the Learn voice card, and Voice Setup all use this).
   function saidText(I) {
-    if (!I || I.grade === 'none') return 'No voice found yet. If you just added one, fully close your browser and open this page again.';
+    if (!I || I.grade === 'none') return 'Let\'s find you a voice. If you just added one, fully close your browser and open this page again.';
     if (platform().os === 'ios') return 'This is one of the voices an iPhone or iPad lets web pages use. Pick the clearest one in the Voice menu. For the most natural voices, watch on a computer in Microsoft Edge.';
     return { great: 'Sounds great. You\'re all set.', okay: 'Sounds okay. A Premium, Enhanced, or Natural voice sounds much more like a person.', basic: 'Sounds basic, and it can make lessons hard to enjoy. A better voice takes a few minutes to set up.' }[I.grade];
   }
@@ -201,7 +201,7 @@
   // Steps for this device first, then every other device behind a tap.
   function helpHtml() {
     var p = platform(), others = Object.keys(STEPS).filter(function (k) { return k !== p.os; });
-    return '<h4>Get a Better Voice</h4><p>Many computers and Android phones come with natural-sounding voices that aren\'t turned on yet. Download one once, and every Grow With Grounded tool uses it, even offline. On an iPhone or iPad, pick the clearest voice in the Voice menu, since web pages there can use only Apple\'s built-in voices for now.</p>'
+    return '<h4>Get a Better Voice</h4><p>Many computers and Android phones come with natural-sounding voices waiting to be turned on. Download one once, and every Grow With Grounded tool uses it, even offline. On an iPhone or iPad, pick the clearest voice in the Voice menu, since web pages there can use only Apple\'s built-in voices for now.</p>'
       + '<p><b>On your ' + STEPS[p.os].name + '</b></p>' + stepsHtml(p.os) + (BROWSER_NOTE[p.browser] ? '<p>' + BROWSER_NOTE[p.browser] + '</p>' : '')
       + others.map(function (k) { return '<details class="gg-vs-more"><summary>' + STEPS[k].name + '</summary>' + stepsHtml(k) + '</details>'; }).join('')
       + '<p>Voices marked \"uses internet\" read the words through that company\'s servers, so Grow With Grounded never picks them for you.</p>';
@@ -328,10 +328,11 @@
       fetch(opts.audioSrc, { method: 'HEAD' }).then(function (r) {
         if (!r.ok) return;
         recorded = true; audio = new Audio(opts.audioSrc); audio.preload = 'none';
-        audio.addEventListener('ended', stop); paint();
+        audio.addEventListener('ended', stop); bar.hidden = false; paint();
       }).catch(function () {});
     }
-    if (!synth && !opts.audioSrc) bar.hidden = true;
+    // BLD 782: with no speech in this browser, the bar shows only once a recording is found.
+    if (!synth) bar.hidden = true;
     paint();
     return bar;
   }

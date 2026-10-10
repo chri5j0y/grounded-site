@@ -548,7 +548,7 @@ const LC_TOPICS = [
     "Learning one task your partner used to handle, at your own pace, with help."
    ],
    "tell": [
-    "“There is no right way or timeline to grieve.”",
+    "“Grief has its own shape and its own timeline.”",
     "“Looking after myself honors the life we shared.”",
     "“Feeling joy again does not mean I have forgotten.”"
    ],
@@ -1063,7 +1063,7 @@ const LC_TOPICS = [
    "Grief for a pet is real grief. You lost daily company and part of the shape of your day.",
    "For many older adults, a pet is a reason to get up, a reason to walk, and someone to talk to. Expect to feel the loss in every hour.",
    "Choosing a peaceful death, or a new home for a pet you could no longer keep, is an act of love.",
-   "There is no deadline to decide about another animal. You choose what fits your life now."
+   "Take all the time you need to decide about another animal. You choose what fits your life now."
   ],
   "feel": "The house is too quiet. You still listen for paws on the floor, or reach for the food bowl at the usual time. Mornings may feel pointless without someone waiting for you. You may feel guilty about a decision, or embarrassed by how much it hurts. If a move or your health meant giving your pet a new home, you may grieve someone who is still alive.",
   "self": {
@@ -1730,7 +1730,7 @@ const LC_TOPICS = [
    "feel": "They may feel weak, foggy, or embarrassed to need help, and worried about losing their independence. Some hide how hard it is so they won't be a bother.",
    "say": [
     "“What would help most today?”",
-    "“Take your time. I'm in no hurry.”",
+    "“Take your time. I have all the time you need.”",
     "“You decide, and I'll help.”"
    ],
    "avoid": [
@@ -2386,7 +2386,7 @@ const LC_TOPICS = [
     "“What do you most want to bring with you?”",
     "“Tell me about this room.”",
     "“What would help the new place feel like home?”",
-    "“There's no rush today. We can do one room.”"
+    "“Take your time today. We can do one room.”"
    ],
    "avoid": [
     "“It's just a house.”",
@@ -4386,7 +4386,7 @@ const LC_TOPICS = [
    "Make amends where it is safe and wise. Where it is not, a letter you keep or a kindness to someone else can carry them.",
    "Letting go of what cannot be undone, and turning toward what is still in reach, helps peace grow."
   ],
-  "feel": "Old moments come back in the quiet hours: words said or never said, a choice that hurt someone, a child you wish you had parented differently, a chance you didn't take, time lost to work, drinking, or anger. Some regrets feel hot and sharp. Others feel like a long ache for a road not taken. You may feel guilt, shame, sadness, or a sense that it is too late. You are not alone. Many people carry something as they look back on a long life.",
+  "feel": "Old moments come back in the quiet hours: words said or never said, a choice that hurt someone, a child you wish you had parented differently, a chance you didn't take, time lost to work, drinking, or anger. Some regrets feel hot and sharp. Others feel like a long ache for a road not taken. You may feel guilt, shame, sadness, or a sense that it is too late. Many people feel this. Many people carry something as they look back on a long life.",
   "self": {
    "first": [
     "Write the regret down in a sentence or two. Naming it plainly often makes it smaller.",
@@ -5101,7 +5101,7 @@ const LC_TOPICS = [
   "helper": {
    "feel": "They may feel frightened when breath runs short, embarrassed about oxygen in public, and tired of how much effort small things take. Many play down symptoms so no one will worry.",
    "say": [
-    "“I'm here. No rush.”",
+    "“I'm here. Take your time.”",
     "“What does your plan say to do?”",
     "“Would a shorter visit work better today?”",
     "“Is there anything you've stopped doing that you miss?”"

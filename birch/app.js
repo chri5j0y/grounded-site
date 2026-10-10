@@ -1218,7 +1218,7 @@ function checkMiles(s, quiet) {
 }
 function todayKindHtml(s) {
   const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0, paused = pnPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Nothing will be lost.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you\'ve grown stays safe.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length;
   const trouble = PART_ORDER.filter(k => hardyDays(s, k));
   checkMiles(s, true);
@@ -1248,7 +1248,7 @@ function persistTend() { return PROF && window.GGP ? GGP.save(PROF.id) : Promise
 function setPnMode(m) {
   const s = window.GGTend && GGTend.state(); if (!s) { showToast('Open your profile first.'); return; }
   const R = pnRec(s); R.mode = m === 'hardy' ? 'hardy' : 'steady'; if (R.mode === 'hardy') R.hardyFrom = todayKey();
-  persistTend().then(() => { showToast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and nothing is lost.'); GGTend.render(); reopenSettings('pn-set-game'); });
+  persistTend().then(() => { showToast(R.mode === 'hardy' ? 'Hardy is on. Untended parts show trouble after ' + HARDY_DAYS + ' days.' : 'Steady tree. Gentle, and everything is kept.'); GGTend.render(); reopenSettings('pn-set-game'); });
 }
 
 // The simple graph: days tended each week, and each part's level at each check-in.
@@ -1415,8 +1415,8 @@ function vcCheck(force) {
   VC_ASKED = who;
   const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Birch Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
     <p class="ggx-small">You can remove it any time.</p>`;
-  const drop = { t: "Don't Add It", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was not added.'); } };
-  const later = { t: 'Not Now', kind: 'line', fn: () => {} };
+  const drop = { t: 'Leave It Off', kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('Your tree stays as it was.'); } };
+  const later = { t: 'Maybe Later', kind: 'line', fn: () => {} };
   if (!PROF) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
       buttons: [{ t: 'Open My Profile', kind: 'main', fn: () => { if (window.GGP) bcOpenAny(); } }, later, drop] });
@@ -1462,7 +1462,7 @@ const TEND_CFG = {
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
   pause: () => pnPause(),
-  pauseLine: 'Your tree is holding still with you while you get support. Nothing is lost.',
+  pauseLine: 'Your tree is holding still with you while you get support. Everything is kept.',
   onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
     get: () => { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'birch'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1507,8 +1507,8 @@ function bringHtml() {
   if (!PROF || HELP || !window.GGP) return '';
   const r = rec(), o = oakRings().length, p = pineRings().length;
   let h = '';
-  if (o && !r.oakBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${o} check-in${o === 1 ? '' : 's'} saved in Oak. Copy them here so Birch shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
-  if (p && !r.pineBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Pine Check-ins</h3><p>You have ${p} check-in${p === 1 ? '' : 's'} saved in Pine. Copy them here, labeled From Pine. Pine keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringPine()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringPine(true)">Not Now</button></div></div>`;
+  if (o && !r.oakBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${o} check-in${o === 1 ? '' : 's'} saved in Oak. Copy them here so Birch shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Maybe Later</button></div></div>`;
+  if (p && !r.pineBrought) h += `<div class="gt-card sq-bring"><h3>Bring My Pine Check-ins</h3><p>You have ${p} check-in${p === 1 ? '' : 's'} saved in Pine. Copy them here, labeled From Pine. Pine keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringPine()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringPine(true)">Maybe Later</button></div></div>`;
   return h;
 }
 function bringList(list, from) {
@@ -1528,14 +1528,14 @@ function bringOak(skip) {
   const r = rec(); let n = 0, nb = false;
   if (!skip) { n = bringList(oakRings(), 'oak'); nb = takePineNotebook((GGP.data(PROF.id, 'oak') || {}).nextsteps); }
   r.oakBrought = todayKey();
-  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Oak check-ins are here now, labeled.' + (nb ? ' Your Pine notebook is in Groundwork.' : '') : 'Nothing new to bring.'); if (window.GGTend) GGTend.render(); renderProgress(); });
+  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Oak check-ins are here now, labeled.' + (nb ? ' Your Pine notebook is in Groundwork.' : '') : 'Everything is already here.'); if (window.GGTend) GGTend.render(); renderProgress(); });
 }
 function bringPine(skip) {
   if (!PROF || !window.GGP) return;
   const r = rec(); let n = 0, nb = false;
   if (!skip) { n = bringList(pineRings(), 'pine'); nb = takePineNotebook((GGP.data(PROF.id, 'pine') || {}).nextsteps); }
   r.pineBrought = todayKey();
-  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Pine check-ins are here now, labeled From Pine.' + (nb ? ' Your Next Steps notebook is in Groundwork.' : '') : 'Nothing new to bring.'); if (window.GGTend) GGTend.render(); renderProgress(); });
+  profPersist().then(() => { showToast(skip ? 'You can bring them any time from Settings.' : n ? 'Your Pine check-ins are here now, labeled From Pine.' + (nb ? ' Your Next Steps notebook is in Groundwork.' : '') : 'Everything is already here.'); if (window.GGTend) GGTend.render(); renderProgress(); });
 }
 
 // =====================================================================
@@ -1944,7 +1944,7 @@ function gwSkill(id, on) {
   if (on) L.skills[id] = { done: todayKey(), t: x ? x.t : '' }; else delete L.skills[id];
   // Marking a skill done is a milestone in the game layer; reached once, kept for good.
   const st = window.GGTend && GGTend.state(), fresh = on && st ? checkMiles(st).filter(m => m !== 'bonus') : [];
-  persistRec().then(() => { renderGround(); if (fresh.length) pnCheer('New milestone: ' + mileName(fresh[0]), 'Skills I\'ve Got'); else showToast(on ? 'Marked. That is one more thing you can do.' : 'Unmarked. Nothing is lost.'); });
+  persistRec().then(() => { renderGround(); if (fresh.length) pnCheer('New milestone: ' + mileName(fresh[0]), 'Skills I\'ve Got'); else showToast(on ? 'Marked. That is one more thing you can do.' : 'Unmarked. Everything is kept.'); });
 }
 function gwPineHtml(L) {
   const F = L.fromPine || {}, A = F.answers || {}, PC = GW.pineChapters || {}, groups = {};
@@ -1958,7 +1958,7 @@ function gwChapterHtml(c, L) {
   let h = `<button type="button" class="lc-back" onclick="gwOpen(null)">Back to all chapters</button>
     <h2 class="section-title" style="margin-top:10px">${escapeHtml(gwT(c, 'title'))}</h2>${gwT(c, 'lead') ? `<p class="lead">${escapeHtml(gwT(c, 'lead'))}</p>` : ''}`;
   if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(gwT(c, 'note') || GW.careLine || '')}</p>
-      <div class="btn-row"><button class="btn btn-primary" onclick="gwOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="gwOpen(null)">Not Now</button></div></div>`;
+      <div class="btn-row"><button class="btn btn-primary" onclick="gwOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="gwOpen(null)">Maybe Later</button></div></div>`;
   if (c.fromPine) h += gwPineHtml(L) + '<h3 class="bc-skills-h">Keep Writing</h3>';
   h += `<p class="gt-small">Skip any prompt. Write a little or a lot. The microphone key on your phone's keyboard lets you speak instead of type.</p>`;
   h += (c.prompts || []).map(p => {
