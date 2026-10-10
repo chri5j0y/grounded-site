@@ -70,7 +70,12 @@ window.PAGE_VIDEOS = {
       + '.gg-watch:focus-visible{outline:3px solid #FFE7BD;outline-offset:3px;}.btn-secondary.gg-watch:focus-visible{outline-color:var(--gold,#8B5E1A);}'
       + '.gg-watch-row{margin:18px 0 0;display:flex;justify-content:center;}.gg-watch-sm{padding:9px 18px;font-size:14px;}'
       + '.gg-watch-fam{margin:12px 0 20px;}'
-      + '.ggl-app.gg-pv .ggl-top img{background:#FFF8EC;}';
+      + '.ggl-app.gg-pv .ggl-top img{background:#FFF8EC;}'
+      // Hero Watch buttons (GWG BLD 780): gold and first on service, About, family tool, and tree app heroes; full width on phones.
+      + '.btn.gg-watch-hero{font-size:1.05rem !important;padding:13px 24px !important;}'
+      + '@media (max-width:560px){.gg-watch-acts{flex-direction:column !important;align-items:stretch !important;width:100%;max-width:420px;margin-left:auto;margin-right:auto;}.gg-watch-acts .btn{width:100%;text-align:center;justify-content:center;}}'
+      + '.gg-hero-btn.gg-watch-app{background:#8B5E1A;color:#FFFFFF;border-color:#8B5E1A;}.gg-hero-btn.gg-watch-app:hover{background:#6E4A14;border-color:#6E4A14;}'
+      + '@media (max-width:900px){.gg-hero-actions .gg-hero-btn.gg-watch-app{flex:1 1 100%;width:100%;}}';
     document.head.appendChild(s);
   }
   var OPEN = null;
