@@ -1,10 +1,10 @@
 /* =====================================================================
-   THE GROVE . When Life Changes Together videos (GWG BLD 774)
+   THE GROVE . When Life Changes Together videos (GWG BLD 774 and 783)
    Two narrated videos for each guide in grove/guides.js: For the Group (side 'you', to watch together) and
    For the Leader (side 'helper'). Played by shared/gg-learn.js (GUIDE_SRC.grove). Each video: {id, guide, side, title,
    sideName, mins, blurb, sources, scenes, plainScenes?}. plainScenes is the same video in Plain wording; The Grove
    swaps it in for a Plain grove (GROVE_VIDS_WORDING), keeping the same id so Watched marks carry.
-   Generated from P/GC/gen.py (BLD 774): edit the data there and rebuild.
+   Generated from patches/bld783/source/gc/gen.py (BLD 774, BLD 783): edit the data there and rebuild.
    ===================================================================== */
 (function(){
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
@@ -15,6 +15,10 @@ window.GG_LEARN_GUIDES.grove = {
   [
    "gw-family",
    "Family Changes"
+  ],
+  [
+   "gw-home",
+   "Home Life Together"
   ],
   [
    "gw-illness",
@@ -1305,6 +1309,1922 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Steady is enough.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Good enough is plenty. Steady, honest, and present is enough. Look after your own rest and support too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "siblings",
+   "ring": "gw-home",
+   "title": "Siblings Who Clash",
+   "you": {
+    "id": "gr-g-siblings-you",
+    "guide": "siblings",
+    "side": "you",
+    "title": "Siblings Who Clash",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family when brothers and sisters clash: we are one team, and we learn to make up.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Siblings Who Clash",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when brothers and sisters have been arguing a lot."
+     },
+     {
+      "k": "big",
+      "h": "Brothers and sisters argue sometimes.",
+      "sub": "We can learn to make up.",
+      "say": "Brothers and sisters argue sometimes. It happens in lots of families. You might argue about toys, turns, or who sits where. Arguing is something we can get better at fixing. In our family, we learn to make up."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Mad",
+       "Jealous",
+       "Left out",
+       "Annoyed",
+       "Sorry",
+       "Happy together"
+      ],
+      "say": "When we argue, we might feel mad, or jealous, or left out. We might feel annoyed, or sorry afterward. And lots of times we feel happy together too. Every feeling is welcome. What we do with it matters."
+     },
+     {
+      "k": "points",
+      "h": "Our family rules",
+      "items": [
+       [
+        "Gentle hands",
+        "Bodies stay safe"
+       ],
+       [
+        "Kind words",
+        "Even when we are mad"
+       ],
+       [
+        "Take a break",
+        "Then come back"
+       ],
+       [
+        "Work it out",
+        "Find a way for both"
+       ]
+      ],
+      "say": "Here are rules that help. Gentle hands, so everyone's body stays safe. Kind words, even when we are mad. Take a break when you need one, and then come back. And work it out, by finding a way that works for both of you."
+     },
+     {
+      "k": "big",
+      "h": "Think of one thing you like.",
+      "sub": "Everyone at once.",
+      "say": "Let's all do this together. Put a hand on your heart. Think of a brother or sister in our family. Think of one thing you like about them. When you're ready, say it out loud to them.",
+      "beats": [
+       "Let's all do this together.",
+       "Put a hand on your heart.",
+       "Think of a brother or sister in our family.",
+       "Think of one thing you like about them.",
+       {
+        "t": "When you're ready, say it out loud to them.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "How we make up",
+      "steps": [
+       [
+        "Calm down first",
+        "A breath, or a break"
+       ],
+       [
+        "Say your part",
+        "I am sorry I grabbed it"
+       ],
+       [
+        "Fresh start",
+        "A hug, a high five, or a smile"
+       ]
+      ],
+      "say": "Here is how we make up. First, calm down, with a slow breath or a short break. Then say your part, like, I'm sorry I grabbed it. Then make a fresh start, with a hug, a high five, or a smile."
+     },
+     {
+      "k": "card",
+      "title": "Love for everyone",
+      "body": "Each of us matters here.",
+      "say": "Sometimes it feels like a brother or sister gets more. Grown-ups love each of you all the way. There is plenty of love for everyone here. If something feels unfair, tell a grown-up. They want to hear your side."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "We are on the same team.",
+       "Gentle hands, kind words.",
+       "Let's make a fresh start."
+      ],
+      "say": "Here are words our family can say together. We are on the same team. Gentle hands, kind words. And, let's make a fresh start."
+     },
+     {
+      "k": "big",
+      "h": "We are one team.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Brothers and sisters can grow up to be great friends. We are one team, and we keep learning together. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-siblings-helper",
+    "guide": "siblings",
+    "side": "helper",
+    "title": "Siblings Who Clash",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the grown-up in the middle of sibling clashes: calm coaching, fair plans, and repair.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Siblings Who Clash",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up raising brothers and sisters who clash, whether it's small daily squabbles or a season that feels like constant battle."
+     },
+     {
+      "k": "big",
+      "h": "From referee to coach.",
+      "sub": "Calm, curious, and on everyone's side.",
+      "say": "When kids fight, it's natural to step in as the referee and decide who's right. Many grown-ups find it works better to be a coach. Stay calm, stay curious, and stay on everyone's side. Your goal is to teach them how to solve it themselves."
+     },
+     {
+      "k": "flow",
+      "h": "A coaching script",
+      "steps": [
+       [
+        "Safety first",
+        "Separate if anyone could get hurt"
+       ],
+       [
+        "Describe it",
+        "Two kids, one tablet"
+       ],
+       [
+        "Hear both",
+        "Each gets a turn"
+       ],
+       [
+        "Ask for ideas",
+        "What could you two try?"
+       ]
+      ],
+      "say": "Here's a simple script. Safety first: separate them if anyone could get hurt. Then describe what you see without blame, like, I see two kids and one tablet. Hear both sides, one at a time. Then ask, what could you two try? Let them try their idea.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Picture the last clash.",
+      "sub": "What did each child need?",
+      "say": "Let's take a moment. Picture the last time your children clashed. Look past who started it. Ask yourself what each child needed in that moment, maybe a turn, some space, or to feel heard. Name it quietly for each one.",
+      "beats": [
+       "Let's take a moment.",
+       "Picture the last time your children clashed.",
+       "Look past who started it.",
+       "Ask yourself what each child needed in that moment, maybe a turn, some space, or to feel heard.",
+       {
+        "t": "Name it quietly for each one.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Fair means each one's need",
+      "items": [
+       [
+        "One-on-one time",
+        "Ten minutes each, their pick"
+       ],
+       [
+        "Their own space",
+        "A corner, a box, a shelf"
+       ],
+       [
+        "No comparing",
+        "Each child on their own path"
+       ],
+       [
+        "Plan the hot spots",
+        "Car seats, turns, timers"
+       ]
+      ],
+      "say": "Fair means each child gets what they need. Give each one ten minutes of one-on-one time a day, doing what they pick. Give each their own space, even a small shelf. Let each child walk their own path, without comparing. And plan ahead for the hot spots, like car seats, turns, and timers."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "Why can't you be like your sister?",
+       "You're the oldest, you should know better.",
+       "Say sorry right now."
+      ],
+      "say": "Some words, said in frustration, make the rivalry grow. Why can't you be like your sister. You're the oldest, you should know better. And a forced, say sorry right now. Try instead, let's calm down first, and then make it right."
+     },
+     {
+      "k": "card",
+      "title": "Catch the good moments.",
+      "body": "“You two figured that out together.”",
+      "say": "Notice the moments that go well, and name them. You two figured that out together. Shared jobs and team games, like cooking together or building a fort, give siblings a chance to win side by side."
+     },
+     {
+      "k": "card",
+      "title": "When it goes beyond normal",
+      "body": "Repeated hurt is a safety matter.",
+      "say": "Most sibling clashes are normal. When one child is being hurt, frightened, or picked on again and again, treat it as a safety matter. Talk with your child's doctor or school counselor, and reach out for help."
+     },
+     {
+      "k": "big",
+      "h": "Every repair teaches.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Take a breath before you step in, and take care of yourself too. Every calm repair you show them teaches more than any lecture. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "teen-away",
+   "ring": "gw-home",
+   "title": "A Teen Pulling Away",
+   "you": {
+    "id": "gr-g-teen-away-you",
+    "guide": "teen-away",
+    "side": "you",
+    "title": "A Teen Pulling Away",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family when a teen needs more space: room to grow, and a home base to come back to.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Teen Pulling Away",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when someone in our family is growing up and needs more space."
+     },
+     {
+      "k": "big",
+      "h": "Growing up means more space.",
+      "sub": "And home is still home.",
+      "say": "When kids become teenagers, they need more time on their own and with friends. That's a healthy part of growing up. They still love their family. Home is still home, for everyone."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Missed",
+       "Confused",
+       "Crowded",
+       "Grown up",
+       "Hopeful",
+       "Close"
+      ],
+      "say": "You might feel missed, or confused about why things are different. A teen might feel crowded, or proud of growing up. Lots of us feel hopeful, and close in new ways. All of these feelings fit."
+     },
+     {
+      "k": "big",
+      "h": "Share one thing from your week.",
+      "sub": "Everyone, one at a time.",
+      "say": "Let's do this together. Think about your week. What is one thing you'd like the rest of us to know about it? It could be small, funny, or hard. When you're ready, take a turn and say it.",
+      "beats": [
+       "Let's do this together.",
+       "Think about your week.",
+       "What is one thing you'd like the rest of us to know about it?",
+       "It could be small, funny, or hard.",
+       {
+        "t": "When you're ready, take a turn and say it.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways we stay close",
+      "items": [
+       [
+        "Side by side",
+        "A walk, a drive, cooking"
+       ],
+       [
+        "Listening",
+        "More ears, fewer lectures"
+       ],
+       [
+        "A teen's pick",
+        "One thing each week"
+       ],
+       [
+        "Unplugged meals",
+        "Phones parked, everyone"
+       ]
+      ],
+      "say": "Here are ways our family can stay close. Time side by side, like a walk, a drive, or cooking. Listening, with more ears and fewer lectures. A teen's pick each week, something they choose for us to do together. And unplugged meals, with everyone's phones parked, grown-ups too."
+     },
+     {
+      "k": "card",
+      "title": "Space with love",
+      "body": "Knock, ask, and wait for a yes.",
+      "say": "Giving someone space is a way to love them. We knock before we open a door. We ask before we borrow. And when a big brother or sister says later, we trust that later will come."
+     },
+     {
+      "k": "card",
+      "title": "Heavy things get shared.",
+      "body": "Tell a grown-up you trust.",
+      "say": "If something feels heavy, like a sadness that stays, a worry you can't shake, or a friend who is hurting, tell a grown-up you trust. We figure out heavy things together."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "We're always on your side.",
+       "You can tell us anything.",
+       "Home is home base."
+      ],
+      "say": "Here are words our family can say. We're always on your side. You can tell us anything, and we'll figure it out together. And, home is home base."
+     },
+     {
+      "k": "big",
+      "h": "Room to grow, and a place to belong.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Every one of us is growing. Our family gives room to grow, and a place to belong. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-teen-away-helper",
+    "guide": "teen-away",
+    "side": "helper",
+    "title": "A Teen Pulling Away",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up whose teen is pulling away: warm and steady, side by side, and alert to warning signs.",
+    "sources": [
+     "steinberg89",
+     "kerrstattin"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Teen Pulling Away",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up raising a teen who seems to be pulling away, behind a closed door, a phone, or one-word answers."
+     },
+     {
+      "k": "big",
+      "h": "Pulling away is part of growing up.",
+      "sub": "You are still needed, in a new way.",
+      "say": "Most teens pull away some. They are building a self of their own, and friends matter more. It can feel like losing them. You are still needed, in a new way. Think of yourself as home base."
+     },
+     {
+      "k": "points",
+      "h": "Warm and firm",
+      "items": [
+       [
+        "Lots of warmth",
+        "Affection and interest"
+       ],
+       [
+        "A few clear limits",
+        "Fair, explained, steady"
+       ],
+       [
+        "Growing choices",
+        "More trust as they show it"
+       ],
+       [
+        "Curiosity",
+        "Their world matters"
+       ]
+      ],
+      "say": "Teens tend to do well with grown-ups who are both warm and firm. Lots of warmth, through affection and interest. A few clear, fair limits, explained and kept steady. Growing choices, as they show they can handle them. And curiosity about their world."
+     },
+     {
+      "k": "card",
+      "title": "Teens share when they feel safe to.",
+      "body": "Closeness opens the door more than control.",
+      "say": "Grown-ups often learn the most about a teen's life when the teen chooses to tell them. That choice grows when talking feels safe, without a lecture waiting. So warmth and listening open the door more than questions and control."
+     },
+     {
+      "k": "big",
+      "h": "Name one way to join them.",
+      "sub": "Ten minutes, this week.",
+      "say": "Let's take a moment. Think of one thing your teen loves right now, a song, a sport, a food, a skill. Now think of one ten-minute way to join them in it this week. Picture yourself asking, and say it out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "Think of one thing your teen loves right now, a song, a sport, a food, a skill.",
+       "Now think of one ten-minute way to join them in it this week.",
+       {
+        "t": "Picture yourself asking, and say it out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "When to reach for help",
+      "items": [
+       [
+        "Two weeks or more",
+        "Of deep sadness or worry"
+       ],
+       [
+        "Big changes",
+        "Sleep, eating, grades"
+       ],
+       [
+        "Dropping everyone",
+        "Friends and family"
+       ],
+       [
+        "Hopeless words",
+        "Call or text 988"
+       ]
+      ],
+      "say": "Sometimes pulling away is more than growing up. Watch for deep sadness or worry that lasts two weeks or more. Big changes in sleep, eating, or grades. Dropping friends and family both. Or hopeless words. Talk with their doctor or school counselor early. If they talk about suicide, call or text nine eight eight, together."
+     },
+     {
+      "k": "words",
+      "h": "Words that keep the door open",
+      "items": [
+       "I'm glad you're home.",
+       "Tell me more?",
+       "Do you want ideas, or just an ear?"
+      ],
+      "say": "Here are words that keep the door open. I'm glad you're home. I'm curious, tell me more? And, do you want ideas, or do you want me to just listen?"
+     },
+     {
+      "k": "big",
+      "h": "Keep showing up.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find other parents of teens to lean on, and keep up your own friendships and rest. Keep showing up, warm and steady. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "time-together",
+   "ring": "gw-home",
+   "title": "Finding Time Together",
+   "you": {
+    "id": "gr-g-time-together-you",
+    "guide": "time-together",
+    "side": "you",
+    "title": "Finding Time Together",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family in a busy season: small, steady, unplugged times that make us feel like us.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Finding Time Together",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when our days have been so busy that we miss each other."
+     },
+     {
+      "k": "big",
+      "h": "We've been busy.",
+      "sub": "And we miss each other.",
+      "say": "Lots of families get busy. School, work, practices, and chores fill the days. Sometimes we only say hi as we pass by, or we sit in the same room looking at different screens. When that happens, we can miss each other. The good news is, we can make more time together, and it takes less time than we think."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Rushed",
+       "Tired",
+       "Lonely",
+       "Excited",
+       "Cozy",
+       "Happy together"
+      ],
+      "say": "In a busy season, you might feel rushed, or tired, or a little lonely. When we do get time together, you might feel excited, cozy, or just happy. All of these feelings fit."
+     },
+     {
+      "k": "points",
+      "h": "Small times count",
+      "items": [
+       [
+        "Breakfast together",
+        "Even a quick one"
+       ],
+       [
+        "A walk after dinner",
+        "Around the block"
+       ],
+       [
+        "Bedtime talk",
+        "One good thing"
+       ],
+       [
+        "Cook together",
+        "Everyone helps"
+       ]
+      ],
+      "say": "Small times together count a lot. Breakfast together, even a quick one. A walk after dinner, around the block. A bedtime talk, where we share one good thing. And cooking together, where everyone helps."
+     },
+     {
+      "k": "big",
+      "h": "Name one fifteen-minute idea.",
+      "sub": "Everyone, one at a time.",
+      "say": "Let's do this together. Think of something fun our family could do this week, in about fifteen minutes. Maybe a game, a walk, or making pancakes. When you're ready, say your idea out loud.",
+      "beats": [
+       "Let's do this together.",
+       "Think of something fun our family could do this week, in about fifteen minutes.",
+       "Maybe a game, a walk, or making pancakes.",
+       {
+        "t": "When you're ready, say your idea out loud.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Phones down, eyes up.",
+      "body": "Screens rest during family time.",
+      "say": "During family time, phones and tablets rest in the basket. Grown-ups' phones go in first. That way our eyes are up, and we can really see each other. We can talk, laugh, play a game at the table, or just be together."
+     },
+     {
+      "k": "points",
+      "h": "Outside together",
+      "items": [
+       [
+        "The park",
+        "Swings and slides"
+       ],
+       [
+        "A trail",
+        "Look for birds"
+       ],
+       [
+        "Bikes or scooters",
+        "Around the block"
+       ],
+       [
+        "The backyard",
+        "Tag, catch, chalk"
+       ]
+      ],
+      "say": "Time outside is extra good for us. We can go to the park, walk a trail and look for birds, ride bikes or scooters, or play tag in the yard. Fresh air and moving our bodies help everyone feel better."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "Our family time is worth protecting.",
+       "Phones down, eyes up.",
+       "We choose what matters most."
+      ],
+      "say": "Here are words our family can say. Our family time is worth protecting. Phones down, eyes up. And, we choose what matters most."
+     },
+     {
+      "k": "big",
+      "h": "Time together grows us.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Little bits of time, again and again, help our family grow strong. Tonight, let's pick one idea from today and try it this week. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-time-together-helper",
+    "guide": "time-together",
+    "side": "helper",
+    "title": "Finding Time Together",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up holding a full calendar: small rhythms, unplugged anchors, and what to set down.",
+    "sources": [
+     "fiese02",
+     "white"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Finding Time Together",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up carrying a busy family calendar, who wants more time that feels like us."
+     },
+     {
+      "k": "big",
+      "h": "Small and steady beats big and rare.",
+      "sub": "Rhythms hold a family.",
+      "say": "A big vacation is wonderful. Yet most of what holds a family together is small and steady. Family routines and rituals, like shared meals and weekly traditions, help children feel secure and help families feel close. You can start with one."
+     },
+     {
+      "k": "flow",
+      "h": "Make room",
+      "steps": [
+       [
+        "Look ahead",
+        "Sunday, together"
+       ],
+       [
+        "Set one thing down",
+        "For a season"
+       ],
+       [
+        "Keep one or two times",
+        "On the calendar"
+       ],
+       [
+        "Unplug them",
+        "Phones in the basket"
+       ]
+      ],
+      "say": "Here's a simple way to make room. Look at the week ahead together, maybe on Sunday. Set one thing down for a season. Keep one or two family times on the calendar, like any other appointment. And unplug them, with every phone in the basket, yours first.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Find one twenty-minute window.",
+      "sub": "This week, by day and time.",
+      "say": "Let's take a moment. Picture your week ahead, day by day. Find one twenty-minute window you could keep for your family. Maybe a breakfast, a walk, or a game after dinner. Name the day and the time out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "Picture your week ahead, day by day.",
+       "Find one twenty-minute window you could keep for your family.",
+       "Maybe a breakfast, a walk, or a game after dinner.",
+       {
+        "t": "Name the day and the time out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Turn ordinary into together",
+      "items": [
+       [
+        "Cooking",
+        "Everyone has a job"
+       ],
+       [
+        "Car rides",
+        "A question game"
+       ],
+       [
+        "Chores",
+        "Music on, side by side"
+       ],
+       [
+        "Bedtime",
+        "One good thing"
+       ]
+      ],
+      "say": "You can also turn what you already do into time together. Cooking, where everyone has a job. Car rides, with a question game instead of headphones. Chores, side by side with music on. And bedtime, with one good thing from the day."
+     },
+     {
+      "k": "card",
+      "title": "Get outside.",
+      "body": "A park, a trail, a lake, the yard.",
+      "say": "Time in nature helps people feel well, and a couple of hours a week adds up. A walk, a park, a trail, a bike ride, or a picnic by a lake all count. Outdoor time is family time that refreshes everyone."
+     },
+     {
+      "k": "card",
+      "title": "Screens rest.",
+      "body": "A family media plan, made together.",
+      "say": "Screens can quietly take much of the time a family has, for grown-ups as much as kids. Make a family media plan together, so everyone knows when screens rest, like at meals, in the car, and at bedtime. Grown-ups lead by example."
+     },
+     {
+      "k": "big",
+      "h": "One rhythm, kept for a month.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Choose progress over perfect. One new family rhythm, kept for a month, is a real win, and it protects your own rest too. Let your children help choose it, and they will help you keep it. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "back-to-table",
+   "ring": "gw-home",
+   "title": "Back to the Table",
+   "you": {
+    "id": "gr-g-back-to-table-you",
+    "guide": "back-to-table",
+    "side": "you",
+    "title": "Back to the Table",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family coming back to the table: cook together, eat together, phones resting.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Back to the Table",
+      "sub": "For the Group",
+      "say": "This is for all of us together, as we bring back our family meals."
+     },
+     {
+      "k": "big",
+      "h": "The table brings us together.",
+      "sub": "Let's eat together more.",
+      "say": "Lots of families get busy and start eating at different times, in the car, or in front of screens. Our table is a special place. It's where we can see each other, share food, and talk. Let's eat together more."
+     },
+     {
+      "k": "points",
+      "h": "Everyone has a job",
+      "items": [
+       [
+        "Wash",
+        "Fruit and vegetables"
+       ],
+       [
+        "Stir",
+        "With a grown-up"
+       ],
+       [
+        "Set the table",
+        "Plates, cups, forks"
+       ],
+       [
+        "Pour water",
+        "For everyone"
+       ]
+      ],
+      "say": "When we make a meal, everyone has a job. Little hands can wash fruit and vegetables. You can stir, with a grown-up close by. You can set the table, with plates, cups, and forks. And you can pour water for everyone. When we all help, the meal belongs to all of us."
+     },
+     {
+      "k": "big",
+      "h": "Name a food to cook together.",
+      "sub": "Everyone, one at a time.",
+      "say": "Let's do this together. Take one slow breath in, like you're smelling something yummy cooking. Let it out. Now think of one food you'd love our family to cook together. When you're ready, say it out loud.",
+      "beats": [
+       "Let's do this together.",
+       "Take one slow breath in, like you're smelling something yummy cooking.",
+       "Let it out.",
+       "Now think of one food you'd love our family to cook together.",
+       {
+        "t": "When you're ready, say it out loud.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Phones rest. People talk.",
+      "body": "Screens go in the basket at meals.",
+      "say": "At the table, phones and tablets rest in the basket, and grown-ups' phones go in first. That way we can look at each other, listen, and laugh."
+     },
+     {
+      "k": "words",
+      "h": "Table talk",
+      "items": [
+       "What made you laugh today?",
+       "What was hard, and what was good?",
+       "If you could cook anything, what would it be?"
+      ],
+      "say": "Here are some table talk questions. What made you laugh today? What was hard, and what was good? And, if you could cook anything, what would it be?"
+     },
+     {
+      "k": "card",
+      "title": "Try a tiny bite.",
+      "body": "Your body decides how much.",
+      "say": "Sometimes there's a new food on the table. You can try a tiny bite, and say one word about it, like crunchy, sweet, or interesting. Your body gets to decide how much to eat. We drink water, and we eat slowly together."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "The table is where we come back together.",
+       "Everyone helps, and everyone belongs.",
+       "Phones rest. People talk."
+      ],
+      "say": "Here are words our family can say. The table is where we come back together. Everyone helps, and everyone belongs. Phones rest. People talk."
+     },
+     {
+      "k": "big",
+      "h": "See you at the table.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "A simple meal, shared together, is one of the best things a family can do. See you at the table. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-back-to-table-helper",
+    "guide": "back-to-table",
+    "side": "helper",
+    "title": "Back to the Table",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up bringing back family meals: start small, cook together, and keep the table calm.",
+    "sources": [
+     "fiese02"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Back to the Table",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up who wants to bring the family back to the table, whether meals have drifted or never quite started."
+     },
+     {
+      "k": "big",
+      "h": "Simple counts.",
+      "sub": "Together matters more than fancy.",
+      "say": "Regular family meals and routines are linked with children feeling secure and families feeling close. The meal itself can be simple. Soup, eggs and toast, rice and beans, a sheet pan of vegetables. What matters most is sitting down together."
+     },
+     {
+      "k": "flow",
+      "h": "Start small",
+      "steps": [
+       [
+        "One or two meals",
+        "A week, to begin"
+       ],
+       [
+        "Clear the table",
+        "Make room for people"
+       ],
+       [
+        "Everyone has a job",
+        "Wash, stir, set, pour"
+       ],
+       [
+        "Phones in the basket",
+        "Yours first"
+       ]
+      ],
+      "say": "Start small. Choose one or two shared meals a week, and breakfast counts. Clear the table and make room for people. Give everyone a job, like washing, stirring, setting, or pouring water. And park the phones in a basket, yours first.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Choose one meal and the jobs.",
+      "sub": "This week.",
+      "say": "Let's take a moment. Picture your week. Choose one meal you could share at the table, and the day. Now picture each person in your family, and give each one a job. Say the meal, the day, and the jobs out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "Picture your week.",
+       "Choose one meal you could share at the table, and the day.",
+       "Now picture each person in your family, and give each one a job.",
+       {
+        "t": "Say the meal, the day, and the jobs out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Nourishing and easy",
+      "items": [
+       [
+        "Whole foods",
+        "Fruit, vegetables, beans, grains"
+       ],
+       [
+        "Water to drink",
+        "On the table every meal"
+       ],
+       [
+        "A big pot",
+        "Cook once, eat twice"
+       ],
+       [
+        "A short list",
+        "Meals your family likes"
+       ]
+      ],
+      "say": "Keep it nourishing and easy. Whole foods, like fruit, vegetables, beans, eggs, and grains. Water on the table at every meal. Cook a big pot on the weekend and enjoy it through the week. And keep a short list of meals your family likes, and rotate them."
+     },
+     {
+      "k": "card",
+      "title": "Keep the table calm.",
+      "body": "Connection first. Hard talks another time.",
+      "say": "The table works best as a calm place. Talk, listen, and laugh. Let children try a bite of something new, and let their bodies decide how much. Save lectures and hard talks for another time, so everyone looks forward to coming back."
+     },
+     {
+      "k": "words",
+      "h": "Words for the table",
+      "items": [
+       "I'm so glad we're all here.",
+       "What was the best part of your day?",
+       "Thanks for helping make this."
+      ],
+      "say": "Here are words for the table. I'm so glad we're all here. What was the best part of your day? And, thanks for helping make this."
+     },
+     {
+      "k": "big",
+      "h": "You belong at the table too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Feeding a family is real work, and a way of loving. Let others share it, sit down yourself, and enjoy the people around you. You belong at the table too. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "big-feelings-home",
+   "ring": "gw-home",
+   "title": "Big Feelings at Home",
+   "you": {
+    "id": "gr-g-big-feelings-home-you",
+    "guide": "big-feelings-home",
+    "side": "you",
+    "title": "Big Feelings at Home",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family when big feelings fill the house: name it, breathe, and come back together.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Big Feelings at Home",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when big feelings have been filling up our home."
+     },
+     {
+      "k": "big",
+      "h": "Everyone has big feelings.",
+      "sub": "Kids and grown-ups too.",
+      "say": "Everyone has big feelings sometimes. Kids do, and grown-ups do too. Sometimes a feeling gets so big it feels like a storm inside. That is okay. Storms pass, and we can learn to ride them out together."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Mad",
+       "Sad",
+       "Scared",
+       "Frustrated",
+       "Worried",
+       "Calm"
+      ],
+      "say": "Here are some feelings. Mad. Sad. Scared. Frustrated. Worried. And calm. All of these feelings are welcome in our family. Feelings are okay. We keep our bodies and our words safe."
+     },
+     {
+      "k": "big",
+      "h": "Three balloon breaths.",
+      "sub": "Everyone at once.",
+      "say": "Let's all do this together. Put your hands on your belly. Breathe in slowly, and fill your belly like a balloon. Now let it out slowly, like the balloon is shrinking. Let's do that three times together.",
+      "beats": [
+       "Let's all do this together.",
+       "Put your hands on your belly.",
+       "Breathe in slowly, and fill your belly like a balloon.",
+       "Now let it out slowly, like the balloon is shrinking.",
+       {
+        "t": "Let's do that three times together.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "When a feeling gets big",
+      "steps": [
+       [
+        "Name it",
+        "I feel mad"
+       ],
+       [
+        "Breathe",
+        "Like a balloon"
+       ],
+       [
+        "Choose",
+        "A safe way to let it out"
+       ]
+      ],
+      "say": "When a feeling gets big, here is what we do. First, name it, like, I feel mad. Then breathe, like a balloon. Then choose a safe way to let it out."
+     },
+     {
+      "k": "points",
+      "h": "Safe ways to let it out",
+      "items": [
+       [
+        "Shake it out",
+        "Count down from ten"
+       ],
+       [
+        "The calm corner",
+        "Pillow and blanket"
+       ],
+       [
+        "Squeeze a pillow",
+        "Hard, then let go"
+       ],
+       [
+        "Run outside",
+        "Around the yard"
+       ]
+      ],
+      "say": "Here are safe ways to let a big feeling out. Shake it out while we count down from ten. Go to the calm corner, with a pillow and a blanket. Squeeze a pillow hard, then let go. Or run around outside with a grown-up."
+     },
+     {
+      "k": "points",
+      "h": "Help our bodies stay steady",
+      "items": [
+       [
+        "Sleep",
+        "Bedtime at the same time"
+       ],
+       [
+        "Food and water",
+        "Meals, snacks, and sips"
+       ],
+       [
+        "Play outside",
+        "Run, climb, and move"
+       ],
+       [
+        "Unplugged time",
+        "Screens rest before bed"
+       ]
+      ],
+      "say": "Our bodies help our feelings. When we're tired or hungry, feelings get bigger faster. So we sleep well, with bedtime at the same time. We eat good food and drink water. We play outside and move our bodies. And screens rest before bed."
+     },
+     {
+      "k": "card",
+      "title": "We make up.",
+      "body": "Sorry, a hug, and a fresh start.",
+      "say": "After a big feeling, we come back together. We talk about what happened and what helped. If someone got hurt or yelled, we say sorry. Grown-ups say sorry too. Then we make a fresh start."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "All feelings are welcome.",
+       "Name it, breathe, then choose.",
+       "We get through it together."
+      ],
+      "say": "Here are words our family can say. All feelings are welcome. Name it, breathe, then choose. And, we get through it together."
+     },
+     {
+      "k": "big",
+      "h": "Storms pass. We stay together.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Big feelings come and go like weather. Storms pass, and our family stays together. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-big-feelings-home-helper",
+    "guide": "big-feelings-home",
+    "side": "helper",
+    "title": "Big Feelings at Home",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up in the middle of the storms: your calm, a family plan, the basics, and repair.",
+    "sources": [
+     "siegel",
+     "lieberman"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Big Feelings at Home",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up guiding a home full of big feelings, from toddler tantrums to teen blowups, and your own short temper too."
+     },
+     {
+      "k": "big",
+      "h": "Children borrow our calm.",
+      "sub": "Before they can make their own.",
+      "say": "A child's brain is still learning to manage big feelings. In a storm, children borrow the calm of the grown-up near them, long before they can make their own. Your calm is your strongest tool, and it grows with practice."
+     },
+     {
+      "k": "big",
+      "h": "I can be the calm one.",
+      "sub": "Practice it now.",
+      "say": "Let's practice it now. Put a hand on your chest. Take one slow breath in, and a longer breath out. Picture your child in the middle of a storm. Now say quietly to yourself, I can be the calm one.",
+      "beats": [
+       "Let's practice it now.",
+       "Put a hand on your chest.",
+       "Take one slow breath in, and a longer breath out.",
+       "Picture your child in the middle of a storm.",
+       {
+        "t": "Now say quietly to yourself, I can be the calm one.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "In the storm",
+      "steps": [
+       [
+        "Safety first",
+        "Move to a calm spot"
+       ],
+       [
+        "Few words",
+        "Soft and low"
+       ],
+       [
+        "Name it",
+        "You're really mad"
+       ],
+       [
+        "Breathe or move",
+        "Together"
+       ]
+      ],
+      "say": "In the storm, keep it simple. Safety first, moving to a calm spot if needed. Use few words, soft and low. Name the feeling, like, you're really mad. Putting feelings into words helps them settle. Then breathe or move together.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "The basics matter",
+      "items": [
+       [
+        "Sleep",
+        "Steady bedtimes"
+       ],
+       [
+        "Food and water",
+        "Regular meals and snacks"
+       ],
+       [
+        "Movement",
+        "Outdoor play every day"
+       ],
+       [
+        "Unplugged evenings",
+        "Calm before bed"
+       ]
+      ],
+      "say": "The basics matter more than they seem. Tired, hungry, rushed bodies have bigger storms. Protect sleep, with steady bedtimes. Regular meals, snacks, and water. Outdoor play and movement every day. And unplugged evenings, so bodies can wind down."
+     },
+     {
+      "k": "card",
+      "title": "Make a plan on a calm day.",
+      "body": "What helps each person settle?",
+      "say": "Make a family calm-down plan on a calm day, when everyone can think. Ask each person, what helps you settle? Write every idea, hang it up, and practice it. Then, in the storm, you can simply point to it."
+     },
+     {
+      "k": "card",
+      "title": "Repair is powerful.",
+      "body": "“I'm sorry I yelled. I love you.”",
+      "say": "Every grown-up loses their temper sometimes. When you do, repair it. I'm sorry I yelled. I love you, and I'm working on staying calm. Children learn as much from a grown-up who repairs as from one who never slips."
+     },
+     {
+      "k": "card",
+      "title": "When to reach for more help",
+      "body": "Daily, intense, or unsafe storms.",
+      "say": "When storms are daily, very intense, or come with worries about sleep, eating, or attention, talk with your child's doctor. If anyone is getting hurt, or you're afraid of losing control, reach out for help right away."
+     },
+     {
+      "k": "big",
+      "h": "Calm grows with practice.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Tend your own calm, with sleep, a walk, time outside, and a friend to call. Calm grows with practice, for you and your children. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "parent-out-of-work",
+   "ring": "gw-home",
+   "title": "A Parent Out of Work",
+   "you": {
+    "id": "gr-g-parent-out-of-work-you",
+    "guide": "parent-out-of-work",
+    "side": "you",
+    "title": "A Parent Out of Work",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family when a parent is out of work: we are a team, and our strengths stay with us.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Parent Out of Work",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when a grown-up in our family is out of work for a while."
+     },
+     {
+      "k": "big",
+      "h": "A job ended.",
+      "sub": "A grown-up is looking for a new one.",
+      "say": "Sometimes a grown-up's job ends. Maybe the company needed fewer workers, or a store closed. Now that grown-up is looking for a new job. That is a grown-up job to figure out, and the grown-ups are on it. Kids can keep being kids."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Worried",
+       "Confused",
+       "Sad",
+       "Happy to have them home",
+       "Hopeful",
+       "Proud"
+      ],
+      "say": "You might feel worried, or confused. You might feel sad for the grown-up. You might feel happy to have them home more. You might feel hopeful, or proud of how hard they're trying. All of these feelings fit."
+     },
+     {
+      "k": "big",
+      "h": "You will have food, a bed, and us.",
+      "sub": "We are a team.",
+      "say": "Here is what matters most. Our family is a team. We take care of each other. There are helpers in our town for families who need a hand. And the grown-ups are working on a plan. Asking questions is always okay."
+     },
+     {
+      "k": "big",
+      "h": "Name something we're good at.",
+      "sub": "Everyone, one at a time.",
+      "say": "Let's do this together. Think about our family. What is one thing we are good at together? Maybe laughing, cooking, helping, or playing games. When you're ready, say it out loud.",
+      "beats": [
+       "Let's do this together.",
+       "Think about our family.",
+       "What is one thing we are good at together?",
+       "Maybe laughing, cooking, helping, or playing games.",
+       {
+        "t": "When you're ready, say it out loud.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Good things to do together",
+      "items": [
+       [
+        "Walk to school",
+        "Together, more often"
+       ],
+       [
+        "Cook a meal",
+        "Everyone helps"
+       ],
+       [
+        "The library",
+        "Books and events"
+       ],
+       [
+        "A park or a trail",
+        "Outside together"
+       ]
+      ],
+      "say": "With a grown-up home more, we can do good things together. Walk to school together. Cook a meal, with everyone helping. Go to the library for books and events. Head to a park or a trail and play outside."
+     },
+     {
+      "k": "card",
+      "title": "Who you are stays the same.",
+      "body": "A job is something we do.",
+      "say": "A job is something a grown-up does. Who they are stays the same. They are still kind, smart, funny, and loved, with or without a job. We can tell them that, with a hug or a note, and they will feel it."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "We are a team.",
+       "We love you, job or no job.",
+       "Our family is strong."
+      ],
+      "say": "Here are words our family can say. We are a team. We love you, job or no job. And, our family is strong."
+     },
+     {
+      "k": "big",
+      "h": "We face it together.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "New work will come, step by step. Until then, we face it together. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-parent-out-of-work-helper",
+    "guide": "parent-out-of-work",
+    "side": "helper",
+    "title": "A Parent Out of Work",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-ups facing a job loss: honest words for kids, a daily rhythm, real help, and your worth.",
+    "sources": [
+     "paulmoser09"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Parent Out of Work",
+      "sub": "For the Leader",
+      "say": "This is for the grown-ups in a family where a parent has lost a job, been laid off, or had hours cut, and for the partner standing beside them."
+     },
+     {
+      "k": "big",
+      "h": "Losing work is a real loss.",
+      "sub": "Money, routine, identity, and pride.",
+      "say": "Losing work is a real loss. It touches money, routine, identity, and pride. Job loss often wears on mood and sleep, especially the longer it lasts. Naming it as a loss lets you grieve it, and then take the next step."
+     },
+     {
+      "k": "big",
+      "h": "Name three strengths you bring.",
+      "sub": "They stay with you.",
+      "say": "Let's take a moment. Think of three strengths you bring, at work and at home. Maybe patience, skill with your hands, a way with people, or how hard you try. Those strengths stay with you through any job change. Say all three out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "Think of three strengths you bring, at work and at home.",
+       "Maybe patience, skill with your hands, a way with people, or how hard you try.",
+       "Those strengths stay with you through any job change.",
+       {
+        "t": "Say all three out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What children need",
+      "items": [
+       [
+        "Simple, honest words",
+        "The job ended, we're okay"
+       ],
+       [
+        "Steady routines",
+        "Meals, school, bedtime"
+       ],
+       [
+        "A grown-up job",
+        "Grown-ups are on it"
+       ],
+       [
+        "You, close",
+        "More time together"
+       ]
+      ],
+      "say": "Children need simple, honest words. The job ended, and we're okay. They need steady routines, like meals, school, and bedtime. They need to hear it's a grown-up job to fix. And they need you, close, using some of this time together."
+     },
+     {
+      "k": "flow",
+      "h": "A daily rhythm",
+      "steps": [
+       [
+        "Same wake-up",
+        "Every day"
+       ],
+       [
+        "Move and get outside",
+        "A walk, a run, the yard"
+       ],
+       [
+        "Job search hours",
+        "Set them, then stop"
+       ],
+       [
+        "Family time",
+        "Meals, homework, play"
+       ]
+      ],
+      "say": "Give your days a rhythm. Wake up at the same time. Move your body and get outside, with a walk or time in the yard. Set job search hours, and then stop. And keep family time, with meals, homework, and play.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Use the help.",
+      "body": "Benefits, workforce centers, 211.",
+      "say": "Apply for unemployment benefits right away. Use job help, like CareerOneStop and your local workforce center. Reach out to former coworkers and friends. And call or text two one one for local help with food, rent, and bills."
+     },
+     {
+      "k": "card",
+      "title": "Watch your own heart.",
+      "body": "Hopeless feelings: talk to someone, call 988.",
+      "say": "Watch for deep sadness, hopelessness, or sleeping much more or less. Talk with your doctor, and lean on people you trust. If you ever have thoughts of not wanting to be alive, call or text nine eight eight, any time."
+     },
+     {
+      "k": "big",
+      "h": "You are more than your work.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Celebrate small steps, like a good conversation or an application sent. You are more than your work, and your family knows it. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "struggling-inside",
+   "ring": "gw-home",
+   "title": "When Someone at Home Is Struggling Inside",
+   "you": {
+    "id": "gr-g-struggling-inside-you",
+    "guide": "struggling-inside",
+    "side": "you",
+    "title": "When Someone at Home Is Struggling Inside",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family when someone at home is struggling inside: it is an illness, help works, and we are together.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Someone at Home Is Struggling Inside",
+      "sub": "For the Group",
+      "say": "This is for all of us together, when someone in our family is struggling inside, in their feelings and thinking."
+     },
+     {
+      "k": "big",
+      "h": "Feelings and thinking can get sick.",
+      "sub": "Just like bodies can.",
+      "say": "Sometimes a person's feelings and thinking get sick, the way a body can get sick. It might be called depression, which can make someone very tired and sad. Or anxiety, which can make worries feel really big. These are real illnesses, and doctors and helpers know how to help."
+     },
+     {
+      "k": "card",
+      "title": "It's nobody's fault.",
+      "body": "And it's a grown-up job to help.",
+      "say": "If someone in our family is struggling, it's nobody's fault. Grown-ups and doctors are the helpers here, and they are working on it. Your job is to be you: to play, learn, and be loved."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Worried",
+       "Confused",
+       "Sad",
+       "Frustrated",
+       "Lonely",
+       "Loving"
+      ],
+      "say": "You might feel worried, or confused. You might feel sad, or frustrated, or a little lonely. And you might feel lots of love for the person who is struggling. All of these feelings fit, and you can share them."
+     },
+     {
+      "k": "big",
+      "h": "Breathe and think of a helper.",
+      "sub": "Everyone at once.",
+      "say": "Let's all do this together. Put a hand on your heart. Take three slow breaths, in and out. Now think of one grown-up you can talk to when you have a big feeling. Picture their face, and keep it in your heart.",
+      "beats": [
+       "Let's all do this together.",
+       "Put a hand on your heart.",
+       "Take three slow breaths, in and out.",
+       "Now think of one grown-up you can talk to when you have a big feeling.",
+       {
+        "t": "Picture their face, and keep it in your heart.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways to show love",
+      "items": [
+       [
+        "A hug",
+        "If they would like one"
+       ],
+       [
+        "A drawing or a note",
+        "Left on a pillow"
+       ],
+       [
+        "Sitting close",
+        "Quiet is okay"
+       ],
+       [
+        "Telling about your day",
+        "They still want to know"
+       ]
+      ],
+      "say": "You can still show love to the person who is struggling. Give a hug, if they would like one. Make a drawing or a note and leave it on their pillow. Sit close, and quiet is okay. And tell them about your day. They still want to know."
+     },
+     {
+      "k": "card",
+      "title": "Tell a grown-up right away.",
+      "body": "If anyone talks about hurting themselves.",
+      "say": "If anyone ever talks about hurting themselves, or about not wanting to be alive, tell a grown-up right away. That is a brave and loving thing to do. Grown-ups can call nine eight eight, any time, for help."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "We love you, and we're in this together.",
+       "Getting help is strong.",
+       "Feelings get better with help and time."
+      ],
+      "say": "Here are words our family can say. We love you, and we're in this together. Getting help is strong. And, feelings get better with help and time."
+     },
+     {
+      "k": "big",
+      "h": "Help works. Love stays.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "People get better with help, time, and love. Help works, and our love stays. The full guide has more, whenever we want it."
+     }
+    ],
+    "crisis": [
+     "988: call, text, or chat, any time",
+     "911: danger right now"
+    ]
+   },
+   "helper": {
+    "id": "gr-g-struggling-inside-helper",
+    "guide": "struggling-inside",
+    "side": "helper",
+    "title": "When Someone at Home Is Struggling Inside",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up caring for someone at home who is struggling inside: getting help, talking with kids, and safety.",
+    "sources": [
+     "namiprog",
+     "meansmatter"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Someone at Home Is Struggling Inside",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up caring for someone at home who is struggling with depression, anxiety, or another mental health condition, and for the grown-up who is struggling."
+     },
+     {
+      "k": "big",
+      "h": "Real, common, and treatable.",
+      "sub": "Help works, and people recover.",
+      "say": "Mental health conditions are real illnesses, common in every kind of family. They are treatable. With the right help, people feel better and families grow warm again. The first step is often a simple, caring conversation."
+     },
+     {
+      "k": "flow",
+      "h": "Getting help",
+      "steps": [
+       [
+        "Notice and ask",
+        "How are you, really?"
+       ],
+       [
+        "Connect with care",
+        "Doctor or therapist"
+       ],
+       [
+        "Offer to help",
+        "Make the call, go along"
+       ],
+       [
+        "Keep checking in",
+        "Every few days"
+       ]
+      ],
+      "say": "Here's a path to help. Notice and ask, gently. How are you, really? Help them connect with their doctor or a licensed therapist. Offer to make the call or go along. Then keep checking in, every few days.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Ask directly about suicide.",
+      "body": "Asking is safe and caring. Call or text 988.",
+      "say": "If you are worried, ask directly. Are you having thoughts of hurting yourself, or of not wanting to be alive? Asking is safe, and it shows you care. If the answer is yes, call or text nine eight eight together. If there is danger right now, call nine one one."
+     },
+     {
+      "k": "points",
+      "h": "For the children",
+      "items": [
+       [
+        "Simple, honest words",
+        "An illness, doctors help"
+       ],
+       [
+        "Nobody's fault",
+        "Say it often"
+       ],
+       [
+        "Steady routines",
+        "Meals, school, bedtime"
+       ],
+       [
+        "Other caring grown-ups",
+        "Grandparents, teachers"
+       ]
+      ],
+      "say": "Children need simple, honest words. It's an illness, and doctors are helping. They need to hear, often, that it's nobody's fault, and that they are loved all the way. They need steady routines, the same meals, school, and bedtime. And they need other caring grown-ups close by, like grandparents, teachers, and friends."
+     },
+     {
+      "k": "card",
+      "title": "Make home safer.",
+      "body": "Lock up medicines and firearms.",
+      "say": "Make a simple safety plan. Put crisis numbers on the fridge. Store medicines safely, and lock up or move firearms out of the home for now. These small steps save lives."
+     },
+     {
+      "k": "big",
+      "h": "Name one person you'll tell.",
+      "sub": "This week, by name.",
+      "say": "Let's take a moment. This is meant to be shared. Think of one person you trust, a friend, a relative, a doctor, or a support group. Decide when you'll tell them what's happening this week. Say their name and the day out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "This is meant to be shared.",
+       "Think of one person you trust, a friend, a relative, a doctor, or a support group.",
+       "Decide when you'll tell them what's happening this week.",
+       {
+        "t": "Say their name and the day out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "big",
+      "h": "Your health matters too.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Rest when you can, walk outside, and find a family support group. Your health matters to everyone in your home. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "back-to-school",
+   "ring": "gw-home",
+   "title": "Back-to-School Stress",
+   "you": {
+    "id": "gr-g-back-to-school-you",
+    "guide": "back-to-school",
+    "side": "you",
+    "title": "Back-to-School Stress",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole family at the start of a school year: butterflies, brave steps, and calm rhythms.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Back-to-School Stress",
+      "sub": "For the Group",
+      "say": "This is for all of us together, as a new school year begins."
+     },
+     {
+      "k": "big",
+      "h": "A new school year is a big change.",
+      "sub": "For the whole family.",
+      "say": "A new school year is a big change. There might be a new teacher, a new classroom, new friends, or even a new school. Grown-ups have new schedules too. Big changes can feel scary and exciting at the same time."
+     },
+     {
+      "k": "words",
+      "h": "Feelings that fit",
+      "items": [
+       "Excited",
+       "Nervous",
+       "Butterflies",
+       "Shy",
+       "Curious",
+       "Brave"
+      ],
+      "say": "You might feel excited, or nervous. You might feel butterflies in your tummy, or a little shy. You might feel curious about what's new. And you can feel brave, even with butterflies. All of these feelings fit."
+     },
+     {
+      "k": "big",
+      "h": "Shake it out, then share.",
+      "sub": "Everyone together.",
+      "say": "Let's all do this together. Shake out your hands while we count down. Five, four, three, two, one. Now take a breath, and think of one thing you're looking forward to this year. When you're ready, say it out loud.",
+      "beats": [
+       "Let's all do this together.",
+       "Shake out your hands while we count down.",
+       "Five, four, three, two, one.",
+       "Now take a breath, and think of one thing you're looking forward to this year.",
+       {
+        "t": "When you're ready, say it out loud.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Our morning steps",
+      "steps": [
+       [
+        "Wake up",
+        "Same time each day"
+       ],
+       [
+        "Breakfast",
+        "Good food and water"
+       ],
+       [
+        "Get ready",
+        "Clothes set out the night before"
+       ],
+       [
+        "Goodbye",
+        "A hug and a wish"
+       ]
+      ],
+      "say": "Here are our morning steps. Wake up at the same time each day. Eat a good breakfast and drink some water. Get ready, with clothes we set out the night before. Then say goodbye, with a hug and a wish for a good day."
+     },
+     {
+      "k": "points",
+      "h": "After school",
+      "items": [
+       [
+        "A healthy snack",
+        "And some water"
+       ],
+       [
+        "Play outside",
+        "Run and move"
+       ],
+       [
+        "Homework time",
+        "The same time each day"
+       ],
+       [
+        "Unplugged evening",
+        "Screens rest at night"
+       ]
+      ],
+      "say": "After school, we take care of our bodies too. A healthy snack and some water. Time to play outside and move. Homework at the same time each day. And an unplugged evening, with screens resting so we sleep well."
+     },
+     {
+      "k": "card",
+      "title": "Worried at school?",
+      "body": "Breathe, and tell your teacher.",
+      "say": "If you feel worried at school, you can take a slow balloon breath. You can tell your teacher or the school counselor. And at home, you can tell us. We want to hear about the good parts and the hard parts."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say",
+      "items": [
+       "Scary and exciting can go together.",
+       "I can do hard things, one step at a time.",
+       "Home is here when the day is done."
+      ],
+      "say": "Here are words our family can say. Scary and exciting can go together. I can do hard things, one step at a time. And, home is here when the day is done."
+     },
+     {
+      "k": "big",
+      "h": "One brave step at a time.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Every day of school gets a little easier. We'll take it one brave step at a time, together. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-back-to-school-helper",
+    "guide": "back-to-school",
+    "side": "helper",
+    "title": "Back-to-School Stress",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the grown-up guiding the start of a school year: sleep, calm mornings, brave steps, and when to ask for help.",
+    "sources": [
+     "aasm16"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Back-to-School Stress",
+      "sub": "For the Leader",
+      "say": "This is for the grown-up guiding a family through the start of a school year, from kindergarten to high school."
+     },
+     {
+      "k": "big",
+      "h": "Some worry is normal.",
+      "sub": "It usually eases in a few weeks.",
+      "say": "Butterflies, stomachaches, and tears at the door are common at the start of school. For most children, worry eases within a few weeks as the new rhythm becomes familiar. Your calm, confident presence helps a child feel brave. Children watch our faces at the door, and they borrow our confidence."
+     },
+     {
+      "k": "points",
+      "h": "Sleep comes first",
+      "items": [
+       [
+        "School-age kids",
+        "About 9 to 12 hours"
+       ],
+       [
+        "Teens",
+        "About 8 to 10 hours"
+       ],
+       [
+        "Start early",
+        "Earlier bedtime, bit by bit"
+       ],
+       [
+        "Screens out",
+        "Of bedrooms at night"
+       ]
+      ],
+      "say": "Sleep comes first. School-age children need about nine to twelve hours a night, and teens about eight to ten. Start moving bedtime earlier a week or two before school, a little each night. And keep screens out of bedrooms at night, grown-ups leading the way."
+     },
+     {
+      "k": "big",
+      "h": "Make tomorrow morning calmer.",
+      "sub": "One thing, tonight.",
+      "say": "Let's take a moment. Picture tomorrow morning at your house, from the alarm to the door. Notice where it gets rushed. Choose one thing you could do tonight to make it calmer, like setting out clothes or packing lunches. Say it out loud.",
+      "beats": [
+       "Let's take a moment.",
+       "Picture tomorrow morning at your house, from the alarm to the door.",
+       "Notice where it gets rushed.",
+       "Choose one thing you could do tonight to make it calmer, like setting out clothes or packing lunches.",
+       {
+        "t": "Say it out loud.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Helping a worried child",
+      "steps": [
+       [
+        "Listen",
+        "What feels hardest?"
+       ],
+       [
+        "Name it kindly",
+        "That makes sense"
+       ],
+       [
+        "Plan small steps",
+        "A visit, a job, a buddy"
+       ],
+       [
+        "Short goodbyes",
+        "Warm and confident"
+       ]
+      ],
+      "say": "When a child is worried, listen first. What feels hardest? Name it kindly, that makes sense. Plan small, brave steps, like a school visit, a job in class, or a buddy. And keep goodbyes short, warm, and confident.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Protect the afternoon.",
+      "body": "Rest, a snack, outdoor play, then homework.",
+      "say": "After school, children need to refill. A healthy snack and water, time to rest, and time to play outside. Then homework at a steady time. Leave room in the week, so afternoons keep room to breathe."
+     },
+     {
+      "k": "card",
+      "title": "When to reach for help",
+      "body": "Worry that keeps a child home, or lasts.",
+      "say": "If worry keeps a child home again and again, brings daily stomachaches or headaches, or lasts beyond the first month, talk with the teacher, the school counselor, and the child's doctor. Early help makes a big difference."
+     },
+     {
+      "k": "big",
+      "h": "Steady is enough.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Prepare what you can, and let the rest be imperfect. Take a few quiet minutes for yourself after the morning rush. Your steady presence is enough. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -5151,6 +7071,1542 @@ window.GG_LEARN_GUIDES.grove = {
    }
   },
   {
+   "id": "left-out",
+   "ring": "gw-school",
+   "title": "Friendship Trouble and Being Left Out",
+   "you": {
+    "id": "gr-g-left-out-you",
+    "guide": "left-out",
+    "side": "you",
+    "title": "Friendship Trouble and Being Left Out",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, when friendships shift and someone feels left out.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Friendship Trouble and Being Left Out",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together. It's about friendships, and about making sure everyone in our class has a way in."
+     },
+     {
+      "k": "big",
+      "h": "Friendships change.",
+      "sub": "That is part of growing up.",
+      "say": "Friendships change. Sometimes two friends become three. Sometimes a friend makes a new friend. Sometimes we just grow in different ways. That's part of growing up, and new friendships grow all the time."
+     },
+     {
+      "k": "words",
+      "h": "Being left out can feel",
+      "items": [
+       "Sad",
+       "Lonely",
+       "Mad",
+       "Embarrassed",
+       "Like a stomachache"
+      ],
+      "say": "Being left out can feel sad, or lonely, or mad. It can feel embarrassing. Sometimes it even feels like a stomachache. Almost everyone has felt it. It's a real hurt, and it gets better."
+     },
+     {
+      "k": "big",
+      "h": "Remember being invited in.",
+      "sub": "Everyone at once.",
+      "say": "Let's all do this together. Put one hand on your heart. Think of a time someone invited you to play, or saved you a seat. Remember how good that felt, right here, under your hand.",
+      "beats": [
+       "Let's all do this together.",
+       "Put one hand on your heart.",
+       "Think of a time someone invited you to play, or saved you a seat.",
+       {
+        "t": "Remember how good that felt, right here, under your hand.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways we bring people in",
+      "items": [
+       [
+        "Want to play?",
+        "Ask, again and again"
+       ],
+       [
+        "Come sit with us",
+        "At lunch and in circle"
+       ],
+       [
+        "We need one more",
+        "Games have room"
+       ],
+       [
+        "Mix it up",
+        "Get to know everyone"
+       ]
+      ],
+      "say": "Here are ways we bring people in. Ask, want to play? Ask again another day. Say, come sit with us, at lunch and in circle. Say, we need one more, because our games have room for everyone. And mix it up, so we get to know everyone in our class.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Best friends, and kind to all",
+      "body": "We can have both.",
+      "say": "It's great to have a best friend. We can have best friends and still be kind to everyone. When a friend wants to play with someone new, that's okay. There's room for more than one friend."
+     },
+     {
+      "k": "card",
+      "title": "Be a noticer",
+      "body": "Look for someone on their own.",
+      "say": "We can all be noticers. At recess, at lunch, and when we pick partners, look around. Is someone on their own? Is someone waiting by the wall? A noticer walks over and says, hi, want to join us? One invitation can change a whole day for someone."
+     },
+     {
+      "k": "points",
+      "h": "If you feel left out",
+      "items": [
+       [
+        "Tell a grown-up",
+        "Your teacher can help"
+       ],
+       [
+        "Try someone new",
+        "Ask a different classmate"
+       ],
+       [
+        "Find a game",
+        "Join one that is open"
+       ]
+      ],
+      "say": "If you feel left out, tell a grown-up, like your teacher. Your teacher can help make a plan. You can try asking someone new to play. And you can look for a game that is open for anyone. You belong in our class.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "There is always room for one more.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "In our class, there is always room for one more. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-left-out-helper",
+    "guide": "left-out",
+    "side": "helper",
+    "title": "Friendship Trouble and Being Left Out",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the teacher or class leader when friendship trouble and exclusion show up in class life.",
+    "sources": [
+     "williams07",
+     "cdcconnect23"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Friendship Trouble and Being Left Out",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class where friendships are shifting, or where a student is often on the edges, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "Being left out is real pain.",
+      "sub": "And belonging can be built.",
+      "say": "Being left out registers as real pain. Children who feel connected at school tend to do better in many ways. The hopeful part is this: belonging can be built, on purpose, into how your class runs every day."
+     },
+     {
+      "k": "points",
+      "h": "Make belonging a routine",
+      "items": [
+       [
+        "Teacher-chosen partners",
+        "Everyone has a partner"
+       ],
+       [
+        "Mix It Up Seats",
+        "Once a week"
+       ],
+       [
+        "Playground Buddies",
+        "A signal anyone can use"
+       ],
+       [
+        "Open games",
+        "Any number can join"
+       ]
+      ],
+      "say": "Make belonging a routine. Choose partners and groups yourself, so nobody waits to be picked last. Mix up seats once a week. Set up Playground Buddies, with a signal anyone can use. And teach a few recess games that any number of students can join.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Who is on the edges?",
+      "sub": "Write the names now.",
+      "say": "Picture your class at recess, or at lunch, or choosing partners. Notice who stands near the edges. Write down two or three names: students who could use one more invitation this week.",
+      "beats": [
+       "Picture your class at recess, or at lunch, or choosing partners.",
+       "Notice who stands near the edges.",
+       {
+        "t": "Write down two or three names: students who could use one more invitation this week.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Teach the words",
+      "body": "\"Want to play?\" \"We need one more.\"",
+      "say": "Many students want to include someone and need the words. Teach invitation words like any other skill, and practice them as a class. Want to play? Come sit with us. We need one more. A class that has practiced inviting does it more often."
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "\"Just go find new friends.\"",
+       "Picking teams with one left last",
+       "Naming who left someone out"
+      ],
+      "say": "Set aside a few things. Telling a hurting student to just go find new friends. Picking teams while one student waits to be chosen last. And naming, in front of the class, who left someone out. Talk with those students privately, and help them practice a kinder way."
+     },
+     {
+      "k": "points",
+      "h": "When it is more",
+      "items": [
+       [
+        "Weeks of loneliness",
+        "The school counselor"
+       ],
+       [
+        "On purpose and repeated",
+        "Your school bullying plan"
+       ],
+       [
+        "Thoughts of suicide",
+        "The counselor at once, 988"
+       ]
+      ],
+      "say": "Sometimes it's more than ordinary friendship trouble. A student who seems lonely for weeks needs the school counselor. Exclusion that is on purpose and repeated follows your school's bullying plan. And any talk of not wanting to be alive goes to the school counselor at once, with 988 if no one is reachable.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Small routines, a kinder room.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You may remember being left out yourself. Let that memory make you watchful and kind. Small, steady routines make a kinder room for everyone. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "unkindness",
+   "ring": "gw-school",
+   "title": "Unkindness and Bullying in Our Class",
+   "you": {
+    "id": "gr-g-unkindness-you",
+    "guide": "unkindness",
+    "side": "you",
+    "title": "Unkindness and Bullying in Our Class",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, learning to stand up for each other.",
+    "sources": [
+     "stopbullying"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Unkindness and Bullying in Our Class",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together. It's about kindness, and about how we stand up for each other."
+     },
+     {
+      "k": "big",
+      "h": "Everyone deserves to feel safe.",
+      "sub": "Every person in our class.",
+      "say": "Everyone in our class deserves to feel safe and welcome. That means every person, every day. We all help make our class a kind place."
+     },
+     {
+      "k": "card",
+      "title": "What bullying is",
+      "body": "Mean on purpose, again and again.",
+      "say": "Sometimes people are unkind by accident, and they say sorry. Bullying is different. Bullying is when someone is mean on purpose, again and again, to someone who has a hard time making it stop. It can be words, pushing, leaving someone out, or saying mean things online."
+     },
+     {
+      "k": "words",
+      "h": "It can make someone feel",
+      "items": [
+       "Scared",
+       "Sad",
+       "Alone",
+       "Like hiding"
+      ],
+      "say": "Bullying can make someone feel scared, or sad, or alone. It can make them want to hide. Seeing it can feel bad too. Our class can change that, together."
+     },
+     {
+      "k": "points",
+      "h": "Be an upstander",
+      "items": [
+       [
+        "Say stop",
+        "In a calm, strong voice"
+       ],
+       [
+        "Come with us",
+        "Help them walk away"
+       ],
+       [
+        "Tell a grown-up",
+        "Every time"
+       ]
+      ],
+      "say": "We can be upstanders. An upstander says stop, in a calm, strong voice. An upstander helps the person walk away, and says, come with us. And an upstander tells a grown-up, every time.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Practice the words.",
+      "sub": "Everyone at once.",
+      "say": "Let's practice our upstander words, all together. Sit up tall. Use a calm, strong voice. Now everyone say it at once: Stop. That's unkind. Come with us.",
+      "beats": [
+       "Let's practice our upstander words, all together.",
+       "Sit up tall.",
+       "Use a calm, strong voice.",
+       {
+        "t": "Now everyone say it at once: Stop. That's unkind. Come with us.",
+        "w": 8
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Telling is brave",
+      "body": "Telling gets someone help.",
+      "say": "Telling a grown-up is brave. Tattling is trying to get someone in trouble. Telling is trying to get someone help. If it happens to you, or you see it, tell your teacher or another grown-up you trust. Grown-ups at our school will help."
+     },
+     {
+      "k": "points",
+      "h": "If it happens to you",
+      "items": [
+       [
+        "Walk away",
+        "Toward a grown-up or friends"
+       ],
+       [
+        "Use a strong voice",
+        "Stop. I want that to stop."
+       ],
+       [
+        "Tell, and keep telling",
+        "Until it stops"
+       ]
+      ],
+      "say": "If it happens to you, walk away, toward a grown-up or a group of friends. You can use a strong voice and say, stop. And tell a grown-up. If it keeps happening, keep telling, until it stops. You matter, and you deserve to feel safe.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Kindness on purpose",
+      "items": [
+       [
+        "Kind words",
+        "Fill our jar"
+       ],
+       [
+        "Our class promise",
+        "How we treat each other"
+       ],
+       [
+        "Work it out",
+        "At the peace table"
+       ]
+      ],
+      "say": "We can be kind on purpose, too. Every kind word helps fill our class jar. Our class promise reminds us how we treat each other. And when we have a problem with someone, we can work it out at the peace table, with calm words.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "In our class, we stand up for each other.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "In our class, we stand up for each other. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-unkindness-helper",
+    "guide": "unkindness",
+    "side": "helper",
+    "title": "Unkindness and Bullying in Our Class",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the teacher or class leader when unkindness or bullying shows up in class.",
+    "sources": [
+     "stopbullying",
+     "cdcbully23"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Unkindness and Bullying in Our Class",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class where teasing, meanness, or bullying has shown up, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "On purpose. Repeated. Power.",
+      "sub": "Your school plan is your path.",
+      "say": "Bullying is unkindness that is on purpose, repeated, and uses power over someone. That power can be size, popularity, or knowing a secret. Every school has a bullying plan. Follow yours, and bring in the school counselor and the principal as it says."
+     },
+     {
+      "k": "flow",
+      "h": "When a student tells you",
+      "steps": [
+       [
+        "Listen and thank",
+        "You did the right thing"
+       ],
+       [
+        "Ask about safety",
+        "What would help tomorrow?"
+       ],
+       [
+        "Act on the plan",
+        "Counselor, principal, notes"
+       ]
+      ],
+      "say": "When a student tells you, listen fully and thank them. You did the right thing by telling me. Ask what would help them feel safe tomorrow. Then act on your school's plan: tell the counselor and the principal, and write down what you heard.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "\"Just ignore it.\"",
+       "A face to face talk too soon",
+       "Moving the hurt student"
+      ],
+      "say": "Set aside a few things. Telling the student to ignore it, or to fight back. Bringing the two students together to talk it out face to face, before your plan says so. And asking the student who was hurt to change seats or routines, when others did the harm."
+     },
+     {
+      "k": "big",
+      "h": "Where does unkindness hide?",
+      "sub": "Write three places.",
+      "say": "Unkindness often happens where grown-ups are fewer. Picture your school day, from the bus to the last bell. Write down three places where unkindness could hide in your students' day, like the hallway, the lunch line, or a group chat.",
+      "beats": [
+       "Unkindness often happens where grown-ups are fewer.",
+       "Picture your school day, from the bus to the last bell.",
+       {
+        "t": "Write down three places where unkindness could hide in your students' day, like the hallway, the lunch line, or a group chat.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Build the norm",
+      "items": [
+       [
+        "Upstander words",
+        "Teach and practice"
+       ],
+       [
+        "Kindness noticed",
+        "Out loud, every day"
+       ],
+       [
+        "A peace table",
+        "Small conflicts, early"
+       ],
+       [
+        "More eyes",
+        "Where it hides"
+       ]
+      ],
+      "say": "Build kindness as the norm. Teach upstander words and practice them. Notice kindness out loud, every day. Set up a peace table, so small conflicts get worked out early. And work with other staff to add grown-up eyes in the places where unkindness hides.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "The student who did it",
+      "body": "Privately: the behavior, the expectation, a better way.",
+      "say": "Talk with the student who did it privately, as your plan directs. Name the behavior, the expectation, and a better way. Many students who bully are copying what they've seen, or hurting in their own way. Clear limits and a path back help them change."
+     },
+     {
+      "k": "card",
+      "title": "When it is more",
+      "body": "Threats, harm, or harm at home: safety first.",
+      "say": "Threats, physical harm, or any weapon follow your school's safety plan, and nine one one for danger right now. Any talk of not wanting to be alive goes to the school counselor at once. And if a student shares harm at home, report as the law and your school require."
+     },
+     {
+      "k": "big",
+      "h": "Kindness, expected and noticed.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "This is team work. Lean on your school's plan, the counselor, and the principal. A room where kindness is expected and noticed is one of the best gifts a teacher gives. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "test-season",
+   "ring": "gw-school",
+   "title": "Test Season Pressure",
+   "you": {
+    "id": "gr-g-test-season-you",
+    "guide": "test-season",
+    "side": "you",
+    "title": "Test Season Pressure",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, getting ready for test season with calm and courage.",
+    "sources": [
+     "dweck06"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Test Season Pressure",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together, as test season comes. We can get ready side by side."
+     },
+     {
+      "k": "big",
+      "h": "Test season is here.",
+      "sub": "We know how to get ready.",
+      "say": "Test season is here. Our schedule might change, and the room might look different for a while. We have practiced, we have learned a lot, and now we get ready together. Our teacher will tell us what each test day looks like, so we know what's coming."
+     },
+     {
+      "k": "words",
+      "h": "Before a test, we might feel",
+      "items": [
+       "Nervous",
+       "Excited",
+       "Wiggly",
+       "A tummy flutter",
+       "Ready"
+      ],
+      "say": "Before a test, we might feel nervous, or excited, or wiggly. We might feel a flutter in our tummy. We might feel ready. All of these feelings are normal. Lots of people feel them."
+     },
+     {
+      "k": "card",
+      "title": "Your body is helping",
+      "body": "A fast heart means: getting ready.",
+      "say": "Here's something amazing. When your heart beats fast before a test, that's your body getting ready to help you. It's sending energy to your brain. You can say to yourself, my body is getting ready to help me."
+     },
+     {
+      "k": "big",
+      "h": "Balloon breaths together.",
+      "sub": "Everyone at once.",
+      "say": "Let's breathe together, all of us at once. Put your hands on your belly. Breathe in slowly, and feel your belly fill up like a balloon. Now let it out slowly. Let's do that three times, together.",
+      "beats": [
+       "Let's breathe together, all of us at once.",
+       "Put your hands on your belly.",
+       "Breathe in slowly, and feel your belly fill up like a balloon.",
+       {
+        "t": "Now let it out slowly. Let's do that three times, together.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "If you get stuck",
+      "items": [
+       [
+        "Take a breath",
+        "A balloon breath"
+       ],
+       [
+        "Go on",
+        "Try the next one"
+       ],
+       [
+        "Come back",
+        "If there is time"
+       ],
+       [
+        "Kind words",
+        "I can do hard things"
+       ]
+      ],
+      "say": "If you get stuck on a question, take a balloon breath. Then go on and try the next one. You can come back later if there is time. And say kind words to yourself, like, I can do hard things.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Taking care of our bodies",
+      "items": [
+       [
+        "Water",
+        "Sip it often"
+       ],
+       [
+        "Move",
+        "Stretch between parts"
+       ],
+       [
+        "Sleep",
+        "A good night of rest"
+       ],
+       [
+        "Play outside",
+        "After the test"
+       ]
+      ],
+      "say": "Taking care of our bodies helps our brains. Drink water. Stretch and move between parts of the test. Get a good night of sleep. And play outside when the test is done. A body that is cared for helps a brain think clearly.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "More than a score",
+      "body": "A test shows some of what you know, on one day.",
+      "say": "A test shows some of what you know, on one day. It can never show everything about you: how kind you are, how funny, how brave, or how hard you try. You are so much more than a score."
+     },
+     {
+      "k": "big",
+      "h": "One question at a time.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "We can do hard things, one question at a time. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-test-season-helper",
+    "guide": "test-season",
+    "side": "helper",
+    "title": "Test Season Pressure",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the teacher or class leader guiding a class through test season.",
+    "sources": [
+     "jamieson10",
+     "ramirez11"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Test Season Pressure",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class heading into test season, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "Your calm is a tool.",
+      "sub": "Students read the room.",
+      "say": "Test season carries pressure from many directions, and students read the room. Your calm is one of the strongest tools you have. You can feel the pressure and still be the steady one. Breathe slowly, speak warmly, and keep the day as ordinary as you can."
+     },
+     {
+      "k": "card",
+      "title": "A fast heart is getting ready",
+      "body": "Name it as the body helping.",
+      "say": "Research suggests that when students learn to read a racing heart as the body getting ready, they often perform better. Teach it simply. That fast heart is your body getting ready to help you think."
+     },
+     {
+      "k": "card",
+      "title": "Write the worry down",
+      "body": "A few minutes, then set the page aside.",
+      "say": "Research also suggests that a few minutes of writing about worries, right before a high-stakes test, can help anxious students do their best. Offer a page, a few quiet minutes, and then the page goes face down or into a folder. Nobody reads it."
+     },
+     {
+      "k": "big",
+      "h": "Choose your words.",
+      "sub": "Write the sentence now.",
+      "say": "The words students hear right before a test stay with them. Picture your class settling into their seats on test morning. Write down the one sentence you want to say to them before they begin.",
+      "beats": [
+       "The words students hear right before a test stay with them.",
+       "Picture your class settling into their seats on test morning.",
+       {
+        "t": "Write down the one sentence you want to say to them before they begin.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Keep the routines",
+      "items": [
+       [
+        "Recess and movement",
+        "Keep them in"
+       ],
+       [
+        "Water and rest",
+        "Close at hand"
+       ],
+       [
+        "Preview the days",
+        "Everyone knows the plan"
+       ],
+       [
+        "Celebrate effort",
+        "Strategies and growth"
+       ]
+      ],
+      "say": "Keep the class's best routines going. Recess and movement stay in the schedule. Water and rest stay close at hand. Preview the testing days, so nothing is a surprise. And celebrate effort and strategies, rather than scores.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "\"This decides your future.\"",
+       "Scores out loud",
+       "Just relax"
+      ],
+      "say": "Set aside a few things. Telling students the test decides their future. Comparing or posting scores. And saying just relax to a student who is panicking. Breathe with them instead."
+     },
+     {
+      "k": "card",
+      "title": "When worry is big",
+      "body": "The school counselor, and each student's plan.",
+      "say": "For a student whose worry is very strong, lasts beyond test season, or keeps them home, bring in the school counselor. Follow each student's plan for testing accommodations. And any talk of not wanting to be alive goes to the counselor at once."
+     },
+     {
+      "k": "big",
+      "h": "Pressure, handled well.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A class that learns to handle pressure well has learned something that lasts much longer than any score. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "family-changing",
+   "ring": "gw-school",
+   "title": "A Classmate's Family Is Changing",
+   "you": {
+    "id": "gr-g-family-changing-you",
+    "guide": "family-changing",
+    "side": "you",
+    "title": "A Classmate's Family Is Changing",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, when a classmate's family is going through a big change.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Classmate's Family Is Changing",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together. It's about being a good friend when someone's family is changing."
+     },
+     {
+      "k": "big",
+      "h": "Families change.",
+      "sub": "That can be a big feeling.",
+      "say": "Families change sometimes. A new baby comes. Someone moves away for work. Parents start living in two homes. A grandparent moves in. Changes like these can be big feelings for anyone, grown-ups and kids alike. When a friend's family is changing, our class can help."
+     },
+     {
+      "k": "words",
+      "h": "A change at home can feel",
+      "items": [
+       "Sad",
+       "Worried",
+       "Tired",
+       "Mixed up",
+       "Happy and sad at once"
+      ],
+      "say": "A change at home can feel sad, or worried, or tired. It can feel mixed up. Sometimes it feels happy and sad at the same time. All of those feelings are okay."
+     },
+     {
+      "k": "card",
+      "title": "Every family belongs",
+      "body": "Every family looks different.",
+      "say": "Every family looks different. Some families have one grown-up, some have two, and some have grandparents, aunts, or uncles. Some live in one home, and some live in two. Every family belongs in our class."
+     },
+     {
+      "k": "card",
+      "title": "Their story is theirs",
+      "body": "We let friends share when they want to.",
+      "say": "A friend's story belongs to them. They get to choose if they want to share it, and when. We can be a great friend without knowing the whole story. If a friend does tell you something, you can say, that sounds hard. I'm glad you told me."
+     },
+     {
+      "k": "big",
+      "h": "A gentle hug for you.",
+      "sub": "Everyone at once.",
+      "say": "Let's do something kind for ourselves, all together. Wrap your arms around yourself, in a big, gentle hug. Take a slow breath in. And let it out slowly, while you give yourself a little squeeze.",
+      "beats": [
+       "Let's do something kind for ourselves, all together.",
+       "Wrap your arms around yourself, in a big, gentle hug.",
+       "Take a slow breath in.",
+       {
+        "t": "And let it out slowly, while you give yourself a little squeeze.",
+        "w": 8
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways to be a good friend",
+      "items": [
+       [
+        "Invite them to play",
+        "Again and again"
+       ],
+       [
+        "Sit together",
+        "At lunch or in circle"
+       ],
+       [
+        "Be patient",
+        "If they seem tired"
+       ],
+       [
+        "Tell a grown-up",
+        "If they seem very sad"
+       ]
+      ],
+      "say": "Here are ways to be a good friend. Invite them to play, again and again. Sit together at lunch or in circle. Be patient if they seem tired or grumpy. And tell a grown-up if a friend seems very sad.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Our class stays steady",
+      "body": "Our routines, our jobs, our friends.",
+      "say": "When things change at home, our class can be a steady place. Our routines stay the same. Our class jobs stay the same. And our friends are here, every day. That helps everyone, and you can always talk to our teacher."
+     },
+     {
+      "k": "big",
+      "h": "Every family belongs here.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Every family belongs here, and every one of us does too. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-family-changing-helper",
+    "guide": "family-changing",
+    "side": "helper",
+    "title": "A Classmate's Family Is Changing",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the teacher or class leader supporting a student whose family is changing.",
+    "sources": [
+     "amato01"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Classmate's Family Is Changing",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class where a student's family is going through a big change, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "School can be the steady place.",
+      "sub": "You are part of that.",
+      "say": "When a family changes, children often feel it as a loss of the ordinary: a new bedtime, a different house on Wednesdays, an empty chair at dinner. School can be the place that stays the same, and you are part of that."
+     },
+     {
+      "k": "card",
+      "title": "Steady routines, caring adults",
+      "body": "Most children do well over time.",
+      "say": "Research on children and divorce, for example, finds that most children do well over time, especially with steady routines and caring adults around them. You don't need the whole story to be one of those adults."
+     },
+     {
+      "k": "flow",
+      "h": "What helps most",
+      "steps": [
+       [
+        "A steady day",
+        "Heads-up before changes"
+       ],
+       [
+        "A quiet check-in",
+        "Brief and private"
+       ],
+       [
+        "A little grace",
+        "Homework, supplies, time"
+       ]
+      ],
+      "say": "What helps most is simple. A steady day, with a heads-up before changes. A quiet check-in, brief and private, a few times a week. And a little grace with homework, supplies, and time, especially for a student moving between homes.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Keep their day steady.",
+      "sub": "Write one way now.",
+      "say": "School can be the steady place when home is changing. Picture this student's day, from the morning bell to pickup. Write down one way you can keep their day predictable and warm this week.",
+      "beats": [
+       "School can be the steady place when home is changing.",
+       "Picture this student's day, from the morning bell to pickup.",
+       {
+        "t": "Write down one way you can keep their day predictable and warm this week.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "Telling the class without an okay",
+       "Questions about home in public",
+       "One kind of family"
+      ],
+      "say": "Set aside a few things. Telling the class about a student's family without the family's and the student's okay. Asking about home in front of others. And assignments that assume one kind of family. Try people who care for me, in place of mom and dad."
+     },
+     {
+      "k": "card",
+      "title": "Every household",
+      "body": "Stay neutral. Share news as the school directs.",
+      "say": "Stay neutral between parents and households. Send school news to every household the school says should receive it. If you're unsure, ask the office. A child feels safest when the adults around them stay kind and steady."
+     },
+     {
+      "k": "points",
+      "h": "Bring in the team",
+      "items": [
+       [
+        "The school counselor",
+        "First, every time"
+       ],
+       [
+        "Military families",
+        "Military OneSource"
+       ],
+       [
+        "Harm at home",
+        "Report as required"
+       ]
+      ],
+      "say": "Bring in the team. The school counselor first, for support and guidance on what to share. For military families, Military OneSource and your school's liaison. And if a student shares harm at home, report as the law and your school require.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Warm and reliable.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Hold this student gently, keep their day steady, and lean on the school counselor. Warm and reliable is exactly what a child needs right now. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "online-drama",
+   "ring": "gw-school",
+   "title": "Group Chats and Online Drama",
+   "you": {
+    "id": "gr-g-online-drama-you",
+    "guide": "online-drama",
+    "side": "you",
+    "title": "Group Chats and Online Drama",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, learning to be kind in group chats and online.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Group Chats and Online Drama",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together. It's about group chats, games, and posts, and how we can be kind online and in person."
+     },
+     {
+      "k": "big",
+      "h": "Online is real life too.",
+      "sub": "Words online land on real people.",
+      "say": "What we type online lands on real people. A message sent at night can still hurt in the morning. A kind message can make someone's whole day. Online is real life too."
+     },
+     {
+      "k": "words",
+      "h": "Online drama can feel",
+      "items": [
+       "Confusing",
+       "Embarrassing",
+       "Left out",
+       "Worried",
+       "Hard to stop"
+      ],
+      "say": "Online drama can feel confusing and embarrassing. Being taken out of a chat can feel like being left out on the playground. It can make us worried about what people are saying. And it can feel hard to stop once it starts."
+     },
+     {
+      "k": "big",
+      "h": "Pause Before You Post.",
+      "sub": "Everyone at once.",
+      "say": "Let's practice Pause Before You Post, all together. Hold up one hand, fingers open. Picture a message you are about to send. Now fold down one finger at a time, slowly, as we count to five in our heads. Is it kind? Is it true? Would I say it face to face?",
+      "beats": [
+       "Let's practice Pause Before You Post, all together.",
+       "Hold up one hand, fingers open.",
+       "Picture a message you are about to send.",
+       {
+        "t": "Now fold down one finger at a time, slowly, as we count to five in our heads. Is it kind? Is it true? Would I say it face to face?",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Ways out of drama",
+      "items": [
+       [
+        "Step away",
+        "Leave a mean chat"
+       ],
+       [
+        "Talk in person",
+        "Face to face is kinder"
+       ],
+       [
+        "Save and show",
+        "A grown-up you trust"
+       ]
+      ],
+      "say": "Here are ways out of drama. You can step away, and leave a chat that feels mean. That's a strong choice. You can say, let's talk in person, because face to face is often kinder. And you can save the message and show a grown-up you trust, rather than forwarding it.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Telling is brave",
+      "body": "Show a grown-up you trust.",
+      "say": "If something online makes you feel bad, scared, or unsafe, show a grown-up you trust. Your teacher, a parent, or the school counselor. That's brave, and it's the right thing to do. Grown-ups can help. You can also be the friend who checks on someone after a hard day online, at recess or at lunch, face to face."
+     },
+     {
+      "k": "points",
+      "h": "Kind online habits",
+      "items": [
+       [
+        "Include",
+        "Room for everyone"
+       ],
+       [
+        "Ask first",
+        "Before sharing a picture"
+       ],
+       [
+        "Cheer people on",
+        "Kind words count"
+       ],
+       [
+        "Unplug",
+        "Rest, play, outside"
+       ]
+      ],
+      "say": "Here are kind online habits. Include people, so there's room for everyone. Ask before you share a picture of someone. Cheer people on, because kind words count. And unplug, for rest, play, and time outside with friends.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Kind online and in person.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "In our class, we're kind online and in person. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-online-drama-helper",
+    "guide": "online-drama",
+    "side": "helper",
+    "title": "Group Chats and Online Drama",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the teacher or class leader when online drama comes into the classroom.",
+    "sources": [
+     "pew24",
+     "sgsocial23"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Group Chats and Online Drama",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class where group chats, games, or posts have turned into drama that walks into the room, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "It happens at night. It lands in the morning.",
+      "sub": "Your part is clear and doable.",
+      "say": "Much of students' friendship now happens online, and drama there moves fast, reaches many at once, and often happens at night, far from grown-ups. It still lands in your classroom in the morning. Your part is clear and doable."
+     },
+     {
+      "k": "flow",
+      "h": "When a student shows you",
+      "steps": [
+       [
+        "Thank them",
+        "You did the right thing"
+       ],
+       [
+        "Support them",
+        "Safe at school today"
+       ],
+       [
+        "Follow the plan",
+        "Counselor, principal"
+       ]
+      ],
+      "say": "When a student shows you something, thank them. You did the right thing. Support them, and ask what would help them feel okay at school today. Then follow your school's technology and bullying plans, with the counselor and the principal.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "Reading messages aloud",
+       "\"Just get off your phone.\"",
+       "Forwarding images to you"
+      ],
+      "say": "Set aside a few things. Reading messages aloud or showing screenshots to the class. Telling a hurting student to just get off their phone. And asking students to forward harmful images or messages to you. Let the school's plan handle evidence."
+     },
+     {
+      "k": "big",
+      "h": "Ask the class.",
+      "sub": "Write one question now.",
+      "say": "Students write the best rules for themselves when they help write them. Picture your class talking about the group chats they are in. Write down one question you could ask them, like: what makes a group chat feel good to be in?",
+      "beats": [
+       "Students write the best rules for themselves when they help write them.",
+       "Picture your class talking about the group chats they are in.",
+       {
+        "t": "Write down one question you could ask them, like: what makes a group chat feel good to be in?",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Teach it as a class skill",
+      "items": [
+       [
+        "Pause before posting",
+        "Kind, true, face to face"
+       ],
+       [
+        "Chat agreements",
+        "Written together"
+       ],
+       [
+        "Ways out",
+        "Step away, talk in person"
+       ]
+      ],
+      "say": "Teach online kindness as a class skill. Pause before posting: is it kind, is it true, would I say it face to face? Help the class write its own agreements for group chats. And practice ways out of drama, like stepping away and talking in person.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Rebuild face to face",
+      "body": "Partner work, recess games, Kindness Notes.",
+      "say": "Face to face connection repairs what screens strain. Build it into the day: partner work, recess games everyone can join, and Kindness Notes. Families may choose unplugged evenings and phones charging outside bedrooms, and you can cheer that on."
+     },
+     {
+      "k": "card",
+      "title": "When it is more",
+      "body": "Threats, pictures, or adults asking for secrets.",
+      "say": "Threats, pictures of a student, or an adult asking a student for secrets or images go to the school's safety plan and the authorities right away. Any talk of not wanting to be alive goes to the counselor at once. And danger right now, nine one one."
+     },
+     {
+      "k": "big",
+      "h": "A room of face to face kindness.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You can make your classroom a room of face to face kindness, teach habits that last, and bring in the team quickly. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "big-feelings-class",
+   "ring": "gw-school",
+   "title": "Big Feelings in the Classroom",
+   "you": {
+    "id": "gr-g-big-feelings-class-you",
+    "guide": "big-feelings-class",
+    "side": "you",
+    "title": "Big Feelings in the Classroom",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole class together, learning what big feelings are and how to settle them.",
+    "sources": [
+     "siegel"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Big Feelings in the Classroom",
+      "sub": "For the Group",
+      "say": "This is for our whole class, together. It's about big feelings, and how we can help them settle."
+     },
+     {
+      "k": "big",
+      "h": "Everybody has big feelings.",
+      "sub": "Kids and grown-ups too.",
+      "say": "Everybody has big feelings sometimes. Kids do, and grown-ups do too. Big feelings are a normal part of being a person."
+     },
+     {
+      "k": "words",
+      "h": "Big feelings have names",
+      "items": [
+       "Mad",
+       "Sad",
+       "Worried",
+       "Scared",
+       "Frustrated",
+       "Excited"
+      ],
+      "say": "Big feelings have names. Mad. Sad. Worried. Scared. Frustrated. Even excited can be a big feeling. When we say a feeling's name out loud, it starts to settle. We call that name it to tame it."
+     },
+     {
+      "k": "card",
+      "title": "Feelings are welcome",
+      "body": "We keep everyone safe.",
+      "say": "In our class, every feeling is welcome. It's okay to be mad. It's okay to be sad. What we do with feelings has limits. We keep our hands, our feet, and our words safe, so everyone stays safe."
+     },
+     {
+      "k": "big",
+      "h": "Squeeze and let go.",
+      "sub": "Everyone at once.",
+      "say": "Let's try a calm-down trick, all together. Make two tight fists, as tight as you can. Squeeze, squeeze, squeeze. Now let go, and let your hands go soft and floppy. Let's do that two more times, together.",
+      "beats": [
+       "Let's try a calm-down trick, all together.",
+       "Make two tight fists, as tight as you can.",
+       "Squeeze, squeeze, squeeze.",
+       {
+        "t": "Now let go, and let your hands go soft and floppy. Let's do that two more times, together.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Our calm-down tools",
+      "items": [
+       [
+        "Name it",
+        "Say the feeling"
+       ],
+       [
+        "Balloon breath",
+        "Slow in, slow out"
+       ],
+       [
+        "Shake it out",
+        "Count down from ten"
+       ],
+       [
+        "Calm corner",
+        "Then come back"
+       ]
+      ],
+      "say": "Here are our calm-down tools. Name it, and say the feeling out loud. Take a balloon breath, slow in and slow out. Shake it out while we count down from ten. And use the calm corner when you need it, then come back when you're ready.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "When a friend is upset",
+      "items": [
+       [
+        "Give space",
+        "Or sit nearby"
+       ],
+       [
+        "Ask",
+        "Want company?"
+       ],
+       [
+        "Tell the teacher",
+        "If someone could get hurt"
+       ]
+      ],
+      "say": "When a friend is upset, we can help. Give them some space, or sit nearby. Ask, do you want company? And tell the teacher if someone could get hurt. We help each other calm down.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Our bodies help too",
+      "body": "Water, moving, rest, outside.",
+      "say": "Our bodies help our feelings, too. A sip of water, a stretch, some rest, and time outside all help big feelings get smaller. Taking care of our bodies is a calm-down tool. When we feel hungry or tired, feelings can get bigger, so we tell a grown-up what our body needs."
+     },
+     {
+      "k": "big",
+      "h": "We help each other calm down.",
+      "sub": "The full guide has more, whenever we want it.",
+      "say": "Big feelings come and go. In our class, we help each other calm down. The full guide has more, whenever we want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-big-feelings-class-helper",
+    "guide": "big-feelings-class",
+    "side": "helper",
+    "title": "Big Feelings in the Classroom",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the teacher or class leader when big feelings fill the classroom.",
+    "sources": [
+     "siegel",
+     "lieberman",
+     "ruler"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Big Feelings in the Classroom",
+      "sub": "For the Leader",
+      "say": "If you teach or lead a class where anger, tears, worry, or meltdowns have been filling the room, this is for you."
+     },
+     {
+      "k": "big",
+      "h": "A brain still learning.",
+      "sub": "Calm first, talk later.",
+      "say": "Children's brains are still learning to name feelings and settle the body. In a meltdown, a student's thinking brain goes offline for a moment, and it comes back as the body calms. So calm comes first, and talking comes later."
+     },
+     {
+      "k": "big",
+      "h": "Settle yourself first.",
+      "sub": "Try it now.",
+      "say": "A calm grown-up is the strongest calm-down tool in any room. Notice your own body right now. Drop your shoulders, soften your jaw, and let one long breath out, slower than the breath in.",
+      "beats": [
+       "A calm grown-up is the strongest calm-down tool in any room.",
+       "Notice your own body right now.",
+       {
+        "t": "Drop your shoulders, soften your jaw, and let one long breath out, slower than the breath in.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "In the moment",
+      "steps": [
+       [
+        "Safety",
+        "Space, and others moved"
+       ],
+       [
+        "Connect",
+        "Low voice, few words"
+       ],
+       [
+        "Then correct",
+        "Once calm returns"
+       ]
+      ],
+      "say": "In the moment, think safety, connect, then correct. Safety first: give space, and move other students if you need to. Then connect, with a low voice and few words. You're safe. I'm right here. And only once calm returns, talk about what happened and what to try next time.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Name it to tame it",
+      "body": "\"It looks like you're really frustrated.\"",
+      "say": "Research suggests that putting a feeling into words can help it settle. Name it for the student, gently. It looks like you're really frustrated. That makes sense. Teach the whole class feeling words, so they can name their own."
+     },
+     {
+      "k": "points",
+      "h": "Practice when calm",
+      "items": [
+       [
+        "Daily breaths",
+        "Balloon, countdown"
+       ],
+       [
+        "A calm corner",
+        "Always a choice"
+       ],
+       [
+        "Movement",
+        "Shake it out, stretch"
+       ],
+       [
+        "Bodies cared for",
+        "Water, rest, outside"
+       ]
+      ],
+      "say": "Practice calm-down tools when everyone is calm, so they're ready when feelings are big. Daily breaths, like balloon breath and the calm countdown. A calm corner that's a choice, never a punishment. Movement to shake out restless energy. And bodies cared for, with water, rest, and time outside.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "A lecture mid-meltdown",
+       "A voice that matches theirs",
+       "Shaming in front of others"
+      ],
+      "say": "Set aside a few things. Reasoning or lecturing in the middle of a meltdown. Raising your voice to match the student's. And shaming a student in front of the class. Keep a student's hard moment private."
+     },
+     {
+      "k": "card",
+      "title": "When it is more",
+      "body": "Frequent, intense, or lasting: the counselor.",
+      "say": "For a student whose big feelings are frequent, intense, or lasting, bring in the school counselor and follow each student's plan. Any talk of hurting themselves, or not wanting to be alive, goes to the counselor at once."
+     },
+     {
+      "k": "big",
+      "h": "Repair helps everyone.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Some days your own patience will run short. That's human. Repair helps everyone. I used a sharp voice earlier. I'm sorry. Let's start fresh. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
    "id": "leader-leaving",
    "ring": "gw-faith",
    "title": "Our Pastor or Leader Is Leaving",
@@ -7774,6 +11230,4064 @@ window.GG_LEARN_GUIDES.grove = {
    }
   },
   {
+   "id": "one-voice",
+   "ring": "gw-faith",
+   "title": "One Voice Fills the Room",
+   "you": {
+    "id": "gr-g-one-voice-you",
+    "guide": "one-voice",
+    "side": "you",
+    "title": "One Voice Fills the Room",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a group that wants every voice to have room.",
+    "sources": [
+     "woolley10",
+     "pranis"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "One Voice Fills the Room",
+      "sub": "For the Group",
+      "say": "This is for all of us, together. It's about sharing the time we have, so every voice in our group has room."
+     },
+     {
+      "k": "big",
+      "h": "Every voice adds something.",
+      "sub": "Groups think better together.",
+      "say": "Groups tend to think better when speaking turns are shared. The quiet person in the corner may be holding the very idea we need. When everyone has room, we all get wiser together."
+     },
+     {
+      "k": "words",
+      "h": "In any group, some of us",
+      "items": [
+       "Think out loud",
+       "Think quietly first",
+       "Need a few seconds",
+       "Feel shy",
+       "Love to talk"
+      ],
+      "say": "In any group, some of us think out loud. Some think quietly first and need a few seconds before speaking. Some feel shy. And some of us love to talk. Every one of those is a gift. We simply want room for all of them."
+     },
+     {
+      "k": "big",
+      "h": "One word for what you bring.",
+      "sub": "Everyone, in quiet.",
+      "say": "Let's try something together, all at once. Think of one word for what you bring to this group: a question, a laugh, a memory, steadiness. When you have your word, rest one hand on your knee, and wait in quiet until every hand is resting.",
+      "beats": [
+       "Let's try something together, all at once.",
+       "Think of one word for what you bring to this group: a question, a laugh, a memory, steadiness.",
+       {
+        "t": "When you have your word, rest one hand on your knee, and wait in quiet until every hand is resting.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we share the time",
+      "items": [
+       [
+        "Rounds",
+        "Everyone once, briefly"
+       ],
+       [
+        "A talking piece",
+        "One voice at a time"
+       ],
+       [
+        "Pairs",
+        "Then a few share"
+       ],
+       [
+        "A pause",
+        "After each question"
+       ]
+      ],
+      "say": "Here is how we can share the time. Rounds, where everyone speaks once, briefly, and anyone can pass. A talking piece, so one voice speaks at a time. Pairs, then a few share with the whole group. And a pause after each question, so the quiet thinkers have a moment too.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Every voice is a gift.",
+      "body": "Each of us carries something the whole circle needs.",
+      "say": "Many traditions teach that each person here carries a gift the whole community needs, and that wisdom often comes through the quietest voice. When we make room for one another, we honor that gift."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "Every voice in this room matters.",
+       "We share the time.",
+       "Let's hear from someone new."
+      ],
+      "say": "Here are words we can say together. Every voice in this room matters. We share the time, so everyone has room. Let's hear from someone we haven't heard from yet."
+     },
+     {
+      "k": "card",
+      "title": "If you love to talk",
+      "body": "Your voice matters. Help us hear others too.",
+      "say": "If you love to talk, your voice matters here. You can also be the one who invites others in. Try asking, what do you think? Then listen. Many people who talk a lot find they enjoy the group even more when others open up."
+     },
+     {
+      "k": "big",
+      "h": "Room for every voice.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Our group is better with every voice in it. Let's keep making room for each other. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "One Voice Fills the Room",
+      "sub": "For the Group",
+      "say": "This is for all of us, together. It's about sharing the time we have, so every voice in our group has room."
+     },
+     {
+      "k": "big",
+      "h": "Every voice adds something.",
+      "sub": "Groups think better together.",
+      "say": "Groups tend to think better when speaking turns are shared. The quiet person in the corner may be holding the very idea we need. When everyone has room, we all get wiser together."
+     },
+     {
+      "k": "words",
+      "h": "In any group, some of us",
+      "items": [
+       "Think out loud",
+       "Think quietly first",
+       "Need a few seconds",
+       "Feel shy",
+       "Love to talk"
+      ],
+      "say": "In any group, some of us think out loud. Some think quietly first and need a few seconds before speaking. Some feel shy. And some of us love to talk. Every one of those is a gift. We simply want room for all of them."
+     },
+     {
+      "k": "big",
+      "h": "One word for what you bring.",
+      "sub": "Everyone, in quiet.",
+      "say": "Let's try something together, all at once. Think of one word for what you bring to this group: a question, a laugh, a memory, steadiness. When you have your word, rest one hand on your knee, and wait in quiet until every hand is resting.",
+      "beats": [
+       "Let's try something together, all at once.",
+       "Think of one word for what you bring to this group: a question, a laugh, a memory, steadiness.",
+       {
+        "t": "When you have your word, rest one hand on your knee, and wait in quiet until every hand is resting.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we share the time",
+      "items": [
+       [
+        "Rounds",
+        "Everyone once, briefly"
+       ],
+       [
+        "A talking piece",
+        "One voice at a time"
+       ],
+       [
+        "Pairs",
+        "Then a few share"
+       ],
+       [
+        "A pause",
+        "After each question"
+       ]
+      ],
+      "say": "Here is how we can share the time. Rounds, where everyone speaks once, briefly, and anyone can pass. A talking piece, so one voice speaks at a time. Pairs, then a few share with the whole group. And a pause after each question, so the quiet thinkers have a moment too.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Every voice is a gift.",
+      "body": "Each of us brings something the whole group needs.",
+      "say": "Each person here brings something the whole group needs, and good ideas often come from the quietest voice. When we make room for one another, everyone's gift gets to show."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "Every voice in this room matters.",
+       "We share the time.",
+       "Let's hear from someone new."
+      ],
+      "say": "Here are words we can say together. Every voice in this room matters. We share the time, so everyone has room. Let's hear from someone we haven't heard from yet."
+     },
+     {
+      "k": "card",
+      "title": "If you love to talk",
+      "body": "Your voice matters. Help us hear others too.",
+      "say": "If you love to talk, your voice matters here. You can also be the one who invites others in. Try asking, what do you think? Then listen. Many people who talk a lot find they enjoy the group even more when others open up."
+     },
+     {
+      "k": "big",
+      "h": "Room for every voice.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Our group is better with every voice in it. Let's keep making room for each other. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-one-voice-helper",
+    "guide": "one-voice",
+    "side": "helper",
+    "title": "One Voice Fills the Room",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the group leader, pastor, or facilitator when one voice fills the room.",
+    "sources": [
+     "woolley10",
+     "edmondson99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "One Voice Fills the Room",
+      "sub": "For the Leader",
+      "say": "This is for the group leader, pastor, or facilitator whose group has one voice that fills the room."
+     },
+     {
+      "k": "big",
+      "h": "Kind to one. Fair to all.",
+      "sub": "Both are possible.",
+      "say": "You may feel caught between kindness to one person and fairness to the whole group. Both are possible. Structure does most of the gentle work, and a warm private word does the rest."
+     },
+     {
+      "k": "card",
+      "title": "Shared turns, wiser groups",
+      "body": "And people speak up where they feel safe.",
+      "say": "Research on groups suggests that groups solve problems better when speaking turns are shared more evenly, and that people speak up more where they feel safe to. Making room for every voice is good for the whole group, and for the person who talks most."
+     },
+     {
+      "k": "points",
+      "h": "Build in structure",
+      "items": [
+       [
+        "An opening round",
+        "Every voice early"
+       ],
+       [
+        "A talking piece",
+        "One at a time"
+       ],
+       [
+        "Pairs",
+        "More air time for all"
+       ],
+       [
+        "Seven seconds",
+        "Of quiet after a question"
+       ]
+      ],
+      "say": "Build structure into every session. An opening round, so every voice is in the room early. A talking piece, one voice at a time. Pairs, which give everyone more air time. And seven seconds of quiet after each question, before you call on anyone.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Open the circle.",
+      "sub": "Practice it now.",
+      "say": "Let's practice the words that open the circle. Picture the person who often speaks first, and at length, finishing a thought. Now say this out loud, warmly: Thank you. I'd love to hear from someone we haven't heard from yet tonight.",
+      "beats": [
+       "Let's practice the words that open the circle.",
+       "Picture the person who often speaks first, and at length, finishing a thought.",
+       {
+        "t": "Now say this out loud, warmly: Thank you. I'd love to hear from someone we haven't heard from yet tonight.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "A warm private word",
+      "body": "\"You bring a lot. Will you help me draw others out?\"",
+      "say": "Speak privately with the person, warmly. Name their gifts, and invite their help. You bring a lot to this group. Will you help me draw out the quieter voices? A role, like timekeeper or the one who invites others, shares the floor with dignity."
+     },
+     {
+      "k": "card",
+      "title": "Listen for what is underneath",
+      "body": "Eagerness, loneliness, grief, or worry.",
+      "say": "Often the one who talks most is eager, lonely, knowledgeable, or carrying something heavy. Listen for that. If grief or a crisis is underneath, offer private support, apart from the group, and any talk of not wanting to be alive gets 988 together, the same day."
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "Public correction",
+       "Hints that never land",
+       "Looks exchanged with others"
+      ],
+      "say": "Set aside a few things. Correcting the person in front of the group. Hints that never land, week after week. And looks exchanged with others. Check in, too, with quieter members between sessions, before they drift away."
+     },
+     {
+      "k": "big",
+      "h": "Kind and clear.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leading well means caring for everyone in the group, including the one who talks most. You can be kind and clear at the same time. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hard-conversations",
+   "ring": "gw-faith",
+   "title": "Hard Conversations in Our Group",
+   "you": {
+    "id": "gr-g-hard-conversations-you",
+    "guide": "hard-conversations",
+    "side": "you",
+    "title": "Hard Conversations in Our Group",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a group getting ready to talk about something hard, together.",
+    "sources": [
+     "pranis"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hard Conversations in Our Group",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when we need to talk about something hard."
+     },
+     {
+      "k": "big",
+      "h": "We can talk about hard things.",
+      "sub": "And take care of each other while we do.",
+      "say": "Every group that matters faces hard conversations sometimes. A change, a loss, a hurt, a decision that touches people's lives. We can talk about hard things, and take good care of each other while we do."
+     },
+     {
+      "k": "words",
+      "h": "Before a hard talk, we might feel",
+      "items": [
+       "Nervous",
+       "Ready at last",
+       "Tired already",
+       "Protective",
+       "Hopeful"
+      ],
+      "say": "Before a hard talk, some of us feel nervous. Some feel ready at last, after waiting a long time. Some feel tired already. Some feel protective of people they love. And some feel hopeful. Every one of those feelings is welcome here."
+     },
+     {
+      "k": "big",
+      "h": "Settle together.",
+      "sub": "Everyone at once.",
+      "say": "Before we begin, let's settle together, all at once. Rest your hands open on your lap, palms up. Feel your feet on the floor. Breathe in slowly, and as you breathe out, let your shoulders soften. We are here, together.",
+      "beats": [
+       "Before we begin, let's settle together, all at once.",
+       "Rest your hands open on your lap, palms up.",
+       "Feel your feet on the floor.",
+       {
+        "t": "Breathe in slowly, and as you breathe out, let your shoulders soften. We are here, together.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we will talk",
+      "items": [
+       [
+        "One voice at a time",
+        "A talking piece"
+       ],
+       [
+        "Speak for yourself",
+        "I, rather than they"
+       ],
+       [
+        "Listen to understand",
+        "Say back what you heard"
+       ],
+       [
+        "Anyone can pass",
+        "Quiet is welcome"
+       ]
+      ],
+      "say": "Here is how we will talk. One voice at a time, with a talking piece. We speak for ourselves, saying I, rather than they. We listen to understand, and say back what we heard. And anyone can pass. Quiet is welcome too.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Feelings belong here.",
+      "body": "Tears and strong words can be part of it.",
+      "say": "When we talk about hard things, feelings come. A voice may shake. Someone may cry. Someone may feel angry. Feelings belong here. When something heavy is shared, we can pause and sit with it for a breath or two before anyone answers."
+     },
+     {
+      "k": "card",
+      "title": "We begin and end in quiet.",
+      "body": "A prayer, or a moment of stillness.",
+      "say": "Many of us find it helps to begin a hard conversation with prayer, or a moment of quiet, and to end the same way. It reminds us that we belong to something larger than the hard thing in front of us."
+     },
+     {
+      "k": "points",
+      "h": "After we talk",
+      "items": [
+       [
+        "A next step",
+        "Even a small one"
+       ],
+       [
+        "A closing round",
+        "One word each"
+       ],
+       [
+        "Check on each other",
+        "In the days after"
+       ]
+      ],
+      "say": "After we talk, we name a next step, even a small one. We close with a round, one word each, for how we're leaving. And in the days after, we check on each other, especially anyone who seemed to carry a lot.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Honest, kind, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We can be honest and kind at the same time. That's how a group grows closer through hard things. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hard Conversations in Our Group",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when we need to talk about something hard."
+     },
+     {
+      "k": "big",
+      "h": "We can talk about hard things.",
+      "sub": "And take care of each other while we do.",
+      "say": "Every group that matters faces hard conversations sometimes. A change, a loss, a hurt, a decision that touches people's lives. We can talk about hard things, and take good care of each other while we do."
+     },
+     {
+      "k": "words",
+      "h": "Before a hard talk, we might feel",
+      "items": [
+       "Nervous",
+       "Ready at last",
+       "Tired already",
+       "Protective",
+       "Hopeful"
+      ],
+      "say": "Before a hard talk, some of us feel nervous. Some feel ready at last, after waiting a long time. Some feel tired already. Some feel protective of people they love. And some feel hopeful. Every one of those feelings is welcome here."
+     },
+     {
+      "k": "big",
+      "h": "Settle together.",
+      "sub": "Everyone at once.",
+      "say": "Before we begin, let's settle together, all at once. Rest your hands open on your lap, palms up. Feel your feet on the floor. Breathe in slowly, and as you breathe out, let your shoulders soften. We are here, together.",
+      "beats": [
+       "Before we begin, let's settle together, all at once.",
+       "Rest your hands open on your lap, palms up.",
+       "Feel your feet on the floor.",
+       {
+        "t": "Breathe in slowly, and as you breathe out, let your shoulders soften. We are here, together.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we will talk",
+      "items": [
+       [
+        "One voice at a time",
+        "A talking piece"
+       ],
+       [
+        "Speak for yourself",
+        "I, rather than they"
+       ],
+       [
+        "Listen to understand",
+        "Say back what you heard"
+       ],
+       [
+        "Anyone can pass",
+        "Quiet is welcome"
+       ]
+      ],
+      "say": "Here is how we will talk. One voice at a time, with a talking piece. We speak for ourselves, saying I, rather than they. We listen to understand, and say back what we heard. And anyone can pass. Quiet is welcome too.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Feelings belong here.",
+      "body": "Tears and strong words can be part of it.",
+      "say": "When we talk about hard things, feelings come. A voice may shake. Someone may cry. Someone may feel angry. Feelings belong here. When something heavy is shared, we can pause and sit with it for a breath or two before anyone answers."
+     },
+     {
+      "k": "card",
+      "title": "We begin and end in quiet.",
+      "body": "A moment of stillness, together.",
+      "say": "Many groups find it helps to begin a hard conversation with a moment of quiet, and to end the same way. It reminds us that we belong to each other, beyond the hard thing in front of us."
+     },
+     {
+      "k": "points",
+      "h": "After we talk",
+      "items": [
+       [
+        "A next step",
+        "Even a small one"
+       ],
+       [
+        "A closing round",
+        "One word each"
+       ],
+       [
+        "Check on each other",
+        "In the days after"
+       ]
+      ],
+      "say": "After we talk, we name a next step, even a small one. We close with a round, one word each, for how we're leaving. And in the days after, we check on each other, especially anyone who seemed to carry a lot.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Honest, kind, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We can be honest and kind at the same time. That's how a group grows closer through hard things. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-hard-conversations-helper",
+    "guide": "hard-conversations",
+    "side": "helper",
+    "title": "Hard Conversations in Our Group",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the group leader, pastor, or facilitator preparing to hold a hard conversation.",
+    "sources": [
+     "pranis",
+     "edmondson99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hard Conversations in Our Group",
+      "sub": "For the Leader",
+      "say": "This is for the group leader, pastor, or facilitator getting ready to hold a hard conversation with a group."
+     },
+     {
+      "k": "big",
+      "h": "You hold the process.",
+      "sub": "The group does the talking.",
+      "say": "You may feel the weight of holding the room. Here's what lightens it. Your job is to hold a fair, kind process. The group does the talking, and the structure carries much of the weight."
+     },
+     {
+      "k": "card",
+      "title": "Safety comes from structure",
+      "body": "Clear agreements. A calm leader.",
+      "say": "People speak up more where they feel safe to. In a group, that safety comes from clear agreements, a steady structure, and a calm leader. Read the agreements aloud before anything else."
+     },
+     {
+      "k": "flow",
+      "h": "Plan the conversation",
+      "steps": [
+       [
+        "One question",
+        "Open and gentle"
+       ],
+       [
+        "A full round",
+        "Before open talk"
+       ],
+       [
+        "A clear close",
+        "A next step"
+       ]
+      ],
+      "say": "Plan the conversation. One open, gentle question. A full round with a talking piece, so everyone is heard once before open talk. And a clear close, with a next step, even if the step is, we'll keep talking next week.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write the question.",
+      "sub": "Write it now.",
+      "say": "The question you open with shapes the whole conversation. Picture the hard thing your group needs to talk about. Write it as one open, gentle question that invites hopes and concerns, like: what matters most to us as we face this?",
+      "beats": [
+       "The question you open with shapes the whole conversation.",
+       "Picture the hard thing your group needs to talk about.",
+       {
+        "t": "Write it as one open, gentle question that invites hopes and concerns, like: what matters most to us as we face this?",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Begin in quiet",
+      "body": "Prayer or stillness, as the group chooses.",
+      "say": "Open with prayer or a moment of quiet, as the group chooses. Then name the topic clearly and kindly, and why you're talking about it now. Be careful that prayer opens the conversation and never closes it too soon."
+     },
+     {
+      "k": "points",
+      "h": "In the room",
+      "items": [
+       [
+        "Slow is kind",
+        "Pause after heavy moments"
+       ],
+       [
+        "Share the time",
+        "Every voice once"
+       ],
+       [
+        "Name feelings",
+        "Gently, out loud"
+       ]
+      ],
+      "say": "In the room, remember that slow is kind. Pause after heavy moments. Share the time, so every voice is heard at least once. And name feelings gently: this is tender, and we're taking our time.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "After",
+      "body": "Follow up privately within a day or two.",
+      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with 988 and the reporting the law requires."
+     },
+     {
+      "k": "big",
+      "h": "Rest after.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Holding a hard conversation is real work. Plan time to rest, and someone to talk with outside the group. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hard Conversations in Our Group",
+      "sub": "For the Leader",
+      "say": "This is for the group leader, pastor, or facilitator getting ready to hold a hard conversation with a group."
+     },
+     {
+      "k": "big",
+      "h": "You hold the process.",
+      "sub": "The group does the talking.",
+      "say": "You may feel the weight of holding the room. Here's what lightens it. Your job is to hold a fair, kind process. The group does the talking, and the structure carries much of the weight."
+     },
+     {
+      "k": "card",
+      "title": "Safety comes from structure",
+      "body": "Clear agreements. A calm leader.",
+      "say": "People speak up more where they feel safe to. In a group, that safety comes from clear agreements, a steady structure, and a calm leader. Read the agreements aloud before anything else."
+     },
+     {
+      "k": "flow",
+      "h": "Plan the conversation",
+      "steps": [
+       [
+        "One question",
+        "Open and gentle"
+       ],
+       [
+        "A full round",
+        "Before open talk"
+       ],
+       [
+        "A clear close",
+        "A next step"
+       ]
+      ],
+      "say": "Plan the conversation. One open, gentle question. A full round with a talking piece, so everyone is heard once before open talk. And a clear close, with a next step, even if the step is, we'll keep talking next week.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write the question.",
+      "sub": "Write it now.",
+      "say": "The question you open with shapes the whole conversation. Picture the hard thing your group needs to talk about. Write it as one open, gentle question that invites hopes and concerns, like: what matters most to us as we face this?",
+      "beats": [
+       "The question you open with shapes the whole conversation.",
+       "Picture the hard thing your group needs to talk about.",
+       {
+        "t": "Write it as one open, gentle question that invites hopes and concerns, like: what matters most to us as we face this?",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Begin in quiet",
+      "body": "A moment of stillness, together.",
+      "say": "Open with a moment of quiet. Then name the topic clearly and kindly, and why you're talking about it now. Let the quiet open the conversation, and give it time to unfold."
+     },
+     {
+      "k": "points",
+      "h": "In the room",
+      "items": [
+       [
+        "Slow is kind",
+        "Pause after heavy moments"
+       ],
+       [
+        "Share the time",
+        "Every voice once"
+       ],
+       [
+        "Name feelings",
+        "Gently, out loud"
+       ]
+      ],
+      "say": "In the room, remember that slow is kind. Pause after heavy moments. Share the time, so every voice is heard at least once. And name feelings gently: this is tender, and we're taking our time.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "After",
+      "body": "Follow up privately within a day or two.",
+      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with 988 and the reporting the law requires."
+     },
+     {
+      "k": "big",
+      "h": "Rest after.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Holding a hard conversation is real work. Plan time to rest, and someone to talk with outside the group. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "trust-broken",
+   "ring": "gw-faith",
+   "title": "When Trust Is Broken",
+   "you": {
+    "id": "gr-g-trust-broken-you",
+    "guide": "trust-broken",
+    "side": "you",
+    "title": "When Trust Is Broken",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a group healing after trust has been broken.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Trust Is Broken",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, after something has broken trust in our group."
+     },
+     {
+      "k": "big",
+      "h": "Trust can be rebuilt.",
+      "sub": "One honest step at a time.",
+      "say": "Something happened that hurt our trust. That's painful, and it matters. Trust can be rebuilt, through honest words, real steps, and time. We're going to take those steps together, at a pace that lets everyone come along."
+     },
+     {
+      "k": "words",
+      "h": "Right now, some of us feel",
+      "items": [
+       "Angry",
+       "Foolish for trusting",
+       "Sad for everyone",
+       "Careful",
+       "Ready to move on"
+      ],
+      "say": "Right now, some of us feel angry. Some feel foolish for having trusted. Some feel sad for everyone involved. Some feel careful about what they say here. And some just want to move on. All of those feelings make sense."
+     },
+     {
+      "k": "big",
+      "h": "Feel the floor hold you.",
+      "sub": "Everyone at once.",
+      "say": "Let's take a moment together, all at once. Put both feet flat on the floor. Rest your hands on your knees. Feel the floor holding you up, steady and strong, and breathe slowly. We are still here, together.",
+      "beats": [
+       "Let's take a moment together, all at once.",
+       "Put both feet flat on the floor.",
+       "Rest your hands on your knees.",
+       {
+        "t": "Feel the floor holding you up, steady and strong, and breathe slowly. We are still here, together.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Trusting is a good thing.",
+      "body": "You trusted because you are trusting.",
+      "say": "If you feel foolish for trusting, hear this. You trusted because you're a trusting person, and that's a good thing. The hurt belongs to what happened, never to your open heart. Your openness is part of what makes this group a good place, and it is worth protecting."
+     },
+     {
+      "k": "points",
+      "h": "How trust grows back",
+      "items": [
+       [
+        "Honest words",
+        "What we can share"
+       ],
+       [
+        "Safety first",
+        "Real steps taken"
+       ],
+       [
+        "Our agreements",
+        "Renewed, out loud"
+       ],
+       [
+        "Time",
+        "Week after week"
+       ]
+      ],
+      "say": "Here is how trust grows back. Honest words, sharing what can be shared. Safety first, with real steps that make our group safer. Our agreements, renewed out loud, especially that what's shared here stays here. And time, with steady care, week after week.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Forgiveness is a gift.",
+      "body": "Chosen freely, in its own time.",
+      "say": "Many traditions teach forgiveness as holy work. Forgiveness is a gift a person may choose, in their own time. No one here will be pressured to forgive, and healing can grow slowly. Safety and honest repair come first."
+     },
+     {
+      "k": "card",
+      "title": "Safety comes first.",
+      "body": "Harm: tell a leader, or call 911.",
+      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law. If there is danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "We are rebuilding, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We are rebuilding, one step at a time, together. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Trust Is Broken",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, after something has broken trust in our group."
+     },
+     {
+      "k": "big",
+      "h": "Trust can be rebuilt.",
+      "sub": "One honest step at a time.",
+      "say": "Something happened that hurt our trust. That's painful, and it matters. Trust can be rebuilt, through honest words, real steps, and time. We're going to take those steps together, at a pace that lets everyone come along."
+     },
+     {
+      "k": "words",
+      "h": "Right now, some of us feel",
+      "items": [
+       "Angry",
+       "Foolish for trusting",
+       "Sad for everyone",
+       "Careful",
+       "Ready to move on"
+      ],
+      "say": "Right now, some of us feel angry. Some feel foolish for having trusted. Some feel sad for everyone involved. Some feel careful about what they say here. And some just want to move on. All of those feelings make sense."
+     },
+     {
+      "k": "big",
+      "h": "Feel the floor hold you.",
+      "sub": "Everyone at once.",
+      "say": "Let's take a moment together, all at once. Put both feet flat on the floor. Rest your hands on your knees. Feel the floor holding you up, steady and strong, and breathe slowly. We are still here, together.",
+      "beats": [
+       "Let's take a moment together, all at once.",
+       "Put both feet flat on the floor.",
+       "Rest your hands on your knees.",
+       {
+        "t": "Feel the floor holding you up, steady and strong, and breathe slowly. We are still here, together.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Trusting is a good thing.",
+      "body": "You trusted because you are trusting.",
+      "say": "If you feel foolish for trusting, hear this. You trusted because you're a trusting person, and that's a good thing. The hurt belongs to what happened, never to your open heart. Your openness is part of what makes this group a good place, and it is worth protecting."
+     },
+     {
+      "k": "points",
+      "h": "How trust grows back",
+      "items": [
+       [
+        "Honest words",
+        "What we can share"
+       ],
+       [
+        "Safety first",
+        "Real steps taken"
+       ],
+       [
+        "Our agreements",
+        "Renewed, out loud"
+       ],
+       [
+        "Time",
+        "Week after week"
+       ]
+      ],
+      "say": "Here is how trust grows back. Honest words, sharing what can be shared. Safety first, with real steps that make our group safer. Our agreements, renewed out loud, especially that what's shared here stays here. And time, with steady care, week after week.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Forgiveness is a gift.",
+      "body": "Chosen in its own time.",
+      "say": "Forgiveness can be a real gift, and a person chooses it in their own time. No one here will be pressured to forgive, and healing can grow slowly. Safety and honest repair come first."
+     },
+     {
+      "k": "card",
+      "title": "Safety comes first.",
+      "body": "Harm: tell a leader, or call 911.",
+      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law. If there is danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "We are rebuilding, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We are rebuilding, one step at a time, together. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-trust-broken-helper",
+    "guide": "trust-broken",
+    "side": "helper",
+    "title": "When Trust Is Broken",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the pastor, group leader, or board guiding a group after trust has been broken.",
+    "sources": [
+     "toussaint"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Trust Is Broken",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, group leader, or board guiding a group after trust has been broken."
+     },
+     {
+      "k": "big",
+      "h": "Truth, safety, steady care.",
+      "sub": "That is how trust is rebuilt.",
+      "say": "Trust is rebuilt when leaders tell the truth as far as they can, act to make the group safer, and show steady care over time. You don't need every answer. You need to be honest and steady."
+     },
+     {
+      "k": "flow",
+      "h": "First steps",
+      "steps": [
+       [
+        "Safety",
+        "Support, and report harm"
+       ],
+       [
+        "Honest words",
+        "What you can share"
+       ],
+       [
+        "Changed practice",
+        "And say what changed"
+       ]
+      ],
+      "say": "Take the first steps in order. Safety first: support anyone harmed, and report harm, abuse, or exploitation as the law requires. Then honest words, sharing what you can. Then changed practices, like two people counting money or a renewed confidentiality agreement, and tell the group what changed.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "What can you honestly say?",
+      "sub": "Write three lines now.",
+      "say": "People can trust a leader who tells the truth, even when the truth is hard. Picture the group gathering next week, waiting to hear from you. Write down three short lines: what you can honestly share about what happened, what is being done, and what comes next.",
+      "beats": [
+       "People can trust a leader who tells the truth, even when the truth is hard.",
+       "Picture the group gathering next week, waiting to hear from you.",
+       {
+        "t": "Write down three short lines: what you can honestly share about what happened, what is being done, and what comes next.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "Quiet to protect our name",
+       "Private details and rumors",
+       "Pressure to forgive"
+      ],
+      "say": "Set aside a few things. Keeping harm quiet to protect the group's reputation. Sharing private details or rumors. And pressuring anyone to forgive, or to reconcile with someone who hurt them."
+     },
+     {
+      "k": "card",
+      "title": "Forgiveness, freely chosen",
+      "body": "A gift a person chooses.",
+      "say": "Research links forgiveness with health and peace, and many traditions hold it as holy work. It is always a person's own choice. Grace and accountability belong together. Reconciliation also asks for safety and changed behavior."
+     },
+     {
+      "k": "card",
+      "title": "Care for everyone, separately",
+      "body": "The hurt, and the one who broke trust.",
+      "say": "Offer private support to people who are hurting, and separately to the person who broke trust. A path to repair can exist without anyone being made a villain. When a leader is involved, bring in your faith body or an outside facilitator."
+     },
+     {
+      "k": "card",
+      "title": "Steady, week after week",
+      "body": "Small signs of trustworthiness.",
+      "say": "Trust grows back in small, steady signs. Starting on time. Keeping confidences. Following through on what you said you'd do. Week after week, the group learns it is safe again."
+     },
+     {
+      "k": "big",
+      "h": "Honest and steady.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leading after a breach of trust is heavy. Find support outside the group. Honest, steady care over time is what rebuilds trust. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Trust Is Broken",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, group leader, or board guiding a group after trust has been broken."
+     },
+     {
+      "k": "big",
+      "h": "Truth, safety, steady care.",
+      "sub": "That is how trust is rebuilt.",
+      "say": "Trust is rebuilt when leaders tell the truth as far as they can, act to make the group safer, and show steady care over time. You don't need every answer. You need to be honest and steady."
+     },
+     {
+      "k": "flow",
+      "h": "First steps",
+      "steps": [
+       [
+        "Safety",
+        "Support, and report harm"
+       ],
+       [
+        "Honest words",
+        "What you can share"
+       ],
+       [
+        "Changed practice",
+        "And say what changed"
+       ]
+      ],
+      "say": "Take the first steps in order. Safety first: support anyone harmed, and report harm, abuse, or exploitation as the law requires. Then honest words, sharing what you can. Then changed practices, like two people counting money or a renewed confidentiality agreement, and tell the group what changed.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "What can you honestly say?",
+      "sub": "Write three lines now.",
+      "say": "People can trust a leader who tells the truth, even when the truth is hard. Picture the group gathering next week, waiting to hear from you. Write down three short lines: what you can honestly share about what happened, what is being done, and what comes next.",
+      "beats": [
+       "People can trust a leader who tells the truth, even when the truth is hard.",
+       "Picture the group gathering next week, waiting to hear from you.",
+       {
+        "t": "Write down three short lines: what you can honestly share about what happened, what is being done, and what comes next.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "Quiet to protect our name",
+       "Private details and rumors",
+       "Pressure to forgive"
+      ],
+      "say": "Set aside a few things. Keeping harm quiet to protect the group's reputation. Sharing private details or rumors. And pressuring anyone to forgive, or to reconcile with someone who hurt them."
+     },
+     {
+      "k": "card",
+      "title": "Forgiveness, freely chosen",
+      "body": "A gift a person chooses.",
+      "say": "Research links forgiveness with health and peace. It is always a person's own choice. Kindness and accountability belong together. Reconciliation also asks for safety and changed behavior."
+     },
+     {
+      "k": "card",
+      "title": "Care for everyone, separately",
+      "body": "The hurt, and the one who broke trust.",
+      "say": "Offer private support to people who are hurting, and separately to the person who broke trust. A path to repair can exist without anyone being made a villain. When a leader is involved, bring in your organization's leaders or an outside facilitator."
+     },
+     {
+      "k": "card",
+      "title": "Steady, week after week",
+      "body": "Small signs of trustworthiness.",
+      "say": "Trust grows back in small, steady signs. Starting on time. Keeping confidences. Following through on what you said you'd do. Week after week, the group learns it is safe again."
+     },
+     {
+      "k": "big",
+      "h": "Honest and steady.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leading after a breach of trust is heavy. Find support outside the group. Honest, steady care over time is what rebuilds trust. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "attendance-drifts",
+   "ring": "gw-faith",
+   "title": "When Attendance Drifts",
+   "you": {
+    "id": "gr-g-attendance-drifts-you",
+    "guide": "attendance-drifts",
+    "side": "you",
+    "title": "When Attendance Drifts",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a group that misses familiar faces and wants to reach out.",
+    "sources": [
+     "liu22"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Attendance Drifts",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when our circle has grown smaller and we miss familiar faces."
+     },
+     {
+      "k": "big",
+      "h": "People drift. The door stays open.",
+      "sub": "Every group knows this season.",
+      "say": "Every group goes through seasons when fewer people come. People get busy. Some get sick, or care for someone, or grieve. Some have a hard season of their own. People drift, and the door stays open."
+     },
+     {
+      "k": "words",
+      "h": "When seats are empty, we might feel",
+      "items": [
+       "Sad",
+       "Worried",
+       "Discouraged",
+       "Curious",
+       "Hopeful"
+      ],
+      "say": "When seats are empty, we might feel sad, or worried, or discouraged. We might wonder if we did something wrong. We can also feel curious, and hopeful. This season can teach us something, and bring new life."
+     },
+     {
+      "k": "card",
+      "title": "A warm word reaches far.",
+      "body": "People appreciate it more than we expect.",
+      "say": "Here is something hopeful. People tend to appreciate being reached out to much more than we expect. A short call, a note, or a text that says, we've been thinking of you, can mean a great deal to someone who has been away."
+     },
+     {
+      "k": "big",
+      "h": "Say one name.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together, all at once. Think of one person who used to be here more often, someone you would love to see. Now, everyone together, softly say their first name, as a quiet promise to reach out this week.",
+      "beats": [
+       "Let's do this together, all at once.",
+       "Think of one person who used to be here more often, someone you would love to see.",
+       {
+        "t": "Now, everyone together, softly say their first name, as a quiet promise to reach out this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we reach out",
+      "items": [
+       [
+        "With warmth",
+        "We have been thinking of you"
+       ],
+       [
+        "With nothing asked",
+        "Just hello"
+       ],
+       [
+        "With listening",
+        "How are you, really?"
+       ],
+       [
+        "With an open door",
+        "Your seat is here"
+       ]
+      ],
+      "say": "Here is how we reach out. With warmth: we've been thinking of you. With nothing asked in return, just hello. With listening: how are you, really? And with an open door: your seat is here whenever you want it.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "We hold them in prayer.",
+      "body": "By name, here or away.",
+      "say": "Many of us pray for the people who are away, by name. It keeps our hearts open, and reminds us that every person matters to this community, here or away."
+     },
+     {
+      "k": "card",
+      "title": "Easy to come back",
+      "body": "A warm hello is enough.",
+      "say": "When someone comes back, let's make it easy. A warm hello. It's so good to see you. A warm hello is enough. And let's ask, together, what would make our group fit people's lives today."
+     },
+     {
+      "k": "big",
+      "h": "Your seat is here.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Every person matters to this group, here or away. Your seat is here, whenever you want it. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Attendance Drifts",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when our circle has grown smaller and we miss familiar faces."
+     },
+     {
+      "k": "big",
+      "h": "People drift. The door stays open.",
+      "sub": "Every group knows this season.",
+      "say": "Every group goes through seasons when fewer people come. People get busy. Some get sick, or care for someone, or grieve. Some have a hard season of their own. People drift, and the door stays open."
+     },
+     {
+      "k": "words",
+      "h": "When seats are empty, we might feel",
+      "items": [
+       "Sad",
+       "Worried",
+       "Discouraged",
+       "Curious",
+       "Hopeful"
+      ],
+      "say": "When seats are empty, we might feel sad, or worried, or discouraged. We might wonder if we did something wrong. We can also feel curious, and hopeful. This season can teach us something, and bring new life."
+     },
+     {
+      "k": "card",
+      "title": "A warm word reaches far.",
+      "body": "People appreciate it more than we expect.",
+      "say": "Here is something hopeful. People tend to appreciate being reached out to much more than we expect. A short call, a note, or a text that says, we've been thinking of you, can mean a great deal to someone who has been away."
+     },
+     {
+      "k": "big",
+      "h": "Say one name.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together, all at once. Think of one person who used to be here more often, someone you would love to see. Now, everyone together, softly say their first name, as a quiet promise to reach out this week.",
+      "beats": [
+       "Let's do this together, all at once.",
+       "Think of one person who used to be here more often, someone you would love to see.",
+       {
+        "t": "Now, everyone together, softly say their first name, as a quiet promise to reach out this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we reach out",
+      "items": [
+       [
+        "With warmth",
+        "We have been thinking of you"
+       ],
+       [
+        "With nothing asked",
+        "Just hello"
+       ],
+       [
+        "With listening",
+        "How are you, really?"
+       ],
+       [
+        "With an open door",
+        "Your seat is here"
+       ]
+      ],
+      "say": "Here is how we reach out. With warmth: we've been thinking of you. With nothing asked in return, just hello. With listening: how are you, really? And with an open door: your seat is here whenever you want it.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "We hold them in kind thought.",
+      "body": "By name, here or away.",
+      "say": "We can hold the people who are away in kind thought, by name. It keeps our hearts open, and reminds us that every person matters to this group, here or away."
+     },
+     {
+      "k": "card",
+      "title": "Easy to come back",
+      "body": "A warm hello is enough.",
+      "say": "When someone comes back, let's make it easy. A warm hello. It's so good to see you. A warm hello is enough. And let's ask, together, what would make our group fit people's lives today."
+     },
+     {
+      "k": "big",
+      "h": "Your seat is here.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Every person matters to this group, here or away. Your seat is here, whenever you want it. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-attendance-drifts-helper",
+    "guide": "attendance-drifts",
+    "side": "helper",
+    "title": "When Attendance Drifts",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the pastor, group leader, or care team when attendance drifts.",
+    "sources": [
+     "liu22",
+     "murthy",
+     "woolever04"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Attendance Drifts",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, group leader, or care team when attendance has been drifting."
+     },
+     {
+      "k": "big",
+      "h": "A signal, rather than a grade.",
+      "sub": "Stay curious.",
+      "say": "Many leaders feel drifting attendance as a grade on their leadership. It's usually a signal, worth listening to. People come and go for many reasons, and most have little to do with you. Stay curious."
+     },
+     {
+      "k": "card",
+      "title": "Connection matters",
+      "body": "And check-ins land better than we think.",
+      "say": "Research on loneliness shows how much people need connection. Research on reaching out suggests people tend to appreciate a check-in more than the sender expects. And communities that welcome well and stay connected tend to be healthier."
+     },
+     {
+      "k": "flow",
+      "h": "Reach out well",
+      "steps": [
+       [
+        "A gentle list",
+        "Who has been away"
+       ],
+       [
+        "Share the calls",
+        "Caring members"
+       ],
+       [
+        "Listen",
+        "What fits their lives now"
+       ]
+      ],
+      "say": "Reach out well. Make a gentle list of who has been away. Share the calls among caring members, so no one carries it alone. And listen, asking what would fit their lives now.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write the message.",
+      "sub": "Write it now.",
+      "say": "A short, warm message can mean more than we expect. Picture one person who has been away from your group for a while. Write a message you could send them today, two or three sentences, with warmth and with nothing asked in return.",
+      "beats": [
+       "A short, warm message can mean more than we expect.",
+       "Picture one person who has been away from your group for a while.",
+       {
+        "t": "Write a message you could send them today, two or three sentences, with warmth and with nothing asked in return.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "\"We haven't seen you in forever.\"",
+       "Naming who is missing",
+       "Calling only for volunteers"
+      ],
+      "say": "Set aside a few things. Guilt, like we haven't seen you in forever. Naming who has been missing in front of the group. And reaching out only when you need volunteers. Warmth with nothing asked lands best."
+     },
+     {
+      "k": "points",
+      "h": "Listen underneath",
+      "items": [
+       [
+        "Health or caregiving",
+        "Offer support"
+       ],
+       [
+        "Grief or hurt",
+        "Private care"
+       ],
+       [
+        "A changing life",
+        "A new rhythm"
+       ]
+      ],
+      "say": "Listen underneath. Health or caregiving may be keeping someone home; offer support. Grief or hurt may need private care. And a changing life may mean the group's rhythm needs to change too. If many say the old time no longer fits, try a new one.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "When it is a faith season",
+      "body": "Curiosity and warmth, never pressure.",
+      "say": "Some people drift because something about faith has become hard: a doubt, a hurt, a dry season. Meet that with curiosity and warmth, never pressure. Their relationship with faith is their own, and the door stays open."
+     },
+     {
+      "k": "big",
+      "h": "Celebrate who is here.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Set the weight down a little. Notice what is still alive in your group, celebrate the people who are here, and keep the door open for everyone who is away. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Attendance Drifts",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, group leader, or care team when attendance has been drifting."
+     },
+     {
+      "k": "big",
+      "h": "A signal, rather than a grade.",
+      "sub": "Stay curious.",
+      "say": "Many leaders feel drifting attendance as a grade on their leadership. It's usually a signal, worth listening to. People come and go for many reasons, and most have little to do with you. Stay curious."
+     },
+     {
+      "k": "card",
+      "title": "Connection matters",
+      "body": "And check-ins land better than we think.",
+      "say": "Research on loneliness shows how much people need connection. Research on reaching out suggests people tend to appreciate a check-in more than the sender expects. And communities that welcome well and stay connected tend to be healthier."
+     },
+     {
+      "k": "flow",
+      "h": "Reach out well",
+      "steps": [
+       [
+        "A gentle list",
+        "Who has been away"
+       ],
+       [
+        "Share the calls",
+        "Caring members"
+       ],
+       [
+        "Listen",
+        "What fits their lives now"
+       ]
+      ],
+      "say": "Reach out well. Make a gentle list of who has been away. Share the calls among caring members, so no one carries it alone. And listen, asking what would fit their lives now.",
+      "cue": {
+       "at": [
+        0,
+        1,
+        2
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Write the message.",
+      "sub": "Write it now.",
+      "say": "A short, warm message can mean more than we expect. Picture one person who has been away from your group for a while. Write a message you could send them today, two or three sentences, with warmth and with nothing asked in return.",
+      "beats": [
+       "A short, warm message can mean more than we expect.",
+       "Picture one person who has been away from your group for a while.",
+       {
+        "t": "Write a message you could send them today, two or three sentences, with warmth and with nothing asked in return.",
+        "w": 14
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Things to set aside",
+      "items": [
+       "\"We haven't seen you in forever.\"",
+       "Naming who is missing",
+       "Calling only for volunteers"
+      ],
+      "say": "Set aside a few things. Guilt, like we haven't seen you in forever. Naming who has been missing in front of the group. And reaching out only when you need volunteers. Warmth with nothing asked lands best."
+     },
+     {
+      "k": "points",
+      "h": "Listen underneath",
+      "items": [
+       [
+        "Health or caregiving",
+        "Offer support"
+       ],
+       [
+        "Grief or hurt",
+        "Private care"
+       ],
+       [
+        "A changing life",
+        "A new rhythm"
+       ]
+      ],
+      "say": "Listen underneath. Health or caregiving may be keeping someone home; offer support. Grief or hurt may need private care. And a changing life may mean the group's rhythm needs to change too. If many say the old time no longer fits, try a new one.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "When it is a hard season",
+      "body": "Curiosity and warmth, never pressure.",
+      "say": "Some people drift because something about the group has become hard for them: a hurt, a change, a tired season. Meet that with curiosity and warmth, never pressure. Their choices are their own, and the door stays open."
+     },
+     {
+      "k": "big",
+      "h": "Celebrate who is here.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Set the weight down a little. Notice what is still alive in your group, celebrate the people who are here, and keep the door open for everyone who is away. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "growing-smaller",
+   "ring": "gw-faith",
+   "title": "When Our Church Is Growing Smaller",
+   "you": {
+    "id": "gr-g-growing-smaller-you",
+    "guide": "growing-smaller",
+    "side": "you",
+    "title": "When Our Church Is Growing Smaller",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group that is smaller than it was.",
+    "sources": [
+     "woolever04"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Our Church Is Growing Smaller",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, as our church or community grows smaller than it was."
+     },
+     {
+      "k": "words",
+      "h": "What many of us feel",
+      "items": [
+       "Grief for what was",
+       "Tired",
+       "Worried about the future",
+       "Close to each other",
+       "Thankful"
+      ],
+      "say": "When a community grows smaller, many feelings live in the room. Grief for the full rooms and the people we miss. Tiredness, with more work and fewer hands. Worry about what comes next. And often something warm too, a closeness, because everyone knows everyone now. Every one of these feelings belongs here."
+     },
+     {
+      "k": "big",
+      "h": "Smaller, and still us.",
+      "sub": "Who we are matters most.",
+      "say": "Here is something true. Many strong communities are small. They know each other by name, they show up for each other, and they know what they are here to do. Being smaller is a season, and it has its own gifts."
+     },
+     {
+      "k": "big",
+      "h": "Remember them together.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Sit back and let your breath slow down. Picture one person who helped make this community what it is, someone here today, someone who moved, or someone who has died. Hold their face in your mind, and silently thank them.",
+      "beats": [
+       "Let's do this together now.",
+       "Sit back and let your breath slow down.",
+       "Picture one person who helped make this community what it is, someone here today, someone who moved, or someone who has died.",
+       {
+        "t": "Hold their face in your mind, and silently thank them.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps a smaller community",
+      "items": [
+       [
+        "Grieve together",
+        "Remember out loud"
+       ],
+       [
+        "Do what we do well",
+        "Two or three strengths"
+       ],
+       [
+        "Simplify",
+        "Let some things rest"
+       ],
+       [
+        "Share the work",
+        "Small parts, many hands"
+       ]
+      ],
+      "say": "A few things help a smaller community. Grieving together, by remembering out loud. Doing what we do well, the two or three strengths everyone can see. Simplifying, and letting some programs rest with thanks. And sharing the work, so each of us carries a small part we enjoy."
+     },
+     {
+      "k": "card",
+      "title": "A few things, done with love.",
+      "body": "Worship, welcome, serve, and be friends.",
+      "say": "We can't do everything we did when we were bigger, and that's okay. We can do a few things, and do them with love. Worship together. Welcome whoever walks in. Serve our neighbors in one clear way. And be good friends to each other."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are smaller, and we are still us.",
+       "We give thanks for everyone who came before.",
+       "We will do a few things, with love."
+      ],
+      "say": "Here are words we can say together. We are smaller, and we are still us. We give thanks for everyone who came before. And we will do a few things, and do them with love."
+     },
+     {
+      "k": "big",
+      "h": "Small can be strong.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A small community can be close, brave, and full of life. Small can be strong. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Our Church Is Growing Smaller",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, as our community or group grows smaller than it was."
+     },
+     {
+      "k": "words",
+      "h": "What many of us feel",
+      "items": [
+       "Grief for what was",
+       "Tired",
+       "Worried about the future",
+       "Close to each other",
+       "Thankful"
+      ],
+      "say": "When a community grows smaller, many feelings live in the room. Grief for the full rooms and the people we miss. Tiredness, with more work and fewer hands. Worry about what comes next. And often something warm too, a closeness, because everyone knows everyone now. Every one of these feelings belongs here."
+     },
+     {
+      "k": "big",
+      "h": "Smaller, and still us.",
+      "sub": "Who we are matters most.",
+      "say": "Here is something true. Many strong communities are small. They know each other by name, they show up for each other, and they know what they are here to do. Being smaller is a season, and it has its own gifts."
+     },
+     {
+      "k": "big",
+      "h": "Remember them together.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Sit back and let your breath slow down. Picture one person who helped make this community what it is, someone here today, someone who moved, or someone who has died. Hold their face in your mind, and silently thank them.",
+      "beats": [
+       "Let's do this together now.",
+       "Sit back and let your breath slow down.",
+       "Picture one person who helped make this community what it is, someone here today, someone who moved, or someone who has died.",
+       {
+        "t": "Hold their face in your mind, and silently thank them.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps a smaller community",
+      "items": [
+       [
+        "Grieve together",
+        "Remember out loud"
+       ],
+       [
+        "Do what we do well",
+        "Two or three strengths"
+       ],
+       [
+        "Simplify",
+        "Let some things rest"
+       ],
+       [
+        "Share the work",
+        "Small parts, many hands"
+       ]
+      ],
+      "say": "A few things help a smaller community. Grieving together, by remembering out loud. Doing what we do well, the two or three strengths everyone can see. Simplifying, and letting some programs rest with thanks. And sharing the work, so each of us carries a small part we enjoy."
+     },
+     {
+      "k": "card",
+      "title": "A few things, done with love.",
+      "body": "Gather, welcome, serve, and be friends.",
+      "say": "We can't do everything we did when we were bigger, and that's okay. We can do a few things, and do them with love. Gather together. Welcome whoever walks in. Serve our neighbors in one clear way. And be good friends to each other."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are smaller, and we are still us.",
+       "We give thanks for everyone who came before.",
+       "We will do a few things, with love."
+      ],
+      "say": "Here are words we can say together. We are smaller, and we are still us. We give thanks for everyone who came before. And we will do a few things, and do them with love."
+     },
+     {
+      "k": "big",
+      "h": "Small can be strong.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A small community can be close, brave, and full of life. Small can be strong. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-growing-smaller-helper",
+    "guide": "growing-smaller",
+    "side": "helper",
+    "title": "When Our Church Is Growing Smaller",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the pastor, elder, board member, or group leader guiding a community that is growing smaller.",
+    "sources": [
+     "woolever04",
+     "bridges91"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Our Church Is Growing Smaller",
+      "sub": "For the Leader",
+      "say": "This is for whoever is guiding a church, a faith community, or a group through a season of growing smaller: a pastor, an elder, a board member, or a group leader."
+     },
+     {
+      "k": "big",
+      "h": "Faithful, more than full.",
+      "sub": "Your worth rests here.",
+      "say": "If you lead a community that is growing smaller, you may feel every empty seat. You may wonder what you missed, or feel pressure to turn it around fast. Here is a steadier measure. Ask whether the community is faithful to who it is, more than whether the room is full."
+     },
+     {
+      "k": "flow",
+      "h": "Three steps, in order",
+      "steps": [
+       [
+        "Grieve",
+        "Remember what was"
+       ],
+       [
+        "Name strengths",
+        "What we do well now"
+       ],
+       [
+        "Then decide",
+        "Building, money, future"
+       ]
+      ],
+      "say": "Take three steps, in this order. First, grieve together, with a gathering to remember what was. Second, name your strengths, the two or three things this community does well right now. Then, and only then, decide the big things, the building, the budget, and the future. Decisions made after grief tend to be wiser and kinder.",
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Simplify on purpose",
+      "items": [
+       [
+        "Fewer committees",
+        "Combine and shorten"
+       ],
+       [
+        "Let programs rest",
+        "With thanks"
+       ],
+       [
+        "Small parts",
+        "Each person, one piece"
+       ],
+       [
+        "One clear service",
+        "Neighbors can see it"
+       ]
+      ],
+      "say": "Simplify on purpose. Combine committees and shorten meetings. Let some programs rest, with real thanks for what they gave. Give each person one small part they enjoy. And choose one clear way to serve your neighbors that people can see and join."
+     },
+     {
+      "k": "big",
+      "h": "Name one strength.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of the last few months in your community. Notice one moment when it was at its best, a meal, a visit, a welcome, a song. Name the strength in that moment, out loud, so you can bring it to your people.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the last few months in your community.",
+       "Notice one moment when it was at its best, a meal, a visit, a welcome, a song.",
+       {
+        "t": "Name the strength in that moment, out loud, so you can bring it to your people.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"If everyone just tried harder.\"",
+       "\"It's the young families' fault.\"",
+       "Big decisions in a small room"
+      ],
+      "say": "Some words close the door. If everyone just tried harder, which turns grief into guilt. It's the young families' fault, or anyone's fault, which turns neighbors into blame. And big decisions about the building made in a small room. Instead try, we are smaller than we were, so let's talk about it together."
+     },
+     {
+      "k": "card",
+      "title": "The building and the money",
+      "body": "Share the facts openly. Decide together.",
+      "say": "Talk about the building and the money openly. Share the facts in plain words, with a clear way for everyone to be heard. Reach out to your faith body, a network, or a nearby congregation. Partnerships, shared space, and shared seasons of worship can open doors no one expected."
+     },
+     {
+      "k": "big",
+      "h": "Small can be strong.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find a peer who leads a small community too, and lean on each other. Rest is part of leading well. Small can be strong. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When Our Church Is Growing Smaller",
+      "sub": "For the Leader",
+      "say": "This is for whoever is guiding a community or a group through a season of growing smaller: a leader, a board member, a coordinator, or a group leader."
+     },
+     {
+      "k": "big",
+      "h": "True to who we are.",
+      "sub": "Your worth rests here.",
+      "say": "If you lead a community that is growing smaller, you may feel every empty seat. You may wonder what you missed, or feel pressure to turn it around fast. Here is a steadier measure. Ask whether the community is true to who it is, more than whether the room is full."
+     },
+     {
+      "k": "flow",
+      "h": "Three steps, in order",
+      "steps": [
+       [
+        "Grieve",
+        "Remember what was"
+       ],
+       [
+        "Name strengths",
+        "What we do well now"
+       ],
+       [
+        "Then decide",
+        "Building, money, future"
+       ]
+      ],
+      "say": "Take three steps, in this order. First, grieve together, with a gathering to remember what was. Second, name your strengths, the two or three things this community does well right now. Then, and only then, decide the big things, the building, the budget, and the future. Decisions made after grief tend to be wiser and kinder.",
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Simplify on purpose",
+      "items": [
+       [
+        "Fewer committees",
+        "Combine and shorten"
+       ],
+       [
+        "Let programs rest",
+        "With thanks"
+       ],
+       [
+        "Small parts",
+        "Each person, one piece"
+       ],
+       [
+        "One clear service",
+        "Neighbors can see it"
+       ]
+      ],
+      "say": "Simplify on purpose. Combine committees and shorten meetings. Let some programs rest, with real thanks for what they gave. Give each person one small part they enjoy. And choose one clear way to serve your neighbors that people can see and join."
+     },
+     {
+      "k": "big",
+      "h": "Name one strength.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of the last few months in your community. Notice one moment when it was at its best, a meal, a visit, a welcome, a song. Name the strength in that moment, out loud, so you can bring it to your people.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the last few months in your community.",
+       "Notice one moment when it was at its best, a meal, a visit, a welcome, a song.",
+       {
+        "t": "Name the strength in that moment, out loud, so you can bring it to your people.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"If everyone just tried harder.\"",
+       "\"It's the young families' fault.\"",
+       "Big decisions in a small room"
+      ],
+      "say": "Some words close the door. If everyone just tried harder, which turns grief into guilt. It's the young families' fault, or anyone's fault, which turns neighbors into blame. And big decisions about the building made in a small room. Instead try, we are smaller than we were, so let's talk about it together."
+     },
+     {
+      "k": "card",
+      "title": "The building and the money",
+      "body": "Share the facts openly. Decide together.",
+      "say": "Talk about the building and the money openly. Share the facts in plain words, with a clear way for everyone to be heard. Reach out to a network, a partner, or a nearby community. Partnerships, shared space, and shared seasons of gathering can open doors no one expected."
+     },
+     {
+      "k": "big",
+      "h": "Small can be strong.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find a peer who leads a small community too, and lean on each other. Rest is part of leading well. Small can be strong. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "volunteers-empty",
+   "ring": "gw-faith",
+   "title": "Volunteers Running on Empty",
+   "you": {
+    "id": "gr-g-volunteers-empty-you",
+    "guide": "volunteers-empty",
+    "side": "you",
+    "title": "Volunteers Running on Empty",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group whose helpers are worn out.",
+    "sources": [
+     "maslach"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Volunteers Running on Empty",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when the people who keep our community going are running on empty."
+     },
+     {
+      "k": "big",
+      "h": "Tired from giving a lot.",
+      "sub": "A sign of love, stretched far.",
+      "say": "Many of us know the faces. The same people make the coffee, teach the children, visit the sick, and lock the doors. If our helpers are tired, it's because they've given so much, for so long. That's a sign of love, stretched far. And it's something we can answer together."
+     },
+     {
+      "k": "points",
+      "h": "What it can look like",
+      "items": [
+       [
+        "Worn out",
+        "Rest barely refills"
+       ],
+       [
+        "Short tempers",
+        "Then a quick sorry"
+       ],
+       [
+        "Empty sign-ups",
+        "The same few again"
+       ],
+       [
+        "Quiet stepping away",
+        "Missing meetings"
+       ]
+      ],
+      "say": "Here's what it can look like. Helpers who feel worn out, even after a rest. Short tempers, followed by a quick sorry. Sign-up sheets that stay empty, until the same few fill them in again. And people quietly stepping away. If this sounds familiar, our community is in good company, and it can turn."
+     },
+     {
+      "k": "big",
+      "h": "Hands open, together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together now. Put your hands in your lap and make two tight fists, as if you were holding everything. Breathe in. Now breathe out slowly and open your hands, palms up, and let them rest.",
+      "beats": [
+       "Let's do this together now.",
+       "Put your hands in your lap and make two tight fists, as if you were holding everything.",
+       "Breathe in.",
+       {
+        "t": "Now breathe out slowly and open your hands, palms up, and let them rest.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Set something down",
+        "Pause or shrink one thing"
+       ],
+       [
+        "Small tasks",
+        "Clear and short"
+       ],
+       [
+        "Teams of two",
+        "No one serves alone"
+       ],
+       [
+        "A season of rest",
+        "With thanks"
+       ]
+      ],
+      "say": "Here's what helps. Set something down, and pause or shrink one thing this season. Break big jobs into small, clear tasks with an end date. Serve in teams of two or three, so everyone has company. And give long-serving helpers a season of rest, with real thanks."
+     },
+     {
+      "k": "card",
+      "title": "Rest is part of serving.",
+      "body": "A gift to the helper and to all of us.",
+      "say": "Rest is part of serving. When a helper takes a season off, it's a gift to them and to all of us. It makes room for someone new to try a small task. Many traditions honor a time to stop, and our community can too."
+     },
+     {
+      "k": "card",
+      "title": "Try one small thing.",
+      "body": "Ask a helper: may I join you?",
+      "say": "If you've wanted to help and wondered how, here's a simple way in. Find one helper this week and ask, may I join you next time? One small task, alongside someone, is how many great helpers begin."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are tired because we've given a lot.",
+       "Rest is part of serving.",
+       "Many hands, small parts."
+      ],
+      "say": "Here are words we can say together. We are tired because we've given a lot. Rest is part of serving. Many hands, small parts."
+     },
+     {
+      "k": "big",
+      "h": "Many hands, lighter load.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Thank you to every helper in this community. Many hands make a lighter load. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Volunteers Running on Empty",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when the people who keep our community going are running on empty."
+     },
+     {
+      "k": "big",
+      "h": "Tired from giving a lot.",
+      "sub": "A sign of love, stretched far.",
+      "say": "Many of us know the faces. The same people make the coffee, teach the children, visit the sick, and lock the doors. If our helpers are tired, it's because they've given so much, for so long. That's a sign of love, stretched far. And it's something we can answer together."
+     },
+     {
+      "k": "points",
+      "h": "What it can look like",
+      "items": [
+       [
+        "Worn out",
+        "Rest barely refills"
+       ],
+       [
+        "Short tempers",
+        "Then a quick sorry"
+       ],
+       [
+        "Empty sign-ups",
+        "The same few again"
+       ],
+       [
+        "Quiet stepping away",
+        "Missing meetings"
+       ]
+      ],
+      "say": "Here's what it can look like. Helpers who feel worn out, even after a rest. Short tempers, followed by a quick sorry. Sign-up sheets that stay empty, until the same few fill them in again. And people quietly stepping away. If this sounds familiar, our community is in good company, and it can turn."
+     },
+     {
+      "k": "big",
+      "h": "Hands open, together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together now. Put your hands in your lap and make two tight fists, as if you were holding everything. Breathe in. Now breathe out slowly and open your hands, palms up, and let them rest.",
+      "beats": [
+       "Let's do this together now.",
+       "Put your hands in your lap and make two tight fists, as if you were holding everything.",
+       "Breathe in.",
+       {
+        "t": "Now breathe out slowly and open your hands, palms up, and let them rest.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Set something down",
+        "Pause or shrink one thing"
+       ],
+       [
+        "Small tasks",
+        "Clear and short"
+       ],
+       [
+        "Teams of two",
+        "No one serves alone"
+       ],
+       [
+        "A season of rest",
+        "With thanks"
+       ]
+      ],
+      "say": "Here's what helps. Set something down, and pause or shrink one thing this season. Break big jobs into small, clear tasks with an end date. Serve in teams of two or three, so everyone has company. And give long-serving helpers a season of rest, with real thanks."
+     },
+     {
+      "k": "card",
+      "title": "Rest is part of serving.",
+      "body": "A gift to the helper and to all of us.",
+      "say": "Rest is part of serving. When a helper takes a season off, it's a gift to them and to all of us. It makes room for someone new to try a small task. Our community can honor a time to stop."
+     },
+     {
+      "k": "card",
+      "title": "Try one small thing.",
+      "body": "Ask a helper: may I join you?",
+      "say": "If you've wanted to help and wondered how, here's a simple way in. Find one helper this week and ask, may I join you next time? One small task, alongside someone, is how many great helpers begin."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are tired because we've given a lot.",
+       "Rest is part of serving.",
+       "Many hands, small parts."
+      ],
+      "say": "Here are words we can say together. We are tired because we've given a lot. Rest is part of serving. Many hands, small parts."
+     },
+     {
+      "k": "big",
+      "h": "Many hands, lighter load.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Thank you to every helper in this community. Many hands make a lighter load. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-volunteers-empty-helper",
+    "guide": "volunteers-empty",
+    "side": "helper",
+    "title": "Volunteers Running on Empty",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the pastor, coordinator, or group leader whose volunteers are worn out.",
+    "sources": [
+     "maslach",
+     "figley"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Volunteers Running on Empty",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, volunteer coordinator, or group leader whose helpers are running on empty."
+     },
+     {
+      "k": "big",
+      "h": "Look at the load first.",
+      "sub": "Then the people.",
+      "say": "When volunteers burn out, it usually says more about the load than about the people. Too many programs, too few hands, jobs that go on forever. So the answer starts with the load. Fewer things, smaller tasks, and clear seasons."
+     },
+     {
+      "k": "points",
+      "h": "Map the load",
+      "items": [
+       [
+        "Every role",
+        "And who fills it"
+       ],
+       [
+        "The many-hatted",
+        "Who carries five jobs?"
+       ],
+       [
+        "End dates",
+        "Every role gets one"
+       ],
+       [
+        "One thing to pause",
+        "This season"
+       ]
+      ],
+      "say": "Start by mapping the load. Write down every volunteer role and who fills it. Notice the people who wear five hats. Give every role an end date, so people can say yes without saying forever. And choose one thing to pause this season."
+     },
+     {
+      "k": "big",
+      "h": "One person to thank.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Picture your most reliable helper, the one who always says yes. Think of one specific thing they did recently that mattered. Decide right now how and when you'll thank them for it, this week.",
+      "beats": [
+       "Let's pause here.",
+       "Picture your most reliable helper, the one who always says yes.",
+       "Think of one specific thing they did recently that mattered.",
+       {
+        "t": "Decide right now how and when you'll thank them for it, this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"If you don't do it, no one will.\"",
+       "\"She never takes a break!\"",
+       "Asking the same few, first"
+      ],
+      "say": "Some words wear helpers down. If you don't do it, no one will, which turns serving into guilt. She never takes a break, said as praise. And always asking the same reliable few first. Instead try, you've given so much. What would a season of rest look like for you?"
+     },
+     {
+      "k": "card",
+      "title": "Invite, one person at a time.",
+      "body": "A small task, alongside a friendly helper.",
+      "say": "Announcements rarely bring new helpers. Personal invitations do. Ask one newer person at a time to try one small task alongside a friendly helper. Ask what they love to do, and match them to it. People stay when the work fits who they are."
+     },
+     {
+      "k": "card",
+      "title": "Watch the helpers who hold pain.",
+      "body": "Visitors, prayer teams, grief helpers.",
+      "say": "Some helpers carry more than tasks. The ones who visit the sick, sit with the grieving, or answer late night calls absorb other people's pain. Check on them often. Offer them time to talk, and a real rest. If exhaustion or low mood lasts two weeks or more, point them to a doctor."
+     },
+     {
+      "k": "big",
+      "h": "Your rest leads the way.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leaders of volunteers are often the last to rest. Take your own season off when it's due. Your rest gives everyone permission to rest. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Volunteers Running on Empty",
+      "sub": "For the Leader",
+      "say": "This is for the pastor, volunteer coordinator, or group leader whose helpers are running on empty."
+     },
+     {
+      "k": "big",
+      "h": "Look at the load first.",
+      "sub": "Then the people.",
+      "say": "When volunteers burn out, it usually says more about the load than about the people. Too many programs, too few hands, jobs that go on forever. So the answer starts with the load. Fewer things, smaller tasks, and clear seasons."
+     },
+     {
+      "k": "points",
+      "h": "Map the load",
+      "items": [
+       [
+        "Every role",
+        "And who fills it"
+       ],
+       [
+        "The many-hatted",
+        "Who carries five jobs?"
+       ],
+       [
+        "End dates",
+        "Every role gets one"
+       ],
+       [
+        "One thing to pause",
+        "This season"
+       ]
+      ],
+      "say": "Start by mapping the load. Write down every volunteer role and who fills it. Notice the people who wear five hats. Give every role an end date, so people can say yes without saying forever. And choose one thing to pause this season."
+     },
+     {
+      "k": "big",
+      "h": "One person to thank.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Picture your most reliable helper, the one who always says yes. Think of one specific thing they did recently that mattered. Decide right now how and when you'll thank them for it, this week.",
+      "beats": [
+       "Let's pause here.",
+       "Picture your most reliable helper, the one who always says yes.",
+       "Think of one specific thing they did recently that mattered.",
+       {
+        "t": "Decide right now how and when you'll thank them for it, this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"If you don't do it, no one will.\"",
+       "\"She never takes a break!\"",
+       "Asking the same few, first"
+      ],
+      "say": "Some words wear helpers down. If you don't do it, no one will, which turns serving into guilt. She never takes a break, said as praise. And always asking the same reliable few first. Instead try, you've given so much. What would a season of rest look like for you?"
+     },
+     {
+      "k": "card",
+      "title": "Invite, one person at a time.",
+      "body": "A small task, alongside a friendly helper.",
+      "say": "Announcements rarely bring new helpers. Personal invitations do. Ask one newer person at a time to try one small task alongside a friendly helper. Ask what they love to do, and match them to it. People stay when the work fits who they are."
+     },
+     {
+      "k": "card",
+      "title": "Watch the helpers who hold pain.",
+      "body": "Visitors, support teams, grief helpers.",
+      "say": "Some helpers carry more than tasks. The ones who visit the sick, sit with the grieving, or answer late night calls absorb other people's pain. Check on them often. Offer them time to talk, and a real rest. If exhaustion or low mood lasts two weeks or more, point them to a doctor."
+     },
+     {
+      "k": "big",
+      "h": "Your rest leads the way.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leaders of volunteers are often the last to rest. Take your own season off when it's due. Your rest gives everyone permission to rest. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hurt-inside",
+   "ring": "gw-faith",
+   "title": "Hurt Inside Our Faith Community",
+   "you": {
+    "id": "gr-g-hurt-inside-you",
+    "guide": "hurt-inside",
+    "side": "you",
+    "title": "Hurt Inside Our Faith Community",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group after someone has been hurt among us.",
+    "sources": [
+     "exline"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hurt Inside Our Faith Community",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when someone has been hurt inside our own faith community."
+     },
+     {
+      "k": "big",
+      "h": "Hurt here cuts deep.",
+      "sub": "Because this place matters.",
+      "say": "When someone is hurt inside a community like ours, it cuts deep. This is a place that promised belonging, and for many of us, a holy place. So it makes sense if we feel sad, confused, or unsettled right now. Those feelings show how much this community matters."
+     },
+     {
+      "k": "points",
+      "h": "What we hold to",
+      "items": [
+       [
+        "Safety first",
+        "Always"
+       ],
+       [
+        "Listen and believe",
+        "Healing starts there"
+       ],
+       [
+        "Private stays private",
+        "Kindness in our words"
+       ],
+       [
+        "Learn and change",
+        "A safer home"
+       ]
+      ],
+      "say": "Here is what we hold to. Safety comes first, always. We listen to people who were hurt, and believe their experience, because healing starts there. We keep private stories private, and choose kind words about everyone. And we learn and change, so this can be a safer home for all of us."
+     },
+     {
+      "k": "big",
+      "h": "A hand on your heart.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. If you want to, place one hand over your heart. Breathe in slowly, and breathe out slowly. In the quiet, wish healing for anyone here who is hurting, and for this whole community.",
+      "beats": [
+       "Let's do this together now.",
+       "If you want to, place one hand over your heart.",
+       "Breathe in slowly, and breathe out slowly.",
+       {
+        "t": "In the quiet, wish healing for anyone here who is hurting, and for this whole community.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Healing has its own pace.",
+      "body": "Forgiveness is a gift, chosen in its own time.",
+      "say": "Healing has its own pace. People who were hurt may need space, or time, or support from outside our community. Forgiveness is a gift a person chooses in their own time. Our part is to be patient, kind, and safe."
+     },
+     {
+      "k": "card",
+      "title": "If you were hurt here",
+      "body": "You can tell a trusted person. You will be heard.",
+      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, call nine one one, and it will be reported to the authorities."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are sorry for the hurt that happened here.",
+       "Everyone deserves to be safe here.",
+       "We will listen, and we will learn."
+      ],
+      "say": "Here are words we can say together. We are sorry for the hurt that happened here. Everyone deserves to be safe and welcome here. We will listen, and we will learn."
+     },
+     {
+      "k": "big",
+      "h": "Safe, kind, and healing.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Together we can become a community that is safe, kind, and healing. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hurt Inside Our Faith Community",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when someone has been hurt inside our own group or community."
+     },
+     {
+      "k": "big",
+      "h": "Hurt here cuts deep.",
+      "sub": "Because this place matters.",
+      "say": "When someone is hurt inside a community like ours, it cuts deep. This is a place that promised belonging. So it makes sense if we feel sad, confused, or unsettled right now. Those feelings show how much this community matters."
+     },
+     {
+      "k": "points",
+      "h": "What we hold to",
+      "items": [
+       [
+        "Safety first",
+        "Always"
+       ],
+       [
+        "Listen and believe",
+        "Healing starts there"
+       ],
+       [
+        "Private stays private",
+        "Kindness in our words"
+       ],
+       [
+        "Learn and change",
+        "A safer home"
+       ]
+      ],
+      "say": "Here is what we hold to. Safety comes first, always. We listen to people who were hurt, and believe their experience, because healing starts there. We keep private stories private, and choose kind words about everyone. And we learn and change, so this can be a safer home for all of us."
+     },
+     {
+      "k": "big",
+      "h": "A hand on your heart.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. If you want to, place one hand over your heart. Breathe in slowly, and breathe out slowly. In the quiet, wish healing for anyone here who is hurting, and for this whole community.",
+      "beats": [
+       "Let's do this together now.",
+       "If you want to, place one hand over your heart.",
+       "Breathe in slowly, and breathe out slowly.",
+       {
+        "t": "In the quiet, wish healing for anyone here who is hurting, and for this whole community.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Healing has its own pace.",
+      "body": "Forgiveness is a gift, chosen in its own time.",
+      "say": "Healing has its own pace. People who were hurt may need space, or time, or support from outside our community. Forgiveness is a gift a person chooses in their own time. Our part is to be patient, kind, and safe."
+     },
+     {
+      "k": "card",
+      "title": "If you were hurt here",
+      "body": "You can tell a trusted person. You will be heard.",
+      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, call nine one one, and it will be reported to the authorities."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are sorry for the hurt that happened here.",
+       "Everyone deserves to be safe here.",
+       "We will listen, and we will learn."
+      ],
+      "say": "Here are words we can say together. We are sorry for the hurt that happened here. Everyone deserves to be safe and welcome here. We will listen, and we will learn."
+     },
+     {
+      "k": "big",
+      "h": "Safe, kind, and healing.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Together we can become a community that is safe, kind, and healing. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-hurt-inside-helper",
+    "guide": "hurt-inside",
+    "side": "helper",
+    "title": "Hurt Inside Our Faith Community",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the pastor, elder, board member, or group leader after someone has been hurt inside the community.",
+    "sources": [
+     "exline",
+     "smithfreyd14"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hurt Inside Our Faith Community",
+      "sub": "For the Leader",
+      "say": "This is for whoever leads a faith community or group after someone has been hurt inside it: a pastor, an elder, a board member, or a group leader."
+     },
+     {
+      "k": "flow",
+      "h": "Three steps, in order",
+      "steps": [
+       [
+        "Safety",
+        "Report harm right away"
+       ],
+       [
+        "Listen",
+        "Believe the experience"
+       ],
+       [
+        "Repair",
+        "Own it, change it"
+       ]
+      ],
+      "say": "Take three steps, in this order. First, safety. If a child or a vulnerable adult was harmed, or anyone is in danger, report it to the authorities right away, and follow your safety policy. Second, listen to the person who was hurt, privately and patiently, and believe their experience. Third, repair what you can. Own what belongs to the community, and change what needs changing.",
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "How a community responds matters.",
+      "body": "A good response helps heal. A cold one deepens the wound.",
+      "say": "How a community responds can matter as much as the first hurt. When people are believed, protected, and offered real repair, healing often begins. When they are hushed, doubted, or pushed aside to protect the community, the wound gets deeper. Your response can be the start of healing."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Let's keep this between us.\"",
+       "\"You must have misunderstood.\"",
+       "\"It's time to forgive and move on.\""
+      ],
+      "say": "Some words close the door. Let's keep this between us, when harm needs reporting. You must have misunderstood, which leaves a hurt person alone. And it's time to forgive and move on, which rushes a gift that comes in its own time. Instead try, thank you for telling me. I believe you. What would help right now?"
+     },
+     {
+      "k": "big",
+      "h": "Find your safety steps.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of your community's safety policy and reporting steps. Picture where they are written down, and who you would call first. If you are unsure, decide right now who you will ask this week.",
+      "beats": [
+       "Let's pause here.",
+       "Think of your community's safety policy and reporting steps.",
+       "Picture where they are written down, and who you would call first.",
+       {
+        "t": "If you are unsure, decide right now who you will ask this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Repair that is real",
+      "items": [
+       [
+        "A clear apology",
+        "For what was ours"
+       ],
+       [
+        "One real change",
+        "Policy, training, safeguards"
+       ],
+       [
+        "Honest, brief words",
+        "With their agreement"
+       ],
+       [
+        "An open door",
+        "At their pace"
+       ]
+      ],
+      "say": "Real repair has a few parts. A clear apology for what belongs to the community or its leaders. One real change, a policy, training, or new safeguards. Honest, brief words to the community, with the hurt person's agreement. And an open door for anyone who stepped away, at their own pace."
+     },
+     {
+      "k": "card",
+      "title": "Make the call.",
+      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
+      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+     },
+     {
+      "k": "card",
+      "title": "Look after the one carrying it",
+      "body": "A mentor, a peer, your faith body's support for leaders.",
+      "say": "This is heavy work, especially when you love everyone involved. Find your own support, a mentor, a peer leader, or your faith body's support for leaders. Steady, honest, and kind is enough."
+     },
+     {
+      "k": "big",
+      "h": "Safety, listening, repair.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Safety, listening, and repair. That is the path toward healing. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Hurt Inside Our Faith Community",
+      "sub": "For the Leader",
+      "say": "This is for whoever leads a community or group after someone has been hurt inside it: a leader, a board member, a coordinator, or a group leader."
+     },
+     {
+      "k": "flow",
+      "h": "Three steps, in order",
+      "steps": [
+       [
+        "Safety",
+        "Report harm right away"
+       ],
+       [
+        "Listen",
+        "Believe the experience"
+       ],
+       [
+        "Repair",
+        "Own it, change it"
+       ]
+      ],
+      "say": "Take three steps, in this order. First, safety. If a child or a vulnerable adult was harmed, or anyone is in danger, report it to the authorities right away, and follow your safety policy. Second, listen to the person who was hurt, privately and patiently, and believe their experience. Third, repair what you can. Own what belongs to the community, and change what needs changing.",
+      "cue": {
+       "at": [
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "How a community responds matters.",
+      "body": "A good response helps heal. A cold one deepens the wound.",
+      "say": "How a community responds can matter as much as the first hurt. When people are believed, protected, and offered real repair, healing often begins. When they are hushed, doubted, or pushed aside to protect the community, the wound gets deeper. Your response can be the start of healing."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Let's keep this between us.\"",
+       "\"You must have misunderstood.\"",
+       "\"It's time to forgive and move on.\""
+      ],
+      "say": "Some words close the door. Let's keep this between us, when harm needs reporting. You must have misunderstood, which leaves a hurt person alone. And it's time to forgive and move on, which rushes a gift that comes in its own time. Instead try, thank you for telling me. I believe you. What would help right now?"
+     },
+     {
+      "k": "big",
+      "h": "Find your safety steps.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of your community's safety policy and reporting steps. Picture where they are written down, and who you would call first. If you are unsure, decide right now who you will ask this week.",
+      "beats": [
+       "Let's pause here.",
+       "Think of your community's safety policy and reporting steps.",
+       "Picture where they are written down, and who you would call first.",
+       {
+        "t": "If you are unsure, decide right now who you will ask this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Repair that is real",
+      "items": [
+       [
+        "A clear apology",
+        "For what was ours"
+       ],
+       [
+        "One real change",
+        "Policy, training, safeguards"
+       ],
+       [
+        "Honest, brief words",
+        "With their agreement"
+       ],
+       [
+        "An open door",
+        "At their pace"
+       ]
+      ],
+      "say": "Real repair has a few parts. A clear apology for what belongs to the community or its leaders. One real change, a policy, training, or new safeguards. Honest, brief words to the community, with the hurt person's agreement. And an open door for anyone who stepped away, at their own pace."
+     },
+     {
+      "k": "card",
+      "title": "Make the call.",
+      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
+      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+     },
+     {
+      "k": "card",
+      "title": "Look after the one carrying it",
+      "body": "A mentor, a peer, or a trusted professional.",
+      "say": "This is heavy work, especially when you love everyone involved. Find your own support, a mentor, a peer leader, or a trusted professional. Steady, honest, and kind is enough."
+     },
+     {
+      "k": "big",
+      "h": "Safety, listening, repair.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Safety, listening, and repair. That is the path toward healing. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "divided",
+   "ring": "gw-faith",
+   "title": "Divided Over Big Issues",
+   "you": {
+    "id": "gr-g-divided-you",
+    "guide": "divided",
+    "side": "you",
+    "title": "Divided Over Big Issues",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group divided over a big question.",
+    "sources": [
+     "pranis"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Divided Over Big Issues",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when a big question has divided our community."
+     },
+     {
+      "k": "big",
+      "h": "Different views, one community.",
+      "sub": "We still belong to each other.",
+      "say": "People who love each other can see a big question in very different ways. Often our views grow from our deepest values and our life stories. Seeing it differently is part of being a real community. We can hold our differences with respect, and still belong to each other."
+     },
+     {
+      "k": "card",
+      "title": "Why we gather",
+      "body": "What we share runs deeper.",
+      "say": "Let's remember why we gather. We came together for a reason, to worship, to grow, to serve, to be a family for each other. That purpose is still here, and it runs deeper than any one question."
+     },
+     {
+      "k": "big",
+      "h": "Look around the room.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Take one slow breath. Then look around the room, gently, at each face you can see. As your eyes rest on each person, think quietly, you belong here too.",
+      "beats": [
+       "Let's do this together now.",
+       "Take one slow breath.",
+       "Then look around the room, gently, at each face you can see.",
+       {
+        "t": "As your eyes rest on each person, think quietly, you belong here too.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we talk with each other",
+      "items": [
+       [
+        "One at a time",
+        "Everyone listens"
+       ],
+       [
+        "Listen to understand",
+        "Ask what matters"
+       ],
+       [
+        "Kind words",
+        "Especially about the absent"
+       ],
+       [
+        "Rest is allowed",
+        "Step back when needed"
+       ]
+      ],
+      "say": "Here is how we can talk with each other. One person speaks at a time, and everyone listens. We listen to understand, and ask what matters most to each person. We use kind words, especially about people who aren't in the room. And anyone can step back and rest from the conversation when they need to."
+     },
+     {
+      "k": "card",
+      "title": "Side by side",
+      "body": "Meals, service, and time together.",
+      "say": "Some of our best healing happens side by side. Sharing a meal, serving our neighbors together, or simply laughing at the same table. When we work and eat together, we remember who we are to each other. The big question can rest for an evening, and our friendship can grow strong again."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We see this differently, and we still belong to each other.",
+       "Help me understand what matters to you.",
+       "What we share is deeper."
+      ],
+      "say": "Here are words we can say together. We see this differently, and we still belong to each other. Help me understand what matters to you. What we share is deeper than what divides us."
+     },
+     {
+      "k": "big",
+      "h": "Together, with respect.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We can stay together, with respect and love. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Divided Over Big Issues",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, when a big question has divided our community."
+     },
+     {
+      "k": "big",
+      "h": "Different views, one community.",
+      "sub": "We still belong to each other.",
+      "say": "People who love each other can see a big question in very different ways. Often our views grow from our deepest values and our life stories. Seeing it differently is part of being a real community. We can hold our differences with respect, and still belong to each other."
+     },
+     {
+      "k": "card",
+      "title": "Why we gather",
+      "body": "What we share runs deeper.",
+      "say": "Let's remember why we gather. We came together for a reason, to grow, to serve, to support each other. That purpose is still here, and it runs deeper than any one question."
+     },
+     {
+      "k": "big",
+      "h": "Look around the room.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Take one slow breath. Then look around the room, gently, at each face you can see. As your eyes rest on each person, think quietly, you belong here too.",
+      "beats": [
+       "Let's do this together now.",
+       "Take one slow breath.",
+       "Then look around the room, gently, at each face you can see.",
+       {
+        "t": "As your eyes rest on each person, think quietly, you belong here too.",
+        "w": 13
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How we talk with each other",
+      "items": [
+       [
+        "One at a time",
+        "Everyone listens"
+       ],
+       [
+        "Listen to understand",
+        "Ask what matters"
+       ],
+       [
+        "Kind words",
+        "Especially about the absent"
+       ],
+       [
+        "Rest is allowed",
+        "Step back when needed"
+       ]
+      ],
+      "say": "Here is how we can talk with each other. One person speaks at a time, and everyone listens. We listen to understand, and ask what matters most to each person. We use kind words, especially about people who aren't in the room. And anyone can step back and rest from the conversation when they need to."
+     },
+     {
+      "k": "card",
+      "title": "Side by side",
+      "body": "Meals, service, and time together.",
+      "say": "Some of our best healing happens side by side. Sharing a meal, serving our neighbors together, or simply laughing at the same table. When we work and eat together, we remember who we are to each other. The big question can rest for an evening, and our friendship can grow strong again."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We see this differently, and we still belong to each other.",
+       "Help me understand what matters to you.",
+       "What we share is deeper."
+      ],
+      "say": "Here are words we can say together. We see this differently, and we still belong to each other. Help me understand what matters to you. What we share is deeper than what divides us."
+     },
+     {
+      "k": "big",
+      "h": "Together, with respect.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "We can stay together, with respect and love. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-divided-helper",
+    "guide": "divided",
+    "side": "helper",
+    "title": "Divided Over Big Issues",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the pastor, elder, board member, or group leader holding a community divided over a big question.",
+    "sources": [
+     "fisher81",
+     "pranis"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Divided Over Big Issues",
+      "sub": "For the Leader",
+      "say": "This is for whoever is holding a faith community or group that is divided over a big question: a pastor, an elder, a board member, or a group leader."
+     },
+     {
+      "k": "big",
+      "h": "Hold the center.",
+      "sub": "For everyone, whatever they think.",
+      "say": "When a community divides, people from every side may look to you to agree with them. Your role is bigger than any side. Hold the center, the shared purpose that brings everyone together. Keep conversations safe and fair. And help every person be heard."
+     },
+     {
+      "k": "card",
+      "title": "Underneath the view",
+      "body": "Ask what matters most, and why.",
+      "say": "Views sit on top of something deeper, what a person values, fears, and hopes for. Two people with opposite views often share more underneath than they expect. So ask, what matters most to you about this, and why? Common ground often lives underneath."
+     },
+     {
+      "k": "flow",
+      "h": "A listening circle",
+      "steps": [
+       [
+        "Agreements first",
+        "How we will speak"
+       ],
+       [
+        "A talking piece",
+        "One voice at a time"
+       ],
+       [
+        "One question",
+        "What matters, and why"
+       ],
+       [
+        "Close together",
+        "Thanks for listening"
+       ]
+      ],
+      "say": "Try a listening circle. Begin with agreements about how everyone will speak. Use a talking piece, so one person speaks at a time and everyone else listens. Ask one question, what matters to you about this, and why? And close together, thanking everyone for listening.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Hear the other side.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of someone in your community who sees this question very differently from you. Picture their face. Now name, quietly, one value they might be protecting, something good they care about.",
+      "beats": [
+       "Let's pause here.",
+       "Think of someone in your community who sees this question very differently from you.",
+       "Picture their face.",
+       {
+        "t": "Now name, quietly, one value they might be protecting, something good they care about.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Those people\"",
+       "A quick vote, before listening",
+       "Using worship to recruit"
+      ],
+      "say": "Some habits deepen a divide. Speaking of those people, which turns neighbors into a group to oppose. A quick vote, before people have been heard. And using worship or announcements to recruit people to a side. Instead try, everyone here is welcome, whatever you think about this."
+     },
+     {
+      "k": "card",
+      "title": "When a decision must be made",
+      "body": "A clear, fair process. Everyone heard first.",
+      "say": "Sometimes a community must decide something. Explain the process before it begins. Hear everyone first. Make the decision in the open. And afterward, reach out to those who are disappointed. A fair process helps people stay, even when the outcome isn't what they hoped."
+     },
+     {
+      "k": "big",
+      "h": "Steady and fair.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find your own place to talk, with a mentor or a peer. Your steadiness and fairness are gifts to everyone. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Divided Over Big Issues",
+      "sub": "For the Leader",
+      "say": "This is for whoever is holding a community or group that is divided over a big question: a leader, a board member, a coordinator, or a group leader."
+     },
+     {
+      "k": "big",
+      "h": "Hold the center.",
+      "sub": "For everyone, whatever they think.",
+      "say": "When a community divides, people from every side may look to you to agree with them. Your role is bigger than any side. Hold the center, the shared purpose that brings everyone together. Keep conversations safe and fair. And help every person be heard."
+     },
+     {
+      "k": "card",
+      "title": "Underneath the view",
+      "body": "Ask what matters most, and why.",
+      "say": "Views sit on top of something deeper, what a person values, fears, and hopes for. Two people with opposite views often share more underneath than they expect. So ask, what matters most to you about this, and why? Common ground often lives underneath."
+     },
+     {
+      "k": "flow",
+      "h": "A listening circle",
+      "steps": [
+       [
+        "Agreements first",
+        "How we will speak"
+       ],
+       [
+        "A talking piece",
+        "One voice at a time"
+       ],
+       [
+        "One question",
+        "What matters, and why"
+       ],
+       [
+        "Close together",
+        "Thanks for listening"
+       ]
+      ],
+      "say": "Try a listening circle. Begin with agreements about how everyone will speak. Use a talking piece, so one person speaks at a time and everyone else listens. Ask one question, what matters to you about this, and why? And close together, thanking everyone for listening.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Hear the other side.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of someone in your community who sees this question very differently from you. Picture their face. Now name, quietly, one value they might be protecting, something good they care about.",
+      "beats": [
+       "Let's pause here.",
+       "Think of someone in your community who sees this question very differently from you.",
+       "Picture their face.",
+       {
+        "t": "Now name, quietly, one value they might be protecting, something good they care about.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Those people\"",
+       "A quick vote, before listening",
+       "Using gatherings to recruit"
+      ],
+      "say": "Some habits deepen a divide. Speaking of those people, which turns neighbors into a group to oppose. A quick vote, before people have been heard. And using gatherings or announcements to recruit people to a side. Instead try, everyone here is welcome, whatever you think about this."
+     },
+     {
+      "k": "card",
+      "title": "When a decision must be made",
+      "body": "A clear, fair process. Everyone heard first.",
+      "say": "Sometimes a community must decide something. Explain the process before it begins. Hear everyone first. Make the decision in the open. And afterward, reach out to those who are disappointed. A fair process helps people stay, even when the outcome isn't what they hoped."
+     },
+     {
+      "k": "big",
+      "h": "Steady and fair.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find your own place to talk, with a mentor or a peer. Your steadiness and fairness are gifts to everyone. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "leader-falls-short",
+   "ring": "gw-faith",
+   "title": "When a Leader Falls Short",
+   "you": {
+    "id": "gr-g-leader-falls-short-you",
+    "guide": "leader-falls-short",
+    "side": "you",
+    "title": "When a Leader Falls Short",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group after a trusted leader has fallen short.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When a Leader Falls Short",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, after a pastor, a faith leader, or a group leader we trusted has fallen short."
+     },
+     {
+      "k": "words",
+      "h": "Many feelings at once",
+      "items": [
+       "Shock",
+       "Sadness",
+       "Anger",
+       "Confusion",
+       "Worry for others"
+      ],
+      "say": "When a leader we trusted falls short, many feelings come at once. Shock. Sadness. Anger. Confusion. Worry, for anyone who was hurt, and for the leader's family. All of these feelings belong here. People feel them at different times and different speeds."
+     },
+     {
+      "k": "points",
+      "h": "What we hold to",
+      "items": [
+       [
+        "Safety first",
+        "Always, for everyone"
+       ],
+       [
+        "Those who were hurt",
+        "Supported first"
+       ],
+       [
+        "Truth, kindly",
+        "Private stays private"
+       ],
+       [
+        "Shared life",
+        "Steady, together"
+       ]
+      ],
+      "say": "Here is what we hold to. Safety comes first, always, for everyone. Anyone who was hurt is supported first. We tell the truth kindly, and keep private things private. And we keep our shared life steady, together, with other leaders stepping in."
+     },
+     {
+      "k": "big",
+      "h": "Breathe together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together now. Sit with your feet flat on the floor. Breathe in slowly, while I count to four. Now breathe out slowly, while I count to six, and feel the floor holding you up.",
+      "beats": [
+       "Let's do this together now.",
+       "Sit with your feet flat on the floor.",
+       "Breathe in slowly, while I count to four.",
+       {
+        "t": "Now breathe out slowly, while I count to six, and feel the floor holding you up.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Bigger than one person.",
+      "body": "Our community rests on more than any leader.",
+      "say": "Our community was never only one person. It rests on something larger, our shared faith, our purpose, and the people who show up for each other every week. That is still here, and it will carry us. Each time we gather, we help each other heal."
+     },
+     {
+      "k": "card",
+      "title": "If you were hurt",
+      "body": "Tell a trusted person. You will be believed.",
+      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed. If a child or a vulnerable adult has been harmed, or anyone is in danger, call nine one one, and it will be reported to the authorities."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are grieving, and we will hold each other.",
+       "Safety and truth come first here.",
+       "We will heal, together, in time."
+      ],
+      "say": "Here are words we can say together, aloud or quietly in our hearts. We are grieving, and we will hold each other. Safety and truth come first here. We will heal, together, in time."
+     },
+     {
+      "k": "big",
+      "h": "We heal together, in time.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Healing takes time, and some days will feel harder than others. We walk it together, one gathering at a time. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When a Leader Falls Short",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, after a leader we trusted has fallen short."
+     },
+     {
+      "k": "words",
+      "h": "Many feelings at once",
+      "items": [
+       "Shock",
+       "Sadness",
+       "Anger",
+       "Confusion",
+       "Worry for others"
+      ],
+      "say": "When a leader we trusted falls short, many feelings come at once. Shock. Sadness. Anger. Confusion. Worry, for anyone who was hurt, and for the leader's family. All of these feelings belong here. People feel them at different times and different speeds."
+     },
+     {
+      "k": "points",
+      "h": "What we hold to",
+      "items": [
+       [
+        "Safety first",
+        "Always, for everyone"
+       ],
+       [
+        "Those who were hurt",
+        "Supported first"
+       ],
+       [
+        "Truth, kindly",
+        "Private stays private"
+       ],
+       [
+        "Shared life",
+        "Steady, together"
+       ]
+      ],
+      "say": "Here is what we hold to. Safety comes first, always, for everyone. Anyone who was hurt is supported first. We tell the truth kindly, and keep private things private. And we keep our shared life steady, together, with other leaders stepping in."
+     },
+     {
+      "k": "big",
+      "h": "Breathe together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together now. Sit with your feet flat on the floor. Breathe in slowly, while I count to four. Now breathe out slowly, while I count to six, and feel the floor holding you up.",
+      "beats": [
+       "Let's do this together now.",
+       "Sit with your feet flat on the floor.",
+       "Breathe in slowly, while I count to four.",
+       {
+        "t": "Now breathe out slowly, while I count to six, and feel the floor holding you up.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Bigger than one person.",
+      "body": "Our community rests on more than any leader.",
+      "say": "Our community was never only one person. It rests on something larger, our shared purpose, and the people who show up for each other every week. That is still here, and it will carry us. Each time we gather, we help each other heal."
+     },
+     {
+      "k": "card",
+      "title": "If you were hurt",
+      "body": "Tell a trusted person. You will be believed.",
+      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed. If a child or a vulnerable adult has been harmed, or anyone is in danger, call nine one one, and it will be reported to the authorities."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We are grieving, and we will hold each other.",
+       "Safety and truth come first here.",
+       "We will heal, together, in time."
+      ],
+      "say": "Here are words we can say together, aloud or quietly in our hearts. We are grieving, and we will hold each other. Safety and truth come first here. We will heal, together, in time."
+     },
+     {
+      "k": "big",
+      "h": "We heal together, in time.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Healing takes time, and some days will feel harder than others. We walk it together, one gathering at a time. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-leader-falls-short-helper",
+    "guide": "leader-falls-short",
+    "side": "helper",
+    "title": "When a Leader Falls Short",
+    "sideName": "For the Leader",
+    "mins": 4,
+    "blurb": "For the elders, board members, staff, or co-leaders guiding a community after a leader falls short.",
+    "sources": [
+     "smithfreyd14",
+     "restoringfallen97"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When a Leader Falls Short",
+      "sub": "For the Leader",
+      "say": "This is for whoever guides a community after a trusted leader has fallen short: an elder, a board member, a staff member, or a co-leader."
+     },
+     {
+      "k": "flow",
+      "h": "In this order",
+      "steps": [
+       [
+        "Safety",
+        "Report harm right away"
+       ],
+       [
+        "Those who were hurt",
+        "Support them first"
+       ],
+       [
+        "The community",
+        "Truth, kindly, steady"
+       ],
+       [
+        "The leader",
+        "A separate path"
+       ]
+      ],
+      "say": "Work in this order. First, safety. Report any harm to a child or a vulnerable adult right away, and follow your safety policy. Second, support anyone who was hurt, privately, with help from outside the community. Third, the community, with honest, brief updates and steady shared life. Fourth, the leader who fell short, whose own path of accountability is separate, and guided by those responsible for it.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "How you respond matters.",
+      "body": "Believe, protect, tell the truth kindly.",
+      "say": "How a community responds can heal or deepen the harm. When people who were hurt are doubted or pushed aside to protect a leader or a reputation, the wound deepens. When they are believed, protected, and supported, healing can begin, for them and for the community."
+     },
+     {
+      "k": "big",
+      "h": "Name who you will call.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of the people outside this situation who can help guide the response, your faith body, a trusted leader, a legal or safety advisor. Picture one of them. Decide right now when you will call them.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the people outside this situation who can help guide the response, your faith body, a trusted leader, a legal or safety advisor.",
+       "Picture one of them.",
+       {
+        "t": "Decide right now when you will call them.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Telling the community",
+      "items": [
+       [
+        "What we can share",
+        "Honest and brief"
+       ],
+       [
+        "What stays private",
+        "To protect people"
+       ],
+       [
+        "Who is leading now",
+        "Names and roles"
+       ],
+       [
+        "When we will say more",
+        "A date"
+       ]
+      ],
+      "say": "When you tell the community, say what you can share, honestly and briefly. Say what stays private, and that it stays private to protect people. Name who is leading now. And give a date for the next update. Rumors grow fastest where facts are thin."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"We handle this ourselves.\"",
+       "\"Think of all the good he did.\"",
+       "\"It's time to forgive.\""
+      ],
+      "say": "Some words close the door. We handle this ourselves, when harm needs reporting. Think of all the good he did, which weighs a person's pain against a reputation. And it's time to forgive, which rushes a gift. Instead try, safety and truth come first, and your feelings belong here."
+     },
+     {
+      "k": "card",
+      "title": "Make the call.",
+      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
+      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+     },
+     {
+      "k": "card",
+      "title": "Look after the ones carrying it",
+      "body": "Support outside the community, for you too.",
+      "say": "This is one of the hardest seasons a leader can face. Find support outside the community, a mentor, a peer, a therapist, or your faith body's support for leaders. You can be steady and still grieve."
+     },
+     {
+      "k": "big",
+      "h": "Safety, truth, kindness.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Safety, truth, and kindness, in that order. Communities do heal. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When a Leader Falls Short",
+      "sub": "For the Leader",
+      "say": "This is for whoever guides a community after a trusted leader has fallen short: an elder, a board member, a staff member, or a co-leader."
+     },
+     {
+      "k": "flow",
+      "h": "In this order",
+      "steps": [
+       [
+        "Safety",
+        "Report harm right away"
+       ],
+       [
+        "Those who were hurt",
+        "Support them first"
+       ],
+       [
+        "The community",
+        "Truth, kindly, steady"
+       ],
+       [
+        "The leader",
+        "A separate path"
+       ]
+      ],
+      "say": "Work in this order. First, safety. Report any harm to a child or a vulnerable adult right away, and follow your safety policy. Second, support anyone who was hurt, privately, with help from outside the community. Third, the community, with honest, brief updates and steady shared life. Fourth, the leader who fell short, whose own path of accountability is separate, and guided by those responsible for it.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "How you respond matters.",
+      "body": "Believe, protect, tell the truth kindly.",
+      "say": "How a community responds can heal or deepen the harm. When people who were hurt are doubted or pushed aside to protect a leader or a reputation, the wound deepens. When they are believed, protected, and supported, healing can begin, for them and for the community."
+     },
+     {
+      "k": "big",
+      "h": "Name who you will call.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of the people outside this situation who can help guide the response, the hosting organization, a trusted leader, a legal or safety advisor. Picture one of them. Decide right now when you will call them.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the people outside this situation who can help guide the response, the hosting organization, a trusted leader, a legal or safety advisor.",
+       "Picture one of them.",
+       {
+        "t": "Decide right now when you will call them.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Telling the community",
+      "items": [
+       [
+        "What we can share",
+        "Honest and brief"
+       ],
+       [
+        "What stays private",
+        "To protect people"
+       ],
+       [
+        "Who is leading now",
+        "Names and roles"
+       ],
+       [
+        "When we will say more",
+        "A date"
+       ]
+      ],
+      "say": "When you tell the community, say what you can share, honestly and briefly. Say what stays private, and that it stays private to protect people. Name who is leading now. And give a date for the next update. Rumors grow fastest where facts are thin."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"We handle this ourselves.\"",
+       "\"Think of all the good he did.\"",
+       "\"It's time to forgive.\""
+      ],
+      "say": "Some words close the door. We handle this ourselves, when harm needs reporting. Think of all the good he did, which weighs a person's pain against a reputation. And it's time to forgive, which rushes a gift. Instead try, safety and truth come first, and your feelings belong here."
+     },
+     {
+      "k": "card",
+      "title": "Make the call.",
+      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
+      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+     },
+     {
+      "k": "card",
+      "title": "Look after the ones carrying it",
+      "body": "Support outside the community, for you too.",
+      "say": "This is one of the hardest seasons a leader can face. Find support outside the community, a mentor, a peer, or a therapist. You can be steady and still grieve."
+     },
+     {
+      "k": "big",
+      "h": "Safety, truth, kindness.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Safety, truth, and kindness, in that order. Communities do heal. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "merger-move",
+   "ring": "gw-faith",
+   "title": "A Merger, a Move, or a New Building",
+   "you": {
+    "id": "gr-g-merger-move-you",
+    "guide": "merger-move",
+    "side": "you",
+    "title": "A Merger, a Move, or a New Building",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For everyone in a congregation or group going through a merger, a move, or a new building.",
+    "sources": [
+     "bridges91"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Merger, a Move, or a New Building",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, as our community merges with another, moves to a new place, or builds something new."
+     },
+     {
+      "k": "words",
+      "h": "All at once",
+      "items": [
+       "Excited",
+       "Sad to leave",
+       "Worried",
+       "Hopeful",
+       "A little lost"
+      ],
+      "say": "A big change like this brings many feelings at once. Excited, and sad to leave. Worried about what's ahead, and hopeful too. Maybe a little lost. Some of us feel all of these in the same afternoon. Every one of these feelings belongs here, and we can be gentle with each other as we feel them."
+     },
+     {
+      "k": "card",
+      "title": "Places hold memories.",
+      "body": "Saying goodbye is real grief.",
+      "say": "Places hold our memories. Weddings, baptisms, funerals, holidays, and ordinary weeks together. Saying goodbye to a place, or to old ways, is real grief, even when the change is good. It makes sense to miss it."
+     },
+     {
+      "k": "big",
+      "h": "Picture your favorite spot.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Close your eyes, or look down. Picture your favorite spot in our community, a room, a seat, a corner, a doorway. Remember one good moment that happened there, and smile at it.",
+      "beats": [
+       "Let's do this together now.",
+       "Close your eyes, or look down.",
+       "Picture your favorite spot in our community, a room, a seat, a corner, a doorway.",
+       {
+        "t": "Remember one good moment that happened there, and smile at it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Three steps through change",
+      "steps": [
+       [
+        "Say goodbye well",
+        "Thanks and stories"
+       ],
+       [
+        "Carry something",
+        "A bell, a quilt, a habit"
+       ],
+       [
+        "Make a new home",
+        "Together, with time"
+       ]
+      ],
+      "say": "Here are three steps through a change like this. Say goodbye well, with thanks and stories. Carry something with us, a bell, a quilt, a window, a favorite tradition. And make a new home together, giving it the time it needs.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Two stories, one community.",
+      "body": "Each brings gifts worth keeping.",
+      "say": "If two communities are becoming one, each brings its own story and its own gifts. Let's learn each other's names, songs, and ways. Let's sit with someone new at every meal. Let's ask each other, what do you love most about how your community does things? Both stories can live on in the community we become."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We give thanks for this place.",
+       "We carry our story with us.",
+       "This new place can become home."
+      ],
+      "say": "Here are words we can say together. We give thanks for this place, and for everything that happened here. We carry our story with us. This new place can become home, together."
+     },
+     {
+      "k": "big",
+      "h": "Home is us, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Home was always more than a building. Home is us, together. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Merger, a Move, or a New Building",
+      "sub": "For the Group",
+      "say": "This is for all of us, together, as our community merges with another, moves to a new place, or builds something new."
+     },
+     {
+      "k": "words",
+      "h": "All at once",
+      "items": [
+       "Excited",
+       "Sad to leave",
+       "Worried",
+       "Hopeful",
+       "A little lost"
+      ],
+      "say": "A big change like this brings many feelings at once. Excited, and sad to leave. Worried about what's ahead, and hopeful too. Maybe a little lost. Some of us feel all of these in the same afternoon. Every one of these feelings belongs here, and we can be gentle with each other as we feel them."
+     },
+     {
+      "k": "card",
+      "title": "Places hold memories.",
+      "body": "Saying goodbye is real grief.",
+      "say": "Places hold our memories. Weddings, celebrations, goodbyes, holidays, and ordinary weeks together. Saying goodbye to a place, or to old ways, is real grief, even when the change is good. It makes sense to miss it."
+     },
+     {
+      "k": "big",
+      "h": "Picture your favorite spot.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together now. Close your eyes, or look down. Picture your favorite spot in our community, a room, a seat, a corner, a doorway. Remember one good moment that happened there, and smile at it.",
+      "beats": [
+       "Let's do this together now.",
+       "Close your eyes, or look down.",
+       "Picture your favorite spot in our community, a room, a seat, a corner, a doorway.",
+       {
+        "t": "Remember one good moment that happened there, and smile at it.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Three steps through change",
+      "steps": [
+       [
+        "Say goodbye well",
+        "Thanks and stories"
+       ],
+       [
+        "Carry something",
+        "A bell, a quilt, a habit"
+       ],
+       [
+        "Make a new home",
+        "Together, with time"
+       ]
+      ],
+      "say": "Here are three steps through a change like this. Say goodbye well, with thanks and stories. Carry something with us, a bell, a quilt, a window, a favorite tradition. And make a new home together, giving it the time it needs.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Two stories, one community.",
+      "body": "Each brings gifts worth keeping.",
+      "say": "If two communities are becoming one, each brings its own story and its own gifts. Let's learn each other's names, songs, and ways. Let's sit with someone new at every meal. Let's ask each other, what do you love most about how your community does things? Both stories can live on in the community we become."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We give thanks for this place.",
+       "We carry our story with us.",
+       "This new place can become home."
+      ],
+      "say": "Here are words we can say together. We give thanks for this place, and for everything that happened here. We carry our story with us. This new place can become home, together."
+     },
+     {
+      "k": "big",
+      "h": "Home is us, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Home was always more than a building. Home is us, together. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-merger-move-helper",
+    "guide": "merger-move",
+    "side": "helper",
+    "title": "A Merger, a Move, or a New Building",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the pastor, board, building team, or group leader guiding a merger, a move, or a new building.",
+    "sources": [
+     "bridges91",
+     "tuckman65"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Merger, a Move, or a New Building",
+      "sub": "For the Leader",
+      "say": "This is for whoever guides a community through a merger, a move, or a new building: a pastor, a board, a building team, or a group leader."
+     },
+     {
+      "k": "card",
+      "title": "Change is the date. Transition is the journey.",
+      "body": "Plan the people, as well as the move.",
+      "say": "The change is the date on the calendar, the closing, the vote, the ribbon cutting. The transition is what people go through inside, an ending, a confusing time between, and a new beginning. Plan the people's journey as carefully as the move itself."
+     },
+     {
+      "k": "points",
+      "h": "Plan the farewell",
+      "items": [
+       [
+        "A last gathering",
+        "Room by room"
+       ],
+       [
+        "Stories and thanks",
+        "From many voices"
+       ],
+       [
+        "Things to carry",
+        "Chosen together"
+       ],
+       [
+        "A send-off",
+        "The community's way"
+       ]
+      ],
+      "say": "Plan the farewell as carefully as the opening. A last gathering in the old space, walking room to room. Stories and thanks from many voices, long-timers and newcomers alike. A few meaningful things to carry, chosen together. And a send-off in your community's own way."
+     },
+     {
+      "k": "big",
+      "h": "Name one thing to carry.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Picture the place or the way of life your community is leaving. Think of one object, story, or tradition that matters deeply to your people. Say it out loud, so you can bring it to your planning team.",
+      "beats": [
+       "Let's pause here.",
+       "Picture the place or the way of life your community is leaving.",
+       "Think of one object, story, or tradition that matters deeply to your people.",
+       {
+        "t": "Say it out loud, so you can bring it to your planning team.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "In a merger, two stories.",
+      "body": "A shared team. Gifts from both.",
+      "say": "In a merger, form a planning team with people from both communities. Invite each to tell its story and name its gifts. Choose together what to keep from each. Mix people on purpose, with shared meals and table groups. When one community's ways quietly replace the other's, people feel like guests in their own home."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Why are you still upset? It's decided.\"",
+       "\"It's just a building.\"",
+       "Surprise costs and dates"
+      ],
+      "say": "Some words close the door. Why are you still upset, it's decided, which treats grief as opposition. It's just a building, which dismisses years of memories. And surprise costs or dates, which wear away trust. Instead try, this is a good change, and it is also a loss. Both are true."
+     },
+     {
+      "k": "card",
+      "title": "Give it time to feel like home.",
+      "body": "Mark the first season, holiday, and year.",
+      "say": "New places take time to feel like home. Groups often go through a season of testing and settling after a big change. Say so out loud. Mark the first season, the first holiday, and the first anniversary in the new place. Check personally on anyone who seems left behind."
+     },
+     {
+      "k": "big",
+      "h": "Arrive together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find a peer who has led a move or merger, and lean on them. Celebrate the progress. The goal is to arrive together. The full guide has more, whenever you want it."
+     }
+    ],
+    "plainScenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Merger, a Move, or a New Building",
+      "sub": "For the Leader",
+      "say": "This is for whoever guides a community through a merger, a move, or a new building: a leader, a board, a building team, or a group leader."
+     },
+     {
+      "k": "card",
+      "title": "Change is the date. Transition is the journey.",
+      "body": "Plan the people, as well as the move.",
+      "say": "The change is the date on the calendar, the closing, the vote, the ribbon cutting. The transition is what people go through inside, an ending, a confusing time between, and a new beginning. Plan the people's journey as carefully as the move itself."
+     },
+     {
+      "k": "points",
+      "h": "Plan the farewell",
+      "items": [
+       [
+        "A last gathering",
+        "Room by room"
+       ],
+       [
+        "Stories and thanks",
+        "From many voices"
+       ],
+       [
+        "Things to carry",
+        "Chosen together"
+       ],
+       [
+        "A send-off",
+        "The community's way"
+       ]
+      ],
+      "say": "Plan the farewell as carefully as the opening. A last gathering in the old space, walking room to room. Stories and thanks from many voices, long-timers and newcomers alike. A few meaningful things to carry, chosen together. And a send-off in your community's own way."
+     },
+     {
+      "k": "big",
+      "h": "Name one thing to carry.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Picture the place or the way of life your community is leaving. Think of one object, story, or tradition that matters deeply to your people. Say it out loud, so you can bring it to your planning team.",
+      "beats": [
+       "Let's pause here.",
+       "Picture the place or the way of life your community is leaving.",
+       "Think of one object, story, or tradition that matters deeply to your people.",
+       {
+        "t": "Say it out loud, so you can bring it to your planning team.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "In a merger, two stories.",
+      "body": "A shared team. Gifts from both.",
+      "say": "In a merger, form a planning team with people from both communities. Invite each to tell its story and name its gifts. Choose together what to keep from each. Mix people on purpose, with shared meals and table groups. When one community's ways quietly replace the other's, people feel like guests in their own home."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Why are you still upset? It's decided.\"",
+       "\"It's just a building.\"",
+       "Surprise costs and dates"
+      ],
+      "say": "Some words close the door. Why are you still upset, it's decided, which treats grief as opposition. It's just a building, which dismisses years of memories. And surprise costs or dates, which wear away trust. Instead try, this is a good change, and it is also a loss. Both are true."
+     },
+     {
+      "k": "card",
+      "title": "Give it time to feel like home.",
+      "body": "Mark the first season, holiday, and year.",
+      "say": "New places take time to feel like home. Groups often go through a season of testing and settling after a big change. Say so out loud. Mark the first season, the first holiday, and the first anniversary in the new place. Check personally on anyone who seems left behind."
+     },
+     {
+      "k": "big",
+      "h": "Arrive together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Find a peer who has led a move or merger, and lean on them. Celebrate the progress. The goal is to arrive together. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
    "id": "hard-death",
    "ring": "gw-team",
    "title": "After a Hard Death",
@@ -8699,6 +16213,1310 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Your rest leads the way.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "Leads are often the most burned out and the last to say so. Find a peer, a supervisor, or your own employee assistance program. Your rest shows the team the way. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "coworker-conflict",
+   "ring": "gw-team",
+   "title": "Conflict Between Coworkers",
+   "you": {
+    "id": "gr-g-coworker-conflict-you",
+    "guide": "coworker-conflict",
+    "side": "you",
+    "title": "Conflict Between Coworkers",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole team when tension between coworkers is affecting everyone.",
+    "sources": [
+     "edmondson99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Conflict Between Coworkers",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, when tension between coworkers is affecting all of us."
+     },
+     {
+      "k": "big",
+      "h": "Good teams have conflict.",
+      "sub": "What matters is how we handle it.",
+      "say": "Every team that works closely together has conflict sometimes. It often grows from real differences in how we work and what we care about, plus the pressure we're under. Good teams have conflict too. What matters is how we handle it."
+     },
+     {
+      "k": "points",
+      "h": "When tension spreads",
+      "items": [
+       [
+        "Short words",
+        "An edge in meetings"
+       ],
+       [
+        "Caught in the middle",
+        "Asked to take sides"
+       ],
+       [
+        "Avoiding",
+        "The break room, the hallway"
+       ],
+       [
+        "Work slips",
+        "Handoffs, ideas"
+       ]
+      ],
+      "say": "When tension spreads, we notice it. Short words, and an edge in meetings. People caught in the middle, asked to take sides. Avoiding the break room or the hallway. And the work slipping, handoffs missed and ideas left unsaid. Naming it is the first step to fixing it."
+     },
+     {
+      "k": "big",
+      "h": "Shoulders down, together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together right now. Lift your shoulders up toward your ears, and hold them there. Breathe in. Now let your shoulders drop as you breathe out, and let your jaw soften too.",
+      "beats": [
+       "Let's do this together right now.",
+       "Lift your shoulders up toward your ears, and hold them there.",
+       "Breathe in.",
+       {
+        "t": "Now let your shoulders drop as you breathe out, and let your jaw soften too.",
+        "w": 9
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "How this team disagrees",
+      "items": [
+       [
+        "Directly",
+        "To each other first"
+       ],
+       [
+        "Privately",
+        "Before the group"
+       ],
+       [
+        "With respect",
+        "Even when it is hard"
+       ],
+       [
+        "About the work",
+        "And what we each need"
+       ]
+      ],
+      "say": "Here's how a team can agree to disagree well. Directly, talking to each other before talking about each other. Privately first, before bringing it to the group. With respect, even when it's hard. And focused on the work, and what each of us needs to do it well."
+     },
+     {
+      "k": "card",
+      "title": "Ask, then listen.",
+      "body": "What did you mean by that?",
+      "say": "Many conflicts grow from a guess about what someone meant. So ask, then listen. When you said that, what did you mean? Often the answer is kinder than the guess. And if you're the one caught in the middle, you can say, I'd rather stay out of it, have you talked with them directly?"
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We can disagree and still work well together.",
+       "Talk to each other, then about the work.",
+       "Ask, then listen."
+      ],
+      "say": "Here are words we can say together. We can disagree and still work well together. Talk to each other, then about the work. Ask, then listen."
+     },
+     {
+      "k": "big",
+      "h": "Stronger after repair.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Teams that repair well often come out stronger, with more trust than before. If tension turns into harassment or threats, bring in human resources right away. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-coworker-conflict-helper",
+    "guide": "coworker-conflict",
+    "side": "helper",
+    "title": "Conflict Between Coworkers",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the manager, supervisor, or team lead when coworkers are in conflict.",
+    "sources": [
+     "fisher81",
+     "edmondson99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Conflict Between Coworkers",
+      "sub": "For the Leader",
+      "say": "This is for the manager, supervisor, or team lead when coworkers are in conflict."
+     },
+     {
+      "k": "big",
+      "h": "Early and fair.",
+      "sub": "Small attention now saves a lot later.",
+      "say": "Many leads hope a conflict will pass on its own. Some do. Many grow. Steady, fair attention, early, usually keeps a conflict small. You don't need to solve it for them. You help them talk it through."
+     },
+     {
+      "k": "flow",
+      "h": "A repair path",
+      "steps": [
+       [
+        "Listen to each",
+        "Privately first"
+       ],
+       [
+        "Bring them together",
+        "Clear ground rules"
+       ],
+       [
+        "Underneath",
+        "What each one needs"
+       ],
+       [
+        "Follow up",
+        "Notice progress"
+       ]
+      ],
+      "say": "Here's a simple repair path. Listen to each person privately first, to understand. Then bring them together with clear ground rules, one speaks, one listens. Help them look underneath their positions, at what each one needs to do the work well. And follow up, noticing progress out loud.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Positions and needs",
+      "body": "Look for what each person needs underneath.",
+      "say": "A position is what someone insists on. A need is why. One coworker insists on email updates. Another insists on quick hallway check-ins. Underneath, both may need the same thing, to know what's happening in time. When people see shared needs, solutions appear."
+     },
+     {
+      "k": "big",
+      "h": "One question to ask.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Picture the two people in conflict on your team. Think of one open question you could ask each of them privately, such as, what do you need to do your work well here? Say your question out loud now, so it's ready.",
+      "beats": [
+       "Let's pause here.",
+       "Picture the two people in conflict on your team.",
+       "Think of one open question you could ask each of them privately, such as, what do you need to do your work well here?",
+       {
+        "t": "Say your question out loud now, so it's ready.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"You two just need to get along.\"",
+       "\"She told me you...\"",
+       "A forced apology"
+      ],
+      "say": "Some words make conflict worse. You two just need to get along, which skips the real issue. She told me you, which carries one side's story. And a forced apology, which rarely repairs anything. Instead try, I want to help you two work well together. What would help?"
+     },
+     {
+      "k": "card",
+      "title": "When it crosses a line",
+      "body": "Harassment, discrimination, threats: HR now.",
+      "say": "Some conflict crosses a line. Harassment, discrimination, threats, or a pattern that keeps hurting someone. Bring in human resources right away, and follow your organization's policies. If anyone is in danger, call nine one one. Safety comes before repair."
+     },
+     {
+      "k": "big",
+      "h": "Fair and steady is enough.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Leading through conflict is draining. Talk it through with a peer lead, a supervisor, or your employee assistance program. Fair and steady is enough. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "new-leader",
+   "ring": "gw-team",
+   "title": "A New Leader",
+   "you": {
+    "id": "gr-g-new-leader-you",
+    "guide": "new-leader",
+    "side": "you",
+    "title": "A New Leader",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole team welcoming a new leader.",
+    "sources": [
+     "tuckman65"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A New Leader",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, as we welcome a new leader."
+     },
+     {
+      "k": "words",
+      "h": "What many of us feel",
+      "items": [
+       "Hopeful",
+       "Curious",
+       "Uneasy",
+       "Missing the old leader",
+       "Waiting to see"
+      ],
+      "say": "A new leader brings many feelings at once. Hopeful. Curious. A little uneasy about what might change. Missing the leader before. Or simply waiting to see. All of these are normal. A new leader changes the whole team, and the whole team helps the new leader."
+     },
+     {
+      "k": "big",
+      "h": "A season of learning each other.",
+      "sub": "It takes time, and it passes.",
+      "say": "Teams usually go through a season of testing and adjusting with a new leader. Small changes can feel bigger than they are. Questions come up about how decisions get made. That season is normal. With patience and honest talk, it passes, and trust grows."
+     },
+     {
+      "k": "big",
+      "h": "One thing we do well.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together right now. Sit back, and take one easy breath. Think of one thing this team does really well, something you're proud of. Hold it in mind, and get ready to share it with our new leader.",
+      "beats": [
+       "Let's do this together right now.",
+       "Sit back, and take one easy breath.",
+       "Think of one thing this team does really well, something you're proud of.",
+       {
+        "t": "Hold it in mind, and get ready to share it with our new leader.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Share our story",
+        "What works, what matters"
+       ],
+       [
+        "Ask early",
+        "Help us understand"
+       ],
+       [
+        "Say what we need",
+        "Kindly and clearly"
+       ],
+       [
+        "Give it time",
+        "Trust grows slowly"
+       ]
+      ],
+      "say": "Here's what helps. Share our story with the new leader, what works and what matters to us. Ask questions early, such as, can you help us understand the reason for this change? Say what we need, kindly and clearly. And give it time, because trust grows one conversation at a time. Our new leader is learning us, just as we are learning them."
+     },
+     {
+      "k": "card",
+      "title": "Honor the last leader too.",
+      "body": "A good goodbye makes room for a good hello.",
+      "say": "If we miss the leader who came before, that's a sign they mattered. We can thank them, and carry forward what they taught us. A good goodbye makes room for a good hello. Our new leader deserves a fair, fresh start."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "Welcome. Here's who we are.",
+       "Help us understand, and we'll help you.",
+       "We'll learn each other, one talk at a time."
+      ],
+      "say": "Here are words we can say together. Welcome, here's who we are. Help us understand, and we'll help you understand us. We'll learn each other, one conversation at a time."
+     },
+     {
+      "k": "big",
+      "h": "A fresh start, together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "A new leader is a fresh start for all of us. Each welcome, each question, and each honest conversation helps. We'll build it together. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-new-leader-helper",
+    "guide": "new-leader",
+    "side": "helper",
+    "title": "A New Leader",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the new manager, supervisor, or director, and the leader who hired them.",
+    "sources": [
+     "tuckman65",
+     "edmondson99",
+     "bridges91"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A New Leader",
+      "sub": "For the Leader",
+      "say": "This is for the new manager, supervisor, or director joining a team, and for the leader who brought them in."
+     },
+     {
+      "k": "big",
+      "h": "Listen first. Change slowly.",
+      "sub": "Trust comes before big moves.",
+      "say": "As a new leader, you'll see things you want to change right away. Hold most of them for now. Listen first, and change slowly. Learn why things are the way they are. Trust you earn in the first months makes every later change easier."
+     },
+     {
+      "k": "points",
+      "h": "Your first one-on-ones",
+      "items": [
+       [
+        "What works here?",
+        "Protect it"
+       ],
+       [
+        "What would you change?",
+        "Ideas to try"
+       ],
+       [
+        "What do you need?",
+        "From me"
+       ],
+       [
+        "How do you like to talk?",
+        "Their style"
+       ]
+      ],
+      "say": "Meet one-on-one with each person early, and ask the same few questions. What's working well here, so you can protect it. What would you change, so you hear their ideas. What do you need from me? And how do you like to communicate? Write down what you hear, and look for patterns."
+     },
+     {
+      "k": "big",
+      "h": "One question to ask.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Think of the person on your new team you know least. Picture their face, and their work. Decide right now one question you'll ask them this week, and say it out loud.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the person on your new team you know least.",
+       "Picture their face, and their work.",
+       {
+        "t": "Decide right now one question you'll ask them this week, and say it out loud.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "card",
+      "title": "Explain every change.",
+      "body": "The reason, and room for questions.",
+      "say": "When you do make changes, explain the reason, and invite questions. Small early wins help, especially ones the team asked for. Teams often go through a season of testing with a new leader. Questions and pushback are part of that season. Meet them with curiosity, and trust grows."
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"At my last job, we...\"",
+       "\"That's how it used to be.\"",
+       "Silence, taken as agreement"
+      ],
+      "say": "Some habits slow trust. At my last job, we, said too often, which can sound like the team's ways don't count. Speaking poorly of the leader before you. And taking silence as agreement, when people may simply be waiting to see. Instead try, help me understand how this works here."
+     },
+     {
+      "k": "card",
+      "title": "Make it safe to speak up.",
+      "body": "Thank people for honest words.",
+      "say": "Ask for honest feedback, and thank people for it, especially when it's hard to hear. Teams that feel safe speaking up bring problems early, while they're small. One sharp reaction can quiet a team for months. Steady thanks builds a team that tells you the truth."
+     },
+     {
+      "k": "big",
+      "h": "Curious and steady.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Starting as a new leader can feel lonely. Find a peer, a mentor, or your employee assistance program. Curious and steady is enough for the first months. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "heavy-workload",
+   "ring": "gw-team",
+   "title": "Heavy Workload and Deadlines",
+   "you": {
+    "id": "gr-g-heavy-workload-you",
+    "guide": "heavy-workload",
+    "side": "you",
+    "title": "Heavy Workload and Deadlines",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole team facing big deadlines or a busy season.",
+    "sources": [],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Heavy Workload and Deadlines",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, as we face a heavy season of work and big deadlines."
+     },
+     {
+      "k": "big",
+      "h": "A heavy season, with an end.",
+      "sub": "We carry it together.",
+      "say": "Every team has heavy seasons. Big deadlines, a surge of work, or a stretch with too few hands. A heavy season can bring us closer, as we pitch in for each other. The key is to carry it together, and to know when it ends."
+     },
+     {
+      "k": "flow",
+      "h": "Sort the work together",
+      "steps": [
+       [
+        "Must happen",
+        "Our first things"
+       ],
+       [
+        "Can wait",
+        "After the deadline"
+       ],
+       [
+        "Set down",
+        "For this season"
+       ]
+      ],
+      "say": "Let's sort the work together. Some things must happen, those are our first things. Some things can wait until after the deadline. And some things we can set down for this season. When we agree on this, everyone knows where to put their energy.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "big",
+      "h": "Stand and stretch, together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together right now. If you can, stand up, or sit tall. Reach both arms up high, and breathe in. Now let your arms float down slowly as you breathe out, and roll your shoulders back twice.",
+      "beats": [
+       "Let's do this together right now.",
+       "If you can, stand up, or sit tall.",
+       "Reach both arms up high, and breathe in.",
+       {
+        "t": "Now let your arms float down slowly as you breathe out, and roll your shoulders back twice.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "Protect the basics",
+      "items": [
+       [
+        "Water and real food",
+        "Fuel for long days"
+       ],
+       [
+        "Short breaks",
+        "Even five minutes"
+       ],
+       [
+        "Movement",
+        "A walk, a stretch"
+       ],
+       [
+        "Sleep",
+        "The best tool we have"
+       ]
+      ],
+      "say": "In a heavy season, the basics matter more. Water and real, nourishing food, to fuel long days. Short breaks, even five minutes away from the work. Movement, a walk outside or a stretch. And sleep, which is the best tool we have for clear thinking. Let's protect these for each other."
+     },
+     {
+      "k": "card",
+      "title": "Say it early.",
+      "body": "I'm falling behind. Can someone help?",
+      "say": "If you're falling behind, say it early. I'm behind on this, can someone help? It's a sign of a strong team, and it keeps small problems small. And if you have a little room, offer it. What can I take off your plate?"
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We'll carry this together.",
+       "First things first.",
+       "There's a finish line."
+      ],
+      "say": "Here are words we can say together. We'll carry this together. First things first. There's a finish line, and we'll cross it together."
+     },
+     {
+      "k": "big",
+      "h": "Cross the finish line together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "When we're through this, let's celebrate, and take time to recover. If stress or poor sleep lasts weeks, reach out to the employee assistance program or your doctor. We'll cross the finish line together. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-heavy-workload-helper",
+    "guide": "heavy-workload",
+    "side": "helper",
+    "title": "Heavy Workload and Deadlines",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the manager, supervisor, or director leading a team through a crunch.",
+    "sources": [
+     "maslach",
+     "whoburnout19"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Heavy Workload and Deadlines",
+      "sub": "For the Leader",
+      "say": "This is for the manager, supervisor, or director leading a team through big deadlines or a busy season."
+     },
+     {
+      "k": "big",
+      "h": "A season needs an end.",
+      "sub": "Name it, and protect the recovery.",
+      "say": "A heavy season can be done well. What turns a busy season into lasting exhaustion is a season that never ends. So name the end date, out loud. And protect the recovery time after it, as firmly as you protect the deadline."
+     },
+     {
+      "k": "points",
+      "h": "Clear priorities",
+      "items": [
+       [
+        "What matters most",
+        "This month"
+       ],
+       [
+        "What can wait",
+        "With a new date"
+       ],
+       [
+        "What we set down",
+        "For this season"
+       ],
+       [
+        "What we ask for",
+        "Help from above"
+       ]
+      ],
+      "say": "Give the team clear priorities. What matters most this month. What can wait, with a new date. What the team will set down for the season. And what you'll ask leadership for, in specific terms, temporary staff, a changed deadline, or fewer extra requests."
+     },
+     {
+      "k": "big",
+      "h": "One thing to move.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Picture your team's list for the next two weeks. Find one task that can wait until after the deadline, or be set down for the season. Say it out loud now, so you'll bring it to the team.",
+      "beats": [
+       "Let's pause here.",
+       "Picture your team's list for the next two weeks.",
+       "Find one task that can wait until after the deadline, or be set down for the season.",
+       {
+        "t": "Say it out loud now, so you'll bring it to the team.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Everything is urgent.\"",
+       "\"Thanks for skipping lunch!\"",
+       "\"Just one more project.\""
+      ],
+      "say": "Some words make a crunch harder. Everything is urgent, which leaves people guessing. Thanks for skipping lunch, which praises the very thing that wears people down. And just one more project, added in the middle of the push. Instead try, here's what matters most, and here's what can wait."
+     },
+     {
+      "k": "card",
+      "title": "Lead the pace.",
+      "body": "Your break gives permission for theirs.",
+      "say": "Your team watches how you pace yourself. Take your break, eat a real meal, step outside for a few minutes. Send messages during work hours. When you model a steady pace, people feel welcome to look after themselves too, and they make fewer mistakes."
+     },
+     {
+      "k": "card",
+      "title": "Watch for who is struggling.",
+      "body": "Brief check-ins. Two weeks or more: EAP.",
+      "say": "Check in briefly with each person during the season, about tasks and also about how they're holding up. Notice who has gone quiet. If stress, low mood, or poor sleep lasts two weeks or more, point them to the employee assistance program or their doctor."
+     },
+     {
+      "k": "big",
+      "h": "Celebrate the finish.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "When the season ends, celebrate the finish together, and thank people specifically. Then let the team recover. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "workplace-injury",
+   "ring": "gw-team",
+   "title": "A Workplace Injury or Accident",
+   "you": {
+    "id": "gr-g-workplace-injury-you",
+    "guide": "workplace-injury",
+    "side": "you",
+    "title": "A Workplace Injury or Accident",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole team after a coworker is hurt on the job, or after an accident.",
+    "sources": [
+     "hobfoll07"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Workplace Injury or Accident",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, after a coworker was hurt on the job, or after an accident we went through together."
+     },
+     {
+      "k": "words",
+      "h": "After an accident",
+      "items": [
+       "Shaken",
+       "Replaying it",
+       "Worried for them",
+       "Guilty",
+       "Afraid"
+      ],
+      "say": "After an accident, many of us feel shaken. Some of us replay it over and over. We worry for our coworker. Some feel guilty, or angry, or afraid it could happen again. These are normal responses to a frightening event. They usually ease with time and support."
+     },
+     {
+      "k": "big",
+      "h": "Safe now.",
+      "sub": "Feel the ground under you.",
+      "say": "Let's do this together right now. Put both feet flat on the floor. Press them down gently, and feel the ground holding you. Breathe in slowly, and breathe out even more slowly. We are here, and we are safe now.",
+      "beats": [
+       "Let's do this together right now.",
+       "Put both feet flat on the floor.",
+       "Press them down gently, and feel the ground holding you.",
+       "Breathe in slowly, and breathe out even more slowly.",
+       {
+        "t": "We are here, and we are safe now.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps us steady",
+      "items": [
+       [
+        "Safety",
+        "The area, the steps"
+       ],
+       [
+        "Calm",
+        "Breaks, water, quiet"
+       ],
+       [
+        "Each other",
+        "Check on the helpers"
+       ],
+       [
+        "Hope",
+        "They will be welcomed back"
+       ]
+      ],
+      "say": "Here's what helps a team steady. Safety, making the area safe and following our steps. Calm, with breaks, water, and quiet when we need it. Each other, especially checking on the people who saw it or helped. And hope, knowing our coworker will be welcomed back when they're ready."
+     },
+     {
+      "k": "card",
+      "title": "Learn, without blame.",
+      "body": "Most accidents come from systems.",
+      "say": "We'll look at what happened, to learn and make our work safer. Most accidents have many causes, equipment, staffing, training, and timing. Looking for one person to blame rarely makes anyone safer. Looking at the whole system does."
+     },
+     {
+      "k": "card",
+      "title": "Stay close to our coworker.",
+      "body": "A card, a message, a warm welcome back.",
+      "say": "Our coworker is still part of this team. A card, a short message, or a meal for their family lets them know we're thinking of them. They don't need to reply. And when they come back, let's welcome them warmly, and ask what would help."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We're glad you're safe.",
+       "We'll learn from this together.",
+       "We look out for each other here."
+      ],
+      "say": "Here are words we can say together. We're glad you're safe. We'll learn from this together. We look out for each other here."
+     },
+     {
+      "k": "big",
+      "h": "We look out for each other.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If shakiness, poor sleep, or replaying it lasts more than a few weeks, reach out to the employee assistance program or your doctor. We look out for each other here. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-workplace-injury-helper",
+    "guide": "workplace-injury",
+    "side": "helper",
+    "title": "A Workplace Injury or Accident",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the manager, supervisor, or safety lead after a workplace injury or accident.",
+    "sources": [
+     "pfa06",
+     "hobfoll07"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "A Workplace Injury or Accident",
+      "sub": "For the Leader",
+      "say": "This is for the manager, supervisor, or safety lead after someone on the team is hurt on the job, or after an accident."
+     },
+     {
+      "k": "flow",
+      "h": "The first hours",
+      "steps": [
+       [
+        "Safety",
+        "911, medical help, the area"
+       ],
+       [
+        "Report",
+        "Your workplace steps"
+       ],
+       [
+        "Gather",
+        "Facts and next steps"
+       ],
+       [
+        "Check on all",
+        "Witnesses and helpers"
+       ]
+      ],
+      "say": "In the first hours, work in this order. Safety, with medical help, nine one one for serious injury, and a safe area. Report, following your workplace's steps. Gather the team briefly with the facts and next steps. And check on everyone, especially the people who saw it or helped.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Five things that help",
+      "items": [
+       [
+        "Safety",
+        "Real and felt"
+       ],
+       [
+        "Calm",
+        "Quiet, water, a pause"
+       ],
+       [
+        "Can-do",
+        "Clear next steps"
+       ],
+       [
+        "Connection",
+        "No one alone"
+       ],
+       [
+        "Hope",
+        "A path forward"
+       ]
+      ],
+      "say": "After a frightening event, five things help people recover. A sense of safety, both real and felt. Calm, with quiet, water, and a pause. A sense that we can do something, with clear next steps. Connection, so no one is alone with it. And hope, a path forward for the injured coworker and the team."
+     },
+     {
+      "k": "big",
+      "h": "One person to check on.",
+      "sub": "Right now, before you go on.",
+      "say": "Let's pause here. Think of the people who saw the accident or helped right after. Picture the one who has been quietest since. Decide right now when you will check on them in person, today or tomorrow.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the people who saw the accident or helped right after.",
+       "Picture the one who has been quietest since.",
+       {
+        "t": "Decide right now when you will check on them in person, today or tomorrow.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Who did this?\"",
+       "\"Back to work, everyone.\"",
+       "Their medical details"
+      ],
+      "say": "Some words make it harder. Who did this, in the first hours, which makes people afraid to speak honestly. Back to work, everyone, right after a frightening event. And sharing the injured person's medical details without their permission. Instead try, everyone's safety comes first, and it makes sense to feel shaken."
+     },
+     {
+      "k": "card",
+      "title": "A learning review",
+      "body": "Systems, steps, and fixes.",
+      "say": "In the days after, lead a learning review. Look at equipment, staffing, training, timing, and steps. Ask what made the accident possible, and what would make it less likely. When people trust the review is about learning, they share what really happened, and the fixes are better."
+     },
+     {
+      "k": "card",
+      "title": "Plan the return together.",
+      "body": "With them and human resources.",
+      "say": "Stay in touch with the injured coworker. Plan their return with them and human resources, easing back, any changes they need, and a warm welcome. Check on the team again in a week and in a month. Remind everyone of the employee assistance program."
+     },
+     {
+      "k": "big",
+      "h": "Steady, honest, and kind.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You may have seen it too. Talk it through with a peer, a supervisor, or your employee assistance program. Steady, honest, and kind is enough. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "coworker-loss",
+   "ring": "gw-team",
+   "title": "Supporting a Coworker Through Loss",
+   "you": {
+    "id": "gr-g-coworker-loss-you",
+    "guide": "coworker-loss",
+    "side": "you",
+    "title": "Supporting a Coworker Through Loss",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole team supporting a coworker who is grieving.",
+    "sources": [
+     "stroebe99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Supporting a Coworker Through Loss",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, as we support a coworker who is grieving a death in their life."
+     },
+     {
+      "k": "big",
+      "h": "Simple and warm is enough.",
+      "sub": "I'm sorry, and I'm here.",
+      "say": "When a coworker is grieving, many of us worry about saying the wrong thing. Here's the good news. Simple and warm is enough. I'm so sorry, and I'm here. Those few words help more than you might think."
+     },
+     {
+      "k": "points",
+      "h": "What grief can look like at work",
+      "items": [
+       [
+        "Tired and foggy",
+        "Hard to focus"
+       ],
+       [
+        "Quick tears",
+        "Out of nowhere"
+       ],
+       [
+        "Quiet",
+        "Holding it in"
+       ],
+       [
+        "Some good days",
+        "And hard ones"
+       ]
+      ],
+      "say": "Grief can look many ways at work. Tired and foggy, finding it hard to focus. Tears that come out of nowhere. Quiet, holding it all in. And some good days mixed with hard ones. All of this is normal grief. Grief comes and goes in waves."
+     },
+     {
+      "k": "big",
+      "h": "Think of them, together.",
+      "sub": "Everyone at once, in quiet.",
+      "say": "Let's do this together right now. Take a slow breath in, and let it out. Picture our coworker's face. In the quiet, send them one kind wish, and think of one small thing you could do for them this week.",
+      "beats": [
+       "Let's do this together right now.",
+       "Take a slow breath in, and let it out.",
+       "Picture our coworker's face.",
+       {
+        "t": "In the quiet, send them one kind wish, and think of one small thing you could do for them this week.",
+        "w": 12
+       }
+      ]
+     },
+     {
+      "k": "points",
+      "h": "What helps",
+      "items": [
+       [
+        "Reach out",
+        "A card, a short note"
+       ],
+       [
+        "Practical help",
+        "Cover, a meal"
+       ],
+       [
+        "Ask, then follow",
+        "Talk, or keep it normal"
+       ],
+       [
+        "Keep remembering",
+        "The hard dates"
+       ]
+      ],
+      "say": "Here's what helps. Reach out, with a card or a short note. Offer practical help, covering shifts or bringing a meal. Ask, then follow their lead. Would you like to talk about it, or keep things normal today? And keep remembering, especially the birthday, the anniversary, and the holidays ahead."
+     },
+     {
+      "k": "card",
+      "title": "Every loss counts.",
+      "body": "A parent, a child, a pregnancy, a friend.",
+      "say": "Every loss deserves support. A parent, a spouse, a child, a pregnancy, a close friend, a beloved pet. Some losses are rarely talked about, and those can feel the loneliest. Whatever your coworker lost, a kind word says, your grief matters here."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We're so sorry, and we're here.",
+       "Take the time you need.",
+       "We'll keep remembering with you."
+      ],
+      "say": "Here are words we can say together. We're so sorry, and we're here. Take the time you need. We'll keep remembering with you."
+     },
+     {
+      "k": "big",
+      "h": "Steady kindness, over time.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Grief lasts longer than any leave. Small, steady kindness, over weeks and months, makes a real difference. A note on a hard day, a covered shift, a quiet word at the end of the day. Together, we can be a team that holds each other through loss. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-coworker-loss-helper",
+    "guide": "coworker-loss",
+    "side": "helper",
+    "title": "Supporting a Coworker Through Loss",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the manager, supervisor, or team lead supporting a grieving team member.",
+    "sources": [
+     "doka",
+     "stroebe99"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "Supporting a Coworker Through Loss",
+      "sub": "For the Leader",
+      "say": "This is for the manager, supervisor, or team lead when someone on the team is grieving a death in their life."
+     },
+     {
+      "k": "flow",
+      "h": "Three moments that matter",
+      "steps": [
+       [
+        "The news",
+        "Reach out personally"
+       ],
+       [
+        "The return",
+        "Ease in, together"
+       ],
+       [
+        "The months after",
+        "Keep checking in"
+       ]
+      ],
+      "say": "Three moments matter most. When the news comes, reach out personally, and ask what they want the team to know. When they return, plan it with them, a lighter start, flexibility, and a check-in on the first day. And in the months after, keep checking in, especially on the hard dates.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3
+       ]
+      }
+     },
+     {
+      "k": "points",
+      "h": "Practical support",
+      "items": [
+       [
+        "Leave, explained",
+        "With human resources"
+       ],
+       [
+        "Fair cover",
+        "For their work"
+       ],
+       [
+        "Flexibility",
+        "Appointments, pace"
+       ],
+       [
+        "EAP",
+        "Grief support"
+       ]
+      ],
+      "say": "Offer practical support. Explain bereavement leave and other options clearly, with human resources. Arrange fair cover for their work. Offer flexibility in the weeks after, for appointments and a slower pace. And remind them of the employee assistance program, which often offers grief support."
+     },
+     {
+      "k": "big",
+      "h": "Mark one hard date.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Think of the grieving person on your team. Picture a date that may be hard for them in the coming year, a birthday, an anniversary, a holiday. Decide right now how you'll remember to check in that day.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the grieving person on your team.",
+       "Picture a date that may be hard for them in the coming year, a birthday, an anniversary, a holiday.",
+       {
+        "t": "Decide right now how you'll remember to check in that day.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"Are you back to normal yet?\"",
+       "\"At least it was only...\"",
+       "Silence after the first week"
+      ],
+      "say": "Some words make grief lonelier. Are you back to normal yet, a few weeks after the death. At least it was only, which ranks someone's loss. And silence after the first week, as if it never happened. Instead try, I know grief takes time. How are you doing this week?"
+     },
+     {
+      "k": "card",
+      "title": "Grief comes in waves.",
+      "body": "Good days and hard days, both normal.",
+      "say": "Grief moves back and forth. Some days a person leans into their loss, and some days they need a break from it, including through work. Both are healthy. So ask, and follow their lead. For some, work is a steadying place. For others, it's too much for a while."
+     },
+     {
+      "k": "card",
+      "title": "When grief stays heavy",
+      "body": "Months of struggle: EAP or a doctor.",
+      "say": "If months pass and your team member is still struggling to function, sleep, or find any hope, gently point them to the employee assistance program, a grief support group, or their doctor. If they speak of not wanting to be alive, ask directly, and call or text nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Warm and steady is enough.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "Supporting grief can stir your own losses. Talk it through with a peer or your employee assistance program. Warm and steady is enough. The full guide has more, whenever you want it."
+     }
+    ]
+   }
+  },
+  {
+   "id": "hard-things",
+   "ring": "gw-team",
+   "title": "When the Work Asks Hard Things",
+   "you": {
+    "id": "gr-g-hard-things-you",
+    "guide": "hard-things",
+    "side": "you",
+    "title": "When the Work Asks Hard Things",
+    "sideName": "For the Group",
+    "mins": 3,
+    "blurb": "For the whole hospice, health, or first responder team after work that asked hard things.",
+    "sources": [
+     "jameton",
+     "rushton18"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When the Work Asks Hard Things",
+      "sub": "For the Group",
+      "say": "This is for our whole team, together, when our work has asked hard things of us. It's for hospice, health care, and first responder teams."
+     },
+     {
+      "k": "big",
+      "h": "Caring about right hurts sometimes.",
+      "sub": "That pain has a name.",
+      "say": "Sometimes we know what feels right, and we can't do it. A short shift, a hard rule, a family's wish, a call where we did everything and it still wasn't enough. That pain has a name, moral distress. It comes from caring deeply about doing good work."
+     },
+     {
+      "k": "words",
+      "h": "What it can feel like",
+      "items": [
+       "Angry",
+       "Guilty",
+       "Frustrated",
+       "Numb",
+       "Questioning the work"
+      ],
+      "say": "It can feel like anger at the system. Guilt, even when we did our best. Frustration. Numbness. Or questioning whether we can keep doing this work. These feelings are common in our kind of work. They tell us our values are alive."
+     },
+     {
+      "k": "big",
+      "h": "Hands on the table, together.",
+      "sub": "Everyone at once.",
+      "say": "Let's do this together right now. Rest both hands flat on the table, or on your knees. Feel their weight. Breathe in slowly. As you breathe out, let your hands grow heavy, and let the weight of that day rest here for a moment.",
+      "beats": [
+       "Let's do this together right now.",
+       "Rest both hands flat on the table, or on your knees.",
+       "Feel their weight.",
+       "Breathe in slowly.",
+       {
+        "t": "As you breathe out, let your hands grow heavy, and let the weight of that day rest here for a moment.",
+        "w": 11
+       }
+      ]
+     },
+     {
+      "k": "flow",
+      "h": "Sort it together",
+      "steps": [
+       [
+        "What we did well",
+        "Name it"
+       ],
+       [
+        "What was beyond us",
+        "Real limits"
+       ],
+       [
+        "What we can change",
+        "Ours to do"
+       ],
+       [
+        "What we raise",
+        "To leadership"
+       ]
+      ],
+      "say": "Let's sort it together. What we did well, and name it out loud. What was beyond our control, the real limits we faced. What we can change ourselves. And what we'll raise to leadership, together, in specific words.",
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      }
+     },
+     {
+      "k": "card",
+      "title": "Our voice matters.",
+      "body": "Speak up early, and together.",
+      "say": "Moral distress eases when we have a voice. Raise concerns early. Use the ethics consult, the safety report, and our team meetings. And when something keeps happening, speak up together. A team's shared voice can change what caused the hurt."
+     },
+     {
+      "k": "words",
+      "h": "Words we can say together",
+      "items": [
+       "We care about doing right. That's why this hurts.",
+       "We did what we could within real limits.",
+       "We'll speak up together."
+      ],
+      "say": "Here are words we can say together. We care about doing right, and that's why this hurts. We did what we could within real limits. We'll speak up together."
+     },
+     {
+      "k": "big",
+      "h": "We carry it together.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "If guilt, nightmares, or numbness last more than a few weeks, reach out to peer support, the employee assistance program, or your doctor. We carry this together. The full guide has more, whenever you want it."
+     }
+    ]
+   },
+   "helper": {
+    "id": "gr-g-hard-things-helper",
+    "guide": "hard-things",
+    "side": "helper",
+    "title": "When the Work Asks Hard Things",
+    "sideName": "For the Leader",
+    "mins": 3,
+    "blurb": "For the manager, charge nurse, medical director, captain, or supervisor leading a team through moral distress.",
+    "sources": [
+     "jameton",
+     "litz",
+     "rushton18"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "grove",
+      "eyebrow": "When Life Changes Together",
+      "h": "When the Work Asks Hard Things",
+      "sub": "For the Leader",
+      "say": "This is for the manager, charge nurse, medical director, captain, or supervisor leading a hospice, health, or first responder team through moral distress."
+     },
+     {
+      "k": "big",
+      "h": "A sign of conscience.",
+      "sub": "Treat it as one.",
+      "say": "Moral distress is the pain of knowing what feels right, and being held back from doing it, by staffing, policy, a family's wishes, or the limits of the moment. It's a sign of conscience, and a sign your team cares deeply. Treat it as a signal worth listening to."
+     },
+     {
+      "k": "points",
+      "h": "After a hard case or call",
+      "items": [
+       [
+        "Debrief soon",
+        "Facts and feelings"
+       ],
+       [
+        "What went well",
+        "Name it"
+       ],
+       [
+        "Beyond our control",
+        "Real limits"
+       ],
+       [
+        "What we raise",
+        "Specific, in writing"
+       ]
+      ],
+      "say": "After a hard case or call, debrief soon. Share the facts, and make room for feelings. Name what went well. Name what was beyond the team's control. And decide together what to raise, in specific words and in writing. Then report back what you heard."
+     },
+     {
+      "k": "big",
+      "h": "One concern to carry forward.",
+      "sub": "Decide it now.",
+      "say": "Let's pause here. Think of the hard thing your team keeps running into, a staffing pattern, a policy, a kind of case. Name it in one clear sentence, out loud. Then decide who you will bring it to this week.",
+      "beats": [
+       "Let's pause here.",
+       "Think of the hard thing your team keeps running into, a staffing pattern, a policy, a kind of case.",
+       "Name it in one clear sentence, out loud.",
+       {
+        "t": "Then decide who you will bring it to this week.",
+        "w": 10
+       }
+      ]
+     },
+     {
+      "k": "words",
+      "h": "Words to set aside",
+      "items": [
+       "\"It's just part of the job.\"",
+       "\"You need more resilience.\"",
+       "\"Who made that call?\""
+      ],
+      "say": "Some words deepen the hurt. It's just part of the job, which tells people their conscience doesn't matter. You need more resilience, which makes it a personal failing. And, who made that call, which turns a debrief into blame. Instead try, that asked hard things of all of us. Let's talk about it."
+     },
+     {
+      "k": "card",
+      "title": "Make voice easy.",
+      "body": "Ethics consults, safety reports, open doors.",
+      "say": "Teams with a voice carry moral distress better. Make ethics consults, safety reports, and concern channels easy to use, and use them yourself. Thank people who raise concerns. When concerns lead to change, say so. When they don't, explain why honestly."
+     },
+     {
+      "k": "card",
+      "title": "When it goes deeper",
+      "body": "Lasting guilt, shame, numbness: more support.",
+      "say": "Sometimes moral distress goes deeper, into lasting guilt, shame, numbness, or despair. Watch for it. Point people to peer support, the employee assistance program, and a professional who understands this work. If anyone speaks of not wanting to be alive, ask directly, and call or text nine eight eight together."
+     },
+     {
+      "k": "big",
+      "h": "Honest about the weight.",
+      "sub": "The full guide has more, whenever you want it.",
+      "say": "You carry moral distress from both sides, your team's and your own. Find a peer, an ethics resource, or your employee assistance program. Your honesty about the weight helps your team carry it. The full guide has more, whenever you want it."
      }
     ]
    }

@@ -425,6 +425,18 @@
     pfa06: ["Brymer and colleagues, Psychological First Aid: Field Operations Guide, second edition (National Child Traumatic Stress Network and National Center for PTSD, 2006)", "https://www.samhsa.gov/resource/dbhis/psychological-first-aid-field-operations-guide-2nd-edition"],
     pfas: ["Brymer and colleagues, Psychological First Aid for Schools: Field Operations Guide (National Child Traumatic Stress Network and National Center for PTSD, 2012)", "https://www.samhsa.gov/resource/dbhis/psychological-first-aid-schools-pfa-s-field-operations-guide-2nd-edition"],
     // end BLD 774
+    // The Grove When Life Changes Together (GWG BLD 783)
+    fisher81: ["Roger Fisher and William Ury, Getting to Yes: Negotiating Agreement Without Giving In (1981): interests over positions", ""],
+    jamieson10: ["Jamieson, Mendes, Blackstock, and Schmader, turning the knots in your stomach into bows: reappraising arousal improves performance on the GRE (Journal of Experimental Social Psychology, 2010)", "https://dash.harvard.edu/handle/1/4214916"],
+    ramirez11: ["Ramirez and Beilock, writing about testing worries boosts exam performance in the classroom (Science, 2011)", "https://doi.org/10.1126/science.1199427"],
+    restoringfallen97: ["Earl Wilson, Paul Friesen, and Larry Paulson, Restoring the Fallen: A Team Approach to Caring for Leaders in Crisis (1997)", "/library/#book=PM-024"],
+    ruler: ["Marc Brackett and the Yale Center for Emotional Intelligence, RULER: recognizing, understanding, labeling, expressing, and regulating emotion", "https://www.marcbrackett.com/ruler/"],
+    rushton18: ["Cynda Hylton Rushton, Moral Resilience: Transforming Moral Suffering in Healthcare (2018)", ""],
+    smithfreyd14: ["Carly Parnitzke Smith and Jennifer J. Freyd, Institutional Betrayal (American Psychologist, 2014)", ""],
+    stopbullying: ["StopBullying.gov (US Department of Health and Human Services), supporting kids involved in bullying, and bystanders who become upstanders", "https://stopbullying.gov/respond/support-kids-involved"],
+    williams07: ["Kipling D. Williams, Ostracism (Annual Review of Psychology, 2007): being left out registers as real pain and threatens the need to belong", "https://doi.org/10.1146/annurev.psych.58.110405.085641"],
+    woolley10: ["Woolley, Chabris, Pentland, Hashmi, and Malone, evidence for a collective intelligence factor in the performance of human groups (Science, 2010): groups did better when speaking turns were shared evenly", "https://doi.org/10.1126/science.1193147"],
+    // end BLD 783
 };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
@@ -462,6 +474,37 @@
     "grove:team-change": ["bridges91", "edmondson99"],
     "grove:two-homes": ["amato01"],
     // end BLD 774
+    // The Grove When Life Changes Together (GWG BLD 783)
+    "grove:attendance-drifts": ["liu22", "murthy", "woolever04"],
+    "grove:back-to-school": ["aasm16"],
+    "grove:back-to-table": ["fiese02"],
+    "grove:big-feelings-class": ["siegel", "lieberman", "ruler"],
+    "grove:big-feelings-home": ["siegel", "lieberman"],
+    "grove:coworker-conflict": ["fisher81", "edmondson99"],
+    "grove:coworker-loss": ["doka", "stroebe99"],
+    "grove:divided": ["fisher81", "pranis"],
+    "grove:family-changing": ["amato01"],
+    "grove:growing-smaller": ["woolever04", "bridges91", "boss"],
+    "grove:hard-conversations": ["pranis", "edmondson99"],
+    "grove:hard-things": ["jameton", "litz", "rushton18", "figley"],
+    "grove:heavy-workload": ["maslach", "whoburnout19"],
+    "grove:hurt-inside": ["exline", "smithfreyd14"],
+    "grove:leader-falls-short": ["smithfreyd14", "restoringfallen97", "exline"],
+    "grove:left-out": ["williams07", "cdcconnect23", "goodenow93"],
+    "grove:merger-move": ["bridges91", "tuckman65"],
+    "grove:new-leader": ["tuckman65", "edmondson99", "bridges91"],
+    "grove:one-voice": ["woolley10", "edmondson99", "pranis"],
+    "grove:online-drama": ["pew24", "sgsocial23", "cdcbully23"],
+    "grove:parent-out-of-work": ["paulmoser09", "patterson02"],
+    "grove:struggling-inside": ["namiprog", "meansmatter"],
+    "grove:teen-away": ["steinberg89", "kerrstattin"],
+    "grove:test-season": ["jamieson10", "ramirez11", "dweck06"],
+    "grove:time-together": ["fiese02", "white"],
+    "grove:trust-broken": ["toussaint", "exline"],
+    "grove:unkindness": ["stopbullying", "cdcbully23"],
+    "grove:volunteers-empty": ["maslach", "figley"],
+    "grove:workplace-injury": ["pfa06", "hobfoll07"],
+    // end BLD 783
     // Birch When Life Changes (GWG BLD 743)
     "birch:adhd": ["ocrpse", "curry17"],
     "birch:after-baby": ["prams18", "paulson10"],

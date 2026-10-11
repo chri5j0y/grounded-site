@@ -1,12 +1,12 @@
 /* =====================================================================
-   THE GROVE . WHEN LIFE CHANGES TOGETHER (grove/guides.js)   GWG BLD 774
+   THE GROVE . WHEN LIFE CHANGES TOGETHER (grove/guides.js)   GWG BLD 774 and 783
    Guides for the changes a family, class, faith community, group, or team goes through together.
    Read by The Grove (/grove/, the When Life Changes tab and Picked for Us) and the site-wide search.
    Each topic: id, ring, title, kinds (family classroom faith group team), short, keys, parts, changes ("kind:id"),
    quick, feel, together {first, helps, say, people}, kids, leader {feel, say, avoid, help, you}, byKind, faith,
    plain (Plain wording overrides), practices (ids from grove/kinds.js or GROVE_GUIDES.practices), trees ([tree, id, title]),
    reach, more, sources, stories. practices: Together practices new in this build, in grove/kinds.js's shape.
-   Generated from P/GC/gen.py (BLD 774) and the writers' data: edit the data there and rebuild.
+   Generated from patches/bld783/source/gc/gen.py (BLD 774, BLD 783) and the writers' data: edit the data there and rebuild.
    ===================================================================== */
 (function(){
 const RINGS = [
@@ -15,6 +15,12 @@ const RINGS = [
   "name": "Family Changes",
   "color": "#5A6B2F",
   "blurb": "A new baby, a move, a blended family, two homes, and someone away."
+ },
+ {
+  "key": "gw-home",
+  "name": "Home Life Together",
+  "color": "#8A6A2A",
+  "blurb": "Siblings, a teen finding their way, time together, the family table, big feelings, work changes, someone struggling inside, and back to school."
  },
  {
   "key": "gw-illness",
@@ -38,19 +44,19 @@ const RINGS = [
   "key": "gw-school",
   "name": "Class and School",
   "color": "#2F6B5A",
-  "blurb": "A loss at school, a scary day, an ill classmate, a new student, and the end of the year."
+  "blurb": "A loss at school, a scary day, an ill classmate, a new student, the end of the year, friendships, kindness, test season, families changing, group chats, and big feelings."
  },
  {
   "key": "gw-faith",
   "name": "Faith Communities and Groups",
   "color": "#5E4A7A",
-  "blurb": "A leader leaving, a loss, conflict, newcomers, endings, and a member in crisis."
+  "blurb": "A leader leaving, a loss, conflict, newcomers, endings, a member in crisis, sharing the room, hard conversations, rebuilding trust, attendance, a smaller church, tired volunteers, healing from hurt, staying together through big issues, a leader who falls short, and a merger or move."
  },
  {
   "key": "gw-team",
   "name": "Teams",
   "color": "#7A4A6A",
-  "blurb": "A hard death, big changes, a coworker who dies, and a season of burnout."
+  "blurb": "A hard death, big changes, a coworker who dies, burnout, conflict, a new leader, heavy workloads, an injury at work, a coworker grieving, and work that asks hard things."
  }
 ];
 const TOPICS = [
@@ -854,6 +860,1127 @@ const TOPICS = [
   ],
   "sources": [
    "mosteens"
+  ]
+ },
+ {
+  "id": "siblings",
+  "title": "Siblings Who Clash",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When brothers and sisters argue, compete, or push each other away: calm repairs and a stronger team.",
+  "keys": "siblings fighting sibling rivalry brothers fighting sisters fighting kids fighting kids arguing jealous of brother jealous of sister they hate each other teasing hitting each other sharing toys always fighting tattling competing for attention fairness its not fair favorite child stepsiblings half siblings twins sibling bullying",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "changes": [
+   "family:joined",
+   "family:baby"
+  ],
+  "quick": [
+   "Clashes between brothers and sisters are common, and every one is a chance to practice making up.",
+   "Each child wants the same things: to be seen, to be treated fairly, and to feel safe at home.",
+   "Grown-ups help most as calm coaches: describe what you see, hear both sides, and help them solve it.",
+   "Plenty of good times together, and one-on-one time with each child, grow a sibling bond that lasts."
+  ],
+  "feel": "The door slams, someone yells “Mom!”, and the same argument starts again: who sat there first, who got more, who touched whose things. A long car ride turns into a battle. One child teases, the other explodes, and both say the other started it. Grown-ups can feel worn down, pulled to take sides, or worried that their children will never be close. Children often feel jealous, left out, or sure that a brother or sister is the favorite. Some clashes grow after a change, like a new baby, a new stepfamily, a move, or a stressful season at home. And underneath it all, most brothers and sisters are learning, the hard way and together, how to share, stand up for themselves, and make up. Those are skills they will carry for life.",
+  "together": {
+   "first": [
+    "Name the hope out loud: “We want our home to feel safe and kind for everyone.”",
+    "Make a few simple family rules together, like “We keep hands gentle” and “We use words to solve it.”",
+    "Plan for the hot spots: who sits where in the car, a turn chart for the favorite chair, a timer for the shared toy.",
+    "Give each child ten minutes a day of one-on-one time, doing what they choose."
+   ],
+   "helps": [
+    "A calm grown-up voice that describes the problem without blaming: “I see two kids and one tablet.”",
+    "Hearing each child's side, then asking, “What could you two try?”",
+    "Fair, as in each child gets what they need, rather than everyone gets the same.",
+    "Catching kind moments and naming them: “You two figured that out together.”",
+    "Shared jobs and team games where siblings win together, like cooking a meal or building a fort.",
+    "Coming back together after a clash with a simple repair: a sorry for my part, a hug, or a fresh start."
+   ],
+   "say": [
+    "“In our family, we are on the same team.”",
+    "“Gentle hands, kind words, and we work it out.”",
+    "“Each of us matters here.”"
+   ],
+   "people": "Try, to two children in the middle of it: “You both want the same thing. Let's find a way that works for both of you.” To one child, later: “It sounds like you felt left out. Tell me more.” To a partner: “Can we agree on how we'll handle the car fights, so we say the same thing?”"
+  },
+  "kids": [
+   "“Brothers and sisters argue sometimes. In our family, we learn to make up.”",
+   "“You can feel mad at your brother. Hands stay gentle, and we use words.”",
+   "“When it feels unfair, come tell me. I want to hear your side.”",
+   "“I love each of you all the way. There is plenty of love for everyone here.”",
+   "“Let's think of one thing you two are great at together.”"
+  ],
+  "leader": {
+   "feel": "Grown-ups can feel like referees all day long, and tired of the noise. You may feel guilty when one child seems to get the short end, or annoyed at the child who seems to start it. You may carry memories of your own brothers and sisters, good or hard, that make this land heavier. Partners may see it differently: one says let them work it out, the other wants to step in. All of this is common, and you can grow a calmer home a step at a time.",
+   "say": [
+    "“I see two upset kids. Let's take a breath, then each of you gets a turn to talk.”",
+    "“What could you two try that works for both of you?”",
+    "“You're both important to me. Let's make this fair.”",
+    "“I noticed you shared without being asked. That was kind.”",
+    "“Let's make a fresh start.”"
+   ],
+   "avoid": [
+    "Comparing children out loud: “Why can't you be more like your sister?”",
+    "Deciding who started it every time, or always blaming the oldest.",
+    "Labels like “the troublemaker,” “the easy one,” or “the baby.”",
+    "Forced apologies said through clenched teeth; a real repair can wait until everyone is calm.",
+    "Letting teasing or rough play continue after someone has said stop."
+   ],
+   "help": [
+    "Step in right away when anyone could get hurt. Safety comes first, then talking.",
+    "Coach rather than judge: describe the problem, listen to both, and invite their ideas.",
+    "Plan ahead for the predictable clashes: car seats, screens, bathroom time, chores.",
+    "Give each child their own one-on-one time and their own space, even a small corner or a box for special things.",
+    "Hold a short family meeting each week where siblings solve one shared problem together.",
+    "Notice when clashes rise after a change at home, and give extra comfort and attention there."
+   ],
+   "you": "Sibling clashes can wear a grown-up down. Take a breath before you step in, and give yourself a break when you can: a walk, a quiet cup of tea, a talk with a friend. Every calm repair you model teaches your children more than any lecture."
+  },
+  "faith": "Many faith traditions tell stories of brothers and sisters who clashed and then found their way back to each other, and they hold forgiveness and making peace as holy work. For some families, a short prayer or blessing after a hard day helps everyone start fresh. For others, it can sting when a family feels it should be more peaceful than it is. Faith can be a comfort or a pressure. With children, invite rather than assume: “Would you like to say a blessing for each other tonight, or share a quiet moment?”",
+  "practices": [
+   "repair-after-a-fight",
+   "work-it-out",
+   "one-on-one",
+   "family-meeting",
+   "kindness-notes",
+   "appreciation-round"
+  ],
+  "trees": [
+   [
+    "maple",
+    "home-conflict",
+    "Arguing and tension at home"
+   ],
+   [
+    "maple",
+    "anger",
+    "Anger and big outbursts"
+   ],
+   [
+    "aspen",
+    "blowup",
+    "In the middle of a blowup"
+   ],
+   [
+    "pine",
+    "blowup",
+    "In the middle of a blowup"
+   ],
+   [
+    "oak",
+    "struggling-child",
+    "Parenting a struggling child"
+   ]
+  ],
+  "reach": [
+   "Your child's doctor or school counselor can help when clashes feel constant or someone is getting hurt.",
+   "When a child is being hurt by a brother or sister again and again, treat it as a safety matter and reach out for help. Childhelp National Child Abuse Hotline: 1-800-422-4453.",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/"
+   ],
+   [
+    "Child Mind Institute",
+    "https://childmind.org/"
+   ]
+  ],
+  "sources": []
+ },
+ {
+  "id": "teen-away",
+  "title": "A Teen Pulling Away",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When a teen spends more time apart: staying close, giving room to grow, and knowing when to reach for help.",
+  "keys": "teen pulling away teenager distant teen wont talk to me teen in room all the time teen withdrawn moody teenager teen attitude teen wants privacy teen independence adolescent rebellion teen stopped talking teen on phone all the time teen isolating teen depression teen friends teen secrets connecting with my teenager",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "changes": [],
+  "quick": [
+   "Teens grow toward independence. Wanting more privacy and more time with friends is a healthy part of growing up.",
+   "Teens stay close to families that stay warm, curious, and steady, with clear, fair limits.",
+   "Side by side often works better than face to face: car rides, cooking, walks, and late night snacks.",
+   "Watch for signs of something heavier, like deep sadness, big changes in sleep or eating, or dropping friends, and reach for help early."
+  ],
+  "feel": "The door that used to stay open is closed. Answers shrink to “fine” and “nothing.” A teen who once told you everything now saves it for friends, and family time feels like something to get through. Grown-ups can feel shut out, hurt, or worried about what they are missing. Younger brothers and sisters may miss the big sibling who used to play. The teen may feel misunderstood, crowded, or pulled between wanting to be close and needing to find their own way. Much of this is the ordinary, healthy work of growing up. Sometimes pulling away is a sign of something heavier, like sadness, stress, a hard friendship, or trouble online. Either way, the relationship is still there, and a family can find new ways to stay close.",
+  "together": {
+   "first": [
+    "Keep the door open with warmth: “I'm here whenever you want to talk.”",
+    "Find one shared thing each week the teen chooses: a walk, a meal they cook, a drive, a game.",
+    "Agree together on a few clear family expectations, like family dinner twice a week and phones parked at night.",
+    "Give real room to grow: more choices, more trust, and a say in family plans."
+   ],
+   "helps": [
+    "Side by side time: car rides, cooking, shooting hoops, walking the dog.",
+    "Listening more than advising, and asking, “Do you want ideas, or do you want me to just listen?”",
+    "Curiosity about their world: their music, their friends, the things they care about.",
+    "Being around and available at the times teens often open up, like late evenings.",
+    "Unplugged time for everyone at meals and at bedtime, grown-ups included.",
+    "Repair when talks go badly: “I came on too strong. Can we try again?”"
+   ],
+   "say": [
+    "“We're always on your side.”",
+    "“You can tell us anything, and we'll figure it out together.”",
+    "“We trust you, and we're here.”"
+   ],
+   "people": "Try, to the teen: “I miss our talks. Want to grab breakfast this weekend, just us?” To a younger sibling: “Your big brother still loves you. He's growing up and needs some space.” To a partner: “Let's agree on what matters most, so we're steady together.”"
+  },
+  "kids": [
+   "For younger brothers and sisters: “Your sister is growing up and needs more alone time. She still loves you.”",
+   "“You can ask her to play, and it's okay if she says later.”",
+   "For the teen: “You get more say in your life as you grow. We're here for the hard parts.”",
+   "“If something is weighing on you, you can tell us, or another grown-up you trust.”",
+   "“Our family is home base. You can always come back to it.”"
+  ],
+  "leader": {
+   "feel": "Watching a teen pull away can feel like a loss, even when it's healthy. You may miss the closeness you had, feel rejected by a slammed door, or lie awake wondering what is going on in their life. You may be tempted to push hard for answers, or to give up and stay out of it. Most teens do best somewhere in the middle: warm, curious, steady grown-ups who keep showing up.",
+   "say": [
+    "“I'm glad you're home.”",
+    "“I'm curious about that. Tell me more?”",
+    "“You don't have to tell me everything. I want to know you're okay.”",
+    "“What would you like more of, or less of, from us?”",
+    "“I love you, and the answer is still no. Let's talk about why.”"
+   ],
+   "avoid": [
+    "Taking a slammed door or a one-word answer as a personal attack.",
+    "Lectures that start the moment they walk in.",
+    "Reading private messages or journals as a first step, rather than talking.",
+    "Mocking their friends, music, or interests.",
+    "Giving up on family time because they groan about it."
+   ],
+   "help": [
+    "Be warm and firm together: lots of affection, and a few clear, fair limits.",
+    "Offer time side by side, at the times your teen is most open.",
+    "Give more choices as they show they can handle them.",
+    "Know their friends and invite them over.",
+    "Watch for warning signs that last two weeks or more: deep sadness, no interest in things they loved, big changes in sleep, eating, or grades, talk of hopelessness, or dropping all friends.",
+    "Talk with their doctor or school counselor early if you are worried. Thoughts of suicide: call or text 988 together."
+   ],
+   "you": "Parenting a teen can stir your own teenage years and leave you feeling unneeded. You are still needed, just in a new way. Find support from other parents of teens, keep up your own friendships, and take your own walks and rest. A steady grown-up is the best home base a teen can have."
+  },
+  "faith": "For some families, faith gives teens a place to belong beyond home: a youth group, a mentor, service projects, and adults who know them by name. Teens may also start asking big questions of their own, and some may step back from the faith they grew up with for a while. That can feel hard for a parent. Many traditions honor questions as part of a living faith. Ask about experience rather than belief: “What helps you feel peaceful? What feels meaningful to you right now?” Faith can be a resource or a stressor, and a teen's own path deserves respect.",
+  "practices": [
+   "one-on-one",
+   "family-meeting",
+   "listening-round",
+   "family-date",
+   "breakfast-together",
+   "bedtime-talk"
+  ],
+  "trees": [
+   [
+    "pine",
+    "depression",
+    "Depression and feeling numb"
+   ],
+   [
+    "pine",
+    "friend-changes",
+    "Friendship changes and losing a friend group"
+   ],
+   [
+    "pine",
+    "social-media",
+    "Social media, comparison, and phone balance"
+   ],
+   [
+    "aspen",
+    "phone",
+    "First phone and group chats"
+   ],
+   [
+    "oak",
+    "struggling-child",
+    "Parenting a struggling child"
+   ],
+   [
+    "birch",
+    "parents-adult",
+    "You and your parents, as adults"
+   ]
+  ],
+  "reach": [
+   "Thoughts of suicide, or a teen who seems hopeless: call or text 988, any time, together if you can. Danger right now: 911.",
+   "Crisis Text Line: text HOME to 741741 (in Minnesota, MN to 741741). Some teens find texting easier than talking.",
+   "Your teen's doctor or school counselor can help when sadness, worry, or withdrawal lasts more than two weeks.",
+   "NAMI HelpLine: 1-800-950-6264, for families with questions about a teen's mental health."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ],
+   [
+    "HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/"
+   ],
+   [
+    "Child Mind Institute",
+    "https://childmind.org/"
+   ]
+  ],
+  "sources": [
+   "steinberg89",
+   "kerrstattin"
+  ]
+ },
+ {
+  "id": "time-together",
+  "title": "Finding Time Together",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When busy schedules pull a family apart: small, steady, unplugged times that bring everyone back together.",
+  "keys": "too busy busy family no time together overscheduled kids activities sports schedule work schedule shift work never see each other passing in the hallway everyone on their phones family time quality time slow down family rhythm weekends together family fun ideas reconnect as a family",
+  "parts": [
+   "leaves",
+   "branches",
+   "roots"
+  ],
+  "changes": [
+   "family:job",
+   "family:none"
+  ],
+  "quick": [
+   "Busy seasons are common. Small, steady times together often matter more than big, rare ones.",
+   "Regular family routines, like a shared meal or a weekly outing, help children feel secure and connected.",
+   "Unplugged time is the heart of it: phones parked, eyes up, and everyone present.",
+   "Making room sometimes means setting something down. What a family sets down makes space for what it loves."
+  ],
+  "feel": "Mornings are a rush, evenings are a relay of practices, homework, and work shifts, and weekends fill before they start. Family members pass each other in the hallway with a quick “hi.” Meals happen in the car or in shifts. Even at home, everyone may be in a different room, or on a different screen. Grown-ups can feel guilty or tired. Children may feel they have to compete for attention, or simply miss the people they love. And still, most families want the same thing: more time that feels like us. The good news is that it often takes less time than people think. A few small rhythms, kept steady, can change how a home feels.",
+  "together": {
+   "first": [
+    "Hold a short family meeting and ask, “What do we love doing together?”",
+    "Look at the week together and choose one or two times to keep for family, and write them on the calendar.",
+    "Pick one thing to set down for a season, so there's room.",
+    "Agree on unplugged times, like meals and the first ten minutes after everyone gets home."
+   ],
+   "helps": [
+    "Small daily anchors: breakfast together, a walk after dinner, a bedtime talk.",
+    "A weekly rhythm: a family outing, a game at the table, a hike, a Saturday pancake breakfast cooked together.",
+    "Doing ordinary jobs together: cooking, yard work, folding laundry with music on.",
+    "Time outdoors as a family: a park, a trail, a bike ride, a lake.",
+    "One-on-one time between each grown-up and each child, even ten minutes.",
+    "A basket by the door where phones rest during family time, grown-ups' phones first."
+   ],
+   "say": [
+    "“Our family time is worth protecting.”",
+    "“Phones down, eyes up.”",
+    "“We choose what matters most.”"
+   ],
+   "people": "Try, to everyone: “Let's each pick one thing we'd love to do together this month.” To a coach or a club: “We keep Sunday evenings for family. Can she miss that one?” To a partner: “Can we look at the calendar together on Sunday nights?”"
+  },
+  "kids": [
+   "“We've been busy, and we miss you. Let's make more time together.”",
+   "“What's one thing you'd love to do with our family?”",
+   "“During family time, phones and tablets rest in the basket.”",
+   "“You can help plan our next family outing.”",
+   "“Ten minutes with you is my favorite part of the day.”"
+  ],
+  "leader": {
+   "feel": "Grown-ups often carry the calendar in their heads and feel the squeeze most. You may be working long hours, juggling shifts, or driving between activities, and feeling like you never get to just be with your family. Guilt can make it worse. You have more power here than it feels like: a few small changes, kept steady, can bring a family back together.",
+   "say": [
+    "“What do you love most about our time together?”",
+    "“Let's protect Sunday supper. It's ours.”",
+    "“I'm putting my phone in the basket. I want to hear about your day.”",
+    "“We're setting this down for a season so we have more time together.”"
+   ],
+   "avoid": [
+    "Filling every open hour with another activity.",
+    "Saying “family time” and then answering work messages through it.",
+    "Making family time feel like a chore or a lecture.",
+    "Letting screens become the default way the family spends time together."
+   ],
+   "help": [
+    "Look at the week ahead together every Sunday and keep one or two family times on the calendar.",
+    "Set down one activity per child or per grown-up for a season, and notice what grows in its place.",
+    "Make meals and the first minutes after coming home unplugged times for everyone.",
+    "Plan simple outdoor time each week: a walk, a park, a bike ride.",
+    "Use what you already do: turn cooking, chores, and car rides into time together.",
+    "Make a family media plan together, so everyone knows when screens rest."
+   ],
+   "you": "Protecting family time also protects you. Rest, a walk, and time with friends make you a steadier parent. Choose progress over perfect: one new family rhythm, kept for a month, is a real win."
+  },
+  "faith": "Many faith traditions build time together into the week: a day of rest, a shared meal, worship side by side, prayers at bedtime. For some families, these rhythms are an anchor that holds when life gets busy. For others, faith commitments are one more thing on a full calendar, and it can feel hard to choose. Faith can be a resource or a stressor. Many families find that a simple weekly rhythm of rest and gathering, in their own tradition's words or in plain ones, steadies the whole home.",
+  "practices": [
+   "weekly-look-ahead",
+   "stop-doing",
+   "family-date",
+   "play-outside",
+   "pace-check",
+   "one-on-one"
+  ],
+  "trees": [
+   [
+    "oak",
+    "burnout",
+    "Burnout"
+   ],
+   [
+    "pine",
+    "social-media",
+    "Social media, comparison, and phone balance"
+   ],
+   [
+    "aspen",
+    "sleep",
+    "Sleep, screens, and gaming"
+   ],
+   [
+    "aspen",
+    "phone",
+    "First phone and group chats"
+   ],
+   [
+    "sequoia",
+    "grandparenting",
+    "Grandparenting"
+   ]
+  ],
+  "reach": [
+   "Your child's school, library, and parks department often list low-cost family events and outdoor programs.",
+   "When a busy season turns into exhaustion, sadness, or tension that lingers, talk with your doctor or a trusted helper.",
+   "Call or text 211 for local family programs and help."
+  ],
+  "more": [
+   [
+    "Family Media Plan, HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/English/fmp/Pages/MediaPlan.aspx"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ]
+  ],
+  "sources": [
+   "fiese02",
+   "white"
+  ]
+ },
+ {
+  "id": "back-to-table",
+  "title": "Back to the Table",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "Bringing back shared family meals: simple, nourishing food cooked together, phones parked, and real talk.",
+  "keys": "family dinner family meals eating together eat together dinner table no family dinner everyone eats separately eating in the car picky eater dinner conversation phones at dinner cooking together healthy eating meal planning busy family dinner mealtime battles breakfast together family supper",
+  "parts": [
+   "leaves",
+   "branches",
+   "roots"
+  ],
+  "changes": [
+   "family:none",
+   "family:job"
+  ],
+  "quick": [
+   "Shared meals are one of the simplest, strongest family rhythms. They help children feel connected and secure.",
+   "Simple counts. Soup, eggs and toast, rice and beans, or a sheet pan of vegetables can all be a family meal.",
+   "Cook together, eat together, and let the phones rest somewhere else.",
+   "The table is for connection: stories, laughter, and listening, with water to drink and whole, nourishing food."
+  ],
+  "feel": "Somewhere along the way, the family table filled up with mail and backpacks. Meals happen in the car, standing at the counter, or in front of screens, each person on their own schedule. Grown-ups may feel too tired to cook, or worn out by mealtime battles over picky eating. Children may not remember the last time everyone sat down together. Some families have never had a regular family meal and wonder where to begin. And yet the table is one of the easiest places to come back together. It takes a meal, a few chairs, and the choice to sit down.",
+  "together": {
+   "first": [
+    "Choose one or two meals a week to eat together, at the table, to start. Breakfast counts.",
+    "Clear the table and make it a place for people: a cloth, a candle, a jar of flowers or leaves.",
+    "Give everyone a job: washing vegetables, stirring, setting the table, pouring water.",
+    "Park the phones in a basket during the meal, grown-ups first."
+   ],
+   "helps": [
+    "Simple, whole, nourishing food: soup, eggs, beans, rice, fruit, vegetables, bread, and water to drink.",
+    "Cooking together, with kid-sized jobs, so the meal belongs to everyone.",
+    "Conversation starters: “What made you laugh today?” “What was hard, and what was good?”",
+    "Taking turns picking the meal, and trying one new food together each week.",
+    "A pause before eating to say thank you, in a prayer, a song, or a simple word of thanks.",
+    "Keeping the table a calm, kind place for talk and laughter, with hard talks saved for another time."
+   ],
+   "say": [
+    "“The table is where we come back together.”",
+    "“Everyone helps, and everyone belongs.”",
+    "“Phones rest. People talk.”"
+   ],
+   "people": "Try, to everyone: “Let's eat together on Tuesdays and Sundays. Who wants to help pick the meal?” To a picky eater: “You can try a bite, or just have the rice tonight.” To a teen: “Want to be in charge of Sunday supper? I'll be your helper.”"
+  },
+  "kids": [
+   "“We're going to eat together more. You get a job: washing, stirring, or setting the table.”",
+   "“At the table, phones and tablets rest, and we talk.”",
+   "“You can try a tiny bite of something new. Your body gets to decide how much.”",
+   "“Tell us one good thing and one hard thing from your day.”",
+   "“You can help pick next week's meal.”"
+  ],
+  "leader": {
+   "feel": "Grown-ups often carry the planning, shopping, and cooking, at the end of long days. You may feel guilty about how meals have been going, or tired of arguing over food. It helps to lower the bar: a simple meal eaten together does more good than a fancy one eaten apart. You can share it; children can help more than we think.",
+   "say": [
+    "“I'm so glad we're all here.”",
+    "“What was the best part of your day?”",
+    "“Thanks for helping make this.”",
+    "“You don't have to finish it. Just try a bite if you'd like.”"
+   ],
+   "avoid": [
+    "Using the meal to lecture or to settle problems.",
+    "Battles over clean plates or rewards and bribes with sweets.",
+    "Screens or phones at the table, grown-ups' included.",
+    "Waiting for the perfect meal or the perfect night to begin."
+   ],
+   "help": [
+    "Start with one or two shared meals a week and grow from there.",
+    "Keep a short list of simple, whole meals the family likes, and rotate them.",
+    "Cook a big pot on the weekend and share leftovers through the week.",
+    "Give each child a real job, and let older kids cook a meal with you.",
+    "Put water on the table, and let fruit and vegetables be the everyday foods.",
+    "Make the table calm: talk, listen, and laugh. Save hard talks for another time."
+   ],
+   "you": "Feeding a family is real work, and it is a way of loving. Let others share it. Sit down yourself, eat slowly, and enjoy the people around you. You are part of the table too."
+  },
+  "faith": "Across many faith traditions, the table is sacred: blessings before meals, feasts on holy days, bread broken together, and hospitality to neighbors and strangers. For many families, a short prayer or blessing at the table is a daily anchor. For others, mealtime faith practices may bring up memories or tension. Faith can be a resource or a stressor. With children, invite rather than assume: a prayer, a song, a moment of thanks, or simply naming the hands that grew and made the food.",
+  "practices": [
+   "soup-supper",
+   "breakfast-together",
+   "table-thanks",
+   "try-a-new-food",
+   "share-the-work",
+   "feast-day"
+  ],
+  "trees": [
+   [
+    "maple",
+    "food-worries",
+    "Worries about food and eating"
+   ],
+   [
+    "aspen",
+    "eating",
+    "Eating, food, and weight worries"
+   ],
+   [
+    "pine",
+    "eating",
+    "Eating disorders"
+   ],
+   [
+    "pine",
+    "social-media",
+    "Social media, comparison, and phone balance"
+   ],
+   [
+    "aspen",
+    "phone",
+    "First phone and group chats"
+   ]
+  ],
+  "reach": [
+   "Call or text 211 for local help with food, like food shelves and meal programs.",
+   "Ask your child's school about school breakfast and lunch programs.",
+   "If meals bring up worries about food, weight, or eating, talk with your child's doctor. Support is available and helps.",
+   "If food is hard for anyone in the family because of a health condition, a doctor or dietitian can help plan meals that work for everyone."
+  ],
+  "more": [
+   [
+    "The Family Dinner Project",
+    "https://thefamilydinnerproject.org/"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ],
+   [
+    "HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/"
+   ]
+  ],
+  "sources": [
+   "fiese02"
+  ]
+ },
+ {
+  "id": "big-feelings-home",
+  "title": "Big Feelings at Home",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When anger, tears, worry, or meltdowns fill the house: calm grown-ups, a family plan, and healthy rhythms.",
+  "keys": "big feelings tantrums meltdowns angry child yelling screaming kids hitting crying a lot emotional child explosive child worry anxiety at home short temper parent yelling calm down strategies feelings at home emotional regulation calm corner frustrated kid moody kids",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches"
+  ],
+  "changes": [],
+  "quick": [
+   "Big feelings are part of being human. Every feeling is welcome; actions have limits.",
+   "A calm grown-up is a child's best help. Children borrow our calm before they can make their own.",
+   "Naming a feeling out loud helps it settle. A family calm-down plan gives everyone a way back.",
+   "Sleep, real food, water, movement, and time outdoors help every body handle feelings better."
+  ],
+  "feel": "One minute it is fine, and the next someone is yelling, crying, or slamming a door. A small thing, like the wrong cup or the end of playtime, sets off a storm. Sometimes it is a child, and sometimes it is a grown-up who snaps after a long day. The whole house can feel like it is walking on eggshells. Grown-ups may feel embarrassed, worn out, or worried that something is wrong. Children may feel scared by how big their feelings get, and sorry afterward. Big feelings often grow when a family is tired, hungry, rushed, or going through a change. And every family can learn, together, how to ride out a storm and come back to calm.",
+  "together": {
+   "first": [
+    "Agree as a family: every feeling is welcome, and we keep bodies and words safe.",
+    "Make a calm-down plan together: what helps each person settle, written where everyone can see.",
+    "Set up a calm corner with a pillow, a blanket, and a few soft things.",
+    "Look at the basics: sleep, regular meals and snacks, water, outdoor play, and unplugged evenings."
+   ],
+   "helps": [
+    "Naming feelings out loud: “You're really mad.” “I feel frustrated.”",
+    "Breathing together, slow and deep, like filling a balloon.",
+    "Moving the feeling: shaking it out, a run around the yard, a walk.",
+    "Staying close and calm during a storm, with few words and a soft voice.",
+    "Talking about it afterward, once everyone is calm: what happened, what helped, what we'll try next time.",
+    "Repair after a hard moment, grown-ups included: “I'm sorry I yelled. I love you.”"
+   ],
+   "say": [
+    "“All feelings are welcome. We keep bodies and words safe.”",
+    "“Name it, breathe, then choose.”",
+    "“We can get through big feelings together.”"
+   ],
+   "people": "Try, to a child in a storm: “You're so angry. I'm right here. Let's breathe.” Afterward: “That was a big feeling. What helped you calm down?” To yourself: “I can be the calm one.” To a partner: “I'm getting heated. I'm going to take five minutes and come back.”"
+  },
+  "kids": [
+   "“All your feelings are okay. Mad, sad, scared, and happy all belong.”",
+   "“When a feeling gets really big, we can breathe like a balloon together.”",
+   "“Hitting, kicking, and throwing stay off our list. Stomping, squeezing a pillow, and shaking it out are on it.”",
+   "“After a big feeling, we can talk about it and make up.”",
+   "“Grown-ups have big feelings too, and we're learning together.”"
+  ],
+  "leader": {
+   "feel": "When a child explodes, it is natural to feel your own anger rise, or to feel helpless and embarrassed. You may wonder what you are doing wrong. Big feelings in children are common, and they are a sign of a growing brain still learning to manage itself. Your calm is the strongest tool you have, and like any skill, it grows with practice. Be gentle with yourself on the days it slips.",
+   "say": [
+    "“You're really upset. I'm right here.”",
+    "“Let's breathe together.”",
+    "“I won't let you hit. I will help you calm down.”",
+    "“What helped you feel better?”",
+    "“I'm sorry I yelled. I love you, and I'm working on staying calm.”"
+   ],
+   "avoid": [
+    "Yelling back, or matching the child's volume.",
+    "Long talks or lectures in the middle of a storm.",
+    "Shaming: “Stop being a baby.”",
+    "Punishing feelings, rather than guiding actions.",
+    "Ignoring the basics: a tired, hungry, rushed child has a harder time."
+   ],
+   "help": [
+    "Stay close, lower your voice, and use few words during a storm.",
+    "Name the feeling for them, then help them breathe or move.",
+    "Keep everyone safe: move a child to a calm spot, or move other children away.",
+    "Make a family calm-down plan together, and practice it on calm days.",
+    "Protect sleep, regular meals, water, outdoor play, and unplugged evenings.",
+    "Notice patterns. When storms are daily, very intense, or come with other worries, talk with your child's doctor."
+   ],
+   "you": "Your own calm needs tending too. Notice what fills you: sleep, a walk, time outdoors, a friend to call, a few quiet minutes. When you lose your temper, repair it. Children learn as much from a grown-up who says sorry as from one who never slips."
+  },
+  "faith": "Many faith traditions name big feelings honestly, in songs and prayers of anger, sorrow, and fear, and teach practices of stillness and breath. For some families, a short breath prayer or a quiet moment of prayer helps everyone settle. For others, feelings like anger can feel shameful in light of their faith. Faith can be a resource or a stressor. With children, invite rather than assume, and offer a quiet moment, a breath, or words of their own tradition as one way among several to find calm. God is never presented as angry at a child's feelings.",
+  "practices": [
+   "calm-down-plan",
+   "name-it-to-tame-it",
+   "balloon-breath",
+   "calm-corner",
+   "shake-it-out",
+   "repair-after-a-fight"
+  ],
+  "trees": [
+   [
+    "maple",
+    "meltdown",
+    "In the middle of a meltdown"
+   ],
+   [
+    "maple",
+    "anger",
+    "Anger and big outbursts"
+   ],
+   [
+    "maple",
+    "worry",
+    "Worry that won't let go"
+   ],
+   [
+    "aspen",
+    "blowup",
+    "In the middle of a blowup"
+   ],
+   [
+    "pine",
+    "blowup",
+    "In the middle of a blowup"
+   ],
+   [
+    "oak",
+    "anger",
+    "Anger that runs hot"
+   ]
+  ],
+  "reach": [
+   "Your child's doctor can help when storms are very frequent, very intense, or come with sleep, eating, or attention worries.",
+   "If anyone at home is being hurt, or a grown-up is afraid of losing control: call 911 for danger right now, or the Childhelp National Child Abuse Hotline, 1-800-422-4453, for support and guidance.",
+   "If anyone talks about wanting to hurt themselves or to die: call or text 988, any time.",
+   "NAMI HelpLine: 1-800-950-6264, for families with questions about a child's mental health."
+  ],
+  "more": [
+   [
+    "HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/"
+   ],
+   [
+    "Child Mind Institute",
+    "https://childmind.org/"
+   ]
+  ],
+  "sources": [
+   "siegel",
+   "lieberman"
+  ]
+ },
+ {
+  "id": "parent-out-of-work",
+  "title": "A Parent Out of Work",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When a parent loses a job or is between jobs: honest words for kids, steady routines, and strengths that stay.",
+  "keys": "lost my job laid off fired job loss unemployed out of work between jobs looking for work parent unemployed dad lost job mom lost job furlough hours cut job search unemployment benefits career change stress at home money worries kids worried about money starting over new job",
+  "parts": [
+   "trunk",
+   "fruit",
+   "leaves"
+  ],
+  "changes": [
+   "family:job",
+   "family:money"
+  ],
+  "quick": [
+   "Losing work is a real loss. It touches money, routine, identity, and pride, and it is common.",
+   "A parent's worth, and a family's worth, stays whole through any job change.",
+   "Children feel safest with simple, honest words, steady routines, and grown-ups who stay close.",
+   "This season can grow new strengths: more time together, new skills, and a family that faces change as a team."
+  ],
+  "feel": "The news may come suddenly, a layoff or a closed business, or slowly, as hours shrink. Grown-ups may feel shock, anger, embarrassment, or fear, and may lie awake doing math. Days lose their shape. A parent who has always gone to work may feel lost at home, or restless, or low. Partners may feel strain. Children notice: a parent home during the day, quiet talks behind closed doors, a no where there used to be a yes. They may worry, ask lots of questions, or say nothing at all. Job loss is one of the most stressful life changes, and it is also one many families come through with new closeness, new direction, and a clearer sense of what matters.",
+  "together": {
+   "first": [
+    "Tell the children together, simply and calmly: “Dad's job ended. He's looking for a new one, and we're okay.”",
+    "Keep daily routines steady: wake-up times, meals, school, bedtime, and family time.",
+    "Make a short plan for the grown-ups: benefits to apply for, people to call, and help for food or bills, like 211.",
+    "Give the parent at home a daily rhythm: job search hours, movement, time outside, and something useful for the family."
+   ],
+   "helps": [
+    "A weekly family meeting about plans, kept calm and hopeful, with grown-up details saved for grown-ups.",
+    "Using the extra time well: walking the kids to school, cooking meals together, fixing things, helping with homework.",
+    "Low-cost family fun: the library, a park, a hike, a game at the table.",
+    "Naming the parent's strengths out loud, often.",
+    "Letting kids help in age-sized ways, like planning a low-cost outing.",
+    "Reaching out: friends, former coworkers, a faith community, and job programs."
+   ],
+   "say": [
+    "“We are a team, and we'll get through this together.”",
+    "“Your job doesn't make you who you are. We love you.”",
+    "“Our family is strong in ways no job can change.”"
+   ],
+   "people": "Try, to a child: “Mom's job ended. She'll find new work, and we'll be okay. It's a grown-up job to figure out.” To a partner: “I'm proud of you. What do you need from me this week?” To a friend: “I'm looking for work. Do you know anyone hiring in my field?”"
+  },
+  "kids": [
+   "“Dad's job ended. He's looking for a new one. That's a grown-up job, and we're working on it.”",
+   "“You will have food, a bed, and us.” Say only what is true.",
+   "“Sometimes we'll say not right now to extras. Let's make a someday list.”",
+   "“It's okay to feel worried. You can ask us anything.”",
+   "“This isn't your fault, and it isn't your job to fix. You can help by being you.”"
+  ],
+  "leader": {
+   "feel": "If you are the one out of work, you may feel grief, shame, anger, or fear, and a loss of who you are. Job loss often wears on mental health, sleep, and confidence, especially the longer it lasts. If you are the partner, you may feel worry, extra pressure, and the pull to hold everything together. Both of you need support, and kindness toward each other.",
+   "say": [
+    "“I lost my job, and I'm working on finding a new one. We're going to be okay.”",
+    "“I'm stressed, and I'm sorry I snapped. It's not about you.”",
+    "“I have more time with you now. Let's make it count.”",
+    "“Thank you for understanding. Tell me what's on your mind.”"
+   ],
+   "avoid": [
+    "Blaming yourself or your partner in front of the children.",
+    "Sharing every money detail or fear with the kids.",
+    "Hiding the job loss, so children sense a secret.",
+    "Spending long days alone, on the couch or on screens.",
+    "Turning to alcohol or other substances to get through it."
+   ],
+   "help": [
+    "Apply for unemployment benefits right away; in Minnesota, through the state's Unemployment Insurance program.",
+    "Use job help: CareerOneStop, your state workforce center, former coworkers, and your network.",
+    "Call or text 211 for local help with food, rent, utilities, and more. Ask the school about meal programs.",
+    "Keep a daily rhythm: wake at the same time, move your body, get outside, eat well, and set job search hours.",
+    "Spend the extra time with your kids: walks to school, meals, homework, play.",
+    "Watch for signs of depression: deep sadness, hopelessness, sleeping much more or less. Talk with your doctor, and call or text 988 for thoughts of not wanting to be alive."
+   ],
+   "you": "You are more than your work. Your kindness, skills, humor, and love stay with you through any job change. Find people to talk to, keep moving and getting outside, and celebrate small steps forward, like a good conversation, an application sent, or a new skill learned."
+  },
+  "faith": "For many families, a faith community is a lifeline in a job loss: people who help with meals, job leads, and prayer, and a sense of being known beyond a job title. Many traditions teach that a person's worth is a gift, never earned by work, and honor work and rest as both holy. For others, losing work stirs questions about why, or shame in front of their community. Faith can be a resource or a stressor. With children, invite rather than assume: a prayer, a family blessing, or a quiet moment of thanks, as one way among several to feel steady.",
+  "practices": [
+   "family-meeting",
+   "next-right-step",
+   "name-a-gift",
+   "simpler-season",
+   "play-outside",
+   "serve-together"
+  ],
+  "trees": [
+   [
+    "maple",
+    "money",
+    "Money worries or a job loss"
+   ],
+   [
+    "aspen",
+    "money",
+    "Money is tight"
+   ],
+   [
+    "birch",
+    "job-loss",
+    "Losing a job, or not finding one"
+   ],
+   [
+    "oak",
+    "job-loss",
+    "Losing your job"
+   ],
+   [
+    "oak",
+    "money-crisis",
+    "Money trouble"
+   ],
+   [
+    "oak",
+    "career-change",
+    "A career change"
+   ]
+  ],
+  "reach": [
+   "Call or text 211, any time, for local help with food, rent, heat, utilities, and more.",
+   "Minnesota Unemployment Insurance (uimn.org), to apply for benefits.",
+   "CareerOneStop, from the U.S. Department of Labor, for job search help and local workforce centers.",
+   "Thoughts of not wanting to be alive: call or text 988, any time. Danger right now: 911.",
+   "If job loss stress has turned into danger at home: call 911. The National Domestic Violence Hotline is 1-800-799-7233, or text START to 88788."
+  ],
+  "more": [
+   [
+    "CareerOneStop (U.S. Department of Labor)",
+    "https://www.careeronestop.org/"
+   ],
+   [
+    "Minnesota Unemployment Insurance",
+    "https://www.uimn.org"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ]
+  ],
+  "sources": [
+   "paulmoser09",
+   "patterson02"
+  ]
+ },
+ {
+  "id": "struggling-inside",
+  "title": "When Someone at Home Is Struggling Inside",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When a parent, child, or teen at home faces depression, anxiety, or another mental health struggle.",
+  "keys": "depression at home parent depressed mom depressed dad depressed teen depressed anxiety mental health mental illness family member struggling sad all the time panic attacks bipolar ptsd stays in bed withdrawn not themselves suicidal thoughts self harm worried about my child worried about my spouse mental health help therapy medication",
+  "parts": [
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "changes": [
+   "family:illness"
+  ],
+  "quick": [
+   "Mental health struggles are common, real, and treatable. Help works, and recovery happens.",
+   "It is nobody's fault, and it is never a child's job to fix.",
+   "Children do best with simple, honest words, steady routines, and other caring grown-ups close by.",
+   "Thoughts of suicide or self-harm are an emergency: call or text 988, any time. Danger right now: 911."
+  ],
+  "feel": "Someone you love seems far away, even when they are in the room. A parent stays in bed, a teen stops eating with the family, a partner is wound so tight with worry that the house holds its breath. Moods may swing, or flatten. Everyone else adjusts: kids get quiet, a partner picks up the slack, plans get canceled. Family members may feel worried, frustrated, sad, confused, or guilty for feeling frustrated. Children may wonder if they caused it, or try hard to be perfect so they won't make it worse. And still, families come through these seasons. With help, honesty, and steady love, people heal and homes grow warm again.",
+  "together": {
+   "first": [
+    "Talk with the person who is struggling, with kindness: “I've noticed you seem weighed down. I care about you. How are you, really?”",
+    "Help them connect with care: their doctor, a licensed therapist, or a crisis line if it is urgent.",
+    "Tell the children, simply and honestly, what is happening and that help is on the way.",
+    "Keep daily routines steady for the children: meals, school, bedtime, and time outside."
+   ],
+   "helps": [
+    "Simple words for kids: “Mom has an illness called depression. It makes her feel very tired and sad. Doctors are helping.”",
+    "Reminding children often: “It's not because of anything you did.”",
+    "Listening without fixing, and letting the person share at their own pace.",
+    "Gentle daily rhythms for everyone: sleep, nourishing meals, water, movement, and time outdoors.",
+    "Other caring grown-ups in the children's lives: grandparents, teachers, coaches, friends.",
+    "Support for the family too: a family support group, a friend, a faith community."
+   ],
+   "say": [
+    "“We love you, and we're in this together.”",
+    "“Getting help is a strong thing to do.”",
+    "“Feelings get better with help and time.”"
+   ],
+   "people": "Try, to the person struggling: “I'm here, and I'm staying right here with you. Can I help you call the doctor?” To a child: “Dad is sick with something called anxiety. It makes his worries feel really big. He's getting help, and you can always talk to me.” To a friend: “We're going through a hard season. Could you take the kids to the park on Saturday?”"
+  },
+  "kids": [
+   "“Someone in our family has an illness in their feelings and thinking. It's called depression (or anxiety). Doctors are helping.”",
+   "“It isn't your fault, and it's a grown-up job to help them get better.”",
+   "“You can still love them, hug them, and tell them about your day.”",
+   "“You can talk to me or another grown-up you trust about how you feel, anytime.”",
+   "“If anyone talks about hurting themselves, tell a grown-up right away. That's a brave and loving thing to do.”"
+  ],
+  "leader": {
+   "feel": "If you are caring for someone at home who is struggling, you may feel worried, worn out, lonely, or angry, and then guilty for those feelings. You may be carrying the household, the kids, and the person who is struggling, all at once. If you are the one struggling, you may feel ashamed, or afraid of being a burden. Both are common. Both deserve support.",
+   "say": [
+    "“I'm here, and we'll get through this together.”",
+    "“It's okay to struggle. Let's get some help together.”",
+    "“Are you having thoughts of hurting yourself, or of not wanting to be alive?” Asking directly is safe and caring.",
+    "To a child: “It's not because of you. You're loved, all the way.”",
+    "“Thank you for telling me.”"
+   ],
+   "avoid": [
+    "“Just snap out of it,” or “Think positive.”",
+    "Keeping it a secret from the children, so they sense something is wrong and fill in the blanks.",
+    "Asking children to keep watch over a parent or keep the family running.",
+    "Waiting to reach out until things are very bad.",
+    "Trying to carry it all alone."
+   ],
+   "help": [
+    "Help the person connect with their doctor or a licensed therapist. Offer to make the call or go along.",
+    "Keep the children's routines steady, and ask other caring grown-ups to step in.",
+    "Learn about the illness together; NAMI offers family classes and support groups.",
+    "Make a simple safety plan: who to call, numbers on the fridge, and safe storage of medications and firearms.",
+    "Encourage gentle healthy rhythms: sleep, meals, water, a walk outside every day.",
+    "Care for yourself: rest, a friend to talk to, and support of your own."
+   ],
+   "you": "Caring for someone who is struggling is a marathon. You need rest, people, and help too. Find a family support group, keep one thing each week that fills you, and let others carry some of the load. Your health matters to everyone in your home."
+  },
+  "faith": "For many families, faith is a deep resource in a mental health struggle: prayer, a supportive community, sacred words that speak honestly of despair and hope, and a sense of being held. For others, faith can add weight: a fear that struggling means weak faith, or that prayer alone should be enough. Many faith leaders and traditions affirm that mental health care and faith go hand in hand, the way they do for any illness. Faith can be a resource or a stressor. With children, invite rather than assume: a prayer, a song, or a quiet moment, as one way among several to feel held. God is never presented as causing the illness or as disappointed in the person who is struggling.",
+  "practices": [
+   "listening-round",
+   "tears-are-welcome",
+   "kind-words-inside",
+   "one-on-one",
+   "play-outside",
+   "hope-in-hard-times"
+  ],
+  "trees": [
+   [
+    "maple",
+    "family-mental-health",
+    "A family member's mental health struggle"
+   ],
+   [
+    "pine",
+    "depression",
+    "Depression and feeling numb"
+   ],
+   [
+    "pine",
+    "anxiety",
+    "Anxiety and panic"
+   ],
+   [
+    "oak",
+    "suicidal-other",
+    "When someone else is thinking about suicide"
+   ],
+   [
+    "oak",
+    "serious-mi",
+    "Living with a serious mental illness"
+   ],
+   [
+    "oak",
+    "caregiving",
+    "Caring for someone who is ill"
+   ]
+  ],
+  "reach": [
+   "Thoughts of suicide or self-harm, for anyone at home: call or text 988, or chat at 988lifeline.org, any time. Danger right now: 911.",
+   "Crisis Text Line: text HOME to 741741 (in Minnesota, MN to 741741).",
+   "NAMI HelpLine: 1-800-950-6264, for information, support, and local family programs.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referrals for mental health and substance use.",
+   "Your doctor, or your child's doctor, is a good first call for a mental health concern."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ],
+   [
+    "NAMI HelpLine",
+    "https://www.nami.org/nami-helpline/"
+   ],
+   [
+    "Crisis Text Line",
+    "https://www.crisistextline.org/"
+   ]
+  ],
+  "sources": [
+   "namiprog"
+  ]
+ },
+ {
+  "id": "back-to-school",
+  "title": "Back-to-School Stress",
+  "ring": "gw-home",
+  "kinds": [
+   "family"
+  ],
+  "short": "When a new school year brings worry, rushed mornings, and tired evenings: calm rhythms and brave steps.",
+  "keys": "back to school first day of school school anxiety nervous about school new teacher new school year school worries stomachache before school doesnt want to go to school school refusal crying at drop off homework stress morning routine bedtime routine school schedule sleep schedule middle school high school starting kindergarten",
+  "parts": [
+   "leaves",
+   "bark",
+   "fruit"
+  ],
+  "changes": [
+   "family:school"
+  ],
+  "quick": [
+   "A new school year is a big change for the whole family. Some worry is normal, and it usually eases in a few weeks.",
+   "Steady sleep, calm mornings, nourishing breakfasts, and unplugged evenings help everyone handle the change.",
+   "Listen to worries, name them kindly, and help children take brave small steps toward school.",
+   "When worry stays big, keeps a child home, or comes with other changes, talk with the school and the child's doctor."
+  ],
+  "feel": "Summer slows down, and suddenly the alarm clock is back. Backpacks, forms, new shoes, and new schedules fill the house. Some children are excited. Others feel butterflies, stomachaches, or tears at the door. Teens may worry about friends, classes, or fitting in, and may say very little about it. Mornings can turn into a rush, evenings into homework battles, and everyone is tired by Friday. Grown-ups may feel the squeeze of new routines and their own worry about how their child will do. The good news: most families settle into the new rhythm within a few weeks, and the habits built now can carry the whole year.",
+  "together": {
+   "first": [
+    "Start the school sleep schedule a week or two before school, moving bedtime earlier a little each night.",
+    "Visit the school or walk the route together, and meet the teacher if you can.",
+    "Make a simple morning plan together, with a picture list for younger kids.",
+    "Talk about what each person is looking forward to, and what feels worrying."
+   ],
+   "helps": [
+    "Getting things ready the night before: clothes, backpack, lunch, shoes by the door.",
+    "A calm, nourishing breakfast, even a simple one, with water or milk.",
+    "A short goodbye ritual at the door or drop-off: a hug, a wish, a wave.",
+    "After-school time to rest, eat a healthy snack, and play outside before homework.",
+    "Unplugged evenings and screens out of bedrooms at night, so everyone sleeps well.",
+    "Listening to the day at dinner or bedtime: “What was one good thing and one hard thing?”"
+   ],
+   "say": [
+    "“New things can feel scary and exciting at the same time.”",
+    "“You can do hard things, one step at a time.”",
+    "“I'll be right here when you get home.”"
+   ],
+   "people": "Try, to a worried child: “Your tummy feels wobbly because school is new. That's your body getting ready. Let's take a big breath together.” To a teen: “What's the part you're most curious about? And the part you'd rather skip?” To the teacher: “He's nervous about the start. Could he have a job the first week, to help him settle?”"
+  },
+  "kids": [
+   "“Lots of kids feel butterflies before school starts. It means something new is coming.”",
+   "“Let's practice our morning steps together, so they feel easy.”",
+   "“When you feel worried at school, you can take a balloon breath, or tell your teacher.”",
+   "“Tell me one good thing and one hard thing from your day.”",
+   "“I'll be right here when you get home. I love hearing about your day.”"
+  ],
+  "leader": {
+   "feel": "Back-to-school season can stir worry in grown-ups too: about a child's friends, grades, or safety, about schedules and costs, about your own memories of school. Mornings may test your patience. You may feel pulled between being encouraging and wanting to protect your child from every hard feeling. Calm, confident grown-ups help children feel brave. You can be both warm and steady.",
+   "say": [
+    "“You feel nervous. That makes sense. I know you can do it.”",
+    "“What would help you feel ready?”",
+    "“Let's figure out a plan together.”",
+    "“I'm proud of you for going, even with butterflies.”"
+   ],
+   "avoid": [
+    "Letting worry keep a child home day after day, rather than helping them take small steps.",
+    "Long, drawn-out goodbyes at drop-off.",
+    "Promising school will be easy or that nothing hard will happen.",
+    "Late bedtimes and screens in bedrooms on school nights.",
+    "Packing every afternoon with activities, leaving no time to rest or play."
+   ],
+   "help": [
+    "Move bedtime earlier before school starts, and keep it steady through the week.",
+    "Prepare the night before, and keep mornings calm with a simple routine.",
+    "Keep goodbyes short, warm, and confident.",
+    "Protect after-school rest and outdoor play, and set a regular homework time.",
+    "Stay in touch with the teacher and the school counselor, especially in the first weeks.",
+    "If worry keeps a child home, causes daily physical complaints, or lasts beyond the first month, talk with the school and the child's doctor."
+   ],
+   "you": "The start of school is a lot for grown-ups too. Prepare what you can, let the rest be imperfect, and give yourself a few quiet minutes after the morning rush: a walk, a cup of tea, a breath. Your steady presence is the best school supply your child has."
+  },
+  "faith": "Many families mark the start of a school year with a blessing: a prayer at the door, a blessing of backpacks at their place of worship, or words of hope at the dinner table. For some families, these rituals help children feel held as they step into something new. For others, faith may feel far away in the rush, or a child may worry about fitting in where others believe differently. Faith can be a resource or a stressor. With children, invite rather than assume: a blessing, a kind wish, or a quiet moment, as one way among several to start the year with courage.",
+  "practices": [
+   "bedtime-routine",
+   "breakfast-together",
+   "doorway-blessing",
+   "weekly-look-ahead",
+   "power-of-yet",
+   "calm-down-plan"
+  ],
+  "trees": [
+   [
+    "maple",
+    "new-school",
+    "Starting or changing schools"
+   ],
+   [
+    "maple",
+    "school-worry",
+    "School and test worries"
+   ],
+   [
+    "aspen",
+    "startms",
+    "Starting middle school"
+   ],
+   [
+    "aspen",
+    "grades",
+    "Grades and pressure"
+   ],
+   [
+    "pine",
+    "start-hs",
+    "Starting high school"
+   ],
+   [
+    "pine",
+    "grades-pressure",
+    "Grades, pressure, and perfectionism"
+   ]
+  ],
+  "reach": [
+   "Your child's teacher and school counselor are partners, especially in the first weeks.",
+   "Your child's doctor can help when worry causes daily stomachaches or headaches, or keeps a child home from school.",
+   "Ask the school about meal programs, fee waivers, and supplies. Call or text 211 for local help with school supplies and more.",
+   "If a child or teen talks about hurting themselves or not wanting to be alive: call or text 988, any time. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "Healthy sleep for children, HealthyChildren.org (American Academy of Pediatrics)",
+    "https://www.healthychildren.org/English/healthy-living/sleep/Pages/healthy-sleep-habits-how-many-hours-does-your-child-need.aspx"
+   ],
+   [
+    "Child Mind Institute",
+    "https://childmind.org/"
+   ],
+   [
+    "211, United Way",
+    "https://www.211unitedway.org"
+   ]
+  ],
+  "sources": [
+   "aasm16"
   ]
  },
  {
@@ -3295,6 +4422,850 @@ const TOPICS = [
   "sources": []
  },
  {
+  "id": "left-out",
+  "title": "Friendship Trouble and Being Left Out",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When friendships shift, groups close up, or a student is often on the edges of class life.",
+  "keys": "left out friendship trouble friend problems no one to play with alone at recess lonely student friend group drama best friend new best friend excluded exclusion cliques the game is full sitting alone at lunch making friends losing a friend friendship fights mean girls choosing partners picked last belonging",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "changes": [
+   "classroom:student"
+  ],
+  "quick": [
+   "Friendships change a lot in childhood. Being left out still hurts for real, and kids heal faster when a grown-up notices.",
+   "A class can build belonging on purpose: buddies, mixed seats, games everyone can join.",
+   "Invitations work best when they come again and again.",
+   "Keep it about class life. Help students practice the words that bring someone in."
+  ],
+  "feel": "Two best friends become three, and someone slides to the edge. A game at recess fills up fast, and one student hears, again, that it is full. A friend group that felt solid in September has shifted by November. For the student on the outside, school can start to feel heavy: they may come in quiet, ask to stay in at recess, or have stomachaches on Monday mornings. For the class, friendship trouble shows up as whispers, partner choosing that takes too long, and a few students who always find each other first. Most of this is the ordinary work of growing up and learning how friendship works. A class that tends belonging on purpose makes that work kinder for everyone.",
+  "together": {
+   "first": [
+    "Notice who is on the edges: at recess, at lunch, in partner work.",
+    "Talk as a class about how it feels to be included, and how it feels to be left out.",
+    "Make a plan together for recess and lunch so everyone has a way in.",
+    "Practice the words that invite: “Want to play?” “Come sit with us.”"
+   ],
+   "helps": [
+    "Playground Buddies and a buddy signal, so anyone alone gets invited.",
+    "Mix It Up Seats once a week, so everyone gets to know everyone.",
+    "Teacher-chosen partners and groups, so choosing never leaves one student last.",
+    "Recess games with simple rules that any number can join.",
+    "A Lunch Bunch, so each student has a turn eating with the teacher and a few classmates.",
+    "Kindness Notes that go to every student over the month."
+   ],
+   "say": [
+    "“In our class, there is always room for one more.”",
+    "“Everyone gets a way in.”",
+    "“We can have best friends and still be kind to all.”"
+   ],
+   "people": "Students often want to include someone and need the words. Try: “We need one more. Want to play?” Or: “You can sit here.” Or, to a friend: “Can she join us? The game is more fun with more people.”"
+  },
+  "kids": [
+   "“Everybody feels left out sometimes. It's a real hurt, and it gets better.”",
+   "“You can have a best friend and still be kind to everyone.”",
+   "“If you see someone alone, you can say: want to play with us?”",
+   "“If you feel left out, tell me. We'll make a plan together.”",
+   "“Friendships change, and new friendships grow. That's part of growing up.”"
+  ],
+  "leader": {
+   "feel": "Being left out registers as real pain. For a child, being excluded at recess or lunch can feel as big as any hurt at school, and children who often feel on the outside of class life carry it into learning. You may see the student who is alone, the group that keeps closing, and the friend pair that just broke up, all in one week. Most friendship trouble is ordinary and passes with steady support. Your part is to make belonging part of how the class runs, so it no longer depends on who is popular this month.",
+   "say": [
+    "“I noticed you were on your own at recess. How was it for you?”",
+    "“Who would you like to sit with tomorrow?”",
+    "“In our class, games are open to anyone who wants to join.”",
+    "“It sounds like your friendship is changing. That can feel sad.”"
+   ],
+   "avoid": [
+    "Telling a hurting student to just go find new friends.",
+    "Letting students pick teams or partners while one waits to be chosen last.",
+    "Naming the students who left someone out in front of the class.",
+    "Forcing two students to be friends.",
+    "Treating ongoing, on-purpose exclusion as ordinary friendship trouble."
+   ],
+   "help": [
+    "Make belonging a routine: buddies, mixed seats, teacher-chosen partners.",
+    "Teach and practice invitation words as a class, like any other skill.",
+    "Teach a few recess games anyone can join, with no limit on players.",
+    "Check in privately and often with a student who is on the edges.",
+    "Talk privately with students who exclude, and help them practice a kinder way.",
+    "Bring in the school counselor when a student seems lonely for weeks, or when exclusion is on purpose and repeated."
+   ],
+   "you": "You may remember being left out yourself, and it can tug at you when you see it now. Let that memory make you watchful and kind. You can tend a whole class's sense of belonging with small, steady routines. The school counselor and the student's family, through your school, are your partners."
+  },
+  "byKind": {
+   "classroom": "Keep the work about class life: recess, lunch, partners, and games. Talk with families through your school's usual ways."
+  },
+  "faith": "",
+  "practices": [
+   "playground-buddies",
+   "mix-it-up",
+   "recess-games",
+   "lunch-bunch",
+   "kindness-notes",
+   "game-break"
+  ],
+  "trees": [
+   [
+    "maple",
+    "friendship",
+    "Friendship troubles"
+   ],
+   [
+    "maple",
+    "different",
+    "Feeling different"
+   ],
+   [
+    "aspen",
+    "leftout",
+    "Being left out"
+   ],
+   [
+    "aspen",
+    "friends",
+    "Friendship breakups and drama"
+   ],
+   [
+    "pine",
+    "left-out",
+    "Feeling lonely or left out"
+   ],
+   [
+    "pine",
+    "friend-changes",
+    "Friendship changes and losing a friend group"
+   ]
+  ],
+  "reach": [
+   "The school counselor, for a student who seems lonely for weeks, or for exclusion that is on purpose and repeated.",
+   "The student's family, through your school, so home and school can support the same plan.",
+   "The principal, when exclusion turns into bullying, threats, or harm.",
+   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "CDC: school connectedness among high school students (research)",
+    "https://www.cdc.gov/mmwr/volumes/73/su/su7304a9.htm"
+   ]
+  ],
+  "sources": [
+   "williams07",
+   "cdcconnect23",
+   "goodenow93"
+  ]
+ },
+ {
+  "id": "unkindness",
+  "title": "Unkindness and Bullying in Our Class",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When teasing, meanness, or bullying shows up in class, and the class learns to stand up for each other.",
+  "keys": "bullying bully bullied mean kids teasing name calling making fun unkind words put downs mean comments rumors pushing hitting kicking picking on someone upstander bystander standing up for others kindness classroom kindness respect class rules report bullying tell a teacher",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "changes": [],
+  "quick": [
+   "Bullying is unkindness that is on purpose, repeated, and uses power over someone. Every school has a plan for it; follow yours.",
+   "Most students are watching. A class of upstanders changes everything.",
+   "Students who tell a grown-up are doing the right thing. Thank them and act.",
+   "Build kindness on purpose: a class promise, kind words noticed out loud, and a calm place to work things out."
+  ],
+  "feel": "It might be a nickname that stings, a laugh when someone answers a question, or a group that keeps grabbing one student's things. It might be worse: pushing in line, rumors, threats. The student on the receiving end may go quiet, have stomachaches, or dread recess. Students who see it often feel stuck, unsure whether to say something, worried they will be next. The students doing it may be testing power, copying what they have seen, or hurting in their own way. A class can change course. When kindness is named, practiced, and expected, and when grown-ups act quickly and calmly, a room becomes safer for everyone.",
+  "together": {
+   "first": [
+    "Follow your school's bullying plan, and tell the school counselor and the principal as it says.",
+    "Make sure the student who was hurt is safe and supported.",
+    "Talk as a class about kindness and respect, without naming anyone.",
+    "Write or renew a class promise about how we treat each other."
+   ],
+   "helps": [
+    "Teaching upstander words and practicing them: “Stop. That's unkind. Come with us.”",
+    "Telling students clearly that reporting to a grown-up is brave and right.",
+    "A Class Compliment Jar, so kind words get noticed out loud.",
+    "A Peace Table, so small conflicts get worked out with simple steps before they grow.",
+    "More grown-up eyes in the places where unkindness hides: hallways, lunch, recess.",
+    "Appreciation Rounds and Kindness Notes that reach every student."
+   ],
+   "say": [
+    "“In our class, we stand up for each other.”",
+    "“Telling a grown-up is brave.”",
+    "“Everyone here deserves to feel safe.”"
+   ],
+   "people": "Students often want to help and need the words. Try, to the student being picked on: “Come with us.” To the one doing it: “Stop. That's unkind.” And then: tell a grown-up, every time."
+  },
+  "kids": [
+   "“Bullying is when someone is mean on purpose, again and again. Grown-ups will help make it stop.”",
+   "“If it happens to you, tell a grown-up. That's brave, and it's the right thing to do.”",
+   "“If you see it, you can be an upstander: say stop, help your classmate walk away, and tell a grown-up.”",
+   "“Tattling tries to get someone in trouble. Telling gets someone help.”",
+   "“Everyone in our class deserves to feel safe and welcome.”"
+  ],
+  "leader": {
+   "feel": "Bullying is unkindness that is on purpose, repeated, and uses power, from physical size to popularity to knowing a secret. Every student involved is affected: the student who is targeted, the students who see it, and the student who does it. You may feel angry, protective, or worried about getting it wrong. Your school's bullying plan is your path; follow it. Your daily work is to make kindness the norm in the room, act calmly and quickly when unkindness shows up, and make it easy for students to tell you.",
+   "say": [
+    "“Thank you for telling me. You did the right thing. I'm going to help.”",
+    "“In our class, everyone is treated with respect.”",
+    "“What would help you feel safe tomorrow?”",
+    "“I saw that. Let's talk privately.”"
+   ],
+   "avoid": [
+    "Telling a student who was bullied to ignore it or to fight back.",
+    "Bringing the two students together to talk it out face to face, before the school's plan says so.",
+    "Asking the student who was hurt to change seats, classes, or routines when others did the harm.",
+    "Naming or shaming any student in front of the class.",
+    "Handling serious bullying alone, outside the school's plan."
+   ],
+   "help": [
+    "Follow your school's bullying plan, and document what you saw and heard.",
+    "Support the student who was hurt: listen, thank them, ask what would help them feel safe.",
+    "Talk privately with the student who did it: name the behavior, the expectation, and a better way, as your plan directs.",
+    "Teach and practice upstander words with the whole class.",
+    "Add grown-up presence where unkindness hides, and work with other staff on it.",
+    "Notice and name kindness out loud, every day."
+   ],
+   "you": "Acting on bullying can feel heavy, especially when families get involved. Lean on your school's plan, the school counselor, and the principal; this is team work. A room where kindness is expected and noticed is one of the best gifts a teacher gives."
+  },
+  "byKind": {
+   "classroom": "Follow your school's bullying plan and tell the school counselor first. Talk with families through your school's usual ways, and keep every student's story private in class."
+  },
+  "faith": "",
+  "practices": [
+   "class-promise",
+   "compliment-jar",
+   "peace-table",
+   "appreciation-round",
+   "kindness-notes",
+   "talking-piece"
+  ],
+  "trees": [
+   [
+    "maple",
+    "bullied",
+    "Being bullied"
+   ],
+   [
+    "maple",
+    "unkind",
+    "When your child is the one being unkind"
+   ],
+   [
+    "maple",
+    "ask-stare-tease",
+    "When other kids ask, stare, or tease"
+   ],
+   [
+    "aspen",
+    "bullying",
+    "Bullying, in person and online"
+   ],
+   [
+    "aspen",
+    "unfair",
+    "Being treated unfairly"
+   ],
+   [
+    "pine",
+    "bullying",
+    "Bullying, in person and online"
+   ]
+  ],
+  "reach": [
+   "Your school's bullying plan, the school counselor, and the principal, every time.",
+   "The families of the students involved, through your school, as the plan says.",
+   "Threats, physical harm, or a weapon: the school's safety plan, and 911 for danger right now.",
+   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable.",
+   "If a student shares harm at home: report as the law and your school require, or call Childhelp, 1-800-422-4453."
+  ],
+  "more": [
+   [
+    "StopBullying.gov: supporting kids involved in bullying",
+    "https://stopbullying.gov/respond/support-kids-involved"
+   ],
+   [
+    "StopBullying.gov: bystanders to bullying",
+    "https://stopbullying.gov/prevention/bystanders-to-bullying"
+   ]
+  ],
+  "sources": [
+   "stopbullying",
+   "cdcbully23"
+  ]
+ },
+ {
+  "id": "test-season",
+  "title": "Test Season Pressure",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When state tests, finals, or a big test week bring worry and pressure into the classroom.",
+  "keys": "test anxiety testing season state tests standardized tests test week finals exams nervous about tests test stress test worry stomachache before test pressure grades scores report cards perfectionism afraid of failing cram study skills calm before test",
+  "parts": [
+   "bark",
+   "leaves",
+   "fruit"
+  ],
+  "changes": [
+   "classroom:testing"
+  ],
+  "quick": [
+   "Some nerves before a test are normal. A fast heart is the body getting ready to help.",
+   "A test shows some of what a student knows on one day. Who they are is so much bigger.",
+   "Steady routines carry a class through test season: water, movement, rest, and calm breaths.",
+   "A few minutes of writing down worries before a test can help anxious students do their best."
+  ],
+  "feel": "The schedule changes. The room gets rearranged. There are practice tests, reminders, and maybe posters counting down the days. Some students hardly notice. Others start having stomachaches, trouble sleeping, or tears over a practice page. A student who usually loves school may freeze, rush, or say they are bad at everything. Teachers feel pressure too, and students can sense it. Test season can make a class feel tight and tired. It can also become a time when a class learns how to handle pressure well: breathe, move, rest, try, and keep going.",
+  "together": {
+   "first": [
+    "Tell the class what to expect: the days, the schedule, and what a testing day looks like.",
+    "Name nerves as normal, and practice calm-down tools together.",
+    "Keep the class's best routines going: movement, water, and rest.",
+    "Remind students that a test shows some of what they know, on one day."
+   ],
+   "helps": [
+    "Balloon Breath before each test session, all together.",
+    "A movement break between sections, and water nearby.",
+    "A few minutes of writing down worries right before the test, then setting the paper aside.",
+    "The Power of Yet, for students who say they can't.",
+    "Kind Words Inside, for students who are hard on themselves.",
+    "Something to look forward to after testing: a walk outside, a game, a class celebration of effort."
+   ],
+   "say": [
+    "“A fast heart means my body is getting ready to help me.”",
+    "“I can do hard things, one question at a time.”",
+    "“I am more than a score.”"
+   ],
+   "people": "Students sometimes need words for each other. Try: “You've got this.” Or: “Want to do balloon breaths with me?” And after: “What was the best part of your effort today?”"
+  },
+  "kids": [
+   "“Feeling nervous before a test is normal. Lots of people feel it.”",
+   "“When your heart beats fast, your body is getting ready to help you think.”",
+   "“If you get stuck, take a balloon breath and go on to the next one.”",
+   "“A test shows some of what you know, on one day. You are so much more than a score.”",
+   "“Your job is to try your best. That's all.”"
+  ],
+  "leader": {
+   "feel": "Test season carries pressure from many directions: schedules, expectations, and scores. Some students feel it as excitement; others feel it as fear in the body, with racing hearts, cold hands, and stomachaches. Research suggests that when students learn to read that racing heart as the body getting ready, they often perform better, and that a few minutes of writing about worries right before a high-stakes test can help anxious students do their best. Your calm is one of the strongest tools in the room.",
+   "say": [
+    "“You've practiced. Now you get to show what you know.”",
+    "“If you get stuck, breathe, and go on to the next question.”",
+    "“That fast heart is your body getting ready to help you.”",
+    "“I'm proud of how hard you're working.”"
+   ],
+   "avoid": [
+    "Telling students the test decides their future.",
+    "Comparing scores out loud, or posting them.",
+    "Cutting recess or movement to make room for more practice.",
+    "Showing your own worry about scores in front of the class.",
+    "Saying “Just relax” to a student who is panicking."
+   ],
+   "help": [
+    "Preview the testing days clearly, so nothing feels like a surprise.",
+    "Teach and practice two calm-down tools well before test week.",
+    "Keep recess, movement, water, and rest in the schedule.",
+    "Offer a few minutes to write down worries before the test, then set the page aside.",
+    "Celebrate effort and strategies, never only scores.",
+    "Let the school counselor know about any student whose worry is very strong or lasting, and follow each student's plan for testing accommodations."
+   ],
+   "you": "You feel the pressure too, and you can still be the steady one in the room. Breathe with your students. Remember that a class that learns to handle pressure well has learned something that lasts much longer than any score."
+  },
+  "byKind": {
+   "classroom": "Follow your school's testing rules and each student's plan for accommodations. Keep talk about scores private, and share them with families through your school's usual ways."
+  },
+  "faith": "",
+  "practices": [
+   "balloon-breath",
+   "power-of-yet",
+   "movement-break",
+   "water-break",
+   "kind-words-inside",
+   "head-down-rest"
+  ],
+  "trees": [
+   [
+    "maple",
+    "school-worry",
+    "School and test worries"
+   ],
+   [
+    "maple",
+    "worry",
+    "Worry that won't let go"
+   ],
+   [
+    "aspen",
+    "grades",
+    "Grades and pressure"
+   ],
+   [
+    "aspen",
+    "compare",
+    "Comparing yourself to others"
+   ],
+   [
+    "pine",
+    "grades-pressure",
+    "Grades, pressure, and perfectionism"
+   ],
+   [
+    "pine",
+    "anxiety",
+    "Anxiety and panic"
+   ]
+  ],
+  "reach": [
+   "The school counselor, for a student whose worry is very strong, lasts beyond test season, or keeps them from school.",
+   "The student's family, through your school, so home and school can support the same calm plan.",
+   "The school's testing coordinator and each student's plan, for accommodations.",
+   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable."
+  ],
+  "more": [
+   [
+    "Ramirez and Beilock, writing about testing worries (Science, 2011)",
+    "https://doi.org/10.1126/science.1199427"
+   ]
+  ],
+  "sources": [
+   "jamieson10",
+   "ramirez11",
+   "dweck06"
+  ]
+ },
+ {
+  "id": "family-changing",
+  "title": "A Classmate's Family Is Changing",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When a student's family is going through a big change, and the class offers steady kindness.",
+  "keys": "classmate parents divorce separation two homes new baby sibling parent deployed parent away military moving family change classmate family trouble parent in jail parent sick grandparent moving in foster care new stepparent family upheaval student sad about home steady school day",
+  "parts": [
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "changes": [],
+  "quick": [
+   "When a family is changing, school can be the steady place.",
+   "The student and family choose what is shared. The class offers kindness, and the story stays theirs.",
+   "Predictable routines, a trusted adult, and a friend or two make a big difference.",
+   "Every family looks different. A class that honors that makes room for everyone."
+  ],
+  "feel": "Maybe parents are separating, and a student now goes between two homes. Maybe a new baby arrived, a parent left for military service or work far away, a grandparent moved in, or someone at home is sick. Sometimes the class knows, because the student told them. Often only the teacher knows, or no one does. The student may seem tired, distracted, teary, or quick to anger, or may seem just the same and save it all for later. Classmates may notice something is different and wonder. A class can help without knowing the story: steady routines, warm invitations, and room for every kind of family.",
+  "together": {
+   "first": [
+    "Let the student and family, through your school, choose what the class is told, if anything.",
+    "Keep the class's routines steady and predictable.",
+    "Check in privately with the student, briefly and warmly.",
+    "Make sure class talk and projects welcome every kind of family."
+   ],
+   "helps": [
+    "A Feelings Check with Colors each morning, where anyone can point and pass.",
+    "A Calm Corner the student can use without asking.",
+    "A class job, so the student has a steady role in the room.",
+    "Invitations to play and sit together, again and again.",
+    "Projects that welcome every family, like “people who care for me” in place of “mom and dad.”",
+    "Step Outside Together, for fresh air on heavy days."
+   ],
+   "say": [
+    "“Every family looks different, and every family belongs.”",
+    "“In our class, we're kind when someone is having a hard time.”",
+    "“We can be a good friend and let their story stay theirs.”"
+   ],
+   "people": "Classmates often want to help. Try: “Want to sit with me at lunch?” Or: “Want to play?” And if a classmate shares something, the kindest answer is simple: “That sounds hard. I'm glad you told me.”"
+  },
+  "kids": [
+   "“Sometimes families change. That's a big feeling for anyone.”",
+   "“If a friend tells you something about home, you can say: that sounds hard, I'm glad you told me.”",
+   "“A friend's story belongs to them. We let them share it if they want.”",
+   "“Every family looks different. All families belong here.”",
+   "“If you're having a hard time, you can always come talk to me.”"
+  ],
+  "leader": {
+   "feel": "When a family changes, children often feel it as a loss of the ordinary: a different bedtime, a different house on Wednesdays, an empty chair at dinner. School can be the place that stays the same, and you are part of that. You may know a lot, a little, or nothing about what is happening. You may feel protective, or unsure what to say. Much of what helps is simple: a predictable day, a warm greeting, a quiet check-in, and patience with a student who is tired or distracted. Research on children and divorce, for example, finds that most children do well over time, especially with steady routines and caring adults around them.",
+   "say": [
+    "“I'm glad you're here today.”",
+    "“If you ever want to talk, or just sit by me, I'm here.”",
+    "“You can use the calm corner any time you need it.”",
+    "“Would it help to have a little more time on this?”"
+   ],
+   "avoid": [
+    "Telling the class about a student's family without the family's and student's okay.",
+    "Asking the student questions about home in front of others.",
+    "Assignments that assume one kind of family, like a family tree with only two parents.",
+    "Taking sides between parents or households.",
+    "Expecting the student to be fine because they seem fine."
+   ],
+   "help": [
+    "Follow your school's guidance on what is shared and with whom.",
+    "Keep routines steady, and give a heads-up before changes.",
+    "Check in briefly and privately, a few times a week.",
+    "Be flexible with homework and supplies when a student moves between homes.",
+    "Send school news to every household the school says should receive it.",
+    "Let the school counselor know, and ask what support the school offers, like a small group for students in changing families."
+   ],
+   "you": "You may care about this student's family more than you can show. That's part of good teaching. Hold it gently, keep their day steady, and lean on the school counselor. You don't need the whole story to be the warm, reliable adult a child needs right now."
+  },
+  "byKind": {
+   "classroom": "Keep it about class life. The student and family, through your school, choose what is shared. Ask the school counselor before any class talk about a student's family."
+  },
+  "faith": "",
+  "practices": [
+   "feelings-colors",
+   "calm-corner",
+   "class-jobs",
+   "one-word-check-in",
+   "step-outside"
+  ],
+  "trees": [
+   [
+    "maple",
+    "divorce",
+    "Divorce or separation"
+   ],
+   [
+    "maple",
+    "blended",
+    "A new stepparent or blended family"
+   ],
+   [
+    "maple",
+    "deployed",
+    "A parent deployed or away for work"
+   ],
+   [
+    "maple",
+    "money",
+    "Money worries or a job loss"
+   ],
+   [
+    "aspen",
+    "divorce",
+    "Divorce and two homes"
+   ],
+   [
+    "aspen",
+    "stepfamily",
+    "A new stepfamily"
+   ]
+  ],
+  "reach": [
+   "The school counselor, first, for support for the student and guidance on what to share.",
+   "The student's family, through your school, about what helps.",
+   "Military families: Military OneSource, 800-342-9647, and the school's military family liaison where there is one.",
+   "Help with food, housing, or money: 211.",
+   "If a student shares harm at home: report as the law and your school require, or call Childhelp, 1-800-422-4453. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "Military OneSource",
+    "https://www.militaryonesource.mil/"
+   ],
+   [
+    "211: local help with food, housing, and bills",
+    "https://www.211.org/"
+   ]
+  ],
+  "sources": [
+   "amato01"
+  ]
+ },
+ {
+  "id": "online-drama",
+  "title": "Group Chats and Online Drama",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When group chats, games, or posts after school turn into drama that comes into the classroom.",
+  "keys": "group chat drama online drama texting fights mean messages screenshots left out of group chat cyberbullying online bullying social media drama class group chat rumors online posts phone fight messaging apps removed from chat online gossip kind online digital citizenship pause before you post",
+  "parts": [
+   "branches",
+   "bark",
+   "leaves"
+  ],
+  "changes": [],
+  "quick": [
+   "What happens in a group chat at night often walks into class in the morning.",
+   "Pause Before You Post: is it kind, is it true, would I say it face to face?",
+   "Students who tell a grown-up about online trouble are doing the right thing.",
+   "Unplugged time and face to face friendship are the best balance for screen life."
+  ],
+  "feel": "It started in a class group chat at 9 at night: a joke that landed wrong, a screenshot passed around, someone removed from the chat, a rumor that spread faster than anyone could stop it. By morning, half the class knows and the other half is guessing. The student at the center may come in red-eyed or refuse to look up. Friend groups take sides. Students check phones at every break if they can. Many teachers feel this is outside their walls, and in a way it is. Yet it lands in the classroom, and a class can learn together how to be kind online, how to step away, and when to bring in a grown-up.",
+  "together": {
+   "first": [
+    "Follow your school's technology and bullying plans, and bring in the school counselor and the principal as they say.",
+    "Make sure the student who was hurt is supported and feels safe at school.",
+    "Talk as a class about kind online habits, without naming anyone or reading any messages aloud.",
+    "Write class agreements for group chats together."
+   ],
+   "helps": [
+    "Pause Before You Post: is it kind, is it true, would I say it face to face?",
+    "A class agreement that everyone in a class chat is included, or the chat stays small and private by choice, kindly.",
+    "Practice words for stepping out of drama: “I'm going to stay out of this.” “Let's talk in person.”",
+    "Telling a grown-up and saving the message, rather than forwarding it.",
+    "Face to face time that rebuilds friendships: recess games, partner work, Kindness Notes.",
+    "Unplugged evenings and phones charging outside bedrooms at night, as families choose."
+   ],
+   "say": [
+    "“I send only what I'd say face to face.”",
+    "“Let's talk in person.”",
+    "“Telling a grown-up is brave.”"
+   ],
+   "people": "Students often need a way out of a pile-on. Try: “I'm going to stay out of this.” Or, to the student left out: “Want to hang out at recess?” And always: show a trusted grown-up."
+  },
+  "kids": [
+   "“Before you post, pause: is it kind, is it true, would I say it to their face?”",
+   "“If something online makes you feel bad, show a grown-up you trust.”",
+   "“Save it and show, rather than forward it.”",
+   "“You can always leave a chat that feels mean. That's a strong choice.”",
+   "“Real friends are kind online and in person.”"
+  ],
+  "leader": {
+   "feel": "Most students now have some kind of online life, and much of their friendship happens in group chats, games, and posts. Online drama moves fast, reaches many people at once, and often happens at night, far from grown-ups. It can include bullying, rumors, exclusion, and sometimes pictures or threats that need the school's and the law's response. You may feel this is outside your classroom, and it is still landing in it. Your part is clear and doable: support the student who was hurt, follow your school's plans, and teach kind online habits as class skills.",
+   "say": [
+    "“Thank you for showing me. You did the right thing.”",
+    "“Let's keep this between us and the people who can help.”",
+    "“In our class, we're kind online and in person.”",
+    "“What would help you feel okay at school today?”"
+   ],
+   "avoid": [
+    "Reading messages aloud or showing screenshots to the class.",
+    "Telling a hurting student to just get off their phone.",
+    "Handling threats or pictures alone, outside the school's plan.",
+    "Shaming students for being online at all.",
+    "Asking students to forward harmful images or messages to you."
+   ],
+   "help": [
+    "Follow your school's technology and bullying plans, and document what you saw.",
+    "Support the student who was hurt, and check in privately for the next few days.",
+    "Lead a class talk about kind online habits, with no names and no messages read aloud.",
+    "Help the class write agreements for group chats.",
+    "Build face to face connection in class: partner work, recess games, Kindness Notes.",
+    "Bring in the school counselor and the principal right away for threats, pictures, or anything that points to harm."
+   ],
+   "you": "Online drama can feel endless and hard to see. You don't need to fix the internet. You can make your classroom a place of face to face kindness, teach habits that last, and bring in the team quickly. That is real, steady help."
+  },
+  "byKind": {
+   "classroom": "Follow your school's technology and bullying plans. Keep every name and message private in class, and talk with families through your school's usual ways."
+  },
+  "faith": "",
+  "practices": [
+   "group-agreements",
+   "turn-and-talk",
+   "work-it-out",
+   "kindness-notes",
+   "talking-piece"
+  ],
+  "trees": [
+   [
+    "maple",
+    "online-trouble",
+    "Trouble online"
+   ],
+   [
+    "maple",
+    "online-secrets",
+    "When someone online asks for secrets"
+   ],
+   [
+    "aspen",
+    "phone",
+    "First phone and group chats"
+   ],
+   [
+    "aspen",
+    "friends",
+    "Friendship breakups and drama"
+   ],
+   [
+    "pine",
+    "social-media",
+    "Social media, comparison, and phone balance"
+   ],
+   [
+    "pine",
+    "bullying",
+    "Bullying, in person and online"
+   ]
+  ],
+  "reach": [
+   "Your school's technology and bullying plans, the school counselor, and the principal.",
+   "The families of the students involved, through your school, as the plans say.",
+   "Threats, pictures of a student, or an adult asking a student for secrets or images: the school's safety plan and the authorities, right away. Danger right now: 911.",
+   "If a student speaks of not wanting to be alive: the school counselor at once, and 988 (call, text, or chat) if no one is reachable."
+  ],
+  "more": [
+   [
+    "US Surgeon General: social media and youth mental health",
+    "https://www.hhs.gov/sites/default/files/sg-youth-mental-health-social-media-advisory.pdf"
+   ],
+   [
+    "StopBullying.gov: supporting kids involved in bullying",
+    "https://stopbullying.gov/respond/support-kids-involved"
+   ]
+  ],
+  "sources": [
+   "pew24",
+   "sgsocial23",
+   "cdcbully23"
+  ]
+ },
+ {
+  "id": "big-feelings-class",
+  "title": "Big Feelings in the Classroom",
+  "ring": "gw-school",
+  "kinds": [
+   "classroom"
+  ],
+  "short": "When anger, tears, worry, or meltdowns fill the room, and the class learns to settle together.",
+  "keys": "big feelings classroom meltdown tantrum angry student crying in class worried kids upset students classroom behavior emotional regulation calm down calm corner calming strategies frustration outbursts yelling throwing things anxious class restless class after recess social emotional learning name it to tame it",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches"
+  ],
+  "changes": [
+   "classroom:schedule",
+   "classroom:emergency"
+  ],
+  "quick": [
+   "Every feeling is welcome. Every action has limits. Both can be true at once.",
+   "Naming a feeling out loud helps it settle.",
+   "A calm grown-up is the strongest calm-down tool in the room.",
+   "A class with a calm corner, practiced breaths, and movement settles faster, together."
+  ],
+  "feel": "One student slams a book. Another cries because the schedule changed. Three are wound up after a windy recess, and someone just shouted that it's unfair. Some days the whole room feels jumpy: after a fire drill, before a holiday, during a hard week in the school or the world. Big feelings are part of being a child, and a class is a room full of them. Children's brains are still learning to put words to feelings and to settle the body. A class can learn that together: what feelings are called, what helps them settle, and how to keep everyone safe while they do.",
+  "together": {
+   "first": [
+    "Teach that every feeling is welcome, and every action has limits.",
+    "Name feelings out loud, often, including your own.",
+    "Make a calm corner and an Our Calm-Down Plan list with the class.",
+    "Practice calm-down tools when everyone is calm, so they are ready when feelings are big."
+   ],
+   "helps": [
+    "Name It to Tame It: say the feeling in a word, then breathe.",
+    "Balloon Breath and Calm Countdown, practiced daily.",
+    "Shake It Out and movement breaks for restless energy.",
+    "A Calm Corner anyone can use, with a timer and a way back.",
+    "A Feelings Words list on the wall, so everyone has words for what they feel.",
+    "Water, rest, and time outside, which help bodies settle."
+   ],
+   "say": [
+    "“All feelings are welcome here. We keep each other safe.”",
+    "“I can name it, breathe, and choose what to do.”",
+    "“We help each other calm down.”"
+   ],
+   "people": "Classmates often want to help a friend who is upset. Try: “Do you want some space, or do you want me to sit with you?” Or: “Want to do balloon breaths with me?” And: tell the teacher if someone might get hurt."
+  },
+  "kids": [
+   "“Big feelings are normal. Everybody has them.”",
+   "“When you feel a big feeling, try to say its name: mad, sad, worried, scared.”",
+   "“You can always use the calm corner, then come back when you're ready.”",
+   "“It's okay to be mad. We keep our hands, feet, and words safe.”",
+   "“If a friend is upset, give them space or ask if they want company.”"
+  ],
+  "leader": {
+   "feel": "Children's brains are still learning to name feelings and settle the body. A student in a meltdown isn't choosing to be difficult; their thinking brain has gone offline for a moment, and it comes back as the body calms. Research suggests that simply putting a feeling into words can help it settle, and social and emotional learning programs teach children to recognize, understand, label, express, and regulate emotions. You may feel frustrated, worn out, or worried about the rest of the class. Your own calm is the most powerful tool you have, and it is a skill that grows with practice.",
+   "say": [
+    "“You're safe. I'm right here.”",
+    "“It looks like you're really frustrated. That makes sense.”",
+    "“Let's breathe together. In, and out.”",
+    "“When you're ready, we'll figure it out together.”"
+   ],
+   "avoid": [
+    "Reasoning or lecturing in the middle of a meltdown.",
+    "Raising your voice to match the student's.",
+    "Using the calm corner as a punishment.",
+    "Shaming a student in front of the class for a big feeling.",
+    "Expecting a student to be fine right away after a big feeling passes."
+   ],
+   "help": [
+    "Settle yourself first: drop your shoulders, lower your voice, slow your breath.",
+    "Keep everyone safe: give space, and move other students if you need to.",
+    "Connect, then correct: calm first, talk later.",
+    "Practice calm-down tools daily, when everyone is calm.",
+    "Build in movement, water, and rest across the day.",
+    "Bring in the school counselor for a student whose big feelings are frequent, intense, or lasting, and follow each student's plan."
+   ],
+   "you": "Big feelings in a classroom can wear you out. You will have days when your own patience runs short; that's human. Repair helps everyone: “I used a sharp voice earlier. I'm sorry. Let's start fresh.” Lean on your school counselor and your colleagues, and rest when you can."
+  },
+  "byKind": {
+   "classroom": "Follow your school's behavior and safety plans and each student's plan. Talk with families through your school's usual ways, and keep a student's hard moment private in class."
+  },
+  "faith": "",
+  "practices": [
+   "calm-corner",
+   "calm-down-plan",
+   "name-it-to-tame-it",
+   "balloon-breath",
+   "shake-it-out",
+   "calm-countdown"
+  ],
+  "trees": [
+   [
+    "maple",
+    "anger",
+    "Anger and big outbursts"
+   ],
+   [
+    "maple",
+    "meltdown",
+    "In the middle of a meltdown"
+   ],
+   [
+    "maple",
+    "worry",
+    "Worry that won't let go"
+   ],
+   [
+    "maple",
+    "sadness",
+    "Sadness that lingers"
+   ],
+   [
+    "aspen",
+    "blowup",
+    "In the middle of a blowup"
+   ],
+   [
+    "pine",
+    "blowup",
+    "In the middle of a blowup"
+   ]
+  ],
+  "reach": [
+   "The school counselor, for a student whose big feelings are frequent, intense, or lasting.",
+   "Your school's behavior and safety plans, and each student's plan.",
+   "The student's family, through your school, so home and school can use the same calm words.",
+   "If a student speaks of not wanting to be alive, or of hurting themselves: the school counselor at once, and 988 (call, text, or chat) if no one is reachable. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "RULER, Yale Center for Emotional Intelligence (Marc Brackett)",
+    "https://www.marcbrackett.com/ruler/"
+   ]
+  ],
+  "sources": [
+   "siegel",
+   "lieberman",
+   "ruler"
+  ]
+ },
+ {
   "id": "leader-leaving",
   "title": "Our Pastor or Leader Is Leaving",
   "ring": "gw-faith",
@@ -4427,6 +6398,1857 @@ const TOPICS = [
   ]
  },
  {
+  "id": "one-voice",
+  "title": "One Voice Fills the Room",
+  "ring": "gw-faith",
+  "kinds": [
+   "group",
+   "faith"
+  ],
+  "short": "When one person does most of the talking, and the group wants every voice to have room.",
+  "keys": "one person dominates talks too much dominating member monopolizes conversation small group bible study group quiet members no one else talks interrupting over talker group discussion share the floor every voice heard facilitation turn taking talking piece book club council board meeting support group",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "changes": [
+   "group:new",
+   "faith:newcomers"
+  ],
+  "quick": [
+   "Groups think better when speaking turns are shared. Every voice adds something.",
+   "The person who talks most often cares a lot, feels anxious, or is carrying something. Kindness and clear structure help both them and the group.",
+   "Structure does the gentle work: rounds, a talking piece, pairs, and agreements.",
+   "A private, warm conversation helps more than any public correction."
+  ],
+  "feel": "Every week, the same person speaks first, speaks longest, and answers every question. The rest of the group settles back. Some feel relieved someone is talking; some feel restless or quietly annoyed; a few have stopped coming. Newer members barely say a word. The person who fills the room often has no idea, or senses it and feels embarrassed. Many are eager, lonely, knowledgeable, or carrying something heavy they need to say. Leaders feel stuck between kindness to one and fairness to all. A group can make room for everyone, gently, and often everyone ends up glad, including the one who talked most.",
+  "together": {
+   "first": [
+    "Write or renew group agreements together, including one about sharing the time.",
+    "Open with a round where everyone speaks once, briefly, before open talk.",
+    "Use pairs or small groups for part of each gathering.",
+    "Name it kindly as a group goal: we want to hear every voice."
+   ],
+   "helps": [
+    "A talking piece for rounds, so one person speaks at a time and anyone can pass.",
+    "One Word Check-in to open, so every voice is in the room early.",
+    "Turn and Talk in pairs, then a few share with everyone.",
+    "Waiting a few seconds of quiet after each question before anyone answers.",
+    "A gentle phrase the whole group agrees on: “Let's hear from someone new.”",
+    "Check-in Pairs between sessions, for members who need more time to talk."
+   ],
+   "say": [
+    "“Every voice in this room matters.”",
+    "“We share the time, so everyone has room.”",
+    "“Let's hear from someone we haven't heard from yet.”"
+   ],
+   "people": "Try, to someone who has been quiet: “I'd love to hear what you think, whenever you're ready.” To the one who talks most, privately: “You bring so much to this group. Will you help me draw out the quieter voices?”"
+  },
+  "kids": [
+   "When children are in the group, keep it simple: “Everyone gets a turn to talk, and everyone gets a turn to listen.”",
+   "A talking piece helps children wait their turn: “Only the person holding it talks.”",
+   "Invite quieter children by name, gently, with a way to pass.",
+   "Praise good listening out loud: “I saw how well you waited.”"
+  ],
+  "leader": {
+   "feel": "You may feel caught between kindness to one person and fairness to the whole group. You may have tried hints that didn't land, or feel guilty for wishing someone would talk less. Research on groups suggests that groups solve problems better when speaking turns are shared more evenly, and that people speak up more where they feel safe to. Most people who fill the room are not trying to take over. Structure and a warm private word usually solve what public correction would only bruise.",
+   "say": [
+    "“Thank you. Let's hear from someone we haven't heard from yet.”",
+    "“Let's do a quick round, so everyone has a turn.”",
+    "“Hold that thought; I want to come back to it after we've heard from a few others.”",
+    "Privately: “You bring a lot to this group. Can I ask your help with something?”"
+   ],
+   "avoid": [
+    "Correcting or shaming the person in front of the group.",
+    "Hoping they will notice on their own week after week.",
+    "Rolling eyes or exchanging looks with others.",
+    "Letting a few quiet members drift away without a word.",
+    "Assuming the person knows how much time they take."
+   ],
+   "help": [
+    "Build structure into every session: an opening round, a talking piece, pairs, a closing round.",
+    "Pause after each question; count to seven in your head before calling on anyone.",
+    "Speak privately and warmly with the person, naming their gifts and inviting their help.",
+    "Give them a role that shares the floor, like timekeeper or the one who invites others in.",
+    "Listen for what may be underneath, like grief or loneliness, and offer private support.",
+    "Check in with quieter members between sessions."
+   ],
+   "you": "Leading a group well means caring for everyone in it, including the one who talks most. You can be both kind and clear. If a member's need to talk comes from a crisis or deep pain, that is a sign to offer private support, apart from the group."
+  },
+  "byKind": {
+   "group": "In a support or study group, rounds and a talking piece are the simplest, kindest tools. Read your agreements at the start.",
+   "faith": "In a ministry team or council, agree on how decisions get made, so the most frequent voice and the final say stay separate."
+  },
+  "faith": "Many traditions teach that each person in a community carries a gift the whole community needs, and that wisdom often comes through the quietest voice. Some gather in silence and speak only when moved; some pass a talking stick; some read a sacred text and invite each person to share one word that stood out. These practices protect room for every voice. When one voice fills the room, a leader can lean on the community's own wisdom about humility, listening, and making space for one another, while remembering that the person who talks most is also a beloved member. Every faith tradition and everything in-between values a circle where all can be heard.",
+  "practices": [
+   "talking-piece",
+   "one-word-check-in",
+   "turn-and-talk",
+   "group-agreements",
+   "check-in-pairs"
+  ],
+  "trees": [
+   [
+    "oak",
+    "loneliness",
+    "Loneliness"
+   ],
+   [
+    "oak",
+    "anxiety",
+    "Anxiety that won't settle"
+   ],
+   [
+    "oak",
+    "anger",
+    "Anger that runs hot"
+   ]
+  ],
+  "reach": [
+   "If a member's talking comes from a crisis or deep pain, offer a private conversation, and the right support beyond the group.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
+   "Many faith bodies and community organizations offer training in group facilitation for leaders."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "woolley10",
+   "edmondson99",
+   "pranis"
+  ]
+ },
+ {
+  "id": "hard-conversations",
+  "title": "Hard Conversations in Our Group",
+  "ring": "gw-faith",
+  "kinds": [
+   "group",
+   "faith"
+  ],
+  "short": "When a group needs to talk about something tender, painful, or high stakes, and wants to do it well.",
+  "keys": "hard conversation difficult conversation tough topic group needs to talk sensitive topic painful subject talking about money talking about change bad news to share tender topic hard discussion small group church meeting council meeting support group facilitation listening speaking honestly emotions in a meeting",
+  "parts": [
+   "bark",
+   "branches",
+   "trunk"
+  ],
+  "changes": [
+   "group:conflict",
+   "faith:conflict",
+   "group:crisis",
+   "faith:building"
+  ],
+  "quick": [
+   "Hard conversations go best when the group agrees on how to talk before what to talk about.",
+   "One clear, gentle question opens the door. Listening keeps it open.",
+   "Feelings belong in the room. Slow is kind.",
+   "Close well, and follow up privately with anyone who left carrying a lot."
+  ],
+  "feel": "Maybe the group needs to talk about a budget cut, a change in leadership, a member's serious illness, a hurtful comment last week, or a painful topic in the news that touches people's lives. Everyone knows it is coming. Some people dread it; some have been waiting a long time to say something; some will say nothing at all. Voices may shake. Someone may cry, and someone may get sharp. Afterward, people may lie awake replaying what they said. A hard conversation held well can become one of the moments a group remembers as the time it grew closer.",
+  "together": {
+   "first": [
+    "Agree on how you will talk before you start: one voice at a time, speak for yourself, anyone can pass.",
+    "Name the topic clearly and kindly, and why the group is talking about it now.",
+    "Open with one gentle question, and a round so every voice is heard once.",
+    "Begin with a moment of quiet or prayer, as the group chooses."
+   ],
+   "helps": [
+    "A talking piece, so each person speaks without interruption.",
+    "Saying back what you heard before responding: “What I'm hearing is...”",
+    "Sit with It: a few breaths of quiet after someone shares something heavy.",
+    "Tissues, water, and a short break if the room needs one.",
+    "A clear plan for what happens next, even if that is “we'll keep talking next week.”",
+    "A gentle closing round: one word for how you're leaving."
+   ],
+   "say": [
+    "“We can talk about hard things and still take care of each other.”",
+    "“Every voice is welcome here, and so is quiet.”",
+    "“We listen to understand.”"
+   ],
+   "people": "Try, before the meeting, to someone who is worried: “I'll make sure there's room for you to speak, or to pass.” After, to someone who was quiet: “How are you doing with what we talked about?”"
+  },
+  "kids": [
+   "Decide ahead whether children should be present. Many hard conversations are best held among adults, with children told simply afterward.",
+   "If children are there, use simple, honest words: “The grown-ups are talking about something hard, and we're taking good care of each other.”",
+   "Give children a quiet activity nearby, and a grown-up they can go to.",
+   "Let them ask questions afterward, and answer simply and truthfully."
+  ],
+  "leader": {
+   "feel": "You may feel the weight of holding the room: worried about tears, about anger, about saying the wrong thing, or about the conversation going nowhere. You may also carry your own feelings about the topic. People speak up more where they feel safe to, and safety in a group comes from clear structure, a calm leader, and agreements everyone shares. Your job is to hold a fair, kind process. The group does the talking.",
+   "say": [
+    "“This is tender, and we're going to take our time.”",
+    "“Let's go one voice at a time. Anyone can pass.”",
+    "“Thank you for saying that. Let's sit with it for a moment.”",
+    "“Before we move on, has everyone had a chance to speak?”"
+   ],
+   "avoid": [
+    "Starting with the decision before people have been heard.",
+    "Rushing past tears or strong feelings.",
+    "Letting one or two voices carry the whole conversation.",
+    "Ending abruptly with no next step.",
+    "Sharing anything private a member told you, without their okay."
+   ],
+   "help": [
+    "Plan the conversation: the question, the agreements, the time, and the close.",
+    "Open with quiet or prayer, as the group chooses, and read the agreements aloud.",
+    "Use a talking piece and a full round before open discussion.",
+    "Pause after heavy moments; slow is kind.",
+    "Name a clear next step at the end.",
+    "Follow up privately within a day or two with anyone who seemed to carry a lot."
+   ],
+   "you": "Holding a hard conversation is real work, and you may feel drained afterward. Plan time to rest, and someone to talk with outside the group. You can be honest about your own view when that helps, and still keep the process fair for everyone."
+  },
+  "byKind": {
+   "group": "In a support or study group, a hard conversation can take a whole session. Protect the time, and keep the group's agreements at the center.",
+   "faith": "In a congregation or ministry team, decide ahead who needs to be in the room, and how the conversation connects to any decision the leaders will make."
+  },
+  "faith": "Many traditions hold practices for speaking honestly about hard things: lament that names sorrow and anger before God, silence that waits before speaking, confession and truth-telling in community, and blessing at the close. Prayer at the start can remind a group that it belongs to something larger than the hard thing in front of it. At the same time, sacred words can be used to end a conversation too early (\"Let's just pray about it\") or to press a point. Invite faith as a steadying presence, and let honest words have their place. Every faith tradition and everything in-between has wisdom for telling the truth in love.",
+  "plain": {
+   "together": {
+    "first": [
+     "Agree on how you will talk before you start: one voice at a time, speak for yourself, anyone can pass.",
+     "Name the topic clearly and kindly, and why the group is talking about it now.",
+     "Open with one gentle question, and a round so every voice is heard once.",
+     "Begin with a moment of quiet together."
+    ],
+    "helps": [
+     "A talking piece, so each person speaks without interruption.",
+     "Saying back what you heard before responding: “What I'm hearing is...”",
+     "Sit with It: a few breaths of quiet after someone shares something heavy.",
+     "Tissues, water, and a short break if the room needs one.",
+     "A clear plan for what happens next, even if that is “we'll keep talking next week.”",
+     "A gentle closing round: one word for how you're leaving."
+    ],
+    "say": [
+     "“We can talk about hard things and still take care of each other.”",
+     "“Every voice is welcome here, and so is quiet.”",
+     "“We listen to understand.”"
+    ],
+    "people": "Try, before the meeting, to someone who is worried: “I'll make sure there's room for you to speak, or to pass.” After, to someone who was quiet: “How are you doing with what we talked about?”"
+   },
+   "leader": {
+    "feel": "You may feel the weight of holding the room: worried about tears, about anger, about saying the wrong thing, or about the conversation going nowhere. You may also carry your own feelings about the topic. People speak up more where they feel safe to, and safety in a group comes from clear structure, a calm leader, and agreements everyone shares. Your job is to hold a fair, kind process. The group does the talking.",
+    "say": [
+     "“This is tender, and we're going to take our time.”",
+     "“Let's go one voice at a time. Anyone can pass.”",
+     "“Thank you for saying that. Let's sit with it for a moment.”",
+     "“Before we move on, has everyone had a chance to speak?”"
+    ],
+    "avoid": [
+     "Starting with the decision before people have been heard.",
+     "Rushing past tears or strong feelings.",
+     "Letting one or two voices carry the whole conversation.",
+     "Ending abruptly with no next step.",
+     "Sharing anything private a member told you, without their okay."
+    ],
+    "help": [
+     "Plan the conversation: the question, the agreements, the time, and the close.",
+     "Open with a moment of quiet, and read the agreements aloud.",
+     "Use a talking piece and a full round before open discussion.",
+     "Pause after heavy moments; slow is kind.",
+     "Name a clear next step at the end.",
+     "Follow up privately within a day or two with anyone who seemed to carry a lot."
+    ],
+    "you": "Holding a hard conversation is real work, and you may feel drained afterward. Plan time to rest, and someone to talk with outside the group. You can be honest about your own view when that helps, and still keep the process fair for everyone."
+   }
+  },
+  "practices": [
+   "group-agreements",
+   "talking-piece",
+   "sit-with-it",
+   "listening-round",
+   "lament-together",
+   "check-in-pairs"
+  ],
+  "trees": [
+   [
+    "oak",
+    "political-division",
+    "Political division in families"
+   ],
+   [
+    "oak",
+    "anger",
+    "Anger that runs hot"
+   ],
+   [
+    "oak",
+    "anxiety",
+    "Anxiety that won't settle"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ],
+   [
+    "willow",
+    "conflict",
+    "Family conflict at the bedside"
+   ]
+  ],
+  "reach": [
+   "Many faith bodies and community organizations offer trained facilitators for especially hard conversations.",
+   "If a conversation reveals harm, abuse, or exploitation, follow up privately and report as the law requires. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
+   "NAMI HelpLine, 1-800-950-6264, for a member or family facing mental health concerns."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ],
+   [
+    "NAMI HelpLine",
+    "https://www.nami.org/nami-helpline"
+   ]
+  ],
+  "sources": [
+   "pranis",
+   "edmondson99"
+  ]
+ },
+ {
+  "id": "trust-broken",
+  "title": "When Trust Is Broken",
+  "ring": "gw-faith",
+  "kinds": [
+   "group",
+   "faith"
+  ],
+  "short": "When a confidence is shared, a promise is broken, or a hurtful act shakes trust in a group.",
+  "keys": "trust broken broken trust betrayal confidentiality broken secret shared gossip broken promise money mishandled stolen funds lied to the group hurt by a member hurt by a leader repair trust rebuild trust apology forgiveness reconciliation accountability church betrayal small group betrayal healing after betrayal",
+  "parts": [
+   "branches",
+   "roots",
+   "bark"
+  ],
+  "changes": [
+   "group:conflict",
+   "faith:conflict",
+   "faith:leader",
+   "group:leaving"
+  ],
+  "quick": [
+   "Trust is rebuilt through honest words, real accountability, and changed actions over time.",
+   "Safety comes first. Harm and exploitation go to the people who can protect, and the law.",
+   "Forgiveness is a gift a person may choose, in their own time, and it can grow slowly.",
+   "A group can heal, and often grows wiser about how it cares for each other."
+  ],
+  "feel": "Maybe something private was shared outside the group. Maybe money was handled carelessly, or worse. Maybe a promise made to the group was broken, or a member did something that hurt others deeply. Now the room feels different. People are careful about what they say. Some feel angry; some feel foolish for having trusted; some feel sad for everyone, including the person who broke the trust. A few may stop coming. Others want to move on quickly and pretend it never happened. A group that has been hurt can heal, with honesty, clear steps, and time.",
+  "together": {
+   "first": [
+    "Make sure anyone harmed is safe and supported, and report harm as the law requires.",
+    "Share what can honestly be shared, clearly and calmly, without rumors or private details.",
+    "Renew the group's agreements, especially about confidentiality.",
+    "Keep gathering, and give people room to feel what they feel."
+   ],
+   "helps": [
+    "Honest, simple words from leaders: what happened, as far as can be shared, and what comes next.",
+    "Clear steps that make the group safer: two people counting money, a renewed confidentiality agreement, new practices.",
+    "A Listening Round, so people can say how they are doing.",
+    "Sit with It, when someone shares how much they were hurt.",
+    "Lament together, honestly naming what is hard.",
+    "Small, steady signs of trustworthiness, week after week."
+   ],
+   "say": [
+    "“What's shared here stays here.”",
+    "“We can be honest about what happened and still care for each other.”",
+    "“We're rebuilding, one step at a time.”"
+   ],
+   "people": "Try, to someone who feels foolish for trusting: “You trusted because you're a trusting person. That's a good thing.” To someone who wants to move on fast: “Let's give people time. Healing has its own pace.”"
+  },
+  "kids": [
+   "Children notice when grown-ups are upset. Tell them simply: “Something happened that hurt people's trust, and the grown-ups are working on it.”",
+   "Keep details private from children, and never ask them to carry messages.",
+   "Let them know they are safe, and that their place in the group is safe.",
+   "Teach what repair looks like: saying sorry, making it right, and keeping promises.",
+   "Many traditions teach children about forgiveness and making peace. Share those stories if they fit your community, as an invitation."
+  ],
+  "leader": {
+   "feel": "You may feel betrayed yourself, embarrassed that it happened on your watch, or pulled between protecting the group and caring for the person who broke the trust. You may want to say too little, or too much. Trust is rebuilt when leaders tell the truth as far as they can, act to make the group safer, and show steady care over time. Forgiveness can be a real gift, and research links it with health and peace, yet it is always a person's own choice and can never be required.",
+   "say": [
+    "“Here is what I can share, and here is what we're doing.”",
+    "“Your feelings about this make sense.”",
+    "“Safety comes first, and we've taken steps.”",
+    "“Healing takes time, and we'll take it together.”"
+   ],
+   "avoid": [
+    "Keeping harm quiet to protect the group's reputation.",
+    "Sharing private details or rumors.",
+    "Pressuring anyone to forgive, or to reconcile with someone who hurt them.",
+    "Rushing back to normal before people are ready.",
+    "Making one person the villain in a way that blocks any path to repair."
+   ],
+   "help": [
+    "Put safety first: support anyone harmed, and report harm, abuse, or exploitation as the law and your organization require.",
+    "Communicate honestly and simply, as far as privacy and the law allow.",
+    "Change the practices that let it happen, and tell the group what changed.",
+    "Renew group agreements, especially confidentiality.",
+    "Offer private support to people who are hurting, and to the person who broke trust, separately.",
+    "Bring in your faith body or an outside facilitator when the hurt is deep or involves a leader."
+   ],
+   "you": "Leading after a breach of trust is heavy, and you may carry your own sense of betrayal. Find support outside the group: a supervisor, a peer, your faith body. You don't need to have every answer. Honest, steady care over time is what rebuilds trust."
+  },
+  "byKind": {
+   "group": "In a support group, confidentiality is the floor everything stands on. Renew it out loud, and talk privately with anyone who broke it about whether and how they continue.",
+   "faith": "When a leader is involved, see When a Leader Falls Short, and bring in your faith body's leaders, who have their own processes for care and accountability."
+  },
+  "faith": "Many traditions hold deep wisdom for broken trust: confession and truth-telling, making amends, repentance as a real change of direction, and forgiveness and reconciliation as holy work. These teachings can be a great resource for healing. They can also be misused, when someone who was hurt is pressured to forgive quickly, or when talk of grace is used to skip accountability. Forgiveness is a gift a person may choose in their own time; reconciliation also asks for safety and changed behavior. Prayer, lament, and shared worship can hold a community while it heals. Every faith tradition and everything in-between has wisdom for repair.",
+  "plain": {
+   "kids": [
+    "Children notice when grown-ups are upset. Tell them simply: “Something happened that hurt people's trust, and the grown-ups are working on it.”",
+    "Keep details private from children, and never ask them to carry messages.",
+    "Let them know they are safe, and that their place in the group is safe.",
+    "Teach what repair looks like: saying sorry, making it right, and keeping promises.",
+    "Read or tell stories about people making things right, and ask what the children noticed."
+   ]
+  },
+  "practices": [
+   "group-agreements",
+   "listening-round",
+   "sit-with-it",
+   "lament-together",
+   "why-we-gather",
+   "shared-meal"
+  ],
+  "trees": [
+   [
+    "oak",
+    "betrayal",
+    "Betrayal"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ],
+   [
+    "oak",
+    "church-hurt",
+    "When faith communities have hurt you"
+   ],
+   [
+    "oak",
+    "shame",
+    "Shame and guilt"
+   ],
+   [
+    "birch",
+    "faith-hurt",
+    "Hurt by a faith community"
+   ],
+   [
+    "pine",
+    "faith-hurt",
+    "Hurt by a faith community"
+   ]
+  ],
+  "reach": [
+   "If anyone was harmed, abused, or exploited, report as the law and your organization require. A vulnerable adult at risk: MAARC, 1-844-880-1574. A child: Childhelp, 1-800-422-4453, and your county child protection. Danger right now: 911.",
+   "Your faith body, denomination, or network, especially when a leader is involved.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
+   "Money handled wrongly: your organization's leaders, and the authorities where the law requires."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "toussaint",
+   "exline"
+  ]
+ },
+ {
+  "id": "attendance-drifts",
+  "title": "When Attendance Drifts",
+  "ring": "gw-faith",
+  "kinds": [
+   "group",
+   "faith"
+  ],
+  "short": "When fewer people come, or familiar faces drift away, and the group wants to reach out with warmth.",
+  "keys": "attendance down low attendance people stopped coming members drifting away empty seats fewer people at church fewer people at group dropping out inactive members reaching out to members who left people not coming back small group shrinking volunteers drifting re engaging members welcome back missing members",
+  "parts": [
+   "branches",
+   "trunk",
+   "roots"
+  ],
+  "changes": [
+   "group:leaving",
+   "faith:newcomers"
+  ],
+  "quick": [
+   "People drift for many reasons: busy seasons, health, hurt, a changing life. Curiosity helps more than worry.",
+   "A warm word reaches further than we think. People tend to appreciate being reached out to more than we expect.",
+   "Reach out with care and warmth. The door stays open.",
+   "Ask what fits people's lives now. Sometimes the group's rhythm needs to change too."
+  ],
+  "feel": "The circle of chairs is a little smaller than it used to be. A few familiar faces haven't been seen in weeks. Some left during a busy season and never quite came back. Some may be sick, caring for someone, grieving, or tired. Some may have felt hurt, or no longer feel the group fits their life. The people who still come may feel discouraged, worried, or quietly wonder whether they did something wrong. Leaders may feel it personally. Drifting attendance is common in every kind of group, and it is often a signal worth listening to rather than a verdict. Warm reaching out, honest listening, and a few changes can bring new life.",
+  "together": {
+   "first": [
+    "Notice who has been away, gently, without blame.",
+    "Divide the names, and reach out warmly: a call, a note, a text, a visit.",
+    "Ask people what would fit their lives now, and listen.",
+    "Pray for those who are away, by name, as the group chooses."
+   ],
+   "helps": [
+    "Check-in Calls: “We've been thinking of you,” with nothing asked in return.",
+    "A Stay in Touch List, shared by choice, so members can reach each other between gatherings.",
+    "A Welcome Table, so anyone who returns is greeted warmly and easily.",
+    "A Shared Meal or a simple gathering that is easy to come back to.",
+    "Why We Gather, to remember together what the group is for.",
+    "Trying a new time, place, or rhythm if many people say the old one no longer fits."
+   ],
+   "say": [
+    "“We've been thinking of you.”",
+    "“Your seat is here whenever you want it.”",
+    "“Every person matters to this group, here or away.”"
+   ],
+   "people": "Try, to someone who has been away: “We've been thinking of you, and I wanted to say hello. How are you?” To someone who comes back: “It's so good to see you.” And to yourself, as a leader: “People drift. That's life. The door stays open.”"
+  },
+  "kids": [
+   "If children ask why a friend's family hasn't come, keep it simple: “They've been busy, and we hope to see them soon.”",
+   "Children can help reach out: a drawing or a card for someone who has been away.",
+   "Welcome returning children warmly, by name.",
+   "Keep the gathering a place children are glad to come: warm greetings, a role, a friend."
+  ],
+  "leader": {
+   "feel": "When attendance drifts, many leaders feel it personally, as if it is a grade on their leadership. Drifting is common in every kind of group, and people come and go for many reasons, most of which have little to do with the leader. Research on loneliness shows how much people need connection, and research on reaching out suggests people tend to appreciate a check-in more than the sender expects. Congregations that welcome well and stay connected tend to be healthier. Your part is to stay curious, reach out warmly, listen honestly, and be willing to adjust.",
+   "say": [
+    "“We've been thinking of you.”",
+    "“Is there anything going on that we could help with?”",
+    "“What would make it easier to be part of the group right now?”",
+    "“It's so good to see you.”"
+   ],
+   "avoid": [
+    "Guilt: “We haven't seen you in forever.”",
+    "Announcing who has been missing in front of the group.",
+    "Assuming people left because of you, or because of them.",
+    "Reaching out only when you need volunteers.",
+    "Changing nothing when many people say the rhythm no longer fits."
+   ],
+   "help": [
+    "Make a gentle list of who has been away, and divide it among caring members.",
+    "Reach out with warmth and nothing asked in return.",
+    "Listen for what is underneath: health, caregiving, grief, hurt, a changing schedule.",
+    "Ask the group, and those who are away, what would fit their lives now.",
+    "Make it easy to come back: a warm welcome, no explanations needed.",
+    "Offer private support to anyone who shares a crisis, grief, or hurt."
+   ],
+   "you": "Leaders often carry drifting attendance as a weight. Set it down a little. People's lives change, and groups change with them. Notice what is still alive in your group, celebrate the people who are here, and keep the door open for those who aren't."
+  },
+  "byKind": {
+   "group": "In a support or study group, a short check-in after two missed gatherings, by the leader or a chosen member, helps people feel remembered.",
+   "faith": "In a congregation, a care team or deacons can share the reaching out, so no one person carries it all."
+  },
+  "faith": "Many traditions tell of a community that goes looking for the one who wandered, and of a table where everyone is welcome back. Prayer for those who are away, by name, can keep a community's heart open. At the same time, some people drift because something about faith or the community has become hard for them: a doubt, a hurt, a dry season, or a change in what they believe. Meet that with curiosity and warmth, never pressure. A person's relationship with faith is their own, and the door can stay open whatever they decide. Every faith tradition and everything in-between knows the joy of welcome.",
+  "plain": {
+   "together": {
+    "first": [
+     "Notice who has been away, gently, without blame.",
+     "Divide the names, and reach out warmly: a call, a note, a text, a visit.",
+     "Ask people what would fit their lives now, and listen.",
+     "Hold those who are away in kind thought, by name."
+    ],
+    "helps": [
+     "Check-in Calls: “We've been thinking of you,” with nothing asked in return.",
+     "A Stay in Touch List, shared by choice, so members can reach each other between gatherings.",
+     "A Welcome Table, so anyone who returns is greeted warmly and easily.",
+     "A Shared Meal or a simple gathering that is easy to come back to.",
+     "Why We Gather, to remember together what the group is for.",
+     "Trying a new time, place, or rhythm if many people say the old one no longer fits."
+    ],
+    "say": [
+     "“We've been thinking of you.”",
+     "“Your seat is here whenever you want it.”",
+     "“Every person matters to this group, here or away.”"
+    ],
+    "people": "Try, to someone who has been away: “We've been thinking of you, and I wanted to say hello. How are you?” To someone who comes back: “It's so good to see you.” And to yourself, as a leader: “People drift. That's life. The door stays open.”"
+   }
+  },
+  "practices": [
+   "check-in-calls",
+   "contact-list",
+   "welcome-table",
+   "shared-meal",
+   "why-we-gather",
+   "story-swap"
+  ],
+  "trees": [
+   [
+    "oak",
+    "loneliness",
+    "Loneliness"
+   ],
+   [
+    "sequoia",
+    "loneliness",
+    "Loneliness and living alone"
+   ],
+   [
+    "oak",
+    "spiritual-dryness",
+    "When the sacred feels far away"
+   ],
+   [
+    "oak",
+    "burnout",
+    "Burnout"
+   ],
+   [
+    "oak",
+    "church-hurt",
+    "When faith communities have hurt you"
+   ],
+   [
+    "birch",
+    "faith-own",
+    "Faith on your own: questions, doubt, and finding a community"
+   ]
+  ],
+  "reach": [
+   "If someone who has been away shares a crisis, a loss, or a hard season, offer private support, and connect them with the right help.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time.",
+   "Help with food, housing, or bills: 211.",
+   "If a vulnerable adult who has been away may be at risk: MAARC, 1-844-880-1574. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "US Surgeon General: Our Epidemic of Loneliness and Isolation",
+    "https://www.hhs.gov/sites/default/files/surgeon-general-social-connection-advisory.pdf"
+   ],
+   [
+    "211: local help with food, housing, and bills",
+    "https://www.211.org/"
+   ]
+  ],
+  "sources": [
+   "liu22",
+   "murthy",
+   "woolever04"
+  ]
+ },
+ {
+  "id": "growing-smaller",
+  "title": "When Our Church Is Growing Smaller",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When a congregation or group is smaller than it was, and wonders who it is now and what comes next.",
+  "keys": "church growing smaller shrinking congregation declining attendance fewer people empty pews aging congregation small church closing church building costs budget shortfall merging churches last members remnant small group shrinking fewer volunteers future of our church sad about our church legacy what comes next",
+  "parts": [
+   "trunk",
+   "fruit",
+   "roots"
+  ],
+  "changes": [
+   "faith:building",
+   "faith:loss",
+   "group:ending"
+  ],
+  "quick": [
+   "Smaller is a season with its own gifts. Many strong congregations are small and know exactly who they are.",
+   "Grieve what was, out loud and together: the full rooms, the children's choir, the people who moved or died.",
+   "Ask what this community does well right now, and do more of that.",
+   "Every size of community can worship, serve, welcome, and love. Who we are matters more than how many we are."
+  ],
+  "feel": "Maybe it happened slowly. The children grew up and moved away. Longtime members died or moved closer to family. The rooms that once overflowed now echo a little. Someone counts the offering and feels a knot in their stomach. Someone looks at a photo from years ago and feels a wave of grief. Some people feel tired, carrying more of the work with fewer hands. Some feel a quiet worry that they are the ones who will turn out the lights. Some feel guilt, as if a smaller community means they failed. Others feel a warm closeness: everyone knows everyone now, and each person matters. All of this can live in one congregation at once. A community growing smaller is grieving, and it is also standing at a door. Communities in this season often find a clearer sense of who they are and what they are here to do.",
+  "together": {
+   "first": [
+    "Say it out loud together, kindly and plainly: “We are smaller than we were, and we are still a community.”",
+    "Give the grief a place: a time to remember the people, the seasons, and the rooms full of life.",
+    "Name what this community does well right now, the two or three strengths everyone can see.",
+    "Choose one small, joyful thing to do together this season that fits the people you have."
+   ],
+   "helps": [
+    "A remembering gathering with photos, stories, and thanks for everyone who built this place.",
+    "Simpler rhythms: fewer meetings, shorter committees, and more time for worship, prayer, and friendship.",
+    "Sharing the work in small pieces, so each person carries a part they enjoy.",
+    "Serving the neighborhood in one clear way people can see and join.",
+    "Honest, hopeful talk about the building, the budget, and the future, with everyone invited to listen and speak.",
+    "Partnering with a nearby congregation or group for a shared meal, a service project, or a season of worship."
+   ],
+   "say": [
+    "“We are smaller, and we are still us.”",
+    "“We give thanks for everyone who came before.”",
+    "“We will do a few things, and do them with love.”"
+   ],
+   "people": "Try, to a longtime member: “Tell me what this place was like when it was full. What do you most want to keep?” To someone tired from carrying too much: “What part of your work could someone else hold for a season?” To someone newer: “You matter here. What do you love about this community?”"
+  },
+  "kids": [
+   "Children notice fewer people. Say it simply: “Our church is smaller now. Many people moved away or grew older, and we still love being here together.”",
+   "Give children a real part: handing out bulletins, ringing a bell, carrying a candle, greeting at the door.",
+   "Tell them stories of the community's past, and ask what they like best about it now.",
+   "If they ask whether the church will close, say what is true and steady: “The grown-ups are planning together, and we will tell you what we decide.”",
+   "Some children like to pray for their church family. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "If you lead a community growing smaller, you may feel the weight of every empty seat. You may wonder what you could have done differently, or feel pressure to turn it around fast. You may be grieving too, and carrying more tasks than one person should. Members may look to you for a plan, for hope, or for someone to blame. Your steadiness and your honesty help more than a quick fix.",
+   "say": [
+    "“We are smaller than we were. Let's talk about it together.”",
+    "“Let's remember what we've been given, and give thanks for it.”",
+    "“What do we do well right now?”",
+    "“What could we set down, so we have energy for what matters most?”",
+    "“Here's what we know about the building and the budget, and here's how we'll decide together.”"
+   ],
+   "avoid": [
+    "Blaming anyone for the decline: a past leader, young families, the culture, or the people who left.",
+    "Guilt as a tool, as in “If everyone just tried harder.”",
+    "Keeping every program and committee from the full years, which wears out the few who remain.",
+    "Deciding big things about the building or a merger in a small room, out of everyone's sight.",
+    "Measuring the community's worth only by its numbers."
+   ],
+   "help": [
+    "Hold a remembering gathering before any big decision, so grief has its place.",
+    "Ask the whole community: “What are the two or three things we do best?” and build around those.",
+    "Simplify: combine committees, shorten meetings, and let some programs rest with thanks.",
+    "Share the facts about the building and the money openly, with a clear way for people to be heard.",
+    "Reach out to your faith body, network, or nearby congregations for partnership and wise counsel.",
+    "Celebrate small things often: a baptism, a new face, a meal that fed the neighborhood."
+   ],
+   "you": "Leading a smaller community can feel lonely. Find a peer leader of another small congregation, a mentor, or your faith body's support for leaders. Your worth as a leader rests in faithfulness and love, never in attendance numbers. Rest is part of leading well."
+  },
+  "byKind": {
+   "group": "For a group growing smaller, ask together whether to keep meeting as you are, change the rhythm, join with another group, or close with a good ending. Each choice can be a good one."
+  },
+  "faith": "Many sacred stories tell of a faithful few: a small band of people who kept the light burning, a remnant who carried hope forward, a tiny seed that grew into something large. Many traditions also honor the people who came before, the saints and ancestors whose prayers and work still hold a community. For some, a shrinking congregation feels like a sign of failure, or even of being abandoned by God, and that is a real spiritual struggle worth hearing with kindness. For others, the closeness of a small community renews their faith. Every faith tradition and everything in-between has words for small beginnings, faithful remnants, and seasons of pruning that lead to new growth. Use the words your community knows.",
+  "plain": {
+   "short": "When a community or group is smaller than it was, and wonders who it is now and what comes next.",
+   "quick": [
+    "Smaller is a season with its own gifts. Many strong communities are small and know exactly who they are.",
+    "Grieve what was, out loud and together: the full rooms, the children's events, the people who moved or died.",
+    "Ask what this community does well right now, and do more of that.",
+    "Every size of community can gather, serve, welcome, and love. Who we are matters more than how many we are."
+   ],
+   "together": {
+    "first": [
+     "Say it out loud together, kindly and plainly: “We are smaller than we were, and we are still a community.”",
+     "Give the grief a place: a time to remember the people, the seasons, and the rooms full of life.",
+     "Name what this community does well right now, the two or three strengths everyone can see.",
+     "Choose one small, joyful thing to do together this season that fits the people you have."
+    ],
+    "helps": [
+     "A remembering gathering with photos, stories, and thanks for everyone who built this place.",
+     "Simpler rhythms: fewer meetings, shorter committees, and more time for gathering and friendship.",
+     "Sharing the work in small pieces, so each person carries a part they enjoy.",
+     "Serving the neighborhood in one clear way people can see and join.",
+     "Honest, hopeful talk about the building, the budget, and the future, with everyone invited to listen and speak.",
+     "Partnering with a nearby community or group for a shared meal, a service project, or a season of gatherings."
+    ],
+    "say": [
+     "“We are smaller, and we are still us.”",
+     "“We give thanks for everyone who came before.”",
+     "“We will do a few things, and do them with love.”"
+    ],
+    "people": "Try, to a longtime member: “Tell me what this place was like when it was full. What do you most want to keep?” To someone tired from carrying too much: “What part of your work could someone else hold for a season?” To someone newer: “You matter here. What do you love about this community?”"
+   },
+   "kids": [
+    "Children notice fewer people. Say it simply: “Our group is smaller now. Many people moved away or grew older, and we still love being here together.”",
+    "Give children a real part: handing out papers, ringing a bell, setting the table, greeting at the door.",
+    "Tell them stories of the community's past, and ask what they like best about it now.",
+    "If they ask whether the group will close, say what is true and steady: “The grown-ups are planning together, and we will tell you what we decide.”",
+    "Some children like to send kind wishes to their community. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "If you lead a community growing smaller, you may feel the weight of every empty seat. You may wonder what you could have done differently, or feel pressure to turn it around fast. You may be grieving too, and carrying more tasks than one person should. Members may look to you for a plan, for hope, or for someone to blame. Your steadiness and your honesty help more than a quick fix.",
+    "say": [
+     "“We are smaller than we were. Let's talk about it together.”",
+     "“Let's remember what we've been given, and give thanks for it.”",
+     "“What do we do well right now?”",
+     "“What could we set down, so we have energy for what matters most?”",
+     "“Here's what we know about the building and the budget, and here's how we'll decide together.”"
+    ],
+    "avoid": [
+     "Blaming anyone for the decline: a past leader, young families, the culture, or the people who left.",
+     "Guilt as a tool, as in “If everyone just tried harder.”",
+     "Keeping every program and committee from the full years, which wears out the few who remain.",
+     "Deciding big things about the building or a merger in a small room, out of everyone's sight.",
+     "Measuring the community's worth only by its numbers."
+    ],
+    "help": [
+     "Hold a remembering gathering before any big decision, so grief has its place.",
+     "Ask the whole community: “What are the two or three things we do best?” and build around those.",
+     "Simplify: combine committees, shorten meetings, and let some programs rest with thanks.",
+     "Share the facts about the building and the money openly, with a clear way for people to be heard.",
+     "Reach out to nearby communities, networks, or partners for partnership and wise advice.",
+     "Celebrate small things often: a milestone, a new face, a meal that fed the neighborhood."
+    ],
+    "you": "Leading a smaller community can feel lonely. Find a peer leader of another small group, a mentor, or a trusted friend. Your worth as a leader rests in steadiness and love, never in attendance numbers. Rest is part of leading well."
+   }
+  },
+  "practices": [
+   "why-we-gather",
+   "looking-back",
+   "name-a-gift",
+   "simpler-season",
+   "serve-together",
+   "using-our-gifts"
+  ],
+  "trees": [
+   [
+    "oak",
+    "empty-nest",
+    "Empty nest and big life transitions"
+   ],
+   [
+    "oak",
+    "lost",
+    "Feeling lost or without purpose"
+   ],
+   [
+    "sequoia",
+    "purpose-again",
+    "Finding purpose again"
+   ],
+   [
+    "oak",
+    "ambiguous-loss",
+    "Ambiguous loss"
+   ],
+   [
+    "sequoia",
+    "downsizing",
+    "Downsizing and letting go of things"
+   ]
+  ],
+  "reach": [
+   "Your faith body, denomination, or network often has people who walk with small and changing congregations. Ask what they offer.",
+   "If the work is wearing someone down, share it: no one person needs to hold a community up alone.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "woolever04",
+   "bridges91",
+   "boss"
+  ]
+ },
+ {
+  "id": "volunteers-empty",
+  "title": "Volunteers Running on Empty",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When the people who keep a congregation or group going are worn out, and the same few carry it all.",
+  "keys": "volunteers tired volunteer burnout same few people doing everything worn out church volunteers ministry burnout no one signs up nursery volunteers sunday school teachers ushers kitchen crew committee fatigue overcommitted saying no stepping down volunteer shortage tired leaders compassion fatigue visiting team helpers",
+  "parts": [
+   "leaves",
+   "trunk",
+   "branches"
+  ],
+  "changes": [
+   "group:crisis",
+   "faith:season"
+  ],
+  "quick": [
+   "When the same few carry everything, tiredness is a sign of love stretched too far. It's a community's question to answer together.",
+   "Rest is holy work too. A season off is a gift to the volunteer and to the community.",
+   "Set something down: fewer events, shorter terms, smaller tasks.",
+   "Thank people often and specifically, and ask each person what they love to do."
+  ],
+  "feel": "You know the faces. The same people make the coffee, teach the children, count the money, visit the sick, set up the tables, and lock the doors. For years it felt like joy. Lately it feels heavy. Someone snaps in the kitchen and then apologizes. Someone quietly stops coming to the meetings. A sign-up sheet stays empty, and the same three people fill it in again. Many volunteers feel guilty for being tired, because the work matters and the people they serve are real. Some fear that if they step back, everything will fall apart. Others wish to help but feel unsure how to get in, because the jobs seem to belong to someone already. This season is common in congregations and groups of every size, and it can turn. When a community shares the load and honors rest, its helpers find their joy again.",
+  "together": {
+   "first": [
+    "Name it together, kindly: “Our helpers are tired, and that's a sign of how much they've given.”",
+    "Thank the volunteers specifically and publicly, for real things they've done.",
+    "Choose one thing to set down, pause, or shrink this season.",
+    "Invite everyone, especially newer people, to try one small, clear task."
+   ],
+   "helps": [
+    "Short terms with clear endings: a season, a month, one event.",
+    "Small tasks with simple instructions, so anyone can step in.",
+    "A season of rest for long-serving volunteers, with a blessing as they step back.",
+    "Teams of two or three for every role, so everyone serves with company.",
+    "Asking people what they love to do, and matching them to it.",
+    "Honest talk about which programs to keep, pause, or let go with thanks."
+   ],
+   "say": [
+    "“We are tired because we've given a lot.”",
+    "“Rest is part of serving.”",
+    "“Many hands, small parts.”"
+   ],
+   "people": "Try, to a tired volunteer: “You've given so much. What would a season of rest look like for you?” To someone newer: “Would you like to try one small thing with me next week?” To a leader: “Could we look together at what we could pause this year?”"
+  },
+  "kids": [
+   "Children can help too, with small, real jobs: setting out cups, greeting at the door, carrying chairs.",
+   "Thank them by name for what they did.",
+   "If a favorite teacher steps back to rest, tell them simply: “Ms. Rosa is resting for a season. She still loves you.”",
+   "Teach them that resting is good: “Even helpers need a break.”",
+   "Some children like to make thank-you cards or say a blessing for the helpers. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "You may be the most tired volunteer of all. You may feel caught between the people who are worn out and the programs that need people. You may feel guilty asking anyone for one more thing, or worried that a rest season means things will fall apart. Your honesty about the load, and your permission to rest, can change the whole community.",
+   "say": [
+    "“Our helpers have carried a lot. Thank you.”",
+    "“What could we pause or let go this season?”",
+    "“You're welcome to step back. Here's how we'll cover it.”",
+    "“What do you love to do here?”",
+    "“Let's try teams of two, so everyone serves with company.”"
+   ],
+   "avoid": [
+    "Guilt as a recruiting tool: “If you don't do it, no one will.”",
+    "Praising people for never taking a break.",
+    "Asking the same reliable few first, every time.",
+    "Keeping every program going when the people are worn out.",
+    "Treating a volunteer's need to rest as a lack of commitment."
+   ],
+   "help": [
+    "Make a list of every volunteer role and who fills it. Notice who is carrying many.",
+    "Offer long-serving volunteers a season of rest, with a real thank-you and a blessing.",
+    "Break big jobs into small tasks with clear instructions and clear end dates.",
+    "Invite newer people personally, one task at a time.",
+    "Let some programs rest, with thanks, and tell the community why.",
+    "Check on the helpers who visit the sick and grieving: that work carries its own weight."
+   ],
+   "you": "Leaders of volunteers are often the last to rest. Find a peer leader, a mentor, or your faith body's support for leaders. Take your own season off when it's due. Your rest gives everyone else permission to rest too."
+  },
+  "byKind": {
+   "group": "For a support group or community group, share the hosting and leading: a different person opens, brings fruit or tea to share, or sends the reminder each month."
+  },
+  "faith": "Many traditions honor both serving and resting. Many speak of a sabbath or a day to stop, of gifts given to every person and none to one person alone, and of a community as a body with many parts. For some volunteers, faith is what keeps them going and what refills them. For others, a sense of duty or calling has turned into pressure, and stepping back feels like failing God or the community. That is worth hearing gently. Rest is part of faithful service in many traditions. Every faith tradition and everything in-between has its own words for serving, resting, and giving thanks. Use the words your community knows.",
+  "plain": {
+   "quick": [
+    "When the same few carry everything, tiredness is a sign of love stretched too far. It's a community's question to answer together.",
+    "Rest is good work too. A season off is a gift to the volunteer and to the community.",
+    "Set something down: fewer events, shorter terms, smaller tasks.",
+    "Thank people often and specifically, and ask each person what they love to do."
+   ],
+   "feel": "You know the faces. The same people make the coffee, lead the children, count the money, visit the sick, set up the tables, and lock the doors. For years it felt like joy. Lately it feels heavy. Someone snaps in the kitchen and then apologizes. Someone quietly stops coming to the meetings. A sign-up sheet stays empty, and the same three people fill it in again. Many volunteers feel guilty for being tired, because the work matters and the people they serve are real. Some fear that if they step back, everything will fall apart. Others wish to help but feel unsure how to get in, because the jobs seem to belong to someone already. This season is common in communities and groups of every size, and it can turn. When a community shares the load and honors rest, its helpers find their joy again.",
+   "together": {
+    "first": [
+     "Name it together, kindly: “Our helpers are tired, and that's a sign of how much they've given.”",
+     "Thank the volunteers specifically and publicly, for real things they've done.",
+     "Choose one thing to set down, pause, or shrink this season.",
+     "Invite everyone, especially newer people, to try one small, clear task."
+    ],
+    "helps": [
+     "Short terms with clear endings: a season, a month, one event.",
+     "Small tasks with simple instructions, so anyone can step in.",
+     "A season of rest for long-serving volunteers, with good words of thanks as they step back.",
+     "Teams of two or three for every role, so everyone serves with company.",
+     "Asking people what they love to do, and matching them to it.",
+     "Honest talk about which programs to keep, pause, or let go with thanks."
+    ],
+    "say": [
+     "“We are tired because we've given a lot.”",
+     "“Rest is part of serving.”",
+     "“Many hands, small parts.”"
+    ],
+    "people": "Try, to a tired volunteer: “You've given so much. What would a season of rest look like for you?” To someone newer: “Would you like to try one small thing with me next week?” To a leader: “Could we look together at what we could pause this year?”"
+   },
+   "kids": [
+    "Children can help too, with small, real jobs: setting out cups, greeting at the door, carrying chairs.",
+    "Thank them by name for what they did.",
+    "If a favorite teacher steps back to rest, tell them simply: “Ms. Rosa is resting for a season. She still loves you.”",
+    "Teach them that resting is good: “Even helpers need a break.”",
+    "Some children like to make thank-you cards for the helpers. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "You may be the most tired volunteer of all. You may feel caught between the people who are worn out and the programs that need people. You may feel guilty asking anyone for one more thing, or worried that a rest season means things will fall apart. Your honesty about the load, and your permission to rest, can change the whole community.",
+    "say": [
+     "“Our helpers have carried a lot. Thank you.”",
+     "“What could we pause or let go this season?”",
+     "“You're welcome to step back. Here's how we'll cover it.”",
+     "“What do you love to do here?”",
+     "“Let's try teams of two, so everyone serves with company.”"
+    ],
+    "avoid": [
+     "Guilt as a recruiting tool: “If you don't do it, no one will.”",
+     "Praising people for never taking a break.",
+     "Asking the same reliable few first, every time.",
+     "Keeping every program going when the people are worn out.",
+     "Treating a volunteer's need to rest as a lack of commitment."
+    ],
+    "help": [
+     "Make a list of every volunteer role and who fills it. Notice who is carrying many.",
+     "Offer long-serving volunteers a season of rest, with a real thank-you and good words.",
+     "Break big jobs into small tasks with clear instructions and clear end dates.",
+     "Invite newer people personally, one task at a time.",
+     "Let some programs rest, with thanks, and tell the community why.",
+     "Check on the helpers who visit the sick and grieving: that work carries its own weight."
+    ],
+    "you": "Leaders of volunteers are often the last to rest. Find a peer leader, a mentor, or a trusted friend. Take your own season off when it's due. Your rest gives everyone else permission to rest too."
+   }
+  },
+  "practices": [
+   "share-the-work",
+   "stop-doing",
+   "permission-to-rest",
+   "help-wanted",
+   "appreciation-round",
+   "check-on-the-helper"
+  ],
+  "trees": [
+   [
+    "oak",
+    "burnout",
+    "Burnout"
+   ],
+   [
+    "sequoia",
+    "volunteering",
+    "Volunteering and serving"
+   ],
+   [
+    "oak",
+    "caregiving",
+    "Caring for someone who is ill"
+   ],
+   [
+    "birch",
+    "pressure-burnout",
+    "Pressure, grades, and burnout"
+   ],
+   [
+    "oak",
+    "spiritual-dryness",
+    "When the sacred feels far away"
+   ]
+  ],
+  "reach": [
+   "Your faith body, denomination, or network may offer training and support for volunteer leaders. Ask what they have.",
+   "Exhaustion or low mood that lasts two weeks or more: talk with your doctor or a mental health professional.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "maslach",
+   "figley"
+  ]
+ },
+ {
+  "id": "hurt-inside",
+  "title": "Hurt Inside Our Faith Community",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When someone has been hurt inside our own congregation or group, and we want to heal and stay safe.",
+  "keys": "hurt at church church hurt hurt by church members hurt by a group harsh words left out excluded gossip judged shamed spiritual harm spiritual abuse treated unfairly by church leaving the church after hurt healing after church hurt safe church safety policy abuse in church reporting harm repair apology rebuilding trust forgiveness reconciliation",
+  "parts": [
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "changes": [
+   "faith:conflict",
+   "group:conflict",
+   "group:crisis"
+  ],
+  "quick": [
+   "Hurt inside a faith community cuts deep, because it happens in a place meant to be safe and holy.",
+   "Listen first and believe the person's experience. Healing begins when someone is heard.",
+   "Safety comes first. Any harm to a child or a vulnerable adult goes to the authorities right away.",
+   "A community can learn, repair what it can, and become a safer, kinder home for everyone."
+  ],
+  "feel": "Maybe it was a harsh word from the pulpit or in a meeting. Maybe someone was left out, gossiped about, or judged in a season when they needed kindness. Maybe a decision was made in a way that felt unfair, or a person in a trusted role caused real harm. Hurt inside a faith community often cuts deeper than hurt anywhere else, because it happens in a place that promised belonging, and sometimes in God's name. The person who was hurt may feel betrayed, ashamed, angry, or alone. They may stop coming, or keep coming and say nothing. Others in the community may feel confused, defensive, sad, or unsure what is true. Some may want to move on quickly. A community can hold all of this with honesty and kindness. When a community listens well, keeps people safe, and repairs what it can, hurt can become the beginning of deeper trust.",
+  "together": {
+   "first": [
+    "Make sure everyone is safe. If anyone was harmed, especially a child or a vulnerable adult, report it to the authorities right away.",
+    "Listen to the person who was hurt, privately and with patience, and believe their experience.",
+    "Ask them what would help: a listening ear, an apology, a change, space, or support from outside the community.",
+    "Keep private stories private. Share with the community only what the hurt person agrees to and what safety requires."
+   ],
+   "helps": [
+    "A trusted, neutral person who can listen to the hurt person and walk with them.",
+    "A clear, honest apology from the person or the leaders responsible, when it is welcome and safe.",
+    "A real change, so the same hurt is less likely to happen again: a new policy, training, or way of deciding.",
+    "Group agreements about how we speak to and about each other.",
+    "A time of lament, in which the community names what is broken and asks for healing.",
+    "Patience: healing has its own pace, and forgiveness is a gift a person chooses in their own time."
+   ],
+   "say": [
+    "“We are sorry for the hurt that happened here.”",
+    "“Everyone deserves to be safe and welcome here.”",
+    "“We will listen, and we will learn.”"
+   ],
+   "people": "Try, to someone who was hurt: “Thank you for telling me. I believe you. What would help right now?” To someone who feels defensive: “We can love this community and still face what happened.” To someone who stopped coming: “We miss you. You're welcome back whenever you're ready, and you set the pace.”"
+  },
+  "kids": [
+   "If a child tells you someone hurt them, stay calm, thank them for telling you, and believe them. Then keep them safe and make the report the law requires.",
+   "Tell children clearly: “Your body belongs to you. You can always tell a trusted grown-up if something feels wrong.”",
+   "If children hear grown-ups upset, say simply: “Some grown-ups had a hard time with each other. They are working on it, and you are safe.”",
+   "Keep their routine steady, with the same trusted helpers they know.",
+   "Some children like to pray for people who are hurting. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "When someone is hurt inside the community you lead, you may feel shock, grief, or defensiveness. You may love the people involved, or be one of them. You may fear what the truth will cost the community. Your first job is safety and listening. A leader who listens, acts, and owns what is theirs helps a community heal and grow.",
+   "say": [
+    "“Thank you for telling me. I believe you.”",
+    "“Your safety comes first. Here is what I will do next.”",
+    "“I'm sorry. That should have been different here.”",
+    "“What would help you right now?”",
+    "“Here is what we are changing, so this is less likely to happen again.”"
+   ],
+   "avoid": [
+    "Asking the hurt person to keep quiet to protect the community or a leader.",
+    "Handling harm to a child or vulnerable adult inside the community instead of reporting it.",
+    "Pressing for quick forgiveness or a meeting with the person who hurt them.",
+    "Sharing private details in a meeting, a prayer request, or a hallway conversation.",
+    "Telling the hurt person they misunderstood, or should have spoken up sooner."
+   ],
+   "help": [
+    "Follow your community's safety policy and the law. Harm to a child or a vulnerable adult goes to the authorities right away.",
+    "Offer the hurt person a trusted, neutral listener, and support from outside the community if they want it.",
+    "Own what is yours: apologize clearly for what the community or its leaders did or failed to do.",
+    "Make one real change: a policy, training, a new way of deciding, or new safeguards.",
+    "Tell the community what it needs to know, honestly and briefly, with the hurt person's agreement.",
+    "Keep the door open for anyone who stepped away, without pressure to return."
+   ],
+   "you": "Walking a community through hurt is heavy, especially when you love everyone involved. Find your own support: a mentor, a peer leader, or your faith body's support for leaders. Steady, honest, and kind is enough."
+  },
+  "byKind": {
+   "group": "For a support group or small group, return to your group agreements together. If harm happened, the facilitator makes sure the hurt person is safe and supported, and follows the hosting organization's safety steps."
+  },
+  "faith": "Hurt inside a faith community can wound a person's relationship with the sacred itself. Some feel far from God, or unsure whether they belong in any faith community again. Many traditions speak of lament, of a God who stands with those who are wronged, of justice and repair, and of forgiveness as a gift given freely in its own time, never demanded. Some find healing in a new community, some in a renewed relationship with their old one, and some in quiet, personal practices for a season. All of these can be part of a healing path. Every faith tradition and everything in-between has words for confession, repair, and healing. Use the words your community knows, and let the hurt person choose their own.",
+  "plain": {
+   "short": "When someone has been hurt inside our own group or community, and we want to heal and stay safe.",
+   "quick": [
+    "Hurt inside a close community cuts deep, because it happens in a place meant to be safe.",
+    "Listen first and believe the person's experience. Healing begins when someone is heard.",
+    "Safety comes first. Any harm to a child or a vulnerable adult goes to the authorities right away.",
+    "A community can learn, repair what it can, and become a safer, kinder home for everyone."
+   ],
+   "feel": "Maybe it was a harsh word in a meeting. Maybe someone was left out, gossiped about, or judged in a season when they needed kindness. Maybe a decision was made in a way that felt unfair, or a person in a trusted role caused real harm. Hurt inside a close community often cuts deeper than hurt anywhere else, because it happens in a place that promised belonging. The person who was hurt may feel betrayed, ashamed, angry, or alone. They may stop coming, or keep coming and say nothing. Others in the community may feel confused, defensive, sad, or unsure what is true. Some may want to move on quickly. A community can hold all of this with honesty and kindness. When a community listens well, keeps people safe, and repairs what it can, hurt can become the beginning of deeper trust.",
+   "together": {
+    "first": [
+     "Make sure everyone is safe. If anyone was harmed, especially a child or a vulnerable adult, report it to the authorities right away.",
+     "Listen to the person who was hurt, privately and with patience, and believe their experience.",
+     "Ask them what would help: a listening ear, an apology, a change, space, or support from outside the community.",
+     "Keep private stories private. Share with the community only what the hurt person agrees to and what safety requires."
+    ],
+    "helps": [
+     "A trusted, neutral person who can listen to the hurt person and walk with them.",
+     "A clear, honest apology from the person or the leaders responsible, when it is welcome and safe.",
+     "A real change, so the same hurt is less likely to happen again: a new policy, training, or way of deciding.",
+     "Group agreements about how we speak to and about each other.",
+     "A time to name together what is broken, and what healing would look like.",
+     "Patience: healing has its own pace, and forgiveness is a gift a person chooses in their own time."
+    ],
+    "say": [
+     "“We are sorry for the hurt that happened here.”",
+     "“Everyone deserves to be safe and welcome here.”",
+     "“We will listen, and we will learn.”"
+    ],
+    "people": "Try, to someone who was hurt: “Thank you for telling me. I believe you. What would help right now?” To someone who feels defensive: “We can love this community and still face what happened.” To someone who stopped coming: “We miss you. You're welcome back whenever you're ready, and you set the pace.”"
+   },
+   "kids": [
+    "If a child tells you someone hurt them, stay calm, thank them for telling you, and believe them. Then keep them safe and make the report the law requires.",
+    "Tell children clearly: “Your body belongs to you. You can always tell a trusted grown-up if something feels wrong.”",
+    "If children hear grown-ups upset, say simply: “Some grown-ups had a hard time with each other. They are working on it, and you are safe.”",
+    "Keep their routine steady, with the same trusted helpers they know.",
+    "Some children like to make a kind card for someone who is hurting. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "When someone is hurt inside the community you lead, you may feel shock, grief, or defensiveness. You may love the people involved, or be one of them. You may fear what the truth will cost the community. Your first job is safety and listening. A leader who listens, acts, and owns what is theirs helps a community heal and grow.",
+    "say": [
+     "“Thank you for telling me. I believe you.”",
+     "“Your safety comes first. Here is what I will do next.”",
+     "“I'm sorry. That should have been different here.”",
+     "“What would help you right now?”",
+     "“Here is what we are changing, so this is less likely to happen again.”"
+    ],
+    "avoid": [
+     "Asking the hurt person to keep quiet to protect the community or a leader.",
+     "Handling harm to a child or vulnerable adult inside the community instead of reporting it.",
+     "Pressing for quick forgiveness or a meeting with the person who hurt them.",
+     "Sharing private details in a meeting, an announcement, or a hallway conversation.",
+     "Telling the hurt person they misunderstood, or should have spoken up sooner."
+    ],
+    "help": [
+     "Follow your community's safety policy and the law. Harm to a child or a vulnerable adult goes to the authorities right away.",
+     "Offer the hurt person a trusted, neutral listener, and support from outside the community if they want it.",
+     "Own what is yours: apologize clearly for what the community or its leaders did or failed to do.",
+     "Make one real change: a policy, training, a new way of deciding, or new safeguards.",
+     "Tell the community what it needs to know, honestly and briefly, with the hurt person's agreement.",
+     "Keep the door open for anyone who stepped away, without pressure to return."
+    ],
+    "you": "Walking a community through hurt is heavy, especially when you love everyone involved. Find your own support: a mentor, a peer leader, or a trusted professional. Steady, honest, and kind is enough."
+   }
+  },
+  "practices": [
+   "listening-round",
+   "group-agreements",
+   "lament-together",
+   "sit-with-it",
+   "tears-are-welcome",
+   "kind-words-inside"
+  ],
+  "trees": [
+   [
+    "oak",
+    "church-hurt",
+    "When faith communities have hurt you"
+   ],
+   [
+    "pine",
+    "faith-hurt",
+    "Hurt by a faith community"
+   ],
+   [
+    "birch",
+    "faith-hurt",
+    "Hurt by a faith community"
+   ],
+   [
+    "oak",
+    "betrayal",
+    "Betrayal"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ],
+   [
+    "oak",
+    "past-abuse",
+    "Living with past abuse"
+   ]
+  ],
+  "reach": [
+   "Harm to a child: call 911 or your county's child protection line. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
+   "Childhelp National Child Abuse Hotline: 1-800-422-4453, for questions about child abuse and how to report it.",
+   "Your faith body, denomination, or network often has a safe church office or a process for reporting a leader's misconduct.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "Childhelp National Child Abuse Hotline",
+    "https://www.childhelphotline.org/"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "exline",
+   "smithfreyd14"
+  ]
+ },
+ {
+  "id": "divided",
+  "title": "Divided Over Big Issues",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When a big question divides our congregation or group, and we want to stay together with respect.",
+  "keys": "divided church divided congregation disagreement politics election polarization big issues split church split denomination vote taking sides hard conversations respect different views controversy tension in the group arguing people leaving over an issue how to disagree well unity common ground civil conversation",
+  "parts": [
+   "branches",
+   "roots",
+   "bark"
+  ],
+  "changes": [
+   "faith:conflict",
+   "group:conflict"
+  ],
+  "quick": [
+   "A community can hold people who see a big question very differently, and still love each other.",
+   "Start from why we gather. What we share is deeper than what divides us.",
+   "Listen to understand: ask what matters to each person underneath their view.",
+   "Choose respect in every word, especially about people who are absent."
+  ],
+  "feel": "Maybe it started with an election, a public question everyone is talking about, a decision in the wider faith body, or a choice about money, worship, or the building. Now it feels as if the community is split into sides. Conversations in the parking lot turn tense. Some people stopped sitting together. Some feel they have to hide what they think. Others feel they have to speak up, or leave. Friends of many years wonder if they still belong to the same community. Some are grieving, some are angry, and many are simply tired. People who love each other can see a big question in very different ways, often for reasons rooted in their deepest values and life stories. A community can learn to hold those differences with respect. When it does, people often discover how much they still share.",
+  "together": {
+   "first": [
+    "Remember together why you gather: name the shared purpose that holds this community.",
+    "Agree on how you will talk with each other: kindly, one at a time, and with respect for people who are absent.",
+    "Make room to listen, in small circles, with each person speaking about what matters to them and why.",
+    "Keep shared life going: meals, service, worship, and simple time together, across every view."
+   ],
+   "helps": [
+    "A talking piece round, where each person speaks without interruption and everyone listens.",
+    "Questions that open hearts: “What life experience shapes how you see this?” “What do you most hope for?”",
+    "Serving side by side, across views, in one clear project for the neighborhood.",
+    "Shared meals where the big question rests for the evening and people simply enjoy each other.",
+    "Clear, fair ways to make any decisions the community must make, with everyone heard first.",
+    "Letting people step back from conversations when they need rest, without judgment."
+   ],
+   "say": [
+    "“We see this differently, and we still belong to each other.”",
+    "“Help me understand what matters to you.”",
+    "“What we share is deeper than what divides us.”"
+   ],
+   "people": "Try, to someone who sees it differently: “I'd like to understand what matters most to you about this.” To someone worn out: “We can just enjoy dinner together tonight.” To someone thinking of leaving: “You matter here, and so does your voice. Can we keep talking?”"
+  },
+  "kids": [
+   "Children feel tension even when grown-ups whisper. Say simply: “Grown-ups here see a big question differently. They are learning to listen to each other, and you are safe and loved.”",
+   "Keep children out of grown-up arguments, and keep their routine steady.",
+   "Show them how to disagree kindly: listen, take turns, and use gentle words.",
+   "If they ask who is right, say: “People here care about this a lot. We're learning to listen and stay kind.”",
+   "Some children like to pray for their church family to be kind to each other. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "When your community divides, people from every side may look to you to agree with them. You may have your own views, and feel pressure to share them, or to stay quiet. You may grieve friendships strained in front of you. Your role is to keep the community's shared center visible, keep conversations safe and fair, and help everyone be heard.",
+   "say": [
+    "“Everyone here is welcome, whatever you think about this.”",
+    "“Let's remember why we gather.”",
+    "“Each person gets to speak, and everyone listens.”",
+    "“What matters most to you underneath your view?”",
+    "“Here is how we'll make the decision, and how everyone will be heard first.”"
+   ],
+   "avoid": [
+    "Using worship, announcements, or leadership time to recruit people to a side.",
+    "Labeling people by their side, or speaking of those who disagree as the problem.",
+    "Forcing a quick vote before people have been heard.",
+    "Pretending the division isn't there.",
+    "Letting a few loud voices speak for everyone."
+   ],
+   "help": [
+    "Name the division kindly and plainly, and name the shared purpose that holds the community.",
+    "Set group agreements for every conversation about the issue, and return to them often.",
+    "Hold listening circles in small groups, with a trained or neutral facilitator if possible.",
+    "Keep shared life strong: meals, service, worship, and fellowship that cross every view.",
+    "When a decision must be made, use a clear, fair process and explain it in advance.",
+    "Check on people who feel unheard or are thinking of leaving, one at a time."
+   ],
+   "you": "Leading a divided community is lonely and tiring. Find your own place to talk, with a mentor, a peer leader, or your faith body's support for leaders. Your steadiness and fairness are gifts to everyone, whatever they think."
+  },
+  "byKind": {
+   "group": "For a small group or support group, agree together whether the big question has a place in your time together, and how. Many groups choose to keep their focus on why they first gathered."
+  },
+  "faith": "Many faith communities have held deep disagreements across their history and stayed together, or parted and later found each other again. Many traditions speak of a community as one body with many parts, of loving neighbors and even those we disagree with, of humility before what is beyond any one person's understanding, and of peacemaking as holy work. For some, faith deepens the division, because each side feels its view is rooted in what is most sacred. For others, faith is exactly what holds them together across differences. Every faith tradition and everything in-between has words for unity, humility, and love across disagreement. Use the words your community knows.",
+  "plain": {
+   "short": "When a big question divides our group or community, and we want to stay together with respect.",
+   "feel": "Maybe it started with an election, a public question everyone is talking about, a decision in a wider organization, or a choice about money, gatherings, or the building. Now it feels as if the community is split into sides. Conversations in the parking lot turn tense. Some people stopped sitting together. Some feel they have to hide what they think. Others feel they have to speak up, or leave. Friends of many years wonder if they still belong to the same community. Some are grieving, some are angry, and many are simply tired. People who love each other can see a big question in very different ways, often for reasons rooted in their deepest values and life stories. A community can learn to hold those differences with respect. When it does, people often discover how much they still share.",
+   "together": {
+    "first": [
+     "Remember together why you gather: name the shared purpose that holds this community.",
+     "Agree on how you will talk with each other: kindly, one at a time, and with respect for people who are absent.",
+     "Make room to listen, in small circles, with each person speaking about what matters to them and why.",
+     "Keep shared life going: meals, service, gatherings, and simple time together, across every view."
+    ],
+    "helps": [
+     "A talking piece round, where each person speaks without interruption and everyone listens.",
+     "Questions that open hearts: “What life experience shapes how you see this?” “What do you most hope for?”",
+     "Serving side by side, across views, in one clear project for the neighborhood.",
+     "Shared meals where the big question rests for the evening and people simply enjoy each other.",
+     "Clear, fair ways to make any decisions the community must make, with everyone heard first.",
+     "Letting people step back from conversations when they need rest, without judgment."
+    ],
+    "say": [
+     "“We see this differently, and we still belong to each other.”",
+     "“Help me understand what matters to you.”",
+     "“What we share is deeper than what divides us.”"
+    ],
+    "people": "Try, to someone who sees it differently: “I'd like to understand what matters most to you about this.” To someone worn out: “We can just enjoy dinner together tonight.” To someone thinking of leaving: “You matter here, and so does your voice. Can we keep talking?”"
+   },
+   "kids": [
+    "Children feel tension even when grown-ups whisper. Say simply: “Grown-ups here see a big question differently. They are learning to listen to each other, and you are safe and loved.”",
+    "Keep children out of grown-up arguments, and keep their routine steady.",
+    "Show them how to disagree kindly: listen, take turns, and use gentle words.",
+    "If they ask who is right, say: “People here care about this a lot. We're learning to listen and stay kind.”",
+    "Some children like to make a kindness card for the group. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "When your community divides, people from every side may look to you to agree with them. You may have your own views, and feel pressure to share them, or to stay quiet. You may grieve friendships strained in front of you. Your role is to keep the community's shared center visible, keep conversations safe and fair, and help everyone be heard.",
+    "say": [
+     "“Everyone here is welcome, whatever you think about this.”",
+     "“Let's remember why we gather.”",
+     "“Each person gets to speak, and everyone listens.”",
+     "“What matters most to you underneath your view?”",
+     "“Here is how we'll make the decision, and how everyone will be heard first.”"
+    ],
+    "avoid": [
+     "Using gatherings, announcements, or leadership time to recruit people to a side.",
+     "Labeling people by their side, or speaking of those who disagree as the problem.",
+     "Forcing a quick vote before people have been heard.",
+     "Pretending the division isn't there.",
+     "Letting a few loud voices speak for everyone."
+    ],
+    "help": [
+     "Name the division kindly and plainly, and name the shared purpose that holds the community.",
+     "Set group agreements for every conversation about the issue, and return to them often.",
+     "Hold listening circles in small groups, with a trained or neutral facilitator if possible.",
+     "Keep shared life strong: meals, service, and gatherings that cross every view.",
+     "When a decision must be made, use a clear, fair process and explain it in advance.",
+     "Check on people who feel unheard or are thinking of leaving, one at a time."
+    ],
+    "you": "Leading a divided community is lonely and tiring. Find your own place to talk, with a mentor, a peer leader, or a trusted friend. Your steadiness and fairness are gifts to everyone, whatever they think."
+   }
+  },
+  "practices": [
+   "why-we-gather",
+   "talking-piece",
+   "group-agreements",
+   "listening-round",
+   "shared-meal",
+   "serve-together"
+  ],
+  "trees": [
+   [
+    "oak",
+    "political-division",
+    "Political division in families"
+   ],
+   [
+    "oak",
+    "church-hurt",
+    "When faith communities have hurt you"
+   ],
+   [
+    "oak",
+    "news-overwhelm",
+    "Overwhelmed by the news"
+   ],
+   [
+    "oak",
+    "estrangement",
+    "Estrangement"
+   ],
+   [
+    "aspen",
+    "news",
+    "Scary news and politics"
+   ]
+  ],
+  "reach": [
+   "Your faith body, denomination, or network may offer trained facilitators or mediators for congregations in conflict. Ask what they have.",
+   "If disagreement turns into threats or anyone feels unsafe: call 911.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "fisher81",
+   "pranis"
+  ]
+ },
+ {
+  "id": "leader-falls-short",
+  "title": "When a Leader Falls Short",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When a pastor or leader we trusted falls short, and our community seeks healing and safety.",
+  "keys": "pastor failed leader failure pastor moral failure leader mistake broken trust pastor resigned misconduct leader stepped down scandal at church pastor affair leader lied leader hurt people abuse by a leader leader under investigation disappointed in our pastor angry at our leader healing after a leader falls restoring trust safe church reporting accountability restoration",
+  "parts": [
+   "roots",
+   "branches",
+   "bark"
+  ],
+  "changes": [
+   "faith:leader",
+   "group:leaving",
+   "faith:conflict"
+  ],
+  "quick": [
+   "When a trusted leader falls short, a community grieves. Shock, sadness, and anger all belong.",
+   "Safety comes first. If anyone was harmed, especially a child or a vulnerable adult, it goes to the authorities right away.",
+   "Support anyone who was hurt first. Their healing comes before the leader's future or the community's image.",
+   "A community can tell the truth kindly, keep its shared life steady, and grow through this together."
+  ],
+  "feel": "Maybe the news came in a letter, a meeting, or a phone call. A pastor, a faith leader, or a group leader people trusted has fallen short, through a serious mistake, broken promises, words or actions that hurt people, or misconduct. People feel many things at once. Shock: how could this be? Grief for the leader they thought they knew. Anger, at the leader, at those who knew, or at themselves for missing the signs. Some feel deeply sad for the leader and their family. Some feel betrayed in their faith itself. Anyone who was hurt may feel exposed, afraid of being blamed, or unsure they will be believed. Children and youth may be confused by what they overhear. A community can hold all of this with honesty and kindness. With safety, truth, and patience, communities do heal, and often grow wiser and kinder to each other.",
+  "together": {
+   "first": [
+    "Make sure everyone is safe. Any harm to a child or a vulnerable adult goes to the authorities right away, and the community's safety policy is followed.",
+    "Make sure anyone who was hurt is supported, privately, with a trusted listener and help from outside the community if they want it.",
+    "Tell the community what it needs to know, honestly and briefly, without private details, and say when you will share more.",
+    "Keep shared life steady: worship, prayer, meals, and gathering, with other leaders stepping in."
+   ],
+   "helps": [
+    "Leaders outside the situation, or from the wider faith body, guiding the response.",
+    "Honest, brief updates, so rumors have less room to grow.",
+    "A time of lament, in which the community names its grief and asks for healing.",
+    "Small groups where people can share their feelings with a trusted facilitator.",
+    "Clear steps toward accountability and safety, so the community can trust its leadership again.",
+    "Patience with each other: people move through shock, anger, and sorrow at different speeds."
+   ],
+   "say": [
+    "“We are grieving, and we will hold each other.”",
+    "“Safety and truth come first here.”",
+    "“We will heal, together, in time.”"
+   ],
+   "people": "Try, to someone who is shaken: “It makes sense to feel this. Want to sit together this week?” To someone angry: “Your anger makes sense. I'm listening.” To someone who was hurt: “Thank you for telling me. I believe you. You are safe to take all the time you need.”"
+  },
+  "kids": [
+   "Tell children simply and truthfully, without details: “Pastor Dan made some wrong choices, so he isn't our leader now. Other grown-ups are leading.”",
+   "Remind them that grown-ups make mistakes too, and that grown-ups are responsible for their own choices.",
+   "Tell them clearly: “Your body belongs to you. You can always tell a trusted grown-up if something feels wrong.”",
+   "If a child tells you someone hurt them, stay calm, thank them, believe them, keep them safe, and make the report the law requires.",
+   "Some children like to pray for their church family. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "If you are one of the leaders left to guide the community, you may feel shock, grief, anger, and the weight of responsibility all at once. You may love the leader who fell short, or feel betrayed by them. You may worry about what the truth will cost the community. Your clearest path is safety, truth, and kindness to everyone, in that order.",
+   "say": [
+    "“Here is what we can share, and here is what stays private to protect people.”",
+    "“If anyone was harmed, we have reported it, and we will support them.”",
+    "“Your feelings belong here, all of them.”",
+    "“Other leaders are stepping in. Our gatherings continue.”",
+    "“We will share more when we can, by this date.”"
+   ],
+   "avoid": [
+    "Keeping harm to a child or a vulnerable adult inside the community instead of reporting it.",
+    "Protecting the leader's reputation at the cost of anyone who was hurt.",
+    "Sharing private details, guesses, or rumors.",
+    "Pressing people to forgive quickly, or bringing the leader back to the role in a hurry.",
+    "Speaking of the leader with contempt, or of anyone who was hurt with suspicion."
+   ],
+   "help": [
+    "Follow your safety policy and the law. Report any harm to a child or a vulnerable adult right away.",
+    "Bring in leaders from outside the situation, or the wider faith body, to guide the response.",
+    "Offer anyone who was hurt a trusted listener and support from outside the community.",
+    "Share honest, brief updates with the community on a clear schedule.",
+    "Keep worship, gatherings, and simple practices steady, with other leaders stepping in.",
+    "Leave the fallen leader's own path of accountability and healing to those responsible for it, separate from the community's healing."
+   ],
+   "you": "This is one of the hardest seasons a leader can face. Find your own support outside the community: a mentor, a peer leader, a therapist, or your faith body's support for leaders. You can be steady and still grieve."
+  },
+  "byKind": {
+   "group": "For a support group or small group whose facilitator fell short, the hosting organization guides the response. The group may pause, then meet with a new facilitator and return to its group agreements."
+  },
+  "faith": "When a faith leader falls short, people may feel that their faith itself has been shaken. Some feel far from God, or wonder whether anything they learned from this leader was true. Many traditions teach that a community's faith rests on something larger than any one leader, and that every person, leaders included, is accountable for their choices. Many also speak of lament, of justice for those who were harmed, and of repentance and repair. Some traditions offer a careful path of restoration for a leader who has fallen, walked with a small team over time, always with safety and accountability first. Forgiveness is a gift a person may choose in their own time, never demanded. Every faith tradition and everything in-between has its own words for this. Use the words your community knows.",
+  "plain": {
+   "short": "When a leader we trusted falls short, and the group seeks healing and safety.",
+   "feel": "Maybe the news came in a letter, a meeting, or a phone call. A leader people trusted has fallen short, through a serious mistake, broken promises, words or actions that hurt people, or misconduct. People feel many things at once. Shock: how could this be? Grief for the leader they thought they knew. Anger, at the leader, at those who knew, or at themselves for missing the signs. Some feel deeply sad for the leader and their family. Some feel their trust in the whole group has been shaken. Anyone who was hurt may feel exposed, afraid of being blamed, or unsure they will be believed. Children and youth may be confused by what they overhear. A community can hold all of this with honesty and kindness. With safety, truth, and patience, communities do heal, and often grow wiser and kinder to each other.",
+   "together": {
+    "first": [
+     "Make sure everyone is safe. Any harm to a child or a vulnerable adult goes to the authorities right away, and the group's safety policy is followed.",
+     "Make sure anyone who was hurt is supported, privately, with a trusted listener and help from outside the group if they want it.",
+     "Tell the community what it needs to know, honestly and briefly, without private details, and say when you will share more.",
+     "Keep shared life steady: gatherings, meals, and simple practices, with other leaders stepping in."
+    ],
+    "helps": [
+     "Leaders outside the situation, or from the hosting organization, guiding the response.",
+     "Honest, brief updates, so rumors have less room to grow.",
+     "A time to name together what is hard, and what healing would look like.",
+     "Small groups where people can share their feelings with a trusted facilitator.",
+     "Clear steps toward accountability and safety, so the community can trust its leadership again.",
+     "Patience with each other: people move through shock, anger, and sorrow at different speeds."
+    ],
+    "say": [
+     "“We are grieving, and we will hold each other.”",
+     "“Safety and truth come first here.”",
+     "“We will heal, together, in time.”"
+    ],
+    "people": "Try, to someone who is shaken: “It makes sense to feel this. Want to sit together this week?” To someone angry: “Your anger makes sense. I'm listening.” To someone who was hurt: “Thank you for telling me. I believe you. You are safe to take all the time you need.”"
+   },
+   "kids": [
+    "Tell children simply and truthfully, without details: “Mr. Dan made some wrong choices, so he isn't our leader now. Other grown-ups are leading.”",
+    "Remind them that grown-ups make mistakes too, and that grown-ups are responsible for their own choices.",
+    "Tell them clearly: “Your body belongs to you. You can always tell a trusted grown-up if something feels wrong.”",
+    "If a child tells you someone hurt them, stay calm, thank them, believe them, keep them safe, and make the report the law requires.",
+    "Some children like to make a kind card for the group. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "If you are one of the leaders left to guide the community, you may feel shock, grief, anger, and the weight of responsibility all at once. You may love the leader who fell short, or feel betrayed by them. You may worry about what the truth will cost the community. Your clearest path is safety, truth, and kindness to everyone, in that order.",
+    "say": [
+     "“Here is what we can share, and here is what stays private to protect people.”",
+     "“If anyone was harmed, we have reported it, and we will support them.”",
+     "“Your feelings belong here, all of them.”",
+     "“Other leaders are stepping in. Our gatherings continue.”",
+     "“We will share more when we can, by this date.”"
+    ],
+    "avoid": [
+     "Keeping harm to a child or a vulnerable adult inside the community instead of reporting it.",
+     "Protecting the leader's reputation at the cost of anyone who was hurt.",
+     "Sharing private details, guesses, or rumors.",
+     "Pressing people to forgive quickly, or bringing the leader back to the role in a hurry.",
+     "Speaking of the leader with contempt, or of anyone who was hurt with suspicion."
+    ],
+    "help": [
+     "Follow your safety policy and the law. Report any harm to a child or a vulnerable adult right away.",
+     "Bring in leaders from outside the situation, or the hosting organization, to guide the response.",
+     "Offer anyone who was hurt a trusted listener and support from outside the group.",
+     "Share honest, brief updates with the community on a clear schedule.",
+     "Keep gatherings and simple practices steady, with other leaders stepping in.",
+     "Leave the leader's own path of accountability to those responsible for it, separate from the group's healing."
+    ],
+    "you": "This is one of the hardest seasons a leader can face. Find your own support outside the group: a mentor, a peer leader, or a therapist. You can be steady and still grieve."
+   }
+  },
+  "practices": [
+   "lament-together",
+   "listening-round",
+   "quiet-after-news",
+   "sit-with-it",
+   "group-agreements",
+   "hope-in-hard-times"
+  ],
+  "trees": [
+   [
+    "oak",
+    "betrayal",
+    "Betrayal"
+   ],
+   [
+    "oak",
+    "church-hurt",
+    "When faith communities have hurt you"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ],
+   [
+    "pine",
+    "faith-hurt",
+    "Hurt by a faith community"
+   ],
+   [
+    "oak",
+    "past-abuse",
+    "Living with past abuse"
+   ],
+   [
+    "oak",
+    "faith-crisis",
+    "A crisis of faith"
+   ]
+  ],
+  "reach": [
+   "Harm to a child: call 911 or your county's child protection line. A vulnerable adult at risk: MAARC, 1-844-880-1574. Danger right now: 911.",
+   "Childhelp National Child Abuse Hotline: 1-800-422-4453, for questions about child abuse and how to report it.",
+   "Your faith body, denomination, or network usually has a process for concerns about a leader's conduct, and people who walk with congregations through this. Ask for them.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "Childhelp National Child Abuse Hotline",
+    "https://www.childhelphotline.org/"
+   ],
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "smithfreyd14",
+   "restoringfallen97",
+   "exline"
+  ]
+ },
+ {
+  "id": "merger-move",
+  "title": "A Merger, a Move, or a New Building",
+  "ring": "gw-faith",
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "When a congregation or group merges with another, moves, sells its building, or builds something new.",
+  "keys": "church merger merging congregations two churches becoming one moving church selling the church building new building building project renovation leaving our building last service in the building closing the building sharing a building new location relocation capital campaign group moving meeting place new space combining groups saying goodbye to a building",
+  "parts": [
+   "roots",
+   "branches",
+   "fruit"
+  ],
+  "changes": [
+   "faith:building",
+   "faith:newcomers",
+   "group:new"
+  ],
+  "quick": [
+   "A building or a community's way of life holds memories. Saying goodbye to it is real grief, even when the change is good.",
+   "Honor the ending before the beginning: give thanks for the old place and the old ways.",
+   "In a merger, two stories become one. Each community brings gifts worth keeping.",
+   "Carry something with you, and make room for something new."
+  ],
+  "feel": "Maybe the vote is done and the date is set. The building where people were married, baptized, and said goodbye to their parents will soon belong to someone else. Or two congregations are becoming one, and people are learning new names, new songs, and new ways. Or a long-awaited new building is rising, and with the excitement comes worry about cost, change, and what might be lost. People feel many things. Grief for rooms full of memories. Excitement and hope. Worry about belonging in a new place or a combined community. Some feel the decision was right but still ache. Some feel unheard. Some feel like guests in a place that is now supposed to be theirs. All of this belongs to a big transition. Communities that honor their endings, welcome each other's gifts, and take time to settle often grow stronger and closer in their new home.",
+  "together": {
+   "first": [
+    "Honor the ending: plan a farewell to the old building or the old ways, with stories, thanks, and a blessing.",
+    "Choose a few meaningful things to carry into the new place: a cross, a bell, a quilt, a window, a tradition.",
+    "In a merger, invite each community to share its story and its gifts, and choose together what to keep from each.",
+    "Give people time to settle, and say out loud that it will take a while to feel like home."
+   ],
+   "helps": [
+    "A last gathering in the old space, walking room to room and sharing memories in each.",
+    "A memory book or a wall of photos from the old place, kept in the new one.",
+    "A first gathering in the new space that blesses each room and welcomes everyone.",
+    "Mixing people on purpose: shared meals, table groups, and greeters from both communities.",
+    "Keeping one or two familiar practices exactly the same during the change.",
+    "Honest updates about the timeline, the costs, and the decisions still ahead."
+   ],
+   "say": [
+    "“We give thanks for this place, and for everything that happened here.”",
+    "“We carry our story with us.”",
+    "“This new place can become home, together.”"
+   ],
+   "people": "Try, to a longtime member: “What's your favorite memory in this building? Would you share it at the farewell?” To someone from the other community in a merger: “Tell me about your church. What do you hope we keep?” To someone uneasy: “It makes sense to miss the old place. It took years to feel like home there too.”"
+  },
+  "kids": [
+   "Tell children what is changing and when, simply: “Our church is moving to a new building in the fall.”",
+   "Let them say goodbye: walk through the old rooms, take a photo, or draw a picture of their favorite place.",
+   "Let them help carry something meaningful into the new space.",
+   "Show them the new place early, and find their room, their seat, or their special spot together.",
+   "Some children like to say a prayer or a blessing for the new building. Invite it; leave it to them."
+  ],
+  "leader": {
+   "feel": "Leading a merger, a move, or a building project asks a lot: decisions, money, timelines, and many people's feelings. You may be excited and exhausted at the same time. You may hear grief that feels like resistance, or criticism that feels personal. Some may blame you for the change. Your patience with people's grief, and your clear communication, help everyone arrive together.",
+   "say": [
+    "“This is a good change, and it is also a loss. Both are true.”",
+    "“What do you most want to carry with us?”",
+    "“Here's the timeline, and here's what's still undecided.”",
+    "“It will take time for the new place to feel like home.”",
+    "“Both communities bring gifts. Let's name them.”"
+   ],
+   "avoid": [
+    "Rushing from the vote to the move without a farewell.",
+    "Treating grief or worry as opposition to the decision.",
+    "In a merger, letting one community's ways quietly replace the other's.",
+    "Surprising people with costs, timelines, or changes.",
+    "Expecting everyone to feel at home right away."
+   ],
+   "help": [
+    "Plan the farewell to the old place as carefully as the opening of the new one.",
+    "Name, together, a few objects and traditions to carry forward.",
+    "In a merger, form a team with people from both communities to plan worship, groups, and welcome.",
+    "Communicate the timeline, costs, and open decisions often and plainly.",
+    "Watch for people who feel left behind, and check on them personally.",
+    "Mark milestones in the new place: the first season, the first holiday, the first anniversary."
+   ],
+   "you": "Leading a big transition is heavy work. Find your own support: a mentor, a peer leader who has led a move or merger, or your faith body's support for leaders. Celebrate the progress, and give yourself time to settle too."
+  },
+  "byKind": {
+   "group": "For a group moving to a new meeting place or joining another group, take a last meeting in the old place, carry one ritual with you, and spend your first meetings together getting to know each other again."
+  },
+  "faith": "Many traditions have rituals for leaving a sacred place and for blessing a new one: a service of thanks and farewell, carrying holy objects from one place to another, blessing each room, or dedicating a new space. Many sacred stories tell of people on the move: leaving one home, wandering, and finding a new place where the holy is still present. For some, leaving a building feels like leaving the place where they met God, and that is real grief worth hearing. For others, faith says that the community itself is the sacred dwelling, wherever it gathers. Every faith tradition and everything in-between has words for this. Use the words your community knows.",
+  "plain": {
+   "short": "When a community or group merges with another, moves, sells its building, or builds something new.",
+   "feel": "Maybe the vote is done and the date is set. The building where people celebrated weddings and milestones and said goodbye to loved ones will soon belong to someone else. Or two communities are becoming one, and people are learning new names, new songs, and new ways. Or a long-awaited new building is rising, and with the excitement comes worry about cost, change, and what might be lost. People feel many things. Grief for rooms full of memories. Excitement and hope. Worry about belonging in a new place or a combined community. Some feel the decision was right but still ache. Some feel unheard. Some feel like guests in a place that is now supposed to be theirs. All of this belongs to a big transition. Communities that honor their endings, welcome each other's gifts, and take time to settle often grow stronger and closer in their new home.",
+   "together": {
+    "first": [
+     "Honor the ending: plan a farewell to the old building or the old ways, with stories, thanks, and good words.",
+     "Choose a few meaningful things to carry into the new place: a bell, a quilt, a sign, a tradition.",
+     "In a merger, invite each community to share its story and its gifts, and choose together what to keep from each.",
+     "Give people time to settle, and say out loud that it will take a while to feel like home."
+    ],
+    "helps": [
+     "A last gathering in the old space, walking room to room and sharing memories in each.",
+     "A memory book or a wall of photos from the old place, kept in the new one.",
+     "A first gathering in the new space that honors each room and welcomes everyone.",
+     "Mixing people on purpose: shared meals, table groups, and greeters from both communities.",
+     "Keeping one or two familiar practices exactly the same during the change.",
+     "Honest updates about the timeline, the costs, and the decisions still ahead."
+    ],
+    "say": [
+     "“We give thanks for this place, and for everything that happened here.”",
+     "“We carry our story with us.”",
+     "“This new place can become home, together.”"
+    ],
+    "people": "Try, to a longtime member: “What's your favorite memory in this building? Would you share it at the farewell?” To someone from the other community in a merger: “Tell me about your group. What do you hope we keep?” To someone uneasy: “It makes sense to miss the old place. It took years to feel like home there too.”"
+   },
+   "kids": [
+    "Tell children what is changing and when, simply: “Our group is moving to a new building in the fall.”",
+    "Let them say goodbye: walk through the old rooms, take a photo, or draw a picture of their favorite place.",
+    "Let them help carry something meaningful into the new space.",
+    "Show them the new place early, and find their room, their seat, or their special spot together.",
+    "Some children like to make a welcome sign for the new building. Invite it; leave it to them."
+   ],
+   "leader": {
+    "feel": "Leading a merger, a move, or a building project asks a lot: decisions, money, timelines, and many people's feelings. You may be excited and exhausted at the same time. You may hear grief that feels like resistance, or criticism that feels personal. Some may blame you for the change. Your patience with people's grief, and your clear communication, help everyone arrive together.",
+    "say": [
+     "“This is a good change, and it is also a loss. Both are true.”",
+     "“What do you most want to carry with us?”",
+     "“Here's the timeline, and here's what's still undecided.”",
+     "“It will take time for the new place to feel like home.”",
+     "“Both communities bring gifts. Let's name them.”"
+    ],
+    "avoid": [
+     "Rushing from the vote to the move without a farewell.",
+     "Treating grief or worry as opposition to the decision.",
+     "In a merger, letting one community's ways quietly replace the other's.",
+     "Surprising people with costs, timelines, or changes.",
+     "Expecting everyone to feel at home right away."
+    ],
+    "help": [
+     "Plan the farewell to the old place as carefully as the opening of the new one.",
+     "Name, together, a few objects and traditions to carry forward.",
+     "In a merger, form a team with people from both communities to plan gatherings, groups, and welcome.",
+     "Communicate the timeline, costs, and open decisions often and plainly.",
+     "Watch for people who feel left behind, and check on them personally.",
+     "Mark milestones in the new place: the first season, the first holiday, the first anniversary."
+    ],
+    "you": "Leading a big transition is heavy work. Find your own support: a mentor, a peer leader who has led a move or merger, or a trusted friend. Celebrate the progress, and give yourself time to settle too."
+   }
+  },
+  "practices": [
+   "story-that-matters",
+   "looking-back",
+   "ending-well",
+   "welcome-table",
+   "milestone",
+   "table-groups"
+  ],
+  "trees": [
+   [
+    "oak",
+    "moving",
+    "Moving to a new place"
+   ],
+   [
+    "sequoia",
+    "moving-home",
+    "Moving from the family home"
+   ],
+   [
+    "sequoia",
+    "downsizing",
+    "Downsizing and letting go of things"
+   ],
+   [
+    "oak",
+    "empty-nest",
+    "Empty nest and big life transitions"
+   ],
+   [
+    "aspen",
+    "moving",
+    "Moving away"
+   ]
+  ],
+  "reach": [
+   "Your faith body, denomination, or network often has people with experience guiding mergers, moves, and building projects. Ask what they offer.",
+   "If anyone in the community speaks of not wanting to be alive: call or text 988, any time. Danger right now: 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "bridges91",
+   "tuckman65"
+  ]
+ },
+ {
   "id": "hard-death",
   "title": "After a Hard Death",
   "ring": "gw-team",
@@ -4970,6 +8792,792 @@ const TOPICS = [
   "sources": [
    "whoburnout19",
    "maslach",
+   "figley"
+  ]
+ },
+ {
+  "id": "coworker-conflict",
+  "title": "Conflict Between Coworkers",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "When tension between coworkers spreads through a team, and the team wants to work well together again.",
+  "keys": "conflict at work coworker conflict coworkers not getting along tension on the team team conflict arguing at work personality clash disagreement with a coworker passive aggressive gossip at work cliques taking sides hostile work environment team morale repair conversation mediation difficult coworker workplace tension",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "changes": [
+   "team:change",
+   "team:new"
+  ],
+  "quick": [
+   "Conflict is a normal part of working closely together. Handled well, it can make a team stronger and clearer.",
+   "Talk to each other, directly and kindly, before talking about each other.",
+   "Look underneath the positions: what does each person need to do their work well?",
+   "Agree together on how this team disagrees, and keep coming back to it."
+  ],
+  "feel": "Maybe it started small: a missed handoff, a sharp email, a joke that landed wrong, a disagreement about how the work should be done. Over weeks it grew. Now two coworkers barely speak, or every meeting carries an edge. Others on the team feel caught in the middle, asked to take sides or to carry messages. Some avoid the break room. Some vent to whoever will listen. The work suffers: handoffs slip, ideas go unspoken, and people dread coming in. Many feel stuck, unsure whether to say something or wait for it to pass. This happens on good teams with good people. Conflict often grows from real differences in how people work, what they value, and the pressure they are under. A team can learn to name it, talk it through, and repair. Teams that do often come out with more trust and better ways of working.",
+  "together": {
+   "first": [
+    "Name it as a team, kindly and without blame: “We've had some tension lately, and we want to work well together.”",
+    "Agree together on how this team disagrees: directly, privately first, with respect, and focused on the work.",
+    "Encourage the people involved to talk with each other directly, with a neutral person present if that helps.",
+    "Keep the work moving with clear roles and handoffs, so tension has less to feed on."
+   ],
+   "helps": [
+    "A repair conversation: each person shares what happened from their view, what they need, and one thing they'll do differently.",
+    "Asking before assuming: “When you said that, what did you mean?”",
+    "Team agreements written down and read at the start of meetings.",
+    "Shared work in mixed pairs, so people see each other's strengths.",
+    "A walk together, side by side, which often makes hard talks easier.",
+    "Bringing in a neutral person, such as human resources or a mediator, when two people stay stuck."
+   ],
+   "say": [
+    "“We can disagree and still work well together.”",
+    "“Talk to each other, then about the work.”",
+    "“Ask, then listen.”"
+   ],
+   "people": "Try, to a coworker you clash with: “I think we've gotten off track. Could we grab a few minutes to talk it through?” To someone venting to you: “That sounds hard. Have you been able to talk with them directly?” To your lead: “There's tension on the team that's affecting the work. Could we look at it together?”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a lead, you may feel caught between people you value. You may hope it resolves on its own, or worry that stepping in will make it worse. You may have a view about who is right. A lead's steady, fair attention, early, usually keeps a conflict from growing.",
+   "say": [
+    "“I've noticed some tension, and I want to help you two work well together.”",
+    "“Let's focus on the work and what each of you needs to do it well.”",
+    "“What would help you hear each other?”",
+    "“Here's how this team handles disagreement.”",
+    "“I'll check in with both of you next week.”"
+   ],
+   "avoid": [
+    "Waiting months for it to pass.",
+    "Taking sides, or listening to only one person's story.",
+    "Discussing one person's faults with others on the team.",
+    "Forcing an apology or a quick handshake.",
+    "Ignoring behavior that crosses into harassment or threats."
+   ],
+   "help": [
+    "Meet with each person privately first, and listen to understand.",
+    "Bring them together for a structured repair conversation, with clear ground rules.",
+    "Clarify roles, handoffs, and decision rights that may be feeding the conflict.",
+    "Set team agreements for how disagreement is handled, and model them.",
+    "Follow up with both people, and notice progress out loud.",
+    "Involve human resources early if there is harassment, discrimination, threats, or a pattern that continues."
+   ],
+   "you": "Leading through conflict is draining, especially when you like everyone involved. Find a peer lead, a supervisor, or your employee assistance program to talk it through. Fair and steady is enough."
+  },
+  "byKind": {
+   "team": "For a hospice, hospital, or school team, tension during hard cases can show up as conflict between coworkers. Name the stress of the work, too, and make time to debrief."
+  },
+  "faith": "",
+  "practices": [
+   "repair-conversation",
+   "ask-dont-assume",
+   "group-agreements",
+   "speak-up-round",
+   "coffee-walk",
+   "teach-each-other"
+  ],
+  "trees": [
+   [
+    "oak",
+    "anger",
+    "Anger that runs hot"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ],
+   [
+    "oak",
+    "anxiety",
+    "Anxiety that won't settle"
+   ],
+   [
+    "birch",
+    "first-job",
+    "A first full-time job"
+   ],
+   [
+    "oak",
+    "escalating",
+    "When someone is escalating"
+   ]
+  ],
+  "reach": [
+   "Your organization's employee assistance program (EAP): short-term support for stress and work relationships, usually at no cost to staff.",
+   "Human resources: for harassment, discrimination, threats, or conflict that stays stuck. Many organizations also offer mediation.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Threats or danger right now: call 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "fisher81",
+   "edmondson99"
+  ]
+ },
+ {
+  "id": "new-leader",
+  "title": "A New Leader",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "When a team gets a new manager, supervisor, or director, and everyone is learning each other.",
+  "keys": "new manager new boss new supervisor new director new team lead new leadership change in leadership getting to know a new boss adjusting to a new manager new leader changes everything missing the old manager first 90 days new leader on the team trust with a new boss leadership transition onboarding a new leader",
+  "parts": [
+   "branches",
+   "trunk",
+   "roots"
+  ],
+  "changes": [
+   "team:change",
+   "team:new",
+   "team:leaving"
+  ],
+  "quick": [
+   "A new leader is a big change for a team, even a welcome one. It takes time to learn each other.",
+   "Give the new leader the team's story: what works, what matters, and what the team is proud of.",
+   "Ask questions early, and say what you need. Trust grows through small, honest conversations.",
+   "Expect some bumps as the team settles. It's a normal season, and it passes."
+  ],
+  "feel": "Maybe the old manager retired, moved on, or was promoted, and the team said goodbye. Now someone new is in the role. Some people feel relief or excitement. Some feel uneasy: Will they understand how we work? Will my job change? Will they see what I do? Some miss the old leader and compare everything. Some wait to see before saying much. The new leader may be eager to make a mark, or quietly nervous, or both. Small changes, a new meeting time, a new form, a new way of deciding, can feel bigger than they are. Teams usually go through a season of testing and adjusting with a new leader. With patience, honest conversation, and some curiosity on both sides, a team and a new leader can build real trust, and the team can grow in good new ways.",
+  "together": {
+   "first": [
+    "Welcome the new leader warmly and specifically: names, roles, and one thing each person enjoys about the work.",
+    "Share the team's story: how it works, what it's proud of, and what it has come through.",
+    "Ask the new leader how they like to communicate and decide, and share how the team works best.",
+    "Give it time. Expect the first months to be a season of learning each other."
+   ],
+   "helps": [
+    "Two-minute interviews in pairs, so the new leader and the team learn about each other quickly.",
+    "A short list of “what works here,” “what could be better,” and “what we hope for.”",
+    "Regular one-on-ones between the new leader and each team member.",
+    "Honest, kind questions about changes: “Can you help us understand the reason for this?”",
+    "Marking the old leader's goodbye well, so the team can welcome the new one fully.",
+    "Noticing and naming early wins together."
+   ],
+   "say": [
+    "“Welcome. Here's who we are.”",
+    "“Help us understand, and we'll help you understand us.”",
+    "“We'll learn each other, one conversation at a time.”"
+   ],
+   "people": "Try, to the new leader: “Welcome. What would help you most in your first few weeks?” To a teammate who misses the old manager: “I miss her too. Want to give the new one a fair shot together?” To yourself: “I can share what I need, kindly and clearly.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "If you are the new leader, you may feel eager, watched, and unsure all at once. You may sense the team comparing you to the person before you. You may see things you want to change right away. If you are the leader above them, you want this transition to go well for everyone. Listening first, and changing slowly, helps a new leader earn the team's trust.",
+   "say": [
+    "“I want to learn how this team works before I change anything big.”",
+    "“What's working well here? What would you change?”",
+    "“Here's how I like to communicate, and I want to hear how you do.”",
+    "“When I make a change, I'll tell you why.”",
+    "“Thank you for showing me how things work here.”"
+   ],
+   "avoid": [
+    "Changing many things in the first weeks before understanding why they are the way they are.",
+    "Speaking poorly of the previous leader.",
+    "Taking silence as agreement.",
+    "Making decisions about people's roles before meeting with them.",
+    "Asking for honesty and then reacting sharply to it."
+   ],
+   "help": [
+    "Meet one-on-one with each team member early, and ask the same few open questions.",
+    "Learn the team's story, its wins, its hard seasons, and its unwritten rules.",
+    "Share your own story and how you like to work.",
+    "Make a few early, small improvements the team asked for.",
+    "Explain the reason for each change, and invite questions.",
+    "Thank the team, often and specifically, for what they teach you."
+   ],
+   "you": "Starting as a new leader is lonely in its own way. Find a peer lead, a mentor, or your employee assistance program to talk it through. Curious and steady is enough for the first months."
+  },
+  "byKind": {
+   "team": "For a hospice, hospital, or school team, a new leader also needs to learn the weight of the work: the hard cases, the grief, and what helps the team carry it. Invite them into a team debrief early."
+  },
+  "faith": "",
+  "practices": [
+   "two-minute-interview",
+   "story-swap",
+   "how-my-part-fits",
+   "purpose-check",
+   "group-agreements",
+   "speak-up-round"
+  ],
+  "trees": [
+   [
+    "oak",
+    "career-change",
+    "A career change"
+   ],
+   [
+    "birch",
+    "first-job",
+    "A first full-time job"
+   ],
+   [
+    "aspen",
+    "teacher",
+    "A teacher or coach leaves"
+   ],
+   [
+    "oak",
+    "anxiety",
+    "Anxiety that won't settle"
+   ]
+  ],
+  "reach": [
+   "Your organization's employee assistance program (EAP): short-term support for stress and big changes at work, usually at no cost to staff.",
+   "Human resources: for questions about roles, policies, or concerns that need a neutral voice.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "tuckman65",
+   "edmondson99",
+   "bridges91"
+  ]
+ },
+ {
+  "id": "heavy-workload",
+  "title": "Heavy Workload and Deadlines",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "When a team faces a crunch: big deadlines, a surge of work, or a busy season to come through well.",
+  "keys": "heavy workload deadlines crunch time busy season too much work overtime long hours surge census high short staffed project deadline year end audit grant deadline survey season flu season stress at work overwhelmed team priorities what can wait pacing a busy season staying healthy at work",
+  "parts": [
+   "leaves",
+   "trunk",
+   "bark"
+  ],
+  "changes": [
+   "team:workload",
+   "team:change"
+  ],
+  "quick": [
+   "A heavy season is a team's to carry together, with a clear start and a clear end.",
+   "Decide together what matters most, what can wait, and what can be set down.",
+   "Protect the basics: water, real food, movement, sleep, and short breaks keep a team steady.",
+   "Mark the finish line, and celebrate together when you cross it."
+  ],
+  "feel": "The deadline is coming, or the busy season has arrived. The inbox fills faster than it empties. The census is high, the audit is due, the project launch is close, or the whole team is covering for open positions. People stay late, eat at their desks, and lie awake making lists. Some feel energized by the push. Some feel overwhelmed and quietly fall behind. Some feel they can never say they are at their limit. Small mistakes creep in, and tempers get shorter. A heavy season can bring a team closer, as people pitch in and cover for each other. It can also slide into lasting exhaustion if it never ends. A team that names the season, sets clear priorities, protects the basics of health, and marks its finish line can come through strong, and often proud of what it did together.",
+  "together": {
+   "first": [
+    "Name the season out loud as a team: what's coming, how long it will last, and when it ends.",
+    "Sort the work together: what must happen, what can wait, and what can be set down for now.",
+    "Agree on how you'll protect the basics: short breaks, water, real meals, movement, and sleep.",
+    "Check in briefly and often on the load, so no one quietly falls behind."
+   ],
+   "helps": [
+    "A short weekly look-ahead: the deadlines, who's covering what, and where help is needed.",
+    "Pairing up on big tasks, and covering for each other so breaks can happen.",
+    "Walking meetings or a few minutes outside to reset.",
+    "Water and nourishing food on hand for long days, shared as a team.",
+    "Celebrating small wins along the way: a milestone, a finished piece, a good save.",
+    "Recovery time after the push: a lighter week, time off, or an early finish."
+   ],
+   "say": [
+    "“We'll carry this together.”",
+    "“First things first.”",
+    "“There's a finish line, and we'll cross it together.”"
+   ],
+   "people": "Try, to a teammate: “What's on your plate this week? Is there anything I can take or help with?” To your lead: “Can we decide together what can wait until after the deadline?” To yourself: “A short break now helps me finish well.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a lead in a heavy season, you may feel pressure from above and worry for your team below. You may be working the longest hours yourself. You may hesitate to set anything down, or to ask for more help. Your clarity about priorities, and your example of steady pacing, help the team carry the load and come through it well.",
+   "say": [
+    "“Here's what matters most this month, and here's what can wait.”",
+    "“Here's when this season ends.”",
+    "“Take your break. We'll cover for you.”",
+    "“Tell me early if you're falling behind. We'll adjust.”",
+    "“When we're through this, we'll take time to recover.”"
+   ],
+   "avoid": [
+    "Adding new projects during the crunch.",
+    "Treating every task as equally urgent.",
+    "Praising people for skipping meals, breaks, or sleep.",
+    "Letting a busy season stretch on with no end date.",
+    "Waiting until after the deadline to notice who is struggling."
+   ],
+   "help": [
+    "Make a clear priority list with the team, and name what can wait or be set down.",
+    "Set an end date for the heavy season, and protect a recovery time after it.",
+    "Build a cover plan so breaks and days off actually happen.",
+    "Ask leadership for help in specific terms: temporary staff, deadline changes, or fewer extra requests.",
+    "Model the basics: take your break, eat a real meal, step outside.",
+    "Celebrate the finish together, and thank people specifically."
+   ],
+   "you": "Leads in a crunch often carry the most and rest the least. Talk with a peer lead, a supervisor, or your employee assistance program. Your steady pace is the team's best signal that they can pace themselves too."
+  },
+  "byKind": {
+   "team": "For a hospice, hospital, or school team, a heavy season often comes with heavier emotions too: more patients, more families, more students in need. Make time for a short debrief alongside the task list."
+  },
+  "faith": "",
+  "practices": [
+   "weekly-look-ahead",
+   "stop-doing",
+   "cover-for-each-other",
+   "small-wins",
+   "walking-meeting",
+   "recovery-time"
+  ],
+  "trees": [
+   [
+    "oak",
+    "burnout",
+    "Burnout"
+   ],
+   [
+    "birch",
+    "pressure-burnout",
+    "Pressure, grades, and burnout"
+   ],
+   [
+    "oak",
+    "anxiety",
+    "Anxiety that won't settle"
+   ],
+   [
+    "birch",
+    "first-job",
+    "A first full-time job"
+   ]
+  ],
+  "reach": [
+   "Your organization's employee assistance program (EAP): short-term support for stress, sleep, and overwhelm, usually at no cost to staff.",
+   "Exhaustion, low mood, or poor sleep that lasts two weeks or more: talk with your doctor or a mental health professional.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "maslach",
+   "whoburnout19"
+  ]
+ },
+ {
+  "id": "workplace-injury",
+  "title": "A Workplace Injury or Accident",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "When a coworker is hurt on the job, or the team goes through an accident together, and needs to steady.",
+  "keys": "workplace injury accident at work coworker hurt at work injured on the job fall at work vehicle crash at work patient lifting injury needlestick equipment accident witnessed an accident shaken after an accident safety incident near miss workers compensation return to work after injury team after an accident blame after an accident safety review",
+  "parts": [
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "changes": [
+   "team:change"
+  ],
+  "quick": [
+   "Safety first: get help, follow your workplace's steps, and make the area safe.",
+   "Check on everyone, including the people who saw it or helped. Shock and shakiness are normal after an accident.",
+   "Look at what happened to learn, never to blame. Most accidents come from systems and steps that we can improve together.",
+   "Stay connected with the injured coworker, and plan their return together."
+  ],
+  "feel": "It happened fast. A fall, a lift that went wrong, a crash in a work vehicle, a piece of equipment that failed. Someone on the team was hurt. Maybe help came quickly; maybe the minutes felt long. Afterward, people feel shaken. Some replay the moment over and over. Some feel guilty: Could I have stopped it? Some feel angry about a known risk. Some are quietly afraid it could happen to them. The person who was hurt may be in pain, worried about their job, or embarrassed. The people who saw it or helped may have trouble sleeping or concentrating for a while. All of this is a normal response to a frightening event. With safety, steady support, honest learning, and kindness toward each other, teams recover, and often come out more watchful and more connected.",
+  "together": {
+   "first": [
+    "Make sure everyone is safe and the injured person has medical help. Danger or serious injury: call 911.",
+    "Follow your workplace's steps for reporting and making the area safe.",
+    "Gather the team briefly: share what's known, who is with the injured coworker, and what happens next.",
+    "Check on the people who saw it or helped. Offer a quiet space, water, and someone to sit with."
+   ],
+   "helps": [
+    "Brief, honest updates about the injured coworker, shared with their permission.",
+    "A short team debrief in the days after: what happened, how people are doing, and what helps.",
+    "A learning review that looks at systems and steps, never at blaming a person.",
+    "Cards, messages, or a meal for the injured coworker and their family.",
+    "Covering their work fairly, without overloading anyone.",
+    "Planning their return together: easing back, any changes they need, and a warm welcome."
+   ],
+   "say": [
+    "“We're glad you're safe.”",
+    "“We'll learn from this together.”",
+    "“We look out for each other here.”"
+   ],
+   "people": "Try, to the injured coworker: “We're thinking of you. No need to reply, we just wanted you to know.” To someone who saw it: “That was frightening. How are you doing today?” To someone who feels guilty: “Accidents usually have many causes. Let's look at what we can change together.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a lead after an accident, you may feel responsible, shaken, and pulled in many directions at once: medical help, reports, the team, the family, and your own leadership. You may worry about blame or liability. The team will watch how you respond. Steady, honest, and focused on safety and people helps everyone recover.",
+   "say": [
+    "“Everyone's safety comes first. Here's what we're doing.”",
+    "“Here's what we know about how they're doing, and here's what we don't know yet.”",
+    "“Seeing that was hard. It makes sense to feel shaken.”",
+    "“We'll look at what happened to learn and make it safer, never to blame.”",
+    "“Here's how we'll support them, and how we'll cover the work.”"
+   ],
+   "avoid": [
+    "Looking for someone to blame in the first hours.",
+    "Sharing the injured person's medical details without their permission.",
+    "Rushing people back to normal work right after a frightening event.",
+    "Forcing everyone to talk through it in detail in a group.",
+    "Letting the injured coworker drop out of the team's life while they recover."
+   ],
+   "help": [
+    "Get medical help, follow reporting steps, and make the area safe.",
+    "Check on everyone involved, especially witnesses and helpers, in person if you can.",
+    "Hold a short team debrief: facts, feelings, and what helps, and anyone welcome to pass.",
+    "Lead a learning review focused on systems: equipment, staffing, training, and steps.",
+    "Stay in touch with the injured coworker, and plan their return with them and human resources.",
+    "Remind everyone of the employee assistance program, and check back in a week and a month."
+   ],
+   "you": "Leading through an accident is heavy, and you may have seen it too. Find a peer lead, a supervisor, or your employee assistance program to talk it through. Give yourself the same patience you give the team."
+  },
+  "byKind": {
+   "team": "For a hospice, hospital, or home health team, injuries can happen in patients' homes, in vehicles, or during lifts. Make sure field staff know the reporting steps and have a lead they can call any time."
+  },
+  "faith": "",
+  "practices": [
+   "debrief-hard-day",
+   "check-on-the-helper",
+   "cover-for-each-other",
+   "learning-from-the-day",
+   "kindness-notes",
+   "quiet-after-news"
+  ],
+  "trees": [
+   [
+    "oak",
+    "accident",
+    "After a car accident or sudden injury"
+   ],
+   [
+    "oak",
+    "trauma",
+    "After something traumatic"
+   ],
+   [
+    "oak",
+    "work-ability",
+    "Working with a disability or illness, or stepping away"
+   ],
+   [
+    "birch",
+    "work-disability",
+    "Disability or illness at work: accommodations and telling your boss"
+   ],
+   [
+    "oak",
+    "chronic",
+    "Chronic illness or pain"
+   ]
+  ],
+  "reach": [
+   "Serious injury or danger right now: call 911.",
+   "Your organization's employee assistance program (EAP): short-term support after a frightening event, usually at no cost to staff.",
+   "Human resources and your safety officer: reporting, workers' compensation, and planning a return to work.",
+   "Shakiness, poor sleep, or replaying the event that lasts more than a few weeks: talk with your doctor or a mental health professional.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "pfa06",
+   "hobfoll07"
+  ]
+ },
+ {
+  "id": "coworker-loss",
+  "title": "Supporting a Coworker Through Loss",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "When someone on the team is grieving a death in their life, and the team wants to support them well.",
+  "keys": "coworker grieving coworker lost a parent coworker lost a child coworker spouse died coworker miscarriage pregnancy loss bereavement leave sympathy card what to say to a grieving coworker returning to work after a death grief at work supporting a grieving colleague team sympathy funeral coworker lost a friend coworker pet died",
+  "parts": [
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "changes": [
+   "team:death",
+   "team:leaving"
+  ],
+  "quick": [
+   "When a coworker is grieving, a simple, warm word helps more than the perfect one.",
+   "Ask what they want: some want to talk about it at work, some want work to feel normal.",
+   "Practical help speaks loudly: covering shifts, a meal, flexibility in the weeks ahead.",
+   "Grief lasts longer than bereavement leave. Keep checking in, and remember the hard dates."
+  ],
+  "feel": "The news came by text, by email, or in a quiet word from the lead. A coworker's mother died. Or their husband, their child, their best friend. Or they lost a pregnancy, a loss few people talk about. Now the team wonders what to do. Should we send flowers? Should we say something when they come back, or leave them be? People worry about saying the wrong thing, so some say nothing at all. When the coworker returns, they may look the same but feel very different: tired, foggy, quick to tears, or quietly holding it all in. Some days they will want to talk; other days they will want work to be the one normal thing. A team can be a real source of support in grief. Small, steady kindness, offered over weeks and months, helps more than anyone expects.",
+  "together": {
+   "first": [
+    "Reach out soon, with simple words: “I'm so sorry. I'm thinking of you.”",
+    "Ask the lead or a close coworker what the person wants shared, and how they'd like the team to help.",
+    "Cover their work fairly during their leave, so they can rest and grieve.",
+    "Prepare for their return: a warm welcome, a lighter start if possible, and room for both talking and quiet."
+   ],
+   "helps": [
+    "A card signed by the team, with a personal line from each person.",
+    "A meal, a gift card for groceries, or help with something practical.",
+    "Saying the name of the person who died, when it feels right.",
+    "Flexibility in the weeks after: time for appointments, a slower start, a quiet space when needed.",
+    "Asking, rather than guessing: “Would you like to talk about it, or would you rather we keep things normal today?”",
+    "Remembering the hard dates later: the birthday, the anniversary, the first holidays."
+   ],
+   "say": [
+    "“We're so sorry, and we're here.”",
+    "“Take the time you need.”",
+    "“We'll keep remembering with you.”"
+   ],
+   "people": "Try, to the grieving coworker: “I'm so sorry about your dad. I'm glad you're back, and I'm here if you want to talk.” Later: “I know this week might be hard. I'm thinking of you.” To a teammate unsure what to say: “Keep it simple. I'm sorry, and I'm here, is enough.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a lead, you may feel unsure how much to say to the team, how to cover the work, and how to support the grieving person without overstepping. You may also face pressure to get things back to normal. Your warmth, flexibility, and steady follow-up matter a great deal, now and in the months ahead.",
+   "say": [
+    "“I'm so sorry for your loss. Take the time you need.”",
+    "“What would you like the team to know, and how can we help?”",
+    "“Here's how we'll cover your work while you're away.”",
+    "“When you come back, we can ease in. Tell me what helps.”",
+    "“Grief takes time. Let's keep checking in.”"
+   ],
+   "avoid": [
+    "Sharing details of the death without the person's permission.",
+    "Expecting full speed right after bereavement leave ends.",
+    "Treating some losses as less worthy of support, such as a pregnancy loss, a friend, an ex-spouse, or a pet.",
+    "Never mentioning the loss again after the first week.",
+    "Pressing them to talk at work if they'd rather keep work steady."
+   ],
+   "help": [
+    "Reach out personally soon, and ask what they want the team to know.",
+    "Explain bereavement leave and other options clearly, with human resources' help.",
+    "Arrange fair cover for their work.",
+    "Plan their return with them: a lighter start, flexibility, and a check-in their first day back.",
+    "Remind them and the team of the employee assistance program, which often offers grief support.",
+    "Put the hard dates on your calendar and check in then."
+   ],
+   "you": "Supporting a grieving coworker can stir your own losses. Talk it through with a peer lead, a supervisor, or your employee assistance program. Warm and steady is enough."
+  },
+  "byKind": {
+   "team": "For a hospice, hospital, or school team, a coworker's personal loss can make the daily work harder for a while. Offer flexibility with assignments that feel too close to their own grief."
+  },
+  "faith": "",
+  "practices": [
+   "kindness-notes",
+   "cover-for-each-other",
+   "shared-meal",
+   "quiet-corner",
+   "check-in-pairs",
+   "ask-dont-assume"
+  ],
+  "trees": [
+   [
+    "oak",
+    "parent-death",
+    "Your parent died"
+   ],
+   [
+    "oak",
+    "spouse-death",
+    "Your spouse or partner died"
+   ],
+   [
+    "oak",
+    "child-death",
+    "Your child died"
+   ],
+   [
+    "oak",
+    "pregnancy-loss",
+    "Pregnancy or infant loss"
+   ],
+   [
+    "oak",
+    "grief-days",
+    "Holidays and anniversaries after a loss"
+   ],
+   [
+    "oak",
+    "after-death",
+    "The first days after a death"
+   ]
+  ],
+  "reach": [
+   "Your organization's employee assistance program (EAP): many offer grief support for employees, usually at no cost to staff.",
+   "Human resources: bereavement leave, flexible schedules, and other options.",
+   "Many hospices offer grief support groups to the whole community. Call your local hospice and ask.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "doka",
+   "stroebe99"
+  ]
+ },
+ {
+  "id": "hard-things",
+  "title": "When the Work Asks Hard Things",
+  "ring": "gw-team",
+  "kinds": [
+   "team"
+  ],
+  "short": "Moral distress for hospice, health, and first responder teams: when the work asks more than feels right.",
+  "keys": "moral distress moral injury hospice team health care team nurses doctors paramedics ems firefighters police first responders ethics conflict at the bedside futile care prolonged suffering family wants everything done short staffed unsafe staffing policy against values could not save them knowing the right thing ethics consult speaking up guilt shame anger at the system moral residue compassion fatigue code debrief peer support",
+  "parts": [
+   "roots",
+   "bark",
+   "trunk"
+  ],
+  "changes": [
+   "team:death",
+   "team:workload",
+   "team:change"
+  ],
+  "quick": [
+   "Moral distress is the pain of knowing what feels right and being unable to do it. It shows how deeply a team cares about doing good work.",
+   "Name it together. Speaking it out loud eases the weight and opens the way to change.",
+   "Find the team's voice: raise concerns early, use ethics consults and safety reports, and speak up together.",
+   "Hold what you could do, and the limits you faced, with the same kindness you give the people you serve."
+  ],
+  "feel": "Maybe it was a patient kept on machines long past hope, because the family needed more time. Maybe it was a shift so short-staffed that no one could sit with the dying man in room twelve. Maybe a policy, a rule, or a decision above the team asked for something that felt wrong. For first responders, it may be a call where they did everything right and still could not save someone, or had to choose who to help first. Afterward, people feel a heavy mix: anger at the system, guilt, frustration, sadness, sometimes shame. Some replay it at night. Some go numb. Some start to question whether they can keep doing this work. This weight has a name: moral distress. It comes from caring about what is right, and it is common in hospice, health care, and emergency work. A team that names it, speaks up together, and supports each other can carry it, and can help change what caused it.",
+  "together": {
+   "first": [
+    "Name it as a team: “That case asked hard things of us. It makes sense that it still weighs on us.”",
+    "Debrief soon: what happened, what was hard, what we did well, and what was outside our control.",
+    "Sort what is ours to change and what belongs to leadership, policy, or the system, and raise it.",
+    "Check on each other in the days after, especially the people closest to the case or call."
+   ],
+   "helps": [
+    "A regular team space to talk about hard cases, separate from task meetings.",
+    "Ethics consults, safety reports, and clear channels for raising concerns early.",
+    "Speaking up together, in specific words, to leadership about staffing, policy, or practice.",
+    "Peer support: a trusted coworker who understands the work.",
+    "Naming what went right: the comfort given, the family who was heard, the life saved another day.",
+    "A short pause together after a death or a hard call, to honor the person and the work."
+   ],
+   "say": [
+    "“We care about doing right. That's why this hurts.”",
+    "“We did what we could within real limits.”",
+    "“We'll speak up together.”"
+   ],
+   "people": "Try, to a teammate: “That case is still with me. Is it with you too?” To your lead: “Our team is carrying moral distress from this. Can we get an ethics consult, or bring this to leadership together?” To yourself: “I did what I could within limits I didn't choose.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a lead, you may share the distress and also feel responsible for it. You may be the one passing down a policy you disagree with, or facing staffing you cannot fix. You may worry that naming moral distress will open something you can't close. Naming it, listening, and carrying the team's concerns forward builds trust and resilience, and it often leads to real change.",
+   "say": [
+    "“That asked hard things of all of us. Let's talk about it.”",
+    "“What part of this weighs on you most?”",
+    "“Here's what we can change ourselves, and here's what I'll take to leadership.”",
+    "“Let's request an ethics consult.”",
+    "“Thank you for caring this much about doing right.”"
+   ],
+   "avoid": [
+    "Telling the team “That's just how it is” or “It's part of the job.”",
+    "Treating moral distress as weakness or a lack of resilience.",
+    "Shutting down concerns about safety, staffing, or ethics.",
+    "Debriefs that turn into blame of one person.",
+    "Waiting until people leave to notice the weight."
+   ],
+   "help": [
+    "Name moral distress as a real, shared experience in this kind of work.",
+    "Hold debriefs after hard cases or calls: facts, feelings, what went well, and what was beyond the team's control.",
+    "Make ethics consults, safety reports, and concern channels easy to use, and use them yourself.",
+    "Bring concerns to leadership in specific terms, and report back what you heard.",
+    "Support peer support programs and the employee assistance program, and name them often.",
+    "Watch for signs that distress is turning into lasting guilt, shame, numbness, or despair."
+   ],
+   "you": "Leads often carry moral distress from both sides: the team's and their own. Find a peer lead, a mentor, an ethics resource, or your employee assistance program. Your honesty about the weight helps your team carry it."
+  },
+  "byKind": {
+   "team": "For first responder teams, use your peer support team and any critical incident support your agency offers. For hospice and hospital teams, the chaplain, the social worker, and the ethics committee are part of the team's support."
+  },
+  "faith": "",
+  "practices": [
+   "debrief-hard-day",
+   "speak-up-round",
+   "pause-after-death",
+   "learning-from-the-day",
+   "end-of-shift",
+   "check-in-pairs"
+  ],
+  "trees": [
+   [
+    "oak",
+    "moral-injury",
+    "Moral injury"
+   ],
+   [
+    "oak",
+    "burnout",
+    "Burnout"
+   ],
+   [
+    "oak",
+    "trauma",
+    "After something traumatic"
+   ],
+   [
+    "oak",
+    "shame",
+    "Shame and guilt"
+   ],
+   [
+    "oak",
+    "bedside",
+    "Sitting with someone who is dying"
+   ],
+   [
+    "oak",
+    "forgiveness",
+    "Forgiving someone, or yourself"
+   ]
+  ],
+  "reach": [
+   "For hospice patients and families: the hospice's own 24/7 line comes first for anything about symptoms or comfort.",
+   "For the team: your organization's employee assistance program (EAP), peer support team, chaplain or spiritual support team, and ethics committee or ethics consult service.",
+   "Guilt, numbness, nightmares, or replaying a case that lasts more than a few weeks: talk with your doctor or a mental health professional who understands this work.",
+   "If anyone speaks of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ]
+  ],
+  "sources": [
+   "jameton",
+   "litz",
+   "rushton18",
    "figley"
   ]
  }
