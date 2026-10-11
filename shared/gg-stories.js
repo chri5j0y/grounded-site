@@ -184,7 +184,7 @@
       var open = !!s.open && s.status === 'posted', pn = Math.max(1, Math.min(+s.preview || 1, paras.length > 1 ? paras.length - 1 : 1));
       var sl = slug(s.title); if (slugs[sl]) sl += '-' + s.id; slugs[sl] = 1;
       var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: String(s.col || ''), status: s.status, open: open,
-        substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : paras.slice(0, pn) };
+        substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : paras.slice(0, pn), posted: String(s.postedAt || '') };
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
       if (open) e.full = paras; else { locked[e.id] = paras; n++; }
@@ -337,9 +337,13 @@
 
   var FILTER = '';
   function themesOf(s) { return (LOOK[s.slug] || LOOK[slug(s.title)] || [''])[0]; }
+  // Newest first: a story's posted time is set by the Story Vault when Chris posts it; older stories keep their order below.
+  function isNew(s) { var t = Date.parse(s.posted || ''); return !!t && Date.now() - t < 30 * 864e5; }
+  function newest(a) { return a.map(function (s, i) { return [s, i]; }).sort(function (x, y) { var tx = Date.parse(x[0].posted || '') || 0, ty = Date.parse(y[0].posted || '') || 0; return ty - tx || x[1] - y[1]; }).map(function (x) { return x[0]; }); }
   function card(s) {
     var L = LOOK[s.slug] || LOOK[slug(s.title)] || ['', ''], isFull = full(s.id), early = s.status === 'early';
     var tag = early ? 'Early Preview' : isFull ? 'Full Story' : 'Preview';
+    if (isNew(s)) tag = 'New · ' + tag;
     return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(L[0]) + '">'
       + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(s.mins)) + ' min</span></div>'
       + '<h3>' + esc(s.title) + '</h3>' + (s.sub ? '<p class="story-sub">' + esc(s.sub) + '</p>' : '')
@@ -361,7 +365,7 @@
     var d = data(); css(); membersBar();
     var openEl = document.getElementById('gs-open'), postEl = document.getElementById('gs-posted'), earlyEl = document.getElementById('gs-early');
     if (!d) { if (openEl) openEl.innerHTML = '<p class="gs-wait">The stories are on their way. Read them now on <a class="text-link" href="https://chri5j0y.substack.com" target="_blank" rel="noopener">Substack</a>.</p>'; return; }
-    var O = d.list.filter(function (s) { return s.open; }), Pz = d.list.filter(function (s) { return !s.open && s.status === 'posted'; }), E = d.list.filter(function (s) { return s.status === 'early'; });
+    var O = d.list.filter(function (s) { return s.open; }), Pz = newest(d.list.filter(function (s) { return !s.open && s.status === 'posted'; })), E = newest(d.list.filter(function (s) { return s.status === 'early'; }));
     if (openEl) openEl.innerHTML = O.map(card).join('');
     if (postEl) postEl.innerHTML = Pz.map(card).join('');
     if (earlyEl) {

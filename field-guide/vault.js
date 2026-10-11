@@ -293,7 +293,7 @@ document.addEventListener('click', e => {
   else if (a === 'seal') sealStories();
   else if (a === 'dl' && UI.out) download(UI.out.js, 'data.js');
   else if (waits()) return;
-  else if (a === 'st' && s){ s.status = v; rr(); keep(); }
+  else if (a === 'st' && s){ if (s.status !== v){ if (v === 'vault') delete s.postedAt; else if (s.status === 'vault' || !s.postedAt) s.postedAt = new Date().toISOString(); } s.status = v; rr(); keep(); }
   else if (a === 'padd' && s){ s.paras.push(''); rr(); const t = document.getElementById('sv-p' + (s.paras.length - 1)); if (t) t.focus(); }
   else if (a === 'pdel' && s){
     const i = +v; if (!(i >= 0 && i < s.paras.length)) return;
