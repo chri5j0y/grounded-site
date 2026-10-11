@@ -289,7 +289,7 @@
     '.gs-wait{color:var(--ink-soft);font-style:italic;}',
     '@media (max-width:820px){.gs-grid{grid-template-columns:minmax(0,1fr);}}',
     // the story window (the player's own overlay styles, ggl ggl-app)
-    '.gs-ov .ggl-in{max-width:980px;}.gs-ov .ln-ctl [data-g="read"]{display:none;}.gs-tabs{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;}',
+    '.gs-ov a.ggl-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}.gs-ov .ggl-in{max-width:980px;}.gs-ov .ln-ctl [data-g="read"]{display:none;}.gs-tabs{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;}',
     '.gs-tabs button{font:inherit;font-size:16px;font-weight:600;border:1px solid var(--ggl-line);background:var(--ggl-card);color:var(--ggl-ink);border-radius:999px;padding:7px 18px;cursor:pointer;min-height:40px;}',
     '.gs-tabs button[aria-pressed="true"]{background:var(--ggl-acc);border-color:var(--ggl-acc);color:#fff;}',
     '.gs-ov .gs-talk-row{margin:14px 0 0;}.gs-ov .gs-talk-row a{color:var(--ggl-ink);}',
@@ -395,7 +395,6 @@
     }
     if (whole && s.refs && s.refs.length) h += '<div class="gs-refs">' + s.refs.map(function (r) { return '<p>' + esc(r) + '</p>'; }).join('') + '</div>';
     h += '<div class="gs-src">' + creditHtml(s) + '</div>'
-      + (s.substack ? '<p class="gs-talk-row"><a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a></p>' : '')
       + '<p class="gs-copy">&copy; ' + y + ' Grow With Grounded LLC. All rights reserved. To share or reuse these stories, ask us first.</p></div>';
     return h;
   }
