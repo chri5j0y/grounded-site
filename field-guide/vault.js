@@ -156,7 +156,9 @@ function storyView(V, s){
      <textarea id="sv-p${i}" rows="${Math.min(12, Math.max(3, Math.ceil(p.length / 70)))}" data-svf="para" data-v="${i}"${lock}>${esc(p)}</textarea>
      <button type="button" class="linkbtn sv-small" data-sva="pdel" data-v="${i}"${lock}>Remove This Paragraph</button></div>`).join('');
   return `<div id="sv-top" class="sv-story"><button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button>
-  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(s.col || 'Stories')}</div><h1>${esc(s.title)}</h1>${s.sub ? `<p>${esc(s.sub)}</p>` : ''}<p class="sv-pills">${pills(s)}</p></div>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(s.col || 'Stories')}</div><h1>${esc(s.title)}</h1>${s.sub ? `<p>${esc(s.sub)}</p>` : ''}<p class="sv-pills">${pills(s)}</p>
+   <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold" data-sva="watch">Watch This Story</button></div>
+   ${needsVoice(s) ? '<p class="muted" style="font-size:14px;margin-top:6px">Sentences you changed play in the device voice until the next build records them.</p>' : ''}</div>
   ${waits() ? '<p class="tipbox" style="border-left:3px solid var(--gold)">An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and this story is ready for changes again.</p>' : ''}
   <div class="card"><h3>Where It Stands</h3><div class="row" style="margin-top:8px">${sw}</div>
    <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, often before it goes on Substack.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
@@ -290,10 +292,11 @@ document.addEventListener('click', e => {
   else if (a === 'copy' && UI.shown) copy(UI.shown.code);
   else if (a === 'hide'){ UI.shown = null; rr(); }
   else if (a === 'cancel') cancelCode(v);
+  else if (a === 'watch' && s){ if (window.GGStories && GGStories.listen) GGStories.listen(s, SV().key); }
   else if (a === 'seal') sealStories();
   else if (a === 'dl' && UI.out) download(UI.out.js, 'data.js');
   else if (waits()) return;
-  else if (a === 'st' && s){ s.status = v; rr(); keep(); }
+  else if (a === 'st' && s){ if (s.status !== v){ if (v === 'vault') delete s.postedAt; else if (s.status === 'vault' || !s.postedAt) s.postedAt = new Date().toISOString(); } s.status = v; rr(); keep(); }
   else if (a === 'padd' && s){ s.paras.push(''); rr(); const t = document.getElementById('sv-p' + (s.paras.length - 1)); if (t) t.focus(); }
   else if (a === 'pdel' && s){
     const i = +v; if (!(i >= 0 && i < s.paras.length)) return;
