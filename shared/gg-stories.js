@@ -3,26 +3,35 @@
    Chris's stories as narrated videos (the shared player, shared/gg-learn.js, Brian start to finish) with a Read
    option. Four stories play and read in full for everyone (open); every other Posted story shows a preview, and a
    member code opens it in full. Members also hear Early Previews. The Story Vault (Chris's Founder tool in the
-   Field Guide) holds every story, makes and cancels member codes, and seals stories/data.js with seal() below.
+   Field Guide) holds every story and seals stories/data.js with seal() below. Every code in the Field Guide's
+   Access list (Founder, Staff, Guide, and Supporter, BLD 785) opens Grounded Stories; Supporter codes open only here.
 
    The data file (stories/data.js) sets window.GG_STORIES = {
      v: 1, made: 'YYYY-MM-DD', k: {v, round, folder} (where the locked clips live; the key itself is never here),
      list: [{id, slug, title, sub, col, status: 'posted' | 'early', open, substack, credit, mins, refs (when any),
              preview: [paragraphs shown to everyone; empty for an Early Preview], full: [paragraphs] only when open}],
      lock: {iv, ct}: AES-GCM 256 with the stories key of JSON {id: [paragraphs]} for every story that is not open,
-     wraps: [{c, salt, iv, ct}]: the 32 key bytes locked by each member code (PBKDF2 SHA-256, 250,000 rounds,
-            16-byte salt, then AES-GCM 256 with a 12-byte IV: the Root Words method, shared/gg-rootwords.js) }
-   Vault stories never appear in it. Base64 everywhere.
+     ws: the one wrap salt (16 bytes) shared by every wrap below that carries no salt of its own (BLD 785),
+     wraps: [{c, iv, ct}]: the 32 key bytes locked by each code (PBKDF2 SHA-256, 250,000 rounds with the shared salt
+            ws, then AES-GCM 256 with a 12-byte IV). A typed code runs PBKDF2 once and then tries each wrap with one
+            quick AES-GCM decrypt, so hundreds of codes still open in a moment. Older wraps made before BLD 785
+            carry their own salt ({c, salt, iv, ct}, one PBKDF2 each, the Root Words method) and keep working. }
+   Vault stories never appear in it, and no wrap carries a name, a level, or an organization. Base64 everywhere.
 
    API (the Story Vault, the lead's Node script, and the page all use these; works in browsers and in Node 22):
-     GGStories.seal(stories, keyObj, wraps) -> Promise<string>  the full text of stories/data.js
+     GGStories.seal(stories, keyObj, wraps, salt) -> Promise<string>  the full text of stories/data.js
          stories: the Vault's list [{id, title, sub, col, status, open, substack, credit, paras: [], preview: n, ...}]
                   (status 'posted' and 'early' are sealed; 'vault' stays out; open counts only when posted)
          keyObj:  the stories key {v: 1, round: 's1', folder: 't', key: base64 of 32 bytes}
-         wraps:   [{c, salt, iv, ct}] from makeWrap, one per member code in use (cancel a code: leave its wrap out)
-     GGStories.makeWrap(code, rawKeyBytes) -> Promise<{c, salt, iv, ct}>
-         rawKeyBytes: Uint8Array of the 32 key bytes (a base64 string works too). c is a short random tag; the
-         subscriber's name stays in the Founder library only.
+         wraps:   [{c, iv, ct}] from makeWrap with the salt, one per code in use (cancel a code: leave its wrap out);
+                  an older wrap with its own salt ({c, salt, iv, ct}) rides along as it is
+         salt:    the shared wrap salt (base64), written to data.js as ws
+     GGStories.makeWrap(code, rawKeyBytes, salt) -> Promise<{c, iv, ct}>
+         rawKeyBytes: Uint8Array of the 32 key bytes (a base64 string works too). salt: the shared wrap salt (base64
+         or bytes; GGStories.newSalt() makes one). Without a salt it makes an older style wrap {c, salt, iv, ct}.
+         c is a short random tag; the person's name, level, and organization stay in the Founder library only.
+     GGStories.newSalt() -> base64 of 16 random bytes
+     GGStories.check(code) -> Promise<boolean>  true when the code opens the loaded data.js (nothing is kept)
      GGStories.makeCode() -> 'word-word-word-NN'   three easy words (512 gentle words) and a number from 10 to 99,
          from crypto.getRandomValues. Typing is forgiving: capitals, spaces, and dashes all work.
      GGStories.sentences(paragraph) -> [sentence]   the player's own sentence rule (gg-learn.js beatsOf), so a
@@ -159,20 +168,23 @@
     var r = crypto.getRandomValues(new Uint32Array(4));
     return [0, 1, 2].map(function (i) { return WORDS[r[i] & 511]; }).join('-') + '-' + (10 + r[3] % 90);
   }
-  function makeWrap(code, raw) {
+  function makeWrap(code, raw, salt) {
     if (!subtle) return Promise.reject(new Error('This browser needs WebCrypto to make a code.'));
     raw = typeof raw === 'string' ? unb64(raw) : new Uint8Array(raw);
     if (raw.length !== 32) return Promise.reject(new Error('The stories key must be 32 bytes.'));
     if (!normCode(code)) return Promise.reject(new Error('A code is needed.'));
-    var salt = rand(16), iv = rand(12), c = 'm' + Array.prototype.map.call(rand(6), function (b) { return (b % 36).toString(36); }).join('');
-    return codeKey(code, salt).then(function (k) { return subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, raw); })
-      .then(function (ct) { return { c: c, salt: b64(salt), iv: b64(iv), ct: b64(new Uint8Array(ct)) }; });
+    var shared = salt != null && salt !== '', sb = shared ? (typeof salt === 'string' ? unb64(salt) : new Uint8Array(salt)) : rand(16);
+    if (sb.length < 16) return Promise.reject(new Error('The wrap salt must be 16 bytes.'));
+    var iv = rand(12), c = 'm' + Array.prototype.map.call(rand(6), function (b) { return (b % 36).toString(36); }).join('');
+    return codeKey(code, sb).then(function (k) { return subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, raw); })
+      .then(function (ct) { var w = { c: c, iv: b64(iv), ct: b64(new Uint8Array(ct)) }; if (!shared) w.salt = b64(sb); return w; });
   }
+  function newSalt() { return b64(rand(16)); }
   function unwrapOne(w, code) {
     return codeKey(code, unb64(w.salt)).then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(w.iv) }, k, unb64(w.ct)); })
       .then(function (pt) { var u = new Uint8Array(pt); if (u.length !== 32) throw new Error('size'); return u; });
   }
-  function seal(stories, keyObj, wraps) {
+  function seal(stories, keyObj, wraps, salt) {
     if (!subtle) return Promise.reject(new Error('This browser needs WebCrypto to seal.'));
     var raw = unb64(keyObj && keyObj.key);
     if (raw.length !== 32) return Promise.reject(new Error('The stories key must be 32 bytes.'));
@@ -193,11 +205,13 @@
     var made = new Date().toISOString().slice(0, 10);
     var lockP = n ? aes(raw, ['encrypt']).then(function (k) { var iv = rand(12); return subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, enc.encode(JSON.stringify(locked))).then(function (ct) { return { iv: b64(iv), ct: b64(new Uint8Array(ct)) }; }); }) : Promise.resolve(null);
     return lockP.then(function (lock) {
-      var data = { v: 1, made: made, k: { v: +keyObj.v || 1, round: String(keyObj.round || 's1'), folder: String(keyObj.folder || 't') }, list: list, lock: lock,
-        wraps: (wraps || []).filter(function (w) { return w && w.salt && w.iv && w.ct; }).map(function (w) { return { c: String(w.c || ''), salt: w.salt, iv: w.iv, ct: w.ct }; }) };
+      var W = (wraps || []).filter(function (w) { return w && w.iv && w.ct && (w.salt || salt); }).map(function (w) { var o = { c: String(w.c || '') }; if (w.salt) o.salt = w.salt; o.iv = w.iv; o.ct = w.ct; return o; });
+      var data = { v: 1, made: made, k: { v: +keyObj.v || 1, round: String(keyObj.round || 's1'), folder: String(keyObj.folder || 't') }, list: list, lock: lock };
+      if (salt && W.some(function (w) { return !w.salt; })) data.ws = typeof salt === 'string' ? salt : b64(salt);
+      data.wraps = W;
       var json = JSON.stringify(data).replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
       return '/* Grounded Stories (stories/data.js), sealed ' + made + ' by the Story Vault. Made by shared/gg-stories.js GGStories.seal; upload as it is.\n'
-        + '   Stories past their preview are locked; a member code opens them. */\nwindow.GG_STORIES = ' + json + ';\n';
+        + '   Stories past their preview are locked; a code from the Access list opens them. */\nwindow.GG_STORIES = ' + json + ';\n';
     });
   }
 
@@ -217,17 +231,31 @@
     var k = lsGet(); if (!k || !subtle || !data()) return Promise.resolve(false);
     return openLock(k).then(function (o) { KEY = k; OPENED = o; return true; }, function () { return false; });
   }
-  function unlock(code) {
-    var d = data(); if (!d || !subtle || !normCode(code)) return Promise.resolve(false);
-    var W = (d.wraps || []).slice(), found = null;
-    // Each wrap takes one PBKDF2 (a fraction of a second); a few run at once.
+  // Finds the key a code opens: one PBKDF2 with the shared salt (ws), then a quick AES-GCM try of each shared salt
+  // wrap; then any older wrap that carries its own salt (one PBKDF2 each, a few at once). Resolves the raw key or null.
+  function find(code) {
+    var d = data(); if (!d || !subtle || !normCode(code)) return Promise.resolve(null);
+    var all = d.wraps || [], S = d.ws ? all.filter(function (w) { return !w.salt; }) : [], W = all.filter(function (w) { return w.salt; }), found = null;
+    function sized(pt) { var u = new Uint8Array(pt); if (u.length !== 32) throw new Error('size'); return u; }
+    var first = !S.length ? Promise.resolve(null) : codeKey(code, unb64(d.ws)).then(function (k) {
+      return Promise.all(S.map(function (w) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(w.iv) }, k, unb64(w.ct)).then(sized, function () { return null; }); }))
+        .then(function (r) { for (var i = 0; i < r.length; i++) if (r[i]) return r[i]; return null; });
+    }, function () { return null; });
     function batch() {
       if (found || !W.length) return Promise.resolve(found);
       var part = W.splice(0, 4);
       return Promise.all(part.map(function (w) { return unwrapOne(w, code).then(function (u) { return u; }, function () { return null; }); }))
         .then(function (r) { r.forEach(function (u) { if (u && !found) found = u; }); return batch(); });
     }
-    return batch().then(function (raw) {
+    return first.then(function (u) { if (u) return u; return batch(); });
+  }
+  // True when a code opens the stories in the loaded data.js. Nothing is kept on the device (the Field Guide uses it
+  // to tell a Supporter kindly where their code opens).
+  function check(code) {
+    return find(code).then(function (raw) { if (!raw) return false; return openLock(b64(raw)).then(function () { return true; }, function () { return false; }); }, function () { return false; });
+  }
+  function unlock(code) {
+    return find(code).then(function (raw) {
       if (!raw) return false;
       var k = b64(raw);
       return openLock(k).then(function (o) { KEY = k; OPENED = o; lsSet(k); return true; }, function () { return false; });
@@ -537,8 +565,8 @@
   }
 
   root.GGStories = {
-    version: 'b784s', lines: LINES, words: WORDS, look: LOOK,
-    seal: seal, makeWrap: makeWrap, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
+    version: 'b785', lines: LINES, words: WORDS, look: LOOK,
+    seal: seal, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
     mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); }
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;
