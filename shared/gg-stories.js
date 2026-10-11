@@ -51,6 +51,12 @@
      GGStories.keyObj()           {v, round, folder, key} for the player's cfg.sealed, or null
      GGStories.lesson(story, mode) a lesson for GGLearn.player: mode 'full' or 'preview'
      GGStories.open(id, view)     opens a story: view 'watch' (default) or 'read'
+     GGStories.remember(key)      keeps the stories key on this device (base64 or base64url, 32 bytes)
+   Open Grounded Stories (BLD 786): the Field Guide opens stories.html#k=<the stories key, base64url>. The key rides in
+   the fragment only, so it never reaches a server; this file keeps it (remember) and clears the fragment at once with
+   history.replaceState, before the page draws.
+   Topics (BLD 786): a story's topics ['dying', 'grief', 'faith', 'kids'] (any, or none) come from the Story Vault and
+   ride into data.js; the page filters by them, and a story with no topics field falls back to LOOK below.
    ===================================================================== */
 (function (root) {
   'use strict';
@@ -113,6 +119,8 @@
     'my-boundaries-have-gates': ['grief', "It's okay to care deeply. The harder part is caring for yourself just as deeply afterward."],
     'he-deserves-that': ['dying', '']
   };
+  var TOPICS = ['dying', 'grief', 'faith', 'kids'];
+  function topicsOf(t) { return Array.isArray(t) ? TOPICS.filter(function (k) { return t.indexOf(k) >= 0; }) : null; }
   var THEMES = [['', 'All Stories'], ['dying', 'Dying and saying goodbye'], ['grief', 'Grief and after'], ['faith', 'Faith and doubt'], ['kids', 'Kids and families']];
 
   /* ---------------- small helpers ---------------- */
@@ -198,6 +206,7 @@
       var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: String(s.col || ''), status: s.status, open: open,
         substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : paras.slice(0, pn), posted: String(s.postedAt || '') };
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
+      var tp = topicsOf(s.topics); if (tp) e.topics = tp;
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
       if (open) e.full = paras; else { locked[e.id] = paras; n++; }
       list.push(e);
@@ -365,7 +374,7 @@
   codeBox.n = 0;
 
   var FILTER = '';
-  function themesOf(s) { return (LOOK[s.slug] || LOOK[slug(s.title)] || [''])[0]; }
+  function themesOf(s) { var tp = topicsOf(s.topics); return tp ? tp.join(' ') : (LOOK[s.slug] || LOOK[slug(s.title)] || [''])[0]; }
   // Newest first: a story's posted time is set by the Story Vault when Chris posts it; older stories keep their order below.
   function isNew(s) { var t = Date.parse(s.posted || ''); return !!t && Date.now() - t < 30 * 864e5; }
   function newest(a) { return a.map(function (s, i) { return [s, i]; }).sort(function (x, y) { var tx = Date.parse(x[0].posted || '') || 0, ty = Date.parse(y[0].posted || '') || 0; return ty - tx || x[1] - y[1]; }).map(function (x) { return x[0]; }); }
@@ -373,7 +382,7 @@
     var L = LOOK[s.slug] || LOOK[slug(s.title)] || ['', ''], isFull = full(s.id), early = s.status === 'early';
     var tag = early ? 'Early Preview' : isFull ? 'Full Story' : 'Preview';
     if (isNew(s)) tag = 'New · ' + tag;
-    return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(L[0]) + '">'
+    return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(themesOf(s)) + '">'
       + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(s.mins)) + ' min</span></div>'
       + '<h3>' + esc(s.title) + '</h3>' + (s.sub ? '<p class="story-sub">' + esc(s.sub) + '</p>' : '')
       + (L[1] && slug(L[1]) !== slug(s.sub) ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
@@ -384,11 +393,11 @@
   function membersBar() {
     var el = document.getElementById('gs-members'); if (!el) return;
     if (unlocked()) {
-      el.innerHTML = '<p><b>Unlocked on this device.</b> Every story here is open to you, in full.</p><div class="gs-acts"><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
+      el.innerHTML = '<p><b>Unlocked on this device.</b> Every story here is open to you, in full.</p><div class="gs-acts"><a class="gs-link" href="supporters.html">Welcome, Supporters</a><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
       return;
     }
     el.innerHTML = '<p><b>Members hear every story in full.</b> Members receive a personal code when they join on Substack.</p>'
-      + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a></div><div class="gs-code-host" hidden></div>';
+      + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a><a class="gs-link" href="supporters.html">Welcome, Supporters</a></div><div class="gs-code-host" hidden></div>';
   }
   function render() {
     var d = data(); css(); membersBar();
@@ -469,7 +478,17 @@
   // The Field Guide hands over the stories key when any Guide, Staff, or Founder code opens it on this device,
   // so Grounded Stories opens in full there with no member code (the same device storage as a member's unlock).
   function remember(k) {
-    try { var raw = unb64(String(k || '')); if (raw.length !== 32) return false; lsSet(b64(raw)); return true; } catch (e) { return false; }
+    try { var t = String(k || '').replace(/-/g, '+').replace(/_/g, '/'); while (t.length % 4) t += '=';
+      var raw = unb64(t); if (raw.length !== 32) return false; lsSet(b64(raw)); return true; } catch (e) { return false; }
+  }
+  // Open Grounded Stories (BLD 786): stories.html#k=<key> keeps the key on this device, then the fragment goes at once.
+  function takeKey() {
+    try {
+      var h = root.location && root.location.hash || ''; if (h.slice(0, 3) !== '#k=') return false;
+      var kept = remember(decodeURIComponent(h.slice(3)));
+      root.history.replaceState(root.history.state, '', root.location.pathname + root.location.search);
+      return kept;
+    } catch (e) { return false; }
   }
   // The Story Vault (Founder tab) plays any story in full with the stories key: GGStories.listen(story, keyObj).
   var VPEND = null;
@@ -560,14 +579,15 @@
     });
     var fl = document.querySelector('.gs-filter'); if (fl) fl.addEventListener('click', function (e) { var b = e.target.closest('button[data-theme]'); if (b) filter(b.getAttribute('data-theme')); });
     root.addEventListener('popstate', function (e) { if (OV && !(e.state && e.state.ggStory === OV.s.slug)) close(true); });
-    root.addEventListener('hashchange', fromHash);
+    root.addEventListener('hashchange', function () { if ((location.hash || '').slice(0, 3) === '#k=') { takeKey(); restore().then(function () { render(); }); return; } fromHash(); });
     restore().then(function () { render(); fromHash(); });
   }
 
   root.GGStories = {
-    version: 'b785', lines: LINES, words: WORDS, look: LOOK,
+    version: 'b786', lines: LINES, words: WORDS, look: LOOK, topics: TOPICS, themesOf: themesOf,
     seal: seal, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
     mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); }
   };
+  if (root.document) takeKey();
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;
 })(typeof window !== 'undefined' ? window : globalThis);

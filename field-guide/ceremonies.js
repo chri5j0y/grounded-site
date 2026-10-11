@@ -1343,7 +1343,10 @@ const API = window.GGCer = {
     openMine(back){ S.view = 'mine'; S.id = null; S.draft = null; S.pick = null; S.me = null; S.fwBack = back || null; S.wdBack = null; },
     // Add Your Own from the session: saved to My Pieces (or only for this service when keep is false).
     savePiece(m, svcId, keepIt){ const x = Object.assign(blankPiece(m.kind), m); if (!keepIt && svcId) x.only = svcId; const o = savePiece(x); return o ? o.id : null; },
-    pieceOf: (kind, pid) => PC(kind, pid)
+    pieceOf: (kind, pid) => PC(kind, pid),
+    // GWG BLD 786: the Listen control for a reading as a Planning Session shows it (tx: {text, ver}), by the Service
+    // Builder's own rule (sbVoice, KJV only for scripture) and its locked Staff clips. '' when it stays text only.
+    listen: (r, tx, where) => listenFor(r, tx || {}, where || 'fw')
   },
   // The Wedding Planning Session (wedding.js, GWG BLD 770): the same calls, for the wedding services (Wedding, Elopement,
   // Vow Renewal). The plan holds the service's id; the couple's names, the day, Faith or Plain, and the session's words follow it.
