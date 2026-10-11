@@ -343,7 +343,7 @@
     return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(L[0]) + '">'
       + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(s.mins)) + ' min</span></div>'
       + '<h3>' + esc(s.title) + '</h3>' + (s.sub ? '<p class="story-sub">' + esc(s.sub) + '</p>' : '')
-      + (L[1] ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
+      + (L[1] && slug(L[1]) !== slug(s.sub) ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
       + '<div class="card-actions"><button type="button" class="btn btn-primary" data-gs="watch" data-id="' + esc(s.id) + '" aria-label="Watch ' + esc(s.title) + '">' + PLAY + 'Watch</button>'
       + '<button type="button" class="btn btn-secondary" data-gs="read" data-id="' + esc(s.id) + '" aria-label="Read ' + esc(s.title) + '">' + BOOK + 'Read</button>'
       + (s.substack ? '<a class="text-link gs-talk" href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a>' : '') + '</div></article>';
@@ -465,7 +465,7 @@
       el.style.setProperty('--ggl-acc', '#8B5E1A'); el.style.setProperty('--ggl-bar', '#2E2118'); el.style.setProperty('--ggl-lite', '#E8C98E');
       el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">Back to Stories</button></div>'
         + '<div class="ggl-in"><div class="ggl-eb">' + (s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h1 tabindex="-1">' + esc(s.title) + '</h1>'
-        + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + ' ' : '') + 'About ' + esc(String(s.mins)) + ' minutes' + (full(s.id) ? '.' : ' in full.') + '</p>'
+        + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (full(s.id) ? '.' : ' in full.') + '</p>'
         + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button></div>'
         + '<div class="gs-watch"></div><div class="gs-rdv" hidden></div><div class="gs-codewrap" hidden></div>'
         + (s.substack ? '<p class="gs-talk-row"><a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a></p>' : '') + '</div>';

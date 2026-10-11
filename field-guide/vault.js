@@ -114,7 +114,7 @@ function view(){
   return `<div id="sv-top"><div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>The Story Vault</h1>
     <p>Every story you have written, in one quiet place. Mark each one Vault, Early Preview, or Posted, tend its words, and seal Grounded Stories for the site.</p></div>
   ${waits() ? '<p class="tipbox" style="border-left:3px solid var(--gold)">An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Story Vault is ready for changes again.</p>' : ''}
-  <div class="card"><p><b>${V.stories.length}</b> stories: ${n.posted} Posted, ${n.early} Early Preview, ${n.vault} in the Vault. ${n.open} open to everyone. ${n.voice} ${n.voice === 1 ? 'needs' : 'need'} a voice.</p>
+  <div class="card"><p><b>${V.stories.length}</b> stories: ${n.posted} Posted, ${n.early} Early Preview, ${n.vault} in the Vault. ${n.open} open to everyone. ${n.voice ? n.voice + (n.voice === 1 ? ' needs' : ' need') + ' a voice.' : 'Every voiced story is recorded.'}</p>
    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-sva="add"${lock}>Add a Story</button></div>
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:8px">${savedLine()}</p></div>
   ${sealCard(V, n)}
