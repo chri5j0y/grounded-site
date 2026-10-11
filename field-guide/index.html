@@ -657,7 +657,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b771"></script>
 <script src="grovevisit.js?v=b782"></script>
 <script src="heartwood.js?v=b782"></script>
-<script src="../shared/gg-stories.js?v=b784u"></script>
+<script src="../shared/gg-stories.js?v=b784v"></script>
 <script src="vault.js?v=b784u"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -760,7 +760,9 @@ async function openLevels(tier, keys){
   out.founderLib = tier === 'founder' ? out.own : null;
   out.keys = K; return out;
 }
-function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.guide; FDR = o.founderLib; }
+function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.guide; FDR = o.founderLib; fgStoriesKey(); }
+// Grounded Stories opens in full on a device where a Guide, Staff, or Founder code is in use (BLD 784).
+function fgStoriesKey(){ try { const k = (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || (FLD && FLD.storiesKey && FLD.storiesKey.key); if (k && window.GGStories && GGStories.remember) GGStories.remember(k); } catch (e) {} }
 function codeEnded(){
   if (!CODEID || CODEID === 'legacy') return false;
   const e = CODES.codes.find(x => x.id === CODEID);

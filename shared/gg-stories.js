@@ -438,6 +438,11 @@
     if (v === 'read') { if (OV.ctl) { try { OV.ctl.stop(); } catch (e) {} OV.ctl = null; } w.hidden = true; r.hidden = false; r.innerHTML = readHtml(OV.s); }
     else { r.hidden = true; w.hidden = false; play(OV.at || 0); }
   }
+  // The Field Guide hands over the stories key when any Guide, Staff, or Founder code opens it on this device,
+  // so Grounded Stories opens in full there with no member code (the same device storage as a member's unlock).
+  function remember(k) {
+    try { var raw = unb64(String(k || '')); if (raw.length !== 32) return false; lsSet(b64(raw)); return true; } catch (e) { return false; }
+  }
   // The Story Vault (Founder tab) plays any story in full with the stories key: GGStories.listen(story, keyObj).
   var VPEND = null;
   function listen(v, k) {
@@ -534,7 +539,7 @@
   root.GGStories = {
     version: 'b784s', lines: LINES, words: WORDS, look: LOOK,
     seal: seal, makeWrap: makeWrap, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
-    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, close: function () { close(); }
+    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); }
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;
 })(typeof window !== 'undefined' ? window : globalThis);
