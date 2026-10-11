@@ -10,6 +10,10 @@
        breathe  a slow breathing circle (in 4, out 6): {h, sub}. Give it hold (seconds) so it stays on
                 screen after the narration ends.
        words    words to say, one per line: {h, items:[...], sub}.
+       tale     Grounded Stories (BLD 784): {eyebrow, title, paras: [[sentence, ...], ...], beats, cue: {at}}, a page of a
+                story with each sentence showing as it is read (shared/gg-stories.js builds these). Stories also use
+                cfg.voice (the public voice, outside the trees), cfg.ending (the caller's own closing card, with
+                cfg.onEnd(id, ctl) for its buttons), and lesson.srcHtml (a ready Sources line).
      Any scene can carry hold (extra seconds on screen before the next one).
    - Support videos: a track with kind: 'support' shows under its own heading (support.title in the app's
      Learn data, shown first when supportFirst is true). Support videos have no quiz, no certificate, and
@@ -126,6 +130,13 @@
         + (sc.note ? '<div class="ln-note"><h4>' + h(sc.note.h) + '</h4><p>' + h(sc.note.p || '') + '</p></div>' : '') + '</div>' + (sc.tap != null ? HAND : '');
       case 'card': return '<div class="ln-card"><h4>' + h(sc.title) + '</h4>' + (sc.body ? '<p>' + h(sc.body) + '</p>' : '') + (sc.fields || []).map(function (f) { return '<label>' + h(f[0]) + '</label><div class="ln-in">' + h(f[1] || '') + '</div>'; }).join('') + '<div class="ln-btns">' + (sc.btns || []).map(function (b, j) { return '<span class="ln-b' + (j === 0 ? ' pri' : '') + (j === sc.tap ? ' ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '>' + h(b) + '</span>'; }).join('') + '</div></div>'
         + (sc.result ? '<div class="ln-res">' + h(sc.result) + '</div>' : '') + (sc.tap != null ? HAND : '');
+      // Grounded Stories (BLD 784): a calm page of the story, each sentence showing as it is read. paras: [[sentence, ...], ...].
+      case 'tale': {
+        var tn = 0; (sc.paras || []).forEach(function (p) { p.forEach(function (x) { tn += String(x).length + 1; }); });
+        var tf = tn > 800 ? 18 : tn > 520 ? 21 : tn > 380 ? 23 : tn > 240 ? 26 : tn > 120 ? 30 : 34;
+        return '<div class="ln-tale" style="--k:' + acc + ';--tf:' + tf + 'px"><div' + A(.15, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow || 'Grounded Stories') + '</div>' + (sc.title ? '<h3' + A(.25) + '>' + h(sc.title) + '</h3>' : '')
+          + '<div class="ln-tl">' + (sc.paras || []).map(function (p) { return p.map(function (x) { return '<span' + A(.4, 'ln-tl-s') + '>' + h(x) + '</span>'; }).join(' '); }).join('<b class="ln-tl-br"></b>') + '</div></div>';
+      }
       case 'story': return '<div class="ln-story" style="--k:' + acc + '"><div' + A(.2, 'ln-eb', 'color:' + acc) + '>' + h(sc.eyebrow || 'From the Bedside') + '</div><h3' + A(.5) + '>' + h(sc.title) + '</h3><div class="ln-st-b">' + (sc.lines || []).map(function (x, j) { return '<p' + A(1.1 + j * (sc.gap || 1.6)) + '>' + h(x) + '</p>'; }).join('') + '</div>' + (sc.lesson ? '<div' + A(1.4 + (sc.lines || []).length * (sc.gap || 1.6), 'ln-st-l') + '>' + h(sc.lesson) + '</div>' : '') + (sc.note ? '<small' + A(2, 'ln-st-n') + '>' + h(sc.note) + '</small>' : '') + '</div>';
       case 'breathe': return '<div class="ln-br" style="--k:' + acc + '"><h3' + A(.2) + '>' + h(sc.h || 'Breathe with me') + '</h3><div class="ln-brw"><div class="ln-brc"></div><div class="ln-brt"><i>Breathe in</i><i>Breathe out</i></div></div>' + (sc.sub ? '<small' + A(.8) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
       case 'words': return '<div class="ln-wd"><h3' + A(.2) + '>' + h(sc.h) + '</h3>' + (sc.items || []).map(function (x, j) { return '<p' + A(.9 + j * (sc.gap || 1.2), '', 'border-color:' + acc) + '>' + h(x) + '</p>'; }).join('') + (sc.sub ? '<small' + A(1.2 + (sc.items || []).length * (sc.gap || 1.2)) + '>' + h(sc.sub) + '</small>' : '') + '</div>';
@@ -216,6 +227,12 @@
       '.ln-story h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:42px;line-height:1.05;margin:6px 0 14px;}',
       '.ln-st-b p{font-size:23px;line-height:1.38;margin:0 0 10px;color:#3A2A1E;}',
       '.ln-st-l{font-family:\'Cormorant Garamond\',serif;font-style:italic;font-size:30px;line-height:1.2;color:var(--k);margin-top:14px;}',
+      /* Grounded Stories (BLD 784): the tale scene. On a phone the stage shows the sentence being read, large. */
+      '.ln-tale{position:absolute;inset:30px 56px;background:#FFFCF6;border:1px solid #DDD0B8;border-top:8px solid var(--k);border-radius:20px;padding:24px 40px;overflow:hidden;}',
+      '.ln-tale .ln-eb{font-size:15px;}.ln-tale h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:26px;line-height:1.1;margin:2px 0 14px;color:#6B5A4D;}',
+      '.ln-tl{font-family:\'Cormorant Garamond\',Georgia,serif;font-size:var(--tf,24px);line-height:1.42;color:#2C1810;}.ln-tl-br{display:block;height:.55em;}',
+      '.ggl-small .ln-tale{padding:40px 50px;}.ggl-small .ln-tale .ln-eb{font-size:30px;}.ggl-small .ln-tale h3{font-size:44px;}.ggl-small .ln-tl{font-size:52px;line-height:1.25;}.ggl-small .ln-tl-br{display:none;}',
+      '.ggl-small .ln-tl-s.hold{display:none;}', '.ggl-small .ln-tl-s:has(~ .ln-tl-s:not(.hold)){display:none;}',
       '.ln-st-n{position:absolute;right:30px;bottom:16px;font-size:16px;color:#6B5A4D;}',
       '.ln-br{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;padding-top:40px;text-align:center;}',
       '.ln-br h3{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:44px;margin:0;}.ln-br small{font-size:22px;color:#6B5A4D;margin-top:14px;max-width:700px;}',
@@ -266,6 +283,8 @@
   };
   function recVoice(cfg, any) {
     var l = (cfg && cfg.lesson) || {}, t = (cfg && cfg.track) || {}, V = VOICES[cfg && cfg.app];
+    // A caller outside the trees can name the public voice itself (cfg.voice; Grounded Stories, BLD 784).
+    if (cfg && (cfg.voice === 'brian' || cfg.voice === 'jenny') && !cfg.sealed && (REC.round || any) && l.id) return cfg.voice;
     if ((!REC.round && !any) || !V || !l.id || t.kind === 'forguides' || t.kind === 'setup') return '';
     if (l.voice) return l.voice;
     if (V.helper && /-helper$/.test(l.id)) return V.helper;
@@ -348,7 +367,7 @@
     });
     return out.map(function (t, i) { return { t: t, w: +(cue.w || {})[i] || 0, p: +(cue.p || {})[i] || 0 }; });
   }
-  var REV = { points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p' };
+  var REV = { points: '.ln-pt', flow: '.ln-step', six: '.ln-sx', trees: '.ln-tr', levels: '.ln-lc', words: '.ln-wd p', parts: 'svg g.a', story: '.ln-st-b p', tale: '.ln-tl-s' };
   var NUMW = ['zero', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten'];
   var STOPW = /^(the|and|for|you|your|are|but|not|all|can|with|that|this|them|they|what|when|have|has|will|from|more|like|about|just|into|than|then|there|their|who|how|its|our|out|one's|things|thing|way|get|let|use|was|were|been|being|each|every|some|any|also|very|much|most|make|made|feel)$/;
   function words(t) { return String(t || '').toLowerCase().replace(/\b(\d{1,2})\b/g, function (m) { return NUMW[+m] || m; }).replace(/[^a-z' ]+/g, ' ').split(/\s+/).filter(function (w) { return w.length >= 3 && !STOPW.test(w); }); }
@@ -383,6 +402,8 @@
     var nx = null; for (var j = i + 1; j < flat.length; j++) if (!done[flat[j].l.id]) { nx = flat[j]; break; }
     if (!nx) for (var k = 0; k < flat.length; k++) if (!done[flat[k].l.id]) { nx = flat[k]; break; }
     var tr = cfg.track, tdone = trackDone(tr, done), cert = !!cfg.cert && tdone && certable(tr);
+    // A caller's own closing card (Grounded Stories, BLD 784): cfg.ending {eyebrow, h, sub, say, ok, buttons: [[id, label, class, href]]}.
+    if (cfg.ending) { var ce = { ok: true, custom: true, count: '', next: null, cert: false }; for (var ck in cfg.ending) ce[ck] = cfg.ending[ck]; return ce; }
     if (tr && tr.kind === 'guide') { var pr = cfg.pair || null; return { ok: true, guide: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: 'The full guide has more' + (pr ? ', and there is a video ' + pr.sideName.replace(/^For/, 'for') + ' too.' : '.'), count: '', say: 'Take all the time you need. The full guide is here whenever you want it.', next: null, pair: pr, cert: false }; }
     if (tr && tr.kind === 'forguides') {
       // For Guides (W1): Open the Full Section, Watch Again, Next Video, Back to the Series. Next is the next guide in order.
@@ -531,7 +552,7 @@
     var vs = host.querySelector('.ln-vs'); if (vs) vs.appendChild(w);
   }
 
-  function srcLine(l) { try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
+  function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
     var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b783'); document.head.appendChild(s);
@@ -584,6 +605,10 @@
         b.push(['home', cfg.fromGuide ? 'Back to the Guide' : 'Back to Learn', '']);
         b.push(['again', 'Watch Again', 'quiet']);
         bar.innerHTML = b.map(function (x) { return '<button class="ggl-btn ' + x[2] + '" data-g="e-' + x[0] + '">' + x[1] + '</button>'; }).join('');
+        bar.classList.add('on'); place(); bar._next = null; return;
+      }
+      if (e.custom) { // the caller's own buttons (cfg.ending); a button with an href opens that page, the rest call cfg.onEnd(id, ctl)
+        bar.innerHTML = (e.buttons || []).map(function (x) { return x[3] ? '<a class="ggl-btn ' + esc(x[2] || '') + '" href="' + esc(x[3]) + '" target="_blank" rel="noopener">' + esc(x[1]) + '</a>' : '<button class="ggl-btn ' + esc(x[2] || '') + '" data-g="' + (x[0] === 'again' ? 'e-again' : 'e-x-' + esc(x[0])) + '">' + esc(x[1]) + '</button>'; }).join('');
         bar.classList.add('on'); place(); bar._next = null; return;
       }
       if (e.fg) {
@@ -831,6 +856,7 @@
       else if (g === 'e-section') { ctl.stop(); if (cfg.section) cfg.section(l.id); }
       else if (g === 'e-guide') { ctl.stop(); if (cfg.guide) cfg.guide(l.guide); }
       else if (g === 'e-pair') { ctl.stop(); if (cfg.pair && cfg.open) cfg.open(cfg.pair.id); }
+      else if (g.indexOf('e-x-') === 0) { if (cfg.onEnd) cfg.onEnd(g.slice(4), ctl); }
     }
     function onKey(e) {
       if (CUR !== ctl || !host.isConnected || /input|textarea|select/i.test((e.target && e.target.tagName) || '')) return;
