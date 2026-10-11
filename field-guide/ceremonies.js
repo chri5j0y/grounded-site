@@ -403,6 +403,28 @@ function rText(r, ver){
   return {text: r.text || '', ver: null};
 }
 const byOfR = r => r.by || r.author || '';
+// Listen (GWG BLD 784, shared/gg-listen.js): Brian reads the King James Version, public domain poems and texts, and
+// Grounded's own words aloud, one locked clip per line, unlocked with the Staff library's audio key (LIB.audio, BLD 781).
+// Everything modern or uncertain stays text only. Decided here from the library's own fields, so no list is kept.
+// The workshop's gen-readings.py mirrors this rule for the recording plan.
+function sbVoice(r){
+  if (!r || r.mine) return false;
+  if (r.kind === 'scripture') return !!(r.versions && r.versions.kjv);
+  if (!String(r.text || '').trim() || r.bring) return false;
+  const s = [r.by || '', r.source || ''].join(' '), o = String(r.origin || '');
+  if (/Grow With Grounded|Chris Joy/.test(s)) return true;
+  if (/Project Gutenberg/.test(o) || /readings\.js/.test(o)) return true;
+  if (/World English Bible|Book of Common Prayer|traditional ecumenical wording|Traditional Irish blessing|Traditional prayer/i.test(s)) return true;
+  if (/unknown|uncertain|disputed/i.test(s)) return false;
+  const ys = (s.replace(/since \d{4}/g, '').match(/\b(1\d{3}|20\d{2})\b/g) || []).map(Number);
+  return ys.length > 0 && ys.every(y => y < 1929);
+}
+// The Listen control for one reading as it shows (scripture only while KJV is the version showing).
+function listenFor(r, tx, where){
+  const k = CTX.lib && CTX.lib.audio;
+  if (!window.GGListen || !k || !sbVoice(r) || (r.kind === 'scripture' && tx.ver !== 'kjv') || !tx.text) return '';
+  return GGListen.html({id: 'sb:' + where + ':' + r.id, lines: tx.text, sealed: k});
+}
 const rHead = (r, ver) => r.kind === 'scripture' ? (r.ref || r.title) + (ver ? ' (' + vShort(ver) + ')' : '') : r.title + (byOfR(r) ? ', ' + byOfR(r) : '');
 // reading.note is for the officiant only (never printed); reading.bring means no text is stored: bring your own copy.
 const rNote = r => (r.bring ? '<p class="cer-do"><b>Bring Your Own Copy</b>' + esc([r.title, byOfR(r)].filter(Boolean).join(', ')) + '</p>' : '') + (r.note ? `<p class="cer-do"><b>Note</b>${esc(r.note)}</p>` : '');
@@ -585,7 +607,7 @@ function readingBlock(s, e){
       <span class="row">${vs.length > 1 ? `<select aria-label="Bible version" data-cerv="${e.k}|${i}">${vs.map(v => `<option value="${esc(v.id)}"${v.id === tx.ver ? ' selected' : ''}>${esc(v.short || v.name)}</option>`).join('')}</select>` : ''}
       <button type="button" class="btn btn-line btn-sm" data-cer="rd-x" data-v="${e.k}|${i}" aria-label="Remove ${esc(r.title)}">Remove</button></span></div>
       ${x.ver && x.ver !== tx.ver && gone(x.ver) ? `<p class="muted cer-off" style="font-size:14px;margin:2px 0 4px">${esc(goneNote(x.ver, vShort(tx.ver)))}</p>` : ''}
-      ${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}${rNote(r)}${tx.text ? `<details><summary class="muted" style="font-size:15px;cursor:pointer">Read it</summary><p>${esc(tx.text)}</p></details>` : ''}</div>`; }).join('');
+      ${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}${rNote(r)}${listenFor(r, tx, e.k + '.' + i)}${tx.text ? `<details><summary class="muted" style="font-size:15px;cursor:pointer">Read it</summary><p>${esc(tx.text)}</p></details>` : ''}</div>`; }).join('');
   return chosen + (S.pick === e.k ? picker(s, e) : `<button type="button" class="btn btn-line btn-sm" data-cer="pick" data-v="${e.k}" style="margin-top:4px">Add a Reading</button>`);
 }
 // Songs and rituals for one part (GWG BLD 768): the Staff library's lists, then My Pieces.
@@ -615,7 +637,7 @@ function pickList(s, e){
   const n = 30 + S.pmore, shown = L.slice(0, n);
   if (!L.length) return `<p class="muted">No readings match. Try another word${S.pall ? '' : ', or show every reading'}.</p>`;
   return shown.map(([r, sc]) => { const tx = rText(r, s.bible).text || (r.bring ? 'Bring your own copy. ' + (r.about || '') : r.about || '');
-    return `<div class="cer-pr"><div class="m"><b>${esc(r.kind === 'scripture' ? (r.ref || r.title) : r.title)}</b>${r.mine ? '<span class="cer-tag">Mine</span>' : sc >= 5 ? '<span class="cer-tag">Suggested</span>' : ''}<br><span class="pv">${esc((r.kind || 'reading').replace(/^./, c => c.toUpperCase()))}${r.kind === 'scripture' && r.title !== r.ref ? ', ' + esc(r.title) : ''}${byOfR(r) && r.kind !== 'scripture' ? ', ' + esc(byOfR(r)) : ''}. ${esc(tx.slice(0, 110))}${tx.length > 110 ? '...' : ''}</span>${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}</div>
+    return `<div class="cer-pr"><div class="m"><b>${esc(r.kind === 'scripture' ? (r.ref || r.title) : r.title)}</b>${r.mine ? '<span class="cer-tag">Mine</span>' : sc >= 5 ? '<span class="cer-tag">Suggested</span>' : ''}<br><span class="pv">${esc((r.kind || 'reading').replace(/^./, c => c.toUpperCase()))}${r.kind === 'scripture' && r.title !== r.ref ? ', ' + esc(r.title) : ''}${byOfR(r) && r.kind !== 'scripture' ? ', ' + esc(byOfR(r)) : ''}. ${esc(tx.slice(0, 110))}${tx.length > 110 ? '...' : ''}</span>${r.source ? `<div class="cer-src">${esc(r.source)}</div>` : ''}${listenFor(r, rText(r, s.bible), 'pick')}</div>
       <button type="button" class="btn ${have.includes(r.id) ? 'btn-line' : 'btn-gold'} btn-sm" data-cer="rd-add" data-v="${e.k}|${esc(r.id)}"${have.includes(r.id) ? ' disabled' : ''}>${have.includes(r.id) ? 'Added' : 'Add'}</button></div>`; }).join('')
     + (L.length > n ? `<button type="button" class="btn btn-line btn-sm" data-cer="pmore" style="margin-top:8px">Show More (${L.length - n})</button>` : '');
 }

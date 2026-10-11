@@ -9,7 +9,7 @@
      Guides       maple/guides.js, aspen/guides.js, pine/guides.js, birch/guides.js, oak/guides.js, sequoia/guides.js, willow/guides.js,
                   grove/guides.js (When Life Changes Together, for families and groups, GWG BLD 774)
      Practices    grove/data.js and grove/library.js
-     Stories      stories.html (read as the page is today)
+     Stories      stories/data.js (Grounded Stories: the posted stories and their open previews, BLD 784)
      Tools        TOOLS below
 
    EVERYDAY WORDS (below) teaches search the words people really type,
@@ -67,6 +67,7 @@
     { title: 'Speaking and Training', sub: 'Talks and trainings for teams, from $750', href: '/speaking-training.html', keys: 'speaking speaker talk keynote training conference in-service workshop hospice team staff' },
     { title: 'Rates', sub: 'What it costs, plainly', href: '/rates.html', keys: 'rates price prices cost costs fee fees how much pay payment deposit' },
     { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
+    { title: 'Grounded Stories', sub: 'Real stories from the edge of life, narrated or to read', href: '/stories.html', keys: 'stories story grounded stories chaplain hospice bedside narrated watch read member members code substack early preview' },
     { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/contact.html', keys: 'contact email call reach out question' },
     { title: 'Voice Setup', sub: 'Set up a good voice for videos and Read Aloud', href: '/voice-setup.html', keys: 'voice voices read aloud premium enhanced natural siri robotic sound audio video setup speech' },
     { title: 'The Grounded Library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
@@ -267,16 +268,17 @@
         add({ type: 'book', title: b.title, sub: b.author + (b.sec ? '. ' + b.sec : ''), keys: b.tags + ' ' + b.author + ' ' + b.sec + ' ' + b.parts + ' book books reading library', lead: [b.summary], href: '/library/#book=' + b.no });
       });
 
-      return fetch('/stories.html').then(function (r) { return r.ok ? r.text() : ''; }).then(function (html) {
-        if (!html) return;
-        var doc = new DOMParser().parseFromString(html, 'text/html');
-        doc.querySelectorAll('article.story, article.preview').forEach(function (a) {
-          var h = a.querySelector('h3'); if (!h) return;
-          var sub = a.querySelector('.story-sub'), quote = a.querySelector('.story-quote'), pv = a.querySelector('.preview-body');
-          var page = a.querySelector('.card-actions a.btn-primary[href$=".html"]');
-          var href = page ? '/' + page.getAttribute('href') : (a.id ? '/stories.html#' + a.id : '/stories.html');
-          add({ type: 'story', title: h.textContent.trim(), sub: sub ? sub.textContent.trim() : (quote ? quote.textContent.trim() : ''),
-            keys: a.getAttribute('data-themes') || '', lead: [quote ? quote.textContent : ''], body: pv ? pv.textContent : '', href: href });
+      // Grounded Stories (BLD 784): the posted stories and their previews, from the sealed stories file (only its open part is read).
+      return (window.GG_STORIES ? Promise.resolve(window.GG_STORIES) : fetch('/stories/data.js?t=' + Math.floor(Date.now() / 6e5)).then(function (r) { return r.ok ? r.text() : ''; }).then(function (t) {
+        var at = t.indexOf('window.GG_STORIES = '); if (at < 0) return null;
+        return JSON.parse(t.slice(at + 20).trim().replace(/;\s*$/, ''));
+      })).then(function (D) {
+        if (!D || !Array.isArray(D.list)) return;
+        D.list.forEach(function (s) {
+          if (s.status !== 'posted') return;
+          var body = (s.full || s.preview || []).join(' ');
+          add({ type: 'story', title: s.title, sub: s.sub || 'Grounded Stories', keys: 'story stories grounded stories ' + (s.open ? 'full ' : '') + (s.col || ''),
+            lead: [s.sub || ''], body: body, href: '/stories.html#' + (s.slug || s.id) });
         });
       }).catch(function () {});
     }).then(function () { WAIT.forEach(function (el) { if (/ready/.test(el.textContent)) el.textContent = ''; }); });
@@ -369,7 +371,7 @@
   }
 
   /* ---------- showing results ---------- */
-  var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Stories' };
+  var NAMES = { talk: 'When Life Changes', practice: 'Practices', book: 'Books', page: 'Pages', tool: 'Tools', story: 'Grounded Stories' };
   var AGES = { teen: 'Teens and up', teenOnly: 'Teens only' };
   var APPNAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var SHOW = 5, uid = 0;

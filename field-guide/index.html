@@ -646,7 +646,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
 <script src="share.js?v=b782"></script>
-<script src="ceremonies.js?v=b770"></script>
+<script src="../shared/gg-listen.js?v=b784s"></script>
+<script src="ceremonies.js?v=b784s"></script>
 <script src="sessions.js?v=b758"></script>
 <script src="farewell.js?v=b782"></script>
 <script src="wedding.js?v=b782"></script>
@@ -656,6 +657,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b771"></script>
 <script src="grovevisit.js?v=b782"></script>
 <script src="heartwood.js?v=b782"></script>
+<script src="../shared/gg-stories.js?v=b784s"></script>
+<script src="vault.js?v=b784s"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -1099,6 +1102,9 @@ if (window.GGGv) GGGv.init({data: () => DATA, gvg: () => GVG(), gt: () => GT, ti
 // GWG BLD 772 hook: Heartwood (heartwood.js, GGHw): Seal Heartwood in the Founder tab, and couple invites from the client file and the premarital couple.
 if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), toast: m => toast(m),
   pendingPlain: l => pendingPlain(l), updBusy: () => !!V.upd, setUpd: u => { V.upd = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
+// GWG BLD 784 hook: the Story Vault (vault.js, GGVault): Founders only, in the Founder tab. Its edits go into FDR.storyVault and
+// fdrKeep seals the Founder library into "Ready to Upload" (lib-founder.js), the way Seal It does.
+if (window.GGVault) GGVault.init({fdr: () => FDR, tier: () => TIER, keep: () => fdrKeep(), render: () => render(), toast: m => toast(m), updLvl: () => V.upd ? V.upd.lvl : ''});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
@@ -1677,6 +1683,7 @@ function vFounder(){
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Guide for the yearly change.'},
     {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: V.upd ? 'An update is ready to seal' : '', hot: !!V.upd},
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
+    window.GGVault ? {k: 'vault', title: 'The Story Vault', desc: 'Every story in one place: Vault, Early Preview, or Posted. Member Codes, and Seal Grounded Stories for the site.', n: GGVault.has() ? GGVault.count() + ' stories' : 'Arrives with the BLD 784 Founder update'} : null, // GWG BLD 784 hook
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
@@ -1690,6 +1697,7 @@ function vFounder(){
   if (C2 === 'rotate') return back(shownH + rotH);
   if (C2 === 'upd') return back(vUpdateCard());
   if (C2 === 'hw') return back(GGHw.sealView()); // GWG BLD 772 hook
+  if (C2 === 'vault') return back(GGVault.view()); // GWG BLD 784 hook
   if (C2 === 'speak') return back(vSpeak());
   if (C2 === 'biz') return back(vBiz());
   if (C2 === 'pricing') return back(priceH);
@@ -9896,6 +9904,24 @@ async function readUpdate(file){
   next._rev = (cur._rev || 0) + 1; next._updated = today();
   V.upd = {lvl, title: f.title || (f._gfg === 'library-edit' ? 'Edited library' : 'Library update'), note: f.note || '', rows, warns, from: cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
+}
+// GWG BLD 784 hook: keeps the Founder library as it stands on this device (FDR, with the Story Vault's changes) by sealing it
+// with the Founder key into "Ready to Upload", exactly as Seal It does. One revision step covers everything waiting to upload.
+// Calls queue, so the newest FDR is what ends up sealed. Returns false when this device can't seal the Founder library.
+let fdrKeepQ = Promise.resolve();
+function fdrKeep(){
+  const run = async () => {
+    if (TIER !== 'founder' || !FDR || !DATA || (V.upd && V.upd.lvl === 'founder')) return false;
+    const k = effKeys().founder; if (!k) return false;
+    const d0 = DATA.founder.draft, had = !!(d0 && d0.libs && d0.libs.founder);
+    const r0 = FDR._rev, u0 = FDR._updated;
+    if (!had) FDR._rev = (r0 || 0) + 1;
+    FDR._updated = today();
+    let box; try { box = await seal(await rawKey(k), FDR); } catch(e){ FDR._rev = r0; FDR._updated = u0; return false; }
+    ensureDraft().libs.founder = box;
+    await persist(); return true;
+  };
+  fdrKeepQ = fdrKeepQ.then(run, run); return fdrKeepQ;
 }
 async function sealUpdate(){
   const U = V.upd; if (!U) return;

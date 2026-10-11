@@ -1031,15 +1031,21 @@ function linesOf(x) { const v = verOf(x); return v === 'kjv' ? x.lines : RD.vers
 function byOf(x) { const v = verOf(x); return v === 'kjv' ? x.by : (RD.bible[v] || {}).name || x.by; }
 function noticeOf(x) { const v = verOf(x); return v === 'kjv' ? '' : (RD.bible[v] || {}).notice || ''; }
 function setVer(v) { S.read.ver = v; render(); }
+// Listen (GWG BLD 784): Brian reads the public domain texts, the King James Version, and Grounded's own words aloud,
+// one recorded clip per line (shared/gg-listen.js, public v1 clips). Scripture: only while KJV is showing.
+const VOICED = ['pd', 'grounded', 'plain'];
+const voiced = x => VOICED.includes(x.rights) && verOf(x) === 'kjv' && !!window.GGListen;
 function readingHtml(x) {
   let body = '';
-  linesOf(x).forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
+  const lv = voiced(x), listen = lv ? GGListen.html({id: 'w:' + x.id, lines: x.lines}) : '';
+  if (listen) GGListen.linesOf(x.lines).forEach((l, i) => { body += l === '' ? '<br>' : `<p data-ggl-ln="${i}">${esc(l)}</p>`; });
+  else linesOf(x).forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
   const vs = RD.versionsOn && RD.versions && RD.versions[x.id], v = verOf(x), note = noticeOf(x);
   const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${Object.keys(RD.bible).filter(k => k === 'kjv' || vs[k]).map(k => [k, RD.bible[k].short || k.toUpperCase()]).map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeReading()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
-    <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}
-    <div class="w-readtext" data-read="Read this aloud">${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
+    <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}${listen}
+    <div class="w-readtext" data-read="Read this aloud"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
     ${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}
   </article>`;
 }
