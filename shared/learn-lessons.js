@@ -16,6 +16,7 @@
    for the whole family) join the Welcome.
    The Grove Learn for the kinds of grove (GWG BLD 774): Choosing Your Grove's Kind, the Group Check-in, results, the Growth
    Plan, privacy, Leading a Grove (5), and Do This Together for families, classes, groups, and teams.
+   Do This Together grows (GWG BLD 783): For Classes, For Faith Communities and Groups, and For Teams, with eight new videos.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
@@ -28366,8 +28367,9 @@ window.GG_LEARN = {
  ]
 },
   /* The Grove Learn (GWG BLD 730, kinds of grove in GWG BLD 774): Start Here, Using The Grove, Leading a Grove,
-     The Six Parts, Together, and Do This Together (For Families; For Classes, Groups, and Teams).
-     Generated from patches/bld730/source and patches/bld774/source/gl in grounded-workshop. */
+     The Six Parts, Together, and Do This Together (For Families, For Classes, For Faith Communities and Groups, For Teams).
+     Generated from patches/bld730/source and patches/bld774/source/gl in grounded-workshop; eight Do This Together videos
+     added in GWG BLD 783 from patches/bld783/source/gl (add.py). */
   grove: {
  "title": "Learn The Grove",
  "intro": "Short lessons, narrated aloud, for a family, a class, a group, or a team to watch together.",
@@ -34848,10 +34850,10 @@ window.GG_LEARN = {
    ]
   },
   {
-   "id": "grove-together-groups",
+   "id": "grove-together-classes",
    "kind": "support",
-   "title": "For Classes, Groups, and Teams",
-   "who": "Short videos for a circle, a group, or a team",
+   "title": "For Classes",
+   "who": "Short videos for a class circle",
    "lessons": [
     {
      "id": "gr-r-circle",
@@ -35018,6 +35020,302 @@ window.GG_LEARN = {
       }
      ]
     },
+    {
+     "id": "gr-r-calm",
+     "n": 2,
+     "title": "Calm Corner Breath",
+     "mins": 4,
+     "blurb": "A slow balloon breath the whole class can do together, any time the room needs to settle.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Calm Corner Breath",
+       "sub": "Slow breaths, together.",
+       "say": "This is Calm Corner Breath. It is a slow breath the whole class can do together, at desks, on the rug, or in the Calm Corner. It takes about two minutes, any time the room needs to settle."
+      },
+      {
+       "k": "big",
+       "h": "A slow breath helps a busy body settle.",
+       "sub": "The long breath out is the calming part.",
+       "say": "When the room feels busy, or a feeling feels big, a slow breath helps the body settle. Many people find the long, slow breath out is the most calming part."
+      },
+      {
+       "k": "flow",
+       "h": "Balloon Breath",
+       "steps": [
+        [
+         "Sit tall",
+         "Feet on the floor"
+        ],
+        [
+         "Breathe in",
+         "Fill the balloon"
+        ],
+        [
+         "Breathe out",
+         "Slowly, slowly"
+        ],
+        [
+         "Notice",
+         "How do you feel now?"
+        ]
+       ],
+       "say": "Here is Balloon Breath. Sit tall, with your feet on the floor. Breathe in slowly, and fill your belly like a balloon. Breathe out slowly, and let the balloon get small. Then notice how you feel."
+      },
+      {
+       "k": "big",
+       "h": "Three balloon breaths",
+       "sub": "Hands on your belly. In slowly, out slowly.",
+       "beats": [
+        "Let us try it now, all together.",
+        "Sit tall, and rest your hands on your belly.",
+        "Breathe in slowly through your nose, and feel your belly fill like a balloon.",
+        "Now breathe out slowly through your mouth, and let the balloon get small.",
+        {
+         "t": "Take three more balloon breaths, at your own pace.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try it now, all together. Sit tall, and rest your hands on your belly. Breathe in slowly through your nose, and feel your belly fill like a balloon. Now breathe out slowly through your mouth, and let the balloon get small. Take three more balloon breaths, at your own pace."
+      },
+      {
+       "k": "points",
+       "h": "The Calm Corner",
+       "items": [
+        [
+         "A cozy spot",
+         "Soft things, a pillow, a plant"
+        ],
+        [
+         "A breathing card",
+         "The Balloon Breath steps"
+        ],
+        [
+         "A small timer",
+         "A few minutes, then back"
+        ]
+       ],
+       "say": "Many classes keep a Calm Corner. It is a cozy spot with soft things, a card with the Balloon Breath steps, and a small timer. Anyone can go there to settle, take a few balloon breaths, and come back to the class when they feel ready. It is a place of comfort, open to everyone."
+      },
+      {
+       "k": "points",
+       "h": "More calm ways",
+       "items": [
+        [
+         "Calm Countdown",
+         "From ten, quieter each time"
+        ],
+        [
+         "Shake It Out",
+         "Then one slow breath"
+        ],
+        [
+         "Water Break",
+         "A sip of water and a stretch"
+        ]
+       ],
+       "say": "Here are more calm ways to try together. A Calm Countdown, counting down from ten, a little quieter with each number. Shake It Out, shaking your hands, arms, and legs, then one slow breath. Or a Water Break, a sip of water and a good stretch."
+      },
+      {
+       "k": "big",
+       "h": "A Calm Countdown",
+       "sub": "Ten, nine, eight, softer and softer.",
+       "beats": [
+        "Let us do a Calm Countdown now.",
+        {
+         "t": "Count down together from ten to one, slowly, a little quieter with each number.",
+         "w": 15
+        },
+        "Then sit for one more quiet breath."
+       ],
+       "say": "Let us do a Calm Countdown now. Count down together from ten to one, slowly, a little quieter with each number. Then sit for one more quiet breath."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Balloon Breath",
+         "Under Bark"
+        ],
+        [
+         "Calm Corner",
+         "Under Bark"
+        ],
+        [
+         "Calm Countdown",
+         "Under Bark"
+        ]
+       ],
+       "say": "In a Classroom grove, you will find all three in Together, under Bark: Balloon Breath, Calm Corner, and Calm Countdown. Anchor one to Morning Meeting or After Lunch in your Class Plan. When your class has done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "A calm class starts with one slow breath.",
+       "sub": "Any time the room needs it.",
+       "say": "A calm class starts with one slow breath, taken together. Come back to it any time the room needs it."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-kindround",
+     "n": 3,
+     "title": "Kindness Round",
+     "mins": 4,
+     "blurb": "Each person says one kind and true thing to the person beside them, all the way around.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Kindness Round",
+       "sub": "One kind word each, all the way around.",
+       "say": "This is a Kindness Round. The class sits in a circle, and each person says one kind and true thing to the person beside them. It takes about ten minutes, and it can brighten the whole day."
+      },
+      {
+       "k": "flow",
+       "h": "The round",
+       "steps": [
+        [
+         "Circle up",
+         "Everyone can see everyone"
+        ],
+        [
+         "Look and listen",
+         "At the person beside you"
+        ],
+        [
+         "One kind thing",
+         "Specific and true"
+        ],
+        [
+         "Thank you",
+         "Then pass it on"
+        ]
+       ],
+       "say": "Here is the shape. Circle up, so everyone can see everyone. Look at the person beside you. Say one kind thing, specific and true. They say thank you, then pass it on."
+      },
+      {
+       "k": "points",
+       "h": "Kind words that land",
+       "items": [
+        [
+         "Name what they did",
+         "You helped me find my pencil"
+        ],
+        [
+         "Name who they are",
+         "You are a good listener"
+        ],
+        [
+         "Keep it about them",
+         "Kind and true"
+        ]
+       ],
+       "say": "The best kind words are specific and true. Name something they did, like, you helped me find my pencil. Or name something about who they are, like, you are a good listener. Keep it about them, and keep it kind."
+      },
+      {
+       "k": "words",
+       "h": "Starters to borrow",
+       "items": [
+        "I like how you ...",
+        "You helped me when ...",
+        "You are good at ...",
+        "Thanks for ..."
+       ],
+       "say": "Here are some starters to borrow. I like how you. You helped me when. You are good at. Or, thanks for, and fill it in."
+      },
+      {
+       "k": "big",
+       "h": "One kind word each",
+       "sub": "Say it, hear thank you, pass it on.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person on your right.",
+        "Look at them, and say one kind and true thing.",
+        "They say thank you, then turn and pass it on.",
+        {
+         "t": "Keep going until everyone in the circle has heard kind words.",
+         "w": 30
+        }
+       ],
+       "say": "Let us try it now. Turn to the person on your right. Look at them, and say one kind and true thing. They say thank you, then turn and pass it on. Keep going until everyone in the circle has heard kind words."
+      },
+      {
+       "k": "points",
+       "h": "Receiving kind words",
+       "items": [
+        [
+         "Just say thank you",
+         "And let it land"
+        ],
+        [
+         "A smile is plenty",
+         "Or a nod"
+        ],
+        [
+         "Passing is welcome",
+         "Come back at the end"
+        ]
+       ],
+       "say": "Hearing kind words can feel a little shy. Just say thank you, and let it land. A smile or a nod is plenty. And anyone can pass, and come back at the end of the round."
+      },
+      {
+       "k": "points",
+       "h": "Keep kindness growing",
+       "items": [
+        [
+         "Class Compliment Jar",
+         "A marble for each kind word"
+        ],
+        [
+         "Kindness Notes",
+         "Short notes to be found"
+        ],
+        [
+         "Appreciation Round",
+         "Thanks for something specific"
+        ]
+       ],
+       "say": "Keep kindness growing all week. With a Class Compliment Jar, add a marble each time someone gives a kind word, and when it is full, celebrate with a Dance Break or a game outside. Write Kindness Notes and leave them where they will be found. Or try an Appreciation Round on a Friday."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Appreciation Round",
+         "Under Branches"
+        ],
+        [
+         "Class Compliment Jar",
+         "Under Branches"
+        ],
+        [
+         "Kindness Notes",
+         "Under Branches"
+        ]
+       ],
+       "say": "In a Classroom grove, you will find all three in Together, under Branches: Appreciation Round, Class Compliment Jar, and Kindness Notes. Anchor a round to Friday Circle in your Class Plan. When your class has done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Kind words, said out loud, grow a kind class.",
+       "sub": "One round, any day.",
+       "say": "Kind words, said out loud, grow a kind class. One round, any day."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "grove-together-groups",
+   "kind": "support",
+   "title": "For Faith Communities and Groups",
+   "who": "Short videos for a congregation, a small group, or any circle that meets",
+   "lessons": [
     {
      "id": "gr-r-openclose",
      "n": 2,
@@ -35274,6 +35572,928 @@ window.GG_LEARN = {
      ]
     },
     {
+     "id": "gr-r-checkinround",
+     "n": 2,
+     "title": "Opening Check-in Round",
+     "mins": 4,
+     "blurb": "Pass a talking piece and share how you are arriving, before anything else begins.",
+     "sources": [
+      "pranis"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Opening Check-in Round",
+       "sub": "How are you arriving today?",
+       "say": "This is an Opening Check-in Round. At the start of your time together, each person shares how they are arriving. It takes five to ten minutes, and it helps a group of any kind settle in and be together."
+      },
+      {
+       "k": "big",
+       "h": "Everyone arrives carrying something.",
+       "sub": "A check-in helps us set it down and be here.",
+       "say": "Everyone arrives carrying something: a long day, good news, or a full mind. A check-in round helps each person set it down, and be here together."
+      },
+      {
+       "k": "flow",
+       "h": "The round",
+       "steps": [
+        [
+         "A talking piece",
+         "Whoever holds it speaks"
+        ],
+        [
+         "One question",
+         "The same for everyone"
+        ],
+        [
+         "Short answers",
+         "A word or a sentence"
+        ],
+        [
+         "Thank each one",
+         "Then pass it on"
+        ]
+       ],
+       "say": "Here is the shape. Pass a talking piece: a stone, a cup, or any small object. The person holding it speaks, and everyone else listens. Ask one question, the same for everyone. Keep answers short, a word or a sentence. Thank each person, and pass it on."
+      },
+      {
+       "k": "words",
+       "h": "Questions to choose from",
+       "items": [
+        "How are you arriving today?",
+        "What is your weather today?",
+        "What is one good thing from this week?",
+        "What do you need from this group today?"
+       ],
+       "say": "Here are some questions to choose from. How are you arriving today? What is your weather today: sunny, cloudy, or stormy? What is one good thing from this week? Or, what do you need from this group today?"
+      },
+      {
+       "k": "big",
+       "h": "What is your weather today?",
+       "sub": "Hold the talking piece, answer, pass it on.",
+       "beats": [
+        "Let us try it now.",
+        "Find a small object to be your talking piece.",
+        "The first person holds it and answers: what is your weather today?",
+        {
+         "t": "Then pass it on, all the way around the circle.",
+         "w": 30
+        }
+       ],
+       "say": "Let us try it now. Find a small object to be your talking piece. The first person holds it and answers: what is your weather today? Then pass it on, all the way around the circle."
+      },
+      {
+       "k": "points",
+       "h": "Listening well",
+       "items": [
+        [
+         "Listen to understand",
+         "Advice can wait until asked"
+        ],
+        [
+         "Hold a moment",
+         "After something hard"
+        ],
+        [
+         "Passing is welcome",
+         "Always"
+        ]
+       ],
+       "say": "Listening is the heart of a check-in. Listen to understand, and save advice for when someone asks. After someone shares something hard, hold a short moment of quiet before the next person speaks. And passing is always welcome."
+      },
+      {
+       "k": "points",
+       "h": "Make it yours",
+       "items": [
+        [
+         "Check-in Pairs",
+         "Two minutes each"
+        ],
+        [
+         "One Word Check-in",
+         "When time is short"
+        ],
+        [
+         "Start with Stillness",
+         "Thirty seconds first"
+        ]
+       ],
+       "say": "Make it yours. When the group is large, try Check-in Pairs, two minutes each. When time is short, use a One Word Check-in. And to settle first, start with thirty seconds of stillness."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Talking Piece Round",
+         "Under Bark"
+        ],
+        [
+         "Check-in Pairs",
+         "Under Bark"
+        ],
+        [
+         "One Word Check-in",
+         "Under Bark"
+        ]
+       ],
+       "say": "You will find all three in Together, under Bark: Talking Piece Round, Check-in Pairs, and One Word Check-in. Anchor your check-in to Opening Our Time, or Before We Gather, in your Growth Plan. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Arrive, check in, and be here together.",
+       "sub": "Every time you gather.",
+       "say": "Arrive, check in, and be here together, every time you gather."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-gratitude",
+     "n": 3,
+     "title": "Closing Gratitude",
+     "mins": 3,
+     "blurb": "End with thanks: one thing each, and one thing to carry home.",
+     "sources": [
+      "seligman"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Closing Gratitude",
+       "sub": "End with thanks, together.",
+       "say": "This is Closing Gratitude. At the end of your time together, each person names something they are thankful for. It takes about five minutes, and it sends everyone home a little lighter."
+      },
+      {
+       "k": "big",
+       "h": "Ending with thanks helps the good stay with us.",
+       "say": "Ending with thanks helps the good of your time together stay with you. It turns everyone’s attention to what went well, and to each other."
+      },
+      {
+       "k": "flow",
+       "h": "The closing",
+       "steps": [
+        [
+         "Pause",
+         "One slow breath"
+        ],
+        [
+         "Thanks round",
+         "One thing each"
+        ],
+        [
+         "Take one thing",
+         "To carry home"
+        ],
+        [
+         "Go out",
+         "Together"
+        ]
+       ],
+       "say": "Here is the shape. Pause for one slow breath. Go around, and each person names one thing they are thankful for today. Then name one thing you are taking home with you. Then go out together."
+      },
+      {
+       "k": "points",
+       "h": "Thanks can be for",
+       "items": [
+        [
+         "Today",
+         "Something someone said"
+        ],
+        [
+         "Each other",
+         "A person in this circle"
+        ],
+        [
+         "The week",
+         "A good thing that happened"
+        ]
+       ],
+       "say": "Thanks can be for today, like something someone said. It can be for each other, a person in this circle. Or it can be for the week, a good thing that happened."
+      },
+      {
+       "k": "big",
+       "h": "One thanks each",
+       "sub": "A sentence, all the way around.",
+       "beats": [
+        "Let us try it now.",
+        "Take one slow breath together.",
+        "Think of one thing you are thankful for today.",
+        {
+         "t": "Go around the circle, and each person names it in a sentence.",
+         "w": 30
+        }
+       ],
+       "say": "Let us try it now. Take one slow breath together. Think of one thing you are thankful for today. Go around the circle, and each person names it in a sentence."
+      },
+      {
+       "k": "points",
+       "h": "Three Good Things",
+       "items": [
+        [
+         "Three good things",
+         "From this week"
+        ],
+        [
+         "And why",
+         "Why did each one go well?"
+        ],
+        [
+         "Once a week",
+         "A little deeper"
+        ]
+       ],
+       "say": "Once a week, go a little deeper with Three Good Things. Each person names three things that went well this week, and why each one went well. Naming the why helps people notice the good more often."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Closing Thanks",
+         "Under Fruit"
+        ],
+        [
+         "Thanks Round",
+         "Under Roots"
+        ],
+        [
+         "Three Good Things",
+         "Under Roots"
+        ]
+       ],
+       "say": "You will find these in Together. Closing Thanks is under Fruit. Thanks Round and Three Good Things are under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Thanks said together goes home with everyone.",
+       "sub": "Every time you gather.",
+       "say": "Thanks said together goes home with everyone. End with thanks, every time you gather."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Closing Gratitude",
+       "sub": "End with thanks, together.",
+       "say": "This is Closing Gratitude. At the end of your time together, each person names something they are thankful for. It takes about five minutes, and it sends everyone home a little lighter."
+      },
+      {
+       "k": "big",
+       "h": "Ending with thanks helps the good stay with us.",
+       "say": "Ending with thanks helps the good of your time together stay with you. It turns everyone’s attention to what went well, and to each other."
+      },
+      {
+       "k": "flow",
+       "h": "The closing",
+       "steps": [
+        [
+         "Pause",
+         "One slow breath"
+        ],
+        [
+         "Thanks round",
+         "One thing each"
+        ],
+        [
+         "Take one thing",
+         "To carry home"
+        ],
+        [
+         "Go out",
+         "Together"
+        ]
+       ],
+       "say": "Here is the shape. Pause for one slow breath. Go around, and each person names one thing they are thankful for today. Then name one thing you are taking home with you. If your group prays, close with a short prayer of thanks. Then go out together."
+      },
+      {
+       "k": "points",
+       "h": "Thanks can be for",
+       "items": [
+        [
+         "Today",
+         "Something someone said"
+        ],
+        [
+         "Each other",
+         "A person in this circle"
+        ],
+        [
+         "The week",
+         "A good thing that happened"
+        ],
+        [
+         "God’s goodness",
+         "If your group prays"
+        ]
+       ],
+       "say": "Thanks can be for today, like something someone said. It can be for each other, a person in this circle. It can be for the week, a good thing that happened. And if your group prays, it can be thanks offered to God."
+      },
+      {
+       "k": "big",
+       "h": "One thanks each",
+       "sub": "A sentence, all the way around.",
+       "beats": [
+        "Let us try it now.",
+        "Take one slow breath together.",
+        "Think of one thing you are thankful for today.",
+        {
+         "t": "Go around the circle, and each person names it in a sentence.",
+         "w": 30
+        }
+       ],
+       "say": "Let us try it now. Take one slow breath together. Think of one thing you are thankful for today. Go around the circle, and each person names it in a sentence."
+      },
+      {
+       "k": "points",
+       "h": "Three Good Things",
+       "items": [
+        [
+         "Three good things",
+         "From this week"
+        ],
+        [
+         "And why",
+         "Why did each one go well?"
+        ],
+        [
+         "Once a week",
+         "A little deeper"
+        ]
+       ],
+       "say": "Once a week, go a little deeper with Three Good Things. Each person names three things that went well this week, and why each one went well. Naming the why helps people notice the good more often."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Closing Thanks",
+         "Under Fruit"
+        ],
+        [
+         "Thanks Round",
+         "Under Roots"
+        ],
+        [
+         "Three Good Things",
+         "Under Roots"
+        ]
+       ],
+       "say": "You will find these in Together. Closing Thanks is under Fruit. Thanks Round and Three Good Things are under Roots. Anchor your closing to Closing Our Time, or Our Weekly Gathering, in your Growth Plan. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Thanks said together goes home with everyone.",
+       "sub": "Every time you gather.",
+       "say": "Thanks said together goes home with everyone. End with thanks, every time you gather."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-circleblessing",
+     "n": 4,
+     "title": "A Blessing for the Circle",
+     "mins": 4,
+     "blurb": "Send each other out with a few good words at the end of your time together.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "A Blessing for the Circle",
+       "sub": "Good words to carry into the week.",
+       "say": "This is A Blessing for the Circle. At the end of your time together, the group sends each other out with a few good words. It takes about two minutes, and it fits a congregation, a study class, a youth group, or a small group."
+      },
+      {
+       "k": "big",
+       "h": "A gift of good words.",
+       "sub": "Something kind to carry into the week.",
+       "say": "A blessing is a gift of good words. Each person leaves carrying something kind into the week ahead."
+      },
+      {
+       "k": "points",
+       "h": "Good words can be",
+       "items": [
+        [
+         "A good wish",
+         "May this week be kind to you"
+        ],
+        [
+         "A line you love",
+         "From a poem or a saying"
+        ],
+        [
+         "Words of thanks",
+         "For each person here"
+        ]
+       ],
+       "say": "Every group sends each other out in its own way. It can be a simple good wish, like, may this week be kind to you. It can be a line from a poem or a saying your group loves. Or it can be a few words of thanks for each person here."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Circle up",
+         "Standing or seated"
+        ],
+        [
+         "One breath",
+         "Together"
+        ],
+        [
+         "Good words",
+         "One voice, or each one"
+        ],
+        [
+         "Go out",
+         "Together"
+        ]
+       ],
+       "say": "Here is how it goes. Stand in a circle, or stay in your seats. Take one slow breath together. Then one person says the good words for everyone, or each person gives good words to the person beside them. Then go out together."
+      },
+      {
+       "k": "words",
+       "h": "Words to borrow",
+       "items": [
+        "May this week be kind to you.",
+        "Go in peace.",
+        "May you know how loved you are.",
+        "May you find rest, and may you find joy."
+       ],
+       "say": "Here are some words to borrow. May this week be kind to you. Go in peace. May you know how loved you are. Or, may you find rest, and may you find joy. Change any of them to fit your group."
+      },
+      {
+       "k": "big",
+       "h": "Good words for the person beside you",
+       "sub": "Their name, and a few good words.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person beside you, and say their name.",
+        "Then give them a few good words for the week ahead.",
+        {
+         "t": "Take turns, all the way around the circle.",
+         "w": 25
+        }
+       ],
+       "say": "Let us try it now. Turn to the person beside you, and say their name. Then give them a few good words for the week ahead. Take turns, all the way around the circle."
+      },
+      {
+       "k": "points",
+       "h": "A few gentle ways",
+       "items": [
+        [
+         "Say their name",
+         "One person at a time"
+        ],
+        [
+         "A hand on the shoulder",
+         "If that feels right to them"
+        ],
+        [
+         "Short and warm",
+         "A sentence or two"
+        ]
+       ],
+       "say": "A few gentle ways help. Say each person’s name. A hand on the shoulder can be warm, if that feels right to them. Keep it short and warm, a sentence or two. And anyone can give the good words, the youngest included."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Sending Words",
+         "Under Roots"
+        ],
+        [
+         "Send-Off Words",
+         "Under Fruit"
+        ],
+        [
+         "Closing Thanks",
+         "Under Fruit"
+        ]
+       ],
+       "say": "You will find Sending Words in Together, under Roots. When someone is moving on, try Send-Off Words, under Fruit. And Closing Thanks, also under Fruit, is a good partner for it. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Go in peace, and go together.",
+       "sub": "Good words, every time you gather.",
+       "say": "Go in peace, and go together. Good words, every time you gather."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "A Blessing for the Circle",
+       "sub": "Good words to carry into the week.",
+       "say": "This is A Blessing for the Circle. At the end of your time together, the group sends each other out with a few good words. It takes about two minutes, and it fits a congregation, a study class, a youth group, or a small group."
+      },
+      {
+       "k": "big",
+       "h": "A gift of good words.",
+       "sub": "Something kind to carry into the week.",
+       "say": "A blessing is a gift of good words. Each person leaves carrying something kind into the week ahead."
+      },
+      {
+       "k": "points",
+       "h": "A blessing can be",
+       "items": [
+        [
+         "A prayer",
+         "In words from your tradition"
+        ],
+        [
+         "A verse",
+         "One your community knows by heart"
+        ],
+        [
+         "A good wish",
+         "May this week be kind to you"
+        ]
+       ],
+       "say": "Every community blesses in its own way. It can be a short prayer, in words from your own tradition. It can be a verse your community knows by heart. Or it can be a simple good wish, like, may this week be kind to you."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Circle up",
+         "Standing or seated"
+        ],
+        [
+         "One breath",
+         "Together"
+        ],
+        [
+         "The blessing",
+         "One voice, or each one"
+        ],
+        [
+         "Go out",
+         "Together"
+        ]
+       ],
+       "say": "Here is how it goes. Stand in a circle, or stay in your seats. Take one slow breath together. Then one person says the blessing for everyone, or each person blesses the person beside them. Then go out together."
+      },
+      {
+       "k": "words",
+       "h": "Words to borrow",
+       "items": [
+        "May God go with you this week.",
+        "Go in peace.",
+        "May you know how loved you are.",
+        "May you find rest, and may you find joy."
+       ],
+       "say": "Here are some words to borrow. May God go with you this week. Go in peace. May you know how loved you are. Or, may you find rest, and may you find joy. Change any of them to fit your community."
+      },
+      {
+       "k": "big",
+       "h": "Bless the person beside you",
+       "sub": "Their name, and a few good words.",
+       "beats": [
+        "Let us try it now.",
+        "Turn to the person beside you, and say their name.",
+        "Then give them a few good words for the week ahead.",
+        {
+         "t": "Take turns, all the way around the circle.",
+         "w": 25
+        }
+       ],
+       "say": "Let us try it now. Turn to the person beside you, and say their name. Then give them a few good words for the week ahead. Take turns, all the way around the circle."
+      },
+      {
+       "k": "points",
+       "h": "A few gentle ways",
+       "items": [
+        [
+         "Say their name",
+         "One person at a time"
+        ],
+        [
+         "A hand on the shoulder",
+         "If that feels right to them"
+        ],
+        [
+         "Short and warm",
+         "A sentence or two"
+        ]
+       ],
+       "say": "A few gentle ways help. Say each person’s name. A hand on the shoulder can be warm, if that feels right to them. Keep it short and warm, a sentence or two. And anyone can give the blessing, the youngest included."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Sending Blessing",
+         "Under Roots"
+        ],
+        [
+         "Blessing for the Road",
+         "Under Fruit"
+        ],
+        [
+         "Passing the Peace",
+         "Under Branches"
+        ]
+       ],
+       "say": "You will find Sending Blessing in Together, under Roots. When someone is moving on, try Blessing for the Road, under Fruit. And Faith Community groves also have Passing the Peace, under Branches. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Go in peace, and go together.",
+       "sub": "Good words, every time you gather.",
+       "say": "Go in peace, and go together. Good words, every time you gather."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-joys",
+     "n": 5,
+     "title": "Sharing Joys and Concerns",
+     "mins": 4,
+     "blurb": "Share one joy and one concern each, and hold them all together as a group.",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Sharing Joys and Concerns",
+       "sub": "Joys grow. Concerns feel lighter.",
+       "say": "This is Sharing Joys and Concerns. Many communities have done this for generations. Each person can share one joy and one concern, and the whole group holds them together. It takes ten to fifteen minutes."
+      },
+      {
+       "k": "big",
+       "h": "A joy shared grows. A concern shared feels lighter.",
+       "say": "When we share a joy, it grows. When we share a concern, it feels lighter. And everyone learns how to show up for each other this week."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Joys first",
+         "Good news, big or small"
+        ],
+        [
+         "Then concerns",
+         "What we are carrying"
+        ],
+        [
+         "Hold them together",
+         "In a quiet moment"
+        ],
+        [
+         "Follow up",
+         "A call or a card this week"
+        ]
+       ],
+       "say": "Here is how it goes. Start with joys, good news, big or small. Then share concerns, what people are carrying. Then hold them all together in a quiet moment of kind thought. And during the week, follow up with a call, a card, or a meal."
+      },
+      {
+       "k": "points",
+       "h": "Kind and safe",
+       "items": [
+        [
+         "Short and simple",
+         "A sentence or two"
+        ],
+        [
+         "Your own news",
+         "Or news shared with permission"
+        ],
+        [
+         "It stays in the circle",
+         "Every time"
+        ]
+       ],
+       "say": "Keep it kind and safe. Share in a sentence or two. Share your own news, or news someone said you could share. And what is shared in the circle stays in the circle."
+      },
+      {
+       "k": "big",
+       "h": "One joy, then one concern",
+       "sub": "A sentence each. Passing is welcome.",
+       "beats": [
+        "Let us try it now.",
+        "Think of one joy from this week, big or small.",
+        {
+         "t": "Go around the circle, and each person shares one joy in a sentence.",
+         "w": 20
+        },
+        "Now think of one thing you are carrying, or someone you are holding close.",
+        {
+         "t": "Go around again, sharing a concern, or simply passing.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try it now. Think of one joy from this week, big or small. Go around the circle, and each person shares one joy in a sentence. Now think of one thing you are carrying, or someone you are holding close. Go around again, sharing a concern, or simply passing."
+      },
+      {
+       "k": "big",
+       "h": "Hold it all together",
+       "sub": "A quiet moment of kind thought.",
+       "beats": [
+        "Now hold everything you heard, together.",
+        {
+         "t": "Take a quiet moment of kind thought for each joy and each concern.",
+         "w": 15
+        },
+        "Then the leader closes with thanks."
+       ],
+       "say": "Now hold everything you heard, together. Take a quiet moment of kind thought for each joy and each concern. Then the leader closes with thanks."
+      },
+      {
+       "k": "points",
+       "h": "For the leader",
+       "items": [
+        [
+         "Go first",
+         "Short and warm"
+        ],
+        [
+         "Thank each person",
+         "Every time"
+        ],
+        [
+         "Safety comes first",
+         "Follow up privately, right away"
+        ]
+       ],
+       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Hold Someone in Kind Thought",
+         "Under Roots"
+        ],
+        [
+         "Ask for What You Need",
+         "Under Bark"
+        ],
+        [
+         "Meal Train",
+         "Under Branches"
+        ]
+       ],
+       "say": "You will find Hold Someone in Kind Thought in Together, under Roots. Ask for What You Need is under Bark, where each person finishes the sentence, this week, I need. And when a concern calls for help, try a Meal Train, under Branches. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "We hold each other’s joys and each other’s concerns.",
+       "sub": "Every time we gather.",
+       "say": "This is what a community does. We hold each other’s joys, and each other’s concerns, every time we gather."
+      }
+     ],
+     "faithScenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Sharing Joys and Concerns",
+       "sub": "Joys grow. Concerns feel lighter.",
+       "say": "This is Sharing Joys and Concerns. Many communities have done this for generations. Each person can share one joy and one concern, and the whole group holds them together. It takes ten to fifteen minutes."
+      },
+      {
+       "k": "big",
+       "h": "A joy shared grows. A concern shared feels lighter.",
+       "say": "When we share a joy, it grows. When we share a concern, it feels lighter. And everyone learns how to show up for each other this week."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Joys first",
+         "Good news, big or small"
+        ],
+        [
+         "Then concerns",
+         "What we are carrying"
+        ],
+        [
+         "Hold them together",
+         "In prayer"
+        ],
+        [
+         "Follow up",
+         "A call or a card this week"
+        ]
+       ],
+       "say": "Here is how it goes. Start with joys, good news, big or small. Then share concerns, what people are carrying. Then hold them all together in prayer. And during the week, follow up with a call, a card, or a meal."
+      },
+      {
+       "k": "points",
+       "h": "Kind and safe",
+       "items": [
+        [
+         "Short and simple",
+         "A sentence or two"
+        ],
+        [
+         "Your own news",
+         "Or news shared with permission"
+        ],
+        [
+         "It stays in the circle",
+         "Every time"
+        ]
+       ],
+       "say": "Keep it kind and safe. Share in a sentence or two. Share your own news, or news someone said you could share. And what is shared in the circle stays in the circle."
+      },
+      {
+       "k": "big",
+       "h": "One joy, then one concern",
+       "sub": "A sentence each. Passing is welcome.",
+       "beats": [
+        "Let us try it now.",
+        "Think of one joy from this week, big or small.",
+        {
+         "t": "Go around the circle, and each person shares one joy in a sentence.",
+         "w": 20
+        },
+        "Now think of one thing you are carrying, or someone you are holding close.",
+        {
+         "t": "Go around again, sharing a concern, or simply passing.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try it now. Think of one joy from this week, big or small. Go around the circle, and each person shares one joy in a sentence. Now think of one thing you are carrying, or someone you are holding close. Go around again, sharing a concern, or simply passing."
+      },
+      {
+       "k": "big",
+       "h": "Hold it all together",
+       "sub": "In your own words, or in silence.",
+       "beats": [
+        "Now hold everything you heard, together.",
+        {
+         "t": "Take a quiet moment of prayer, in your own words or in silence.",
+         "w": 15
+        },
+        "Then the leader closes with thanks."
+       ],
+       "say": "Now hold everything you heard, together. Take a quiet moment of prayer, in your own words or in silence. Then the leader closes with thanks."
+      },
+      {
+       "k": "points",
+       "h": "For the leader",
+       "items": [
+        [
+         "Go first",
+         "Short and warm"
+        ],
+        [
+         "Thank each person",
+         "Every time"
+        ],
+        [
+         "Safety comes first",
+         "Follow up privately, right away"
+        ]
+       ],
+       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Pray Together",
+         "Under Roots"
+        ],
+        [
+         "Prayer Wall",
+         "Under Roots"
+        ],
+        [
+         "Meal Train",
+         "Under Branches"
+        ]
+       ],
+       "say": "You will find Pray Together in Together, under Roots. Faith Community groves also have Prayer Wall, under Roots, a wall or a book where people write joys and concerns, and the group prays over them. And when a concern calls for help, try a Meal Train, under Branches. When you have done one, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "We hold each other’s joys and each other’s concerns.",
+       "sub": "Every time we gather.",
+       "say": "This is what a community does. We hold each other’s joys, and each other’s concerns, every time we gather."
+      }
+     ]
+    },
+    {
      "id": "gr-r-newcomer",
      "n": 3,
      "title": "Welcome Someone New",
@@ -35400,7 +36620,15 @@ window.GG_LEARN = {
        "say": "Make room for someone new, and the whole circle grows."
       }
      ]
-    },
+    }
+   ]
+  },
+  {
+   "id": "grove-together-teams",
+   "kind": "support",
+   "title": "For Teams",
+   "who": "Short videos for a team that works side by side",
+   "lessons": [
     {
      "id": "gr-r-huddle",
      "n": 4,
@@ -35563,6 +36791,300 @@ window.GG_LEARN = {
        "h": "A team that pauses together goes further.",
        "sub": "Ten minutes, side by side.",
        "say": "A team that pauses together goes further. Ten minutes, side by side."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-reset",
+     "n": 2,
+     "title": "Two-Minute Reset",
+     "mins": 3,
+     "blurb": "Stretch, breathe, look far, and drink some water, together, in the middle of a busy day.",
+     "voice": "brian",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Two-Minute Reset",
+       "sub": "Stretch, breathe, look far, drink water.",
+       "say": "This is a Two-Minute Reset. It is a short pause a team takes together, in the middle of a busy day, between meetings, or before the next call. Two minutes, standing or sitting, wherever you are."
+      },
+      {
+       "k": "big",
+       "h": "Two minutes can change the whole afternoon.",
+       "say": "A busy day keeps moving. Two minutes together lets everyone catch their breath, stretch, and come back to the work steady and clear."
+      },
+      {
+       "k": "flow",
+       "h": "The reset",
+       "steps": [
+        [
+         "Stretch",
+         "Reach up, roll your shoulders"
+        ],
+        [
+         "Breathe",
+         "Three slow breaths"
+        ],
+        [
+         "Look far",
+         "Out a window"
+        ],
+        [
+         "Water",
+         "A few sips"
+        ]
+       ],
+       "say": "Here is the reset. Stand and stretch. Take three slow breaths. Look far away, out a window if you can. And drink some water."
+      },
+      {
+       "k": "big",
+       "h": "Stretch and breathe",
+       "sub": "Arms up. Shoulders back. Three slow breaths.",
+       "beats": [
+        "Let us do the reset now.",
+        "Stand up, if you are able, and reach both arms up high.",
+        "Roll your shoulders back, slowly, a few times.",
+        {
+         "t": "Now take three slow breaths together, with a long breath out each time.",
+         "w": 20
+        }
+       ],
+       "say": "Let us do the reset now. Stand up, if you are able, and reach both arms up high. Roll your shoulders back, slowly, a few times. Now take three slow breaths together, with a long breath out each time."
+      },
+      {
+       "k": "big",
+       "h": "Look far, then sip",
+       "sub": "Twenty seconds on something far away.",
+       "beats": [
+        "Now look far away, out a window or across the room.",
+        {
+         "t": "Let your eyes rest on something far, for about twenty seconds.",
+         "w": 20
+        },
+        "Then take a few sips of water, and come back to the work."
+       ],
+       "say": "Now look far away, out a window or across the room. Let your eyes rest on something far, for about twenty seconds. Then take a few sips of water, and come back to the work."
+      },
+      {
+       "k": "points",
+       "h": "When to reset",
+       "items": [
+        [
+         "Midday",
+         "Before the afternoon"
+        ],
+        [
+         "Between meetings",
+         "A breath before the next one"
+        ],
+        [
+         "After a hard call",
+         "Before the next thing"
+        ]
+       ],
+       "say": "Find the moments. Midday, before the afternoon. Between meetings, a breath before the next one. And after a hard call or visit, before the next thing."
+      },
+      {
+       "k": "points",
+       "h": "Make it a habit",
+       "items": [
+        [
+         "Water Break",
+         "A few times a day"
+        ],
+        [
+         "Movement Break",
+         "Stand, stretch, and move"
+        ],
+        [
+         "Step Outside Together",
+         "Two minutes of fresh air"
+        ]
+       ],
+       "say": "Make it a habit. Take a Water Break together a few times a day. Try a Movement Break, to stand, stretch, and move. And when you can, step outside together for two minutes of fresh air."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Water Break",
+         "Under Leaves"
+        ],
+        [
+         "Movement Break",
+         "Under Leaves"
+        ],
+        [
+         "Step Outside Together",
+         "Under Roots"
+        ]
+       ],
+       "say": "In a Team grove, you will find these in Together. Water Break and Movement Break are under Leaves. Step Outside Together is under Roots. Anchor your reset to Lunch or Team Huddle in Our Team Plan. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Two minutes together, then back to the work.",
+       "sub": "Steady, clear, and side by side.",
+       "say": "Two minutes together, then back to the work, steady, clear, and side by side."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-aftershift",
+     "n": 3,
+     "title": "After a Hard Shift",
+     "mins": 4,
+     "blurb": "Ten minutes for a team to land together after a heavy day, before everyone heads home.",
+     "sources": [
+      "bartels"
+     ],
+     "crisis": [
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "voice": "brian",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "After a Hard Shift",
+       "sub": "Land together, then head home.",
+       "say": "This is After a Hard Shift. Some shifts ask a lot: a death, a crisis, or a long, heavy day. This is ten minutes for a team to land together before heading home. It fits hospice and hospital teams, first responders, school staff, and any team that carries heavy things."
+      },
+      {
+       "k": "big",
+       "h": "Heavy work is lighter, carried together.",
+       "sub": "Ten minutes before home.",
+       "say": "The work you do matters, and some days it is heavy. A team that pauses together at the end goes home a little lighter."
+      },
+      {
+       "k": "flow",
+       "h": "The shape",
+       "steps": [
+        [
+         "Pause",
+         "One minute of quiet"
+        ],
+        [
+         "What happened",
+         "A few words each"
+        ],
+        [
+         "What we felt",
+         "Every feeling is welcome"
+        ],
+        [
+         "What we need",
+         "For tonight"
+        ]
+       ],
+       "say": "Here is the shape. Pause for one minute of quiet. Then each person says what happened, in a few words. Then what we felt. Every feeling is welcome here. Then what each person needs tonight."
+      },
+      {
+       "k": "big",
+       "h": "A minute of quiet",
+       "sub": "Say their name. Honor their life, and the work.",
+       "beats": [
+        "Let us begin with the pause now.",
+        "Stand or sit together, wherever you are.",
+        "If someone you served died today, say their name aloud.",
+        {
+         "t": "Then hold a minute of quiet together, honoring their life, and the work of everyone who served them.",
+         "w": 25
+        }
+       ],
+       "say": "Let us begin with the pause now. Stand or sit together, wherever you are. If someone you served died today, say their name aloud. Then hold a minute of quiet together, honoring their life, and the work of everyone who served them."
+      },
+      {
+       "k": "points",
+       "h": "Debrief together",
+       "items": [
+        [
+         "What happened",
+         "In a few words"
+        ],
+        [
+         "What we felt",
+         "Sad, tired, proud, or shaken"
+        ],
+        [
+         "Listen well",
+         "Thank each person"
+        ]
+       ],
+       "say": "Then debrief together. Start with what happened, in a few words. Then feelings: sad, tired, proud, or shaken. Every feeling makes sense after a hard shift. Listen well, and thank each person."
+      },
+      {
+       "k": "big",
+       "h": "Leave it at the door",
+       "sub": "One thing to leave. One thing to take home.",
+       "beats": [
+        "Now each person names one thing they are leaving at work tonight.",
+        "And one thing they are taking home, like a good moment or a thank you.",
+        {
+         "t": "Go around once, a few words each.",
+         "w": 20
+        }
+       ],
+       "say": "Now each person names one thing they are leaving at work tonight. And one thing they are taking home, like a good moment or a thank you. Go around once, a few words each."
+      },
+      {
+       "k": "points",
+       "h": "Tonight, tend yourself",
+       "items": [
+        [
+         "A real meal",
+         "Whole food, and water"
+        ],
+        [
+         "Move and get outside",
+         "A walk, fresh air"
+        ],
+        [
+         "Rest and connect",
+         "Sleep, and someone you love"
+        ]
+       ],
+       "say": "Then tend yourself tonight. Eat a real meal, and drink water. Move your body, and get outside for a walk. Rest well, and spend time face to face with someone you love."
+      },
+      {
+       "k": "big",
+       "h": "Helpers need help too.",
+       "sub": "Call or text 988 any time. In danger now? Call 911.",
+       "say": "Helpers need help too. If a hard shift stays heavy for days, talk with someone you trust, your team lead, or your employee assistance program. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Pause After a Death",
+         "Under Roots"
+        ],
+        [
+         "Debrief After a Hard Day",
+         "Under Bark"
+        ],
+        [
+         "Leave It at the Door",
+         "Under Bark"
+        ],
+        [
+         "Recovery Time",
+         "Under Leaves"
+        ]
+       ],
+       "say": "In a Team grove, you will find these in Together. Pause After a Death is under Roots. Debrief After a Hard Day and Leave It at the Door are under Bark. And Recovery Time, under Leaves, gives people time to step away after a death or a crisis. Anchor it to Shift Change in Our Team Plan. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Land together, then go home lighter.",
+       "sub": "Thank you for the work you do.",
+       "say": "Land together, then go home a little lighter. Thank you for the work you do."
       }
      ]
     }
