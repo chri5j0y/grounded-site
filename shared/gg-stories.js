@@ -235,10 +235,11 @@
   }
   function forget() { KEY = null; OPENED = null; lsSet(''); }
   function unlocked() { return !!(KEY && OPENED); }
-  function story(id) { var d = data(); if (!d) return null; for (var i = 0; i < d.list.length; i++) if (d.list[i].id === id || d.list[i].slug === id) return d.list[i]; return null; }
-  function full(id) { var s = story(id); return !!s && (s.open || !!(OPENED && OPENED[s.id])); }
-  function paras(id) { var s = story(id); if (!s) return []; if (s.open && s.full) return s.full; if (OPENED && OPENED[s.id]) return OPENED[s.id]; return s.preview || []; }
-  function keyObj() { var d = data(); if (!KEY || !d) return null; var k = d.k || {}; return { v: k.v || 1, round: k.round || 's1', folder: k.folder || 't', key: KEY }; }
+  function isV(id) { return !!(OV && OV.vault && (OV.s.id === id || OV.s.slug === id)); }
+  function story(id) { if (isV(id)) return OV.s; var d = data(); if (!d) return null; for (var i = 0; i < d.list.length; i++) if (d.list[i].id === id || d.list[i].slug === id) return d.list[i]; return null; }
+  function full(id) { if (isV(id)) return true; var s = story(id); return !!s && (s.open || !!(OPENED && OPENED[s.id])); }
+  function paras(id) { if (isV(id)) return OV.s.paras || []; var s = story(id); if (!s) return []; if (s.open && s.full) return s.full; if (OPENED && OPENED[s.id]) return OPENED[s.id]; return s.preview || []; }
+  function keyObj() { if (OV && OV.vault) return OV.vaultKey || null; var d = data(); if (!KEY || !d) return null; var k = d.k || {}; return { v: k.v || 1, round: k.round || 's1', folder: k.folder || 't', key: KEY }; }
 
   // A lesson for the shared player: the title scene speaks the opening line, then the story a page at a time.
   // Each paragraph's sentences are the beats; short paragraphs share a page, a long one spans pages (always whole sentences).
@@ -437,13 +438,22 @@
     if (v === 'read') { if (OV.ctl) { try { OV.ctl.stop(); } catch (e) {} OV.ctl = null; } w.hidden = true; r.hidden = false; r.innerHTML = readHtml(OV.s); }
     else { r.hidden = true; w.hidden = false; play(OV.at || 0); }
   }
+  // The Story Vault (Founder tab) plays any story in full with the stories key: GGStories.listen(story, keyObj).
+  var VPEND = null;
+  function listen(v, k) {
+    if (!v || !k) return Promise.resolve(false);
+    var P = (v.paras || []).slice();
+    VPEND = k;
+    return open({ id: String(v.id), slug: slug(v.title || v.id), title: String(v.title || ''), sub: String(v.sub || ''), col: String(v.col || ''), status: 'posted', open: false,
+      substack: String(v.substack || ''), credit: String(v.credit || ''), mins: mins(P), paras: P }, 'watch', null, true);
+  }
   function close(fromPop) {
     if (!OV) return;
     var o = OV; OV = null;
     if (o.ctl) try { o.ctl.stop(); } catch (e) {}
     document.removeEventListener('keydown', onKey, true);
     o.root.remove(); document.body.style.overflow = o.overflow || '';
-    if (!fromPop) { if (o.hist) { try { history.back(); } catch (e) {} } else { try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {} } }
+    if (!fromPop && !o.vault) { if (o.hist) { try { history.back(); } catch (e) {} } else { try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {} } }
     var c = document.getElementById('story-' + o.s.slug), b = c && c.querySelector('[data-gs="watch"]');
     try { (o.from && o.from.isConnected ? o.from : b || document.body).focus({ preventScroll: true }); } catch (e) {}
   }
@@ -457,8 +467,9 @@
     }
   }
   function open(id, v, from, fromHash) {
-    var s = story(id); if (!s) return Promise.resolve(false);
-    if (s.status === 'early' && !unlocked()) { var inv = document.getElementById('gs-early'); if (inv) inv.scrollIntoView(); return Promise.resolve(false); }
+    var vk = VPEND; VPEND = null;
+    var s = (id && typeof id === 'object') ? id : story(id); if (!s) return Promise.resolve(false);
+    if (!vk && s.status === 'early' && !unlocked()) { var inv = document.getElementById('gs-early'); if (inv) inv.scrollIntoView(); return Promise.resolve(false); }
     return need(READ_JS, function () { return !!root.GGRead; }).then(function () { return need(LEARN_JS, function () { return !!root.GGLearn; }); }).then(function () {
       if (!root.GGLearn) return false;
       if (OV) close(true);
@@ -466,15 +477,16 @@
       var el = document.createElement('div');
       el.className = 'ggl ggl-app gs-ov'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Grounded Stories: ' + s.title);
       el.style.setProperty('--ggl-acc', '#8B5E1A'); el.style.setProperty('--ggl-bar', '#2E2118'); el.style.setProperty('--ggl-lite', '#E8C98E');
-      el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">Back to Stories</button></div>'
+      el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">' + (vk ? 'Back to the Story Vault' : 'Back to Stories') + '</button></div>'
         + '<div class="ggl-in"><div class="ggl-eb">' + (s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h1 tabindex="-1">' + esc(s.title) + '</h1>'
         + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (full(s.id) ? '.' : ' in full.') + '</p>'
         + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button></div>'
         + '<div class="gs-watch"></div><div class="gs-rdv" hidden></div><div class="gs-codewrap" hidden></div>'
         + (s.substack ? '<p class="gs-talk-row"><a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a></p>' : '') + '</div>';
       document.body.appendChild(el);
-      OV = { s: s, root: el, at: 0, view: 'watch', from: from || document.activeElement, overflow: document.body.style.overflow, hist: false };
-      if (!fromHash) { try { history.pushState({ ggStory: s.slug }, '', '#' + s.slug); OV.hist = true; } catch (e) {} }
+      OV = { s: s, root: el, at: 0, view: 'watch', from: from || document.activeElement, overflow: document.body.style.overflow, hist: false, vault: !!vk, vaultKey: vk };
+      if (vk) {}
+      else if (!fromHash) { try { history.pushState({ ggStory: s.slug }, '', '#' + s.slug); OV.hist = true; } catch (e) {} }
       else { try { history.replaceState({ ggStory: s.slug }, '', location.href); } catch (e) {} }
       document.body.style.overflow = 'hidden';
       document.addEventListener('keydown', onKey, true);
@@ -522,7 +534,7 @@
   root.GGStories = {
     version: 'b784s', lines: LINES, words: WORDS, look: LOOK,
     seal: seal, makeWrap: makeWrap, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
-    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, close: function () { close(); }
+    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, close: function () { close(); }
   };
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;
 })(typeof window !== 'undefined' ? window : globalThis);
