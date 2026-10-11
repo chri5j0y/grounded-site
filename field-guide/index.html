@@ -519,6 +519,10 @@ body.cd-noscroll{overflow:hidden;}
 .pls-end{break-inside:avoid;}
 .pls-foot{margin-top:4mm;font-size:7.4pt;color:#6B5A4D;text-align:center;border-top:.5pt solid #DDD0B8;padding-top:2mm;}
 .codeshow{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(22px * var(--scale));letter-spacing:.5px;margin:10px 0;word-break:break-word;}
+.acc-code{font-family:ui-monospace,Menlo,Consolas,monospace;font-size:calc(16px * var(--scale));overflow-wrap:anywhere;text-align:right;}
+.acc-steps{margin:8px 0 8px 20px;}.acc-steps li{margin-top:4px;}
+.acc-row .lr-main b{overflow-wrap:anywhere;}
+@media (max-width:600px){.acc-row{flex-wrap:wrap;}.acc-row > .row{width:100%;}}
 
 /* ---------- maple guide ---------- */
 .sp-hello{background:radial-gradient(ellipse 80% 120% at 85% 20%,#3F5A2C 0%,#2C3F20 55%,#1F2D17 100%);}
@@ -657,8 +661,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b771"></script>
 <script src="grovevisit.js?v=b782"></script>
 <script src="heartwood.js?v=b782"></script>
-<script src="../shared/gg-stories.js?v=b784u"></script>
-<script src="vault.js?v=b784u"></script>
+<script src="../shared/gg-stories.js?v=b785"></script>
+<script src="vault.js?v=b785"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -726,7 +730,7 @@ function fgDraftNorm(d){
 }
 const CODES = fgCodesNorm(window.GFG_CODES || {v:1, stamp:'', salt:null, codes:[], links:{}});
 const RANK = {guide:1, staff:2, founder:3};
-const LEVEL_NAME = {founder:'Founder', staff:'Staff', guide:'Guide', org:'Organization'};
+const LEVEL_NAME = {founder:'Founder', staff:'Staff', guide:'Guide', org:'Organization', supporter:'Supporter'};
 async function rawKey(raw){ return crypto.subtle.importKey('raw', unb64(raw), {name:'AES-GCM'}, true, ['encrypt','decrypt']); }
 async function tryOpen(box, raw){ if (!box || !raw) return null; try { return await open(await rawKey(raw), box); } catch(e){ return null; } }
 const newRaw = () => b64(crypto.getRandomValues(new Uint8Array(32)));
@@ -760,7 +764,9 @@ async function openLevels(tier, keys){
   out.founderLib = tier === 'founder' ? out.own : null;
   out.keys = K; return out;
 }
-function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.guide; FDR = o.founderLib; }
+function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.guide; FDR = o.founderLib; fgStoriesKey(); }
+// Grounded Stories opens in full on a device where a Guide, Staff, or Founder code is in use (BLD 784).
+function fgStoriesKey(){ try { const k = (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || (FLD && FLD.storiesKey && FLD.storiesKey.key); if (k && window.GGStories && GGStories.remember) GGStories.remember(k); } catch (e) {} }
 function codeEnded(){
   if (!CODEID || CODEID === 'legacy') return false;
   const e = CODES.codes.find(x => x.id === CODEID);
@@ -905,8 +911,18 @@ async function handleLock(mode){
       await persist(); start();
     }
   } catch(e){
+    // A Supporter code opens Grounded Stories only (BLD 785): say so kindly and point the way.
+    if ((mode === 'access' || mode === 'renew') && !(e && e.message === 'ended') && await fgStoriesCode(($('#l1') || {}).value || '')){ m.innerHTML = 'That code opens Grounded Stories. <a href="../stories.html">Open Grounded Stories</a> and enter it there.'; return; }
     m.textContent = e && e.message === 'ended' ? 'That access code has ended. Reach out for a new one.' : (mode !== 'create') ? "That access code didn't work. Check with Chris." : 'Something went wrong. Please try again.';
   }
+}
+// True when a code opens Grounded Stories (stories/data.js, loaded only when needed). Nothing is kept.
+async function fgStoriesCode(code){
+  try {
+    if (!code.trim() || !window.GGStories || !GGStories.check) return false;
+    if (!window.GG_STORIES) await new Promise(ok => { const s = document.createElement('script'); s.src = '../stories/data.js?t=' + Math.floor(Date.now() / 6e4); s.onload = s.onerror = () => ok(); document.head.appendChild(s); });
+    return !!window.GG_STORIES && await GGStories.check(code);
+  } catch(e){ return false; }
 }
 function resetDevice(){
   if (!confirm('Reset this device? This permanently erases all Field Guide notes and records stored here. If you have a backup file, you can restore it afterward.')) return;
@@ -1104,7 +1120,9 @@ if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, 
   pendingPlain: l => pendingPlain(l), updBusy: () => !!V.upd, setUpd: u => { V.upd = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
 // GWG BLD 784 hook: the Story Vault (vault.js, GGVault): Founders only, in the Founder tab. Its edits go into FDR.storyVault and
 // fdrKeep seals the Founder library into "Ready to Upload" (lib-founder.js), the way Seal It does.
-if (window.GGVault) GGVault.init({fdr: () => FDR, tier: () => TIER, keep: () => fdrKeep(), render: () => render(), toast: m => toast(m), updLvl: () => V.upd ? V.upd.lvl : ''});
+// BLD 785: every code lives in the Access list (accView); the Vault seals data.js with the wraps of every code in use.
+if (window.GGVault) GGVault.init({fdr: () => FDR, tier: () => TIER, keep: () => fdrKeep(), render: () => render(), toast: m => toast(m), updLvl: () => V.upd ? V.upd.lvl : '',
+  wraps: () => accWraps(), wsalt: () => (FDR && FDR.access && FDR.access.salt) || '', sealed: () => { ensureDraft().stories = today(); }});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
 // ---------------- HOME ----------------
@@ -1588,20 +1606,38 @@ async function relink(d){
   d.codes.links = L; d.stamp = d.codes.stamp = uid();
 }
 function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return !!(k.staff && (!L['founder>staff'] || (k.guide && !L['staff>guide']))); }
-async function makeCode(kind, label, ends){
-  const tier = kind === 'org' ? 'guide' : kind, k = effKeys()[tier];
-  if (!k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish setup."'); return null; }
-  const d = ensureDraft();
-  if (!d.codes.salt) d.codes.salt = b64(crypto.getRandomValues(new Uint8Array(16)));
-  const code = wordsCode();
-  const e = await seal(await derive(code, unb64(d.codes.salt), false), {k, tier});
-  Object.assign(e, {id: tier.slice(0,3) + uid(), tier, kind, label, made: today(), ends: ends || null});
-  d.codes.codes.push(e);
-  DATA.founder.saved.push({id:e.id, code, label, tier, kind, made:e.made, ends:e.ends});
-  await relink(d); await persist();
+// One code for one person (BLD 785). kind: 'founder', 'staff', 'guide', or 'supporter' ('org' reads as 'guide').
+// Founder, Staff, and Guide codes get a codes.js line (a sealed copy of the library key, labelled only with the level,
+// so names stay off the site); Supporter codes get none, so the Field Guide never opens for them. Every code also gets
+// a record in the Founder library's Access list (FDR.access) carrying its stories wrap, so it opens Grounded Stories.
+// o: {org, n (place in the organization), quiet (the caller relinks, saves, and seals once at the end)}.
+async function makeCode(kind, label, ends, o = {}){
+  if (accWaits()) { alert(ACC_WAIT); return null; }
+  const sup = kind === 'supporter', tier = kind === 'org' ? 'guide' : kind, k = sup ? null : effKeys()[tier];
+  if (!sup && !k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish setup."'); return null; }
+  if (sup && !accKey()) { alert('Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).'); return null; }
+  const code = wordsCode(), made = today();
+  let e;
+  if (!sup){
+    const d = ensureDraft();
+    if (!d.codes.salt) d.codes.salt = b64(crypto.getRandomValues(new Uint8Array(16)));
+    e = await seal(await derive(code, unb64(d.codes.salt), false), {k, tier});
+    Object.assign(e, {id: tier.slice(0,3) + uid(), tier, kind: tier, label: LEVEL_NAME[tier] + ' code', made, ends: ends || null});
+    d.codes.codes.push(e);
+  } else e = {id: 'sup' + uid(), tier: 'supporter', kind: 'supporter', made, ends: ends || null};
+  DATA.founder.saved.push(Object.assign({id:e.id, code, label, tier:e.tier, kind:e.kind, made, ends:e.ends}, o.org ? {org:o.org, n:o.n} : {}));
+  if (FDR){
+    const A = accStore(), r = {id:e.id, level:e.tier, label, made};
+    if (e.ends) r.ends = e.ends;
+    if (o.org){ r.org = o.org; r.n = o.n; }
+    const w = await accWrap(code); if (w) Object.assign(r, w);
+    A.codes.push(r);
+  }
+  if (!o.quiet){ if (!sup) await relink(ensureDraft()); await persist(); await fdrKeep(); }
   return {code, e};
 }
 async function rotateLevel(tier){
+  if (accWaits()) return alert(ACC_WAIT);
   const plain = await pendingPlain(tier);
   if (!plain) return alert("This device can't open the " + LEVEL_NAME[tier] + ' library, so it can\'t rotate it.');
   const warn = {founder:'Rotate the Founder code? The current Founder code stops working once you upload. Kayti (and any other Founder device) types the new Founder code once.',
@@ -1613,11 +1649,210 @@ async function rotateLevel(tier){
   d.libs[tier] = await seal(await rawKey(raw), plain);
   d.codes.codes = d.codes.codes.filter(e => e.tier !== tier);
   DATA.founder.saved = DATA.founder.saved.filter(x => x.tier !== tier);
+  if (FDR) accStore().codes.forEach(r => { if (r.level === tier && !r.cancelled) r.cancelled = today(); }); // the Access list follows: that level's codes end everywhere
   const r = await makeCode(tier, {founder:'Founder code', staff:'Staff code', guide:'Guide code (individuals)'}[tier], tier === 'guide' ? oneYear() : null);
   if (!r) return;
   d.newIds[tier] = r.e.id; await persist();
   V.show = r.e.id; render();
 }
+// ---------------- FOUNDER: the one Access list (GWG BLD 785) ----------------
+// One place for every code, and one code for each person. Founder, Staff, and Guide codes open the Field Guide (codes.js)
+// and Grounded Stories; Supporter codes open Grounded Stories only. Make Codes for an Organization makes a personal code
+// for each person, grouped under the organization.
+// Where the records live: the Founder library, FDR.access = {v: 1, salt (the shared stories wrap salt), orgs: [{id, name,
+// level, made, size}], codes: [{id (the codes.js id for Founder, Staff, and Guide), level, label, made, ends?, cancelled?,
+// org?, n?, c, iv, ct (the stories key wrapped by the code, GGStories.makeWrap with the salt) or c, salt, iv, ct (an older
+// BLD 784 Member Code)}]}. The Story Vault's BLD 784 Member Codes move in as Supporter codes, labels kept, the first time
+// the list changes; until then they show here just the same. Names, levels, and organizations stay in the Founder library:
+// codes.js lines carry only the level, and stories/data.js wraps carry only a random tag.
+// Uploads: codes.js (field-guide folder) when a Founder, Staff, or Guide code changes; lib-founder.js (field-guide folder)
+// for every change; data.js (stories folder) for every change, sealed by the Story Vault's Seal Grounded Stories.
+const ACC_LV = ['founder', 'staff', 'guide', 'supporter'];
+const ACC_WAIT = 'An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Access list is ready for changes again.';
+const accWaits = () => !!(V.upd && V.upd.lvl === 'founder');
+const accKey = () => (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || '';
+const accFromMember = m => Object.assign({id: 'sup' + m.c, level: 'supporter', label: m.label || '', made: m.made || '', c: m.c, salt: m.salt, iv: m.iv, ct: m.ct}, m.cancelled ? {cancelled: m.cancelled} : {});
+// Every record, read only: FDR.access plus any Member Codes still waiting in the Story Vault.
+function accRecs(){
+  const A = (FDR && FDR.access) || {}, out = (A.codes || []).slice(), have = new Set(out.map(r => r.c).filter(Boolean));
+  ((FDR && FDR.storyVault && FDR.storyVault.codes) || []).forEach(m => { if (m && m.c && !have.has(m.c)) out.push(accFromMember(m)); });
+  return out;
+}
+const accOrgs = () => ((FDR && FDR.access && FDR.access.orgs) || []);
+// The Access list, ready for a change: made the first time, with the Story Vault's Member Codes moved in.
+function accStore(){
+  if (!FDR.access || typeof FDR.access !== 'object') FDR.access = {v: 1, salt: '', orgs: [], codes: []};
+  const A = FDR.access; A.codes = A.codes || []; A.orgs = A.orgs || [];
+  if (!A.salt && window.GGStories && GGStories.newSalt) A.salt = GGStories.newSalt();
+  const SVt = FDR.storyVault;
+  if (SVt && Array.isArray(SVt.codes) && SVt.codes.length){ const have = new Set(A.codes.map(r => r.c)); SVt.codes.forEach(m => { if (m && m.c && !have.has(m.c)) A.codes.push(accFromMember(m)); }); SVt.codes = []; }
+  return A;
+}
+async function accWrap(code){ const k = accKey(); if (!k || !window.GGStories || !GGStories.makeWrap) return null; const A = accStore(); return await GGStories.makeWrap(code, k, A.salt); }
+const accEnded = r => !!(r.ends && r.ends < today());
+// The wraps of every code in use, for data.js (cancelled and ended codes stay out).
+const accWraps = () => accRecs().filter(r => r.c && r.iv && r.ct && !r.cancelled && !accEnded(r)).map(r => Object.assign({c: r.c}, r.salt ? {salt: r.salt} : {}, {iv: r.iv, ct: r.ct}));
+const accSealed = () => new Set((((FDR && FDR.storyVault) || {}).sealed || {}).codes || []);
+// True when the codes in use differ from the ones in the last sealed data.js.
+function accStoriesDue(){
+  if (!accKey()) return false;
+  const live = accWraps().map(w => w.c), S = accSealed();
+  return live.length !== S.size || live.some(c => !S.has(c));
+}
+const accName = r => r.label || (r.org ? 'Person ' + (r.n || '') : LEVEL_NAME[r.level] || 'Code');
+const accOpens = r => r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
+// Ends codes: takes their codes.js lines out (Founder, Staff, Guide), marks the records cancelled, and saves once.
+async function accCancel(ids){
+  if (accWaits()) return alert(ACC_WAIT);
+  const W = workCodes(), fg = ids.filter(id => W.codes.some(x => x.id === id));
+  if (fg.some(id => W.codes.find(x => x.id === id).tier === 'founder') && !W.codes.some(x => x.tier === 'founder' && !ids.includes(x.id))) { alert("That's the only Founder code. Rotate Founder instead, so there's always a way in."); return false; }
+  if (fg.length){ const d = ensureDraft(); d.codes.codes = d.codes.codes.filter(x => !fg.includes(x.id)); await relink(d); }
+  DATA.founder.saved = DATA.founder.saved.filter(x => !ids.includes(x.id));
+  if (FDR && accRecs().some(r => ids.includes(r.id))) accStore().codes.forEach(r => { if (ids.includes(r.id) && !r.cancelled) r.cancelled = today(); });
+  if (ids.includes(V.show)) V.show = null;
+  await persist(); await fdrKeep(); return true;
+}
+// An older Founder, Staff, or Guide code made on this device opens Grounded Stories too.
+async function accAddStories(id){
+  if (accWaits()) return alert(ACC_WAIT);
+  const sv = DATA.founder.saved.find(x => x.id === id), e = workCodes().codes.find(x => x.id === id);
+  if (!sv || !e || !FDR || !accKey()) return;
+  const w = await accWrap(sv.code); if (!w) return;
+  accStore().codes.push(Object.assign({id, level: fgTier(e.tier), label: sv.label || e.label || '', made: e.made || today()}, e.ends ? {ends: e.ends} : {}, w));
+  await persist(); await fdrKeep(); render(); toast('It opens Grounded Stories once data.js is uploaded.');
+}
+// Make Codes for an Organization: one personal code for each person, a few at a time.
+async function accMakeOrg(){
+  if (accWaits()) return alert(ACC_WAIT);
+  const name = $('#acc-org').value.trim(), level = $('#acc-olvl').value, ends = $('#acc-oends').value || null;
+  const names = $('#acc-onames').value.split('\n').map(x => x.trim());
+  while (names.length && !names[names.length - 1]) names.pop();
+  const n = Math.max(+$('#acc-on').value || 0, names.length), prog = $('#acc-prog');
+  if (!name){ $('#acc-org').focus(); return; }
+  if (!(n >= 1 && n <= 500)){ $('#acc-on').focus(); prog.textContent = 'Choose how many people, from 1 to 500.'; return; }
+  if (level === 'supporter' ? !accKey() : !effKeys()[level]) return alert(level === 'supporter' ? 'Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).' : "This device can't open the " + LEVEL_NAME[level] + ' library yet. See "Finish setup."');
+  const btn = $('[data-act="acc-org-make"]'); if (btn) btn.disabled = true;
+  const A = accStore(), org = {id: 'org' + uid(), name, level, made: today(), size: n}; A.orgs.push(org);
+  let done = 0;
+  for (let i = 0; i < n; i += 5){
+    prog.textContent = 'Making ' + n + ' codes: ' + done + ' ready so far.';
+    const part = [];
+    for (let j = i; j < Math.min(n, i + 5); j++) part.push(makeCode(level, names[j] || '', ends, {org: org.id, n: j + 1, quiet: true}));
+    done += (await Promise.all(part)).filter(Boolean).length;
+  }
+  if (level !== 'supporter') await relink(ensureDraft());
+  await persist(); await fdrKeep();
+  V.org = org.id; V.show = null; render(); window.scrollTo(0, 0);
+  toast(done + ' codes made for ' + name + '.');
+}
+// The organization's list, from the codes kept on this device: for copying or printing.
+function accOrgLines(o){
+  const R = accRecs().filter(r => r.org === o.id && !r.cancelled).sort((a, b) => (a.n || 0) - (b.n || 0));
+  return R.map(r => { const sv = DATA.founder.saved.find(x => x.id === r.id); return {name: r.label || 'Person ' + (r.n || ''), code: sv ? sv.code : ''}; });
+}
+const accOrgSteps = o => o.level === 'supporter'
+  ? ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on Grounded Stories: growwithgrounded.com/stories.html. Every story opens on that device.']
+  : ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on the Field Guide (growwithgrounded.com/field-guide) or on Grounded Stories (growwithgrounded.com/stories.html).', 'On the Field Guide, you then make your own passcode, and that device is ready for you.'];
+function accOrgText(o){
+  const L = accOrgLines(o);
+  return [o.name, LEVEL_NAME[o.level] + ' codes, made ' + nice(o.made), ''].concat(L.map(x => x.name + ': ' + (x.code || 'shown on the device that made it')), [''], accOrgSteps(o)).join('\n');
+}
+function accOrgPrint(o){
+  const L = accOrgLines(o);
+  fgSheet(ph(LEVEL_NAME[o.level] + ' codes') + `<h1>${esc(o.name)}</h1><p>${esc(LEVEL_NAME[o.level])} codes, made ${esc(nice(o.made))}. One code for each person.</p>
+    <div style="margin-top:12px">${L.map(x => `<div class="pr-field"><div class="l">${esc(x.name)}</div><div class="v" style="font-family:monospace;font-size:15px">${esc(x.code || 'Shown on the device that made it')}</div></div>`).join('')}</div>
+    <h2 style="margin-top:18px">How to Begin</h2><ol>${accOrgSteps(o).map(x => `<li>${esc(x)}</li>`).join('')}</ol>` + pf(), o.name + ' Codes', {file: 'organization-codes', confidential: true});
+}
+// The Access list view (the Access Codes section of the Founder tab).
+function accView(){
+  const C = workCodes(), live = new Set(CODES.codes.map(e => e.id)), S = accSealed(), recs = accRecs(), byId = {};
+  recs.forEach(r => { byId[r.id] = r; });
+  const saved = id => DATA.founder.saved.find(x => x.id === id), wait = accWaits() ? ' disabled' : '', hasStories = !!accKey();
+  const order = {founder: 0, staff: 1, guide: 2, org: 2, supporter: 3};
+  // Rows: every record, plus codes.js lines from before the Access list (Founder, Staff, Guide) that have no record yet.
+  const rows = recs.map(r => ({r, fg: r.level !== 'supporter', e: C.codes.find(x => x.id === r.id)}))
+    .concat(C.codes.filter(e => !byId[e.id]).map(e => ({r: {id: e.id, level: fgTier(e.kind === 'org' ? 'guide' : e.tier), label: e.label, made: e.made, ends: e.ends, old: e.kind === 'org' ? 'Organization' : ''}, fg: true, e})));
+  const status = x => {
+    const r = x.r;
+    if (r.cancelled) return '<span class="pill">Cancelled</span>';
+    if (accEnded(r)) return '<span class="pill warn">Ended</span>';
+    if ((x.fg && !live.has(r.id)) || (r.c && !S.has(r.c))) return '<span class="pill gold">Waiting to Upload</span>';
+    return '<span class="pill sage">In Use</span>';
+  };
+  const row = x => { const r = x.r, sv = saved(r.id), canAdd = !r.c && !r.cancelled && x.fg && sv && hasStories;
+    return `<div class="list-row acc-row"><div class="lr-main"><b>${esc(accName(r))}</b> <span class="pill">${esc(r.old || LEVEL_NAME[r.level] || '')}</span> ${status(x)}<br><small class="muted">Made ${nice(r.made)}${r.cancelled ? ', cancelled ' + nice(r.cancelled) : ''} &middot; ${r.cancelled ? 'opened ' : 'opens '}${esc(accOpens(r))}${r.ends ? ' &middot; ends ' + nice(r.ends) : ''}</small></div>
+      <div class="row">${sv && !r.cancelled ? `<button class="btn btn-line btn-sm" data-act="fdr-show" data-v="${esc(r.id)}">Show</button>` : ''}${canAdd ? `<button class="btn btn-line btn-sm" data-act="acc-stories" data-v="${esc(r.id)}"${wait}>Open Stories Too</button>` : ''}${r.cancelled ? '' : `<button class="btn btn-line btn-sm" data-act="acc-cancel" data-v="${esc(r.id)}"${wait}>Cancel</button>`}</div></div>`; };
+  const sortP = (a, b) => (order[a.r.level] - order[b.r.level]) || String(accName(a.r)).localeCompare(String(accName(b.r)));
+  const people = rows.filter(x => !x.r.org && !x.r.cancelled).sort(sortP), gone = rows.filter(x => x.r.cancelled && !x.r.org);
+  const orgs = accOrgs().slice().sort((a, b) => String(b.made).localeCompare(String(a.made)) || a.name.localeCompare(b.name));
+  const orgH = orgs.map(o => {
+    const R = rows.filter(x => x.r.org === o.id).sort((a, b) => (a.r.n || 0) - (b.r.n || 0)), inUse = R.filter(x => !x.r.cancelled).length;
+    return `<div class="card acc-org"><div class="eyebrow">${esc(LEVEL_NAME[o.level])} codes &middot; made ${nice(o.made)}</div><h3>${esc(o.name)}</h3>
+      <p class="muted">${inUse} of ${R.length} ${R.length === 1 ? 'code' : 'codes'} in use. Each person has their own.</p>
+      <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="acc-org-show" data-v="${esc(o.id)}">Show the List</button>${inUse ? `<button class="btn btn-line btn-sm" data-act="acc-org-cancel" data-v="${esc(o.id)}"${wait}>Cancel the Whole Group</button>` : ''}</div>
+      <details class="proof-sec"><summary>Each Person<span>${R.length}</span></summary>${R.map(row).join('')}</details></div>`;
+  }).join('');
+  const oShow = V.org && orgs.find(o => o.id === V.org);
+  const orgShowH = oShow ? (() => { const L = accOrgLines(oShow), miss = L.filter(x => !x.code).length;
+    return `<div class="card" id="acc-orgshow" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[oShow.level])} codes</div><h3>${esc(oShow.name)}</h3>
+    <div style="margin-top:8px">${L.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.name)}</b></div><span class="acc-code">${esc(x.code || 'On the device that made it')}</span></div>`).join('')}</div>
+    <p class="muted" style="margin-top:10px">${miss ? 'Codes made on another Founder device show there. ' : ''}Share the list privately with the organization. ${oShow.level === 'supporter' ? 'Each person enters their code once on Grounded Stories.' : 'Each person enters their code once on the Field Guide or on Grounded Stories.'} The codes open once the files in Ready to Upload are on the site.</p>
+    <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="acc-org-copy" data-v="${esc(oShow.id)}">${icon('copy')} Copy the List</button><button class="btn btn-line btn-sm" data-act="acc-org-print" data-v="${esc(oShow.id)}">Print the List</button><button class="btn btn-line btn-sm" data-act="acc-org-hide">Done</button></div></div>`; })() : '';
+  const legacyLive = BOX.staff && BOX.staff.salt && !(DATA.founder.draft && DATA.founder.draft.libs.staff);
+  const due = accStoriesDue();
+  const dueH = due ? `<div class="tipbox" style="border-left:3px solid var(--gold)"><b>Grounded Stories is ready for a fresh data.js.</b> Seal it here, then upload data.js into the stories folder, so these codes open the stories.
+    <div class="row" style="margin-top:8px"><button class="btn btn-gold btn-sm" data-act="acc-seal"${wait}>Seal Grounded Stories</button></div></div>` : '';
+  const listH = `  <div class="card" id="acc-list"><h3>Access Codes</h3><p class="muted">One list for every code, and one code for each person. Founder, Staff, and Guide codes open the Field Guide and Grounded Stories. Supporter codes open Grounded Stories. A code is used once on each device; after that, the Field Guide opens with each person's own passcode, and Grounded Stories stays open on that device.</p>
+   ${accWaits() ? `<p class="tipbox" style="border-left:3px solid var(--gold)">${esc(ACC_WAIT)}</p>` : ''}${dueH}
+   <div style="margin-top:8px">${people.map(row).join('') || '<p class="muted" style="margin-top:8px">Codes you make show here.</p>'}</div>
+   ${legacyLive ? `<div class="list-row"><div class="lr-main"><b>Staff code</b> <span class="pill">Staff</span><br><small class="muted">The code from before levels. It works until you rotate Staff.</small></div></div>` : ''}
+   ${gone.length ? `<details class="proof-sec" style="margin-top:10px"><summary>Cancelled<span>${gone.length}</span></summary>${gone.map(row).join('')}</details>` : ''}
+   <p class="muted" style="font-size:14px;margin-top:10px">Cancel ends a code once the files in Ready to Upload are on the site: the Field Guide closes for it on every device, and it opens Grounded Stories on no new device. A device that already opened the stories keeps them, so each person keeps what they already received.</p></div>`;
+  const lvlOpt = (list, sel) => list.map(l => `<option value="${l}"${l === sel ? ' selected' : ''}>${LEVEL_NAME[l]}</option>`).join('');
+  const makeH = `  <div class="card"><h3>Make a Code</h3>
+   <label class="f" for="fdr-kind">Level</label><select id="fdr-kind">${lvlOpt(ACC_LV, 'guide')}</select>
+   <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="The person's name" autocomplete="off">
+   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Every code opens Grounded Stories. Supporter codes open Grounded Stories only, with every story in full and the Early Previews. New Guides go through Orientation before anything else opens.</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make"${wait}>Make Code</button></div>`;
+  const orgMakeH = `  <div class="card" id="acc-orgmake"><h3>Make Codes for an Organization</h3><p class="muted">A personal code for each person, grouped under the organization, ready to copy or print as one list.</p>
+   <label class="f" for="acc-org">Organization</label><input type="text" id="acc-org" placeholder="The organization's name" autocomplete="off">
+   <label class="f" for="acc-olvl">Level</label><select id="acc-olvl">${lvlOpt(['guide', 'staff', 'supporter'], 'guide')}</select>
+   <label class="f" for="acc-on">How many people</label><input type="number" id="acc-on" min="1" max="500" value="5" inputmode="numeric" style="max-width:140px">
+   <div class="row" style="margin-top:8px">${[5, 10, 25, 50].map(k => `<button type="button" class="btn btn-line btn-sm" data-act="acc-size" data-v="${k}">${k}</button>`).join('')}</div>
+   <label class="f" for="acc-onames">Names (optional, one on each line)</label><textarea id="acc-onames" rows="4" placeholder="One name on each line"></textarea>
+   <label class="f" for="acc-oends">Ends</label><input type="date" id="acc-oends" value="${oneYear()}">
+   <p class="muted" style="font-size:14px;margin-top:4px">Names are for you and the printed list; any left blank show as Person 1, Person 2, and so on. The size is a count for your records: a code opens any device it is entered on, so each person keeps their own code to themselves.</p>
+   <button class="btn btn-gold" style="margin-top:12px" data-act="acc-org-make"${wait}>Make the Codes</button><p class="muted" id="acc-prog" role="status" style="margin-top:8px"></p></div>`;
+  return orgShowH + listH + orgH + makeH + orgMakeH;
+}
+async function accAct(a, v){
+  const o = accOrgs().find(x => x.id === v);
+  switch (a){
+    case 'acc-cancel': {
+      const r = accRecs().find(x => x.id === v), e = workCodes().codes.find(x => x.id === v); if (!r && !e) return true;
+      if (!confirm('Cancel the code for ' + (r ? accName(r) : e.label) + '? It ends once the files in Ready to Upload are on the site.')) return true;
+      if (await accCancel([v])){ render(); toast('Cancelled. Ready to Upload has the files.'); } return true; }
+    case 'acc-org-cancel': {
+      if (!o) return true; const ids = accRecs().filter(r => r.org === o.id && !r.cancelled).map(r => r.id);
+      if (!confirm('Cancel all ' + ids.length + ' codes for ' + o.name + '? They end once the files in Ready to Upload are on the site.')) return true;
+      if (await accCancel(ids)){ render(); toast('The whole group is cancelled. Ready to Upload has the files.'); } return true; }
+    case 'acc-stories': await accAddStories(v); return true;
+    case 'acc-org-make': await accMakeOrg(); return true;
+    case 'acc-size': { const n = $('#acc-on'); if (n) n.value = v; return true; }
+    case 'acc-org-show': V.org = v; V.show = null; render(); window.scrollTo(0, 0); return true;
+    case 'acc-org-hide': V.org = null; render(); return true;
+    case 'acc-org-copy': if (o) copy(accOrgText(o)); return true;
+    case 'acc-org-print': if (o) accOrgPrint(o); return true;
+    case 'acc-seal': if (window.GGVault && GGVault.seal && !GGVault.busy()){ const b = $('[data-act="acc-seal"]'); if (b) b.disabled = true; await GGVault.seal(); render(); } return true;
+  }
+  return false;
+}
+// The end date follows the level: a year for Guide codes (and an organization's Guide or Staff codes), none for the rest.
+document.addEventListener('change', e => {
+  const t = e.target; if (!t || !DATA || (t.id !== 'fdr-kind' && t.id !== 'acc-olvl')) return;
+  const d = $(t.id === 'fdr-kind' ? '#fdr-ends' : '#acc-oends'); if (!d) return;
+  d.value = t.value === 'guide' || (t.id === 'acc-olvl' && t.value === 'staff') ? oneYear() : '';
+});
 const HEAD = '// Grounded Field Guide(TM). (c) 2026 Grow With Grounded LLC. Proprietary and confidential.\n';
 // Take-home footers (GWG BLD 743): the tree's full name, and the trademark on Grow With Grounded, owned by Grow With Grounded LLC.
 const GWG_TM = 'Grow With Grounded\u2122 is a trademark of Grow With Grounded LLC.';
@@ -1635,30 +1870,24 @@ function vFounder(){
   if (V.slab) return vStoryLab();
   const d = DATA.founder.draft, C = workCodes(), live = new Set(CODES.codes.map(e => e.id)), k = effKeys();
   const saved = id => DATA.founder.saved.find(x => x.id === id);
-  const order = {founder:0, staff:1, guide:2, org:3};
-  const list = C.codes.slice().sort((a,b) => (order[a.kind||a.tier] - order[b.kind||b.tier]) || String(a.label).localeCompare(String(b.label)));
-  const legacyLive = BOX.staff && BOX.staff.salt && !(d && d.libs.staff);
   const shown = V.show ? saved(V.show) : null;
   const pr = FDR.pricing; // tiers are [label, price] rows; a row with no price is a group heading (W1)
-  const fileRows = d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '';
+  const storiesUp = !!accKey() && (accStoriesDue() || !!(d && d.stories)); // data.js for the stories folder (BLD 785)
+  const fileRows = (d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b><br><small class="muted">Into the field-guide folder</small></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '')
+    + (storiesUp ? `<div class="list-row"><div class="lr-main"><b>data.js</b><br><small class="muted">Into the stories folder. Download seals Grounded Stories fresh, with every code in use.</small></div><button class="btn btn-line btn-sm" data-act="acc-seal">Download</button></div>` : '');
   const head = `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>`;
   const shownH = `  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
-    <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here.${live.has(shown.id) ? '' : ' It starts working once you upload codes.js.'}</p>
+    <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here. ${shown.tier === 'supporter' ? 'It opens Grounded Stories once data.js is uploaded into the stories folder.' : (live.has(shown.id) ? 'It opens the Field Guide now' : 'It opens the Field Guide once codes.js is uploaded') + (accKey() ? ', and Grounded Stories once data.js is uploaded into the stories folder.' : '.')}</p>
     <div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="copy" data-v="${esc(shown.code)}">${icon('copy')} Copy code</button><button class="btn btn-line btn-sm" data-act="fdr-hide">Done</button></div></div>` : ''}`;
   const setupH = `  ${!k.staff ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>Open Staff on this device</h3><p class="muted">Type the Staff code once (the Field Guide code from before levels). Then tap Finish Setup, so every Founder device opens everything from now on.</p>
     <label class="f" for="fdr-sc">Staff code</label><input type="password" id="fdr-sc" autocomplete="off" autocapitalize="none" spellcheck="false" style="max-width:320px">
     <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Guide libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}`;
-  const readyH = `  ${d ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live. Download each file, then upload them all at once to the <b>field-guide</b> folder in the site repo, replacing what's there. This card clears itself the next time you open the Field Guide after they're live.</p>
-    <div style="margin-top:8px">${fileRows}</div><div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div></div>` : ''}`;
-  const codesH = `  <div class="card"><h3>Access Codes</h3><p class="muted">A code is only used once, to set up a device. After that, each person unlocks with their own passcode.</p>
-   <div style="margin-top:8px">${list.map(e => { const ended = e.ends && e.ends < today(), sv = saved(e.id); return `<div class="list-row"><div class="lr-main"><b>${esc(e.label)}</b> <span class="pill">${esc(LEVEL_NAME[e.kind || e.tier])}</span>${live.has(e.id) ? '' : ' <span class="pill warn">Not uploaded yet</span>'}${ended ? ' <span class="pill warn">Ended</span>' : ''}<br><small class="muted">Made ${nice(e.made)} &middot; ${e.ends ? 'ends ' + nice(e.ends) : 'no end date'}</small></div><div class="row">${sv ? `<button class="btn btn-line btn-sm" data-act="fdr-show" data-v="${e.id}">Show</button>` : ''}<button class="btn btn-line btn-sm" data-act="fdr-remove" data-v="${e.id}">Remove</button></div></div>`; }).join('')}
-   ${legacyLive ? `<div class="list-row"><div class="lr-main"><b>Staff code</b> <span class="pill">Staff</span><br><small class="muted">The code from before levels. It works until you rotate Staff.</small></div></div>` : ''}</div></div>`;
-  const makeH = `  <div class="card"><h3>Make a Code</h3>
-   <label class="f" for="fdr-kind">Kind</label><select id="fdr-kind"><option value="org">Organization (Guide)</option><option value="guide">Individual (Guide)</option><option value="staff">Staff</option><option value="founder">Founder</option></select>
-   <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="Organization or person">
-   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. New Guides go through Orientation before anything else opens.</p>
-   <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make">Make Code</button></div>`;
+  const fgFiles = d ? [...(d.stamp ? ['codes.js'] : []), ...Object.keys(d.libs).map(f => 'lib-' + f + '.js')] : [];
+  const readyH = `  ${d || storiesUp ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${d && Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live.</p>
+    <ol class="acc-steps"><li>Download each file below.</li>${fgFiles.length ? `<li>Upload ${fgFiles.join(' and ').replace(/ and (?=.* and )/g, ', ')} to the <b>field-guide</b> folder in the site repo, replacing what's there.</li>` : ''}${storiesUp ? `<li>Upload data.js to the <b>stories</b> folder in the site repo, replacing what's there.</li>` : ''}</ol>
+    <p class="muted" style="font-size:14px">This card clears itself the next time you open the Field Guide after they're live.</p>
+    <div style="margin-top:8px">${fileRows}</div>${d ? `<div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div>` : ''}</div>` : ''}`;
   const rotH = `  <div class="card"><h3>Rotate a Level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Guide for the yearly change.</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="guide">Rotate Guide</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="staff">Rotate Staff</button><button class="btn btn-line btn-sm" data-act="fdr-rot" data-v="founder">Rotate Founder</button></div>
    <p class="muted" style="font-size:14px;margin-top:10px">Removing a code stops it from setting up new devices and ends it on devices that already use it. For a clean break, rotate the level too.</p></div>`;
@@ -1676,14 +1905,14 @@ function vFounder(){
   if (V.upd && !V.upd.seen){ V.upd.seen = 1; SEC.founder = 'upd'; }
   const B = bizLib(), bizN = B ? (B.order || Object.keys(B.docs || {})).filter(id => (B.docs || {})[id]).length : 0;
   const SPK = FDR && FDR.speaking, slN = SL() ? slCount() : null, mapleDue = FLD && SPG() && SPG().report && addDays(today(), 30) >= addYear(SPG().report.checked);
-  const nFiles = d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0, notUp = list.filter(e => !live.has(e.id)).length;
+  const nFiles = (d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0) + (storiesUp ? 1 : 0), accN = accRecs().filter(r => !r.cancelled).length + C.codes.filter(e => !accRecs().some(r => r.id === e.id)).length, orgN = accOrgs().length;
   const cards = [
-    d ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
-    {k: 'codes', title: 'Access Codes', desc: 'Make, find, copy, and end access codes.', n: list.length + (list.length === 1 ? ' code' : ' codes') + (notUp ? ', ' + notUp + ' not uploaded yet' : '')},
+    d || storiesUp ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
+    {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, and Supporter, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Guide for the yearly change.'},
     {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: V.upd ? 'An update is ready to seal' : '', hot: !!V.upd},
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
-    window.GGVault ? {k: 'vault', title: 'The Story Vault', desc: 'Every story in one place: Vault, Early Preview, or Posted. Member Codes, and Seal Grounded Stories for the site.', n: GGVault.has() ? GGVault.count() + ' stories' : 'Arrives with the BLD 784 Founder update'} : null, // GWG BLD 784 hook
+    window.GGVault ? {k: 'vault', title: 'The Story Vault', desc: 'Every story in one place: Vault, Early Preview, or Posted, and Seal Grounded Stories for the site.', n: GGVault.has() ? GGVault.count() + ' stories' : 'Arrives with the BLD 784 Founder update'} : null, // GWG BLD 784 hook
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
     SPK ? {k: 'speak', title: 'Speaking and Proposals', desc: 'Proposals, deadlines, and fields to copy and paste.', n: (SPK.items || []).length + ((SPK.items || []).length === 1 ? ' item' : ' items')} : null,
     B ? {k: 'biz', title: 'Business Documents', desc: 'Sealed documents and Founder decks, to read, save, or print.', n: bizN + (bizN === 1 ? ' document' : ' documents')} : null,
@@ -1693,7 +1922,7 @@ function vFounder(){
   ];
   const C2 = secPick('founder', cards), back = h => secPage('founder', 'Back to Founder', h);
   if (C2 === 'ready') return back(readyH);
-  if (C2 === 'codes') return back(shownH + setupH + codesH + makeH);
+  if (C2 === 'codes') return back(shownH + setupH + accView());
   if (C2 === 'rotate') return back(shownH + rotH);
   if (C2 === 'upd') return back(vUpdateCard());
   if (C2 === 'hw') return back(GGHw.sealView()); // GWG BLD 772 hook
@@ -10239,6 +10468,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('lg-') && lgAct(a, v, t)) return;
   if (a && a.startsWith('dk-') && dkAct(a, v, t)) return;
   if (a && a.startsWith('sl-') && slAct(a, v)) return;
+  if (a && a.startsWith('acc-') && await accAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
@@ -10307,7 +10537,7 @@ document.addEventListener('click', async e => {
       const kind = $('#fdr-kind').value, label = $('#fdr-label').value.trim(), ends = $('#fdr-ends').value;
       if (!label){ $('#fdr-label').focus(); return; }
       if ((kind === 'founder' || kind === 'staff') && ends && !confirm('Give this ' + LEVEL_NAME[kind] + ' code an end date of ' + nice(ends) + '? Founder and Staff codes usually have none.')) return;
-      const r = await makeCode(kind, label, ends || null); if (r){ V.show = r.e.id; render(); } break; }
+      t.disabled = true; const r = await makeCode(kind, label, ends || null); t.disabled = false; if (r){ V.show = r.e.id; V.org = null; render(); window.scrollTo(0, 0); } break; }
     case 'fdr-remove': {
       const d0 = workCodes(), e0 = d0.codes.find(x => x.id === v); if (!e0) return;
       if (e0.tier === 'founder' && d0.codes.filter(x => x.tier === 'founder').length < 2) return alert("That's the only Founder code. Rotate Founder instead, so there's always a way in.");
@@ -10376,7 +10606,9 @@ document.addEventListener('click', async e => {
     case 'fdr-discard': {
       if (!confirm('Discard every change that hasn\'t been uploaded? Codes made since then will be forgotten.')) return;
       const liveIds = new Set(CODES.codes.map(e => e.id)); DATA.founder.saved = DATA.founder.saved.filter(x => liveIds.has(x.id));
-      DATA.founder.draft = null; V.show = null; await persist(); render(); break; }
+      DATA.founder.draft = null; V.show = null; V.org = null;
+      { const f0 = await tryOpen(BOX.founder, KEYS.founder); if (f0) FDR = f0; } // the Founder library as it is on the site (the Access list and the Story Vault)
+      await persist(); render(); break; }
     case 'change-pass': {
       const p0 = $('#cp0').value, p1 = $('#cp1').value, p2 = $('#cp2').value;
       if (p1.length < 6) return alert('Please use at least 6 characters.'); if (p1 !== p2) return alert("The new passcodes don't match.");

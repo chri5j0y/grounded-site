@@ -5,10 +5,10 @@
 // Early Preview (members see it first), or Posted (on Grounded Stories: a preview for everyone, the whole story for
 // members, and the whole story for everyone when Open to Everyone is on).
 //
-// Where it lives: the Founder library, FDR.storyVault = {v: 1, key: {v: 1, round: 's1', folder: 't', key}, codes:
-// [{c, label, made, cancelled?, salt, iv, ct}], stories: [{id, title, sub, col, status, open, substack, credit, paras,
-// preview, chars, voice, note, voiced, and Vault only alt?, draftNote?, refs?}], sealed?: {at, posted, early, codes}}.
-// The BLD 784 Founder patch adds it.
+// Where it lives: the Founder library, FDR.storyVault = {v: 1, key: {v: 1, round: 's1', folder: 't', key}, codes: []
+// (BLD 784 Member Codes; BLD 785 moves them into the Access list, FDR.access, as Supporter codes), stories: [{id, title,
+// sub, col, status, open, substack, credit, paras, preview, chars, voice, note, voiced, and Vault only alt?, draftNote?,
+// refs?}], sealed?: {at, posted, early, codes}}. The BLD 784 Founder patch adds it.
 //
 // How edits save (the Update a Library pattern): each change is made to FDR.storyVault on this device, then, a moment
 // later, index.html's fdrKeep seals the whole Founder library with the Founder key into "Ready to Upload" (lib-founder.js),
@@ -17,10 +17,11 @@
 // changes to every Founder device. One revision step covers everything waiting to upload. While an update from a chat
 // waits in Update a Library for the Founder library, the Vault waits too, so neither one undoes the other.
 //
-// Member Codes: GGStories.makeCode() on this device, the stories key wrapped by the code with GGStories.makeWrap (Root
-// Words method). The code is shown once; the label stays only here. Seal Grounded Stories: GGStories.seal(Posted and
-// Early Preview stories, the key, the wraps of every active code) makes stories/data.js to upload. Vault stories and
-// labels never go into data.js.
+// Codes (BLD 785): every code lives in one place, the Access list in the Founder tab (index.html, FDR.access). Each one
+// carries a wrap of the stories key; C.wraps() hands the wraps of every code in use, and C.wsalt() the shared wrap salt.
+// Seal Grounded Stories: GGStories.seal(Posted and Early Preview stories, the key, those wraps, the salt) makes
+// stories/data.js to upload. The Access list runs the same seal (GGVault.seal). Vault stories, names, levels, and
+// organizations never go into data.js.
 // =====================================================================
 (function(){
 'use strict';
@@ -52,7 +53,10 @@ function previewOf(paras){
 }
 const splitParas = t => String(t || '').replace(/\r\n?/g, '\n').split(/\n\s*\n/).map(p => p.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
 
-const UI = {f: 'all', q: '', open: null, adding: false, shown: null, out: null, busy: false, err: '', groups: null, saved: 0};
+const UI = {f: 'all', q: '', open: null, adding: false, out: null, busy: false, err: '', groups: null, saved: 0};
+// The wraps of every code in use, from the Access list (C.wraps), or the Story Vault's own BLD 784 codes when the
+// page has no Access list.
+const liveWraps = V => C.wraps ? C.wraps() : (V.codes || []).filter(c => !c.cancelled).map(c => ({c: c.c, salt: c.salt, iv: c.iv, ct: c.ct}));
 
 // ---------- saving ----------
 let saveT = null, chain = Promise.resolve();
@@ -118,16 +122,16 @@ function view(){
    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-sva="add"${lock}>Add a Story</button></div>
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:8px">${savedLine()}</p></div>
   ${sealCard(V, n)}
-  ${codesCard(V)}
+  ${codesCard()}
   <div class="card"><h3>Stories</h3><label class="f" for="sv-q">Search</label><input type="text" inputmode="search" id="sv-q" data-svf="q" value="${esc(UI.q)}" placeholder="A title, a name, a phrase" autocomplete="off">
    <div class="row" style="margin-top:12px">${FILTERS.map(fb).join('')}</div></div>
   <div id="sv-list">${listHTML()}</div></div>`;
 }
 function sealCard(V, n){
-  const S = V.sealed, live = V.codes.filter(c => !c.cancelled).length;
+  const S = V.sealed, live = liveWraps(V).length;
   return `<div class="card" id="sv-seal" style="border-left:4px solid var(--gold)"><h3>Seal Grounded Stories</h3>
    <p class="muted">Seals every Posted and Early Preview story into one file for the site, data.js: previews for everyone, the whole story for members, and the whole story for everyone where Open to Everyone is on. Vault stories stay right here.</p>
-   <p style="margin-top:8px">${n.posted} Posted and ${n.early} Early Preview stories, opened by ${live} member ${live === 1 ? 'code' : 'codes'}.${S && S.at ? ` Last sealed ${esc(nice(S.at))}.` : ''}</p>
+   <p style="margin-top:8px">${n.posted} Posted and ${n.early} Early Preview stories, opened by ${live} ${live === 1 ? 'code' : 'codes'} from the Access list.${S && S.at ? ` Last sealed ${esc(nice(S.at))}.` : ''}</p>
    <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold" data-sva="seal"${UI.busy || waits() ? ' disabled' : ''}>${UI.busy ? 'Sealing...' : 'Seal Grounded Stories'}</button></div>
    ${UI.err ? `<p class="tipbox" style="border-left:3px solid var(--danger)">${esc(UI.err)}</p>` : ''}
    ${UI.out ? `<div class="tipbox" style="margin-top:12px"><b>data.js is ready.</b>
@@ -135,19 +139,10 @@ function sealCard(V, n){
      <p class="muted" style="font-size:14px">Visitors and members see the new stories once data.js is uploaded.</p>
      <div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="dl">Download data.js Again</button></div></div>` : ''}</div>`;
 }
-function codesCard(V){
-  const sealedSet = new Set(((V.sealed || {}).codes) || []);
-  const list = V.codes.slice().sort((a, b) => (!!a.cancelled - !!b.cancelled) || String(b.made || '').localeCompare(String(a.made || '')));
-  const sh = UI.shown;
-  return `<div class="card" id="sv-codes"><h3>Member Codes</h3>
-   <p class="muted">One code for each member, most often a paid subscriber on Substack. A member types the code once on Grounded Stories, and that device opens every Posted story in full, plus the Early Previews.</p>
-   ${sh ? `<div class="tipbox" style="border-left:4px solid var(--gold)"><b>${esc(sh.label)}</b><p class="codeshow">${esc(sh.code)}</p>
-     <p class="muted" style="font-size:14px">This is the one time the code shows, so copy it now and share it privately. It opens stories once you seal Grounded Stories and upload data.js.</p>
-     <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-sva="copy">Copy Code</button><button type="button" class="btn btn-line btn-sm" data-sva="hide">Done</button></div></div>` : ''}
-   <label class="f" for="sv-label">Who it is for</label><input type="text" id="sv-label" placeholder="The member's name" autocomplete="off"${waits() ? ' disabled' : ''}>
-   <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-sva="mk"${waits() ? ' disabled' : ''}>Make a Member Code</button></div>
-   <div style="margin-top:12px">${list.map(c => `<div class="list-row"><div class="lr-main"><b>${esc(c.label || 'Member')}</b> ${c.cancelled ? '<span class="pill">Cancelled</span>' : sealedSet.has(c.c) ? '<span class="pill sage">Active</span>' : '<span class="pill gold">Opens After the Next Seal</span>'}<br><small class="muted">Made ${esc(nice(c.made))}${c.cancelled ? ', cancelled ' + esc(nice(c.cancelled)) : ''}</small></div>${c.cancelled ? '' : `<button type="button" class="btn btn-line btn-sm" data-sva="cancel" data-v="${esc(c.c)}"${waits() ? ' disabled' : ''}>Cancel a Code</button>`}</div>`).join('')}</div>
-   <p class="muted" style="font-size:14px;margin-top:10px">Cancelling a code takes effect once you seal Grounded Stories and upload data.js: from then on, the code opens no new devices. A device that already unlocked with it keeps its stories, so the member keeps what they already received.</p></div>`;
+function codesCard(){
+  return `<div class="card" id="sv-codes"><h3>Codes</h3>
+   <p class="muted">Every code lives in the Access list now: Founder, Staff, Guide, and Supporter, plus codes for an organization. Each one opens Grounded Stories. Make, find, and cancel them there.</p>
+   <div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-act="sec-open" data-v="founder|codes">Open the Access List</button></div></div>`;
 }
 function storyView(V, s){
   const lock = waits() ? ' disabled' : '', cols = [...new Set(V.stories.map(x => x.col).filter(Boolean))];
@@ -238,25 +233,6 @@ async function addStory(){
   C.render && C.render(); window.scrollTo(0, 0);
   await keep(true); toast('Added to the Vault.');
 }
-async function makeCode(){
-  const V = SV(); if (!V || waits() || UI.busy) return;
-  const el = document.getElementById('sv-label'), label = ((el && el.value) || '').trim();
-  if (!label){ if (el) el.focus(); toast('Add who the code is for.'); return; }
-  if (!window.GGStories) return alert('The stories tools are still loading. Try again in a moment.');
-  UI.busy = true;
-  try {
-    const code = GGStories.makeCode(), w = await GGStories.makeWrap(code, unb64(V.key.key));
-    V.codes.push({c: w.c, label, made: today(), salt: w.salt, iv: w.iv, ct: w.ct});
-    UI.shown = {code, label, c: w.c};
-  } catch (e) { UI.busy = false; alert('That code needs another try. Tap Make a Member Code again.'); return; }
-  UI.busy = false; rr(); await keep(true);
-}
-async function cancelCode(id){
-  const V = SV(); if (!V || waits()) return; const c = V.codes.find(x => x.c === id); if (!c) return;
-  if (!confirm('Cancel the code for ' + (c.label || 'this member') + '? Once you seal Grounded Stories and upload data.js, it opens no new devices. A device that already unlocked keeps its stories.')) return;
-  c.cancelled = today(); if (UI.shown && UI.shown.c === id) UI.shown = null;
-  rr(); await keep(true); toast('Cancelled. Seal Grounded Stories when you are ready.');
-}
 function download(text, name){ const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([text], {type: 'text/javascript'})); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 500); }
 async function sealStories(){
   const V = SV(); if (!V || UI.busy || waits()) return;
@@ -265,18 +241,15 @@ async function sealStories(){
   try {
     await keep(true);
     const list = V.stories.filter(s => s.status === 'posted' || s.status === 'early').map(s => { const o = JSON.parse(JSON.stringify(s)); delete o.alt; delete o.draftNote; delete o.refs; delete o.note; return o; });
-    const live = V.codes.filter(c => !c.cancelled), wraps = live.map(c => ({c: c.c, salt: c.salt, iv: c.iv, ct: c.ct}));
-    const js = await GGStories.seal(list, V.key, wraps);
+    const wraps = liveWraps(V);
+    const js = await GGStories.seal(list, V.key, wraps, C.wsalt ? C.wsalt() : '');
     if (typeof js !== 'string' || !js) throw new Error('empty');
-    V.sealed = {at: today(), posted: list.filter(s => s.status === 'posted').length, early: list.filter(s => s.status === 'early').length, codes: live.map(c => c.c)};
+    V.sealed = {at: today(), posted: list.filter(s => s.status === 'posted').length, early: list.filter(s => s.status === 'early').length, codes: wraps.map(c => c.c)};
     UI.out = {js}; UI.busy = false;
-    download(js, 'data.js'); rr(); await keep(true);
+    download(js, 'data.js'); if (C.sealed) C.sealed(); rr(); await keep(true);
     toast('data.js downloaded. Upload it into the stories folder on the site.');
-  } catch (e) { UI.busy = false; UI.err = 'Sealing needs another try on this device. Tap Seal Grounded Stories again.'; rr(); }
-}
-function copy(t){
-  const done = () => toast('Copied.');
-  if (navigator.clipboard) navigator.clipboard.writeText(t).then(done, () => prompt('Copy the code:', t)); else prompt('Copy the code:', t);
+    return true;
+  } catch (e) { UI.busy = false; UI.err = 'Sealing needs another try on this device. Tap Seal Grounded Stories again.'; rr(); if (C.toast) toast(UI.err); return false; }
 }
 
 // ---------- events ----------
@@ -288,10 +261,6 @@ document.addEventListener('click', e => {
   else if (a === 'f'){ UI.f = v; keepGroups(); rr(); }
   else if (a === 'add'){ UI.adding = true; C.render && C.render(); window.scrollTo(0, 0); }
   else if (a === 'addgo') addStory();
-  else if (a === 'mk') makeCode();
-  else if (a === 'copy' && UI.shown) copy(UI.shown.code);
-  else if (a === 'hide'){ UI.shown = null; rr(); }
-  else if (a === 'cancel') cancelCode(v);
   else if (a === 'watch' && s){ if (window.GGStories && GGStories.listen) GGStories.listen(s, SV().key); }
   else if (a === 'seal') sealStories();
   else if (a === 'dl' && UI.out) download(UI.out.js, 'data.js');
@@ -348,6 +317,9 @@ window.GGVault = {
   view,
   has: () => !!SV(),
   count: () => { const V = SV(); return V ? V.stories.length : 0; },
+  // Seal Grounded Stories from anywhere (the Access list and Ready to Upload): downloads data.js. Resolves true when done.
+  seal: () => sealStories(),
+  busy: () => UI.busy,
   // for tests
   _previewOf: previewOf, _splitParas: splitParas, _ui: UI
 };
