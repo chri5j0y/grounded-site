@@ -25,6 +25,7 @@
                           data-pdf-k="h1" (or any block kind) on an element, data-pdf-page,
                           data-pdf-qr="https://..." with its label as the element's text
                           opts {eyebrow, foot}
+   ggTakeHomePdf(n, art)  the Take-Home Sheet (GWG BLD 782); ggReflectionPdf(o, art) a Reflection Card (GWG BLD 787)
    ===================================================================== */
 (function () {
   var W = [278,278,355,556,556,889,667,191,333,333,389,584,278,333,278,278,556,556,556,556,556,556,556,556,556,556,278,278,584,584,584,556,1015,667,667,722,722,667,611,778,722,278,500,667,556,833,722,778,667,778,722,667,611,722,667,944,667,667,611,278,278,278,469,556,333,556,556,500,556,556,278,556,556,222,222,500,222,833,556,556,556,556,333,500,278,556,500,722,500,500,500,334,260,334,584];
@@ -467,7 +468,73 @@
     return blob;
   }
 
+  /* ---------- a Reflection Card as a one-page PDF (GWG BLD 787) ----------
+     ggReflectionPdf(o, art) returns a PDF Blob: one Letter page to cut in half. The top half is the front: the Grounded
+     Stories painting across the top (art.strip, from ggPdfImage), the line from the story, "From the story <title>, by
+     Chris Joy", and the month. The bottom half is the back: the practice, why it helps, its steps, the Adapted from line,
+     and growwithgrounded.com/stories. o is the model from GGPrint.reflectionModel. Modeled on ggTakeHomePdf. */
+  function ggReflectionPdf(o, art) {
+    art = art || {};
+    var PW = 612, PH = 792, MID = 396, X0 = 54, TW = PW - 2 * X0, STRIP = 132;
+    var INK = [0.173, 0.094, 0.063], SOFT = [0.36, 0.3, 0.26], GOLD = [0.545, 0.369, 0.102], CREAM = [1, 0.988, 0.965], RULE = [0.78, 0.72, 0.62];
+    function lay(z) {
+      var ops = [], fits = true;
+      function T(t, x, yy, f, size, col, tc) { t = text(t); if (!t) return; ops.push('BT ' + col.join(' ') + ' rg /' + f + ' ' + size.toFixed(2) + ' Tf ' + (tc || 0) + ' Tc ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' Td (' + escp(t) + ') Tj ET'); }
+      function C(t, yy, f, size, col, bold) { t = text(t); T(t, (PW - width(t, size, bold)) / 2, yy, f, size, col); }
+      function R(x, yy, w, h, fill) { ops.push(fill.join(' ') + ' rg ' + x.toFixed(1) + ' ' + yy.toFixed(1) + ' ' + w.toFixed(1) + ' ' + h.toFixed(1) + ' re f'); }
+      R(0, 0, PW, PH, CREAM);
+      // the front
+      if (art.strip) ops.push('q ' + PW + ' 0 0 ' + STRIP + ' 0 ' + (PH - STRIP) + ' cm /Im1 Do Q'); else R(0, PH - STRIP, PW, STRIP, GOLD);
+      T('GROUNDED STORIES · A REFLECTION CARD', X0, PH - 30, 'F2', 8.5, [1, 0.94, 0.82], 1.2);
+      var ls = 24 * z, lines = wrap(text('“' + o.line + '”'), ls, false, TW - 40), y = PH - STRIP - 44;
+      lines.forEach(function (l) { C(l, y, 'F5', ls, INK); y -= ls * 1.3; });
+      y -= 8; C(o.from, y, 'F1', 11.5, SOFT); y -= 18;
+      C(String(o.monthLabel || '').toUpperCase(), y, 'F2', 9, GOLD, true);
+      if (y < MID + 28) fits = false;
+      // the cut line
+      for (var x = 24; x < PW - 24; x += 10) ops.push(RULE.join(' ') + ' RG 0.8 w ' + x.toFixed(1) + ' ' + MID + ' m ' + (x + 5).toFixed(1) + ' ' + MID + ' l S');
+      T('Cut here, then keep the card where you will see it this week.', X0, MID + 6, 'F3', 7, SOFT);
+      // the back
+      y = MID - 40;
+      T('THIS WEEK’S PRACTICE', X0, y, 'F2', 8.5, GOLD, 1.2); y -= 26 * z;
+      T(o.name, X0, y, 'F4', 22 * z, GOLD); y -= 8;
+      wrap(text(o.why || ''), 11 * z, false, TW).forEach(function (l) { y -= 11 * z * 1.35; T(l, X0, y, 'F3', 11 * z, INK); });
+      y -= 6;
+      (o.steps || []).forEach(function (s, i) {
+        var w = wrap(text(s), 10.5 * z, false, TW - 22); y -= 10.5 * z * 1.6;
+        T(String(i + 1) + '.', X0, y, 'F2', 10.5 * z, GOLD);
+        w.forEach(function (l, j) { if (j) y -= 10.5 * z * 1.35; T(l, X0 + 20, y, 'F1', 10.5 * z, INK); });
+      });
+      if (o.adapted) { y -= 8; wrap(text(o.adapted), 8 * z, false, TW).forEach(function (l) { y -= 8 * z * 1.35; T(l, X0, y, 'F3', 8 * z, SOFT); }); }
+      if (y < 52) fits = false;
+      T(o.site || 'growwithgrounded.com/stories', X0, 30, 'F2', 9, GOLD);
+      T(text(o.foot || ''), PW - X0 - width(text(o.foot || ''), 7.5, false), 30, 'F1', 7.5, SOFT);
+      return { ops: ops, fits: fits };
+    }
+    var z = 1, out = lay(z);
+    while (!out.fits && z > 0.62) { z -= 0.04; out = lay(z); }
+    var body = out.ops.join('\n');
+    var objs = [], add = function (x) { objs.push(x); return objs.length; };
+    var cat = add(''), pgs = add('');
+    var fonts = [['F1', 'Helvetica'], ['F2', 'Helvetica-Bold'], ['F3', 'Helvetica-Oblique'], ['F4', 'Times-Bold'], ['F5', 'Times-Italic']].map(function (f) { return '/' + f[0] + ' ' + add('<< /Type /Font /Subtype /Type1 /BaseFont /' + f[1] + ' /Encoding /WinAnsiEncoding >>') + ' 0 R'; }).join(' ');
+    var xo = [];
+    if (art.strip) xo.push('/Im1 ' + add('<< /Type /XObject /Subtype /Image /Width ' + art.strip.w + ' /Height ' + art.strip.h + ' /ColorSpace /DeviceRGB /BitsPerComponent 8 /Filter /DCTDecode /Length ' + art.strip.data.length + ' >>\nstream\n' + art.strip.data + '\nendstream') + ' 0 R');
+    var cs = add('<< /Length ' + body.length + ' >>\nstream\n' + body + '\nendstream');
+    var pg = add('<< /Type /Page /Parent ' + pgs + ' 0 R /MediaBox [0 0 ' + PW + ' ' + PH + '] /Resources << /Font << ' + fonts + ' >>' + (xo.length ? ' /XObject << ' + xo.join(' ') + ' >>' : '') + ' >> /Contents ' + cs + ' 0 R >>');
+    objs[cat - 1] = '<< /Type /Catalog /Pages ' + pgs + ' 0 R >>';
+    objs[pgs - 1] = '<< /Type /Pages /Kids [' + pg + ' 0 R] /Count 1 >>';
+    var info = add('<< /Title (' + escp(text(o.title || 'Reflection Card')) + ') /Creator (Grow With Grounded) >>');
+    var pdf = '%PDF-1.4\n%\xE2\xE3\xCF\xD3\n', offs = [];
+    objs.forEach(function (x, i) { offs.push(pdf.length); pdf += (i + 1) + ' 0 obj\n' + x + '\nendobj\n'; });
+    var xr = pdf.length;
+    pdf += 'xref\n0 ' + (objs.length + 1) + '\n0000000000 65535 f \n' + offs.map(function (v) { return String(v).padStart(10, '0') + ' 00000 n \n'; }).join('') + 'trailer\n<< /Size ' + (objs.length + 1) + ' /Root ' + cat + ' 0 R /Info ' + info + ' 0 R >>\nstartxref\n' + xr + '\n%%EOF';
+    var bytes = new Uint8Array(pdf.length); for (var i = 0; i < pdf.length; i++) bytes[i] = pdf.charCodeAt(i) & 255;
+    var blob = new Blob([bytes], { type: 'application/pdf' }); blob.fitScale = z;
+    return blob;
+  }
+
   window.ggPdf = ggPdf;
+  window.ggReflectionPdf = ggReflectionPdf;
   window.ggTakeHomePdf = ggTakeHomePdf;
   window.ggPdfImage = ggPdfImage;
   window.ggPdfText = text;

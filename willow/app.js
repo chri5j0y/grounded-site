@@ -1038,15 +1038,21 @@ const voiced = x => VOICED.includes(x.rights) && verOf(x) === 'kjv' && !!window.
 function readingHtml(x) {
   let body = '';
   const lv = voiced(x), listen = lv ? GGListen.html({id: 'w:' + x.id, lines: x.lines}) : '';
-  if (listen) GGListen.linesOf(x.lines).forEach((l, i) => { body += l === '' ? '<br>' : `<p data-ggl-ln="${i}">${esc(l)}</p>`; });
-  else linesOf(x).forEach(l => { body += l === '' ? '<br>' : `<p>${esc(l)}</p>`; });
+  // refs (GWG BLD 787): where each line comes from (Julian's chapters), in small type after it.
+  const ref = (l, i) => x.refs && x.refs[i] && l === x.lines[i] ? ` <small class="w-small">${esc(x.refs[i])}</small>` : '';
+  if (listen) GGListen.linesOf(x.lines).forEach((l, i) => { body += l === '' ? '<br>' : `<p data-ggl-ln="${i}">${esc(l)}${ref(l, i)}</p>`; });
+  else linesOf(x).forEach((l, i) => { body += l === '' ? '<br>' : `<p>${esc(l)}${ref(l, i)}</p>`; });
+  // From Chris's Shelf (GWG BLD 787): a reading may carry a breath prayer, its own Learn video, and a Sources line.
+  const bp = x.breath ? `<section class="w-breath" style="margin-top:18px"><h3>${esc(x.breath.title || 'A Breath Prayer')}</h3><p class="w-readtext"><i>Breathe in:</i> ${esc(x.breath.in)}<br><i>Breathe out:</i> ${esc(x.breath.out)}</p>${x.breath.how ? `<p>${esc(x.breath.how)}</p>` : ''}</section>` : '';
+  const vid = x.video && window.GGLearn ? `<div class="btn-row no-print" style="margin:8px 0 12px"><button type="button" class="btn btn-primary" onclick="GGLearn.open('willow','${esc(x.video)}')">&#9654; Watch the Video</button></div>` : '';
+  const src = Array.isArray(x.sources) && x.sources.length && window.GGSources ? GGSources.line(x.sources) : '';
   const vs = RD.versionsOn && RD.versions && RD.versions[x.id], v = verOf(x), note = noticeOf(x);
   const sw = vs ? `<div class="btn-row no-print" role="group" aria-label="Bible version" style="margin:4px 0 12px">${Object.keys(RD.bible).filter(k => k === 'kjv' || vs[k]).map(k => [k, RD.bible[k].short || k.toUpperCase()]).map(o => `<button type="button" class="lc-chip" style="--rc:var(--gold)" aria-pressed="${v === o[0]}" title="${esc(o[0] === 'kjv' ? 'King James Version' : (RD.bible[o[0]] || {}).name || '')}" onclick="W.bibleVer('${o[0]}')">${o[1]}</button>`).join('')}</div>` : '';
   return `<article class="lc-article w-readingview" style="--rc:var(--gold)">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeReading()">Back to readings</button><button class="btn btn-secondary" onclick="W.printReading('${x.id}')">Save or Print</button></div>
     <h2>${esc(x.title)}</h2><p class="w-small">${esc(byOf(x))} &middot; ${esc(v === 'kjv' ? RIGHTS[x.rights] || '' : 'Used by permission')}</p>${sw}${listen}
-    <div class="w-readtext" data-read="Read this aloud"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
-    ${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}
+    ${vid}<div class="w-readtext" data-read="Read this aloud"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
+    ${bp}${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}${src}
   </article>`;
 }
 function openReading(id) { const fromList = S.tab === 'readings' && !S.read.open; S.read.open = id; S.tab = 'readings'; render(); scrollTop(true); pushHash(fromList ? { wList: 1 } : null); }
@@ -1054,7 +1060,8 @@ function closeReading() { if (history.state && history.state.wList && S.read.ope
 function printReading(id) {
   const x = RD.readings.find(y => y.id === id); if (!x) return;
   const note = noticeOf(x);
-  printHtml(x.title, (x.tr ? `<p><i>${esc(x.tr)}</i></p>` : '') + linesOf(x).map(l => l ? `<p>${esc(l)}</p>` : '<br>').join('') + `<p><small>${esc(byOf(x))}</small></p>` + (note ? `<p><small>${esc(note)}</small></p>` : ''));
+  const bp = x.breath ? `<h3>${esc(x.breath.title || 'A Breath Prayer')}</h3><p><i>Breathe in:</i> ${esc(x.breath.in)}<br><i>Breathe out:</i> ${esc(x.breath.out)}</p>` : '';
+  printHtml(x.title, (x.tr ? `<p><i>${esc(x.tr)}</i></p>` : '') + linesOf(x).map(l => l ? `<p>${esc(l)}</p>` : '<br>').join('') + `<p><small>${esc(byOf(x))}</small></p>` + bp + (note ? `<p><small>${esc(note)}</small></p>` : ''));
 }
 
 /* ---------- Settings ---------- */

@@ -155,7 +155,24 @@ const CHAPTERS = [
       { id: 'learned-6', t: 'A value you have tried to live by.', help: 'Where did it come from, and where did you see it pay off?' },
       { id: 'learned-7', t: 'What you hope the world learns.', help: 'From your life, your generation, or your times.' }
     ] },
-  { id: 'blessings', title: 'Blessings and Words to Leave', optIn: false,
+  /* BLD787 finished start */
+  // From Chris's Shelf (GWG BLD 787): A Life Well Finished, written reflection questions for the last season. sources: shown under
+  // the chapter by sequoia/app.js (shared/gg-sources.js).
+  { id: "finished", title: "A Life Well Finished", optIn: true, sources: ["byock97"],
+    lead: "A chapter for the last season, whenever you are ready: what you want settled, said, and passed on.",
+    note: "This chapter is here for whenever you choose to open it. Many people find peace in settling their affairs, tending the people they love, and saying what matters while there is time. Write as much or as little as you like, and invite someone you trust to sit with you. If it gets heavy, call or text 988 any time.",
+    prompts: [
+      { id: "finished-1", t: "What you want settled, so the people you love have an easier path.", help: "Papers, plans, passwords kept safe, who to call, where things are kept. A list is enough.", care: 1 },
+      { id: "finished-2", t: "Treasured things, and who you would like to have them.", help: "A ring, a recipe box, a tool, a quilt. Add the story behind each one.", care: 1 },
+      { id: "finished-3", t: "Someone you want to thank, and what for.", help: "Name them, and the moment you remember most.", care: 1 },
+      { id: "finished-4", t: "Words you want to say while there is time.", help: "Love, thanks, forgiveness, or goodbye. Whatever is true for you, to whomever you choose.", care: 1 },
+      { id: "finished-5", t: "A relationship you would like to tend or mend.", help: "A first step can be small: a call, a letter, a visit. Simply naming it here counts too.", care: 1 },
+      { id: "finished-6", t: "What you are proud of in how you have lived.", help: "The way you loved, worked, showed up, or kept going.", care: 1 },
+      { id: "finished-7", t: "What you hope the people you love carry on.", help: "A value, a tradition, a recipe, a way of treating people.", care: 1 },
+      { id: "finished-8", t: "How you would like your last days to feel.", help: "Who is near, what music plays, what is in the room. Share it with your family and your doctor or hospice team.", care: 1 },
+      { id: "finished-9", t: "What gives you peace now.", help: "A place, a person, a memory, a practice.", care: 1 }
+    ] },
+  /* BLD787 finished end */{ id: 'blessings', title: 'Blessings and Words to Leave', optIn: false,
     lead: 'A letter of the heart, sometimes called an ethical will: the values, thanks, hopes, and blessings you want to pass on. Write to one person, to many, or to whoever reads this someday.',
     prompts: [
       { id: 'blessings-1', t: 'What you hope for the people you love.', help: 'For their lives, their work, their hearts. By blood or by choice.' },

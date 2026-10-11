@@ -335,7 +335,7 @@ const LC_TOPICS = [
   faith: "Many traditions have blessings, prayers, or naming rituals for babies who died. A faith leader can help create one if yours doesn't.",
   practices: ["roots|Ritual", "leaves|Sleep", "branches|Friends"],
   reach: ["Postpartum Support International helpline: 1-800-944-4773.", "Deep sadness that lingers, or any thoughts of harming yourself: call or text 988."],
-  more: [L.share, L.psi], kids: "baby-loss" },
+  more: [L.share, L.psi], kids: "baby-loss"/* BLD787 pages-pregnancy-loss start */, pages: [["Making Memories With Your Baby", "ok-pg-baby-memories"]] /* BLD787 pages-pregnancy-loss end */ },
 
 { id: "suicide-loss", ring: "loss", title: "After a suicide loss", keys: "suicide loss died by suicide survivor grief why", parts: ["roots", "bark", "branches"],
   quick: ["Suicide grief often includes shock, guilt, anger, and endless “why” questions.", "It was not your fault. Suicide comes from a complex illness, not one thing anyone said or did.", "Speak about it honestly. Silence tends to deepen shame.", "Your own risk may rise. Take care of yourself and reach out."],

@@ -31,7 +31,36 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
-    // The Kathy story's verse (1 Corinthians 13:1) in the ESV (Chris, October 7, 2026).
+/* BLD787 shelf start */
+    // From Chris's Shelf (GWG BLD 787): books on Chris's shelf, linked to their Library card, and the writers' new sources.
+    byock97: ["Ira Byock, Dying Well (1997)", SHELF + "DY-001"],
+    groves05: ["Richard Groves and Anne Klauser, The American Book of Living and Dying (2005)", SHELF + "DY-005"],
+    devine17: ["Megan Devine, It's OK That You're Not OK (2017)", SHELF + "DY-011", 'a'],
+    schwiebert81: ["Pat Schwiebert and Paul Kirk, When Hello Means Goodbye (1981)", SHELF + "DY-014"],
+    rowland17: ["Joanna Rowland, The Memory Box (2017)", SHELF + "DY-015", 'a'],
+    remen00: ["Rachel Naomi Remen, My Grandfather's Blessings (2000)", SHELF + "CP-009", 'a'],
+    rollnick08: ["Stephen Rollnick, William R. Miller, and Christopher C. Butler, Motivational Interviewing in Health Care (2008)", SHELF + "CP-010", 'a'],
+    waters19: ["Sonia E. Waters, Addiction and Pastoral Care (2019)", SHELF + "CP-012", 'a'],
+    frankl46: ["Viktor E. Frankl, Man's Search for Meaning (1946)", SHELF + "PS-007", 'a'],
+    yalom02: ["Irvin D. Yalom, The Gift of Therapy (2002)", SHELF + "PS-004"],
+    vanderkolk14: ["Bessel van der Kolk, The Body Keeps the Score (2014)", SHELF + "PS-009", 'a'],
+    rosmarin18: ["David H. Rosmarin, Spirituality, Religion, and Cognitive-Behavioral Therapy (2018)", SHELF + "PS-013"],
+    brach19: ["Tara Brach, Radical Compassion (2019)", SHELF + "CM-004", 'a'],
+    hanson09: ["Rick Hanson, Buddha's Brain (2009)", SHELF + "CM-012", 'a'],
+    emerald05: ["David Emerald, The Power of TED* (2005)", SHELF + "CM-019", 'a'],
+    garcia16: ["Hector Garcia and Francesc Miralles, Ikigai (2016)", SHELF + "CM-020", 'a'],
+    wohlleben15: ["Peter Wohlleben, The Hidden Life of Trees (2015)", SHELF + "NA-001"],
+    li18: ["Qing Li, Forest Bathing (2018)", SHELF + "NA-006", 'a'],
+    hartmann06: ["Thom Hartmann, Walking Your Blues Away (2006)", SHELF + "NA-010", 'a'],
+    ratey08: ["John J. Ratey, Spark (2008)", SHELF + "BD-004"],
+    zweig21: ["Connie Zweig, The Inner Work of Age (2021)", SHELF + "PS-026", 'a'],
+    doerrfeld18: ["Cori Doerrfeld, The Rabbit Listened (2018)", SHELF + "LT-002", 'a'],
+    burnett11: ["Frances Hodgson Burnett, The Secret Garden (1911)", SHELF + "LT-018"],
+    julian: ["Julian of Norwich, Revelations of Divine Love, translated by Grace Warrack (1901)", SHELF + "CD-006"],
+    buber23: ["Martin Buber, I and Thou (1923)", SHELF + "WR-006"],
+    mcdonald: ["Michele McDonald, who first taught RAIN", ""],
+    nilmdts: ["Now I Lay Me Down to Sleep, remembrance photography for families", "https://www.nowilaymedowntosleep.org/"],
+    /* BLD787 shelf end */    // The Kathy story's verse (1 Corinthians 13:1) in the ESV (Chris, October 7, 2026).
     esv: ["Scripture quotations are from the ESV® Bible (The Holy Bible, English Standard Version®), © 2001 by Crossway, a publishing ministry of Good News Publishers. ESV Text Edition: 2025. The ESV text may not be quoted in any publication made available to the public by a Creative Commons license. The ESV may not be translated in whole or in part into any other language. Used by permission. All rights reserved.", "https://www.esv.org"],
     // BLD 751 The Grounded Marriage (Practices for Two, the session videos) and BLD 752 Premarital Guide Training.
     kellerman89: ["Kellerman, Lewis, and Laird, looking and loving: the effects of mutual gaze on feelings of romantic love (Journal of Research in Personality, 1989)", "https://doi.org/10.1016/0092-6566(89)90020-2"],
@@ -663,7 +692,26 @@
 
   // Practices by name, everywhere they appear. P_RE is matched against the name (Aspen names are sentences).
   var P = {
-    'examen': ['examen'], 'awe walk': ['ggsc', 'sturm'], 'hold someone in light': ['quaker'], 'slow sacred reading': ['lectio'],
+/* BLD787 shelf-p start */
+    // From Chris's Shelf (GWG BLD 787): the shelf practices, by name.
+    "five minutes with your grief": ["devine17"],
+    "memory box": ["rowland17"],
+    "noticing the blessing": ["remen00"],
+    "a daily recovery rhythm": ["waters19"],
+    "find your why for today": ["frankl46"],
+    "what life is asking of me now": ["frankl46"],
+    "steady rhythm reset": ["vanderkolk14"],
+    "rain for hard feelings": ["brach19", "mcdonald"],
+    "taking in the good": ["hanson09"],
+    "the creator question": ["emerald05"],
+    "your reason to rise": ["garcia16"],
+    "forest bathing walk": ["li18"],
+    "five senses in the woods": ["li18"],
+    "walk it through": ["hartmann06"],
+    "walk it out after a hard day": ["hartmann06"],
+    "a ten minute mood walk": ["ratey08", "noetel"],
+    "meeting the elder within": ["zweig21"],
+    /* BLD787 shelf-p end */    'examen': ['examen'], 'awe walk': ['ggsc', 'sturm'], 'hold someone in light': ['quaker'], 'slow sacred reading': ['lectio'],
     'scripture': ['lectio'], 'centering prayer': ['centering'], 'values sort': ['act'], 'leaves on a stream': ['act'],
     'worry window': ['borkovec'], 'expressive writing': ['pennebaker'], 'name it': ['lieberman'], 'say it out loud': ['lieberman'],
     'self-compassion break': ['neff'], 'kind voice letter': ['neff'], 'loving-kindness': ['metta'], 'gratitude letter': ['seligman'],
