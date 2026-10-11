@@ -650,19 +650,19 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
 <script src="share.js?v=b782"></script>
-<script src="../shared/gg-listen.js?v=b784s"></script>
-<script src="ceremonies.js?v=b784s"></script>
+<script src="../shared/gg-listen.js?v=b786"></script>
+<script src="ceremonies.js?v=b786"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b782"></script>
-<script src="wedding.js?v=b782"></script>
+<script src="farewell.js?v=b786"></script>
+<script src="wedding.js?v=b786"></script>
 <script src="premarital.js?v=b782"></script>
 <script src="clients.js?v=b782"></script>
 <script src="books.js?v=b777"></script>
 <script src="runner.js?v=b771"></script>
 <script src="grovevisit.js?v=b782"></script>
 <script src="heartwood.js?v=b782"></script>
-<script src="../shared/gg-stories.js?v=b785"></script>
-<script src="vault.js?v=b785"></script>
+<script src="../shared/gg-stories.js?v=b786"></script>
+<script src="vault.js?v=b786"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -767,6 +767,13 @@ async function openLevels(tier, keys){
 function useLevels(o){ KEYS = o.keys; LIB = o.staff; FLD = o.guide; FDR = o.founderLib; fgStoriesKey(); }
 // Grounded Stories opens in full on a device where a Guide, Staff, or Founder code is in use (BLD 784).
 function fgStoriesKey(){ try { const k = (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || (FLD && FLD.storiesKey && FLD.storiesKey.key); if (k && window.GGStories && GGStories.remember) GGStories.remember(k); } catch (e) {} }
+// Open Grounded Stories (BLD 786): on iPhone a Home Screen Field Guide keeps its own storage, apart from Safari. The button
+// opens stories.html in the browser with the stories key in the URL fragment only (#k=, base64url), which never reaches a
+// server; the stories page keeps the key on that browser and clears the fragment at once. The key goes into the link only
+// at the tap, and the link goes back to plain right after.
+function fgStoriesHref(){ try { const k = (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || (FLD && FLD.storiesKey && FLD.storiesKey.key); return '../stories.html' + (k ? '#k=' + String(k).replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '') : ''); } catch (e) { return '../stories.html'; } }
+function fgStoriesCard(){ return `<div class="card spread fg-stories" style="border-left:4px solid var(--gold)"><div><b>Grounded Stories</b> <span class="muted">Real stories from the edge of life, every one open to you in full. They open in your browser and stay open there.</span></div><a class="btn btn-gold btn-sm" href="../stories.html" target="_blank" rel="noopener" data-fgstories="1">Open Grounded Stories</a></div>`; }
+document.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[data-fgstories]'); if (!a) return; a.href = fgStoriesHref(); setTimeout(() => { a.href = '../stories.html'; }, 0); }, true);
 function codeEnded(){
   if (!CODEID || CODEID === 'legacy') return false;
   const e = CODES.codes.find(x => x.id === CODEID);
@@ -1144,6 +1151,7 @@ function vHome(){
   ${window.GGGv ? GGGv.homeCard() : ''}
   ${window.GGCli ? GGCli.homeCard() : (DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${window.GGBooks ? GGBooks.homeCard() : ''}
+  ${fgStoriesCard()}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
   <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
@@ -2075,6 +2083,7 @@ function vLearn(){
   }
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p></div>
   ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
+  ${fgStoriesCard()}
   <div class="lc-cats">${cats.map(c => `<button class="card lc-cat" style="border-left-color:${c.accent}" data-act="${c.act || 'lc-cat'}" data-v="${esc(c.k)}"><div class="eyebrow" style="color:${c.accent}">${esc(c.eb)}</div><h3>${esc(c.title)}</h3>${c.intro ? `<p class="muted">${esc(c.intro)}</p>` : ''}<p class="lc-n">${esc(c.n)}</p></button>`).join('')}</div>
   <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'guide' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p></div>`;
 }

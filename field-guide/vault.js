@@ -7,8 +7,11 @@
 //
 // Where it lives: the Founder library, FDR.storyVault = {v: 1, key: {v: 1, round: 's1', folder: 't', key}, codes: []
 // (BLD 784 Member Codes; BLD 785 moves them into the Access list, FDR.access, as Supporter codes), stories: [{id, title,
-// sub, col, status, open, substack, credit, paras, preview, chars, voice, note, voiced, and Vault only alt?, draftNote?,
-// refs?}], sealed?: {at, posted, early, codes}}. The BLD 784 Founder patch adds it.
+// sub, col, status, open, substack, credit, paras, preview, chars, voice, note, voiced, topics?, and Vault only alt?,
+// draftNote?, refs?}], sealed?: {at, posted, early, codes}}. The BLD 784 Founder patch adds it.
+// Topics (BLD 786): topics: ['dying', 'grief', 'faith', 'kids'] (any, or none), the four filters on Grounded Stories. Four
+// switches on each story page set them; Seal Grounded Stories carries them into data.js. A story with no topics yet shows
+// the page's own choice (GGStories.themesOf) until a switch is touched. The BLD 786 Founder patch seeds every story.
 //
 // How edits save (the Update a Library pattern): each change is made to FDR.storyVault on this device, then, a moment
 // later, index.html's fdrKeep seals the whole Founder library with the Founder key into "Ready to Upload" (lib-founder.js),
@@ -42,6 +45,9 @@ const stName = k => (ST.find(x => x[0] === k) || ST[0])[1];
 const FILTERS = [['all', 'All'], ['posted', 'Posted'], ['early', 'Early Preview'], ['vault', 'Vault'], ['voice', 'Needs a Voice']];
 const NOTEBOOK = 'Story: Chris Joy, from my notebook. Names and details changed.';
 const pubCredit = t => 'Story: Chris Joy, ' + t + ' · Read it on Grounded';
+const TOPICS = [['dying', 'Dying and saying goodbye'], ['grief', 'Grief and after'], ['faith', 'Faith and doubt'], ['kids', 'Kids and families']];
+// The topics a story shows under now: its own, or the page's fallback (GGStories.themesOf) for a story with none set yet.
+const topicsNow = s => Array.isArray(s.topics) ? s.topics.slice() : (window.GGStories && GGStories.themesOf ? String(GGStories.themesOf({slug: GGStories.slug(s.title), title: s.title}) || '').split(' ').filter(Boolean) : []);
 const needsVoice = s => !s.voiced && s.voice !== false;
 const charsOf = paras => paras.join('\n\n').length;
 // Visitors see the opening paragraphs up to about 1,500 characters: at least one, and always short of the whole story.
@@ -119,7 +125,7 @@ function view(){
     <p>Every story you have written, in one quiet place. Mark each one Vault, Early Preview, or Posted, tend its words, and seal Grounded Stories for the site.</p></div>
   ${waits() ? '<p class="tipbox" style="border-left:3px solid var(--gold)">An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Story Vault is ready for changes again.</p>' : ''}
   <div class="card"><p><b>${V.stories.length}</b> stories: ${n.posted} Posted, ${n.early} Early Preview, ${n.vault} in the Vault. ${n.open} open to everyone. ${n.voice ? n.voice + (n.voice === 1 ? ' needs' : ' need') + ' a voice.' : 'Every voiced story is recorded.'}</p>
-   <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-sva="add"${lock}>Add a Story</button></div>
+   <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold btn-sm" data-sva="add"${lock}>Add a Story</button><a class="btn btn-line btn-sm" href="../stories.html" target="_blank" rel="noopener" data-fgstories="1">Open Grounded Stories</a></div>
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:8px">${savedLine()}</p></div>
   ${sealCard(V, n)}
   ${codesCard()}
@@ -159,6 +165,8 @@ function storyView(V, s){
    <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, often before it goes on Substack.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
    <label class="sv-tick"><input type="checkbox" data-svf="open"${s.open ? ' checked' : ''}${lock}> <span><b>Open to Everyone</b><br><small class="muted">The whole story plays and reads for every visitor once it is Posted.</small></span></label>
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:10px">${savedLine()}</p></div>
+  <div class="card" id="sv-topics"><h3>Topics</h3><p class="muted" style="font-size:14px;margin-top:4px">Grounded Stories shows this story under each topic you choose, and always under All Stories.</p>
+   ${(() => { const on = topicsNow(s); return TOPICS.map(([k, t]) => `<label class="sv-tick"><input type="checkbox" data-svf="topic" data-v="${k}"${on.includes(k) ? ' checked' : ''}${lock}> <span><b>${esc(t)}</b></span></label>`).join(''); })()}</div>
   <div class="card"><h3>Details</h3>
    <label class="f" for="sv-title">Title</label><input type="text" id="sv-title" data-svf="title" value="${esc(s.title)}"${lock}>
    <label class="f" for="sv-sub">Subtitle</label><input type="text" id="sv-sub" data-svf="sub" value="${esc(s.sub || '')}"${lock}>
@@ -279,13 +287,14 @@ document.addEventListener('input', e => {
   if (k === 'q'){ UI.q = t.value; const L = document.getElementById('sv-list'); if (L){ keepGroups(); L.innerHTML = listHTML(); } return; }
   const s = cur(); if (!s || waits()) return;
   if (k === 'para'){ const i = +t.getAttribute('data-v'); if (s.paras[i] !== t.value){ s.paras[i] = t.value; textChanged(s); keep(); } return; }
-  if (k === 'open') return;
+  if (k === 'open' || k === 'topic') return;
   setField(s, k, t.value); keep();
 });
 document.addEventListener('change', e => {
   const t = e.target, k = t && t.getAttribute && t.getAttribute('data-svf'); if (!k || !SV() || !isFounder()) return;
   const s = cur(); if (!s || waits()) return;
   if (k === 'open'){ s.open = !!t.checked; rr(); keep(); return; }
+  if (k === 'topic'){ const v = t.getAttribute('data-v'), on = new Set(topicsNow(s)); if (t.checked) on.add(v); else on.delete(v); s.topics = TOPICS.map(x => x[0]).filter(x => on.has(x)); keep(); return; }
   if (k === 'para'){
     // Leaving a box: a blank line inside makes two paragraphs, and an empty box goes away.
     const i = +t.getAttribute('data-v'), parts = splitParas(t.value);

@@ -642,7 +642,7 @@ const rfill = (t, p) => fill(String(t || '').replace(/\[Name\]/g, '[Couple]'), p
 function lbPrev(p, k, x){
   const bible = (CER() && hasSvc(p) && CER().get(p.svc) || {}).bible || 'kjv';
   if (k === 'reading'){ const b = rBody(x, bible);
-    return `<div class="wd-prev">${x.bring ? `<p class="wd-note2"><b>Bring your own copy.</b> It prints with this credit line.</p>` : `<div class="wd-words wd-read">${esc(b.text)}</div>`}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}</div>`; }
+    return `<div class="wd-prev">${x.bring ? `<p class="wd-note2"><b>Bring your own copy.</b> It prints with this credit line.</p>` : `${CER() && CER().listen ? CER().listen(x, b, 'wd') : ''}<div class="wd-words wd-read">${esc(b.text)}</div>`}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}${x.note && !x.bring ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}</div>`; }
   return `<div class="wd-prev">${x.by ? `<p><b>${esc(x.by)}</b></p>` : ''}${x.about ? `<p>${esc(rfill(x.about, p))}</p>` : ''}${arr(x.how).length ? `<div class="wd-lbl">How it goes</div><ol>${x.how.map(h => `<li>${esc(rfill(h, p))}</li>`).join('')}</ol>` : ''}${arr(x.needs).length ? `<div class="wd-lbl">What to bring</div><ul>${x.needs.map(h => `<li>${esc(h)}</li>`).join('')}</ul>` : ''}
     <p class="wd-sub">${[x.minutes ? 'About ' + x.minutes + ' minutes' : '', momentsOf(k, x).length ? 'Fits: ' + momentsOf(k, x).map(momName).join(', ') : '', faithKind(k, x) === 'faith' ? 'Faith' : faithKind(k, x) === 'plain' ? 'Plain' : 'Faith or plain'].filter(Boolean).join(' · ')}</p>${x.note ? `<p class="wd-sub">${esc(x.note)}</p>` : ''}${x.source ? `<p class="wd-src">${esc(x.source)}</p>` : ''}</div>`;
 }

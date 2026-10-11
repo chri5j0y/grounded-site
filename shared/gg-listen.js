@@ -96,8 +96,8 @@
     });
   }
   function css() {
-    if (document.getElementById('ggl-css')) return;
-    var s = document.createElement('style'); s.id = 'ggl-css';
+    if (document.getElementById('ggl-listen-css')) return;
+    var s = document.createElement('style'); s.id = 'ggl-listen-css';
     s.textContent = '.ggl{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin:6px 0 12px;min-width:0}'
       + '.ggl-b{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:6px 14px;border-radius:999px;border:1.5px solid var(--line,rgba(0,0,0,.2));background:var(--card,transparent);color:var(--ink,inherit);font:inherit;font-size:15px;font-weight:600;cursor:pointer;line-height:1.1}'
       + '.ggl-b:hover{border-color:var(--gold,currentColor)}.ggl-b:focus-visible{outline:2px solid var(--gold,currentColor);outline-offset:2px}'
@@ -194,5 +194,5 @@
     if (spec.sealed) return Promise.all(lines.map(function (t) { return G.sealedName(spec.sealed, 'brian', t); }));
     return Promise.resolve(lines.map(function (t) { return G.clipName('brian', t); }));
   }
-  window.GGListen = { html: html, linesOf: linesOf, names: names, stop: stop, state: function () { return { id: P.id, i: P.i, state: P.state, played: P.played, speed: SPEEDS[sp][0], src: P.el ? P.el.src : '' }; }, act: act, version: 'b784s' };
+  window.GGListen = { html: html, linesOf: linesOf, names: names, stop: stop, state: function () { return { id: P.id, i: P.i, state: P.state, played: P.played, speed: SPEEDS[sp][0], src: P.el ? P.el.src : '' }; }, act: act, version: 'b786' };
 })();
