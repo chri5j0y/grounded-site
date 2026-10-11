@@ -638,9 +638,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b782"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
-<script src="../read.js?v=b782"></script>
+<script src="../read.js?v=b784"></script>
 <script src="../shared/gg-sources.js?v=b777"></script>
-<script src="../shared/gg-learn.js?v=b783"></script>
+<script src="../shared/gg-learn.js?v=b784"></script>
 <script src="../shared/gg-print.js?v=b782"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -1798,7 +1798,7 @@ function lnTracks(){
   if (TIER === 'founder') add(typeof FDR !== 'undefined' ? FDR : null);
   out.sort((a, b) => (a.order || 0) - (b.order || 0));
   // Get Set Up (a good voice) comes first on every device, from the shared player.
-  if (window.GGLearn && GGLearn.setupTrack) out.unshift(GGLearn.setupTrack);
+  // Get Set Up (the device voice video) is retired, Chris, October 10, 2026.
   return out;
 }
 const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn || {}));

@@ -331,8 +331,9 @@
         audio.addEventListener('ended', stop); bar.hidden = false; paint();
       }).catch(function () {});
     }
-    // BLD 782: with no speech in this browser, the bar shows only once a recording is found.
-    if (!synth) bar.hidden = true;
+    // Chris, October 10, 2026: the device read-aloud bar and its voice menu are retired (the videos carry recorded voices);
+    // the bar shows only once a real recording is found (story pages).
+    bar.hidden = true;
     paint();
     return bar;
   }
