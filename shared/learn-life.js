@@ -1435,7 +1435,7 @@
           "k": "big",
           "h": "Choose what is part of your life right now.",
           "sub": "Or none. As many as fit.",
-          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say."
+          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say. Living Sober is there too, private like the rest, for your own choices or for loving someone who drinks or uses."
          },
          {
           "k": "screen",
@@ -2162,7 +2162,7 @@
           "k": "big",
           "h": "Choose what is part of your life right now.",
           "sub": "Or none. As many as fit.",
-          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, a serious illness, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say."
+          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, a serious illness, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say. Living Sober is there too, private like the rest, for growing sober or for loving someone who drinks or uses."
          },
          {
           "k": "screen",
@@ -2889,7 +2889,7 @@
           "k": "big",
           "h": "Choose what is part of your life right now.",
           "sub": "Or none. As many as fit.",
-          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, a serious illness, memory or thinking changes, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say."
+          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, a disability, a mental health condition, a serious illness, memory or thinking changes, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say. Living Sober is there too, private like the rest, for growing sober or for loving someone who drinks or uses."
          },
          {
           "k": "screen",
@@ -3616,7 +3616,7 @@
           "k": "big",
           "h": "Choose what is part of your life right now.",
           "sub": "Or none. As many as fit.",
-          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, moving, hearing, or seeing differently, memory or thinking changes, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say."
+          "say": "Open Settings, or Manage My Profile, and tap Health and Ability. Choose anything that is part of your life right now: a health condition, pain or fatigue, moving, hearing, or seeing differently, memory or thinking changes, or someone close to you living with one. Pick as many as fit, or None Right Now, or I’d Rather Not Say. Living Sober is there too, private like the rest, for growing sober or for loving someone who drinks or uses."
          },
          {
           "k": "screen",

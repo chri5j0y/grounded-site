@@ -647,8 +647,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b784"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b791"></script>
-<script src="../shared/gg-print.js?v=b787"></script>
+<script src="../shared/gg-learn.js?v=b793"></script>
+<script src="../shared/gg-print.js?v=b793"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
@@ -2216,7 +2216,7 @@ function lnAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b787'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b793'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
@@ -9376,7 +9376,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b789', '../aspen/guides.js?v=b789', '../oak/guides.js?v=b790', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b790', '../pine/guides.js?v=b790', '../birch/guides.js?v=b789'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b793', '../aspen/guides.js?v=b793', '../oak/guides.js?v=b793', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b793', '../pine/guides.js?v=b793', '../birch/guides.js?v=b793'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
