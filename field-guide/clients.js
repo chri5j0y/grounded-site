@@ -9,9 +9,8 @@
 // payments, numbered invoices, linked plans and sessions, notes); and Back Up (the weekly Back Up
 // Now card on the Staff and Founder Home).
 // Words: the Staff library's clients key, filled from the built-in words below wherever a piece is
-// missing. Rates: the Staff library's services rates. Travel: no fee in St. Cloud, Sartell, Sauk
-// Rapids, and Waite Park; beyond that, the IRS standard mileage rate, round trip from St. Cloud
-// (a rate the Founder can update).
+// missing. Rates: the Staff library's services rates. Travel: included for the first 30 miles;
+// beyond that, charged at the IRS mileage rate (Chris, October 13, 2026), a rate the Founder can update.
 // GWG BLD 769: the privacy notice adds the writing-help line, and Step 1 asks the writing assistant yes (saved with how and when).
 // Privacy: nothing is saved until the client's yes to the privacy notice is recorded. Files live in
 // DATA.cli: encrypted with the rest of this device's records and carried in backups (merged by
@@ -97,7 +96,7 @@ const DEF = {
       signWays: L2(['here', 'Sign Here'], ['send', 'Send to Sign'])
     },
     payRules: ['Ceremonies: a 50% deposit holds the date. The balance is due the day before.', 'Sessions: paid at the time of each session.', 'Packages: paid up front.',
-      'Travel: no fee in St. Cloud, Sartell, Sauk Rapids, and Waite Park. Beyond that, the IRS standard mileage rate, round trip from St. Cloud.',
+      'Travel: included for the first 30 miles. Beyond that, travel is charged at the IRS mileage rate.',
       'Funerals and end-of-life work never carry a cancellation fee.'],
     included: ''
   },
@@ -210,8 +209,8 @@ function libRates(){
     const unit = pr.slice(m.index + m[0].length).trim().replace(/^per\s+/i, 'per ');
     out.push({lid: s.id + '.' + i, svc: s.id, group: s.short || s.title || s.id, name: lab, kind: kindOf(lab), rate: +m[1].replace(/,/g, ''), from: /^\s*from/i.test(pr), unit});
   }));
-  out.push({lid: 'travel-none', svc: 'travel', group: 'Travel', name: 'No travel fee: St. Cloud, Sartell, Sauk Rapids, or Waite Park', kind: 'nofee', rate: 0, unit: ''});
-  out.push({lid: 'travel-miles', svc: 'travel', group: 'Travel', name: 'Travel, round trip from St. Cloud at the IRS standard mileage rate', kind: 'travel', rate: irs(), unit: 'a mile'});
+  out.push({lid: 'travel-none', svc: 'travel', group: 'Travel', name: 'Travel included: within the first 30 miles', kind: 'nofee', rate: 0, unit: ''});
+  out.push({lid: 'travel-miles', svc: 'travel', group: 'Travel', name: 'Travel beyond the first 30 miles, at the IRS mileage rate', kind: 'travel', rate: irs(), unit: 'a mile'});
   return out;
 }
 const KIND = {ceremony: 'Ceremony: 50% deposit, balance the day before', package: 'Package: paid up front', session: 'Session: paid at the time', travel: 'Travel: with the ceremony balance', nofee: 'No travel fee in the St. Cloud area'};
@@ -231,7 +230,7 @@ function calc(f){
 function dueText(f){ const d = f.svc.date; return d ? nice(addDays(d, -1)) : 'the day before the service'; }
 const amtCell = r => fixed(r.it) ? 'No fee' : money(r.amt);
 function rowName(it){
-  return it.name + (it.kind === 'travel' ? ', ' + (+it.qty || 0) + ' miles round trip at ' + perMile(it.rate) + ' a mile' : it.kind === 'session' && +it.qty > 1 ? ', ' + it.qty + ' sessions' : it.kind !== 'nofee' && +it.qty > 1 ? ', ' + it.qty : '');
+  return it.name + (it.kind === 'travel' ? ', ' + (+it.qty || 0) + ' miles beyond the first 30, at ' + perMile(it.rate) + ' a mile' : it.kind === 'session' && +it.qty > 1 ? ', ' + it.qty + ' sessions' : it.kind !== 'nofee' && +it.qty > 1 ? ', ' + it.qty : '');
 }
 
 // ---------- the agreement (one source for the page, the copy that is sent, and the signed record) ----------
@@ -560,7 +559,7 @@ function vFiles(){
   ${lockNote('Every file is encrypted on this device and in your locked backup. Only your passcode opens it.')}
   <div class="cl-top"><input type="search" id="cl-q" data-clq="1" aria-label="Search client files" placeholder="Search by name or service" value="${esc(S.q)}"><button type="button" class="btn btn-gold" data-cla="new-intake"${fk('new-intake')}>New Client: Start Intake</button></div>
   <div class="cl-list">${L.length ? L.map(x => { const st = status(x); return `<div class="cl-ccard"><h3>${esc(fTitle(x))}</h3><p>${esc(picked(x, 'svc').join(', ') || 'Service to choose')}</p><p class="muted">${esc([x.svc.date ? nice(x.svc.date) : 'Started ' + nice(x.made), x.svc.forWhom].filter(Boolean).join(' · '))}</p><span class="pill${st.ok ? ' sage' : ' gold'}">${esc(st.t)}</span><div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-cla="file" data-clv="${esc(x.id)}">Open File</button></div></div>`; }).join('') : `<p class="muted">${files().length ? 'No files match. Try another name.' : 'Client files start in the Intake Session, once their yes to the privacy notice is recorded.'}</p>`}</div>
-  <div class="fw-blk" style="margin-top:16px"><h3 style="margin:0 0 4px">Travel Rate</h3><p class="fw-sub">The IRS standard mileage rate, for travel beyond St. Cloud, Sartell, Sauk Rapids, and Waite Park, round trip from St. Cloud.</p>
+  <div class="fw-blk" style="margin-top:16px"><h3 style="margin:0 0 4px">Travel Rate</h3><p class="fw-sub">The IRS mileage rate, for travel beyond the first 30 miles.</p>
     ${isFounder() ? `<div class="cl-addlib"><input type="number" min="0" step="0.001" id="cl-irs" aria-label="Rate a mile" value="${esc(irs())}"><button type="button" class="btn btn-line btn-sm" data-cla="irs">Update the Rate</button></div><p class="fw-sub">Now ${perMile(irs())} a mile. Update it each January when the IRS sets the new rate.${window.GGBooks ? ' The Mileage Log in Books uses this same rate.' : ''}</p>` : `<p style="margin:0"><b>${perMile(irs())} a mile.</b> <span class="muted">The Founder updates it each year.</span></p>`}</div>`;
 }
 const kv = rows => `<dl class="cl-kv">${rows.filter(r => r[1]).map(r => `<dt>${esc(r[0])}</dt><dd>${esc(r[1])}</dd>`).join('')}</dl>`;
