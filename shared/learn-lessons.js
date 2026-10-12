@@ -13339,7 +13339,7 @@ window.GG_LEARN = {
         {
          "id": "ok-st-grief-minutes",
          "n": 1,
-         "title": "Five Minutes With Your Grief",
+         "title": "Five Minutes with Your Grief",
          "mins": 3,
          "blurb": "A short daily writing practice that gives grief a place to land.",
          "sources": [
@@ -13350,7 +13350,7 @@ window.GG_LEARN = {
            "k": "title",
            "hero": "oak",
            "eyebrow": "Practices From Chris’s Shelf",
-           "h": "Five Minutes With Your Grief",
+           "h": "Five Minutes with Your Grief",
            "sub": "A notebook, a timer, and five minutes.",
            "say": "This is a short practice for grief. Five minutes, a notebook, and a place for what you carry to land."
           },

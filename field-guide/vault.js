@@ -347,7 +347,7 @@ function cardView(V, c){
   ${c.status !== 'posted' ? `<button class="linkbtn" data-sva="cdel"${lock}>Remove This Card</button><br>` : ''}
   <button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button></div>`;
 }
-function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=b788'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
+function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=b791'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
 function libSearch(){ const q = UI.cq.trim(); if (!q){ UI.lib = null; return Promise.resolve(); } return needLib().then(okl => { UI.lib = okl ? GGLibrary.search(q, 'oak') : []; }); }
 function voiceLine(s){
   if (s.voiced) return '<span class="pill sage">Recorded</span> The narrator\'s voice reads this story as written.';

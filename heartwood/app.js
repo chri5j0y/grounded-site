@@ -13,7 +13,7 @@
    answers as digits, locked with a word only the two of them know, after the # in a link or QR code (heartwood/core.js).
    A check-in card carries one partner's written check-in answers the same way.
    The Week Card (GWG BLD 755): before a session, the couple can choose to share a short card with their leaders
-   (videos watched, practices tried, workbook answers marked Share With Our Leaders, and one question), locked with
+   (videos watched, practices tried, workbook answers marked Share with Our Leaders, and one question), locked with
    their shared word the same way and carried as #gmw=w1.<code> (GMCore.week). Nothing is sent anywhere else.
    Sending a card to Chris and Kayti (GWG BLD 773): beside each card (the partner card, the Week Card, and the
    check-in card), Email to Chris and Kayti (hello@growwithgrounded.com) is the main button and a smaller Text to Chris
@@ -969,7 +969,7 @@
     if (ATV) return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">' + esc(avText('week', 'Whenever you like, share a short card with Chris and Kayti: the videos you watched, the practices you tried, and one question on your heart.')) + '</p>' +
       '<p class="btv-small">It is your choice, and it is locked with your shared word, which you tell Chris and Kayti in person' + (two ? '. Each of you can make one from your own device' : '') + '.</p>' +
       '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
-    return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">Before each session, you can choose to share a short card with your leaders: the videos you watched, the practices you tried, any workbook answers you marked Share With Our Leaders, and one question you want to talk about.</p>' +
+    return '<div class="ff-card gm-wk"><h2>The Week Card</h2><p class="ff-sub">Before each session, you can choose to share a short card with your leaders: the videos you watched, the practices you tried, any workbook answers you marked Share with Our Leaders, and one question you want to talk about.</p>' +
       '<p class="btv-small">It is your choice, and it is locked with your shared word. You open it with your leaders at your session' + (two ? ', and each of you can make one from your own device' : '') + '.</p>' +
       '<div class="ff-row">' + btn('week', 'Make a Week Card', { cls: 'btn-primary ff-sm' }) + '</div></div>';
   }
@@ -996,7 +996,7 @@
       '<h3>Videos You Watched</h3>' + (I.vids.length ? '<div class="gm-wk-list">' + I.vids.map(function (v) { return row('vid', v, v.on); }).join('') + '</div>' : '<p class="btv-small">Videos you finish in Learn show here.</p>') +
       '<h3>Practices You Tried</h3>' + (I.prs.length ? '<div class="gm-wk-list">' + I.prs.map(function (p) { return row('pr', p, false); }).join('') + '</div>' : '<p class="btv-small">Practices for Two show here.</p>') +
       (ATV ? '' : '<h3>From The Couple Workbook</h3>' + (I.wbs.length ? '<div class="gm-wk-list">' + I.wbs.map(function (x) { return row('wb', x, true, esc(x.w) + ': ' + esc(x.a.length > 140 ? x.a.slice(0, 140) + '...' : x.a)); }).join('') + '</div>'
-        : '<p class="btv-small">In The Couple Workbook, choose Share With Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>')) +
+        : '<p class="btv-small">In The Couple Workbook, choose Share with Our Leaders on any exercise you would like to bring' + (two ? ' from your own answers' : '') + '.</p>')) +
       '<h3>One Question</h3><label class="ff-f"><span class="h">' + (ATV ? 'One question you would like to talk about with Chris and Kayti, if you like.' : 'One question you want to talk about at your session, if you like.') + '</span><textarea id="gm-wk-q" rows="2" maxlength="500"></textarea></label>' +
       '<label class="gm-check"><input type="checkbox" id="gm-wk-yes"><span>' + (two ? 'I say yes to sharing this card with ' : 'We both say yes to sharing this card with ') + (ATV ? 'Chris and Kayti' : 'our leaders') + '.</span></label>' +
       '<div class="ff-row">' + btn('wk-make', 'Lock and Make the Card') + btn('leave-talk', 'Lock and Close', sec()) + '<span class="ff-status" id="gm-wkst" role="status" aria-live="polite"></span></div>' +
@@ -1321,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b790', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b791', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

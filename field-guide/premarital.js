@@ -18,7 +18,7 @@
 // (merged by GGPm.merge). Nothing is sent.
 // GWG BLD 770: a couple linked to a Wedding Plan (wedding.js) shows a Wedding Plan link in its header.
 // GWG BLD 755, the Week Card: before a session the couple can choose to share a short card from the app (videos
-// watched, practices tried, workbook answers they marked Share With Our Leaders, one question), locked with their
+// watched, practices tried, workbook answers they marked Share with Our Leaders, one question), locked with their
 // shared word like their answers card (#gmw=w1.<code>, read here with its own reader of the same format). The leader
 // pastes it on that session's page, the couple types their word, and it shows at the top of that session as
 // premarital.weekCard.title ("From the Couple This Week"), kept in c.week {sessionKey: [{brought, yes, card}]}.
