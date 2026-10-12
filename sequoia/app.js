@@ -1888,6 +1888,8 @@ function legChapterHtml(c, L, who) {
       : `<div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="legEdit('${p.id}')">Write This One</button></div>`}
     </article>`;
   }).join('');
+  // A chapter drawn from a book (GWG BLD 787: A Life Well Finished) carries sources, shown here as the quiet Sources line.
+  if (Array.isArray(c.sources) && c.sources.length && window.GGSources) h += GGSources.line(c.sources);
   h += `<div class="btn-row"><button class="btn btn-primary" onclick="legPrint(['${c.id}'])">Save or Print This Chapter</button>${c.optIn ? `<button class="btn btn-secondary" onclick="legOptIn('${c.id}', false)">Close This Chapter</button>` : ''}<button class="btn btn-secondary" onclick="legOpen(null)">Back to All Chapters</button></div>
     <div id="sq-legsheet" class="sq-legsheet" aria-hidden="true"></div>`;
   return h;

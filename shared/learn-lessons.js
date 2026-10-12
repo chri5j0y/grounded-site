@@ -17,6 +17,8 @@
    The Grove Learn for the kinds of grove (GWG BLD 774): Choosing Your Grove's Kind, the Group Check-in, results, the Growth
    Plan, privacy, Leading a Grove (5), and Do This Together for families, classes, groups, and teams.
    Do This Together grows (GWG BLD 783): For Classes, For Faith Communities and Groups, and For Teams, with eight new videos.
+   From Chris's Shelf (GWG BLD 787): Learn videos drawn from the books on Chris's shelf, in our own words, added insert only from
+   patches/bld787/source/gl/add.py in grounded-workshop: <app>-shelf, <app>-shelf-try, and the unlisted willow-faith track.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
@@ -3612,6 +3614,302 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "maple-shelf",
+   "title": "From Chris's Shelf",
+   "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+   "lessons": [
+    {
+     "id": "mp-sh-trees",
+     "n": 1,
+     "title": "Trees Help Each Other",
+     "mins": 4,
+     "blurb": "Trees in a forest share and shelter each other, and we can too.",
+     "sources": [
+      "wohlleben15"
+     ],
+     "for": "kids",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "Trees Help Each Other",
+       "sub": "A forest is a family of trees.",
+       "say": "Today we are going on a walk into a forest, to learn something wonderful about trees. Trees help each other. And people can help each other too."
+      },
+      {
+       "k": "big",
+       "h": "Under the ground, trees hold hands.",
+       "sub": "Roots and tiny threads link them together.",
+       "say": "People who study forests have found something amazing. Under the ground, the roots of the trees reach toward each other. Tiny threads, thinner than a hair, link one root to the next. It is a little like the trees are holding hands."
+      },
+      {
+       "k": "points",
+       "h": "How trees help each other",
+       "items": [
+        [
+         "Sharing food",
+         "Big trees help little ones"
+        ],
+        [
+         "Sharing shade",
+         "Cool shelter from hot sun"
+        ],
+        [
+         "Standing close",
+         "Together against the wind"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "Many scientists think trees can share food through those roots, and big trees may help the little ones growing in their shade. Trees give each other cool shade on a hot day. And trees standing close together help each other stay strong when the wind blows."
+      },
+      {
+       "k": "big",
+       "h": "You have a forest too.",
+       "sub": "Family, friends, teachers, and neighbors.",
+       "say": "Guess what? You have a forest too. Your family, your friends, your teachers, and your neighbors are like the trees all around you. When one of you has a hard day, the others can help."
+      },
+      {
+       "k": "points",
+       "h": "Ways we help each other",
+       "items": [
+        [
+         "Share",
+         "A snack, a crayon, a turn"
+        ],
+        [
+         "Stay close",
+         "Sit by someone who feels sad"
+        ],
+        [
+         "Cheer",
+         "Say, you can do it!"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here are some ways we can be like trees. Share, like a snack, a crayon, or a turn on the swing. Stay close, and sit by someone who feels sad. And cheer each other on. You can do it!"
+      },
+      {
+       "k": "big",
+       "h": "Be a tree",
+       "sub": "Feet like roots. Arms like branches.",
+       "beats": [
+        "Let us try something together.",
+        "Stand up tall like a tree, if you can, or sit up tall right where you are.",
+        "Wiggle your toes, like roots reaching down into the ground.",
+        "Stretch your arms up high, like branches.",
+        {
+         "t": "Now think of one person in your forest, someone who helps you, and say their name out loud.",
+         "w": 8
+        },
+        {
+         "t": "Last, think of one way you can help someone today.",
+         "w": 8
+        },
+        "Great job, little tree!"
+       ],
+       "say": "Let us try something together. Stand up tall like a tree, if you can, or sit up tall right where you are. Wiggle your toes, like roots reaching down into the ground. Stretch your arms up high, like branches. Now think of one person in your forest, someone who helps you, and say their name out loud. Last, think of one way you can help someone today. Great job, little tree!"
+      },
+      {
+       "k": "points",
+       "h": "Little trees grow strong",
+       "items": [
+        [
+         "Slow and steady",
+         "Growing a little each day"
+        ],
+        [
+         "With helpers",
+         "Big trees all around"
+        ],
+        [
+         "Reaching up",
+         "Toward the light"
+        ]
+       ],
+       "say": "Little trees in a forest grow slowly, a little bit each day, with big trees all around them. That helps them grow strong. You are growing like that too, a little each day, with your helpers all around you."
+      },
+      {
+       "k": "big",
+       "h": "We grow strong together.",
+       "sub": "Grown-ups: ask, who is in your forest?",
+       "say": "Grown-ups, here is a good question for tonight. Who is in your forest? Listen for the names. A forest grows strong because the trees help each other. And so do we."
+      },
+      {
+       "k": "quiz",
+       "q": "How do trees in a forest help each other?",
+       "opts": [
+        "They share and stay close",
+        "They race to be the tallest",
+        "They each grow all alone"
+       ],
+       "right": 0,
+       "why": "Trees share food and shade and stand close together, and people can help each other the same way.",
+       "say": "Quick question. How do trees in a forest help each other?"
+      }
+     ]
+    },
+    {
+     "id": "mp-sh-rabbit",
+     "n": 2,
+     "title": "Be Like the Rabbit",
+     "mins": 3,
+     "blurb": "When a friend is sad, come close, listen, and wait until they are ready.",
+     "sources": [
+      "doerrfeld18"
+     ],
+     "for": "kids",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "Be Like the Rabbit",
+       "sub": "Come close. Listen. Wait.",
+       "say": "This lesson is about a gentle way to help a friend who feels sad or upset. We call it being like the rabbit."
+      },
+      {
+       "k": "big",
+       "h": "Sometimes something sad happens.",
+       "sub": "And a friend feels all mixed up.",
+       "say": "Imagine your friend spent all morning making a sandcastle at the beach. Then a big wave came, and whoosh! It washed the sandcastle away. Your friend feels sad and mad and all mixed up inside."
+      },
+      {
+       "k": "points",
+       "h": "Helpers with lots of ideas",
+       "items": [
+        [
+         "Fix it fast",
+         "Build it again right now!"
+        ],
+        [
+         "Talk a lot",
+         "Here is what you should do!"
+        ],
+        [
+         "Hurry up",
+         "Come on, let us go play!"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Lots of helpers rush in with ideas. Build it again right now! Here is what you should do! Come on, let us go play! Those helpers mean well. A friend with big feelings usually needs something quieter first."
+      },
+      {
+       "k": "big",
+       "h": "Be like the rabbit.",
+       "sub": "Soft and quiet, with big ears for listening.",
+       "say": "So be like a rabbit. A rabbit comes close, soft and quiet. A rabbit has big ears, just right for listening. And a rabbit waits, calm and patient, until the friend is ready."
+      },
+      {
+       "k": "flow",
+       "h": "Rabbit steps",
+       "steps": [
+        [
+         "Come close",
+         "Soft and quiet"
+        ],
+        [
+         "Listen",
+         "With big rabbit ears"
+        ],
+        [
+         "Wait",
+         "Until they are ready"
+        ],
+        [
+         "Help together",
+         "When they say so"
+        ]
+       ],
+       "say": "Here are the rabbit steps. Come close, soft and quiet. Listen with your big rabbit ears. Wait until your friend is ready. Then, when they want to, you can help together."
+      },
+      {
+       "k": "words",
+       "h": "Rabbit words",
+       "items": [
+        "Take your time.",
+        "You can tell me.",
+        "We can sit here together."
+       ],
+       "cue": {
+        "p": {
+         "2": 1.5,
+         "3": 1.5,
+         "4": 2
+        },
+        "at": [
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Rabbits use only a few words. Here are some you can borrow. Take your time. You can tell me. We can sit here together."
+      },
+      {
+       "k": "big",
+       "h": "Practice your rabbit ears",
+       "sub": "Hands up high. Very still. Listen.",
+       "beats": [
+        "Let us practice right now.",
+        "Put your hands up on your head, like two tall rabbit ears.",
+        "Now be very, very still.",
+        "Listen for three sounds around you.",
+        {
+         "t": "Count them on your fingers, one, two, three.",
+         "w": 12
+        },
+        "Wonderful listening!",
+        "That is just the kind of listening a sad friend needs."
+       ],
+       "say": "Let us practice right now. Put your hands up on your head, like two tall rabbit ears. Now be very, very still. Listen for three sounds around you. Count them on your fingers, one, two, three. Wonderful listening! That is just the kind of listening a sad friend needs."
+      },
+      {
+       "k": "big",
+       "h": "You can find a rabbit too.",
+       "sub": "A grown-up or a friend who listens.",
+       "say": "And when you feel sad or upset, you can find a rabbit too. Go to a grown-up or a friend who will sit close and listen. Telling someone how you feel helps the feeling get smaller."
+      },
+      {
+       "k": "big",
+       "h": "Come close. Listen. Wait.",
+       "sub": "Grown-ups: be the rabbit first, then help.",
+       "say": "Grown-ups, when your child is upset, try being the rabbit first. Come close, listen, and wait, and then help together. Everyone can be a rabbit for someone."
+      },
+      {
+       "k": "quiz",
+       "q": "Your friend is sad. What does a rabbit do?",
+       "opts": [
+        "Tells them to hurry up",
+        "Comes close and listens",
+        "Runs off to play"
+       ],
+       "right": 1,
+       "why": "A rabbit comes close, listens, and waits until the friend is ready.",
+       "say": "Quick question. Your friend is sad. What does a rabbit do?"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "maple-support",
    "kind": "support",
    "title": "For Big Feelings",
@@ -4674,6 +4972,237 @@ window.GG_LEARN = {
        "h": "You are brave, and you are loved.",
        "sub": "Grown-ups: When Life Changes has guides for this.",
        "say": "You are brave. You are loved. And there are grown-ups who want to help you, always."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "maple-shelf-try",
+   "kind": "support",
+   "title": "Practices From Chris's Shelf",
+   "who": "Short practices drawn from the books on Chris's shelf.",
+   "lessons": [
+    {
+     "id": "mp-st-memory-box",
+     "n": 1,
+     "title": "A Memory Box for Someone We Miss",
+     "mins": 3,
+     "blurb": "Fill a box with drawings, notes, and treasures that help you remember someone you love.",
+     "sources": [
+      "rowland17"
+     ],
+     "for": "kids",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "A Memory Box for Someone We Miss",
+       "sub": "A special place for happy memories.",
+       "say": "When we miss someone we love, it helps to keep our memories somewhere special. Maybe the person you miss died, or moved far away. Today we will make a memory box, so you can remember them any time you want."
+      },
+      {
+       "k": "big",
+       "h": "Memories are treasures.",
+       "sub": "We can keep them close.",
+       "say": "Memories are like treasures. A memory box is a special place to keep them, so you can open it and feel close to the person you miss."
+      },
+      {
+       "k": "flow",
+       "h": "Make your box",
+       "steps": [
+        [
+         "Find a box",
+         "A shoebox works great"
+        ],
+        [
+         "Decorate it",
+         "Colors, stickers, their name"
+        ],
+        [
+         "Fill it",
+         "Things that help you remember"
+        ]
+       ],
+       "say": "Here is how. Find a box with your grown-up. A shoebox works great. Decorate it any way you like, with colors, stickers, or their name. Then fill it with things that help you remember them."
+      },
+      {
+       "k": "points",
+       "h": "What can go inside?",
+       "items": [
+        [
+         "Drawings",
+         "You and them together"
+        ],
+        [
+         "Photos",
+         "Happy times"
+        ],
+        [
+         "Notes",
+         "Things you want to tell them"
+        ],
+        [
+         "Treasures",
+         "A shell, a ribbon, a ticket"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "What can go inside? Drawings of you and them together. Photos of happy times. Notes with things you want to tell them. And little treasures that remind you of them, like a shell, a ribbon, or a ticket from a day you shared."
+      },
+      {
+       "k": "big",
+       "h": "Think of one memory",
+       "sub": "One happy time. One thing for your box.",
+       "beats": [
+        "Let us start right now.",
+        "Close your eyes, if you like, and think of the person you miss.",
+        "Think of one happy time you had together.",
+        {
+         "t": "What could you put in your box to help you remember that time?",
+         "w": 10
+        },
+        {
+         "t": "Now tell your grown-up about it, or draw it on a piece of paper.",
+         "w": 12
+        }
+       ],
+       "say": "Let us start right now. Close your eyes, if you like, and think of the person you miss. Think of one happy time you had together. What could you put in your box to help you remember that time? Now tell your grown-up about it, or draw it on a piece of paper."
+      },
+      {
+       "k": "words",
+       "h": "When you open your box",
+       "items": [
+        "Love you always.",
+        "You are in my heart.",
+        "Thank you for the happy times."
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 2
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "When you open your box, you can say, out loud or in your head. Love you always. You are in my heart. Thank you for the happy times."
+      },
+      {
+       "k": "big",
+       "h": "Open it whenever you like.",
+       "sub": "Grown-ups: open it together, and share a story.",
+       "say": "You can open your memory box whenever you want, on happy days and sad days. Grown-ups, open it together sometimes, and tell a story about the person you miss. Missing feels lighter when we share it."
+      }
+     ]
+    },
+    {
+     "id": "mp-st-soak",
+     "n": 2,
+     "title": "Soak Up the Good",
+     "mins": 3,
+     "blurb": "Notice something happy, hold it like warm sunshine, and breathe it in.",
+     "sources": [
+      "hanson09"
+     ],
+     "for": "kids",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "maple",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Soak Up the Good",
+       "sub": "Hold a happy moment like warm sunshine.",
+       "say": "Happy moments can zip by really fast. Today we will learn to slow down and soak them up, the way a sponge soaks up water. It is called Soak Up the Good."
+      },
+      {
+       "k": "big",
+       "h": "Your brain can soak up the good.",
+       "sub": "Like a sponge, or warm sunshine.",
+       "say": "When something good happens, your brain can soak it up. The longer you stay with a happy moment, the more of it your brain keeps. It is like warm sunshine on your skin."
+      },
+      {
+       "k": "flow",
+       "h": "Soak it up",
+       "steps": [
+        [
+         "Notice",
+         "Something happy"
+        ],
+        [
+         "Stay",
+         "Hold it like warm sun"
+        ],
+        [
+         "Breathe it in",
+         "Let it fill you up"
+        ]
+       ],
+       "say": "Here is how. Notice something happy. Stay with it, and hold it like warm sunshine. Then breathe it in, and let it fill you up."
+      },
+      {
+       "k": "big",
+       "h": "Let us try it",
+       "sub": "Something happy. Big and bright. Breathe it in.",
+       "beats": [
+        "Let us try it now.",
+        "Think of something happy, like a hug, a puppy, a funny joke, or your favorite place.",
+        "Picture it big and bright.",
+        {
+         "t": "Now breathe in slowly, and imagine that happy feeling filling you up like warm sunshine, from your head to your toes.",
+         "w": 8
+        },
+        {
+         "t": "Stay with it for three more slow breaths.",
+         "w": 14
+        },
+        "Ahh.",
+        "You soaked up the good!"
+       ],
+       "say": "Let us try it now. Think of something happy, like a hug, a puppy, a funny joke, or your favorite place. Picture it big and bright. Now breathe in slowly, and imagine that happy feeling filling you up like warm sunshine, from your head to your toes. Stay with it for three more slow breaths. Ahh. You soaked up the good!"
+      },
+      {
+       "k": "points",
+       "h": "When to soak it up",
+       "items": [
+        [
+         "After a hug",
+         "Stay in it a little longer"
+        ],
+        [
+         "Outside",
+         "Sun, wind, a bird singing"
+        ],
+        [
+         "At bedtime",
+         "One happy thing from today"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "You can soak up the good any time. After a hug, stay in it a little longer. Outside, feel the sun and the wind, and listen for a bird singing. And at bedtime, remember one happy thing from today, and soak it up one more time."
+      },
+      {
+       "k": "big",
+       "h": "Good moments are everywhere.",
+       "sub": "Grown-ups: at bedtime, ask for one good thing to soak up.",
+       "say": "Good moments are everywhere, once you start looking. Grown-ups, at bedtime, ask your child for one good thing from today, and soak it up together."
       }
      ]
     }
@@ -8295,6 +8824,184 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "aspen-shelf",
+   "title": "From Chris's Shelf",
+   "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+   "lessons": [
+    {
+     "id": "as-sh-garden",
+     "n": 1,
+     "title": "A Garden That Helps Us Heal",
+     "mins": 6,
+     "blurb": "Fresh air, friendship, and tending something living, with short readings from a story first published in 1911.",
+     "sources": [
+      "burnett11"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "A Garden That Helps Us Heal",
+       "sub": "Fresh air, friends, and something growing.",
+       "say": "This lesson visits a story written more than a hundred years ago, about three young people who grew stronger in a garden. We will read a few short lines from it, and find what it can teach us today."
+      },
+      {
+       "k": "big",
+       "h": "The Secret Garden",
+       "sub": "A story first published in 1911.",
+       "say": "The story begins with Mary, a girl who comes to live with her uncle in a huge old house beside the wide, windy moors of England. At first she feels lonely, bored, and cross, and she spends her days indoors. Then someone tells her to go outside and play. Here is what happened when she did."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From the Story",
+       "title": "Fresh Air",
+       "lines": [
+        "But the big breaths of rough fresh air blown over the heather filled her lungs with something which was good for her whole thin body and whipped some red color into her cheeks and brightened her dull eyes when she did not know anything about it."
+       ],
+       "chris": false,
+       "say": "But the big breaths of rough fresh air blown over the heather filled her lungs with something which was good for her whole thin body and whipped some red color into her cheeks and brightened her dull eyes when she did not know anything about it."
+      },
+      {
+       "k": "big",
+       "h": "Your body loves fresh air too.",
+       "sub": "Wind, light, and moving outside.",
+       "say": "Wind on her face, running down the paths, and big breaths of fresh air. Within a few days Mary woke up hungry, and she felt stronger and brighter. Many people find the same thing today. Time outside, moving your body, can lift your mood and help you sleep."
+      },
+      {
+       "k": "big",
+       "h": "A hidden garden, and a new friend",
+       "sub": "Looking for signs of life.",
+       "say": "Mary finds a hidden garden that has been locked for ten years. And she makes a friend, Dickon, a boy from the moor who knows all about animals and growing things. Together they look for green life inside the gray, tangled branches."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From the Story",
+       "title": "Wick",
+       "lines": [
+        "\"It's as wick as you or me,\" he said; and Mary remembered that Martha had told her that \"wick\" meant \"alive\" or \"lively.\""
+       ],
+       "chris": false,
+       "say": "\"It's as wick as you or me,\" he said; and Mary remembered that Martha had told her that \"wick\" meant \"alive\" or \"lively.\""
+      },
+      {
+       "k": "big",
+       "h": "Look for what is alive.",
+       "sub": "Even a small green shoot counts.",
+       "say": "Wick means alive. Mary and Dickon went from bush to bush, looking for the green inside. On a hard day, you can do the same thing. Look for what is still alive and growing in you, even something small, like a friend who makes you laugh or a thing you love to do."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From the Story",
+       "title": "A Bit of Earth",
+       "lines": [
+        "\"Might I,\" quavered Mary, \"might I have a bit of earth?\""
+       ],
+       "chris": false,
+       "say": "\"Might I,\" quavered Mary, \"might I have a bit of earth?\""
+      },
+      {
+       "k": "big",
+       "h": "Tending something living helps us grow.",
+       "sub": "A plant, a garden bed, a pet, a friendship.",
+       "say": "Mary asked her uncle for a bit of earth, and he said yes. She planted seeds, pulled weeds, and watched for green. Caring for something living gave her days a purpose. It can do the same for you. A plant on your windowsill, a garden bed, a pet, or a friendship you tend."
+      },
+      {
+       "k": "big",
+       "h": "Then Mary meets Colin.",
+       "sub": "Stories first, then fresh air, then the garden.",
+       "say": "Then Mary meets her cousin Colin, a boy who has spent years in bed indoors, sure that he will always be sick. Mary and Dickon bring the garden to him: stories first, then fresh air through the window, and then the garden itself. One spring day they wheel his chair through the hidden door."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From the Story",
+       "title": "In the Garden",
+       "lines": [
+        "\"I shall get well! I shall get well!\" he cried out. \"Mary! Dickon! I shall get well! And I shall live forever and ever and ever!\""
+       ],
+       "chris": false,
+       "say": "\"I shall get well! I shall get well!\" he cried out. \"Mary! Dickon! I shall get well! And I shall live forever and ever and ever!\""
+      },
+      {
+       "k": "points",
+       "h": "What helped them grow",
+       "items": [
+        [
+         "Fresh air",
+         "Time outside, every day"
+        ],
+        [
+         "Friendship",
+         "People who believe in you"
+        ],
+        [
+         "Something to tend",
+         "A living thing to care for"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "So what helped three young people grow strong? Fresh air, and time outside every day. Friendship, with people who believed in them. And something living to tend, together."
+      },
+      {
+       "k": "big",
+       "h": "Find your bit of earth",
+       "sub": "A plant, a pet, a garden bed, a friendship.",
+       "beats": [
+        "Let us try something now.",
+        "Take a slow, deep breath, as if you were standing in that garden.",
+        "Think of one living thing you could tend this week: a plant, a pet, a garden bed, or a friendship.",
+        {
+         "t": "Pick one, and picture the first small thing you will do for it.",
+         "w": 12
+        },
+        {
+         "t": "And if you can, step outside today, even for five minutes, and take three big breaths of fresh air.",
+         "w": 5
+        }
+       ],
+       "say": "Let us try something now. Take a slow, deep breath, as if you were standing in that garden. Think of one living thing you could tend this week: a plant, a pet, a garden bed, or a friendship. Pick one, and picture the first small thing you will do for it. And if you can, step outside today, even for five minutes, and take three big breaths of fresh air."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From the Story",
+       "title": "A Rose",
+       "lines": [
+        "\"Where, you tend a rose, my lad,",
+        "A thistle cannot grow.\""
+       ],
+       "chris": false,
+       "say": "\"Where, you tend a rose, my lad, A thistle cannot grow.\""
+      },
+      {
+       "k": "big",
+       "h": "Tend what you want to grow.",
+       "sub": "Hard feelings staying a while? Tell a grown-up you trust.",
+       "say": "Tend what you want to grow. Fresh air, good friends, and something living to care for helped three young people in a story long ago, and they can help you too. And if a hard feeling stays with you, tell a grown-up you trust, like a parent, a teacher, or a school counselor."
+      },
+      {
+       "k": "quiz",
+       "q": "In the story, what helped Mary grow stronger?",
+       "opts": [
+        "Staying inside all day",
+        "Fresh air, a friend, and a garden to tend",
+        "Getting everything she asked for"
+       ],
+       "right": 1,
+       "why": "Fresh air, friendship, and something living to tend helped Mary, Dickon, and Colin grow.",
+       "say": "Last question. In the story, what helped Mary grow stronger?"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "aspen-support",
    "kind": "support",
    "title": "For Hard Moments",
@@ -9347,6 +10054,93 @@ window.GG_LEARN = {
        "say": "Telling is brave. You are not in trouble, and you are held. You deserve to be safe."
       }
      ]
+    },
+    {
+     "id": "as-r-woods",
+     "n": 11,
+     "title": "Five Senses in the Woods",
+     "mins": 3,
+     "blurb": "Slow down among trees, one sense at a time.",
+     "sources": [
+      "li18"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "aspen",
+       "eyebrow": "Support for Right Now",
+       "h": "Five Senses in the Woods",
+       "sub": "Slow down outside, one sense at a time.",
+       "say": "This one is for outside. Find some trees: a park, a trail, your backyard, or even one tree on your street. Go somewhere safe, with your grown-up’s okay. We will slow down and take it all in with your five senses."
+      },
+      {
+       "k": "big",
+       "h": "Trees help us calm down.",
+       "sub": "Some people call it forest bathing.",
+       "say": "In Japan, people have a practice whose name means forest bathing: soaking in the forest with your senses. People who study it have found that slow time among trees can calm your heart, ease stress, and lift your mood. Some think the fresh smell of the trees helps too."
+      },
+      {
+       "k": "big",
+       "h": "Phone in your pocket. Eyes up.",
+       "sub": "Walk slowly, with nowhere to be.",
+       "say": "Before you start, set your phone to silent and tuck it away. Walk slowly, like you have nowhere to be. This is all about noticing."
+      },
+      {
+       "k": "points",
+       "h": "One sense at a time",
+       "items": [
+        [
+         "See",
+         "Shapes, colors, light"
+        ],
+        [
+         "Hear",
+         "Wind, birds, leaves"
+        ],
+        [
+         "Smell",
+         "Bark, soil, pine"
+        ],
+        [
+         "Touch",
+         "Bark, a leaf, the air"
+        ],
+        [
+         "Breathe",
+         "Slow and deep"
+        ]
+       ],
+       "cue": {
+        "w": {
+         "1": 10,
+         "2": 10,
+         "5": 8,
+         "6": 8,
+         "7": 12
+        },
+        "at": [
+         1,
+         2,
+         3,
+         6,
+         7
+        ]
+       },
+       "say": "Let us go one sense at a time. Look closely at one tree: its shape, its colors, and the light coming through the leaves. Now close your eyes and listen for wind, birds, and leaves moving. Breathe in through your nose. What do you smell? Bark, soil, pine, or rain? Reach out and touch something: rough bark, a smooth leaf, or the cool air on your skin. Last, take three slow, deep breaths of forest air."
+      },
+      {
+       "k": "big",
+       "h": "Find a tree to come back to.",
+       "sub": "A few quiet minutes, a few times a week.",
+       "say": "If you like it, pick one tree to come back to. Sit near it for a few quiet minutes, a few times a week, and watch how it changes with the seasons."
+      },
+      {
+       "k": "big",
+       "h": "Take a little forest with you.",
+       "sub": "A hard feeling staying? Tell a parent, grandparent, teacher, or school counselor.",
+       "say": "When you head back inside, take a little of the forest with you: the smells, the sounds, and how calm your body felt. And if a hard feeling stays with you, tell a grown-up you trust, like a parent, a grandparent, a teacher, or a school counselor."
+      }
+     ]
     }
    ]
   }
@@ -9572,7 +10366,161 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'When views clash, where should your focus go?', opts: ['Winning the argument', 'The person, not the topic', 'Avoiding them'], right: 1, why: 'Every person deserves compassionate presence, whatever their views.', say: 'Quick question. When views clash, where should your focus go?' }
         ] },
 
-        { id: 'ok-s-gates', n: 6, title: 'Caring for Yourself While You Care', mins: 6, blurb: 'Boundaries with gates, and refilling your own cup.', scenes: [
+        {
+         "id": "ok-s-healthy-change",
+         "n": 6,
+         "title": "Supporting Someone Toward a Healthy Change",
+         "mins": 4,
+         "blurb": "Help someone you love grow toward health by listening for their own hopes and reasons.",
+         "sources": [
+          "rollnick08"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Shelter for Others, Lesson 7",
+           "h": "Supporting Someone Toward a Healthy Change",
+           "sub": "Listen for their own hopes and reasons.",
+           "say": "Someone you love may be facing a change that would help their health. Drinking less, quitting smoking, moving more, eating well, or taking a medicine each day. This lesson is about helping them grow toward it, by listening for their own hopes and reasons."
+          },
+          {
+           "k": "big",
+           "h": "People grow toward their own reasons.",
+           "sub": "Pushing tends to bring pushback.",
+           "say": "When we love someone, we want to fix things for them. So we explain, warn, and plead. Usually that brings pushback. People who study change have found that people grow toward health for their own reasons, spoken in their own words."
+          },
+          {
+           "k": "points",
+           "h": "Change is often two-sided",
+           "items": [
+            [
+             "Part of them wants it",
+             "Better health, more energy, more time"
+            ],
+            [
+             "Part of them holds on",
+             "Habit, comfort, fear"
+            ],
+            [
+             "Your part",
+             "Help them hear their own hopes"
+            ]
+           ],
+           "say": "Change is often two-sided. Part of the person wants it, for better health, more energy, or more years with the people they love. Part of them holds on, out of habit, comfort, or fear. Both sides are normal. Your part is to help them hear their own hopes out loud."
+          },
+          {
+           "k": "flow",
+           "h": "Four ways to help",
+           "steps": [
+            [
+             "Ask",
+             "Open questions"
+            ],
+            [
+             "Affirm",
+             "Name their strengths"
+            ],
+            [
+             "Reflect",
+             "Say back what you hear"
+            ],
+            [
+             "Summarize",
+             "Gather their reasons"
+            ]
+           ],
+           "say": "Here are four ways to help. Ask open questions, the kind that invite a story. Affirm, by naming their strengths and efforts. Reflect, by saying back what you hear, so they hear it too. And summarize, gathering up their own reasons for change, in their own words."
+          },
+          {
+           "k": "words",
+           "h": "Questions that open the door",
+           "items": [
+            "What would you like to be different?",
+            "What would make this change worth it to you?",
+            "How would life look if it went well?",
+            "What has worked for you before?"
+           ],
+           "say": "Here are questions that open the door. What would you like to be different? What would make this change worth it to you? How would life look if it went well? And, what has worked for you before?"
+          },
+          {
+           "k": "points",
+           "h": "Offer ideas with permission",
+           "items": [
+            [
+             "Ask first",
+             "Would it help to hear an idea?"
+            ],
+            [
+             "Offer a few choices",
+             "They choose the path"
+            ],
+            [
+             "Trust their pace",
+             "Small steps count"
+            ]
+           ],
+           "say": "When you have an idea to share, ask first. Would it help to hear an idea? Offer a few choices, and let them choose the path. And trust their pace. Small steps count, and every step is theirs to take."
+          },
+          {
+           "k": "big",
+           "h": "One open question",
+           "sub": "For someone you love.",
+           "beats": [
+            "Let us practice now.",
+            "Think of someone you love who is facing a healthy change.",
+            {
+             "t": "Choose one open question you could ask them, one that invites their own hopes and reasons.",
+             "w": 12
+            },
+            "Say it once, quietly, the way you would say it to them.",
+            {
+             "t": "Now picture yourself listening to the answer, curious and calm.",
+             "w": 8
+            }
+           ],
+           "say": "Let us practice now. Think of someone you love who is facing a healthy change. Choose one open question you could ask them, one that invites their own hopes and reasons. Say it once, quietly, the way you would say it to them. Now picture yourself listening to the answer, curious and calm."
+          },
+          {
+           "k": "points",
+           "h": "Help any time",
+           "items": [
+            [
+             "SAMHSA National Helpline",
+             "1-800-662-4357, any time"
+            ],
+            [
+             "988",
+             "Call or text, any time"
+            ],
+            [
+             "911",
+             "Danger right now"
+            ]
+           ],
+           "say": "For drinking or drug use, the SAMHSA National Helpline is open any time, at one, eight hundred, six six two, four three five seven. If someone is in crisis, call or text nine eight eight. If someone is in danger right now, call nine one one. When Life Changes in Oak has a guide for addiction and recovery, too."
+          },
+          {
+           "k": "big",
+           "h": "Your patience makes room for change.",
+           "sub": "And tend your own tree as you help.",
+           "say": "Your love and patience make room for change. And as you help, keep tending your own tree. You matter here too."
+          },
+          {
+           "k": "quiz",
+           "q": "What helps someone grow toward a healthy change?",
+           "opts": [
+            "Warning them again and again",
+            "Listening for their own hopes and reasons",
+            "Making the choice for them"
+           ],
+           "right": 1,
+           "why": "People grow toward health for their own reasons, and good listening helps them hear those reasons.",
+           "say": "Quick question. What helps someone grow toward a healthy change?"
+          }
+         ]
+        },
+        { id: 'ok-s-gates', n: 7, title: 'Caring for Yourself While You Care', mins: 6, blurb: 'Boundaries with gates, and refilling your own cup.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 6', h: 'Caring for Yourself While You Care', sub: 'Shelter for others. Strength for you.', say: 'This last lesson is about you. To be a shelter for others, you need strength of your own.' },
           { k: 'story', title: 'My Boundaries Have Gates', lines: ['He had endured a brutally hard life with almost no one in his corner. You promise you’ll come back? he asked. I never make promises in this work. I said yes anyway.', 'I picture my boundary as a white picket fence around my own home, with a gate in it.', 'Sometimes I choose to open that gate and let someone in. They stay with me longer. And that is not a bad thing. It just asks more of me.'], lesson: 'Boundaries can have gates. You choose when to open them.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/my-boundaries-have-gates', label: 'Read the Full Story: My Boundaries Have Gates' }, say: 'Let me tell you about a man who had lived a brutally hard life, with almost no one in his corner. He asked me, you promise you will come back? I never make promises in this work, and I said yes anyway. I picture my boundaries as a white picket fence around my own home, with a gate in it. Sometimes I choose to open that gate and let someone in. They stay with me longer, almost like friends. That is not a bad thing. It just asks more of me.' },
           { k: 'big', h: 'Good boundaries have gates.', sub: 'You choose who comes in, and you tend your own yard.', say: 'Boundaries are not walls. They have gates. You get to choose who comes in, and when. And you still have to tend your own yard.' },
@@ -9583,6 +10531,814 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'What does My Boundaries Have Gates teach?', opts: ['Never let anyone in', 'You choose when to open the gate, and you still tend your own yard', 'Always say yes'], right: 1, why: 'Good boundaries have gates, and your own yard needs tending too.', say: 'Last question. What does My Boundaries Have Gates teach?' }
         ] }
       ] },
+      {
+       "id": "oak-shelf",
+       "title": "From Chris's Shelf",
+       "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+       "pages": [
+        "ok-pg-baby-memories"
+       ],
+       "lessons": [
+        {
+         "id": "ok-sh-grief-love",
+         "n": 1,
+         "title": "Grief Is Love We Carry",
+         "mins": 4,
+         "blurb": "Grief is love that goes on, and we can carry it with honesty, patience, and good company.",
+         "sources": [
+          "devine17"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 1",
+           "h": "Grief Is Love We Carry",
+           "sub": "Honesty, patience, and company for the road.",
+           "say": "This lesson is about grief, and about carrying it well. If you are grieving right now, welcome. Take this at your own pace, and pause whenever you need to."
+          },
+          {
+           "k": "big",
+           "h": "Grief is love that goes on.",
+           "sub": "It grows from the same place your love does.",
+           "say": "Grief is love that goes on after a loss. It grows from the same place your love does. That is why it can feel so big. It is as big as what you shared."
+          },
+          {
+           "k": "points",
+           "h": "Grief asks to be carried",
+           "items": [
+            [
+             "Carried, like love",
+             "Something you hold and tend"
+            ],
+            [
+             "Honest",
+             "Every feeling has room"
+            ],
+            [
+             "Patient",
+             "It moves at its own pace"
+            ],
+            [
+             "Shared",
+             "Good company makes it lighter"
+            ]
+           ],
+           "say": "Many people hope grief can be fixed, or finished on a schedule. Grief asks for something else. It asks to be carried, the way we carry love. It asks for honesty, so every feeling has room. It asks for patience, because it moves at its own pace. And it asks for company, because shared grief is lighter."
+          },
+          {
+           "k": "big",
+           "h": "Some pain is fixed. Grief is companioned.",
+           "sub": "Being heard helps far more than being hurried.",
+           "say": "Some pain can be fixed. Grief is different. Grief is companioned. What helps most is someone who hears the whole truth of it, and stays. Being heard helps far more than being hurried."
+          },
+          {
+           "k": "story",
+           "eyebrow": "Picture This",
+           "title": "Tell Me About Him",
+           "lines": [
+            "Eight months after her husband died, friends kept asking if she was feeling better yet.",
+            "One friend simply sat down and said, tell me about him today.",
+            "She talked for an hour. For the first time in weeks, she breathed deeply."
+           ],
+           "lesson": "Being heard is how grief gets carried.",
+           "chris": false,
+           "say": "Picture a woman, eight months after her husband died. Friends keep asking if she is feeling better yet. Then one friend sits down beside her and says, tell me about him today. She talks for an hour, about his laugh, his stubbornness, the way he made coffee. And for the first time in weeks, she breathes deeply. Being heard is how grief gets carried."
+          },
+          {
+           "k": "points",
+           "h": "Ways to carry it",
+           "items": [
+            [
+             "Tell the truth",
+             "This is hard, and it is love"
+            ],
+            [
+             "Find your witnesses",
+             "People who listen and stay"
+            ],
+            [
+             "Tend your body",
+             "Water, good food, rest, a walk"
+            ],
+            [
+             "Mark the days",
+             "Birthdays, anniversaries, holidays"
+            ]
+           ],
+           "say": "Here are ways to carry it. Tell the truth, to yourself and to someone safe. This is hard, and it is love. Find your witnesses, the people who listen and stay. Tend your body, because grief lives there too. Water, good food, rest, and a walk outside. And mark the days that matter, birthdays, anniversaries, and holidays, so the love has a place to go."
+          },
+          {
+           "k": "big",
+           "h": "Carry them for a moment",
+           "sub": "A hand on your heart. One name.",
+           "beats": [
+            "Let us try something together.",
+            "Place one hand on your heart, if that feels right.",
+            "Take one slow breath, in and out.",
+            "Bring to mind someone you carry with you.",
+            {
+             "t": "Say their name, softly or inside, and notice the love that is still there.",
+             "w": 15
+            },
+            "That love is yours to keep."
+           ],
+           "say": "Let us try something together. Place one hand on your heart, if that feels right. Take one slow breath, in and out. Bring to mind someone you carry with you. Say their name, softly or inside, and notice the love that is still there. That love is yours to keep."
+          },
+          {
+           "k": "big",
+           "h": "Heavy for a long time? More support is a strong step.",
+           "sub": "A grief group, a grief counselor, or your doctor. Need to talk now? Call or text 988.",
+           "say": "If grief stays very heavy for a long time, more support is a strong and hopeful step. A grief group, a grief counselor, or your doctor can walk with you. When Life Changes in Oak has guides for many kinds of loss. And if you need to talk with someone right now, call or text nine eight eight, any time."
+          },
+          {
+           "k": "quiz",
+           "q": "What does grief ask of us?",
+           "opts": [
+            "To be finished on a schedule",
+            "To be carried with honesty, patience, and company",
+            "To be kept quiet"
+           ],
+           "right": 1,
+           "why": "Grief is love that goes on, carried at its own pace, with good company.",
+           "say": "Quick question. What does grief ask of us?"
+          }
+         ]
+        },
+        {
+         "id": "ok-sh-meaning",
+         "n": 2,
+         "title": "Three Paths to Meaning",
+         "mins": 4,
+         "blurb": "Meaning grows through what we give, whom we love, and the stance we choose in hard seasons.",
+         "sources": [
+          "frankl46"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 2",
+           "h": "Three Paths to Meaning",
+           "sub": "What we give, what we love, how we meet hard days.",
+           "say": "This lesson is about meaning, the sense that your life matters and points somewhere. Meaning can grow in every season, even the hardest ones."
+          },
+          {
+           "k": "big",
+           "h": "Meaning is found, one day at a time.",
+           "sub": "It grows from how we live each day.",
+           "say": "Meaning is something we find more than something we are handed. It grows from how we live, one day at a time. People who have walked through terrible seasons have found that meaning grows along three paths."
+          },
+          {
+           "k": "flow",
+           "h": "Three paths to meaning",
+           "steps": [
+            [
+             "What we give",
+             "Work, making, serving"
+            ],
+            [
+             "What we love",
+             "People, beauty, goodness"
+            ],
+            [
+             "How we meet hard days",
+             "The stance we choose"
+            ]
+           ],
+           "say": "The first path is what we give. Our work, the things we make, and the ways we serve. The second path is what we love. The people we love, and the beauty and goodness we take in. The third path is how we meet hard days. When a season is hard and beyond our power to change, we can still choose the stance we take toward it."
+          },
+          {
+           "k": "points",
+           "h": "What we give",
+           "items": [
+            [
+             "A task",
+             "Something waiting for you alone"
+            ],
+            [
+             "A craft",
+             "Cooking, building, writing, growing"
+            ],
+            [
+             "A service",
+             "A neighbor, a cause, a team"
+            ]
+           ],
+           "say": "The first path, what we give. Think of a task waiting for you, one that you can do in a way only you can. A craft, like cooking, building, writing, or growing a garden. Or a service, to a neighbor, a cause, or a team. Giving connects us to something beyond ourselves."
+          },
+          {
+           "k": "points",
+           "h": "What we love",
+           "items": [
+            [
+             "A person",
+             "Someone you love deeply"
+            ],
+            [
+             "Beauty",
+             "Music, a sunset, a forest path"
+            ],
+            [
+             "Goodness",
+             "Kindness you witness or receive"
+            ]
+           ],
+           "say": "The second path, what we love. Loving one person deeply gives life meaning. So does taking in beauty, like music, a sunset, or a forest path. And so does goodness, the kindness we see and the kindness we receive."
+          },
+          {
+           "k": "big",
+           "h": "In hard seasons, the stance we choose matters.",
+           "sub": "Courage, dignity, and care are still ours to choose.",
+           "say": "The third path asks the most of us. Some suffering we can change, and we work to change it. Some suffering is beyond our power to change. Then meaning comes from the stance we choose. Courage, dignity, patience, and care for the people beside us. That choice stays ours, even when much else is out of our hands."
+          },
+          {
+           "k": "big",
+           "h": "Your three paths today",
+           "sub": "One gift. One love. One stance.",
+           "beats": [
+            "Let us try this now.",
+            "Take a slow breath.",
+            {
+             "t": "Name one thing you can give today, a task, a craft, or a kindness.",
+             "w": 8
+            },
+            {
+             "t": "Name one person, or one beautiful thing, that you love.",
+             "w": 8
+            },
+            {
+             "t": "And if something hard is in front of you, name the stance you want to bring to it.",
+             "w": 10
+            }
+           ],
+           "say": "Let us try this now. Take a slow breath. Name one thing you can give today, a task, a craft, or a kindness. Name one person, or one beautiful thing, that you love. And if something hard is in front of you, name the stance you want to bring to it."
+          },
+          {
+           "k": "big",
+           "h": "Meaning grows in every season.",
+           "sub": "In Oak, this is your Trunk, your purpose.",
+           "say": "Meaning grows in every season of life. In Oak, this is your Trunk, your purpose, and these three paths are ways to tend it. The Practice Library has more ways, whenever you are ready."
+          },
+          {
+           "k": "quiz",
+           "q": "Which of these is one of the three paths to meaning?",
+           "opts": [
+            "Having everything go your way",
+            "The stance you choose toward a hard season",
+            "Staying busy every minute"
+           ],
+           "right": 1,
+           "why": "What we give, what we love, and how we meet hard days: all three grow meaning.",
+           "say": "Quick question. Which of these is one of the three paths to meaning?"
+          }
+         ]
+        },
+        {
+         "id": "ok-sh-body-safe",
+         "n": 3,
+         "title": "Your Body Can Feel Safe Again",
+         "mins": 4,
+         "blurb": "Rhythm, breath, movement, and connection: paths that help the body settle after hard experiences.",
+         "sources": [
+          "vanderkolk14"
+         ],
+         "crisis": [
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 3",
+           "h": "Your Body Can Feel Safe Again",
+           "sub": "Rhythm, breath, movement, and connection.",
+           "say": "This lesson is about what happens in the body after hard experiences, and the paths that help it feel safe again. Be gentle with yourself as you watch. You can pause anytime."
+          },
+          {
+           "k": "big",
+           "h": "The body remembers, and the body can heal.",
+           "sub": "After hard experiences, the alarm can stay switched on.",
+           "say": "After frightening or painful experiences, the body often remembers. The alarm that kept you safe can stay switched on, long after the danger has passed. These are signs of a body doing its best to protect you. And a body can learn safety again."
+          },
+          {
+           "k": "points",
+           "h": "Signs the alarm is still on",
+           "items": [
+            [
+             "Always on guard",
+             "Jumpy, watchful, tense"
+            ],
+            [
+             "Far away",
+             "Numb, foggy, disconnected"
+            ],
+            [
+             "Restless nights",
+             "Sleep that comes hard"
+            ],
+            [
+             "Big reactions",
+             "To small reminders"
+            ]
+           ],
+           "say": "Here are some signs the alarm is still on. Always on guard, jumpy, watchful, or tense. Feeling far away, numb, or foggy. Restless nights, when sleep comes hard. And big reactions to small reminders. If you recognize some of these, you are in good company, and there are real paths forward."
+          },
+          {
+           "k": "flow",
+           "h": "Four paths back to safety",
+           "steps": [
+            [
+             "Rhythm",
+             "Walking, music, drumming"
+            ],
+            [
+             "Breath",
+             "A long, slow breath out"
+            ],
+            [
+             "Movement",
+             "Stretching, yoga, dance"
+            ],
+            [
+             "Connection",
+             "Safe faces and kind voices"
+            ]
+           ],
+           "say": "People who study trauma have found that the body often settles through the body. Here are four paths. Rhythm, like walking, music, or drumming. Breath, especially a long, slow breath out. Movement, like stretching, yoga, or dance. And connection, with safe faces and kind voices. Being near a steady person helps your body borrow their steadiness."
+          },
+          {
+           "k": "big",
+           "h": "Feel your body, right here",
+           "sub": "Feet down. Palms together. A long breath out.",
+           "beats": [
+            "Let us try a short practice together.",
+            "Press your feet into the floor, and feel the ground holding you.",
+            "Press your palms together for a moment, then let them go.",
+            "Breathe in through your nose, and let a long, slow breath out.",
+            {
+             "t": "Look around and name three things you can see that tell you where you are, right now.",
+             "w": 15
+            },
+            "That is your body noticing the here and now."
+           ],
+           "say": "Let us try a short practice together. Press your feet into the floor, and feel the ground holding you. Press your palms together for a moment, then let them go. Breathe in through your nose, and let a long, slow breath out. Look around and name three things you can see that tell you where you are, right now. That is your body noticing the here and now."
+          },
+          {
+           "k": "points",
+           "h": "Small daily rhythms",
+           "items": [
+            [
+             "Walk every day",
+             "Steady steps, steady heart"
+            ],
+            [
+             "Sing or hum",
+             "It slows your breath"
+            ],
+            [
+             "Move with others",
+             "A class, a dance, a team"
+            ],
+            [
+             "Rest and daylight",
+             "Morning light, steady sleep"
+            ]
+           ],
+           "say": "Small daily rhythms help too. Walk every day, steady steps for a steady heart. Sing or hum, which slows your breath. Move with other people, in a class, a dance, or a team. And give your body rest and daylight, with morning light and a steady bedtime."
+          },
+          {
+           "k": "big",
+           "h": "Healing is a team effort.",
+           "sub": "A therapist trained in trauma can walk with you.",
+           "say": "Healing is a team effort. A therapist trained in trauma can walk with you, and many approaches today work with the body as well as with words. Asking for that help is a strong, hopeful step. When Life Changes in Oak has a guide for after something traumatic, too."
+          },
+          {
+           "k": "big",
+           "h": "Help is here any time.",
+           "sub": "Call or text 988. Danger right now? Call 911.",
+           "say": "If memories feel overwhelming, or you have thoughts of harming yourself, call or text nine eight eight, any time, day or night. And if you are in danger right now, call nine one one."
+          },
+          {
+           "k": "quiz",
+           "q": "What helps a body settle after hard experiences?",
+           "opts": [
+            "Pushing the memories away",
+            "Rhythm, breath, movement, and connection",
+            "Staying on guard"
+           ],
+           "right": 1,
+           "why": "The body often settles through the body: rhythm, breath, movement, and safe connection.",
+           "say": "Quick question. What helps a body settle after hard experiences?"
+          }
+         ]
+        },
+        {
+         "id": "ok-sh-creating",
+         "n": 4,
+         "title": "From Reacting to Creating",
+         "mins": 4,
+         "blurb": "Turn your focus toward what you want, and step into the Creator, Challenger, and Coach roles.",
+         "sources": [
+          "emerald05"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 4",
+           "h": "From Reacting to Creating",
+           "sub": "Focus on what you want, and step into a new role.",
+           "say": "This lesson is about a shift that changes how we meet problems. From reacting to what happens, to creating what we want."
+          },
+          {
+           "k": "big",
+           "h": "What we focus on shapes what we do.",
+           "sub": "Focus on the problem, and we react. Focus on the outcome, and we create.",
+           "say": "What we focus on shapes what we do. When our focus stays on the problem, we tend to react. When our focus turns to the outcome we want, we start to create."
+          },
+          {
+           "k": "points",
+           "h": "Three ways we react",
+           "items": [
+            [
+             "Feeling stuck",
+             "As if life simply happens to us"
+            ],
+            [
+             "Blaming",
+             "Pointing at someone else"
+            ],
+            [
+             "Rescuing",
+             "Fixing others until we wear out"
+            ]
+           ],
+           "say": "Here are three ways most of us react under stress. Feeling stuck, as if life simply happens to us. Blaming, pointing at someone else. And rescuing, fixing other people’s problems for them, until we wear ourselves out. Everyone slips into these. Noticing them is the first step."
+          },
+          {
+           "k": "flow",
+           "h": "Three roles that create",
+           "steps": [
+            [
+             "Creator",
+             "Chooses a step toward what you want"
+            ],
+            [
+             "Challenger",
+             "Calls out growth, with kindness"
+            ],
+            [
+             "Coach",
+             "Asks questions, trusts others"
+            ]
+           ],
+           "say": "There are three roles that create. A Creator chooses a response, and takes one step toward what they want. A Challenger calls other people toward growth, with kindness and clear words. And a Coach asks good questions, and trusts other people to find their own way."
+          },
+          {
+           "k": "points",
+           "h": "A Creator asks",
+           "items": [
+            [
+             "What outcome do you want?",
+             "Name it in one sentence"
+            ],
+            [
+             "What is in your hands?",
+             "Your choices, your next step"
+            ],
+            [
+             "What is one small step?",
+             "Today, or this week"
+            ]
+           ],
+           "say": "A Creator asks three questions. What outcome do you want? Name it in one sentence. What is in your hands? Your choices, and your next step. And what is one small step you can take, today or this week?"
+          },
+          {
+           "k": "big",
+           "h": "Try the shift",
+           "sub": "One situation. One outcome. One step.",
+           "beats": [
+            "Let us try the shift now.",
+            "Think of one situation that has been weighing on you.",
+            {
+             "t": "Set the problem aside for a moment, and name the outcome you want, in one sentence.",
+             "w": 12
+            },
+            {
+             "t": "Now name one small step toward it that is in your hands.",
+             "w": 10
+            },
+            "That is the shift, from reacting to creating."
+           ],
+           "say": "Let us try the shift now. Think of one situation that has been weighing on you. Set the problem aside for a moment, and name the outcome you want, in one sentence. Now name one small step toward it that is in your hands. That is the shift, from reacting to creating."
+          },
+          {
+           "k": "points",
+           "h": "With the people you love",
+           "items": [
+            [
+             "Coach more than rescue",
+             "Ask: what do you want here?"
+            ],
+            [
+             "Challenge with care",
+             "Trust that they can grow"
+            ],
+            [
+             "Create together",
+             "Shared outcomes, shared steps"
+            ]
+           ],
+           "say": "This shift helps with the people you love too. Coach more than you rescue. Ask them, what do you want here, and what could you try? Challenge with care, letting them know you believe they can grow. And create together, naming the outcome you both want, and taking the steps side by side."
+          },
+          {
+           "k": "big",
+           "h": "Every day brings a chance to create.",
+           "sub": "One outcome, one step, one new role.",
+           "say": "Every day brings a chance to create. One outcome, one small step, and a new role to step into. Your tree grows from choices like these."
+          },
+          {
+           "k": "quiz",
+           "q": "What does a Creator focus on?",
+           "opts": [
+            "Who is to blame",
+            "The outcome they want, and one step toward it",
+            "Fixing everyone else first"
+           ],
+           "right": 1,
+           "why": "A Creator turns toward the outcome they want and takes one step that is in their hands.",
+           "say": "Quick question. What does a Creator focus on?"
+          }
+         ]
+        },
+        {
+         "id": "ok-sh-rooted",
+         "n": 5,
+         "title": "Rooted Together",
+         "mins": 4,
+         "blurb": "What a forest teaches about Branches: strong roots grow through connection.",
+         "sources": [
+          "wohlleben15"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 5",
+           "h": "Rooted Together",
+           "sub": "What forests teach us about connection.",
+           "say": "This lesson is about Branches, your relationships, and what a forest can teach us about growing strong together."
+          },
+          {
+           "k": "big",
+           "h": "Trees in a forest are connected below the ground.",
+           "sub": "Roots and fine threads in the soil link them.",
+           "say": "People who study forests have found that trees are often connected below the ground. Their roots meet, and fine threads in the soil link one tree to the next. Through these links, trees can share water, nourishment, and even signals with their neighbors."
+          },
+          {
+           "k": "points",
+           "h": "What forests show us",
+           "items": [
+            [
+             "Sharing",
+             "Strong trees help struggling ones"
+            ],
+            [
+             "Shelter",
+             "Together they meet the wind"
+            ],
+            [
+             "Elders",
+             "Older trees nurture young ones"
+            ]
+           ],
+           "say": "Some forest scientists describe older trees passing nourishment to young ones growing in the shade. They describe trees helping a struggling neighbor. And they describe how a strong wind meets a whole forest together, while a tree alone in a field faces every storm by itself. Scientists are still learning how much trees share, and the picture so far is a beautiful one."
+          },
+          {
+           "k": "big",
+           "h": "We grow strong through connection too.",
+           "sub": "Your people are part of your root system.",
+           "say": "People are much the same. We grow strong through connection. Your family, friends, neighbors, and community are part of your root system. They carry water to you in dry seasons, and you carry it to them."
+          },
+          {
+           "k": "points",
+           "h": "Tending your roots together",
+           "items": [
+            [
+             "Show up in person",
+             "Face to face, a meal, a walk"
+            ],
+            [
+             "Share the load",
+             "Ask for help, and offer it"
+            ],
+            [
+             "Mentor and be mentored",
+             "Elders and young ones together"
+            ],
+            [
+             "Stay through storms",
+             "Hard seasons, side by side"
+            ]
+           ],
+           "say": "Here is how to tend your roots together. Show up in person, face to face, over a meal or on a walk. Share the load, asking for help and offering it. Mentor and be mentored, so elders and young ones grow together. And stay through storms, side by side through the hard seasons."
+          },
+          {
+           "k": "big",
+           "h": "Your root network",
+           "sub": "Three people. One reach today.",
+           "beats": [
+            "Let us map your roots for a moment.",
+            "Take a slow breath.",
+            {
+             "t": "Name three people whose roots reach yours, people who help hold you up.",
+             "w": 12
+            },
+            {
+             "t": "Now choose one of them, and plan one small reach today, a call, a visit, or a walk together.",
+             "w": 10
+            },
+            "Roots grow stronger when they are used."
+           ],
+           "say": "Let us map your roots for a moment. Take a slow breath. Name three people whose roots reach yours, people who help hold you up. Now choose one of them, and plan one small reach today, a call, a visit, or a walk together. Roots grow stronger when they are used."
+          },
+          {
+           "k": "points",
+           "h": "Room for new roots",
+           "items": [
+            [
+             "A new neighbor",
+             "Say hello, learn a name"
+            ],
+            [
+             "A group that meets",
+             "A class, a team, a congregation"
+            ],
+            [
+             "Someone younger",
+             "Share what you know"
+            ]
+           ],
+           "say": "Every forest has room for new growth. Say hello to a new neighbor, and learn their name. Join a group that meets regularly, like a class, a team, or a congregation. And find someone younger, and share what you know."
+          },
+          {
+           "k": "big",
+           "h": "A forest is strong because it grows together.",
+           "sub": "Tend your Branches, and they tend you.",
+           "say": "A forest is strong because it grows together. Tend your Branches, and they tend you."
+          },
+          {
+           "k": "quiz",
+           "q": "What does a forest teach us about Branches?",
+           "opts": [
+            "The strongest tree stands alone",
+            "We grow strong through connection",
+            "Roots do best kept apart"
+           ],
+           "right": 1,
+           "why": "Like trees linked below the ground, we grow strong by sharing the load with our people.",
+           "say": "Quick question. What does a forest teach us about Branches?"
+          }
+         ]
+        },
+        {
+         "id": "ok-sh-meeting",
+         "n": 6,
+         "title": "Truly Meeting Someone",
+         "mins": 3,
+         "blurb": "Turning toward the people we love with full attention, one real meeting at a time.",
+         "sources": [
+          "buber23"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "From Chris's Shelf, Lesson 6",
+           "h": "Truly Meeting Someone",
+           "sub": "Full attention, one real meeting at a time.",
+           "say": "This lesson is about truly meeting someone. Turning toward the people we love with our whole attention."
+          },
+          {
+           "k": "big",
+           "h": "Every person is a whole world.",
+           "sub": "A real meeting sees the whole person.",
+           "say": "Much of life is busy. We deal with people as tasks. The cashier, the coworker with a question, even family, as items on a list. A real meeting is different. In a real meeting, we see the other person as a whole person, a whole world, right in front of us."
+          },
+          {
+           "k": "points",
+           "h": "A real meeting looks like",
+           "items": [
+            [
+             "Turning toward",
+             "Body, eyes, and attention"
+            ],
+            [
+             "Listening to understand",
+             "Curious about their world"
+            ],
+            [
+             "Being present",
+             "Here, now, unplugged"
+            ],
+            [
+             "Being yourself",
+             "Honest and open too"
+            ]
+           ],
+           "say": "A real meeting looks like turning toward someone, with your body, your eyes, and your attention. Listening to understand, curious about their world. Being present, here, now, and unplugged. And being yourself, honest and open too. A real meeting goes both ways."
+          },
+          {
+           "k": "big",
+           "h": "These moments change both people.",
+           "sub": "They happen in the space between us.",
+           "say": "Moments like these change both people. They happen in the space between us. They are often brief. A look, a laugh, a long talk on the porch. And they are what we remember most."
+          },
+          {
+           "k": "points",
+           "h": "Making room for real meetings",
+           "items": [
+            [
+             "Phones away",
+             "At meals and in talks"
+            ],
+            [
+             "Eye level",
+             "Sit down together"
+            ],
+            [
+             "One question more",
+             "Ask, and then ask again"
+            ],
+            [
+             "Unhurried time",
+             "A walk, a meal, a porch"
+            ]
+           ],
+           "say": "Make room for real meetings. Put phones away at meals and in conversations. Get to eye level, and sit down together. Ask one question more, and then ask again. And make unhurried time, a walk, a meal, or an evening on the porch."
+          },
+          {
+           "k": "big",
+           "h": "Picture one person",
+           "sub": "Their face. Their world. Your next meeting.",
+           "beats": [
+            "Let us practice now.",
+            "Close your eyes, or rest them on one spot.",
+            {
+             "t": "Picture the face of someone you love, as clearly as you can.",
+             "w": 10
+            },
+            "Think about their world, what they carry, what they hope for, and what makes them laugh.",
+            {
+             "t": "Now choose a time this week to meet them, unplugged, with your full attention.",
+             "w": 10
+            }
+           ],
+           "say": "Let us practice now. Close your eyes, or rest them on one spot. Picture the face of someone you love, as clearly as you can. Think about their world, what they carry, what they hope for, and what makes them laugh. Now choose a time this week to meet them, unplugged, with your full attention."
+          },
+          {
+           "k": "points",
+           "h": "Real meeting at home and at work",
+           "items": [
+            [
+             "At the door",
+             "Look up and greet them"
+            ],
+            [
+             "At the table",
+             "One real question each"
+            ],
+            [
+             "At work",
+             "Learn one thing beyond the task"
+            ]
+           ],
+           "say": "Try it in ordinary places. At the door, look up and greet the people coming home. At the table, ask each person one real question. And at work, learn one thing about a coworker beyond the task you share."
+          },
+          {
+           "k": "big",
+           "h": "The people we love are waiting to be met.",
+           "sub": "One real meeting at a time.",
+           "say": "The people we love are waiting to be met. One real meeting at a time is how Branches grow strong."
+          },
+          {
+           "k": "quiz",
+           "q": "What makes a real meeting?",
+           "opts": [
+            "Getting through the talk quickly",
+            "Full attention to the whole person in front of you",
+            "Talking while checking your phone"
+           ],
+           "right": 1,
+           "why": "A real meeting turns toward the whole person, with full attention, and goes both ways.",
+           "say": "Quick question. What makes a real meeting?"
+          }
+         ]
+        }
+       ]
+      },
       { id: 'oak-support', kind: 'support', title: 'For the Hard Moments', who: 'Short videos to use right in the middle of it', lessons: [
 
         { id: 'ok-r-ground', n: 1, title: 'Ground Yourself Right Now', mins: 3, blurb: 'Five senses to bring you back when everything is too much.', scenes: [
@@ -9676,7 +11432,733 @@ window.GG_LEARN = {
           { k: 'points', h: 'Be kind to yourself tonight', items: [['Something warm', 'Tea, a shower, a blanket'], ['Something gentle', 'Music, a book, a gentle stretch'], ['Something for the morning', 'One small plan to look forward to']], say: 'And be kind to yourself tonight. Something warm, like tea or a blanket. Something gentle, like music you love. And one small plan for the morning, something to look forward to.' },
           { k: 'big', h: 'Call or text 988 any time.', sub: 'If you are thinking about ending your life, reach out now. In danger right now? Call 911.', say: 'If you want to talk to someone right now, call or text nine eight eight, any time, day or night. If you are thinking about ending your life, please reach out now. You matter. And if you are in danger right now, call nine one one.' }
         ] }
-      ] }
+      ] },
+      {
+       "id": "oak-shelf-try",
+       "kind": "support",
+       "title": "Practices From Chris's Shelf",
+       "who": "Short practices drawn from the books on Chris's shelf.",
+       "lessons": [
+        {
+         "id": "ok-st-grief-minutes",
+         "n": 1,
+         "title": "Five Minutes With Your Grief",
+         "mins": 3,
+         "blurb": "A short daily writing practice that gives grief a place to land.",
+         "sources": [
+          "devine17"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "Five Minutes With Your Grief",
+           "sub": "A notebook, a timer, and five minutes.",
+           "say": "This is a short practice for grief. Five minutes, a notebook, and a place for what you carry to land."
+          },
+          {
+           "k": "big",
+           "h": "Grief needs a place to land.",
+           "sub": "Writing gives it one, a few minutes at a time.",
+           "say": "Grief can feel like it has nowhere to go. Writing gives it a place to land. A few minutes a day, honest and private, can make the weight easier to carry."
+          },
+          {
+           "k": "points",
+           "h": "The practice",
+           "items": [
+            [
+             "Set a timer",
+             "Five minutes"
+            ],
+            [
+             "Choose one prompt",
+             "And start writing"
+            ],
+            [
+             "Keep the pen moving",
+             "Any words are welcome"
+            ],
+            [
+             "Close gently",
+             "One breath, then go on"
+            ]
+           ],
+           "say": "Here is the practice. Set a timer for five minutes. Choose one prompt, and start writing. Keep the pen moving. Any words are welcome, messy, angry, tender, or plain. When the timer ends, close gently with one slow breath, and go on with your day."
+          },
+          {
+           "k": "words",
+           "h": "Prompts to choose from",
+           "items": [
+            "Today, my grief feels like...",
+            "What my heart misses most this week...",
+            "Something to tell them...",
+            "One thing that helps, even a little..."
+           ],
+           "say": "Here are some prompts to choose from. Today, my grief feels like. What my heart misses most this week. Something to tell them. Or, one thing that helps, even a little."
+          },
+          {
+           "k": "big",
+           "h": "Try one minute now",
+           "sub": "Pick a prompt. Write, or simply think it through.",
+           "beats": [
+            "Let us try one minute now.",
+            "Pick one prompt.",
+            {
+             "t": "Write, or simply think it through quietly, for one minute.",
+             "w": 60
+            },
+            "Take one slow breath, and set it down for now."
+           ],
+           "say": "Let us try one minute now. Pick one prompt. Write, or simply think it through quietly, for one minute. Take one slow breath, and set it down for now."
+          },
+          {
+           "k": "points",
+           "h": "Make it a rhythm",
+           "items": [
+            [
+             "Same time each day",
+             "With morning tea, or before bed"
+            ],
+            [
+             "Keep it private",
+             "Just for you"
+            ],
+            [
+             "Read back now and then",
+             "Notice how it shifts"
+            ]
+           ],
+           "say": "Make it a rhythm. Write at the same time each day, with morning tea, or before bed. Keep it private, just for you. And now and then, read back over the pages, and notice how your grief shifts and changes over time."
+          },
+          {
+           "k": "big",
+           "h": "Your grief deserves a place to land.",
+           "sub": "Heavy for a long time? Reach out. Need to talk now? Call or text 988.",
+           "say": "Your grief deserves a place to land, and five minutes is enough to start. If it stays very heavy for a long time, reach out to someone you trust. And if you need to talk right now, call or text nine eight eight."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-blessing",
+         "n": 2,
+         "title": "Noticing the Blessing",
+         "mins": 2,
+         "blurb": "Each evening, name one way someone blessed you and one way you blessed someone.",
+         "sources": [
+          "remen00"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "Noticing the Blessing",
+           "sub": "Two small questions at the end of the day.",
+           "say": "This is a practice for the end of the day. Two small questions that help you notice the good that passes between people."
+          },
+          {
+           "k": "big",
+           "h": "Everyday blessings pass by quickly.",
+           "sub": "A kind word. A door held. A moment of being seen.",
+           "say": "In everyday life, a blessing is any way someone adds good to your life. A kind word, a door held open, a moment of really being seen. These happen every day, and they pass by quickly."
+          },
+          {
+           "k": "flow",
+           "h": "Two questions each evening",
+           "steps": [
+            [
+             "Received",
+             "How were you blessed today?"
+            ],
+            [
+             "Given",
+             "How did you bless someone?"
+            ]
+           ],
+           "say": "Each evening, ask two questions. How were you blessed today? And how did you bless someone else today? Small answers count the most."
+          },
+          {
+           "k": "big",
+           "h": "Look back at today",
+           "sub": "One blessing received. One blessing given.",
+           "beats": [
+            "Let us try it now.",
+            "Take a slow breath, and let today play back.",
+            {
+             "t": "Find one way someone blessed you today, even a small one.",
+             "w": 12
+            },
+            {
+             "t": "Now find one way you blessed someone, with a word, a hand, or your attention.",
+             "w": 12
+            },
+            "Hold them both for a moment."
+           ],
+           "say": "Let us try it now. Take a slow breath, and let today play back. Find one way someone blessed you today, even a small one. Now find one way you blessed someone, with a word, a hand, or your attention. Hold them both for a moment."
+          },
+          {
+           "k": "points",
+           "h": "Ways to keep it",
+           "items": [
+            [
+             "A notebook by the bed",
+             "Two lines a night"
+            ],
+            [
+             "Share at the table",
+             "Each person names one"
+            ],
+            [
+             "Say thank you",
+             "A short note tomorrow"
+            ]
+           ],
+           "say": "Here are ways to keep it going. Keep a notebook by the bed, and write two lines a night. Share it at the dinner table, where each person names one blessing. And when someone blessed you, tell them, with a short note of thanks tomorrow."
+          },
+          {
+           "k": "big",
+           "h": "Kindness grows where it is noticed.",
+           "sub": "Notice the blessings, and you give more of them.",
+           "say": "Kindness grows where it is noticed. The more blessings you notice, the more you find yourself giving."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-recovery",
+         "n": 3,
+         "title": "A Daily Recovery Rhythm",
+         "mins": 3,
+         "blurb": "A morning and evening rhythm of honesty, gratitude, and reaching out for a Sober life.",
+         "sources": [
+          "waters19"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "A Daily Recovery Rhythm",
+           "sub": "Morning and evening, honest and steady.",
+           "say": "This practice is for anyone growing a Sober life, from the first day to many years in. It is a short rhythm for the morning and the evening, built on honesty, gratitude, and reaching out."
+          },
+          {
+           "k": "big",
+           "h": "Recovery grows one day at a time.",
+           "sub": "Small daily rhythms build a strong life.",
+           "say": "Recovery from drinking or drug use grows one day at a time. Small, steady rhythms each day help build a life that is strong, connected, and full. And recovery grows best in community, with people walking beside you."
+          },
+          {
+           "k": "flow",
+           "h": "Morning",
+           "steps": [
+            [
+             "Breathe",
+             "One slow breath"
+            ],
+            [
+             "Intention",
+             "A Sober day, chosen today"
+            ],
+            [
+             "Honest check",
+             "How are you, really?"
+            ],
+            [
+             "Reach",
+             "Plan one call or meeting"
+            ]
+           ],
+           "say": "In the morning, take one slow breath. Set your intention, a Sober day, chosen today. Check in honestly. How are you, really? Tired, hopeful, restless, or steady? Then plan one reach, a call to a sponsor or a friend, a meeting, or a walk with someone."
+          },
+          {
+           "k": "flow",
+           "h": "Evening",
+           "steps": [
+            [
+             "Thanks",
+             "Three good things"
+            ],
+            [
+             "Honest look",
+             "What went well, what to tend"
+            ],
+            [
+             "Reach",
+             "One message of thanks"
+            ],
+            [
+             "Rest",
+             "Water, quiet, and bed"
+            ]
+           ],
+           "say": "In the evening, name three good things from the day. Take an honest look. What went well, and what needs tending tomorrow? Send one message of thanks, to someone who helped. Then rest, with a glass of water, some quiet, and an early bed."
+          },
+          {
+           "k": "big",
+           "h": "Try the morning rhythm now",
+           "sub": "Breathe. Choose. Check in. Reach.",
+           "beats": [
+            "Let us try the morning rhythm now, whatever time it is.",
+            "Take one slow breath, in and out.",
+            {
+             "t": "Say your intention quietly, in your own words, for the rest of this day.",
+             "w": 8
+            },
+            {
+             "t": "Ask yourself honestly how you are, and name it in one word.",
+             "w": 8
+            },
+            {
+             "t": "Now choose one person to reach out to today.",
+             "w": 8
+            }
+           ],
+           "say": "Let us try the morning rhythm now, whatever time it is. Take one slow breath, in and out. Say your intention quietly, in your own words, for the rest of this day. Ask yourself honestly how you are, and name it in one word. Now choose one person to reach out to today."
+          },
+          {
+           "k": "points",
+           "h": "Help any time",
+           "items": [
+            [
+             "SAMHSA National Helpline",
+             "1-800-662-4357, any time"
+            ],
+            [
+             "988",
+             "Call or text, any time"
+            ],
+            [
+             "911",
+             "Danger right now"
+            ]
+           ],
+           "say": "Help is here any time. The SAMHSA National Helpline is open every day and night, at one, eight hundred, six six two, four three five seven. If you are in crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+          },
+          {
+           "k": "big",
+           "h": "Every Sober day is worth celebrating.",
+           "sub": "One day, one rhythm, one reach.",
+           "say": "Every Sober day is worth celebrating. One day, one rhythm, and one reach at a time. If a day goes hard, the rhythm is here again tomorrow morning, and so are your people."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-rain",
+         "n": 4,
+         "title": "RAIN for Hard Feelings",
+         "mins": 3,
+         "blurb": "Recognize, allow, investigate, nurture: four steps for meeting a hard feeling with kindness.",
+         "sources": [
+          "brach19",
+          "mcdonald"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "RAIN for Hard Feelings",
+           "sub": "Four steps to meet a hard feeling with kindness.",
+           "say": "This is a practice for a hard feeling, one that is here right now or one that keeps coming back. It has four steps, and their first letters spell RAIN."
+          },
+          {
+           "k": "flow",
+           "h": "RAIN",
+           "steps": [
+            [
+             "Recognize",
+             "What is here?"
+            ],
+            [
+             "Allow",
+             "Let it be here"
+            ],
+            [
+             "Investigate",
+             "With kindness"
+            ],
+            [
+             "Nurture",
+             "Offer what you need"
+            ]
+           ],
+           "say": "Recognize what is happening. Allow it to be here, just as it is. Investigate with kindness. Where do you feel it, and what does it need? Then Nurture, offering yourself the care you need."
+          },
+          {
+           "k": "big",
+           "h": "Recognize",
+           "sub": "Name what is here.",
+           "beats": [
+            "Let us walk through it now.",
+            "Bring to mind a feeling that has been hard lately, a small or middle-sized one to start.",
+            {
+             "t": "Recognize it, and name it quietly, worry, sadness, anger, shame, or something else.",
+             "w": 8
+            }
+           ],
+           "say": "Let us walk through it now. Bring to mind a feeling that has been hard lately, a small or middle-sized one to start. Recognize it, and name it quietly, worry, sadness, anger, shame, or something else."
+          },
+          {
+           "k": "big",
+           "h": "Allow",
+           "sub": "Let it be here, for now.",
+           "beats": [
+            "Allow it to be here.",
+            "You might say inside, this belongs, for now.",
+            {
+             "t": "Let it stay, just as it is, for a few breaths.",
+             "w": 10
+            }
+           ],
+           "say": "Allow it to be here. You might say inside, this belongs, for now. Let it stay, just as it is, for a few breaths."
+          },
+          {
+           "k": "big",
+           "h": "Investigate, with kindness",
+           "sub": "Where is it? What does it need?",
+           "beats": [
+            "Investigate with kindness.",
+            "Where do you feel it in your body?",
+            {
+             "t": "Ask it gently, what do you most need right now?",
+             "w": 12
+            }
+           ],
+           "say": "Investigate with kindness. Where do you feel it in your body? Ask it gently, what do you most need right now?"
+          },
+          {
+           "k": "big",
+           "h": "Nurture",
+           "sub": "Offer what is needed.",
+           "beats": [
+            "Now Nurture.",
+            "Place a hand on your heart or your cheek, if that feels right.",
+            {
+             "t": "Offer yourself what is needed, a kind word, some patience, or a sense of being held.",
+             "w": 12
+            }
+           ],
+           "say": "Now Nurture. Place a hand on your heart or your cheek, if that feels right. Offer yourself what is needed, a kind word, some patience, or a sense of being held."
+          },
+          {
+           "k": "big",
+           "h": "After the RAIN",
+           "sub": "Notice the space that opens.",
+           "say": "After the rain, notice how you feel. Often a little space opens up, a softness, or a bit more room to breathe. That space is yours."
+          },
+          {
+           "k": "big",
+           "h": "Use it anywhere, as often as you need.",
+           "sub": "Big or lasting feelings? Reach out. Need to talk now? Call or text 988.",
+           "say": "Use RAIN anywhere, as often as you need. For big or lasting feelings, reach out to someone you trust. And if you need to talk with someone right now, call or text nine eight eight."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-good",
+         "n": 5,
+         "title": "Taking in the Good",
+         "mins": 3,
+         "blurb": "Stay with a good moment for a few breaths and let it sink in.",
+         "sources": [
+          "hanson09"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "Taking in the Good",
+           "sub": "A few breaths to let good moments sink in.",
+           "say": "This is a short practice for letting good moments sink in. It takes only a few breaths, and you can do it many times a day."
+          },
+          {
+           "k": "big",
+           "h": "Good moments need a little help to stick.",
+           "sub": "Hard moments stick fast. Good ones slip by.",
+           "say": "Our brains are built to learn quickly from hard things, to keep us safe. Good moments often slip right by. With a few extra breaths, we can help the good sink in, and over time the brain learns from what is good."
+          },
+          {
+           "k": "flow",
+           "h": "Three steps",
+           "steps": [
+            [
+             "Notice",
+             "A good moment"
+            ],
+            [
+             "Stay",
+             "Ten to twenty seconds"
+            ],
+            [
+             "Soak it in",
+             "Let it sink in"
+            ]
+           ],
+           "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it sink into you."
+          },
+          {
+           "k": "big",
+           "h": "Try it now",
+           "sub": "One good moment. A few breaths.",
+           "beats": [
+            "Let us try it now.",
+            "Bring to mind a good moment from today or this week, a kind word, a warm cup of tea, or a beautiful sky.",
+            {
+             "t": "Stay with it, and let it fill your mind, and feel it in your body.",
+             "w": 15
+            },
+            {
+             "t": "Now imagine it soaking in, like water into dry ground, or warmth spreading through your chest.",
+             "w": 12
+            },
+            "Let it become part of you."
+           ],
+           "say": "Let us try it now. Bring to mind a good moment from today or this week, a kind word, a warm cup of tea, or a beautiful sky. Stay with it, and let it fill your mind, and feel it in your body. Now imagine it soaking in, like water into dry ground, or warmth spreading through your chest. Let it become part of you."
+          },
+          {
+           "k": "points",
+           "h": "Good moments to look for",
+           "items": [
+            [
+             "Being cared for",
+             "A hug, a smile, a kind text"
+            ],
+            [
+             "Getting something done",
+             "Even small things count"
+            ],
+            [
+             "Beauty",
+             "Light, music, the outdoors"
+            ],
+            [
+             "Ease",
+             "A moment of calm"
+            ]
+           ],
+           "say": "Here are good moments to look for. Being cared for, like a hug, a smile, or a kind text. Getting something done, and small things count. Beauty, like light through a window, music, or time outdoors. And ease, a moment of calm in a busy day."
+          },
+          {
+           "k": "big",
+           "h": "A few seconds, many times a day.",
+           "sub": "Small good moments add up.",
+           "say": "A few seconds, many times a day. Small good moments add up, and your heart grows steadier with each one."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-forest",
+         "n": 6,
+         "title": "Forest Bathing Walk",
+         "mins": 3,
+         "blurb": "A slow walk among trees, taking in each sense, for twenty minutes or more.",
+         "sources": [
+          "li18"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "Forest Bathing Walk",
+           "sub": "A slow walk among trees, with every sense.",
+           "say": "This practice is a slow walk among trees, taking in the forest with every sense. Try a minute of it now, then take the walk when you can."
+          },
+          {
+           "k": "big",
+           "h": "Time among trees helps body and mind.",
+           "sub": "Calmer hearts, lighter moods, steadier sleep.",
+           "say": "People who study time in forests have found that a slow walk among trees can ease stress, calm the heart, and lift the mood. This walk is less about exercise, and more about taking the forest in."
+          },
+          {
+           "k": "flow",
+           "h": "The walk",
+           "steps": [
+            [
+             "Unplug",
+             "Phone away, or on silent"
+            ],
+            [
+             "Slow down",
+             "Wander with ease"
+            ],
+            [
+             "Use each sense",
+             "See, hear, smell, touch"
+            ],
+            [
+             "Rest",
+             "Sit and take it in"
+            ]
+           ],
+           "say": "Here is the walk. Unplug, with your phone put away or on silent. Slow down, and wander with ease, with nowhere to be. Use each sense, one at a time. And rest somewhere along the way, to sit and take it all in."
+          },
+          {
+           "k": "points",
+           "h": "Invitations along the way",
+           "items": [
+            [
+             "Look",
+             "Light through leaves, every green"
+            ],
+            [
+             "Listen",
+             "Birds, wind, water"
+            ],
+            [
+             "Breathe",
+             "The smell of earth and pine"
+            ],
+            [
+             "Touch",
+             "Bark, moss, cool water"
+            ]
+           ],
+           "say": "Here are some invitations along the way. Look at the light coming through the leaves, and every shade of green. Listen to birds, wind, and water. Breathe in the smell of earth and pine. And touch the bark of a tree, a patch of moss, or cool water in a stream."
+          },
+          {
+           "k": "big",
+           "h": "Try a minute now",
+           "sub": "At a window, or wherever you are.",
+           "beats": [
+            "Let us try a minute of it now, wherever you are.",
+            "If you can, look out a window, or picture a forest you love.",
+            "Let your breath slow down.",
+            {
+             "t": "Notice three things you can see, two things you can hear, and one thing you can feel on your skin.",
+             "w": 20
+            }
+           ],
+           "say": "Let us try a minute of it now, wherever you are. If you can, look out a window, or picture a forest you love. Let your breath slow down. Notice three things you can see, two things you can hear, and one thing you can feel on your skin."
+          },
+          {
+           "k": "points",
+           "h": "Plan your walk",
+           "items": [
+            [
+             "Twenty minutes or more",
+             "Longer when you can"
+            ],
+            [
+             "Any green place",
+             "A park, a trail, a tree-lined street"
+            ],
+            [
+             "Often",
+             "Weekly is a lovely rhythm"
+            ]
+           ],
+           "say": "Now plan your walk. Twenty minutes or more, and longer when you can. Any green place works, a park, a trail, or a tree-lined street. And go often. Once a week is a lovely rhythm."
+          },
+          {
+           "k": "big",
+           "h": "The trees are waiting.",
+           "sub": "Slow down, and take the forest in.",
+           "say": "The trees are waiting. Slow down, and take the forest in."
+          }
+         ]
+        },
+        {
+         "id": "ok-st-walk-through",
+         "n": 7,
+         "title": "Walk It Through",
+         "mins": 3,
+         "blurb": "Walk at an easy pace, think a hard thing through, and finish with a hopeful picture of what comes next.",
+         "sources": [
+          "hartmann06"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Practices From Chris's Shelf",
+           "h": "Walk It Through",
+           "sub": "Walk, think it through, and end with hope.",
+           "say": "This is a practice for a worry or a memory that keeps circling. You walk at an easy pace, think it through, and finish with a hopeful picture of what comes next."
+          },
+          {
+           "k": "big",
+           "h": "Walking helps the mind sort things out.",
+           "sub": "Left, right, left: a steady rhythm for heavy thoughts.",
+           "say": "There is something about walking. The steady rhythm of left, right, left, with your arms swinging, seems to help the mind sort through heavy things. Many people find a hard memory feels lighter after a good walk with it."
+          },
+          {
+           "k": "flow",
+           "h": "The walk",
+           "steps": [
+            [
+             "Easy pace",
+             "Arms swinging freely"
+            ],
+            [
+             "Bring it along",
+             "The worry or memory"
+            ],
+            [
+             "Walk it through",
+             "Let it unfold"
+            ],
+            [
+             "End with hope",
+             "Picture what comes next"
+            ]
+           ],
+           "say": "Here is the walk. Set out at an easy pace, with your arms swinging freely. Bring the worry or memory along, and let it come to mind. Walk it through, letting it unfold as you go. Then, before you finish, picture something hopeful, what you would like to come next."
+          },
+          {
+           "k": "big",
+           "h": "Try it in place",
+           "sub": "March gently, arms swinging.",
+           "beats": [
+            "Let us try a short version right now.",
+            "Stand, or sit tall, and begin a gentle march in place, swinging your arms.",
+            {
+             "t": "Bring to mind a small worry, and let it come along as you move.",
+             "w": 15
+            },
+            {
+             "t": "Keep moving, and now picture a hopeful next step, how you would like this to go.",
+             "w": 15
+            },
+            "Slow down, and take one deep breath."
+           ],
+           "say": "Let us try a short version right now. Stand, or sit tall, and begin a gentle march in place, swinging your arms. Bring to mind a small worry, and let it come along as you move. Keep moving, and now picture a hopeful next step, how you would like this to go. Slow down, and take one deep breath."
+          },
+          {
+           "k": "points",
+           "h": "Tips for the walk",
+           "items": [
+            [
+             "Twenty to forty minutes",
+             "Outside when you can"
+            ],
+            [
+             "Start with smaller things",
+             "Then work up to bigger ones"
+            ],
+            [
+             "The heaviest memories",
+             "Walk them with a therapist"
+            ]
+           ],
+           "say": "A few tips. Walk for twenty to forty minutes, outside when you can. Start with smaller worries, and work up to bigger ones over time. And for the heaviest memories, walk with support. A therapist trained in trauma can help you carry those."
+          },
+          {
+           "k": "big",
+           "h": "Walk it through, and walk toward hope.",
+           "sub": "Overwhelmed? Call or text 988, any time.",
+           "say": "Walk it through, and walk toward hope. And if a memory ever feels overwhelming, call or text nine eight eight, any time."
+          }
+         ]
+        }
+       ]
+      }
     ]
   },
   willow: {
@@ -9798,6 +12280,100 @@ window.GG_LEARN = {
         {"id": "wl-s-ask", "n": 30, "title": "Asking for What You Need", "mins": 4, "blurb": "Asking your hospice team, your people, and the one you love.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Asking for What You Need", "sub": "The ask is a gift.", "say": "If you have been carrying most of this on your own, this is for you. Asking is a strength, and it opens doors."}, {"k": "big", "h": "The ask is the gift.", "sub": "It shows people how to help.", "say": "Many caregivers wait until they are worn through before they ask. But the ask is a gift. It shows the people around you how to love you both. Your hospice team wants to know what you need."}, {"k": "points", "h": "Ask your hospice team", "items": [["An extra nurse visit", "When something changes or worries you"], ["A hospice aide", "Help with bathing and personal needs"], ["The chaplain or social worker", "Any faith or none; paperwork, family stress"], ["Respite or a volunteer", "So you can rest or step out"]], "say": "Your hospice team is more than the nurse. You can ask for an extra nurse visit when something changes. A hospice aide, to help with bathing. The chaplain, for anyone, of any faith or none. The social worker, for paperwork, money worries, and family stress. And ask about respite or a volunteer, so you can rest or step away for a while."}, {"k": "story", "title": "If She Is Still Here", "lines": ["On my day off, Jenny texted: It's mom. She's taken a turn. Can you come?", "I offered tomorrow. She wrote back: If she is still here.", "I came right away. Carol died peacefully a few hours after I left."], "lesson": "A plain ask lets people know it matters now.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/if-she-is-still-here", "label": "Read the Full Story: If She Is Still Here"}, "say": "On a day off, I got a text from Jenny, a daughter whose family I had been visiting for about a year. It's mom. She's taken a turn and not doing well. Can you come? I wrote back that I could come by tomorrow. She answered, Okay. If she is still here. My heart dropped. I wrote, I can come now if that's okay. I was out the door within minutes, and I stayed close to two hours. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."}, {"k": "big", "h": "Plain words help people say yes.", "sub": "You can simply say it.", "say": "Jenny's ask was plain. Can you come. Plain words like that let people know it matters now. You don't need to explain, or apologize, or wait until you are sure."}, {"k": "words", "h": "Ask family and friends, specifically", "items": ["Can you call the pharmacy for me?", "Can you sit with Mom Saturday morning?", "Can you be the one who updates everyone?", "Can you come now?"], "say": "With family and friends, specific asks work best. Can you call the pharmacy for me. Can you sit with Mom on Saturday morning, so I can sleep. Can you be the one who updates everyone. And sometimes, simply, can you come now."}, {"k": "words", "h": "Name one ask.", "items": ["Can you...?"], "say": "Let's practice. Think of one thing that would help this week. Think of one person who could do it. Now say the ask to yourself, in one plain sentence.", "beats": ["Let's practice.", "Think of one thing that would help this week.", "Think of one person who could do it.", {"t": "Now say the ask to yourself, in one plain sentence.", "w": 12}]}, {"k": "words", "h": "Ask the one you love, too", "items": ["What would make today better?", "Who would you like to see?", "Would you like company, or quiet?", "What would you like to hear?"], "say": "And ask the person in the bed. Their wishes still lead. What would make today better. Who would you like to see. Would you like company, or quiet. What would you like to hear, music, a story, the news from home."}, {"k": "big", "h": "Send one ask today.", "sub": "Your hospice is there day or night.", "say": "Asking lets other people love you both. Send one ask today. And for anything about their comfort that worries you, call your hospice, day or night."}]},
         {"id": "wl-s-far", "n": 31, "title": "When Family Is Far Away", "mins": 4, "blurb": "Ways to be there, and to say goodbye, from far away.", "sources": ["blundon"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Family Is Far Away", "sub": "Love can travel.", "say": "Whether you are the one far away, or the one at the bedside holding the phone, this is for you."}, {"k": "big", "h": "Being far away is common.", "sub": "It does not measure your love.", "say": "Families are spread out. Work, money, health, travel, or a heart that just can't face it can keep someone away. If that is you, many people feel it too. Being far away does not measure your love."}, {"k": "points", "h": "Ways to be there from far away", "items": [["A phone to their ear", "Or a video call, held close"], ["A recorded message", "Played whenever it helps"], ["A letter, read aloud", "By someone at the bedside"], ["A photo", "Set where they can see it"]], "say": "Here are ways to be there. Ask someone at the bedside to hold the phone to their ear, or set up a video call. Hearing may be one of the last senses to go, so your voice can still reach them. Record a message that can be played again. Write a letter for someone to read aloud. Send a photo to set where they can see it."}, {"k": "points", "h": "For the ones at the bedside", "items": [["Offer the phone", "Would you like to talk to them?"], ["Read their words aloud", "Slowly, in your own voice"], ["Name them in the room", "Your son is thinking of you"], ["Leave room for their choice", "Everyone comes in their own way"]], "say": "If you are the one at the bedside, you are the bridge. Offer the phone. Read their letters aloud, slowly, in your own voice. Name them in the room. Your son is thinking of you. Your sister sends her love. And leave room for their choice. Everyone comes in their own way."}, {"k": "story", "title": "Please Help My Dad Die", "lines": ["A man was struggling to let go. His son would not come. He said he just couldn't do this.", "I told him, Your son loves you deeply, even if he can't be here right now.", "The next day he died peacefully, with his daughter at his side."], "lesson": "Love can reach them, even from far away.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die", "label": "Read the Full Story: Please Help My Dad Die"}, "say": "I was once called to the bedside of a man named Bob, who was struggling to let go. His son would not come. He said he just couldn't do this. Bob was in a deep sleep and could no longer respond. I placed a hand on his shoulder and told him his children would be alright, and that his son loved him deeply, even if he couldn't be here right now. The next day, Bob died peacefully, with his daughter at his side."}, {"k": "words", "h": "Say it from where you are.", "items": ["I love you.", "I'm with you from here.", "Thank you for...", "I'll carry you with me."], "say": "If you are far away, try it now. Picture their face. Say what you want them to know, out loud or in your heart.", "beats": ["If you are far away, try it now.", "Picture their face.", {"t": "Say what you want them to know, out loud or in your heart.", "w": 14}]}, {"k": "big", "h": "You can say goodbye from far away.", "sub": "It is a real goodbye.", "say": "Here is permission, if you need it. You can say goodbye from far away. A goodbye said on the phone, in a letter, or in your heart is a real goodbye."}, {"k": "big", "h": "Love travels farther than we think.", "say": "Love travels farther than we think. Send your words today, in whatever way you can. And if you need help setting up a call, ask your hospice team."}]}
       ] },
+      {
+       "id": "willow-faith",
+       "kind": "support",
+       "unlisted": true,
+       "title": "From the Readings",
+       "who": "A video for a reading in Willow, opened from the reading itself",
+       "lessons": [
+        {
+         "id": "wl-f-well",
+         "n": 1,
+         "title": "All Shall Be Well",
+         "mins": 3,
+         "blurb": "A short reading and a breath prayer for the bedside, for families whose faith is a comfort.",
+         "sources": [
+          "julian"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "willow",
+           "eyebrow": "A Faith Practice",
+           "h": "All Shall Be Well",
+           "sub": "A reading and a breath prayer for the bedside.",
+           "say": "This is a short faith practice for the bedside. A reading of words that have comforted Christians for more than six hundred years, and a breath prayer you can pray with someone you love, or on your own."
+          },
+          {
+           "k": "big",
+           "h": "Words from a time of great sorrow.",
+           "sub": "Written in England, more than six hundred years ago.",
+           "say": "These words come from a woman who lived in England through plague and hard years. During a serious illness, she received visions of God’s love, and she spent the rest of her life writing about them. Her words still bring hope to people keeping watch."
+          },
+          {
+           "k": "words",
+           "h": "All shall be well",
+           "sub": "Chapter 27",
+           "items": [
+            "All shall be well,",
+            "and all shall be well,",
+            "and all manner of thing shall be well."
+           ],
+           "cue": {
+            "p": {
+             "1": 2,
+             "2": 4
+            }
+           },
+           "say": "Here are her best known words. Listen slowly. All shall be well, and all shall be well, and all manner of thing shall be well."
+          },
+          {
+           "k": "words",
+           "h": "Love was His meaning.",
+           "sub": "Chapter 86",
+           "items": [
+            "Love was His meaning."
+           ],
+           "cue": {
+            "p": {
+             "0": 2,
+             "1": 4
+            }
+           },
+           "say": "Near the end of her book, after years of prayer, she wrote what she had come to understand. Love was His meaning."
+          },
+          {
+           "k": "big",
+           "h": "A breath prayer",
+           "sub": "In: All shall be well. Out: All manner of thing shall be well.",
+           "beats": [
+            "Now let us pray with the breath.",
+            "Breathe in slowly, and pray, all shall be well.",
+            "Breathe out gently, and pray, all manner of thing shall be well.",
+            {
+             "t": "Keep praying with your breath, in your own rhythm, for a few breaths.",
+             "w": 30
+            }
+           ],
+           "say": "Now let us pray with the breath. Breathe in slowly, and pray, all shall be well. Breathe out gently, and pray, all manner of thing shall be well. Keep praying with your breath, in your own rhythm, for a few breaths."
+          },
+          {
+           "k": "big",
+           "h": "Pray it with them, or for them.",
+           "sub": "Hold a hand. Speak softly.",
+           "say": "If the person you love would welcome it, pray it aloud beside them, softly, matching their breathing. If they are resting, pray it quietly for them. A prayer can be a few words, held in love."
+          },
+          {
+           "k": "big",
+           "h": "All shall be well.",
+           "sub": "Your hospice chaplain is one call away.",
+           "say": "Carry these words with you through the hours ahead. And if you would like someone to pray with you, your hospice chaplain or your own faith leader is one call away."
+          }
+         ]
+        }
+       ]
+      },
       /* ---------- end W4 ---------- */
       /* ---------- Start Here (unchanged from the Learn build) ---------- */
       /* Willow Learn, premium (GWG BLD 728): Start Here, Using Willow, The Six Parts, For You, and For the People Who Love Them.
@@ -15487,6 +18063,171 @@ window.GG_LEARN = {
      }
     ],
     "for": "family"
+   },
+   {
+    "id": "wl-h-growing",
+    "n": 8,
+    "title": "Growing to the Very End",
+    "mins": 5,
+    "blurb": "The last weeks can hold love, meaning, and completion. How a family makes room for it, day by day.",
+    "sources": [
+     "byock97"
+    ],
+    "crisis": [
+     "Your hospice 24/7 line first",
+     "988: call or text, any time",
+     "911: danger right now"
+    ],
+    "scenes": [
+     {
+      "k": "title",
+      "hero": "willow",
+      "eyebrow": "For the People Who Love Them, Lesson 8",
+      "h": "Growing to the Very End",
+      "sub": "Room for love, meaning, and completion.",
+      "say": "This lesson is about something many families are surprised to find. The last weeks of a life can hold real growth. Love can deepen, old knots can loosen, and a person can feel their whole life come together. Here is how you can make room for it, day by day."
+     },
+     {
+      "k": "big",
+      "h": "A person can keep growing, all the way to the end.",
+      "sub": "Even as the body grows weaker.",
+      "say": "People who spend their lives at the bedside see it again and again. As the body grows weaker, a person can keep growing inside. They grow in love, in peace, and in their sense of who they are. Comfort comes first, and good hospice support makes room for the rest."
+     },
+     {
+      "k": "points",
+      "h": "What growing at the end can look like",
+      "items": [
+       [
+        "Affairs settled",
+        "Plans made, treasures passed on"
+       ],
+       [
+        "Relationships tended",
+        "Thanks, love, and forgiveness"
+       ],
+       [
+        "Meaning found",
+        "A life seen as one whole story"
+       ],
+       [
+        "A life honored",
+        "Remembered and celebrated"
+       ]
+      ],
+      "cue": {
+       "at": [
+        1,
+        2,
+        3,
+        4
+       ]
+      },
+      "say": "Growing at the end often shows up in a few ways. Practical affairs get settled, with plans made and treasured things passed on. Relationships get tended, with thanks, love, and forgiveness said out loud. Meaning grows, as a person sees their life as one whole story. And the life is honored by the people who share it."
+     },
+     {
+      "k": "points",
+      "h": "Ways to make room, day by day",
+      "items": [
+       [
+        "Ask what matters today",
+        "Their wishes lead"
+       ],
+       [
+        "Bring their people close",
+        "Visits, calls, letters read aloud"
+       ],
+       [
+        "Tell the stories",
+        "Photos, songs, old places"
+       ],
+       [
+        "Keep comfort first",
+        "Rest is part of it too"
+       ]
+      ],
+      "say": "You can make room for this, one day at a time. Ask what matters to them today, and let their wishes lead. Bring the people they want close, by visits, calls, or letters read aloud. Tell the stories together, with photos, favorite songs, and memories of old places. And keep comfort first. Rest and sleep are part of the journey too."
+     },
+     {
+      "k": "words",
+      "h": "Words that help a life feel complete",
+      "items": [
+       "Thank you.",
+       "We love you.",
+       "You matter so much to us.",
+       "Every day with you has been a gift."
+      ],
+      "say": "Simple words can help a life feel complete. Thank you. We love you. You matter so much to us. Every day with you has been a gift. Forgiveness, asked or given, can belong here too, when it feels right and safe."
+     },
+     {
+      "k": "words",
+      "h": "Questions that open a door",
+      "items": [
+       "What are you most proud of?",
+       "What do you want us to remember?",
+       "Who would you like to talk with?",
+       "What are you thankful for today?"
+      ],
+      "say": "Gentle questions can open a door. What are you most proud of? What do you want us to remember? Who would you like to talk with, or send a few words to? What are you thankful for today? Follow their lead, and let quiet be part of the answer."
+     },
+     {
+      "k": "big",
+      "h": "Picture a quiet afternoon.",
+      "sub": "A box of photos, and one question each.",
+      "say": "Picture a father in his last weeks. His daughter brings a box of old photos and asks one question about each. He laughs at one, cries at another, and tells a story that is new to her. The illness stays the same. And that afternoon, something in both of them feels complete."
+     },
+     {
+      "k": "big",
+      "h": "Try it now: one memory, one thank you.",
+      "sub": "Silently, or out loud.",
+      "beats": [
+       "Let us try it now, wherever you are.",
+       "Think of the person you love in hospice.",
+       "Bring to mind one moment from their life that you treasure.",
+       {
+        "t": "Now, silently or out loud, thank them for that moment.",
+        "w": 15
+       }
+      ],
+      "say": "Let us try it now, wherever you are. Think of the person you love in hospice. Bring to mind one moment from their life that you treasure. Now, silently or out loud, thank them for that moment."
+     },
+     {
+      "k": "points",
+      "h": "Help for the heavy days",
+      "items": [
+       [
+        "Your hospice team first",
+        "Their 24/7 line, any hour"
+       ],
+       [
+        "Tend your own body",
+        "Real food, water, sleep, fresh air"
+       ],
+       [
+        "988 and 911",
+        "Call or text 988 any time"
+       ]
+      ],
+      "say": "This season can be heavy for you too. Your hospice team is there for you day and night, so call their twenty four seven line first, any hour. Tend your own body with real food, water, sleep, and a little fresh air. And if the weight ever feels like too much, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+     },
+     {
+      "k": "big",
+      "h": "Every day can still hold something good.",
+      "sub": "Love, meaning, and a life honored.",
+      "say": "Every day can still hold something good. Love, meaning, and a life honored. You are part of that gift."
+     },
+     {
+      "k": "quiz",
+      "q": "What comes first, so growth at the end has room?",
+      "opts": [
+       "Finishing every task on a list",
+       "Comfort, and then their wishes leading",
+       "Keeping visitors away"
+      ],
+      "right": 1,
+      "why": "Comfort comes first. Then their wishes lead, one day at a time.",
+      "say": "One question. What comes first, so growth at the end has room?"
+     }
+    ]
    }
   ]
  }
@@ -19136,6 +21877,438 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "sequoia-shelf",
+   "title": "From Chris's Shelf",
+   "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+   "pages": [
+    "sq-pg-trees"
+   ],
+   "lessons": [
+    {
+     "id": "sq-sh-purpose",
+     "n": 1,
+     "title": "Purpose at Every Age",
+     "mins": 4,
+     "blurb": "What the longest lived communities share: a daily purpose, friends, movement, and simple whole food.",
+     "sources": [
+      "garcia16"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "From Chris’s Shelf, Lesson 1",
+       "h": "Purpose at Every Age",
+       "sub": "A reason to rise, in every season.",
+       "say": "This lesson is about purpose at every age. People who study the longest lived communities in the world keep finding the same simple things. A reason to rise each morning, good friends, daily movement, and simple whole food. Let us look at each one."
+      },
+      {
+       "k": "big",
+       "h": "A reason to rise each morning.",
+       "sub": "Small reasons count fully.",
+       "say": "In a village in northern Okinawa, Japan, many people live past ninety. They speak of a reason for being, the thing that gets them up each morning. It can be tending a garden, teaching a grandchild, or making something by hand. There, purpose has no retirement age. It simply changes shape."
+      },
+      {
+       "k": "points",
+       "h": "What long, good lives share",
+       "items": [
+        [
+         "A daily purpose",
+         "Something that needs you"
+        ],
+        [
+         "Friends for life",
+         "A circle that gathers often"
+        ],
+        [
+         "Moving all day",
+         "Gardens, walks, and chores"
+        ],
+        [
+         "Simple whole food",
+         "Vegetables, beans, tea, water"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Long, good lives tend to share four things. A daily purpose, something that needs you. Friends for life, a circle that gathers often. Moving all through the day. And simple whole food."
+      },
+      {
+       "k": "big",
+       "h": "Friends are part of a long, good life.",
+       "sub": "A small circle that meets often.",
+       "say": "Many of the elders there belong to a small circle of friends who meet often, for years, even for life. They share news, help each other through hard times, and laugh a lot. Being known and needed by friends gives each day a reason."
+      },
+      {
+       "k": "points",
+       "h": "Move naturally, eat simply",
+       "items": [
+        [
+         "Garden and walk",
+         "Movement woven into the day"
+        ],
+        [
+         "Eat slowly",
+         "Stop when comfortably full"
+        ],
+        [
+         "Whole food",
+         "Vegetables, beans, fish, tea"
+        ],
+        [
+         "Get outside",
+         "Sun, air, and growing things"
+        ]
+       ],
+       "say": "Movement there is woven into the day: gardening, walking to a neighbor, sitting on the floor and standing up again. Meals are simple and whole: vegetables, beans, a little fish, green tea, and water. Many eat slowly and stop when they feel comfortably full. And much of life happens outside, among growing things."
+      },
+      {
+       "k": "big",
+       "h": "Find your reason for this season.",
+       "sub": "What you love. What you do well. Who is glad you are here.",
+       "beats": [
+        "Let us find your reason for this season.",
+        "Think of one thing you love to do.",
+        "Think of one thing you do well.",
+        "Think of one person or place that is better because of you.",
+        {
+         "t": "Now picture where those three meet, and name one way to live it this week.",
+         "w": 15
+        }
+       ],
+       "say": "Let us find your reason for this season. Think of one thing you love to do. Think of one thing you do well. Think of one person or place that is better because of you. Now picture where those three meet, and name one way to live it this week."
+      },
+      {
+       "k": "points",
+       "h": "Purpose fits every body",
+       "items": [
+        [
+         "From a chair",
+         "Calls, letters, wise advice"
+        ],
+        [
+         "Side by side",
+         "Teach a skill, share a recipe"
+        ],
+        [
+         "In your community",
+         "Volunteer, mentor, welcome"
+        ]
+       ],
+       "say": "Purpose fits every body and every ability. From a chair, you can make calls, write letters, and offer wise advice. Side by side, you can teach a skill or share a family recipe. And in your community, you can volunteer, mentor, or welcome someone new."
+      },
+      {
+       "k": "big",
+       "h": "Your gifts are still needed.",
+       "sub": "Feeling like a burden? Call or text 988, any time.",
+       "say": "Your gifts are still needed. If you ever feel you have no place, or feel like a burden, tell someone you trust. Call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "Rise for one good reason today.",
+       "sub": "A friend, a walk, a meal, a need you can meet.",
+       "say": "Rise for one good reason today. Share a meal of real food with a friend, take a walk outside, and do one thing someone needs from you."
+      },
+      {
+       "k": "quiz",
+       "q": "What do long, good lives often share?",
+       "opts": [
+        "A daily purpose, friends, movement, and whole food",
+        "Strict diets and costly gadgets",
+        "Resting alone all day"
+       ],
+       "right": 0,
+       "why": "A daily purpose, friends who gather often, movement all through the day, and simple whole food.",
+       "say": "Quick question. What do long, good lives often share?"
+      }
+     ]
+    },
+    {
+     "id": "sq-sh-moving",
+     "n": 2,
+     "title": "Moving Keeps the Mind Strong",
+     "mins": 4,
+     "blurb": "How regular movement feeds memory, mood, and sleep, at every age and every movement level.",
+     "sources": [
+      "ratey08"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "From Chris’s Shelf, Lesson 2",
+       "h": "Moving Keeps the Mind Strong",
+       "sub": "At every age, at every level.",
+       "say": "This lesson is about how moving your body helps your mind. Movement feeds memory, lifts mood, and steadies sleep, at every age and every movement level."
+      },
+      {
+       "k": "big",
+       "h": "Movement is food for the brain.",
+       "sub": "At every age.",
+       "say": "When you move, your heart sends more blood to your brain. Your body makes natural substances that help brain cells grow and connect. People who study exercise and the brain call movement one of the best things we can do for thinking and mood."
+      },
+      {
+       "k": "points",
+       "h": "What regular movement supports",
+       "items": [
+        [
+         "Memory",
+         "Learning and recall"
+        ],
+        [
+         "Mood",
+         "Lighter, steadier days"
+        ],
+        [
+         "Focus",
+         "A clearer mind"
+        ],
+        [
+         "Sleep",
+         "Deeper rest at night"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Regular movement supports four things the brain loves. Memory, for learning and recall. Mood, for lighter, steadier days. Focus, for a clearer mind. And sleep, for deeper rest at night."
+      },
+      {
+       "k": "big",
+       "h": "Every movement level counts.",
+       "sub": "Standing, sitting, or lying down.",
+       "say": "You can start right where you are. A walk down the hall counts. So does marching in a chair, stretching in bed, or dancing in the kitchen. A little more than yesterday is a fine goal."
+      },
+      {
+       "k": "points",
+       "h": "Mix it up through the week",
+       "items": [
+        [
+         "Walk",
+         "Breathing a little harder"
+        ],
+        [
+         "Balance",
+         "One foot, hand on a counter"
+        ],
+        [
+         "Strength",
+         "Rise from a chair, slowly"
+        ],
+        [
+         "Learn something new",
+         "Dance steps, tai chi, a new route"
+        ]
+       ],
+       "say": "A good week mixes a few kinds of movement. Walk, at a pace that has you breathing a little harder. Practice balance, standing on one foot while you hold a counter. Build strength, by rising slowly from a chair a few times. And try movement that asks your brain to learn, like new dance steps, tai chi, or a new walking route. Learning while you move gives the brain a double gift."
+      },
+      {
+       "k": "big",
+       "h": "Chair March",
+       "sub": "One minute, right now.",
+       "beats": [
+        "Let us move together right now.",
+        "Sit tall near the front of your chair, with your feet flat on the floor.",
+        "Lift one knee, then the other, like a slow march.",
+        "Swing your arms gently as you go.",
+        {
+         "t": "Keep marching at your own pace for one minute.",
+         "w": 45
+        }
+       ],
+       "say": "Let us move together right now. Sit tall near the front of your chair, with your feet flat on the floor. Lift one knee, then the other, like a slow march. Swing your arms gently as you go. Keep marching at your own pace for one minute."
+      },
+      {
+       "k": "points",
+       "h": "Move safely",
+       "items": [
+        [
+         "Ask your doctor",
+         "Before a big change"
+        ],
+        [
+         "Start small",
+         "Five minutes, then more"
+        ],
+        [
+         "Steady footing",
+         "Good shoes, clear floors, a rail"
+        ],
+        [
+         "Water",
+         "A glass before and after"
+        ]
+       ],
+       "say": "Move safely, too. Ask your doctor before a big change, and ask which kinds of movement fit your body. Start small, with five minutes, and add more as it feels good. Wear steady shoes, keep floors clear, and hold a rail or a counter when you need one. And drink a glass of water before and after."
+      },
+      {
+       "k": "big",
+       "h": "Move with someone.",
+       "sub": "A walking friend, a class, a grandchild.",
+       "say": "Movement is even better shared. Walk with a friend, join a class at a senior center, or play outside with a grandchild. Time in the fresh air adds a lift of its own."
+      },
+      {
+       "k": "big",
+       "h": "A stronger mind starts with a few steps.",
+       "sub": "Move a little more today.",
+       "say": "A stronger mind starts with a few steps. Move a little more today, and enjoy how it feels."
+      },
+      {
+       "k": "quiz",
+       "q": "Which movement counts for your brain?",
+       "opts": [
+        "Only hard gym workouts",
+        "Walking, chair marching, dancing, and stretching",
+        "Moving once a month"
+       ],
+       "right": 1,
+       "why": "Every movement level counts, and a little more than yesterday is a fine goal.",
+       "say": "Quick question. Which movement counts for your brain?"
+      }
+     ]
+    },
+    {
+     "id": "sq-sh-wiser",
+     "n": 3,
+     "title": "Growing Older, Growing Wiser",
+     "mins": 4,
+     "blurb": "Later life as a season of inner growth, purpose, and wisdom to share.",
+     "sources": [
+      "zweig21"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "From Chris’s Shelf, Lesson 3",
+       "h": "Growing Older, Growing Wiser",
+       "sub": "A season of inner growth.",
+       "say": "This lesson is about growing older and growing wiser. Later life can be a season of inner growth, a time to become an elder, someone whose wisdom helps the people who come after."
+      },
+      {
+       "k": "big",
+       "h": "From the roles you held to the person you are.",
+       "sub": "That turn is where wisdom grows.",
+       "say": "For much of life, we are known by our roles: worker, parent, provider, neighbor. As roles change, many people find an invitation to turn inward, toward who they are beneath the roles. That turn is where elder wisdom grows."
+      },
+      {
+       "k": "points",
+       "h": "Aging and eldering",
+       "items": [
+        [
+         "Aging",
+         "What time does to the body"
+        ],
+        [
+         "Eldering",
+         "What we choose to grow inside"
+        ],
+        [
+         "Both together",
+         "A full, honest season"
+        ]
+       ],
+       "say": "Aging is what time does to the body. Eldering is what we choose to grow on the inside: patience, perspective, humor, and a wide heart. Both happen together, and both deserve honesty."
+      },
+      {
+       "k": "big",
+       "h": "Trade old stories about age for truer ones.",
+       "sub": "My experience is a gift. My story has more chapters.",
+       "say": "Many of us carry old messages about age, that it only means decline, or being in the way. Notice them when they show up. Then trade them for truer words. My experience is a gift. My story still has chapters to write."
+      },
+      {
+       "k": "points",
+       "h": "Inner work for this season",
+       "items": [
+        [
+         "Look back with kind eyes",
+         "Your life as one story"
+        ],
+        [
+         "Make peace",
+         "With old hurts, where you can"
+        ],
+        [
+         "Find quiet",
+         "Time each day to reflect"
+        ],
+        [
+         "Pass it on",
+         "Wisdom for younger people"
+        ]
+       ],
+       "say": "This season has its own inner work. Look back at your life with kind eyes, as one whole story. Make peace with old hurts where you can, at your own pace. Find a little quiet each day to reflect, outside if you can. And pass on what you have learned to younger people who would love to hear it."
+      },
+      {
+       "k": "big",
+       "h": "One gift of wisdom",
+       "sub": "Something life has taught you.",
+       "beats": [
+        "Let us try this now.",
+        "Settle into your seat and take one easy breath.",
+        "Think of one hard lesson life has taught you, one you would gladly pass on.",
+        {
+         "t": "Say it to yourself in one sentence, as if speaking to someone young you love.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try this now. Settle into your seat and take one easy breath. Think of one hard lesson life has taught you, one you would gladly pass on. Say it to yourself in one sentence, as if speaking to someone young you love."
+      },
+      {
+       "k": "big",
+       "h": "Picture a grandmother at the kitchen table.",
+       "sub": "A story, a lesson, a laugh.",
+       "say": "Picture a grandmother at the kitchen table with her teenage grandson. He asks how she got through a hard year long ago. She tells him, simply and honestly, and they laugh about part of it. He carries that conversation for the rest of his life. That is eldering."
+      },
+      {
+       "k": "big",
+       "h": "Your Legacy Book holds your wisdom.",
+       "sub": "One memory at a time.",
+       "say": "Sequoia’s Legacy Book is a place to keep what you have learned, one memory at a time. The chapter What Life Has Taught Me is a fine place to start."
+      },
+      {
+       "k": "big",
+       "h": "Heavy memories deserve company.",
+       "sub": "Call or text 988, any time.",
+       "say": "Looking inward can stir old grief. If a memory feels too heavy to carry alone, talk with someone you trust, or call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "Growing older can mean growing deeper.",
+       "sub": "Your wisdom is a gift to share.",
+       "say": "Growing older can mean growing deeper. Your wisdom is a gift. Share it, one story at a time."
+      },
+      {
+       "k": "quiz",
+       "q": "What is eldering?",
+       "opts": [
+        "Doing exactly what you did at forty",
+        "Choosing inner growth, and sharing wisdom",
+        "Stepping away from everyone"
+       ],
+       "right": 1,
+       "why": "Eldering is the inner growth we choose, and the wisdom we pass on.",
+       "say": "Quick question. What is eldering?"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "sequoia-support",
    "kind": "support",
    "title": "Support for Right Now",
@@ -20140,6 +23313,182 @@ window.GG_LEARN = {
        "h": "You matter, and people are ready to help you carry this.",
        "sub": "Make one call today. Someone will listen.",
        "say": "You matter, and people are ready to help you carry this. Make one call today. Someone will listen."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-shelf-try",
+   "kind": "support",
+   "title": "Practices From Chris's Shelf",
+   "who": "Short practices drawn from the books on Chris's shelf.",
+   "lessons": [
+    {
+     "id": "sq-st-asking",
+     "n": 1,
+     "title": "What Life Is Asking of Me Now",
+     "mins": 2,
+     "blurb": "A gentle reflection on what this season of life is asking of you, and one step toward it.",
+     "sources": [
+      "frankl46"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "What Life Is Asking of Me Now",
+       "sub": "A question for this season.",
+       "say": "This practice turns a big question around. Instead of asking what we want from life, we ask what life is asking of us, right now, in this season. It takes a few minutes."
+      },
+      {
+       "k": "points",
+       "h": "Meaning lives in three places",
+       "items": [
+        [
+         "What we give",
+         "Work, gifts, and good deeds"
+        ],
+        [
+         "What we love",
+         "People, beauty, the world"
+        ],
+        [
+         "How we meet hard days",
+         "Courage and grace"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "People who came through great hardship have found meaning in three places. In what we give and make. In whom and what we love. And in the courage we bring to the hard days we are given."
+      },
+      {
+       "k": "big",
+       "h": "What is life asking of me now?",
+       "sub": "One answer for this week.",
+       "beats": [
+        "Let us try it now.",
+        "Sit comfortably and take a slow breath.",
+        "Ask yourself quietly, what is life asking of me now?",
+        "Maybe it is patience, a phone call, a word of thanks, or a gift only you can give.",
+        {
+         "t": "Let one answer come, and hold it for a moment.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try it now. Sit comfortably and take a slow breath. Ask yourself quietly, what is life asking of me now? Maybe it is patience, a phone call, a word of thanks, or a gift only you can give. Let one answer come, and hold it for a moment."
+      },
+      {
+       "k": "points",
+       "h": "Turn it into one step",
+       "items": [
+        [
+         "Name it",
+         "One word or one sentence"
+        ],
+        [
+         "Choose one step",
+         "Something you can do this week"
+        ],
+        [
+         "Tell someone",
+         "Spoken aloud, it grows"
+        ]
+       ],
+       "say": "Now turn it into one step. Name it in a word or a sentence. Choose one thing you can do this week to answer it. And tell someone you trust. Spoken out loud, purpose grows stronger."
+      },
+      {
+       "k": "big",
+       "h": "Even a hard season asks something good of us.",
+       "sub": "Courage, kindness, a word of love.",
+       "say": "Even a hard season asks something good of us. Courage on a painful day. Kindness to the people who help us. A word of love passed on to someone younger. Each answer gives the day meaning."
+      },
+      {
+       "k": "big",
+       "h": "Life is still asking. You still have answers.",
+       "sub": "Come back to this question any week.",
+       "say": "Life is still asking, and you still have answers to give. Come back to this question any week you like."
+      }
+     ]
+    },
+    {
+     "id": "sq-st-elder",
+     "n": 2,
+     "title": "Meeting the Elder Within",
+     "mins": 2,
+     "blurb": "A quiet reflection on the wise elder you are becoming, and one gift you can pass on.",
+     "sources": [
+      "zweig21"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Meeting the Elder Within",
+       "sub": "The wise elder you are becoming.",
+       "say": "This is a quiet reflection on the wise elder you are becoming, and one gift you can pass on. It takes a few minutes. Find a comfortable seat."
+      },
+      {
+       "k": "big",
+       "h": "An elder is a life ripened into wisdom.",
+       "sub": "That ripening is happening in you.",
+       "say": "An elder is someone whose life has ripened into wisdom, warmth, and perspective. That ripening is happening in you, one season at a time."
+      },
+      {
+       "k": "big",
+       "h": "Picture your elder self.",
+       "sub": "Wise, warm, and at peace.",
+       "beats": [
+        "Close your eyes, or rest them on one spot.",
+        "Take a slow breath in, and a long breath out.",
+        "Picture yourself as the wisest, kindest elder you could become.",
+        "Notice how this elder sits, speaks, and listens.",
+        {
+         "t": "Ask this elder one question, and listen for the answer.",
+         "w": 20
+        }
+       ],
+       "say": "Close your eyes, or rest them on one spot. Take a slow breath in, and a long breath out. Picture yourself as the wisest, kindest elder you could become. Notice how this elder sits, speaks, and listens. Ask this elder one question, and listen for the answer."
+      },
+      {
+       "k": "points",
+       "h": "One gift to pass on",
+       "items": [
+        [
+         "A story",
+         "A memory worth keeping"
+        ],
+        [
+         "A skill",
+         "Something your hands know"
+        ],
+        [
+         "A few kind words",
+         "For someone young you love"
+        ]
+       ],
+       "say": "Now choose one gift this elder would pass on. A story worth keeping. A skill your hands know. Or a few kind words, spoken or written, for someone young you love."
+      },
+      {
+       "k": "big",
+       "h": "Give it this week.",
+       "sub": "A call, a visit, a letter, a Legacy Book page.",
+       "say": "Choose one way to give it this week. A call, a visit, a letter, or a page in your Legacy Book. Elder wisdom grows as it is shared."
+      },
+      {
+       "k": "big",
+       "h": "The elder within is already here.",
+       "sub": "Return to this reflection any time.",
+       "say": "The elder within you is already here, growing wiser each day. Return to this reflection any time."
       }
      ]
     }
@@ -23355,6 +26704,288 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "pine-shelf",
+   "title": "From Chris's Shelf",
+   "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+   "lessons": [
+    {
+     "id": "pn-sh-brain",
+     "n": 1,
+     "title": "Your Brain Grows Toward What You Practice",
+     "mins": 4,
+     "blurb": "Your brain strengthens what you repeat, so small good habits build a steadier mind.",
+     "sources": [
+      "hanson09"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "Your Brain Grows Toward What You Practice",
+       "sub": "Small good habits, a steadier mind.",
+       "say": "Here is something worth knowing about your brain. It keeps changing your whole life, and it grows toward whatever you practice. That means you get a real say in the mind you are building."
+      },
+      {
+       "k": "big",
+       "h": "What you repeat gets stronger.",
+       "sub": "Like a path through tall grass.",
+       "say": "Picture a field of tall grass. Walk across it once, and you barely leave a mark. Walk the same way every day, and soon there is a clear path. Your brain works a lot like that. People who study the brain have found that the connections you use often grow stronger and quicker. What you repeat gets easier."
+      },
+      {
+       "k": "big",
+       "h": "Your brain holds on to hard moments.",
+       "sub": "It was built to keep people safe.",
+       "say": "Here is the twist. Your brain is built to watch closely for danger. That kept people safe a long time ago. So one harsh comment can stick with you all day, while ten good moments slide right past. That is a normal brain at work, and you can balance it."
+      },
+      {
+       "k": "flow",
+       "h": "Take in the good",
+       "steps": [
+        [
+         "Notice",
+         "A laugh, a win, a kind word"
+        ],
+        [
+         "Stay with it",
+         "Ten to twenty seconds"
+        ],
+        [
+         "Let it sink in",
+         "Feel it in your body"
+        ]
+       ],
+       "say": "You balance it by taking in the good, on purpose. When something good happens, notice it, even something small, like a laugh with a friend or a problem you finally solved. Stay with it for ten or twenty seconds before you move on. And let it sink in, like water soaking into dry ground. Do that often, and your brain builds a path toward steadiness and hope."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "One good moment, fifteen seconds.",
+       "beats": [
+        "Let us try it right now.",
+        "Think of one good moment from today or yesterday.",
+        "It can be tiny.",
+        "Picture it clearly: where you were, who was there, and how it felt.",
+        {
+         "t": "Now stay with that feeling for about fifteen seconds, and let it soak in.",
+         "w": 15
+        },
+        "Nice.",
+        "That is one more step on a good path."
+       ],
+       "say": "Let us try it right now. Think of one good moment from today or yesterday. It can be tiny. Picture it clearly: where you were, who was there, and how it felt. Now stay with that feeling for about fifteen seconds, and let it soak in. Nice. That is one more step on a good path."
+      },
+      {
+       "k": "points",
+       "h": "More paths worth building",
+       "items": [
+        [
+         "Kind self-talk",
+         "Like you talk to a good friend"
+        ],
+        [
+         "A calm breath",
+         "Before you answer"
+        ],
+        [
+         "Moving your body",
+         "A little every day"
+        ],
+        [
+         "Real rest",
+         "Sleep and unplugged time"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "The same is true for other habits. Speak to yourself the way you would speak to a good friend. Take one calm breath before you answer when you are upset. Move your body a little every day. And protect your sleep and your unplugged time. Each time you practice, the path gets a little clearer."
+      },
+      {
+       "k": "big",
+       "h": "Start small. Repeat often.",
+       "sub": "Small and steady builds the path.",
+       "say": "Start small, and repeat it often. One minute a day, done again and again, builds more than one big plan done once. Pick one path to practice this week."
+      },
+      {
+       "k": "big",
+       "h": "Your brain is still growing.",
+       "sub": "Hard feelings sticking around? Talk to an adult you trust, or call or text 988.",
+       "say": "Your brain is still growing, and you get to help shape it. If hard feelings stick around for a while, talk with an adult you trust. And you can call or text nine eight eight, any time."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps a good moment stick?",
+       "opts": [
+        "Rushing on to the next thing",
+        "Staying with it for a few breaths",
+        "Waiting for something big"
+       ],
+       "right": 1,
+       "why": "Staying with a good moment for ten to twenty seconds helps your brain take it in.",
+       "say": "Quick question. What helps a good moment stick?"
+      }
+     ]
+    },
+    {
+     "id": "pn-sh-move",
+     "n": 2,
+     "title": "Move for Your Mood",
+     "mins": 4,
+     "blurb": "Moving lifts your mood, focus, and sleep, and even short bursts count.",
+     "sources": [
+      "ratey08",
+      "noetel",
+      "cdcpa"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "Move for Your Mood",
+       "sub": "Short bursts count.",
+       "say": "When you feel stressed, stuck, or low, one of the best tools you have is your own body. This lesson is about how moving lifts your mood and sharpens your focus, and how even short bursts count."
+      },
+      {
+       "k": "big",
+       "h": "Moving feeds your brain.",
+       "sub": "Better mood, focus, and sleep.",
+       "say": "People who study the brain have found that when you move, your brain gets more blood and oxygen, and a boost of natural chemicals that help it grow and learn. Many people feel calmer, clearer, and happier after they move, and they sleep better that night."
+      },
+      {
+       "k": "points",
+       "h": "What research shows",
+       "items": [
+        [
+         "Mood",
+         "Walking, running, yoga, and lifting all help"
+        ],
+        [
+         "Focus",
+         "A quick burst before you study"
+        ],
+        [
+         "Sleep",
+         "Deeper rest after an active day"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here is what research shows. A large review of many studies found that walking or jogging, yoga, and strength training all helped people with depression feel better, and harder effort helped a little more. Moving before you study can help you focus. And an active day often leads to deeper sleep."
+      },
+      {
+       "k": "big",
+       "h": "A one minute boost",
+       "sub": "March, pump your arms, then breathe.",
+       "beats": [
+        "Let us move right now, wherever you are.",
+        "Stand up if you can, or sit up tall.",
+        {
+         "t": "March in place, or pump your arms, as fast as feels good, for thirty seconds.",
+         "w": 30
+        },
+        "Now stop, and take one slow breath.",
+        {
+         "t": "Notice your heart, your breath, and your mood.",
+         "w": 6
+        }
+       ],
+       "say": "Let us move right now, wherever you are. Stand up if you can, or sit up tall. March in place, or pump your arms, as fast as feels good, for thirty seconds. Now stop, and take one slow breath. Notice your heart, your breath, and your mood."
+      },
+      {
+       "k": "points",
+       "h": "Find your kind of moving",
+       "items": [
+        [
+         "With friends",
+         "A game, a walk, a team"
+        ],
+        [
+         "On your own",
+         "A run, a ride, a dance"
+        ],
+        [
+         "Outside",
+         "Fresh air adds a lift"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "The best kind of moving is the kind you enjoy, because that is the kind you keep doing. With friends, like shooting hoops, a pickup game, or a walk after school. On your own, like a run, a bike ride, lifting, or dancing in your room. And outside whenever you can, because fresh air and daylight give your mood a lift of their own."
+      },
+      {
+       "k": "points",
+       "h": "Make it easy to start",
+       "items": [
+        [
+         "Ten minutes counts",
+         "Short bursts add up"
+        ],
+        [
+         "Same time each day",
+         "Like right after school"
+        ],
+        [
+         "Pair it up",
+         "A friend or music you love"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Make it easy to start. Ten minutes counts, and short bursts add up across the day. Pick the same time each day, like right after school. And pair it with something you love, like a friend or a favorite playlist. Teens do best with about an hour of moving spread through the day, and every bit counts toward it."
+      },
+      {
+       "k": "big",
+       "h": "Feeling low for a couple of weeks?",
+       "sub": "Talk to an adult you trust, or call or text 988.",
+       "say": "Moving helps a lot, and it works best alongside people. If you have felt low or stressed for a couple of weeks, talk with a parent, a school counselor, or a doctor. And any time you need someone right now, call or text nine eight eight."
+      },
+      {
+       "k": "big",
+       "h": "Move a little. Feel a little better.",
+       "sub": "A walk, a dance, a quick game.",
+       "say": "So when the day feels heavy, move a little. A walk, a dance, a quick game outside. Your body and your brain will thank you."
+      },
+      {
+       "k": "quiz",
+       "q": "Which kinds of moving can lift your mood?",
+       "opts": [
+        "Only long, hard workouts",
+        "Walking, running, yoga, and lifting",
+        "Only team sports"
+       ],
+       "right": 1,
+       "why": "Walking or jogging, yoga, and strength training all help, and even short bursts count.",
+       "say": "Quick question. Which kinds of moving can lift your mood?"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "pine-support",
    "kind": "support",
    "title": "Support for Right Now",
@@ -24353,6 +27984,231 @@ window.GG_LEARN = {
        "h": "You matter, and people are ready to help you carry this.",
        "sub": "Reach out today. Someone will listen.",
        "say": "You matter, and people are ready to help you carry this. Reach out today. Someone will listen. Later, Pine's practice My Safety Plan can help you plan for hard moments."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "pine-shelf-try",
+   "kind": "support",
+   "title": "Practices From Chris's Shelf",
+   "who": "Short practices drawn from the books on Chris's shelf.",
+   "lessons": [
+    {
+     "id": "pn-st-why",
+     "n": 1,
+     "title": "Find Your Why for Today",
+     "mins": 3,
+     "blurb": "Name one small reason today is worth showing up for, and take one step for it.",
+     "sources": [
+      "frankl46"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Find Your Why for Today",
+       "sub": "One small reason, one small step.",
+       "say": "Some mornings it is hard to get going. This practice helps you find one small reason that makes today worth showing up for, and then act on it. It takes about three minutes."
+      },
+      {
+       "k": "big",
+       "h": "A reason makes hard things lighter.",
+       "sub": "A small one counts.",
+       "say": "People who have lived through very hard times have noticed something. When we have a reason, a why, we can carry a lot more. Your why can be small. One for today counts."
+      },
+      {
+       "k": "points",
+       "h": "Where a why comes from",
+       "items": [
+        [
+         "Something to do",
+         "A project, a team, a skill"
+        ],
+        [
+         "Someone to show up for",
+         "A friend, a sibling, a pet"
+        ],
+        [
+         "Who you want to be",
+         "Kind, brave, steady"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "A why can come from three places. Something to do, like a project, a practice, or a skill you are building. Someone to show up for, like a friend, a little brother, a grandparent, or a dog who waits by the door. Or who you want to be today, like kind, brave, or steady, even when the day is hard."
+      },
+      {
+       "k": "big",
+       "h": "Find yours",
+       "sub": "Today, my why is...",
+       "beats": [
+        "Let us find yours right now.",
+        "Take one slow breath.",
+        "Ask yourself, what is one thing, one person, or one way of being that matters to me today?",
+        {
+         "t": "Pick one, and say it in a sentence: today, my why is.",
+         "w": 12
+        },
+        {
+         "t": "Now pick one small step you can take for it before tonight.",
+         "w": 10
+        }
+       ],
+       "say": "Let us find yours right now. Take one slow breath. Ask yourself, what is one thing, one person, or one way of being that matters to me today? Pick one, and say it in a sentence: today, my why is. Now pick one small step you can take for it before tonight."
+      },
+      {
+       "k": "points",
+       "h": "Make it real",
+       "items": [
+        [
+         "Write it down",
+         "A note on your phone or mirror"
+        ],
+        [
+         "Take the step",
+         "Small, and today"
+        ],
+        [
+         "Notice tonight",
+         "How did it feel?"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Then make it real. Write your why somewhere you will see it, like a note on your phone or your mirror. Take your small step today. And tonight, notice how it felt to show up for it."
+      },
+      {
+       "k": "big",
+       "h": "Hard day? Your why can be tiny.",
+       "sub": "Showing up counts. Feeling hopeless? Talk to an adult you trust, or call or text 988.",
+       "say": "On a really hard day, your why can be tiny: a text to a friend, a walk with your dog, finishing one page. Showing up counts. And if things feel hopeless, talk with an adult you trust, or call or text nine eight eight. You matter, and people want to help."
+      }
+     ]
+    },
+    {
+     "id": "pn-st-rain",
+     "n": 2,
+     "title": "RAIN for Teens",
+     "mins": 3,
+     "blurb": "Four steps for meeting stress, friend drama, and big feelings with kindness.",
+     "sources": [
+      "brach19",
+      "mcdonald"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "RAIN for Teens",
+       "sub": "Four steps for a hard feeling.",
+       "say": "Stress, friend drama, a bad grade, or a feeling that keeps hanging on. This practice gives you four steps for meeting a hard feeling with kindness. It is called RAIN, and it takes about three minutes."
+      },
+      {
+       "k": "flow",
+       "h": "RAIN",
+       "steps": [
+        [
+         "Recognize",
+         "What am I feeling?"
+        ],
+        [
+         "Allow",
+         "Let it be here"
+        ],
+        [
+         "Investigate",
+         "Where is it in my body?"
+        ],
+        [
+         "Nurture",
+         "What do I need?"
+        ]
+       ],
+       "say": "RAIN stands for four steps. Recognize: name what you are feeling. Allow: let the feeling be here for a minute, just as it is. Investigate: get curious about where you feel it in your body. Nurture: offer yourself kindness, the way you would for a good friend."
+      },
+      {
+       "k": "big",
+       "h": "Try RAIN now",
+       "sub": "Recognize. Allow. Investigate. Nurture.",
+       "beats": [
+        "Let us try it now, with something small, like a worry or an annoying moment from this week.",
+        "Sit comfortably, and take a slow breath.",
+        {
+         "t": "Recognize: name it quietly, like this is stress, this is hurt, or this is anger.",
+         "w": 6
+        },
+        {
+         "t": "Allow: tell yourself, it is okay to feel this right now.",
+         "w": 6
+        },
+        {
+         "t": "Investigate: where do you feel it, in your chest, your stomach, or your jaw?",
+         "w": 8
+        },
+        {
+         "t": "Nurture: put a hand on your heart, and ask yourself what you need right now.",
+         "w": 6
+        },
+        {
+         "t": "Then offer it to yourself, with the kind words you would give a good friend.",
+         "w": 8
+        }
+       ],
+       "say": "Let us try it now, with something small, like a worry or an annoying moment from this week. Sit comfortably, and take a slow breath. Recognize: name it quietly, like this is stress, this is hurt, or this is anger. Allow: tell yourself, it is okay to feel this right now. Investigate: where do you feel it, in your chest, your stomach, or your jaw? Nurture: put a hand on your heart, and ask yourself what you need right now. Then offer it to yourself, with the kind words you would give a good friend."
+      },
+      {
+       "k": "big",
+       "h": "After the RAIN",
+       "sub": "Notice how you feel now.",
+       "say": "Now notice how you feel. Often the feeling softens a little, or there is more room around it. You met it with kindness, and that is a skill you can grow."
+      },
+      {
+       "k": "points",
+       "h": "Use RAIN for",
+       "items": [
+        [
+         "Stress",
+         "Before a test or a game"
+        ],
+        [
+         "Friend drama",
+         "Before you reply"
+        ],
+        [
+         "Big feelings",
+         "When they hang on"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "You can use RAIN almost anywhere. For stress, before a test or a game. For friend drama, before you reply to that message. And for big feelings that hang on, at night or after a hard day."
+      },
+      {
+       "k": "big",
+       "h": "Feeling too big to hold?",
+       "sub": "Talk to an adult you trust, or call or text 988.",
+       "say": "RAIN is for everyday hard feelings. If a feeling is too big to hold on your own, reach out. Talk with an adult you trust, or call or text nine eight eight, any time."
       }
      ]
     }
@@ -28359,6 +32215,463 @@ window.GG_LEARN = {
        "h": "You matter, and people are ready to help you carry this.",
        "sub": "Reach out today. Someone will listen.",
        "say": "You matter, and people are ready to help you carry this. Reach out today. Someone will listen. Later, Birch's practice My Safety Plan can help you plan for hard moments."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "birch-shelf-try",
+   "kind": "support",
+   "title": "Practices From Chris's Shelf",
+   "who": "Short practices drawn from the books on Chris's shelf.",
+   "lessons": [
+    {
+     "id": "br-st-rhythm",
+     "n": 1,
+     "title": "Steady Rhythm Reset",
+     "mins": 3,
+     "blurb": "A few minutes of steady rhythm, tapping, rocking, or walking, to help your body find calm.",
+     "sources": [
+      "vanderkolk14"
+     ],
+     "crisis": [
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Steady Rhythm Reset",
+       "sub": "Let rhythm settle your body.",
+       "say": "When stress or old memories leave your body buzzing, rhythm can help it settle. This practice uses a steady beat, tapping, rocking, or walking, to bring your body back to calm. It takes about three minutes."
+      },
+      {
+       "k": "big",
+       "h": "Your body speaks the language of rhythm.",
+       "sub": "A steady beat says: you are safe right now.",
+       "say": "Hard experiences can live in the body as well as the mind. Steady, simple rhythm is one of the oldest ways a body finds calm. Think of rocking a baby, walking a long road, or drumming together. A steady beat tells your body, you are safe right now."
+      },
+      {
+       "k": "points",
+       "h": "Pick your rhythm",
+       "items": [
+        [
+         "Tap",
+         "Hands on knees, left and right"
+        ],
+        [
+         "Rock",
+         "Gently, side to side"
+        ],
+        [
+         "Walk",
+         "Steady steps, arms swinging"
+        ],
+        [
+         "Hum",
+         "One low, even note"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Pick the rhythm that fits where you are. Tap your hands on your knees, left and right. Rock gently, side to side. Walk with steady steps and swinging arms. Or hum one low, even note."
+      },
+      {
+       "k": "big",
+       "h": "Tap a steady beat",
+       "sub": "Left, right, left, right.",
+       "beats": [
+        "Let us try it now.",
+        "Rest your hands on your knees or thighs.",
+        "Tap your left hand, then your right, slow and even, like a heartbeat at rest.",
+        "Let your breath slow down to match.",
+        {
+         "t": "Keep tapping for thirty seconds, and feel your feet on the floor.",
+         "w": 30
+        }
+       ],
+       "say": "Let us try it now. Rest your hands on your knees or thighs. Tap your left hand, then your right, slow and even, like a heartbeat at rest. Let your breath slow down to match. Keep tapping for thirty seconds, and feel your feet on the floor."
+      },
+      {
+       "k": "big",
+       "h": "Notice what changed.",
+       "sub": "A little calmer counts.",
+       "say": "Now let your hands rest. Notice your breathing and your shoulders. A little calmer counts. You can use this anywhere: in class, at work, on the bus, or before sleep."
+      },
+      {
+       "k": "big",
+       "h": "Heavy memories deserve real support.",
+       "sub": "Call or text 988 any time. In danger now? Call 911.",
+       "say": "If memories keep coming back hard, or your body stays on alert for days, you deserve real support. A therapist trained in trauma can help a lot. Call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+      },
+      {
+       "k": "big",
+       "h": "Steady beat, steady you.",
+       "sub": "Your body knows the way back to calm.",
+       "say": "Steady beat, steady you. Your body knows the way back to calm."
+      }
+     ]
+    },
+    {
+     "id": "br-st-creator",
+     "n": 2,
+     "title": "The Creator Question",
+     "mins": 2,
+     "blurb": "In a hard moment, ask what you want here, and take one small step toward it.",
+     "sources": [
+      "emerald05"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "The Creator Question",
+       "sub": "What do you want here?",
+       "say": "When something goes sideways, it is easy to get stuck on the problem. This practice gives you one question that moves you toward what you want. It takes a few minutes."
+      },
+      {
+       "k": "big",
+       "h": "Focus on what you want, and you can move.",
+       "sub": "You become the creator of your next step.",
+       "say": "In a hard moment, our attention locks onto the problem, and we can start to feel like a victim of it. Shifting your focus to what you want changes how you feel and what you can do. You become the creator of your next step."
+      },
+      {
+       "k": "flow",
+       "h": "The Creator Question",
+       "steps": [
+        [
+         "Notice",
+         "What is happening?"
+        ],
+        [
+         "Ask",
+         "What do you want here?"
+        ],
+        [
+         "Step",
+         "What is one small step?"
+        ]
+       ],
+       "say": "Here is the shape. First, notice what is happening, in one plain sentence. Then ask, what do you want here? Then ask, what is one small step toward it?"
+      },
+      {
+       "k": "big",
+       "h": "Try it with something real.",
+       "sub": "One situation from this week.",
+       "beats": [
+        "Let us try it with something real.",
+        "Think of one situation that is bugging you this week.",
+        "Say in one sentence what is happening.",
+        "Now ask yourself, what do you want here?",
+        {
+         "t": "And name one small step you could take in the next day.",
+         "w": 20
+        }
+       ],
+       "say": "Let us try it with something real. Think of one situation that is bugging you this week. Say in one sentence what is happening. Now ask yourself, what do you want here? And name one small step you could take in the next day."
+      },
+      {
+       "k": "points",
+       "h": "Three roles to grow into",
+       "items": [
+        [
+         "Creator",
+         "You choose your response"
+        ],
+        [
+         "Challenger",
+         "The truth, told kindly"
+        ],
+        [
+         "Coach",
+         "Questions that help others grow"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "This way of thinking has three roles to grow into. As a creator, you choose your response. When you need to speak up, be a challenger who tells the truth kindly. And when a friend is stuck, be a coach who asks what they want, and trusts them to find their own step."
+      },
+      {
+       "k": "big",
+       "h": "You can create your next step.",
+       "sub": "What do you want here?",
+       "say": "Whatever the day brings, you can create your next step. Come back to one question. What do you want here?"
+      }
+     ]
+    },
+    {
+     "id": "br-st-rise",
+     "n": 3,
+     "title": "Your Reason to Rise",
+     "mins": 3,
+     "blurb": "Name what you love, what you do well, and how you serve, and pick one way to live it this week.",
+     "sources": [
+      "garcia16"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Your Reason to Rise",
+       "sub": "What gets you up in the morning.",
+       "say": "This practice helps you name your reason to rise, the thing that gets you out of bed with a little spark. It takes about three minutes, and you might want something to write on."
+      },
+      {
+       "k": "big",
+       "h": "A reason to rise lives where three things meet.",
+       "sub": "What you love. What you do well. How you serve.",
+       "say": "A reason to rise often lives where three things meet. What you love. What you do well. And how you serve the people around you. It can be big or small, and it can change as you grow."
+      },
+      {
+       "k": "big",
+       "h": "Name your three.",
+       "sub": "One answer each.",
+       "beats": [
+        "Let us find yours right now.",
+        "Name one thing you love doing, something that makes time fly.",
+        "Name one thing you do well, or that people thank you for.",
+        "Name one way you like to help others.",
+        {
+         "t": "Write the three down, or say them out loud.",
+         "w": 25
+        }
+       ],
+       "say": "Let us find yours right now. Name one thing you love doing, something that makes time fly. Name one thing you do well, or that people thank you for. Name one way you like to help others. Write the three down, or say them out loud."
+      },
+      {
+       "k": "big",
+       "h": "Look for the overlap.",
+       "sub": "Where could all three show up this week?",
+       "say": "Now look at your three answers together. Where could all three show up this week? Maybe you love music, you are patient, and you like helping, so you teach a younger cousin a few chords. Maybe you love cooking, you plan well, and you serve by feeding friends a real home cooked meal."
+      },
+      {
+       "k": "points",
+       "h": "Keep it alive",
+       "items": [
+        [
+         "Pick one action",
+         "This week, on the calendar"
+        ],
+        [
+         "Fuel your body",
+         "Sleep, movement, whole food, water"
+        ],
+        [
+         "Find your people",
+         "Purpose grows with friends"
+        ]
+       ],
+       "say": "Pick one action and put it on your calendar this week. Fuel your body with sleep, movement, whole food, and water, so you have energy for what matters. And find your people. Purpose grows stronger with friends who share it."
+      },
+      {
+       "k": "big",
+       "h": "Your reason to rise is worth getting up for.",
+       "sub": "Live it once this week.",
+       "say": "Your reason to rise is worth getting up for. Live it once this week, and notice how the morning feels."
+      }
+     ]
+    },
+    {
+     "id": "br-st-walk-out",
+     "n": 4,
+     "title": "Walk It Out After a Hard Day",
+     "mins": 2,
+     "blurb": "A twenty minute walk that turns a heavy day into a clearer mind.",
+     "sources": [
+      "hartmann06"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "Walk It Out After a Hard Day",
+       "sub": "Twenty minutes to a clearer mind.",
+       "say": "After a hard day, a walk can turn the weight into something you can carry. This practice is a twenty minute walk with a simple plan. Watch now, then head out the door."
+      },
+      {
+       "k": "big",
+       "h": "Left, right, left, right.",
+       "sub": "Steady steps help the mind sort things out.",
+       "say": "There is something about the steady left, right rhythm of walking. As your body moves side to side, your mind often sorts through a hard day and settles. Many people come home clearer than they left."
+      },
+      {
+       "k": "flow",
+       "h": "The walk",
+       "steps": [
+        [
+         "First ten minutes",
+         "Think about the hard thing"
+        ],
+        [
+         "Then let it go",
+         "Notice the world around you"
+        ],
+        [
+         "Last few minutes",
+         "Name one thing you learned"
+        ]
+       ],
+       "say": "Here is the plan. Walk at an easy, steady pace, swinging your arms. For the first ten minutes or so, think about the hard thing, on purpose. Then let it go, and notice the world around you: trees, sky, sounds, and people. In the last few minutes, name one thing you learned, or one thing you will do next."
+      },
+      {
+       "k": "points",
+       "h": "Set yourself up well",
+       "items": [
+        [
+         "Leave the earbuds home",
+         "Give your mind the quiet"
+        ],
+        [
+         "Go outside",
+         "Daylight and fresh air"
+        ],
+        [
+         "Walk safely",
+         "Lit routes, someone knows where"
+        ]
+       ],
+       "say": "Set yourself up well. Leave the earbuds home, so your mind has the quiet. Walk outside if you can, in daylight and fresh air. And walk safely, on well lit routes, with someone who knows where you are."
+      },
+      {
+       "k": "big",
+       "h": "Start with one breath.",
+       "sub": "Name the hard thing, then step out.",
+       "beats": [
+        "Before you go, try this.",
+        "Stand up and feel your feet on the floor.",
+        "Name the hard thing from today in one sentence.",
+        {
+         "t": "Take one long breath, then take your first steps.",
+         "w": 12
+        }
+       ],
+       "say": "Before you go, try this. Stand up and feel your feet on the floor. Name the hard thing from today in one sentence. Take one long breath, then take your first steps."
+      },
+      {
+       "k": "big",
+       "h": "Heavy for days? Reach out.",
+       "sub": "Talk with someone you trust, or call or text 988.",
+       "say": "If the weight stays heavy for days, reach out. Talk with someone you trust, or call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "Walk it out. Come home clearer.",
+       "sub": "Twenty minutes is enough.",
+       "say": "Walk it out, and come home a little clearer. Twenty minutes is enough."
+      }
+     ]
+    },
+    {
+     "id": "br-st-mood-walk",
+     "n": 5,
+     "title": "A Ten Minute Mood Walk",
+     "mins": 2,
+     "blurb": "A brisk ten minute walk outdoors to lift your mood and clear your focus.",
+     "sources": [
+      "ratey08",
+      "noetel"
+     ],
+     "for": "you",
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Practices From Chris’s Shelf",
+       "h": "A Ten Minute Mood Walk",
+       "sub": "Ten brisk minutes outside.",
+       "say": "When your mood is low or your focus is foggy, ten brisk minutes outside can help. This practice shows you how. Watch now, then go."
+      },
+      {
+       "k": "big",
+       "h": "Moving lifts mood.",
+       "sub": "Ten minutes is a real start.",
+       "say": "When you move briskly, your brain gets a boost of natural chemicals that lift mood and sharpen focus. Large reviews of research find that walking and jogging can ease depression. Ten minutes is a real start."
+      },
+      {
+       "k": "flow",
+       "h": "The ten minutes",
+       "steps": [
+        [
+         "Two minutes easy",
+         "Warm up"
+        ],
+        [
+         "Six minutes brisk",
+         "Breathing a little harder"
+        ],
+        [
+         "Two minutes easy",
+         "Look around"
+        ]
+       ],
+       "say": "Here is the plan. Walk two minutes at an easy pace to warm up. Then six minutes brisk, fast enough that you breathe a little harder and can still talk. Then two easy minutes to cool down, looking around at the sky and the trees."
+      },
+      {
+       "k": "big",
+       "h": "Ready, set, go.",
+       "sub": "Shoes on, water, out the door.",
+       "beats": [
+        "Let us get ready now.",
+        "Put on your shoes, and fill a water bottle.",
+        "Stand tall and roll your shoulders back three times.",
+        {
+         "t": "Take three quick breaths, and head for the door.",
+         "w": 12
+        }
+       ],
+       "say": "Let us get ready now. Put on your shoes, and fill a water bottle. Stand tall and roll your shoulders back three times. Take three quick breaths, and head for the door."
+      },
+      {
+       "k": "points",
+       "h": "Make it a habit",
+       "items": [
+        [
+         "Same time each day",
+         "After class or after work"
+        ],
+        [
+         "Bring a friend",
+         "Walk and talk"
+        ],
+        [
+         "Notice the lift",
+         "Rate your mood before and after"
+        ]
+       ],
+       "say": "Make it a habit. Walk at the same time each day, like after class or after work. Bring a friend, and walk and talk. And notice the lift: rate your mood from one to ten before and after, and watch the numbers over a week."
+      },
+      {
+       "k": "big",
+       "h": "Low for two weeks or more? Reach out.",
+       "sub": "A doctor, someone you trust, or 988, any time.",
+       "say": "If your mood stays low for two weeks or more, talk with a doctor or someone you trust. You can call or text nine eight eight, any time."
+      },
+      {
+       "k": "big",
+       "h": "Ten minutes. A brighter mind.",
+       "sub": "Go now, and enjoy the air.",
+       "say": "Ten minutes, and a brighter mind. Go now, and enjoy the air."
       }
      ]
     }
@@ -33223,6 +37536,179 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "grove-shelf",
+   "title": "From Chris's Shelf",
+   "who": "Lessons drawn from the books on Chris's shelf, in our own words.",
+   "pages": [
+    "gr-pg-secret-garden"
+   ],
+   "lessons": [
+    {
+     "id": "gr-sh-forest",
+     "n": 1,
+     "title": "Our Family Is a Forest",
+     "mins": 4,
+     "blurb": "What a forest teaches a family about sharing, shelter, and growing side by side.",
+     "sources": [
+      "wohlleben15"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "From Chris’s Shelf",
+       "h": "Our Family Is a Forest",
+       "sub": "Sharing, shelter, and growing side by side.",
+       "say": "A family is a lot like a forest. This lesson shares what people who study forests have learned about how trees live together, and what it can teach a family about sharing, shelter, and growing side by side."
+      },
+      {
+       "k": "big",
+       "h": "Trees are linked underground.",
+       "sub": "Roots, and threads finer than a hair.",
+       "say": "Under the forest floor, the roots of neighboring trees reach toward each other. Fine threads of fungus, thinner than a hair, link root to root across the forest. People who study forests think the trees use these links to pass along water, food, and even signals."
+      },
+      {
+       "k": "points",
+       "h": "What a forest does",
+       "items": [
+        [
+         "Shares",
+         "Food and water through the roots"
+        ],
+        [
+         "Shelters",
+         "Shade, and a wall against the wind"
+        ],
+        [
+         "Grows patiently",
+         "Young trees grow strong in the shade"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here are three things a forest does. It shares: trees seem to pass food and water through their roots, sometimes to a neighbor that is struggling. It shelters: standing together, the trees block strong winds and keep the forest floor cool and moist. And it grows patiently: young trees often grow slowly in the shade of the older ones, and that slow growth makes their wood strong."
+      },
+      {
+       "k": "points",
+       "h": "What a family does",
+       "items": [
+        [
+         "Shares",
+         "Time, meals, chores, and stories"
+        ],
+        [
+         "Shelters",
+         "A safe place on a hard day"
+        ],
+        [
+         "Grows patiently",
+         "Each person at their own pace"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "A family can do the same three things. Share time, meals, chores, and stories. Shelter each other, so home is a safe place on a hard day. And grow patiently, giving each person room to grow at their own pace."
+      },
+      {
+       "k": "big",
+       "h": "Every tree gives and receives.",
+       "sub": "The youngest and the oldest too.",
+       "say": "In a healthy forest, every tree gives and receives. The same is true at home. The youngest can give a hug, a drawing, or a joke. And the oldest can receive help too. Everyone has a place in the forest."
+      },
+      {
+       "k": "big",
+       "h": "Who shelters you?",
+       "sub": "One sentence each: thank you for...",
+       "beats": [
+        "Let us try this together, right now.",
+        "Sit close, in a circle if you can.",
+        "Think of one way someone in this family shelters you or shares with you.",
+        {
+         "t": "Go around, and each person says it in one sentence, starting with, thank you for.",
+         "w": 30
+        },
+        "Notice how it feels to hear it."
+       ],
+       "say": "Let us try this together, right now. Sit close, in a circle if you can. Think of one way someone in this family shelters you or shares with you. Go around, and each person says it in one sentence, starting with, thank you for. Notice how it feels to hear it."
+      },
+      {
+       "k": "points",
+       "h": "Grow your forest this week",
+       "items": [
+        [
+         "Share a meal",
+         "Cook it together"
+        ],
+        [
+         "Walk among trees",
+         "A park or a trail"
+        ],
+        [
+         "Ask and offer",
+         "Help goes both ways"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here are three ways to grow your forest this week. Cook and share a meal, with a job for everyone. Take a walk among real trees, at a park or on a trail, and notice how they stand together. And practice asking for help, and offering it."
+      },
+      {
+       "k": "points",
+       "h": "In The Grove",
+       "items": [
+        [
+         "Branches",
+         "Our relationships"
+        ],
+        [
+         "Together",
+         "Practices to do side by side"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "In The Grove, this is the work of Branches, the part about relationships. Choose a Together practice for Branches in your Growth Plan. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Strong forests grow together.",
+       "sub": "Share, shelter, and grow side by side.",
+       "say": "A forest is strong because its trees stand together. So is a family. Share, shelter each other, and grow side by side."
+      },
+      {
+       "k": "quiz",
+       "q": "What do trees in a forest do for each other?",
+       "opts": [
+        "They share and shelter each other",
+        "They grow best standing alone",
+        "They stop growing in the shade"
+       ],
+       "right": 0,
+       "why": "Trees share food and water through their roots and shelter each other from the wind, and a family can do the same.",
+       "say": "Last question. What do trees in a forest do for each other?"
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "grove-together",
    "kind": "support",
    "title": "For Families",
@@ -34844,6 +39330,292 @@ window.GG_LEARN = {
        "k": "big",
        "h": "A little movement, together, goes a long way.",
        "say": "A little movement, done together, goes a long way. Come back and move anytime."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-memorybox",
+     "n": 12,
+     "title": "Building a Memory Box Together",
+     "mins": 4,
+     "blurb": "Gather stories and keepsakes for someone you miss into one family box, and share a memory with each one.",
+     "sources": [
+      "rowland17"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Building a Memory Box Together",
+       "sub": "Stories and keepsakes for someone we miss.",
+       "say": "This is Building a Memory Box Together. When your family misses someone, a person who died or someone far away, you can gather your memories of them into one box. It takes about twenty minutes to start, and you can add to it for years."
+      },
+      {
+       "k": "big",
+       "h": "Shared memories keep love close.",
+       "sub": "Everyone adds something.",
+       "say": "Each person remembers something different. When everyone adds to one box, the whole family holds the memories together, and even the youngest has a place in the story."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Gather",
+         "A box, and a few things each"
+        ],
+        [
+         "Decorate",
+         "Together, any way you like"
+        ],
+        [
+         "Share",
+         "One memory with each thing"
+        ],
+        [
+         "Keep",
+         "Where everyone can reach it"
+        ]
+       ],
+       "say": "Here is how it goes. Gather a box, and ask each person to bring a few things that remind them of the person you miss. Decorate the box together, any way you like. Then share: as each thing goes in, tell the memory that goes with it. Keep the box where everyone can reach it."
+      },
+      {
+       "k": "points",
+       "h": "What can go inside",
+       "items": [
+        [
+         "Photos",
+         "And drawings of them"
+        ],
+        [
+         "Keepsakes",
+         "A recipe, a scarf, a ticket"
+        ],
+        [
+         "Notes",
+         "Things we want to say to them"
+        ],
+        [
+         "Their favorites",
+         "A song list, a saying, a flower"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "What can go inside? Photos, and drawings the children make of them. Keepsakes, like a recipe card, a scarf, or a ticket from a day you shared. Notes, with things you want to say to them. And their favorites, like a list of their songs, a saying they used, or a pressed flower."
+      },
+      {
+       "k": "big",
+       "h": "One memory each",
+       "sub": "A sentence or two, all the way around.",
+       "beats": [
+        "Let us try it now, even before the box is ready.",
+        "Take one slow breath together.",
+        "Think of the person you miss, and one thing that reminds you of them.",
+        {
+         "t": "Go around, and each person shares one memory in a sentence or two.",
+         "w": 40
+        },
+        "Thank each person for their memory."
+       ],
+       "say": "Let us try it now, even before the box is ready. Take one slow breath together. Think of the person you miss, and one thing that reminds you of them. Go around, and each person shares one memory in a sentence or two. Thank each person for their memory."
+      },
+      {
+       "k": "points",
+       "h": "Open it again",
+       "items": [
+        [
+         "Their birthday",
+         "And the holidays"
+        ],
+        [
+         "Hard days",
+         "When missing feels big"
+        ],
+        [
+         "Any day",
+         "Just to remember"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Open the box again on the days that matter. Their birthday, and the holidays. Hard days, when missing them feels big. Or any day at all, just to remember. Add something new each time."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Build a Memory Box",
+         "In Together, under Fruit"
+        ],
+        [
+         "Remember Together",
+         "Under Fruit too"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Build a Memory Box in Together, under Fruit, next to Remember Together. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Remembering together keeps love close.",
+       "sub": "Grief feeling heavy for a long time? Reach out for support, or call or text 988.",
+       "say": "Remembering together keeps love close. And if grief feels heavy for a long time, for anyone in your family, reach out for support, or call or text nine eight eight."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-listening",
+     "n": 13,
+     "title": "Listening Round",
+     "mins": 4,
+     "blurb": "Take turns sharing while everyone else simply listens.",
+     "sources": [
+      "doerrfeld18",
+      "pranis"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Listening Round",
+       "sub": "One person shares. Everyone listens.",
+       "say": "This is a Listening Round. One person shares, and everyone else simply listens, with open ears and quiet hands. It takes about ten minutes, and it helps everyone feel heard."
+      },
+      {
+       "k": "big",
+       "h": "Being heard is a gift.",
+       "sub": "Sometimes listening is the whole help.",
+       "say": "When someone we love is upset, many of us rush to fix it. Often what helps most is someone who comes close, listens, and waits. Being heard is a gift you can give each other."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Pick a talking piece",
+         "A stone, a spoon, a pinecone"
+        ],
+        [
+         "Share",
+         "Whoever holds it speaks"
+        ],
+        [
+         "Listen",
+         "Eyes and ears on them"
+        ],
+        [
+         "Thank and pass",
+         "Then the next person"
+        ]
+       ],
+       "say": "Here is how it goes. Pick a talking piece, like a smooth stone, a wooden spoon, or a pinecone. Whoever holds it gets to speak. Everyone else listens with their eyes and ears. When they finish, say thank you, and pass it on. Anyone can pass, too."
+      },
+      {
+       "k": "points",
+       "h": "Good listening",
+       "items": [
+        [
+         "Stay quiet",
+         "Until they finish"
+        ],
+        [
+         "Stay close",
+         "Face them, calm and kind"
+        ],
+        [
+         "Say it back",
+         "What I heard you say is..."
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Good listening looks like this. Stay quiet until the speaker finishes, and save your ideas for later. Stay close, and face them, calm and kind. And when they finish, say back what you heard in your own words, so they know they were truly heard."
+      },
+      {
+       "k": "words",
+       "h": "Questions for a round",
+       "items": [
+        "What made you smile today?",
+        "What is on your mind?",
+        "What is one thing you need this week?"
+       ],
+       "cue": {
+        "p": {
+         "1": 1.5,
+         "2": 1.5,
+         "3": 2
+        },
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Here are some questions for a round. What made you smile today? What is on your mind? What is one thing you need this week?"
+      },
+      {
+       "k": "big",
+       "h": "Try a round now",
+       "sub": "One smile, one hard part, all the way around.",
+       "beats": [
+        "Let us try a round now.",
+        "Pick something to be your talking piece.",
+        "Each person answers: what was one part of today that made you smile, and one part that was hard?",
+        {
+         "t": "Take turns, and everyone else just listens.",
+         "w": 45
+        },
+        "When everyone has had a turn, take one slow breath together."
+       ],
+       "say": "Let us try a round now. Pick something to be your talking piece. Each person answers: what was one part of today that made you smile, and one part that was hard? Take turns, and everyone else just listens. When everyone has had a turn, take one slow breath together."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Listening Round",
+         "In Together, under Branches"
+        ],
+        [
+         "Once a week",
+         "Same day, same time"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Listening Round in Together, under Branches. Anchor it to the same day and time each week, like Sunday supper. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "We listen, and we are heard.",
+       "sub": "Come close. Listen. Wait.",
+       "say": "Listening is one of the kindest things a family can do. Come close, listen, and wait. Everyone grows."
       }
      ]
     }

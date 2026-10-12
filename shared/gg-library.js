@@ -22,13 +22,15 @@
                                   in the words for that age (life and adapt: Health and
                                   Ability tags from grove/data.js, GWG BLD 756)
      GGLibrary.info(key, age)     {desc, guide, hard, life, adapt} for a tending card
+   Watch the Video (GWG BLD 787): a practice with watch: {app: lesson id} (grove/library.js LIB_NEW) shows a button
+   that plays its Learn video, the viewer's own app first.
    Sources and Credits (GWG BLD 713): every "Show me how" ends with the quiet Sources line from
    shared/gg-sources.js (Adapted from, Sources, and the story a bedside practice was born from).
    ===================================================================== */
 (function () {
   if (window.GGLibrary) return;
   var LIB = null, PARTS = null, waiting = null;
-  var FILES = ['/grove/data.js?v=b782', '/grove/library.js?v=b782'];
+  var FILES = ['/grove/data.js?v=b782', '/grove/library.js?v=b787'];
 
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
 
@@ -71,6 +73,7 @@
       steps: steps ? String(steps).split('|') : [],
       hard: (k ? h[5] : h[2]) || h[2] || '',
       bedside: it.bedside || null,
+      watch: it.watch || null, age: age || '',
       life: Array.isArray(it.life) ? it.life.slice() : [],
       adapt: it.adapt || '',
       app: age === 'maple' || age === 'aspen' || age === 'pine' || age === 'birch' || age === 'sequoia' ? age : 'lib'
@@ -82,6 +85,7 @@
       + (v.steps.length ? '<p style="margin-bottom:2px"><b>How to do it.</b></p><ol>' + v.steps.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ol>' : '')
       + (v.hard ? '<p><b>If it\'s hard.</b> ' + esc(v.hard) + '</p>' : '')
       + (v.bedside ? bedsideHtml(v.bedside) : '')
+      + (v.watch && !v.bedside ? watchHtml(v.watch, v.age) : '')
       + (window.GGShelf && v.key ? GGShelf.html('practice', v.key) : '')
       + (window.GGSources && v.key ? GGSources.practice(v.key, v.app, v.bedside) : '');
   }
@@ -91,6 +95,13 @@
     return '<p class="gg-bedside" style="border-left:4px solid #8B5E1A;padding:6px 0 6px 12px;margin:10px 0"><b>From the Bedside.</b> Born from the story ' + esc(b.story) + '.'
       + (L.length === 2 ? ' <button type="button" class="gg-bedside-go" style="font:inherit;font-weight:600;color:inherit;background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px 2px" onclick="window.GGLearn ? GGLearn.open(\'' + esc(L[0]) + '\', \'' + esc(L[1]) + '\') : location.assign(\'/' + esc(L[0]) + '/\')">Watch the Video</button>' : '')
       + (b.href ? ' <a href="' + esc(b.href) + '" target="_blank" rel="noopener">Read the Full Story</a>' : '') + '</p>';
+  }
+  // From Chris's Shelf (GWG BLD 787): a practice with its own Learn video, watch: {app: lesson id}. The viewer's own app
+  // plays it when it has one, otherwise the first app listed. Opens in Learn (waiting on Play), or on the app's page by link.
+  function watchHtml(w, age) {
+    var apps = Object.keys(w || {}); if (!apps.length) return '';
+    var app = w[age] ? age : apps[0], id = w[app];
+    return '<p class="gg-watch-prac" style="margin:10px 0"><button type="button" class="gg-bedside-go" style="font:inherit;font-weight:600;color:inherit;background:none;border:0;text-decoration:underline;cursor:pointer;padding:4px 2px;min-height:44px" onclick="window.GGLearn ? GGLearn.open(\'' + esc(app) + '\', \'' + esc(id) + '\') : location.assign(\'/' + esc(app) + '/#learn=' + esc(id) + '\')">&#9654; Watch the Video</button></p>';
   }
   function info(key, age) {
     var it = get(key); if (!it) return {};

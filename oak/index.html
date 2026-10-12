@@ -3,8 +3,8 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
-<script src="/shared/gg-shelf.js?v=b782"></script>
-<script src="/shared/gg-sources.js?v=b783"></script>
+<script src="/shared/gg-shelf.js?v=b787"></script>
+<script src="/shared/gg-sources.js?v=b787"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -1119,17 +1119,17 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-avatars.js?v=b782"></script>
 <script src="/oak/checkin.js?v=b782"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
-<script src="/shared/gg-pdf.js?v=b782"></script>
+<script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/shared/gg-profiles.js?v=b782"></script>
 <script src="/shared/gg-life.js?v=b782"></script>
 <script src="/shared/gg-life-kit.js?v=b782"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b782"></script>
+<script src="/shared/gg-library.js?v=b787"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
-<script src="/oak/guides.js?v=b782"></script>
+<script src="/oak/guides.js?v=b787"></script>
 <script src="/oak/practices.js?v=b782"></script>
 <script>
 // The six parts and the practice library live in oak/practices.js (moved there in GWG BLD 756,
@@ -3257,7 +3257,7 @@ function lcDetail(mode, t) {
     <span class="lc-tag">${lcEsc(r.name)}</span>
     <h2>${lcEsc(t.title)}</h2>
     <div class="lc-quick"><b>Quick Reference</b>${lcList(t.quick)}</div>
-    ${lcVids(t.id, self)}
+    ${lcVids(t.id, self)}${lcPages(t)}
     <div class="lc-toggle no-print" role="group" aria-label="Choose a view">
       <button aria-pressed="${self}" onclick="lcPersp('${mode}','self')">I'm going through this</button>
       <button aria-pressed="${!self}" onclick="lcPersp('${mode}','helper')">I'm helping someone</button>
@@ -3285,6 +3285,13 @@ function lcVids(gid, self) {
   return `<div class="lc-gv no-print"><div class="btn-row">${b('you', 'For You', self)}${b('helper', 'For the Helper', !self)}</div>
     <p class="lc-gv-note">For You, if this is what you're facing. For the Helper, if you're walking beside someone who is. A few minutes each, narrated aloud.</p></div>`;
 }
+// Written pages for a guide (GWG BLD 787): pages: [[title, page id]] in oak/guides.js, read in Oak's Learn (shared/learn-pages.js).
+function lcPages(t) {
+  if (!Array.isArray(t.pages) || !t.pages.length) return '';
+  return `<div class="lc-gv no-print"><div class="btn-row">${t.pages.map(([title, id]) => `<button type="button" class="btn btn-secondary" onclick="lcRead('${lcEsc(id)}')">Read: ${lcEsc(title)}</button>`).join('')}</div>
+    <p class="lc-gv-note">A page to read, at your own pace. Print it or keep it for later.</p></div>`;
+}
+function lcRead(id) { if (window.GGLearn && GGLearn.page) GGLearn.page('oak', id); else location.hash = '#page=' + encodeURIComponent(id); }
 function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('oak', 'ok-g-' + gid + '-' + side, { from: 'guide' }); }
 // gg-learn's Open the Full Guide button lands here.
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
@@ -3374,9 +3381,9 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b784s" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b784s';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b787" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b787';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b784s" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b784s';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b784s" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b787" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b787';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b787" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

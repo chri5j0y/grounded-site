@@ -57,6 +57,21 @@
    history.replaceState, before the page draws.
    Topics (BLD 786): a story's topics ['dying', 'grief', 'faith', 'kids'] (any, or none) come from the Story Vault and
    ride into data.js; the page filters by them, and a story with no topics field falls back to LOOK below.
+   Supporter perks (BLD 787), sealed under the stories key, so every code opens them:
+     seal(stories, keyObj, wraps, salt, extras) with extras = {letters, cards} from the Story Vault. The lock JSON also holds
+       b:<story id>   the Story Behind the Story (a story's behind paragraphs, Chris's own words), on Posted and Early Preview
+       l:<letter id>  a Posted letter's paragraphs        c:<card id>  {line, story: {id, slug, title, credit}, practice}
+                      (a Posted card whose story is Posted)
+     and data.js gains letters: [{id, month, title, from, mins, posted}] and cards: [{id, month, title}] (titles show to
+     visitors; the words stay sealed). Older pages and older data.js files keep working: they read only the parts they know.
+     The page: the closing card of a story with a note leads with The Story Behind the Story (a short video with its own
+     opening line, then Back to the Story), and Read shows the note after the story; #gs-letters lists the letters (Watch,
+     Read, New for 30 days); #gs-cards shows This Month's Card (GGPrint.reflectionCard, Save as PDF, Send by Email or Text)
+     and past cards. Visitors see invites naming the months and titles.
+     GGStories.spokenNote(paras), GGStories.spokenLetter(letter): every sentence for the recorder (B8, locked s1/t clips).
+     GGStories.listenLetter(letter, keyObj): the Story Vault plays a letter; GGStories.listen plays a story with its note.
+   Story pictures (BLD 787): stories/img/<story id>.webp, then .jpg, on each card (3 by 2) and behind the title in the story
+   window; the picture area goes away cleanly when neither file is there. Public files, nothing sealed.
    ===================================================================== */
 (function (root) {
   'use strict';
@@ -64,7 +79,12 @@
   var crypto = root.crypto, subtle = crypto && crypto.subtle;
   var enc = new TextEncoder(), dec = new TextDecoder();
   var ROUNDS = 250000, LS = 'gg_stories_key', SUBSCRIBE = 'https://chri5j0y.substack.com/subscribe';
-  var LINES = { opening: 'A story by Chris Joy, read by a narrator.', thanks: 'Thank you for listening.', members: 'Members hear the whole story.' };
+  var LINES = { opening: 'A story by Chris Joy, read by a narrator.', thanks: 'Thank you for listening.', members: 'Members hear the whole story.',
+    note: 'The story behind the story, a note from Chris Joy, read by a narrator.', letterGrounded: 'A letter from Grow With Grounded, read by a narrator.', letterChris: 'A letter from Chris Joy, read by a narrator.' };
+  // The three Supporter perks (BLD 787), named the same way in the members bar, the invites, and supporters.html.
+  var PERKS = 'the Story Behind the Story, the Monthly Letter, and Reflection Cards';
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function monthLabel(m) { var x = /^(\d{4})-(\d\d)/.exec(m || ''); return x ? MONTHS[+x[2] - 1] + ' ' + x[1] : ''; }
   var WORDS = (
     'acorn acre alder almond amber anchor apple apricot aspen aurora autumn badger balsam banjo banner barley basil basin ' +
     'basket bay bayou beacon bean beech beet bell berry birch bison blanket bloom blossom bluebird bluff boat bobcat bold ' +
@@ -192,7 +212,7 @@
     return codeKey(code, unb64(w.salt)).then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(w.iv) }, k, unb64(w.ct)); })
       .then(function (pt) { var u = new Uint8Array(pt); if (u.length !== 32) throw new Error('size'); return u; });
   }
-  function seal(stories, keyObj, wraps, salt) {
+  function seal(stories, keyObj, wraps, salt, extras) {
     if (!subtle) return Promise.reject(new Error('This browser needs WebCrypto to seal.'));
     var raw = unb64(keyObj && keyObj.key);
     if (raw.length !== 32) return Promise.reject(new Error('The stories key must be 32 bytes.'));
@@ -209,13 +229,38 @@
       var tp = topicsOf(s.topics); if (tp) e.topics = tp;
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
       if (open) e.full = paras; else { locked[e.id] = paras; n++; }
+      // The Story Behind the Story (BLD 787): Chris's own note, sealed for members on every Posted and Early Preview story.
+      var note = (Array.isArray(s.behind) ? s.behind : []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+      if (note.length) { locked['b:' + e.id] = note; n++; }
       list.push(e);
     });
+    // The Monthly Letter and Reflection Cards (BLD 787): titles for everyone, words for members. Only Posted ones ride.
+    var X = extras || null, letters = [], cards = [];
+    if (X) {
+      (X.letters || []).forEach(function (l) {
+        if (!l || l.status !== 'posted' || !l.id) return;
+        var P = (l.paras || []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean); if (!P.length) return;
+        letters.push({ id: String(l.id), month: String(l.month || ''), title: String(l.title || ''), from: l.from === 'chris' ? 'chris' : 'grounded', mins: mins(P), posted: String(l.postedAt || '') });
+        locked['l:' + l.id] = P; n++;
+      });
+      (X.cards || []).forEach(function (c) {
+        if (!c || c.status !== 'posted' || !c.id || !c.line) return;
+        var st = list.filter(function (e) { return e.id === String(c.story) && e.status === 'posted'; })[0]; if (!st) return;
+        var pr = c.practice || {};
+        cards.push({ id: String(c.id), month: String(c.month || ''), title: String(c.title || pr.name || '') });
+        locked['c:' + c.id] = { line: String(c.line), story: { id: st.id, slug: st.slug, title: st.title, credit: st.credit },
+          practice: { name: String(pr.name || ''), why: String(pr.why || ''), steps: (pr.steps || []).map(String), src: (pr.src || []).map(String) }, posted: String(c.postedAt || '') };
+        n++;
+      });
+      letters.sort(function (a, b) { return a.month < b.month ? 1 : a.month > b.month ? -1 : 0; });
+      cards.sort(function (a, b) { return a.month < b.month ? 1 : a.month > b.month ? -1 : 0; });
+    }
     var made = new Date().toISOString().slice(0, 10);
     var lockP = n ? aes(raw, ['encrypt']).then(function (k) { var iv = rand(12); return subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, enc.encode(JSON.stringify(locked))).then(function (ct) { return { iv: b64(iv), ct: b64(new Uint8Array(ct)) }; }); }) : Promise.resolve(null);
     return lockP.then(function (lock) {
       var W = (wraps || []).filter(function (w) { return w && w.iv && w.ct && (w.salt || salt); }).map(function (w) { var o = { c: String(w.c || '') }; if (w.salt) o.salt = w.salt; o.iv = w.iv; o.ct = w.ct; return o; });
       var data = { v: 1, made: made, k: { v: +keyObj.v || 1, round: String(keyObj.round || 's1'), folder: String(keyObj.folder || 't') }, list: list, lock: lock };
+      if (X) { data.letters = letters; data.cards = cards; }
       if (salt && W.some(function (w) { return !w.salt; })) data.ws = typeof salt === 'string' ? salt : b64(salt);
       data.wraps = W;
       var json = JSON.stringify(data).replace(/\u2028/g, '\\u2028').replace(/\u2029/g, '\\u2029');
@@ -280,14 +325,16 @@
 
   // A lesson for the shared player: the title scene speaks the opening line, then the story a page at a time.
   // Each paragraph's sentences are the beats; short paragraphs share a page, a long one spans pages (always whole sentences).
-  function lesson(s, mode) {
-    var P = mode === 'preview' ? (s.preview || []) : paras(s.id), scenes = [], cur = [], size = 0;
-    scenes.push({ k: 'title', hero: 'page-stories', eyebrow: 'Grounded Stories', h: s.title, sub: s.sub || '', beats: [LINES.opening], hold: 1 });
+  // o (BLD 787) plays another piece the same way: {paras, opening, eyebrow, id, sub} for the Story Behind the Story and the Monthly Letter.
+  function lesson(s, mode, o) {
+    o = o || {};
+    var P = o.paras || (mode === 'preview' ? (s.preview || []) : paras(s.id)), scenes = [], cur = [], size = 0, eb = o.eyebrow || 'Grounded Stories';
+    scenes.push({ k: 'title', hero: 'page-stories', eyebrow: eb, h: s.title, sub: o.sub != null ? o.sub : (s.sub || ''), beats: [o.opening || LINES.opening], hold: 1 });
     function flush() {
       if (!cur.length) return;
       var beats = [], at = [];
       cur.forEach(function (p) { p.forEach(function (x) { at.push(beats.length); beats.push(x); }); });
-      scenes.push({ k: 'tale', eyebrow: 'Grounded Stories', title: s.title, paras: cur, beats: beats, cue: { at: at } });
+      scenes.push({ k: 'tale', eyebrow: eb, title: s.title, paras: cur, beats: beats, cue: { at: at } });
       cur = []; size = 0;
     }
     P.forEach(function (p) {
@@ -304,8 +351,18 @@
       cur.push(S); size += len + 1;
     });
     flush();
-    return { id: 'story-' + s.id, n: '', title: s.title, mins: s.mins, blurb: s.sub || '', scenes: scenes, srcHtml: creditHtml(s) };
+    return { id: o.id || 'story-' + s.id, n: '', title: s.title, mins: o.paras ? mins(P) : s.mins, blurb: s.sub || '', scenes: scenes, srcHtml: o.id && /^letter-/.test(o.id) ? '' : creditHtml(s) };
   }
+  // The pieces a member's key opens besides the stories (BLD 787): the Story Behind the Story (b:<story id>), the Monthly Letter
+  // (l:<letter id>), and Reflection Cards (c:<card id>). The Story Vault plays its own notes and letters with the stories key.
+  function noteOf(id) { if (isV(id)) { var b = (OV.s.behind || []).filter(function (p) { return String(p).trim(); }); return b.length ? b : null; } var s = story(id); var n = s && OPENED && OPENED['b:' + s.id]; return Array.isArray(n) && n.length ? n : null; }
+  function letterParas(id) { var n = OPENED && OPENED['l:' + id]; return Array.isArray(n) ? n : null; }
+  function cardOf(id) { var c = OPENED && OPENED['c:' + id]; return c && c.line ? c : null; }
+  function noteLesson(s) { return lesson(s, 'full', { paras: noteOf(s.id) || [], opening: LINES.note, eyebrow: 'The Story Behind the Story', sub: 'The Story Behind the Story', id: 'note-' + s.id }); }
+  function letterLesson(l) { return lesson(l, 'full', { paras: l.paras || [], opening: l.from === 'chris' ? LINES.letterChris : LINES.letterGrounded, eyebrow: 'The Monthly Letter', sub: monthLabel(l.month), id: 'letter-' + l.id }); }
+  // Every sentence the recorder needs (B8): a note's and a letter's.
+  function spokenNote(p) { var out = [LINES.note]; (p || []).forEach(function (x) { out = out.concat(sentences(x)); }); out.push(LINES.thanks); return out; }
+  function spokenLetter(l) { var out = [l && l.from === 'chris' ? LINES.letterChris : LINES.letterGrounded]; ((l && l.paras) || []).forEach(function (x) { out = out.concat(sentences(x)); }); out.push(LINES.thanks); return out; }
 
   /* ---------------- the page ---------------- */
   var CSS = [
@@ -341,12 +398,24 @@
     '.gs-rd .gs-src{margin:22px 0 8px;color:var(--ggl-soft);}.gs-rd .gs-copy{font-size:13px;color:var(--ggl-soft);margin-top:10px;}',
     '.gs-ov .gs-code input{background:var(--ggl-card);color:var(--ggl-ink);border-color:var(--ggl-line);}.gs-ov .gs-msg{color:var(--ggl-soft);}',
     '.gs-ov .gs-codewrap{margin:14px 0 0;padding:14px 16px;border:1px solid var(--ggl-line);border-radius:14px;background:var(--ggl-card);}.gs-ov .gs-codewrap[hidden]{display:none;}',
-    '.gg-src-line{display:block;font-size:13px;line-height:1.4;margin-top:4px;}.gg-src-line a{color:inherit;text-decoration:underline;text-underline-offset:2px;}.gg-src-k{font-weight:600;}'
+    '.gg-src-line{display:block;font-size:13px;line-height:1.4;margin-top:4px;}.gg-src-line a{color:inherit;text-decoration:underline;text-underline-offset:2px;}.gg-src-k{font-weight:600;}',
+    // story pictures (BLD 787): stories/img/<id>.webp or .jpg, the area goes away cleanly when neither is there
+    '.gs-img{aspect-ratio:3/2;margin:-28px -26px 16px;border-radius:15px 12px 0 0;overflow:hidden;background:color-mix(in srgb,var(--gold) 12%,var(--card));}',
+    '.gs-img img,.gs-ban-pic img{display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;}.gs-img.gs-in img,.gs-ban-pic.gs-in img{opacity:1;}',
+    '.gs-ban{margin:0 0 4px;}.gs-ban-pic{display:none;}.gs-ban-img{position:relative;border-radius:16px;overflow:hidden;min-height:clamp(170px,30vw,300px);display:flex;align-items:flex-end;background:#2E2118;margin:4px 0 12px;}',
+    '.gs-ban-img .gs-ban-pic{display:block;position:absolute;inset:0;}.gs-ban-img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,13,7,.82) 0%,rgba(20,13,7,.45) 45%,rgba(20,13,7,.05) 80%);pointer-events:none;}',
+    '.gs-ban-img .gs-ban-t{position:relative;z-index:1;padding:18px 22px;color:#F6EFE2;}.gs-ban-img .ggl-eb{color:#F2C46A;}.gs-ban-img h1{color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.45);margin:2px 0 0;}',
+    // the perks (BLD 787): the Story Behind the Story, the Monthly Letter, Reflection Cards
+    '.gs-rd .gs-note{margin:26px 0 0;padding:18px 20px;border:1px solid var(--ggl-line);border-left:4px solid var(--ggl-acc);border-radius:14px;background:var(--ggl-card);}.gs-rd .gs-note h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px;margin:0 0 4px;color:var(--ggl-ink);}',
+    '.gs-pcard{display:flex;flex-direction:column;}.gs-pcard h3{margin-top:4px;}.gs-pcard .card-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:10px;}.gs-pcard .btn{display:inline-flex;align-items:center;gap:8px;}.gs-pcard .btn svg{width:18px;height:18px;flex:none;}',
+    '.gs-from{color:var(--ink-soft);font-size:16px;margin:4px 0 0;}.gs-rcard{border-left:4px solid var(--gold);}.gs-rcard blockquote{font-family:"Cormorant Garamond",Georgia,serif;font-style:italic;font-size:clamp(22px,3.2vw,30px);line-height:1.3;margin:10px 0 6px;overflow-wrap:anywhere;}',
+    '.gs-rcard .gs-prac{margin:12px 0 0;font-size:17px;}.gs-past{margin-top:18px;}.gs-past li{margin:6px 0;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}.gs-past ul{list-style:none;padding:0;margin:8px 0 0;}',
+    '.gs-cards-wrap{margin-top:18px;}.gs-cmsg{min-height:1.4em;font-size:15px;color:var(--ink-soft);margin:8px 0 0;}'
   ].join('\n');
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>';
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
-  var READ_JS = '/read.js?v=b784', LEARN_JS = '/shared/gg-learn.js?v=b784s';
+  var READ_JS = '/read.js?v=b784', LEARN_JS = '/shared/gg-learn.js?v=b787';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function css() { if (document.getElementById('gs-css')) return; var s = document.createElement('style'); s.id = 'gs-css'; s.textContent = CSS; document.head.appendChild(s); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -378,11 +447,25 @@
   // Newest first: a story's posted time is set by the Story Vault when Chris posts it; older stories keep their order below.
   function isNew(s) { var t = Date.parse(s.posted || ''); return !!t && Date.now() - t < 30 * 864e5; }
   function newest(a) { return a.map(function (s, i) { return [s, i]; }).sort(function (x, y) { var tx = Date.parse(x[0].posted || '') || 0, ty = Date.parse(y[0].posted || '') || 0; return ty - tx || x[1] - y[1]; }).map(function (x) { return x[0]; }); }
+  // Story pictures (BLD 787, public files): stories/img/<id>.webp, then <id>.jpg; the area goes when neither is there. IMG keeps
+  // what this page learned, so a redraw (after an unlock) skips the ones already missing.
+  var IMG = {};
+  function imgBase(id) { return ROOT + '/stories/img/' + encodeURIComponent(id); }
+  function imgTag(s, cls) {
+    if (!s || !s.id || s.kind || IMG[s.id] === 'none') return '';
+    return '<div class="' + cls + (IMG[s.id] ? ' gs-in' : '') + '" data-gsimg="' + esc(s.id) + '"><img src="' + imgBase(s.id) + '.' + (IMG[s.id] || 'webp') + '" alt="' + esc(s.title) + '" loading="lazy" decoding="async" onload="GGStories._imgOk(this)" onerror="GGStories._imgErr(this)"></div>';
+  }
+  function imgOk(el) { var w = el.parentNode; if (!w) return; IMG[w.getAttribute('data-gsimg')] = /\.jpg$/.test(el.getAttribute('src') || '') ? 'jpg' : 'webp'; w.classList.add('gs-in'); }
+  function imgErr(el) {
+    var w = el.parentNode; if (!w) return; var id = w.getAttribute('data-gsimg'), src = el.getAttribute('src') || '';
+    if (/\.webp$/.test(src)) { el.setAttribute('src', imgBase(id) + '.jpg'); return; }
+    IMG[id] = 'none'; var ban = w.closest && w.closest('.gs-ban-img'); if (ban) ban.classList.remove('gs-ban-img'); w.remove();
+  }
   function card(s) {
     var L = LOOK[s.slug] || LOOK[slug(s.title)] || ['', ''], isFull = full(s.id), early = s.status === 'early';
     var tag = early ? 'Early Preview' : isFull ? 'Full Story' : 'Preview';
     if (isNew(s)) tag = 'New · ' + tag;
-    return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(themesOf(s)) + '">'
+    return '<article class="card story gs-card" id="story-' + esc(s.slug) + '" data-themes="' + esc(themesOf(s)) + '">' + imgTag(s, 'gs-img')
       + '<div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(s.mins)) + ' min</span></div>'
       + '<h3>' + esc(s.title) + '</h3>' + (s.sub ? '<p class="story-sub">' + esc(s.sub) + '</p>' : '')
       + (L[1] && slug(L[1]) !== slug(s.sub) ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
@@ -393,10 +476,10 @@
   function membersBar() {
     var el = document.getElementById('gs-members'); if (!el) return;
     if (unlocked()) {
-      el.innerHTML = '<p><b>Unlocked on this device.</b> Every story here is open to you, in full.</p><div class="gs-acts"><a class="gs-link" href="supporters.html">Welcome, Supporters</a><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
+      el.innerHTML = '<p><b>Unlocked on this device.</b> Every story here is open to you, in full, with ' + PERKS + '.</p><div class="gs-acts"><a class="gs-link" href="supporters.html">Welcome, Supporters</a><button type="button" class="gs-link" data-gs="forget">Forget This Device</button></div>';
       return;
     }
-    el.innerHTML = '<p><b>Members hear every story in full.</b> Members receive a personal code when they join on Substack.</p>'
+    el.innerHTML = '<p><b>Members hear every story in full.</b> Members also receive ' + PERKS + ', with a personal code when they join on Substack.</p>'
       + '<div class="gs-acts"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a><a class="gs-link" href="supporters.html">Welcome, Supporters</a></div><div class="gs-code-host" hidden></div>';
   }
   function render() {
@@ -408,12 +491,67 @@
     if (postEl) postEl.innerHTML = Pz.map(card).join('');
     if (earlyEl) {
       if (unlocked()) earlyEl.innerHTML = E.length ? E.map(card).join('') : '<p class="gs-wait">New early previews arrive here first.</p>';
-      else earlyEl.innerHTML = '<article class="card gs-invite"><h3>Members hear new stories first</h3><p>Early Previews are stories on their way to everyone, often before they reach Substack. Join on Substack to receive your member code.</p>'
+      else earlyEl.innerHTML = '<article class="card gs-invite"><h3>Members hear new stories first</h3><p>Early Previews are stories on their way to everyone, often before they reach Substack. Members also receive ' + PERKS + '. Join on Substack to receive your member code.</p>'
         + (E.length ? '<ul>' + E.map(function (s) { return '<li>' + esc(s.title) + '</li>'; }).join('') + '</ul>' : '')
         + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><a class="btn btn-primary" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a><button type="button" class="btn btn-secondary" data-gs="code">Enter Your Code</button></div></article>';
     }
     var hP = document.getElementById('gs-posted-h'); if (hP) hP.hidden = !Pz.length;
+    perks(d);
     filter(FILTER);
+  }
+  /* The Monthly Letter and Reflection Cards on the page (BLD 787). Members: the letters newest first (Watch, Read, New for 30
+     days) and this month's card with past cards. Visitors: an invite naming the months and titles. */
+  var MAIL = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6 3h9l3 3v15H6z"/><path d="M9 11h6M9 15h6"/></svg>';
+  function invite(h, p, rows) {
+    return '<article class="card gs-invite"><h3>' + esc(h) + '</h3><p>' + esc(p) + '</p>' + (rows.length ? '<ul>' + rows.map(function (r) { return '<li>' + esc(r) + '</li>'; }).join('') + '</ul>' : '')
+      + '<div class="card-actions" style="margin-top:14px;display:flex;gap:12px;flex-wrap:wrap;"><button type="button" class="btn btn-primary" data-gs="code">Enter Your Code</button><a class="btn btn-secondary" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a></div></article>';
+  }
+  function letterCard(l) {
+    var tag = 'The Monthly Letter'; if (isNew(l)) tag = 'New · ' + tag;
+    return '<article class="card gs-pcard gs-letter" id="letter-' + esc(l.id) + '"><div class="gs-meta"><span class="gs-tag">' + tag + '</span><span>' + esc(String(l.mins || 1)) + ' min</span></div>'
+      + '<h3>' + esc(l.title) + '</h3><p class="gs-from">' + esc(monthLabel(l.month)) + '. From ' + (l.from === 'chris' ? 'Chris Joy' : 'Grow With Grounded') + '.</p>'
+      + '<div class="card-actions"><button type="button" class="btn btn-primary" data-gs="lwatch" data-id="' + esc(l.id) + '" aria-label="Watch ' + esc(l.title) + '">' + PLAY + 'Watch</button>'
+      + '<button type="button" class="btn btn-secondary" data-gs="lread" data-id="' + esc(l.id) + '" aria-label="Read ' + esc(l.title) + '">' + BOOK + 'Read</button></div></article>';
+  }
+  function perks(d) {
+    var lEl = document.getElementById('gs-letters'), cEl = document.getElementById('gs-cards');
+    var Ls = (d.letters || []).filter(function (l) { return l && l.id; }), Cs = (d.cards || []).filter(function (c) { return c && c.id; });
+    if (lEl) {
+      if (unlocked()) { var mine = Ls.filter(function (l) { return letterParas(l.id); }); lEl.innerHTML = mine.length ? mine.map(letterCard).join('') : '<p class="gs-wait">The first letter arrives here soon.</p>'; }
+      else lEl.innerHTML = invite('A letter each month for members', 'A letter each month from Grow With Grounded, read aloud. Join on Substack to receive your member code.', Ls.map(function (l) { return monthLabel(l.month) + ': ' + l.title; }));
+    }
+    if (cEl) {
+      if (unlocked()) {
+        var mc = Cs.filter(function (c) { return cardOf(c.id); });
+        if (!mc.length) { cEl.innerHTML = '<p class="gs-wait">The first Reflection Card arrives here soon.</p>'; return; }
+        var t = mc[0], c = cardOf(t.id);
+        cEl.innerHTML = '<article class="card gs-pcard gs-rcard" id="card-' + esc(t.id) + '"><div class="gs-meta"><span class="gs-tag">This Month\u2019s Card</span><span>' + esc(monthLabel(t.month)) + '</span></div>'
+          + '<blockquote>\u201C' + esc(c.line) + '\u201D</blockquote><p class="gs-from">From the story ' + esc(c.story.title) + ', by Chris Joy</p>'
+          + '<p class="gs-prac"><b>This week\u2019s practice:</b> ' + esc(c.practice.name) + '</p>'
+          + '<div class="card-actions"><button type="button" class="btn btn-primary" data-gs="cprint" data-id="' + esc(t.id) + '">' + MAIL + 'Print the Card</button>'
+          + '<button type="button" class="btn btn-secondary" data-gs="csave" data-id="' + esc(t.id) + '">Save as PDF</button>'
+          + '<button type="button" class="btn btn-secondary" data-gs="cmail" data-id="' + esc(t.id) + '">Send by Email</button>'
+          + '<button type="button" class="btn btn-secondary" data-gs="ctext" data-id="' + esc(t.id) + '">Send by Text</button>'
+          + '<button type="button" class="text-link gs-link" data-gs="read" data-id="' + esc(c.story.id) + '">Read the Story</button></div><p class="gs-cmsg" role="status"></p></article>'
+          + (mc.length > 1 ? '<div class="gs-past"><h4>Past Cards</h4><ul>' + mc.slice(1).map(function (p) { var x = cardOf(p.id); return '<li><span>' + esc(monthLabel(p.month)) + ': ' + esc(p.title || x.practice.name) + ', from ' + esc(x.story.title) + '</span><button type="button" class="gs-link" data-gs="cprint" data-id="' + esc(p.id) + '">Print the Card</button></li>'; }).join('') + '</ul></div>' : '');
+        warmPrint();
+      } else cEl.innerHTML = invite('A printable card each month for members', 'A line from a Grounded Story and a practice to carry it into your week. Join on Substack to receive your member code.', Cs.map(function (c) { return monthLabel(c.month) + ': ' + c.title; }));
+    }
+  }
+  var PRINT_JS = '/shared/gg-print.js?v=b787', SOURCES_JS = '/shared/gg-sources.js?v=b787';
+  function warmPrint() { return need(SOURCES_JS, function () { return !!root.GGSources; }).then(function () { return need(PRINT_JS, function () { return !!root.GGPrint; }); }); }
+  function cardModel(id) { var c = cardOf(id), t = ((data() || {}).cards || []).filter(function (x) { return x.id === id; })[0]; if (!c || !t) return null; return { month: t.month, line: c.line, story: c.story, practice: c.practice }; }
+  function cardAct(g, id, btn) {
+    var m = cardModel(id); if (!m) return;
+    var msg = btn && btn.closest('.gs-rcard') ? btn.closest('.gs-rcard').querySelector('.gs-cmsg') : null;
+    var go = function () {
+      if (!root.GGPrint || !GGPrint.reflectionCard) { if (msg) msg.textContent = 'The card is on its way. Tap once more in a moment.'; return; }
+      if (g === 'cprint') return GGPrint.reflectionCard(m);
+      return GGPrint.sendReflection(m, g === 'csave' ? 'save' : g === 'cmail' ? 'email' : 'text').then(function (r) {
+        if (!msg) return; msg.textContent = r === 'saved' ? 'Saved as a PDF.' : r === 'opened' ? 'Saved as a PDF. Attach it to the message that just opened.' : r === 'shared' ? 'Sent.' : '';
+      });
+    };
+    if (root.GGPrint) go(); else warmPrint().then(go);
   }
   function filter(t) {
     FILTER = t || '';
@@ -428,7 +566,11 @@
   /* the story window: Watch (the shared player) and Read */
   var OV = null;
   function readHtml(s) {
-    var P = paras(s.id), whole = full(s.id), y = new Date().getFullYear();
+    var y = new Date().getFullYear();
+    if (s.kind === 'letter') return '<div class="gs-rd"><p class="gs-by">The Monthly Letter, ' + esc(monthLabel(s.month)) + '. From ' + (s.from === 'chris' ? 'Chris Joy' : 'Grow With Grounded') + '.</p>'
+      + (s.paras || []).map(function (p) { return '<p class="gs-p">' + esc(p) + '</p>'; }).join('')
+      + '<p class="gs-copy">&copy; ' + y + ' Grow With Grounded LLC. All rights reserved. For Supporters of Grounded Stories.</p></div>';
+    var P = paras(s.id), whole = full(s.id);
     var h = '<div class="gs-rd"><p class="gs-by">A story by Chris Joy.</p>' + P.map(function (p) { return '<p class="gs-p">' + esc(p) + '</p>'; }).join('');
     if (!whole) {
       h += '<div class="gs-fade" aria-hidden="true"></div><div class="gs-more"><p><b>' + esc(LINES.members) + '</b> Enter your member code to read and hear it all.</p>'
@@ -436,19 +578,29 @@
         + (s.substack ? '<a class="ggl-btn" href="' + esc(s.substack) + '" target="_blank" rel="noopener">Read it on Substack</a>' : '<a class="ggl-btn" href="' + SUBSCRIBE + '" target="_blank" rel="noopener">Join on Substack</a>') + '</div></div>';
     }
     if (whole && s.refs && s.refs.length) h += '<div class="gs-refs">' + s.refs.map(function (r) { return '<p>' + esc(r) + '</p>'; }).join('') + '</div>';
+    var note = whole ? noteOf(s.id) : null;
+    if (note) h += '<div class="gs-note" id="gs-note"><h2>The Story Behind the Story</h2><p class="gs-by">A note from Chris Joy.</p>' + note.map(function (p) { return '<p class="gs-p">' + esc(p) + '</p>'; }).join('') + '</div>';
     h += '<div class="gs-src">' + creditHtml(s) + '</div>'
       + '<p class="gs-copy">&copy; ' + y + ' Grow With Grounded LLC. All rights reserved. To share or reuse these stories, ask us first.</p></div>';
     return h;
   }
   function endingFor(s, whole) {
+    if (s.kind === 'letter') return { eyebrow: 'Thank You for Listening', h: s.title, sub: 'The Monthly Letter', say: LINES.thanks, ok: true,
+      buttons: [['read', 'Read the Letter', 'pri'], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']] };
+    if (OV && OV.mode === 'note') return { eyebrow: 'Thank You for Listening', h: s.title, sub: 'The Story Behind the Story', say: LINES.thanks, ok: true,
+      buttons: [['story', 'Back to the Story', 'pri'], ['home', 'Back to Stories', 'quiet']] };
+    // A member on a story with a note: the closing card leads with the Story Behind the Story.
+    var note = whole && noteOf(s.id);
     if (whole) return { eyebrow: 'Thank You for Listening', h: s.title, sub: 'A story by Chris Joy.', say: LINES.thanks, ok: true,
-      buttons: [].concat(s.substack ? [['talk', 'Talk about this on Substack', 'pri', s.substack]] : [], [['read', 'Read the Story', s.substack ? '' : 'pri'], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
+      buttons: [].concat(note ? [['note', 'The Story Behind the Story', 'pri']] : [], s.substack ? [['talk', 'Talk about this on Substack', note ? '' : 'pri', s.substack]] : [], [['read', 'Read the Story', s.substack || note ? '' : 'pri'], ['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
     return { eyebrow: 'Grounded Stories', h: LINES.members, sub: 'Enter your member code to keep listening.', say: LINES.members, ok: false,
       buttons: [['code', 'Enter Your Code', 'pri']].concat(s.substack ? [['sub', 'Read it on Substack', '', s.substack]] : [['join', 'Join on Substack', '', SUBSCRIBE]], [['again', 'Watch Again', ''], ['home', 'Back to Stories', 'quiet']]) };
   }
   function play(at) {
     if (!OV) return;
-    var s = OV.s, whole = full(s.id), L = lesson(s, whole ? 'full' : 'preview'), K = whole && !s.open ? keyObj() : null;
+    var s = OV.s, whole = s.kind ? true : full(s.id), nt = !s.kind && OV.mode === 'note' && whole && noteOf(s.id);
+    if (!nt && !s.kind) OV.mode = 'story';
+    var L = s.kind === 'letter' ? letterLesson(s) : nt ? noteLesson(s) : lesson(s, whole ? 'full' : 'preview'), K = whole && (!s.open || s.kind || nt) ? keyObj() : null;
     if (OV.ctl) try { OV.ctl.stop(); } catch (e) {}
     var host = $('.gs-watch', OV.root);
     var cfg = { app: 'site', lesson: L, track: { id: 'grounded-stories', kind: 'support', title: 'Grounded Stories', lessons: [L] }, done: {}, at: at || 0, accent: '#8B5E1A',
@@ -457,6 +609,8 @@
       onEnd: function (id) {
         if (id === 'home') close();
         else if (id === 'read') view('read');
+        else if (id === 'note') { OV.mode = 'note'; OV.at = 0; play(0); }
+        else if (id === 'story') { OV.mode = 'story'; OV.at = 0; play(0); }
         else if (id === 'code') showCode(function () { play(Math.max(0, lesson(s, 'preview').scenes.length - 1)); }); // picks up on the last preview page
       },
       open: function () {}, home: close };
@@ -499,6 +653,11 @@
     return open({ id: String(v.id), slug: slug(v.title || v.id), title: String(v.title || ''), sub: String(v.sub || ''), col: String(v.col || ''), status: 'posted', open: false,
       substack: String(v.substack || ''), credit: String(v.credit || ''), mins: mins(P), paras: P }, 'watch', null, true);
   }
+  // A letter, from the page (a member) or from the Story Vault (with the stories key): GGStories.openLetter(id, view),
+  // GGStories.listenLetter(letter, keyObj).
+  function letterPiece(l, P) { return { kind: 'letter', id: String(l.id), slug: 'letter-' + l.id, title: String(l.title || ''), sub: monthLabel(l.month), month: String(l.month || ''), from: l.from === 'chris' ? 'chris' : 'grounded', status: 'posted', open: false, substack: '', credit: '', mins: mins(P), paras: P }; }
+  function openLetter(id, v, from) { var l = ((data() || {}).letters || []).filter(function (x) { return x.id === id; })[0], P = letterParas(id); if (!l || !P) return Promise.resolve(false); return open(letterPiece(l, P), v, from); }
+  function listenLetter(l, k) { if (!l || !k) return Promise.resolve(false); VPEND = k; return open(letterPiece(l, (l.paras || []).slice()), 'watch', null, true); }
   function close(fromPop) {
     if (!OV) return;
     var o = OV; OV = null;
@@ -521,7 +680,7 @@
   function open(id, v, from, fromHash) {
     var vk = VPEND; VPEND = null;
     var s = (id && typeof id === 'object') ? id : story(id); if (!s) return Promise.resolve(false);
-    if (!vk && s.status === 'early' && !unlocked()) { var inv = document.getElementById('gs-early'); if (inv) inv.scrollIntoView(); return Promise.resolve(false); }
+    if (!vk && !s.kind && s.status === 'early' && !unlocked()) { var inv = document.getElementById('gs-early'); if (inv) inv.scrollIntoView(); return Promise.resolve(false); }
     return need(READ_JS, function () { return !!root.GGRead; }).then(function () { return need(LEARN_JS, function () { return !!root.GGLearn; }); }).then(function () {
       if (!root.GGLearn) return false;
       if (OV) close(true);
@@ -530,13 +689,13 @@
       el.className = 'ggl ggl-app gs-ov'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Grounded Stories: ' + s.title);
       el.style.setProperty('--ggl-acc', '#8B5E1A'); el.style.setProperty('--ggl-bar', '#2E2118'); el.style.setProperty('--ggl-lite', '#E8C98E');
       el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">' + (vk ? 'Back to the Story Vault' : 'Back to Stories') + '</button></div>'
-        + '<div class="ggl-in"><div class="ggl-eb">' + (s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h1 tabindex="-1">' + esc(s.title) + '</h1>'
-        + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (full(s.id) ? '.' : ' in full.') + '</p>'
+        + '<div class="ggl-in"><div class="gs-ban' + (imgTag(s, 'gs-ban-pic') ? ' gs-ban-img' : '') + '">' + imgTag(s, 'gs-ban-pic') + '<div class="gs-ban-t"><div class="ggl-eb">' + (s.kind === 'letter' ? 'The Monthly Letter' : s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h1 tabindex="-1">' + esc(s.title) + '</h1></div></div>'
+        + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (s.kind || full(s.id) ? '.' : ' in full.') + '</p>'
         + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button></div>'
         + '<div class="gs-watch"></div><div class="gs-rdv" hidden></div><div class="gs-codewrap" hidden></div>'
         + (s.substack ? '<p class="gs-talk-row"><a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a></p>' : '') + '</div>';
       document.body.appendChild(el);
-      OV = { s: s, root: el, at: 0, view: 'watch', from: from || document.activeElement, overflow: document.body.style.overflow, hist: false, vault: !!vk, vaultKey: vk };
+      OV = { s: s, root: el, at: 0, view: 'watch', mode: 'story', from: from || document.activeElement, overflow: document.body.style.overflow, hist: false, vault: !!vk, vaultKey: vk };
       if (vk) {}
       else if (!fromHash) { try { history.pushState({ ggStory: s.slug }, '', '#' + s.slug); OV.hist = true; } catch (e) {} }
       else { try { history.replaceState({ ggStory: s.slug }, '', location.href); } catch (e) {} }
@@ -569,6 +728,8 @@
       var b = e.target.closest('[data-gs]'); if (!b || (OV && OV.root.contains(b))) return;
       var g = b.getAttribute('data-gs');
       if (g === 'watch' || g === 'read') { e.preventDefault(); open(b.getAttribute('data-id'), g, b); }
+      else if (g === 'lwatch' || g === 'lread') { e.preventDefault(); openLetter(b.getAttribute('data-id'), g === 'lread' ? 'read' : 'watch', b); }
+      else if (/^c(print|save|mail|text)$/.test(g)) { e.preventDefault(); cardAct(g, b.getAttribute('data-id'), b); }
       else if (g === 'forget') { forget(); render(); var m = document.getElementById('gs-members'); if (m) { var p = document.createElement('p'); p.className = 'gs-msg'; p.setAttribute('role', 'status'); p.textContent = 'This device is back to previews. Your code works again any time.'; m.appendChild(p); } }
       else if (g === 'code') {
         var bar = document.getElementById('gs-members'); if (!bar) return;
@@ -586,7 +747,10 @@
   root.GGStories = {
     version: 'b786', lines: LINES, words: WORDS, look: LOOK, topics: TOPICS, themesOf: themesOf,
     seal: seal, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
-    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); }
+    mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); },
+    // BLD 787: the Supporter perks and story pictures
+    perks: PERKS, monthLabel: monthLabel, note: noteOf, letter: letterParas, card: cardOf, cardModel: cardModel, noteLesson: noteLesson, letterLesson: letterLesson,
+    spokenNote: spokenNote, spokenLetter: spokenLetter, openLetter: openLetter, listenLetter: listenLetter, imgBase: imgBase, imgTag: imgTag, _imgOk: imgOk, _imgErr: imgErr
   };
   if (root.document) takeKey();
   if (typeof module !== 'undefined' && module.exports) module.exports = root.GGStories;

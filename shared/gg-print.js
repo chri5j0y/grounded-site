@@ -14,6 +14,7 @@
                                 The Classroom flyer is kept for later: nothing links to it until the attorney answers
                                 the PPRA question about classroom check-ins (grove-plan.md Section 14).
    - GGPrint.takeHome(m)        the Take-Home Sheet after a Guide visit (GWG BLD 782), see below.
+   - GGPrint.reflectionCard(o)  a Reflection Card for Grounded Stories Supporters (GWG BLD 787), see below.
    Every print carries a small QR code with only a page address on it, never a person's name, except the Take-Home
    Sheet's Bring It Home code, which carries the family's own visit card (only what the sheet already shows).
    Wording rule: Certificate of Completion, never "certified." Grow With Grounded is not an accrediting body.
@@ -454,7 +455,7 @@
   function needPdf() {
     return new Promise(function (ok) {
       if (window.ggTakeHomePdf) return ok();
-      var s = document.createElement('script'); s.src = A('/shared/gg-pdf.js?v=b782'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
+      var s = document.createElement('script'); s.src = A('/shared/gg-pdf.js?v=b787'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
     });
   }
   function loadImg(u) { return new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = u; }); }
@@ -506,6 +507,84 @@
     });
   }
 
+  /* ---------------- Reflection Cards (GWG BLD 787) ----------------
+     A Supporter perk on Grounded Stories: one Letter page to cut in half. The front carries a line from a Grounded Story
+     (exactly as written), "From the story <title>, by Chris Joy", and the month, under a strip of the Grounded Stories
+     painting; the back carries a practice to carry it into the week: its name, why it helps, three to five steps, the
+     Adapted from line, and growwithgrounded.com/stories. Made on this device; nothing is sent anywhere.
+     GGPrint.reflectionCard(o)          opens the print page (Print, Save as PDF, Send by Email, Send by Text)
+     GGPrint.reflectionPdf(o)           a Promise of the one-page PDF Blob (needs gg-pdf.js, ggReflectionPdf)
+     GGPrint.sendReflection(o, how)     how 'save', 'email', or 'text', as sendTakeHome
+     GGPrint.reflectionModel(o)         the model both use
+     o {month: 'YYYY-MM', line, story: {title, slug, credit}, practice: {name, why, steps, src}, adapted?, test?}
+       adapted: the Adapted from line as text; without it, practice.src ids are read from GGSources when loaded. */
+  var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
+  function monthLabel(m) { var x = /^(\d{4})-(\d\d)/.exec(m || ''); return x ? MONTHS[+x[2] - 1] + ' ' + x[1] : ''; }
+  function rcAdapted(o) {
+    if (o.adapted) return String(o.adapted);
+    var S = window.GGSources && GGSources.SRC, src = ((o.practice || {}).src || []).map(function (id) { return S && S[id] ? String(S[id][0]) : ''; }).filter(Boolean);
+    return src.length ? 'Adapted from: ' + src.join('; ') + '.' : '';
+  }
+  function rcModel(o) {
+    var p = o.practice || {}, st = o.story || {}, ml = monthLabel(o.month);
+    return { title: (o.test ? 'Test Card: ' : '') + 'Reflection Card' + (ml ? ', ' + ml : ''), line: String(o.line || ''), from: 'From the story ' + (st.title || '') + ', by Chris Joy',
+      monthLabel: ml, name: p.name || '', why: p.why || '', steps: (p.steps || []).slice(0, 5), adapted: rcAdapted(o), site: 'growwithgrounded.com/stories', test: !!o.test,
+      foot: 'Grow With Grounded™. A Supporter perk of Grounded Stories.', file: 'reflection-card-' + (o.month || 'card') + '.pdf',
+      subject: 'A Reflection Card from Grounded Stories' + (ml ? ', ' + ml : ''),
+      body: 'Hello,\n\nHere is this month\'s Reflection Card from Grounded Stories: a line from a story, and a practice to carry it into the week.\n\nWith gratitude,\nGrow With Grounded',
+      sms: 'This month\'s Reflection Card from Grounded Stories. The PDF is attached.' };
+  }
+  function rcBody(n) {
+    return '<div class="rc">'
+      + '<section class="rc-front"><div class="rc-strip"><img src="' + A('/shared/heroes/page-stories-wide.webp') + '" alt=""><span class="cond">GROUNDED STORIES · A REFLECTION CARD' + (n.test ? ' · TEST CARD' : '') + '</span></div>'
+      + '<blockquote class="serif">“' + esc(n.line) + '”</blockquote><p class="rc-from">' + esc(n.from) + '</p><p class="rc-month cond">' + esc(n.monthLabel.toUpperCase()) + '</p></section>'
+      + '<div class="rc-cut"><span>Cut here, then keep the card where you will see it this week.</span></div>'
+      + '<section class="rc-back"><p class="rc-eb cond">THIS WEEK’S PRACTICE</p><h2 class="serif">' + esc(n.name) + '</h2>' + (n.why ? '<p class="rc-why">' + esc(n.why) + '</p>' : '')
+      + '<ol>' + n.steps.map(function (s) { return '<li>' + esc(s) + '</li>'; }).join('') + '</ol>' + (n.adapted ? '<p class="rc-src">' + esc(n.adapted) + '</p>' : '')
+      + '<div class="rc-foot"><b>' + esc(n.site) + '</b><span>' + esc(n.foot) + '</span></div></section></div>';
+  }
+  var RC_CSS = [
+    '.rc{position:absolute;inset:0;display:flex;flex-direction:column;color:#2C1810;}',
+    '.rc-front,.rc-back{height:5.5in;flex:none;position:relative;overflow:hidden;}',
+    '.rc-strip{position:relative;height:1.85in;overflow:hidden;background:#8B5E1A;}.rc-strip img{width:100%;height:100%;object-fit:cover;display:block;}',
+    '.rc-strip span{position:absolute;left:0.6in;bottom:0.16in;color:#FBE8C4;font-size:9pt;letter-spacing:2.4px;font-weight:700;text-shadow:0 1px 6px rgba(0,0,0,.5);}',
+    '.rc-front{display:flex;flex-direction:column;}.rc-strip{flex:none;}.rc-front blockquote{margin:auto 0.85in 0;font-size:23pt;font-style:italic;font-weight:500;line-height:1.25;text-align:center;}',
+    '.rc-from{text-align:center;font-size:11.5pt;color:#5A4B3F;margin:0.2in 0 0;}.rc-month{text-align:center;font-size:9.5pt;letter-spacing:2px;color:#8B5E1A;font-weight:700;margin:6px 0 auto;padding-bottom:0.3in;}',
+    '.rc-cut{position:absolute;left:0.3in;right:0.3in;top:5.5in;border-top:1.5px dashed #C7B79E;}.rc-cut span{position:absolute;left:0.3in;top:-15px;font-size:7pt;font-style:italic;color:#7A6A5D;}',
+    '.rc-back{padding:0.5in 0.75in 0.4in;}.rc-eb{font-size:8.5pt;letter-spacing:2.4px;font-weight:700;color:#8B5E1A;margin:0;}',
+    '.rc-back h2{font-size:24pt;font-weight:700;color:#8B5E1A;margin:4px 0 6px;line-height:1.1;}.rc-why{font-size:11pt;font-style:italic;line-height:1.4;margin:0;}',
+    '.rc-back ol{margin:10px 0 0;padding-left:1.3em;font-size:10.5pt;line-height:1.45;}.rc-back li{margin-top:4px;}',
+    '.rc-src{font-size:8pt;font-style:italic;color:#6B5A4D;margin:10px 0 0;line-height:1.35;}',
+    '.rc-foot{position:absolute;left:0.75in;right:0.75in;bottom:0.32in;display:flex;justify-content:space-between;align-items:baseline;gap:12px;font-size:7.5pt;color:#7A6A5D;}.rc-foot b{color:#8B5E1A;font-size:9.5pt;}'
+  ].join('\n');
+  var RC_ART = null;
+  function rcWarm() {
+    if (RC_ART) return RC_ART;
+    RC_ART = needPdf().then(function () { return window.ggPdfImage ? ggPdfImage(A('/shared/heroes/page-stories-wide.webp'), 1224, 264, { y: 0.5, q: 0.84 }) : null; })
+      .then(function (strip) { return { strip: strip }; });
+    return RC_ART;
+  }
+  function rcPdfNow(n, art) { return window.ggReflectionPdf ? window.ggReflectionPdf(n, art || {}) : null; }
+  function reflectionPdf(o) { var n = rcModel(o); return rcWarm().then(function (art) { return rcPdfNow(n, art); }); }
+  function sendReflection(o, how) {
+    var n = rcModel(o);
+    return rcWarm().then(function (art) {
+      var blob = rcPdfNow(n, art); if (!blob) return 'none';
+      var CAP = window.Capacitor;
+      if (CAP && CAP.isNativePlatform && CAP.isNativePlatform() && window.GGApp && GGApp.share) return Promise.resolve(GGApp.share(blob, n.file, n.title)).then(function () { return 'shared'; });
+      return deliver(window, blob, meta(n), how);
+    });
+  }
+  function reflectionCard(o) {
+    var win = pre(), n = rcModel(o);
+    var w = page({ win: win, title: n.title, size: LETTER, body: rcBody(n), css: RC_CSS, printLabel: 'Print the Card',
+      acts: [['th-pdf', 'Save as PDF'], ['th-mail', 'Send by Email'], ['th-text', 'Send by Text']],
+      tipFull: 'One page: print it, cut it in half along the dashed line, and keep the card where you will see it.', js: thPageJs() });
+    rcWarm().then(function (art) { var blob = rcPdfNow(n, art); if (w && blob) { try { w.__ggTH = { blob: blob, meta: meta(n) }; } catch (e) {} } });
+    return Promise.resolve(w);
+  }
+
   window.GGPrint = { certificate: certificate, poster: poster, flyer: flyer, trees: T, groveKinds: GK,
+    reflectionCard: reflectionCard, reflectionPdf: reflectionPdf, sendReflection: sendReflection, reflectionModel: rcModel, reflectionHTML: function (o) { return { body: rcBody(rcModel(o)), css: RC_CSS }; },
     takeHome: takeHome, takeHomePdf: takeHomePdf, sendTakeHome: sendTakeHome, warmTakeHome: warmTakeHome, takeHomeModel: thModel, takeHomeHTML: function (m) { return { body: thBody(thModel(m)), css: TH_CSS }; }, watchUrl: thWatchUrl };
 })();

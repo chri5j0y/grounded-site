@@ -43,11 +43,18 @@
      ring, played by the Field Guide). The closing scene offers Open the Full Section (cfg.section), Watch Again,
      Next Video (the next guide in the ring), and Back to the Series, plus Get Your Certificate (cfg.cert) when the
      whole ring is counted.
+   - From Chris's Shelf (GWG BLD 787): a track with unlisted: true stays out of the Learn list but opens by its id (Willow's
+     All Shall Be Well video, opened from its reading). A track may list written pages, pages: [ids], shown under its videos
+     as "A page to read". Pages live in shared/learn-pages.js (window.GG_LEARN_PAGES[app], loaded when first needed):
+     {id, title, blurb, mins, lead, sections: [{h, b: blocks}], sources, print}, blocks as in the For Guides parts
+     (['p', text], ['lab', text], ['ul', [line or [bold, rest], ...]], plus ['link', label, https url, note])). GGLearn.page(app, id) opens one inside Learn.
+     Links: #learn=<lesson id> and #page=<page id> on any tree app page open that video or page in the app's Learn,
+     waiting on Play before any sound (like #watch); the hash comes off the address once read.
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b785';
+  var V = 'b787';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -85,7 +92,8 @@
     play: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>',
     check: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
     award: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.5 5 2.5-1.5-7.5"/></svg>',
-    print: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3.5h10V9M7 17.5H4.5v-7A1.5 1.5 0 0 1 6 9h12a1.5 1.5 0 0 1 1.5 1.5v7H17"/><path d="M7 14h10v6.5H7z"/></svg>'
+    print: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3.5h10V9M7 17.5H4.5v-7A1.5 1.5 0 0 1 6 9h12a1.5 1.5 0 0 1 1.5 1.5v7H17"/><path d="M7 14h10v6.5H7z"/></svg>',
+    page: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4M9.5 12h5M9.5 15.5h5"/></svg>'
   };
   var HAND = '<svg class="ln-ptr" viewBox="0 0 40 48" aria-hidden="true"><path d="M14 3c2.2 0 4 1.8 4 4v13l2-.4c1.6-.3 3.2.6 3.7 2.1l.2.6 2-.3c1.7-.2 3.3.8 3.8 2.4l.2.6 1.6-.2c2-.2 3.8 1.3 4 3.3L36 38c.3 4.5-3 8.5-7.5 9H18.6c-2.6 0-5-1.2-6.5-3.3L4.3 32.8c-1.2-1.7-.8-4 .9-5.1 1.5-1 3.5-.8 4.8.5L10 30V7c0-2.2 1.8-4 4-4z" fill="#FFF8EC" stroke="#2C1810" stroke-width="2"/></svg><span class="ln-ring"></span>';
   var A = function (d, extra, sty) { return ' class="a' + (extra ? ' ' + extra : '') + '" style="transition-delay:' + d + 's' + (sty ? ';' + sty : '') + '"'; };
@@ -203,6 +211,8 @@
       '.ln-sx b{display:block;font-family:\'Cormorant Garamond\',serif;font-size:32px;color:var(--k);line-height:1;}.ln-sx span{display:block;font-size:19px;font-weight:600;margin-top:4px;}.ln-sx small{display:block;font-size:17px;color:#6B5A4D;margin-top:6px;line-height:1.3;}',
       /* the Learn tab inside a tree app */
       '.ggl-app{position:fixed;inset:0;z-index:2147483000;overflow-y:auto;-webkit-overflow-scrolling:touch;background:#F7F2E8;--ggl-line:#DDD0B8;--ggl-card:#FFFCF6;--ggl-ink:#2C1810;--ggl-soft:#6B5A4D;--ggl-deep:#EFE6D4;color:var(--ggl-ink);font-family:Barlow,system-ui,sans-serif;}',
+      // shared/gg-listen.js styles its own Listen bar as .ggl (display:flex); two classes here keep the Learn overlay a plain block (GWG BLD 787).
+      '.ggl.ggl-app{display:block;flex-wrap:nowrap;gap:0;margin:0;align-items:normal;min-width:0;}',
       ':root[data-theme="dark"] .ggl-app{background:#1B1714;--ggl-line:#3D352D;--ggl-card:#26211C;--ggl-ink:#F2EADC;--ggl-soft:#C4B8A6;--ggl-deep:#332B24;}',
       '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app{background:#1B1714;--ggl-line:#3D352D;--ggl-card:#26211C;--ggl-ink:#F2EADC;--ggl-soft:#C4B8A6;--ggl-deep:#332B24;}}',
       '.ggl-top{position:sticky;top:0;z-index:2;display:flex;align-items:center;gap:10px;padding:10px 14px;padding-top:calc(10px + env(safe-area-inset-top,0px));background:var(--ggl-bar);color:#FFF8EC;}',
@@ -252,6 +262,10 @@
       '.ln-mu{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:14px;margin:8px 0 0;}.ln-mu-k{font-weight:600;}.ln-mu select{font:inherit;font-size:14px;padding:4px 6px;border-radius:8px;background:transparent;color:inherit;border:1px solid currentColor;}.ln-mu select option{color:#2C1810;background:#FFFCF6;}.ln-mu-b{font:inherit;font-size:14px;padding:5px 10px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;}.ggl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
       '.ln-crisis{margin:8px 0 0;padding:8px 12px;border-radius:12px;border-left:5px solid #B8612F;background:rgba(184,97,47,.10);font-size:15px;line-height:1.4;}.ln-crisis b{margin-right:6px;}',
       '.ggl-sup{margin-top:22px;}.ggl-sup>p{margin:4px 0 0;}.ggl-sup .ggl-card{border-left:6px solid var(--ggl-bar,var(--ggl-acc));}',
+      // Written pages (GWG BLD 787)
+      '.ggl-pg-eb{margin:14px 0 0;}.ggl-page{margin-top:2px;}.ggl-pg{font-size:calc(17px * var(--ggl-scale,1));line-height:1.65;margin-top:12px;}.ggl-pg h2{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:26px;line-height:1.15;margin:22px 0 6px;}',
+      '.ggl-pg-link a{font-weight:600;color:var(--ggl-acc);}.ggl-pg p{margin:0 0 10px;}.ggl-pg ul{margin:0 0 12px;padding-left:22px;}.ggl-pg li{margin:5px 0;}.ggl-pg-lead{font-size:1.08em;}.ggl-pg-lab{margin:12px 0 4px !important;}.ggl-pg-src{margin-top:8px;color:var(--ggl-soft);}.ggl-pg-src a{color:inherit;}',
+      ':root[data-theme="dark"] .ggl-app .ggl-pg-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ggl-pg-link a{color:var(--ggl-lite);}}',
       // Learn opens to category cards (BLD 725); each opens to its videos.
       '.ggl-cats{display:grid;gap:12px;margin-top:14px;}@media(min-width:720px){.ggl-cats{grid-template-columns:1fr 1fr;}}.ggl-cat{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;margin-top:0;border-left:6px solid var(--ggl-bar,var(--ggl-acc));}.ggl-cat:hover{border-color:var(--ggl-acc);}.ggl-cat h3{margin:2px 0 4px;}.ggl-cat .ggl-cat-n{margin:8px 0 0;font-weight:600;font-size:15px;}.ggl-cat .ggl-cat-go{float:right;opacity:.7;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
@@ -555,7 +569,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b783'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b787'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -978,7 +992,44 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b782'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=b787'), function () { return !!window.GGPrint; }); }
+  // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
+  function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
+  function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }
+  // A page's sections: ['p', text], ['lab', text], ['ul', [line or [bold, rest], ...]] (the For Guides part blocks).
+  function blocksHtml(bl) {
+    return (bl || []).map(function (b) {
+      if (!Array.isArray(b)) return '';
+      if (b[0] === 'p') return '<p>' + esc(b[1]) + '</p>';
+      if (b[0] === 'lab') return '<p class="ggl-pg-lab"><b>' + esc(b[1]) + '</b></p>';
+      if (b[0] === 'link' && /^(https:\/\/|\/)/.test(String(b[2] || ''))) return '<p class="ggl-pg-link"><a href="' + esc(b[2]) + '" target="_blank" rel="noopener">' + esc(b[1]) + '</a>' + (b[3] ? ' ' + esc(b[3]) : '') + '</p>';
+      if (b[0] === 'ul') return '<ul>' + (b[1] || []).map(function (x) { return '<li>' + (Array.isArray(x) ? '<b>' + esc(x[0]) + '</b> ' + esc(x[1] || '') : esc(x)) + '</li>'; }).join('') + '</ul>';
+      return '';
+    }).join('');
+  }
+  function pageBody(p) {
+    return (p.lead ? '<p class="ggl-pg-lead">' + esc(p.lead) + '</p>' : '') + (p.sections || []).map(function (sc) { return (sc.h ? '<h2>' + esc(sc.h) + '</h2>' : '') + blocksHtml(sc.b); }).join('');
+  }
+  // Print a page (a new tab with the page alone and a Print button; a hidden frame when pop-ups are blocked).
+  function printPage(app, p) {
+    var meta = APPS[app] || { name: 'Grow With Grounded', color: '#8B5E1A' }, src = window.GGSources ? GGSources.line(p.sources || []) : '';
+    var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(p.title) + '</title>'
+      + '<link rel="stylesheet" href="' + url('/fonts/fonts.css') + '"><style>body{margin:0;background:#FFFCF6;color:#2C1810;font-family:Barlow,Helvetica,Arial,sans-serif;font-size:16px;line-height:1.6;}'
+      + '.bar{position:sticky;top:0;display:flex;gap:10px;align-items:center;padding:10px 14px;background:#2E2118;color:#F6EFE2;}.bar b{font-family:"Cormorant Garamond",Georgia,serif;font-size:20px;margin-right:auto;}'
+      + '.bar button{min-height:44px;padding:8px 16px;border-radius:10px;border:1.5px solid #D9A847;background:#D9A847;color:#2E2118;font:inherit;font-weight:600;cursor:pointer;}'
+      + 'main{max-width:7in;margin:0 auto;padding:28px 18px 40px;}.eb{font-family:"Barlow Condensed",sans-serif;letter-spacing:1.5px;text-transform:uppercase;font-weight:600;color:' + meta.color + ';}'
+      + 'h1{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:34px;line-height:1.1;margin:4px 0 10px;}h2{font-family:"Cormorant Garamond",Georgia,serif;font-weight:600;font-size:23px;margin:20px 0 6px;}'
+      + '.ggl-pg-lead{font-size:18px;}ul{padding-left:22px;}li{margin:4px 0;}.gg-src{font-size:12.5px;margin-top:18px;}.gg-src p{margin:2px 0;}.foot{font-size:12px;color:#6B5A4D;border-top:1px solid #DDD0B8;margin-top:18px;padding-top:8px;}'
+      + 'a{color:inherit;}@media print{.bar{display:none;}main{padding:0;max-width:none;}@page{margin:.7in;}}</style></head><body>'
+      + '<div class="bar"><b>' + esc(p.title) + '</b><button type="button" onclick="window.print()">Print or Save as PDF</button></div>'
+      + '<main><div class="eb">' + esc(meta.name) + ', a page to read</div><h1>' + esc(p.title) + '</h1>' + pageBody(p) + src
+      + '<p class="foot">From ' + esc(meta.name) + ' by Grow With Grounded, growwithgrounded.com. General spiritual and emotional support. Emergency: 911. Crisis: call or text 988. &copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. Yours to print for personal use.</p></main></body></html>';
+    var w = null; try { w = window.open('', '_blank'); } catch (e) { w = null; }
+    if (w && w.document) { w.document.open(); w.document.write(html); w.document.close(); try { w.focus(); } catch (e) {} return; }
+    var f = document.createElement('iframe'); f.setAttribute('aria-hidden', 'true'); f.style.cssText = 'position:fixed;right:0;bottom:0;width:0;height:0;border:0;';
+    document.body.appendChild(f); f.contentDocument.open(); f.contentDocument.write(html); f.contentDocument.close();
+    setTimeout(function () { try { f.contentWindow.focus(); f.contentWindow.print(); } catch (e) {} setTimeout(function () { f.remove(); }, 60000); }, 900);
+  }
 
   var APP = null; // {app, root, view, lesson, depth}
   // Browser Back inside Learn (GWG BLD 780). Opening Learn adds one history entry (same address, so the apps' hash
@@ -1001,7 +1052,7 @@
     e.stopImmediatePropagation();
     APP.depth = lv;
     if (!lv) { close(false, true); return; }
-    if (st.ggLesson) lesson(st.ggLesson, true); else list(true);
+    if (st.ggLesson && /^page:/.test(st.ggLesson)) showPage(st.ggLesson.slice(5), true); else if (st.ggLesson) lesson(st.ggLesson, true); else list(true);
   }
   window.addEventListener('popstate', onPop, true);
   // Closes Learn, then runs then() once the browser has stepped back over Learn's entries.
@@ -1015,7 +1066,8 @@
   function open(app, lessonId, opts) {
     var meta = APPS[app]; if (!meta) return;
     css();
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () {
+    var pg = opts && opts.page;
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () { return pg || hasPages(app) ? needPages() : null; }).then(function () {
       var keep = APP ? APP.depth : 0;
       if (APP) close(true, true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
@@ -1029,8 +1081,8 @@
       document.body.style.overflow = 'hidden';
       root.addEventListener('click', appClick);
       document.addEventListener('keydown', appKey);
-      if (!keep) hPush(1, lessonId);
-      if (lessonId) lesson(lessonId); else list();
+      if (!keep) hPush(1, lessonId || (pg ? 'page:' + pg : null));
+      if (lessonId) lesson(lessonId); else if (pg) showPage(pg); else list();
     });
   }
   // close(quiet, keepHistory): keepHistory when the browser already stepped back (Back), or Learn reopens in place.
@@ -1063,7 +1115,7 @@
   function list(fromPop) {
     if (CUR) CUR.stop();
     APP.view = 'list'; if (!fromPop) hSet(null);
-    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app), D = load(app);
+    var app = APP.app, meta = APPS[app], L = (window.GG_LEARN || {})[app] || {}, every = tracksFor(app).filter(function (t) { return !t.unlisted; }), D = load(app);
     var gd = every.filter(function (t) { return t.kind === 'guide'; }), tr = every.filter(function (t) { return t.kind !== 'support' && t.kind !== 'guide'; }), sup = every.filter(function (t) { return t.kind === 'support'; }), counted = tr.filter(function (t) { return t.kind !== 'setup'; });
     var all = counted.reduce(function (n, t) { return n + t.lessons.length; }, 0), fin = counted.reduce(function (n, t) { return n + t.lessons.filter(function (l) { return D.done[l.id]; }).length; }, 0);
     var el = $('#ggl-in', APP.root);
@@ -1071,7 +1123,13 @@
       var isSup = t.kind === 'support', n = t.lessons.filter(function (l) { return D.done[l.id]; }).length, ok = n === t.lessons.length && certable(t);
       return '<div class="ggl-card"><div class="ggl-spread"><div><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ggl-muted">' + esc(t.who) + '</p>' : '') + '</div>' + (isSup ? '' : '<span class="ggl-muted">' + n + ' of ' + t.lessons.length + '</span>') + '</div>'
         + '<div class="ln-list">' + t.lessons.map(function (l) { var d = D.done[l.id] && !isSup; return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : isSup ? IC.play : esc(String(l.n || ''))) + '</span><span class="ln-t"><b>' + esc(l.title) + '</b>' + forTag(l, 'ln-for') + '<small>' + (l.blurb ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (D.at[l.id] && !D.done[l.id] && !isSup ? '. Pick up where you left off.' : '') + '</small></span>' + IC.play + '</button>'; }).join('') + '</div>'
+        + pagesHtml(t)
         + (ok ? '<div class="ggl-row"><button class="ggl-btn pri" data-l="cert" data-v="' + esc(t.id) + '">' + IC.award + 'Get Your Certificate</button></div>' : certable(t) ? '<p class="ggl-muted" style="margin-top:10px;font-size:15px">Finish every lesson in this series for a Certificate of Completion.</p>' : '') + '</div>';
+    };
+    // A track's written pages (GWG BLD 787), after its videos.
+    var pagesHtml = function (t) {
+      var ps = (t.pages || []).map(function (id) { return pageOf(app, id); }).filter(Boolean); if (!ps.length) return '';
+      return '<p class="ggl-eb ggl-pg-eb">A page to read</p><div class="ln-list">' + ps.map(function (p) { return '<button class="ln-item" data-l="page" data-v="' + esc(p.id) + '"><span class="ln-n">' + IC.page + '</span><span class="ln-t"><b>' + esc(p.title) + '</b><small>' + (p.blurb ? esc(p.blurb) + ' ' : '') + 'About ' + esc(String(p.mins || 3)) + ' minutes to read.</small></span>' + IC.page + '</button>'; }).join('') + '</div>';
     };
     // When Life Changes: a quiet check for each video watched, no counts.
     var gcard = function (t) {
@@ -1113,7 +1171,7 @@
     el.innerHTML = '<button class="ggl-link" data-l="' + (gv && APP.fromGuide ? 'close' : 'home') + '">&larr; ' + (gv ? (APP.fromGuide ? 'Back to the Guide' : 'Back to Learn') : sup ? 'Back to Learn' : 'All lessons') + '</button><div class="ggl-eb" style="margin-top:6px">' + (gv ? esc(((window.GG_LEARN_GUIDES || {})[app] || {}).title || 'When Life Changes') + ', ' + esc(f.l.sideName || '') : esc(f.t.title) + (sup ? '' : ', Lesson ' + esc(String(f.l.n || '')))) + '</div><h1>' + esc(gv ? (f.l.guideTitle || f.l.title) : f.l.title) + '</h1>' + (gv ? '' : forTag(f.l, 'ggl-for')) + '<div id="ggl-host"></div>';
     APP.root.scrollTop = 0;
     player($('#ggl-host', el), {
-      app: app, lesson: f.l, track: f.t, tracks: tracksFor(app).filter(function (t) { return (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
+      app: app, lesson: f.l, track: f.t, tracks: f.t.unlisted ? [f.t] : tracksFor(app).filter(function (t) { return !t.unlisted && (t.kind === 'support') === sup && (t.kind === 'guide') === gv; }), done: D.done, at: D.at[f.l.id] || 0, accent: meta.btn,
       pair: pair, fromGuide: gv && APP.fromGuide,
       guide: function (gid) { closeThen(function () { var go = (window.GG_GUIDE_OPEN || {})[app]; if (typeof go === 'function') go(gid); else location.hash = '#guide=' + encodeURIComponent(gid); }); },
       onAt: function (i) { var d = load(app); d.at[f.l.id] = i; keep(app, d); },
@@ -1128,6 +1186,28 @@
     var name = prompt('Name to print on the certificate:', ''); if (name === null) return; name = name.trim(); if (!name) return;
     needPrint().then(function () { if (window.GGPrint) GGPrint.certificate({ tree: app, name: name, title: t.certTitle || (APPS[app].name + ': ' + t.title), body: t.certLine || ('For finishing every lesson in the ' + t.title + ' series.'), date: when, kind: 'series' }); });
   }
+  function hasPages(app) { return ((window.GG_LEARN || {})[app] || { tracks: [] }).tracks.some(function (t) { return t && t.pages && t.pages.length; }); }
+  // A written page inside Learn (GWG BLD 787): the page, its Sources line, Print, and Back.
+  function showPage(id, fromPop) {
+    if (!APP) return;
+    var app = APP.app, p = pageOf(app, id); if (!p) return list(fromPop);
+    if (CUR) CUR.stop();
+    if (!fromPop) { if (APP.view === 'list' && APP.depth === 1) hPush(2, 'page:' + id); else hSet('page:' + id); }
+    APP.view = 'page';
+    var tr = ((window.GG_LEARN || {})[app] || { tracks: [] }).tracks.filter(function (t) { return (t.pages || []).indexOf(id) >= 0; })[0];
+    var el = $('#ggl-in', APP.root);
+    el.innerHTML = '<button class="ggl-link" data-l="home">&larr; ' + (tr ? 'Back to ' + esc(tr.title) : 'Back to Learn') + '</button>'
+      + '<article class="ggl-page"><div class="ggl-eb" style="margin-top:6px">' + (tr ? esc(tr.title) + ', ' : '') + 'A Page to Read</div><h1>' + esc(p.title) + '</h1>'
+      + '<p class="ggl-muted" style="margin:0">About ' + esc(String(p.mins || 3)) + ' minutes to read.</p>'
+      + (p.print !== false ? '<div class="ggl-row"><button class="ggl-btn" data-l="pprint" data-v="' + esc(p.id) + '">' + IC.print + 'Print This Page</button></div>' : '')
+      + '<div class="ggl-pg">' + pageBody(p) + '</div><div class="ggl-pg-src"></div></article>'
+      + '<div class="ggl-row"><button class="ggl-btn" data-l="home">' + (tr ? 'Back to ' + esc(tr.title) : 'Back to Learn') + '</button></div>';
+    APP.root.scrollTop = 0; var h = $('h1', el); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+    needSources();
+    (function src(n) { var box = $('.ggl-pg-src', el); if (!box || !box.isConnected) return; if (window.GGSources) { box.innerHTML = GGSources.line(p.sources || []); return; } if (n < 40) setTimeout(function () { src(n + 1); }, 100); })(0);
+  }
+  // GGLearn.page(app, id): open a written page in the app's Learn.
+  function page(app, id) { open(app, null, { page: id }); }
   function appClick(e) {
     var b = e.target.closest('[data-l]'); if (!b || !APP) return;
     var a = b.getAttribute('data-l'), v = b.getAttribute('data-v');
@@ -1137,10 +1217,24 @@
     else if (a === 'cat') { APP.cat = v; APP.ring = null; if (v === 'sup') { var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.cat === 'sup') list(); }); } else list(); }
     else if (a === 'ring') { APP.cat = 'gd'; APP.ring = v; list(); }
     else if (a === 'open') lesson(v);
+    else if (a === 'page') showPage(v);
+    else if (a === 'pprint') { var pp = pageOf(APP.app, v); if (pp) printPage(APP.app, pp); }
     else if (a === 'cert') { var t = tracksFor(APP.app).filter(function (x) { return x.id === v; })[0]; if (t) cert(APP.app, t); }
     else if (a === 'vcheck') { if (window.GGRead && GGRead.check) GGRead.check(function () { if (APP) list(); }); }
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
-  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, sealedName: sealedName, scene: scene, player: player, open: open, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  // Links (GWG BLD 787): #learn=<lesson id> or #page=<page id> on a tree app's page (/oak/, /maple/, ...) opens that video or
+  // page in the app's Learn. The video waits on its Play button, so sound starts only after a tap (like #watch). The hash
+  // comes off the address first, so Back and closing Learn land on the app itself.
+  function fromLink() {
+    var m = /^#(learn|page)=([A-Za-z0-9_-]+)$/.exec(location.hash || ''); if (!m) return;
+    var app = String(location.pathname.split('/')[1] || ''); if (!APPS[app]) return;
+    try { history.replaceState(history.state, '', location.pathname + location.search); } catch (e) {}
+    if (m[1] === 'learn') open(app, m[2]); else open(app, null, { page: m[2] });
+  }
+  window.addEventListener('hashchange', fromLink);
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fromLink); else setTimeout(fromLink, 0);
+
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, sealedName: sealedName, scene: scene, player: player, open: open, page: page, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();
