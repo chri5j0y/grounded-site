@@ -39,6 +39,12 @@
      count, no certificate: a quiet check marks the ones watched. The closing scene offers Open the Full
      Guide (window.GG_GUIDE_OPEN[app](id), or #guide=id), the other video, and Back.
      GGLearn.open(app, id, {from: 'guide'}) opens one straight from a guide page.
+     One home, two doors (GWG BLD 790): where the tree shows its When Life Changes cards in the page, Learn's When Life
+     Changes card and tab close Learn and open them there (window.GG_LC_OPEN[app]() when a tree names its own opener,
+     otherwise the tree's own tab opener, see lcDoor). The videos still open by #learn= links, from each guide, and from
+     Learn's search. A tree without the view keeps them in Learn, one card per ring, as before.
+   - The Learn top (GWG BLD 790): a search bar (title, blurb, and track name; listed tracks only, so low-key tracks follow
+     their rules) and a tab for each category, All first. The category cards stay below as the All view.
    - For Guides videos (W1, GWG BLD 714): a track with kind: 'forguides' (sealed in the Field library, one track per
      ring, played by the Field Guide). The closing scene offers Open the Full Section (cfg.section), Watch Again,
      Next Video (the next guide in the ring), and Back to the Series, plus Get Your Certificate (cfg.cert) when the
@@ -54,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b789';
+  var V = 'b790';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -970,7 +976,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b789', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b789' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b790', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b790' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1238,7 +1244,17 @@
     if (!fn) return null;
     return function () {
       fn();
-      if (at) setTimeout(function () { var v = document.querySelector(at); if (v && v.scrollIntoView) try { v.scrollIntoView({ block: 'start' }); } catch (e) {} }, 140);
+      if (at) setTimeout(function () {
+        var v = document.querySelector(at); if (!v) return;
+        try {
+          var to = function (y) { window.scrollTo({ top: Math.max(0, y), behavior: 'instant' }); }, y = v.getBoundingClientRect().top + window.scrollY;
+          to(y);
+          // A sticky bar across the top (a tree's tab bar) keeps the heading in view below it.
+          for (var n = document.elementFromPoint(innerWidth / 2, 2); n && n !== document.body; n = n.parentElement) {
+            var ps = getComputedStyle(n).position; if (ps === 'fixed' || ps === 'sticky') { var bt = n.getBoundingClientRect().bottom; if (bt > 0 && bt < innerHeight / 2) to(y - bt - 8); break; }
+          }
+        } catch (e) {}
+      }, 140);
     };
   }
   function lesson(id, fromPop) {

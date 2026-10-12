@@ -929,7 +929,7 @@ VIEWS.guides = () => {
   if (st.open) { const g = G.guides.find(x => x.id === st.open); if (g) return guideHtml(g); st.open = null; }
   let h = `<div class="lc-head"><p class="eyebrow">When Life Changes</p><h2 class="section-title" style="margin-top:4px">Words for the hardest conversations</h2>
     <p class="lead"><b>How to show up.</b> What's happening, what to say, what not to say, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
-    <p class="w-small">${icon('play', 16)} Every guide has two short videos, narrated aloud: For You, and For the Helper. Watch them inside any guide, or <button type="button" class="text-btn" onclick="window.GGLearn&&GGLearn.open('willow')">browse them all in Learn</button>.</p>
+    <p class="w-small">${icon('play', 16)} Every guide has two short videos, narrated aloud: For You, and For the Helper. Open any guide below to watch them.</p>
     <p class="w-tool">${esc(G.tool)}</p></div>
     <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.find || '')}" oninput="W.gFind(this)" enterkeyhint="search">
     <div class="lc-chips" role="group" aria-label="Filter">
