@@ -933,22 +933,58 @@ VIEWS.guides = () => {
     <p class="w-tool">${esc(G.tool)}</p></div>
     <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.find || '')}" oninput="W.gFind(this)" enterkeyhint="search">
     <div class="lc-chips" role="group" aria-label="Filter">
-      <button class="lc-chip" style="--rc:var(--ink-soft)" aria-pressed="${st.ring === 'all'}" onclick="W.S.guide.ring='all';W.render()">All</button>
-      ${G.rings.map(r => `<button class="lc-chip" style="--rc:${RING_COLOR[r[0]]}" aria-pressed="${st.ring === r[0]}" onclick="W.S.guide.ring='${r[0]}';W.render()">${esc(r[1])}</button>`).join('')}
+      <button class="lc-chip" style="--rc:var(--ink-soft)" aria-pressed="${st.ring === 'all'}" onclick="W.gRing('all')">All</button>
+      ${G.rings.map(r => `<button class="lc-chip" style="--rc:${RING_COLOR[r[0]]}" aria-pressed="${st.ring === r[0]}" onclick="W.gRing('${r[0]}')">${esc(r[1])}</button>`).join('')}
     </div><div id="w-glist">${gListHtml()}</div>
     <p class="lc-note">Worried? Call your hospice's 24/7 line first, day or night. In danger now, call 911. Thinking about ending your life, call or text 988. These guides offer spiritual and emotional support alongside your hospice team. For medical, therapy, or legal questions, turn to your hospice nurse, your doctor, a therapist, or a lawyer.</p>`;
   return h;
 };
+/* When Life Changes as Cards (GWG BLD 790): with no search and All chosen, one card per group; a card is the same
+   as its chip, and All Groups returns. The readings list does the same with a card for each tradition. */
+const RING_BLURB = { spirit: 'Faith, hope, forgiveness, and family: words for what the heart carries near the end.', last: 'What the last days can look like, what helps at the bedside, and the first hours and days after.' };
+const nGuides = n => n + (n === 1 ? ' guide' : ' guides');
+function wStyle() {
+  if (document.getElementById('w-lc790')) return;
+  const st = document.createElement('style'); st.id = 'w-lc790';
+  st.textContent = `.w-groups{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;margin-top:22px;}
+.w-groups.w-groups-3{grid-template-columns:repeat(3,minmax(0,1fr));}
+@media (max-width:900px){.w-groups.w-groups-3{grid-template-columns:repeat(2,minmax(0,1fr));}}@media (max-width:600px){.w-groups,.w-groups.w-groups-3{grid-template-columns:1fr;}}
+button.w-group{text-align:left;font:inherit;color:var(--ink);cursor:pointer;border-top-width:1px;border-left:7px solid var(--rc);min-width:0;}
+button.w-group:hover{border-color:var(--rc);}
+button.w-group:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+button.w-group h4{overflow-wrap:anywhere;}
+button.w-group .w-small{margin:0;}
+.w-group-n{margin-top:auto;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);}
+.w-group-n i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--rc);margin-right:8px;}
+.w-allg{margin:20px 0 0;}
+.lc-cbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+.lc-card .lc-cbtns .btn{margin-top:0;}`;
+  document.head.appendChild(st);
+}
+function gGroupsHtml() {
+  return `<div class="w-groups" role="list">${G.rings.map(r => { const n = G.guides.filter(g => g.ring === r[0]).length; if (!n) return '';
+    return `<div role="listitem" style="display:flex;min-width:0"><button type="button" class="lc-card w-group" style="--rc:${RING_COLOR[r[0]]};flex:1" onclick="W.gRing('${r[0]}',1)" aria-label="${esc(r[1])}, ${nGuides(n)}"><h4>${esc(r[1])}</h4><p class="w-small">${esc(RING_BLURB[r[0]] || '')}</p><span class="w-group-n"><i></i>${nGuides(n)}</span></button></div>`; }).join('')}</div>`;
+}
+const oneLine = (t, max) => { const x = String(t || '').trim(), m = x.match(/^.*?[.!?](\s|$)/), f = (m ? m[0] : x).trim(); return f.length > (max || 150) ? f.slice(0, (max || 150) - 1).replace(/\s+\S*$/, '') + '...' : f; };
 function gListHtml() {
   const st = S.guide; let h = '', n = 0;
-  G.rings.filter(r => st.ring === 'all' || st.ring === r[0]).forEach(r => {
+  wStyle();
+  if (st.ring === 'all' && !st.q) return gGroupsHtml();
+  G.rings.filter(r => st.q || st.ring === r[0]).forEach(r => {
     const gs = G.guides.filter(g => g.ring === r[0] && gMatch(g, st.q)); if (!gs.length) return; n += gs.length;
-    h += `<div class="lc-ring" style="--rc:${RING_COLOR[r[0]]}"><h3><i></i>${esc(r[1])}</h3><div class="lc-grid">${gs.map(g => {
-      const first = g.parts.find(p => p[0] === 'what') || g.parts[0];
-      return `<article class="lc-card" style="--rc:${RING_COLOR[r[0]]}"><span class="lc-label">Guide</span><h4>${esc(g.title)}</h4><p class="w-small">${esc(first[1])}</p><button class="btn btn-secondary" onclick="W.guide('${g.id}')">Open the guide</button></article>`;
+    h += `<div class="lc-ring" style="--rc:${RING_COLOR[r[0]]}"><h3><i></i>${esc(r[1])}</h3>${RING_BLURB[r[0]] ? `<p>${esc(RING_BLURB[r[0]])}</p>` : ''}<div class="lc-grid">${gs.map(g => {
+      const first = g.parts.find(p => p[0] === 'what') || g.parts[0], tl = esc(g.title);
+      return `<article class="lc-card" style="--rc:${RING_COLOR[r[0]]}"><span class="lc-label">${esc(r[1])}</span><h4>${tl}</h4><p class="w-small">${esc(oneLine(first[1]))}</p><div class="lc-cbtns"><button type="button" class="btn btn-primary btn-sm" onclick="W.guide('${g.id}')" aria-label="Read: ${tl}">Read</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.watch('${g.id}','you')" aria-label="Watch For You: ${tl}">${icon('play', 16)} For You</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.watch('${g.id}','helper')" aria-label="Watch For the Helper: ${tl}">${icon('play', 16)} For the Helper</button></div></article>`;
     }).join('')}</div></div>`;
   });
-  return n ? h : `<div class="lc-none"><p>No guides match "${esc(st.q)}." Try another word.</p></div>`;
+  const back = st.q ? '' : `<button type="button" class="lc-back w-allg no-print" id="w-allg" onclick="W.gRing('all',2)">All Groups</button>`;
+  return back + (n ? h : `<div class="lc-none"><p>No guides match "${esc(st.q)}." Try another word.</p></div>`);
+}
+// A group card or chip: from a card, focus moves to All Groups; from All Groups, back to that card.
+function gRing(k, from) {
+  const was = S.guide.ring; S.guide.ring = k || 'all'; render();
+  const x = from === 1 ? $('#w-allg') : from === 2 ? document.querySelector('.w-group[onclick*="\'' + was + '\'"]') : null;
+  if (x) x.focus();
 }
 function gList() { const b = $('#w-glist'); if (b) b.innerHTML = gListHtml(); }
 /* Search: the same engine as the header search. Willow's guides first, then the rest of Grow With Grounded. */
@@ -1008,20 +1044,34 @@ function myTrads() {
   if (f && f.trad && sees('faith')) { out.push(f.trad); if (CHRISTIAN.includes(f.trad)) out.push('christian'); }
   return out;
 }
+function readFilt(trad, q, mine) { return x => (trad === 'every' || (trad === 'mine' ? x.trad.some(t => mine.includes(t)) : x.trad.includes(trad) || (trad !== 'all' && CHRISTIAN.includes(trad) && x.trad.includes('christian')))) && (!q || (x.title + ' ' + x.by + ' ' + x.lines.join(' ')).toLowerCase().includes(q.toLowerCase())); }
+// The readings All view (BLD 790): a card for each tradition the Tradition list offers, the same as choosing it there.
+function readGroupsHtml(opts) {
+  const grp = id => id === 'all' ? 'Every Tradition' : ((F.intake.groups.find(g => g[2].includes(id)) || [0, ''])[1]);
+  return `<div class="w-groups w-groups-3" role="list">${opts.map(o => { const rs = RD.readings.filter(readFilt(o[0], '')), n = rs.length; if (!n) return '';
+    const own = rs.filter(x => x.trad.includes(o[0])).concat(rs.filter(x => !x.trad.includes(o[0]))).slice(0, 2).map(x => x.title);
+    return `<div role="listitem" style="display:flex;min-width:0"><button type="button" class="lc-card w-group" style="--rc:var(--gold);flex:1" onclick="W.rTrad('${o[0]}',1)" aria-label="${esc(o[1])}, ${n} ${n === 1 ? 'reading' : 'readings'}"><span class="lc-label">${esc(grp(o[0]))}</span><h4>${esc(o[1])}</h4><p class="w-small">${esc(own.join(', '))}${n > 2 ? ', and more' : ''}.</p><span class="w-group-n"><i></i>${n} ${n === 1 ? 'reading' : 'readings'}</span></button></div>`; }).join('')}</div>`;
+}
+function rTrad(k, from) {
+  const was = S.read.trad; S.read.trad = k || 'every'; render();
+  const x = from === 1 ? $('#w-rallg') : from === 2 ? document.querySelector('.w-group[onclick*="\'' + was + '\'"]') : null;
+  if (x) x.focus();
+}
 VIEWS.readings = () => {
   const st = S.read;
   if (st.open) { const x = RD.readings.find(y => y.id === st.open); if (x) return readingHtml(x); st.open = null; }
   const mine = myTrads(), hasMine = mine.length > 1;
   if (st.trad === 'mine' && !hasMine) st.trad = 'every';
-  const filt = x => (st.trad === 'every' || (st.trad === 'mine' ? x.trad.some(t => mine.includes(t)) : x.trad.includes(st.trad) || (st.trad !== 'all' && CHRISTIAN.includes(st.trad) && x.trad.includes('christian')))) && (!st.q || (x.title + ' ' + x.by + ' ' + x.lines.join(' ')).toLowerCase().includes(st.q.toLowerCase()));
+  const filt = readFilt(st.trad, st.q, mine);
   const list = RD.readings.filter(filt);
+  wStyle();
   const tradOpts = [['every', 'Every reading'], ['all', 'For every tradition and in-between']].concat(F.intake.groups.flatMap(g => g[2].filter(id => RD.readings.some(x => x.trad.includes(id))).map(id => [id, faithName(id)])));
   return `<div class="lc-head"><p class="eyebrow">Readings</p><h2 class="section-title" style="margin-top:4px">Words to read aloud</h2>
     <p class="lead">Psalms, prayers, poems, and blessings for all faith traditions and everything in-between. Read slowly. Read it twice. Hearing is often the last sense to go.</p></div>
     <div class="w-readfilter">${hasMine ? `<button class="lc-chip" style="--rc:var(--gold)" aria-pressed="${st.trad === 'mine'}" onclick="W.S.read.trad='mine';W.render()">${isSelf() ? 'For me' : 'For ' + esc(nameOf(target()))}</button>` : ''}
       <label class="w-l w-inline" for="w-rtrad">Tradition</label><select id="w-rtrad" onchange="W.S.read.trad=this.value;W.render()">${tradOpts.map(o => `<option value="${o[0]}"${st.trad === o[0] ? ' selected' : ''}>${esc(o[1])}</option>`).join('')}</select></div>
     <input class="lc-search" type="search" placeholder="Search: shepherd, peace, river, home..." aria-label="Search the readings" value="${esc(st.q)}" onchange="W.S.read.q=this.value;W.render()">
-    <div class="w-readlist">${list.map(x => `<button type="button" class="w-reading" onclick="W.reading('${x.id}')"><b>${esc(x.title)}</b><span>${esc(x.by)}</span><i>${esc(RIGHTS[x.rights] || '')}</i></button>`).join('') || '<p class="w-small">No readings match. Try another word or tradition.</p>'}</div>
+    ${st.trad === 'every' && !st.q ? readGroupsHtml(tradOpts.slice(1)) : `${st.q || st.trad === 'mine' ? '' : `<button type="button" class="lc-back w-allg no-print" id="w-rallg" onclick="W.rTrad('every',2)">All Groups</button><h3 class="section-title">${esc((tradOpts.find(o => o[0] === st.trad) || [0, ''])[1])}</h3>`}<div class="w-readlist">${list.map(x => `<button type="button" class="w-reading" onclick="W.reading('${x.id}')"><b>${esc(x.title)}</b><span>${esc(x.by)}</span><i>${esc(RIGHTS[x.rights] || '')}</i></button>`).join('') || '<p class="w-small">No readings match. Try another word or tradition.</p>'}</div>`}
     <h3 class="section-title">Songs families often ask for</h3><p>${RD.songs.map(esc).join(', ')}. Play a recording the family loves, or sing it. Off key counts.</p>
     <h3 class="section-title">Beloved writing to find in print</h3><p class="lead">Still under copyright, so Willow names them and you can find them in the book or online.</p>
     <ul class="w-linked">${RD.linked.map(l => `<li><b>${esc(l[0])}</b>, ${esc(l[1])}. In <i>${esc(l[2])}</i>. <span class="w-small">${esc(l[3])}</span></li>`).join('')}</ul>
@@ -1333,7 +1383,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, closeGuide, closeReading, watch: watchGuide, gList, gFind, printGuide, reading: openReading, printReading, bibleVer: setVer,
+  guide: openGuide, closeGuide, closeReading, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify

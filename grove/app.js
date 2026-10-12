@@ -942,25 +942,51 @@ function lcPickPractices(picks, max) {
   return joinOrder(out).slice(0, max);
 }
 function lcCard(t) {
-  const r = lcRing(t.ring), fit = lcFits(t), tt = lcT(t);
-  return `<article class="gv-lc-card" style="--rc:${r.color}"><span class="gv-lc-label">${esc(r.name)}</span><h4>${esc(t.title)}</h4><p>${esc(tt.short || '')}</p>
+  const r = lcRing(t.ring), fit = lcFits(t), tt = lcT(t), id = esc(t.id), ttl = esc(t.title);
+  return `<article class="gv-lc-card" style="--rc:${r.color}"><span class="gv-lc-label">${esc(r.name)}</span><h4>${ttl}</h4><p>${esc(tt.short || '')}</p>
     <p class="gv-lc-for">${fit && G ? 'Fits our grove' : 'For ' + esc(list3(lcKinds(t)))}${lcWatchedBoth(t.id) ? ' · Both videos watched' : ''}</p>
-    <button type="button" class="btn btn-line btn-sm" data-act="lc-open" data-id="${esc(t.id)}">Open This Guide</button></article>`;
+    <div class="gv-lc-cbtns"><button type="button" class="btn btn-gold btn-sm" data-act="lc-open" data-id="${id}" aria-label="Read: ${ttl}">Read</button><button type="button" class="btn btn-line btn-sm" data-act="lc-watch" data-id="${id}" data-side="you" aria-label="Watch For the Group: ${ttl}">${icon('play')} For the Group</button><button type="button" class="btn btn-line btn-sm" data-act="lc-watch" data-id="${id}" data-side="helper" aria-label="Watch For the Leader: ${ttl}">${icon('play')} For the Leader</button></div></article>`;
 }
-// The guides list: Picked for Us first, then each ring with the guides that fit this grove's kind first.
+/* When Life Changes as Cards (GWG BLD 790): the All view is a grid of group cards, one per ring this grove can see.
+   A card is the same as its ring's chip; All Groups returns. A search shows guide cards from every ring. */
+const lcInRing = (t, r) => r.key === 'sober' ? lcIsSober(t) : t.ring === r.key;
+function lcStyle() {
+  if (document.getElementById('gv-lc790')) return;
+  const st = document.createElement('style'); st.id = 'gv-lc790';
+  st.textContent = `.gv-lc-groups{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin:22px 0 8px;}
+@media (max-width:980px){.gv-lc-groups{grid-template-columns:repeat(2,minmax(0,1fr));}}@media (max-width:600px){.gv-lc-groups{grid-template-columns:1fr;}}
+.gv-lc-group{display:flex;flex-direction:column;gap:6px;text-align:left;font:inherit;color:var(--ink);cursor:pointer;background:var(--card);border:1px solid var(--line);border-left:7px solid var(--rc);border-radius:14px;padding:16px 18px;min-width:0;}
+.gv-lc-group:hover{border-color:var(--rc);}
+.gv-lc-group:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+.gv-lc-group b{font-family:'Cormorant Garamond',serif;font-size:calc(24px * var(--scale));line-height:1.15;overflow-wrap:anywhere;}
+.gv-lc-group span{color:var(--ink-soft);font-size:calc(15px * var(--scale));line-height:1.45;}
+.gv-lc-group small{margin-top:auto;padding-top:4px;font-family:'Barlow Condensed',sans-serif;letter-spacing:1px;text-transform:uppercase;font-weight:700;font-size:calc(14px * var(--scale));color:var(--ink);}
+.gv-lc-group small i{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--rc);margin-right:8px;}
+.gv-lc-allg{margin:18px 0 0;}
+.gv-lc-cbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;}
+.gv-lc-card .gv-lc-cbtns .btn{margin-top:0;}`;
+  document.head.appendChild(st);
+}
+function lcGroupsHtml() {
+  return `<div class="gv-lc-groups" role="list">${lcRingsShown().map(r => { const n = LC.filter(t => lcInRing(t, r)).length; if (!n || !LC.some(t => t.ring === r.key)) return '';
+    return `<div role="listitem" style="display:flex;min-width:0"><button type="button" class="gv-lc-group" style="--rc:${r.color};flex:1" data-act="lc-ring" data-id="${r.key}" aria-label="${esc(r.name)}, ${n} ${n === 1 ? 'guide' : 'guides'}"><b>${esc(r.name)}</b><span>${esc(r.blurb)}</span><small><i></i>${n} ${n === 1 ? 'guide' : 'guides'}</small></button></div>`; }).join('')}</div>`;
+}
+// The guides list: Picked for Us first, then the group cards; a chosen group, or a search, shows its guide cards.
 function lcListHtml() {
   const st = S.lc; let h = '', n = 0;
   if (G && st.ring === 'all' && !st.q) {
     const picks = lcPicks(6);
     if (picks.length) h += `<div class="gv-lc-ring gv-lc-picked" style="--rc:var(--gold)"><h3><i></i>Picked for Us</h3><p>Guides that fit ${esc(KW().we)} right now, from What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide stays open.</p><div class="gv-lc-grid">${picks.map(lcCard).join('')}</div></div>`;
   }
-  (st.q && !lcSoberOn() ? [SOBER_RING].concat(LC_RINGS) : lcRingsShown()).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => { // a search looks in every ring, Living Sober too
-    const ts = LC.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q)); if (!ts.length) return;
+  if (st.ring === 'all' && !st.q) return h + lcGroupsHtml();
+  const back = st.q ? '' : `<button type="button" class="text-btn gv-lc-allg no-print" id="gv-lc-allg" data-act="lc-ring" data-id="all">${icon('back', 'gv-ic-inline')} All Groups</button>`;
+  (st.q ? [SOBER_RING].concat(LC_RINGS) : lcRingsShown()).filter(r => st.q || r.key === st.ring).forEach(r => { // a search looks in every ring, Living Sober too
+    const ts = LC.filter(t => (st.q ? t.ring === r.key : lcInRing(t, r)) && lcMatches(t, st.q)); if (!ts.length) return; // a search lists each guide once, in its own ring
     const ord = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t)));
     n += ts.length;
     h += `<div class="gv-lc-ring" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="gv-lc-grid">${ord.map(lcCard).join('')}</div></div>`;
   });
-  return n ? h : `<div class="card"><p>No guides match “${esc(st.q)}.” Try another word, or browse every topic.</p></div>`;
+  return back + (n ? h : `<div class="card"><p>No guides match “${esc(st.q)}.” Try another word, or browse every group.</p></div>`);
 }
 function viewLife() {
   const st = S.lc;
@@ -970,6 +996,7 @@ function viewLife() {
   let h = `<div class="section-head"><p class="gv-kicker">When Life Changes Together</p><h2>Guides for the changes we go through together</h2>
     <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree app.</p></div>`;
   if (!LC.length) return h + `<div class="card"><p>The guides are on the way.</p></div>` + helpCardHtml(true);
+  lcStyle();
   h += `<input class="gv-input gv-lc-search" id="gv-lcq" type="search" placeholder="Search: a move, a new baby, hospice, a team..." aria-label="Search the guides" value="${esc(st.q)}" enterkeyhint="search">
     <div class="gv-chips" role="group" aria-label="Filter by topic"><button type="button" class="chip${st.ring === 'all' ? ' on' : ''}" aria-pressed="${st.ring === 'all'}" data-act="lc-ring" data-id="all">All Topics</button>${filled.map(r => `<button type="button" class="chip${st.ring === r.key ? ' on' : ''}" aria-pressed="${st.ring === r.key}" data-act="lc-ring" data-id="${r.key}" style="--rc:${r.color}">${esc(r.name)}</button>`).join('')}</div>`;
   if (G && G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see Picked for Us, from your check-in and What's Changed Lately. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
@@ -1668,7 +1695,8 @@ document.addEventListener('click', e => {
   else if (act === 'glockon') { const data = VAULTS[G.id] || Object.assign(blankVault(), G.plainBox || {}); VAULTS[G.id] = data; G.lockOn = true; choosePass('').then(ok => { if (!ok) { G.lockOn = false; } else G.plainBox = null; save(); render(); }); }
   else if (act === 'lc-open') lcOpen(id);
   else if (act === 'lc-back') { if (history.state && history.state.gList && S.lc.open) { history.back(); return; } S.lc.open = null; render(); const a = $('#app'); if (a) a.scrollIntoView(); pushHash(); }
-  else if (act === 'lc-ring') { S.lc.ring = id || 'all'; render(); }
+  else if (act === 'lc-ring') { const fromCard = b.classList.contains('gv-lc-group'), fromBack = b.id === 'gv-lc-allg', was = S.lc.ring; S.lc.ring = id || 'all'; render();
+    if (fromCard) { const x = $('#gv-lc-allg'); if (x) x.focus(); } else if (fromBack) { const x = document.querySelector('.gv-lc-group[data-id="' + was + '"]'); if (x) x.focus(); } }
   else if (act === 'lc-persp') { S.lc.persp = id === 'leader' ? 'leader' : 'group'; const y = window.scrollY; render(); window.scrollTo(0, y); }
   else if (act === 'lc-watch') lcWatch(id, b.dataset.side === 'helper' ? 'helper' : 'you');
   else if (act === 'lc-print') lcPrint(id);

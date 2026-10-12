@@ -3395,6 +3395,10 @@ const LC_TOPICS = [
    [
     "NAMI (National Alliance on Mental Illness)",
     "https://www.nami.org"
+   ],
+   [
+    "Sequoia: When Your Adult Child Drinks or Uses (Living Sober)",
+    "/sequoia/#life=sober-adult-child"
    ]
   ]
  },
@@ -5490,6 +5494,10 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "Community Reinforcement and Family Training (CRAFT), Robert J. Meyers",
     "https://www.robertjmeyersphd.com/cra-approach/community-reinforcement-and-family-training-approach"
+   ],
+   [
+    "Sequoia: Worry About Adult Children",
+    "/sequoia/#life=worry-adult-children"
    ]
   ],
   "sources": [

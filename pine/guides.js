@@ -42,7 +42,7 @@ const LC_RINGS = [
   "key": "pn-mind",
   "name": "Mind and Mood",
   "color": "#3F5A7A",
-  "blurb": "Anxiety, depression, self-harm, and getting counseling."
+  "blurb": "Anxiety, low moods, self-harm, and finding the right support."
  },
  {
   "key": "pn-online",
