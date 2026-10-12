@@ -1046,7 +1046,7 @@
   function lifeGo(fn) {
     if (window.GGLife) return fn();
     var s = document.querySelector('script[data-gglife]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b788'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b789'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { if (window.GGLife) fn(); });
     s.addEventListener('error', function () { toast('That could not load. Check the connection and try again.'); });
   }

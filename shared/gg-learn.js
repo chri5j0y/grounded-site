@@ -54,7 +54,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b788';
+  var V = 'b789';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -573,7 +573,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b788'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b789'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -963,7 +963,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b788', aspen: '/aspen/guide-videos.js?v=b788', maple: '/maple/guide-videos.js?v=b788', sequoia: '/sequoia/guide-videos.js?v=b788', pine: '/pine/guide-videos.js?v=b788', birch: '/birch/guide-videos.js?v=b788', grove: '/grove/guide-videos.js?v=b788' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b789', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b789' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -981,7 +981,7 @@
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
-      return script(url('/shared/gg-life.js?v=b788'), function () { return !!window.GGLife; });
+      return script(url('/shared/gg-life.js?v=b789'), function () { return !!window.GGLife; });
     });
   }
   // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first

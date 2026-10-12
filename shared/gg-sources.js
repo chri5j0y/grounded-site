@@ -462,12 +462,56 @@
     williams07: ["Kipling D. Williams, Ostracism (Annual Review of Psychology, 2007): being left out registers as real pain and threatens the need to belong", "https://doi.org/10.1146/annurev.psych.58.110405.085641"],
     woolley10: ["Woolley, Chabris, Pentland, Hashmi, and Malone, evidence for a collective intelligence factor in the performance of human groups (Science, 2010): groups did better when speaking turns were shared evenly", "https://doi.org/10.1126/science.1193147"],
     // end BLD 783
+    // Living Sober (GWG BLD 789): every helper's new sources, one id per work.
+    // Kept ids. kelly10 also stands for kellywesterhoff10; meyers02 for craft and sqsocraft; narcanotc for fdanarcan23 (see ALIAS).
+    kelly10: ["Kelly and Westerhoff, does it matter how we refer to individuals with substance-related conditions? A randomized study of two commonly used terms (International Journal of Drug Policy, 2010)", "https://doi.org/10.1016/j.drugpo.2009.10.010"],
+    bowen09: ["Bowen and Marlatt, surfing the urge: brief mindfulness-based intervention for college student smokers (Psychology of Addictive Behaviors, 2009)", "https://doi.org/10.1037/a0017127", "a"],
+    marlatt85: ["G. Alan Marlatt and Judith R. Gordon, Relapse Prevention: Maintenance Strategies in the Treatment of Addictive Behaviors (Guilford, 1985)", ""],
+    witkiewitz04: ["Witkiewitz and Marlatt, relapse prevention for alcohol and drug problems: that was Zen, this is Tao (American Psychologist, 2004)", "https://pubmed.ncbi.nlm.nih.gov/?term=Relapse+prevention+for+alcohol+and+drug+problems+that+was+Zen+this+is+Tao"],
+    randles13: ["Randles and Tracy, nonverbal displays of shame predict a return to drinking and declining health (Clinical Psychological Science, 2013)", "https://doi.org/10.1177/2167702612470645"],
+    prochaska83: ["Prochaska and DiClemente, stages and processes of self-change of smoking: toward an integrative model of change (Journal of Consulting and Clinical Psychology, 1983)", "https://digitalcommons.uri.edu/psy_facpubs/572"],
+    meyers02: ["Meyers, Miller, Smith, and Tonigan, a randomized trial of two methods for engaging treatment-refusing drug users through concerned significant others, the CRAFT approach (Journal of Consulting and Clinical Psychology, 2002)", "https://doi.org/10.1037/0022-006X.70.5.1182"],
+    felitti98: ["Felitti and colleagues, the Adverse Childhood Experiences (ACE) Study (American Journal of Preventive Medicine, 1998)", "https://doi.org/10.1016/S0749-3797(98)00017-8"],
+    cdcaces: ["CDC, Adverse Childhood Experiences (ACEs)", "https://www.cdc.gov/aces/"],
+    khantzian97: ["Edward J. Khantzian, the self-medication hypothesis of substance use disorders: a reconsideration and recent applications (Harvard Review of Psychiatry, 1997)", "https://doi.org/10.3109/10673229709030550"],
+    dennis07: ["Dennis, Foss, and Scott, an eight-year perspective on the relationship between the duration of abstinence and other aspects of recovery (Evaluation Review, 2007)", "https://doi.org/10.1177/0193841X07307771"],
+    volkow01: ["Volkow and colleagues, dopamine transporters recover with long abstinence from methamphetamine (Journal of Neuroscience, 2001)", "https://doi.org/10.1523/JNEUROSCI.21-23-09414.2001"],
+    litt09: ["Litt, Kadden, Kabela-Cormier, and Petry, changing network support for drinking: Network Support Project two-year follow-up (Journal of Consulting and Clinical Psychology, 2009)", "https://doi.org/10.1037/a0015252"],
+    lewicki16: ["Lewicki, Polin, and Lount, an exploration of the structure of effective apologies (Negotiation and Conflict Management Research, 2016)", "https://doi.org/10.1111/ncmr.12073"],
+    feigelman12: ["Feigelman, Jordan, McIntosh, and Feigelman, Devastating Losses: How Parents Cope with the Death of a Child to Suicide or Drugs (Springer, 2012)", ""],
+    black81: ["Claudia Black, It Will Never Happen to Me (1981): the don't talk, don't trust, don't feel rules in families living with drinking", ""],
+    grant97: ["Grant and Dawson, age at onset of alcohol use and later alcohol problems (Journal of Substance Abuse, 1997)", ""],
+    graham24: ["Graham and colleagues, a vaping cessation text message program for adolescent e-cigarette users: a randomized clinical trial (JAMA, 2024)", "https://jamanetwork.com/journals/jama/fullarticle/2822082"],
+    arhe: ["Association of Recovery in Higher Education (ARHE), collegiate recovery programs", "https://collegiaterecovery.org/"],
+    asamaw: ["American Society of Addiction Medicine, Clinical Practice Guideline on Alcohol Withdrawal Management (2020)", "https://www.asam.org/quality-care/clinical-guidelines/alcohol-withdrawal-management-guideline"],
+    fdabenzo20: ["US Food and Drug Administration, Boxed Warning updated to improve safe use of benzodiazepine drug class (2020)", "https://www.fda.gov/drugs/drug-safety-and-availability/fda-requiring-boxed-warning-updated-improve-safe-use-benzodiazepine-drug-class"],
+    cdcnaloxone: ["CDC, Reversing Opioid Overdoses with Lifesaving Naloxone (fact sheet)", "https://www.cdc.gov/overdose-resources/search/pages/Naloxone-Fact-Sheet.html"],
+    mngoodsam: ["Minnesota Statutes 604A.05, Good Samaritan overdose medical assistance", "https://www.revisor.mn.gov/statutes/cite/604A.05"],
+    nidadbb: ["NIDA, Drugs, Brains, and Behavior: The Science of Addiction", "https://nida.nih.gov/publications/drugs-brains-behavior-science-addiction"],
+    nidatreat: ["NIDA, Drugs, Brains, and Behavior: The Science of Addiction, Treatment and Recovery", "https://nida.nih.gov/publications/drugs-brains-behavior-science-addiction/treatment-recovery"],
+    niaaanav: ["NIAAA Alcohol Treatment Navigator", "https://alcoholtreatment.niaaa.nih.gov/"],
+    samhsahelp: ["SAMHSA National Helpline", "https://www.samhsa.gov/find-help/national-helpline"],
+    sqsonia: ["National Institute on Aging, Facts About Aging and Alcohol (2022)", "https://www.nia.nih.gov/health/alcohol-misuse-or-alcohol-use-disorder/facts-about-aging-and-alcohol"],
+    sqsoniaaa: ["NIAAA Director's Blog, A Growing Concern: Increased Drinking Among Older Adults", "https://www.niaaa.nih.gov/about-niaaa/directors-page/niaaa-directors-blog/growing-concern-increased-drinking-among-older-adults"],
+    sqsofda: ["US Food and Drug Administration, Drug Safety Communication: serious risks and death when combining opioid pain or cough medicines with benzodiazepines (2016)", "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-fda-warns-about-serious-risks-and-death-when-combining-opioid-pain-or"],
+    sqsogu: ["Generations United, grandfamilies and the opioid epidemic: a GRANDResource (2019)", "https://www.gu.org/app/uploads/2019/01/Grandfamilies-Report-GRANDResource-Opioids.pdf"],
+    maf180: ["Philip Maffetone, the MAF 180 Formula for easy aerobic training", "https://philmaffetone.com/180-formula/", "a"],
+    linehan15: ["Marsha M. Linehan, DBT Skills Training Manual, second edition (2015): cool water for the TIPP skill", "https://www.guilford.com/books/DBT-Skills-Training-Manual/Marsha-Linehan/9781462516995", "a"],
+    // Books on Chris's shelf, linked to their Library card.
+    sheff08: ["David Sheff, Beautiful Boy (2008)", SHELF + "LT-025"],
+    levine14: ["Noah Levine, Refuge Recovery (2014)", SHELF + "CM-013", "a"],
+    nestor20: ["James Nestor, Breath (2020)", SHELF + "BD-001", "a"],
+    wimhof20: ["Wim Hof, The Wim Hof Method (2020)", SHELF + "BD-002", "a"],
+    huberman25: ["Andrew D. Huberman, Protocols (2025)", SHELF + "BD-003"],
+    // end BLD 789
 };
 
   // Written guides, videos, and lessons. 'unknown' adds "Source unknown" for a line that needs one.
   // One work, one id (GWG BLD 788). Older ids that sealed lessons still carry read forward to the kept id,
   // so a Sources line that cites both shows the work once.
-  var ALIAS = { kbia988asl: 'asl988', socialmodel: 'barnessocial', carterbelong: 'carter19', samhsarecovery: 'samhsarec' };
+  var ALIAS = { kbia988asl: 'asl988', socialmodel: 'barnessocial', carterbelong: 'carter19', samhsarecovery: 'samhsarec',
+    // Living Sober (GWG BLD 789)
+    kellywesterhoff10: 'kelly10', craft: 'meyers02', sqsocraft: 'meyers02', fdanarcan23: 'narcanotc' };
   Object.keys(ALIAS).forEach(function (a) { SRC[a] = SRC[ALIAS[a]]; });
 
   var C = {
@@ -718,7 +762,7 @@
     "birch:purpose": ["bronk18", "damon03", "mlq"],
     "birch:selfharm": ["cornellsirr", "dazzi"],
     "birch:sexual-assault": ["moller17", "nisvs"],
-    "birch:substances": ["mtfpanel24", "diforti", "deaonepill", "narcanotc"],
+    "birch:substances": ["mtfpanel24", "deaonepill", "narcanotc"],
     "birch:suicide-thoughts": ["nsduh24", "stanley", "dazzi", "meansmatter"],
     "birch:what-now": ["damon08", "mlq"],
     "birch:young-parent": ["prams18", "paulson10"],
@@ -836,8 +880,30 @@
     "sequoia:invisible": ["levy02", "levy14", "whoageism"],
     "sequoia:volunteering": ["anderson"],
     "sequoia:estrangement": ["pillemer"],
-    "sequoia:hearing": ["nidcd"]
+    "sequoia:hearing": ["nidcd"],
     // end BLD 788
+    // Written Living Sober guides (GWG BLD 789).
+    "maple:sober-grown-up-drinks": ["mccabe25", "sevencs"],
+    "maple:sober-never-your-fault": ["sevencs"],
+    "maple:sober-getting-better": ["samhsarec"],
+    "maple:sober-staying-safe": ["narcanotc"],
+    "maple:sober-loved-one-dies": ["dougy"],
+    "oak:sober-change": ["rollnick08", "asamaw", "narcanotc"],
+    "oak:sober-cravings": ["bowen09", "marlatt85"],
+    "oak:sober-first-30": ["asamaw", "fdabenzo20", "cdcnaloxone", "narcanotc"],
+    "oak:sober-first-year": ["dennis07", "samhsarec"],
+    "oak:sober-healing": ["khantzian97", "felitti98", "vanderkolk14", "pennebaker"],
+    "oak:sober-overdose-grief": ["doka", "feigelman12"],
+    "oak:sober-partner": ["craft", "meyers02"],
+    "oak:sober-repair": ["lewicki16", "tangney"],
+    "oak:sober-slip": ["marlatt85", "tangney", "neff", "cdcnaloxone"],
+    "oak:sober-work-friends": ["litt09"],
+    "grove:sober-family": ["samhsarec", "sevencs"],
+    "grove:sober-kids-talk": ["sevencs"],
+    "grove:sober-trust": ["samhsarec"],
+    "grove:sober-teammate": ["kelly10"],
+    "grove:sober-welcome": ["kelly10", "waters19"]
+    // end BLD 789
   };
 
   // Practices by name, everywhere they appear. P_RE is matched against the name (Aspen names are sentences).
@@ -876,8 +942,22 @@
     "rest day": ["brenner"],
     "my brain grows": ["yeager19"],
     "purpose reflection": ["bronk18", "damon03"],
-    "study sprints": [{"label": "Francesco Cirillo, the Pomodoro Technique", "href": "", "adapted": true}]
+    "study sprints": [{"label": "Francesco Cirillo, the Pomodoro Technique", "href": "", "adapted": true}],
     // end BLD 739
+    // Living Sober practices (GWG BLD 789).
+    "morning rhythm": ["huberman25"],
+    "surf the wave": ["bowen09"],
+    "slow, low, and long": ["nestor20"],
+    "easy run by heart rate": ["maf180", "ratey08"],
+    "sauna and cool water": ["wimhof20", "linehan15"],
+    "a walk among trees": ["li18"],
+    "write it out": ["pennebaker"],
+    "evening wind down": ["huberman25"],
+    "let the good sink in": ["hanson09"],
+    "feel it, name it, move it": ["lieberman"],
+    "ride the wave": ["bowen09"],
+    "move it out": ["ratey08", "cdcpa"]
+    // end BLD 789
   };
   var P_RE = [[/three good things/i, ['seligman']]];
   // Extra credits where one app's own words make a research claim (Oak's "Why it helps").

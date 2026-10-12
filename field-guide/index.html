@@ -643,8 +643,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b787"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b784"></script>
-<script src="../shared/gg-sources.js?v=b788"></script>
-<script src="../shared/gg-learn.js?v=b788"></script>
+<script src="../shared/gg-sources.js?v=b789"></script>
+<script src="../shared/gg-learn.js?v=b789"></script>
 <script src="../shared/gg-print.js?v=b787"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -661,7 +661,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b788"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b788"></script>
+<script src="../shared/gg-stories.js?v=b789"></script>
 <script src="vault.js?v=b788"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -9363,7 +9363,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b788', '../aspen/guides.js?v=b788', '../oak/guides.js?v=b788', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b788', '../pine/guides.js?v=b788', '../birch/guides.js?v=b788'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b789', '../aspen/guides.js?v=b789', '../oak/guides.js?v=b789', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b789', '../pine/guides.js?v=b789', '../birch/guides.js?v=b789'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
