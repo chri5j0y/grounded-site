@@ -8684,7 +8684,7 @@ function vWLPerson(c){
     ${p.changed ? `<p><span class="muted">${esc(S.plan.changed)}:</span> ${esc(p.changed)}</p>` : ''}</div>`).join('') : `<p class="muted" style="margin-top:8px">${esc(S.plan.empty)}</p>`}
    ${V.wlpe && V.wlpe.c === c.id ? wlPlanForm(c) : ''}</div>
   <div class="grid g2" style="margin-top:14px">
-   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
+   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
    <div class="card"><h3>${esc(S.hope.title)}</h3><p class="muted" style="font-size:14px">${esc(S.hope.lead)}</p>
     ${S.hope.fields.map(f => `<label class="f" for="wl-h-${f[0]}">${esc(f[1])}</label><textarea id="wl-h-${f[0]}" data-wlh="${f[0]}" style="min-height:60px" placeholder="${esc(f[2])}">${esc(h[f[0]] || '')}</textarea>`).join('')}
     <p class="muted" style="font-size:13px;margin-top:6px">${h.date ? 'Last changed ' + nice(h.date) + '. ' : ''}${esc(S.hope.source)}</p></div></div>
@@ -8950,7 +8950,7 @@ function wlFaithStep(c){
   let h = `<div class="run-step-n">Faith comes first</div><h2 class="run-step-t">Faith, spirit, or something else</h2>
    <div class="card step-card">${blk('Ask', [WC.C.guide.opening.faith], 'say')}<div class="tipbox">${esc(WLG().faithTip)}</div></div>`;
   if (cur && !RUN.faithEdit){
-    h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(cur.never)}</p>` : ''}
+    h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(cur.never)}</p>` : ''}
       <p style="margin-top:10px"><b>Ask: "Is that still true for you?"</b></p>
       <div class="st-opts">${stChip('wl-fcheck', 'data-v="same"', RUN.faithCheck === 'same', 'Yes, still true')}${stChip('wl-fcheck', 'data-v="changed"', RUN.faithCheck === 'changed', 'Something has changed')}${stChip('wl-fcheck', 'data-v="skip"', RUN.faithCheck === 'skip', 'Not today')}</div></div>
       ${cur.trad ? wlCardHTML(cur.trad) : ''}`;
