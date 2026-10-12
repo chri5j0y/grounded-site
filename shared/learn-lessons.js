@@ -20,7 +20,7 @@
    From Chris's Shelf (GWG BLD 787): Learn videos drawn from the books on Chris's shelf, in our own words, added insert only from
    patches/bld787/source/gl/add.py in grounded-workshop: <app>-shelf, <app>-shelf-try, and the unlisted willow-faith track.
    Living Sober (GWG BLD 789): Growing a Healthy Tree in Birch, Oak, Sequoia (12) and Pine (5), low-key tracks (lowkey: 'sober',
-   listed only when Living Sober is chosen, still opened by id), and the Grove's Family Sober Night, added insert only from
+   listed only when Living Sober is chosen, still opened by id), and the Grove's Family Night, added insert only from
    patches/bld789/L/add.py in grounded-workshop.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
@@ -45984,27 +45984,24 @@ window.GG_LEARN = {
     {
      "id": "gr-r-sobernight",
      "n": 14,
-     "title": "Family Sober Night",
+     "title": "Family Night",
      "mins": 4,
-     "blurb": "One evening a week of good sober time together: a meal, something fun, and a round of thanks.",
+     "blurb": "One evening a week together: a meal everyone helps make, something fun, and a round of thanks.",
      "sources": [],
-     "life": [
-      "sober"
-     ],
      "scenes": [
       {
        "k": "title",
        "hero": "grove",
        "eyebrow": "Do This Together",
-       "h": "Family Sober Night",
+       "h": "Family Night",
        "sub": "Good time together, every week.",
-       "say": "This is Family Sober Night. One evening a week, your family shares a meal, does something fun, and says thank you. It is good for every family, and it is a strong support when someone in your family is growing sober."
+       "say": "This is Family Night. One evening a week, your family makes a meal together, does something fun, and says thank you. It takes about an hour, and it gives everyone something to look forward to."
       },
       {
        "k": "big",
        "h": "The best part is us.",
        "sub": "Real food, good fun, and each other.",
-       "say": "A Sober Night has no alcohol, and it is built around the best parts of being a family. Real food, good fun, and each other. Everyone is fully here, and everyone gets to remember it."
+       "say": "Family Night is built around the best parts of being a family. Real food, good fun, and each other. Everyone is here, all the way, together."
       },
       {
        "k": "flow",
@@ -46015,7 +46012,7 @@ window.GG_LEARN = {
          "The same one each week"
         ],
         [
-         "Share a meal",
+         "Make a meal",
          "Everyone helps"
         ],
         [
@@ -46027,7 +46024,7 @@ window.GG_LEARN = {
          "One good thing each"
         ]
        ],
-       "say": "Here is how it goes. Pick the night, the same one each week, so everyone can count on it. Share a meal, and let everyone help. Do something fun together, something that moves you or makes you laugh. Then close with thanks, one good thing from the week, each."
+       "say": "Here is how it goes. Pick the night, the same one each week, so everyone can count on it. Make a meal together, and give everyone a job, from washing to stirring to setting the table. Do something fun together, something that moves you or makes you laugh. Then close with thanks, one good thing from the week, each."
       },
       {
        "k": "points",
@@ -46088,10 +46085,10 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Plan our first Sober Night.",
+       "h": "Plan our first Family Night.",
        "sub": "Each person picks one part.",
        "beats": [
-        "Let us plan our first Sober Night right now.",
+        "Let us plan our first Family Night right now.",
         "Each person picks one part.",
         "Who picks the meal?",
         "Who picks the special drink?",
@@ -46101,20 +46098,20 @@ window.GG_LEARN = {
          "w": 30
         }
        ],
-       "say": "Let us plan our first Sober Night right now. Each person picks one part. Who picks the meal? Who picks the special drink? Who picks the fun? Say your choices out loud, and choose the night together."
+       "say": "Let us plan our first Family Night right now. Each person picks one part. Who picks the meal? Who picks the special drink? Who picks the fun? Say your choices out loud, and choose the night together."
       },
       {
        "k": "card",
-       "title": "If someone is growing sober",
-       "body": "Ask them what helps. Keep it easy and kind.",
-       "say": "If someone in your family is growing sober, ask them what would make Sober Night good for them. Keep it easy and kind. A Sober Night is a celebration of the healthy home you are growing together, one week at a time."
+       "title": "Keep it easy",
+       "body": "Simple food, one fun thing, and everyone welcome.",
+       "say": "Keep it easy. Simple food, one fun thing, and everyone welcome, from the youngest to the oldest. A quiet Family Night counts just as much as a big one. What matters is being together, week after week."
       },
       {
        "k": "points",
        "h": "Find it in The Grove",
        "items": [
         [
-         "Family Sober Night",
+         "Family Night",
          "In Together, under Fruit"
         ],
         [
@@ -46126,13 +46123,13 @@ window.GG_LEARN = {
          "Tap it, and the grove grows"
         ]
        ],
-       "say": "You will find Family Sober Night in Together, under Fruit. Put it in your Growth Plan, anchored to your night. When you have done it, tap We did this today, and the grove grows."
+       "say": "You will find Family Night in Together, under Fruit. Put it in your Growth Plan, anchored to your night. When you have done it, tap We did this today, and the grove grows."
       },
       {
        "k": "big",
        "h": "Good time together grows the whole tree.",
-       "sub": "See you at Sober Night.",
-       "say": "Good time together grows the whole family tree. See you at Sober Night."
+       "sub": "See you at Family Night.",
+       "say": "Good time together grows the whole family tree. See you at Family Night."
       }
      ]
     }
