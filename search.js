@@ -158,7 +158,7 @@
   // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
   var GPART = null;
   function loadGrove() {
-    return Promise.all(['/grove/data.js', '/grove/library.js'].map(function (u) {
+    return Promise.all(['/grove/data.js?v=b782', '/grove/library.js?v=b788'].map(function (u) {
       return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
     })).then(function (t) {
       try {
@@ -172,7 +172,7 @@
   // The Grounded library (Library session): read as text, so a page that already loaded books.js isn't disturbed.
   var BOOKS = [];
   function loadBooks() {
-    return fetch('/library/books.js').then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
+    return fetch('/library/books.js?v=l1').then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
       var sec = {}, m = /const SECTIONS = \{([\s\S]*?)\};/.exec(txt);
       if (m) m[1].replace(/([A-Z]{2}):\s*\['([^']+)'/g, function (a, k, n) { sec[k] = n; });
       var d = /const BOOK_DATA = `([\s\S]*?)`/.exec(txt);
@@ -188,7 +188,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js'), load('/aspen/guides.js'), load('/pine/guides.js?v=b782'), load('/birch/guides.js?v=b782'), load('/oak/guides.js?v=b787'), load('/sequoia/guides.js?v=b782'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b783'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b788'), load('/aspen/guides.js?v=b788'), load('/pine/guides.js?v=b788'), load('/birch/guides.js?v=b788'), load('/oak/guides.js?v=b788'), load('/sequoia/guides.js?v=b788'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b788'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -381,7 +381,7 @@
     if (!c && !a) return '';
     return '<div class="ss-crisis" role="note"><b>If someone is in danger right now, call 911.</b>' +
       '<p>For thoughts of suicide or any mental health crisis, call or text <a href="tel:988">988</a>, any time, day or night.</p>' +
-      (a ? '<p>For child abuse: Childhelp, <a href="tel:18004224453">1-800-422-4453</a>. For abuse at home: the National Domestic Violence Hotline, <a href="tel:18007997233">1-800-799-7233</a>.</p>' : '') +
+      (a ? '<p>For child abuse: Childhelp, <a href="tel:18004224453">1-800-422-4453</a>. For abuse at home: the National Domestic Violence Hotline, <a href="tel:18007997233">1-800-799-7233</a>. For a vulnerable adult in Minnesota: MAARC, <a href="tel:18448801574">1-844-880-1574</a>, any time.</p>' : '') +
       '</div>';
   }
   function rowHTML(it, opts) {

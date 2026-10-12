@@ -3359,7 +3359,7 @@ window.GROVE_KINDS = {
    "kinds": [
     "team"
    ],
-   "name": "Ask, Don't Assume",
+   "name": "Ask First",
    "text": "When someone seems off, ask simply how they are, and listen.",
    "steps": "Notice when someone seems off.|Ask: how are you doing, really?|Listen.|Offer help if you can."
   },

@@ -100,7 +100,7 @@ const DEF = {
   processional: [
     {id: 'traditional', t: 'Traditional', lead: 'Family is seated, the officiant and [Partner 2] wait at the front, the attendants walk in, and [Partner 1] comes last.', order: ['grandparents', 'p2parents', 'p1parents', 'officiant', 'p2', 'att2', 'att1', 'honor2', 'honor1', 'ring', 'flower', 'p1'], recessional: ['p1', 'p2', 'flower', 'ring', 'honor1', 'honor2', 'att1', 'att2', 'p1parents', 'p2parents', 'grandparents']},
     {id: 'together', t: 'Walking In Together', lead: 'The two of you walk in side by side, after everyone else.', order: ['grandparents', 'p1parents', 'p2parents', 'officiant', 'att1', 'att2', 'honor1', 'honor2', 'ring', 'flower', 'p1'], recessional: ['p1', 'p2', 'flower', 'ring', 'honor1', 'honor2', 'att1', 'att2', 'p1parents', 'p2parents', 'grandparents']},
-    {id: 'parents', t: 'Each With Parents', lead: 'Each of you walks in with your parents, one after the other.', order: ['grandparents', 'officiant', 'att1', 'att2', 'honor1', 'honor2', 'ring', 'flower', 'p2', 'p1'], recessional: ['p1', 'p2', 'flower', 'ring', 'honor1', 'honor2', 'att1', 'att2', 'p1parents', 'p2parents', 'grandparents']},
+    {id: 'parents', t: 'Each with Parents', lead: 'Each of you walks in with your parents, one after the other.', order: ['grandparents', 'officiant', 'att1', 'att2', 'honor1', 'honor2', 'ring', 'flower', 'p2', 'p1'], recessional: ['p1', 'p2', 'flower', 'ring', 'honor1', 'honor2', 'att1', 'att2', 'p1parents', 'p2parents', 'grandparents']},
     {id: 'small', t: 'Small and Simple', lead: 'Just the officiant, your two witnesses or honor attendants, and the two of you.', order: ['officiant', 'honor1', 'honor2', 'witness', 'p1'], recessional: ['p1', 'p2', 'honor1', 'honor2', 'witness']}],
   license: {title: 'The License', say: 'Let us walk through the marriage license together, so nothing surprises you.', intro: 'Apply at any Minnesota county office. Each line below has its source. Anything marked Check with the County is worth a quick call.',
     countyLine: 'Stearns County serves St. Cloud; any Minnesota county can issue the license.', phoneLine: ['The license', 'Apply at any Minnesota county office together, and bring the license to me before the ceremony.']},
@@ -141,7 +141,7 @@ const DEF = {
     blocks: [{h: 'Welcome', t: 'Thank everyone for coming. Introduce yourself and the coordinator, and say the plan: we walk it twice.', min: 5}, {h: 'Places', t: 'Everyone stands where they will stand at the end of the processional, so they see the picture first.', min: 5},
       {h: 'The Processional', t: 'Walk the processional in order, with the music if it is here. Space each person about halfway down the aisle from the one before.', min: 10}, {h: 'The Ceremony, Walked Through', t: 'Walk through each part in order: who moves, who hands the rings, where the readers stand, and the unity ritual.', min: 10},
       {h: 'The Recessional', t: 'Walk out in pairs, in order, after the kiss and the presentation.', min: 5}, {h: 'Once More', t: 'Run it once more from the top, start to finish, without stopping.', min: 15}, {h: 'Last Notes', t: 'Arrival times for the day, where the license and the rings go, and who holds the bouquet.', min: 5}],
-    places: L2(['front', 'At the Front With the Officiant'], ['p1side', "[Partner 1]'s Side"], ['p2side', "[Partner 2]'s Side"], ['row1p1', "Front Row, [Partner 1]'s Side"], ['row1p2', "Front Row, [Partner 2]'s Side"], ['aisle', 'Aisle Seat'], ['back', 'At the Back']),
+    places: L2(['front', 'At the Front with the Officiant'], ['p1side', "[Partner 1]'s Side"], ['p2side', "[Partner 2]'s Side"], ['row1p1', "Front Row, [Partner 1]'s Side"], ['row1p2', "Front Row, [Partner 2]'s Side"], ['aisle', 'Aisle Seat'], ['back', 'At the Back']),
     cues: L2(['music', 'Music Starts'], ['doors', 'Doors Open'], ['stand', 'Everyone Stands'], ['nod', 'The Officiant Nods'], ['kiss', 'After the Kiss'], ['recmusic', 'Recessional Music'])},
   checklist: [{id: 'license', t: 'Marriage license appointment', who: 'Couple'}, {id: 'witnesses', t: 'Two witnesses chosen', who: 'Couple'}, {id: 'rings', t: 'Rings', who: 'Couple'}, {id: 'vows', t: 'Vows written', who: 'Couple'},
     {id: 'music_files', t: 'Music to the musician or DJ', who: 'Couple'}, {id: 'unity', t: 'Unity ritual supplies', who: 'Couple'}, {id: 'programs', t: 'Programs printed', who: 'Family'}, {id: 'rehearsal_dinner', t: 'Rehearsal dinner place', who: 'Family'},
@@ -411,7 +411,7 @@ function fuDate(p, f){
 }
 function touches(p){
   const L = cfg().followUp.map(f => ({f, id: f.id, title: fill(f.title, p), date: fuDate(p, f)}));
-  arr(p.fuOwn).forEach(o => L.push({f: {id: o.id, title: o.title}, id: o.id, own: true, title: o.title || 'My Own Check-In', date: o.date || ''}));
+  arr(p.fuOwn).forEach(o => L.push({f: {id: o.id, title: o.title}, id: o.id, own: true, title: o.title || 'My Own Check-in', date: o.date || ''}));
   return L.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
 }
 function dueSoon(){
@@ -439,7 +439,7 @@ function custom(p, sid){
 }
 function star(p, key, lab){
   const on = !!p.stars[key];
-  return `<button type="button" class="wd-star" data-wda="star" data-wdv="${esc(key)}" data-wdl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back To This</button>`;
+  return `<button type="button" class="wd-star" data-wda="star" data-wdv="${esc(key)}" data-wdl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back to This</button>`;
 }
 function who(p, key, lab){
   const cur = key.startsWith('task.') ? (p.tasks[+key.slice(5)] || {}).who : p.tags[key];
@@ -592,7 +592,7 @@ function svcBlock(p){
       <span class="wd-mv"><button type="button" class="btn btn-line btn-sm" data-wda="svc-up" data-wdv="${esc(r.k)}" aria-label="Move ${esc(r.name)} up"${i ? '' : ' disabled'}${fk('su|' + r.k)}>&uarr;</button><button type="button" class="btn btn-line btn-sm" data-wda="svc-down" data-wdv="${esc(r.k)}" aria-label="Move ${esc(r.name)} down"${i < on.length - 1 ? '' : ' disabled'}${fk('sd|' + r.k)}>&darr;</button><button type="button" class="btn btn-line btn-sm" data-wda="svc-off" data-wdv="${esc(r.k)}" aria-label="Take out ${esc(r.name)}"${fk('so|' + r.k)}>Take Out</button></span></div>`).join('')}</div>
     <div class="wd-total"><span>Running total</span><b id="wd-tot">${c.total(p.svc)} minutes</b></div>
     ${off.length ? `<details class="wd-custom"><summary>More Parts to Add (${off.length})</summary><div class="wd-chips" style="margin-top:8px">${off.map(r => `<button type="button" class="chip" data-wda="svc-on" data-wdv="${esc(r.k)}"${fk('sa|' + r.k)}>${esc(r.name)}</button>`).join('')}</div></details>` : ''}
-    ${addOwn('svcpart', 'Add a part: a sign of peace, a toast...')}
+    ${addOwn('svcpart', 'Add a part: a sign of peace, a word of tribute...')}
     <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-wda="svc-open">Readings and Words in the Service Builder</button><button type="button" class="btn btn-line btn-sm" data-wda="svc-sync">Match the Couple's Choices Again</button></div>
     <p class="wd-sub">The vows, the declaration, the ring exchange, the kiss, and the pronouncement are parts here: choose the wording for each. The words for every part, Faith or Plain, and the printouts live in the Service Builder. This is the same ceremony.</p>`;
 }
@@ -816,9 +816,9 @@ function vFollow(p){
     return `<details class="wd-fu${st.done ? ' done' : ''}" data-wdfu="${esc(t.id)}"${open ? ' open' : ''}><summary><span class="wd-dot" aria-hidden="true"></span><b>${esc(t.title)}</b><span class="wd-when">${t.date ? esc(nice(t.date)) : ''}${st.done ? ' &middot; Done' : ''}</span></summary><div class="wd-fu-in">
       ${t.own ? '' : `<div class="wd-box"><h4>Ready-to-Send Email</h4><div class="wd-words">${esc(body)}</div><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-wda="fu-copy" data-wdv="${esc(t.id)}">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(cEm(p), sub, body))}">Open in Mail</a></div></div>
       <div class="wd-box"><h4>Phone Call</h4>${cl.open ? `<div class="wd-lbl">Opening</div><p>"${esc(fill(cl.open, p))}"</p>` : ''}${arr(cl.questions).length ? `<div class="wd-lbl">Gentle questions</div><ul>${cl.questions.map(q => `<li>${esc(fill(q, p))}</li>`).join('')}</ul>` : ''}${cl.listenFor ? `<div class="wd-lbl">Listen for</div><p>${esc(fill(cl.listenFor, p))}</p>` : ''}${f.invite ? `<div class="wd-lbl">The Grounded Marriage</div><p>${esc(fill(cfg().gmInvite, p, {Link: gmURL()}))}</p>` : ''}<div class="wd-crisis">${esc(cfg().crisis)}</div></div>`}
-      <div class="wd-box wd-full"><label class="wd-ck"><input type="checkbox" data-wdc="fu.${esc(t.id)}.done"${st.done ? ' checked' : ''}> Done</label><textarea rows="2" data-wdi="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-wda="fu-del" data-wdv="${esc(t.id)}">Remove This Check-In</button>` : ''}</div>
+      <div class="wd-box wd-full"><label class="wd-ck"><input type="checkbox" data-wdc="fu.${esc(t.id)}.done"${st.done ? ' checked' : ''}> Done</label><textarea rows="2" data-wdi="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-wda="fu-del" data-wdv="${esc(t.id)}">Remove This Check-in</button>` : ''}</div>
     </div></details>`; }).join('')}</div>
-  <div class="wd-g3"><div class="wd-fld"><label class="f" for="wd-fuo-t">Add Your Own Check-In</label><input type="text" id="wd-fuo-t" placeholder="Their first home, a new baby..." autocomplete="off"></div><div class="wd-fld"><label class="f" for="wd-fuo-d">Date</label><input type="date" id="wd-fuo-d"></div><div class="wd-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-wda="fu-add">Add Your Own</button></div></div>`, 'A thank-you a week after, and the first anniversary with an invitation to The Grounded Marriage.');
+  <div class="wd-g3"><div class="wd-fld"><label class="f" for="wd-fuo-t">Add Your Own Check-in</label><input type="text" id="wd-fuo-t" placeholder="Their first home, a new baby..." autocomplete="off"></div><div class="wd-fld"><label class="f" for="wd-fuo-d">Date</label><input type="date" id="wd-fuo-d"></div><div class="wd-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-wda="fu-add">Add Your Own</button></div></div>`, 'A thank-you a week after, and the first anniversary with an invitation to The Grounded Marriage.');
 }
 function vTidy(p){
   const ns = cfg().steps.map((s, i) => ({s, n: i + 1})).filter(x => (p.notes[x.s.id] || '').trim());
@@ -1267,7 +1267,7 @@ function vWriting(p){
   return blk(p, 'Writing Help', 'writing', (wa && wa.ans === 'yes' ? '' : `<p class="wd-warn" role="note">${esc(H0.reminder)} <button type="button" class="linkbtn" data-wda="step" data-wdv="1">Go to Welcome the Couple</button></p>`) +
     `<p class="wd-sub" style="margin-top:0">Copy for Writing Help makes a text with names turned into placeholders and contact details left out. Paste it into a chat with your writing assistant, then paste what comes back below. The names come back in on this device only.</p>
     <div class="wd-lbl">What to Write</div><div class="wd-chips">${arr(H0.pieces).map(x => `<button type="button" class="chip wd-sm" data-wda="wh-want" data-wdv="${esc(x.id)}" aria-pressed="${!!w.want[x.id]}"${fk('ww|' + x.id)}>${esc(x.id === 'vows1' ? vName(p, 'p1') + "'s Vows" : x.id === 'vows2' ? vName(p, 'p2') + "'s Vows" : x.t)}</button>`).join('')}</div>
-    ${w.want.other ? fld('wh.other', 'Other pieces to ask for', w.other, 'text', 'A blessing for the meal, a toast') : ''}
+    ${w.want.other ? fld('wh.other', 'Other pieces to ask for', w.other, 'text', 'A blessing for the meal, a word of tribute') : ''}
     <details class="wd-custom" style="margin-top:12px" data-wdanc="wh-map" data-wdkeep="whMap"${S.whMap ? ' open' : ''}><summary>Names and Placeholders (${M.length})</summary><p class="wd-sub">Kept only in this plan, on this device.</p>
       <ul class="wd-flist">${M.map(m => `<li><span>${esc(m.real)}</span><span>${esc(m.ph)}${arr(w.own).some(o => o.real === m.real) ? ` <button type="button" class="linkbtn" data-wda="wh-del" data-wdv="${esc(m.real)}">Remove</button>` : ''}</span></li>`).join('')}</ul>
       <div class="wd-add"><input type="text" id="wd-whreal" placeholder="Another name or place to hide" autocomplete="off" aria-label="Another name or place to hide">${kindSel}<button type="button" class="btn btn-line btn-sm" data-wda="wh-add" data-wdv="">Add</button></div>
@@ -1473,7 +1473,7 @@ function rail(p){
 }
 function cbt(p){
   const ks = Object.keys(p.stars);
-  return `<h2>Come Back To This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-wda="step" data-wdv="${p.stars[k].step}">&#9733; ${esc(p.stars[k].label)} <span class="muted">(Step ${p.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
+  return `<h2>Come Back to This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-wda="step" data-wdv="${p.stars[k].step}">&#9733; ${esc(p.stars[k].label)} <span class="muted">(Step ${p.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
 }
 function vPlan(p){
   const n = S.step, st = typeof n === 'number' ? STEP(n) : {title: n === 'finish' ? (cfg().finish.title || 'Finish') : 'Tidy Up'}, mode = S.mode;

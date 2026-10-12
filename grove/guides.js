@@ -150,22 +150,22 @@ const TOPICS = [
    [
     "maple",
     "new-baby",
-    "A new baby"
+    "A New Baby"
    ],
    [
     "aspen",
     "baby",
-    "A new baby or sibling"
+    "A New Baby or Sibling"
    ],
    [
     "oak",
     "newparent",
-    "Becoming a parent"
+    "Becoming a Parent"
    ],
    [
     "birch",
     "after-baby",
-    "After the baby: depression and anxiety for moms and dads"
+    "After the Baby: Depression and Anxiety for Moms and Dads"
    ]
   ],
   "reach": [
@@ -286,22 +286,22 @@ const TOPICS = [
    [
     "aspen",
     "moving",
-    "Moving away"
+    "Moving Away"
    ],
    [
     "pine",
     "moving",
-    "Moving or changing schools"
+    "Moving or Changing Schools"
    ],
    [
     "oak",
     "moving",
-    "Moving to a new place"
+    "Moving to a New Place"
    ],
    [
     "sequoia",
     "moving-home",
-    "Moving from the family home"
+    "Moving From the Family Home"
    ]
   ],
   "reach": [
@@ -420,22 +420,22 @@ const TOPICS = [
    [
     "maple",
     "blended",
-    "A new stepparent or blended family"
+    "A New Stepparent or Blended Family"
    ],
    [
     "aspen",
     "stepfamily",
-    "A new stepfamily"
+    "A New Stepfamily"
    ],
    [
     "pine",
     "stepfamily",
-    "A new stepfamily"
+    "A New Stepfamily"
    ],
    [
     "oak",
     "divorce",
-    "Divorce or a breakup"
+    "Divorce or a Breakup"
    ]
   ],
   "reach": [
@@ -548,27 +548,27 @@ const TOPICS = [
    [
     "oak",
     "aging-parents",
-    "Aging parents"
+    "Aging Parents"
    ],
    [
     "oak",
     "caregiving",
-    "Caring for someone who is ill"
+    "Caring for Someone Who Is Ill"
    ],
    [
     "sequoia",
     "care-move",
-    "Moving to assisted living or a nursing home"
+    "Moving to Assisted Living or a Nursing Home"
    ],
    [
     "sequoia",
     "burden",
-    "Feeling like a burden"
+    "Feeling Like a Burden"
    ],
    [
     "maple",
     "dementia",
-    "A grandparent with dementia"
+    "A Grandparent with Dementia"
    ]
   ],
   "reach": [
@@ -682,27 +682,27 @@ const TOPICS = [
    [
     "maple",
     "divorce",
-    "Divorce or separation"
+    "Divorce or Separation"
    ],
    [
     "aspen",
     "divorce",
-    "Divorce and two homes"
+    "Divorce and Two Homes"
    ],
    [
     "pine",
     "divorce",
-    "Parents' divorce or separation"
+    "Parents' Divorce or Separation"
    ],
    [
     "oak",
     "divorce",
-    "Divorce or a breakup"
+    "Divorce or a Breakup"
    ],
    [
     "birch",
     "parents-adult",
-    "You and your parents, as adults"
+    "You and Your Parents, as Adults"
    ]
   ],
   "reach": [
@@ -815,27 +815,27 @@ const TOPICS = [
    [
     "maple",
     "deployed",
-    "A parent deployed or away for work"
+    "A Parent Deployed or Away for Work"
    ],
    [
     "aspen",
     "deployed",
-    "A parent is deployed or far away"
+    "A Parent Is Deployed or Far Away"
    ],
    [
     "pine",
     "deployed",
-    "A parent deployed, and military family life"
+    "A Parent Deployed, and Military Family Life"
    ],
    [
     "birch",
     "military",
-    "Joining the military, and military life"
+    "Joining the Military, and Military Life"
    ],
    [
     "oak",
     "military",
-    "Coming home from military service"
+    "Coming Home From Military Service"
    ]
   ],
   "reach": [
@@ -955,27 +955,27 @@ const TOPICS = [
    [
     "maple",
     "home-conflict",
-    "Arguing and tension at home"
+    "Arguing and Tension at Home"
    ],
    [
     "maple",
     "anger",
-    "Anger and big outbursts"
+    "Anger and Big Outbursts"
    ],
    [
     "aspen",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ],
    [
     "pine",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ],
    [
     "oak",
     "struggling-child",
-    "Parenting a struggling child"
+    "Parenting a Struggling Child"
    ]
   ],
   "reach": [
@@ -1085,32 +1085,32 @@ const TOPICS = [
    [
     "pine",
     "depression",
-    "Depression and feeling numb"
+    "Depression and Feeling Numb"
    ],
    [
     "pine",
     "friend-changes",
-    "Friendship changes and losing a friend group"
+    "Friendship Changes and Losing a Friend Group"
    ],
    [
     "pine",
     "social-media",
-    "Social media, comparison, and phone balance"
+    "Social Media, Comparison, and Phone Balance"
    ],
    [
     "aspen",
     "phone",
-    "First phone and group chats"
+    "First Phone and Group Chats"
    ],
    [
     "oak",
     "struggling-child",
-    "Parenting a struggling child"
+    "Parenting a Struggling Child"
    ],
    [
     "birch",
     "parents-adult",
-    "You and your parents, as adults"
+    "You and Your Parents, as Adults"
    ]
   ],
   "reach": [
@@ -1234,17 +1234,17 @@ const TOPICS = [
    [
     "pine",
     "social-media",
-    "Social media, comparison, and phone balance"
+    "Social Media, Comparison, and Phone Balance"
    ],
    [
     "aspen",
     "sleep",
-    "Sleep, screens, and gaming"
+    "Sleep, Screens, and Gaming"
    ],
    [
     "aspen",
     "phone",
-    "First phone and group chats"
+    "First Phone and Group Chats"
    ],
    [
     "sequoia",
@@ -1363,27 +1363,27 @@ const TOPICS = [
    [
     "maple",
     "food-worries",
-    "Worries about food and eating"
+    "Worries About Food and Eating"
    ],
    [
     "aspen",
     "eating",
-    "Eating, food, and weight worries"
+    "Eating, Food, and Weight Worries"
    ],
    [
     "pine",
     "eating",
-    "Eating disorders"
+    "Eating Disorders"
    ],
    [
     "pine",
     "social-media",
-    "Social media, comparison, and phone balance"
+    "Social Media, Comparison, and Phone Balance"
    ],
    [
     "aspen",
     "phone",
-    "First phone and group chats"
+    "First Phone and Group Chats"
    ]
   ],
   "reach": [
@@ -1500,32 +1500,32 @@ const TOPICS = [
    [
     "maple",
     "meltdown",
-    "In the middle of a meltdown"
+    "In the Middle of a Meltdown"
    ],
    [
     "maple",
     "anger",
-    "Anger and big outbursts"
+    "Anger and Big Outbursts"
    ],
    [
     "maple",
     "worry",
-    "Worry that won't let go"
+    "Worry That Won't Let Go"
    ],
    [
     "aspen",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ],
    [
     "pine",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ],
    [
     "oak",
     "anger",
-    "Anger that runs hot"
+    "Anger That Runs Hot"
    ]
   ],
   "reach": [
@@ -1641,32 +1641,32 @@ const TOPICS = [
    [
     "maple",
     "money",
-    "Money worries or a job loss"
+    "Money Worries or a Job Loss"
    ],
    [
     "aspen",
     "money",
-    "Money is tight"
+    "Money Is Tight"
    ],
    [
     "birch",
     "job-loss",
-    "Losing a job, or not finding one"
+    "Losing a Job, or Not Finding One"
    ],
    [
     "oak",
     "job-loss",
-    "Losing your job"
+    "Losing Your Job"
    ],
    [
     "oak",
     "money-crisis",
-    "Money trouble"
+    "Money Trouble"
    ],
    [
     "oak",
     "career-change",
-    "A career change"
+    "A Career Change"
    ]
   ],
   "reach": [
@@ -1787,32 +1787,32 @@ const TOPICS = [
    [
     "maple",
     "family-mental-health",
-    "A family member's mental health struggle"
+    "A Family Member's Mental Health Struggle"
    ],
    [
     "pine",
     "depression",
-    "Depression and feeling numb"
+    "Depression and Feeling Numb"
    ],
    [
     "pine",
     "anxiety",
-    "Anxiety and panic"
+    "Anxiety and Panic"
    ],
    [
     "oak",
     "suicidal-other",
-    "When someone else is thinking about suicide"
+    "When Someone Else Is Thinking About Suicide"
    ],
    [
     "oak",
     "serious-mi",
-    "Living with a serious mental illness"
+    "Living with a Serious Mental Illness"
    ],
    [
     "oak",
     "caregiving",
-    "Caring for someone who is ill"
+    "Caring for Someone Who Is Ill"
    ]
   ],
   "reach": [
@@ -1931,32 +1931,32 @@ const TOPICS = [
    [
     "maple",
     "new-school",
-    "Starting or changing schools"
+    "Starting or Changing Schools"
    ],
    [
     "maple",
     "school-worry",
-    "School and test worries"
+    "School and Test Worries"
    ],
    [
     "aspen",
     "startms",
-    "Starting middle school"
+    "Starting Middle School"
    ],
    [
     "aspen",
     "grades",
-    "Grades and pressure"
+    "Grades and Pressure"
    ],
    [
     "pine",
     "start-hs",
-    "Starting high school"
+    "Starting High School"
    ],
    [
     "pine",
     "grades-pressure",
-    "Grades, pressure, and perfectionism"
+    "Grades, Pressure, and Perfectionism"
    ]
   ],
   "reach": [
@@ -2078,27 +2078,27 @@ const TOPICS = [
    [
     "maple",
     "family-illness",
-    "Serious illness in the family"
+    "Serious Illness in the Family"
    ],
    [
     "aspen",
     "sick",
-    "A parent or grandparent is very sick"
+    "A Parent or Grandparent Is Very Sick"
    ],
    [
     "pine",
     "loved-one-ill",
-    "When someone you love is seriously ill"
+    "When Someone You Love Is Seriously Ill"
    ],
    [
     "oak",
     "diagnosis",
-    "A hard diagnosis"
+    "A Hard Diagnosis"
    ],
    [
     "sequoia",
     "new-diagnosis",
-    "A new diagnosis"
+    "A New Diagnosis"
    ]
   ],
   "reach": [
@@ -2216,32 +2216,32 @@ const TOPICS = [
    [
     "maple",
     "own-illness",
-    "Their own illness or hospital stay"
+    "Their Own Illness or Hospital Stay"
    ],
    [
     "maple",
     "family-illness",
-    "Serious illness in the family"
+    "Serious Illness in the Family"
    ],
    [
     "aspen",
     "sick",
-    "A parent or grandparent is very sick"
+    "A Parent or Grandparent Is Very Sick"
    ],
    [
     "pine",
     "loved-one-ill",
-    "When someone you love is seriously ill"
+    "When Someone You Love Is Seriously Ill"
    ],
    [
     "sequoia",
     "hospital",
-    "Surgery, recovery, or a hospital stay"
+    "Surgery, Recovery, or a Hospital Stay"
    ],
    [
     "oak",
     "caregiving",
-    "Caring for someone who is ill"
+    "Caring for Someone Who Is Ill"
    ]
   ],
   "reach": [
@@ -2363,22 +2363,22 @@ const TOPICS = [
    [
     "maple",
     "dying",
-    "Someone they love is dying"
+    "Someone They Love Is Dying"
    ],
    [
     "pine",
     "loved-one-ill",
-    "When someone you love is seriously ill"
+    "When Someone You Love Is Seriously Ill"
    ],
    [
     "oak",
     "dying-loved",
-    "Someone you love is dying"
+    "Someone You Love Is Dying"
    ],
    [
     "sequoia",
     "facing-death",
-    "Facing death and sharing your wishes"
+    "Facing Death and Sharing Your Wishes"
    ]
   ],
   "reach": [
@@ -2413,7 +2413,7 @@ const TOPICS = [
  },
  {
   "id": "disability-together",
-  "title": "Living With a Disability or Chronic Illness Together",
+  "title": "Living with a Disability or Chronic Illness Together",
   "ring": "gw-illness",
   "kinds": [
    "family",
@@ -2506,32 +2506,32 @@ const TOPICS = [
    [
     "maple",
     "disability",
-    "Disability in the family"
+    "Disability in the Family"
    ],
    [
     "maple",
     "sibling-health",
-    "A brother or sister with a disability or illness"
+    "A Brother or Sister with a Disability or Illness"
    ],
    [
     "pine",
     "chronic-illness",
-    "Living with a chronic illness or disability"
+    "Living with a Chronic Illness or Disability"
    ],
    [
     "oak",
     "disability",
-    "Living with a new disability"
+    "Living with a New Disability"
    ],
    [
     "oak",
     "chronic",
-    "Chronic illness or pain"
+    "Chronic Illness or Pain"
    ],
    [
     "birch",
     "young-carer",
-    "Caring for a parent or sibling in your twenties"
+    "Caring for a Parent or Sibling in Your Twenties"
    ]
   ],
   "reach": [
@@ -2654,32 +2654,32 @@ const TOPICS = [
    [
     "maple",
     "money",
-    "Money worries or a job loss"
+    "Money Worries or a Job Loss"
    ],
    [
     "aspen",
     "money",
-    "Money is tight"
+    "Money Is Tight"
    ],
    [
     "pine",
     "money",
-    "Money: paychecks, saving, and debt"
+    "Money: Paychecks, Saving, and Debt"
    ],
    [
     "birch",
     "debt",
-    "Student loans and other debt"
+    "Student Loans and Other Debt"
    ],
    [
     "oak",
     "money-crisis",
-    "Money trouble"
+    "Money Trouble"
    ],
    [
     "sequoia",
     "fixed-income",
-    "Money worries on a fixed income"
+    "Money Worries on a Fixed Income"
    ]
   ],
   "reach": [
@@ -2799,27 +2799,27 @@ const TOPICS = [
    [
     "maple",
     "addiction",
-    "A family member's addiction"
+    "A Family Member's Addiction"
    ],
    [
     "aspen",
     "drinking",
-    "Someone at home drinks or uses too much"
+    "Someone at Home Drinks or Uses Too Much"
    ],
    [
     "pine",
     "family-substance",
-    "A family member's drinking or drug use"
+    "A Family Member's Drinking or Drug Use"
    ],
    [
     "oak",
     "addiction",
-    "Addiction and recovery"
+    "Addiction and Recovery"
    ],
    [
     "maple",
     "family-mental-health",
-    "A family member's mental health struggle"
+    "A Family Member's Mental Health Struggle"
    ]
   ],
   "reach": [
@@ -2952,32 +2952,32 @@ const TOPICS = [
    [
     "maple",
     "family-death",
-    "A family member died"
+    "A Family Member Died"
    ],
    [
     "aspen",
     "death",
-    "When someone dies"
+    "When Someone Dies"
    ],
    [
     "pine",
     "parent-death",
-    "When a parent or sibling dies"
+    "When a Parent or Sibling Dies"
    ],
    [
     "pine",
     "grandparent-death",
-    "When a grandparent dies"
+    "When a Grandparent Dies"
    ],
    [
     "oak",
     "parent-death",
-    "Your parent died"
+    "Your Parent Died"
    ],
    [
     "oak",
     "child-death",
-    "Your child died"
+    "Your Child Died"
    ]
   ],
   "reach": [
@@ -3086,7 +3086,7 @@ const TOPICS = [
     "Plan something gentle for the day after.",
     "Watch for grief that seems stuck or worse with each holiday, and bring in a grief group or a grief counselor if it does."
    ],
-   "you": "Holidays ask a lot of the grown-up who usually makes them happen. It is okay to do less this year: buy the pie, skip the cards, say no to a party. Ask someone else to take one task. Find your own time to grieve, away from the kids for an hour, with a friend who will let you talk about the person you miss."
+   "you": "Holidays ask a lot of the grown-up who usually makes them happen. It is okay to do less this year: keep the meal simple, skip the cards, say no to a party. Ask someone else to take one task. Find your own time to grieve, away from the kids for an hour, with a friend who will let you talk about the person you miss."
   },
   "byKind": {
    "faith": "Holy days carry deep memories. Name the people your community has lost this year in worship, and invite grieving families to a quieter service or a time of remembrance if your tradition has one.",
@@ -3104,32 +3104,32 @@ const TOPICS = [
    [
     "maple",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "sequoia",
     "holidays-alone",
-    "Holidays and anniversaries alone"
+    "Holidays and Anniversaries Alone"
    ],
    [
     "aspen",
     "death",
-    "When someone dies"
+    "When Someone Dies"
    ],
    [
     "pine",
     "parent-death",
-    "When a parent or sibling dies"
+    "When a Parent or Sibling Dies"
    ],
    [
     "birch",
     "grief-young",
-    "Grief when you're young: a parent, a friend, or a peer dies"
+    "Grief When You're Young: A Parent, a Friend, or a Peer Dies"
    ]
   ],
   "reach": [
@@ -3246,22 +3246,22 @@ const TOPICS = [
    [
     "maple",
     "pet-death",
-    "A pet died"
+    "A Pet Died"
    ],
    [
     "aspen",
     "pet",
-    "A pet dies"
+    "A Pet Dies"
    ],
    [
     "oak",
     "pet-death",
-    "Your pet died"
+    "Your Pet Died"
    ],
    [
     "sequoia",
     "pet-death",
-    "Losing a pet"
+    "Losing a Pet"
    ]
   ],
   "reach": [
@@ -3383,27 +3383,27 @@ const TOPICS = [
    [
     "maple",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "sequoia",
     "holidays-alone",
-    "Holidays and anniversaries alone"
+    "Holidays and Anniversaries Alone"
    ],
    [
     "birch",
     "grief-young",
-    "Grief when you're young: a parent, a friend, or a peer dies"
+    "Grief When You're Young: A Parent, a Friend, or a Peer Dies"
    ],
    [
     "pine",
     "parent-death",
-    "When a parent or sibling dies"
+    "When a Parent or Sibling Dies"
    ]
   ],
   "reach": [
@@ -3522,27 +3522,27 @@ const TOPICS = [
    [
     "maple",
     "scary-news",
-    "Scary news in general"
+    "Scary News in General"
    ],
    [
     "maple",
     "war",
-    "War and conflict"
+    "War and Conflict"
    ],
    [
     "aspen",
     "news",
-    "Scary news and politics"
+    "Scary News and Politics"
    ],
    [
     "pine",
     "school-threats",
-    "School threats, lockdowns, and scary news"
+    "School Threats, Lockdowns, and Scary News"
    ],
    [
     "oak",
     "news-overwhelm",
-    "Overwhelmed by the news"
+    "Overwhelmed by the News"
    ]
   ],
   "reach": [
@@ -3668,32 +3668,32 @@ const TOPICS = [
    [
     "maple",
     "disasters",
-    "Natural disasters and climate worries"
+    "Natural Disasters and Climate Worries"
    ],
    [
     "maple",
     "fire",
-    "A house fire"
+    "A House Fire"
    ],
    [
     "maple",
     "home-loss",
-    "Losing a home"
+    "Losing a Home"
    ],
    [
     "aspen",
     "disaster",
-    "Disasters and storms"
+    "Disasters and Storms"
    ],
    [
     "oak",
     "disaster",
-    "After a disaster"
+    "After a Disaster"
    ],
    [
     "maple",
     "community-tragedy",
-    "A tragedy in the community"
+    "A Tragedy in the Community"
    ]
   ],
   "reach": [
@@ -3818,32 +3818,32 @@ const TOPICS = [
    [
     "pine",
     "friend-death",
-    "When a friend or classmate dies"
+    "When a Friend or Classmate Dies"
    ],
    [
     "aspen",
     "death",
-    "When someone dies"
+    "When Someone Dies"
    ],
    [
     "aspen",
     "teacher",
-    "A teacher or coach leaves"
+    "A Teacher or Coach Leaves"
    ],
    [
     "maple",
     "family-death",
-    "A family member died"
+    "A Family Member Died"
    ],
    [
     "birch",
     "grief-young",
-    "Grief when you're young: a parent, a friend, or a peer dies"
+    "Grief When You're Young: A Parent, a Friend, or a Peer Dies"
    ],
    [
     "maple",
     "community-tragedy",
-    "A tragedy in the community"
+    "A Tragedy in the Community"
    ]
   ],
   "reach": [
@@ -3968,27 +3968,27 @@ const TOPICS = [
    [
     "maple",
     "lockdown",
-    "Lockdown drills"
+    "Lockdown Drills"
    ],
    [
     "maple",
     "school-violence",
-    "School shootings in the news"
+    "School Shootings in the News"
    ],
    [
     "aspen",
     "lockdown",
-    "Lockdowns and school violence"
+    "Lockdowns and School Violence"
    ],
    [
     "pine",
     "school-threats",
-    "School threats, lockdowns, and scary news"
+    "School Threats, Lockdowns, and Scary News"
    ],
    [
     "maple",
     "scary-news",
-    "Scary news in general"
+    "Scary News in General"
    ]
   ],
   "reach": [
@@ -4111,32 +4111,32 @@ const TOPICS = [
    [
     "maple",
     "own-illness",
-    "Their own illness or hospital stay"
+    "Their Own Illness or Hospital Stay"
    ],
    [
     "maple",
     "ask-stare-tease",
-    "When other kids ask, stare, or tease"
+    "When Other Kids Ask, Stare, or Tease"
    ],
    [
     "aspen",
     "school-health",
-    "A health condition at school: the nurse, a 504 plan, and missed days"
+    "A Health Condition at School: The Nurse, a 504 Plan, and Missed Days"
    ],
    [
     "aspen",
     "telling-friends",
-    "Telling friends, or not"
+    "Telling Friends, or Not"
    ],
    [
     "pine",
     "serious-illness",
-    "A serious illness or long treatment as a teen"
+    "A Serious Illness or Long Treatment as a Teen"
    ],
    [
     "pine",
     "chronic-illness",
-    "Living with a chronic illness or disability"
+    "Living with a Chronic Illness or Disability"
    ]
   ],
   "reach": [
@@ -4249,7 +4249,7 @@ const TOPICS = [
    [
     "maple",
     "new-school",
-    "Starting or changing schools"
+    "Starting or Changing Schools"
    ],
    [
     "maple",
@@ -4259,22 +4259,22 @@ const TOPICS = [
    [
     "aspen",
     "moving",
-    "Moving away"
+    "Moving Away"
    ],
    [
     "aspen",
     "startms",
-    "Starting middle school"
+    "Starting Middle School"
    ],
    [
     "pine",
     "moving",
-    "Moving or changing schools"
+    "Moving or Changing Schools"
    ],
    [
     "pine",
     "start-hs",
-    "Starting high school"
+    "Starting High School"
    ]
   ],
   "reach": [
@@ -4386,7 +4386,7 @@ const TOPICS = [
    [
     "maple",
     "new-school",
-    "Starting or changing schools"
+    "Starting or Changing Schools"
    ],
    [
     "maple",
@@ -4396,22 +4396,22 @@ const TOPICS = [
    [
     "aspen",
     "startms",
-    "Starting middle school"
+    "Starting Middle School"
    ],
    [
     "aspen",
     "teacher",
-    "A teacher or coach leaves"
+    "A Teacher or Coach Leaves"
    ],
    [
     "pine",
     "start-hs",
-    "Starting high school"
+    "Starting High School"
    ],
    [
     "pine",
     "graduation",
-    "Graduation, college, and leaving home"
+    "Graduation, College, and Leaving Home"
    ]
   ],
   "reach": [
@@ -4515,32 +4515,32 @@ const TOPICS = [
    [
     "maple",
     "friendship",
-    "Friendship troubles"
+    "Friendship Troubles"
    ],
    [
     "maple",
     "different",
-    "Feeling different"
+    "Feeling Different"
    ],
    [
     "aspen",
     "leftout",
-    "Being left out"
+    "Being Left Out"
    ],
    [
     "aspen",
     "friends",
-    "Friendship breakups and drama"
+    "Friendship Breakups and Drama"
    ],
    [
     "pine",
     "left-out",
-    "Feeling lonely or left out"
+    "Feeling Lonely or Left Out"
    ],
    [
     "pine",
     "friend-changes",
-    "Friendship changes and losing a friend group"
+    "Friendship Changes and Losing a Friend Group"
    ]
   ],
   "reach": [
@@ -4653,32 +4653,32 @@ const TOPICS = [
    [
     "maple",
     "bullied",
-    "Being bullied"
+    "Being Bullied"
    ],
    [
     "maple",
     "unkind",
-    "When your child is the one being unkind"
+    "When Your Child Is the One Being Unkind"
    ],
    [
     "maple",
     "ask-stare-tease",
-    "When other kids ask, stare, or tease"
+    "When Other Kids Ask, Stare, or Tease"
    ],
    [
     "aspen",
     "bullying",
-    "Bullying, in person and online"
+    "Bullying, in Person and Online"
    ],
    [
     "aspen",
     "unfair",
-    "Being treated unfairly"
+    "Being Treated Unfairly"
    ],
    [
     "pine",
     "bullying",
-    "Bullying, in person and online"
+    "Bullying, in Person and Online"
    ]
   ],
   "reach": [
@@ -4797,32 +4797,32 @@ const TOPICS = [
    [
     "maple",
     "school-worry",
-    "School and test worries"
+    "School and Test Worries"
    ],
    [
     "maple",
     "worry",
-    "Worry that won't let go"
+    "Worry That Won't Let Go"
    ],
    [
     "aspen",
     "grades",
-    "Grades and pressure"
+    "Grades and Pressure"
    ],
    [
     "aspen",
     "compare",
-    "Comparing yourself to others"
+    "Comparing Yourself to Others"
    ],
    [
     "pine",
     "grades-pressure",
-    "Grades, pressure, and perfectionism"
+    "Grades, Pressure, and Perfectionism"
    ],
    [
     "pine",
     "anxiety",
-    "Anxiety and panic"
+    "Anxiety and Panic"
    ]
   ],
   "reach": [
@@ -4934,32 +4934,32 @@ const TOPICS = [
    [
     "maple",
     "divorce",
-    "Divorce or separation"
+    "Divorce or Separation"
    ],
    [
     "maple",
     "blended",
-    "A new stepparent or blended family"
+    "A New Stepparent or Blended Family"
    ],
    [
     "maple",
     "deployed",
-    "A parent deployed or away for work"
+    "A Parent Deployed or Away for Work"
    ],
    [
     "maple",
     "money",
-    "Money worries or a job loss"
+    "Money Worries or a Job Loss"
    ],
    [
     "aspen",
     "divorce",
-    "Divorce and two homes"
+    "Divorce and Two Homes"
    ],
    [
     "aspen",
     "stepfamily",
-    "A new stepfamily"
+    "A New Stepfamily"
    ]
   ],
   "reach": [
@@ -5074,32 +5074,32 @@ const TOPICS = [
    [
     "maple",
     "online-trouble",
-    "Trouble online"
+    "Trouble Online"
    ],
    [
     "maple",
     "online-secrets",
-    "When someone online asks for secrets"
+    "When Someone Online Asks for Secrets"
    ],
    [
     "aspen",
     "phone",
-    "First phone and group chats"
+    "First Phone and Group Chats"
    ],
    [
     "aspen",
     "friends",
-    "Friendship breakups and drama"
+    "Friendship Breakups and Drama"
    ],
    [
     "pine",
     "social-media",
-    "Social media, comparison, and phone balance"
+    "Social Media, Comparison, and Phone Balance"
    ],
    [
     "pine",
     "bullying",
-    "Bullying, in person and online"
+    "Bullying, in Person and Online"
    ]
   ],
   "reach": [
@@ -5219,32 +5219,32 @@ const TOPICS = [
    [
     "maple",
     "anger",
-    "Anger and big outbursts"
+    "Anger and Big Outbursts"
    ],
    [
     "maple",
     "meltdown",
-    "In the middle of a meltdown"
+    "In the Middle of a Meltdown"
    ],
    [
     "maple",
     "worry",
-    "Worry that won't let go"
+    "Worry That Won't Let Go"
    ],
    [
     "maple",
     "sadness",
-    "Sadness that lingers"
+    "Sadness That Lingers"
    ],
    [
     "aspen",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ],
    [
     "pine",
     "blowup",
-    "In the middle of a blowup"
+    "In the Middle of a Blowup"
    ]
   ],
   "reach": [
@@ -5425,27 +5425,27 @@ const TOPICS = [
    [
     "oak",
     "career-change",
-    "A career change"
+    "A Career Change"
    ],
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "sequoia",
     "retirement",
-    "Retirement: who am I now?"
+    "Retirement: Who Am I Now?"
    ],
    [
     "aspen",
     "teacher",
-    "A teacher or coach leaves"
+    "A Teacher or Coach Leaves"
    ],
    [
     "oak",
     "empty-nest",
-    "Empty nest and big life transitions"
+    "Empty Nest and Big Life Transitions"
    ]
   ],
   "reach": [
@@ -5623,32 +5623,32 @@ const TOPICS = [
    [
     "oak",
     "after-death",
-    "The first days after a death"
+    "The First Days After a Death"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "oak",
     "suicide-loss",
-    "After a suicide loss"
+    "After a Suicide Loss"
    ],
    [
     "sequoia",
     "friend-death",
-    "Outliving your friends"
+    "Outliving Your Friends"
    ],
    [
     "pine",
     "friend-death",
-    "When a friend or classmate dies"
+    "When a Friend or Classmate Dies"
    ],
    [
     "maple",
     "family-death",
-    "A family member died"
+    "A Family Member Died"
    ]
   ],
   "reach": [
@@ -5830,22 +5830,22 @@ const TOPICS = [
    [
     "oak",
     "political-division",
-    "Political division in families"
+    "Political Division in Families"
    ],
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "oak",
     "anger",
-    "Anger that runs hot"
+    "Anger That Runs Hot"
    ],
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "willow",
@@ -5855,7 +5855,7 @@ const TOPICS = [
    [
     "birch",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ]
   ],
   "reach": [
@@ -5991,27 +5991,27 @@ const TOPICS = [
    [
     "oak",
     "moving",
-    "Moving to a new place"
+    "Moving to a New Place"
    ],
    [
     "birch",
     "new-city",
-    "Moving to a new city"
+    "Moving to a New City"
    ],
    [
     "birch",
     "faith-own",
-    "Faith on your own: questions, doubt, and finding a community"
+    "Faith on Your Own: Questions, Doubt, and Finding a Community"
    ],
    [
     "sequoia",
     "friendship",
-    "Friendship in later life"
+    "Friendship in Later Life"
    ],
    [
     "pine",
     "left-out",
-    "Feeling lonely or left out"
+    "Feeling Lonely or Left Out"
    ]
   ],
   "reach": [
@@ -6166,22 +6166,22 @@ const TOPICS = [
    [
     "oak",
     "empty-nest",
-    "Empty nest and big life transitions"
+    "Empty Nest and Big Life Transitions"
    ],
    [
     "sequoia",
     "friendship",
-    "Friendship in later life"
+    "Friendship in Later Life"
    ],
    [
     "birch",
     "friends",
-    "Making friends after school"
+    "Making Friends After School"
    ],
    [
     "pine",
     "graduation",
-    "Graduation, college, and leaving home"
+    "Graduation, College, and Leaving Home"
    ]
   ],
   "reach": [
@@ -6341,32 +6341,32 @@ const TOPICS = [
    [
     "oak",
     "suicidal-other",
-    "When someone else is thinking about suicide"
+    "When Someone Else Is Thinking About Suicide"
    ],
    [
     "oak",
     "escalating",
-    "When someone is escalating"
+    "When Someone Is Escalating"
    ],
    [
     "oak",
     "addiction",
-    "Addiction and recovery"
+    "Addiction and Recovery"
    ],
    [
     "oak",
     "domestic-violence",
-    "When home isn't safe"
+    "When Home Isn't Safe"
    ],
    [
     "birch",
     "friend-suicide",
-    "When a friend is thinking about suicide"
+    "When a Friend Is Thinking About Suicide"
    ],
    [
     "sequoia",
     "elder-abuse",
-    "Abuse or being taken advantage of"
+    "Abuse or Being Taken Advantage Of"
    ]
   ],
   "reach": [
@@ -6497,12 +6497,12 @@ const TOPICS = [
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "oak",
     "anger",
-    "Anger that runs hot"
+    "Anger That Runs Hot"
    ]
   ],
   "reach": [
@@ -6669,22 +6669,22 @@ const TOPICS = [
    [
     "oak",
     "political-division",
-    "Political division in families"
+    "Political Division in Families"
    ],
    [
     "oak",
     "anger",
-    "Anger that runs hot"
+    "Anger That Runs Hot"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "willow",
@@ -6826,27 +6826,27 @@ const TOPICS = [
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "oak",
     "shame",
-    "Shame and guilt"
+    "Shame and Guilt"
    ],
    [
     "birch",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ],
    [
     "pine",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ]
   ],
   "reach": [
@@ -6991,12 +6991,12 @@ const TOPICS = [
    [
     "sequoia",
     "loneliness",
-    "Loneliness and living alone"
+    "Loneliness and Living Alone"
    ],
    [
     "oak",
     "spiritual-dryness",
-    "When the sacred feels far away"
+    "When the Sacred Feels Far Away"
    ],
    [
     "oak",
@@ -7006,12 +7006,12 @@ const TOPICS = [
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "birch",
     "faith-own",
-    "Faith on your own: questions, doubt, and finding a community"
+    "Faith on Your Own: Questions, Doubt, and Finding a Community"
    ]
   ],
   "reach": [
@@ -7198,27 +7198,27 @@ const TOPICS = [
    [
     "oak",
     "empty-nest",
-    "Empty nest and big life transitions"
+    "Empty Nest and Big Life Transitions"
    ],
    [
     "oak",
     "lost",
-    "Feeling lost or without purpose"
+    "Feeling Lost or Without Purpose"
    ],
    [
     "sequoia",
     "purpose-again",
-    "Finding purpose again"
+    "Finding Purpose Again"
    ],
    [
     "oak",
     "ambiguous-loss",
-    "Ambiguous loss"
+    "Ambiguous Loss"
    ],
    [
     "sequoia",
     "downsizing",
-    "Downsizing and letting go of things"
+    "Downsizing and Letting Go of Things"
    ]
   ],
   "reach": [
@@ -7404,22 +7404,22 @@ const TOPICS = [
    [
     "sequoia",
     "volunteering",
-    "Volunteering and serving"
+    "Volunteering and Serving"
    ],
    [
     "oak",
     "caregiving",
-    "Caring for someone who is ill"
+    "Caring for Someone Who Is Ill"
    ],
    [
     "birch",
     "pressure-burnout",
-    "Pressure, grades, and burnout"
+    "Pressure, Grades, and Burnout"
    ],
    [
     "oak",
     "spiritual-dryness",
-    "When the sacred feels far away"
+    "When the Sacred Feels Far Away"
    ]
   ],
   "reach": [
@@ -7602,17 +7602,17 @@ const TOPICS = [
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "pine",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ],
    [
     "birch",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ],
    [
     "oak",
@@ -7622,12 +7622,12 @@ const TOPICS = [
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "oak",
     "past-abuse",
-    "Living with past abuse"
+    "Living with Past Abuse"
    ]
   ],
   "reach": [
@@ -7807,17 +7807,17 @@ const TOPICS = [
    [
     "oak",
     "political-division",
-    "Political division in families"
+    "Political Division in Families"
    ],
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "oak",
     "news-overwhelm",
-    "Overwhelmed by the news"
+    "Overwhelmed by the News"
    ],
    [
     "oak",
@@ -7827,7 +7827,7 @@ const TOPICS = [
    [
     "aspen",
     "news",
-    "Scary news and politics"
+    "Scary News and Politics"
    ]
   ],
   "reach": [
@@ -8008,27 +8008,27 @@ const TOPICS = [
    [
     "oak",
     "church-hurt",
-    "When faith communities have hurt you"
+    "When Faith Communities Have Hurt You"
    ],
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "pine",
     "faith-hurt",
-    "Hurt by a faith community"
+    "Hurt by a Faith Community"
    ],
    [
     "oak",
     "past-abuse",
-    "Living with past abuse"
+    "Living with Past Abuse"
    ],
    [
     "oak",
     "faith-crisis",
-    "A crisis of faith"
+    "A Crisis of Faith"
    ]
   ],
   "reach": [
@@ -8210,27 +8210,27 @@ const TOPICS = [
    [
     "oak",
     "moving",
-    "Moving to a new place"
+    "Moving to a New Place"
    ],
    [
     "sequoia",
     "moving-home",
-    "Moving from the family home"
+    "Moving From the Family Home"
    ],
    [
     "sequoia",
     "downsizing",
-    "Downsizing and letting go of things"
+    "Downsizing and Letting Go of Things"
    ],
    [
     "oak",
     "empty-nest",
-    "Empty nest and big life transitions"
+    "Empty Nest and Big Life Transitions"
    ],
    [
     "aspen",
     "moving",
-    "Moving away"
+    "Moving Away"
    ]
   ],
   "reach": [
@@ -8338,7 +8338,7 @@ const TOPICS = [
    [
     "oak",
     "bedside",
-    "Sitting with someone who is dying"
+    "Sitting with Someone Who Is Dying"
    ],
    [
     "oak",
@@ -8348,17 +8348,17 @@ const TOPICS = [
    [
     "oak",
     "moral-injury",
-    "Moral injury"
+    "Moral Injury"
    ],
    [
     "oak",
     "trauma",
-    "After something traumatic"
+    "After Something Traumatic"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ]
   ],
   "reach": [
@@ -8472,32 +8472,32 @@ const TOPICS = [
    [
     "oak",
     "job-loss",
-    "Losing your job"
+    "Losing Your Job"
    ],
    [
     "oak",
     "career-change",
-    "A career change"
+    "A Career Change"
    ],
    [
     "oak",
     "money-crisis",
-    "Money trouble"
+    "Money Trouble"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "birch",
     "job-loss",
-    "Losing a job, or not finding one"
+    "Losing a Job, or Not Finding One"
    ],
    [
     "sequoia",
     "working-longer",
-    "Working longer, or going back to work"
+    "Working Longer, or Going Back to Work"
    ]
   ],
   "reach": [
@@ -8610,32 +8610,32 @@ const TOPICS = [
    [
     "oak",
     "after-death",
-    "The first days after a death"
+    "The First Days After a Death"
    ],
    [
     "oak",
     "suicide-loss",
-    "After a suicide loss"
+    "After a Suicide Loss"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "sequoia",
     "friend-death",
-    "Outliving your friends"
+    "Outliving Your Friends"
    ],
    [
     "birch",
     "grief-young",
-    "Grief when you're young: a parent, a friend, or a peer dies"
+    "Grief When You're Young: A Parent, a Friend, or a Peer Dies"
    ],
    [
     "oak",
     "trauma",
-    "After something traumatic"
+    "After Something Traumatic"
    ]
   ],
   "reach": [
@@ -8750,27 +8750,27 @@ const TOPICS = [
    [
     "birch",
     "pressure-burnout",
-    "Pressure, grades, and burnout"
+    "Pressure, Grades, and Burnout"
    ],
    [
     "oak",
     "sadness",
-    "Sadness that lingers"
+    "Sadness That Lingers"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "oak",
     "caregiving",
-    "Caring for someone who is ill"
+    "Caring for Someone Who Is Ill"
    ],
    [
     "oak",
     "lost",
-    "Feeling lost or without purpose"
+    "Feeling Lost or Without Purpose"
    ]
   ],
   "reach": [
@@ -8885,27 +8885,27 @@ const TOPICS = [
    [
     "oak",
     "anger",
-    "Anger that runs hot"
+    "Anger That Runs Hot"
    ],
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "birch",
     "first-job",
-    "A first full-time job"
+    "A First Full-Time Job"
    ],
    [
     "oak",
     "escalating",
-    "When someone is escalating"
+    "When Someone Is Escalating"
    ]
   ],
   "reach": [
@@ -9016,22 +9016,22 @@ const TOPICS = [
    [
     "oak",
     "career-change",
-    "A career change"
+    "A Career Change"
    ],
    [
     "birch",
     "first-job",
-    "A first full-time job"
+    "A First Full-Time Job"
    ],
    [
     "aspen",
     "teacher",
-    "A teacher or coach leaves"
+    "A Teacher or Coach Leaves"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ]
   ],
   "reach": [
@@ -9147,17 +9147,17 @@ const TOPICS = [
    [
     "birch",
     "pressure-burnout",
-    "Pressure, grades, and burnout"
+    "Pressure, Grades, and Burnout"
    ],
    [
     "oak",
     "anxiety",
-    "Anxiety that won't settle"
+    "Anxiety That Won't Settle"
    ],
    [
     "birch",
     "first-job",
-    "A first full-time job"
+    "A First Full-Time Job"
    ]
   ],
   "reach": [
@@ -9266,27 +9266,27 @@ const TOPICS = [
    [
     "oak",
     "accident",
-    "After a car accident or sudden injury"
+    "After a Car Accident or Sudden Injury"
    ],
    [
     "oak",
     "trauma",
-    "After something traumatic"
+    "After Something Traumatic"
    ],
    [
     "oak",
     "work-ability",
-    "Working with a disability or illness, or stepping away"
+    "Working with a Disability or Illness, or Stepping Away"
    ],
    [
     "birch",
     "work-disability",
-    "Disability or illness at work: accommodations and telling your boss"
+    "Disability or Illness at Work: Accommodations and Telling Your Boss"
    ],
    [
     "oak",
     "chronic",
-    "Chronic illness or pain"
+    "Chronic Illness or Pain"
    ]
   ],
   "reach": [
@@ -9397,32 +9397,32 @@ const TOPICS = [
    [
     "oak",
     "parent-death",
-    "Your parent died"
+    "Your Parent Died"
    ],
    [
     "oak",
     "spouse-death",
-    "Your spouse or partner died"
+    "Your Spouse or Partner Died"
    ],
    [
     "oak",
     "child-death",
-    "Your child died"
+    "Your Child Died"
    ],
    [
     "oak",
     "pregnancy-loss",
-    "Pregnancy or infant loss"
+    "Pregnancy or Infant Loss"
    ],
    [
     "oak",
     "grief-days",
-    "Holidays and anniversaries after a loss"
+    "Holidays and Anniversaries After a Loss"
    ],
    [
     "oak",
     "after-death",
-    "The first days after a death"
+    "The First Days After a Death"
    ]
   ],
   "reach": [
@@ -9533,7 +9533,7 @@ const TOPICS = [
    [
     "oak",
     "moral-injury",
-    "Moral injury"
+    "Moral Injury"
    ],
    [
     "oak",
@@ -9543,22 +9543,22 @@ const TOPICS = [
    [
     "oak",
     "trauma",
-    "After something traumatic"
+    "After Something Traumatic"
    ],
    [
     "oak",
     "shame",
-    "Shame and guilt"
+    "Shame and Guilt"
    ],
    [
     "oak",
     "bedside",
-    "Sitting with someone who is dying"
+    "Sitting with Someone Who Is Dying"
    ],
    [
     "oak",
     "forgiveness",
-    "Forgiving someone, or yourself"
+    "Forgiving Someone, or Yourself"
    ]
   ],
   "reach": [

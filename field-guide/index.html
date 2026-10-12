@@ -16,7 +16,7 @@
 <title>Grounded Field Guide</title>
 <link rel="icon" type="image/svg+xml" href="../shared/marks/fieldguide-tab.svg">
 <link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' fill='%232E2118'/%3E%3Crect x='17' y='12' width='30' height='40' rx='3' fill='none' stroke='%23D9A847' stroke-width='3.5'/%3E%3Cpath d='M24 22h16M24 30h16M24 38h10' stroke='%23F4EBDA' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E">
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <style>
 :root{
   --bg:#F6F0E4; --bg-deep:#ECE3D2; --card:#FFFCF6; --ink:#2A1C12; --ink-soft:#6B5A4D; --line:#DDD0B8;
@@ -643,26 +643,26 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b787"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b784"></script>
-<script src="../shared/gg-sources.js?v=b787"></script>
-<script src="../shared/gg-learn.js?v=b787"></script>
+<script src="../shared/gg-sources.js?v=b788"></script>
+<script src="../shared/gg-learn.js?v=b788"></script>
 <script src="../shared/gg-print.js?v=b787"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
-<script src="share.js?v=b782"></script>
+<script src="share.js?v=b788"></script>
 <script src="../shared/gg-listen.js?v=b786"></script>
 <script src="ceremonies.js?v=b786"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b786"></script>
-<script src="wedding.js?v=b786"></script>
-<script src="premarital.js?v=b782"></script>
-<script src="clients.js?v=b782"></script>
-<script src="books.js?v=b777"></script>
-<script src="runner.js?v=b771"></script>
-<script src="grovevisit.js?v=b782"></script>
-<script src="heartwood.js?v=b782"></script>
-<script src="../shared/gg-stories.js?v=b787"></script>
-<script src="vault.js?v=b787"></script>
+<script src="farewell.js?v=b788"></script>
+<script src="wedding.js?v=b788"></script>
+<script src="premarital.js?v=b788"></script>
+<script src="clients.js?v=b788"></script>
+<script src="books.js?v=b788"></script>
+<script src="runner.js?v=b788"></script>
+<script src="grovevisit.js?v=b788"></script>
+<script src="heartwood.js?v=b788"></script>
+<script src="../shared/gg-stories.js?v=b788"></script>
+<script src="vault.js?v=b788"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -787,7 +787,7 @@ async function enter(inner){
   TIER = v2 ? fgTier(inner.tier) : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
   DATA = fgPartsData(Object.assign(blankData(), inner.data));
   if (inner.data && inner.data[FG_OLD] && !(inner.data.founder && inner.data.founder.saved && inner.data.founder.saved.length)) DATA.founder = inner.data[FG_OLD];
-  delete DATA.founder;
+  delete DATA[FG_OLD]; // the old name only (BLD 788: this line read delete DATA.founder, which dropped the Founder records and every file in Ready to Upload at each unlock)
   DATA.founder = Object.assign({saved:[], draft:null}, DATA.founder || {}); fgFounderNorm(DATA.founder); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
   // Clears once every file it made is on the site: codes.js (if codes changed) and each library it resealed.
@@ -796,6 +796,8 @@ async function enter(inner){
     const libs = Object.entries(d.libs || {}), codesLive = !d.stamp || d.stamp === CODES.stamp, libsLive = libs.every(([l, b]) => BOX[l] && b && BOX[l].iv === b.iv);
     if ((d.stamp || libs.length) && codesLive && libsLive){ Object.assign(keys, d.keys || {}); if (d.newIds && d.newIds[TIER]) CODEID = d.newIds[TIER]; DATA.founder.draft = null; setTimeout(() => toast('Your Founder tab changes are live.'), 900); }
   }
+  // Sealed library updates wait in IndexedDB (BLD 788): bring them back into memory for Ready to Upload.
+  if (DATA.founder.draft){ const lost = await draftLoad(DATA.founder.draft, USERKEY, keys); if (lost.length) setTimeout(() => alert('The sealed ' + lost.join(' and ') + ' library update waiting on this device needs sealing again. Choose its update file in Update a Library (Founder tab) and tap Seal It.'), 900); }
   KEYS = keys;
   useLevels(await openLevels(TIER, keys));
   // A Founder device shows library updates waiting to upload, so they can be tried before they go live.
@@ -806,16 +808,82 @@ async function enter(inner){
 
 // ---------------- state ----------------
 let LIB = null, FDR = null, FLD = null, TIER = null, KEYS = {}, CODEID = null, DATA = null, USERKEY = null, VSALT = null;
+// UPD: a library update chosen in Update a Library and waiting for Seal It or Cancel. It lives outside V, so it
+// stays through tab changes (BLD 788).
+let UPD = null;
 let V = {tab:'home'}, RUN = null, lastAct = Date.now(), saveT = null, runTimer = null;
 const blankData = name => ({settings:{name:name||'', role:'', autolock:5, scale:1}, clients:[], sessions:[], training:{progress:{}, agreed:null}, orient:{lessons:{}, last:null, pass:null, signed:null, staff:null}, lastBackup:null, draft:null, deleted:{clients:{}, sessions:{}}, founder:{saved:[], draft:null}, plans:[]});
 const touch = o => { if (o) o.u = Date.now(); return o; };
 
 function readVault(){ try { return JSON.parse(localStorage.getItem(VAULT_KEY)); } catch(e){ return null; } }
-async function persist(){
-  if (!USERKEY) return;
-  const box = await seal(USERKEY, {v:2, tier:TIER, codeId:CODEID, keys:KEYS, libKey:KEYS.staff || null, data:DATA});
-  try { localStorage.setItem(VAULT_KEY, JSON.stringify({app:'grounded-field-guide', v:1, salt:b64(VSALT), iv:box.iv, ct:box.ct})); }
-  catch(e){ toast('Could not save. Storage may be full.'); }
+// Sealed library updates waiting in Ready to Upload (DATA.founder.draft.libs) are large: the Guide library alone is about
+// 12 MB, well past what this browser's localStorage holds (about 5 MB). BLD 788: they stay in memory for Ready to Upload,
+// and the saved record keeps only a small note for each ({iv, idb:1}). The sealed file itself waits in this device's
+// IndexedDB (gfg-drafts), sealed a second time with this passcode's key, just as it was inside the record before.
+// persist() resolves true when everything saved and false when anything did not, and saves run one at a time.
+const DRAFT_DB = 'gfg-drafts';
+let DRAFT_PUT = {}, SAVE_FAIL = false, persistQ = Promise.resolve(true);
+function draftDb(){ return new Promise((res, rej) => { const r = indexedDB.open(DRAFT_DB, 1); r.onupgradeneeded = () => r.result.createObjectStore('d'); r.onsuccess = () => res(r.result); r.onerror = () => rej(r.error); }); }
+async function draftIdb(mode, fn){
+  const db = await draftDb();
+  try { return await new Promise((res, rej) => { const t = db.transaction('d', mode), q = fn(t.objectStore('d')); t.oncomplete = () => res(q ? q.result : undefined); t.onerror = t.onabort = () => rej(t.error); }); }
+  finally { db.close(); }
+}
+const draftLibs = () => (DATA && DATA.founder && DATA.founder.draft && DATA.founder.draft.libs) || {};
+// After unlock: bring each waiting sealed library back from IndexedDB into memory. A file that can't be found (site data
+// cleared, or a backup brought to a new device) leaves the list; a rotated level is sealed again from the live library
+// with its new key, so the new codes and the library still match. Returns the names of the libraries to seal again.
+async function draftLoad(d, key, liveKeys){
+  const libs = (d && d.libs) || {}, lost = [];
+  for (const [l, b] of Object.entries(libs)){
+    if (!b || !b.idb) continue;
+    let box = null;
+    try { const rec = await draftIdb('readonly', st => st.get('lib-' + l)); if (rec && rec.iv === b.iv) box = await open(key, rec.box); } catch(e){ box = null; }
+    if (box && box.iv === b.iv){ libs[l] = box; DRAFT_PUT[l] = {iv: b.iv, key}; continue; }
+    delete libs[l]; lost.push(LEVEL_NAME[l] || l);
+    if (d.keys && d.keys[l]){ const plain = await tryOpen(BOX[l], liveKeys[l]); if (plain) libs[l] = await seal(await rawKey(d.keys[l]), plain); }
+  }
+  return lost;
+}
+function persist(){
+  // Capture who and what to save now: lock() clears these right after calling persist().
+  const key = USERKEY, salt = VSALT, rec = {v:2, tier:TIER, codeId:CODEID, keys:KEYS, libKey:KEYS.staff || null, data:DATA};
+  const run = () => persistNow(key, salt, rec);
+  persistQ = persistQ.then(run, run); return persistQ;
+}
+async function persistNow(key, salt, rec){
+  if (!key || !rec.data) return false;
+  let ok = true, data = rec.data;
+  const d = data.founder && data.founder.draft, libs = (d && d.libs) || {};
+  try {
+    const stubs = {};
+    for (const [l, b] of Object.entries(libs)){
+      if (!b || b.idb){ stubs[l] = b; continue; }
+      const had = DRAFT_PUT[l];
+      if (!(had && had.iv === b.iv && had.key === key)){
+        try { const inner = await seal(key, b); await draftIdb('readwrite', st => st.put({iv: b.iv, box: inner}, 'lib-' + l)); DRAFT_PUT[l] = {iv: b.iv, key}; }
+        catch(e){ stubs[l] = b; continue; } // IndexedDB closed to this page: try the record itself, as before
+      }
+      stubs[l] = {iv: b.iv, idb: 1};
+    }
+    for (const l of LEVELS) if (!libs[l] && DRAFT_PUT[l] !== null){ try { await draftIdb('readwrite', st => st.delete('lib-' + l)); DRAFT_PUT[l] = null; } catch(e){} }
+    if (d) data = Object.assign({}, data, {founder: Object.assign({}, data.founder, {draft: Object.assign({}, d, {libs: stubs})})});
+  } catch(e){}
+  try {
+    const box = await seal(key, Object.assign({}, rec, {data}));
+    localStorage.setItem(VAULT_KEY, JSON.stringify({app:'grounded-field-guide', v:1, salt:b64(salt), iv:box.iv, ct:box.ct}));
+  } catch(e){ ok = false; }
+  saveWarn(!ok); return ok;
+}
+// A lasting card while saving waits (BLD 788): changes are held while this page stays open.
+function saveWarn(on){
+  SAVE_FAIL = on;
+  let el = document.getElementById('save-warn');
+  if (!on){ if (el) el.remove(); return; }
+  if (!el){ el = document.createElement('div'); el.id = 'save-warn'; el.className = 'wrap'; el.setAttribute('role', 'alert'); el.style.paddingTop = '14px'; const v = document.getElementById('view'); if (v && v.parentNode) v.parentNode.insertBefore(el, v); else document.body.prepend(el); }
+  const f = TIER === 'founder' && !!(DATA && DATA.founder && DATA.founder.draft);
+  el.innerHTML = `<div class="card" style="border-left:4px solid var(--danger);margin:0"><h3>Saving needs a moment</h3><p class="muted" style="margin-top:6px">This device's storage is full, so your newest changes are held while this page stays open. ${f ? 'Download the files in Ready to Upload now, then tap Back Up Everything in Settings.' : 'Tap Back Up Everything in Settings now to keep them.'}</p>
+   <div class="row" style="margin-top:10px">${f ? '<button class="btn btn-gold btn-sm" data-act="save-warn-ready">Open Ready to Upload</button>' : ''}<button class="btn btn-line btn-sm" data-act="save-warn-retry">Try Saving Again</button></div></div>`;
 }
 function save(){ clearTimeout(saveT); saveT = setTimeout(persist, 350); }
 
@@ -934,12 +1002,12 @@ async function fgStoriesCode(code){
 function resetDevice(){
   if (!confirm('Reset this device? This permanently erases all Field Guide notes and records stored here. If you have a backup file, you can restore it afterward.')) return;
   if (!confirm('Are you sure? This cannot be undone.')) return;
-  localStorage.removeItem(VAULT_KEY); sessClear(); lockScreen('access', 'This device has been reset.');
+  localStorage.removeItem(VAULT_KEY); sessClear(); try { indexedDB.deleteDatabase(DRAFT_DB); } catch(e){} DRAFT_PUT = {}; lockScreen('access', 'This device has been reset.');
 }
 function lock(){
   if (DATA && RUN && !RUN.demo) { DATA.draft = RUN; persist(); }
   clearInterval(runTimer); RUN = null; CS = null; PS = null; cdFullClose(); spKidClose(); spRepClose(); dkClose();
-  LIB = null; FDR = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; sessClear();
+  LIB = null; FDR = null; FLD = null; DATA = null; USERKEY = null; KEYS = {}; TIER = null; CODEID = null; UPD = null; DRAFT_PUT = {}; saveWarn(false); sessClear();
   $('#view').innerHTML = ''; $('#runner').innerHTML = ''; $('#runner').classList.add('hide'); closeMenu();
   lockScreen('unlock');
 }
@@ -952,7 +1020,7 @@ function start(){
   if (!DATA.settings.lockv2){ DATA.settings.autolock = 0; DATA.settings.lockv2 = 1; save(); }
   if (SESS_UNTIL) setTimeout(() => toast('Unlocked until ' + untilText() + '.'), 400);
   document.documentElement.style.setProperty('--scale', DATA.settings.scale || 1);
-  V = {tab: tabsFor()[0][0]}; render();
+  V = {tab: firstTab(tabsFor())}; render();
   const dr = DATA.draft, st = dr && dr.kind === 'st';
   if (dr && dr.kind === 'wl'){
     if (WLG() && (dr.demo || CL(dr.clientId))) setTimeout(() => { if (confirm('You have a Willow visit in progress. Pick up where you left off?')){ RUN = DATA.draft; DATA.draft = null; save(); wlLoad(); let n = 0; const go2 = () => { if (WC) wlOpenRun(); else if (WC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Willow questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else { DATA.draft = null; save(); } }, 200);
@@ -981,6 +1049,8 @@ function start(){
   }
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
+// The first real tab, past any group label ('-') at the top of the list (BLD 788).
+const firstTab = tabs => (tabs.find(t => t[0] !== '-') || ['home'])[0];
 function tabsFor(){
   // Tab order (GWG BLD 743): the Guiding group first, trees youngest to oldest, then a thin divider ('-') and the
   // Grow With Grounded group for Staff and Founders. Birch takes its slot after Pine (Birch Guide, BLD 744).
@@ -1015,13 +1085,13 @@ const audTag = k => { const a = AUD[k]; return `<span class="pill aud aud-${a[1]
 const audPill = tab => {
   if (TIER === 'guide' || !LIB || tab === 'settings') return '';
   const g = TREE_G()[tab], G = g && g(), shut = g && !(G && fgOpen(G.open));
-  return `<div class="aud-row">${audTag(tabAud(tab))}${shut ? '<span class="aud-note">Not yet open to Guides</span>' : ''}</div>`;
+  return `<div class="aud-row">${audTag(tabAud(tab))}${shut ? '<span class="aud-note">Opens to Guides when you choose</span>' : ''}</div>`;
 };
 const notice = () => ((LIB || FDR || FLD || {}).brand || {}).notice || '';
 function render(){
   const tabs = tabsFor();
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
-  if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: tabs[0][0]};
+  if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
   const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
@@ -1093,13 +1163,13 @@ const IC = {
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
 const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<span class="w gwg-w">Grow With Grounded</span>`;
-const CATS = [['start','Getting Started'],['eol','End-of-Life Support'],['ceremony','Ceremonies'],['counsel','Spiritual Guidance'],['grief','Grief & Caregiver Support'],['speaking','Speaking & Training'],['self','For You'],['safety','Safety']];
+const CATS = [['start','Getting Started'],['eol','End-of-Life Support'],['ceremony','Ceremonies'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training'],['self','For You'],['safety','Safety']];
 const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
 // Session guides as this person sees them: their own versions in place, then their own sessions (GWG BLD 758, sessions.js).
 const GL = () => !LIB ? [] : window.GGSes ? GGSes.list() : LIB.guides;
 const G = id => !LIB ? null : window.GGSes ? GGSes.get(id) : LIB.guides.find(g => g.id === id);
 const CL = id => DATA.clients.find(c => c.id === id);
-const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief & Caregiver Support', speaking:'Speaking & Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
+const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief and Caregiver Support', speaking:'Speaking and Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
 if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m), esc, icon,
   guideHTML: (g, pv) => vGuide(g, pv), saveAll: (g, adds) => sesSaveAll(g, adds), cats: CATS, services: SERVICE_NAMES});
 // The Farewell Planning Session (GWG BLD 766, farewell.js): Staff and Founders, in the Ceremonies tab.
@@ -1124,11 +1194,11 @@ if (window.GGGv) GGGv.init({data: () => DATA, gvg: () => GVG(), gt: () => GT, ti
   rec: id => gxRec(id), sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf(), name: () => (DATA && DATA.settings && DATA.settings.name) || '', open: () => gvOpen() && gxReady()});
 // GWG BLD 772 hook: Heartwood (heartwood.js, GGHw): Seal Heartwood in the Founder tab, and couple invites from the client file and the premarital couple.
 if (window.GGHw) GGHw.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), toast: m => toast(m),
-  pendingPlain: l => pendingPlain(l), updBusy: () => !!V.upd, setUpd: u => { V.upd = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
+  pendingPlain: l => pendingPlain(l), updBusy: () => !!UPD, setUpd: u => { UPD = u; render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60); }});
 // GWG BLD 784 hook: the Story Vault (vault.js, GGVault): Founders only, in the Founder tab. Its edits go into FDR.storyVault and
 // fdrKeep seals the Founder library into "Ready to Upload" (lib-founder.js), the way Seal It does.
 // BLD 785: every code lives in the Access list (accView); the Vault seals data.js with the wraps of every code in use.
-if (window.GGVault) GGVault.init({fdr: () => FDR, tier: () => TIER, keep: () => fdrKeep(), render: () => render(), toast: m => toast(m), updLvl: () => V.upd ? V.upd.lvl : '',
+if (window.GGVault) GGVault.init({fdr: () => FDR, tier: () => TIER, keep: () => fdrKeep(), render: () => render(), toast: m => toast(m), updLvl: () => UPD ? UPD.lvl : '',
   wraps: () => accWraps(), wsalt: () => (FDR && FDR.access && FDR.access.salt) || '', sealed: () => { ensureDraft().stories = today(); }});
 const sesPill = g => g && g._mine && window.GGSes ? ' ' + GGSes.pill(g) : '';
 
@@ -1156,7 +1226,7 @@ function vHome(){
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
   <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
-    <div class="card"><div class="spread"><h3>Follow-ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
+    <div class="card"><div class="spread"><h3>Follow-Ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
     <div class="card"><h3 class="aud-h">Recent Sessions ${audTag('staff')}</h3>
       ${recent.length ? recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(c ? c.name : 'No person')}</b> <span class="muted">${esc(sessTitle(s))}</span><br><small class="muted">${nice(s.date)}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No sessions yet. Start one above.</p>'}</div>
@@ -1315,7 +1385,7 @@ function vClient(c){
     <label class="cb"><input type="checkbox" data-cb="grace" ${c.grace?'checked':''}> Grace spot or sliding scale</label>
     <label class="f">Status</label><select data-c="status">${[['active','Active'],['follow-up','Following up'],['closed','Closed']].map(([v,l]) => `<option value="${v}" ${v===c.status?'selected':''}>${l}</option>`).join('')}</select>
     <label class="f">Notes</label><textarea data-c="notes" placeholder="Family, faith, what matters to them">${esc(c.notes||'')}</textarea></div>
-   <div class="card"><h3>Follow-ups</h3>
+   <div class="card"><h3>Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-fu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="nfd"><input type="text" id="nft" placeholder="What to do"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button>
@@ -1372,7 +1442,7 @@ function docForm(d){
 
 // ---------------- TRAINING ----------------
 function vTraining(){
-  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First Conversation'],['eol','End-of-Life Support'],['vigil','Vigil Sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual Guidance'],['grief','Grief & Caregiver'],['speaking','Speaking']];
+  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First Conversation'],['eol','End-of-Life Support'],['vigil','Vigil Sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training']];
   // Training opens to cards (GWG BLD 732). Each card opens one part.
   const head = `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>`, orH = `  ${OR() ? orStatusCard() : ''}`;
   const wel = `  <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>
@@ -1441,7 +1511,7 @@ function fieldDue(){
   DATA.clients.filter(c => !anyMe(c)).forEach(c => (c.followups || []).forEach(f => { if (!f.done && f.date && f.date <= addDays(today(), 7)) due.push({c, f}); }));
   if (!due.length) return '';
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
-  return `<div class="card" style="margin-top:14px"><h3>Follow-ups This Week</h3>${due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text || 'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div>${htPersonOpen(x.c)}</div>`).join('')}</div>`;
+  return `<div class="card" style="margin-top:14px"><h3>Follow-Ups This Week</h3>${due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text || 'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div>${htPersonOpen(x.c)}</div>`).join('')}</div>`;
 }
 
 // ---------------- ORIENTATION ----------------
@@ -1483,7 +1553,7 @@ function orStatusCard(){
 }
 function vOrient(){
   if (!OR()) return `<div class="card"><p>Orientation isn't available on this device yet.</p></div>`;
-  if (V.lesson !== undefined) return vLesson(V.lesson);
+  if (V.lesson !== undefined) return orLesson(V.lesson);
   if (V.staff) return vStaffSection();
   if (V.quiz) return V.quiz.done ? vQuizResult() : vQuizQ();
   if (V.sign) return vSign();
@@ -1512,7 +1582,7 @@ function lessonBody(L){
     <div class="card" style="margin-top:24px;border-left:4px solid var(--gold)"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${L.remember.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
     ${window.GGSources && (L.sources || L.video) ? GGSources.lesson('', {id: L.id, sources: L.sources || [], scenes: (L.video && L.video.scenes) || []}) : ''}</div>`;
 }
-function vLesson(i){
+function orLesson(i){
   const L = OR().lessons[i], n = OR().lessons.length, read = !!DATA.orient.lessons[L.id];
   return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
@@ -1622,7 +1692,7 @@ function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return 
 async function makeCode(kind, label, ends, o = {}){
   if (accWaits()) { alert(ACC_WAIT); return null; }
   const sup = kind === 'supporter', tier = kind === 'org' ? 'guide' : kind, k = sup ? null : effKeys()[tier];
-  if (!sup && !k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish setup."'); return null; }
+  if (!sup && !k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
   if (sup && !accKey()) { alert('Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).'); return null; }
   const code = wordsCode(), made = today();
   let e;
@@ -1677,7 +1747,7 @@ async function rotateLevel(tier){
 // for every change; data.js (stories folder) for every change, sealed by the Story Vault's Seal Grounded Stories.
 const ACC_LV = ['founder', 'staff', 'guide', 'supporter'];
 const ACC_WAIT = 'An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Access list is ready for changes again.';
-const accWaits = () => !!(V.upd && V.upd.lvl === 'founder');
+const accWaits = () => !!(UPD && UPD.lvl === 'founder');
 const accKey = () => (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || '';
 const accFromMember = m => Object.assign({id: 'sup' + m.c, level: 'supporter', label: m.label || '', made: m.made || '', c: m.c, salt: m.salt, iv: m.iv, ct: m.ct}, m.cancelled ? {cancelled: m.cancelled} : {});
 // Every record, read only: FDR.access plus any Member Codes still waiting in the Story Vault.
@@ -1738,7 +1808,7 @@ async function accMakeOrg(){
   const n = Math.max(+$('#acc-on').value || 0, names.length), prog = $('#acc-prog');
   if (!name){ $('#acc-org').focus(); return; }
   if (!(n >= 1 && n <= 500)){ $('#acc-on').focus(); prog.textContent = 'Choose how many people, from 1 to 500.'; return; }
-  if (level === 'supporter' ? !accKey() : !effKeys()[level]) return alert(level === 'supporter' ? 'Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).' : "This device can't open the " + LEVEL_NAME[level] + ' library yet. See "Finish setup."');
+  if (level === 'supporter' ? !accKey() : !effKeys()[level]) return alert(level === 'supporter' ? 'Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).' : "This device can't open the " + LEVEL_NAME[level] + ' library yet. See "Finish Setup."');
   const btn = $('[data-act="acc-org-make"]'); if (btn) btn.disabled = true;
   const A = accStore(), org = {id: 'org' + uid(), name, level, made: today(), size: n}; A.orgs.push(org);
   let done = 0;
@@ -1759,8 +1829,8 @@ function accOrgLines(o){
   return R.map(r => { const sv = DATA.founder.saved.find(x => x.id === r.id); return {name: r.label || 'Person ' + (r.n || ''), code: sv ? sv.code : ''}; });
 }
 const accOrgSteps = o => o.level === 'supporter'
-  ? ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on Grounded Stories: growwithgrounded.com/stories.html. Every story opens on that device.']
-  : ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on the Field Guide (growwithgrounded.com/field-guide) or on Grounded Stories (growwithgrounded.com/stories.html).', 'On the Field Guide, you then make your own passcode, and that device is ready for you.'];
+  ? ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on Grounded Stories: growwithgrounded.com/stories. Every story opens on that device.']
+  : ['Each person has their own code. Keep it private, just for you.', 'Enter your code once on the Field Guide (growwithgrounded.com/field-guide) or on Grounded Stories (growwithgrounded.com/stories).', 'On the Field Guide, you then make your own passcode, and that device is ready for you.'];
 function accOrgText(o){
   const L = accOrgLines(o);
   return [o.name, LEVEL_NAME[o.level] + ' codes, made ' + nice(o.made), ''].concat(L.map(x => x.name + ': ' + (x.code || 'shown on the device that made it')), [''], accOrgSteps(o)).join('\n');
@@ -1865,9 +1935,12 @@ const HEAD = '// Grounded Field Guide(TM). (c) 2026 Grow With Grounded LLC. Prop
 // Take-home footers (GWG BLD 743): the tree's full name, and the trademark on Grow With Grounded, owned by Grow With Grounded LLC.
 const GWG_TM = 'Grow With Grounded\u2122 is a trademark of Grow With Grounded LLC.';
 const tmFoot = (name, site) => 'Grow With Grounded ' + name + '. ' + GWG_TM + (site ? ' ' + site : '');
+// A list in Grounded's style: a and b; a, b, and c (BLD 788).
+const listAnd = a => a.length < 3 ? a.join(' and ') : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1];
 function draftFile(which){
   const d = DATA.founder.draft;
-  if (which === 'codes') return HEAD + '// Access codes. Each line holds a sealed copy of one library key. No code is stored here in readable form.\n// Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.\nwindow.GFG_CODES = ' + JSON.stringify(d.codes, null, 1) + ';\n';
+  // codes.js is public: every line is labelled by its level only (BLD 788), so older lines named for a person lose the name.
+  if (which === 'codes') return HEAD + '// Access codes. Each line holds a sealed copy of one library key. No code is stored here in readable form.\n// Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.\nwindow.GFG_CODES = ' + JSON.stringify(Object.assign({}, d.codes, {codes: (d.codes.codes || []).map(e => Object.assign({}, e, {label: (LEVEL_NAME[fgTier(e.tier)] || 'Access') + ' code'}))}), null, 1) + ';\n';
   return HEAD + '// ' + LEVEL_NAME[which] + ' library (encrypted).\nwindow.GFG_' + which.toUpperCase() + ' = ' + JSON.stringify(d.libs[which]) + ';\n';
 }
 function download(name, text){
@@ -1881,8 +1954,10 @@ function vFounder(){
   const shown = V.show ? saved(V.show) : null;
   const pr = FDR.pricing; // tiers are [label, price] rows; a row with no price is a group heading (W1)
   const storiesUp = !!accKey() && (accStoriesDue() || !!(d && d.stories)); // data.js for the stories folder (BLD 785)
+  const hwUp = window.GGHw && GGHw.waiting ? GGHw.waiting() : null; // a sealed lib-heartwood.js waiting on this page (BLD 788)
   const fileRows = (d ? [...(d.stamp ? ['codes'] : []), ...Object.keys(d.libs)].map(f => { const n = f === 'codes' ? 'codes.js' : 'lib-' + f + '.js'; return `<div class="list-row"><div class="lr-main"><b>${n}</b><br><small class="muted">Into the field-guide folder</small></div><button class="btn btn-line btn-sm" data-act="fdr-dl" data-v="${f}">Download</button></div>`; }).join('') : '')
-    + (storiesUp ? `<div class="list-row"><div class="lr-main"><b>data.js</b><br><small class="muted">Into the stories folder. Download seals Grounded Stories fresh, with every code in use.</small></div><button class="btn btn-line btn-sm" data-act="acc-seal">Download</button></div>` : '');
+    + (storiesUp ? `<div class="list-row"><div class="lr-main"><b>data.js</b><br><small class="muted">Into the stories folder. Download seals Grounded Stories fresh, with every code in use.</small></div><button class="btn btn-line btn-sm" data-act="acc-seal">Download</button></div>` : '')
+    + (hwUp ? `<div class="list-row"><div class="lr-main"><b>lib-heartwood.js</b><br><small class="muted">Into the heartwood folder. Sealed ${esc(nice(hwUp.made))} in Seal Heartwood; it waits here while this page stays open.</small></div><button class="btn btn-line btn-sm" data-act="fdr-hwdl">Download</button></div>` : '');
   const head = `<div class="page-head"><div class="eyebrow">Founder &middot; Chris and Kayti only</div><h1>Access and the business side</h1><p>Make and end access codes, and keep the private side of Grounded in one place.</p></div>`;
   const shownH = `  ${shown ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">${esc(LEVEL_NAME[shown.kind] || '')} code</div><h3>${esc(shown.label)}</h3><p class="codeshow">${esc(shown.code)}</p>
     <p class="muted">Share it privately. It's kept in this device's encrypted records, so you can find it again here. ${shown.tier === 'supporter' ? 'It opens Grounded Stories once data.js is uploaded into the stories folder.' : (live.has(shown.id) ? 'It opens the Field Guide now' : 'It opens the Field Guide once codes.js is uploaded') + (accKey() ? ', and Grounded Stories once data.js is uploaded into the stories folder.' : '.')}</p>
@@ -1892,8 +1967,8 @@ function vFounder(){
     <button class="btn btn-gold btn-sm" style="margin-top:10px" data-act="fdr-addstaff">Add Staff Access</button></div>`
     : needsSetup() ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Finish Setup</h3><p class="muted">One time only. This links the Founder code to the Staff and Guide libraries, so a Founder code opens everything on any device.</p><button class="btn btn-gold" style="margin-top:10px" data-act="fdr-setup">Finish Setup</button></div>` : ''}`;
   const fgFiles = d ? [...(d.stamp ? ['codes.js'] : []), ...Object.keys(d.libs).map(f => 'lib-' + f + '.js')] : [];
-  const readyH = `  ${d || storiesUp ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${d && Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live.</p>
-    <ol class="acc-steps"><li>Download each file below.</li>${fgFiles.length ? `<li>Upload ${fgFiles.join(' and ').replace(/ and (?=.* and )/g, ', ')} to the <b>field-guide</b> folder in the site repo, replacing what's there.</li>` : ''}${storiesUp ? `<li>Upload data.js to the <b>stories</b> folder in the site repo, replacing what's there.</li>` : ''}</ol>
+  const readyH = `  ${d || storiesUp || hwUp ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Ready to Upload</h3><p class="muted">${d && Object.keys(d.libs || {}).length ? 'This device already shows these library changes, so you can try them first. ' : ''}Nothing changes for anyone else until these are live.</p>
+    <ol class="acc-steps"><li>Download each file below.</li>${fgFiles.length ? `<li>Upload ${listAnd(fgFiles)} to the <b>field-guide</b> folder in the site repo, replacing what's there.</li>` : ''}${storiesUp ? `<li>Upload data.js to the <b>stories</b> folder in the site repo, replacing what's there.</li>` : ''}${hwUp ? `<li>Upload lib-heartwood.js to the <b>heartwood</b> folder in the site repo, replacing what's there${hwUp.newKey ? ', together with lib-staff.js' : ''}.</li>` : ''}</ol>
     <p class="muted" style="font-size:14px">This card clears itself the next time you open the Field Guide after they're live.</p>
     <div style="margin-top:8px">${fileRows}</div>${d ? `<div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="fdr-discard">Discard These Changes</button></div>` : ''}</div>` : ''}`;
   const rotH = `  <div class="card"><h3>Rotate a Level</h3><p class="muted">Rotating gives a level a new key and one new code. Every old code for that level stops working once you upload. Use Staff when someone leaves, and Guide for the yearly change.</p>
@@ -1910,15 +1985,15 @@ function vFounder(){
   ${FLD ? `<div class="card"><h3>Sequoia Guide</h3>${sqFieldRow()}</div>` : ''}
   ${FLD ? wlFounderCard() : ''}`;
   // Founder opens to cards (GWG BLD 732). A new update to seal opens Update a Library, so its card is in view.
-  if (V.upd && !V.upd.seen){ V.upd.seen = 1; SEC.founder = 'upd'; }
+  if (UPD && !UPD.seen){ UPD.seen = 1; SEC.founder = 'upd'; }
   const B = bizLib(), bizN = B ? (B.order || Object.keys(B.docs || {})).filter(id => (B.docs || {})[id]).length : 0;
   const SPK = FDR && FDR.speaking, slN = SL() ? slCount() : null, mapleDue = FLD && SPG() && SPG().report && addDays(today(), 30) >= addYear(SPG().report.checked);
-  const nFiles = (d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0) + (storiesUp ? 1 : 0), accN = accRecs().filter(r => !r.cancelled).length + C.codes.filter(e => !accRecs().some(r => r.id === e.id)).length, orgN = accOrgs().length;
+  const nFiles = (d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0) + (storiesUp ? 1 : 0) + (hwUp ? 1 : 0), accN = accRecs().filter(r => !r.cancelled).length + C.codes.filter(e => !accRecs().some(r => r.id === e.id)).length, orgN = accOrgs().length;
   const cards = [
-    d || storiesUp ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
+    d || storiesUp || hwUp ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
     {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, and Supporter, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Guide for the yearly change.'},
-    {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: V.upd ? 'An update is ready to seal' : '', hot: !!V.upd},
+    {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: UPD ? 'An update is ready to seal' : '', hot: !!UPD},
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
     window.GGVault ? {k: 'vault', title: 'The Story Vault', desc: 'Every story in one place: Vault, Early Preview, or Posted, and Seal Grounded Stories for the site.', n: GGVault.has() ? GGVault.count() + ' stories' : 'Arrives with the BLD 784 Founder update'} : null, // GWG BLD 784 hook
     slN ? {title: 'Story Lab', desc: 'The stories still to write, one card per guide.', n: slN.all + ' story cards, ' + slN.ready + ' ready', act: 'sl-open'} : null,
@@ -1940,7 +2015,9 @@ function vFounder(){
   if (C2 === 'pricing') return back(priceH);
   if (C2 === 'guide') return back(fieldH());
   if (C2 === 'guides') return back(guidesH());
-  return head + shownH + setupH + secCards('founder', cards);
+  // A waiting library update stays through tab changes (BLD 788) and shows here until Seal It or Cancel.
+  const updH = UPD ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>An Update Is Waiting to Seal</h3><p class="muted">${esc(UPD.title)} (${LEVEL_NAME[UPD.lvl]} library). Open Update a Library to Seal It or Cancel.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="sec-open" data-v="founder|upd">Open Update a Library</button></div></div>` : '';
+  return head + shownH + updH + setupH + secCards('founder', cards);
 }
 
 
@@ -2268,7 +2345,7 @@ function stmCard(){
   const m = stmState();
   if (!STM()) return '';
   if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Oak training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="st-mhome">Open Training</button></div>` : '';
-  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Oak training' : 'Start with the Oak training'}</h3><p class="muted">${esc(STM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="st-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew Your Oak Training' : 'Start the Oak Training'}</h3><p class="muted">${esc(STM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="st-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="st-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
 }
 function vSTM(){
   const M = STM(), D = stmData(), s = stmState();
@@ -2514,7 +2591,7 @@ function vSTPerson(c){
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Rings</h3><div class="st-ringwrap">${stRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(s => s.visit !== 'open' && stAvg(s.scores) != null).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${stPartTable(c)}</div>
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
-    <h3 style="margin-top:20px">Follow-ups</h3>
+    <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-stfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${s.notToday ? ' <span class="pill">Not today</span>' : ''}${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? ' <span class="pill">Earlier questions</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
@@ -2763,7 +2840,7 @@ async function stSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.oakGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.oakGuide.open = fgOpenSet(next.oakGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open Oak Guide to Guides' : 'Close Oak Guide to Guides', note:'', rows:[['Replaces', 'oakGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open Oak Guide to Guides' : 'Close Oak Guide to Guides', note:'', rows:[['Replaces', 'oakGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 
@@ -2869,7 +2946,7 @@ function sqmCard(){
   const m = sqmState();
   if (!SQM()) return '';
   if (m.complete) return m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Renew your Sequoia training soon</h3><p class="muted">Renew by ${nice(m.renewBy)}.</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sq-mhome">Open Training</button></div>` : '';
-  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Sequoia training' : 'Start with the Sequoia training'}</h3><p class="muted">${esc(SQM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sq-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sq-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
+  return `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew Your Sequoia Training' : 'Start the Sequoia Training'}</h3><p class="muted">${esc(SQM().intro[0])}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sq-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sq-demo">${icon('play')} Try a Demo Visit</button></div></div>`;
 }
 function vSQM(){
   const M = SQM(), D = sqmData(), s = sqmState();
@@ -3118,7 +3195,7 @@ function vSQPerson(c){
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Rings</h3><div class="st-ringwrap">${sqRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(sqRingVisit).length)}. Each full visit or quick check-in in their own voice adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${sqPartTable(c)}</div>
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${sqPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
-    <h3 style="margin-top:20px">Follow-ups</h3>
+    <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-sqfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sqVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.by === 'observed' ? ' <span class="pill">From what I see</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${sqSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sq-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
@@ -3351,7 +3428,7 @@ async function sqSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.sequoiaGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.sequoiaGuide.open = fgOpenSet(next.sequoiaGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open Sequoia Guide to Guides' : 'Close Sequoia Guide to Guides', note:'', rows:[['Replaces', 'sequoiaGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open Sequoia Guide to Guides' : 'Close Sequoia Guide to Guides', note:'', rows:[['Replaces', 'sequoiaGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function sqPersonCard(c){ return c.sq && sqOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Sequoia Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="sq-open" data-v="${c.id}">${icon('sequoia')} Open</button></div></div>` : ''; }
@@ -3836,7 +3913,7 @@ function vGXRec(r){
     return `${back}${head}${window.GGGv ? GGGv.recCard(r) : ''}
     <div class="card"><h3>A Visit</h3><p class="muted" style="font-size:15px">Pick the practices you offered or did together. The family visit sheet prints the first two.</p>
      <div class="row" style="margin-top:8px">${pool.map(chip).join('')}</div>
-     ${others.length ? `<details class="st-lf" style="margin-top:8px"><summary>More Together practices</summary><div class="row" style="margin-top:8px">${others.map(p => chip(p.id)).join('')}</div></details>` : ''}
+     ${others.length ? `<details class="st-lf" style="margin-top:8px"><summary>More Together Practices</summary><div class="row" style="margin-top:8px">${others.map(p => chip(p.id)).join('')}</div></details>` : ''}
      <label class="f" for="gx-vdate">Date</label><input type="date" id="gx-vdate" value="${today()}" style="max-width:220px">
      <label class="f" for="gx-vnotes">Visit notes (private)</label><textarea id="gx-vnotes" placeholder="${esc(S.notesNote || '')}"></textarea>
      <p class="muted" style="font-size:14px;margin-top:6px">What went well, what to bring next time. No scores.</p>
@@ -3972,7 +4049,7 @@ async function gvSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.groveGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.groveGuide.open = fgOpenSet(next.groveGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open the Grove Guide to Guides' : 'Close the Grove Guide to Guides', note:'', rows:[['Replaces', 'groveGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open the Grove Guide to Guides' : 'Close the Grove Guide to Guides', note:'', rows:[['Replaces', 'groveGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 // ----- actions -----
@@ -4297,7 +4374,7 @@ const spBand = g => spK2(g) ? 'k2' : 'g35';
 const spPeople = () => DATA.clients.filter(c => c.sp);
 const spVisits = id => DATA.sessions.filter(s => s.kind === 'sp' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const spReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool !== 'sa' && s.tool !== 'st' && s.tool !== 'sq' && s.tool !== 'pn' && s.tool !== 'br' && s.tool !== 'wl' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const spVisitName = k => k === 'nottoday' ? 'Not today' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const spVisitName = k => k === 'nottoday' ? 'Another day' : ((SPG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const spGradeName = g => g === 'K' ? 'Kindergarten' : g ? 'Grade ' + g : '';
 const SP_GRADES = ['K','1','2','3','4','5'];
 const SPK = () => fgKid(SPG(), 'child');
@@ -4617,7 +4694,7 @@ function vSP(){
   const S = SPG(), list = spPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = spmState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
   // Maple opens to cards (GWG BLD 732). The training reminder stays above the cards.
   const hello = `<div class="hello sp-hello"><div class="eyebrow" style="color:#9BD27A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Maple training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sp-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Maple training' : 'Start with the Maple training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A child</h3>
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew Your Maple Training' : 'Start the Maple Training'}</h3><p class="muted">${esc(SPM() ? SPM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sp-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sp-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A child</h3>
    <div class="grid g2"><div><label class="f" for="sp-nn">First name or nickname</label><input type="text" id="sp-nn" autocomplete="off" placeholder="Mia"></div>
    <div><label class="f" for="sp-ng">Grade</label><select id="sp-ng">${SP_GRADES.map(g => `<option value="${g}">${spGradeName(g)}</option>`).join('')}</select></div>
    <div><label class="f" for="sp-nr">Their grown-up (relationship)</label><input type="text" id="sp-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
@@ -4684,7 +4761,7 @@ function vSPPerson(c){
   <div class="card"><h3>Start a Visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sp-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'tree')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Levels</h3>${spLevelTable(c)}</div>
-   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-spfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+   <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-spfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="sp-fd" aria-label="Follow-up date"><input type="text" id="sp-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(spVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Share with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sp-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
@@ -4712,7 +4789,7 @@ function vSPVisit(){
   if (!SC && s.visit !== 'nottoday') { const w = spNeedData(); if (w) return w; }
   const demo = V.spv === 'demo', c = demo ? s.person : CL(s.clientId), S = SPG();
   const back = demo ? `<button class="linkbtn" data-tab="maple">Back to Maple Guide</button>` : `<button class="linkbtn" data-act="sp-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'child')}</button>`;
-  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Another day</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sp-del-visit" data-v="${s.id}">Delete</button>`}`;
   const idxs = s.visit === 'full' ? [0,1,2,3] : [0], room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : spReports(c ? c.id : null).filter(r => r.visitId === s.id);
   return `${back}
@@ -5016,7 +5093,7 @@ function spAct(a, v, t){
     case 'sp-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('maple', 'tree')); return true;
     case 'sp-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('maple', 'parts')); return true;
     case 'sp-mprint': spmPrint(); return true;
-    case 'sp-new': { const n = $('#sp-nn').value.trim(); if (!n){ $('#sp-nn').focus(); return true; }
+    case 'sp-new': { const n = $('#sp-nn').value.trim(); if (!n){ needName('#sp-nn', 'Add a name first.'); return true; }
       const c = {id:uid(), u:Date.now(), name:n, service:'Maple', status:'active', followups:[], created:today(), sp:{grade:$('#sp-ng').value, rel:$('#sp-nr').value.trim(), consent:null}};
       DATA.clients.push(c); save(); go('maple', {spc:c.id}); return true; }
     case 'sp-open': { const c = CL(v); if (!c){ go('maple'); return true; } if (!c.sp){ c.sp = {grade:'K', rel:'', consent:null}; touch(c); save(); } go('maple', {spp:v}); return true; }
@@ -5116,7 +5193,7 @@ async function spLibUpdate(title, path, fn){
   const cur = await pendingPlain('guide'); if (!cur || !cur.mapleGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); fn(next.mapleGuide);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function spSetField(on){ spLibUpdate(on ? 'Open Maple Guide to Guides' : 'Close Maple Guide to Guides', 'mapleGuide.open.guide', g => { g.open = fgOpenSet(g.open, on); }); }
@@ -5154,7 +5231,7 @@ const saPart = k => SAG().parts.find(p => p.key === k);
 const saPeople = () => DATA.clients.filter(c => c.sa);
 const saVisits = id => DATA.sessions.filter(s => s.kind === 'sa' && s.clientId === id).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
 const saReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'sa' && (!id || s.clientId === id)).sort((a,b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0));
-const saVisitName = k => k === 'nottoday' ? 'Not today' : ((SAG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const saVisitName = k => k === 'nottoday' ? 'Another day' : ((SAG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const saGradeName = g => g ? 'Grade ' + g : '';
 const SA_GRADES = ['6','7','8'];
 
@@ -5370,7 +5447,7 @@ function vSA(){
   const S = SAG(), list = saPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||'')), m = samState(), k = spContact(), cty = DATA.settings.spCounty || 'stearns', own = DATA.settings.spOwnCounty || {};
   // Aspen opens to cards (GWG BLD 732). The training reminder stays above the cards.
   const hello = `<div class="hello sa-hello"><div class="eyebrow" style="color:#A9D88A">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Aspen training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="sa-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Aspen training' : 'Start with the Aspen training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A student</h3>
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew Your Aspen Training' : 'Start the Aspen Training'}</h3><p class="muted">${esc(SAM() ? SAM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="sa-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="sa-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`, add = `  <div class="card"><h3>A student</h3>
    <div class="grid g2"><div><label class="f" for="sa-nn">First name or nickname</label><input type="text" id="sa-nn" autocomplete="off" placeholder="Jordan"></div>
    <div><label class="f" for="sa-ng">Grade</label><select id="sa-ng">${SA_GRADES.map(g => `<option value="${g}">${saGradeName(g)}</option>`).join('')}</select></div>
    <div><label class="f" for="sa-nr">Their grown-up (relationship)</label><input type="text" id="sa-nr" placeholder="Mom, Grandpa, foster dad"></div></div>
@@ -5435,7 +5512,7 @@ function vSAPerson(c){
   <div class="card"><h3>Start a Visit</h3><div class="st-visits">${S.visits.map(v => `<button class="qbtn" data-act="sa-start" data-v="${v[0]}" data-c="${c.id}" ${ok && ready ? '' : 'disabled'}><span class="qi">${icon(v[0] === 'topic' ? 'talk' : v[0] === 'quick' ? 'start' : 'aspen')}</span><span><b>${esc(v[1])}</b><small>${esc(v[2])}. ${esc(v[3])}</small></span></button>`).join('')}</div></div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Levels</h3>${saLevelTable(c)}</div>
-   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+   <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="sa-fd" aria-label="Follow-up date"><input type="text" id="sa-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !saCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
@@ -5464,7 +5541,7 @@ function vSAVisit(){
   if (!SAC && s.visit !== 'nottoday') { const w = saNeedData(); if (w) return w; }
   const demo = V.sav === 'demo', c = demo ? s.person : CL(s.clientId), S = SAG();
   const back = demo ? `<button class="linkbtn" data-tab="aspen">Back to Aspen Guide</button>` : `<button class="linkbtn" data-act="sa-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
-  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Another day</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="sa-del-visit" data-v="${s.id}">Delete</button>`}`;
   const idxs = saIdx(s), room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '';
   const reps = demo ? [] : saReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, sq = sens.asked ? saSensQ(s.grade) : null;
   return `${back}
@@ -5834,7 +5911,7 @@ function saAct(a, v, t){
     case 'sa-poster': fgPrint().then(() => window.GGPrint && GGPrint.poster('aspen', 'tree')); return true;
     case 'sa-parts': fgPrint().then(() => window.GGPrint && GGPrint.poster('aspen', 'parts')); return true;
     case 'sa-mprint': samPrint(); return true;
-    case 'sa-new': { const n = $('#sa-nn').value.trim(); if (!n){ $('#sa-nn').focus(); return true; }
+    case 'sa-new': { const n = $('#sa-nn').value.trim(); if (!n){ needName('#sa-nn', 'Add a name first.'); return true; }
       const c = {id:uid(), u:Date.now(), name:n, service:'Aspen', status:'active', followups:[], created:today(), sa:{grade:$('#sa-ng').value, rel:$('#sa-nr').value.trim(), consent:null}};
       DATA.clients.push(c); save(); V.sach = null; V.sanv = undefined; go('aspen', {sac:c.id}); return true; }
     case 'sa-open': { const c = CL(v); if (!c){ go('aspen'); return true; } if (!c.sa){ c.sa = {grade:'6', rel:'', consent:null}; touch(c); save(); } go('aspen', {sap:v}); return true; }
@@ -5919,7 +5996,7 @@ async function saLibUpdate(title, path, fn){
   const cur = await pendingPlain('guide'); if (!cur || !cur.aspenGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); fn(next.aspenGuide);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title, note:'', rows:[['Replaces', path]], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function saSetField(on){ saLibUpdate(on ? 'Open Aspen Guide to Guides' : 'Close Aspen Guide to Guides', 'aspenGuide.open.guide', g => { g.open = fgOpenSet(g.open, on); }); }
@@ -5960,7 +6037,7 @@ const pnPeople = () => DATA.clients.filter(c => c.pn);
 const pnSort = (a, b) => (b.date||'').localeCompare(a.date||'') || (b.u||0) - (a.u||0);
 const pnVisits = id => DATA.sessions.filter(s => s.kind === 'pn' && s.clientId === id).sort(pnSort);
 const pnReports = id => DATA.sessions.filter(s => s.kind === 'spr' && s.tool === 'pn' && (!id || s.clientId === id)).sort(pnSort);
-const pnVisitName = k => k === 'nottoday' ? 'Not today' : ((PNG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const pnVisitName = k => k === 'nottoday' ? 'Another day' : ((PNG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const pnGradeName = g => g ? 'Grade ' + g : '';
 const PN_GRADES = ['9','10','11','12'];
 const pnWordName = w => w === 'plain' ? 'Plain wording' : 'Faith wording';
@@ -6332,7 +6409,7 @@ function vPNPerson(c){
   <div class="row" style="margin:12px 0">${pnShield(c.id)}${reps.length ? ` <span class="pill">${reps.length} report record${reps.length === 1 ? '' : 's'}</span>` : ''}</div>
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Levels</h3>${pnLevelTable(c)}</div>
-   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-pnfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+   <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-pnfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="pn-fd" aria-label="Follow-up date"><input type="text" id="pn-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="pn-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(pnVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.told && s.told !== 'concern' ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${pnSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.grade ? ' &middot; ' + esc(pnGradeName(s.grade)) : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !pnCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="pn-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
@@ -6354,7 +6431,7 @@ function vPNVisit(){
   if (!PNC && s.visit !== 'nottoday'){ const w = pnNeedData(); if (w) return w; }
   const demo = V.pnv === 'demo', c = demo ? s.person : CL(s.clientId), S = PNG();
   const back = demo ? `<button class="linkbtn" data-act="pn-home">Back to Pine Guide</button>` : `<button class="linkbtn" data-act="pn-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'student')}</button>`;
-  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="pn-del-visit" data-v="${s.id}">Delete</button>`}`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Another day</h1><p>${esc(c ? c.name : '')} said not today. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="pn-del-visit" data-v="${s.id}">Delete</button>`}`;
   const room = S.room, scr = (S.screen.opts.find(o => o[0] === s.screen) || [])[1] || '', reps = demo ? [] : pnReports(c ? c.id : null).filter(r => r.visitId === s.id), sens = s.sens || {}, open = s.visit === 'open';
   const flagged = pnAllFlags(s);
   return `${back}
@@ -6691,7 +6768,7 @@ function pnRunReport(){
   const cid = RUN.clientId, demo = RUN.demo;
   pnKidClose(); if (!demo){ DATA.draft = RUN; save(); }
   clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  go('pine', {pnrep:cid || ''}); toast(demo ? 'Demo closed. Nothing was saved.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
+  go('pine', {pnrep:cid || ''}); toast(demo ? 'Demo closed. Your records stay as they were.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
 }
 function pnToggle(t){
   const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
@@ -6865,7 +6942,7 @@ async function pnSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.pineGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.pineGuide.open = fgOpenSet(next.pineGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open Pine Guide to Guides' : 'Close Pine Guide to Guides', note:'', rows:[['Replaces', 'pineGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open Pine Guide to Guides' : 'Close Pine Guide to Guides', note:'', rows:[['Replaces', 'pineGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function pnPersonCard(c){ return c.pn && pnOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Pine Guide</b> <span class="muted">Visits, levels, and permission for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="pn-open" data-v="${c.id}">${icon('pine')} Open</button></div></div>` : ''; }
@@ -7247,7 +7324,7 @@ function vBRPerson(c){
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Rings</h3><div class="st-ringwrap">${brRings(c)}<p class="muted" style="font-size:15px">${(n => n + (n === 1 ? ' ring' : ' rings'))(vs.filter(brRingVisit).length)}. Each full visit or quick check-in adds one. Green is strong, gold is steady, rust is a growing edge.</p></div>${brPartTable(c)}</div>
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${brPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
-    <h3 style="margin-top:20px">Follow-ups</h3>
+    <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-brfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(brVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.youth === 'yes' ? ' <span class="pill">Youth setting</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${brSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}</small></div><button class="btn btn-line btn-sm" data-act="br-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
@@ -7572,7 +7649,7 @@ function brRunReport(){
   const cid = RUN.clientId, demo = RUN.demo;
   if (!demo){ DATA.draft = RUN; save(); }
   clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  go('birch', {brrep:cid || ''}); toast(demo ? 'Demo closed. Nothing was saved.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
+  go('birch', {brrep:cid || ''}); toast(demo ? 'Demo closed. Your records stay as they were.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
 }
 function brToggle(t){
   const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
@@ -7688,7 +7765,7 @@ async function brSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.birchGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.birchGuide.open = fgOpenSet(next.birchGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open Birch Guide to Guides' : 'Close Birch Guide to Guides', note:'', rows:[['Replaces', 'birchGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open Birch Guide to Guides' : 'Close Birch Guide to Guides', note:'', rows:[['Replaces', 'birchGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function brPersonCard(c){ return c.br && brTab() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Birch Guide</b> <span class="muted">Rings, growth plan, and visits for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="br-open" data-v="${c.id}">${icon('birch')} Open</button></div></div>` : ''; }
@@ -7853,7 +7930,7 @@ async function lgSetField(on){
   const next = JSON.parse(JSON.stringify(cur)); next.lifeGuide.open = fgOpenSet(next.lifeGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
   const nm = cur.lifeGuide.title || 'Walking with Illness and Disability';
-  V.upd = {lvl:'guide', title: on ? 'Open ' + nm + ' to Guides' : 'Close ' + nm + ' to Guides', note:'', rows:[['Replaces', 'lifeGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open ' + nm + ' to Guides' : 'Close ' + nm + ' to Guides', note:'', rows:[['Replaces', 'lifeGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function lgAct(a, v, t){
@@ -7880,7 +7957,7 @@ function lgAct(a, v, t){
 // It replaces the guide with the same id, or adds a new one at the end. The Founder seals it and uploads lib-staff.js.
 async function sesSaveAll(g){
   const cur = await pendingPlain('staff');
-  if (!cur || !Array.isArray(cur.guides)) return alert("This device can't open the Staff library, so it can't update it. See \"Finish setup.\"");
+  if (!cur || !Array.isArray(cur.guides)) return alert("This device can't open the Staff library, so it can't update it. See \"Finish Setup.\"");
   const clean = JSON.parse(JSON.stringify(g)); Object.keys(clean).forEach(k => { if (k[0] === '_') delete clean[k]; });
   const next = JSON.parse(JSON.stringify(cur)); let i = next.guides.findIndex(x => x.id === clean.id); const add = i < 0;
   if (add) i = next.guides.length;
@@ -7894,7 +7971,7 @@ async function sesSaveAll(g){
 async function pieceSaveAll(key, item){
   if (TIER !== 'founder' || !['readings', 'music', 'rituals'].includes(key) || !item || !item.title) return;
   const cur = await pendingPlain('staff');
-  if (!cur || !cur.ceremonies) return alert("This device can't open the Staff library, so it can't update it. See \"Finish setup.\"");
+  if (!cur || !cur.ceremonies) return alert("This device can't open the Staff library, so it can't update it. See \"Finish Setup.\"");
   const next = JSON.parse(JSON.stringify(cur)), c = next.ceremonies; if (!Array.isArray(c[key])) c[key] = [];
   const L = c[key], strip = x => { const o = Object.assign({}, x); delete o.id; return o; };
   if (L.some(x => same(strip(x), strip(item)))){ toast('The Staff library already has this piece.'); return; }
@@ -7935,7 +8012,7 @@ const wlVisits = id => DATA.sessions.filter(s => s.kind === 'wl' && s.clientId =
 const wlRole = () => DATA.settings.wlRole || 'chaplain';
 const wlRoleName = k => ((WLG().roles.find(x => x[0] === (k || wlRole())) || [])[1]) || 'Chaplain';
 const wlVisitWord = k => (WLG().visitWord || {})[k || wlRole()] || 'Spiritual care visit';
-const wlVisitName = k => k === 'nottoday' ? 'Not today' : k === 'shared' ? 'Shared from their Willow' : ((WLG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
+const wlVisitName = k => k === 'nottoday' ? 'Another day' : k === 'shared' ? 'Shared from their Willow' : ((WLG().visits.find(x => x[0] === k) || [])[1] || 'Visit');
 const wlTypeName = t => ((WLG().people.find(x => x[0] === t) || [])[1]) || 'Person';
 const wlRunRole = c => c && c.wl && c.wl.type === 'family' ? 'helper' : 'person';
 const wlFirst = n => String(n || '').trim().split(/\s+/)[0] || '';
@@ -7946,7 +8023,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b782', '../willow/practices.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -8181,7 +8258,7 @@ function sgLearnCard(){
   if (!sgOn()) return '';
   const S = SGD();
   return `<div class="card ln-track sg-series" id="sg-series"><div class="eyebrow" style="color:var(--sage)">For You</div><h3>${esc(S.title)}</h3><p class="muted">${esc(S.intro || '')}</p>
-   ${sgGroups().map(g => `<div class="wfg-ring"><h4>${esc(g.name)}</h4><div class="ln-list">${g.items.map(x => `<button class="ln-item" data-act="sg-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? '. ' : ''}About ${esc(String(x.mins || 4))} minutes, and a page to read</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}</div>`;
+   ${sgGroups().map(g => `<div class="wfg-ring"><h4>${esc(g.name)}</h4><div class="ln-list">${g.items.map(x => `<button class="ln-item" data-act="sg-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? (/[.!?]$/.test(x.blurb) ? ' ' : '. ') : ''}About ${esc(String(x.mins || 4))} minutes, and a page to read</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}</div>`;
 }
 // The written page for one item. Hospital Guide (BLD 763) reuses it with its own library section (S) for the help line.
 function sgBody(x, S = SGD()){
@@ -8525,7 +8602,7 @@ function wlRunReport(){
   const cid = RUN.clientId, demo = RUN.demo;
   if (!demo){ DATA.draft = RUN; save(); }
   clearInterval(runTimer); RUN = null; $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
-  go('willow', {wlrep:cid || ''}); toast(demo ? 'Demo closed. Nothing was saved.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
+  go('willow', {wlrep:cid || ''}); toast(demo ? 'Demo closed. Your records stay as they were.' : 'Your visit is paused and kept. Tap Back to the Visit when you are ready.');
 }
 function wlResume(){
   if (!DATA.draft || DATA.draft.kind !== 'wl') return;
@@ -8546,7 +8623,7 @@ function vWL(){
   const S = WLG(), m = wlmState(), list = wlPeople().filter(c => c.status !== 'closed').sort((a,b) => (b.last||'').localeCompare(a.last||''));
   // Willow opens to cards (GWG BLD 732). The training reminder and the crisis line stay above the cards.
   const hello = `${wlHello()}`, top = `  ${m.complete ? (m.dueSoon ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Time to renew your Willow training</b> <span class="muted">Renew by ${nice(m.renewBy)}.</span></div><button class="btn btn-gold btn-sm" data-act="wl-mhome">Renew</button></div></div>` : '')
-   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew your Willow training' : 'Start with the Willow training'}</h3><p class="muted">${esc(WLM() ? WLM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="wl-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
+   : `<div class="card" style="border-left:4px solid var(--gold)"><h3>${m.renewing ? 'Renew Your Willow Training' : 'Start the Willow Training'}</h3><p class="muted">${esc(WLM() ? WLM().intro[0] : '')}</p>${orBar(m.done, m.total)}<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="wl-mhome">${m.done ? 'Continue' : 'Start'} Training</button><button class="btn btn-line btn-sm" data-act="wl-demo">${icon('play')} Try a Demo Visit</button></div></div>`}`, about = `  <div class="card">${S.intro.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="grid g2" style="margin-top:12px"><div><label class="f" for="wl-role" style="margin-top:0">I visit as</label><select id="wl-role" data-wlset="wlRole">${S.roles.map(r => `<option value="${r[0]}" ${wlRole() === r[0] ? 'selected' : ''}>${esc(r[1])}</option>`).join('')}</select></div></div>
    <p class="muted" style="font-size:14px;margin-top:6px">${esc(S.roleNote)}</p></div>`, crisis = `  ${htCrisisLine()}`, add = `  <div class="card"><h3>Someone new</h3>
    <div class="grid g2"><div><label class="f" for="wl-nn">First name or initials</label><input type="text" id="wl-nn" autocomplete="off" placeholder="Ruth, or R.M."></div>
@@ -8607,7 +8684,7 @@ function vWLPerson(c){
     ${p.changed ? `<p><span class="muted">${esc(S.plan.changed)}:</span> ${esc(p.changed)}</p>` : ''}</div>`).join('') : `<p class="muted" style="margin-top:8px">${esc(S.plan.empty)}</p>`}
    ${V.wlpe && V.wlpe.c === c.id ? wlPlanForm(c) : ''}</div>
   <div class="grid g2" style="margin-top:14px">
-   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
+   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
    <div class="card"><h3>${esc(S.hope.title)}</h3><p class="muted" style="font-size:14px">${esc(S.hope.lead)}</p>
     ${S.hope.fields.map(f => `<label class="f" for="wl-h-${f[0]}">${esc(f[1])}</label><textarea id="wl-h-${f[0]}" data-wlh="${f[0]}" style="min-height:60px" placeholder="${esc(f[2])}">${esc(h[f[0]] || '')}</textarea>`).join('')}
     <p class="muted" style="font-size:13px;margin-top:6px">${h.date ? 'Last changed ' + nice(h.date) + '. ' : ''}${esc(S.hope.source)}</p></div></div>
@@ -8620,7 +8697,7 @@ function vWLPerson(c){
    ${fw.vigil && Object.values(fw.vigil).some(Boolean) ? `<h4 style="margin-top:10px">Their vigil wishes, in Willow</h4>${(WC ? WC.C.guide.vigil : []).map((x, i) => fw.vigil['v' + i] ? `<p style="margin-top:4px"><b>${esc(x[0])}:</b> ${esc(fw.vigil['v' + i])}</p>` : '').join('')}` : ''}</div>` : ''}
   <div class="row" style="margin:14px 0"><button class="btn btn-line" data-act="wl-import" data-v="${c.id}">${icon('willow')} Bring In From Their Willow</button></div>
   <div class="grid g2">
-   <div class="card"><h3>Follow-ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-wlfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
+   <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-wlfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="wl-fd" aria-label="Follow-up date"><input type="text" id="wl-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div>
    <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(wlVisitName(s.visit))}</b>${s.by === 'observed' ? ' <span class="pill">Seen by family</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${wlSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.quick ? ' &middot; quick' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div></div>
@@ -8668,7 +8745,7 @@ function vWLVisit(){
   const w = wlNeedData(); if (w) return w;
   const demo = V.wlv === 'demo', c = demo ? s.person : CL(s.clientId), S = WLG(), C = WC.C;
   const back = demo ? `<button class="linkbtn" data-tab="willow">Back to Willow Guide</button>` : `<button class="linkbtn" data-act="wl-open" data-v="${c ? c.id : ''}">Back to ${esc(c ? c.name : 'their record')}</button>`;
-  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Not today</h1><p>${esc(c ? c.name : '')} said ${s.yes === 'later' ? 'not now, come back' : 'not today'}. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}`;
+  if (s.visit === 'nottoday') return `${back}<div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}</div><h1>Another day</h1><p>${esc(c ? c.name : '')} said ${s.yes === 'later' ? 'not now, come back' : 'not today'}. That was honored.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="wl-del-visit" data-v="${s.id}">Delete</button>`}`;
   const shared = s.visit === 'shared', bank = wlBank(s.role), idx = s.quick || s.visit === 'quick' ? [0] : [0, 1, 2];
   const byName = ((C.answeredBy.find(b => b[0] === s.by) || [])[1]) || (s.role === 'helper' ? 'They answered for themselves' : '');
   const plans = wlVisitPlans(s, c);
@@ -8873,7 +8950,7 @@ function wlFaithStep(c){
   let h = `<div class="run-step-n">Faith comes first</div><h2 class="run-step-t">Faith, spirit, or something else</h2>
    <div class="card step-card">${blk('Ask', [WC.C.guide.opening.faith], 'say')}<div class="tipbox">${esc(WLG().faithTip)}</div></div>`;
   if (cur && !RUN.faithEdit){
-    h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Never do:</b> ${esc(cur.never)}</p>` : ''}
+    h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(cur.never)}</p>` : ''}
       <p style="margin-top:10px"><b>Ask: "Is that still true for you?"</b></p>
       <div class="st-opts">${stChip('wl-fcheck', 'data-v="same"', RUN.faithCheck === 'same', 'Yes, still true')}${stChip('wl-fcheck', 'data-v="changed"', RUN.faithCheck === 'changed', 'Something has changed')}${stChip('wl-fcheck', 'data-v="skip"', RUN.faithCheck === 'skip', 'Not today')}</div></div>
       ${cur.trad ? wlCardHTML(cur.trad) : ''}`;
@@ -9211,7 +9288,7 @@ async function wlSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.willowGuide) return;
   const next = JSON.parse(JSON.stringify(cur)); next.willowGuide.open = fgOpenSet(next.willowGuide.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title:on ? 'Open Willow Guide to Guides' : 'Close Willow Guide to Guides', note:'', rows:[['Replaces', 'willowGuide.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title:on ? 'Open Willow Guide to Guides' : 'Close Willow Guide to Guides', note:'', rows:[['Replaces', 'willowGuide.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 function wlPersonCard(c){ return c.wl && wlOpen() ? `<div class="card" style="margin-bottom:14px"><div class="spread"><div><b>Willow Guide</b> <span class="muted">Visits, the six parts, care plans, and the vigil plan for ${esc(c.name)}.</span></div><button class="btn btn-line btn-sm" data-act="wl-open" data-v="${c.id}">${icon('willow')} Open</button></div></div>` : ''; }
@@ -9278,7 +9355,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js', '../aspen/guides.js', '../oak/guides.js?v=b787', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b782', '../pine/guides.js?v=b782', '../birch/guides.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b788', '../aspen/guides.js?v=b788', '../oak/guides.js?v=b788', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b788', '../pine/guides.js?v=b788', '../birch/guides.js?v=b788'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -9603,7 +9680,7 @@ async function htSetField(on){
   const cur = await pendingPlain('guide'); if (!cur || !cur.hardTalks) return;
   const next = JSON.parse(JSON.stringify(cur)); next.hardTalks.open = fgOpenSet(next.hardTalks.open, on);
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl:'guide', title: on ? 'Open When Life Changes to Guides' : 'Close When Life Changes to Guides', note:'', rows:[['Replaces', 'hardTalks.open.guide']], warns:[], from:cur._rev || 0, next};
+  UPD = {lvl:'guide', title: on ? 'Open When Life Changes to Guides' : 'Close When Life Changes to Guides', note:'', rows:[['Replaces', 'hardTalks.open.guide']], warns:[], from:cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 
@@ -10165,7 +10242,7 @@ async function readUpdate(file){
   let f; try { const txt = await file.text(); if (/window\.GFG_/.test(txt)) return alert("That's a sealed library file for the site. Choose the update file a chat gave you instead (it ends in .json)."); f = JSON.parse(txt); } catch(e){ return alert("That file couldn't be read. Choose the .json update file from the chat."); }
   if (!f || !['library-edit','library-patch'].includes(f._gfg) || !LEVELS.includes(fgTier(f.level))) return alert("That isn't a Field Guide library update.");
   const lvl = fgTier(f.level), cur = await pendingPlain(lvl);
-  if (!cur) return alert("This device can't open the " + LEVEL_NAME[lvl] + ' library, so it can\'t update it. See "Finish setup."');
+  if (!cur) return alert("This device can't open the " + LEVEL_NAME[lvl] + ' library, so it can\'t update it. See "Finish Setup."');
   const next = JSON.parse(JSON.stringify(cur)), rows = [], warns = [];
   if (f._gfg === 'library-edit'){
     if (!f.data || typeof f.data !== 'object' || Array.isArray(f.data)) return alert('That update file is empty.');
@@ -10180,7 +10257,7 @@ async function readUpdate(file){
   }
   if (!rows.length) return alert('Nothing in that file is different from the library as it stands. Nothing to do.');
   next._rev = (cur._rev || 0) + 1; next._updated = today();
-  V.upd = {lvl, title: f.title || (f._gfg === 'library-edit' ? 'Edited library' : 'Library update'), note: f.note || '', rows, warns, from: cur._rev || 0, next};
+  UPD = {lvl, title: f.title || (f._gfg === 'library-edit' ? 'Edited library' : 'Library update'), note: f.note || '', rows, warns, from: cur._rev || 0, next};
   render(); setTimeout(() => { const el = $('#upd-card'); if (el) el.scrollIntoView({block:'start'}); }, 60);
 }
 // GWG BLD 784 hook: keeps the Founder library as it stands on this device (FDR, with the Story Vault's changes) by sealing it
@@ -10189,7 +10266,7 @@ async function readUpdate(file){
 let fdrKeepQ = Promise.resolve();
 function fdrKeep(){
   const run = async () => {
-    if (TIER !== 'founder' || !FDR || !DATA || (V.upd && V.upd.lvl === 'founder')) return false;
+    if (TIER !== 'founder' || !FDR || !DATA || (UPD && UPD.lvl === 'founder')) return false;
     const k = effKeys().founder; if (!k) return false;
     const d0 = DATA.founder.draft, had = !!(d0 && d0.libs && d0.libs.founder);
     const r0 = FDR._rev, u0 = FDR._updated;
@@ -10197,12 +10274,12 @@ function fdrKeep(){
     FDR._updated = today();
     let box; try { box = await seal(await rawKey(k), FDR); } catch(e){ FDR._rev = r0; FDR._updated = u0; return false; }
     ensureDraft().libs.founder = box;
-    await persist(); return true;
+    return await persist(); // false when saving waits, so the Story Vault says so (BLD 788)
   };
   fdrKeepQ = fdrKeepQ.then(run, run); return fdrKeepQ;
 }
 async function sealUpdate(){
-  const U = V.upd; if (!U) return;
+  const U = UPD; if (!U) return;
   const d = ensureDraft(), k = effKeys()[U.lvl];
   if (!k) return alert("This device can't open that library.");
   const box = await seal(await rawKey(k), U.next);
@@ -10210,10 +10287,10 @@ async function sealUpdate(){
   if (!d.keys[U.lvl] && BOX[U.lvl] && BOX[U.lvl].salt) box.salt = BOX[U.lvl].salt;
   d.libs[U.lvl] = box;
   if (U.lvl === 'founder') FDR = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
-  V.upd = null; await persist(); render(); toast('Sealed. It is in "Ready to upload."');
+  UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.');
 }
 function vUpdateCard(){
-  const U = V.upd;
+  const U = UPD;
   const pick = `<div class="card"><h3>Update a Library</h3><p class="muted">For wording changes and new material from a chat. Keys and codes never leave this device.</p>
    <p style="margin-top:10px"><b>To change wording that's already there:</b> download a copy for editing and send it to the chat. It's a plain, readable file, so never upload it to the site, and delete it when you're done.</p>
    <div class="row" style="margin-top:8px"><select id="upd-lvl" style="max-width:220px" aria-label="Library">${LEVELS.map(l => `<option value="${l}">${LEVEL_NAME[l]} library</option>`).join('')}</select><button class="btn btn-line btn-sm" data-act="upd-dl">Download for Editing</button></div>
@@ -10224,7 +10301,7 @@ function vUpdateCard(){
    ${U.note ? `<p class="muted" style="margin-top:4px">${esc(U.note)}</p>` : ''}
    <div style="margin-top:8px">${U.rows.map(r => `<div class="list-row"><div class="lr-main"><span class="pill ${r[0] === 'Removes' ? 'warn' : 'gold'}">${r[0]}</span> <b style="overflow-wrap:anywhere">${esc(r[1])}</b></div></div>`).join('')}</div>
    ${U.warns.map(w => `<p class="tipbox" style="border-left:3px solid var(--danger)">${esc(w)}</p>`).join('')}
-   <p class="muted" style="margin-top:10px">Sealing adds lib-${U.lvl}.js to "Ready to upload." Nothing changes for anyone until you upload it.</p>
+   <p class="muted" style="margin-top:10px">Sealing adds lib-${U.lvl}.js to Ready to Upload. Nothing changes for anyone until you upload it.</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="upd-seal">Seal It</button><button class="btn btn-line" data-act="upd-cancel">Cancel</button></div></div>`;
 }
 
@@ -10346,6 +10423,8 @@ function printCert(){
 }
 
 // ---------------- helpers ----------------
+// A short line under a name box left empty (BLD 788), so Add Child, Add Student, and Add Person say what they need.
+function needName(sel, msg){ const el = $(sel); if (!el) return; el.focus(); let m = document.getElementById(el.id + '-need'); if (!m){ m = document.createElement('p'); m.id = el.id + '-need'; m.className = 'muted'; m.setAttribute('role', 'status'); m.style.cssText = 'font-size:14px;margin-top:6px'; el.insertAdjacentElement('afterend', m); el.addEventListener('input', () => m.remove(), {once: true}); } m.textContent = msg; }
 function toast(t){ const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
 async function copy(t){ try { await navigator.clipboard.writeText(t); toast('Copied.'); } catch(e){ const a = document.createElement('textarea'); a.value = t; document.body.appendChild(a); a.select(); document.execCommand('copy'); a.remove(); toast('Copied.'); } }
 async function exportBackup(){
@@ -10600,9 +10679,9 @@ document.addEventListener('click', async e => {
       KEYS = Object.assign({}, KEYS, {staff: r.k}); useLevels(await openLevels(TIER, KEYS)); await persist(); render(); toast('Staff access added. Now tap Finish Setup.'); break; }
     case 'upd-dl': await downloadForEdit($('#upd-lvl').value); break;
     case 'upd-seal': await sealUpdate(); break;
-    case 'upd-cancel': V.upd = null; render(); break;
+    case 'upd-cancel': UPD = null; render(); break;
     case 'st-field': await stSetField(v === 'on'); break;
-    case 'st-new': { const n = $('#st-nn').value.trim(); if (!n){ $('#st-nn').focus(); return; } const c = {id:uid(), u:Date.now(), name:n, service:'Oak', status:'active', followups:[], created:today(), st:{type:$('#st-nt').value, consent:null}}; DATA.clients.push(c); save(); go('oak', {stc:c.id}); break; }
+    case 'st-new': { const n = $('#st-nn').value.trim(); if (!n){ needName('#st-nn', 'Add a code or initials first.'); return; } const c = {id:uid(), u:Date.now(), name:n, service:'Oak', status:'active', followups:[], created:today(), st:{type:$('#st-nt').value, consent:null}}; DATA.clients.push(c); save(); go('oak', {stc:c.id}); break; }
     case 'st-me': { const c = {id:uid(), u:Date.now(), name:'Me', service:'', status:'active', followups:[], created:today(), st:{type:'me'}}; DATA.clients.push(c); save(); go('oak', {stp:c.id}); break; }
     case 'st-open': { const c = CL(v); if (!c) return; if (!c.st){ c.st = {type:'community', consent:null}; touch(c); save(); } go('oak', {stp:v}); break; }
     case 'st-consent': go('oak', {stc:v}); break;
@@ -10651,13 +10730,21 @@ document.addEventListener('click', async e => {
     case 'st-del': if (confirm('Delete this person and all their visits and sessions? This cannot be undone.')) { const now = Date.now(); DATA.deleted = DATA.deleted || {clients:{}, sessions:{}}; DATA.deleted.clients[v] = now; DATA.sessions.filter(s => s.clientId === v).forEach(s => DATA.deleted.sessions[s.id] = now); DATA.clients = DATA.clients.filter(c => c.id !== v); DATA.sessions = DATA.sessions.filter(s => s.clientId !== v); save(); go('oak'); } break;
     case 'st-add-fu': { const c = CL(v), d = $('#st-fd').value, tx = $('#st-ft').value.trim(); if (!d){ $('#st-fd').focus(); return; } (c.followups = c.followups || []).push({date:d, text:tx || 'Follow up', done:false}); touch(c); save(); render(); break; }
     case 'st-imp-local': await stImportLocal(); break;
+    case 'fdr-hwdl': if (window.GGHw && GGHw.download) GGHw.download(); break;
     case 'fdr-dl': download(v === 'codes' ? 'codes.js' : 'lib-' + v + '.js', draftFile(v)); break;
     case 'fdr-discard': {
-      if (!confirm('Discard every change that hasn\'t been uploaded? Codes made since then will be forgotten.')) return;
+      // Name everything this clears (BLD 788): every file in Ready to Upload goes back to the copy on the site.
+      const dd = DATA.founder.draft, lv = dd ? Object.keys(dd.libs || {}) : [], files = dd ? [...(dd.stamp ? ['codes.js'] : []), ...lv.map(l => 'lib-' + l + '.js')] : [];
+      const what = [dd && dd.stamp ? 'the access codes made or changed since your last upload' : '', lv.includes('founder') ? 'your Story Vault changes (story text, statuses, topics, notes, letters, and Reflection Cards) and the Access list' : '', ...lv.filter(l => l !== 'founder').map(l => 'the sealed ' + LEVEL_NAME[l] + ' library update')].filter(Boolean);
+      if (!confirm('Discard These Changes clears the files waiting in Ready to Upload' + (files.length ? ' (' + listAnd(files) + ')' : '') + ', so this device goes back to what is on the site.\n\nThis clears ' + (what.length ? listAnd(what) : 'the changes waiting here') + '.\n\nTo keep any of them, tap Cancel and download the files first.')) return;
       const liveIds = new Set(CODES.codes.map(e => e.id)); DATA.founder.saved = DATA.founder.saved.filter(x => liveIds.has(x.id));
       DATA.founder.draft = null; V.show = null; V.org = null;
       { const f0 = await tryOpen(BOX.founder, KEYS.founder); if (f0) FDR = f0; } // the Founder library as it is on the site (the Access list and the Story Vault)
+      if (lv.includes('staff')){ const s0 = await tryOpen(BOX.staff, KEYS.staff); if (s0) LIB = s0; }
+      if (lv.includes('guide')){ const g0 = await tryOpen(BOX.guide, KEYS.guide); if (g0) FLD = g0; }
       await persist(); render(); break; }
+    case 'save-warn-ready': SEC.founder = 'ready'; go('founder'); break;
+    case 'save-warn-retry': { const ok = await persist(); toast(ok ? 'Saved on this device.' : 'Saving still needs a moment. Download your files to keep them.'); break; }
     case 'change-pass': {
       const p0 = $('#cp0').value, p1 = $('#cp1').value, p2 = $('#cp2').value;
       if (p1.length < 6) return alert('Please use at least 6 characters.'); if (p1 !== p2) return alert("The new passcodes don't match.");
@@ -10729,7 +10816,8 @@ document.addEventListener('change', e => {
   if (t.id === 'imp' && t.files[0]) importBackup(t.files[0]);
   if (t.id === 'upd-file' && t.files[0]){ const f = t.files[0]; t.value = ''; readUpdate(f); }
 });
-document.addEventListener('visibilitychange', () => { if (document.hidden && DATA) persist(); });
+// On close or switching away, finish any Story Vault save that is waiting, then save the record (BLD 788).
+document.addEventListener('visibilitychange', () => { if (!document.hidden || !DATA) return; if (window.GGVault && GGVault.flush && GGVault.flush()) return; persist(); });
 
 // ---------------- PRESENT ----------------
 /* PRESENT (Presentations session, October 2026)
@@ -10743,7 +10831,7 @@ document.addEventListener('visibilitychange', () => { if (document.hidden && DAT
      yet saved lives in DATA.dkWork.
    - Present on one screen, or Presenter View with the audience on a second window. Offline, notes, timer.
    - Handouts and speaker notes save as a PDF or print, through fgSheet.
-   - The Founder tab's "Speaking and proposals" card reads FDR.speaking (Founder library). Checks are kept in
+   - The Founder tab's "Speaking and Proposals" card reads FDR.speaking (Founder library). Checks are kept in
      DATA.founder.speak.
    Lives inside the main script, so it reads LIB, FDR, and DATA directly. At load it only adds the slide styles. */
 
@@ -11133,7 +11221,7 @@ const BIZ_CSS = `.biz-item{border-top:1px solid var(--line);padding:12px 0}.biz-
 .biz-tw{overflow-x:auto;margin:8px 0}.biz-t{border-collapse:collapse;width:100%;font-size:15px}.biz-t th,.biz-t td{border:1px solid var(--line);padding:6px 8px;text-align:left;vertical-align:top}.biz-t th{background:var(--bg-deep, var(--bg))}`;
 (function(){ const s = document.createElement('style'); s.textContent = BIZ_CSS; document.head.appendChild(s); })();
 
-// ----- FOUNDER: Speaking and proposals (FDR.speaking) -----
+// ----- FOUNDER: Speaking and Proposals (FDR.speaking) -----
 function vSpeak(){
   const P = (typeof FDR !== 'undefined' && FDR && FDR.speaking) || null; if (!P) return '';
   const ck = DATA.founder.speak = DATA.founder.speak || {};
@@ -11152,7 +11240,7 @@ function vSpeak(){
       ${lists}${fields ? `<h4 style="margin-top:16px">${esc(it.fieldsTitle || 'Fields to paste')}</h4>${fields}` : ''}${people ? `<h4 style="margin-top:16px">Presenters</h4>${people}` : ''}${plan}${notes}
       ${it.source ? `<p class="muted" style="font-size:14px;margin-top:12px">Source: <a href="${esc(it.source)}" target="_blank" rel="noopener noreferrer">${esc(it.sourceLabel || it.source)}</a></p>` : ''}</details>`;
   }).join('');
-  return `<div class="card" id="spk-card"><h3>${esc(P.title || 'Speaking and proposals')}</h3><p class="muted">${esc(P.intro || '')}</p><div style="margin-top:8px">${items}</div>
+  return `<div class="card" id="spk-card"><h3>${esc(P.title || 'Speaking and Proposals')}</h3><p class="muted">${esc(P.intro || '')}</p><div style="margin-top:8px">${items}</div>
    ${P.ideas && P.ideas.length ? `<h4 style="margin-top:16px">${esc(P.ideasTitle || 'Ideas for later')}</h4><ul class="spk-ul">${P.ideas.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`;
 }
 

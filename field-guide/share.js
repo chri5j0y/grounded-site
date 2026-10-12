@@ -661,7 +661,7 @@ function biosHtml(D){
   ${plats.length ? plats.map(p => `<h3 style="margin-top:16px">${esc(platName(p))}</h3>${list.filter(([b]) => b.platform === p).map(([b, i]) => { const n = chars(b.text), lim = +b.limit || 0; const aim = +b.aim || 0, nm = subName(b.subject), head = b.label ? (String(b.label).indexOf(nm) === 0 ? b.label : nm + ', ' + b.label) : nm + ', ' + platName(b.platform) + (b.part ? ' ' + b.part : '');
       return `<div class="sc-bio"><div class="spread"><b>${esc(head)}</b><span class="sc-count${lim && n > lim ? ' over' : ''}">${n}${aim ? ' characters, aiming for ' + aim + (lim ? ' (' + platName(b.platform) + ' allows ' + lim + ')' : '') : (lim ? ' of ' + lim : '') + ' characters'}</span></div><p>${esc(b.text)}</p><button type="button" class="btn btn-line btn-sm" data-sc="copy-bio" data-v="${i}">Copy</button></div>`; }).join('')}`).join('') : `<p class="muted" style="margin-top:10px">The bios arrive with the next Staff library update.</p>`}</div>`;
 }
-const WITH = [['place', 'In Place of the Tagline'], ['along', 'Along With the Tagline']];
+const WITH = [['place', 'In Place of the Tagline'], ['along', 'Along with the Tagline']];
 const countOf = (n, max, best) => `${n} of ${max} characters${n > best ? ', shorter reads best' : ''}`;
 // Your Own Words: a headline and a short message for an event, a date, a time, or a place.
 function ownHtml(){

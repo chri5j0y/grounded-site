@@ -5,7 +5,7 @@
    Aspen's Learn opens. So far: Home and Family and Safety (BLD 724), Friends and School and Big World, Hard News (BLD 725), Growing Up and Online (BLD 726): all 49 guides, 98 videos. Health and Ability (GWG BLD 757, HA 2, from patches/bld757/source/A): 9 guides, 18 videos, 58 guides in all.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
    the same as shared/learn-lessons.js. Generated from patches/bld726/source (bld724 and bld725 source for the earlier groups) in grounded-workshop:
-   edit the data there and rebuild. Proofreading lines are in the Founder library.
+   edit the data there and rebuild.
    ===================================================================== */
 (function(){
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
@@ -13172,12 +13172,12 @@ window.GG_LEARN_GUIDES.aspen = {
 {
 "id": "sibling-disability",
 "ring": "life",
-"title": "A Sibling With a Disability or Illness",
+"title": "A Sibling with a Disability or Illness",
 "you": {
 "id": "as-g-sibling-disability-you",
 "guide": "sibling-disability",
 "side": "you",
-"title": "A Sibling With a Disability or Illness",
+"title": "A Sibling with a Disability or Illness",
 "sideName": "For You",
 "mins": 3,
 "sources": [
@@ -13188,7 +13188,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "title",
 "hero": "aspen",
 "eyebrow": "When Life Changes",
-"h": "A Sibling With a Disability or Illness",
+"h": "A Sibling with a Disability or Illness",
 "sub": "For You",
 "say": "If your brother or sister lives with a disability or an illness, this is for you. You matter too, and so do your feelings."
 },
@@ -13276,7 +13276,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "id": "as-g-sibling-disability-helper",
 "guide": "sibling-disability",
 "side": "helper",
-"title": "A Sibling With a Disability or Illness",
+"title": "A Sibling with a Disability or Illness",
 "sideName": "For the Grown-up",
 "mins": 4,
 "sources": [
@@ -13289,7 +13289,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "title",
 "hero": "aspen",
 "eyebrow": "When Life Changes",
-"h": "A Sibling With a Disability or Illness",
+"h": "A Sibling with a Disability or Illness",
 "sub": "For the Grown-up",
 "say": "If you're raising or helping a middle schooler whose brother or sister lives with a disability or an illness, this is for you. You're carrying a lot. This video is about the child who sometimes gets less of you."
 },

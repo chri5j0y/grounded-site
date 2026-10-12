@@ -79,7 +79,7 @@
       words: same('Memory, Thinking, or a Brain Injury'),
       line: same('Memory changes, a stroke, a brain injury, or thinking that works differently than it did.') },
     { id: 'close', trees: TREES,
-      words: over(same('Someone Close to Me Lives With One'), { maple: 'Someone in Our Family' }),
+      words: over(same('Someone Close to Me Lives with One'), { maple: 'Someone in Our Family' }),
       line: over(same('A parent, child, partner, brother or sister, or friend living with any of these.'), {
         maple: 'A brother, sister, parent, or grandparent who lives with any of these.',
         aspen: 'A parent, brother, sister, or grandparent living with any of these.',

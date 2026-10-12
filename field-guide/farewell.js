@@ -100,7 +100,7 @@ const DEF = {
     visitation: {title: 'Visitation or Wake', lead: 'A time for people to come, share a word with the family, and say goodbye.', blocks: [{h: 'Before Doors Open', t: 'The family gathers a few minutes early for a quiet moment together.', min: 15, who: 'Funeral Home'}, {h: 'Greeting', t: 'Family members greet guests near the entrance. A guest book sits nearby.', min: 60, who: 'Family'}, {h: 'Words of Comfort', faith: 'A short prayer and a reading, then a moment of silence.', plain: 'A few words of remembrance and a moment of silence.', min: 10, who: 'Chris'}, {h: 'Closing', t: 'Thank everyone and share the details for the service.', min: 5, who: 'Chris'}]},
     prayer: {title: 'Prayer Service', lead: 'A short service of prayer and readings the evening before.', blocks: [{h: 'Welcome', t: 'A few words of welcome and why we gather.', min: 3, who: 'Chris'}, {h: 'Reading', t: 'A reading the family chooses.', min: 5, who: 'Family'}, {h: 'Prayers', faith: 'Prayers for [Person] and for the family.', plain: 'Words of comfort and remembrance.', min: 10, who: 'Chris'}, {h: 'Blessing', t: 'A closing blessing.', min: 2, who: 'Chris'}]},
     scattering: {title: 'Scattering of Ashes', lead: 'A small, quiet gathering in a place that mattered to [Person].', blocks: [{h: 'Gathering', t: 'Everyone gathers in a circle at the place.', min: 5, who: 'Family'}, {h: 'Words', faith: 'A short reading and a prayer of thanks.', plain: 'A few words about why this place mattered to [Person].', min: 5, who: 'Chris'}, {h: 'Scattering', t: 'Family members scatter the ashes in turn, in silence or with a word each.', min: 10, who: 'Family'}, {h: 'Closing', t: 'A closing word and a moment of quiet.', min: 3, who: 'Chris'}]},
-    celebration: {title: 'Celebration of Life', lead: 'A gathering full of stories, music, and the things [Person] loved.', blocks: [{h: 'Welcome', t: 'Welcome everyone and set a warm tone.', min: 5, who: 'Chris'}, {h: 'Stories', t: 'Family and friends share stories.', min: 20, who: 'Family'}, {h: 'Music', t: 'A song [Person] loved.', min: 5, who: 'Family'}, {h: 'Closing Words', t: 'A closing word and a toast or a moment together.', min: 5, who: 'Chris'}]},
+    celebration: {title: 'Celebration of Life', lead: 'A gathering full of stories, music, and the things [Person] loved.', blocks: [{h: 'Welcome', t: 'Welcome everyone and set a warm tone.', min: 5, who: 'Chris'}, {h: 'Stories', t: 'Family and friends share stories.', min: 20, who: 'Family'}, {h: 'Music', t: 'A song [Person] loved.', min: 5, who: 'Family'}, {h: 'Closing Words', t: 'A closing word, a tribute, and a moment together.', min: 5, who: 'Chris'}]},
     reception: {title: 'Reception', lead: 'Time to stay, eat together, and talk.', blocks: [{h: 'Setting Up', t: 'Tables, food, and the photo board ready before guests arrive.', min: 30, who: 'Church'}, {h: 'Blessing the Meal', faith: 'A short table prayer.', plain: 'A word of thanks for the food and the people.', min: 2, who: 'Chris'}, {h: 'Time Together', t: 'Guests share food and stories.', min: 60, who: 'Family'}]}
   },
   followUp: [
@@ -309,7 +309,7 @@ function fuDate(p, f){
 }
 function touches(p){
   const L = cfg().followUp.map(f => ({f, id: f.id, title: fill(f.title, p), date: fuDate(p, f)}));
-  arr(p.fuOwn).forEach(o => L.push({f: {id: o.id, title: o.title}, id: o.id, own: true, title: o.title || 'My Own Check-In', date: o.date || ''}));
+  arr(p.fuOwn).forEach(o => L.push({f: {id: o.id, title: o.title}, id: o.id, own: true, title: o.title || 'My Own Check-in', date: o.date || ''}));
   return L.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
 }
 function dueSoon(){
@@ -336,7 +336,7 @@ function custom(p, sid){
 }
 function star(p, key, lab){
   const on = !!p.stars[key];
-  return `<button type="button" class="fw-star" data-fwa="star" data-fwv="${esc(key)}" data-fwl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back To This</button>`;
+  return `<button type="button" class="fw-star" data-fwa="star" data-fwv="${esc(key)}" data-fwl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back to This</button>`;
 }
 function who(p, key, lab){
   const cur = key.startsWith('task.') ? (p.tasks[+key.slice(5)] || {}).who : p.tags[key];
@@ -898,9 +898,9 @@ V[9] = p => {
       ${t.own ? '' : `<div class="fw-box"><h4>Ready-to-Send Email</h4><div class="fw-words">${esc(body)}</div><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-fwa="fu-copy" data-fwv="${esc(t.id)}">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(p.contact.em, sub, body))}">Open in Mail</a></div></div>
       <div class="fw-box"><h4>Phone Call</h4>${cl.open ? `<div class="fw-lbl">Opening</div><p>"${esc(fill(cl.open, p))}"</p>` : ''}${arr(cl.questions).length ? `<div class="fw-lbl">Gentle questions</div><ul>${cl.questions.map(q => `<li>${esc(fill(q, p))}</li>`).join('')}</ul>` : ''}${cl.listenFor ? `<div class="fw-lbl">Listen for</div><p>${esc(fill(cl.listenFor, p))}</p>` : ''}${cl.moreSupport ? `<div class="fw-lbl">When to suggest more support</div><p>${esc(fill(cl.moreSupport, p))}</p>` : ''}<div class="fw-crisis">${esc(cfg().crisis)}</div></div>
       ${f.resource ? `<div class="fw-box fw-full"><h4>Resource to Share</h4><p>${esc(fill(f.resource, p))}</p></div>` : ''}`}
-      <div class="fw-box fw-full"><label class="fw-ck"><input type="checkbox" data-fwc="fu.${esc(t.id)}.done"${st.done ? ' checked' : ''}> Done</label><textarea rows="2" data-fwi="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-fwa="fu-del" data-fwv="${esc(t.id)}">Remove This Check-In</button>` : ''}</div>
+      <div class="fw-box fw-full"><label class="fw-ck"><input type="checkbox" data-fwc="fu.${esc(t.id)}.done"${st.done ? ' checked' : ''}> Done</label><textarea rows="2" data-fwi="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-fwa="fu-del" data-fwv="${esc(t.id)}">Remove This Check-in</button>` : ''}</div>
     </div></details>`; }).join('')}</div>
-  <section class="fw-blk"><h3>Add Your Own Check-In</h3><div class="fw-g3"><div class="fw-fld"><label class="f" for="fw-fuo-t">What</label><input type="text" id="fw-fuo-t" placeholder="A hard date, a grandchild's graduation..." autocomplete="off"></div><div class="fw-fld"><label class="f" for="fw-fuo-d">Date</label><input type="date" id="fw-fuo-d"></div><div class="fw-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-fwa="fu-add">Add Your Own</button></div></div></section>` +
+  <section class="fw-blk"><h3>Add Your Own Check-in</h3><div class="fw-g3"><div class="fw-fld"><label class="f" for="fw-fuo-t">What</label><input type="text" id="fw-fuo-t" placeholder="A hard date, a grandchild's graduation..." autocomplete="off"></div><div class="fw-fld"><label class="f" for="fw-fuo-d">Date</label><input type="date" id="fw-fuo-d"></div><div class="fw-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-fwa="fu-add">Add Your Own</button></div></div></section>` +
   custom(p, 'followup') + note(p, 'followup');
 };
 
@@ -1578,7 +1578,7 @@ function rail(p){
 }
 function cbt(p){
   const ks = Object.keys(p.stars);
-  return `<h2>Come Back To This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-fwa="step" data-fwv="${p.stars[k].step}">&#9733; ${esc(p.stars[k].label)} <span class="muted">(Step ${p.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
+  return `<h2>Come Back to This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-fwa="step" data-fwv="${p.stars[k].step}">&#9733; ${esc(p.stars[k].label)} <span class="muted">(Step ${p.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
 }
 function vPlan(p){
   const n = S.step, st = typeof n === 'number' ? STEP(n) : {title: n === 'finish' ? (cfg().finish.title || 'Finish') : 'Tidy Up'}, mode = S.mode;

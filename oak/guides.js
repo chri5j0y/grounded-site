@@ -64,7 +64,7 @@ const L = {
 
 const LC_TOPICS = [
 /* ================= INSIDE ME ================= */
-{ id: "anxiety", ring: "inside", title: "Anxiety that won't settle", keys: "anxiety worry panic nervous racing thoughts cant sleep dread", parts: ["bark", "leaves"],
+{ id: "anxiety", ring: "inside", title: "Anxiety That Won't Settle", keys: "anxiety worry panic nervous racing thoughts cant sleep dread", parts: ["bark", "leaves"],
   quick: ["Anxiety is your alarm system working too hard, not a flaw in you.", "Calm the body first. The mind follows the body more than the other way around.", "Name the worry, then ask what is true right now, in this room.", "Small, steady steps toward what you fear shrink it. Avoiding it feeds it."],
   feel: "A tight chest, a racing mind, a sense that something bad is coming even when nothing is wrong. Some people feel it as irritability, stomach trouble, or waking at 3am with a list of dreads.",
   self: { first: ["Slow your breath: in for four, out for six, for two minutes.", "Write the worry down so it stops circling.", "Cut back on caffeine and late-night scrolling for a week and notice the difference."],
@@ -81,7 +81,7 @@ const LC_TOPICS = [
   reach: ["Panic attacks, or anxiety that keeps you from work, sleep, or relationships for more than a few weeks.", "Any thoughts of harming yourself: call or text 988."],
   more: [L.nami, L.apa], kids: "worry" },
 
-{ id: "sadness", ring: "inside", title: "Sadness that lingers", keys: "depression depressed sad low numb empty hopeless tired down", parts: ["fruit", "leaves", "branches"],
+{ id: "sadness", ring: "inside", title: "Sadness That Lingers", keys: "depression depressed sad low numb empty hopeless tired down", parts: ["fruit", "leaves", "branches"],
   quick: ["Lingering sadness is common and treatable. It is not a character flaw.", "Lower the bar. On heavy days, small care counts.", "Isolation deepens it. Connection, even brief, helps.", "If hope feels gone, tell someone today."],
   feel: "Heavy, flat, or numb. Things you used to enjoy feel pointless. Sleep, appetite, and energy change. Some people feel irritable more than sad.",
   self: { first: ["Do one small caring thing today: shower, eat something real, step outside.", "Tell one person how you are really doing.", "Book a visit with your doctor or a counselor."],
@@ -132,7 +132,7 @@ const LC_TOPICS = [
   reach: ["Exhaustion that doesn't improve with rest, or signs of depression.", "Thoughts of escaping your life or not being here: call or text 988."],
   more: [L.apa, L.caregiver] },
 
-{ id: "anger", ring: "inside", title: "Anger that runs hot", keys: "anger angry rage irritable temper resentment snapping", parts: ["bark", "branches"],
+{ id: "anger", ring: "inside", title: "Anger That Runs Hot", keys: "anger angry rage irritable temper resentment snapping", parts: ["bark", "branches"],
   quick: ["Anger often guards something softer: hurt, fear, grief, or feeling unheard.", "Cool the body before you use your words.", "Anger can point to something that truly needs to change.", "Repair after a blowup matters more than never having one."],
   feel: "A quick fuse, a clenched jaw, replaying arguments. Sometimes it comes out at the wrong people, like kids or coworkers.",
   self: { first: ["When it rises, step away for twenty minutes before responding.", "Move your body: walk fast, lift, stretch.", "Ask: what is under this anger?"],
@@ -149,7 +149,7 @@ const LC_TOPICS = [
   reach: ["Anger that leads to violence, threats, or frightened family members.", "Anger that masks deep depression or trauma."],
   more: [L.apa] },
 
-{ id: "shame", ring: "inside", title: "Shame and guilt", keys: "shame guilt regret failure mistake unworthy bad person", parts: ["roots", "trunk"],
+{ id: "shame", ring: "inside", title: "Shame and Guilt", keys: "shame guilt regret failure mistake unworthy bad person", parts: ["roots", "trunk"],
   quick: ["Guilt says “I did something wrong.” Shame says “I am wrong.” Only one of those is true.", "Guilt can lead to repair. Shame usually leads to hiding.", "Shame shrinks when it is spoken to someone safe.", "You can take responsibility and still treat yourself with kindness."],
   feel: "A heavy sense of being bad, not enough, or beyond forgiving. You may replay mistakes, hide, or overwork to prove your worth.",
   self: { first: ["Write down what happened, plainly, without the story you tell about yourself.", "Ask: is there something I can repair?", "Tell one trusted person."],
@@ -166,7 +166,7 @@ const LC_TOPICS = [
   reach: ["Shame tied to trauma or abuse.", "Thoughts that you'd be better off dead: call or text 988."],
   more: [L.apa, L.gg] },
 
-{ id: "lost", ring: "inside", title: "Feeling lost or without purpose", keys: "purpose meaning lost direction stuck empty why", parts: ["trunk", "fruit"],
+{ id: "lost", ring: "inside", title: "Feeling Lost or Without Purpose", keys: "purpose meaning lost direction stuck empty why", parts: ["trunk", "fruit"],
   quick: ["Seasons without clear purpose are normal, especially after change.", "Purpose is usually found in doing, not just thinking.", "Start with what breaks your heart or lights you up.", "Serve someone. Meaning often shows up in the act of helping."],
   feel: "Going through the motions. Wondering what it's all for. Restless, flat, or quietly grieving a life you expected to have.",
   self: { first: ["List three moments when you felt most alive.", "Try one new thing this month.", "Give an hour to helping someone."],
@@ -184,7 +184,7 @@ const LC_TOPICS = [
   more: [L.gg] },
 
 /* ================= SAFETY ================= */
-{ id: "suicidal-self", ring: "safety", title: "When you're thinking about suicide", keys: "suicide suicidal kill myself want to die end my life no reason to live 988", parts: ["fruit", "roots", "branches"],
+{ id: "suicidal-self", ring: "safety", title: "When You're Thinking About Suicide", keys: "suicide suicidal kill myself want to die end my life no reason to live 988", parts: ["fruit", "roots", "branches"],
   quick: ["If you are in danger right now, call 911 or call or text 988.", "These thoughts are a sign of pain, not a plan you have to follow.", "Put distance between you and anything you could use to hurt yourself.", "Tell one person today. Others can help you carry this."],
   feel: "Unbearable pain, exhaustion, or numbness. A belief that things will never change, or that people would be better off without you. That belief is the pain talking, not the truth.",
   self: { first: ["Call or text 988 now, or text HOME to 741741.", "Move medications, firearms, or other dangers out of reach, or ask someone to hold them.", "Go where other people are."],
@@ -201,7 +201,7 @@ const LC_TOPICS = [
   reach: ["Call or text 988, the Suicide and Crisis Lifeline, any time. Veterans: call 988 and press 1.", "Call 911 if you are in immediate danger.", "Crisis Text Line: text HOME to 741741."],
   more: [L.lifeline, L.afsp] },
 
-{ id: "suicidal-other", ring: "safety", title: "When someone else is thinking about suicide", keys: "suicide friend family worried talk about dying warning signs 988", parts: ["branches", "fruit"],
+{ id: "suicidal-other", ring: "safety", title: "When Someone Else Is Thinking About Suicide", keys: "suicide friend family worried talk about dying warning signs 988", parts: ["branches", "fruit"],
   quick: ["Ask directly: “Are you thinking about killing yourself?” It doesn't plant the idea.", "Listen without arguing or judging.", "Help keep them safe: reduce access to medications and firearms.", "Connect them to help today, and stay with them."],
   feel: "You may feel scared, helpless, or afraid of saying the wrong thing. The fact that you are asking already helps.",
   self: { first: ["Take a breath. Caring is enough to start.", "Call or text 988 yourself for guidance on what to do."],
@@ -218,7 +218,7 @@ const LC_TOPICS = [
   reach: ["Call or text 988 any time, including for advice on how to help.", "Call 911 in immediate danger."],
   more: [L.lifeline, L.afsp, L.nami] },
 
-{ id: "escalating", ring: "safety", title: "When someone is escalating", keys: "de-escalate deescalate de-escalation escalating escalation yelling screaming shouting agitated heated confrontation blowup blow up losing it angry person family member staff bedside hospital workplace coworker customer patient visitor", parts: ["bark", "branches"],
+{ id: "escalating", ring: "safety", title: "When Someone Is Escalating", keys: "de-escalate deescalate de-escalation escalating escalation yelling screaming shouting agitated heated confrontation blowup blow up losing it angry person family member staff bedside hospital workplace coworker customer patient visitor", parts: ["bark", "branches"],
   quick: ["Calm yourself first: slow breath, lower voice, relaxed hands. Your body sets the temperature of the room.", "Listen for the feeling under the words: fear, grief, exhaustion, or feeling unheard.", "Say less. Short, respectful sentences. Save the facts for when feelings settle.", "If there is a weapon, a threat, or you feel unsafe, leave and call 911."],
   feel: "A voice rises, a body tightens, someone moves toward you or starts pacing. You may feel your own heart pound, your face get hot, or an urge to fight back, freeze, or fix it fast. It can happen at home, at work, in a store, or at a bedside, where grief and fear often come out as anger at whoever is closest.",
   self: { first: ["Step back to give space, about two arm's lengths, and stand a little to the side, not face to face.", "Take one slow breath before you say anything.", "Lower your volume and slow your pace. People often match you without knowing it."],
@@ -235,7 +235,7 @@ const LC_TOPICS = [
   reach: ["Anyone has a weapon, makes a threat, or you feel unsafe: leave and call 911.", "The person talks about hurting themselves or not wanting to be alive: stay with them if it's safe, and call or text 988.", "Blowups keep happening at home and you feel afraid: see the guide “When home isn't safe.”"],
   more: [L.apa, ["Crisis Prevention Institute", "https://www.crisisprevention.com"]], kids: "meltdown" },
 
-{ id: "domestic-violence", ring: "safety", title: "When home isn't safe", keys: "domestic violence abuse partner hitting controlling threatened afraid of partner", parts: ["branches", "roots"],
+{ id: "domestic-violence", ring: "safety", title: "When Home Isn't Safe", keys: "domestic violence abuse partner hitting controlling threatened afraid of partner", parts: ["branches", "roots"],
   quick: ["Abuse is never your fault, and you deserve to be safe.", "Abuse includes control, threats, isolation, and money control, not only hitting.", "Leaving can be the most dangerous time. Plan with an advocate.", "Help is confidential and free, 24 hours a day."],
   feel: "Walking on eggshells, doubting yourself, feeling trapped or ashamed. You may love the person and fear them at the same time.",
   self: { first: ["Call the National Domestic Violence Hotline at 1-800-799-7233, or text START to 88788.", "If you are in danger now, call 911.", "Think about safe people and places you could go."],
@@ -252,7 +252,7 @@ const LC_TOPICS = [
   reach: ["National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788.", "Call 911 if you are in immediate danger."],
   more: [L.hotline], kids: "home-conflict" },
 
-{ id: "past-abuse", ring: "safety", title: "Living with past abuse", keys: "abuse trauma childhood sexual abuse survivor memories flashbacks", parts: ["roots", "bark", "leaves"],
+{ id: "past-abuse", ring: "safety", title: "Living with Past Abuse", keys: "abuse trauma childhood sexual abuse survivor memories flashbacks", parts: ["roots", "bark", "leaves"],
   quick: ["What happened was not your fault.", "Trauma lives in the body. Healing often involves the body, too.", "You get to decide who you tell, and when.", "Healing is possible, and it often happens with skilled help."],
   feel: "Memories or flashbacks, feeling unsafe in your body, trouble trusting, sudden anger or numbness. Anniversaries, touch, or smells can bring it back.",
   self: { first: ["Find one grounding practice for hard moments: feet on the floor, name five things you can see.", "Consider a trauma-informed counselor.", "RAINN offers confidential support at 1-800-656-4673."],
@@ -269,7 +269,7 @@ const LC_TOPICS = [
   reach: ["RAINN National Sexual Assault Hotline: 1-800-656-4673.", "If a child is being harmed now, call 911 or child protective services."],
   more: [L.rainn, L.nami] },
 /* ================= LOSS AND GRIEF ================= */
-{ id: "spouse-death", ring: "loss", title: "Your spouse or partner died", keys: "widow widower husband wife partner died spouse death grief", parts: ["branches", "fruit", "roots"],
+{ id: "spouse-death", ring: "loss", title: "Your Spouse or Partner Died", keys: "widow widower husband wife partner died spouse death grief", parts: ["branches", "fruit", "roots"],
   quick: ["Grief for a partner reshapes every part of daily life. Expect it to be hard for a long time.", "Avoid big decisions in the first year when you can.", "Let people help in specific ways, and tell them what you need.", "Grief comes in waves. A good day doesn't mean you're done, and a bad day doesn't mean you're stuck."],
   feel: "The house is too quiet. You reach for your phone to tell them something. Meals, bedtime, and weekends feel strange. You may feel lost, angry, numb, or even relieved after a long illness, and all of it is normal.",
   self: { first: ["Take care of the basics: sleep, water, food, medicines.", "Let one trusted person help you track paperwork and deadlines.", "Say yes to company, even if you don't feel like talking."],
@@ -286,7 +286,7 @@ const LC_TOPICS = [
   reach: ["Grief that stays intense or gets worse after many months, or keeps you from daily life.", "Thoughts of wanting to join them: call or text 988."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
-{ id: "parent-death", ring: "loss", title: "Your parent died", keys: "mom dad mother father parent died death grief", parts: ["roots", "branches", "trunk"],
+{ id: "parent-death", ring: "loss", title: "Your Parent Died", keys: "mom dad mother father parent died death grief", parts: ["roots", "branches", "trunk"],
   quick: ["Losing a parent can shake your sense of home, at any age.", "Complicated relationships bring complicated grief. All of it is valid.", "Family roles shift. Expect tension around decisions and belongings.", "Carry forward what you want to keep from them, and set down what you don't."],
   feel: "Sadness, relief, anger, regret, or feeling suddenly like the oldest generation. Small things, like their handwriting or a song, can undo you.",
   self: { first: ["Let yourself grieve even while handling logistics.", "Share the tasks with siblings or family where you can.", "Keep a few meaningful things before sorting everything."],
@@ -303,7 +303,7 @@ const LC_TOPICS = [
   reach: ["Grief that doesn't ease, or family conflict that feels unmanageable."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
-{ id: "child-death", ring: "loss", title: "Your child died", keys: "child died son daughter death baby grief parent bereaved", parts: ["roots", "fruit", "branches"],
+{ id: "child-death", ring: "loss", title: "Your Child Died", keys: "child died son daughter death baby grief parent bereaved", parts: ["roots", "fruit", "branches"],
   quick: ["This is one of the deepest losses a person can face. There is no timeline.", "Your grief and your partner's may look very different. Both are real.", "Surviving siblings need honest words and attention too.", "You will always be their parent."],
   feel: "Unbearable, disorienting, and physically painful. You may feel the world should have stopped. Some parents feel intense guilt, anger at the sacred, or fear for their other children.",
   self: { first: ["Let others carry the practical things.", "Take one hour at a time.", "Ask your hospital, hospice, or funeral home about bereaved parent support."],
@@ -320,7 +320,7 @@ const LC_TOPICS = [
   reach: ["The Compassionate Friends supports bereaved parents and siblings.", "Any thoughts of not wanting to live: call or text 988."],
   more: [L.tcf, L.dougy], kids: "family-death" },
 
-{ id: "pregnancy-loss", ring: "loss", title: "Pregnancy or infant loss", keys: "miscarriage stillbirth infant loss baby died pregnancy loss", parts: ["roots", "fruit", "leaves"],
+{ id: "pregnancy-loss", ring: "loss", title: "Pregnancy or Infant Loss", keys: "miscarriage stillbirth infant loss baby died pregnancy loss", parts: ["roots", "fruit", "leaves"],
   quick: ["This is a real loss of a real child and a hoped-for future.", "Your body may still be healing while your heart is breaking.", "Partners grieve too, sometimes differently.", "It is okay to name your baby, hold rituals, and grieve openly."],
   feel: "Empty arms, a body that still feels pregnant, guilt, jealousy of others' babies, or grief that others don't seem to see.",
   self: { first: ["Rest and follow up with your doctor.", "Ask for keepsakes if available: photos, footprints, a blanket.", "Tell people what you need, including privacy."],
@@ -335,9 +335,9 @@ const LC_TOPICS = [
   faith: "Many traditions have blessings, prayers, or naming rituals for babies who died. A faith leader can help create one if yours doesn't.",
   practices: ["roots|Ritual", "leaves|Sleep", "branches|Friends"],
   reach: ["Postpartum Support International helpline: 1-800-944-4773.", "Deep sadness that lingers, or any thoughts of harming yourself: call or text 988."],
-  more: [L.share, L.psi], kids: "baby-loss"/* BLD787 pages-pregnancy-loss start */, pages: [["Making Memories With Your Baby", "ok-pg-baby-memories"]] /* BLD787 pages-pregnancy-loss end */ },
+  more: [L.share, L.psi], kids: "baby-loss"/* BLD787 pages-pregnancy-loss start */, pages: [["Making Memories with Your Baby", "ok-pg-baby-memories"]] /* BLD787 pages-pregnancy-loss end */ },
 
-{ id: "suicide-loss", ring: "loss", title: "After a suicide loss", keys: "suicide loss died by suicide survivor grief why", parts: ["roots", "bark", "branches"],
+{ id: "suicide-loss", ring: "loss", title: "After a Suicide Loss", keys: "suicide loss died by suicide survivor grief why", parts: ["roots", "bark", "branches"],
   quick: ["Suicide grief often includes shock, guilt, anger, and endless “why” questions.", "It was not your fault. Suicide comes from a complex illness, not one thing anyone said or did.", "Speak about it honestly. Silence tends to deepen shame.", "Your own risk may rise. Take care of yourself and reach out."],
   feel: "Replaying the last conversation. Searching for what you missed. Anger at them, then guilt for the anger. Feeling isolated because people don't know what to say.",
   self: { first: ["Find a suicide loss survivors group.", "Tell your doctor what happened.", "Let others help with the tasks."],
@@ -354,7 +354,7 @@ const LC_TOPICS = [
   reach: ["If you have thoughts of suicide: call or text 988.", "Alliance of Hope offers support for suicide loss survivors."],
   more: [L.hope, L.afsp], kids: "suicide-loss" },
 
-{ id: "dying-loved", ring: "loss", title: "Someone you love is dying", keys: "dying terminal hospice end of life anticipatory grief goodbye", parts: ["roots", "branches", "fruit"],
+{ id: "dying-loved", ring: "loss", title: "Someone You Love Is Dying", keys: "dying terminal hospice end of life anticipatory grief goodbye", parts: ["roots", "branches", "fruit"],
   quick: ["Grief often begins before the death. That's called anticipatory grief.", "Say what matters while you can: thank you, I'm sorry, I forgive you, I love you, goodbye.", "Hospice teams care for the whole family, including you. Use them.", "You can't do this perfectly. Presence is enough."],
   feel: "Exhausted, torn between hoping and preparing, guilty for wishing it were over, and afraid of the moment itself.",
   self: { first: ["Ask the care team what to expect in the coming days.", "Take shifts with family so you can sleep.", "Tell them what they mean to you."],
@@ -371,7 +371,7 @@ const LC_TOPICS = [
   reach: ["Ask hospice for chaplain or social work support.", "After the death, see the guide on the first days after a death."],
   more: [L.convo, L.dougy], kids: "dying" },
 
-{ id: "ambiguous-loss", ring: "loss", title: "Ambiguous loss", keys: "ambiguous loss estranged missing dementia addiction not the same person grief without death", parts: ["roots", "branches", "bark"],
+{ id: "ambiguous-loss", ring: "loss", title: "Ambiguous Loss", keys: "ambiguous loss estranged missing dementia addiction not the same person grief without death", parts: ["roots", "branches", "bark"],
   quick: ["Some losses have no clear ending: dementia, estrangement, addiction, a missing person.", "Grieving someone still living is real grief.", "Hold two truths: they are here, and they are gone in ways that matter.", "Find meaning without waiting for closure."],
   feel: "Stuck, confused, and unsure whether you are allowed to grieve. Others may not understand why you are so sad.",
   self: { first: ["Name it as grief.", "Find people who understand this kind of loss.", "Decide what connection is healthy right now."],
@@ -388,7 +388,7 @@ const LC_TOPICS = [
   reach: ["Grief combined with depression or burnout."],
   more: [L.ambiguous], kids: null },
 
-{ id: "grief-days", ring: "loss", title: "Holidays and anniversaries after a loss", keys: "holidays anniversary birthday death anniversary christmas first year grief", parts: ["roots", "branches"],
+{ id: "grief-days", ring: "loss", title: "Holidays and Anniversaries After a Loss", keys: "holidays anniversary birthday death anniversary christmas first year grief", parts: ["roots", "branches"],
   quick: ["The days before are often harder than the day itself.", "Make a plan, and have a backup plan.", "Keep some traditions, change others, and add one that honors your person.", "Joy and grief can sit at the same table."],
   feel: "Dread as the date approaches, tears at unexpected moments, or numbness. Other people's celebrations may feel hard to be around.",
   self: { first: ["Decide ahead of time how you want to spend the day.", "Tell a few people it's coming.", "Plan something gentle for the day after."],
@@ -405,7 +405,7 @@ const LC_TOPICS = [
   reach: ["Grief that seems to get heavier each year."],
   more: [L.wyg], kids: "grief-days" },
 
-{ id: "pet-death", ring: "loss", title: "Your pet died", keys: "pet dog cat died euthanasia animal companion grief", parts: ["branches", "roots"],
+{ id: "pet-death", ring: "loss", title: "Your Pet Died", keys: "pet dog cat died euthanasia animal companion grief", parts: ["branches", "roots"],
   quick: ["Grief for a pet is real grief. You lost a daily companion.", "Deciding on euthanasia is an act of love, even when it feels unbearable.", "Mark the loss with a ritual or memorial.", "Be gentle with the empty routines."],
   feel: "Listening for their steps. Guilt over decisions. People who don't understand how much it hurts.",
   self: { first: ["Let yourself cry.", "Keep a collar or photo nearby.", "Tell someone who loved them too."],
@@ -422,7 +422,7 @@ const LC_TOPICS = [
   reach: ["Grief that keeps you from daily life for weeks."],
   more: [L.wyg], kids: "pet-death" },
 /* ================= HEALTH AND THE END OF LIFE ================= */
-{ id: "diagnosis", ring: "health", title: "A hard diagnosis", keys: "diagnosis cancer serious illness bad news test results sick", parts: ["leaves", "roots", "fruit"],
+{ id: "diagnosis", ring: "health", title: "A Hard Diagnosis", keys: "diagnosis cancer serious illness bad news test results sick", parts: ["leaves", "roots", "fruit"],
   quick: ["The first days after hard news are a blur. You don't have to decide everything at once.", "Bring someone to appointments and write things down.", "Ask: what are my options, what matters most to me, and what are the tradeoffs?", "Hope can change shape. It can stay with you."],
   feel: "Shock, fear, disbelief, or a strange calm. Your mind may race through worst cases, or go blank.",
   self: { first: ["Write your questions before each appointment.", "Bring a trusted person to listen with you.", "Limit late-night internet searching."],
@@ -439,7 +439,7 @@ const LC_TOPICS = [
   reach: ["Ask your care team about counseling, social work, or chaplain support.", "Deep depression or hopelessness: tell your doctor, or call or text 988."],
   more: [L.nami, L.convo], kids: "family-illness" },
 
-{ id: "chronic", ring: "health", title: "Chronic illness or pain", keys: "chronic pain illness disability long term autoimmune fatigue", parts: ["leaves", "bark", "trunk"],
+{ id: "chronic", ring: "health", title: "Chronic Illness or Pain", keys: "chronic pain illness disability long term autoimmune fatigue", parts: ["leaves", "bark", "trunk"],
   quick: ["Living with ongoing illness brings grief for the life you expected.", "Pacing matters. Plan for energy, not just time.", "Your worth is not measured by your productivity.", "Find people who get it."],
   feel: "Tired of explaining, tired of being tired. Frustration with bodies and systems. Isolation when others don't see your pain.",
   self: { first: ["Track what helps and what makes it worse.", "Plan rest before you need it.", "Find one support group or online community."],
@@ -456,7 +456,7 @@ const LC_TOPICS = [
   reach: ["Pain with depression or hopelessness.", "Any thoughts of suicide: call or text 988."],
   more: [L.apa, L.nami], kids: "family-illness" },
 
-{ id: "own-death", ring: "health", title: "Facing your own death", keys: "dying terminal my death end of life hospice prognosis afraid to die", parts: ["roots", "trunk", "fruit"],
+{ id: "own-death", ring: "health", title: "Facing Your Own Death", keys: "dying terminal my death end of life hospice prognosis afraid to die", parts: ["roots", "trunk", "fruit"],
   quick: ["It's natural to feel fear, grief, anger, and peace, sometimes all in one day.", "Hospice is not giving up. It is care focused on comfort, meaning, and your family.", "Say what matters: thank you, I'm sorry, I forgive you, I love you, goodbye.", "You still get to choose how you spend your days."],
   feel: "Some people feel terror, some a surprising calm. Many feel grief for the people they'll leave, and worry about being a burden.",
   self: { first: ["Tell your doctor what matters most to you.", "Ask about hospice and palliative care.", "Choose someone to speak for you if you can't."],
@@ -473,7 +473,7 @@ const LC_TOPICS = [
   reach: ["Ask your care team for hospice or palliative care, and for a chaplain.", "Unbearable distress: ask your team for help now; it can be eased."],
   more: [L.convo, L.caringinfo], kids: "dying" },
 
-{ id: "eol-plan", ring: "health", title: "Making an end-of-life plan", keys: "advance directive living will health care proxy power of attorney plan wishes end of life", parts: ["trunk", "branches"],
+{ id: "eol-plan", ring: "health", title: "Making an End-of-Life Plan", keys: "advance directive living will health care proxy power of attorney plan wishes end of life", parts: ["trunk", "branches"],
   quick: ["Planning ahead is a gift to the people you love.", "Choose a health care agent who will honor your wishes.", "Put your wishes in writing with an advance directive for your state.", "Talk about it. The conversation matters as much as the paperwork."],
   feel: "Uncomfortable, maybe morbid. Many people put it off until a crisis, when it's much harder.",
   self: { first: ["Think about what matters most to you if you were very sick.", "Choose your health care agent and ask them.", "Get your state's advance directive form and complete it."],
@@ -490,7 +490,7 @@ const LC_TOPICS = [
   reach: ["An estate or elder law attorney can help with legal documents like wills and powers of attorney."],
   more: [L.caringinfo, L.convo] },
 
-{ id: "bedside", ring: "health", title: "Sitting with someone who is dying", keys: "bedside vigil dying signs of dying hospice last days actively dying what to expect", parts: ["roots", "branches"],
+{ id: "bedside", ring: "health", title: "Sitting with Someone Who Is Dying", keys: "bedside vigil dying signs of dying hospice last days actively dying what to expect", parts: ["roots", "branches"],
   quick: ["Your presence matters more than your words.", "Hearing is thought to last late. Speak to them, not about them.", "Changes in breathing, color, and sleep are common near death. Ask the hospice nurse what you are seeing.", "Take breaks. Some people die when loved ones step out."],
   feel: "Awe, fear, exhaustion, tenderness. Time can feel strange at a bedside.",
   self: { first: ["Ask the nurse what to expect and how to help with comfort.", "Say what you want to say.", "Rotate with others so everyone rests."],
@@ -507,7 +507,7 @@ const LC_TOPICS = [
   reach: ["Call the hospice nurse any time you are unsure or worried, day or night.", "Ask for the hospice chaplain or social worker."],
   more: [L.convo, L.dougy], kids: "dying" },
 
-{ id: "after-death", ring: "health", title: "The first days after a death", keys: "after death what to do funeral arrangements first days logistics", parts: ["branches", "leaves"],
+{ id: "after-death", ring: "health", title: "The First Days After a Death", keys: "after death what to do funeral arrangements first days logistics", parts: ["branches", "leaves"],
   quick: ["You don't have to do everything right away.", "If hospice was involved, call them first. Otherwise, call 911 or the doctor.", "Choose a funeral home and ask what they handle for you.", "Let people help with food, calls, and childcare."],
   feel: "Numb, busy, foggy. Many people run on adrenaline for days, then crash after the funeral.",
   self: { first: ["Make a short list of who to tell, and ask someone to help make calls.", "Ask the funeral home to walk you through the steps.", "Eat, drink water, and sleep when you can."],
@@ -524,7 +524,7 @@ const LC_TOPICS = [
   reach: ["Grief support through your hospice or funeral home."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
-{ id: "addiction", ring: "health", title: "Addiction and recovery", keys: "addiction alcohol drugs drinking sober recovery relapse substance use", parts: ["leaves", "branches", "roots"],
+{ id: "addiction", ring: "health", title: "Addiction and Recovery", keys: "addiction alcohol drugs drinking sober recovery relapse substance use", parts: ["leaves", "branches", "roots"],
   quick: ["Addiction is a treatable illness, not a moral failure.", "Recovery is possible, and it often takes more than one try.", "Connection is the opposite of addiction. Others can walk this with you.", "For families: you can't control someone else's recovery, but you can take care of yourself."],
   feel: "Shame, cravings, denial, fear of change, or the exhausting hope and heartbreak of loving someone who uses.",
   self: { first: ["Call the SAMHSA National Helpline at 1-800-662-4357, free and confidential.", "Talk to your doctor honestly.", "Find a recovery meeting or support group."],
@@ -541,7 +541,7 @@ const LC_TOPICS = [
   reach: ["SAMHSA National Helpline: 1-800-662-4357.", "Overdose: call 911. Many states have laws protecting people who call for help."],
   more: [L.samhsa, L.nami], kids: "addiction" },
 
-{ id: "caregiving", ring: "health", title: "Caring for someone who is ill", keys: "caregiver caregiving caring for parent spouse sick exhausted respite", parts: ["leaves", "branches", "trunk"],
+{ id: "caregiving", ring: "health", title: "Caring for Someone Who Is Ill", keys: "caregiver caregiving caring for parent spouse sick exhausted respite", parts: ["leaves", "branches", "trunk"],
   quick: ["Caregiving is love in action, and it can drain you.", "You can't pour from an empty cup. Build breaks into the plan.", "Accept help, and ask for it specifically.", "Mixed feelings, like resentment or wishing it were over, are normal."],
   feel: "Tired, isolated, guilty, and on alert. Your own health may be slipping.",
   self: { first: ["List tasks others could do, and hand some out.", "Ask about respite care.", "Keep your own doctor appointments."],
@@ -558,7 +558,7 @@ const LC_TOPICS = [
   reach: ["Caregiver burnout, depression, or declining health.", "Family Caregiver Alliance and your local Area Agency on Aging can help."],
   more: [L.caregiver], kids: "family-illness" },
 
-{ id: "dementia-care", ring: "health", title: "Caring for someone with dementia", keys: "dementia alzheimers memory loss caregiving parent forgets confused", parts: ["branches", "bark", "roots"],
+{ id: "dementia-care", ring: "health", title: "Caring for Someone with Dementia", keys: "dementia alzheimers memory loss caregiving parent forgets confused", parts: ["branches", "bark", "roots"],
   quick: ["Dementia is a long goodbye. Grief begins long before death.", "Meet them where they are. Correcting often causes distress.", "Behavior is communication. Look for the need underneath.", "Get support early, not only in crisis."],
   feel: "Heartbroken when they don't recognize you. Frustrated, then guilty. Worn down by repeated questions and safety worries.",
   self: { first: ["Call the Alzheimer's Association 24/7 helpline: 1-800-272-3900.", "Look into adult day programs and respite care.", "Make legal and financial plans while they can participate."],
@@ -575,7 +575,7 @@ const LC_TOPICS = [
   reach: ["Alzheimer's Association helpline: 1-800-272-3900, 24/7.", "Safety concerns like wandering or driving."],
   more: [L.alz, L.caregiver], kids: "dementia" },
 /* ================= RELATIONSHIPS AND FAMILY ================= */
-{ id: "divorce", ring: "family", title: "Divorce or a breakup", keys: "divorce breakup separation ending relationship ex co-parenting", parts: ["branches", "trunk", "fruit"],
+{ id: "divorce", ring: "family", title: "Divorce or a Breakup", keys: "divorce breakup separation ending relationship ex co-parenting", parts: ["branches", "trunk", "fruit"],
   quick: ["The end of a relationship is a real loss, even if it was the right choice.", "Grief, anger, relief, and fear can all show up together.", "If you have kids, keep them out of the middle.", "Rebuild slowly: routines, friendships, and your own identity."],
   feel: "Lonely evenings, second-guessing, anger at the other person or yourself, and a strange mix of freedom and loss.",
   self: { first: ["Lean on friends for the first hard weeks.", "Get good legal and financial advice.", "Keep routines steady, especially for kids."],
@@ -592,7 +592,7 @@ const LC_TOPICS = [
   reach: ["Deep depression, or a situation that isn't safe: see the guide on when home isn't safe."],
   more: [L.apa], kids: "divorce" },
 
-{ id: "marriage-strain", ring: "family", title: "When your marriage is struggling", keys: "marriage problems fighting distance couples counseling relationship strain", parts: ["branches", "bark"],
+{ id: "marriage-strain", ring: "family", title: "When Your Marriage Is Struggling", keys: "marriage problems fighting distance couples counseling relationship strain", parts: ["branches", "bark"],
   quick: ["Every long relationship has hard seasons.", "Repair matters more than avoiding conflict.", "Talk about needs, not just complaints.", "Get help early. Couples counseling works best before things are broken."],
   feel: "Lonely inside the relationship, stuck in the same argument, or quietly drifting apart.",
   self: { first: ["Pick a calm time to talk, not the heat of an argument.", "Start with what you need, not what they do wrong.", "Look for a couples counselor."],
@@ -660,7 +660,7 @@ const LC_TOPICS = [
   reach: ["Grief that becomes depression."],
   more: [L.ambiguous, L.apa] },
 
-{ id: "aging-parents", ring: "family", title: "Aging parents", keys: "aging parents elderly parent care decisions moving assisted living", parts: ["branches", "trunk"],
+{ id: "aging-parents", ring: "family", title: "Aging Parents", keys: "aging parents elderly parent care decisions moving assisted living", parts: ["branches", "trunk"],
   quick: ["Role reversal is emotional for everyone.", "Talk about wishes early, before a crisis.", "Share the load among siblings when possible.", "Respect their dignity and choices where it's safe."],
   feel: "Worry, frustration, grief over their decline, and exhaustion from juggling your own life.",
   self: { first: ["Have the conversation about their wishes.", "Know their doctors, medicines, and documents.", "Call your local Area Agency on Aging."],
@@ -677,7 +677,7 @@ const LC_TOPICS = [
   reach: ["Safety concerns, or caregiver burnout: see the caregiving guide."],
   more: [L.caregiver, L.convo] },
 
-{ id: "empty-nest", ring: "family", title: "Empty nest and big life transitions", keys: "empty nest kids leave home transition identity midlife change college graduation leaving home launching dorm senior year moving out", parts: ["trunk", "fruit"],
+{ id: "empty-nest", ring: "family", title: "Empty Nest and Big Life Transitions", keys: "empty nest kids leave home transition identity midlife change college graduation leaving home launching dorm senior year moving out", parts: ["trunk", "fruit"],
   quick: ["Transitions include loss, even good ones.", "Let yourself grieve the season that ended.", "Rediscover interests and relationships.", "A new season can be full of meaning."],
   feel: "A quiet house, a lost sense of purpose, or reconnecting (or not) with your partner.",
   self: { first: ["Mark the change with a ritual or trip.", "Try one new thing.", "Reconnect with friends."],
@@ -694,7 +694,7 @@ const LC_TOPICS = [
   reach: ["Transition that becomes lasting sadness."],
   more: [L.gg] },
 
-{ id: "struggling-child", ring: "family", title: "Parenting a struggling child", keys: "child struggling teen depression behavior problems parenting worried son daughter lying stealing sneaking adult child", parts: ["branches", "bark", "fruit"],
+{ id: "struggling-child", ring: "family", title: "Parenting a Struggling Child", keys: "child struggling teen depression behavior problems parenting worried son daughter lying stealing sneaking adult child", parts: ["branches", "bark", "fruit"],
   quick: ["Your child's struggle is not proof you failed.", "Stay connected, even when they push you away.", "Get help for them, and for you.", "Take care of your marriage and other kids, too."],
   feel: "Scared, helpless, blamed, and exhausted. You may grieve the family life you imagined.",
   self: { first: ["Talk to your child's doctor or school counselor.", "Find a parent support group.", "Ask directly about safety if you are worried."],
@@ -712,7 +712,7 @@ const LC_TOPICS = [
   more: [L.nami, L.lifeline] },
 
 /* ================= WORK AND MONEY ================= */
-{ id: "job-loss", ring: "work", title: "Losing your job", keys: "fired laid off job loss unemployed work career", parts: ["trunk", "fruit", "branches"],
+{ id: "job-loss", ring: "work", title: "Losing Your Job", keys: "fired laid off job loss unemployed work career", parts: ["trunk", "fruit", "branches"],
   quick: ["Job loss hits identity, routine, and money all at once.", "It's okay to grieve before you start job hunting.", "Keep a daily structure.", "Reach out to your network. Most jobs come through people."],
   feel: "Shock, shame, fear about money, and a loss of purpose or community.",
   self: { first: ["Apply for unemployment and review benefits.", "Make a simple budget.", "Tell a few people you trust."],
@@ -729,7 +729,7 @@ const LC_TOPICS = [
   reach: ["Depression, or money crisis: dial 211 for local help."],
   more: [L.career, L.nfcc], kids: "money" },
 
-{ id: "money-crisis", ring: "work", title: "Money trouble", keys: "debt bills money problems financial crisis bankruptcy eviction", parts: ["bark", "leaves", "fruit"],
+{ id: "money-crisis", ring: "work", title: "Money Trouble", keys: "debt bills money problems financial crisis bankruptcy eviction", parts: ["bark", "leaves", "fruit"],
   quick: ["Money stress affects sleep, health, and relationships.", "Face the numbers. Clarity reduces fear.", "Ask for help early: creditors, nonprofits, 211.", "Shame keeps people stuck. Talking helps."],
   feel: "Dread when the phone rings, sleepless nights, arguments at home, and shame.",
   self: { first: ["List what you owe and what's due.", "Call 211 for local assistance.", "Contact a nonprofit credit counselor."],
@@ -763,7 +763,7 @@ const LC_TOPICS = [
   reach: ["Loneliness or depression after retirement."],
   more: [L.gg] },
 
-{ id: "career-change", ring: "work", title: "A career change", keys: "career change new job starting over calling vocation", parts: ["trunk", "fruit"],
+{ id: "career-change", ring: "work", title: "A Career Change", keys: "career change new job starting over calling vocation", parts: ["trunk", "fruit"],
   quick: ["Changing paths is brave, and often scary.", "Start small: talk to people, try a project, take a class.", "Your past experience still counts.", "Expect a season of being new again."],
   feel: "Excitement and doubt, fear of failure, or grief for the path you're leaving.",
   self: { first: ["Talk to three people doing the work you want.", "Make a financial bridge plan.", "Take one concrete step."],
@@ -780,7 +780,7 @@ const LC_TOPICS = [
   reach: ["Anxiety or depression during the transition."],
   more: [L.career] },
 /* ================= FAITH AND MEANING ================= */
-{ id: "faith-crisis", ring: "faith", title: "A crisis of faith", keys: "faith crisis doubt questions believe anymore spiritual struggle", parts: ["roots", "trunk"],
+{ id: "faith-crisis", ring: "faith", title: "A Crisis of Faith", keys: "faith crisis doubt questions believe anymore spiritual struggle", parts: ["roots", "trunk"],
   quick: ["Doubt is part of many faith journeys, not the end of them.", "Questions deserve honesty, not quick answers.", "You can hold your questions without deciding everything now.", "Find a guide who can sit with doubt without panic."],
   feel: "Unmoored, anxious, guilty, or strangely free. Old answers no longer fit what you've lived through.",
   self: { first: ["Write your questions down, honestly.", "Talk with a chaplain, spiritual director, or trusted mentor.", "Keep practices that still feel true, and rest from those that don't."],
@@ -797,7 +797,7 @@ const LC_TOPICS = [
   reach: ["Doubt tangled with depression or trauma."],
   more: [L.gg] },
 
-{ id: "leaving-faith", ring: "faith", title: "Changing or leaving a faith", keys: "leaving church changing religion deconstruction converting family faith differences", parts: ["roots", "branches"],
+{ id: "leaving-faith", ring: "faith", title: "Changing or Leaving a Faith", keys: "leaving church changing religion deconstruction converting family faith differences", parts: ["roots", "branches"],
   quick: ["Changing faith can mean losing community and family closeness, even when it's right for you.", "Grief and relief can coexist.", "Find new sources of meaning and belonging.", "Families can love across different beliefs."],
   feel: "Freedom, loneliness, guilt, anger, or fear about how family will respond.",
   self: { first: ["Find a few people who understand this journey.", "Decide what you want to tell family, and when.", "Keep practices that still give you life."],
@@ -814,7 +814,7 @@ const LC_TOPICS = [
   reach: ["Isolation or depression during the change."],
   more: [L.apa] },
 
-{ id: "spiritual-dryness", ring: "faith", title: "When the sacred feels far away", keys: "spiritual dryness dark night prayer feels empty god feels distant numb faith", parts: ["roots"],
+{ id: "spiritual-dryness", ring: "faith", title: "When the Sacred Feels Far Away", keys: "spiritual dryness dark night prayer feels empty god feels distant numb faith", parts: ["roots"],
   quick: ["Dry seasons are common in every spiritual tradition.", "Showing up still counts, even when you feel nothing.", "Try new ways to pray or practice.", "Dryness is often a season of deepening, not ending."],
   feel: "Prayers feel like talking to the ceiling. Worship feels flat. You wonder if something is wrong with you.",
   self: { first: ["Keep one simple practice.", "Try a new practice: silence, nature, music, service.", "Tell a spiritual companion."],
@@ -831,7 +831,7 @@ const LC_TOPICS = [
   reach: ["Dryness that comes with depression: talk to a doctor too."],
   more: [L.gg] },
 
-{ id: "moral-injury", ring: "faith", title: "Moral injury", keys: "moral injury guilt healthcare military first responder betrayed values did wrong", parts: ["roots", "trunk", "bark"],
+{ id: "moral-injury", ring: "faith", title: "Moral Injury", keys: "moral injury guilt healthcare military first responder betrayed values did wrong", parts: ["roots", "trunk", "bark"],
   quick: ["Moral injury comes from doing, seeing, or failing to prevent something that violates your deepest values.", "It is common among healthcare workers, veterans, and first responders.", "It's a wound to the soul, not a weakness.", "Healing often includes truth-telling, community, and sometimes repair."],
   feel: "Guilt, shame, anger, or betrayal by leaders or systems. Pulling away from faith or people.",
   self: { first: ["Name what happened, honestly, with someone safe.", "Find peers who understand your work.", "Talk with a chaplain or counselor familiar with moral injury."],
@@ -848,7 +848,7 @@ const LC_TOPICS = [
   reach: ["Veterans: call 988 and press 1.", "Thoughts of suicide: call or text 988."],
   more: [L.voa, L.lifeline] },
 
-{ id: "forgiveness", ring: "faith", title: "Forgiving someone, or yourself", keys: "forgive forgiveness resentment hurt grudge reconcile", parts: ["roots", "branches", "bark"],
+{ id: "forgiveness", ring: "faith", title: "Forgiving Someone, or Yourself", keys: "forgive forgiveness resentment hurt grudge reconcile", parts: ["roots", "branches", "bark"],
   quick: ["Forgiveness is releasing a debt, not excusing harm.", "Forgiveness and reconciliation are different. You can forgive without returning.", "It's usually a process, not a moment.", "Forgiving yourself is often the hardest."],
   feel: "Resentment that keeps replaying, or pressure to forgive before you're ready.",
   self: { first: ["Name the hurt clearly.", "Notice what the resentment costs you.", "Choose a small step toward release."],
@@ -865,7 +865,7 @@ const LC_TOPICS = [
   reach: ["Forgiveness tangled with ongoing abuse: safety comes first."],
   more: [L.gg] },
 
-{ id: "church-hurt", ring: "faith", title: "When faith communities have hurt you", keys: "church hurt religious trauma spiritual abuse faith community harm", parts: ["roots", "branches"],
+{ id: "church-hurt", ring: "faith", title: "When Faith Communities Have Hurt You", keys: "church hurt religious trauma spiritual abuse faith community harm", parts: ["roots", "branches"],
   quick: ["Harm done in the name of faith can wound deeply.", "Your hurt is real, and it's not a sign that you lack faith.", "You get to set boundaries with people and places.", "Healing can happen at your own pace, in or out of religious spaces."],
   feel: "Anger, grief, anxiety in religious settings, or feeling spiritually homeless.",
   self: { first: ["Name what happened.", "Find a safe person to talk with.", "Take a break from what triggers you."],
@@ -883,7 +883,7 @@ const LC_TOPICS = [
   more: [L.apa] },
 
 /* ================= COMMUNITY, COUNTRY, WORLD ================= */
-{ id: "political-division", ring: "world", title: "Political division in families", keys: "politics election family divided argue relatives disagree", parts: ["branches", "bark"],
+{ id: "political-division", ring: "world", title: "Political Division in Families", keys: "politics election family divided argue relatives disagree", parts: ["branches", "bark"],
   quick: ["People who love each other can disagree deeply.", "Relationships can be bigger than any election.", "Set boundaries around topics when needed.", "Listen to understand, not only to answer."],
   feel: "Dread before holidays, anger, grief over relationships that feel strained.",
   self: { first: ["Decide what topics are off the table for now.", "Plan a graceful exit line.", "Remember what you love about the person."],
@@ -900,7 +900,7 @@ const LC_TOPICS = [
   reach: ["Conflict that becomes threatening or abusive."],
   more: [L.braver], kids: "politics" },
 
-{ id: "immigration", ring: "world", title: "Living with immigration fear", keys: "ice immigration raids deportation undocumented family separation fear", parts: ["branches", "bark", "fruit"],
+{ id: "immigration", ring: "world", title: "Living with Immigration Fear", keys: "ice immigration raids deportation undocumented family separation fear", parts: ["branches", "bark", "fruit"],
   quick: ["Fear for your family's safety is heavy. Name it and care for your body.", "Make a family preparedness plan: emergency contacts, a caregiver for children, and documents in one place.", "Get accurate information from trusted legal aid, not rumors.", "Stay connected with community support."],
   feel: "Constant vigilance, trouble sleeping, anxiety when leaving home, and worry for children.",
   self: { first: ["Complete a family preparedness plan.", "Contact a trusted immigration legal aid organization.", "Tell your children the basics of your plan in a calm way."],
@@ -917,7 +917,7 @@ const LC_TOPICS = [
   reach: ["A trusted immigration legal aid organization for your situation.", "Counseling if fear disrupts daily life."],
   more: [L.ilrc, L.informed], kids: "immigration" },
 
-{ id: "community-violence", ring: "world", title: "Violence in your community", keys: "shooting violence community tragedy crime trauma", parts: ["bark", "branches", "leaves"],
+{ id: "community-violence", ring: "world", title: "Violence in Your Community", keys: "shooting violence community tragedy crime trauma", parts: ["bark", "branches", "leaves"],
   quick: ["After violence nearby, shock and fear are normal.", "Limit graphic images and repeated news.", "Gather with others. Communities heal together.", "Watch for lasting trauma reactions."],
   feel: "Jumpy, sleepless, numb, or angry. Fear in places that used to feel safe.",
   self: { first: ["Reach out to people you love.", "Take a break from the news.", "Keep routines."],
@@ -934,7 +934,7 @@ const LC_TOPICS = [
   reach: ["Nightmares, panic, or numbness lasting weeks.", "Disaster Distress Helpline: 1-800-985-5990."],
   more: [L.nctsn, L.apa], kids: "community-tragedy" },
 
-{ id: "disaster", ring: "world", title: "After a disaster", keys: "disaster flood fire tornado hurricane lost home storm recovery", parts: ["leaves", "branches", "fruit"],
+{ id: "disaster", ring: "world", title: "After a Disaster", keys: "disaster flood fire tornado hurricane lost home storm recovery", parts: ["leaves", "branches", "fruit"],
   quick: ["Safety first, then basic needs.", "Recovery is a marathon. Pace yourself.", "Accept help from agencies and neighbors.", "Anniversaries and storms may bring feelings back."],
   feel: "Overwhelmed, displaced, grieving lost things, and exhausted by paperwork.",
   self: { first: ["Contact the Red Cross and local agencies.", "Document damage.", "Rest when you can."],
@@ -951,7 +951,7 @@ const LC_TOPICS = [
   reach: ["Disaster Distress Helpline: 1-800-985-5990.", "The American Red Cross."],
   more: [L.redcross], kids: "disasters" },
 
-{ id: "news-overwhelm", ring: "world", title: "Overwhelmed by the news", keys: "news overwhelm doomscrolling anxiety world events climate war", parts: ["bark", "fruit"],
+{ id: "news-overwhelm", ring: "world", title: "Overwhelmed by the News", keys: "news overwhelm doomscrolling anxiety world events climate war", parts: ["bark", "fruit"],
   quick: ["Staying informed doesn't require constant exposure.", "Set news times and limits.", "Turn worry into one small action.", "Notice the helpers and the good."],
   feel: "Anxious, helpless, angry, or numb after scrolling.",
   self: { first: ["Pick one or two times a day for news.", "Turn off alerts.", "Do one caring action for a cause you care about."],
@@ -968,7 +968,7 @@ const LC_TOPICS = [
   reach: ["Anxiety that interferes with daily life."],
   more: [L.apa], kids: "scary-news" },
 
-{ id: "prejudice", ring: "world", title: "Facing prejudice", keys: "racism prejudice discrimination hate bias treated unfairly", parts: ["branches", "roots", "trunk"],
+{ id: "prejudice", ring: "world", title: "Facing Prejudice", keys: "racism prejudice discrimination hate bias treated unfairly", parts: ["branches", "roots", "trunk"],
   quick: ["Discrimination harms body and spirit.", "Your hurt and anger are valid.", "Find community and allies.", "Care for yourself; you don't have to educate everyone."],
   feel: "Anger, exhaustion, grief, and hypervigilance.",
   self: { first: ["Tell someone who understands.", "Document incidents if needed.", "Rest from people and spaces that harm you."],
@@ -984,7 +984,7 @@ const LC_TOPICS = [
   practices: ["branches|Friends", "trunk|Write Your Story", "fruit|Inspire Hope"],
   reach: ["Harassment, threats, or workplace discrimination may need legal help."],
   more: [L.apa], kids: "prejudice" },
-{ id: "trauma", ring: "inside", title: "After something traumatic", keys: "trauma ptsd accident assault shock flashbacks nightmares startle numb frightening event", parts: ["bark", "leaves", "roots"],
+{ id: "trauma", ring: "inside", title: "After Something Traumatic", keys: "trauma ptsd accident assault shock flashbacks nightmares startle numb frightening event", parts: ["bark", "leaves", "roots"],
   quick: ["Strong reactions after a frightening event are common, and for many people they ease over the following weeks.", "Your body may stay on alert for a while. Calming the body is often the first step.", "Safety, rest, and connection help most in the early days.", "If reactions stay strong after a month, trauma-focused therapy works for many people."],
   feel: "You may replay what happened, startle easily, sleep poorly, or feel numb and far away. Some people avoid anything that reminds them of it. Others feel guilty for surviving or for how they reacted.",
   self: { first: ["Get to a safe, quiet place and slow your breathing.", "Eat, drink water, and rest, even if sleep comes in pieces.", "Tell one trusted person what happened, as much as you want to."],
@@ -1000,7 +1000,7 @@ const LC_TOPICS = [
   practices: ["bark|Slow Exhale", "bark|Name It", "leaves|Two Hours Outdoors", "roots|Lament"],
   reach: ["Nightmares, flashbacks, or avoidance that last longer than a month, or get in the way of daily life.", "Thoughts of hurting yourself: call or text 988."],
   more: [L.ptsd, L.apa] },
-{ id: "disability", ring: "health", title: "Living with a new disability", keys: "disability injury wheelchair vision hearing loss stroke amputation chronic limitation adapting accessibility", parts: ["leaves", "trunk", "branches"],
+{ id: "disability", ring: "health", title: "Living with a New Disability", keys: "disability injury wheelchair vision hearing loss stroke amputation chronic limitation adapting accessibility", parts: ["leaves", "trunk", "branches"],
   quick: ["Adjusting to a new disability often brings grief, and grief is a healthy response.", "Your worth was never about what your body could do.", "Practical help, like tools, benefits, and accessible spaces, can open up a lot of life.", "Other people living with the same disability are often the best guides."],
   feel: "You may grieve the life you planned, feel frustrated by everyday tasks, or worry about work, money, and relationships. Some days bring hope and some bring anger. Both are normal.",
   self: { first: ["Name one thing you miss, and one thing you can still enjoy.", "Ask your care team about therapy, tools, and adaptations.", "Look up disability resources in your state."],
@@ -1016,7 +1016,7 @@ const LC_TOPICS = [
   practices: ["bark|Self-Compassion Break", "branches|Support Group", "trunk|Values Sort", "fruit|Tiny Next Step"],
   reach: ["Sadness or hopelessness that doesn't lift.", "Thoughts of not wanting to live: call or text 988."],
   more: [L.disabilityhub, L.nami] },
-{ id: "assault", ring: "safety", title: "After a sexual assault", keys: "sexual assault rape abuse violated consent attacked harassed survivor", parts: ["bark", "leaves", "branches"],
+{ id: "assault", ring: "safety", title: "After a Sexual Assault", keys: "sexual assault rape abuse violated consent attacked harassed survivor", parts: ["bark", "leaves", "branches"],
   quick: ["What happened was not your fault. Nothing you did or wore makes it your fault.", "You get to decide what happens next, including whether to report.", "Free, confidential help is available any time, day or night.", "Healing takes time, and support makes a real difference."],
   feel: "You may feel shock, numbness, fear, shame, or anger. Some people blame themselves, lose sleep, or feel unsafe in their own body. Every reaction is a valid response to harm.",
   self: { first: ["Get somewhere safe.", "Call the RAINN hotline at 1-800-656-4673, or in Central Minnesota call 320-251-4357, any time.", "If you're hurt, or want evidence kept, a hospital can help, even if you don't want to report."],
@@ -1032,7 +1032,7 @@ const LC_TOPICS = [
   practices: ["bark|Soothing Touch", "bark|Slow Exhale", "branches|Ask for Help", "bark|Self-Compassion Break"],
   reach: ["Any time you need to talk: RAINN, 1-800-656-4673, or Central Minnesota, 320-251-4357.", "If you're in danger, call 911. Thoughts of suicide: call or text 988."],
   more: [L.rainn, L.cmsac] },
-{ id: "newparent", ring: "family", title: "Becoming a parent", keys: "new baby parent mother father postpartum depression anxiety newborn adoption exhausted overwhelmed", parts: ["leaves", "branches", "bark"],
+{ id: "newparent", ring: "family", title: "Becoming a Parent", keys: "new baby parent mother father postpartum depression anxiety newborn adoption exhausted overwhelmed", parts: ["leaves", "branches", "bark"],
   quick: ["Becoming a parent changes everything, and it's normal to feel joy and struggle at the same time.", "Up to one in seven mothers, and many fathers too, face depression or anxiety after a baby arrives. It's common and treatable.", "Sleep, food, and help from others are not luxuries right now.", "Asking for help is part of good parenting."],
   feel: "Love and exhaustion can arrive together. You may feel overwhelmed, anxious, teary, or unlike yourself. Some parents feel numb, or have frightening thoughts they're ashamed of. Those are symptoms, not who you are.",
   self: { first: ["Sleep whenever someone else can watch the baby.", "Accept one offer of help today.", "Tell someone honestly how you're doing."],
@@ -1048,7 +1048,7 @@ const LC_TOPICS = [
   practices: ["leaves|Sleep", "branches|Ask for Help", "leaves|Morning Daylight", "bark|Self-Compassion Break"],
   reach: ["Sadness, anxiety, or scary thoughts that last more than two weeks: call the National Maternal Mental Health Hotline, 1-833-852-6262, any time.", "Thoughts of harming yourself or your baby: call or text 988, or call 911 now."],
   more: [L.psi, L.mmh] },
-{ id: "incarceration", ring: "family", title: "When someone you love is incarcerated", keys: "jail prison incarcerated arrested sentence inmate visiting family of prisoner", parts: ["branches", "bark", "fruit"],
+{ id: "incarceration", ring: "family", title: "When Someone You Love Is Incarcerated", keys: "jail prison incarcerated arrested sentence inmate visiting family of prisoner", parts: ["branches", "bark", "fruit"],
   quick: ["Having someone you love in jail or prison is a real loss, even though they're still alive.", "Many families feel shame, but you haven't done anything wrong.", "Staying connected, when it's safe, often helps everyone.", "You deserve support too."],
   feel: "Grief, anger, worry, and loneliness can all come at once. Money, childcare, and phone calls may get harder. People may judge you, or you may keep it secret.",
   self: { first: ["Learn the facility's rules for calls, mail, and visits.", "Tell one trusted person what's happening.", "Make a simple plan for money and childcare."],
@@ -1064,7 +1064,7 @@ const LC_TOPICS = [
   practices: ["branches|Support Group", "branches|One Reach-Out a Day", "roots|Lament", "fruit|Tiny Next Step"],
   reach: ["If the stress is affecting your health or your children, reach out to a counselor.", "Thoughts of suicide: call or text 988."],
   more: [L.mndoc, L.nami] },
-{ id: "moving", ring: "work", title: "Moving to a new place", keys: "move moving relocation new town new city homesick starting over no friends", parts: ["branches", "trunk", "leaves"],
+{ id: "moving", ring: "work", title: "Moving to a New Place", keys: "move moving relocation new town new city homesick starting over no friends", parts: ["branches", "trunk", "leaves"],
   quick: ["Moving is one of life's big stressors, even when it's a good change.", "Homesickness is a form of grief for places and people.", "It usually takes months, not weeks, to feel at home.", "Small, regular routines help a new place become yours."],
   feel: "You may feel excited and lonely at the same time. Familiar comforts are gone, and everything takes more energy. Children and partners may adjust at different speeds.",
   self: { first: ["Unpack one room fully so you have a calm space.", "Find a nearby walk, a coffee shop, or a park.", "Keep one old routine going."],
@@ -1080,7 +1080,7 @@ const LC_TOPICS = [
   practices: ["branches|Clubs", "branches|Neighbors", "roots|Sit Spot", "fruit|Something to Look Forward To"],
   reach: ["Loneliness or low mood that doesn't lift after several months.", "Thoughts of suicide: call or text 988."],
   more: [L.nami, L.m211] },
-{ id: "military", ring: "work", title: "Coming home from military service", keys: "veteran military service deployment coming home transition civilian ptsd moral injury va", parts: ["trunk", "branches", "bark"],
+{ id: "military", ring: "work", title: "Coming Home From Military Service", keys: "veteran military service deployment coming home transition civilian ptsd moral injury va", parts: ["trunk", "branches", "bark"],
   quick: ["Leaving military life is a big transition, even when you're glad to be home.", "Many veterans miss the purpose and closeness of their unit.", "Help built for veterans is free, and it works.", "Veterans Crisis Line: call 988 and press 1, or text 838255."],
   feel: "Civilian life may feel slow, confusing, or lonely. You may miss the structure and the people. Some veterans carry memories, injuries, or moral injury that are hard to talk about.",
   self: { first: ["Connect with your local County Veterans Service Officer, or the Minnesota Department of Veterans Affairs.", "Reach out to one person from your unit.", "Build a simple daily routine."],
@@ -1098,7 +1098,7 @@ const LC_TOPICS = [
   more: [L.vcl, L.mdva, L.ptsd] },
 
 /* ================= ADDED IN SESSION 7 ================= */
-{ id: "self-harm", ring: "safety", title: "Self-harm", keys: "self harm self-harm self injury selfharm cutting burning hurting myself on purpose scratching my child is cutting teen cutting 988", parts: ["bark", "branches", "fruit"],
+{ id: "self-harm", ring: "safety", title: "Self-Harm", keys: "self harm self-harm self injury selfharm cutting burning hurting myself on purpose scratching my child is cutting teen cutting 988", parts: ["bark", "branches", "fruit"],
   quick: ["If you are badly hurt, call 911. If you are thinking about suicide, call or text 988.", "Self-harm is a sign of pain that needs care, not a character flaw.", "It tends to get harder to stop over time, and it can become more dangerous. You don’t have to stop alone.", "For parents: stay calm, care for wounds, and get your child seen this week."],
   feel: "Overwhelming feelings, numbness, shame, or a need to feel in control. Secrecy, and fear of what people would think if they knew.",
   self: { first: ["Tell one safe person: a friend, a doctor, a counselor, or 988.", "Put distance between you and the things you use, or ask someone to hold them for you.", "Care for any wounds, and get medical care for anything deep or infected."],
@@ -1115,7 +1115,7 @@ const LC_TOPICS = [
   reach: ["Call or text 988 any time, or text HOME to 741741.", "Call 911 for a serious injury, or if someone is in danger right now.", "See a doctor or counselor this week if self-harm has happened at all."],
   more: [L.lifeline, L.nami, ['Cornell Self-Injury and Recovery Resources', 'https://selfinjury.bctr.cornell.edu']], kids: "self-harm" },
 
-{ id: "eating", ring: "health", title: "Eating disorders", keys: "eating disorder eating disorders anorexia bulimia binge eating arfid purging restricting not eating food weight body image obsessed with food", parts: ["leaves", "bark", "roots"],
+{ id: "eating", ring: "health", title: "Eating Disorders", keys: "eating disorder eating disorders anorexia bulimia binge eating arfid purging restricting not eating food weight body image obsessed with food", parts: ["leaves", "bark", "roots"],
   quick: ["Eating disorders are serious medical illnesses, not choices or vanity.", "Anyone can have one, at any age, size, or shape.", "Recovery is real. It usually takes a team: a doctor, a therapist, and a dietitian.", "If you are worried, start with a doctor visit."],
   feel: "Thoughts about food, weight, or your body that take up more and more room. Rules, secrecy, guilt after eating, or feeling out of control around food.",
   self: { first: ["Make a doctor’s appointment and tell them honestly what is going on.", "Call the ANAD Helpline at 1-888-375-7767 for support and treatment options.", "Tell one person you trust."],
@@ -1132,7 +1132,7 @@ const LC_TOPICS = [
   reach: ["See a doctor soon for weight changes, dizziness, fainting, missed periods, or making yourself throw up.", "Call 911 for fainting, chest pain, a racing or uneven heartbeat, or confusion.", "ANAD Eating Disorders Helpline: 1-888-375-7767. National Alliance for Eating Disorders Helpline: 1-866-662-1235. Thoughts of suicide: call or text 988."],
   more: [['ANAD', 'https://anad.org'], ['National Alliance for Eating Disorders', 'https://www.allianceforeatingdisorders.com'], ['The Emily Program (Minnesota)', 'https://emilyprogram.com']], kids: "food-worries" },
 
-{ id: "accident", ring: "health", title: "After a car accident or sudden injury", keys: "car accident crash wreck collision injured injury hit by a car trauma er icu hospital concussion brain injury at fault guilt insurance", parts: ["leaves", "bark", "branches"],
+{ id: "accident", ring: "health", title: "After a Car Accident or Sudden Injury", keys: "car accident crash wreck collision injured injury hit by a car trauma er icu hospital concussion brain injury at fault guilt insurance", parts: ["leaves", "bark", "branches"],
   quick: ["See a doctor, even if you feel fine. Some injuries show up later.", "Shock, replaying it, and jumpiness are normal in the first weeks.", "If you were at fault, guilt can be heavy. You still deserve care.", "If fear, nightmares, or flashbacks last past a month, ask about trauma therapy."],
   feel: "Shaky, numb, jumpy, or angry. Replaying what happened. Afraid to drive or ride. Pain, and a pile of calls, forms, and appointments on top of it.",
   self: { first: ["See a doctor, and follow up on anything that gets worse, especially head injury signs.", "Let someone else handle calls and paperwork for a few days.", "Rest, and go back to driving in small steps."],
@@ -1149,7 +1149,7 @@ const LC_TOPICS = [
   reach: ["Go to the ER for a headache that gets worse, repeated vomiting, confusion, slurred speech, weakness, or a seizure.", "Talk with your doctor if fear, nightmares, or flashbacks last more than a month.", "If someone died in the crash, see the grief guides too. Thoughts of suicide: call or text 988."],
   more: [L.ptsd, ['CDC HEADS UP: Concussion', 'https://www.cdc.gov/heads-up/'], ['Brain Injury Alliance of Minnesota', 'https://www.braininjurymn.org']], kids: "accident" },
 
-{ id: "porn", ring: "health", title: "Pornography that’s hard to stop", keys: "porn pornography compulsive sexual behavior sex addiction lust partner found porn husband watches porn wife watches porn betrayal shame accountability", parts: ["roots", "bark", "branches"],
+{ id: "porn", ring: "health", title: "Pornography That’s Hard to Stop", keys: "porn pornography compulsive sexual behavior sex addiction lust partner found porn husband watches porn wife watches porn betrayal shame accountability", parts: ["roots", "bark", "branches"],
   quick: ["Many people struggle with pornography use that feels out of their control. Many people share this.", "Shame tends to feed the cycle. Honesty and support help break it.", "Look for help that fits your values: a counselor, a faith leader, or a support group.", "Anything involving minors is illegal and deeply harmful. Stop, and get help now."],
   feel: "A cycle of urges, use, and regret. Secrecy and shame. For a partner who found out: shock, hurt, and questions about your own worth.",
   self: { first: ["Tell one trusted person the truth.", "Add friction: filters, devices out of the bedroom, and no screens when you are alone and worn out.", "Notice what comes right before the urge: stress, loneliness, boredom, or late nights."],
@@ -1166,7 +1166,7 @@ const LC_TOPICS = [
   reach: ["If use is harming your relationships, work, or sense of self, see a counselor.", "If you are drawn to sexual images of minors, get confidential help from Stop It Now before anyone is harmed. If you come across child sexual abuse material, report it at report.cybertip.org or 1-800-843-5678.", "Thoughts of suicide: call or text 988."],
   more: [['Stop It Now', 'https://www.stopitnow.org'], L.apa, ['The Gottman Institute', 'https://www.gottman.com']], kids: "saw-porn" },
 
-{ id: "adhd", ring: "inside", title: "ADHD as an adult, or a late diagnosis", keys: "adhd add adult adhd attention focus distracted forgetful late diagnosis diagnosed as an adult executive function procrastination learning disability dyslexia", parts: ["bark", "trunk", "leaves"],
+{ id: "adhd", ring: "inside", title: "ADHD as an Adult, or a Late Diagnosis", keys: "adhd add adult adhd attention focus distracted forgetful late diagnosis diagnosed as an adult executive function procrastination learning disability dyslexia", parts: ["bark", "trunk", "leaves"],
   quick: ["ADHD is real in adults, and many people are not diagnosed until later in life.", "A diagnosis can bring relief, grief, or both.", "Treatment works: medication, coaching, therapy, and tools that fit how your brain works.", "Your struggles were never proof that you were lazy or careless."],
   feel: "Relief at finally having a name for it. Grief for the years you blamed yourself. Frustration with forgetting, starting, or finishing things, even when you care a lot.",
   self: { first: ["Talk with your doctor about an evaluation, and bring examples from school, work, and home.", "Write down what gets in the way most, so you know where to start.", "Pick one tool to try this week, like a visible calendar or reminders on your phone."],
@@ -1183,7 +1183,7 @@ const LC_TOPICS = [
   reach: ["See your doctor if focus, mood, or daily life feel out of control.", "Anxiety and depression often come with ADHD. Get help for those too. Thoughts of suicide: call or text 988."],
   more: [['CHADD', 'https://chadd.org'], ['Understood (for adults, too)', 'https://www.understood.org'], L.nami], kids: "attention" },
 
-{ id: "gambling", ring: "health", title: "Gambling that’s out of control", keys: "gambling gamble betting sports betting casino lottery scratch tickets slots poker fantasy sports online betting apps debt chasing losses gambling addiction problem gambling", parts: ["leaves", "branches", "fruit"],
+{ id: "gambling", ring: "health", title: "Gambling That’s Out of Control", keys: "gambling gamble betting sports betting casino lottery scratch tickets slots poker fantasy sports online betting apps debt chasing losses gambling addiction problem gambling", parts: ["leaves", "branches", "fruit"],
   quick: ["Gambling disorder is a real, treatable addiction.", "In Minnesota, treatment is often free for gamblers and their families. Call 1-800-333-4673 (HOPE).", "Put barriers in place: block betting apps and sites, and let someone else hold the money for a while.", "Gambling problems raise the risk of suicide. If you feel hopeless, call or text 988."],
   feel: "Chasing losses. Hiding bets or money. Promising to stop and not being able to. Shame, panic about debt, and a hope that the next win will fix everything.",
   self: { first: ["Call the Minnesota Problem Gambling Helpline at 1-800-333-4673, or text HOPE to 53342.", "Block gambling apps and sites, and ask about self-exclusion at casinos and betting sites.", "Tell one person the full truth about the money."],
@@ -1214,7 +1214,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "pacing",
   "ring": "life",
-  "title": "Fatigue, flares, and pacing your energy",
+  "title": "Fatigue, Flares, and Pacing Your Energy",
   "keys": "fatigue tired exhausted no energy flare flare up flares pacing pace energy spoons spoon theory chronic fatigue chronic pain autoimmune lupus multiple sclerosis ms fibromyalgia long covid arthritis crohns colitis boom and bust crash rest good days bad days canceling plans invisible illness",
   "parts": [
    "leaves",
@@ -1304,7 +1304,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "work-ability",
   "ring": "life",
-  "title": "Working with a disability or illness, or stepping away",
+  "title": "Working with a Disability or Illness, or Stepping Away",
   "keys": "work job career disability illness chronic illness accommodation accommodations reasonable accommodation ada americans with disabilities act telling my boss disclose disclosure hr human resources cutting hours part time leave medical leave stepping away quitting leaving work disability benefits ssdi going back to work return to work coworkers employer workplace",
   "parts": [
    "trunk",
@@ -1400,7 +1400,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "parenting-ability",
   "ring": "life",
-  "title": "Parenting with a disability or chronic illness",
+  "title": "Parenting with a Disability or Chronic Illness",
   "keys": "parenting parent mom dad mother father disability chronic illness pain fatigue wheelchair blind deaf mental health condition kids children telling my kids what to tell children good enough parent guilt flare days help with kids young carer kids helping too much judged as a parent adaptive parenting",
   "parts": [
    "branches",
@@ -1493,7 +1493,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "child-ability",
   "ring": "life",
-  "title": "Raising a child with a disability or serious illness",
+  "title": "Raising a Child with a Disability or Serious Illness",
   "keys": "my child has a disability special needs child disabled child autism down syndrome cerebral palsy medically complex child seriously ill child childhood cancer chronic illness in my child diagnosis iep 504 plan school advocacy siblings parent burnout respite chronic sorrow grief milestones therapies appointments hospital stays",
   "parts": [
    "branches",
@@ -1585,7 +1585,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "hearing",
   "ring": "life",
-  "title": "Hearing loss or deafness as an adult",
+  "title": "Hearing Loss or Deafness as an Adult",
   "keys": "hearing loss hard of hearing deaf deafness going deaf losing my hearing hearing aids cochlear implant tinnitus captions asl american sign language lip reading audiologist listening fatigue noisy restaurants meetings phone calls deaf community hearing loss at work",
   "parts": [
    "branches",
@@ -1677,7 +1677,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "vision",
   "ring": "life",
-  "title": "Vision loss as an adult",
+  "title": "Vision Loss as an Adult",
   "keys": "vision loss losing my sight low vision blind blindness going blind visually impaired glaucoma macular degeneration diabetic retinopathy eye disease eye injury white cane guide dog screen reader magnifier braille vision rehabilitation orientation and mobility can not drive reading print",
   "parts": [
    "leaves",
@@ -1764,7 +1764,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "autistic",
   "ring": "life",
-  "title": "Autistic, or diagnosed as an adult",
+  "title": "Autistic, or Diagnosed as an Adult",
   "keys": "autism autistic autistic adult late diagnosis diagnosed as an adult asperger asd spectrum neurodivergent masking burnout sensory overload meltdown shutdown routines special interests social differences evaluation am i autistic",
   "parts": [
    "bark",
@@ -1847,7 +1847,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "serious-mi",
   "ring": "life",
-  "title": "Living with a serious mental illness",
+  "title": "Living with a Serious Mental Illness",
   "keys": "serious mental illness smi bipolar schizophrenia schizoaffective psychosis major depression ocd severe anxiety mental health condition long term living well recovery relapse warning signs hospital stay psychiatric medication side effects stigma peer support nami family to family",
   "parts": [
    "bark",
@@ -1939,7 +1939,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "brain-injury",
   "ring": "life",
-  "title": "After a brain injury or stroke",
+  "title": "After a Brain Injury or Stroke",
   "keys": "brain injury traumatic brain injury tbi concussion stroke aphasia speech memory problems attention thinking changes personality change fatigue rehab rehabilitation physical therapy occupational therapy speech therapy not the same person recovery return to work driving after stroke caregiver of stroke survivor",
   "parts": [
    "leaves",
@@ -2032,7 +2032,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
  {
   "id": "faith-access",
   "ring": "life",
-  "title": "Faith and disability: when worship is hard to reach",
+  "title": "Faith and Disability: When Worship Is Hard to Reach",
   "keys": "faith disability worship church synagogue mosque temple congregation accessible accessibility ramp steps hearing loop captions large print sensory friendly service can not get to church homebound left out of my faith community belonging why me healing prayer for healing punishment spiritual struggle disability ministry inclusion",
   "parts": [
    "roots",

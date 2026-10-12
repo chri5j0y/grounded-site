@@ -4341,7 +4341,7 @@
          {
           "k": "title",
           "hero": "grove",
-          "eyebrow": "Do This Together",
+          "eyebrow": "Health and Ability",
           "h": "Ways Everyone Can Join",
           "sub": "Room for every body in the family.",
           "say": "This one is for the whole family. In most families, bodies work in different ways. A grandparent uses a cane, a little one is still learning to walk, someone is tired from treatment, or someone uses a wheelchair. Here is how everyone can join."
@@ -4444,7 +4444,7 @@
          {
           "k": "title",
           "hero": "grove",
-          "eyebrow": "Do This Together",
+          "eyebrow": "Health and Ability",
           "h": "A Family Rest Day",
           "sub": "Slow down, together.",
           "say": "Sometimes the whole family needs a slower day. Maybe someone is sick, or healing, or worn out, or it has just been a lot. A family rest day is a gift to everyone."

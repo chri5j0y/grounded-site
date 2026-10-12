@@ -313,7 +313,7 @@
         '<p>' + esc(o.lead || 'Type your 12 Root Words in order. Capital letters and extra spaces do not matter, and the first four letters of each word are enough.') + '</p>' +
         '<label for="ggr-in">Your Root Words</label><textarea id="ggr-in" autocomplete="off" autocapitalize="off" autocorrect="off" spellcheck="false" aria-describedby="ggr-cnt"></textarea>' +
         '<p class="ggr-count" id="ggr-cnt" aria-live="polite">0 of 12 words</p><p class="ggr-msg" role="alert" id="ggr-msg"></p>' +
-        '<div class="ggr-row"><button type="button" class="ggr-b" data-r="no">Cancel</button><button type="button" class="ggr-b ggr-go" data-r="ok">' + esc(o.ok || 'Open With My Root Words') + '</button></div>');
+        '<div class="ggr-row"><button type="button" class="ggr-b" data-r="no">Cancel</button><button type="button" class="ggr-b ggr-go" data-r="ok">' + esc(o.ok || 'Open with My Root Words') + '</button></div>');
       var box = back.firstChild, ta = box.querySelector('#ggr-in'), msg = box.querySelector('#ggr-msg'), cnt = box.querySelector('#ggr-cnt'), busy = false, prev = document.activeElement;
       function close(v) { back.remove(); try { if (prev && prev.focus) prev.focus(); } catch (e) {} resolve(v); }
       ta.addEventListener('input', function () { var r = parse(ta.value); cnt.textContent = r.n + ' of 12 words' + (r.bad.length ? '. Check word ' + r.bad.join(', ') + '.' : ''); });

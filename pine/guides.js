@@ -62,7 +62,7 @@ const LC_TOPICS = [
  {
   "id": "start-hs",
   "ring": "pn-school",
-  "title": "Starting high school",
+  "title": "Starting High School",
   "keys": "starting high school ninth grade 9th grade freshman first year new school bigger school lost nervous first day lunch who to sit with no friends friends split up new schedule more homework harder classes lockers getting lost transition from middle school fitting in clubs teams where do i belong",
   "parts": [
    "branches",
@@ -153,7 +153,7 @@ const LC_TOPICS = [
  {
   "id": "grades-pressure",
   "ring": "pn-school",
-  "title": "Grades, pressure, and perfectionism",
+  "title": "Grades, Pressure, and Perfectionism",
   "keys": "grades pressure perfectionism perfectionist gpa stress school stress test anxiety bad grade failing a class not good enough never enough ap classes honors class rank college applications parents expectations disappoint my parents all nighter staying up late studying burnout overwhelmed too much homework procrastination afraid to fail comparing grades",
   "parts": [
    "bark",
@@ -248,7 +248,7 @@ const LC_TOPICS = [
  {
   "id": "adhd",
   "ring": "pn-school",
-  "title": "ADHD and learning differences",
+  "title": "ADHD and Learning Differences",
   "keys": "adhd add attention focus can't focus distracted forgetful lose things missing assignments late work procrastination learning disability learning difference dyslexia dyscalculia slow reader processing iep 504 plan accommodations extra time testing transition planning special education medication meds driving with adhd college disability services my brain works differently",
   "parts": [
    "trunk",
@@ -345,7 +345,7 @@ const LC_TOPICS = [
  {
   "id": "sports-cut",
   "ring": "pn-school",
-  "title": "Sports: getting cut, injury, and burnout",
+  "title": "Sports: Getting Cut, Injury, and Burnout",
   "keys": "sports got cut cut from the team didn't make varsity tryouts bench playing time injury injured torn acl broken out for the season concussion overuse burnout don't love it anymore want to quit quitting a sport one sport all year club team travel team scholarship pressure coach yells athlete identity who am i without my sport",
   "parts": [
    "leaves",
@@ -439,7 +439,7 @@ const LC_TOPICS = [
  {
   "id": "path-after",
   "ring": "pn-school",
-  "title": "Choosing a path after high school",
+  "title": "Choosing a Path After High School",
   "keys": "what should i do after high school future plans no idea what i want to do career college or not trade school apprenticeship community college four year college military enlist service americorps gap year work full time stay home live at home major undecided pressure to go to college fafsa financial aid cost of college everyone else knows",
   "parts": [
    "trunk",
@@ -533,7 +533,7 @@ const LC_TOPICS = [
  {
   "id": "graduation",
   "ring": "pn-school",
-  "title": "Graduation, college, and leaving home",
+  "title": "Graduation, College, and Leaving Home",
   "keys": "graduation graduating senior year last year of high school leaving home moving out going to college dorm roommate freshman year first year homesick lonely at college miss home miss my friends saying goodbye starting a job moving away basic training trade school turning 18 adult now parents letting go empty nest",
   "parts": [
    "branches",
@@ -626,7 +626,7 @@ const LC_TOPICS = [
  {
   "id": "friend-changes",
   "ring": "pn-friends",
-  "title": "Friendship changes and losing a friend group",
+  "title": "Friendship Changes and Losing a Friend Group",
   "keys": "friends friend group lost my friends friend breakup best friend dropped me ghosted grew apart new friend group sit alone at lunch no one to sit with group chat left out of the chat friends changed drama fight with best friend friends moved on starting over making new friends lonely at school",
   "parts": [
    "branches",
@@ -725,7 +725,7 @@ const LC_TOPICS = [
  {
   "id": "left-out",
   "ring": "pn-friends",
-  "title": "Feeling lonely or left out",
+  "title": "Feeling Lonely or Left Out",
   "keys": "lonely loneliness left out no friends nobody likes me not invited everyone hangs out without me alone at lunch eat alone weekends alone feel invisible don't fit in no one gets me lonely in a crowd lonely even with friends everyone else has plans fomo saw it on their story",
   "parts": [
    "branches",
@@ -825,7 +825,7 @@ const LC_TOPICS = [
  {
   "id": "bullying",
   "ring": "pn-friends",
-  "title": "Bullying, in person and online",
+  "title": "Bullying, in Person and Online",
   "keys": "bullying bullied bully cyberbullying cyber bullying mean messages harassed harassment rumors spreading rumors they post about me fake account group chat roast threatened threats pushed shoved made fun of teased mocked for how i look excluded on purpose screenshots shared embarrassing video posted private picture shared report bullying school won't do anything upstander",
   "parts": [
    "branches",
@@ -930,7 +930,7 @@ const LC_TOPICS = [
  {
   "id": "first-relationship",
   "ring": "pn-friends",
-  "title": "First relationships and what healthy looks like",
+  "title": "First Relationships and What Healthy Looks Like",
   "keys": "first relationship dating going out boyfriend girlfriend partner crush talking stage healthy relationship is this normal red flags green flags jealous checks my phone wants to know where i am pressure boundaries consent saying no pictures nudes asked for pics too fast older person age gap how do i know if they like me parents won't let me date not dating yet",
   "parts": [
    "branches",
@@ -1130,7 +1130,7 @@ const LC_TOPICS = [
  {
   "id": "dating-abuse",
   "ring": "pn-friends",
-  "title": "Dating abuse and controlling partners",
+  "title": "Dating Abuse and Controlling Partners",
   "keys": "dating abuse dating violence abusive relationship controlling partner controlling boyfriend controlling girlfriend checks my phone tracks my location wants my passwords jealous won't let me see friends tells me what to wear yells at me calls me names threatens me hits me pushed me grabbed me pressured me forced me says they'll hurt themselves if i leave scared of my partner walking on eggshells is this abuse how do i break up safely friend in an abusive relationship",
   "parts": [
    "branches",
@@ -1237,7 +1237,7 @@ const LC_TOPICS = [
  {
   "id": "divorce",
   "ring": "pn-home",
-  "title": "Parents' divorce or separation",
+  "title": "Parents' Divorce or Separation",
   "keys": "divorce divorced separation separated parents splitting up parents fighting two homes two houses custody parenting time switching houses every other weekend dad moved out mom moved out caught in the middle pick a side messenger new house new school my fault parents yelling court lawyer stepparent dating again holidays two christmases",
   "parts": [
    "branches",
@@ -1334,7 +1334,7 @@ const LC_TOPICS = [
  {
   "id": "stepfamily",
   "ring": "pn-home",
-  "title": "A new stepfamily",
+  "title": "A New Stepfamily",
   "keys": "stepfamily step family blended family stepparent stepmom stepdad step mom step dad stepsiblings step siblings half sibling new baby parent remarried parent getting married parent dating new partner moving in sharing a room new rules not my real parent what do i call them feel replaced jealous holidays two families",
   "parts": [
    "branches",
@@ -1426,7 +1426,7 @@ const LC_TOPICS = [
  {
   "id": "moving",
   "ring": "pn-home",
-  "title": "Moving or changing schools",
+  "title": "Moving or Changing Schools",
   "keys": "moving move new town new city new state new school changing schools transfer new kid don't know anyone eat lunch alone miss my friends long distance friends left my team homesick starting over senior year move military move lost our house eviction staying with relatives open enrollment new credits",
   "parts": [
    "branches",
@@ -1520,7 +1520,7 @@ const LC_TOPICS = [
  {
   "id": "deployed",
   "ring": "pn-home",
-  "title": "A parent deployed, and military family life",
+  "title": "A Parent Deployed, and Military Family Life",
   "keys": "deployed deployment parent deployed dad deployed mom deployed military family military kid national guard reserves army navy air force marines coast guard space force base pcs move moving again homecoming reintegration parent coming home worried about my parent news war training away tdy extra chores man of the house miss my dad miss my mom",
   "parts": [
    "branches",
@@ -1618,7 +1618,7 @@ const LC_TOPICS = [
  {
   "id": "family-substance",
   "ring": "pn-home",
-  "title": "A family member's drinking or drug use",
+  "title": "A Family Member's Drinking or Drug Use",
   "keys": "parent drinks too much mom drinks dad drinks alcoholic parent addiction in my family drug use parent high parent drunk sibling using brother using sister using pills opioids meth weed every day relapse rehab treatment recovery cover for them keep it a secret embarrassed bring friends home drunk driving overdose mood swings broken promises",
   "parts": [
    "bark",
@@ -1716,7 +1716,7 @@ const LC_TOPICS = [
  {
   "id": "parent-jail",
   "ring": "pn-home",
-  "title": "A parent in jail or prison",
+  "title": "A Parent in Jail or Prison",
   "keys": "parent in jail parent in prison dad in jail mom in prison arrested incarcerated locked up sentenced court trial probation release coming home reentry visiting prison video visit phone calls letters embarrassed secret what do i tell people kids at school know news about my parent miss my dad miss my mom angry at my parent living with grandparents",
   "parts": [
    "branches",
@@ -1812,7 +1812,7 @@ const LC_TOPICS = [
  {
   "id": "blowup",
   "ring": "pn-home",
-  "title": "In the middle of a blowup",
+  "title": "In the Middle of a Blowup",
   "keys": "blowup blow up fight with my parents fight with my mom fight with my dad yelling screaming argument lost my temper so angry rage slammed the door punched a wall can't calm down they always yell family fight house is loud said things i regret grounded again temper anger",
   "parts": [
    "bark",
@@ -1912,7 +1912,7 @@ const LC_TOPICS = [
  {
   "id": "lying",
   "ring": "pn-home",
-  "title": "Lying, sneaking out, and stealing",
+  "title": "Lying, Sneaking Out, and Stealing",
   "keys": "lying lies liar lied to my parents caught lying sneaking out snuck out stealing stole shoplifting shoplifted took money trust broken they don't trust me grounded honesty secret cover for a friend got caught in trouble rebuild trust missing money",
   "parts": [
    "branches",
@@ -2010,7 +2010,7 @@ const LC_TOPICS = [
  {
   "id": "parent-death",
   "ring": "pn-loss",
-  "title": "When a parent or sibling dies",
+  "title": "When a Parent or Sibling Dies",
   "keys": "my mom died my dad died my mother died my father died parent died my brother died my sister died sibling died death in the family grief grieving funeral lost my mom lost my dad lost my brother lost my sister miss them so much can't focus at school anniversary of their death bereaved teen",
   "parts": [
    "branches",
@@ -2108,7 +2108,7 @@ const LC_TOPICS = [
  {
   "id": "friend-death",
   "ring": "pn-loss",
-  "title": "When a friend or classmate dies",
+  "title": "When a Friend or Classmate Dies",
   "keys": "my friend died best friend died classmate died student died someone at school died friend died by suicide friend killed in a crash overdose friend died of cancer memorial vigil school grief whole school is sad i should have known it's my fault i didn't even know them that well guilt rumors posts about them",
   "parts": [
    "branches",
@@ -2204,7 +2204,7 @@ const LC_TOPICS = [
  {
   "id": "grandparent-death",
   "ring": "pn-loss",
-  "title": "When a grandparent dies",
+  "title": "When a Grandparent Dies",
   "keys": "grandma died grandpa died grandmother died grandfather died grandparent died lost my grandma lost my grandpa nana papa great grandma funeral hospice grief first death raised by my grandparents lived with my grandma mom is so sad dad is grieving wish i had visited more",
   "parts": [
    "branches",
@@ -2294,7 +2294,7 @@ const LC_TOPICS = [
  {
   "id": "car-crash",
   "ring": "pn-loss",
-  "title": "Car crashes and new drivers",
+  "title": "Car Crashes and New Drivers",
   "keys": "car accident crash wreck totaled the car i crashed got in an accident fender bender new driver teen driver permit license scared to drive driving anxiety friend hurt in a crash friend killed in a crash passenger concussion whiplash insurance ticket guilt it was my fault can't stop replaying it",
   "parts": [
    "leaves",
@@ -2394,7 +2394,7 @@ const LC_TOPICS = [
  {
   "id": "loved-one-ill",
   "ring": "pn-loss",
-  "title": "When someone you love is seriously ill",
+  "title": "When Someone You Love Is Seriously Ill",
   "keys": "sick parent mom has cancer dad has cancer cancer chemo hospital hospice parent sick sibling sick grandparent sick serious illness dying terminal stroke heart attack surgery icu scared they will die helping take care caregiver can't focus at school nobody gets it guilty for having fun",
   "parts": [
    "branches",
@@ -2496,7 +2496,7 @@ const LC_TOPICS = [
  {
   "id": "sleep",
   "ring": "pn-body",
-  "title": "Sleep and the teen body clock",
+  "title": "Sleep and the Teen Body Clock",
   "keys": "sleep tired exhausted can't fall asleep can't sleep up late night owl insomnia staying up on my phone waking up early school starts too early sleepy in class naps weekends sleep in body clock how much sleep do teens need drowsy driving caffeine energy drinks",
   "parts": [
    "leaves",
@@ -2588,7 +2588,7 @@ const LC_TOPICS = [
  {
   "id": "body-image",
   "ring": "pn-body",
-  "title": "Body image and comparison",
+  "title": "Body Image and Comparison",
   "keys": "body image hate my body ugly fat too skinny too short not muscular enough acne skin looks appearance comparing myself comparison instagram tiktok filters edited photos mirror weight comments puberty changes locker room embarrassed self-conscious selfies want to look like",
   "parts": [
    "leaves",
@@ -2680,7 +2680,7 @@ const LC_TOPICS = [
  {
   "id": "eating",
   "ring": "pn-body",
-  "title": "Eating disorders",
+  "title": "Eating Disorders",
   "keys": "eating disorder anorexia bulimia binge eating arfid restricting not eating skipping meals food rules calories counting calories cutting weight making weight wrestling dance running athlete over exercising purging throwing up guilt after eating scared to eat friend not eating worried about my friend",
   "parts": [
    "leaves",
@@ -2777,7 +2777,7 @@ const LC_TOPICS = [
  {
   "id": "concussion",
   "ring": "pn-body",
-  "title": "Concussion and sports injuries",
+  "title": "Concussion and Sports Injuries",
   "keys": "concussion hit my head head injury headache after a hit dizzy blurry vision sports injury torn acl broken bone sprain out for the season can't play sitting out return to play return to learn injured athlete football hockey soccer volleyball wrestling crash fall screens hurt my head foggy",
   "parts": [
    "leaves",
@@ -2869,7 +2869,7 @@ const LC_TOPICS = [
  {
   "id": "chronic-illness",
   "ring": "pn-body",
-  "title": "Living with a chronic illness or disability",
+  "title": "Living with a Chronic Illness or Disability",
   "keys": "chronic illness disability diabetes type 1 asthma epilepsy seizures crohn's colitis arthritis chronic pain migraines heart condition cancer survivor wheelchair hearing loss vision loss new diagnosis different from friends missing school 504 plan iep accommodations doctor appointments managing my own meds tired of being sick nobody understands",
   "parts": [
    "leaves",
@@ -2967,7 +2967,7 @@ const LC_TOPICS = [
  {
   "id": "substances",
   "ring": "pn-body",
-  "title": "Vaping, drinking, and drugs",
+  "title": "Vaping, Drinking, and Drugs",
   "keys": "vaping vape nicotine juul e cig drinking alcohol beer party weed marijuana thc edibles pills fentanyl drugs high drunk peer pressure offered something everyone does it how to say no getting out of a party friend passed out overdose stress coping",
   "parts": [
    "leaves",
@@ -3064,7 +3064,7 @@ const LC_TOPICS = [
  {
   "id": "anxiety",
   "ring": "pn-mind",
-  "title": "Anxiety and panic",
+  "title": "Anxiety and Panic",
   "keys": "anxiety anxious worry worried nervous stress stressed panic attack panicking cant breathe heart racing chest tight overthinking cant stop thinking test anxiety social anxiety scared to talk in class stomach ache before school avoiding things freaking out",
   "parts": [
    "bark",
@@ -3162,7 +3162,7 @@ const LC_TOPICS = [
  {
   "id": "depression",
   "ring": "pn-mind",
-  "title": "Depression and feeling numb",
+  "title": "Depression and Feeling Numb",
   "keys": "depression depressed sad numb empty flat nothing matters dont care anymore tired all the time cant get out of bed no motivation hopeless crying sleeping too much cant sleep lost interest quit everything alone not myself whats the point",
   "parts": [
    "bark",
@@ -3260,7 +3260,7 @@ const LC_TOPICS = [
  {
   "id": "selfharm",
   "ring": "pn-mind",
-  "title": "Self-harm",
+  "title": "Self-Harm",
   "keys": "self harm self-harm selfharm self injury cutting hurting myself on purpose hurting yourself urge to hurt myself scars hiding marks long sleeves relapse friend hurts themselves numb release punish myself",
   "parts": [
    "bark",
@@ -3359,7 +3359,7 @@ const LC_TOPICS = [
  {
   "id": "suicide-thoughts",
   "ring": "pn-mind",
-  "title": "Thoughts of suicide, and making a safety plan",
+  "title": "Thoughts of Suicide, and Making a Safety Plan",
   "keys": "suicide suicidal thoughts of suicide want to die wish i was dead dont want to be here dont want to be alive kill myself end it all everyone would be better off without me burden no way out hopeless safety plan crisis plan friend suicidal worried about a friend 988",
   "parts": [
    "fruit",
@@ -3462,7 +3462,7 @@ const LC_TOPICS = [
  {
   "id": "counseling",
   "ring": "pn-mind",
-  "title": "Getting counseling, and your rights at 16 in Minnesota",
+  "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
   "keys": "counseling counselor therapy therapist see someone talk to someone mental health help how do i get help can i get therapy without my parents 16 consent minnesota confidential private will they tell my parents school counselor psychologist psychiatrist first appointment what to say insurance cost",
   "parts": [
    "bark",
@@ -3562,7 +3562,7 @@ const LC_TOPICS = [
  {
   "id": "sextortion",
   "ring": "pn-online",
-  "title": "Sextortion and threats with a picture",
+  "title": "Sextortion and Threats with a Picture",
   "keys": "sextortion someone threatening me picture nude nudes pic photo sent a picture they want money pay or they post it blackmail threatening to share my pictures catfished fake account fake ai picture deepfake leaked screenshot scared to tell parents take it down cybertip report",
   "parts": [
    "bark",
@@ -3754,7 +3754,7 @@ const LC_TOPICS = [
  {
   "id": "social-media",
   "ring": "pn-online",
-  "title": "Social media, comparison, and phone balance",
+  "title": "Social Media, Comparison, and Phone Balance",
   "keys": "social media phone addiction screen time too much time on my phone scrolling doomscrolling instagram tiktok snapchat streaks comparison everyone else's life looks better feel bad about my body likes followers fomo left out group chat drama can't put my phone down sleep phone at night screen time rules",
   "parts": [
    "bark",
@@ -3843,7 +3843,7 @@ const LC_TOPICS = [
  {
   "id": "ai-companions",
   "ring": "pn-online",
-  "title": "AI chatbots and companions",
+  "title": "AI Chatbots and Companions",
   "keys": "ai chatbot companion ai friend ai girlfriend ai boyfriend character ai talking to ai instead of people chatgpt replika is it bad to talk to ai ai gave me advice lonely attached to a chatbot my teen talks to ai all the time ai said something weird ai and mental health",
   "parts": [
    "branches",
@@ -3933,7 +3933,7 @@ const LC_TOPICS = [
  {
   "id": "gambling",
   "ring": "pn-online",
-  "title": "Gambling and sports betting",
+  "title": "Gambling and Sports Betting",
   "keys": "gambling sports betting bet betting apps parlay odds fantasy sports poker online casino loot boxes skins crypto lost money chasing losses owe money debt borrowed money can't stop betting my teen is betting using my account friends bet on games",
   "parts": [
    "trunk",
@@ -4024,7 +4024,7 @@ const LC_TOPICS = [
  {
   "id": "sexual-assault",
   "ring": "pn-online",
-  "title": "Sexual assault and unwanted touching",
+  "title": "Sexual Assault and Unwanted Touching",
   "keys": "sexual assault rape unwanted touching touched me without asking groped forced pressured into sex didn't say yes i froze my fault was drinking party date someone i know family member coach assaulted abused molested harassed is it assault what do i do after my teen was assaulted rainn day one",
   "parts": [
    "bark",
@@ -4123,7 +4123,7 @@ const LC_TOPICS = [
  {
   "id": "school-threats",
   "ring": "pn-online",
-  "title": "School threats, lockdowns, and scary news",
+  "title": "School Threats, Lockdowns, and Scary News",
   "keys": "school threat threats lockdown lockdown drill active shooter drill school shooting shooting news scared to go to school rumor on snapchat someone said they would shoot bomb threat evacuation hiding in the classroom scary news world news war news anxious about the news can't stop scrolling doomscrolling report a threat tell someone see it say it send it friend made a threat joke threat can't sleep after lockdown",
   "parts": [
    "bark",
@@ -4222,7 +4222,7 @@ const LC_TOPICS = [
  {
   "id": "first-job",
   "ring": "pn-meaning",
-  "title": "A first job, and balancing work with school",
+  "title": "A First Job, and Balancing Work with School",
   "keys": "first job part time job working while in school job and school too many hours boss manager schedule shifts can't keep up homework tired from work no time paycheck how many hours can i work closing shift late shift school night work permit quit my job got fired job interview harassment at work boss yells unsafe job hurt at work coworkers help my family pay bills",
   "parts": [
    "trunk",
@@ -4318,7 +4318,7 @@ const LC_TOPICS = [
  {
   "id": "money",
   "ring": "pn-meaning",
-  "title": "Money: paychecks, saving, and debt",
+  "title": "Money: Paychecks, Saving, and Debt",
   "keys": "money paycheck pay stub taxes taken out why is my check so small saving budget bank account savings account debit card credit card credit score debt owe money borrowed money buy now pay later loans student loans can't afford spending too much broke money stress family money problems scam cash app venmo someone asked for money gift cards fake job check saving for a car",
   "parts": [
    "trunk",
@@ -4410,7 +4410,7 @@ const LC_TOPICS = [
  {
   "id": "faith-doubt",
   "ring": "pn-meaning",
-  "title": "Faith questions and doubt",
+  "title": "Faith Questions and Doubt",
   "keys": "faith questions doubt doubts doubting god is god real not sure what i believe questions about religion my faith or my parents' faith different from my family church youth group feels fake prayer doesn't work prayer feels empty god feels far away science and faith why do bad things happen afraid to ask questions confused about faith spiritual but not religious losing my faith finding my faith friends believe different things",
   "parts": [
    "roots",
@@ -4471,7 +4471,7 @@ const LC_TOPICS = [
   "faith": "This guide's topic is faith, so it sits at the center here, offered as one door among several. Many traditions have stories of people who wrestled with God, questioned, waited, and still belonged. For many, questions are part of a living faith, not the end of it. If faith hasn't been part of your life, the same questions of meaning, purpose, and what holds you up are yours too, and you can explore them in your own words. Grounded welcomes all faith traditions and everything in-between.",
   "practices": [
    "roots|Carry Your Questions",
-   "roots|Talk With a Faith Mentor",
+   "roots|Talk with a Faith Mentor",
    "roots|Lament",
    "roots|Quiet Time",
    "roots|What Holds Me Up",
@@ -4502,7 +4502,7 @@ const LC_TOPICS = [
  {
   "id": "faith-hurt",
   "ring": "pn-meaning",
-  "title": "Hurt by a faith community",
+  "title": "Hurt by a Faith Community",
   "keys": "hurt by church hurt by my faith community youth group hurt me youth pastor leader made me uncomfortable judged at church shamed at church embarrassed in front of everyone gossip kicked out left out at youth group people at church are fake hypocrites scared of god told i'm going to hell not good enough can't go back to church don't want to go to church spiritual abuse leader asked me to keep a secret pastor touched me mosque temple synagogue church hurt religious hurt",
   "parts": [
    "roots",
@@ -4568,7 +4568,7 @@ const LC_TOPICS = [
    "bark|Name It",
    "bark|Self-Compassion Break",
    "roots|What Holds Me Up",
-   "roots|Talk With a Faith Mentor",
+   "roots|Talk with a Faith Mentor",
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
@@ -4600,7 +4600,7 @@ const LC_TOPICS = [
  {
   "id": "purpose-service",
   "ring": "pn-meaning",
-  "title": "Finding purpose, and serving others",
+  "title": "Finding Purpose, and Serving Others",
   "keys": "purpose what is my purpose meaning what should i do with my life no direction don't know what i care about don't know what i want to be bored lost passion calling make a difference volunteer volunteering community service service hours helping others mission trip service trip mentor tutoring coaching younger kids giving back feel useless want to matter",
   "parts": [
    "trunk",
@@ -4693,7 +4693,7 @@ const LC_TOPICS = [
  {
   "id": "own-health",
   "ring": "life",
-  "title": "Taking over your own health",
+  "title": "Taking Over Your Own Health",
   "life": [
    "health",
    "pain",
@@ -4796,7 +4796,7 @@ const LC_TOPICS = [
  {
   "id": "pain-fatigue",
   "ring": "life",
-  "title": "Chronic pain and fatigue",
+  "title": "Chronic Pain and Fatigue",
   "life": [
    "pain",
    "health"
@@ -4895,7 +4895,7 @@ const LC_TOPICS = [
  {
   "id": "iep-transition",
   "ring": "life",
-  "title": "Disability, school, and planning what's next",
+  "title": "Disability, School, and Planning What's Next",
   "life": [
    "learning",
    "autism",
@@ -4998,7 +4998,7 @@ const LC_TOPICS = [
  {
   "id": "deaf-hoh",
   "ring": "life",
-  "title": "Deaf or hard of hearing",
+  "title": "Deaf or Hard of Hearing",
   "life": [
    "hearing"
   ],
@@ -5093,7 +5093,7 @@ const LC_TOPICS = [
  {
   "id": "blind-low-vision",
   "ring": "life",
-  "title": "Blind or low vision",
+  "title": "Blind or Low Vision",
   "life": [
    "seeing"
   ],
@@ -5188,7 +5188,7 @@ const LC_TOPICS = [
  {
   "id": "autistic-hs",
   "ring": "life",
-  "title": "Autistic in high school",
+  "title": "Autistic in High School",
   "life": [
    "autism"
   ],
@@ -5285,7 +5285,7 @@ const LC_TOPICS = [
  {
   "id": "serious-illness",
   "ring": "life",
-  "title": "A serious illness or long treatment as a teen",
+  "title": "A Serious Illness or Long Treatment as a Teen",
   "life": [
    "serious",
    "health"
@@ -5378,7 +5378,7 @@ const LC_TOPICS = [
  {
   "id": "mh-longterm",
   "ring": "life",
-  "title": "Living with a mental health condition long-term",
+  "title": "Living with a Mental Health Condition Long-Term",
   "life": [
    "mind"
   ],
@@ -5479,7 +5479,7 @@ const LC_TOPICS = [
  {
   "id": "young-carer",
   "ring": "life",
-  "title": "Helping care for a parent or sibling",
+  "title": "Helping Care for a Parent or Sibling",
   "life": [
    "close"
   ],
@@ -5577,7 +5577,7 @@ const LC_TOPICS = [
  {
   "id": "faith-body",
   "ring": "life",
-  "title": "Faith questions when your body hurts",
+  "title": "Faith Questions When Your Body Hurts",
   "life": [
    "health",
    "pain",
@@ -5649,7 +5649,7 @@ const LC_TOPICS = [
    "roots|Breath Prayer",
    "roots|Carry Your Questions",
    "roots|What Holds Me Up",
-   "roots|Talk With a Faith Mentor",
+   "roots|Talk with a Faith Mentor",
    "roots|Quiet Senses"
   ],
   "reach": [

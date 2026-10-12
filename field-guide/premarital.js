@@ -366,7 +366,7 @@ function vSession(c){
     ${s.bridge ? `<h3 style="margin-top:14px">Before Next Time</h3><p>${esc(s.bridge)}</p>` : ''}
     ${(s.btvAreas || []).length ? `<h3 style="margin-top:14px">Before the Vows Areas</h3><div class="pm-tags">${s.btvAreas.map(a => `<span class="pill">${esc(areaName(a))}</span>`).join('')}</div>${talkFor(c, s.btvAreas)}` : ''}
   </div>
-  ${s.safety ? `<div class="card pm-safe"><h3>Time With Each Partner Alone</h3><p>${esc(P.safety.lead || '')}</p><ul class="pm-ul">${lines}</ul></div>` : ''}
+  ${s.safety ? `<div class="card pm-safe"><h3>Time with Each Partner Alone</h3><p>${esc(P.safety.lead || '')}</p><ul class="pm-ul">${lines}</ul></div>` : ''}
   ${s.results ? resultsBlock(c) + tipsBlock(true) : ''}
   ${s.faith ? faithBlock(c) : ''}
   ${s.finish && isEss(c) ? `<div class="card"><h3>Finishing Well</h3><p>${esc(ESS().finish || 'Confirm the hours and present the Certificate of Completion.')}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="cert">Certificate of Completion</button></div></div>${upgradeBlock(c)}` : ''}

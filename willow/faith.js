@@ -23,7 +23,7 @@ const INTAKE = {
     ['changed', `Has your relationship with it changed?`, [['steady', `Steady`], ['stronger', `Stronger`], ['quiet', `Gone quiet`], ['away', `I stepped away`], ['hurt', `It hurt me`], ['complicated', `It's complicated`]]]
   ],
   call: `Is there someone from your faith or community we should call?`,
-  never: `Is there anything we should never do?`,
+  never: `Is there anything we should steer clear of?`,
   neverEx: `"Don't pray over me." "No visits from my old church." "Never remove my garments."`,
   universal: `When someone answers "Not at all" or "Rather not say," Willow uses universal language: meaning, love, legacy, what grounds you.`
 };

@@ -573,28 +573,28 @@
   };
   const SHELF = {
     roots: [
-      ['Contemplative Outreach', 'https://www.contemplativeoutreach.org/', 'Centering prayer and lectio divina, with free guides.'],
+      ['Contemplative Outreach', 'https://www.contemplativeoutreach.org/', 'Centering prayer and lectio divina, with simple guides.'],
       ['The Ignatian Examen', 'https://www.jesuits.org/spirituality/the-ignatian-examen/', 'The five steps of the daily examen.'],
-      ['Awe Walk, Greater Good in Action', 'https://ggia.berkeley.edu/practice/awe_walk', 'A free, research-based awe practice.'],
+      ['Awe Walk, Greater Good in Action', 'https://ggia.berkeley.edu/practice/awe_walk', 'A research-informed awe practice.'],
       ['Awe, by Dacher Keltner', '', 'A book on the science of wonder.'],
       ['The Awakened Brain, by Lisa Miller', '', 'A book on spirituality and resilience.'],
       ['A chaplain or spiritual director', '', 'Ask a local hospital, hospice, or retreat center.']
     ],
     trunk: [
-      ['Values handout, VA Whole Health', 'https://www.va.gov/WHOLEHEALTHLIBRARY/docs/Values.pdf', 'A free guide to naming your values.'],
-      ['Free ACT resources, Russ Harris', 'https://psychwire.com/free-resources/clinical-tools/resource-1gm0b9r/act-made-simple-extra-bits', 'Worksheets on values and meaning.'],
+      ['Values handout, VA Whole Health', 'https://www.va.gov/WHOLEHEALTHLIBRARY/docs/Values.pdf', 'A short guide to naming your values.'],
+      ['ACT resources, Russ Harris', 'https://psychwire.com/free-resources/clinical-tools/resource-1gm0b9r/act-made-simple-extra-bits', 'Worksheets on values and meaning.'],
       ['Michael Steger on meaning', 'http://www.michaelfsteger.com/?page_id=13', 'Research on meaning and purpose.'],
       ["Man's Search for Meaning, by Viktor Frankl", '', 'A classic on meaning through suffering.']
     ],
     bark: [
-      ['Self-compassion practices', 'https://self-compassion.org/', 'Free guided practices from Kristin Neff.'],
+      ['Self-compassion practices', 'https://self-compassion.org/', 'Guided practices from Kristin Neff.'],
       ['Self-Compassion, by Kristin Neff', '', 'A book on being kind to yourself.'],
-      ['ProQOL', 'https://proqol.org/', 'A free self-check for helpers and caregivers.'],
+      ['ProQOL', 'https://proqol.org/', 'A self-check for helpers and caregivers.'],
       ['NAMI Minnesota', 'https://namimn.org/', 'Mental health education and support groups.']
     ],
     branches: [
       ['Commit to Connect', 'https://committoconnect.org/the-surgeon-generals-advisory/', 'Resources on loneliness and connection.'],
-      ['NAMI Minnesota support groups', 'https://namimn.org/', 'Free groups for people and families.'],
+      ['NAMI Minnesota support groups', 'https://namimn.org/', 'Support groups for people and families.'],
       ['Minnesota 211', 'https://www.211unitedway.org/', 'Call 211 to find local groups and help.'],
       ['National Domestic Violence Hotline', 'https://www.thehotline.org/', '1-800-799-7233, or text START to 88788.']
     ],
@@ -605,7 +605,7 @@
       ['SAMHSA National Helpline', 'https://www.samhsa.gov/find-help/helplines/national-helpline', '1-800-662-4357, free and confidential.']
     ],
     fruit: [
-      ['Greater Good in Action', 'https://ggia.berkeley.edu/', 'Free gratitude, hope, and savoring practices.'],
+      ['Greater Good in Action', 'https://ggia.berkeley.edu/', 'Gratitude, hope, and savoring practices.'],
       ['Gratitude Letter', 'https://ggia.berkeley.edu/practice/gratitude_letter', 'Step-by-step instructions.'],
       ['988 Suicide and Crisis Lifeline', 'https://988lifeline.org/', 'Call or text 988, any time.']
     ]

@@ -171,7 +171,7 @@
   function blankVault() { return { v: 1, keys: {}, email: '', stories: { saved: {}, read: {} } }; }
 
   /* ---------- Root Words (GWG BLD 780) ---------- */
-  var ROOT_SRC = '/shared/gg-rootwords.js?v=b782', rootP = null;
+  var ROOT_SRC = '/shared/gg-rootwords.js?v=b788', rootP = null;
   function needRoot() {
     if (window.GGRoot) return Promise.resolve(window.GGRoot);
     if (!rootP) rootP = new Promise(function (ok, no) {
@@ -1046,7 +1046,7 @@
   function lifeGo(fn) {
     if (window.GGLife) return fn();
     var s = document.querySelector('script[data-gglife]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b782'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b788'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { if (window.GGLife) fn(); });
     s.addEventListener('error', function () { toast('That could not load. Check the connection and try again.'); });
   }

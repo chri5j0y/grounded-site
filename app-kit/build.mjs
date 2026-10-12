@@ -1,4 +1,4 @@
-// Grow With Grounded app build: node build.mjs <app>   (grove, maple, aspen, oak, field-guide, or all)
+// Grow With Grounded app build: node build.mjs <app>   (grove, maple, aspen, pine, birch, oak, sequoia, willow, field-guide, or all)
 // Copies only that app's files from the site into apps/<app>/www, adds its config, and writes the
 // Capacitor project files. Nothing here touches the live site. Run from the app-kit folder.
 import fs from 'node:fs'; import path from 'node:path'; import url from 'node:url';

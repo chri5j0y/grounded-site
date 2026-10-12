@@ -12440,12 +12440,12 @@ window.GG_LEARN_GUIDES.pine = {
   {
    "id": "mh-longterm",
    "ring": "life",
-   "title": "Living With a Mental Health Condition Long-Term",
+   "title": "Living with a Mental Health Condition Long-Term",
    "you": {
     "id": "pn-g-mh-longterm-you",
     "guide": "mh-longterm",
     "side": "you",
-    "title": "Living With a Mental Health Condition Long-Term",
+    "title": "Living with a Mental Health Condition Long-Term",
     "sideName": "For You",
     "mins": 3,
     "blurb": "For you, if you live with a mental health condition: recovery is a path, and you get to help steer it.",
@@ -12457,7 +12457,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "title",
       "hero": "pine",
       "eyebrow": "When Life Changes",
-      "h": "Living With a Mental Health Condition Long-Term",
+      "h": "Living with a Mental Health Condition Long-Term",
       "sub": "For You",
       "say": "If you live with a mental health condition, like anxiety, depression, bipolar disorder, OCD, or another one, and it's been part of your life for a while, this is for you."
      },
@@ -12545,7 +12545,7 @@ window.GG_LEARN_GUIDES.pine = {
     "id": "pn-g-mh-longterm-helper",
     "guide": "mh-longterm",
     "side": "helper",
-    "title": "Living With a Mental Health Condition Long-Term",
+    "title": "Living with a Mental Health Condition Long-Term",
     "sideName": "For the Grown-up",
     "mins": 3,
     "blurb": "For the grown-up beside a teen with a long-term mental health condition: stay steady, and help them lead their recovery.",
@@ -12558,7 +12558,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "title",
       "hero": "pine",
       "eyebrow": "When Life Changes",
-      "h": "Living With a Mental Health Condition Long-Term",
+      "h": "Living with a Mental Health Condition Long-Term",
       "sub": "For the Grown-up",
       "say": "This is for the parent, guardian, or other grown-up of a teen who lives with a long-term mental health condition."
      },

@@ -10,7 +10,7 @@ window.GG_LEARN_PAGES = {
  "oak": [
   {
    "id": "ok-pg-baby-memories",
-   "title": "Making Memories With Your Baby",
+   "title": "Making Memories with Your Baby",
    "blurb": "Gentle options for holding, naming, photos, and keepsakes, so you can make the memories you want.",
    "mins": 4,
    "lead": "When a baby dies before birth, at birth, or soon after, the time you have together is precious. These are gentle options, gathered so you can make the memories you want, in your own time. Every choice here is yours, and the people caring for you are there to help.",
@@ -153,7 +153,7 @@ window.GG_LEARN_PAGES = {
      ]
     },
     {
-     "h": "Taking Your Time With Choices",
+     "h": "Taking Your Time with Choices",
      "b": [
       [
        "ul",

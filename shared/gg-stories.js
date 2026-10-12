@@ -9,7 +9,8 @@
    The data file (stories/data.js) sets window.GG_STORIES = {
      v: 1, made: 'YYYY-MM-DD', k: {v, round, folder} (where the locked clips live; the key itself is never here),
      list: [{id, slug, title, sub, col, status: 'posted' | 'early', open, substack, credit, mins, refs (when any),
-             preview: [paragraphs shown to everyone; empty for an Early Preview], full: [paragraphs] only when open}],
+             preview: [paragraphs shown to everyone; empty for an Early Preview], cut: 1 when the preview
+             ends partway through a paragraph (BLD 788), full: [paragraphs] only when open}],
      lock: {iv, ct}: AES-GCM 256 with the stories key of JSON {id: [paragraphs]} for every story that is not open,
      ws: the one wrap salt (16 bytes) shared by every wrap below that carries no salt of its own (BLD 785),
      wraps: [{c, iv, ct}]: the 32 key bytes locked by each code (PBKDF2 SHA-256, 250,000 rounds with the shared salt
@@ -30,6 +31,8 @@
          rawKeyBytes: Uint8Array of the 32 key bytes (a base64 string works too). salt: the shared wrap salt (base64
          or bytes; GGStories.newSalt() makes one). Without a salt it makes an older style wrap {c, salt, iv, ct}.
          c is a short random tag; the person's name, level, and organization stay in the Founder library only.
+     GGStories.previewCut(paras, n) -> {paras, cut}  a locked story's preview (BLD 788): at most about 1,500 characters
+         and 40 percent of the story, whole paragraphs while they fit, else the first paragraph's opening sentences (cut).
      GGStories.newSalt() -> base64 of 16 random bytes
      GGStories.check(code) -> Promise<boolean>  true when the code opens the loaded data.js (nothing is kept)
      GGStories.makeCode() -> 'word-word-word-NN'   three easy words (512 gentle words) and a number from 10 to 99,
@@ -141,7 +144,7 @@
   };
   var TOPICS = ['dying', 'grief', 'faith', 'kids'];
   function topicsOf(t) { return Array.isArray(t) ? TOPICS.filter(function (k) { return t.indexOf(k) >= 0; }) : null; }
-  var THEMES = [['', 'All Stories'], ['dying', 'Dying and saying goodbye'], ['grief', 'Grief and after'], ['faith', 'Faith and doubt'], ['kids', 'Kids and families']];
+  var THEMES = [['', 'All Stories'], ['dying', 'Dying and Saying Goodbye'], ['grief', 'Grief and After'], ['faith', 'Faith and Doubt'], ['kids', 'Kids and Families']];
 
   /* ---------------- small helpers ---------------- */
   function b64(u) { u = u instanceof Uint8Array ? u : new Uint8Array(u); var s = ''; for (var i = 0; i < u.length; i += 8192) s += String.fromCharCode.apply(null, u.subarray(i, i + 8192)); return btoa(s); }
@@ -207,6 +210,20 @@
     return codeKey(code, sb).then(function (k) { return subtle.encrypt({ name: 'AES-GCM', iv: iv }, k, raw); })
       .then(function (ct) { var w = { c: c, iv: b64(iv), ct: b64(new Uint8Array(ct)) }; if (!shared) w.salt = b64(sb); return w; });
   }
+  // The preview everyone sees of a locked story (BLD 788): at most about 1,500 characters and at most 40 percent of the
+  // story. Whole opening paragraphs (up to n, the Vault's count, when it gives one) while they fit; when the first
+  // paragraph alone is past the limit, its opening sentences up to the limit, so a one paragraph story shows only its
+  // opening. Returns {paras, cut} (cut: the last preview paragraph is the start of a longer one).
+  var PV_MAX = 1500, PV_SHARE = 0.4;
+  function previewCut(paras, n) {
+    var P = (paras || []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
+    var lim = Math.min(PV_MAX, Math.floor(P.join('\n\n').length * PV_SHARE)), want = +n > 0 ? +n : P.length, out = [], c = 0, i;
+    for (i = 0; i < P.length && i < want; i++) { var add = (out.length ? 2 : 0) + P[i].length; if (c + add > lim) break; out.push(P[i]); c += add; }
+    if (out.length) return { paras: out, cut: false };
+    var S = sentences(P[0] || ''), part = [], pc = 0;
+    for (i = 0; i < S.length; i++) { var a = (part.length ? 1 : 0) + S[i].length; if (pc + a > lim) break; part.push(S[i]); pc += a; }
+    return { paras: part.length ? [part.join(' ')] : [], cut: part.length > 0 };
+  }
   function newSalt() { return b64(rand(16)); }
   function unwrapOne(w, code) {
     return codeKey(code, unb64(w.salt)).then(function (k) { return subtle.decrypt({ name: 'AES-GCM', iv: unb64(w.iv) }, k, unb64(w.ct)); })
@@ -221,10 +238,11 @@
       if (!s || (s.status !== 'posted' && s.status !== 'early')) return;
       var paras = (s.paras || []).map(function (p) { return String(p).replace(/\s+/g, ' ').trim(); }).filter(Boolean);
       if (!paras.length) return;
-      var open = !!s.open && s.status === 'posted', pn = Math.max(1, Math.min(+s.preview || 1, paras.length > 1 ? paras.length - 1 : 1));
+      var open = !!s.open && s.status === 'posted', pv = previewCut(paras, s.preview);
       var sl = slug(s.title); if (slugs[sl]) sl += '-' + s.id; slugs[sl] = 1;
       var e = { id: String(s.id), slug: sl, title: String(s.title || ''), sub: String(s.sub || ''), col: String(s.col || ''), status: s.status, open: open,
-        substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : paras.slice(0, pn), posted: String(s.postedAt || '') };
+        substack: String(s.substack || ''), credit: String(s.credit || ''), mins: mins(paras), preview: s.status === 'early' ? [] : pv.paras, posted: String(s.postedAt || '') };
+      if (s.status !== 'early' && pv.cut) e.cut = 1; // the preview ends partway through a paragraph
       // refs: reference lines under a story (Read view only, never voiced). alt and draftNote stay in the Vault.
       var tp = topicsOf(s.topics); if (tp) e.topics = tp;
       var refs = (Array.isArray(s.refs) ? s.refs : []).map(function (r) { return String(r).trim(); }).filter(Boolean); if (refs.length) e.refs = refs;
@@ -329,7 +347,7 @@
   function lesson(s, mode, o) {
     o = o || {};
     var P = o.paras || (mode === 'preview' ? (s.preview || []) : paras(s.id)), scenes = [], cur = [], size = 0, eb = o.eyebrow || 'Grounded Stories';
-    scenes.push({ k: 'title', hero: 'page-stories', eyebrow: eb, h: s.title, sub: o.sub != null ? o.sub : (s.sub || ''), beats: [o.opening || LINES.opening], hold: 1 });
+    scenes.push({ k: 'title', hero: 'page-stories', heroNarrow: 'page-stories-narrow', eyebrow: eb, h: s.title, sub: o.sub != null ? o.sub : (s.sub || ''), beats: [o.opening || LINES.opening], hold: 1 });
     function flush() {
       if (!cur.length) return;
       var beats = [], at = [];
@@ -404,7 +422,9 @@
     '.gs-img img,.gs-ban-pic img{display:block;width:100%;height:100%;object-fit:cover;opacity:0;transition:opacity .4s ease;}.gs-img.gs-in img,.gs-ban-pic.gs-in img{opacity:1;}',
     '.gs-ban{margin:0 0 4px;}.gs-ban-pic{display:none;}.gs-ban-img{position:relative;border-radius:16px;overflow:hidden;min-height:clamp(170px,30vw,300px);display:flex;align-items:flex-end;background:#2E2118;margin:4px 0 12px;}',
     '.gs-ban-img .gs-ban-pic{display:block;position:absolute;inset:0;}.gs-ban-img::after{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(20,13,7,.82) 0%,rgba(20,13,7,.45) 45%,rgba(20,13,7,.05) 80%);pointer-events:none;}',
-    '.gs-ban-img .gs-ban-t{position:relative;z-index:1;padding:18px 22px;color:#F6EFE2;}.gs-ban-img .ggl-eb{color:#F2C46A;}.gs-ban-img h1{color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.45);margin:2px 0 0;}',
+    '.gs-ban-img .gs-ban-t{position:relative;z-index:1;padding:18px 22px;color:#F6EFE2;}.gs-ban-img .ggl-eb{color:#F2C46A;}.gs-ov .gs-ban-img h2.gs-rh{color:#FFF8EC;text-shadow:0 2px 12px rgba(0,0,0,.45);margin:2px 0 0;}',
+    // the story title in the story window is an h2 under the page's own h1 (BLD 788), styled as the window's title
+    '.gs-ov h2.gs-rh{font-family:"Cormorant Garamond",serif;font-weight:600;font-size:36px;line-height:1.1;margin:6px 0 8px;}.gs-ov h2.gs-rh:focus{outline:none;}',
     // the perks (BLD 787): the Story Behind the Story, the Monthly Letter, Reflection Cards
     '.gs-rd .gs-note{margin:26px 0 0;padding:18px 20px;border:1px solid var(--ggl-line);border-left:4px solid var(--ggl-acc);border-radius:14px;background:var(--ggl-card);}.gs-rd .gs-note h2{font-family:"Cormorant Garamond",Georgia,serif;font-size:28px;margin:0 0 4px;color:var(--ggl-ink);}',
     '.gs-pcard{display:flex;flex-direction:column;}.gs-pcard h3{margin-top:4px;}.gs-pcard .card-actions{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:auto;padding-top:10px;}.gs-pcard .btn{display:inline-flex;align-items:center;gap:8px;}.gs-pcard .btn svg{width:18px;height:18px;flex:none;}',
@@ -415,7 +435,7 @@
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>';
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
-  var READ_JS = '/read.js?v=b784', LEARN_JS = '/shared/gg-learn.js?v=b787';
+  var READ_JS = '/read.js?v=b784', LEARN_JS = '/shared/gg-learn.js?v=b788';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
   function css() { if (document.getElementById('gs-css')) return; var s = document.createElement('style'); s.id = 'gs-css'; s.textContent = CSS; document.head.appendChild(s); }
   var $ = function (s, r) { return (r || document).querySelector(s); };
@@ -538,7 +558,7 @@
       } else cEl.innerHTML = invite('A printable card each month for members', 'A line from a Grounded Story and a practice to carry it into your week. Join on Substack to receive your member code.', Cs.map(function (c) { return monthLabel(c.month) + ': ' + c.title; }));
     }
   }
-  var PRINT_JS = '/shared/gg-print.js?v=b787', SOURCES_JS = '/shared/gg-sources.js?v=b787';
+  var PRINT_JS = '/shared/gg-print.js?v=b787', SOURCES_JS = '/shared/gg-sources.js?v=b788';
   function warmPrint() { return need(SOURCES_JS, function () { return !!root.GGSources; }).then(function () { return need(PRINT_JS, function () { return !!root.GGPrint; }); }); }
   function cardModel(id) { var c = cardOf(id), t = ((data() || {}).cards || []).filter(function (x) { return x.id === id; })[0]; if (!c || !t) return null; return { month: t.month, line: c.line, story: c.story, practice: c.practice }; }
   function cardAct(g, id, btn) {
@@ -689,7 +709,7 @@
       el.className = 'ggl ggl-app gs-ov'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', 'Grounded Stories: ' + s.title);
       el.style.setProperty('--ggl-acc', '#8B5E1A'); el.style.setProperty('--ggl-bar', '#2E2118'); el.style.setProperty('--ggl-lite', '#E8C98E');
       el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">' + (vk ? 'Back to the Story Vault' : 'Back to Stories') + '</button></div>'
-        + '<div class="ggl-in"><div class="gs-ban' + (imgTag(s, 'gs-ban-pic') ? ' gs-ban-img' : '') + '">' + imgTag(s, 'gs-ban-pic') + '<div class="gs-ban-t"><div class="ggl-eb">' + (s.kind === 'letter' ? 'The Monthly Letter' : s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h1 tabindex="-1">' + esc(s.title) + '</h1></div></div>'
+        + '<div class="ggl-in"><div class="gs-ban' + (imgTag(s, 'gs-ban-pic') ? ' gs-ban-img' : '') + '">' + imgTag(s, 'gs-ban-pic') + '<div class="gs-ban-t"><div class="ggl-eb">' + (s.kind === 'letter' ? 'The Monthly Letter' : s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h2 class="gs-rh" tabindex="-1">' + esc(s.title) + '</h2></div></div>'
         + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (s.kind || full(s.id) ? '.' : ' in full.') + '</p>'
         + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button></div>'
         + '<div class="gs-watch"></div><div class="gs-rdv" hidden></div><div class="gs-codewrap" hidden></div>'
@@ -708,7 +728,7 @@
         else if (b.hasAttribute('data-v')) view(b.getAttribute('data-v'));
       });
       view(v === 'read' ? 'read' : 'watch');
-      var h = $('h1', el); if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
+      var h = $('h2.gs-rh', el); if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
       return true;
     });
   }
@@ -746,7 +766,7 @@
 
   root.GGStories = {
     version: 'b786', lines: LINES, words: WORDS, look: LOOK, topics: TOPICS, themesOf: themesOf,
-    seal: seal, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
+    seal: seal, previewCut: previewCut, makeWrap: makeWrap, newSalt: newSalt, check: check, makeCode: makeCode, normCode: normCode, sentences: sentences, spoken: spoken, slug: slug, mins: mins, creditHtml: creditHtml,
     mount: mount, unlock: unlock, forget: forget, unlocked: unlocked, restore: restore, paras: paras, full: full, keyObj: keyObj, story: story, lesson: lesson, open: open, listen: listen, remember: remember, close: function () { close(); },
     // BLD 787: the Supporter perks and story pictures
     perks: PERKS, monthLabel: monthLabel, note: noteOf, letter: letterParas, card: cardOf, cardModel: cardModel, noteLesson: noteLesson, letterLesson: letterLesson,

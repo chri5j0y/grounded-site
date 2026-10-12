@@ -63,7 +63,7 @@ const LC_TOPICS = [
  {
   "id": "retirement",
   "ring": "purpose",
-  "title": "Retirement: who am I now?",
+  "title": "Retirement: Who Am I Now?",
   "keys": "retirement retired retiring who am i now identity lost my role miss work miss my job bored restless days too long no structure not needed anymore forced retirement early retirement spouse home all day purpose after work",
   "parts": [
    "trunk",
@@ -158,7 +158,7 @@ const LC_TOPICS = [
  {
   "id": "purpose-again",
   "ring": "purpose",
-  "title": "Finding purpose again",
+  "title": "Finding Purpose Again",
   "keys": "purpose meaning no purpose lost my role not needed anymore useless what's the point empty days nothing to do caregiving ended kids grown can't do what i used to burden in the way reason to get up why am i still here",
   "parts": [
    "trunk",
@@ -250,7 +250,7 @@ const LC_TOPICS = [
  {
   "id": "volunteering",
   "ring": "purpose",
-  "title": "Volunteering and serving",
+  "title": "Volunteering and Serving",
   "keys": "volunteer volunteering serve serving give back giving back help others helping out mentor tutor reading buddy foster grandparent senior companion rsvp americorps food shelf hospital library church where to volunteer too old to volunteer too tired said yes to too much worn out",
   "parts": [
    "trunk",
@@ -338,7 +338,7 @@ const LC_TOPICS = [
  {
   "id": "working-longer",
   "ring": "purpose",
-  "title": "Working longer, or going back to work",
+  "title": "Working Longer, or Going Back to Work",
   "keys": "working longer going back to work job after retirement part time job unretire need money fixed income older worker age bias too old to work new job at 70 still working",
   "parts": [
    "trunk",
@@ -427,7 +427,7 @@ const LC_TOPICS = [
  {
   "id": "burden",
   "ring": "purpose",
-  "title": "Feeling like a burden",
+  "title": "Feeling Like a Burden",
   "keys": "burden in the way bother useless dependent needing help asking for help hate to ask independence better off without me guilt nuisance",
   "parts": [
    "trunk",
@@ -519,7 +519,7 @@ const LC_TOPICS = [
  {
   "id": "spouse-death",
   "ring": "loss",
-  "title": "Losing a spouse or partner",
+  "title": "Losing a Spouse or Partner",
   "keys": "widow widower husband died wife died partner died spouse death grief living alone after losing my husband after losing my wife bereaved alone now",
   "parts": [
    "branches",
@@ -610,7 +610,7 @@ const LC_TOPICS = [
  {
   "id": "friend-death",
   "ring": "loss",
-  "title": "Outliving your friends",
+  "title": "Outliving Your Friends",
   "keys": "friend died best friend death grief outliving friends last one left funerals old friends shrinking circle lonely losing friends",
   "parts": [
    "branches",
@@ -704,7 +704,7 @@ const LC_TOPICS = [
  {
   "id": "child-death",
   "ring": "loss",
-  "title": "Losing an adult child",
+  "title": "Losing an Adult Child",
   "keys": "son died daughter died adult child died grown child death grief bereaved parent outliving my child child died before me grandchildren son-in-law daughter-in-law overdose",
   "parts": [
    "roots",
@@ -795,7 +795,7 @@ const LC_TOPICS = [
  {
   "id": "sibling-death",
   "ring": "loss",
-  "title": "Losing a sibling",
+  "title": "Losing a Sibling",
   "keys": "brother died sister died sibling death grief twin last of my family only one left childhood big brother little sister",
   "parts": [
    "branches",
@@ -882,7 +882,7 @@ const LC_TOPICS = [
  {
   "id": "grief-stuck",
   "ring": "loss",
-  "title": "When grief won't ease",
+  "title": "When Grief Won't Ease",
   "keys": "grief stuck prolonged grief complicated grief still grieving years later cant move on cant accept death widow widower miss them every day grief counselor",
   "parts": [
    "bark",
@@ -967,7 +967,7 @@ const LC_TOPICS = [
  {
   "id": "holidays-alone",
   "ring": "loss",
-  "title": "Holidays and anniversaries alone",
+  "title": "Holidays and Anniversaries Alone",
   "keys": "holiday alone christmas thanksgiving hanukkah easter new year birthday anniversary wedding anniversary lonely by myself no family far away widow widower first holiday",
   "parts": [
    "branches",
@@ -1015,7 +1015,7 @@ const LC_TOPICS = [
    "help": [
     "Ask early, and offer a specific time.",
     "Offer a ride to a gathering, a service, or a community meal.",
-    "Let them bring something: a dish, a story, a toast.",
+    "Let them bring something: a dish, a story, a blessing.",
     "Put their hard dates in your own calendar, for years."
    ],
    "you": "You can't fill every empty chair, and you don't have to. One call, one visit, or one invitation matters more than you know. Holidays may stir your own losses too, so be gentle with yourself."
@@ -1052,7 +1052,7 @@ const LC_TOPICS = [
  {
   "id": "pet-death",
   "ring": "loss",
-  "title": "Losing a pet",
+  "title": "Losing a Pet",
   "keys": "pet dog cat bird died death euthanasia put down put to sleep animal companion grief rehome rehoming new home for my pet moving lonely quiet house",
   "parts": [
    "branches",
@@ -1132,7 +1132,7 @@ const LC_TOPICS = [
  {
   "id": "new-diagnosis",
   "ring": "body",
-  "title": "A new diagnosis",
+  "title": "A New Diagnosis",
   "keys": "diagnosis new diagnosis chronic illness long term condition diabetes heart failure copd kidney disease parkinsons arthritis cancer test results doctor appointment questions for the doctor bad news",
   "parts": [
    "leaves",
@@ -1232,7 +1232,7 @@ const LC_TOPICS = [
  {
   "id": "pain",
   "ring": "body",
-  "title": "Living with pain",
+  "title": "Living with Pain",
   "keys": "pain chronic pain ache aches hurting sore arthritis back pain joint pain nerve pain neuropathy hurts every day pain medicine bad days flare cant sleep from pain",
   "parts": [
    "leaves",
@@ -1324,7 +1324,7 @@ const LC_TOPICS = [
  {
   "id": "falls",
   "ring": "body",
-  "title": "After a fall",
+  "title": "After a Fall",
   "keys": "fall fell falling fear of falling afraid to fall unsteady balance dizzy tripped slipped cant get up on the floor broken hip cane walker grab bars rugs home safety steadi matter of balance",
   "parts": [
    "leaves",
@@ -1420,7 +1420,7 @@ const LC_TOPICS = [
  {
   "id": "hearing",
   "ring": "body",
-  "title": "Hearing loss",
+  "title": "Hearing Loss",
   "keys": "hearing loss hard of hearing deaf cant hear hearing aids hearing test audiologist ringing in ears tinnitus captions mumbling turn it up tv too loud phone calls left out of conversation",
   "parts": [
    "branches",
@@ -1511,7 +1511,7 @@ const LC_TOPICS = [
  {
   "id": "vision",
   "ring": "body",
-  "title": "Vision loss",
+  "title": "Vision Loss",
   "keys": "vision loss low vision eyesight losing my sight blind blindness macular degeneration glaucoma cataracts diabetic eyes cant see cant read large print magnifier eye doctor reading the mail",
   "parts": [
    "leaves",
@@ -1603,7 +1603,7 @@ const LC_TOPICS = [
  {
   "id": "driving",
   "ring": "body",
-  "title": "Giving up driving",
+  "title": "Giving Up Driving",
   "keys": "driving stop driving give up driving car keys taking the keys license no car rides getting around transportation independence unsafe driver dad wont stop driving mom driving worried bus",
   "parts": [
    "trunk",
@@ -1693,7 +1693,7 @@ const LC_TOPICS = [
  {
   "id": "hospital",
   "ring": "body",
-  "title": "Surgery, recovery, or a hospital stay",
+  "title": "Surgery, Recovery, or a Hospital Stay",
   "keys": "surgery operation hospital hospital stay recovery recovering discharge going home coming home rehab hip replacement knee replacement heart surgery confused after surgery confusion foggy delirium weak tired home health help at home",
   "parts": [
    "leaves",
@@ -1782,7 +1782,7 @@ const LC_TOPICS = [
  {
   "id": "appetite",
   "ring": "body",
-  "title": "Losing appetite or weight",
+  "title": "Losing Appetite or Weight",
   "keys": "appetite no appetite not hungry losing weight weight loss not eating eating less skipping meals food tastes different cooking for one eating alone thin clothes loose malnutrition protein drinking water dehydrated meals on wheels",
   "parts": [
    "leaves",
@@ -1871,7 +1871,7 @@ const LC_TOPICS = [
  {
   "id": "memory-worry",
   "ring": "mind",
-  "title": "Worried about your memory",
+  "title": "Worried About Your Memory",
   "keys": "memory forgetful forgetting forgetting names losing things misplacing memory loss memory problems dementia alzheimers worried about memory brain fog confused confusion cognitive decline mild cognitive impairment brain health am i getting dementia",
   "parts": [
    "bark",
@@ -1961,7 +1961,7 @@ const LC_TOPICS = [
  {
   "id": "dementia",
   "ring": "mind",
-  "title": "A dementia diagnosis",
+  "title": "A Dementia Diagnosis",
   "keys": "dementia alzheimers diagnosis memory loss diagnosed mild cognitive impairment forgetting planning early stage",
   "parts": [
    "bark",
@@ -2063,7 +2063,7 @@ const LC_TOPICS = [
  {
   "id": "depression",
   "ring": "mind",
-  "title": "Depression in later life",
+  "title": "Depression in Later Life",
   "keys": "depression depressed low mood sad empty flat no interest not myself tired hopeless withdrawn lost interest",
   "parts": [
    "bark",
@@ -2156,7 +2156,7 @@ const LC_TOPICS = [
  {
   "id": "anxiety",
   "ring": "mind",
-  "title": "Worry and anxiety",
+  "title": "Worry and Anxiety",
   "keys": "anxiety worry worried nervous fear restless cant sleep health worries money worries memory worries family worries fear of falling panic",
   "parts": [
    "bark",
@@ -2249,7 +2249,7 @@ const LC_TOPICS = [
  {
   "id": "old-memories",
   "ring": "mind",
-  "title": "When old memories return",
+  "title": "When Old Memories Return",
   "keys": "old memories war memories veteran ptsd flashbacks nightmares trauma past childhood memories coming back combat military service",
   "parts": [
    "bark",
@@ -2342,7 +2342,7 @@ const LC_TOPICS = [
  {
   "id": "moving-home",
   "ring": "home",
-  "title": "Moving from the family home",
+  "title": "Moving From the Family Home",
   "keys": "moving leaving the house selling the house family home moving out where we raised our kids leaving home relocating moving closer to family apartment condo smaller place grief for a house saying goodbye to a home homesick",
   "parts": [
    "roots",
@@ -2437,7 +2437,7 @@ const LC_TOPICS = [
  {
   "id": "downsizing",
   "ring": "home",
-  "title": "Downsizing and letting go of things",
+  "title": "Downsizing and Letting Go of Things",
   "keys": "downsizing decluttering too much stuff sorting belongings letting go of things what to keep heirlooms who gets what the kids dont want it estate sale donate giving away cleaning out the house attic basement keepsakes",
   "parts": [
    "trunk",
@@ -2530,7 +2530,7 @@ const LC_TOPICS = [
  {
   "id": "care-move",
   "ring": "home",
-  "title": "Moving to assisted living or a nursing home",
+  "title": "Moving to Assisted Living or a Nursing Home",
   "keys": "assisted living nursing home memory care long term care facility moving into a home putting mom in a home cant live alone anymore residents rights ombudsman first weeks adjusting new room transitional care rehab stay",
   "parts": [
    "branches",
@@ -2629,7 +2629,7 @@ const LC_TOPICS = [
  {
   "id": "fixed-income",
   "ring": "home",
-  "title": "Money worries on a fixed income",
+  "title": "Money Worries on a Fixed Income",
   "keys": "money worries fixed income social security not enough money cant pay bills rent prices going up running out of money savings gone debt medicine costs food costs heating bill ashamed about money benefits help paying",
   "parts": [
    "bark",
@@ -2726,7 +2726,7 @@ const LC_TOPICS = [
  {
   "id": "scams",
   "ring": "home",
-  "title": "Scams and fraud",
+  "title": "Scams and Fraud",
   "keys": "scam scammed fraud conned tricked lost money gift cards wire transfer grandparent scam grandchild in jail romance scam irs call medicare scam tech support pop up lottery prize sweepstakes phishing identity theft ashamed i was scammed report fraud",
   "parts": [
    "branches",
@@ -2826,7 +2826,7 @@ const LC_TOPICS = [
  {
   "id": "affairs",
   "ring": "home",
-  "title": "Getting your affairs in order",
+  "title": "Getting Your Affairs in Order",
   "keys": "affairs in order will power of attorney health care directive advance directive living will health care agent health care proxy where are my papers important documents funeral wishes estate planning passwords accounts beneficiaries what happens when i die planning ahead",
   "parts": [
    "fruit",
@@ -2930,7 +2930,7 @@ const LC_TOPICS = [
  {
   "id": "spouse-caregiving",
   "ring": "family",
-  "title": "Caring for a spouse or partner",
+  "title": "Caring for a Spouse or Partner",
   "keys": "caregiver caregiving caring for my husband caring for my wife spouse partner sick taking care of him taking care of her exhausted worn out respite break help at home dementia stroke parkinsons cancer tired resentful lonely marriage changed",
   "parts": [
    "branches",
@@ -3115,7 +3115,7 @@ const LC_TOPICS = [
  {
   "id": "raising-grandkids",
   "ring": "family",
-  "title": "Raising grandchildren",
+  "title": "Raising Grandchildren",
   "keys": "raising grandchildren grandfamily grandfamilies kinship care kinship caregiver custody guardianship grandkids live with me raising my grandson raising my granddaughter parent addiction parent in prison parent died foster care relative caregiver tired second time parenting",
   "parts": [
    "branches",
@@ -3215,7 +3215,7 @@ const LC_TOPICS = [
  {
   "id": "estrangement",
   "ring": "family",
-  "title": "Estrangement from an adult child",
+  "title": "Estrangement From an Adult Child",
   "keys": "estranged estrangement adult child not speaking no contact cut off my son wont talk to me my daughter wont talk to me cut me off grandchildren kept from me family rift falling out reconcile reconciliation repair hurt silence",
   "parts": [
    "branches",
@@ -3306,7 +3306,7 @@ const LC_TOPICS = [
  {
   "id": "worry-adult-children",
   "ring": "family",
-  "title": "Worry about adult children",
+  "title": "Worry About Adult Children",
   "keys": "worried about my son worried about my daughter adult child grown children struggling addiction drinking drugs money problems borrowing money divorce marriage trouble lost job mental illness cant sleep worrying about my kids never stop being a parent",
   "parts": [
    "bark",
@@ -3401,7 +3401,7 @@ const LC_TOPICS = [
  {
   "id": "kids-deciding",
   "ring": "family",
-  "title": "When your children start deciding for you",
+  "title": "When Your Children Start Deciding for You",
   "keys": "kids deciding for me children taking over my son my daughter treat me like a child talking over me not listened to independence choices my say health care agent health care proxy power of attorney dignity respect bossy family making decisions",
   "parts": [
    "trunk",
@@ -3499,7 +3499,7 @@ const LC_TOPICS = [
  {
   "id": "new-love",
   "ring": "family",
-  "title": "New love late in life",
+  "title": "New Love Late in Life",
   "keys": "dating again new love boyfriend girlfriend companion romance remarry remarriage falling in love after my wife died after my husband died after divorce widow dating online dating guilt kids dont approve living apart together moving in together second marriage lonely",
   "parts": [
    "branches",
@@ -3591,7 +3591,7 @@ const LC_TOPICS = [
  {
   "id": "gray-divorce",
   "ring": "family",
-  "title": "Divorce late in life",
+  "title": "Divorce Late in Life",
   "keys": "divorce gray divorce grey divorce separated separation after 50 years of marriage husband left wife left ending my marriage alone again starting over who am I money after divorce my parents are divorcing kids taking sides",
   "parts": [
    "bark",
@@ -3686,7 +3686,7 @@ const LC_TOPICS = [
  {
   "id": "elder-abuse",
   "ring": "family",
-  "title": "Abuse or being taken advantage of",
+  "title": "Abuse or Being Taken Advantage Of",
   "keys": "elder abuse abused hurting me hit pushed yelled at threatened scared of my son scared of my daughter caregiver neglect left alone not fed money taken stealing from me financial abuse exploitation power of attorney misuse pressured to sign taken advantage of afraid at home adult protective services report abuse MAARC",
   "parts": [
    "branches",
@@ -3784,7 +3784,7 @@ const LC_TOPICS = [
  {
   "id": "loneliness",
   "ring": "belong",
-  "title": "Loneliness and living alone",
+  "title": "Loneliness and Living Alone",
   "keys": "lonely loneliness alone living alone by myself isolated isolation no one to talk to no friends left quiet house empty house widow widower nobody calls nobody visits weekends long evenings long miss company",
   "parts": [
    "branches",
@@ -3883,7 +3883,7 @@ const LC_TOPICS = [
  {
   "id": "friendship",
   "ring": "belong",
-  "title": "Friendship in later life",
+  "title": "Friendship in Later Life",
   "keys": "friends friendship old friends new friends make friends making friends best friend keep in touch stay in touch friend moved far away friend is sick friend in hospital friend with dementia drifting apart close friend circle of friends company companionship visit a friend call a friend",
   "parts": [
    "branches",
@@ -3983,7 +3983,7 @@ const LC_TOPICS = [
  {
   "id": "veterans",
   "ring": "belong",
-  "title": "Growing older as a veteran",
+  "title": "Growing Older as a Veteran",
   "keys": "veteran veterans military service army navy air force marines coast guard national guard vietnam korea gulf war cold war va benefits agent orange service memories war memories buddies reunion legion vfw cvso pride proud of my service",
   "parts": [
    "trunk",
@@ -4086,7 +4086,7 @@ const LC_TOPICS = [
  {
   "id": "invisible",
   "ring": "belong",
-  "title": "Feeling invisible or written off because of age",
+  "title": "Feeling Invisible or Written Off Because of Age",
   "keys": "invisible ignored overlooked written off talked over talked down to talked about ageism age discrimination too old patronized treated like a child elderspeak honey sweetie doctor talks to my kids not me no one listens not taken seriously old age jokes left out",
   "parts": [
    "trunk",
@@ -4178,7 +4178,7 @@ const LC_TOPICS = [
  {
   "id": "faith-questions",
   "ring": "meaning",
-  "title": "Faith questions late in life",
+  "title": "Faith Questions Late in Life",
   "keys": "faith questions doubt doubts late in life god feels far away where is god why did this happen afraid of what comes after heaven afterlife lost my faith left the church never religious spiritual struggle angry at god prayer feels empty faith deeper now religion old age meaning of my life guilt judgment forgiveness worship can't get to church",
   "parts": [
    "roots",
@@ -4271,7 +4271,7 @@ const LC_TOPICS = [
  {
   "id": "facing-death",
   "ring": "meaning",
-  "title": "Facing death and sharing your wishes",
+  "title": "Facing Death and Sharing Your Wishes",
   "keys": "dying my own death thinking about death afraid to die fear of dying end of life wishes advance directive health care directive living will health care agent health care proxy power of attorney for health care who will speak for me talk with my family about dying hospice palliative care what i want at the end conversation project honoring choices peace about dying",
   "parts": [
    "fruit",
@@ -4372,7 +4372,7 @@ const LC_TOPICS = [
  {
   "id": "regrets",
   "ring": "meaning",
-  "title": "Making peace with regrets",
+  "title": "Making Peace with Regrets",
   "keys": "regret regrets i wish i had should have shouldn't have mistakes my past guilt looking back life review make amends apologize apology say sorry forgive myself self-forgiveness can't undo it too late missed chances bad parent what i did lying awake at night old mistakes estranged ashamed",
   "parts": [
    "trunk",
@@ -4466,7 +4466,7 @@ const LC_TOPICS = [
  {
   "id": "legacy",
   "ring": "meaning",
-  "title": "Leaving a legacy",
+  "title": "Leaving a Legacy",
   "keys": "legacy what will i leave behind be remembered how will they remember me my story life story write my memories record my stories ethical will legacy letter letter to my grandchildren pass on values blessing family history memoir what matters most no children who will remember me meaning of my life wisdom to pass on",
   "parts": [
    "trunk",
@@ -4559,7 +4559,7 @@ const LC_TOPICS = [
  {
   "id": "several-conditions",
   "ring": "life",
-  "title": "Living with several conditions at once",
+  "title": "Living with Several Conditions at Once",
   "life": [
    "health",
    "pain",
@@ -4659,7 +4659,7 @@ const LC_TOPICS = [
  {
   "id": "energy-pacing",
   "ring": "life",
-  "title": "Energy, fatigue, and pacing",
+  "title": "Energy, Fatigue, and Pacing",
   "life": [
    "pain",
    "health",
@@ -4759,7 +4759,7 @@ const LC_TOPICS = [
  {
   "id": "lifelong-disability",
   "ring": "life",
-  "title": "Growing older with a lifelong disability",
+  "title": "Growing Older with a Lifelong Disability",
   "life": [
    "autism",
    "moving",
@@ -4859,7 +4859,7 @@ const LC_TOPICS = [
  {
   "id": "adult-child-disability",
   "ring": "life",
-  "title": "Who will help my adult child? Aging parents of adults with disabilities",
+  "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
   "life": [
    "close",
    "autism"
@@ -4958,7 +4958,7 @@ const LC_TOPICS = [
  {
   "id": "stroke",
   "ring": "life",
-  "title": "After a stroke",
+  "title": "After a Stroke",
   "life": [
    "memory",
    "moving",
@@ -5057,7 +5057,7 @@ const LC_TOPICS = [
  {
   "id": "heart-lung",
   "ring": "life",
-  "title": "Living with heart or lung disease, and oxygen",
+  "title": "Living with Heart or Lung Disease, and Oxygen",
   "life": [
    "health",
    "serious"
