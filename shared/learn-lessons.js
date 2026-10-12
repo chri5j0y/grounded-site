@@ -7598,8 +7598,7 @@ window.GG_LEARN = {
      "blurb": "Looking forward, being thankful, and believing things can get better.",
      "sources": [
       "snyder",
-      "froh",
-      "seligman"
+      "froh"
      ],
      "scenes": [
       {

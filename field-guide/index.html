@@ -787,7 +787,7 @@ async function enter(inner){
   TIER = v2 ? fgTier(inner.tier) : 'staff'; CODEID = v2 ? inner.codeId : 'legacy';
   DATA = fgPartsData(Object.assign(blankData(), inner.data));
   if (inner.data && inner.data[FG_OLD] && !(inner.data.founder && inner.data.founder.saved && inner.data.founder.saved.length)) DATA.founder = inner.data[FG_OLD];
-  delete DATA.founder;
+  delete DATA[FG_OLD]; // the old name only (BLD 788: this line read delete DATA.founder, which dropped the Founder records and every file in Ready to Upload at each unlock)
   DATA.founder = Object.assign({saved:[], draft:null}, DATA.founder || {}); fgFounderNorm(DATA.founder); DATA.orient = Object.assign({lessons:{}, last:null, pass:null, signed:null, staff:null}, DATA.orient || {});
   // Changes made in the Access manager on this device are now live: pick up the new keys.
   // Clears once every file it made is on the site: codes.js (if codes changed) and each library it resealed.
