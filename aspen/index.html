@@ -2079,7 +2079,7 @@ function asNote(part, i, grade){
   (ASL.notes || []).forEach(n => { if (n.part !== part || n.i !== i || (n.grades && !n.grades.includes(String(grade)))) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
   out.ex = asUniq(out.ex); out.tip = asUniq(out.tip); return out;
 }
-function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '')); }
+function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '').concat(asLifeIds().includes('sober') && GGLife.soberSteps ? GGLife.soberSteps('aspen', part) : [])); }
 function asLifeLinesHtml(){
   const L = asLifeUse() ? GGLife.lines('aspen') : []; if (!L.length) return '';
   const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
@@ -2092,11 +2092,18 @@ function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === '
 // other groups. That group shows only here, never twice. Faith-topic guides stay out of Picked for You when Plain
 // wording is set, like the faith guide's part links (guideLinks); they stay in the group, one tap away.
 const AS_LIFE_GROUP = 'Health and Ability', AS_FAITH_GUIDES = ['faith', 'why-me'];
-function asOtherGroups(G){ return (G || guidesData()).groups.filter(g => g.name !== AS_LIFE_GROUP); }
+function asOtherGroups(G){ const gs = (G || guidesData()).groups.filter(g => g.name !== AS_LIFE_GROUP), sob = asSober(); return gs.filter(g => asSoberGroup(g) && sob).map(g => Object.assign({}, g, { name: sob.name })).concat(gs.filter(g => !asSoberGroup(g))); }
+/* Living Sober (GWG BLD 789): the group with key 'sober' (When Someone Drinks or Uses) is low-key. It shows only when it is
+   chosen in the student's Health and Ability, first among the groups; its guides are always found by search and by Picked
+   for You (first there, in stage order). They stay out of the Health and Ability group. */
+const asSoberGroup = g => g.key === 'sober' || (g.topics.length && g.topics.every(t => t.ring === 'sober'));
+const asIsSober = t => t.ring === 'sober' || ((t.life || []).length === 1 && t.life[0] === 'sober');
+function asSober(){ return window.GGLife && GGLife.sober && asLifeIds().includes('sober') ? GGLife.ring('aspen') : null; }
 function asLifeGroups(){
   const all = [], picks = [], ids = asLifeIds(), plain = isPlain(), gs = guidesData().groups;
-  gs.filter(g => g.name === AS_LIFE_GROUP).concat(asOtherGroups()).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
-  return { all, picks };
+  gs.filter(g => g.name === AS_LIFE_GROUP).concat(gs.filter(g => g.name !== AS_LIFE_GROUP)).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { if (!asIsSober(t)) all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
+  const sp = picks.filter(t => t.ring === 'sober' || t.life.includes('sober'));
+  return { all, picks: (sp.length && window.GGLife ? GGLife.order(sp) : sp).concat(picks.filter(t => !sp.includes(t))) };
 }
 function asLifePanel(s){
   if (!window.GGLife) return '';

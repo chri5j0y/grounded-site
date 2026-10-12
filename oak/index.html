@@ -1718,7 +1718,7 @@ function startCheckin(by, forId) {
 // =====================================================================
 // Health and Ability (GWG BLD 756): in the person's own Oak (never the Guide's session view), practices
 // that fit their choice come first with a "Fits You" tag and the adapt line. Nothing is hidden.
-function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '', sober: f.sober || [] }; }
 function lifeFitHtml(key, name) { return window.GGLifeKit && GGLifeKit.fits(lifeTags(key, name)) ? GGLifeKit.fitHtml(lifeTags(key, name).adapt) : ''; }
 function lifeOrder(mode, key, rows) { return mode === 'client' && window.GGLife ? GGLife.order(rows, r => lifeTags(key, r[0])) : rows; }
 function renderGrowthPlanBuilder(mode) {
@@ -3152,7 +3152,7 @@ const LC_TOPICS = (window.OAK_GUIDES || {}).topics || [];
 
 /* ===================== WHEN LIFE CHANGES ===================== */
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self' }, prac: { q: '', ring: 'all', open: null, persp: 'helper' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : { key: k, name: '', color: 'var(--ink-soft)' }); // HA 2: the Health and Ability guides live in ring 'life'
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : k === 'sober' && window.GGLife ? GGLife.ring('oak') : { key: k, name: '', color: 'var(--ink-soft)' }); // HA 2: the Health and Ability guides live in ring 'life'
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 function lcMatches(t, q) {
@@ -3175,7 +3175,7 @@ function renderLC(mode) {
     <input class="lc-search no-print" type="search" placeholder="Search: grief, diagnosis, divorce, burnout, faith..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
-      ${LC_RINGS.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
+      ${lcSoberChip(mode)}${LC_RINGS.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>
     <div id="${mode}-lc-list"></div>
     <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. For guides on talking with children, visit <a class="text-link" href="https://growwithgrounded.com/maple/#life">When Life Changes in Maple</a>.</p>
@@ -3189,8 +3189,10 @@ function lcRenderList(mode) {
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
-  LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
+  const sob = lcSober(mode);
+  if (st.ring === 'sober' && !sob) st.ring = 'all';
+  (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -3207,14 +3209,19 @@ function lcRenderList(mode) {
 }
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    oak/guides.js, and Picked for You at the top of the person's own view when they have made a choice. */
-const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+const LC_LIFE = window.GGLifeKit && GGLifeKit.lifeOnly(LC_TOPICS).length ? GGLifeKit.RING : null;
 function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
 function lcPickedHtml(mode) {
   const ts = mode === 'client' && window.GGLifeKit ? GGLifeKit.picked('oak', LC_TOPICS) : [];
   return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
+/* Living Sober (GWG BLD 789): ring 'sober' is low-key. Its chip and section show only when Living Sober is chosen in
+   Settings (the person's own view); its guides are always found by search and by Picked for You. */
+const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
+function lcSober(mode) { return mode === 'client' && window.GGLifeKit ? GGLifeKit.sober('oak') : null; }
+function lcSoberChip(mode) { const r = lcSober(mode); return r ? `<button class="lc-chip" style="--rc:${r.color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(r.name)}</button>` : ''; }
 function lcLifeRingHtml(mode) {
-  const ts = LC_LIFE ? GGLifeKit.tagged(LC_TOPICS) : [];
+  const ts = LC_LIFE ? GGLifeKit.lifeOnly(LC_TOPICS) : [];
   return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) renderLC('client'); });
