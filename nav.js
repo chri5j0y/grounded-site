@@ -35,7 +35,7 @@
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
     { name: 'Together', items: [
-      { id: 'grove', title: 'The Grove', desc: 'A shared space to grow side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
     ] },
     { name: 'For Families', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
@@ -46,7 +46,7 @@
       { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
-      { id: 'field', title: 'Grounded Field Guide', desc: 'Every Grounded tool and guide in one place, for chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.fieldguide, bg: '#EDE7DA', locked: true }
+      { id: 'field', title: 'Grounded Field Guide', desc: 'For trained Guides: a Guide for every tree and For Guides training, for chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.fieldguide, bg: '#EDE7DA', locked: true }
     ] }
   ];
 
