@@ -7118,8 +7118,8 @@ window.GG_LEARN_GUIDES.birch = {
       "cue": {
        "at": [
         1,
-        2,
-        3
+        1,
+        2
        ]
       }
      },
@@ -11981,7 +11981,7 @@ window.GG_LEARN_GUIDES.birch = {
        "at": [
         1,
         2,
-        3
+        2
        ]
       }
      },

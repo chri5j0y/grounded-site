@@ -5393,9 +5393,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "If you lead a group or a team, ask the people closest to the loss before marking a date. Make joining a choice, never a requirement. And lighten that week, with flexible plans and permission to step away.",
       "cue": {
        "at": [
+        0,
         1,
-        2,
-        3
+        2
        ]
       }
      },
@@ -7695,10 +7695,10 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "If you get stuck on a question, take a balloon breath. Then go on and try the next one. You can come back later if there is time. And say kind words to yourself, like, I can do hard things.",
       "cue": {
        "at": [
+        0,
         1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -8668,9 +8668,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "A change like this has three seasons. First an ending, and endings go better when we say goodbye well. Then a time between, which can feel unsettled, so we keep our gatherings steady. Then a new beginning, with a new leader, and new beginnings need a real welcome and some time.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -8782,9 +8782,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "A change like this has three seasons. First an ending, and endings go better when we say goodbye well. Then a time between, which can feel unsettled, so we keep our gatherings steady. Then a new beginning, with a new leader, and new beginnings need a real welcome and some time.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -9766,9 +9766,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Agree on how you'll talk before you decide what you'll do. Set or renew your group agreements. Then make sure everyone is heard, including the quiet voices that rarely speak in a meeting. Only then decide, with a clear, fair plan for how the decision is made.",
       "cue": {
        "at": [
+        0,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -9874,9 +9874,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Agree on how you'll talk before you decide what you'll do. Set or renew your group agreements. Then make sure everyone is heard, including the quiet voices that rarely speak in a meeting. Only then decide, with a clear, fair plan for how the decision is made.",
       "cue": {
        "at": [
+        0,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -10598,9 +10598,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Plan the ending. Name it weeks ahead, so the last session is never a surprise. Remind people gently each week. And keep the last session mostly about looking back and saying goodbye, not about fitting in more content.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -10700,9 +10700,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Plan the ending. Name it weeks ahead, so the last session is never a surprise. Remind people gently each week. And keep the last session mostly about looking back and saying goodbye, not about fitting in more content.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -11677,9 +11677,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "After we talk, we name a next step, even a small one. We close with a round, one word each, for how we're leaving. And in the days after, we check on each other, especially anyone who seemed to carry a lot.",
       "cue": {
        "at": [
+        0,
         1,
-        2,
-        3
+        2
        ]
       }
      },
@@ -11795,9 +11795,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "After we talk, we name a next step, even a small one. We close with a round, one word each, for how we're leaving. And in the days after, we check on each other, especially anyone who seemed to carry a lot.",
       "cue": {
        "at": [
+        0,
         1,
-        2,
-        3
+        2
        ]
       }
      },
@@ -15466,9 +15466,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Here's a simple rhythm. Right away, a one-minute pause, say the name and hold quiet together. Within a day or two, a short, voluntary debrief focused on support. And weeks later, check in again, because reactions often show up after the busy days pass.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -15587,9 +15587,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "Change has three seasons. First an ending, and it helps to name what we lost. Then a messy middle, when the old way is gone and the new way isn't clear yet, so we steady each other. Then a new start, and we build it together.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -15756,9 +15756,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "The messy middle needs a rhythm. A short team check-in every week, even when there's no news. A shared list of questions, answered openly. And small wins, celebrated as the new shape takes hold.",
       "cue": {
        "at": [
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -15934,9 +15934,9 @@ window.GG_LEARN_GUIDES.grove = {
       "say": "When you tell the team, the family comes first. Make sure they've been told, and ask what they're comfortable having shared. Then tell the team in person and together, before any email, so no one reads it alone at their desk. And have support ready, the employee assistance program, and a chaplain or grief support if you have one.",
       "cue": {
        "at": [
+        0,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -18592,10 +18592,10 @@ var V = [
      "say": "When a teammate tells you, thank them for trusting you. Listen, and let them lead. Ask what would help at work right now, like a schedule for appointments or a quieter week. Then point to help, the employee assistance program and human resources.",
      "cue": {
       "at": [
+       0,
        1,
        2,
-       3,
-       4
+       3
       ]
      }
     },
