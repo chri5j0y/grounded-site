@@ -1892,7 +1892,7 @@ function ringDetail(s, i, grown){
       flags.forEach(f => {
         const said = `${name} answered "${esc(f.ans)}" to "${esc(f.q)}"`;
         if (f.type === 'bully') h += `<p>${said}. Listen first and ask what has been happening. Save any messages, then work with the school. <a href="#" onclick="go('guide',{id:'bullying'});return false">Read the bullying guide</a></p>`;
-        if (f.type === 'alone') h += `<p>${said}. Extra closeness this week, like one-on-one time, a walk, or a drive together, can make a real difference. <a href="#" onclick="go('guide',{id:'leftout'});return false">Read the Being left out guide</a></p>`;
+        if (f.type === 'alone') h += `<p>${said}. Extra closeness this week, like one-on-one time, a walk, or a drive together, can make a real difference. <a href="#" onclick="go('guide',{id:'leftout'});return false">Read the Being Left Out guide</a></p>`;
         if (f.type === 'hope') h += `<p>${said}. Most of the time this means a student feels worn out or sad, but please ask gently how they are feeling. If they ever talk about wanting to die or hurting themselves, call or text 988 any time, or call 911 in an emergency.</p>`;
       });
       h += `</div>`;
