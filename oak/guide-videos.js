@@ -5693,9 +5693,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "A treatable illness, not a moral failure.",
+"h": "Healing is real.",
 "sub": "Recovery is possible, and it often takes more than one try.",
-"say": "Here is the first thing to know. Addiction is a treatable illness, not a moral failure. A person with a substance use disorder is still a whole person, with worth and a future. Recovery is possible. For many people, it takes more than one try."
+"say": "Here is the first thing to know. Drinking and using often begin as a way to numb pain, and healing is real. A person who drinks or uses is a whole person, with worth and a future. Recovery is possible. For many people, it takes more than one try."
 },
 {
 "k": "points",
@@ -5724,7 +5724,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Guilt points toward repair. Shame pulls toward hiding.",
 "sub": "You are worth helping, today.",
-"say": "It helps to know the difference between guilt and shame. Guilt says, I did something I regret, and I can work to make it right. Shame says, I am the problem. Guilt can point you toward repair. Shame tends to pull people into hiding, and hiding feeds the illness. You are worth helping, today, just as you are."
+"say": "It helps to know the difference between guilt and shame. Guilt says, I did something I regret, and I can work to make it right. Shame says, I am the problem. Guilt can point you toward repair. Shame tends to pull people into hiding, and hiding feeds the struggle. You are worth helping, today, just as you are."
 },
 {
 "k": "points",
@@ -5739,15 +5739,15 @@ window.GG_LEARN_GUIDES.oak = {
 "Honestly, about what is going on"
 ],
 [
-"Find a recovery meeting",
-"In person or online"
+"Find support that fits",
+"A group, therapy, or treatment"
 ],
 [
 "Tell one person",
 "Someone safe and steady"
 ]
 ],
-"say": "Here are some first steps. Call the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on. Find a recovery meeting or support group, in person or online. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
+"say": "Here are some first steps. Call the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
 },
 {
 "k": "big",
@@ -5791,7 +5791,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "A slip is not the end of recovery.",
 "body": "Return to use is part of many recoveries. Reach out the same day.",
-"say": "If you slip, or return to use, you are not starting from nothing. Relapse is part of many recoveries. What you learned is still yours. Reach out the same day, to your sponsor, your group, your doctor, or the helpline, and take the next step. You can tell yourself, a slip is not the end of my recovery."
+"say": "If you slip, or return to use, you are not starting from nothing. A return to use is part of many recoveries. What you learned is still yours. Reach out the same day, to your sponsor, your group, your doctor, or the helpline, and take the next step. You can tell yourself, a slip is not the end of my recovery."
 },
 {
 "k": "card",
@@ -5822,7 +5822,7 @@ window.GG_LEARN_GUIDES.oak = {
 "eyebrow": "When Life Changes",
 "h": "Addiction and Recovery",
 "sub": "For the Helper",
-"say": "This is for the family member or friend who loves someone with a substance use disorder. The worry, the hope, and the heartbreak are real. You matter here too."
+"say": "This is for the family member or friend who loves someone who drinks or uses. The worry, the hope, and the heartbreak are real. You matter here too."
 },
 {
 "k": "big",
@@ -5884,7 +5884,7 @@ window.GG_LEARN_GUIDES.oak = {
 "So you know the options"
 ]
 ],
-"say": "A few things help more than they seem to. Skip shaming and lecturing, which push people into hiding. Let natural consequences land, instead of covering for them. Help in other ways, like a ride to a meeting, rather than with money that can feed the illness. And learn about recovery options, so you're ready when they are."
+"say": "A few things help more than they seem to. Skip shaming and lecturing, which push people into hiding. Let natural consequences land, instead of covering for them. Help in other ways, like a ride to a meeting, rather than with money that can feed the drinking or using. And learn about recovery options, so you're ready when they are."
 },
 {
 "k": "flow",
@@ -17937,3 +17937,2756 @@ window.GG_LEARN_GUIDES.oak = {
 ];
   V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); }); })();
 /* HA2 videos end */
+/* Living Sober videos start, GWG BLD 789: For You and For the Helper videos for the eleven Living Sober guides, in their own ring
+   (a low-key Learn track: listed only when Living Sober is chosen). Generated from patches/bld789/O in grounded-workshop by gen.py. */
+(function () { var O = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES.oak; if (!O) return;
+  if (!O.rings.some(function (r) { return r[0] === 'sober'; })) O.rings.push(['sober', 'Living Sober']);
+  var V = [
+ {
+  "id": "sober-change",
+  "ring": "sober",
+  "title": "Thinking About a Change",
+  "you": {
+   "id": "ok-g-sober-change-you",
+   "guide": "sober-change",
+   "side": "you",
+   "title": "Thinking About a Change",
+   "sideName": "For You",
+   "mins": 5,
+   "sources": [
+    "rollnick08",
+    "asamaw"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Thinking About a Change",
+     "sub": "For You",
+     "say": "If you've been wondering about your drinking or using, even a little, this is for you. Wondering is a strong place to start, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Wondering is a beginning.",
+     "sub": "You choose what change looks like.",
+     "say": "Many people wonder for a long time before they say it out loud. Maybe the mornings are harder. Maybe someone you love said something. Maybe it's a quiet feeling that it's time. That feeling deserves to be heard. You get to decide what change looks like for you."
+    },
+    {
+     "k": "points",
+     "h": "Two sides, both real",
+     "items": [
+      [
+       "Part of you wants change",
+       "Sleep, health, your people"
+      ],
+      [
+       "Part of you wants it to stay",
+       "Comfort, habit, friends"
+      ],
+      [
+       "Both can be heard",
+       "Without a verdict"
+      ]
+     ],
+     "say": "Mixed feelings are normal. Part of you wants change: better sleep, clearer mornings, more of yourself for the people you love. Part of you wants things to stay, because it has comforted you, or because it's woven into your friendships. Both sides can be heard, without a verdict.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "What does it do for you?",
+     "body": "And what does it cost you?",
+     "say": "Here is a question that helps. What does drinking or using do for you? Maybe it quiets worry, eases pain, or helps you feel at ease with people. Those needs are real. Then ask, what does it cost you? Sleep, money, health, time, trust. When you see both clearly, your next step gets clearer too."
+    },
+    {
+     "k": "big",
+     "h": "Picture a good morning.",
+     "sub": "Rested. Clear. Yours.",
+     "say": "Let's try something now. Close your eyes, or soften your gaze. Picture a morning a few months from now, waking up rested and clear. Notice one thing you'd love about that morning, and say it quietly to yourself.",
+     "beats": [
+      "Let's try something now.",
+      "Close your eyes, or soften your gaze.",
+      "Picture a morning a few months from now, waking up rested and clear.",
+      {
+       "t": "Notice one thing you'd love about that morning, and say it quietly to yourself.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "flow",
+     "h": "One small experiment",
+     "steps": [
+      [
+       "Notice",
+       "When, how much, how you feel"
+      ],
+      [
+       "Try",
+       "A few sober days"
+      ],
+      [
+       "Learn",
+       "What got easier, what got harder"
+      ]
+     ],
+     "say": "You can start with one small experiment. For one week, notice when you drink or use, how much, and how you feel before and after. Then try a few sober days, and fill that hour with something that tends your body: a walk, a shower, a real meal. Afterward, ask what got easier, and what got harder. Everything you learn is useful.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Stopping safely",
+     "body": "Daily drinking, or daily pills like Xanax or Valium: talk with a doctor first.",
+     "say": "One thing to know before you stop. If you drink every day, or take sedatives like Xanax or Valium daily, stopping suddenly can be dangerous, and can even cause seizures. Talk with a doctor first. They can help you stop safely, and medical detox is there when it's needed."
+    },
+    {
+     "k": "points",
+     "h": "Every kind of help is welcome",
+     "items": [
+      [
+       "Your doctor",
+       "Honest talk, a safe plan"
+      ],
+      [
+       "A therapist or treatment",
+       "For what sits underneath"
+      ],
+      [
+       "Peer groups",
+       "AA, NA, SMART, Refuge Recovery"
+      ],
+      [
+       "SAMHSA Helpline",
+       "1-800-662-4357, any hour"
+      ]
+     ],
+     "say": "Every kind of help is welcome here. Your doctor, for an honest talk and a safe plan. A therapist or a treatment program, for what sits underneath. Peer groups, like AA, NA, SMART Recovery, or Refuge Recovery, where people walk this together. And the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven, any hour, to hear your options.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "Chris, one of Grounded's founders, has been sober since April 1, 2008.",
+      "\"It felt like I had been asleep for a few hundred years and just woke up.\"",
+      "\"Getting sober was just the beginning.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, has been sober since April first, two thousand eight. For years he drank at home, where no one would notice, and never missed a day of work. When he stopped, he says it felt like he had been asleep for a few hundred years and just woke up. Getting sober, he says, was just the beginning."
+    },
+    {
+     "k": "big",
+     "h": "Wondering is a beginning.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Wondering is a beginning. Small, honest steps still count. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-change-helper",
+   "guide": "sober-change",
+   "side": "helper",
+   "title": "Thinking About a Change",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "rollnick08",
+    "narcanotc"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Thinking About a Change",
+     "sub": "For the Helper",
+     "say": "This is for the partner, friend, or family member of someone who is wondering about their drinking or using. Your steady presence can make it safer for them to be honest."
+    },
+    {
+     "k": "big",
+     "h": "Curiosity opens. Pressure closes.",
+     "say": "People change most when they feel heard. Pressure, lectures, and labels tend to make a person dig in and defend. Steady curiosity helps them think out loud, and hear their own reasons for change."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"Thank you for telling me.\"",
+      "\"What would you like to be different?\"",
+      "\"Whatever you decide, I'm on your side.\""
+     ],
+     "say": "Here are words that help. Thank you for telling me. That took courage. What would you like to be different? And, whatever you decide, I'm on your side.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of labels",
+       "Let them choose their words"
+      ],
+      [
+       "Instead of a lecture",
+       "Ask, then listen"
+      ],
+      [
+       "Instead of deciding for them",
+       "Ask what they want"
+      ]
+     ],
+     "say": "A few trades help. Instead of labels, even as a joke, let them choose their own words. Instead of a lecture, ask a question, then listen. And instead of deciding what their sobriety has to look like, ask what they want.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Reflect both sides.",
+     "body": "Part of you wants a change, and part of you is unsure.",
+     "say": "When you hear mixed feelings, reflect both sides back. It sounds like part of you wants things to change, and part of you is unsure. Hearing both sides said out loud often helps a person lean toward the one they care about most."
+    },
+    {
+     "k": "big",
+     "h": "Practice it once.",
+     "sub": "Gently, out loud.",
+     "say": "Let's practice. Picture the person you love. Take one slow breath. Now say it out loud, gently: part of you wants a change, and part of you is unsure. That makes sense.",
+     "beats": [
+      "Let's practice.",
+      "Picture the person you love.",
+      "Take one slow breath.",
+      {
+       "t": "Now say it out loud, gently: part of you wants a change, and part of you is unsure. That makes sense.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "The safety basics",
+     "body": "Daily drinking or sedatives: a doctor first. Someone won't wake up: 911.",
+     "say": "Know the safety basics. If they drink every day, or take sedatives daily, stopping suddenly can be dangerous, so encourage a doctor's help first. If someone won't wake up, or is breathing very slowly, call nine one one right away. If opioids are part of the picture, keep naloxone, also called Narcan, close by. You can buy it without a prescription."
+    },
+    {
+     "k": "points",
+     "h": "Support for you, too",
+     "items": [
+      [
+       "Your own group",
+       "Al-Anon or Nar-Anon"
+      ],
+      [
+       "Rest and your people",
+       "A life beyond the worry"
+      ],
+      [
+       "SAMHSA Helpline",
+       "For families too"
+      ]
+     ],
+     "say": "Keep tending your own tree. Groups like Al-Anon and Nar-Anon are there for families and friends. Rest, and keep your own people close. And the SAMHSA National Helpline is there for families too.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Steady, curious, and kind.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Their choice is theirs. Your part is to be steady, curious, and kind. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-first-30",
+  "ring": "sober",
+  "title": "The First 30 Days, Safely",
+  "you": {
+   "id": "ok-g-sober-first-30-you",
+   "guide": "sober-first-30",
+   "side": "you",
+   "title": "The First 30 Days, Safely",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "asamaw",
+    "fdabenzo20",
+    "cdcnaloxone"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "The First 30 Days, Safely",
+     "sub": "For You",
+     "say": "If you're in your first days or weeks without drinking or using, this is for you. You've already done something brave, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Safety first.",
+     "sub": "Then one day at a time.",
+     "say": "Let's start with safety, because it matters most right now. If you drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Talk with a doctor today, or call the SAMHSA National Helpline. Medical detox is there to help you through it safely."
+    },
+    {
+     "k": "card",
+     "title": "Know the warning signs.",
+     "body": "Confusion, seeing things, a seizure, a racing heart: call 911.",
+     "say": "Know the warning signs. Confusion. Seeing or hearing things that aren't there. A seizure. A racing heart, or a high fever. Any of these is a nine one one call. And if you used opioids, your body's tolerance drops fast. After even a short break, an old amount can be deadly. Keep naloxone, also called Narcan, close by."
+    },
+    {
+     "k": "points",
+     "h": "Tend your leaves",
+     "items": [
+      [
+       "Water",
+       "Through the whole day"
+      ],
+      [
+       "Real food",
+       "Three simple meals"
+      ],
+      [
+       "Sleep",
+       "It may take weeks to settle"
+      ],
+      [
+       "A daily walk",
+       "Outside, even ten minutes"
+      ]
+     ],
+     "say": "Your body is doing hard work right now, so tend your leaves, the body part of your tree. Water, through the whole day. Real food, three simple meals. Sleep, which may take a few weeks to settle, so keep a steady bedtime. And a walk outside every day, even ten minutes.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Plan the hour.",
+     "body": "The time you used to drink or use.",
+     "say": "Next, plan the hour. Most people have a time of day when the pull is strongest: after work, a lonely evening, the weekend. Name yours. Then fill it ahead of time: a walk, a shower, a meal with someone, a call, a meeting. An hour is easier to fill before it arrives."
+    },
+    {
+     "k": "big",
+     "h": "Ride the wave.",
+     "sub": "In for four. Out for six.",
+     "say": "Feelings you used to numb may arrive all at once. That's your bark, your mind, learning to heal over. When a hard one comes, try this. Breathe in slowly for four. Breathe out for six. Notice where you feel it in your body, and let it rise and fall, like a wave.",
+     "beats": [
+      "Feelings you used to numb may arrive all at once.",
+      "That's your bark, your mind, learning to heal over.",
+      "When a hard one comes, try this.",
+      "Breathe in slowly for four.",
+      "Breathe out for six.",
+      {
+       "t": "Notice where you feel it in your body, and let it rise and fall, like a wave.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Your people",
+     "items": [
+      [
+       "One person",
+       "You can text any hour"
+      ],
+      [
+       "A group",
+       "If you want one"
+      ],
+      [
+       "Your doctor",
+       "On your team"
+      ]
+     ],
+     "say": "This goes better with people. One person you can text any hour. A group, if you want one: AA, NA, SMART Recovery, Refuge Recovery, or another that fits you. And your doctor, on your team. Try saying, I've stopped drinking, and the first weeks are hard. Could you check on me most days this month?",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Living Sober",
+     "lines": [
+      "\"Living sober means that you have decided to face whatever life throws at you.\"",
+      "\"Find new ways to change your state of mind.\"",
+      "\"Live sober because you are worth it.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, has been sober since two thousand eight. He describes living sober as deciding to face whatever life throws at you, without masking your emotions with alcohol. That means learning new ways to change your state of mind when you're in a place you don't want to be. That learning starts now. Live sober, he says, because you are worth it."
+    },
+    {
+     "k": "big",
+     "h": "Today counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Every sober day counts, and today counts. Your body is healing right now. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-first-30-helper",
+   "guide": "sober-first-30",
+   "side": "helper",
+   "title": "The First 30 Days, Safely",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "asamaw",
+    "narcanotc"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "The First 30 Days, Safely",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone in their first days or weeks without drinking or using. Your steady kindness matters a lot right now."
+    },
+    {
+     "k": "big",
+     "h": "Safety first.",
+     "sub": "A doctor, and the warning signs.",
+     "say": "Start with safety. If they drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Encourage a doctor's help, today. Watch for confusion, seeing things, a seizure, a racing heart, or a high fever. Any of these is a nine one one call."
+    },
+    {
+     "k": "card",
+     "title": "Opioids: tolerance drops fast.",
+     "body": "Keep naloxone close. Someone won't wake up: 911.",
+     "say": "If opioids are part of the picture, know this. After even a short break, the body's tolerance drops, and an old amount can be deadly. Keep naloxone, also called Narcan, in the house. You can buy it without a prescription. If someone won't wake up, or is breathing very slowly, call nine one one, and give the naloxone."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"I'm proud of you.\"",
+      "\"What would help today?\"",
+      "\"Want to take a walk?\""
+     ],
+     "say": "Here are words that help. I'm proud of you. What would help today? And, want to take a walk?",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Ways to help",
+     "items": [
+      [
+       "A sober home",
+       "Water, tea, real food"
+      ],
+      [
+       "Evening plans",
+       "When the pull is strong"
+      ],
+      [
+       "Small company",
+       "A walk, a meal, a ride"
+      ]
+     ],
+     "say": "A few practical ways to help. Make home a sober place, stocked with water, tea, sparkling water, and real food. Plan something for the evenings and weekends, when the pull is often strongest. And offer small company: a walk, a meal, a ride to a meeting or an appointment.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "A hard day is part of healing.",
+     "body": "Ask what would help, then listen.",
+     "say": "Expect hard days. Feelings they used to numb may come up fast: anger, grief, worry. A hard day is part of healing. Ask what would help, then listen more than you speak. And skip asking for promises about forever. Today is enough."
+    },
+    {
+     "k": "big",
+     "h": "A breath for you.",
+     "sub": "Support them, and rest.",
+     "say": "Let's take a moment for you. Put a hand on your chest. Breathe in slowly, and let it out longer. Then say quietly: I can support them, and still rest.",
+     "beats": [
+      "Let's take a moment for you.",
+      "Put a hand on your chest.",
+      "Breathe in slowly, and let it out longer.",
+      {
+       "t": "Then say quietly: I can support them, and still rest.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Support for you",
+     "items": [
+      [
+       "Al-Anon or Nar-Anon",
+       "For families and friends"
+      ],
+      [
+       "Rest",
+       "Your own sleep matters"
+      ],
+      [
+       "SAMHSA Helpline",
+       "For families too"
+      ]
+     ],
+     "say": "The first month can be intense for the whole family. Groups like Al-Anon and Nar-Anon are there for you. Your own sleep and rest matter. And the SAMHSA National Helpline is there for families too.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Steady and kind, one day at a time.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Their sobriety is theirs. Your steady kindness is a gift, one day at a time. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-first-year",
+  "ring": "sober",
+  "title": "Your First Year Sober",
+  "you": {
+   "id": "ok-g-sober-first-year-you",
+   "guide": "sober-first-year",
+   "side": "you",
+   "title": "Your First Year Sober",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "dennis07",
+    "samhsarec"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Your First Year Sober",
+     "sub": "For You",
+     "say": "If you're somewhere in your first year sober, this is for you. Every month you've kept is real, and we're with you for the rest of the year."
+    },
+    {
+     "k": "big",
+     "h": "A year of firsts.",
+     "sub": "Holidays, birthdays, hard days, good ones.",
+     "say": "The first year is full of firsts. Your first sober holiday. Your first sober birthday. A wedding, a trip, a hard anniversary, a bad day at work. Each one met sober makes the next one easier. Research finds sobriety tends to grow steadier with time."
+    },
+    {
+     "k": "flow",
+     "h": "Plan each first",
+     "steps": [
+      [
+       "Who",
+       "You'll be with"
+      ],
+      [
+       "What",
+       "You'll drink instead"
+      ],
+      [
+       "How",
+       "You'll leave if you need to"
+      ]
+     ],
+     "say": "So plan each first ahead of time. Who you'll be with, and who knows your plan. What you'll drink instead: sparkling water, tea, something you love. And how you'll leave if you need to, with your own ride. A plan turns a hard day into one you can handle.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Grow the whole tree",
+     "items": [
+      [
+       "Leaves",
+       "Sleep, food, movement, breath"
+      ],
+      [
+       "Bark",
+       "Feelings, named and healed"
+      ],
+      [
+       "Branches",
+       "Your people"
+      ],
+      [
+       "Trunk and fruit",
+       "Meaning and hope"
+      ]
+     ],
+     "say": "Sobriety is more than stopping. It's growing the whole tree. Your leaves, your body: sleep, real food, water, movement, and breath. Your bark, your mind: feelings that were numbed, now named and healed over. Your branches: the people who walk with you. And your trunk and fruit: meaning, and hope for what's growing.",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4,
+       5
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Flat days are part of it.",
+     "body": "Fill the time with something new.",
+     "say": "Some days will feel flat, or boring, or strange. That's common in the first year. Your evenings are yours again, and that can feel empty at first. Fill the time with something new: a class, a trail, a skill for your hands, a way to serve. Purpose grows where the old habit used to be."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "\"I felt like I was asleep for a few hundred years and just woke up.\"",
+      "His first sober Fourth of July.",
+      "The fireworks, for the first time since he was a little kid."
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, remembers his first sober year. He says it felt like he had been asleep for a few hundred years and just woke up. Simple things, like a blanket in the park, became new. And his first sober Fourth of July, he saw the fireworks for the first time since he was a little kid, because for years he had always been blacked out long before the light show."
+    },
+    {
+     "k": "words",
+     "h": "Three good things",
+     "items": [
+      "Something you noticed",
+      "Something you did",
+      "Someone you are glad for"
+     ],
+     "sub": "Say them out loud, or quietly.",
+     "say": "Let's notice the good on purpose. Think of three good things from this week: something you noticed, something you did, and someone you're glad for. Say them out loud, or quietly to yourself.",
+     "beats": [
+      "Let's notice the good on purpose.",
+      "Think of three good things from this week: something you noticed, something you did, and someone you're glad for.",
+      {
+       "t": "Say them out loud, or quietly to yourself.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Celebrate the sober way.",
+     "body": "A meal, sparkling water, a walk, your people.",
+     "say": "Mark your milestones. Thirty days, six months, a year. Celebrate the sober way: a favorite meal, sparkling water or tea, a walk somewhere beautiful, a blessing, and people who are proud of you. And if cravings grow, or you slip, reach out the same day. One hard day is one day."
+    },
+    {
+     "k": "big",
+     "h": "Growing, one season at a time.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You're growing, one season at a time. Keep tending the whole tree. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-first-year-helper",
+   "guide": "sober-first-year",
+   "side": "helper",
+   "title": "Your First Year Sober",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "samhsarec"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Your First Year Sober",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone in their first year sober. You get a front row seat to real growth, and your steady company is part of it."
+    },
+    {
+     "k": "big",
+     "h": "Ordinary company helps most.",
+     "sub": "More than big speeches.",
+     "say": "In the first year, many people swing between bright days and flat ones. They may feel unsure who they are without the old habit. Feelings that were numbed for years can surface now. What helps most is steady, ordinary company: meals, walks, plans, and kindness that keeps showing up."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"I love seeing you like this.\"",
+      "\"What would make this holiday easier?\"",
+      "\"Want to celebrate? Your choice how.\""
+     ],
+     "say": "Here are words that help. I love seeing you like this. What would make this holiday easier for you? And, want to celebrate your six months? Your choice how.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of watching every move",
+       "Trust, and ask"
+      ],
+      [
+       "Instead of the same old gatherings",
+       "Plan new ones together"
+      ],
+      [
+       "Instead of old mistakes",
+       "Notice today's growth"
+      ]
+     ],
+     "say": "A few trades help. Instead of watching every move, trust them, and ask how they're doing. Instead of the same old gatherings the same old way, plan new ones together. And instead of bringing up old mistakes when things get tense, notice today's growth out loud.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Sober holidays, together",
+     "body": "Good food, sparkling drinks, music, a walk.",
+     "say": "Holidays and celebrations can be some of the hardest firsts. Plan them together. Good food. Sparkling water, juice, or tea that feels special. Music, games, a walk outside, a blessing at the table. Ask what would make the day easier, and let them leave early if they need to."
+    },
+    {
+     "k": "big",
+     "h": "Notice their growth.",
+     "sub": "Name one thing.",
+     "say": "Let's try this now. Think of the person you love, and one way they've grown this year. Maybe they're more present, more honest, or more themselves. Say it out loud now, the way you'd tell them.",
+     "beats": [
+      "Let's try this now.",
+      "Think of the person you love, and one way they've grown this year.",
+      "Maybe they're more present, more honest, or more themselves.",
+      {
+       "t": "Say it out loud now, the way you'd tell them.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Hope and old worries, both.",
+     "body": "Keep your own support. Enjoy the good days.",
+     "say": "Living beside someone in their first sober year can stir hope and old worries at the same time. Both make sense. Keep your own support, like Al-Anon or Nar-Anon. If they slip, encourage them to reach out the same day, and keep your love steady. And let yourself enjoy the good days, too."
+    },
+    {
+     "k": "big",
+     "h": "Steady company, all year.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Steady company, all year long, is a gift. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-cravings",
+  "ring": "sober",
+  "title": "Cravings and Triggers",
+  "you": {
+   "id": "ok-g-sober-cravings-you",
+   "guide": "sober-cravings",
+   "side": "you",
+   "title": "Cravings and Triggers",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "bowen09",
+    "marlatt85"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Cravings and Triggers",
+     "sub": "For You",
+     "say": "If cravings are pulling at you, out of nowhere or right on schedule, this is for you. Cravings are common in sobriety, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "A signal, never a verdict.",
+     "sub": "Wanting it is part of healing.",
+     "say": "First, a craving is part of healing. Your brain and body learned a pattern over a long time, and they're still learning a new one. A craving is a signal, never a verdict. You can notice it, and choose what comes next."
+    },
+    {
+     "k": "card",
+     "title": "It rises, peaks, and passes.",
+     "body": "Like a wave.",
+     "say": "Here's something research on cravings has found. A craving acts like a wave. It rises, it peaks, and it passes, often within minutes, whether or not you act on it. Each time you ride one without acting on it, the next one tends to be a little smaller."
+    },
+    {
+     "k": "big",
+     "h": "Ride the wave.",
+     "sub": "Notice it. Breathe. Let it pass.",
+     "say": "Let's ride one together now. Think of a time you felt a pull, and notice where it shows up in your body: your chest, your hands, your mouth. Breathe in slowly. Breathe out slower. Watch it like a wave, rising and falling, and stay on top of it.",
+     "beats": [
+      "Let's ride one together now.",
+      "Think of a time you felt a pull, and notice where it shows up in your body: your chest, your hands, your mouth.",
+      "Breathe in slowly.",
+      "Breathe out slower.",
+      {
+       "t": "Watch it like a wave, rising and falling, and stay on top of it.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Know your triggers",
+     "items": [
+      [
+       "People and places",
+       "Old friends, the bar, the store aisle"
+      ],
+      [
+       "Times",
+       "Friday night, payday, after work"
+      ],
+      [
+       "Feelings",
+       "Stress, loneliness, celebration"
+      ],
+      [
+       "Your body",
+       "Hungry, angry, lonely, tired"
+      ]
+     ],
+     "say": "Cravings often have triggers. People and places, like old friends, a bar, or one aisle of the store. Times, like Friday night, payday, or right after work. Feelings, like stress, loneliness, or even celebration. And your body. Ask yourself, am I hungry, angry, lonely, or tired? Tend that need first.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "flow",
+     "h": "A plan for the wave",
+     "steps": [
+      [
+       "Wait",
+       "Twenty minutes"
+      ],
+      [
+       "Move",
+       "A walk, stairs, cold water"
+      ],
+      [
+       "Reach",
+       "Call or text your person"
+      ],
+      [
+       "Leave",
+       "You can always leave"
+      ]
+     ],
+     "say": "Have a plan ready before the wave comes. Wait, and set a timer for twenty minutes. Move your body: a brisk walk, the stairs, cold water on your face. Reach out: call or text your person before the wave peaks. And leave, if you need to. You can always leave.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Norco",
+     "lines": [
+      "\"Have you ever heard of Norco?\"",
+      "He thought of his family who counted on him.",
+      "\"No thanks, I'm good.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, faced a big wave in a dentist's chair. The dentist offered him the same pain pills he had once used. He says the world stood still. Then he thought of his family who counted on him, looked the dentist in the eyes, and said, no thanks, I'm good. He was ready, because he had planned for the pain before he walked in."
+    },
+    {
+     "k": "card",
+     "title": "Plan ahead for pain.",
+     "body": "Tell your doctor and dentist you're sober.",
+     "say": "That's a good reminder. Tell your doctor and your dentist that you're sober, and ask about pain plans that fit you. If cravings keep growing, reach out today, to your doctor, your group, or the SAMHSA National Helpline. For some people, medication for addiction treatment eases cravings. Your doctor can talk it through with you."
+    },
+    {
+     "k": "big",
+     "h": "This is a wave. It will pass.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "This is a wave, and it will pass. You have ridden waves before. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-cravings-helper",
+   "guide": "sober-cravings",
+   "side": "helper",
+   "title": "Cravings and Triggers",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "bowen09"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Cravings and Triggers",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone growing sober who is facing cravings. Your calm company can help a hard moment pass."
+    },
+    {
+     "k": "big",
+     "h": "Telling you is a good sign.",
+     "say": "If someone tells you they're having a craving, take it as a good sign. It means they trust you, and they're choosing honesty over hiding. Many people feel embarrassed to admit a craving. Cravings are common in sobriety, they are part of healing, and they pass."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"Let's ride it out together.\"",
+      "\"Want to take a walk right now?\"",
+      "\"What do you need in the next twenty minutes?\""
+     ],
+     "say": "Here are words that help. Thank you for telling me. Let's ride it out together. Want to take a walk right now? And, what do you need in the next twenty minutes?",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of panic",
+       "Calm company"
+      ],
+      [
+       "Instead of drinks in sight",
+       "A sober home"
+      ],
+      [
+       "Instead of testing them",
+       "Planning together"
+      ]
+     ],
+     "say": "A few trades help. Instead of panic, offer calm company. A craving is a moment to ride, and it passes. Instead of keeping drinks or pills where they'll see them, keep a sober home. And instead of testing them around old triggers, plan ahead together for the hard ones.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "flow",
+     "h": "Twenty minutes, together",
+     "steps": [
+      [
+       "Stay close",
+       "On the phone or in person"
+      ],
+      [
+       "Do something",
+       "A walk, a meal, a drive"
+      ],
+      [
+       "Check in after",
+       "How was that?"
+      ]
+     ],
+     "say": "Most cravings rise and pass within minutes. So stay close for about twenty, on the phone or in person. Do something together: a walk, a meal, a drive somewhere new. Then check in afterward. How was that? What helped?",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice the steady voice.",
+     "sub": "Calm, warm, and plain.",
+     "say": "Let's practice, so the words are ready. Take a slow breath and let your voice settle. Now say it out loud, calm and warm: thank you for telling me. Let's ride it out together.",
+     "beats": [
+      "Let's practice, so the words are ready.",
+      "Take a slow breath and let your voice settle.",
+      {
+       "t": "Now say it out loud, calm and warm: thank you for telling me. Let's ride it out together.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Plan for the known triggers.",
+     "body": "Holidays, payday, medical visits.",
+     "say": "Some triggers can be seen coming: holidays, payday, a family gathering, a surgery, or a dentist visit. Help them plan ahead, including a pain plan with their doctor. If opioids were part of their past, keep naloxone, also called Narcan, in the house. If someone won't wake up, call nine one one."
+    },
+    {
+     "k": "card",
+     "title": "Calm for them, care for you.",
+     "body": "Your own support keeps you steady.",
+     "say": "Hearing about cravings can scare you. That's natural. Keep your own support, like Al-Anon or Nar-Anon, so you can stay calm for them. And the SAMHSA National Helpline is there for families too."
+    },
+    {
+     "k": "big",
+     "h": "Calm company helps the wave pass.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Calm company helps the wave pass. Your part is simple: stay close. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-slip",
+  "ring": "sober",
+  "title": "After a Slip",
+  "you": {
+   "id": "ok-g-sober-slip-you",
+   "guide": "sober-slip",
+   "side": "you",
+   "title": "After a Slip",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "marlatt85",
+    "tangney",
+    "neff",
+    "cdcnaloxone"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "After a Slip",
+     "sub": "For You",
+     "say": "If you drank or used again after a stretch of sobriety, this is for you. You're here, and that matters. We're with you."
+    },
+    {
+     "k": "big",
+     "h": "A moment, never a verdict.",
+     "sub": "Every return to the path counts.",
+     "say": "Here's the first thing to know. A slip is a moment, never a verdict. Sobriety is rarely a straight line. Many people who are sober for years had slips along the way. Every return to the path counts, and you can begin again today."
+    },
+    {
+     "k": "card",
+     "title": "The \"I've blown it\" trap",
+     "body": "One slip, or a long stretch? The next hour decides.",
+     "say": "Watch for one trap. After a slip, a voice often says, I've blown it, so why stop now. Research finds that voice is what turns one slip into a long stretch. The next hour matters more than the last one. Stop where you are, if you can safely, and reach out."
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Opioids: naloxone close. Days of heavy drinking: a doctor.",
+     "say": "Safety comes first. If you used opioids after a break, your tolerance is lower, and an old amount can stop your breathing. Keep naloxone, also called Narcan, close, and stay with someone. If you drank heavily for several days, talk with a doctor before stopping again. If someone won't wake up, call nine one one."
+    },
+    {
+     "k": "flow",
+     "h": "The same day",
+     "steps": [
+      [
+       "Tell one person",
+       "Today"
+      ],
+      [
+       "Tend your body",
+       "Water, food, a shower, sleep"
+      ],
+      [
+       "Reconnect",
+       "Group, doctor, therapist"
+      ]
+     ],
+     "say": "Then, the same day, tell one person. Try, I drank last night, and I want to get right back on track. Tend your body tonight: water, a real meal, a shower, sleep. And reconnect this week, with your group, your doctor, or your therapist.",
+     "cue": {
+      "at": [
+       0,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Speak to yourself like a friend.",
+     "sub": "Hand on your heart.",
+     "say": "Shame says, I am the problem. Guilt says, I did something I regret, and I can make it right. Guilt helps you grow. Shame pulls you into hiding. So let's try something now. Put a hand on your heart. Say quietly, the way you'd say it to a friend: this is a hard moment, and I can begin again today.",
+     "beats": [
+      "Shame says, I am the problem.",
+      "Guilt says, I did something I regret, and I can make it right.",
+      "Guilt helps you grow.",
+      "Shame pulls you into hiding.",
+      "So let's try something now.",
+      "Put a hand on your heart.",
+      {
+       "t": "Say quietly, the way you'd say it to a friend: this is a hard moment, and I can begin again today.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Learn from it kindly",
+     "items": [
+      [
+       "The day",
+       "Sleep, food, feelings, people"
+      ],
+      [
+       "The need",
+       "What were you reaching for?"
+      ],
+      [
+       "One change",
+       "For your plan"
+      ]
+     ],
+     "say": "When you're ready, look back like a kind detective. The day it happened: how you slept and ate, what you felt, who was there. The need underneath: what were you reaching for? Rest, relief, connection? And one change to your plan, based on what you learned.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       4
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "\"Sobriety has not been a straight line.\"",
+      "A few hard battles with pills.",
+      "\"But I did not give up.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, has been sober from alcohol for eighteen years. He says his sobriety has not been a straight line. After a cycling accident broke his hip, he was lost in pain pills for a few weeks. But he did not give up. Everything he had learned was still his, and it is still yours."
+    },
+    {
+     "k": "big",
+     "h": "You can begin again today.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your sober days still count. Everything you learned is still yours. You can begin again today. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-slip-helper",
+   "guide": "sober-slip",
+   "side": "helper",
+   "title": "After a Slip",
+   "sideName": "For the Helper",
+   "mins": 4,
+   "sources": [
+    "marlatt85",
+    "cdcnaloxone"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "After a Slip",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone who drank or used again after a stretch of sobriety. Your first few minutes can help them come back quickly."
+    },
+    {
+     "k": "big",
+     "h": "The first few minutes matter.",
+     "sub": "Shame hides. Welcome returns.",
+     "say": "After a slip, many people feel deep shame, and expect anger or disappointment. Some hide it to protect you. When they're met with welcome, they tend to return quickly. When they're met with shame, they tend to hide. Your first words matter."
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Opioids: naloxone. Days of heavy drinking: a doctor. Won't wake up: 911.",
+     "say": "Check safety first. If opioids were involved, their tolerance is lower, and an old amount can stop their breathing. Keep naloxone, also called Narcan, close, and stay with them. If they drank heavily for days, encourage a doctor before they stop again. If someone won't wake up, call nine one one, and give naloxone."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"Thank you for telling me.\"",
+      "\"What do you need today?\"",
+      "\"Your sober days still count.\""
+     ],
+     "say": "Here are words that help. Thank you for telling me. I'm glad you're here. What do you need today? And, your sober days still count.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of I knew it",
+       "I'm glad you told me"
+      ],
+      [
+       "Instead of counting",
+       "Today"
+      ],
+      [
+       "Instead of silence",
+       "Steady, kind boundaries"
+      ]
+     ],
+     "say": "A few trades help. Instead of I knew this would happen, say I'm glad you told me. Instead of counting every past slip, focus on today. And instead of punishing with silence, keep your boundaries steady and kind.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Steady your own heart first.",
+     "sub": "Then speak.",
+     "say": "A slip can stir your own fear and anger. That makes sense. Let's practice steadying first. Breathe in slowly. Breathe out longer. Now say out loud, warmly: thank you for telling me. I'm glad you're here.",
+     "beats": [
+      "A slip can stir your own fear and anger.",
+      "That makes sense.",
+      "Let's practice steadying first.",
+      "Breathe in slowly.",
+      "Breathe out longer.",
+      {
+       "t": "Now say out loud, warmly: thank you for telling me. I'm glad you're here.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "flow",
+     "h": "Help them reconnect",
+     "steps": [
+      [
+       "Today",
+       "Their person, group, or doctor"
+      ],
+      [
+       "This week",
+       "A look at what happened"
+      ],
+      [
+       "Ongoing",
+       "Your own support"
+      ]
+     ],
+     "say": "Then help them reconnect. Today, with their person, their group, or their doctor. This week, a kind look at what happened and what they needed. And for you, ongoing support of your own, like Al-Anon or Nar-Anon.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If slips keep coming",
+     "body": "More support may help. Every path is welcome.",
+     "say": "If slips keep coming, that's information, and a reason to add support. More help may fit now: a doctor, a treatment program, medication for addiction treatment, a therapist, or a different group. Look at the options together, and call the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven."
+    },
+    {
+     "k": "big",
+     "h": "Every return counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Sobriety is rarely a straight line, and every return to the path counts. Your welcome helps them make it. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-healing",
+  "ring": "sober",
+  "title": "Healing What You Drank Over",
+  "you": {
+   "id": "ok-g-sober-healing-you",
+   "guide": "sober-healing",
+   "side": "you",
+   "title": "Healing What You Drank Over",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "khantzian97",
+    "felitti98",
+    "vanderkolk14",
+    "pennebaker"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Healing What You Drank Over",
+     "sub": "For You",
+     "say": "If you're sober, and finding there's old pain underneath, this is for you. What you feel makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Stopping is a beginning.",
+     "sub": "Healing what's underneath is the path.",
+     "say": "Drinking and using are often how people numbed painful emotions and old hurts. Research finds many people reach for a substance to quiet pain they had no other way to carry. So when the drinking stops, the pain is often still there, waiting. That isn't failure. It's the next part of healing."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Living Sober Is Hard",
+     "lines": [
+      "Storms in life, great and small.",
+      "\"The only disease we have is the dis-ease of painful emotions.\"",
+      "Heal them, and sober life begins."
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, has been sober since two thousand eight. He believes we all go through storms in life, great and small, and gather hurts along the way. Without healthy ways to heal them, we reach for whatever works. In his words, the only disease we have is the dis-ease of painful emotions. Once you see that, you can start finding healthy ways to heal."
+    },
+    {
+     "k": "card",
+     "title": "A little at a time.",
+     "body": "Small parts, honestly faced, add up.",
+     "say": "Here's the good news. You don't have to heal everything at once. Be honest about what you were numbing, and willing to look at it. Then work on one small part at a time. As long as you're moving in the right direction, you're making progress."
+    },
+    {
+     "k": "points",
+     "h": "Mind, body, spirit",
+     "items": [
+      [
+       "Mind",
+       "Breath and full attention"
+      ],
+      [
+       "Body",
+       "A daily walk, a weekly long run"
+      ],
+      [
+       "Spirit",
+       "Write it out"
+      ]
+     ],
+     "say": "Healing works best when it tends the whole person. Mind: a few minutes of breath meditation each day, and giving your full attention to whatever you're doing. Body: a daily walk, and a longer run or hike each week, because stress lives in the body too. Spirit, which here means your feelings: write it out. Putting words to what you feel helps you know what you truly feel.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Write one line.",
+     "sub": "Right now, what am I feeling?",
+     "say": "Let's try it now. Take a pen, or open a note on your phone. Breathe once, slowly. Then write one honest line that starts: right now, I'm feeling.",
+     "beats": [
+      "Let's try it now.",
+      "Take a pen, or open a note on your phone.",
+      "Breathe once, slowly.",
+      {
+       "t": "Then write one honest line that starts: right now, I'm feeling.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Old hurts deserve good help.",
+     "body": "A therapist who works with trauma or grief.",
+     "say": "Some hurts run deep: childhood hurts, trauma, grief that was never grieved. Research finds hard childhood experiences are common among people who later drink or use heavily. Those hurts deserve good help. A therapist who works with trauma or grief can walk with you, at your pace."
+    },
+    {
+     "k": "words",
+     "h": "Things to tell yourself",
+     "items": [
+      "I can heal one small part at a time.",
+      "What I feel can move through me.",
+      "I am growing, and healing is real."
+     ],
+     "say": "Here are some things to tell yourself. I can heal one small part at a time. What I feel can move through me. I am growing, and healing is real.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Healing is real.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You are growing, never broken for good. Healing is real, one small part at a time. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-healing-helper",
+   "guide": "sober-healing",
+   "side": "helper",
+   "title": "Healing What You Drank Over",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "khantzian97",
+    "vanderkolk14"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Healing What You Drank Over",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone who is sober, and now facing the old pain underneath. Your patience is part of their healing."
+    },
+    {
+     "k": "big",
+     "h": "Sober, and still healing.",
+     "sub": "Old pain often surfaces now.",
+     "say": "Many families expect life to feel easy once the drinking stops. Often, it's the opposite for a while. What the drinking quieted, like grief, anger, shame, or old trauma, comes to the surface. That's a sign of healing beginning, even when it looks hard."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"It makes sense old pain would show up now.\"",
+      "\"I'm here to listen.\"",
+      "\"What helps on the heavy days?\""
+     ],
+     "say": "Here are words that help. It makes sense that old pain would show up now. I'm here to listen, whenever you want to talk. And, what helps you most on the heavy days?",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of you should be happy",
+       "This makes sense"
+      ],
+      [
+       "Instead of digging",
+       "Let them lead"
+      ],
+      [
+       "Instead of rushing",
+       "Patience with the pace"
+      ]
+     ],
+     "say": "A few trades help. Instead of you're sober now, so you should be happy, say this makes sense. Instead of digging into their past, let them lead what they share and when. And instead of rushing them toward forgiveness or closure, be patient with the pace. Healing takes the time it takes.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Heal alongside them.",
+     "body": "A walk, a hike, a shared meal.",
+     "say": "You can join the body-level tools. Stress and old hurts live in the body as well as the mind. A walk together, a hike on the weekend, a shared meal, time outdoors. These are simple, and they help. And if they want a therapist, help with the practical parts, like finding names or a ride."
+    },
+    {
+     "k": "big",
+     "h": "Listen with your whole body.",
+     "sub": "Practice once.",
+     "say": "Let's practice listening. Sit back and let your shoulders drop. Picture the person you love, telling you something hard. Breathe slowly, and say out loud the first words you'd offer: thank you for telling me. I'm listening.",
+     "beats": [
+      "Let's practice listening.",
+      "Sit back and let your shoulders drop.",
+      "Picture the person you love, telling you something hard.",
+      {
+       "t": "Breathe slowly, and say out loud the first words you'd offer: thank you for telling me. I'm listening.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Your own healing, too.",
+     "body": "Their healing may stir yours.",
+     "say": "Watching someone heal old hurts can stir your own. Notice what comes up for you. Keep your own support close, like Al-Anon, Nar-Anon, or a therapist of your own. If they ever speak of suicide, call or text nine eight eight together."
+    },
+    {
+     "k": "big",
+     "h": "Patience is part of healing.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Celebrate small signs of healing out loud. Your patience is part of it. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-repair",
+  "ring": "sober",
+  "title": "Repairing Relationships",
+  "you": {
+   "id": "ok-g-sober-repair-you",
+   "guide": "sober-repair",
+   "side": "you",
+   "title": "Repairing Relationships",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "lewicki16",
+    "tangney"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Repairing Relationships",
+     "sub": "For You",
+     "say": "If you're growing sober and want to mend relationships your drinking or using hurt, this is for you. Wanting to make things right is a sign of real growth, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Trust grows back one action at a time.",
+     "sub": "Steady days speak louder than promises.",
+     "say": "Here's the heart of it. Trust grows back the way it left: one action at a time. Promises matter less right now than steady, sober days. Show up on time. Keep your word. Be present. Let your life speak first."
+    },
+    {
+     "k": "card",
+     "title": "Guilt points toward repair.",
+     "body": "Shame pulls toward hiding.",
+     "say": "You may feel deep regret. That's healthy. Guilt says, I did something I regret, and I can make it right. It points you toward repair. Shame says, I am the problem. It pulls you toward hiding. Let guilt guide you, and let shame go."
+    },
+    {
+     "k": "flow",
+     "h": "A real apology",
+     "steps": [
+      [
+       "Name it",
+       "What you did"
+      ],
+      [
+       "See them",
+       "How it affected them"
+      ],
+      [
+       "Repair",
+       "What you'll do now"
+      ]
+     ],
+     "say": "When you're ready to apologize, research finds some parts matter most. Name what you did, plainly, without excuses. See them: say how it affected them, and ask if you've got it right. Then repair: say what you'll do now, and offer to make it right where you can.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "words",
+     "h": "Words you might use",
+     "items": [
+      "\"I hurt you when I was drinking.\"",
+      "\"How did it affect you?\"",
+      "\"I'd like to show you, over time.\""
+     ],
+     "say": "Here are words you might use. I want to make things right with you. I know I hurt you when I was drinking. How did it affect you? I'd like to show you, over time.",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Say one sentence out loud.",
+     "sub": "For one person.",
+     "say": "Let's practice. Think of one person you'd like to make things right with. Picture their face. Now say one honest sentence out loud, as if they were here, starting with: I know I hurt you when.",
+     "beats": [
+      "Let's practice.",
+      "Think of one person you'd like to make things right with.",
+      "Picture their face.",
+      {
+       "t": "Now say one honest sentence out loud, as if they were here, starting with: I know I hurt you when.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Their pace is theirs.",
+     "body": "Some need time. Some need distance.",
+     "say": "Then let each person heal at their own pace. Some will welcome you quickly. Some need time, or distance, and that's their right. Keep showing up in steady ways, and leave the door open. Repair is something you offer, never something you demand."
+    },
+    {
+     "k": "points",
+     "h": "Support for the hard talks",
+     "items": [
+      [
+       "Your group or peer",
+       "Before and after"
+      ],
+      [
+       "A therapist",
+       "For you, or the family"
+      ],
+      [
+       "Your body",
+       "Sleep, a walk, a meal"
+      ]
+     ],
+     "say": "Hard conversations go better with support. Talk with your group or a peer before and after. A therapist, for you or for the whole family, can help everyone be heard. And tend your body on those days: sleep, a walk, a real meal.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Own your past. Live in today.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You can own your past without living in it. Trust grows back one action at a time. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-repair-helper",
+   "guide": "sober-repair",
+   "side": "helper",
+   "title": "Repairing Relationships",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "lewicki16"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Repairing Relationships",
+     "sub": "For the Helper",
+     "say": "This is for the partner, parent, grown child, or friend of someone growing sober who wants to make things right with you. Your feelings and your pace matter here too."
+    },
+    {
+     "k": "big",
+     "h": "You can be open and careful at once.",
+     "say": "When someone you love gets sober and wants to repair things, you may feel hope and old hurt at the same time. Both make sense. You can be open to repair and still take your time. Trust that grows back slowly often grows back strong."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"I see the changes you're making.\"",
+      "\"I need more time, and I'm open to this.\"",
+      "\"Here's what would help me trust again.\""
+     ],
+     "say": "Here are words that help. I see the changes you're making. I need more time, and I'm open to this. And, here's one thing that would help me trust again.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of pretending",
+       "Honest, kind words"
+      ],
+      [
+       "Instead of the past as a weapon",
+       "Today's issue"
+      ],
+      [
+       "Instead of secret tests",
+       "Clear requests"
+      ]
+     ],
+     "say": "A few trades help. Instead of pretending you're fine to keep the peace, use honest, kind words. Instead of using the past as a weapon in every disagreement, stay with today's issue. And instead of testing them in secret, make clear requests.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Name what helps you trust.",
+     "body": "Specific, doable actions.",
+     "say": "It helps to name what would rebuild your trust. Make it specific and doable. Calling if they'll be late. Sharing their plan for a hard event. Paying back money on a schedule. Specific actions give them a way to show you, and give you a way to see it."
+    },
+    {
+     "k": "big",
+     "h": "Name one action.",
+     "sub": "Out loud, for you.",
+     "say": "Let's try it. Take a slow breath. Think of one small action that would help you trust a little more. Say it out loud now: it would help me if you.",
+     "beats": [
+      "Let's try it.",
+      "Take a slow breath.",
+      "Think of one small action that would help you trust a little more.",
+      {
+       "t": "Say it out loud now: it would help me if you.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Your healing counts too.",
+     "body": "Your own support, your own pace.",
+     "say": "Healing the relationship includes healing you. Al-Anon, Nar-Anon, or a therapist of your own can help with what you carry. Family therapy can help you both be heard. And if anyone is ever unsafe at home, call the National Domestic Violence Hotline, or nine one one for danger now."
+    },
+    {
+     "k": "big",
+     "h": "Open, careful, and kind.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You can be open, careful, and kind all at once. Trust can grow back. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-work-friends",
+  "ring": "sober",
+  "title": "Sober at Work and with Friends",
+  "you": {
+   "id": "ok-g-sober-work-friends-you",
+   "guide": "sober-work-friends",
+   "side": "you",
+   "title": "Sober at Work and with Friends",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "litt09"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Sober at Work and with Friends",
+     "sub": "For You",
+     "say": "If you're growing sober and finding your way at work, at parties, and with friends, this is for you. Your choice is a strong one, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Your reasons are yours.",
+     "sub": "You decide what to share.",
+     "say": "First, you decide what to share, and with whom. Some people tell everyone. Some tell a few. Some just say no thanks. All of these are fine. Your reasons are yours, and they're good ones."
+    },
+    {
+     "k": "words",
+     "h": "Lines that work",
+     "items": [
+      "\"No thanks, I'm good.\"",
+      "\"I'm driving.\"",
+      "\"I don't drink.\""
+     ],
+     "say": "Choose your line ahead of time. No thanks, I'm good. I'm driving. Or simply, I don't drink. Say it once, kindly, and change the subject. Most people move on faster than you expect.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "flow",
+     "h": "Plan the event",
+     "steps": [
+      [
+       "Your drink",
+       "In hand, early"
+      ],
+      [
+       "Your person",
+       "Who knows your plan"
+      ],
+      [
+       "Your ride",
+       "And a time to leave"
+      ]
+     ],
+     "say": "For work events, happy hours, and parties, plan ahead. Get your own drink in hand early, sparkling water, tea, or something you love, so fewer people offer. Have one person there who knows your plan. And bring your own ride, with a time to leave. The best part of most events is the first hour anyway.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice your line.",
+     "sub": "Friendly, short, done.",
+     "say": "Let's practice now. Picture someone at a party holding out a drink. Smile, and say your line out loud, friendly and short. Then say one sentence to change the subject.",
+     "beats": [
+      "Let's practice now.",
+      "Picture someone at a party holding out a drink.",
+      "Smile, and say your line out loud, friendly and short.",
+      {
+       "t": "Then say one sentence to change the subject.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Living Sober Is Hard",
+     "lines": [
+      "The phone stops ringing. The invites slow down.",
+      "\"Nobody knows the real reasons why you chose to live sober except you.\"",
+      "\"Live sober because you are worth it.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, remembers how isolating it felt when the phone stopped ringing and the invitations slowed down. He also learned this. Nobody knows the real reasons why you chose to live sober except you. Sobriety was something he was doing for himself. Live sober, he says, because you are worth it."
+    },
+    {
+     "k": "card",
+     "title": "New circles grow.",
+     "body": "Around what you love.",
+     "say": "Some friendships may drift. That can hurt. New ones grow around what you love: a trail, a running group, a class, a team, a faith community, a volunteer crew, a peer group. Research finds that even one new person who supports your sobriety helps you keep it. Invite one person to something sober this week."
+    },
+    {
+     "k": "card",
+     "title": "Support at work",
+     "body": "Confidential help, if you want it.",
+     "say": "At work, you choose who knows. If you'd like confidential support, many employers have an employee assistance program. And if cravings spike around work or social events, reach out to your person, your group, or the SAMHSA National Helpline."
+    },
+    {
+     "k": "big",
+     "h": "The right people will stay.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "The right people will stay, and new ones will come. Your sober life has room for real friendship. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-work-friends-helper",
+   "guide": "sober-work-friends",
+   "side": "helper",
+   "title": "Sober at Work and with Friends",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "litt09"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Sober at Work and with Friends",
+     "sub": "For the Helper",
+     "say": "This is for the friend, coworker, manager, or host of someone growing sober. Your ordinary welcome can be one of the most powerful things they receive."
+    },
+    {
+     "k": "big",
+     "h": "Include them, without fuss.",
+     "say": "People growing sober often feel out of place at gatherings, and lonely when invitations slow down. What helps most is simple. Keep inviting them. Make good drinks easy to find. And keep the talk on them, and on everything else in life."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"Want to grab breakfast instead?\"",
+      "\"What would you like to drink?\"",
+      "\"I'm glad you came.\""
+     ],
+     "say": "Here are words that help. Want to grab breakfast instead? What would you like to drink? We have plenty. And, I'm glad you came.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of just one",
+       "Offer sparkling water first"
+      ],
+      [
+       "Instead of asking why",
+       "Talk about anything else"
+      ],
+      [
+       "Instead of leaving them out",
+       "Keep inviting"
+      ]
+     ],
+     "say": "A few trades help. Instead of just one won't hurt, offer sparkling water, juice, or tea first. Instead of asking why, talk about anything else. Their reasons are theirs. And instead of leaving them off the invite list, keep inviting. Let them choose.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Host a sober-friendly gathering.",
+     "body": "Food, music, games, the outdoors at the center.",
+     "say": "If you're hosting, put something besides drinks at the center: good food, music, games, a fire pit, a hike, a team activity. Stock sparkling water, juice, and tea, and offer them first. At work, plan some events that happen in daylight, like a lunch, a volunteer day, or a walk."
+    },
+    {
+     "k": "big",
+     "h": "Practice the back-up line.",
+     "sub": "Calm and friendly.",
+     "say": "Sometimes someone pushes. Let's practice backing them up. Picture the moment. Now say it out loud, calm and friendly: they said no thanks. Want to see the garden?",
+     "beats": [
+      "Sometimes someone pushes.",
+      "Let's practice backing them up.",
+      "Picture the moment.",
+      {
+       "t": "Now say it out loud, calm and friendly: they said no thanks. Want to see the garden?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "One sober friend matters.",
+     "body": "Ordinary welcome, kept up.",
+     "say": "Research finds that even one person in someone's circle who supports their sobriety helps them keep it. Ordinary welcome, kept up over time, is enough."
+    },
+    {
+     "k": "card",
+     "title": "If you lead a team",
+     "body": "Privacy, daylight events, confidential help.",
+     "say": "If you manage someone growing sober, keep what they share private, and let them choose who else knows. Point to the employee assistance program for confidential support. Plan some team events around lunch, a walk, or a volunteer day. And judge their work by their work, the same as anyone's."
+    },
+    {
+     "k": "big",
+     "h": "Keep inviting.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Keep inviting. Your welcome matters. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-swap",
+  "ring": "sober",
+  "title": "When Another Habit Takes Its Place",
+  "you": {
+   "id": "ok-g-sober-swap-you",
+   "guide": "sober-swap",
+   "side": "you",
+   "title": "When Another Habit Takes Its Place",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "When Another Habit Takes Its Place",
+     "sub": "For You",
+     "say": "If you've stopped drinking or using, and noticed something else growing in its place, this is for you. Noticing it is a sign of growth, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Anything that changes how you feel.",
+     "sub": "Food, spending, screens, work, even religion.",
+     "say": "Here's something many people discover. When drinking stops, the feelings it covered are still there, and they look for a new place to go. Anything that changes how you feel can become a new way to numb. Food. Spending. Screens. Work. Even religion, when it turns into image or pride."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Living Sober",
+     "lines": [
+      "Overeating: 140 to over 200 pounds.",
+      "Shopping: almost six figures of credit debt.",
+      "Church leadership: \"My ego became drunk.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, lived this. In his early sober years he went from one hundred forty to over two hundred pounds, turning to food for comfort. He built up almost six figures of credit debt, shopping to fill boredom. And he rose quickly as a church leader, until, in his words, his ego became drunk in the place of leadership, and he lost sight of grace. He had to learn each one the hard way."
+    },
+    {
+     "k": "card",
+     "title": "Noticing is growing.",
+     "body": "A swap points back to a feeling.",
+     "say": "If you see yourself in that, take heart. Noticing a swap is a sign of growth. It points back to a feeling that still needs tending: boredom, loneliness, stress, shame. So the question isn't only, how do I stop this? It's, what am I really reaching for?"
+    },
+    {
+     "k": "big",
+     "h": "What am I really reaching for?",
+     "sub": "Name it, quietly.",
+     "say": "Let's try it now. Think of one habit you reach for when you want to feel different. Picture the last time. Breathe once, slowly. Then name, quietly, the feeling you were hoping to change.",
+     "beats": [
+      "Let's try it now.",
+      "Think of one habit you reach for when you want to feel different.",
+      "Picture the last time.",
+      "Breathe once, slowly.",
+      {
+       "t": "Then name, quietly, the feeling you were hoping to change.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Healthy ways to feel better",
+     "items": [
+      [
+       "Move",
+       "A walk, an easy run, a bike ride"
+      ],
+      [
+       "Breathe",
+       "A few minutes of meditation"
+      ],
+      [
+       "Warm and rest",
+       "A sauna or bath, an early night"
+      ],
+      [
+       "Express",
+       "Write it out, music, art"
+      ]
+     ],
+     "say": "Then build a wide toolbox of healthy ways to change how you feel. Move: a daily walk, a run at an easy pace you could talk through, a bike ride. Breathe: a few minutes of meditation in the morning. Warm and rest: a sauna or a hot bath, an early night. Express: write it out, make music, make art. Time among trees counts too.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Help that fits the habit",
+     "body": "A doctor, a financial counselor, a therapist.",
+     "say": "Some swaps need their own help. Eating that feels out of control, or worrying weight changes: talk with your doctor. Growing debt: a reputable nonprofit financial counselor. And a therapist can help with the feelings underneath all of them. Telling one person the truth about the new habit is a strong first step."
+    },
+    {
+     "k": "words",
+     "h": "Things to tell yourself",
+     "items": [
+      "What am I really reaching for?",
+      "I have healthy ways to feel better.",
+      "Noticing is growing."
+     ],
+     "say": "Here are some things to tell yourself. What am I really reaching for? I have healthy ways to feel better. Noticing is growing.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Noticing is growing.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You've changed before, and you can change this too. Noticing is growing. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-swap-helper",
+   "guide": "sober-swap",
+   "side": "helper",
+   "title": "When Another Habit Takes Its Place",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "When Another Habit Takes Its Place",
+     "sub": "For the Helper",
+     "say": "This is for the partner, family member, or friend of someone growing sober who has picked up a new habit in place of the old one. Your calm, kind noticing can help."
+    },
+    {
+     "k": "big",
+     "h": "A new habit, an old feeling.",
+     "say": "When drinking or using stops, the feelings it covered are still there. Many people find a new way to change how they feel: food, spending, screens, work, or a need to look perfect. Seeing it can scare you. It helps to remember that it points back to a feeling, and feelings can be tended."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"You can change this too.\"",
+      "\"What do you think it's helping you with?\"",
+      "\"Want to take a walk instead?\""
+     ],
+     "say": "Here are words that help. You've changed a lot already. You can change this too. What do you think it's helping you with? And, want to take a walk instead?",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of at least it's not drinking",
+       "Take it seriously, kindly"
+      ],
+      [
+       "Instead of shaming",
+       "Curious questions"
+      ],
+      [
+       "Instead of policing",
+       "Shared healthy swaps"
+      ]
+     ],
+     "say": "A few trades help. Instead of at least it's not drinking, take it seriously, and kindly. Instead of shaming about weight, money, or screens, ask curious questions. And instead of policing, like hiding cards or counting bites, offer healthy swaps you can share.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Swaps you can share",
+     "body": "Walks, hikes, real food, unplugged evenings.",
+     "say": "Healthy swaps are easier together. A walk after dinner. A hike on the weekend. Cooking real food together. An unplugged evening with music, a book, or a board game. These change how you both feel, and they grow your connection too."
+    },
+    {
+     "k": "big",
+     "h": "Ask it with curiosity.",
+     "sub": "Practice once.",
+     "say": "Let's practice. Picture the person you love. Let your face soften, and breathe once. Now ask it out loud, with real curiosity: what do you think it's helping you with?",
+     "beats": [
+      "Let's practice.",
+      "Picture the person you love.",
+      "Let your face soften, and breathe once.",
+      {
+       "t": "Now ask it out loud, with real curiosity: what do you think it's helping you with?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Help that fits, and help for you",
+     "body": "A doctor, a financial counselor, your own support.",
+     "say": "Some swaps need their own help: a doctor for eating that feels out of control, a reputable financial counselor for growing debt, a therapist for the feelings underneath. And watching a new habit grow can bring back old fears. Keep your own support close, like Al-Anon or Nar-Anon."
+    },
+    {
+     "k": "big",
+     "h": "Calm, kind noticing.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Calm, kind noticing helps more than worry does. They've changed before, and you've seen it. Small steps still count. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-partner",
+  "ring": "sober",
+  "title": "When Your Partner Drinks or Uses",
+  "you": {
+   "id": "ok-g-sober-partner-you",
+   "guide": "sober-partner",
+   "side": "you",
+   "title": "When Your Partner Drinks or Uses",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "craft",
+    "meyers02"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "When Your Partner Drinks or Uses",
+     "sub": "For You",
+     "say": "If your partner drinks or uses, and it's hurting you, your home, or your family, this is for you. What you feel makes sense, and we're with you."
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Afraid at home? 1-800-799-7233. Danger now: 911.",
+     "say": "Let's start with you. If you ever feel afraid of your partner, or there's any violence, call the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three, and make a safety plan. If there's danger right now, call nine one one. If your partner uses opioids, keep naloxone, also called Narcan, at home."
+    },
+    {
+     "k": "big",
+     "h": "More influence than you think.",
+     "sub": "Calm, warm, steady actions.",
+     "say": "You didn't cause this, and you can't control it. And you have more influence than you might think. Research on an approach for families finds that calm, warm, steady actions help many people see their loved one start treatment, and help the family feel better too."
+    },
+    {
+     "k": "points",
+     "h": "What helps",
+     "items": [
+      [
+       "Make sober time rewarding",
+       "Warm, enjoyable time together"
+      ],
+      [
+       "Step away when they use",
+       "Calmly, without a fight"
+      ],
+      [
+       "Let consequences land",
+       "Instead of covering"
+      ]
+     ],
+     "say": "Here's what helps. Make sober time rewarding: warm, enjoyable time together when they're sober. Step away when they're drinking or using, calmly, without a fight. And let natural consequences land, instead of covering, cleaning up, or making excuses.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "words",
+     "h": "Short, kind, specific",
+     "items": [
+      "\"I love you.\"",
+      "\"When you drink, I feel lonely.\"",
+      "\"I'd love to take a walk with you tonight.\""
+     ],
+     "say": "Then speak in short, kind, specific sentences. Start with love. Say how you feel, starting with I. And ask for something positive. For example: I love you. When you drink, I feel lonely. I'd love to take a walk with you tonight.",
+     "cue": {
+      "at": [
+       4,
+       5,
+       6
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Say it once, kindly.",
+     "sub": "Love, feeling, request.",
+     "say": "Let's practice. Breathe in, and let it out slowly. Now say your own version out loud: I love you. When you drink, I feel. And then, one thing you'd love to do together.",
+     "beats": [
+      "Let's practice.",
+      "Breathe in, and let it out slowly.",
+      "Now say your own version out loud: I love you.",
+      "When you drink, I feel.",
+      {
+       "t": "And then, one thing you'd love to do together.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Watch for a window.",
+     "body": "A calm, sober moment. Options ready.",
+     "say": "Watch for windows: a calm, sober moment, the morning after a hard night, or when they say something is hard. Have treatment information ready. Then ask simply: would you talk to a doctor with me? Whatever the answer, windows come again."
+    },
+    {
+     "k": "points",
+     "h": "Your own tree",
+     "items": [
+      [
+       "Your support",
+       "Al-Anon, Nar-Anon, a therapist"
+      ],
+      [
+       "Your body",
+       "Sleep, food, movement"
+      ],
+      [
+       "Your joys",
+       "Friends, time outdoors"
+      ]
+     ],
+     "say": "And tend your own tree. Your support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a therapist. Your body: sleep, real food, movement. And your joys: friends, time outdoors, the things you love. Your life matters too.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Calm and kind still counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You didn't cause this, you can't cure it, and you can care for yourself. Calm and kind still counts. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-partner-helper",
+   "guide": "sober-partner",
+   "side": "helper",
+   "title": "When Your Partner Drinks or Uses",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "craft"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "When Your Partner Drinks or Uses",
+     "sub": "For the Helper",
+     "say": "This is for the friend, sibling, parent, or neighbor of someone whose partner drinks or uses. Your steady support, with no judgment, can mean more than you know."
+    },
+    {
+     "k": "big",
+     "h": "Steady support, no judgment.",
+     "say": "People in this spot often feel ashamed, protective of their partner, and exhausted. They may defend their partner one minute and break down the next. That's normal. What helps most is a friend who listens without judging either of them."
+    },
+    {
+     "k": "card",
+     "title": "Ask about safety.",
+     "body": "Gently, and privately.",
+     "say": "Ask about safety, gently and privately. Are you safe at home? If they're afraid, share the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three. If there's danger right now, call nine one one. And know that leaving can be the most dangerous time, so a safety plan matters."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"I'm glad you told me.\"",
+      "\"Are you safe at home?\"",
+      "\"What would help you this week?\""
+     ],
+     "say": "Here are words that help. That sounds so hard. I'm glad you told me. Are you safe at home? And, what would help you this week?",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of just leave",
+       "Ask what they want"
+      ],
+      [
+       "Instead of attacking their partner",
+       "Stay with their feelings"
+      ],
+      [
+       "Instead of blame",
+       "You didn't cause this"
+      ]
+     ],
+     "say": "A few trades help. Instead of just leave, ask what they want, and respect that it's their decision. Instead of attacking their partner, stay with their feelings. And instead of any hint of blame, say it plainly: you didn't cause this, and it isn't yours to fix.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice the safety question.",
+     "sub": "Calm and private.",
+     "say": "Let's practice the hardest question, so it comes easily. Let your voice soften. Now say it out loud, calm and private: are you safe at home?",
+     "beats": [
+      "Let's practice the hardest question, so it comes easily.",
+      "Let your voice soften.",
+      {
+       "t": "Now say it out loud, calm and private: are you safe at home?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Help them find their people.",
+     "body": "Al-Anon, Nar-Anon, a therapist, ordinary breaks.",
+     "say": "Help them find their own support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a therapist. Offer ordinary breaks: a walk, a meal, a night away from the worry. And keep your own boundaries, so you can stay steady for the long haul."
+    },
+    {
+     "k": "card",
+     "title": "If opioids are involved",
+     "body": "Naloxone at home. Won't wake up: 911.",
+     "say": "If their partner uses opioids, encourage them to keep naloxone, also called Narcan, at home. It's sold without a prescription, and it reverses an opioid overdose. If someone won't wake up, or is breathing very slowly, call nine one one and give the naloxone."
+    },
+    {
+     "k": "big",
+     "h": "Your steady presence is a gift.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your steady presence is a gift. Keep showing up. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-overdose-grief",
+  "ring": "sober",
+  "title": "Grieving an Overdose",
+  "you": {
+   "id": "ok-g-sober-overdose-grief-you",
+   "guide": "sober-overdose-grief",
+   "side": "you",
+   "title": "Grieving an Overdose",
+   "sideName": "For You",
+   "mins": 4,
+   "sources": [
+    "doka",
+    "feigelman12"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Grieving an Overdose",
+     "sub": "For You",
+     "say": "If someone you love died from an overdose, this is for you. We're so sorry. Your grief is real, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Real grief, for a real life.",
+     "sub": "It deserves the same care as any loss.",
+     "say": "Grief after an overdose is real grief. Their life was real, and so is your love. Research finds that people grieving an overdose often feel their grief is overlooked or judged, and that can make it heavier. It deserves the same care, the same meals, the same kindness, as any other loss."
+    },
+    {
+     "k": "points",
+     "h": "All of it can be true",
+     "items": [
+      [
+       "Sorrow",
+       "And love with nowhere to go"
+      ],
+      [
+       "Guilt",
+       "What-ifs at night"
+      ],
+      [
+       "Anger",
+       "At them, at the drug"
+      ],
+      [
+       "Relief",
+       "That the fear has ended"
+      ]
+     ],
+     "say": "Many feelings can be true at once. Deep sorrow, and love with nowhere to go. Guilt, and what-ifs that circle at night. Anger, at them, at the drug, at a system. And sometimes relief, that the fear has ended, followed by guilt about the relief. None of these makes your grief less.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "What you knew then",
+     "body": "You did what you knew how to do.",
+     "say": "If guilt keeps asking, could I have saved them, try this. You did what you knew how to do, with what you knew then. Addiction is powerful, and love alone can't always reach it. The love you gave them was real, and it still counts."
+    },
+    {
+     "k": "big",
+     "h": "Say their name.",
+     "sub": "And one thing you loved.",
+     "say": "Let's take a moment for them. Breathe in slowly, and let it out. Say their name out loud. Then say one thing you loved about them.",
+     "beats": [
+      "Let's take a moment for them.",
+      "Breathe in slowly, and let it out.",
+      "Say their name out loud.",
+      {
+       "t": "Then say one thing you loved about them.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Your words, your choice",
+     "body": "Honest or private, both are okay.",
+     "say": "You choose how to speak about the cause. Some families say it plainly, hoping to help others. Some keep it private. Both are okay, and you can change your mind later. Either way, telling stories about their whole life, not only the end, helps keep them close."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "Norco",
+     "lines": [
+      "A close friend, lost to an accidental overdose.",
+      "\"I hope my honesty will maybe prevent the next person from an overdose.\""
+     ],
+     "note": "From Chris's notebook",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, lost a close friend to an accidental overdose, a friend he once took pills with. He tells that story honestly now, he says, hoping it might prevent the next overdose. Honest words, when you're ready, can help someone else."
+    },
+    {
+     "k": "points",
+     "h": "People who understand",
+     "items": [
+      [
+       "GRASP",
+       "Grief after a substance passing"
+      ],
+      [
+       "A grief group or therapist",
+       "For the heavy months"
+      ],
+      [
+       "Your own people",
+       "Meals, walks, their name"
+      ]
+     ],
+     "say": "You don't have to carry this alone. GRASP, which stands for Grief Recovery After a Substance Passing, offers groups led by people who've lost someone this way. A grief group or therapist, for the heavy months. And your own people, for meals, walks, and saying their name. If grief ever feels unbearable, call or text nine eight eight.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Love keeps going.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Their life mattered, and so does your grief. Love keeps going. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "ok-g-sober-overdose-grief-helper",
+   "guide": "sober-overdose-grief",
+   "side": "helper",
+   "title": "Grieving an Overdose",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "sources": [
+    "doka"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "oak",
+     "eyebrow": "When Life Changes",
+     "h": "Grieving an Overdose",
+     "sub": "For the Helper",
+     "say": "This is for the friend, neighbor, coworker, or family member of someone grieving an overdose death. Your steady presence can ease a grief that often feels lonely."
+    },
+    {
+     "k": "big",
+     "h": "Grief that can feel lonely.",
+     "say": "People grieving an overdose often feel judged, or that others think the death was deserved. Friends may go quiet, unsure what to say. That silence can make grief heavier. You can help simply by showing up, and saying their person's name."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"I'm so sorry. Tell me about them.\"",
+      "\"Their life mattered.\"",
+      "\"I'll bring dinner Thursday.\""
+     ],
+     "say": "Here are words that help. I'm so sorry. Tell me about them. Their life mattered, and so does your grief. And, I'll bring dinner Thursday. Is that okay?",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of they made their choices",
+       "Their life mattered"
+      ],
+      [
+       "Instead of asking for details",
+       "Ask about their life"
+      ],
+      [
+       "Instead of disappearing",
+       "Show up, even quietly"
+      ]
+     ],
+     "say": "A few trades help. Instead of they made their choices, say their life mattered. Instead of asking for details about how it happened, ask about their life. And instead of disappearing because you don't know what to say, show up anyway, even quietly.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice saying the name.",
+     "sub": "Warm and plain.",
+     "say": "Let's practice something simple and powerful. Think of a name, any name. Breathe once. Now say it out loud, warmly, the way you'd say it to a grieving friend: I've been thinking about him. Tell me about him.",
+     "beats": [
+      "Let's practice something simple and powerful.",
+      "Think of a name, any name.",
+      "Breathe once.",
+      {
+       "t": "Now say it out loud, warmly, the way you'd say it to a grieving friend: I've been thinking about him. Tell me about him.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Practical help, over months",
+     "body": "Meals, errands, rides, the hard dates.",
+     "say": "Offer practical help: meals, errands, rides, childcare. Then keep going, because grief lasts longer than the casseroles. Put the hard dates on your calendar, their birthday, the holidays, the anniversary, and reach out on those days."
+    },
+    {
+     "k": "card",
+     "title": "Watch for safety.",
+     "body": "Suicide thoughts: 988. Opioids nearby: naloxone.",
+     "say": "Keep safety in view. Grief this heavy can bring thoughts of not wanting to live. If you're worried, ask directly, and call or text nine eight eight together. If others in their circle use opioids, encourage naloxone at home. And point them toward GRASP, or a grief group, where people understand."
+    },
+    {
+     "k": "card",
+     "title": "Your own heart, too",
+     "body": "This grief may stir yours.",
+     "say": "Walking with someone through this grief may stir your own losses, or your own fears for someone you love. Take care of your own heart. Talk with someone you trust, and rest. Steady presence over the long months is the gift, and it asks you to keep your own tree tended too."
+    },
+    {
+     "k": "big",
+     "h": "Say their name. Keep showing up.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Say their name. Keep showing up. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ }
+];
+  V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); }); })();
+/* Living Sober videos end, GWG BLD 789 */

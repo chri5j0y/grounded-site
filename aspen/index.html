@@ -2103,7 +2103,7 @@ function asLifeGroups(){
   const all = [], picks = [], ids = asLifeIds(), plain = isPlain(), gs = guidesData().groups;
   gs.filter(g => g.name === AS_LIFE_GROUP).concat(gs.filter(g => g.name !== AS_LIFE_GROUP)).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { if (!asIsSober(t)) all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
   const sp = picks.filter(t => t.ring === 'sober' || t.life.includes('sober'));
-  return { all, picks: (sp.length && window.GGLife ? GGLife.order(sp) : sp).concat(picks.filter(t => !sp.includes(t))) };
+  return { all, picks: (sp.length && window.GGLife ? GGLife.order(sp, null, 'aspen') : sp).concat(picks.filter(t => !sp.includes(t))) };
 }
 function asLifePanel(s){
   if (!window.GGLife) return '';

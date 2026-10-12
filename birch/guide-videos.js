@@ -7427,7 +7427,6 @@ window.GG_LEARN_GUIDES.birch = {
     "blurb": "For the young adult deciding what fits their life: notice the why, plan your answer, and know help is there.",
     "sources": [
      "mtfpanel24",
-     "diforti",
      "deaonepill",
      "narcanotc"
     ],
@@ -7442,7 +7441,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Less drinking. More weed.",
+      "h": "Fewer young adults binge drink.",
       "sub": "You decide what fits your life.",
       "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. Cannabis use is at a record high. So whatever you choose, we're with you, and you're the one who decides."
      },
@@ -7511,21 +7510,16 @@ window.GG_LEARN_GUIDES.birch = {
         "Sold over the counter"
        ],
        [
-        "Strong, daily weed",
-        "Linked to psychosis"
-       ],
-       [
         "Never drive",
         "After drinking or using"
        ]
       ],
-      "say": "A few things to know. A pill that didn't come from a pharmacy can be fake and hold fentanyl, even when it looks real. Naloxone, also called Narcan, reverses an opioid overdose, and it's sold over the counter. Heavy use of strong cannabis is linked with a higher risk of psychosis. And never drive after drinking or using. Call a ride.",
+      "say": "A few things to know. A pill that didn't come from a pharmacy can be fake and hold fentanyl, even when it looks real. Naloxone, also called Narcan, reverses an opioid overdose, and it's sold over the counter. And never drive after drinking or using. Call a ride.",
       "cue": {
        "at": [
         1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
@@ -7640,7 +7634,7 @@ window.GG_LEARN_GUIDES.birch = {
       "steps": [
        [
         "Look together",
-        "A doctor, counseling, a group"
+        "A doctor, therapy, a group"
        ],
        [
         "Let them choose",
@@ -7651,7 +7645,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Say what goes well"
        ]
       ],
-      "say": "When they're ready, look at options together: a doctor, counseling, or a support group. Let them choose the path and the pace. And notice the good days out loud. Say what goes well when they don't use."
+      "say": "When they're ready, look at options together: a doctor, therapy, or a support group. Let them choose the path and the pace. And notice the good days out loud. Say what goes well when they don't use."
      },
      {
       "k": "big",

@@ -3830,9 +3830,9 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        "Don't tell anyone about this.",
        "Go check on your mom.",
-       "Your father is a drunk."
+       "Put-downs about their parent"
       ],
-      "say": "Some words add weight. Don't tell anyone about this, which makes the secret theirs to carry. Go check on your mom, which hands them an adult's job. And your father is a drunk, because they likely still love him. Speak about the illness, not with contempt for the person."
+      "say": "Some words add weight. Don't tell anyone about this, which makes the secret theirs to carry. Go check on your mom, which hands them an adult's job. And put-downs or labels for their parent, because they likely still love them. Speak about the struggle with respect for the person."
      },
      {
       "k": "points",
@@ -6770,7 +6770,7 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Vaping, Drinking, and Drugs",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the high schooler who gets offered things, or wonders about them: you decide, and a plan makes it easier.",
+    "blurb": "For the high schooler who gets offered things, or wonders about them: waiting is the healthy choice, and a plan makes it easier.",
     "sources": [
      "mtf24",
      "deaonepill"
@@ -6887,9 +6887,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "You get to decide.",
+      "h": "Your body is worth protecting.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "You get to decide what goes into your body, and you can change your mind about a choice at any point. A plan makes it easier. The full guide has more, whenever you want it."
+      "say": "You get to decide what goes into your body, and it's worth protecting. For teens, waiting until adulthood is the healthy choice, and a plan makes it easier. The full guide has more, whenever you want it."
      }
     ]
    },

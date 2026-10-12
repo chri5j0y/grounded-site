@@ -3857,12 +3857,12 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "id": "addiction",
 "ring": "mp-health",
-"title": "A Family Member's Addiction",
+"title": "When a Family Member Drinks or Uses",
 "you": {
 "id": "mp-g-addiction-you",
 "guide": "addiction",
 "side": "you",
-"title": "A Family Member's Addiction",
+"title": "When a Family Member Drinks or Uses",
 "sideName": "For You",
 "mins": 3,
 "sources": [
@@ -3880,15 +3880,15 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "title",
 "hero": "maple",
 "eyebrow": "When Life Changes",
-"h": "A Family Member's Addiction",
+"h": "When a Family Member Drinks or Uses",
 "sub": "For You",
-"say": "If someone in your family has an illness called addiction, this is for you. Maybe it's a parent, a grandparent, or a big brother or sister."
+"say": "If someone in your family drinks too much or uses drugs, this is for you. Maybe it's a parent, a grandparent, or a big brother or sister."
 },
 {
 "k": "card",
-"title": "Addiction is an illness.",
-"body": "It makes a body and brain want alcohol or drugs.",
-"say": "Addiction is an illness. It makes a person's body and brain want alcohol or drugs, even when it hurts them. It can make them act different, and that can feel scary. People can get better with help."
+"title": "Grown-ups can heal.",
+"body": "Drinking or drugs can make a body and brain keep wanting more.",
+"say": "Sometimes a grown-up drinks or uses drugs to cover up hurting feelings. After a while, their body and brain keep wanting alcohol or drugs, even when it hurts them. It can make them act different, and that can feel scary. People can heal, with help."
 },
 {
 "k": "words",
@@ -3900,7 +3900,7 @@ window.GG_LEARN_GUIDES.maple = {
 "Sad",
 "Embarrassed"
 ],
-"say": "You might feel scared, mixed up, mad, sad, or embarrassed. Every feeling is okay. Your grown-up still loves you. The illness is not the same as how they feel about you."
+"say": "You might feel scared, mixed up, mad, sad, or embarrassed. Every feeling is okay. Your grown-up still loves you. The drinking is not the same as how they feel about you."
 },
 {
 "k": "big",
@@ -3960,7 +3960,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "You are loved.",
 "sub": "Grown-ups are here to help.",
-"say": "Addiction is a grown-up problem, and grown-ups can get help for it. You are loved, and grown-ups are here to help."
+"say": "Drinking or using too much is a grown-up problem, and grown-ups can get help for it. You are loved, and grown-ups are here to help."
 }
 ],
 "crisis": [
@@ -3972,7 +3972,7 @@ window.GG_LEARN_GUIDES.maple = {
 "id": "mp-g-addiction-helper",
 "guide": "addiction",
 "side": "helper",
-"title": "A Family Member's Addiction",
+"title": "When a Family Member Drinks or Uses",
 "sideName": "For the Grown-up",
 "mins": 5,
 "sources": [
@@ -3990,9 +3990,9 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "title",
 "hero": "maple",
 "eyebrow": "When Life Changes",
-"h": "A Family Member's Addiction",
+"h": "When a Family Member Drinks or Uses",
 "sub": "For the Grown-up",
-"say": "When someone in your family lives with addiction, this is for the grown-up helping a child through it. Maybe the person is your partner, your child's other parent, a grandparent, or you. Thank you for being here. Kids do best with the truth at their level, and a steady grown-up beside them."
+"say": "When someone in your family drinks too much or uses drugs, this is for the grown-up helping a child through it. Maybe the person is your partner, your child's other parent, a grandparent, or you. Thank you for being here. Kids do best with the truth at their level, and a steady grown-up beside them."
 },
 {
 "k": "points",
@@ -4024,17 +4024,17 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "words",
 "h": "The truth at their level",
 "items": [
-"\"Mom has an illness called addiction.\"",
+"\"Mom drinks too much.\"",
 "\"She's getting help.\"",
 "\"You didn't cause it.\""
 ],
-"say": "Kids need the truth at their level, and permission to talk about it. Try this. Mom has an illness called addiction. It makes her body and brain want alcohol even when it hurts her. She's getting help. Say only what is true for your family. Then add the words that lift the weight. You didn't cause it, you can't control it, and you can't cure it. But you can take care of you."
+"say": "Kids need the truth at their level, and permission to talk about it. Try this. Mom drinks too much, and her body and brain keep wanting alcohol even when it hurts her. She's getting help. Say only what is true for your family. Then add the words that lift the weight. You didn't cause it, you can't control it, and you can't cure it. But you can take care of you."
 },
 {
 "k": "card",
 "title": "Why can't she just stop?",
-"body": "Addiction changes how the brain works. People can get better with help.",
-"say": "Kids ask hard questions. Why can't she just stop? Try, addiction changes how the brain works, so stopping is really hard. People can get better with help. Does she still love me? Yes. The illness is not the same as how she feels about you."
+"body": "Drinking a lot changes how the brain works. People can heal, with help.",
+"say": "Kids ask hard questions. Why can't she just stop? Try, drinking a lot changes how the brain works, so stopping is really hard. People can heal, with help. Does she still love me? Yes. The drinking is not the same as how she feels about you."
 },
 {
 "k": "points",
@@ -4095,13 +4095,13 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Help for the whole family",
 "body": "SAMHSA National Helpline: 1-800-662-4357, 24 hours. Danger right now: 911.",
-"say": "You don't carry this alone. The SAMHSA National Helpline can point your family toward treatment and support, any time, at 1 800 662 4357. As kids get older, groups like Alateen can help. Many recovery paths draw on faith and community too, if that fits your family. If anyone is in danger, call 911. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
+"say": "You don't carry this alone. The SAMHSA National Helpline can point your family toward treatment and support, any time, at 1 800 662 4357. As kids get older, groups like Alateen can help. Every path to healing is welcome: doctors, treatment, therapy, peer groups, and community. If anyone is in danger, call 911. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
 },
 {
 "k": "big",
 "h": "Truth, safety, and kept promises.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Relapse can happen. If it does, talk about it honestly, and keep the safety plan current. Celebrate recovery milestones in ways a child can enjoy. And look after yourself too. Truth, safety, and kept promises. The full guide has more, whenever you want it."
+"say": "A slip can happen. If it does, talk about it honestly, and keep the safety plan current. Celebrate recovery milestones in ways a child can enjoy. And look after yourself too. Truth, safety, and kept promises. The full guide has more, whenever you want it."
 }
 ],
 "crisis": [

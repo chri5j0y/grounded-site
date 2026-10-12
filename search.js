@@ -547,7 +547,7 @@
     document.head.appendChild(st);
   }
   function attach(input, opts) {
-    if (!input) return;
+    if (!input || !input.isConnected || !input.parentNode) return; // the page re-rendered while search.js loaded: the new box attaches itself
     opts = opts || {}; css();
     var panel = input._ggPanel;
     if (!panel || !panel.isConnected) {
@@ -555,6 +555,7 @@
       if (opts.accent) panel.style.setProperty('--ggf-acc', opts.accent);
       panel.innerHTML = '<p class="ss-status"></p><div class="ggf-out"></div>';
       var after = (opts.after && document.querySelector(opts.after)) || input;
+      if (!after.parentNode) return;
       after.parentNode.insertBefore(panel, after.nextSibling);
       input._ggPanel = panel;
     }

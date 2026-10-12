@@ -336,14 +336,14 @@
     if (life.some(function (t) { return c.ids.indexOf(t) >= 0; })) return true;
     return !!((c.gentle || c.rather) && (life.indexOf('gentle') >= 0 || !!ad));
   }
-  function order(rows, tagOf) {
+  function order(rows, tagOf, tree) {
     var list = Array.isArray(rows) ? rows.slice() : [];
     var f = typeof tagOf === 'function' ? tagOf : function (r) { return r && (r.life || r.adapt) ? { life: r.life, adapt: r.adapt, sober: r.sober } : []; };
     var yes = [], no = [];
     list.forEach(function (r) { (fits(f(r)) ? yes : no).push(r); });
     // Living Sober chosen: within the rows that fit, Living Sober rows come first, in stage order.
     if (get().ids.indexOf('sober') >= 0) {
-      var st = get().sober, tg = function (r) { var t = f(r); return Array.isArray(t) ? { life: t } : (t || {}); };
+      var st = tree ? soberStage(tree) : get().sober, tg = function (r) { var t = f(r); return Array.isArray(t) ? { life: t } : (t || {}); };
       var sy = yes.filter(function (r) { return isSober(tg(r)); }), so = yes.filter(function (r) { return !isSober(tg(r)); });
       var ranked = sy.map(function (r) { return { r: r, k: stageRank(tg(r), st) }; });
       yes = ranked.filter(function (x) { return x.k === 2; }).concat(ranked.filter(function (x) { return x.k === 1; }), ranked.filter(function (x) { return x.k === 0; })).map(function (x) { return x.r; }).concat(so);

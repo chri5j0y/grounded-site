@@ -3328,9 +3328,9 @@ const LC_TOPICS = [
     "Taking a break for a few weeks to see how your sleep, mood, money, and anxiety change.",
     "Trying another tool first when a hard feeling hits: a walk, a shower, music, a call to a friend, slow breathing.",
     "Keeping a drink of your own in your hand, like sparkling water, and going with a friend who has your back.",
-    "Stepping back from strong or daily cannabis, especially if it's started to make you anxious, paranoid, or low. Heavy use of high-potency cannabis is linked with a higher risk of psychosis.",
+    "Noticing how anything you use affects your sleep, mood, and anxiety, and stepping back from whatever leaves you anxious, paranoid, or low.",
     "Carrying naloxone if you or people around you use opioids or pills from anywhere but a pharmacy. It's sold over the counter.",
-    "Talking with a doctor honestly. Treatment works, and there are options, including support groups, counseling, and medicine for some substances."
+    "Talking with a doctor honestly. Treatment works, and there are options, including support groups, therapy, and medicine for some substances. Every path is welcome."
    ],
    "tell": [
     "“I don't owe anyone an explanation.”",
@@ -3358,7 +3358,7 @@ const LC_TOPICS = [
     "Notice and say out loud what goes well on days they don't use.",
     "Set clear, kind boundaries for your own life and home, and keep them.",
     "Keep naloxone where you live if anyone around you uses opioids or pills from anywhere but a pharmacy. Learn to use it.",
-    "If they're ready for help, offer to look at options together: a doctor, counseling, a support group, or the SAMHSA National Helpline.",
+    "If they're ready for help, offer to look at options together: a doctor, therapy, a support group, or the SAMHSA National Helpline.",
     "Find support for yourself, such as Al-Anon or SMART Recovery Family and Friends."
    ],
    "you": "Loving someone who uses a lot is exhausting, and you can't control their choices. You can take care of yourself, keep the door open, and stay safe. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
@@ -5896,6 +5896,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Healthy ways to change how you feel: a run, a long walk outdoors, a hot shower, music, writing it out, time with a friend, a workout, or slow breathing.",
     "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal what's underneath at your own pace.",
     "Purpose and fun. Try something new: a class, a team, volunteering, a trail, a craft. Many people find serving others steadies them.",
+    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking, Cannabis, and Other Drugs has more.",
     "Marking the wins: a week, a month, ninety days, your first sober holiday. Celebrate with sparkling water, a good meal, a hike, or people you love."
    ],
    "tell": [
@@ -6015,6 +6016,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Finding sober people. Collegiate recovery programs, sober dorms or recovery housing, peer groups like AA, NA, SMART Recovery, or Refuge Recovery, and sober clubs and meetups.",
     "Tending the basics that make nights easier: sleep, real meals, and a plan for the hours when you used to drink.",
     "Noticing your early warning signs, like feeling lonely, bored, or stressed before a big night, and calling someone first.",
+    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking, Cannabis, and Other Drugs has more.",
     "Hosting. A game night, a cookout, or a movie night with good drinks and food puts you in charge of the vibe."
    ],
    "tell": [
@@ -6668,5 +6670,8 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "sources": []
  }
 ];
-  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
+  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); });
+  /* The older guide Drinking, Cannabis, and Other Drugs joins Living Sober too (tags), with its sources listed here. */
+  var S = G.topics.find(function (x) { return x.id === 'substances'; });
+  if (S) { S.life = ['mind', 'sober']; S.sober = ['change']; S.sources = ['mtfpanel24', 'deaonepill', 'narcanotc']; } })();
 /* Living Sober guides end, GWG BLD 789 */

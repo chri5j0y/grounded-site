@@ -1618,6 +1618,13 @@ const LC_TOPICS = [
  {
   "id": "family-substance",
   "ring": "pn-home",
+  "life": [
+   "close",
+   "sober"
+  ],
+  "sober": [
+   "love"
+  ],
   "title": "A Family Member's Drinking or Drug Use",
   "keys": "parent drinks too much mom drinks dad drinks alcoholic parent addiction in my family drug use parent high parent drunk sibling using brother using sister using pills opioids meth weed every day relapse rehab treatment recovery cover for them keep it a secret embarrassed bring friends home drunk driving overdose mood swings broken promises",
   "parts": [
@@ -1647,7 +1654,7 @@ const LC_TOPICS = [
     "Knowing your own family story as you make your own choices. Practicing an easy way out of a party, a ride, a vape, or a drink before you need it."
    ],
    "tell": [
-    "“This is their illness, not my failure.”",
+    "“This is their struggle, not my failure.”",
     "“I can love them and still keep myself safe.”",
     "“I'm allowed to have a good life even when they're struggling.”"
    ],
@@ -1710,6 +1717,10 @@ const LC_TOPICS = [
    [
     "Childhelp National Child Abuse Hotline",
     "https://childhelphotline.org/"
+   ],
+   [
+    "Pine: A Parent's Drinking or Using (Living Sober)",
+    "/pine/#life=sober-parent"
    ]
   ]
  },
@@ -2967,6 +2978,12 @@ const LC_TOPICS = [
  {
   "id": "substances",
   "ring": "pn-body",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "change"
+  ],
   "title": "Vaping, Drinking, and Drugs",
   "keys": "vaping vape nicotine juul e cig drinking alcohol beer party weed marijuana thc edibles pills fentanyl drugs high drunk peer pressure offered something everyone does it how to say no getting out of a party friend passed out overdose stress coping",
   "parts": [
@@ -2981,7 +2998,7 @@ const LC_TOPICS = [
    "A pill from a friend, a dealer, or social media can be fake and hold fentanyl, even when it looks real.",
    "If someone can't wake up or is having trouble breathing, call 911 right away and stay with them."
   ],
-  "feel": "Maybe it's offered at a party, in a car, or in a bathroom at school, and everyone seems to be watching. Maybe friends make it sound normal, or you're curious, or you just want the pressure to stop. Some people reach for something because they're stressed, can't sleep, or want a hard feeling to go quiet for a while. You might feel left out when you say no, or worried about a friend who seems to be using more. All of that is common, and you get to decide what's right for you.",
+  "feel": "Maybe it's offered at a party, in a car, or in a bathroom at school, and everyone seems to be watching. Maybe friends make it sound normal, or you're curious, or you just want the pressure to stop. Some people reach for something because they're stressed, can't sleep, or want a hard feeling to go quiet for a while. You might feel left out when you say no, or worried about a friend who seems to be using more. All of that is common. For teens, waiting until adulthood is the healthy choice, and a plan of your own makes it easier.",
   "self": {
    "first": [
     "Pick two lines you'd actually say: “I'm good, I've got practice,” “My parents check,” or simply “No thanks.”",
@@ -3050,6 +3067,10 @@ const LC_TOPICS = [
    [
     "DEA: One Pill Can Kill",
     "https://www.dea.gov/onepill"
+   ],
+   [
+    "Pine: Pills, Fentanyl, and Staying Alive (Living Sober)",
+    "/pine/#life=sober-pills"
    ],
    [
     "Alateen, Teen Corner (Al-Anon)",
@@ -5764,6 +5785,10 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "more": [
    [
+    "Pine: Vaping, Drinking, and Drugs",
+    "/pine/#life=substances"
+   ],
+   [
     "SAMHSA National Helpline",
     "https://www.samhsa.gov/find-help/helplines/national-helpline"
    ],
@@ -5978,6 +6003,10 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "more": [
    [
+    "Pine: Vaping, Drinking, and Drugs",
+    "/pine/#life=substances"
+   ],
+   [
     "SAMHSA National Helpline",
     "https://www.samhsa.gov/find-help/helplines/national-helpline"
    ],
@@ -6082,6 +6111,10 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
   ],
   "more": [
+   [
+    "Pine: A Family Member's Drinking or Drug Use",
+    "/pine/#life=family-substance"
+   ],
    [
     "NACoA: the Seven Cs",
     "https://nacoa.org/the-seven-cs/"
@@ -6289,6 +6322,10 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
   ],
   "more": [
+   [
+    "Pine: Vaping, Drinking, and Drugs",
+    "/pine/#life=substances"
+   ],
    [
     "DEA: One Pill Can Kill",
     "https://www.dea.gov/onepill"
