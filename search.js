@@ -167,7 +167,7 @@
   // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
   var GPART = null;
   function loadGrove() {
-    return Promise.all(['/grove/data.js?v=b782', '/grove/library.js?v=b788'].map(function (u) {
+    return Promise.all(['/grove/data.js?v=b791', '/grove/library.js?v=b791'].map(function (u) {
       return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
     })).then(function (t) {
       try {
