@@ -17641,7 +17641,7 @@ var V = [
        "Kids have them too"
       ]
      ],
-     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A weekly Family Night, with a meal, a walk, or a game. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
+     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A weekly Family Night, with a meal, a walk, or a game, and small good moments on ordinary days too. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
     },
     {
      "k": "words",

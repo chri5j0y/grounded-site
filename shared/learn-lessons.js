@@ -46104,7 +46104,26 @@ window.GG_LEARN = {
        "k": "card",
        "title": "Keep it easy",
        "body": "Simple food, one fun thing, and everyone welcome.",
-       "say": "Keep it easy. Simple food, one fun thing, and everyone welcome, from the youngest to the oldest. A quiet Family Night counts just as much as a big one. What matters is being together, week after week."
+       "say": "Keep it easy. Simple food, one fun thing, and everyone welcome, from the youngest to the oldest. A quiet Family Night counts just as much as a big one."
+      },
+      {
+       "k": "points",
+       "h": "Every day is a gift",
+       "items": [
+        [
+         "Family Night",
+         "A steady anchor each week"
+        ],
+        [
+         "Ordinary days",
+         "A walk after dinner"
+        ],
+        [
+         "Small moments",
+         "Cooking, a few minutes of real talk"
+        ]
+       ],
+       "say": "Family Night is a steady anchor, especially when a family is finding a new rhythm. And as the weeks go by, many families notice something more. The small, healthy things on ordinary days matter just as much as the big, planned night. A walk after dinner. Cooking together. A few minutes of real talk before bed. Every day is a gift, and every day is a chance to choose time together."
       },
       {
        "k": "points",
@@ -46127,9 +46146,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Good time together grows the whole tree.",
-       "sub": "See you at Family Night.",
-       "say": "Good time together grows the whole family tree. See you at Family Night."
+       "h": "Every day is a gift.",
+       "sub": "Choose time together, today and every day.",
+       "say": "Good time together grows the whole family tree. Every day is a gift. Choose time together, today and every day."
       }
      ]
     }

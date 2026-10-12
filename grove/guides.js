@@ -9643,7 +9643,7 @@ var TOPICS = [
    "helps": [
     "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
     "Tending our bodies together: sleep, water, whole food, movement, and time outdoors.",
-    "A weekly Family Night, with a meal everyone helps make, a walk, music, or a game.",
+    "A weekly Family Night, with a meal everyone helps make, a walk, music, or a game, and small healthy moments on ordinary days too.",
     "Family groups like Al-Anon, Alateen, or Nar-Anon, where others understand.",
     "Marking milestones: a day, a week, a season, a promise kept.",
     "A plan for hard nights: who to call, where to go, and what helps."
