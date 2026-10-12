@@ -671,6 +671,7 @@ body.ts-2 .guide{font-size:21.5px;}
 .ring-chips{display:flex;gap:6px;flex-wrap:wrap;margin:10px 0 4px;}
 .ring-chip{font-family:var(--sans);font-weight:600;font-size:14px;border:2px solid var(--rc);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 12px;}
 .ring-chip[aria-pressed="true"]{background:var(--rc);color:#fff;}
+.ring-chip[data-ring="all"][aria-pressed="true"]{color:var(--card);}
 .ring-block{margin-top:26px;}
 .ring-block h3{display:flex;align-items:center;gap:10px;font-family:var(--serif);font-weight:700;font-size:26px;margin:0 0 2px;}
 .ring-block h3 i{width:16px;height:16px;border-radius:50%;background:var(--rc);flex:none;}
@@ -683,6 +684,26 @@ body.ts-2 .guide{font-size:21.5px;}
 .talk-card li{margin:3px 0;}
 .talk-card .meta{font-size:14px;color:var(--ink-soft);margin:0;}
 .talk-card .soft-btn{align-self:flex-start;margin-top:auto;font-size:16px;min-height:42px;padding:8px 16px;}
+.ring-cards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:14px;margin-top:18px;}
+@media(max-width:980px){ .ring-cards{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(max-width:600px){ .ring-cards{grid-template-columns:1fr;} }
+.ring-cards-h{font-family:var(--serif);font-weight:700;font-size:26px;margin:30px 0 0;}
+.ring-card{display:flex;flex-direction:column;gap:6px;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:3px solid var(--outline);border-left:12px solid var(--rc);border-radius:20px;padding:16px 18px;cursor:pointer;min-height:44px;transition:transform .15s,box-shadow .15s;}
+.ring-card:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08);}
+.ring-card:focus-visible{outline:3px solid var(--sky);outline-offset:3px;}
+.ring-card .rc-name{font-family:var(--serif);font-weight:700;font-size:24px;line-height:1.15;}
+.ring-card .rc-blurb{color:var(--ink-soft);font-size:15.5px;line-height:1.45;}
+.ring-card .rc-count,.ring-block .rc-n{font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.ring-card .rc-count{margin-top:auto;padding-top:4px;}
+.ring-block .rc-n{margin-left:6px;white-space:nowrap;}
+.ring-back{display:inline-block;margin:0 0 12px;font-size:16px;}
+#life-ring-h:focus{outline:none;}#life-ring-h:focus-visible{outline:3px solid var(--sky);outline-offset:3px;}
+.ggf .ss-group .talk-card h4{font-family:var(--serif);font-weight:700;font-size:22px;line-height:1.2;letter-spacing:0;text-transform:none;color:var(--ink);margin:0;}
+.talk-card .tc-line{margin:0;font-size:15.5px;line-height:1.5;color:var(--ink-soft);}
+.talk-card .tc-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px;}
+.talk-card .tc-btns .soft-btn{margin-top:0;font-size:15px;min-height:44px;padding:8px 14px;}
+.talk-card .tc-btns .tc-read{border-color:var(--rc);}
+@media (prefers-reduced-motion: reduce){ .ring-card{transition:none;} .ring-card:hover{transform:none;} }
 .no-results{background:var(--card);border:2px dashed var(--outline);border-radius:20px;padding:22px;text-align:center;margin-top:18px;}
 .talk{max-width:760px;margin:0 auto;font-size:17.5px;line-height:1.7;}
 .talk h2{font-family:var(--serif);font-weight:700;font-size:38px;line-height:1.1;margin:6px 0 6px;}
@@ -3204,37 +3225,62 @@ function mpSober() { return MP_KID && window.GGLife && GGLife.sober && mpLifeUse
 function lifeFind(el) {
   if (!window.GGFind) return;
   GGFind(el, { here: 'maple', kid: 'maple', localType: 'talk', open: id => openTalk(id), openLabel: 'Talking It Through',
-    after: '.life-tools', hide: ['#life-list', '.ring-chips'], accent: 'var(--btn-ink)' });
+    after: '.life-tools', hide: ['#life-list', '.ring-chips'], accent: 'var(--btn-ink)',
+    localHTML: items => mpGuideGrid(items.map(it => TOPICS.find(t => t.id === it.id)).filter(Boolean)) });
 }
+/* The All view as group cards (GWG BLD 790): with All topics chosen, one card per ring this family sees (its name, its line,
+   how many guides). A card opens its ring just like its chip, and All Groups comes back. Search draws guide cards across every ring. */
+const mpShort = (s, n) => { s = String(s || '').replace(/<[^>]*>/g, ''); n = n || 110; if (s.length <= n) return s; const c = s.slice(0, n); return c.slice(0, Math.max(c.lastIndexOf(' '), 40)).replace(/[,;:.]$/, '') + '…'; };
+function mpRingTopics(r) { return r.key === 'life' ? lifeTagged() : TOPICS.filter(t => r.key === 'sober' ? t.ring === 'sober' || (t.life || []).includes('sober') : t.ring === r.key); }
+const mpNGuides = n => n + (n === 1 ? ' guide' : ' guides');
+function mpGuideCard(t0) {
+  const t = t0.plain && isPlain() ? Object.assign({}, t0, t0.plain) : t0, r = ringBy(t.ring) || LIFE_RING;
+  const vb = (side, name) => { const w = mvVidWatched('mp-g-' + t.id + '-' + side);
+    return `<button type="button" class="soft-btn" onclick="mvWatch('${t.id}','${side}')" aria-label="Watch ${name}: ${esc(t.title)}${w ? ', watched' : ''}">${w ? '&#10003;' : '&#9654;'} ${name}</button>`; };
+  return `<article class="talk-card" style="--rc:${r.color}">
+      <span class="label">${esc(r.name)}</span>
+      <h4>${esc(t.title)}</h4>
+      <p class="tc-line">${esc(mpShort((t.quick || [])[0]))}</p>
+      <div class="tc-btns"><button type="button" class="soft-btn tc-read" onclick="openTalk('${t.id}')" aria-label="Read the Guide: ${esc(t.title)}">Read the Guide</button>${MV_VIDS.includes(t.id) ? vb('you', 'For You') + vb('helper', 'For the Grown-up') : ''}</div>
+    </article>`;
+}
+const mpGuideGrid = ts => `<div class="talk-grid">${ts.map(mpGuideCard).join('')}</div>`;
+// The rings this family sees, in chip order: Living Sober (only when chosen), the rings, then Health and Ability.
+function mpRingsShown() { const sob = mpSober(); return (sob ? [sob] : []).concat(RINGS.filter(r => r.key !== 'life')).concat(lifeTagged().length ? [LIFE_RING] : []); }
 function renderLifeList() {
-  const sob0 = mpSober(), sob = sob0 || (LIFE.q && window.GGLife ? GGLife.ring('maple') : null), sc = $('mp-sober-chip'); // a search looks in every ring
+  const sob0 = mpSober(), sc = $('mp-sober-chip');
   if (LIFE.ring === 'sober' && !sob0) LIFE.ring = 'all';
-  if (sc) sc.innerHTML = sob0 ? `<button class="ring-chip" style="--rc:${sob.color}" data-ring="sober" onclick="setLifeRing('sober')">${esc(sob.name)}</button>` : '';
+  if (LIFE.ring !== 'all' && !mpRingsShown().some(r => r.key === LIFE.ring)) LIFE.ring = 'all';
+  if (sc) sc.innerHTML = sob0 ? `<button class="ring-chip" style="--rc:${sob0.color}" data-ring="sober" onclick="setLifeRing('sober')">${esc(sob0.name)}</button>` : '';
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
-  const rings = (sob ? [sob] : []).concat(RINGS).filter(r => r.key !== 'life' && (LIFE.ring === 'all' || r.key === LIFE.ring));
-  let html = '', count = 0;
-  const block = (r, ts, label) => `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
-      <article class="talk-card" style="--rc:${(ringBy(t.ring) || r).color}">
-        <span class="label">${label || 'Guide'}</span>
-        <h4>${esc(t.title)}</h4>
-        <ul>${t.quick.map(q => `<li>${esc(q)}</li>`).join('')}</ul>
-        <p class="meta">Often rainy: ${esc(t.rainy)}. Try: ${t.acts.map(actTitle).map(esc).join(', ')}.</p>
-        <button class="soft-btn" onclick="openTalk('${t.id}')">Talking It Through</button>
-      </article>`).join('')}</div></div>`;
-  // Picked for You: guides tagged for the open child's Health and Ability choice, first.
-  const pk = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean) : [];
-  const picks = pk.filter(mpIsSober).concat(lifeFirst(pk.filter(t => !mpIsSober(t))));
-  if (picks.length) html += block({ name: 'Picked for You', color: LIFE_RING.color, blurb: `Guides that fit ${MP_KID.name}'s Health and Ability. Every guide stays open.` }, picks, 'Picked for You');
-  rings.forEach(r => {
-    const ts = TOPICS.filter(t => (r.key === 'sober' ? t.ring === 'sober' || (t.life || []).includes('sober') : t.ring === r.key) && topicMatches(t, LIFE.q));
-    if (!ts.length) return;
-    count += ts.length;
-    html += block(r, ts);
-  });
-  // The Health and Ability ring: every guide tagged for any choice, open to every family.
-  if (LIFE.ring === 'all' || LIFE.ring === 'life') { const ts = lifeTagged().filter(t => topicMatches(t, LIFE.q)); if (ts.length) { count += ts.length; html += block(LIFE_RING, ts, 'Health and Ability'); } }
+  let html = '';
+  if (LIFE.ring === 'all') {
+    // Picked for You: guides tagged for the open child's Health and Ability choice, first.
+    const pk = MP_KID && mpLifeUse(MP_KID) ? GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+    const picks = pk.filter(mpIsSober).concat(lifeFirst(pk.filter(t => !mpIsSober(t))));
+    if (picks.length) html += `<div class="ring-block" style="--rc:${LIFE_RING.color}"><h3><i></i>Picked for You</h3><p>Guides that fit ${esc(MP_KID.name)}'s Health and Ability. Every guide stays open.</p>${mpGuideGrid(picks)}</div><h3 class="ring-cards-h">All Groups</h3>`;
+    html += `<div class="ring-cards" role="group" aria-label="Guide groups">${mpRingsShown().map(r => { const n = mpRingTopics(r).length; return n ? `<button type="button" class="ring-card" style="--rc:${r.color}" data-ring="${r.key}" onclick="mpOpenRing('${r.key}')"><b class="rc-name">${esc(r.name)}</b><span class="rc-blurb">${esc(r.blurb)}</span><span class="rc-count">${mpNGuides(n)}</span></button>` : ''; }).join('')}</div>`;
+  } else {
+    const r = mpRingsShown().find(x => x.key === LIFE.ring), ts = mpRingTopics(r);
+    html = `<div class="ring-block" style="--rc:${r.color}">
+      <button type="button" class="link-btn ring-back no-print" onclick="mpAllGroups('${r.key}')">&larr; All Groups</button>
+      <h3 id="life-ring-h" tabindex="-1"><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)} <span class="rc-n">${mpNGuides(ts.length)}</span></p>${mpGuideGrid(ts)}</div>`;
+  }
   const ll = $('life-lines'); if (ll) ll.innerHTML = MP_KID ? mpLifeLinesHtml() : '';
-  $('life-list').innerHTML = count ? html : `<div class="no-results"><p>No guides match “${esc(LIFE.q)}.” Try another word, or browse all topics.</p><button class="soft-btn" onclick="LIFE.q='';$('life-search').value='';setLifeRing('all')">Show all topics</button></div>`;
+  $('life-list').innerHTML = html;
+}
+// A group card opens its ring (the same as its chip) and brings its heading into view.
+function mpOpenRing(k) {
+  setLifeRing(k);
+  const h = $('life-ring-h'), c = document.querySelector('#view-life .ring-chips');
+  if (c) window.scrollTo({ top: Math.max(0, c.getBoundingClientRect().top + window.scrollY - 12), behavior: 'auto' });
+  if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
+}
+// All Groups: back to the cards, with the card just left in focus.
+function mpAllGroups(k) {
+  setLifeRing('all');
+  const b = document.querySelector(`#life-list .ring-card[data-ring="${k}"]`);
+  if (b) { try { b.focus({ preventScroll: true }); } catch (e) {} b.scrollIntoView({ block: 'center' }); }
 }
 function openTalk(id, from) {
   const t0 = TOPICS.find(x => x.id === id);
@@ -3246,7 +3292,7 @@ function openTalk(id, from) {
   const list = a => `<ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`;
   $('view-talk').innerHTML = `<article class="talk" style="--rc:${r.color}">
     <div class="action-row no-print" style="margin:0 0 14px">
-      <button class="link-btn" onclick="${LIFE.from === 'tree' ? "go('tree')" : "go('life')"}">${LIFE.from === 'tree' ? 'Back to the tree' : 'Back to all guides'}</button>
+      <button class="link-btn" onclick="${LIFE.from === 'tree' ? "go('tree')" : "go('life')"}">${LIFE.from === 'tree' ? 'Back to the tree' : LIFE.ring !== 'all' && ringBy(LIFE.ring) ? 'Back to ' + esc(ringBy(LIFE.ring).name) : 'Back to all guides'}</button>
       <button class="soft-btn" style="margin-left:auto" onclick="printTalk()">Save or Print This Guide</button>
     </div>
     <span class="ring-tag">${esc(r.name)}</span>
@@ -3339,9 +3385,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b789';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b790" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b790';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b789';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b789" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b790" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b790';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b790" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

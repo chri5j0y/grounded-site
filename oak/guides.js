@@ -2225,7 +2225,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "story": {
    "title": "18 Years",
-   "text": "On April 1, 2008, I quit drinking. I preferred to drink at home, where I could drink much more without being noticed, and I never missed a day of work. I was thirty-eight, and I knew I only had a few years left before I would drink myself to death. When I stopped, it felt like I had been asleep for a few hundred years and just woke up. Getting sober was just the beginning. My story had many more chapters to be written."
+   "text": "On April 1, 2008, I quit drinking. I preferred to drink at home, where I could drink much more without being noticed, and I never missed a day of work. I was twenty-nine, and I knew I only had a few years left before I would drink myself to death. When I stopped, it felt like I had been asleep for a few hundred years and just woke up. Getting sober was just the beginning. My story had many more chapters to be written."
   }
  },
  {
@@ -2623,7 +2623,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   ],
   "story": {
    "title": "18 Years",
-   "text": "At least for me, sobriety has not been a straight line. I have had a lot of ups and downs. I have been able to completely avoid alcohol for these eighteen years, but I have had a few hard battles with pills. When I broke my hip in a cycling accident, I was lost in an oxy blackout for a few weeks. But I did not give up."
+   "text": "At least for me, sobriety has not been a straight line. I have had a lot of ups and downs. I have been able to completely avoid alcohol for these eighteen years, but I have had a few hard battles with pills. When I broke my hip in a cycling accident, I was lost in an oxy blackout for about a week. But I did not give up."
   }
  },
  {

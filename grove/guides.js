@@ -20,7 +20,7 @@ const RINGS = [
   "key": "gw-home",
   "name": "Home Life Together",
   "color": "#8A6A2A",
-  "blurb": "Siblings, a teen finding their way, time together, the family table, big feelings, work changes, someone struggling inside, and back to school."
+  "blurb": "Siblings, the family table, big feelings, and growing together at home."
  },
  {
   "key": "gw-illness",
@@ -44,19 +44,19 @@ const RINGS = [
   "key": "gw-school",
   "name": "Class and School",
   "color": "#2F6B5A",
-  "blurb": "A loss at school, a scary day, an ill classmate, a new student, the end of the year, friendships, kindness, test season, families changing, group chats, and big feelings."
+  "blurb": "Hard days, friendships, kindness, and changes in the classroom."
  },
  {
   "key": "gw-faith",
   "name": "Faith Communities and Groups",
   "color": "#5E4A7A",
-  "blurb": "A leader leaving, a loss, conflict, newcomers, endings, a member in crisis, sharing the room, hard conversations, rebuilding trust, attendance, a smaller church, tired volunteers, healing from hurt, staying together through big issues, a leader who falls short, and a merger or move."
+  "blurb": "Leaders, newcomers, hard seasons, and healing together as a community."
  },
  {
   "key": "gw-team",
   "name": "Teams",
   "color": "#7A4A6A",
-  "blurb": "A hard death, big changes, a coworker who dies, burnout, conflict, a new leader, heavy workloads, an injury at work, a coworker grieving, and work that asks hard things."
+  "blurb": "Changes, hard losses, heavy seasons, and caring for each other at work."
  }
 ];
 const TOPICS = [
@@ -9643,7 +9643,7 @@ var TOPICS = [
    "helps": [
     "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
     "Tending our bodies together: sleep, water, whole food, movement, and time outdoors.",
-    "A Family Sober Night each week, with a shared meal, a walk, music, or a game.",
+    "A weekly Family Night, with a meal everyone helps make, a walk, music, or a game, and small healthy moments on ordinary days too.",
     "Family groups like Al-Anon, Alateen, or Nar-Anon, where others understand.",
     "Marking milestones: a day, a week, a season, a promise kept.",
     "A plan for hard nights: who to call, where to go, and what helps."
@@ -9691,7 +9691,7 @@ var TOPICS = [
   },
   "faith": "For many families, faith is part of growing sober: prayer, a Higher Power as each person understands it, a faith community that welcomes them home, forgiveness, and grace that makes a new start possible. Many recovery groups draw on a spiritual path, in words that fit all faith traditions and everything in-between. For others, a faith community has felt like a place of shame, and that hurt may need healing too. Faith can be a deep resource or a heavy stressor. Follow each person's own words, and let grace be the door that stays open.",
   "practices": [
-   "family-sober-night",
+   "family-night",
    "family-meeting",
    "listening-round",
    "play-outside",
@@ -9717,7 +9717,7 @@ var TOPICS = [
    [
     "maple",
     "addiction",
-    "When a Family Member Drinks or Uses"
+    "A Family Member's Addiction"
    ]
   ],
   "reach": [
@@ -9857,13 +9857,13 @@ var TOPICS = [
    "listening-round",
    "feelings-words",
    "kind-words-inside",
-   "family-sober-night"
+   "family-night"
   ],
   "trees": [
    [
     "maple",
     "addiction",
-    "When a Family Member Drinks or Uses"
+    "A Family Member's Addiction"
    ],
    [
     "aspen",
@@ -10011,7 +10011,7 @@ var TOPICS = [
    "feast-day",
    "laugh-together",
    "gratitude-jar",
-   "family-sober-night"
+   "family-night"
   ],
   "trees": [
    [
@@ -10146,7 +10146,7 @@ var TOPICS = [
    "one-on-one",
    "looking-back",
    "kind-words-inside",
-   "family-sober-night"
+   "family-night"
   ],
   "trees": [
    [
@@ -10510,7 +10510,7 @@ var TOPICS = [
 ];
 var PRACTICES = [
  {
-  "id": "family-sober-night",
+  "id": "family-night",
   "part": "fruit",
   "kinds": [
    "family",
@@ -10519,9 +10519,9 @@ var PRACTICES = [
   "life": [
    "sober"
   ],
-  "name": "Family Sober Night",
-  "text": "One evening a week of good sober time together: a shared meal, something that moves you, something that makes you laugh, and a few words of thanks.",
-  "kid": "Help pick the meal, the walk, or the game for our Sober Night.",
+  "name": "Family Night",
+  "text": "One evening a week of good time together: a meal everyone helps make, something that moves you, something that makes you laugh, and a few words of thanks.",
+  "kid": "Help pick the meal, the walk, or the game for our Family Night.",
   "steps": "Pick one evening each week and keep it.|Cook or share a simple meal, with water, sparkling water, juice, or tea.|Do one thing together that moves you or makes you laugh: a walk, music, a game, a puzzle.|Close with a thank-you round: one good thing from this week each.",
   "sources": [],
   "guide": "sober-family"

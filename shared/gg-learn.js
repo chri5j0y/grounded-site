@@ -39,6 +39,12 @@
      count, no certificate: a quiet check marks the ones watched. The closing scene offers Open the Full
      Guide (window.GG_GUIDE_OPEN[app](id), or #guide=id), the other video, and Back.
      GGLearn.open(app, id, {from: 'guide'}) opens one straight from a guide page.
+     One home, two doors (GWG BLD 790): where the tree shows its When Life Changes cards in the page, Learn's When Life
+     Changes card and tab close Learn and open them there (window.GG_LC_OPEN[app]() when a tree names its own opener,
+     otherwise the tree's own tab opener, see lcDoor). The videos still open by #learn= links, from each guide, and from
+     Learn's search. A tree without the view keeps them in Learn, one card per ring, as before.
+   - The Learn top (GWG BLD 790): a search bar (title, blurb, and track name; listed tracks only, so low-key tracks follow
+     their rules) and a tab for each category, All first. The category cards stay below as the All view.
    - For Guides videos (W1, GWG BLD 714): a track with kind: 'forguides' (sealed in the Field library, one track per
      ring, played by the Field Guide). The closing scene offers Open the Full Section (cfg.section), Watch Again,
      Next Video (the next guide in the ring), and Back to the Series, plus Get Your Certificate (cfg.cert) when the
@@ -54,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b789';
+  var V = 'b790';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -93,6 +99,7 @@
     check: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.5 4.5L19 7.5"/></svg>',
     award: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="9" r="5.5"/><path d="M8.5 13.5L7 21l5-2.5 5 2.5-1.5-7.5"/></svg>',
     print: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M7 9V3.5h10V9M7 17.5H4.5v-7A1.5 1.5 0 0 1 6 9h12a1.5 1.5 0 0 1 1.5 1.5v7H17"/><path d="M7 14h10v6.5H7z"/></svg>',
+    go: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M8.5 12h7M12.5 8.5L16 12l-3.5 3.5"/></svg>',
     page: '<svg viewBox="0 0 24 24" aria-hidden="true" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M6.5 3.5h7.5l4 4v13h-11.5z"/><path d="M14 3.5v4h4M9.5 12h5M9.5 15.5h5"/></svg>'
   };
   var HAND = '<svg class="ln-ptr" viewBox="0 0 40 48" aria-hidden="true"><path d="M14 3c2.2 0 4 1.8 4 4v13l2-.4c1.6-.3 3.2.6 3.7 2.1l.2.6 2-.3c1.7-.2 3.3.8 3.8 2.4l.2.6 1.6-.2c2-.2 3.8 1.3 4 3.3L36 38c.3 4.5-3 8.5-7.5 9H18.6c-2.6 0-5-1.2-6.5-3.3L4.3 32.8c-1.2-1.7-.8-4 .9-5.1 1.5-1 3.5-.8 4.8.5L10 30V7c0-2.2 1.8-4 4-4z" fill="#FFF8EC" stroke="#2C1810" stroke-width="2"/></svg><span class="ln-ring"></span>';
@@ -271,6 +278,12 @@
       '.ggl-pg-link a{font-weight:600;color:var(--ggl-acc);}.ggl-pg p{margin:0 0 10px;}.ggl-pg ul{margin:0 0 12px;padding-left:22px;}.ggl-pg li{margin:5px 0;}.ggl-pg-lead{font-size:1.08em;}.ggl-pg-lab{margin:12px 0 4px !important;}.ggl-pg-src{margin-top:8px;color:var(--ggl-soft);}.ggl-pg-src a{color:inherit;}',
       ':root[data-theme="dark"] .ggl-app .ggl-pg-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ggl-pg-link a{color:var(--ggl-lite);}}',
       // Learn opens to category cards (BLD 725); each opens to its videos.
+      // The top (GWG BLD 790): a search bar and category tabs, like the tree pages' When Life Changes.
+      '.ggl-find{margin-top:14px;}.ggl-q{display:block;width:100%;box-sizing:border-box;min-height:48px;padding:10px 14px;border:1.5px solid var(--ggl-line);border-radius:12px;background:var(--ggl-card);color:var(--ggl-ink);font:inherit;font-size:17px;}.ggl-q::placeholder{color:var(--ggl-soft);opacity:1;}.ggl-q:focus-visible{outline:3px solid var(--ggl-acc);outline-offset:2px;border-color:var(--ggl-acc);}',
+      '.ggl-chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:10px;}.ggl-chip{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:8px 16px;border-radius:999px;border:1.5px solid var(--ggl-line);background:var(--ggl-card);color:var(--ggl-ink);font:inherit;font-weight:600;font-size:16px;cursor:pointer;line-height:1.2;text-align:left;}.ggl-chip:hover{border-color:var(--ggl-acc);}.ggl-chip.on{background:var(--ggl-acc);border-color:var(--ggl-acc);color:#FFF8EC;}.ggl-chip svg{width:18px;height:18px;flex:none;}',
+      ':root[data-theme="dark"] .ggl-app .ggl-chip.on{background:var(--ggl-lite);border-color:var(--ggl-lite);color:#1F1A14;}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ggl-chip.on{background:var(--ggl-lite);border-color:var(--ggl-lite);color:#1F1A14;}}',
+      '.ggl-chip:focus-visible,.ggl-cat:focus-visible{outline:3px solid var(--ggl-acc);outline-offset:2px;}:root[data-theme="dark"] .ggl-app .ggl-chip:focus-visible,:root[data-theme="dark"] .ggl-app .ggl-cat:focus-visible{outline-color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ggl-chip:focus-visible,:root:not([data-theme="light"]) .ggl-app .ggl-cat:focus-visible{outline-color:var(--ggl-lite);}}',
+      '.ggl-res{margin-top:14px;}.ggl-res .ln-list{display:grid;gap:8px;}.ggl-res .ln-t small{display:block;}.ggl-res-k{display:block;font-size:14px;font-weight:600;color:var(--ggl-soft);margin-top:1px;}',
       '.ggl-cats{display:grid;gap:12px;margin-top:14px;}@media(min-width:720px){.ggl-cats{grid-template-columns:1fr 1fr;}}.ggl-cat{display:block;width:100%;text-align:left;font:inherit;color:inherit;cursor:pointer;margin-top:0;border-left:6px solid var(--ggl-bar,var(--ggl-acc));}.ggl-cat:hover{border-color:var(--ggl-acc);}.ggl-cat h3{margin:2px 0 4px;}.ggl-cat .ggl-cat-n{margin:8px 0 0;font-weight:600;font-size:15px;}.ggl-cat .ggl-cat-go{float:right;opacity:.7;}',
       '@media (prefers-reduced-motion:reduce){.go .ln-brc,.go .ln-brt i{animation:none !important;}.ln-brc{transform:scale(.8);}.ln-brt i:first-child{opacity:1;top:-22px;}.ln-brt i:last-child{opacity:1;top:22px;}}',
       '@media (prefers-reduced-motion:reduce){.ln-canvas .a,.ln-ptr,.ln-ring,.ln-panel,.ln-note,.ln-res,.ln-tgt{transition:none !important;}}',
@@ -963,7 +976,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b789', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b789' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b790', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b790' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -1083,7 +1096,7 @@
       document.body.appendChild(root);
       APP = { app: app, root: root, prevFocus: document.activeElement, overflow: document.body.style.overflow, fromGuide: !!(opts && opts.from === 'guide'), depth: keep };
       document.body.style.overflow = 'hidden';
-      root.addEventListener('click', appClick);
+      root.addEventListener('click', appClick); root.addEventListener('input', appInput);
       document.addEventListener('keydown', appKey);
       if (!keep) hPush(1, lessonId || (pg ? 'page:' + pg : null));
       if (lessonId) lesson(lessonId); else if (pg) showPage(pg); else list();
@@ -1104,6 +1117,8 @@
   function appKey(e) {
     if (e.key !== 'Escape' || !APP || document.querySelector('.gg-vc')) return; // the Voice Check (read.js) keeps its own keys
     e.preventDefault();
+    var qi = e.target && e.target.id === 'ggl-q' ? e.target : null;
+    if (qi && qi.value) { qi.value = ''; APP.q = ''; if (APP.paint) APP.paint(); return; }
     if (APP.view === 'lesson') { if (APP.gv && APP.fromGuide) close(); else goList(); } else close();
   }
   function tracksFor(app) {
@@ -1161,22 +1176,86 @@
     if (gd.length) cats.push({ k: 'gd', eb: 'How to Show Up', title: GD.title || 'When Life Changes', intro: GD.intro || '', n: size(gd) + ' videos in ' + gd.length + (gd.length === 1 ? ' group' : ' groups') + ', ' + watched(gd) + ' watched' });
     if (sup.length) cats.push({ k: 'sup', eb: S.eyebrow || 'Support', title: S.title || 'Support for Right Now', intro: S.intro || '', n: size(sup) + ' short videos' });
     if (L.supportFirst) cats.sort(function (a, b) { return ['sup', 'gd', 'les'].indexOf(a.k) - ['sup', 'gd', 'les'].indexOf(b.k); });
-    var catCard = function (c) { return '<button class="ggl-card ggl-cat" data-l="cat" data-v="' + c.k + '"><span class="ggl-eb">' + esc(c.eb) + '</span><h3>' + esc(c.title) + '</h3>' + (c.intro ? '<p class="ggl-muted" style="margin:0">' + esc(c.intro) + '</p>' : '') + '<p class="ggl-cat-n">' + esc(c.n) + '<span class="ggl-cat-go">' + IC.play + '</span></p></button>'; };
-    var cat = APP.cat && cats.some(function (c) { return c.k === APP.cat; }) ? APP.cat : null, html;
-    if (cat === 'les') html = back(['cats'], 'Back to Learn') + '<div class="ggl-eb" style="margin-top:6px">Lessons</div>' + H2(L.lessonsTitle || 'Learn Step by Step') + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') + tr.map(card).join('');
-    else if (cat === 'sup') html = back(['cats'], 'Back to Learn') + '<div class="ggl-eb" style="margin-top:6px">' + esc(S.eyebrow || 'Support') + '</div>' + H2(S.title || 'Support for Right Now') + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('');
-    else if (cat === 'gd') {
-      var ring = APP.ring ? gd.filter(function (t) { return t.id === APP.ring; })[0] : null;
-      html = ring ? back(['cat', 'gd'], 'Back to ' + (GD.title || 'When Life Changes')) + '<div class="ggl-eb" style="margin-top:6px">' + esc(GD.title || 'When Life Changes') + '</div>' + H2(ring.title) + gcard(ring)
-        : back(['cats'], 'Back to Learn') + '<div class="ggl-eb" style="margin-top:6px">How to Show Up</div>' + H2(GD.title || 'When Life Changes') + (GD.intro ? '<p class="ggl-muted">' + esc(GD.intro) + '</p>' : '')
-          + '<div class="ggl-cats">' + gd.map(function (t) { var w = watched([t]); return '<button class="ggl-card ggl-cat" data-l="ring" data-v="' + esc(t.id) + '"><h3>' + esc(t.title) + '</h3><p class="ggl-cat-n">' + t.lessons.length + ' videos' + (w ? ', ' + w + ' watched' : '') + '<span class="ggl-cat-go">' + IC.play + '</span></p></button>'; }).join('') + '</div>';
-    } else html = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1><p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>'
-      + '<h2 class="ggl-sr">Videos</h2>' + voiceCard()
-      + (cats.length ? '<div class="ggl-cats">' + cats.map(catCard).join('') + '</div>' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>')
-      + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
-      + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
-    el.innerHTML = html;
+    var catCard = function (c) { return '<button class="ggl-card ggl-cat" data-l="' + (c.door ? 'door' : 'cat') + '" data-v="' + c.k + '"><span class="ggl-eb">' + esc(c.eb) + '</span><h3>' + esc(c.title) + '</h3>' + (c.intro ? '<p class="ggl-muted" style="margin:0">' + esc(c.intro) + '</p>' : '') + '<p class="ggl-cat-n">' + esc(c.n) + '<span class="ggl-cat-go">' + (c.door ? IC.go : IC.play) + '</span></p></button>'; };
+    // When Life Changes is one door (GWG BLD 790): where the tree shows its When Life Changes cards in the page, the card
+    // and its tab close Learn and open them there. Elsewhere the videos stay in Learn as before.
+    var door = lcDoor(app), guides = {};
+    gd.forEach(function (t) { t.lessons.forEach(function (l) { guides[l.guide || l.id] = 1; }); });
+    var nGuides = Object.keys(guides).length, gw = watched(gd);
+    cats.forEach(function (c) { if (c.k === 'gd' && door) { c.door = true; c.n = nGuides + (nGuides === 1 ? ' guide' : ' guides') + ', each with two short videos' + (gw ? ', ' + gw + ' watched' : ''); } });
+    var cat = APP.cat && cats.some(function (c) { return c.k === APP.cat && !c.door; }) ? APP.cat : null, q = String(APP.q || '');
+    // The top: the search bar and a tab for each category (All first). Search looks across every listed track.
+    var chip = function (k, label, on, isDoor) { return '<button type="button" class="ggl-chip' + (on ? ' on' : '') + '" aria-pressed="' + (on ? 'true' : 'false') + '" data-l="' + (isDoor ? 'door' : k ? 'cat' : 'cats') + '"' + (k ? ' data-v="' + k + '"' : '') + (isDoor ? ' aria-label="' + esc(label) + ', opens the guides in ' + esc(meta.name) + '"' : '') + '>' + esc(label) + (isDoor ? IC.go : '') + '</button>'; };
+    var top = cats.length ? '<div class="ggl-find" role="search"><input class="ggl-q" id="ggl-q" type="search" placeholder="Search the lessons and videos" aria-label="Search Learn ' + esc(meta.name) + '" value="' + esc(q) + '" enterkeyhint="search" autocomplete="off">'
+      + '<div class="ggl-chips" role="group" aria-label="Learn categories">' + chip('', 'All', !cat) + cats.map(function (c) { return chip(c.k, c.title, cat === c.k, c.door); }).join('') + '</div></div><p class="ggl-sr" id="ggl-qn" aria-live="polite"></p>' : '';
+    var head = '<div class="ggl-eb">Learn</div><h1>' + esc(L.title || ('Learn ' + meta.name)) + '</h1>' + (cat ? '' : '<p class="ggl-muted">' + esc(L.intro || 'Short animated lessons, narrated aloud. Watch them in any order, as often as you like.') + '</p>');
+    var catHtml = function () {
+      if (cat === 'les') return '<div class="ggl-eb" style="margin-top:18px">Lessons</div>' + H2(L.lessonsTitle || 'Learn Step by Step') + (all ? '<p style="margin-top:6px"><b>' + fin + ' of ' + all + '</b> lessons finished on this device.</p>' : '') + tr.map(card).join('');
+      if (cat === 'sup') return '<div class="ggl-eb" style="margin-top:18px">' + esc(S.eyebrow || 'Support') + '</div>' + H2(S.title || 'Support for Right Now') + (S.intro ? '<p class="ggl-muted">' + esc(S.intro) + '</p>' : '') + sup.map(card).join('');
+      if (cat === 'gd') {
+        var ring = APP.ring ? gd.filter(function (t) { return t.id === APP.ring; })[0] : null;
+        return ring ? '<div style="margin-top:12px">' + back(['cat', 'gd'], 'Back to ' + (GD.title || 'When Life Changes')) + '</div><div class="ggl-eb" style="margin-top:6px">' + esc(GD.title || 'When Life Changes') + '</div>' + H2(ring.title) + gcard(ring)
+          : '<div class="ggl-eb" style="margin-top:18px">How to Show Up</div>' + H2(GD.title || 'When Life Changes') + (GD.intro ? '<p class="ggl-muted">' + esc(GD.intro) + '</p>' : '')
+            + '<div class="ggl-cats">' + gd.map(function (t) { var w = watched([t]); return '<button class="ggl-card ggl-cat" data-l="ring" data-v="' + esc(t.id) + '"><h3>' + esc(t.title) + '</h3><p class="ggl-cat-n">' + t.lessons.length + ' videos' + (w ? ', ' + w + ' watched' : '') + '<span class="ggl-cat-go">' + IC.play + '</span></p></button>'; }).join('') + '</div>';
+      }
+      return '<h2 class="ggl-sr">Videos</h2>' + voiceCard()
+        + (cats.length ? '<div class="ggl-cats">' + cats.map(catCard).join('') + '</div>' : '<div class="ggl-card"><p>New lessons are on the way. Check back soon.</p></div>')
+        + '<div class="ggl-card"><h3>Share ' + esc(meta.name) + '</h3><p class="ggl-muted">Print a one-page flyer for a bulletin board at school, church, or work. Its QR code opens ' + esc(meta.name) + '.</p><div class="ggl-row"><button class="ggl-btn" data-l="flyer">' + IC.print + 'Print the ' + esc(meta.name === 'The Grove' ? 'Grove' : meta.name) + ' Flyer</button></div></div>'
+        + '<p class="ggl-muted" style="font-size:14px;margin-top:16px">Lessons are optional. Your progress stays on this device and goes along in your Grow With Grounded backup.</p>';
+    };
+    // Search results: every word typed appears in the title, the blurb, or the track's name. The listed tracks only, so
+    // a low-key track (Living Sober) is found once it is chosen, like the list.
+    var results = function (qq) {
+      var ws = qq.toLowerCase().split(/\s+/).filter(Boolean), out = [], hit = function (t) { t = t.toLowerCase(); return ws.every(function (w) { return t.indexOf(w) >= 0; }); };
+      tracksFor(app).filter(function (t) { return !t.unlisted; }).forEach(function (t) {
+        var gv = t.kind === 'guide', where = gv ? (GD.title || 'When Life Changes') + ', ' + t.title : t.kind === 'support' ? (S.title || 'Support for Right Now') + ', ' + t.title : t.title;
+        t.lessons.forEach(function (l) { if (hit([l.title, l.guideTitle, l.blurb, l.sideName, t.title, where].join(' '))) out.push({ l: l, t: t, gv: gv, where: where }); });
+        (t.pages || []).map(function (id) { return pageOf(app, id); }).filter(Boolean).forEach(function (p) { if (hit([p.title, p.blurb, t.title].join(' '))) out.push({ p: p, where: t.title }); });
+      });
+      var n = out.length;
+      var body = n ? '<div class="ggl-card ggl-res"><h3>' + n + (n === 1 ? ' match' : ' matches') + '</h3><div class="ln-list">' + out.map(function (x) {
+        if (x.p) return '<button class="ln-item" data-l="page" data-v="' + esc(x.p.id) + '"><span class="ln-n">' + IC.page + '</span><span class="ln-t"><b>' + esc(x.p.title) + '</b><span class="ggl-res-k">' + esc(x.where) + ', A Page to Read</span><small>About ' + esc(String(x.p.mins || 3)) + ' minutes to read.</small></span>' + IC.page + '</button>';
+        var l = x.l, sp = x.t.kind === 'support', d = !!D.done[l.id] && !sp;
+        return '<button class="ln-item' + (d ? ' done' : '') + '" data-l="open" data-v="' + esc(l.id) + '"><span class="ln-n">' + (d ? IC.check : IC.play) + '</span><span class="ln-t"><b>' + esc(x.gv ? (l.guideTitle || l.title) : l.title) + '</b><span class="ggl-res-k">' + esc(x.where) + (x.gv && l.sideName ? ', ' + esc(l.sideName) : '') + '</span><small>' + (l.blurb && !x.gv ? esc(l.blurb) + ' ' : '') + 'About ' + esc(String(l.mins || 2)) + ' minutes' + (d ? '. Watched.' : '') + '</small></span>' + IC.play + '</button>';
+      }).join('') + '</div></div>'
+        : '<div class="ggl-card ggl-res"><p style="margin:0">Try another word for \u201c' + esc(qq) + '\u201d, or tap a category above to browse.</p></div>';
+      return { n: n, html: body };
+    };
+    var paint = function () {
+      var qq = String(APP.q || '').trim(), box = $('#ggl-body', el), live = $('#ggl-qn', el); if (!box) return;
+      if (qq) { var r = results(qq); box.innerHTML = r.html; if (live) live.textContent = r.n + (r.n === 1 ? ' match' : ' matches'); }
+      else { box.innerHTML = catHtml(); if (live) live.textContent = ''; }
+    };
+    APP.paint = paint;
+    el.innerHTML = head + top + '<div id="ggl-body"></div>';
+    paint();
     APP.root.scrollTop = 0; var h = $('h1', el); if (h) { h.tabIndex = -1; h.focus({ preventScroll: true }); }
+  }
+  // The tree's own When Life Changes view, when it has one in the page (GWG BLD 790). A tree can name its own opener as
+  // window.GG_LC_OPEN[app]() (it opens the All cards); otherwise Learn uses the tree's own tab opener. Null keeps the videos in Learn.
+  // The browser puts the page back where it was when Learn opened, so Learn then brings the guides into view itself.
+  function lcDoor(app) {
+    var W = window, own = (W.GG_LC_OPEN || {})[app], fn = null, at = null;
+    if (typeof own === 'function') fn = function () { own(); };
+    else if ((app === 'maple' || app === 'aspen') && typeof W.go === 'function' && document.getElementById('view-life')) { fn = function () { W.go('life'); }; at = '#view-life'; }
+    else if (/^(pine|birch|oak|sequoia)$/.test(app) && typeof W.lcOpen === 'function' && document.getElementById('client-life')) { fn = function () { W.lcOpen('client', null); }; at = '#client-life'; }
+    else if (app === 'willow' && W.W && typeof W.W.go === 'function' && document.getElementById('w-view')) { fn = function () { try { if (W.W.S && W.W.S.guide) W.W.S.guide.open = null; } catch (e) {} W.W.go('guides'); }; at = '#w-view'; }
+    else if (app === 'grove' && document.querySelector('#tabs [data-tab="life"]')) { fn = function () { var t = document.querySelector('#tabs [data-tab="life"]'); if (t) t.click(); else location.hash = '#life'; }; at = '#app'; }
+    if (!fn) return null;
+    return function () {
+      fn();
+      if (at) setTimeout(function () {
+        var v = document.querySelector(at); if (!v) return;
+        try {
+          var to = function (y) { window.scrollTo({ top: Math.max(0, y), behavior: 'instant' }); }, y = v.getBoundingClientRect().top + window.scrollY;
+          to(y);
+          // A sticky bar across the top (a tree's tab bar) keeps the heading in view below it.
+          for (var n = document.elementFromPoint(innerWidth / 2, 2); n && n !== document.body; n = n.parentElement) {
+            var ps = getComputedStyle(n).position; if (ps === 'fixed' || ps === 'sticky') { var bt = n.getBoundingClientRect().bottom; if (bt > 0 && bt < innerHeight / 2) to(y - bt - 8); break; }
+          }
+        } catch (e) {}
+      }, 140);
+    };
   }
   function lesson(id, fromPop) {
     var app = APP.app, f = find(app, id); if (!f) return list(fromPop);
@@ -1224,13 +1303,26 @@
   }
   // GGLearn.page(app, id): open a written page in the app's Learn.
   function page(app, id) { open(app, null, { page: id }); }
+  // After a tab is tapped, focus stays on that tab (the list redraws under it).
+  function chipFocus(b) {
+    if (!APP || !b || !b.classList || !b.classList.contains('ggl-chip')) return;
+    var v = b.getAttribute('data-v'), n = APP.root.querySelector('.ggl-chip[data-l="' + b.getAttribute('data-l') + '"]' + (v ? '[data-v="' + v + '"]' : ':not([data-v])'));
+    if (n) try { n.focus({ preventScroll: true }); } catch (e) {}
+  }
+  // Typing in the search bar redraws the results only, so the cursor stays put. Health and Ability videos load on the first word.
+  function appInput(e) {
+    var t = e.target; if (!APP || !t || t.id !== 'ggl-q') return;
+    APP.q = t.value; if (APP.paint) APP.paint();
+    if (t.value && !APP.lifeAsked) { APP.lifeAsked = true; var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.view === 'list' && APP.q && APP.paint) APP.paint(); }); }
+  }
   function appClick(e) {
     var b = e.target.closest('[data-l]'); if (!b || !APP) return;
     var a = b.getAttribute('data-l'), v = b.getAttribute('data-v');
     if (a === 'close') close();
     else if (a === 'home') goList();
-    else if (a === 'cats') { APP.cat = null; APP.ring = null; list(); }
-    else if (a === 'cat') { APP.cat = v; APP.ring = null; if (v === 'sup') { var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.cat === 'sup') list(); }); } else list(); }
+    else if (a === 'cats') { APP.cat = null; APP.ring = null; APP.q = ''; list(); chipFocus(b); }
+    else if (a === 'cat') { APP.cat = v; APP.ring = null; APP.q = ''; if (v === 'sup') { var at = APP.app; needLife(at).then(function () { if (APP && APP.app === at && APP.cat === 'sup') { list(); chipFocus(b); } }); } else { list(); chipFocus(b); } }
+    else if (a === 'door') { var dr = lcDoor(APP.app); if (dr) closeThen(dr); else { APP.cat = 'gd'; APP.ring = null; APP.q = ''; list(); } }
     else if (a === 'ring') { APP.cat = 'gd'; APP.ring = v; list(); }
     else if (a === 'open') lesson(v);
     else if (a === 'page') showPage(v);

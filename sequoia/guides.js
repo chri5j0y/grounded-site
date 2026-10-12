@@ -3395,6 +3395,10 @@ const LC_TOPICS = [
    [
     "NAMI (National Alliance on Mental Illness)",
     "https://www.nami.org"
+   ],
+   [
+    "Sequoia: When Your Adult Child Drinks or Uses (Living Sober)",
+    "/sequoia/#life=sober-adult-child"
    ]
   ]
  },
@@ -5174,7 +5178,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "change",
    "early"
   ],
-  "title": "Drinking in retirement and loneliness",
+  "title": "Drinking in Retirement and Loneliness",
   "keys": "drinking more retired retirement lonely loneliness alone drinking alone evenings wine beer cocktails happy hour five o clock drink a day too much alcohol cutting back cut down quit drinking stop drinking sober sobriety thinking about a change widow widower bored empty days grief drinking to sleep nightcap hangover falls",
   "parts": [
    "leaves",
@@ -5284,7 +5288,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "pain"
   ],
   "sober": [],
-  "title": "Medications, pain pills, and alcohol",
+  "title": "Medications, Pain Pills, and Alcohol",
   "keys": "pain pills painkillers opioids oxycodone hydrocodone norco vicodin percocet tramadol oxy sleeping pills benzodiazepines xanax valium ativan klonopin anxiety pills mixing alcohol and medicine drinking with medication surgery dental work root canal prescription too many pills taking more than prescribed running out early tolerance withdrawal overdose naloxone narcan sober sobriety recovery staying sober after surgery",
   "parts": [
    "leaves",
@@ -5394,7 +5398,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "sober": [
    "love"
   ],
-  "title": "When your adult child drinks or uses",
+  "title": "When Your Adult Child Drinks or Uses",
   "keys": "my son drinks my daughter drinks adult child drinking using drugs addiction alcohol opioids pills meth heroin fentanyl overdose rehab treatment detox borrowing money asking for money lying stealing worried sick cant sleep enabling tough love cut off al-anon nar-anon smart recovery family and friends craft grown child substance use recovery sober",
   "parts": [
    "branches",
@@ -5490,6 +5494,10 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "Community Reinforcement and Family Training (CRAFT), Robert J. Meyers",
     "https://www.robertjmeyersphd.com/cra-approach/community-reinforcement-and-family-training-approach"
+   ],
+   [
+    "Sequoia: Worry About Adult Children",
+    "/sequoia/#life=worry-adult-children"
    ]
   ],
   "sources": [
@@ -5506,7 +5514,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "sober": [
    "love"
   ],
-  "title": "Raising grandchildren through a parent's drinking or using",
+  "title": "Raising Grandchildren Through a Parent's Drinking or Using",
   "keys": "raising grandchildren grandkids live with me grandparent raising grandkids kinship care grandfamilies custody guardianship my son my daughter drinking using drugs addiction opioids meth overdose in treatment in jail parent visits what to tell the kids explaining to children seven cs alateen nacoa tired too old for this money worries sober recovery",
   "parts": [
    "branches",
@@ -5622,7 +5630,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "long",
    "growing"
   ],
-  "title": "Long-term sober, still growing",
+  "title": "Long-Term Sober, Still Growing",
   "keys": "long term sober years sober decades sober sobriety anniversary sober birthday chip still growing recovery old cravings craving again after surgery pain pills retirement grief losses swapped habits food shopping work religion pride sponsor mentor giving back aa na smart recovery refuge recovery healing old wounds painful emotions staying sober later life",
   "parts": [
    "bark",

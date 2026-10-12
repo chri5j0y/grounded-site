@@ -1208,7 +1208,7 @@ function renderLC(mode) {
       <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes a long life brings, written for later life. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.</p>
     </div>
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: retirement, grief, a fall, memory..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
-    <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
+    <div class="lc-chips no-print" id="${mode}-lc-chips" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
       ${lcSoberChip(mode)}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>` : ''}
@@ -1224,25 +1224,84 @@ function lcRenderList(mode) {
   const st = LCS[mode];
   const box = document.getElementById(mode + '-lc-list');
   if (!box) return;
-  document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
-  let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
+  lcCss();
   const sob = lcSober() || (st.q && window.GGLife ? GGLife.ring('sequoia') : null); // a search looks in every ring
   if (st.ring === 'sober' && !sob) st.ring = 'all';
-  (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
+  if (st.ring === 'life' && !LC_LIFE) st.ring = 'all';
+  document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
+  const rings = (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE ? [LC_LIFE] : []);
+  // The All view (GWG BLD 790): one card per group, like Learn's category cards.
+  if (st.ring === 'all' && !st.q) { box.innerHTML = LC_TOPICS.length ? lcPickedHtml(mode) + lcGroupsHtml(mode, rings) : ''; return; }
+  let html = '', n = 0;
+  rings.filter(r => st.ring === 'all' ? r.key !== 'life' : r.key === st.ring).forEach(r => {
+    const ts = lcRingTopics(r).filter(t => lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
-    html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
-      <article class="lc-card" style="--rc:${r.color}">
-        <span class="lc-label">Hard season</span>
-        <h4>${lcEsc(t.title)}</h4>
-        ${lcList(t.quick)}
-        <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
-        <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
-      </article>`).join('')}</div></div>`;
+    html += `<div class="lc-ring" style="--rc:${r.color}"><h3 tabindex="-1"><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => lcCardHtml(mode, t, r.color)).join('')}</div></div>`;
   });
-  if (st.ring === 'all' && n) html += lcLifeRingHtml(mode);
-  box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+  const back = st.ring !== 'all' ? `<button type="button" class="lc-back lc-allg no-print" onclick="lcGo('${mode}','all')">&larr; All Groups</button>` : '';
+  box.innerHTML = n ? back + html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+}
+/* Group cards and guide cards (GWG BLD 790). A group card is the same as its tab; All Groups returns to the cards.
+   A guide card carries its title, one short line, Read, and the two video buttons where the guide has them. */
+function lcRingTopics(r) { return LC_TOPICS.filter(t => r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key); }
+function lcGroupsHtml(mode, rings) {
+  return `<div class="lc-groups" role="list" aria-label="Groups of guides">${rings.map(r => { const c = lcRingTopics(r).length; return c ? `<div role="listitem"><button type="button" class="lc-group" style="--rc:${r.color}" data-ring="${r.key}" onclick="lcGo('${mode}','${r.key}')">
+      <span class="lc-group-t">${lcEsc(r.name)}</span><span class="lc-group-b">${lcEsc(r.blurb)}</span><span class="lc-group-n"><i></i>${c} ${c === 1 ? 'guide' : 'guides'}</span></button></div>` : ''; }).join('')}</div>`;
+}
+function lcGo(mode, key) {
+  const prev = LCS[mode].ring;
+  LCS[mode].ring = key;
+  lcRenderList(mode);
+  const box = document.getElementById(mode + '-lc-list'); if (!box) return;
+  const f = key === 'all' ? box.querySelector('.lc-group[data-ring="' + prev + '"]') : box.querySelector('.lc-allg');
+  if (f) f.focus({ preventScroll: true });
+  scrollToViewTop(mode + '-lc-chips', true, false);
+}
+function lcOne(t) {
+  const s = String((t.quick && t.quick[0]) || t.feel || '');
+  if (s.length <= 120) return s;
+  const cut = s.slice(0, 117); return cut.slice(0, cut.lastIndexOf(' ')).replace(/[,;:.]$/, '') + '...';
+}
+function lcCardHtml(mode, t, color, ringName, panel) {
+  const go = panel ? `data-open="${t.id}"` : `onclick="lcOpen('${mode}','${t.id}')"`;
+  const v = SQ_VIDS.includes(t.id) ? [['you', 'For You'], ['helper', 'For the Helper']].map(([side, name]) => { const w = lcVidWatched('sq-g-' + t.id + '-' + side);
+    return `<button type="button" class="btn btn-secondary" aria-label="Watch ${name}: ${lcEsc(t.title)}${w ? ', watched' : ''}" onclick="lcWatch('${t.id}','${side}')">${w ? '&#10003;' : '&#9654;'} ${name}</button>`; }).join('') : '';
+  return `<article class="lc-card" style="--rc:${color}">
+        ${ringName ? `<span class="lc-label"><i></i>${lcEsc(ringName)}</span>` : ''}
+        <h4>${lcEsc(t.title)}</h4>
+        <p class="lc-one">${lcEsc(lcOne(t))}</p>
+        <div class="lc-card-btns no-print"><button type="button" class="btn btn-primary" aria-label="Read: ${lcEsc(t.title)}" ${go}>Read</button>${v}</div>
+      </article>`;
+}
+/* Search results as guide cards across every ring, each with its ring name (the search engine ranks them). */
+function lcFoundHtml(mode, items) {
+  lcCss();
+  return `<div class="lc-grid lc-found">${items.map(it => LC_TOPICS.find(t => t.id === it.id)).filter(Boolean).map(t => { const r = lcRing(t.ring); return lcCardHtml(mode, t, r.color, r.name, true); }).join('')}</div>`;
+}
+/* The card styles live here so Sequoia's page needs no other change (the same rules as Oak's). */
+function lcCss() {
+  if (document.getElementById('lc-cards-css')) return;
+  const el = document.createElement('style'); el.id = 'lc-cards-css';
+  el.textContent = `.lc-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;margin-top:22px;}
+.lc-groups > div{display:flex;}
+.lc-group{display:flex;flex-direction:column;gap:6px;width:100%;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:7px solid var(--rc);border-radius:14px;padding:16px 18px 14px;cursor:pointer;transition:border-color .15s,transform .15s;}
+.lc-group:hover{border-color:var(--rc);transform:translateY(-1px);}
+.lc-group:focus-visible,.lc-card .btn:focus-visible,.lc-allg:focus-visible{outline:3px solid var(--gold);outline-offset:3px;}
+.lc-group-t{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:24px;line-height:1.15;}
+.lc-group-b{font-size:15px;line-height:1.45;color:var(--ink-soft);}
+.lc-group-n{display:flex;align-items:center;gap:8px;margin-top:auto;padding-top:6px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink);}
+.lc-group-n i,.lc-card .lc-label i{width:10px;height:10px;border-radius:50%;background:var(--rc);flex:none;display:inline-block;}
+.lc-card .lc-label{display:flex;align-items:center;gap:7px;}
+.lc-card .lc-one{margin:0;font-size:15px;line-height:1.5;color:var(--ink);}
+.lc-card-btns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px;}
+.lc-card .lc-card-btns .btn{margin-top:0;padding:9px 14px;}
+.lc-allg{margin-top:22px;}
+.lc-allg + .lc-ring{margin-top:14px;}
+.lc-ring h3:focus{outline:none;}
+.lc-found{margin-top:10px;}
+.ggf .ss-group .lc-card h4{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1.2;letter-spacing:normal;text-transform:none;color:var(--ink);margin:0;}`;
+  document.head.appendChild(el);
 }
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    sequoia/guides.js, and Picked for You at the top when the person has made a choice. */
@@ -1257,16 +1316,12 @@ function lcPickedHtml(mode) {
   const ts = window.GGLifeKit ? GGLifeKit.picked('sequoia', LC_TOPICS) : [];
   return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
-function lcLifeRingHtml(mode) {
-  const ts = LC_LIFE ? GGLifeKit.lifeOnly(LC_TOPICS) : [];
-  return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
-}
 if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) renderLC('client'); });
 /* Search: the same engine as the header search. Sequoia's guides first, then the rest of Grow With Grounded. */
 function lcFind(el, mode) {
   LCS[mode].q = ''; LCS[mode].find = el.value;
   if (!window.GGFind) return;
-  GGFind(el, { here: 'sequoia', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through',
+  GGFind(el, { here: 'sequoia', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through', localLabel: 'Guides in Sequoia', localHTML: items => lcFoundHtml(mode, items),
     hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)' });
 }
 function lcOpen(mode, id) {
@@ -1312,7 +1367,7 @@ function lcDetail(mode, t) {
       <h3>Caring for yourself as the helper</h3><p>${lcEsc(t.helper.you)}</p>`;
   return `<article class="lc-article" id="${mode}-lc-article" style="--rc:${r.color}">
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px">
-      <button class="lc-back" onclick="lcClose('${mode}')">Back to all guides</button>
+      <button class="lc-back" onclick="lcClose('${mode}')">${st.ring !== 'all' && lcRing(st.ring).name ? 'Back to ' + lcEsc(lcRing(st.ring).name) : 'Back to all guides'}</button>
       <button class="btn btn-secondary" onclick="printGrowthPlan('${mode}-lc-article')">Save or Print This Guide</button>
     </div>
     <span class="lc-tag">${lcEsc(r.name)}</span>
@@ -1328,7 +1383,7 @@ function lcDetail(mode, t) {
     <h3>Using Sequoia</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
     ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p>` : ''}
     <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
-    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
+    ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}"${/^\/sequoia\/#/.test(u) ? '' : ' target="_blank" rel="noopener"'}>${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
     ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}
     ${lcSourcesHtml(t)}
     <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
@@ -1350,7 +1405,7 @@ function lcWatch(gid, side) { if (window.GGLearn) GGLearn.open('sequoia', 'sq-g-
 // gg-learn's Open the Full Guide button lands here.
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.sequoia = id => { if (LC_TOPICS.some(t => t.id === id)) lcOpen('client', id); };
-['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (LCS.client.open && document.getElementById('client-life')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } }));
+['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (!document.getElementById('client-life')) return; const y = window.scrollY; if (LCS.client.open) renderLC('client'); else if (LCS.client.ring !== 'all') lcRenderList('client'); else return; window.scrollTo(0, y); }));
 /* After a check-in: guides that touch the parts carrying the most, two per part, lowest part first. */
 function lcSuggestHtml(scores) {
   const low = PART_ORDER.filter(k => scores[k] <= 4).sort((a, b) => scores[a] - scores[b]);

@@ -17633,7 +17633,7 @@ var V = [
        "Sleep, water, food, outside"
       ],
       [
-       "Sober Night",
+       "Family Night",
        "A meal, a walk, a game"
       ],
       [
@@ -17641,7 +17641,7 @@ var V = [
        "Kids have them too"
       ]
      ],
-     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A Family Sober Night each week, with a meal, a walk, or a game. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
+     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A weekly Family Night, with a meal, a walk, or a game, and small good moments on ordinary days too. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
     },
     {
      "k": "words",
@@ -17751,10 +17751,10 @@ var V = [
       ],
       [
        "The family",
-       "Sober Night, together"
+       "Family Night, together"
       ]
      ],
-     "say": "Healing goes better when everyone has support. The person growing sober, with their own plan and their own people. The other grown-ups, through Al-Anon, Nar-Anon, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good sober time together."
+     "say": "Healing goes better when everyone has support. The person growing sober, with their own plan and their own people. The other grown-ups, through Al-Anon, Nar-Anon, or a therapist. The children, through Alateen or a school counselor. And the whole family, with a weekly Family Night together."
     },
     {
      "k": "card",

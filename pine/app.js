@@ -1001,30 +1001,89 @@ function lcRenderList(mode) {
   const st = LCS[mode];
   const box = document.getElementById(mode + '-lc-list');
   if (!box) return;
+  lcCss();
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
-  let html = '', n = 0;
-  const card = (t, col, label) => `
-      <article class="lc-card" style="--rc:${col}">
-        <span class="lc-label">${label || 'Hard season'}</span>
+  let html = '';
+  const ringBlock = (r, ts, label) => `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => lcGuideCard(mode, t, label)).join('')}</div></div>`;
+  const groups = lcGroups();
+  if (st.ring !== 'all' && !groups.some(g => g.r.key === st.ring)) st.ring = 'all';
+  if (st.ring === 'all') {
+    // Picked for You: guides tagged for the teen's Health and Ability choice, first, then one card per group.
+    const picks = lifeOn() ? GGLife.picks('pine', LC_TOPICS).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+    if (picks.length) html += ringBlock({ name: 'Picked for You', color: LC_LIFE.color, blurb: 'Guides that fit what you chose in Health and Ability. Every guide stays open to you.' }, picks, 'Picked for You');
+    if (groups.length) html += `<div class="lc-groups" role="group" aria-label="Guide groups">${groups.map(g => lcGroupCard(mode, g.r, g.ts.length)).join('')}</div>`;
+  } else {
+    const g = groups.find(x => x.r.key === st.ring);
+    html += `<p class="lc-allgroups no-print"><button type="button" class="lc-back" onclick="lcAllGroups('${mode}','${g.r.key}')">All Groups</button></p>` + ringBlock(g.r, g.ts, g.r.key === 'life' ? 'Health and Ability' : '');
+  }
+  box.innerHTML = html;
+}
+/* When Life Changes as Cards (GWG BLD 790): with no search and the All tab, each group the teen can see shows as one
+   card (its color, name, short line, and how many guides). A card opens that group just like its tab; All Groups
+   comes back to the cards. Living Sober's card shows only when it is chosen in Settings. */
+function lcGroups() {
+  const sob = lcSober(), out = [];
+  if (sob) out.push({ r: sob, ts: LC_TOPICS.filter(lcIsSober) });
+  LC_RINGS.forEach(r => { const ts = LC_TOPICS.filter(t => t.ring === r.key); if (ts.length) out.push({ r, ts }); });
+  const life = lcLifeTopics();
+  if (life.length) out.push({ r: LC_LIFE, ts: life });
+  return out;
+}
+function lcShort(s, n) {
+  s = String(s || '').trim();
+  const m = s.match(/^.*?[.!?](?=\s|$)/), f = m && m[0].length >= 40 ? m[0] : s;
+  if (f.length <= n) return f;
+  const c = f.slice(0, n);
+  return c.slice(0, c.lastIndexOf(' ')).replace(/[,;:]$/, '') + '…';
+}
+function lcGroupCard(mode, r, n) {
+  return `<button type="button" class="lc-group" style="--rc:${r.color}" data-group="${r.key}" onclick="lcGroup('${mode}','${r.key}')">
+      <span class="lc-group-name">${lcEsc(r.name)}</span>
+      <span class="lc-group-blurb">${lcEsc(r.blurb)}</span>
+      <span class="lc-group-n">${n} ${n === 1 ? 'guide' : 'guides'}</span>
+    </button>`;
+}
+function lcGuideCard(mode, t, label) {
+  const r = lcRing(t.ring), col = r.color || 'var(--gold)', v = PN_VIDS.includes(t.id);
+  const w = side => lcVidWatched('pn-g-' + t.id + '-' + side) ? '&#10003;' : '&#9654;';
+  return `
+      <article class="lc-card lc-gcard" style="--rc:${col}">
+        <span class="lc-label">${lcEsc(label || r.name || 'Hard season')}</span>
         <h4>${lcEsc(t.title)}</h4>
-        ${lcList(t.quick)}
-        <p class="lc-meta">Parts of the tree often affected: ${lcEsc(lcPartsText(t))}.</p>
-        <button class="btn btn-secondary" onclick="lcOpen('${mode}','${t.id}')">Talking It Through</button>
+        <p class="lc-line">${lcEsc(lcShort((t.quick || [])[0] || t.feel, 130))}</p>
+        <div class="lc-gbtns">
+          <button type="button" class="btn btn-primary btn-sm" onclick="lcOpen('${mode}','${t.id}')" aria-label="Read: ${lcEsc(t.title)}">Read</button>
+          ${v ? `<button type="button" class="btn btn-secondary btn-sm no-print" onclick="lcWatch('${t.id}','you')" aria-label="Watch For You: ${lcEsc(t.title)}">${w('you')} For You</button>
+          <button type="button" class="btn btn-secondary btn-sm no-print" onclick="lcWatch('${t.id}','helper')" aria-label="Watch For the Grown-up: ${lcEsc(t.title)}">${w('helper')} For the Grown-up</button>` : ''}
+        </div>
       </article>`;
-  const ringBlock = (r, ts, label) => `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => card(t, (lcRing(t.ring) || r).color || r.color, label)).join('')}</div></div>`;
-  // Picked for You: guides tagged for the teen's Health and Ability choice, first.
-  const picks = st.ring === 'all' && !st.q && lifeOn() ? GGLife.picks('pine', LC_TOPICS).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean) : [];
-  if (picks.length) html += ringBlock({ name: 'Picked for You', color: LC_LIFE.color, blurb: 'Guides that fit what you chose in Health and Ability. Every guide stays open to you.' }, picks, 'Picked for You');
-  const sob = lcSober() || (st.q && lifeOn() ? GGLife.ring('pine') : null); // a search looks in every ring
-  (sob ? [sob] : []).concat(LC_RINGS).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
-    if (!ts.length) return;
-    n += ts.length;
-    html += ringBlock(r, ts);
-  });
-  // The Health and Ability ring: every guide tagged for any choice, open to everyone.
-  if (st.ring === 'all' || st.ring === 'life') { const ts = lcLifeTopics().filter(t => lcMatches(t, st.q)); if (ts.length) { n += ts.length; html += ringBlock(LC_LIFE, ts, 'Health and Ability'); } }
-  box.innerHTML = n ? html : LC_TOPICS.length ? `<div class="lc-none"><p>No guides match “${lcEsc(st.q)}.” Try another word, or browse all topics.</p></div>` : '';
+}
+function lcGroup(mode, key) {
+  LCS[mode].ring = key; lcRenderList(mode);
+  const b = document.querySelector('#' + mode + '-life .lc-allgroups button');
+  if (b) { b.focus({ preventScroll: true }); const c = document.querySelector('#' + mode + '-life .lc-chips'); (c || b).scrollIntoView({ block: 'start', behavior: 'smooth' }); }
+}
+function lcAllGroups(mode, from) {
+  LCS[mode].ring = 'all'; lcRenderList(mode);
+  const b = document.querySelector('#' + mode + '-life .lc-group[data-group="' + from + '"]');
+  if (b) { b.focus({ preventScroll: true }); b.scrollIntoView({ block: 'center', behavior: 'smooth' }); }
+}
+function lcCss() {
+  if (document.getElementById('lc-cards-css')) return;
+  const s = document.createElement('style'); s.id = 'lc-cards-css';
+  s.textContent = '.lc-groups{display:grid;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));gap:14px;margin-top:24px;}' +
+    '.lc-group{display:flex;flex-direction:column;gap:6px;text-align:left;font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-left:6px solid var(--rc);border-radius:14px;padding:16px 18px;cursor:pointer;transition:border-color .2s,transform .2s;}' +
+    '.lc-group:hover{border-color:var(--rc);transform:translateY(-1px);}' +
+    '.lc-group:focus-visible,.lc-gcard .btn:focus-visible,.lc-allgroups .lc-back:focus-visible{outline:3px solid var(--rc,var(--gold));outline-offset:2px;}' +
+    '.lc-group-name{font-family:\'Cormorant Garamond\',serif;font-weight:700;font-size:24px;line-height:1.15;}' +
+    '.lc-group-blurb{font-size:15px;line-height:1.45;color:var(--ink-soft);}' +
+    '.lc-group-n{margin-top:auto;padding-top:4px;font-family:\'Barlow Condensed\',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--ink);display:flex;align-items:center;gap:8px;}' +
+    '.lc-group-n::before{content:"";width:10px;height:10px;border-radius:50%;background:var(--rc);flex:none;}' +
+    '.lc-allgroups{margin:22px 0 0;}.lc-allgroups + .lc-ring{margin-top:12px;}' +
+    '.lc-gcard .lc-line{margin:0;font-size:15px;line-height:1.5;color:var(--ink);}' +
+    '.lc-gbtns{display:flex;flex-wrap:wrap;gap:6px;margin-top:auto;padding-top:4px;}.lc-card .lc-gbtns .btn{margin-top:0;}' +
+    '.ggf .ss-local .lc-grid{margin-top:8px;}';
+  document.head.appendChild(s);
 }
 /* Search: the same engine as the header search. Pine's guides first, then the rest of Grow With Grounded
    (kid: 'pine' keeps results written only for adults out). */
@@ -1032,7 +1091,9 @@ function lcFind(el, mode) {
   LCS[mode].q = ''; LCS[mode].find = el.value;
   if (!window.GGFind) return;
   GGFind(el, { here: 'pine', kid: 'pine', localType: 'talk', open: id => lcOpen(mode, id), openLabel: 'Talking It Through',
-    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)' });
+    hide: ['#' + mode + '-lc-list', '#' + mode + '-life .lc-chips', '#' + mode + '-life .lc-soon'], accent: 'var(--gold)',
+    // BLD 790: Pine's own matches show as guide cards, across every group (Living Sober too), with the group's name on each.
+    localHTML: list => { lcCss(); return `<div class="lc-grid">${list.map(it => LC_TOPICS.find(t => t.id === it.id)).filter(Boolean).map(t => lcGuideCard(mode, t)).join('')}</div>`; } });
 }
 function lcOpen(mode, id) {
   mode = 'client';

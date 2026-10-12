@@ -19139,7 +19139,7 @@ window.GG_LEARN_GUIDES.oak = {
      ],
      "note": "From Chris's notebook",
      "hold": 2,
-     "say": "Chris, one of Grounded's founders, has been sober from alcohol for eighteen years. He says his sobriety has not been a straight line. After a cycling accident broke his hip, he was lost in pain pills for a few weeks. But he did not give up. Everything he had learned was still his, and it is still yours."
+     "say": "Chris, one of Grounded's founders, has been sober from alcohol for eighteen years. He says his sobriety has not been a straight line. After a cycling accident broke his hip, he was lost in pain pills for about a week. But he did not give up. Everything he had learned was still his, and it is still yours."
     },
     {
      "k": "big",

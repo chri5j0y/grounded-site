@@ -318,6 +318,34 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 .guide ul{padding-left:20px;}
 .src{font-size:.9em;}
 
+/* When Life Changes as cards (GWG BLD 790) */
+.ring-chips{display:flex;gap:6px;flex-wrap:wrap;margin:0 0 18px;}
+.ring-chip{font-weight:600;font-size:14px;border:2px solid var(--rc);background:var(--card);color:var(--ink);border-radius:999px;padding:5px 12px;cursor:pointer;}
+.ring-chip[aria-pressed="true"]{background:var(--rc);color:#fff;}
+.ring-chip[data-ring="all"][aria-pressed="true"]{color:var(--card);}
+.as-rcards{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;}
+@media(max-width:980px){ .as-rcards{grid-template-columns:repeat(2,minmax(0,1fr));} }
+@media(max-width:600px){ .as-rcards{grid-template-columns:1fr;} }
+.as-rcard{display:flex;flex-direction:column;gap:5px;text-align:left;background:var(--card);color:var(--ink);border:1px solid var(--line);border-left:10px solid var(--rc);border-radius:14px;padding:14px 16px;cursor:pointer;min-height:44px;transition:transform .15s,box-shadow .15s;}
+.as-rcard:hover{transform:translateY(-2px);box-shadow:0 6px 16px rgba(0,0,0,.08);}
+.as-rcard b{font-family:var(--serif);font-size:23px;line-height:1.15;}
+.as-rblurb{color:var(--ink-soft);font-size:15px;line-height:1.45;}
+.as-rcount,.as-rn{font-family:var(--cond);font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.as-rcount{margin-top:auto;padding-top:4px;}
+.as-rn{margin-left:6px;white-space:nowrap;}
+.as-cards-h{margin:28px 0 12px;}
+.as-gh{display:flex;align-items:center;gap:10px;margin:0 0 4px;}
+.as-gh i{width:14px;height:14px;border-radius:50%;background:var(--rc);flex:none;}
+#life-ring-h:focus{outline:none;}#life-ring-h:focus-visible{outline:3px solid var(--sun);outline-offset:3px;}
+.as-gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:10px;}
+.as-gcard{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--rc);border-radius:14px;padding:14px 16px;}
+.as-gcard h4,.ggf .ss-group .as-gcard h4{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.2;letter-spacing:0;text-transform:none;color:var(--ink);margin:0;}
+.as-gcard p{margin:0;font-size:15px;line-height:1.5;color:var(--ink-soft);}
+.as-glabel{font-family:var(--cond);font-weight:700;font-size:12px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.as-gbtns{display:flex;flex-wrap:wrap;gap:8px;margin-top:auto;padding-top:4px;}
+.as-gbtns .btn{min-height:44px;}
+@media (prefers-reduced-motion: reduce){ .as-rcard{transition:none;} .as-rcard:hover{transform:none;} }
+
 /* Calm card */
 .overlay{position:fixed;inset:0;background:rgba(8,30,32,.55);z-index:100;display:flex;align-items:center;justify-content:center;padding:18px;}
 .calm{background:var(--card);border-radius:20px;max-width:520px;width:100%;max-height:92vh;overflow:auto;padding:24px;border-top:6px solid var(--leaf);}
@@ -2116,14 +2144,76 @@ function asLifeMountG(s){
   // One quiet card after the student's first full check-in, shown to the grown-up here, at most once.
   if ((s.rings || []).some(isStd)) { const o = $('as-life-offer'); if (o) GGLife.offerCard(o, 'aspen', { forChild: true, onChoose: () => { const h = $('as-life-g'); if (h) h.scrollIntoView({ block: 'start' }); } }); }
 }
+/* When Life Changes as cards (GWG BLD 790): the search bar, then a chip for each group, then the All view as group cards
+   (the group's color, name, line, and how many guides). A card opens its group just like its chip; All Groups comes back.
+   Search draws guide cards across every group, the low-key ones too. */
+const AS_LOOK = {
+  'Home and Family': ['#B5562B', 'Big changes at home, from a new stepfamily or a move to a loss in the family.'],
+  'Friends and School': ['#2E7D46', 'Friendships, classes, teams, and finding their place in middle school.'],
+  'Growing Up and Online': ['#6E5BB5', 'A changing body, phones and group chats, and figuring out who they are.'],
+  'Big World, Hard News': ['#1F5F8B', 'Hard news and big events that reach into their world, met with steady grown-ups.'],
+  'Safety': ['#C0392B', 'The moments that matter most, when a student or a friend is hurting.'],
+  'Health and Ability': ['#2F6E8C', 'For a student living with a health condition, pain, a disability, or mental health, or with someone in the family who is. Open to every family.']
+};
+let AS_RING = 'all';
+const asKey = g => g.key || String(g.name).toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const asNGuides = n => n + (n === 1 ? ' guide' : ' guides');
+const asShort = (s, n) => { s = String(s || '').replace(/<[^>]*>/g, ''); n = n || 110; if (s.length <= n) return s; const c = s.slice(0, n); return c.slice(0, Math.max(c.lastIndexOf(' '), 40)).replace(/[,;:.]$/, '') + '…'; };
+// The groups this student's grown-ups see, in chip order: Living Sober first (only when chosen), the groups, then Health and Ability.
+function asGroupsShown(){
+  const sob = asSober(), LG = asLifeGroups();
+  const look = g => { const L = AS_LOOK[g.name] || []; return { key: asKey(g), name: g.name, color: g.key === 'sober' && sob ? sob.color : (L[0] || 'var(--hero)'), blurb: g.key === 'sober' && sob ? sob.blurb : (L[1] || ''), topics: g.topics }; };
+  return asOtherGroups().map(look).concat(LG.all.length ? [look({ key: 'life', name: AS_LIFE_GROUP, topics: LG.all })] : []);
+}
+// One guide's group (its own home in aspen/guides.js), for the card's label and color.
+function asHomeGroup(id){ const g = guidesData().groups.find(x => x.topics.some(t => t.id === id)); if (!g) return { name: '', color: 'var(--hero)' }; const sob = asSoberGroup(g) && window.GGLife ? GGLife.ring('aspen') : null; return sob ? { name: g.name, color: sob.color } : { name: g.name, color: (AS_LOOK[g.name] || [])[0] || 'var(--hero)' }; }
+function asGuideCard(t){
+  const h = asHomeGroup(t.id), vb = (side, name) => { const w = avVidWatched('as-g-' + t.id + '-' + side);
+    return `<button type="button" class="btn ghost small" onclick="avWatch('${t.id}','${side}')" aria-label="Watch ${name}: ${esc(t.title)}${w ? ', watched' : ''}">${w ? '&#10003;' : '&#9654;'} ${name}</button>`; };
+  return `<article class="as-gcard" style="--rc:${h.color}"><span class="as-glabel">${esc(h.name)}</span><h4>${esc(t.title)}</h4>${t.quick && t.quick[0] ? `<p>${esc(asShort(t.quick[0]))}</p>` : ''}
+    <div class="as-gbtns"><button type="button" class="btn small" onclick="go('guide',{id:'${t.id}'})" aria-label="Read the Guide: ${esc(t.title)}">Read the Guide</button>${AV_VIDS.includes(t.id) ? vb('you', 'For You') + vb('helper', 'For the Grown-up') : ''}</div></article>`;
+}
+const asGuideGrid = ts => `<div class="as-gcards">${ts.map(asGuideCard).join('')}</div>`;
 function renderLife(){
-  const G = guidesData();
+  const shown = asGroupsShown();
+  if (AS_RING !== 'all' && !shown.some(g => g.key === AS_RING)) AS_RING = 'all';
   $('view-life').innerHTML = `<h2>When Life Changes</h2>
     <p class="lede"><b>How to show up.</b> Guides for grown-ups talking with a middle schooler about hard things. Each has a quick card for right now and a full "Talking It Through" guide, with trusted sources.</p>
     <input class="life-search" id="life-search" type="search" placeholder="Search: vaping, group chats, grief, bullying..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(LIFE_FIND)}" oninput="lifeFind(this)" enterkeyhint="search">
-    <div id="life-groups">${(LG => LG.picks.length && me() ? `<div class="life-group"><h3>Picked for ${esc(me().name)}</h3><div class="topics">${LG.picks.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}${asOtherGroups(G).map(g=>`<div class="life-group"><h3>${esc(g.name)}</h3><div class="topics">${g.topics.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}${(LG => LG.all.length ? `<div class="life-group"><h3>Health and Ability</h3><p class="muted small">For a student living with a health condition, pain, a disability, or mental health, or with someone in the family who is. Open to every family.</p><div class="topics">${LG.all.map(t=>`<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
+    <div class="ring-chips" id="life-chips" role="group" aria-label="Filter by topic"><button type="button" class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="asSetRing('all')">All topics</button>${shown.map(g => `<button type="button" class="ring-chip" style="--rc:${g.color}" data-ring="${g.key}" onclick="asSetRing('${g.key}')">${esc(g.name)}</button>`).join('')}</div>
+    <div id="life-groups"></div>
     <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>${asLifeLinesHtml()}`;
+  asLifeList();
   if (LIFE_FIND) lifeFind($('life-search'));
+}
+function asLifeList(){
+  const shown = asGroupsShown(), el = $('life-groups'); if (!el) return;
+  if (AS_RING !== 'all' && !shown.some(g => g.key === AS_RING)) AS_RING = 'all';
+  document.querySelectorAll('#life-chips .ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === AS_RING ? 'true' : 'false'));
+  if (!guidesData().groups.length){ el.innerHTML = '<p class="muted">Guides are loading.</p>'; return; }
+  if (AS_RING === 'all'){
+    const LG = asLifeGroups();
+    el.innerHTML = (LG.picks.length && me() ? `<div class="life-group" style="--rc:${AS_LOOK[AS_LIFE_GROUP][0]}"><h3 class="as-gh"><i></i>Picked for ${esc(me().name)}</h3>${asGuideGrid(LG.picks)}</div><h3 class="as-cards-h">All Groups</h3>` : '') +
+      `<div class="as-rcards" role="group" aria-label="Guide groups">${shown.map(g => `<button type="button" class="as-rcard" style="--rc:${g.color}" data-ring="${g.key}" onclick="asOpenRing('${g.key}')"><b>${esc(g.name)}</b><span class="as-rblurb">${esc(g.blurb)}</span><span class="as-rcount">${asNGuides(g.topics.length)}</span></button>`).join('')}</div>`;
+  } else {
+    const g = shown.find(x => x.key === AS_RING);
+    el.innerHTML = `<div class="life-group" style="--rc:${g.color}"><button type="button" class="back" onclick="asAllGroups('${g.key}')">&larr; All Groups</button>
+      <h3 class="as-gh" id="life-ring-h" tabindex="-1"><i></i>${esc(g.name)}</h3><p class="muted small">${esc(g.blurb)} <span class="as-rn">${asNGuides(g.topics.length)}</span></p>${asGuideGrid(g.topics)}</div>`;
+  }
+}
+function asSetRing(k){ AS_RING = k; asLifeList(); }
+// A group card opens its group (the same as its chip) and brings its heading into view.
+function asOpenRing(k){
+  asSetRing(k);
+  const c = $('life-chips'), h = $('life-ring-h');
+  if (c) window.scrollTo({ top: Math.max(0, c.getBoundingClientRect().top + window.scrollY - (document.querySelector('.tabs') ? document.querySelector('.tabs').offsetHeight : 0) - 12), behavior: 'auto' });
+  if (h) try { h.focus({ preventScroll: true }); } catch(e){}
+}
+// All Groups: back to the cards, with the card just left in focus.
+function asAllGroups(k){
+  asSetRing('all');
+  const b = document.querySelector(`#life-groups .as-rcard[data-ring="${k}"]`);
+  if (b){ try { b.focus({ preventScroll: true }); } catch(e){} b.scrollIntoView({ block: 'center' }); }
 }
 /* Search: the same engine as the header search. Aspen's guides first, then the rest of Grow With Grounded (kid-safe). */
 let LIFE_FIND = '';
@@ -2131,7 +2221,8 @@ function lifeFind(el) {
   LIFE_FIND = el.value;
   if (!window.GGFind) return;
   GGFind(el, { here: 'aspen', kid: 'aspen', localType: 'talk', open: id => go('guide', {id}), openLabel: 'Talking It Through',
-    hide: ['#life-groups'], accent: 'var(--btn-ink)' });
+    hide: ['#life-groups', '#life-chips'], accent: 'var(--btn-ink)',
+    localHTML: items => { const all = []; guidesData().groups.forEach(g => g.topics.forEach(t => all.push(t))); return asGuideGrid(items.map(it => all.find(t => t.id === it.id)).filter(Boolean)); } });
 }
 function renderGuide(opts){
   const G = guidesData(); let t = null, grp = null;
@@ -2139,7 +2230,7 @@ function renderGuide(opts){
   G.groups.forEach(g => g.topics.forEach(x => { if (x.id === id){ t = x; grp = g; } }));
   if (!t){ go('life'); return; }
   const list = arr => arr && arr.length ? `<ul>${arr.map(x=>`<li>${x}</li>`).join('')}</ul>` : '';
-  $('view-guide').innerHTML = `<button class="back no-print" onclick="go('life')">&larr; All topics</button>
+  $('view-guide').innerHTML = `<button class="back no-print" onclick="go('life')">&larr; ${(g => g ? 'Back to ' + esc(g.name) : 'All topics')(AS_RING !== 'all' && asGroupsShown().find(x => x.key === AS_RING))}</button>
     <p class="muted small" style="margin:0">${esc(grp.name)}</p><h2>${esc(t.title)}</h2>
     ${avVids(t.id)}
     ${t.quick || t.talk ? `<div class="btn-row no-print" style="margin:0 0 12px"><button type="button" class="btn ghost small" onclick="asPrintGuide()">Save or Print This Guide</button></div>` : ''}
@@ -2528,9 +2619,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b789';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b790" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b790';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b789';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b789" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b790" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b790';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b790" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>
