@@ -5697,7 +5697,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-cutting-back",
   "ring": "sober",
-  "title": "Thinking about cutting back",
+  "title": "Thinking About Cutting Back",
   "life": [
    "sober"
   ],
@@ -5805,7 +5805,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-teen",
   "ring": "sober",
-  "title": "Getting sober as a teen",
+  "title": "Getting Sober as a Teen",
   "life": [
    "sober"
   ],
@@ -5919,7 +5919,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-party",
   "ring": "sober",
-  "title": "Party pressure and saying no your way",
+  "title": "Party Pressure and Saying No Your Way",
   "life": [
    "sober"
   ],
@@ -6023,7 +6023,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-parent",
   "ring": "sober",
-  "title": "A parent's drinking or using",
+  "title": "A Parent's Drinking or Using",
   "life": [
    "sober",
    "close"
@@ -6136,7 +6136,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-vaping",
   "ring": "sober",
-  "title": "Quitting vaping",
+  "title": "Quitting Vaping",
   "life": [
    "sober"
   ],
@@ -6239,7 +6239,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-pills",
   "ring": "sober",
-  "title": "Pills, fentanyl, and staying alive",
+  "title": "Pills, Fentanyl, and Staying Alive",
   "life": [
    "sober"
   ],
@@ -6347,7 +6347,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  {
   "id": "sober-friend-od",
   "ring": "sober",
-  "title": "When a friend overdoses",
+  "title": "When a Friend Overdoses",
   "life": [
    "sober",
    "close"
