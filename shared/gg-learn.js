@@ -1227,14 +1227,19 @@
   }
   // The tree's own When Life Changes view, when it has one in the page (GWG BLD 790). A tree can name its own opener as
   // window.GG_LC_OPEN[app]() (it opens the All cards); otherwise Learn uses the tree's own tab opener. Null keeps the videos in Learn.
+  // The browser puts the page back where it was when Learn opened, so Learn then brings the guides into view itself.
   function lcDoor(app) {
-    var W = window, own = (W.GG_LC_OPEN || {})[app];
-    if (typeof own === 'function') return function () { own(); };
-    if ((app === 'maple' || app === 'aspen') && typeof W.go === 'function' && document.getElementById('view-life')) return function () { W.go('life'); };
-    if (/^(pine|birch|oak|sequoia)$/.test(app) && typeof W.lcOpen === 'function' && document.getElementById('client-life')) return function () { W.lcOpen('client', null); };
-    if (app === 'willow' && W.W && typeof W.W.go === 'function') return function () { try { if (W.W.S && W.W.S.guide) W.W.S.guide.open = null; } catch (e) {} W.W.go('guides'); };
-    if (app === 'grove' && document.querySelector('#tabs [data-tab="life"]')) return function () { var t = document.querySelector('#tabs [data-tab="life"]'); if (t) t.click(); else location.hash = '#life'; };
-    return null;
+    var W = window, own = (W.GG_LC_OPEN || {})[app], fn = null, at = null;
+    if (typeof own === 'function') fn = function () { own(); };
+    else if ((app === 'maple' || app === 'aspen') && typeof W.go === 'function' && document.getElementById('view-life')) { fn = function () { W.go('life'); }; at = '#view-life'; }
+    else if (/^(pine|birch|oak|sequoia)$/.test(app) && typeof W.lcOpen === 'function' && document.getElementById('client-life')) { fn = function () { W.lcOpen('client', null); }; at = '#client-life'; }
+    else if (app === 'willow' && W.W && typeof W.W.go === 'function' && document.getElementById('w-view')) { fn = function () { try { if (W.W.S && W.W.S.guide) W.W.S.guide.open = null; } catch (e) {} W.W.go('guides'); }; at = '#w-view'; }
+    else if (app === 'grove' && document.querySelector('#tabs [data-tab="life"]')) { fn = function () { var t = document.querySelector('#tabs [data-tab="life"]'); if (t) t.click(); else location.hash = '#life'; }; at = '#app'; }
+    if (!fn) return null;
+    return function () {
+      fn();
+      if (at) setTimeout(function () { var v = document.querySelector(at); if (v && v.scrollIntoView) try { v.scrollIntoView({ block: 'start' }); } catch (e) {} }, 140);
+    };
   }
   function lesson(id, fromPop) {
     var app = APP.app, f = find(app, id); if (!f) return list(fromPop);

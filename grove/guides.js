@@ -20,7 +20,7 @@ const RINGS = [
   "key": "gw-home",
   "name": "Home Life Together",
   "color": "#8A6A2A",
-  "blurb": "Siblings, a teen finding their way, time together, the family table, big feelings, work changes, someone struggling inside, and back to school."
+  "blurb": "Siblings, the family table, big feelings, and growing together at home."
  },
  {
   "key": "gw-illness",
@@ -44,19 +44,19 @@ const RINGS = [
   "key": "gw-school",
   "name": "Class and School",
   "color": "#2F6B5A",
-  "blurb": "A loss at school, a scary day, an ill classmate, a new student, the end of the year, friendships, kindness, test season, families changing, group chats, and big feelings."
+  "blurb": "Hard days, friendships, kindness, and changes in the classroom."
  },
  {
   "key": "gw-faith",
   "name": "Faith Communities and Groups",
   "color": "#5E4A7A",
-  "blurb": "A leader leaving, a loss, conflict, newcomers, endings, a member in crisis, sharing the room, hard conversations, rebuilding trust, attendance, a smaller church, tired volunteers, healing from hurt, staying together through big issues, a leader who falls short, and a merger or move."
+  "blurb": "Leaders, newcomers, hard seasons, and healing together as a community."
  },
  {
   "key": "gw-team",
   "name": "Teams",
   "color": "#7A4A6A",
-  "blurb": "A hard death, big changes, a coworker who dies, burnout, conflict, a new leader, heavy workloads, an injury at work, a coworker grieving, and work that asks hard things."
+  "blurb": "Changes, hard losses, heavy seasons, and caring for each other at work."
  }
 ];
 const TOPICS = [

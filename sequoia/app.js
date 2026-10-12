@@ -1299,7 +1299,8 @@ function lcCss() {
 .lc-allg{margin-top:22px;}
 .lc-allg + .lc-ring{margin-top:14px;}
 .lc-ring h3:focus{outline:none;}
-.lc-found{margin-top:10px;}`;
+.lc-found{margin-top:10px;}
+.ggf .ss-group .lc-card h4{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:22px;line-height:1.2;letter-spacing:normal;text-transform:none;color:var(--ink);margin:0;}`;
   document.head.appendChild(el);
 }
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
