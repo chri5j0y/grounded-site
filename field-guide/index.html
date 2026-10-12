@@ -625,7 +625,7 @@ body.cd-noscroll{overflow:hidden;}
     <h1 class="lock-title">Field Guide<span class="lock-tm">&trade;</span></h1>
     <div id="lock-body"></div>
   </div>
-  <p class="lock-notice"><a class="lock-home" href="../index.html">Back to Grow With Grounded</a> &nbsp; <a class="lock-home" href="../privacy.html">Privacy</a> <a class="lock-home" href="../terms.html">Terms</a> <a class="lock-home" href="../accessibility.html">Accessibility</a><br>&copy; 2026 Grow With Grounded LLC. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Proprietary and confidential. For authorized Grounded practitioners only.</p>
+  <p class="lock-notice"><a class="lock-home" href="../index.html">Back to Grow With Grounded</a> &nbsp; <a class="lock-home" href="../privacy.html">Privacy</a> <a class="lock-home" href="../terms.html">Terms</a> <a class="lock-home" href="../accessibility.html">Accessibility</a><br>&copy; 2026 Grow With Grounded LLC. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Proprietary and confidential. For Grounded Guides, Staff, and Founders only.</p>
 </section>
 <div id="app" class="hide">
 <nav class="gg-sitenav" aria-label="Grow With Grounded"><a href="../index.html">Home</a><a href="../services.html">Services</a><a href="../tools.html">Tools</a><a href="../stories.html">Stories</a><a href="../about.html">About</a><a href="../privacy.html">Privacy</a><a href="../terms.html">Terms</a><a href="../accessibility.html">Accessibility</a><button type="button" class="gg-lock" data-act="lock">Lock now</button></nav>
@@ -659,7 +659,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="farewell.js?v=b788"></script>
 <script src="wedding.js?v=b788"></script>
 <script src="premarital.js?v=b791"></script>
-<script src="clients.js?v=b788"></script>
+<script src="clients.js?v=b793b"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b788"></script>
 <script src="grovevisit.js?v=b788"></script>
@@ -10863,10 +10863,13 @@ const dkOn = () => typeof TIER !== 'undefined' && TIER !== 'guide' && !!LIB;
 const dkDecks = () => ((DKL() || {}).decks || []).concat(typeof TIER !== 'undefined' && TIER === 'founder' && typeof FDR !== 'undefined' && FDR && Array.isArray(FDR.founderDecks) ? FDR.founderDecks : []);
 const dkDeckDef = id => dkDecks().find(d => d.id === id) || null;
 const dkPair = (list, id) => (list || []).find(x => x[0] === id) || null;
-const dkAud = id => { const p = dkPair((DKL() || {}).audiences, id); return p ? p[1] : ''; };
+// A deck may carry its own audiences (BLD 794: couples, wedding vendors, teams); the picker then shows those.
+const dkAuds = D => (D && Array.isArray(D.audiences) && D.audiences.length) ? D.audiences : ((DKL() || {}).audiences || []);
+const dkAud = id => { const p = dkPair((DKL() || {}).audiences, id) || dkDecks().map(D => dkPair(D.audiences, id)).find(Boolean); return p ? p[1] : ''; };
 const dkFmt = id => dkPair((DKL() || {}).formats, id) || ['s', 'Small group', 'About 30 minutes', 30];
 const dkMode = id => { const p = dkPair((DKL() || {}).modes, id); return p ? p[1] : ''; };
-const dkMark = m => new URL('../shared/marks/' + m + '.svg', location.href).href;
+// A mark with a folder in it (heartwood/mark) is read from that folder of the site; the rest from shared/marks.
+const dkMark = m => new URL((String(m).includes('/') ? '../' : '../shared/marks/') + m + '.svg', location.href).href;
 const dkByLine = d => d.mark === 'grounded' ? 'Grow With Grounded' : d.name + ' by Grow With Grounded';
 let DK_SHOW = null, DK_TICK = null, DK_AW = null;
 
@@ -10926,13 +10929,14 @@ function vDK(){
   if (V.dke && d) return dkEditHTML(d);
   const sel = V.dks = V.dks || Object.assign({deck: 'grounded', aud: 'hospice', fmt: 's', mode: 'live'}, DATA.settings.dkLast || {});
   if (!dkDeckDef(sel.deck)) sel.deck = dkDecks()[0].id;
+  const AUDS = dkAuds(dkDeckDef(sel.deck)); if (AUDS.length && !AUDS.some(a => a[0] === sel.aud)) sel.aud = AUDS[0][0];
   const chip = (k, id, label, sm) => `<button type="button" class="chip" data-act="dk-sel" data-v="${esc(k + '|' + id)}" aria-pressed="${sel[k] === id}">${label}${sm ? ` <small class="muted">${esc(sm)}</small>` : ''}</button>`;
   const pre = dkBuild(sel.deck, sel.aud, sel.fmt, sel.mode), F = dkFmt(sel.fmt);
   const saved = dkList().slice().sort((a, b) => (b.u || 0) - (a.u || 0));
   // Present opens to cards (GWG BLD 732): Build a Talk and Saved Decks. A deck in progress stays above the cards.
   const intro = `<div class="card"><div class="dk-intro">${L.intro.map(t => `<p class="muted">${esc(t)}</p>`).join('')}</div></div>`, work = `  ${DATA.dkWork ? `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><h3>${esc(DATA.dkWork.name)}</h3><p class="muted">A deck you started and haven't saved.</p></div><div class="row"><button class="btn btn-gold btn-sm" data-act="dk-open" data-v="work">Open</button><button class="btn btn-line btn-sm" data-act="dk-drop">Let It Go</button></div></div></div>` : ''}`, build = `  <div class="card" style="margin-top:14px"><h3>Build a Talk</h3>
    <label class="f">Subject</label><div class="dk-pick">${dkDecks().map(D => `<button type="button" class="dk-pk" data-act="dk-sel" data-v="${esc('deck|' + D.id)}" aria-pressed="${sel.deck === D.id}" style="--dk:${esc(D.color)}">${dkMarkTile(D, 'dk-pkm')}<span><b>${esc(D.name)}</b>${D.preview ? ' <span class="pill">Preview</span>' : ''}<small>${esc(D.who)}</small></span></button>`).join('')}</div>
-   <label class="f">Who you're speaking to</label><div class="row">${L.audiences.map(a => chip('aud', a[0], esc(a[1]))).join('')}</div>
+   <label class="f">Who you're speaking to</label><div class="row">${AUDS.map(a => chip('aud', a[0], esc(a[1]))).join('')}</div>
    <label class="f">How long you have</label><div class="row">${L.formats.map(f => chip('fmt', f[0], esc(f[1]), f[2])).join('')}</div>
    <label class="f">Where</label><div class="row">${L.modes.map(m => chip('mode', m[0], esc(m[1]))).join('')}</div>
    <p style="margin-top:14px"><b>${pre ? pre.slides.length : 0} slides</b>, ${esc(F[2].toLowerCase())}, with speaker notes on every slide.</p>
