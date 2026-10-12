@@ -9585,3 +9585,946 @@ const TOPICS = [
 const PRACTICES = [];
 window.GROVE_GUIDES = { rings: RINGS, topics: TOPICS, practices: PRACTICES };
 })();
+/* ===== Living Sober guides start, GWG BLD 789 =====
+   The Grove: Living Sober, When Life Changes Together guides for families, faith communities, groups, and teams
+   (A Family Growing Sober Together, Talking with Kids About a Parent's Recovery, Sober Celebrations, Rebuilding Trust
+   at Home, When a Teammate Is Getting Sober, Welcoming Someone Growing Sober), plus the Together practice Family Sober
+   Night. Each topic has ring 'sober', life ['sober'], and sober [stages] (patches/bld789/C/API.md). The ring itself comes
+   from core (GGLife), shown when Who's in Our Circle has Someone Growing Sober; search and Picked for Us always find them.
+   Generated from grounded-workshop patches/bld789/G/gen.py and G/guides/<id>.py: edit the data there and rebuild.
+   ===== */
+(function(){
+var GG = window.GROVE_GUIDES; if (!GG) return;
+var TOPICS = [
+ {
+  "id": "sober-family",
+  "title": "A Family Growing Sober Together",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing",
+   "love"
+  ],
+  "kinds": [
+   "family",
+   "group"
+  ],
+  "short": "When someone in the family is growing sober: honest talk, healthy roots, and good sober time for all.",
+  "keys": "sober sobriety growing sober living sober drunk beer wine aa na slip quit drinking stopped drinking stopped using drinking drugs alcohol pills recovery family recovery treatment rehab home from treatment early sobriety first year sober healthy home al-anon alateen nar-anon whole family heals",
+  "parts": [
+   "branches",
+   "bark",
+   "leaves"
+  ],
+  "changes": [
+   "family:joined"
+  ],
+  "quick": [
+   "Growing sober is a season for the whole family. Everyone grows, and every small step counts.",
+   "It is safe to talk about drinking and drugs in our home. Honest talk is how a family heals.",
+   "Drinking or using often covered painful feelings. Healing those roots, together, is the path.",
+   "Good sober time together, with real food, water, movement, rest, and laughter, grows the whole tree."
+  ],
+  "feel": "Someone in the family has chosen to grow sober. Maybe they are home from treatment, or a few weeks in, or a year along. There can be relief and hope, and also tiredness, old hurt, and a quiet worry about what comes next. The person growing sober may feel raw, proud, restless, and tender all in one day, because the feelings drinking or using once covered are rising to the surface. Children may feel glad, unsure, or watchful. Other grown-ups may want to trust and still feel braced. All of this makes sense. Growing sober asks a lot of a family, and it also opens the door to honesty, closeness, and a healthier home than many families have known before.",
+  "together": {
+   "first": [
+    "Sit down together and say it plainly: someone in our family is growing sober, and we are all part of a healthier home.",
+    "Ask the person growing sober what helps them most right now, and what makes the hard hours easier.",
+    "Agree on a few home rhythms that steady everyone: meals together, a regular bedtime, time outside, and a sober home.",
+    "Make sure each person has support of their own: a group, a therapist, a trusted friend, or a faith community."
+   ],
+   "helps": [
+    "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
+    "Tending the roots together: sleep, water, whole food, movement, and time outdoors.",
+    "A Family Sober Night each week, with a shared meal, a walk, music, or a game.",
+    "Family groups like Al-Anon, Alateen, or Nar-Anon, where others understand.",
+    "Marking milestones: a day, a week, a season, a promise kept.",
+    "A plan for hard nights: who to call, where to go, and what helps."
+   ],
+   "say": [
+    "“We can talk about anything in this family.”",
+    "“Every day counts, and so does every person.”",
+    "“We are growing a healthier home, one day at a time.”"
+   ],
+   "people": "Try, from the person growing sober: “I'm working on this every day. Thank you for walking with me.” To a child: “Dad is learning new ways to handle hard feelings, without drinking. You can ask me anything.” To each other: “What do you need from me this week?”"
+  },
+  "kids": [
+   "“Mom is growing sober. That means she stopped drinking and is learning healthy ways to feel better.”",
+   "“You didn't cause it, and it's a grown-up job to help. Your job is to be a kid.”",
+   "“It's okay to talk about it. You never have to keep it a secret.”",
+   "“You can feel glad, mad, or worried, all on the same day. Every feeling is welcome here.”",
+   "“If you ever feel unsafe, tell me or another grown-up you trust right away.”"
+  ],
+  "leader": {
+   "feel": "If you are leading the family through this season, you may carry hope and worry side by side, and old hurt that still needs a place to land. If you are the one growing sober, you may feel a strong pull to prove yourself, and feelings you once numbed may come back louder than you expected. Children may test limits, act extra good, or watch closely. All of it is a family learning a new way to live. It takes time, and it grows.",
+   "say": [
+    "“I'm proud of the work you're doing.”",
+    "“It's okay to still be hurt. We can talk about it.”",
+    "“You didn't cause this, and you never have to fix it.”",
+    "“What helps you on a hard night?”"
+   ],
+   "avoid": [
+    "Keep it a family secret children must guard. Honest, simple words help them more.",
+    "Give a child the job of watching the grown-up. That job belongs to grown-ups and helpers.",
+    "Expect trust to return overnight. It grows back through small promises kept.",
+    "Treat a slip as the end of the road. It is a reason to reach for help and keep going."
+   ],
+   "help": [
+    "Learn together about early sobriety, with the treatment team, a doctor, or a family program.",
+    "Support the person's own plan: their group, appointments, sleep, and daily practices.",
+    "Make home a steady place: regular meals, water, rest, movement, and a sober house.",
+    "Find your own support: Al-Anon, Nar-Anon, a therapist, or a trusted friend.",
+    "Give children their own place to talk: Alateen, a school counselor, or a kids' program.",
+    "Keep help numbers where everyone can see them, and celebrate the small wins out loud."
+   ],
+   "you": "Walking with someone growing sober takes stamina. You matter in this too. Your rest, your people, and your honesty help the whole family heal. You can hope with your whole heart and still keep your limits."
+  },
+  "byKind": {
+   "group": "In a family support group, follow the group's own agreements about privacy, and let each person speak only for themselves."
+  },
+  "faith": "For many families, faith is part of growing sober: prayer, a Higher Power as each person understands it, a faith community that welcomes them home, forgiveness, and grace that makes a new start possible. Many recovery groups draw on a spiritual path, in words that fit all faith traditions and everything in-between. For others, a faith community has felt like a place of shame, and that hurt may need healing too. Faith can be a deep resource or a heavy stressor. Follow each person's own words, and let grace be the door that stays open.",
+  "practices": [
+   "family-sober-night",
+   "family-meeting",
+   "listening-round",
+   "play-outside",
+   "hard-day-huddle",
+   "looking-back"
+  ],
+  "trees": [
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ],
+   [
+    "pine",
+    "family-substance",
+    "A Family Member's Drinking or Drug Use"
+   ],
+   [
+    "aspen",
+    "drinking",
+    "Someone at Home Drinks or Uses Too Much"
+   ],
+   [
+    "maple",
+    "addiction",
+    "A Family Member's Addiction"
+   ]
+  ],
+  "reach": [
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information, in English and Spanish.",
+   "Al-Anon and Alateen, for family members and teens affected by someone's drinking. Nar-Anon, for families affected by someone's drug use.",
+   "Stopping alcohol or sedative pills suddenly can be dangerous. Talk with a doctor first.",
+   "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
+   "An overdose, someone who won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222.",
+   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ],
+   [
+    "FindTreatment.gov",
+    "https://findtreatment.gov/"
+   ],
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ],
+   [
+    "NACoA: the Seven Cs for children",
+    "https://nacoa.org/the-seven-cs/"
+   ]
+  ],
+  "sources": [
+   "samhsarec",
+   "sevencs"
+  ],
+  "stories": [
+   "18 Years",
+   "Living Sober Is Hard"
+  ]
+ },
+ {
+  "id": "sober-kids-talk",
+  "title": "Talking with Kids About a Parent's Recovery",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "love",
+   "early",
+   "growing"
+  ],
+  "kinds": [
+   "family",
+   "group"
+  ],
+  "short": "Honest, simple words for children of every age when a parent is growing sober.",
+  "keys": "drunk beer wine drugs pills slip aa na talking with kids telling children parent sober parent in recovery mom drinking dad drinking parent drugs parent in treatment rehab what to tell kids explain addiction to a child drunk alcohol pills using sober sobriety seven cs alateen kids questions will you drink again family secret honest",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "changes": [
+   "family:joined",
+   "family:away"
+  ],
+  "quick": [
+   "Children notice more than we think. Honest, simple words help them feel safe.",
+   "Say it plainly: a parent is growing sober, learning healthy ways to handle hard feelings.",
+   "Every child needs to hear: you didn't cause it, you can't fix it, and you can always talk about it.",
+   "One talk opens the door. Many small talks, over time, keep it open."
+  ],
+  "feel": "A parent is growing sober, or away at treatment, or just home. The grown-ups may wonder how much to say, and when. Children usually sense far more than anyone has told them: the tension, the empty chair, the change in routines. Without words, they fill in the blanks, often with a story that makes it their fault. Little ones may ask the same question again and again. School-age children may worry quietly or act out. Teens may be angry, protective, or quietly relieved. Every one of these reactions makes sense. Honest words, in the right size for each child, are a gift that helps the whole family heal.",
+  "together": {
+   "first": [
+    "Decide together, as grown-ups, what you will say, and who will say it. The parent growing sober can share in their own words, with the other grown-up close by.",
+    "Pick a calm, unhurried time, like a walk or a quiet evening at home, with time after for questions and a hug.",
+    "Say the truth in words that fit each child's age, and keep it short. You can always add more later.",
+    "End with what stays the same: we love you, you are safe, and you can talk about this anytime."
+   ],
+   "helps": [
+    "Using real words, like drinking, drugs, and growing sober. Plain words feel safer than mystery.",
+    "Answering the question that was asked, then asking, “What else are you wondering?”",
+    "A question jar, where children can drop a question to talk about later.",
+    "Keeping daily routines steady: meals, school, bedtime, and time outside.",
+    "Alateen, a kids' program, or a school counselor, so each child has a place of their own to talk.",
+    "Coming back to it often, in small moments, so it never becomes a secret again."
+   ],
+   "say": [
+    "“You can ask us anything. There are no wrong questions.”",
+    "“It's not your fault, and it's not your job to fix.”",
+    "“In our family, we say true things out loud.”"
+   ],
+   "people": "Try, for a little one: “Dad was drinking too much, and it made him sick and grumpy. Now he's getting better. You didn't cause it, and we love you.” For a school-age child: “Mom is growing sober. That means she stopped drinking and is learning healthy ways to handle hard feelings. She's working on it every day.” For a teen: “I want to be honest with you about my drinking, and about what I'm doing now to heal. Ask me anything.”"
+  },
+  "kids": [
+   "“Mom stopped drinking. She's learning new ways to feel better, like walks, talking, and rest.”",
+   "“You didn't cause it, you can't fix it, and you can't control it. That's grown-up work.”",
+   "“You can take care of you: tell someone how you feel, make healthy choices, and have fun.”",
+   "“Our family can talk about this. It's never a secret you have to keep.”",
+   "“If a grown-up ever won't wake up, call 911 and find another grown-up right away.”"
+  ],
+  "leader": {
+   "feel": "Talking with children about drinking or using can bring up guilt, fear, and grief for the grown-ups. The parent growing sober may worry that honesty will cost their child's respect. Usually the opposite is true: children trust the parent who tells them the truth and keeps showing up. The other grown-up may feel torn between protecting the children and protecting the parent. Both instincts come from love. Honest, kind words protect everyone.",
+   "say": [
+    "“I want to tell you something true about our family.”",
+    "“Thank you for asking. That's a good question.”",
+    "“I'm working on this every day, and I have lots of help.”",
+    "“If I ever slip, I'll get help. It will never be your job to fix it.”",
+    "“What else are you wondering?”"
+   ],
+   "avoid": [
+    "Wait until everything feels settled before saying anything. Children are already wondering.",
+    "Make promises you may be unable to keep, like “I'll never drink again.” Say what you're doing today.",
+    "Share every hard detail of the past. Keep it true and sized to their age.",
+    "Ask a child to keep it secret, or to watch the parent and report back."
+   ],
+   "help": [
+    "Plan the first talk together, then keep the door open with many small talks.",
+    "Fit the words to the age: short and concrete for little ones, more of the why for teens.",
+    "Tell teens plainly that drinking and drugs wait until adulthood, and that a family history is a good reason to take extra care.",
+    "Give each child their own support: Alateen, a kids' program, or the school counselor.",
+    "Tell children what to do if a grown-up won't wake up: call 911 and find another grown-up.",
+    "Notice and name how each child is coping, and keep their routines steady."
+   ],
+   "you": "This is one of the bravest talks a parent can have. You don't need perfect words. You need true ones, said with love, and then said again. Take care of your own heart before and after, with someone who supports you."
+  },
+  "byKind": {
+   "group": "In a parents' or family support group, practice the first words in pairs before saying them at home."
+  },
+  "faith": "For families of faith, honesty and grace often go together: we tell the truth, and we are still loved. A family may pray together for the parent growing sober, or give thanks for each sober day, in the words of their own tradition. With children, invite, never assume. God is never named as punishing a parent's drinking or a child's feelings. A child's questions, anger, and worry are welcome in every tradition, and in all faith traditions and everything in-between.",
+  "practices": [
+   "bedtime-talk",
+   "one-on-one",
+   "listening-round",
+   "feelings-words",
+   "kind-words-inside",
+   "family-sober-night"
+  ],
+  "trees": [
+   [
+    "maple",
+    "addiction",
+    "A Family Member's Addiction"
+   ],
+   [
+    "aspen",
+    "drinking",
+    "Someone at Home Drinks or Uses Too Much"
+   ],
+   [
+    "pine",
+    "family-substance",
+    "A Family Member's Drinking or Drug Use"
+   ],
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ]
+  ],
+  "reach": [
+   "Al-Anon and Alateen: for families and teens affected by someone's drinking. Nar-Anon: for families affected by someone's drug use.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
+   "Teach every child: if a grown-up won't wake up or is hard to wake, call 911. Poison Control: 1-800-222-1222.",
+   "Thoughts of not wanting to be alive, for anyone at home: call or text 988, any time.",
+   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+  ],
+  "more": [
+   [
+    "NACoA: the Seven Cs for children",
+    "https://nacoa.org/the-seven-cs/"
+   ],
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ]
+  ],
+  "sources": [
+   "sevencs"
+  ],
+  "stories": [
+   "No More Silence"
+  ]
+ },
+ {
+  "id": "sober-celebrations",
+  "title": "Sober Celebrations",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
+  "kinds": [
+   "family",
+   "faith",
+   "group",
+   "team"
+  ],
+  "short": "Birthdays, holidays, weddings, and wins, celebrated with joy, good food, and everyone welcome.",
+  "keys": "sober celebrations sober party holidays sober holiday birthday wedding new years eve fourth of july thanksgiving christmas office party work party team party no alcohol without drinking mocktails sparkling water what to drink hosting someone sober first sober holiday drinking beer wine champagne toast sobriety recovery",
+  "parts": [
+   "fruit",
+   "branches",
+   "roots"
+  ],
+  "changes": [
+   "faith:season",
+   "team:new",
+   "group:new"
+  ],
+  "quick": [
+   "The best part of any celebration is the people. Joy needs no alcohol.",
+   "Build the day around something you do together: a meal, music, a walk, a game, a few good words.",
+   "Make the sober drinks special: sparkling water, juice, tea, something made with care.",
+   "For someone growing sober, a celebration can stir old feelings. A plan and a friend close by help."
+  ],
+  "feel": "Celebrations are some of the brightest days of the year, and for many people they were also the biggest drinking days. For someone growing sober, a first sober birthday, holiday, or wedding can bring joy and nerves together: old memories, an empty hand, a worry about what people will say. Hosts may wonder what to serve and how to make everyone feel welcome. Children, people who drive, people who are pregnant, people healing from drinking, and people who simply feel better without it all benefit from a sober celebration. A gathering built around people, good food, and shared joy is a celebration everyone can enjoy fully, and remember.",
+  "together": {
+   "first": [
+    "Decide together what the celebration is really about: the person, the season, the win, the people.",
+    "Plan the heart of it around something you do: a meal, music, games, a walk, a story round, a few good words.",
+    "Make sober drinks the special drinks, set out first and served with care.",
+    "Ask anyone growing sober, privately: “What would make this feel good for you?”"
+   ],
+   "helps": [
+    "A beautiful table of sparkling water, juices, iced tea, and hot tea, served in the good glasses.",
+    "Real food that nourishes, shared slowly, with everyone at the table.",
+    "Something to do: music, dancing, lawn games, a puzzle, a walk at sunset, fireworks.",
+    "A round of thanks or a few good words for the person or the season.",
+    "An easy arrival and an easy goodbye, so anyone can come for the best part.",
+    "Celebrating sober milestones too: a day, a month, a year."
+   ],
+   "say": [
+    "“We're glad you're here.”",
+    "“There's sparkling water, juice, and tea. What sounds good?”",
+    "“The best part is all of us together.”"
+   ],
+   "people": "Try, as a host: “I'm planning the party around a meal and a walk. What would help you enjoy it?” From someone growing sober: “I'd love to come. I'll bring my own sparkling water, and I may head out early.” To a guest who offers a drink: “No thanks, I'm good,” said with a smile, is a whole answer."
+  },
+  "kids": [
+   "“Our party is about being together: games, music, and food we love.”",
+   "“Everyone gets a fancy drink in a special glass. What should we make?”",
+   "“You can help plan one thing: a game, a song, or the table.”"
+  ],
+  "leader": {
+   "feel": "If you are hosting or leading, you may feel pulled between tradition and the person growing sober, or worried that a sober party will feel flat. If you are the one growing sober, you may carry nerves, memories, and the hope of a really good day. Both are normal. A celebration built on people and shared joy usually feels warmer, and everyone gets to remember it.",
+   "say": [
+    "“What would make this celebration feel good for you?”",
+    "“I'm glad you came, for as long as you're here.”",
+    "“The sober drinks are the special ones today.”",
+    "“No need to explain anything. You're welcome as you are.”"
+   ],
+   "avoid": [
+    "Plan the whole day around drinking, with sober options as an afterthought.",
+    "Ask someone why they aren't drinking, or offer again after a no.",
+    "Announce someone's sobriety to the room. Their story is theirs to share.",
+    "Expect someone growing sober to stay late if they need to leave early."
+   ],
+   "help": [
+    "Build the gathering around an activity, a meal, or a ritual of thanks.",
+    "Set out sober drinks first, in the good glasses, and make them as special as anything else.",
+    "Choose a time and place that fit a sober day: a brunch, an afternoon, a park, a hike.",
+    "Give anyone growing sober an easy arrival and an easy goodbye.",
+    "Celebrate sober milestones with the same joy as birthdays and anniversaries.",
+    "For a team or group event, choose a format everyone can enjoy fully: breakfast, a walk, a service day, a shared meal."
+   ],
+   "you": "You don't need to get every detail right. Warmth is the main ingredient. Notice the people, enjoy the food, and let the joy be the point. Celebrate your own effort too."
+  },
+  "byKind": {
+   "faith": "For gatherings and worship, offer grape juice wherever a ritual uses alcohol, and say so plainly, so everyone can take part.",
+   "team": "For work events, choose a format everyone can enjoy fully, and keep it sober or at least centered on the meal and the people."
+  },
+  "faith": "Many traditions celebrate with feasts, songs, blessings, and gathering at the table. A sober celebration can hold all of it: a prayer of thanks, a blessing over the person or the season, the joy of a shared meal. Where a ritual uses alcohol, many communities offer grape juice alongside, and saying so plainly lets everyone take part with dignity. In all faith traditions and everything in-between, joy, gratitude, and belonging are at the heart of celebrating.",
+  "plain": {
+   "faith": ""
+  },
+  "practices": [
+   "celebrate-together",
+   "milestone",
+   "feast-day",
+   "laugh-together",
+   "gratitude-jar",
+   "family-sober-night"
+  ],
+  "trees": [
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ],
+   [
+    "pine",
+    "family-substance",
+    "A Family Member's Drinking or Drug Use"
+   ],
+   [
+    "aspen",
+    "drinking",
+    "Someone at Home Drinks or Uses Too Much"
+   ]
+  ],
+  "reach": [
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
+   "Al-Anon and Alateen: for families and teens affected by someone's drinking.",
+   "If someone has had too much and won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222.",
+   "Thoughts of not wanting to be alive: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ],
+   [
+    "NIAAA: Rethinking Drinking",
+    "https://www.rethinkingdrinking.niaaa.nih.gov/"
+   ],
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/"
+   ]
+  ],
+  "sources": [],
+  "stories": [
+   "18 Years"
+  ]
+ },
+ {
+  "id": "sober-trust",
+  "title": "Rebuilding Trust at Home",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing",
+   "love"
+  ],
+  "kinds": [
+   "family"
+  ],
+  "short": "When drinking or using hurt the family, and everyone is learning to trust again, one kept promise at a time.",
+  "keys": "rebuilding trust trust again broken promises lies drinking drunk alcohol drugs using pills hiding it sober sobriety recovery amends making amends apology forgiveness hurt angry partner spouse parent teen family healing after drinking slip honesty boundaries",
+  "parts": [
+   "branches",
+   "bark",
+   "trunk"
+  ],
+  "changes": [
+   "family:joined"
+  ],
+  "quick": [
+   "Trust grows back the way a tree grows: slowly, steadily, one ring at a time.",
+   "Small promises kept, again and again, rebuild more trust than big words.",
+   "Family members can take the time they need. Hurt and hope can share the same home.",
+   "Honesty about a slip, told early, builds trust. Hiding it is what breaks it."
+  ],
+  "feel": "Drinking or using often comes with broken promises, missed moments, money that went missing, and words that hurt. When someone grows sober, the family may feel relief and still find it hard to believe. A late arrival can set off old fear. A closed door can feel like a secret. The person growing sober may feel frustrated that the family still watches, and ashamed of why they do. Children may test whether promises are real now. All of this makes sense. Trust rebuilt slowly is trust that lasts, and families do rebuild it.",
+  "together": {
+   "first": [
+    "Name it together, plainly: trust was hurt, and we're rebuilding it, one day at a time.",
+    "The person growing sober makes small, clear promises, and keeps them: home by six, a call if plans change.",
+    "Family members say what helps them feel safer, and the person growing sober chooses openness freely.",
+    "Agree on how you'll talk about a hard day or a slip: early, honestly, and with help."
+   ],
+   "helps": [
+    "Small promises, kept on time, again and again.",
+    "Saying what you'll do, and then doing it, so actions match words.",
+    "A weekly family meeting to say what's going well and what still feels hard.",
+    "Openness the person growing sober offers freely, like sharing plans or their recovery schedule.",
+    "Each person's own support, so the hurt has somewhere to go besides the kitchen table.",
+    "Noticing and naming every kept promise out loud."
+   ],
+   "say": [
+    "“Thank you for keeping your word.”",
+    "“I'm still hurt, and I'm still here.”",
+    "“We're rebuilding, one day at a time.”"
+   ],
+   "people": "Try, from the person growing sober: “I know my drinking hurt you. I'm working on it every day. Take all the time you need.” From a family member: “I want to trust you again. It helps me when you call if you'll be late.” To a child: “When Dad says he'll be there, watch. He's practicing keeping his word.”"
+  },
+  "kids": [
+   "“Mom is practicing keeping her promises. You can notice when she does.”",
+   "“It's okay if trusting again takes a while. Your feelings make sense.”",
+   "“You can tell me if something feels wrong. You'll never be in trouble for telling.”",
+   "“Grown-ups fix grown-up problems. Your job is to be you.”"
+  ],
+  "leader": {
+   "feel": "If you were hurt, you may want to believe and still feel braced, and you may feel guilty for not trusting faster. If you are the one growing sober, you may feel impatient, ashamed, or tired of being watched, even when you understand why. Both are honest. Trust grows from the ground up, through small actions over time, and both sides have a part.",
+   "say": [
+    "From the one growing sober: “I know I hurt you. Take all the time you need.”",
+    "From a family member: “I'm still hurt, and I want to rebuild this with you.”",
+    "“What would help you feel a little safer this week?”",
+    "“Thank you for telling me. Let's get help.” (after a slip, told honestly)"
+   ],
+   "avoid": [
+    "Big promises like “I'll never let you down again.” Small, kept promises do more.",
+    "Searching, checking, and testing every day, which keeps everyone in the old fear. Agree on openness together.",
+    "Bringing up every past hurt in every disagreement. Give old hurts their own time and place.",
+    "Rushing forgiveness, or demanding it. Trust and forgiveness grow at their own pace."
+   ],
+   "help": [
+    "Start with small, clear promises and keep them on time.",
+    "Agree together on what openness looks like, chosen freely by the one growing sober.",
+    "Set a weekly family meeting to name what's going well and what still hurts.",
+    "Plan how a slip will be shared: early, honestly, and with a call to their support.",
+    "Give each person support of their own: Al-Anon, Nar-Anon, a therapist, a group.",
+    "Notice and name every kept promise. Trust grows faster when it's seen."
+   ],
+   "you": "Rebuilding trust is slow work for everyone. You don't have to heal everything at once. Small pieces, in the right direction, are real progress. Take care of your own heart along the way."
+  },
+  "faith": "Many traditions hold forgiveness and making amends as sacred work: naming the harm, changing how we live, and making things right where we can. Forgiveness is a gift that can't be rushed or demanded, and trust is something different, rebuilt by actions over time. A family may pray for healing, or mark a sober milestone with thanks, in the words of their own tradition. In all faith traditions and everything in-between, grace and honesty can grow side by side.",
+  "practices": [
+   "family-meeting",
+   "repair-after-a-fight",
+   "one-on-one",
+   "looking-back",
+   "kind-words-inside",
+   "family-sober-night"
+  ],
+  "trees": [
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ],
+   [
+    "pine",
+    "family-substance",
+    "A Family Member's Drinking or Drug Use"
+   ],
+   [
+    "aspen",
+    "drinking",
+    "Someone at Home Drinks or Uses Too Much"
+   ]
+  ],
+  "reach": [
+   "Al-Anon and Nar-Anon: for family members affected by someone's drinking or drug use. Alateen for teens.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
+   "If anyone at home is being hurt or threatened: call 911. The National Domestic Violence Hotline: 1-800-799-7233, any time.",
+   "Thoughts of not wanting to be alive: call or text 988, any time.",
+   "If a child is unsafe or not being looked after: Childhelp, 1-800-422-4453."
+  ],
+  "more": [
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ]
+  ],
+  "sources": [
+   "samhsarec"
+  ],
+  "stories": [
+   "18 Years"
+  ]
+ },
+ {
+  "id": "sober-teammate",
+  "title": "When a Teammate Is Getting Sober",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
+  "kinds": [
+   "team"
+  ],
+  "short": "When a coworker is growing sober or back from treatment: respect, privacy, and belonging.",
+  "keys": "drunk beer wine drugs pills slip aa na coworker sober teammate sober colleague in recovery back from rehab back from treatment returning to work after treatment drinking at work alcohol drugs pills using work party happy hour drinks after work employee assistance program eap hr privacy sobriety recovery slip team lead manager supervisor",
+  "parts": [
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "changes": [
+   "team:new",
+   "team:leaving",
+   "team:change"
+  ],
+  "quick": [
+   "A teammate growing sober is doing brave, healthy work. Respect and privacy help most.",
+   "Their story is theirs to share. Treat them the way you always have, and keep inviting them.",
+   "Build team time everyone can enjoy fully: breakfast, a walk, a shared lunch, a service day.",
+   "Team leads: the employee assistance program and human resources know the policies and the help."
+  ],
+  "feel": "A coworker has shared that they are growing sober, or is back after time away for treatment, or the team simply noticed a change. Teammates may feel glad, curious, unsure what to say, or worried about saying the wrong thing. Some may wonder about the team's habits, like drinks after work. The teammate growing sober may feel nervous about being seen differently, and very aware of every glance. Many people growing sober say the hardest part is how quickly the invitations stop. A team that keeps them close, respects their privacy, and builds time together everyone can enjoy becomes a real strength in their healing.",
+  "together": {
+   "first": [
+    "Let the teammate lead. If they share, thank them. If they keep it private, honor that fully.",
+    "Treat them the way you always have: same work, same respect, same jokes, same invitations.",
+    "Look at the team's habits together, and add gatherings everyone can enjoy fully.",
+    "Keep it private. Their story is theirs to tell, never ours to pass along."
+   ],
+   "helps": [
+    "Simple invitations that keep coming: a walk at lunch, breakfast before a shift, a team meal.",
+    "Celebrations built around the work and the people, with good sober drinks set out first.",
+    "Taking a no without question, and asking again next time.",
+    "Kind, ordinary words: “Good to have you back.”",
+    "A team culture where anyone can ask for help early, without shame.",
+    "Knowing where help lives: the employee assistance program and human resources."
+   ],
+   "say": [
+    "“Good to have you here.”",
+    "“We're grabbing lunch. Want to come?”",
+    "“We've got your back.”"
+   ],
+   "people": "Try, if a teammate shares with you: “Thanks for telling me. I'm glad you're taking care of yourself. Anything that would help at work?” To the team, from a lead: “Our team events will always have good options for everyone, and nobody needs to explain their choices.” If you're the one growing sober: “I'm sober these days. I'd love to come to the lunch.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a team lead, you may feel protective of the teammate, unsure what you're allowed to say, and responsible for the team's work all at once. You may also notice your own team's habits around drinking. The teammate may feel grateful, exposed, or anxious about their job. A steady, private, respectful response from you sets the tone for the whole team.",
+   "say": [
+    "Privately: “Thank you for trusting me. What would help you at work right now?”",
+    "On return: “Welcome back. We're glad you're here. Whatever you'd like to share is up to you.”",
+    "To the team: “Every team event will have good options for everyone.”",
+    "If a teammate asks you questions about it: “That's their story to share. Let's make them welcome.”"
+   ],
+   "avoid": [
+    "Sharing anything a teammate told you in confidence, even with good intent.",
+    "Asking where they've been, or for details of treatment.",
+    "Planning team time mostly around drinking, like happy hours.",
+    "Mixing performance talks with guesses about health. Keep work talks about the work, and point to help."
+   ],
+   "help": [
+    "Meet privately, listen, and ask what would help at work.",
+    "Learn your organization's policies with human resources, and point to the employee assistance program.",
+    "Follow your organization's rules for safety-sensitive work, kindly and the same for everyone.",
+    "Plan team events everyone can enjoy fully: breakfasts, walks, service days, shared lunches.",
+    "Model words without labels: “growing sober,” “in recovery,” “taking care of their health.”",
+    "Check in with the teammate now and then, the same way you check in with everyone."
+   ],
+   "you": "Leading a team through this takes discretion and warmth. You don't need to be an expert in recovery. You need to keep confidences, treat people with dignity, and know where the help is. Take care of your own steadiness too."
+  },
+  "byKind": {
+   "team": "Healthcare and safety-sensitive teams: follow your organization's fitness for duty and return to work policies, and route questions through human resources and the employee assistance program."
+  },
+  "faith": "",
+  "practices": [
+   "team-lunch",
+   "coffee-walk",
+   "celebrate-together",
+   "check-on-the-helper",
+   "ask-dont-assume",
+   "walking-meeting"
+  ],
+  "trees": [
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ],
+   [
+    "birch",
+    "friends",
+    "Making Friends After School"
+   ]
+  ],
+  "reach": [
+   "Your organization's employee assistance program (EAP): confidential support for employees and often their families.",
+   "Human resources: for leave, return to work, and accommodations under your organization's policies.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
+   "Someone at work who won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222.",
+   "Thoughts of not wanting to be alive: call or text 988, any time."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ],
+   [
+    "EEOC: the ADA and the enforcement of disability rights at work",
+    "https://www.eeoc.gov/wysk/what-you-should-know-about-eeoc-and-enforcement-americans-disabilities-act"
+   ]
+  ],
+  "sources": [
+   "kelly10"
+  ]
+ },
+ {
+  "id": "sober-welcome",
+  "title": "Welcoming Someone Growing Sober",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
+  "kinds": [
+   "faith",
+   "group"
+  ],
+  "short": "Welcoming people growing sober, and their families, into our community with dignity and belonging.",
+  "keys": "drunk beer wine drugs pills slip aa na welcoming someone sober church member sober congregation recovery ministry recovery friendly church group member in recovery communion grape juice potluck sober events hosting aa meetings na meetings al-anon support group drinking alcohol drugs using sobriety faith community small group belonging shame stigma",
+  "parts": [
+   "branches",
+   "roots",
+   "trunk"
+  ],
+  "changes": [
+   "faith:newcomers",
+   "group:new",
+   "faith:season"
+  ],
+  "quick": [
+   "People growing sober, and their families, are already in every community. A clear welcome helps them stay.",
+   "Words from the front matter: say “growing sober” and “in recovery,” and let people choose their own words.",
+   "Make every gathering one everyone can enjoy fully, and offer a sober choice plainly wherever a ritual uses alcohol.",
+   "Belonging and a place to serve, at a person's own pace, are powerful parts of healing."
+  ],
+  "feel": "Every congregation and group already holds people growing sober, people still struggling, and families who love someone who drinks or uses. Many carry their story quietly, afraid of being judged. Someone newly sober may slip in late and leave early, unsure they belong. A family member may sit in the back, tired and hoping for a kind word. Leaders may want to help and worry about saying the wrong thing. A community that speaks about drinking and drugs plainly, with grace and without labels, becomes a place where healing can grow. Belonging is one of the strongest supports a person growing sober can have.",
+  "together": {
+   "first": [
+    "Say it plainly, as a community: people growing sober, and their families, belong here.",
+    "Look at your gatherings and rituals, and make sure everyone can take part fully.",
+    "Keep stories private: prayer requests, sharing, and news travel only with the person's okay.",
+    "Know your local help: recovery meetings, family groups, and the SAMHSA National Helpline."
+   ],
+   "helps": [
+    "Gatherings built around food, music, service, and people, with good sober drinks set out first.",
+    "Grape juice offered plainly wherever a ritual uses alcohol, said from the front, with dignity.",
+    "Opening your space to recovery meetings and family groups, if you have room.",
+    "A warm welcome without a spotlight: a greeter, a name remembered, a seat saved.",
+    "A place to serve, offered gently and at the person's own pace.",
+    "Talking about drinking and drugs plainly, with grace, so nobody has to carry it in silence."
+   ],
+   "say": [
+    "“We're glad you're here.”",
+    "“You belong here, wherever you are on your path.”",
+    "“Would you like to help with something, at your own pace?”"
+   ],
+   "people": "Try, to someone who shares they're growing sober: “Thank you for telling me. We're glad you're here. What would help you feel at home?” To a family member: “That sounds really heavy to carry. You're welcome here too.” From the front: “Whoever you are and wherever you are on your path, including growing sober, you belong here.”"
+  },
+  "kids": [],
+  "leader": {
+   "feel": "As a pastor, leader, or group facilitator, you may want to help and feel unsure where to start. You may also realize some of your gatherings and rituals assume drinking, or that your community has spoken about drinking with more shame than grace. Someone growing sober may be watching closely to see whether they're truly welcome. Small, clear changes show them they are.",
+   "say": [
+    "From the front: “Whoever you are and wherever you are on your path, you belong here.”",
+    "Privately: “Thank you for trusting me. What would help you feel at home?”",
+    "“Every gathering here will have good options for everyone.”",
+    "To a family member: “You're welcome here too. Who supports you?”"
+   ],
+   "avoid": [
+    "Share someone's sobriety in a prayer request or announcement without their clear okay.",
+    "Use labels from the front, or speak of drinking with shame. Grace opens doors.",
+    "Rush someone newly sober into a big spotlight or leadership role. Let them grow at their own pace.",
+    "Plan gatherings where drinking is the center, with sober options as an afterthought."
+   ],
+   "help": [
+    "Offer grape juice plainly wherever a ritual uses alcohol, and say so from the front.",
+    "Make every gathering one everyone can enjoy fully, with sober drinks set out first.",
+    "Open your space to recovery meetings and family groups, and list them where people can find them.",
+    "Offer meaningful service, gently, at the person's own pace.",
+    "Train greeters and leaders to welcome warmly, remember names, and keep stories private.",
+    "Keep help numbers close: SAMHSA, 988, 911, and local meetings."
+   ],
+   "you": "You don't need a recovery program to be a recovery-friendly community. You need grace, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
+  },
+  "byKind": {
+   "faith": "Communion and other rituals: wherever a ritual uses alcohol, offer grape juice plainly, say so from the front, and serve it with the same dignity.",
+   "group": "In a group, keep your agreements about privacy, and let each person speak only for themselves."
+  },
+  "faith": "Most traditions teach that every person can begin again: grace, mercy, repentance, return. A faith community can live that out by welcoming people growing sober, and their families, without labels or shame. Many congregations host recovery meetings in their buildings, and many recovery groups draw on a spiritual path in words that fit all faith traditions and everything in-between. For some, a faith community was once a place of judgment, and coming back takes courage. A warm welcome, plain words, and a grape juice cup offered with dignity can tell them, you belong here.",
+  "plain": {
+   "quick": [
+    "People growing sober, and their families, are already in every group. A clear welcome helps them stay.",
+    "Words matter: say “growing sober” and “in recovery,” and let people choose their own words.",
+    "Make every gathering one everyone can enjoy fully, with good sober drinks set out first.",
+    "Belonging and a meaningful role, at a person's own pace, are powerful parts of healing."
+   ],
+   "faith": "",
+   "together": {
+    "first": [
+     "Say it plainly, as a community: people growing sober, and their families, belong here.",
+     "Look at your gatherings and rituals, and make sure everyone can take part fully.",
+     "Keep stories private: sharing, requests for support, and news travel only with the person's okay.",
+     "Know your local help: recovery meetings, family groups, and the SAMHSA National Helpline."
+    ],
+    "helps": [
+     "Gatherings built around food, music, service, and people, with good sober drinks set out first.",
+     "Grape juice offered plainly wherever a ritual uses alcohol, said from the front, with dignity.",
+     "Opening your space to recovery meetings and family groups, if you have room.",
+     "A warm welcome without a spotlight: a greeter, a name remembered, a seat saved.",
+     "A place to serve, offered gently and at the person's own pace.",
+     "Talking about drinking and drugs plainly, with grace, so nobody has to carry it in silence."
+    ],
+    "say": [
+     "“We're glad you're here.”",
+     "“You belong here, wherever you are on your path.”",
+     "“Would you like to help with something, at your own pace?”"
+    ],
+    "people": "Try, to someone who shares they're growing sober: “Thank you for telling me. We're glad you're here. What would help you feel at home?” To a family member: “That sounds really heavy to carry. You're welcome here too.” From the front: “Whoever you are and wherever you are on your path, including growing sober, you belong here.”"
+   },
+   "leader": {
+    "feel": "As a pastor, leader, or group facilitator, you may want to help and feel unsure where to start. You may also realize some of your gatherings and rituals assume drinking, or that your community has spoken about drinking with more shame than grace. Someone growing sober may be watching closely to see whether they're truly welcome. Small, clear changes show them they are.",
+    "say": [
+     "From the front: “Whoever you are and wherever you are on your path, you belong here.”",
+     "Privately: “Thank you for trusting me. What would help you feel at home?”",
+     "“Every gathering here will have good options for everyone.”",
+     "To a family member: “You're welcome here too. Who supports you?”"
+    ],
+    "avoid": [
+     "Share someone's sobriety in a request for support or an announcement without their clear okay.",
+     "Use labels from the front, or speak of drinking with shame. Grace opens doors.",
+     "Rush someone newly sober into a big spotlight or leadership role. Let them grow at their own pace.",
+     "Plan gatherings where drinking is the center, with sober options as an afterthought."
+    ],
+    "help": [
+     "Offer grape juice plainly wherever a ritual uses alcohol, and say so from the front.",
+     "Make every gathering one everyone can enjoy fully, with sober drinks set out first.",
+     "Open your space to recovery meetings and family groups, and list them where people can find them.",
+     "Offer meaningful service, gently, at the person's own pace.",
+     "Train greeters and leaders to welcome warmly, remember names, and keep stories private.",
+     "Keep help numbers close: SAMHSA, 988, 911, and local meetings."
+    ],
+    "you": "You don't need a recovery program to be a recovery-friendly community. You need grace, plain words, and a welcome that doesn't need explaining. Take care of your own heart too; this work can stir your own family's story."
+   }
+  },
+  "practices": [
+   "welcome-table",
+   "welcome-someone-new",
+   "shared-meal",
+   "serve-together",
+   "check-in-calls",
+   "story-swap"
+  ],
+  "trees": [
+   [
+    "oak",
+    "addiction",
+    "Addiction and Recovery"
+   ],
+   [
+    "oak",
+    "church-hurt",
+    "When Faith Communities Have Hurt You"
+   ]
+  ],
+  "reach": [
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
+   "Al-Anon and Alateen, for families and teens affected by someone's drinking. Nar-Anon, for families affected by someone's drug use.",
+   "If someone won't wake up, is very hard to wake, or is breathing slowly: call 911. Naloxone (Narcan) reverses an opioid overdose. Poison Control: 1-800-222-1222.",
+   "Thoughts of not wanting to be alive: call or text 988, any time.",
+   "A vulnerable adult being harmed or neglected: MAARC, 1-844-880-1574."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/national-helpline"
+   ],
+   [
+    "FindTreatment.gov",
+    "https://findtreatment.gov/"
+   ],
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ]
+  ],
+  "sources": [
+   "kelly10",
+   "waters19"
+  ],
+  "stories": [
+   "18 Years",
+   "Living Sober"
+  ]
+ }
+];
+var PRACTICES = [
+ {
+  "id": "family-sober-night",
+  "part": "fruit",
+  "kinds": [
+   "family",
+   "group"
+  ],
+  "life": [
+   "sober"
+  ],
+  "name": "Family Sober Night",
+  "text": "One evening a week of good sober time together: a shared meal, something that moves you, something that makes you laugh, and a few words of thanks.",
+  "kid": "Help pick the meal, the walk, or the game for our Sober Night.",
+  "steps": "Pick one evening each week and keep it.|Cook or share a simple meal, with water, sparkling water, juice, or tea.|Do one thing together that moves you or makes you laugh: a walk, music, a game, a puzzle.|Close with a thank-you round: one good thing from this week each.",
+  "sources": [],
+  "guide": "sober-family"
+ }
+];
+TOPICS.forEach(function (t) { if (!GG.topics.some(function (x) { return x.id === t.id; })) GG.topics.push(t); });
+GG.practices = GG.practices || [];
+PRACTICES.forEach(function (p) { if (!GG.practices.some(function (x) { return x.id === p.id; })) GG.practices.push(p); });
+})();
+/* ===== Living Sober guides end, GWG BLD 789 ===== */

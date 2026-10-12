@@ -12415,3 +12415,1183 @@ window.GG_LEARN_GUIDES.sequoia = {
  ]
 };
 })();
+/* Living Sober videos start: For You and For the Helper videos for the five Sequoia Living Sober guides (GWG BLD 789).
+   The 'sober' ring is added here for Learn's track (core keeps that track low-key). Generated from patches/bld789/Q. */
+(function () { var O = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES.sequoia; if (!O) return;
+  if (!O.rings.some(function (r) { return r[0] === 'sober'; })) O.rings.push(['sober', 'Living Sober']);
+  var V = [
+ {
+  "id": "sober-retirement",
+  "ring": "sober",
+  "title": "Drinking in Retirement and Loneliness",
+  "you": {
+   "id": "sq-g-sober-retirement-you",
+   "guide": "sober-retirement",
+   "side": "you",
+   "title": "Drinking in Retirement and Loneliness",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if the quiet days have brought more drinking than you would like.",
+   "sources": [
+    "sqsonia",
+    "murthy"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Drinking in Retirement and Loneliness",
+     "sub": "For You",
+     "say": "If the days have grown quiet, and a drink has started filling more of them, this is for you. Your feelings make sense, and we're with you. Settle in for a few minutes."
+    },
+    {
+     "k": "big",
+     "h": "It is safe to talk about.",
+     "sub": "You are in good company.",
+     "say": "Many people drink more after retiring, after a loss, or when friends move away. It often starts gently: one drink to soften the evening. You are in good company, and it is safe to talk about. Noticing it is a good sign."
+    },
+    {
+     "k": "points",
+     "h": "What a drink can be filling",
+     "items": [
+      [
+       "An empty evening",
+       "The hours that used to be full"
+      ],
+      [
+       "A missing person",
+       "A spouse, a friend, a coworker"
+      ],
+      [
+       "A restless mind",
+       "Worry, boredom, grief"
+      ],
+      [
+       "A hard night",
+       "Trouble falling asleep"
+      ]
+     ],
+     "say": "A drink often fills a space. An empty evening, in the hours that used to be full. A missing person, like a spouse, a friend, or the people from work. A restless mind, full of worry, boredom, or grief. Or a hard night, when sleep won't come."
+    },
+    {
+     "k": "card",
+     "title": "The body feels it more with age.",
+     "body": "Ask your doctor or pharmacist about your medicines.",
+     "say": "Here is something worth knowing. As we age, the body feels alcohol more strongly. The same drink can land harder at seventy than it did at fifty, and it mixes poorly with many medicines. Balance, sleep, and memory can all feel it. Your doctor or pharmacist can tell you what fits your body now."
+    },
+    {
+     "k": "big",
+     "h": "When does the drink come?",
+     "sub": "Seated is fine.",
+     "beats": [
+      "Rest your hands in your lap.",
+      "Think of yesterday.",
+      "Picture the hour when a drink usually comes.",
+      "Notice the feeling underneath: bored, lonely, sad, restless.",
+      {
+       "t": "Say that one word out loud now, gently.",
+       "w": 10
+      }
+     ],
+     "say": "Rest your hands in your lap. Think of yesterday. Picture the hour when a drink usually comes. Notice the feeling underneath: bored, lonely, sad, restless. Say that one word out loud now, gently."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "A new five o'clock",
+     "items": [
+      [
+       "Something warm in your glass",
+       "Tea, sparkling water, juice"
+      ],
+      [
+       "Someone to talk to",
+       "A standing call at that hour"
+      ],
+      [
+       "A short walk",
+       "Daylight and fresh air"
+      ]
+     ],
+     "say": "That word tells you what the hour needs. Try a new five o'clock. Something warm or bright in a favorite glass, like tea or sparkling water. Someone to talk to, with a standing call at that very hour. Or a short walk in the daylight. People and purpose fill the space best."
+    },
+    {
+     "k": "card",
+     "title": "Drinking every day? Talk with your doctor first.",
+     "body": "Stopping suddenly can be dangerous. Help makes it safer.",
+     "say": "One safety note, said plainly. If you drink every day and want to stop, talk with your doctor before you stop. Stopping all at once after daily drinking can bring shaking, confusion, or seizures. A doctor can help you change safely, and that is a strong first step."
+    },
+    {
+     "k": "big",
+     "h": "Fill your days with what feeds you.",
+     "sub": "People, purpose, movement, rest.",
+     "say": "Then fill your days with what feeds you. A standing date with a friend. A reason to get up, like a class, a garden, or a volunteer shift. A walk every day. A wind-down hour before bed. Each one is a small step, and small steps still count."
+    },
+    {
+     "k": "big",
+     "h": "A quiet evening can be a peaceful one.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "A quiet evening can be a peaceful one. Start with one this week. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "sq-g-sober-retirement-helper",
+   "guide": "sober-retirement",
+   "side": "helper",
+   "title": "Drinking in Retirement and Loneliness",
+   "sideName": "For the Helper",
+   "mins": 4,
+   "blurb": "For anyone who loves an older adult who is drinking more in a quiet season.",
+   "sources": [
+    "sqsonia"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Drinking in Retirement and Loneliness",
+     "sub": "For the Helper",
+     "say": "If someone you love has been drinking more since retiring, or since a loss, this is for you. Your worry makes sense. Your steady company can help more than you might think."
+    },
+    {
+     "k": "big",
+     "h": "Underneath, there is often loneliness.",
+     "sub": "Or grief with nowhere else to go.",
+     "say": "Start with what may be underneath. For many older adults, more drinking follows a quieter life: work has ended, a spouse has died, friends have moved. The drink is often keeping them company. Meeting the loneliness is part of meeting the drinking."
+    },
+    {
+     "k": "card",
+     "title": "They may feel embarrassed.",
+     "body": "Many grew up when drinking was private.",
+     "say": "They may feel embarrassed, or worried you will treat them like a child. Many grew up when drinking was simply part of the day, and talking about it felt private. So lead with warmth, and keep it between the two of you."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "I've missed our time together.",
+      "How are the evenings for you?",
+      "Would you like company at the doctor?"
+     ],
+     "say": "Here are words that help. I've missed our time together. Could we start a standing lunch? How are the evenings for you? And, would you like company when you talk with your doctor? Each one opens a door kindly."
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of a lecture",
+       "Ask about their days"
+      ],
+      [
+       "Instead of counting drinks",
+       "Fill an hour together"
+      ],
+      [
+       "Instead of the holiday table",
+       "A quiet talk, just two of you"
+      ]
+     ],
+     "say": "A few trades make a big difference. Instead of a lecture, ask about their days. Instead of counting drinks or hiding bottles, fill an hour together, at the time they usually pour one. And instead of raising it at a family gathering, choose a quiet talk with just the two of you."
+    },
+    {
+     "k": "big",
+     "h": "Plan one hour together.",
+     "sub": "At the time they usually drink.",
+     "beats": [
+      "Let's practice.",
+      "Think of the hour when their drinking usually starts.",
+      "Picture something the two of you could share then: a call, a walk, a meal.",
+      {
+       "t": "Write it down now, with a day of the week beside it.",
+       "w": 12
+      }
+     ],
+     "say": "Let's practice. Think of the hour when their drinking usually starts. Picture something the two of you could share then: a call, a walk, a meal. Write it down now, with a day of the week beside it."
+    },
+    {
+     "k": "card",
+     "title": "Know the danger signs.",
+     "body": "Confusion, a fall, very slow breathing: call 911.",
+     "say": "Know the danger signs. Alcohol mixed with sleep or pain medicines can slow breathing. Confusion, a fall, slurred speech, or very slow breathing after drinking means call nine one one. And if they want to stop after daily drinking, encourage a doctor's help first, because stopping suddenly can be dangerous."
+    },
+    {
+     "k": "big",
+     "h": "Find your own support too.",
+     "sub": "You are one warm thread among many.",
+     "say": "You can be one warm thread in their days, alongside others. Share the calls and visits. And find your own support. Groups for families, like Al-Anon or SMART Recovery Family and Friends, welcome people who love someone who drinks."
+    },
+    {
+     "k": "big",
+     "h": "Your company is a gift.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your company is a gift, and it helps fill the space a drink has been filling. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-meds",
+  "ring": "sober",
+  "title": "Medications, Pain Pills, and Alcohol",
+  "you": {
+   "id": "sq-g-sober-meds-you",
+   "guide": "sober-meds",
+   "side": "you",
+   "title": "Medications, Pain Pills, and Alcohol",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if pain, medicines, and alcohol are part of your days, or if you are growing sober and facing pain.",
+   "sources": [
+    "sqsonia",
+    "sqsofda",
+    "narcanotc"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Medications, Pain Pills, and Alcohol",
+     "sub": "For You",
+     "say": "If you're managing pain, juggling medicines, or growing sober and facing a surgery, this is for you. Your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Your pain is real.",
+     "sub": "So is your safety.",
+     "say": "Your pain is real, and you deserve relief. Your safety is real too. Later life often brings more medicines and more procedures, and talking openly about pills and alcohol is part of staying well."
+    },
+    {
+     "k": "points",
+     "h": "These can each slow breathing",
+     "items": [
+      [
+       "Alcohol",
+       "Even a drink or two"
+      ],
+      [
+       "Pain pills",
+       "Like oxycodone or hydrocodone"
+      ],
+      [
+       "Sleep or anxiety pills",
+       "Like Xanax or Valium"
+      ]
+     ],
+     "say": "Here is what matters most. Alcohol, pain pills like oxycodone or hydrocodone, and sleep or anxiety pills like Xanax or Valium can each slow your breathing. Together, they are far stronger than any one alone. And as we age, the body feels each of them more."
+    },
+    {
+     "k": "card",
+     "title": "Ask your pharmacist about every mix.",
+     "body": "Bring one list: every medicine, and how much you drink.",
+     "say": "So make one list. Every medicine, vitamin, and supplement, with the dose, and how much you drink. Bring it to your pharmacist and ask, do any of these mix poorly? Pharmacists are glad to help, and it takes a few minutes."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Notebook",
+     "title": "Norco",
+     "lines": [
+      "A root canal, and a dentist offering pain pills.",
+      "Chris had planned for the pain before he sat down.",
+      "“No thanks, I'm good.”"
+     ],
+     "lesson": "A plan made ahead is a strong plan.",
+     "note": "Names and details changed",
+     "say": "Chris, one of Grounded's founders, is many years sober. Pain pills were once a big part of his struggle. Years into his sobriety, he needed an emergency root canal, and the dentist offered him a prescription for Norco. Chris had expected that moment, and he had planned for the pain before he ever sat down. He thought of the people who count on him, and he said, no thanks, I'm good."
+    },
+    {
+     "k": "big",
+     "h": "Make your pain plan.",
+     "sub": "Seated is fine.",
+     "beats": [
+      "Let's practice.",
+      "Picture your next appointment, a doctor or a dentist.",
+      "Think of one honest sentence to say before anything is prescribed.",
+      {
+       "t": "Say it out loud now: Pain pills have been hard for me. Can we plan for the pain together?",
+       "w": 10
+      }
+     ],
+     "say": "Let's practice. Picture your next appointment, a doctor or a dentist. Think of one honest sentence to say before anything is prescribed. Say it out loud now: Pain pills have been hard for me. Can we plan for the pain together?"
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     },
+     "h": "A plan made ahead",
+     "items": [
+      [
+       "What helps the pain",
+       "Including choices beyond opioids"
+      ],
+      [
+       "Who holds the bottle",
+       "A trusted person"
+      ],
+      [
+       "A daily check-in",
+       "The truth, out loud"
+      ],
+      [
+       "Leftovers go back",
+       "To a take-back site"
+      ]
+     ],
+     "say": "A good pain plan has a few parts. What helps the pain, including choices beyond opioids, like heat, ice, movement, and medicines your doctor approves. Who holds the bottle, if that helps you. A daily check-in, where you tell one person the truth about the pain and the pills. And leftover pills taken back to a pharmacy when you are done."
+    },
+    {
+     "k": "card",
+     "title": "Change some medicines only with your doctor.",
+     "body": "Daily drinking, and sleep or anxiety pills, can be dangerous to stop all at once.",
+     "say": "One safety note. Stopping daily drinking, or sleep and anxiety pills like Xanax or Valium, all at once can bring seizures. Make those changes with your doctor. And if opioids are in your home, keep naloxone, also called Narcan, where others can find it. It reverses an opioid overdose, and it is sold without a prescription. If someone is very hard to wake, or breathing slowly, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "A plan made ahead is a strong plan.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You can tend your pain and your sobriety together. A plan made ahead is a strong plan. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: very hard to wake, or breathing slowly",
+    "Poison Control: 1-800-222-1222",
+    "988: call or text, any time"
+   ]
+  },
+  "helper": {
+   "id": "sq-g-sober-meds-helper",
+   "guide": "sober-meds",
+   "side": "helper",
+   "title": "Medications, Pain Pills, and Alcohol",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "blurb": "For anyone helping an older adult manage pain, medicines, and alcohol safely.",
+   "sources": [
+    "sqsofda",
+    "narcanotc"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Medications, Pain Pills, and Alcohol",
+     "sub": "For the Helper",
+     "say": "If someone you love is managing pain, many medicines, or a drink beside their pills, this is for you. Calm, practical help can keep them safe."
+    },
+    {
+     "k": "big",
+     "h": "Pain, pills, and pride.",
+     "sub": "They may hurt, and still hide it.",
+     "say": "Start with what they may be feeling. They may be hurting and frightened of the pain. They may trust every prescription completely. Or they may feel ashamed that a pill has a hold on them. Someone growing sober may worry that any pain medicine undoes their progress."
+    },
+    {
+     "k": "card",
+     "title": "Together, they slow breathing.",
+     "body": "Alcohol, pain pills, and sleep or anxiety pills.",
+     "say": "Know the most important fact. Alcohol, opioid pain pills, and sleep or anxiety pills can each slow breathing, and together they are far stronger. A nightly drink beside a sleeping pill can be a real danger, especially as we age."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "How is the pain today, really?",
+      "Let's bring your list to the pharmacist.",
+      "Let's make a pain plan that protects your sobriety."
+     ],
+     "say": "Here are words that help. How is the pain today, really? Let's bring your list to the pharmacist together. And for someone growing sober, your sobriety matters. Let's make a pain plan that protects it."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "Practical help",
+     "items": [
+      [
+       "One medicine list",
+       "With their say on every line"
+      ],
+      [
+       "A held bottle",
+       "If they want that"
+      ],
+      [
+       "A nightly check-in",
+       "Calm and kind"
+      ]
+     ],
+     "say": "Practical help goes a long way. One medicine list, kept up to date, with their say on every line. A held bottle, with doses handed out as prescribed, if they want that. And a calm nightly check-in. Leave every change to a medicine with their doctor or pharmacist."
+    },
+    {
+     "k": "flow",
+     "h": "If they are hard to wake",
+     "steps": [
+      [
+       "Call 911",
+       "Right away"
+      ],
+      [
+       "Give naloxone",
+       "If you have it"
+      ],
+      [
+       "Stay with them",
+       "On their side"
+      ]
+     ],
+     "say": "Learn the signs of an overdose: very sleepy or hard to wake, slow or noisy breathing, blue or gray lips. Call nine one one right away. Give naloxone, also called Narcan, if you have it. It is sold without a prescription. Then stay with them, turned on their side, until help arrives."
+    },
+    {
+     "k": "big",
+     "h": "Find the naloxone.",
+     "sub": "Or plan where it will go.",
+     "beats": [
+      "Let's practice.",
+      "Picture their home.",
+      "Choose the spot where naloxone will live, easy for anyone to find.",
+      {
+       "t": "Say that spot out loud now, and plan to tell one more person.",
+       "w": 10
+      }
+     ],
+     "say": "Let's practice. Picture their home. Choose the spot where naloxone will live, easy for anyone to find. Say that spot out loud now, and plan to tell one more person."
+    },
+    {
+     "k": "big",
+     "h": "Keep your own rest.",
+     "sub": "Bring your questions to the pharmacist too.",
+     "say": "Watching someone you love in pain is hard, and worrying about their medicines adds weight. Bring your own questions to the pharmacist. Share the load with others. And keep your own rest."
+    },
+    {
+     "k": "big",
+     "h": "Calm, practical, close by.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Calm, practical, and close by. That is your part. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: very hard to wake, or breathing slowly",
+    "Poison Control: 1-800-222-1222",
+    "988: call or text, any time"
+   ]
+  }
+ },
+ {
+  "id": "sober-adult-child",
+  "ring": "sober",
+  "title": "When Your Adult Child Drinks or Uses",
+  "you": {
+   "id": "sq-g-sober-adult-child-you",
+   "guide": "sober-adult-child",
+   "side": "you",
+   "title": "When Your Adult Child Drinks or Uses",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For the parent of a grown child who drinks or uses.",
+   "sources": [
+    "sqsocraft"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "When Your Adult Child Drinks or Uses",
+     "sub": "For You",
+     "say": "If your grown child drinks or uses, and you lie awake with the worry, this is for you. Your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "You never stop being a parent.",
+     "sub": "Love, worry, anger, grief. All of it belongs.",
+     "say": "You never stop being a parent. You may feel love, fear, anger, grief, and shame, all in the same hour. Every one of those feelings makes sense. It is safe to talk about this, and you deserve support too."
+    },
+    {
+     "k": "card",
+     "title": "Kind, steady words keep the door open.",
+     "body": "Research finds families can help a loved one move toward help.",
+     "say": "Here is a hopeful truth. Research finds that families who learn warm, calm ways to talk often help a loved one move toward help, and they feel better themselves along the way. Your love is a real force here. How you use it matters."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "Three steady habits",
+     "items": [
+      [
+       "Welcome sober time",
+       "A meal, a drive, a laugh"
+      ],
+      [
+       "Let results rest with them",
+       "Without rescue"
+      ],
+      [
+       "Keep help ready",
+       "For the moment they ask"
+      ]
+     ],
+     "say": "Three steady habits help. Welcome their sober time, and enjoy it with them: a meal, a drive, a laugh. Let the hard results of using rest with them, gently, without rescue. And keep treatment information ready, so you can offer it the very moment they say, I want help."
+    },
+    {
+     "k": "big",
+     "h": "Say what you will do.",
+     "sub": "Seated is fine.",
+     "beats": [
+      "Let's practice.",
+      "Think of one thing you are glad to do for your child, like a ride to treatment.",
+      "Think of one thing you will set down, like cash.",
+      {
+       "t": "Say both out loud now, starting with: I love you, and here is what I can do.",
+       "w": 12
+      }
+     ],
+     "say": "Let's practice. Think of one thing you are glad to do for your child, like a ride to treatment. Think of one thing you will set down, like cash. Say both out loud now, starting with: I love you, and here is what I can do."
+    },
+    {
+     "k": "card",
+     "title": "Protect your peace, money, and home.",
+     "body": "Pressure for money, or fear at home: call for help.",
+     "say": "Protect your peace, your money, and your home. A locked medicine cabinet and a kind, firm no are acts of love. If a grown child pressures you for money or frightens you, that is a reason to call for help. In Minnesota, MAARC answers any time. If anyone is in danger right now, call nine one one."
+    },
+    {
+     "k": "card",
+     "title": "If opioids are in the picture, keep naloxone.",
+     "body": "Hard to wake, or breathing slowly: call 911.",
+     "say": "If opioids or pills are in your child's life, keep naloxone, also called Narcan, on hand. It reverses an opioid overdose and is sold without a prescription. If they are very hard to wake, or breathing slowly, call nine one one, give the naloxone, and stay with them."
+    },
+    {
+     "k": "big",
+     "h": "Find your people.",
+     "sub": "Family groups meet in person and online.",
+     "say": "This is meant to be carried with others. Family groups like Al-Anon, Nar-Anon, and SMART Recovery Family and Friends meet in person and online. Tell one trusted person the whole truth this week."
+    },
+    {
+     "k": "big",
+     "h": "Every return to the path counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Healing is real, for your child and for you. Sobriety is rarely a straight line, and every return to the path counts. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "sq-g-sober-adult-child-helper",
+   "guide": "sober-adult-child",
+   "side": "helper",
+   "title": "When Your Adult Child Drinks or Uses",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "blurb": "For anyone supporting an older parent whose grown child drinks or uses.",
+   "sources": [
+    "sqsocraft"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "When Your Adult Child Drinks or Uses",
+     "sub": "For the Helper",
+     "say": "If you are walking beside an older parent whose grown child drinks or uses, this is for you. You can help them carry it with more peace."
+    },
+    {
+     "k": "big",
+     "h": "They may be carrying it in secret.",
+     "sub": "Worn out, frightened, ashamed.",
+     "say": "Start with what they may be feeling. Worn out, frightened, and often ashamed, as if their child's struggle were a verdict on their parenting. Many keep it secret for years, lose sleep, and give money they need. Your kindness can break that silence."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "That's a lot to carry.",
+      "What is keeping you up at night?",
+      "Want company at a family group?"
+     ],
+     "say": "Here are words that help. You love them so much. That's a lot to carry. What is keeping you up at night? And, would you like me to come with you to a family group?"
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of advice",
+       "Listen first"
+      ],
+      [
+       "Instead of labels",
+       "Use the child's name"
+      ],
+      [
+       "Instead of taking sides",
+       "Hold steady for everyone"
+      ]
+     ],
+     "say": "A few trades help. Instead of quick advice, like cut them off, listen first. Those choices belong to the parent. Instead of labels, use the child's name, and speak of them as a whole person. And instead of taking sides in a family quarrel, hold steady for everyone."
+    },
+    {
+     "k": "big",
+     "h": "Picture their kitchen table.",
+     "sub": "One question, asked warmly.",
+     "beats": [
+      "Let's practice.",
+      "Picture sitting with them at their kitchen table.",
+      "Let your voice slow down.",
+      {
+       "t": "Ask it out loud now: What would help you most this week?",
+       "w": 10
+      }
+     ],
+     "say": "Let's practice. Picture sitting with them at their kitchen table. Let your voice slow down. Ask it out loud now: What would help you most this week?"
+    },
+    {
+     "k": "card",
+     "title": "Watch gently for money pressure.",
+     "body": "Missing money, missing medicines, or fear at home.",
+     "say": "Watch gently for money pressure, missing medicines, or fear in their home. Older parents are sometimes pressured or frightened by a struggling child, and they may protect that child by staying quiet. If you see it, help them call for support. In Minnesota, MAARC answers any time. Danger right now, call nine one one."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "Practical help",
+     "items": [
+      [
+       "A family group",
+       "Offer to go along"
+      ],
+      [
+       "Naloxone at home",
+       "If opioids are involved"
+      ],
+      [
+       "Time away from the worry",
+       "A meal, a walk, a laugh"
+      ]
+     ],
+     "say": "Practical help makes a difference. Help them find a family group, and offer to go along the first time. If opioids are involved, help them get naloxone and learn how to use it. And plan time together that has nothing to do with the worry."
+    },
+    {
+     "k": "big",
+     "h": "A family can heal together.",
+     "sub": "One honest conversation at a time.",
+     "say": "If the struggling one is your sibling or your nephew, you are inside this too. Find your own place to talk. A family can heal, one honest conversation at a time."
+    },
+    {
+     "k": "big",
+     "h": "Steady love helps.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your steady love helps them stay steady. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-grandkids",
+  "ring": "sober",
+  "title": "Raising Grandchildren Through a Parent's Drinking or Using",
+  "you": {
+   "id": "sq-g-sober-grandkids-you",
+   "guide": "sober-grandkids",
+   "side": "you",
+   "title": "Raising Grandchildren Through a Parent's Drinking or Using",
+   "sideName": "For You",
+   "mins": 3,
+   "blurb": "For grandparents raising grandchildren while a parent struggles with drinking or drugs.",
+   "sources": [
+    "sevencs",
+    "sqsogu"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Raising Grandchildren Through a Parent's Drinking or Using",
+     "sub": "For You",
+     "say": "If you're raising your grandchildren because their parent is struggling with drinking or drugs, this is for you. Your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "You stepped in.",
+     "sub": "That matters more than any perfect answer.",
+     "say": "You stepped in. Many grandparents are raising grandchildren for this very reason, so you are part of a large and strong community. You may feel deep love and deep tiredness at once. Both make sense."
+    },
+    {
+     "k": "card",
+     "title": "You are grieving your own child too.",
+     "body": "Both feelings belong.",
+     "say": "You are raising your grandchildren while grieving your own son or daughter, who is somewhere on a hard road. You may feel angry, then guilty for the anger. You may grieve the retirement you planned. Both the love and the grief belong, and both deserve support."
+    },
+    {
+     "k": "words",
+     "h": "The truth, simply",
+     "items": [
+      "Your mom is struggling with drinking.",
+      "It is never your fault.",
+      "You are safe with me."
+     ],
+     "say": "Children do best with the truth, told simply and kindly. Something like this. Your mom is struggling with drinking. It is never your fault. You are safe with me. Then let them ask anything, as often as they need."
+    },
+    {
+     "k": "points",
+     "h": "The Seven Cs, for children",
+     "items": [
+      [
+       "I didn't cause it",
+       "I can't cure it"
+      ],
+      [
+       "I can't control it",
+       "And it's still safe to love"
+      ],
+      [
+       "I can take care of myself",
+       "Feelings, healthy choices, celebrating me"
+      ]
+     ],
+     "say": "Many families teach children the Seven Cs. I didn't cause it. I can't cure it. I can't control it. I can take care of myself, by talking about my feelings, making healthy choices, and celebrating me. Children can still love their parent, and you can help them do that safely."
+    },
+    {
+     "k": "big",
+     "h": "Practice the words.",
+     "sub": "Seated is fine.",
+     "beats": [
+      "Let's practice.",
+      "Picture your grandchild beside you.",
+      "Use their parent's name.",
+      {
+       "t": "Say it out loud now, gently: It is never your fault, and you are safe with me.",
+       "w": 10
+      }
+     ],
+     "say": "Let's practice. Picture your grandchild beside you. Use their parent's name. Say it out loud now, gently: It is never your fault, and you are safe with me."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "What helps children most",
+     "items": [
+      [
+       "A predictable day",
+       "Meals, bedtime, a ritual"
+      ],
+      [
+       "Safe, calm visits",
+       "When the parent is sober"
+      ],
+      [
+       "One more helper",
+       "A therapist, a group, a mentor"
+      ]
+     ],
+     "say": "What helps children most is steady and simple. A predictable day, with meals, bedtime, and a goodnight ritual. Safe, calm visits with their parent, when the parent is sober. And one more helper, like a therapist, a group for kids, or a caring mentor."
+    },
+    {
+     "k": "big",
+     "h": "A tended grandparent can tend a child.",
+     "sub": "Rest, respite, and your own people.",
+     "say": "A tended grandparent can tend a child. Ask for rest and respite. Find a grandfamily program or a support group. Ask what help fits your family, from school forms to money to legal steps. Asking for help is part of doing this well."
+    },
+    {
+     "k": "big",
+     "h": "Love and steadiness.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Love and steadiness are what these children need most, and you are giving them both. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "sq-g-sober-grandkids-helper",
+   "guide": "sober-grandkids",
+   "side": "helper",
+   "title": "Raising Grandchildren Through a Parent's Drinking or Using",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "blurb": "For anyone helping a grandparent raise grandchildren through a parent's drinking or using.",
+   "sources": [
+    "sqsogu"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Raising Grandchildren Through a Parent's Drinking or Using",
+     "sub": "For the Helper",
+     "say": "If you know a grandparent raising grandchildren because a parent is struggling with drinking or drugs, this is for you. Your steady help can lighten a heavy load."
+    },
+    {
+     "k": "big",
+     "h": "Love, tiredness, and grief.",
+     "sub": "Often all at once.",
+     "say": "Start with what they may be carrying. Love for the children. Tiredness that reaches the bones. Worry about money and their own health. And grief for their own son or daughter. Many also feel embarrassed, or judged."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "You're doing something remarkable.",
+      "What is the hardest part of the week?",
+      "How are you doing about your child?"
+     ],
+     "say": "Here are words that help. You're doing something remarkable. What is the hardest part of the week? And, gently, how are you doing about your son or daughter? That last one honors a grief many people skip past."
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of labels",
+       "Use the parent's name"
+      ],
+      [
+       "Instead of the whole story",
+       "Ask in private"
+      ],
+      [
+       "Instead of help once",
+       "Help on a schedule"
+      ]
+     ],
+     "say": "A few trades help. Instead of labels for the children's parent, use the parent's name, especially where the children can hear. Instead of asking for the whole story in front of the grandchildren, ask in private. And instead of offering help once, offer help on a schedule."
+    },
+    {
+     "k": "big",
+     "h": "Choose one regular gift.",
+     "sub": "Specific, and on the calendar.",
+     "beats": [
+      "Let's practice.",
+      "Think of this grandparent's week.",
+      "Choose one thing you could do every week: a pickup, a meal, an afternoon.",
+      {
+       "t": "Say it out loud now, with the day: Every Tuesday, I can...",
+       "w": 10
+      }
+     ],
+     "say": "Let's practice. Think of this grandparent's week. Choose one thing you could do every week: a pickup, a meal, an afternoon. Say it out loud now, with the day: Every Tuesday, I can..."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "Help that lasts",
+     "items": [
+      [
+       "Childcare",
+       "So they can rest"
+      ],
+      [
+       "A ride and a hand",
+       "To a program or legal aid"
+      ],
+      [
+       "One more safe grown-up",
+       "For the children"
+      ]
+     ],
+     "say": "Help that lasts looks like this. Childcare, so they can rest. A ride and a hand to a grandfamily program, legal aid, or a support group. And being one more safe, kind grown-up in the children's lives."
+    },
+    {
+     "k": "card",
+     "title": "Safety comes first.",
+     "body": "A parent arrives intoxicated, or someone is in danger: call 911.",
+     "say": "Safety comes first. If a parent arrives intoxicated and a child is in danger, or someone is very hard to wake or breathing slowly, call nine one one. For treatment and family support, SAMHSA's National Helpline answers any time."
+    },
+    {
+     "k": "big",
+     "h": "Grandfamilies do well with a circle.",
+     "sub": "You can be part of it.",
+     "say": "Grandfamilies do well with a circle around them. You can be one steady part of that circle. Share the load with others, and take care of yourself too."
+    },
+    {
+     "k": "big",
+     "h": "Steady help, every week.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Steady help, every week, is a gift to the whole family. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-long",
+  "ring": "sober",
+  "title": "Long-Term Sober, Still Growing",
+  "you": {
+   "id": "sq-g-sober-long-you",
+   "guide": "sober-long",
+   "side": "you",
+   "title": "Long-Term Sober, Still Growing",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if you have years of sobriety and want to keep growing.",
+   "sources": [
+    "samhsarec"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Long-Term Sober, Still Growing",
+     "sub": "For You",
+     "say": "If you have years of sobriety behind you, and you want to keep growing, this is for you. Your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Long-term sober is a season of deepening.",
+     "sub": "Growth keeps going for a lifetime.",
+     "say": "Years of sobriety are a real achievement. And growth keeps going for a lifetime. Long-term sober is a season of deepening, and later life brings its own chapters to grow through."
+    },
+    {
+     "k": "points",
+     "h": "Later life can test it",
+     "items": [
+      [
+       "Retirement",
+       "Wide-open days"
+      ],
+      [
+       "Losses",
+       "People, places, roles"
+      ],
+      [
+       "Surgeries and pain",
+       "New medicines"
+      ],
+      [
+       "Quieter circles",
+       "Sober friends move or pass"
+      ]
+     ],
+     "say": "Later life can test even long sobriety. Retirement, with wide-open days. Losses of people, places, and roles. Surgeries and pain, with new medicines offered. And quieter circles, as sober friends move away or pass on. Naming these early keeps you strong."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Notebook",
+     "title": "18 Years",
+     "lines": [
+      "The drinking stopped. The pain underneath stayed.",
+      "Pride took the empty seat for a while.",
+      "He learned to heal small pieces at a time."
+     ],
+     "lesson": "Healing the roots keeps the tree steady.",
+     "note": "Names and details changed",
+     "say": "Chris, one of Grounded's founders, has been sober since April 1, 2008. He says the drinking stopped, but for years he had yet to heal the reasons he drank. Without noticing, he let pride and hard work cover the same old pain. Then he learned something hopeful. You don't have to heal everything at once. You can be honest about the pain, and tend small pieces of it at a time."
+    },
+    {
+     "k": "card",
+     "title": "Watch for swapped habits.",
+     "body": "Food, shopping, work, screens, even pride.",
+     "say": "Chris also noticed swapped habits. Food, shopping, work, screens, and even religion or pride can quietly take a drink's old place. If you notice one, name it kindly. It is simply a sign of a feeling asking for care."
+    },
+    {
+     "k": "big",
+     "h": "What is asking for care?",
+     "sub": "Seated is fine.",
+     "beats": [
+      "Let's practice.",
+      "Place a hand on your chest.",
+      "Ask yourself: what feeling has been asking for my attention lately?",
+      {
+       "t": "Name it out loud now, and then say: I can tend this, a little at a time.",
+       "w": 12
+      }
+     ],
+     "say": "Let's practice. Place a hand on your chest. Ask yourself: what feeling has been asking for my attention lately? Name it out loud now, and then say: I can tend this, a little at a time."
+    },
+    {
+     "k": "points",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     },
+     "h": "Tend the whole tree",
+     "items": [
+      [
+       "Mind",
+       "A few quiet breaths each day"
+      ],
+      [
+       "Body",
+       "A daily walk, rest, good food"
+      ],
+      [
+       "Spirit",
+       "Write out what you feel"
+      ]
+     ],
+     "say": "Keep tending the whole tree. For the mind, a few minutes of quiet breathing each day. For the body, a daily walk, good rest, and whole food. For the spirit, a place for your feelings to go. Many people write it out, putting words to what they feel."
+    },
+    {
+     "k": "big",
+     "h": "Your story lights the way.",
+     "sub": "Mentor, sponsor, show up.",
+     "say": "Your story is a gift. Mentoring, sponsoring, volunteering, or simply telling someone who is just starting, I've been where you are, keeps sobriety bright for both of you. And celebrate your anniversaries with joy, with the people who walked with you."
+    },
+    {
+     "k": "big",
+     "h": "I am still growing.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Healing is real, and it keeps going. You are still growing. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "sq-g-sober-long-helper",
+   "guide": "sober-long",
+   "side": "helper",
+   "title": "Long-Term Sober, Still Growing",
+   "sideName": "For the Helper",
+   "mins": 3,
+   "blurb": "For anyone who loves an older adult with long sobriety.",
+   "sources": [
+    "samhsarec"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "sequoia",
+     "eyebrow": "When Life Changes",
+     "h": "Long-Term Sober, Still Growing",
+     "sub": "For the Helper",
+     "say": "If someone you love has many years of sobriety, this is for you. Your steady interest tells them their growth still matters."
+    },
+    {
+     "k": "big",
+     "h": "Long sobriety is still living.",
+     "sub": "It keeps growing, and it still needs tending.",
+     "say": "Long sobriety is a living thing. People may assume it is finished business after so many years. But later life brings new tests, and many people hesitate to mention a craving after decades, for fear of worrying anyone."
+    },
+    {
+     "k": "points",
+     "h": "Seasons that stir old feelings",
+     "items": [
+      [
+       "A loss",
+       "A spouse, a friend, a role"
+      ],
+      [
+       "A surgery",
+       "And pain pills offered"
+      ],
+      [
+       "A quiet season",
+       "Retirement, a move"
+      ]
+     ],
+     "say": "Some seasons stir old feelings. A loss, of a spouse, a friend, or a role. A surgery, with pain pills offered. Or a quiet season, like retirement or a move far from their sober friends. These are good times to stay close."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "I'm proud of you.",
+      "How is your sobriety these days?",
+      "What does this season ask of you?"
+     ],
+     "say": "Here are words that help. I'm proud of you. How is your sobriety these days? And, what does this season ask of you? Asked with warmth, these questions say: your growth still matters to me."
+    },
+    {
+     "k": "points",
+     "h": "Trade these",
+     "items": [
+      [
+       "Instead of a drink offered",
+       "A warm sober choice"
+      ],
+      [
+       "Instead of alarm",
+       "Calm listening"
+      ],
+      [
+       "Instead of silence",
+       "Celebrate the milestones"
+      ]
+     ],
+     "say": "A few trades help. Instead of a drink offered, since it's been so long, have a warm sober choice ready, like sparkling water or tea. Instead of alarm when they mention a craving, listen calmly. And instead of silence, celebrate their milestones out loud."
+    },
+    {
+     "k": "big",
+     "h": "Plan a sober celebration.",
+     "sub": "For their next anniversary.",
+     "beats": [
+      "Let's practice.",
+      "Think of their sober anniversary, or another day that matters to them.",
+      "Picture a celebration they would love: a meal, a walk, music, the people who walked with them.",
+      {
+       "t": "Write down one idea now, and a date to suggest it.",
+       "w": 12
+      }
+     ],
+     "say": "Let's practice. Think of their sober anniversary, or another day that matters to them. Picture a celebration they would love: a meal, a walk, music, the people who walked with them. Write down one idea now, and a date to suggest it."
+    },
+    {
+     "k": "card",
+     "title": "Before a surgery, support their plan.",
+     "body": "Honesty with the care team keeps them safe.",
+     "say": "Before a surgery or a new prescription, support their pain plan and their honesty with the care team. Offer a ride, a held bottle, or a nightly check-in, if they want one. And if they ever seem very hard to wake, or breathe slowly, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Keep them close to their people.",
+     "sub": "Sober friends, groups, and you.",
+     "say": "As the years change who is nearby, help them stay close to their sober people. A ride to a group, a call, a visit. And let their example encourage your own healthy choices too."
+    },
+    {
+     "k": "big",
+     "h": "Their growth still matters.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Their growth still matters, and so does your steady love. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ }
+];
+  V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); }); })();
+/* Living Sober videos end */

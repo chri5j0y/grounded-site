@@ -5669,3 +5669,748 @@ const LC_TOPICS = [
 ];
 window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 })();
+/* Living Sober guides start: the seven Pine Living Sober guides (GWG BLD 789). Generated from patches/bld789/P in grounded-workshop
+   by gen.py: edit the data there and rebuild. Ring 'sober' is the low-key Living Sober ring from shared/gg-life.js (shown in the ring
+   list only when Living Sober is chosen; always found by search and Picked for You). sober: the stages each guide fits most. */
+(function () { var G = window.PINE_GUIDES; if (!G || !G.topics) return; var T = [
+ {
+  "id": "sober-cutting-back",
+  "ring": "sober",
+  "title": "Thinking about cutting back",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "change"
+  ],
+  "sources": [
+   "rollnick08",
+   "mtf24"
+  ],
+  "keys": "cutting back cut back drink less drinking too much using too much quit drinking stop using thinking about quitting should i stop am i drinking too much how much is too much weed every day vaping every day pills alcohol party every weekend high a lot drunk a lot worried about my drinking worried about my use change sober curious taking a break wait until 21",
+  "parts": [
+   "bark",
+   "trunk",
+   "leaves",
+   "branches"
+  ],
+  "quick": [
+   "Wondering about your drinking or using is a strong, honest place to start.",
+   "For teens, the healthiest amount of alcohol, nicotine, weed, and pills is none, until adulthood. Cutting back is a real step toward that.",
+   "Ask yourself what it does for you, what it costs you, and what you want. Your own reasons carry the most power.",
+   "If you've been drinking every day or taking pills like Xanax, talk with a doctor before you stop."
+  ],
+  "feel": "Maybe a night went further than you meant it to. Maybe you've noticed you reach for something every weekend, or every day. Maybe a friend said something, or a grade slipped, or you just feel tired of how you feel the morning after. You might also really like how it feels, or how easy it makes things with friends. Both can be true at once, and that's normal. Most people feel two ways about a change before they make it. Wondering is how growth starts, and you get to take an honest look at your own pace.",
+  "self": {
+   "first": [
+    "Take an honest look: what does drinking or using do for you, and what does it cost you? Write both lists.",
+    "Ask yourself, from zero to ten, how much you want a change. Then ask why your number isn't lower. Those reasons are yours.",
+    "Pick one small step for this week, like a sober weekend, leaving a party at eleven, or keeping a water bottle in your hand."
+   ],
+   "helps": [
+    "Knowing what you're really looking for: calm, fun, sleep, courage, or a break from a hard feeling. Each of those has other doors.",
+    "Telling one person you trust that you're thinking about a change.",
+    "Planning ahead for the moments that pull hardest: a certain friend, a certain place, a certain feeling.",
+    "Sleep, real meals, and moving your body. Being tired and wired makes cravings louder.",
+    "A doctor or school counselor, who can talk with you privately about where you are.",
+    "Remembering that most high schoolers aren't using. Choosing less, or none, puts you with the majority."
+   ],
+   "tell": [
+    "“I'm allowed to take an honest look.”",
+    "“My reasons count.”",
+    "“Small steps still count.”"
+   ],
+   "people": "Try, with a friend: “I'm taking a break from drinking for a while. Still coming Friday.” With a trusted adult: “I've been thinking about how much I've been using. Can I talk it through with you?”"
+  },
+  "helper": {
+   "feel": "A teen who is thinking about cutting back is already doing something hard: looking honestly at their own choices. They likely feel two ways about it. They may like what drinking or using does for them and also see what it costs. Lectures and pressure tend to push them toward defending it. Calm questions, real listening, and their own reasons are what move them toward change.",
+   "say": [
+    "“What do you like about it? What don't you like?”",
+    "“What would be different if you cut back?”",
+    "“On a scale of zero to ten, how ready do you feel? What makes it that number?”",
+    "“I'm glad you're thinking about this. I'm on your side.”"
+   ],
+   "avoid": [
+    "A lecture or a list of scary facts. They tend to stop the conversation.",
+    "Asking them to confess everything they've tried.",
+    "Labels. Talk about choices and health, with the words they use themselves.",
+    "Arguing for change. Let them say the reasons. People believe what they hear themselves say."
+   ],
+   "help": [
+    "Ask open questions, then reflect back what you hear: “So it helps you relax, and you hate how Sunday feels.”",
+    "Help them make one small, clear plan for one week, and check in kindly.",
+    "Keep alcohol and old medicines out of easy reach at home.",
+    "Ask their doctor to talk with them privately at their next visit.",
+    "If daily drinking or daily pills are part of it, involve a doctor before they stop. Stopping suddenly can be dangerous."
+   ],
+   "you": "It can be hard to stay calm when you're worried. Breathe before you talk, and get support of your own: a friend, a therapist, or a family group. Your steadiness helps them think clearly. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+  },
+  "faith": "If faith is part of your life, it can help to bring this question there: to pray about it, or talk with a youth leader you trust, without fear of being judged. Some teens worry that faith people will only be disappointed in them. Many will be glad you're taking an honest look. If faith isn't part of your life, your own values can do the same work: what kind of person do you want to be, and how does this fit?",
+  "practices": [
+   "trunk|Values Sort",
+   "trunk|What I Stand For",
+   "bark|Name It",
+   "branches|Easy Ways Out",
+   "branches|Name Your Trusted Adult",
+   "fruit|Tiny Next Step"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
+   "Daily drinking, or daily pills like Xanax or opioids: talk with a doctor before you stop. Stopping suddenly can be dangerous.",
+   "SAMHSA National Helpline, 1-800-662-4357, any time, for information and treatment options for teens and families.",
+   "Vaping: text DITCHVAPE to 88709. In Minnesota, teens 13 to 17 can text Start My Quit to 36072 (My Life, My Quit).",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "Minnesota Department of Health: help to quit, including My Life, My Quit",
+    "https://www.health.state.mn.us/communities/tobacco/quitting/index.html"
+   ],
+   [
+    "Truth Initiative: This is Quitting",
+    "https://truthinitiative.org/thisisquitting"
+   ]
+  ]
+ },
+ {
+  "id": "sober-teen",
+  "ring": "sober",
+  "title": "Getting sober as a teen",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing"
+  ],
+  "sources": [
+   "samhsarec",
+   "mdhminor"
+  ],
+  "keys": "getting sober sober teen sobriety quit drinking stop drinking quit drugs stop using stop smoking weed quit weed pills xanax percs opioids alcohol drunk high every day can't stop cravings withdrawal detox rehab treatment outpatient program recovery high school sober friends first weeks sober staying sober slip relapse aa na smart recovery alateen counselor doctor",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches",
+   "fruit"
+  ],
+  "quick": [
+   "Getting sober as a teen takes real courage, and it is one of the strongest things a person can do.",
+   "If you have been drinking every day or taking pills like Xanax, talk with a doctor before you stop. They can help you stop safely.",
+   "Drinking and using often numb hard feelings. Healing those feelings, and growing a healthy tree, is the path.",
+   "Sobriety is rarely a straight line. Every return to the path counts."
+  ],
+  "feel": "Maybe you decided this on your own. Maybe a parent, a school, a doctor, or a scary night decided it for you. You might feel relieved, angry, proud, embarrassed, or all of those in one day. The first weeks can bring bad sleep, big moods, and cravings that show up out of nowhere. You might wonder who your friends are now, and what a weekend even looks like. You might miss how fast a drink, a hit, or a pill could quiet a hard feeling. All of that makes sense. Your body and your brain are learning a new way, and they are good at learning. You are growing something real.",
+  "self": {
+   "first": [
+    "If you have been drinking a lot every day, or taking pills like Xanax, Valium, or opioids, tell a doctor before you stop. Stopping some of these suddenly can be dangerous, and a doctor can help you do it safely.",
+    "Pick one grown-up who knows the whole story and is on your side: a parent, a school counselor, a coach, a doctor, a relative.",
+    "Make a short list of what you will do the next time a craving hits: who you will text, where you will walk, what music you will play."
+   ],
+   "helps": [
+    "Sleep, water, real meals, and moving your body every day. Your body is healing, and it needs the basics.",
+    "Writing it out. Putting a feeling into words helps it move through you.",
+    "Friends who are glad you are sober, and time with them doing things you love.",
+    "A therapist or an outpatient program for teens, and a peer group if it helps: Alateen, NA, AA, SMART Recovery, or a group at school.",
+    "In Minnesota, recovery high schools, where every student is growing sober.",
+    "In Minnesota, you can agree to health care for drinking or drug use on your own, at any age."
+   ],
+   "tell": [
+    "“This is a craving. It rises, and it passes.”",
+    "“I'm worth it.”",
+    "“A hard day is part of the path, and I'm still on it.”"
+   ],
+   "people": "Try, with a friend: “I'm sober now. I still want to hang out. Want to get food Friday?” With a parent: “The evenings are the hardest. Can we do something together after dinner this week?”"
+  },
+  "helper": {
+   "feel": "A teen getting sober is doing one of the bravest things a person can do. They may be proud and raw at the same time, touchy about being watched, and tired from poor sleep. They may grieve friends, a scene, or the relief that using gave them. Many teens used to cope with something underneath: anxiety, loss, trauma, or pain. Healing that is part of the path. They do best with adults who treat sobriety as growth, stay calm about hard days, and help them build a full life.",
+   "say": [
+    "“I'm proud of you. What helps most this week?”",
+    "“What were drinking or using doing for you? Let's find other ways to get that.”",
+    "“A hard day doesn't erase your progress.”",
+    "“You can tell me the truth, and I'll stay calm.”"
+   ],
+   "avoid": [
+    "Labels. Use words like “growing sober,” or the words they choose for themselves.",
+    "Watching every move. Agree together on what checking in looks like.",
+    "Treating a slip as the end. Calm, honest talk helps them get back on the path fastest.",
+    "Leaving alcohol, old pain pills, or other medicines out at home."
+   ],
+   "help": [
+    "If they have been drinking every day or taking sedative pills, get a doctor involved before they stop. Stopping suddenly can be dangerous.",
+    "Help them find a teen outpatient program, a therapist, and their kind of support group. The SAMHSA National Helpline can point you to options.",
+    "Clear the house of alcohol, and lock up or safely dispose of medicines.",
+    "Fill the evenings and weekends with real things: a sport, a job, a gym, a trail, a meal together.",
+    "Keep naloxone at home if opioids or pills have been part of the story, and learn how to use it."
+   ],
+   "you": "Walking with a teen through early sobriety can bring fear, hope, and exhaustion in one day. Get support for yourself: Al-Anon, a family group, a therapist, or a friend who listens. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+  },
+  "faith": "For some teens, faith is a real source of strength in getting sober: prayer on a hard night, a youth group that welcomes them, or a sense of being loved through every step. Some have felt judged by a faith community, and that can hurt. If faith is part of your life, you can bring your cravings and your hopes to God honestly, and ask a youth leader you trust to walk with you. If it isn't, the same need for people who stay close points to the friends and grown-ups on your side.",
+  "practices": [
+   "bark|Name It",
+   "bark|Slow Exhale",
+   "leaves|Walk or Jog",
+   "trunk|Journal",
+   "branches|Name Your Trusted Adult",
+   "fruit|Celebrate a Win"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or there is danger right now: call 911.",
+   "Thinking about stopping after daily drinking, or daily pills like Xanax or opioids: talk with a doctor first. Stopping suddenly can be dangerous.",
+   "SAMHSA National Helpline, 1-800-662-4357, any time, for treatment options and information for teens and families.",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Poison Help, 1-800-222-1222, any time, for a question about something taken or mixed.",
+   "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age.",
+   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "Association of Recovery Schools",
+    "https://recoveryschools.org/"
+   ],
+   [
+    "Alateen, Al-Anon Teen Corner",
+    "https://al-anon.org/newcomers/teen-corner-alateen/"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org/"
+   ],
+   [
+    "Minnesota Department of Health: minor consent summary",
+    "https://www.health.state.mn.us/people/adolescent/youth/minorconsent.pdf"
+   ]
+  ]
+ },
+ {
+  "id": "sober-party",
+  "ring": "sober",
+  "title": "Party pressure and saying no your way",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
+  "sources": [
+   "mtf24"
+  ],
+  "keys": "party pressure peer pressure saying no how to say no offered a drink offered a vape offered weed offered pills everyone was drinking sober at a party sober friends being the sober one what do i say drinking games shots beer pong homecoming prom after party bonfire hangout leave the party code word ride home drunk driver sober fun fitting in left out friends think i'm boring",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Most high schoolers aren't drinking, vaping, or using in a given month. Choosing to wait puts you with the majority.",
+   "Deciding ahead, with lines that sound like you, makes the moment much easier.",
+   "You owe nobody an explanation. A short, friendly answer and a change of subject work best.",
+   "Leaving is always an option. A code word with a grown-up gets you a ride, with no questions that night."
+  ],
+  "feel": "Maybe you're sober now and worried about the first party. Maybe you've never wanted to drink or use and feel like the only one. Maybe you love your friends and hate the moment when the bottle or the vape comes around. You might worry people will think you're boring, judgy, or a narc. You might feel left out, or tired of explaining. All of that makes sense. Being yourself in a room where everyone seems to be doing something else takes real strength, and it gets easier with practice.",
+  "self": {
+   "first": [
+    "Pick two lines that sound like you: “I'm good, thanks.” “I've got a game tomorrow.” “I'm driving.” “Not my thing.”",
+    "Set up a code word with a parent or trusted grown-up: you text it, they come get you, no questions that night.",
+    "Before you go, know your ride, your exit time, and one friend who leaves when you leave."
+   ],
+   "helps": [
+    "A drink of your own in your hand: water, sparkling water, a soda. Fewer people offer.",
+    "Saying it once, kindly, then changing the subject: “I'm good. Hey, did you see the game?”",
+    "Something to do: the music, the food, the fire, the game. Busy hands get fewer offers.",
+    "Friends who are glad you're sober, and plans with them that start without alcohol: a late-night food run, a game night, a hike, a concert.",
+    "Hosting sometimes. Your house, your rules, your snacks, your playlist.",
+    "Leaving early, and feeling good the next morning."
+   ],
+   "tell": [
+    "“I don't owe anyone an explanation.”",
+    "“Leaving is always an option.”",
+    "“The people who matter will still be here.”"
+   ],
+   "people": "Try, with a friend before the party: “I'm not drinking. Got my back if people push?” With a parent: “Can we set up a code word? If I text it, come get me, and we'll talk tomorrow.”"
+  },
+  "helper": {
+   "feel": "Teens want to belong, and parties are where belonging seems to happen. A teen who is sober, or who is choosing to wait, may feel proud and nervous at the same time. Most want a way to say no that keeps their friends. They're watching whether asking you for help leads to a rescue or to a lecture.",
+   "say": [
+    "“If you ever want out, text me the code word. I'll come. No questions that night.”",
+    "“What would you say if someone handed you something?”",
+    "“I'm proud of how you're handling this.”",
+    "“If a friend is ever in trouble, call 911 first. We'll sort out the rest later.”"
+   ],
+   "avoid": [
+    "Grilling them after every party. Ask how it went, and listen.",
+    "Breaking the code word promise. One broken promise can end its use for good.",
+    "Offering alcohol at home “so they learn safely.” For teens, waiting is the healthy choice.",
+    "Assuming their friends are the problem. Ask who has their back."
+   ],
+   "help": [
+    "Set up a code word together, and honor it every time.",
+    "Help them practice two lines that sound like them.",
+    "Know the plan: where, who's driving, and when they'll be home, the same calm way every time.",
+    "Make your home a good place to gather: food, music, space, and a sober welcome.",
+    "Celebrate their wins: a party they walked out of, a weekend they loved, a friend they kept."
+   ],
+   "you": "It's easy to lie awake on party nights. Find your own calm: a walk, a friend to text, a prayer or a quiet moment if that's part of your life. Your steady welcome when they walk in the door matters more than any rule. If they use Pine, their answers stay private."
+  },
+  "faith": "If faith is part of your life, a youth group or faith community can be one place to find friends who have your back, and a reason to choose what you believe is right when it's hard. Some teens pray for courage before a party, or ask a youth leader to be a code word grown-up. If faith isn't part of your life, your values and the people who care about you do the same work.",
+  "practices": [
+   "branches|Easy Ways Out",
+   "branches|Look Out for a Friend",
+   "branches|Friends",
+   "bark|Before the Big Moment",
+   "trunk|What I Stand For",
+   "fruit|Celebrate a Win"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
+   "A ride with someone who has been drinking or using: skip it. Text your code word or call a grown-up.",
+   "Poison Help, 1-800-222-1222, any time, if you're worried about something someone took.",
+   "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "SAMHSA National Helpline, 1-800-662-4357, any time, for information and support."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "DEA: One Pill Can Kill",
+    "https://www.dea.gov/onepill"
+   ],
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org/"
+   ]
+  ]
+ },
+ {
+  "id": "sober-parent",
+  "ring": "sober",
+  "title": "A parent's drinking or using",
+  "life": [
+   "sober",
+   "close"
+  ],
+  "sober": [
+   "love"
+  ],
+  "sources": [
+   "sevencs",
+   "mccabe25"
+  ],
+  "keys": "parent drinks mom drinks dad drinks parent drinking too much parent using drugs mom high dad high parent in rehab parent in treatment parent getting sober parent sober now parent relapse slip broken promises can i trust them again embarrassed angry worried keep it secret talk about it family history will i be like them alateen al-anon nacoa seven cs not my fault",
+  "parts": [
+   "bark",
+   "branches",
+   "roots",
+   "fruit"
+  ],
+  "quick": [
+   "It's safe to talk about a parent's drinking or using. Silence keeps families stuck; honest talk with a safe person helps you grow.",
+   "You didn't cause it, you can't control it, and you can't cure it. You can take good care of yourself.",
+   "When a parent gets sober, trust comes back slowly, and that's okay. You get to go at your own pace.",
+   "Your family's story is part of your story, and you write the next chapter."
+  ],
+  "feel": "Maybe your parent is still drinking or using. Maybe they're in treatment, or newly sober, and everyone is acting like things are fine. You might feel hope and doubt at the same time, waiting to see if this time is different. You might be angry about years of broken promises, or embarrassed, or protective, or tired of being the responsible one. You might wonder whether you'll end up the same way. All of it makes sense. You can love your parent and still feel every one of those things.",
+  "self": {
+   "first": [
+    "Say it to one safe person this week: a relative, a coach, a school counselor, a friend's parent, a youth leader.",
+    "Learn the Seven Cs: I didn't cause it. I can't control it. I can't cure it. I can take care of myself, by communicating my feelings, making healthy choices, and celebrating myself.",
+    "Keep your own safety plan: who you'll call, where you can go, and a ride that never involves someone who has been drinking or using."
+   ],
+   "helps": [
+    "Alateen, where teens affected by someone else's drinking talk with other teens who get it. Many groups welcome teens affected by drug use too.",
+    "Writing it out: what you feel, what you wish, what you're afraid of.",
+    "Your own roots: sleep, real meals, moving your body, time outside.",
+    "Your own life: school, practice, work, friends, plans. You're allowed to have a good life no matter what is happening at home.",
+    "If your parent is sober now, going at your own pace. Trust can come back in small pieces.",
+    "Knowing your family history as you make your own choices. Waiting until adulthood, and living sober if you choose, are both strong ways to write your own story."
+   ],
+   "tell": [
+    "“I didn't cause it, and I can take care of myself.”",
+    "“I'm allowed to talk about this.”",
+    "“My story is mine to write.”"
+   ],
+   "people": "Try, with a safe adult: “Things at home are hard because of drinking. Can I talk to you about it?” With a parent who's getting sober, at a calm time: “I'm glad you're getting help. I'm still scared sometimes. Can we talk about it?”"
+  },
+  "helper": {
+   "feel": "Teens with a parent who drinks or uses often carry secrets, worry, and grown-up jobs. When the parent gets help, the teen may feel relief and suspicion at once, and may stay guarded for a long time. That's a healthy way to protect a heart, and it softens with steady time. Many teens also wonder about their own future. They do best when it's safe to talk, when someone else does the grown-up jobs, and when their own life gets room to grow.",
+   "say": [
+    "“It's not your fault, and it's not your job to fix.”",
+    "“You can talk to me about it any time. Nothing you say will get you in trouble.”",
+    "“You can take your time trusting again.”",
+    "If you're the parent: “I'm getting help. My recovery is my job. Your job is being a teenager.”"
+   ],
+   "avoid": [
+    "Asking the teen to keep the secret, cover for the parent, or check on them.",
+    "Speaking about the parent with contempt. The teen likely still loves them.",
+    "Promising that this time will fix everything. Steady actions speak louder.",
+    "If you're the parent: asking your teen to forgive you on your timeline, or leaning on them for support."
+   ],
+   "help": [
+    "Name safe adults the teen can always call, with numbers in their phone.",
+    "Make a clear safety plan together: rides, where to go, and calling 911 if someone can't wake up.",
+    "Help them find Alateen, a school group, or a therapist.",
+    "Protect normal teen life: sleep, school, sports, work, friends.",
+    "If you're the parent growing sober: tell your teen honestly, in a calm and sober moment, what you're doing to heal, and let your steady days do the rest."
+   ],
+   "you": "Loving someone who drinks or uses, or growing sober yourself while raising a teen, is a lot to carry. Al-Anon and Nar-Anon are there for family members, and the SAMHSA National Helpline can point you to treatment and family support. If your teen uses Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+  },
+  "faith": "For some teens, faith is a place to bring the hurt honestly: anger, fear, and hope all at once, in prayer or with a youth leader they trust. Some feel pressure to forgive and forget quickly, and that can add weight. Forgiveness, if it comes, can take its own time, and safety comes first. If faith isn't part of your life, saying what hurts to someone safe, and choosing your own path, matter just as much.",
+  "practices": [
+   "branches|Name Your Trusted Adult",
+   "bark|Self-Compassion Break",
+   "trunk|Expressive Writing",
+   "bark|My Safety Plan",
+   "leaves|Two Hours Outdoors",
+   "fruit|Future Me Letter"
+  ],
+  "reach": [
+   "Someone can't wake up, isn't breathing well, or there is danger right now: call 911.",
+   "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111.",
+   "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "SAMHSA National Helpline, 1-800-662-4357, any time, for treatment and support for the parent, or for your family.",
+   "Alateen, for teens affected by someone else's drinking: find a meeting through Al-Anon's Teen Corner.",
+   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+  ],
+  "more": [
+   [
+    "NACoA: the Seven Cs",
+    "https://nacoa.org/the-seven-cs/"
+   ],
+   [
+    "Alateen, Al-Anon Teen Corner",
+    "https://al-anon.org/newcomers/teen-corner-alateen/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ]
+  ]
+ },
+ {
+  "id": "sober-vaping",
+  "ring": "sober",
+  "title": "Quitting vaping",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "change",
+   "early"
+  ],
+  "sources": [
+   "graham24",
+   "bowen09"
+  ],
+  "keys": "quit vaping stop vaping vape juul elf bar puff bar disposable nicotine pouches zyn nicotine addiction can't stop vaping cravings withdrawal irritable can't focus headache sleep quit date ditchvape this is quitting my life my quit text to quit nicotine gum patch doctor hitting my vape every hour vaping at school vaping in the bathroom",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "Nicotine is built to keep you coming back, so quitting takes real effort. Needing help says nothing bad about you.",
+   "Cravings and crankiness are strongest in the first days, and they ease week by week.",
+   "Know your trigger times and plan a swap for each one.",
+   "Text support works: teens can text DITCHVAPE to 88709. In Minnesota, teens 13 to 17 can text Start My Quit to 36072."
+  ],
+  "feel": "Maybe it started as something fun with friends, and now you hit it between every class. Maybe you've tried to quit and ended up borrowing one by lunch. You might feel annoyed at yourself, or worried about your lungs, your money, or getting caught. When you skip it you might feel jumpy, cranky, foggy, or hungry. That's your body asking for nicotine, and it settles as your body adjusts. Wanting to quit is a big step, and many teens are taking it right now.",
+  "self": {
+   "first": [
+    "Pick a quit day in the next week or two, and tell one person.",
+    "Text DITCHVAPE to 88709 for daily support messages. In Minnesota, teens 13 to 17 can text Start My Quit to 36072 for a quit coach.",
+    "On your quit day, get rid of every vape, pod, and charger."
+   ],
+   "helps": [
+    "Knowing your trigger times: after school, in the car, when you're stressed, when friends hit theirs. Plan a swap for each.",
+    "Something for your hands and mouth: a water bottle, gum, a toothpick, a stress ball.",
+    "Riding out a craving. It rises, peaks, and passes within minutes.",
+    "Moving your body. A fast walk or a few sprints can calm a craving and your mood.",
+    "Sleep and real meals. Hunger and tiredness feel a lot like cravings.",
+    "Talking with your doctor. They can help with a plan, and with medicine if it fits you."
+   ],
+   "tell": [
+    "“This is a craving. It passes.”",
+    "“Every hour without it counts.”",
+    "“A slip is a moment. I can start again right now.”"
+   ],
+   "people": "Try, with a friend who vapes: “I'm quitting. Can you not offer for a while?” With a parent: “I want to quit vaping, and I need help. Can we talk to my doctor?”"
+  },
+  "helper": {
+   "feel": "Many teens who vape started with friends and found themselves hooked fast. Nicotine changes how a growing brain handles reward and stress, so quitting brings real cravings, crankiness, and trouble focusing. Teens often feel embarrassed and expect a lecture. They quit best with adults who stay calm, treat it as a health goal, and help with a plan.",
+   "say": [
+    "“Thank you for telling me. Let's make a plan together.”",
+    "“What times of day are hardest?”",
+    "“A slip is part of quitting. What did you learn from it?”",
+    "“I'm proud of you for trying.”"
+   ],
+   "avoid": [
+    "Punishment as the main response. It tends to push vaping out of sight.",
+    "Expecting one try to stick. Many people need a few.",
+    "Constant searching of their room or bag. Agree together on what support looks like.",
+    "Vaping or smoking around them, if you can help it. If you use nicotine too, consider quitting together."
+   ],
+   "help": [
+    "Help them sign up for a texting program: DITCHVAPE to 88709, or in Minnesota, Start My Quit to 36072.",
+    "Book a visit with their doctor about a quit plan, including whether medicine fits.",
+    "Plan swaps together for the hardest times of day.",
+    "Give the money they save a purpose: a goal they choose.",
+    "Celebrate milestones: one day, one week, one month."
+   ],
+   "you": "Watching a teen struggle with nicotine can bring worry and frustration. Breathe, and remember that quitting is hard for everyone, at every age. If you use nicotine yourself, quitting alongside them can be a gift to both of you. Adults can call 1-800-QUIT-NOW for support. If they use Pine, their answers stay private."
+  },
+  "faith": "If faith is part of your life, you might ask for strength in a hard moment, or ask a youth leader to check in on your quit. Many traditions teach care for the body as something precious, and quitting can be part of that. If faith isn't part of your life, your own reasons, your health, your money, your freedom, carry the same strength.",
+  "practices": [
+   "leaves|Walk or Jog",
+   "bark|Slow Exhale",
+   "leaves|Breathe",
+   "bark|Name It",
+   "branches|Ask for Help",
+   "fruit|Celebrate a Win"
+  ],
+  "reach": [
+   "Teens: text DITCHVAPE to 88709 for help quitting. In Minnesota, teens 13 to 17: text Start My Quit to 36072 (My Life, My Quit).",
+   "Adults: call 1-800-QUIT-NOW (1-800-784-8669).",
+   "Your doctor, for a quit plan and medicine questions.",
+   "Swallowed vape liquid, or a child got into it: call Poison Help, 1-800-222-1222, any time. Danger right now: 911.",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "Truth Initiative: This is Quitting",
+    "https://truthinitiative.org/thisisquitting"
+   ],
+   [
+    "Minnesota Department of Health: help to quit, including My Life, My Quit",
+    "https://www.health.state.mn.us/communities/tobacco/quitting/index.html"
+   ],
+   [
+    "Smokefree Teen: quit vaping",
+    "https://teen.smokefree.gov/quit-vaping"
+   ]
+  ]
+ },
+ {
+  "id": "sober-pills",
+  "ring": "sober",
+  "title": "Pills, fentanyl, and staying alive",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
+  "sources": [
+   "deaonepill",
+   "narcanotc",
+   "cdcnaloxone",
+   "mngoodsam"
+  ],
+  "keys": "pills fentanyl fake pills counterfeit pills percs percocet m30 blues xanax bars adderall oxy oxycodone opioids pain pills buying pills online snapchat dealer pressed pills overdose od narcan naloxone won't wake up not breathing blue lips how to use narcan good samaritan law call 911 will i get in trouble staying safe",
+  "parts": [
+   "branches",
+   "leaves",
+   "bark"
+  ],
+  "quick": [
+   "Any pill from a friend, a dealer, or social media can be fake and hold fentanyl, even when it looks exactly real.",
+   "The only safe medicine is one a pharmacy gives you, with your name on it.",
+   "If someone won't wake up or is breathing slowly: call 911, give naloxone (Narcan) if you have it, and stay.",
+   "Naloxone nasal spray is sold without a prescription. Carrying it can save a life."
+  ],
+  "feel": "Maybe you've seen pills passed around at school or offered online. Maybe someone told you a pill was \"just a Perc\" or \"just a Xanax\" from a friend. Maybe you've lost someone, or you're scared for a friend who takes things. You might feel anxious just reading this. That makes sense. Knowing the truth about fake pills, and knowing exactly what to do in an emergency, turns that worry into something useful. You can be the person who knows what to do.",
+  "self": {
+   "first": [
+    "Make it your rule: the only pills you take come from a pharmacy, with your name on the label.",
+    "Learn the signs of an overdose: won't wake up, slow or no breathing, blue or gray lips, gurgling or snoring sounds.",
+    "Learn the three steps: call 911, give naloxone if you have it, and stay with them."
+   ],
+   "helps": [
+    "Carrying naloxone, or knowing where it is at home and at school. It's sold without a prescription.",
+    "Knowing that naloxone is safe to give. If it isn't an opioid overdose, it does no harm.",
+    "Knowing Minnesota's Good Samaritan law: a person who calls 911 to get help for an overdose, and stays, is protected from many drug charges.",
+    "Telling a trusted grown-up if a friend is buying pills, even if you don't say who.",
+    "If pills are already part of your life: talking with a doctor. Stopping opioids or sedatives safely goes best with a doctor's help."
+   ],
+   "tell": [
+    "“If it isn't from a pharmacy, it isn't for me.”",
+    "“911, naloxone, stay.”",
+    "“Calling for help is always the right call.”"
+   ],
+   "people": "Try, with a friend: “Those pills could be fake. I care about you. Please don't take them.” With a parent: “Can we get naloxone for the house? I want to know how to use it.”"
+  },
+  "helper": {
+   "feel": "Teens today live in a world where a pill bought on social media can hold a deadly amount of fentanyl. Many teens know this, and many still believe a pill from a friend is safe. Some take pills to cope with stress, sleep, or pain. They're more likely to stay safe, and to call for help, when the adults around them talk plainly and calmly, and when calling 911 won't feel like the end of the world.",
+   "say": [
+    "“Any pill that isn't from a pharmacy with your name on it could be fake.”",
+    "“If anyone ever won't wake up, call 911 first. You will never be in trouble with me for that.”",
+    "“Let's learn how to use naloxone together.”",
+    "“If you're ever taking something to cope, I want to help you find something better, without a fight.”"
+   ],
+   "avoid": [
+    "Scare stories alone. Pair the truth with what to do.",
+    "Making 911 feel risky. Fear of trouble is the main reason people wait to call.",
+    "Leaving leftover pain pills or sedatives in the house.",
+    "Assuming it couldn't happen in your family."
+   ],
+   "help": [
+    "Get naloxone for your home, and keep it where everyone knows. Teach the whole family to use it.",
+    "Clear out old medicines through a drug take-back site or a pharmacy drop box.",
+    "Talk about fake pills plainly and calmly, more than once.",
+    "Promise, out loud, that calling 911 for a friend will never get them in trouble with you.",
+    "If your teen is using pills: talk with their doctor right away. The SAMHSA National Helpline, 1-800-662-4357, can point you to teen treatment."
+   ],
+   "you": "This topic can keep a parent up at night. Turning worry into action helps: naloxone in the house, a cleared medicine cabinet, and one calm talk. If you've lost someone to an overdose, your own grief may come up here. Be gentle with yourself, and reach out for support. If they use Pine, their answers stay private."
+  },
+  "faith": "If faith is part of your life, you might pray for the friends you worry about, and ask a youth leader to help you talk with them. Caring enough to speak up is a way of loving your neighbor. If faith isn't part of your life, that same care is what makes you the friend who knows what to do.",
+  "practices": [
+   "branches|Look Out for a Friend",
+   "branches|Easy Ways Out",
+   "branches|Name Your Trusted Adult",
+   "bark|Before the Big Moment",
+   "trunk|What I Stand For"
+  ],
+  "reach": [
+   "Someone won't wake up, is breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it. Stay with them.",
+   "Poison Help, 1-800-222-1222, any time, for questions about something someone took.",
+   "Using pills to cope, or finding it hard to stop: tell a doctor or a trusted adult. SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, you can agree to health care for alcohol or drug use on your own, at any age."
+  ],
+  "more": [
+   [
+    "DEA: One Pill Can Kill",
+    "https://www.dea.gov/onepill"
+   ],
+   [
+    "CDC: naloxone fact sheet",
+    "https://www.cdc.gov/overdose-resources/search/pages/Naloxone-Fact-Sheet.html"
+   ],
+   [
+    "Minnesota Statutes 604A.05, Good Samaritan overdose medical assistance",
+    "https://www.revisor.mn.gov/statutes/cite/604A.05"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ]
+  ]
+ },
+ {
+  "id": "sober-friend-od",
+  "ring": "sober",
+  "title": "When a friend overdoses",
+  "life": [
+   "sober",
+   "close"
+  ],
+  "sober": [
+   "love"
+  ],
+  "sources": [
+   "narcanotc",
+   "mngoodsam",
+   "pfas"
+  ],
+  "keys": "friend overdosed friend od overdose friend in the hospital friend died of an overdose friend died fentanyl pills i found them i called 911 narcan naloxone i should have known it's my fault survivor guilt grief funeral memorial scared angry at my friend talking to them after they came back school after an overdose classmate died",
+  "parts": [
+   "bark",
+   "branches",
+   "roots"
+  ],
+  "quick": [
+   "If it's happening now: call 911, give naloxone (Narcan) if you have it, and stay.",
+   "Whatever happened, the feelings afterward make sense: fear, anger, guilt, numbness, relief, grief.",
+   "You aren't to blame for a friend's overdose. Calling for help, or wishing you had known, both come from love.",
+   "Talk with a trusted grown-up in the next day or two. Shock and grief go better with company."
+  ],
+  "feel": "Maybe you were there. Maybe you found them, or called 911, or watched someone give naloxone. Maybe you heard about it in a text, or at school the next morning. Your friend might be in the hospital, back home, or gone. You might feel shaky, numb, angry at them, angry at whoever sold the pills, guilty for not seeing it coming, or guilty for being okay. You might replay it over and over, or not be able to sleep. All of it makes sense. This is one of the hardest things a person can live through, at any age, and you deserve support.",
+  "self": {
+   "first": [
+    "If it's happening now: call 911, give naloxone if you have it, and stay with them.",
+    "Tell a trusted grown-up what happened, today or tomorrow: a parent, a coach, a school counselor, a youth leader.",
+    "Take care of your body for the next few days: water, food, sleep, a walk outside. Shock lives in the body."
+   ],
+   "helps": [
+    "Saying what happened out loud to someone safe, as many times as you need.",
+    "Writing it out, or drawing it, when the words are hard to say.",
+    "If your friend survived: letting them know you care, simply. “I'm so glad you're here.”",
+    "If your friend died: being with others who loved them, and finding a way to remember them.",
+    "Talking with a school counselor or therapist if the pictures keep replaying, or sleep won't come back.",
+    "Looking honestly at your own use, if pills or other drugs are part of your life too."
+   ],
+   "tell": [
+    "“I'm not to blame for this.”",
+    "“What I feel makes sense.”",
+    "“I can ask for help, and I will.”"
+   ],
+   "people": "Try, with a grown-up: “Something happened to my friend, and I can't stop thinking about it. Can we talk?” With your friend, if they survived: “I'm so glad you're here. I'm not going anywhere.”"
+  },
+  "helper": {
+   "feel": "A teen whose friend overdosed may be in shock, even if they seem fine. They may feel guilty for not stopping it, guilty for calling 911, or afraid of getting in trouble. Some feel angry at their friend, then ashamed of the anger. If the friend died, grief can come with fear about their own safety and their friends'. Teens often turn to each other first. What helps is a calm adult who listens, handles the practical parts, and keeps watching gently over the next weeks.",
+   "say": [
+    "“I'm so glad you told me. You're safe now.”",
+    "“Whatever you're feeling makes sense.”",
+    "“You did the right thing by calling for help.” Or, if they weren't there: “Nobody could have known for sure.”",
+    "“Is anyone else in your group in danger right now?”"
+   ],
+   "avoid": [
+    "Interrogating them about who sold what, in the first hours. Safety and comfort come first.",
+    "Blaming the friend in front of them. They likely still love them.",
+    "Assuming they're fine because they seem fine.",
+    "Using the moment for a lecture about their own choices. There will be calm time for that talk later."
+   ],
+   "help": [
+    "Stay close for the first few days: meals, rides, sleep, company.",
+    "Tell the school counselor, so they can watch over your teen and their friends.",
+    "Check gently on their own use. Ask directly and calmly, and keep naloxone at home.",
+    "If the friend died: help them take part in a memorial or funeral, if they want to, and keep the friend's memory welcome at home.",
+    "Watch over the next weeks for trouble sleeping, pulling away, or using. Bring in a therapist if it lasts."
+   ],
+   "you": "Hearing that your teen's friend overdosed can shake you to the core. It's natural to feel fear for your own child. Steady yourself before you talk: a breath, a walk, a call to a friend. If you're grieving too, you can grieve together. If they use Pine, their answers stay private; you may see a quiet “Please check in.”"
+  },
+  "faith": "If faith is part of your life, you might find comfort in prayer, in a service of remembrance, or with a youth leader who sits with you without needing answers. Some teens feel angry at God, and that's an honest prayer too. If faith isn't part of your life, gathering with people who loved your friend, and remembering them together, does sacred work of its own.",
+  "practices": [
+   "bark|Five Senses Pause",
+   "bark|Slow Exhale",
+   "branches|Name Your Trusted Adult",
+   "trunk|Expressive Writing",
+   "branches|Look Out for a Friend",
+   "roots|Lament"
+  ],
+  "reach": [
+   "Someone won't wake up, is breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it. Stay with them.",
+   "Thoughts of not wanting to be alive, or the grief feels like too much: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "In Minnesota, for a county crisis team: call **CRISIS (274747) from a cell phone.",
+   "Using pills or other drugs yourself and want help: SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
+  ],
+  "more": [
+   [
+    "988 Suicide and Crisis Lifeline",
+    "https://988lifeline.org/"
+   ],
+   [
+    "Dougy Center: grief support for teens",
+    "https://www.dougy.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ]
+  ]
+ }
+];
+  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
+/* Living Sober guides end, GWG BLD 789 */

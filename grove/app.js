@@ -175,7 +175,9 @@ const LEVEL = { strength: 'Shared Strength', steady: 'Steady', edge: 'Growing Ed
 const CIRCLE = [
   ['little', 'Little Ones', []], ['moving', 'Someone Who Moves Differently or Uses a Wheelchair', ['moving']], ['hearing', 'Deaf or Hard of Hearing', ['hearing']],
   ['seeing', 'Blind or Low Vision', ['seeing']], ['memory', 'Memory Loss', ['memory']], ['autism', 'Autism or Sensory Needs', ['autism']],
-  ['serious', 'Serious Illness', ['serious', 'health']], ['close', 'Someone Grieving', ['close']]];
+  ['serious', 'Serious Illness', ['serious', 'health']], ['close', 'Someone Grieving', ['close']],
+  ['sober', 'Someone Growing Sober', ['sober'], ['family', 'faith', 'group', 'team']]]; // Living Sober (GWG BLD 789): offered to every kind but a classroom
+const circleOffered = c => !c[3] || (!!G && c[3].includes(G.kind));
 const ANCHORS_DEF = {
   family: ['Dinner', 'The Car', 'Bedtime', 'Saturday Morning', 'Breakfast', 'A Walk Together'],
   classroom: ['Morning Meeting', 'After Lunch', 'The End of the Day', 'Friday Circle'],
@@ -837,7 +839,7 @@ function viewWall() {
 // A practice in this grove's words: Plain wording replaces Faith wording where a practice has it.
 function pv(pr) { const o = Object.assign({}, pr); if (plainMode() && pr.plain) Object.assign(o, pr.plain); return o; }
 function kindPractices(part) { return ALLP.filter(p => (p.kinds || []).includes(G.kind) && (!part || p.part === part)); }
-function circleTags() { const v = V(); if (!v || !v.circle || !v.circle.length) return null; const t = new Set(); CIRCLE.forEach(c => { if (v.circle.includes(c[0])) c[2].forEach(x => t.add(x)); }); return { tags: t, little: v.circle.includes('little') }; }
+function circleTags() { const v = V(); if (!v || !v.circle || !v.circle.length) return null; const t = new Set(); CIRCLE.filter(circleOffered).forEach(c => { if (v.circle.includes(c[0])) c[2].forEach(x => t.add(x)); }); if (!t.size && !v.circle.includes('little')) return null; return { tags: t, little: v.circle.includes('little') }; }
 function fitsCircle(pr) { const c = circleTags(); if (!c) return false; return (pr.life || []).some(x => c.tags.has(x)) || (c.little && !!pr.kid); }
 const joinFits = x => !!(x.adapt || (x.life || []).includes('gentle'));
 function joinOrder(list) {
@@ -892,7 +894,14 @@ const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Comm
 const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
 const HOSPICE_FIRST = ['hospice', 'hard-death'];
 S.lc = { q: '', ring: 'all', open: null, persp: 'group' };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'sober' ? SOBER_RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+/* Living Sober (GWG BLD 789): ring 'sober' is low-key. It shows in the ring list only when Who's in Our Circle has
+   Someone Growing Sober; its guides are always found by search, and that circle choice puts them in Picked for Us. */
+const SOBER_RING = { key: 'sober', name: 'Living Sober', color: '#4E7D6A', blurb: 'For a family, faith community, group, or team walking with someone growing sober: honest talk, steady support, and sober celebrations.' };
+const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
+function lcSoberOn() { const v = G && vaultOpen() ? V() : null; return !!(v && (v.circle || []).includes('sober') && circleOffered(CIRCLE.find(c => c[0] === 'sober'))); }
+window.GROVE_SOBER_ON = () => lcSoberOn(); // shared/gg-learn.js lists the Living Sober video track only then
+function lcRingsShown() { return (lcSoberOn() ? [SOBER_RING] : []).concat(LC_RINGS); }
 const lcFits = t => !G || (t.kinds || []).includes(G.kind);
 // A guide in this grove's words: Plain wording replaces any field the guide gives a Plain version of.
 function lcT(t) { const o = Object.assign({}, t); if (plainMode() && t.plain) Object.assign(o, t.plain); return o; }
@@ -921,6 +930,7 @@ function lcPicks(max, ci) {
     s += (t.parts || []).filter(p => sg.edges.includes(p)).length * 2;
     if (sg.circ.includes('close') && t.ring === 'gw-loss') s += 3;
     if (sg.circ.includes('serious') && t.ring === 'gw-illness') s += 3;
+    if (lcIsSober(t) && lcSoberOn()) s += 8;
     if (isFamily() && G.hard && ['hospice', 'diagnosis', 'hospital', 'family-death'].includes(t.id)) s += 6;
     return s;
   };
@@ -944,8 +954,8 @@ function lcListHtml() {
     const picks = lcPicks(6);
     if (picks.length) h += `<div class="gv-lc-ring gv-lc-picked" style="--rc:var(--gold)"><h3><i></i>Picked for Us</h3><p>Guides that fit ${esc(KW().we)} right now, from What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide stays open.</p><div class="gv-lc-grid">${picks.map(lcCard).join('')}</div></div>`;
   }
-  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC.filter(t => t.ring === r.key && lcMatches(t, st.q)); if (!ts.length) return;
+  lcRingsShown().filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q)); if (!ts.length) return;
     const ord = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t)));
     n += ts.length;
     h += `<div class="gv-lc-ring" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="gv-lc-grid">${ord.map(lcCard).join('')}</div></div>`;
@@ -955,7 +965,7 @@ function lcListHtml() {
 function viewLife() {
   const st = S.lc;
   if (st.open) { const t = LC.find(x => x.id === st.open); if (t) return lcDetail(t); st.open = null; }
-  const filled = LC_RINGS.filter(r => LC.some(t => t.ring === r.key));
+  const filled = lcRingsShown().filter(r => LC.some(t => t.ring === r.key));
   if (st.ring !== 'all' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   let h = `<div class="section-head"><p class="gv-kicker">When Life Changes Together</p><h2>Guides for the changes we go through together</h2>
     <p>For a family, a class, a faith community, a group, or a team. Each guide has two views: For the Group, to read together, and For the Leader, for the grown-up, teacher, pastor, group leader, or team lead guiding the way. Each has two short videos, a few Together practices, and links to the guides in each person's own tree app.</p></div>`;
@@ -1337,7 +1347,7 @@ function viewSettings() {
   h += `<div class="card"><h3>${icon('circle', 'gv-ic-inline')} Who's in Our Circle</h3>`;
   if (!vaultOpen()) h += `<p class="muted">Locked with the grove passcode.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`;
   else { const c = V().circle || [];
-    h += `<p class="muted">${esc(W('circle.intro', 'Pick any that are part of our circle. Practices that fit come first, with a way for everyone to join.'))} ${esc(W('circle.note', 'It never changes a question, a result, or a help line.'))}</p><div class="gv-chips">${CIRCLE.map(([id, l]) => `<button type="button" class="chip${c.includes(id) ? ' on' : ''}" aria-pressed="${c.includes(id)}" data-act="circle" data-id="${id}">${esc(l)}</button>`).join('')}</div>`; }
+    h += `<p class="muted">${esc(W('circle.intro', 'Pick any that are part of our circle. Practices that fit come first, with a way for everyone to join.'))} ${esc(W('circle.note', 'It never changes a question, a result, or a help line.'))}</p><div class="gv-chips">${CIRCLE.filter(circleOffered).map(([id, l]) => `<button type="button" class="chip${c.includes(id) ? ' on' : ''}" aria-pressed="${c.includes(id)}" data-act="circle" data-id="${id}">${esc(l)}</button>`).join('')}</div>`; }
   h += `</div>`;
   h += `<div class="card"><h3>${icon('lock', 'gv-ic-inline')} The Grove Lock</h3><p class="muted">${G.lockOn ? 'On. The check-ins, the plan, and the circle choices are locked with the grove passcode. The Wall and practices done together stay readable on this device.' : 'Off. Anyone using this device can open the check-ins and the plan.'}</p><div class="tools-row" style="justify-content:flex-start">`
     + (G.lockOn ? (vaultOpen() ? `<button class="btn btn-line btn-sm" data-act="glock">Lock Now</button><button class="btn btn-line btn-sm" data-act="gpass">Change the Passcode</button><button class="btn btn-line btn-sm" data-act="groot">${G.lock && G.lock.rw ? 'See Our Root Words' : 'Make Our Root Words'}</button><button class="btn btn-line btn-sm" data-act="glockoff">Turn the Lock Off</button>` : `<button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button>`) : `<button class="btn btn-gold btn-sm" data-act="glockon">Turn the Lock On</button>`) + `</div></div>`;

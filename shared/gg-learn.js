@@ -973,7 +973,7 @@
       D.guides.filter(function (g) { return g.ring === r[0]; }).forEach(function (g) {
         ['you', 'helper'].forEach(function (k) { var l = g[k]; if (!l) return; l.guide = g.id; l.guideTitle = g.title; l.pairId = (g[k === 'you' ? 'helper' : 'you'] || {}).id; ls.push(l); });
       });
-      return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls };
+      return { id: 'wlc-' + app + '-' + r[0], kind: 'guide', title: r[1], lessons: ls, lowkey: r[0] === 'sober' ? 'sober' : undefined };
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
@@ -1110,7 +1110,19 @@
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
     if (lt.length) sup = lifeFirst() ? lt.concat(sup) : sup.concat(lt);
-    return rest.concat(sup, guideTracks(app)); // Get Set Up (the device voice video) retired, Chris, October 10, 2026
+    return lowkey(app, rest.concat(sup, guideTracks(app))); // Get Set Up (the device voice video) retired, Chris, October 10, 2026
+  }
+  // Living Sober (GWG BLD 789): a track with lowkey: 'sober' is listed only when Living Sober is chosen (shared/gg-life.js),
+  // and then first among its kind. Otherwise it stays unlisted: it still opens by its id or a lesson id.
+  function soberOn(app) { try { return app === 'grove' ? !!(window.GROVE_SOBER_ON && GROVE_SOBER_ON()) : !!(window.GGLife && GGLife.sober && GGLife.sober(app)); } catch (e) { return false; } }
+  function lowkey(app, ts) {
+    if (!ts.some(function (t) { return t.lowkey; })) return ts;
+    var on = soberOn(app), lk = [], other = [];
+    ts.forEach(function (t) { if (t.lowkey === 'sober') lk.push(on ? t : Object.assign({}, t, { unlisted: true })); else other.push(t); });
+    if (!on) return other.concat(lk);
+    var out = other.slice();
+    lk.forEach(function (t) { var i = -1; out.some(function (x, j) { if (x.kind === t.kind) { i = j; return true; } return false; }); if (i < 0) out.push(t); else out.splice(i, 0, t); });
+    return out;
   }
   function find(app, id) { var r = null; tracksFor(app).forEach(function (t) { t.lessons.forEach(function (l) { if (l.id === id) r = { t: t, l: l }; }); }); return r; }
   // Who each video is for (GWG BLD 743): a small, quiet label from the lesson's 'for' key (shared/learn-lessons.js).

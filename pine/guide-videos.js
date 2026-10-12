@@ -13012,3 +13012,1691 @@ window.GG_LEARN_GUIDES.pine = {
  ]
 };
 })();
+/* Living Sober videos start: For You and For the Grown-up videos for the seven Pine Living Sober guides (GWG BLD 789), in their own
+   ring. Generated from patches/bld789/P in grounded-workshop by gen.py. */
+(function () { var O = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES.pine; if (!O) return;
+  if (!O.rings.some(function (r) { return r[0] === 'sober'; })) O.rings.push(['sober', 'Living Sober']);
+  var V = [
+ {
+  "id": "sober-cutting-back",
+  "ring": "sober",
+  "title": "Thinking About Cutting Back",
+  "you": {
+   "id": "pn-g-sober-cutting-back-you",
+   "guide": "sober-cutting-back",
+   "side": "you",
+   "title": "Thinking About Cutting Back",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if you are wondering about your drinking or using: take an honest look, at your own pace.",
+   "sources": [
+    "rollnick08",
+    "mtf24"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Thinking About Cutting Back",
+     "sub": "For You",
+     "say": "If you've been wondering whether you drink, vape, or use more than you want to, this is for you. Nobody here is keeping score. Wondering is a strong, honest place to start, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Two ways at once is normal.",
+     "sub": "You can like it and want less of it.",
+     "say": "Most people feel two ways about a change before they make it. You might like how it feels, or how easy it makes things with friends. And you might be tired of the mornings after, or the money, or the way it's starting to run your weekends. Both can be true at once."
+    },
+    {
+     "k": "big",
+     "h": "Wait until adulthood.",
+     "sub": "Cutting back is a real step there.",
+     "say": "Here's the plain truth, said kindly. For teens, the healthiest amount of alcohol, nicotine, weed, and pills is none, until adulthood. Your brain is still building itself into your twenties. Cutting back is a real step in that direction, and every step counts."
+    },
+    {
+     "k": "points",
+     "h": "An honest look",
+     "items": [
+      [
+       "What it does for you",
+       "Calm, fun, sleep, courage"
+      ],
+      [
+       "What it costs you",
+       "Sleep, grades, money, trust"
+      ],
+      [
+       "What you want",
+       "Your own reasons"
+      ]
+     ],
+     "say": "Try an honest look. What does it do for you? Calm, fun, sleep, courage, or a break from a hard feeling? What does it cost you? Sleep, grades, money, people's trust, how you feel about yourself? And what do you want? Your own reasons carry the most power.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       5
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Pick a number from zero to ten.",
+     "sub": "Then ask why it is not lower.",
+     "say": "Let's try something right now. Ask yourself how much you want a change, from zero to ten. Pick your number. Now ask yourself why it isn't lower. Say one reason quietly to yourself.",
+     "beats": [
+      "Let's try something right now.",
+      "Ask yourself how much you want a change, from zero to ten.",
+      "Pick your number.",
+      "Now ask yourself why it isn't lower.",
+      {
+       "t": "Say one reason quietly to yourself.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "That reason is yours.",
+     "body": "Keep it somewhere you will see it.",
+     "say": "That reason is yours, and it matters more than anything anyone else could tell you. Write it in your phone, or somewhere you'll see it. When a hard moment comes, your own reason is the one you'll remember."
+    },
+    {
+     "k": "flow",
+     "h": "One small step this week",
+     "steps": [
+      [
+       "A sober weekend",
+       "Or one night"
+      ],
+      [
+       "Leave by eleven",
+       "With a friend"
+      ],
+      [
+       "Water in your hand",
+       "Fewer people offer"
+      ]
+     ],
+     "say": "Then pick one small step for this week. A sober weekend, or even one sober night. Leaving the party by eleven, with a friend. Keeping a water bottle in your hand, so fewer people offer. Small steps add up fast.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Daily drinking or pills? Talk with a doctor before you stop.",
+     "say": "One safety note. If you've been drinking every day, or taking pills like Xanax every day, talk with a doctor before you stop. Stopping suddenly can be dangerous, and a doctor can help. A school counselor or the SAMHSA National Helpline can point you to help too. If someone can't wake up, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Small steps still count.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Taking an honest look is growth. You get to choose your next step, and small steps still count. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-cutting-back-helper",
+   "guide": "sober-cutting-back",
+   "side": "helper",
+   "title": "Thinking About Cutting Back",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "blurb": "For the grown-up beside a teen thinking about cutting back: ask, listen, and let them find their own reasons.",
+   "sources": [
+    "rollnick08",
+    "mtf24"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Thinking About Cutting Back",
+     "sub": "For the Grown-up",
+     "say": "This is for the parent, guardian, coach, or youth leader of a teen who might be drinking, vaping, or using more than is good for them, and who might be wondering about it too. Your worry makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Their reasons move them.",
+     "sub": "More than ours.",
+     "say": "Here's what helps most. People change for their own reasons, more than for ours. When an adult argues for change, a teen often argues back. When an adult asks good questions and really listens, a teen starts to say the reasons out loud, and believes them."
+    },
+    {
+     "k": "card",
+     "title": "Two ways at once",
+     "body": "They can like it and want less of it.",
+     "say": "Expect your teen to feel two ways. They may like what drinking or using does for them, calm, fun, belonging, and also see what it costs. That's normal. It's the starting point for change, more than a sign they don't care."
+    },
+    {
+     "k": "words",
+     "h": "Questions that open the door",
+     "items": [
+      "What do you like about it?",
+      "What don't you like?",
+      "What would be different if you cut back?"
+     ],
+     "say": "Questions that open the door. What do you like about it? What don't you like about it? And, what would be different if you cut back? Then listen, and say back what you heard. So it helps you relax, and you hate how Sunday feels."
+    },
+    {
+     "k": "card",
+     "title": "Calm and clear",
+     "body": "No lecture, no confession, no labels.",
+     "say": "A few things tend to close the door. A lecture, or a pile of scary facts. Asking them to confess everything they've tried. And labels. Talk about health and choices, and say plainly that you want them to wait until adulthood, because their brain is still growing."
+    },
+    {
+     "k": "big",
+     "h": "Ask the zero to ten question.",
+     "sub": "Out loud, once.",
+     "say": "Let's practice a question that works well. Picture your teen, calm, on a car ride. Keep your voice light and curious. Now say out loud: from zero to ten, how ready do you feel to cut back, and what makes it that number?",
+     "beats": [
+      "Let's practice a question that works well.",
+      "Picture your teen, calm, on a car ride.",
+      "Keep your voice light and curious.",
+      {
+       "t": "Now say out loud: from zero to ten, how ready do you feel to cut back, and what makes it that number?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps next",
+     "items": [
+      [
+       "One small plan",
+       "For one week"
+      ],
+      [
+       "A safer home",
+       "Alcohol and medicines put away"
+      ],
+      [
+       "Their doctor",
+       "A private talk"
+      ],
+      [
+       "A doctor first",
+       "If use is daily"
+      ]
+     ],
+     "say": "What helps next. One small, clear plan for one week, and a kind check-in after. A safer home, with alcohol and old medicines out of easy reach. A private talk with their doctor at the next visit. And if they've been drinking or taking pills every day, a doctor before they stop, because stopping suddenly can be dangerous.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Lines to know",
+     "body": "SAMHSA 1-800-662-4357. Danger: 911.",
+     "say": "The SAMHSA National Helpline, at 1-800-662-4357, offers information and treatment options for families, any time. If someone can't wake up or is struggling to breathe, call nine one one. If your teen talks about not wanting to live, call or text nine eight eight together."
+    },
+    {
+     "k": "big",
+     "h": "Curious, calm, and on their side.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Stay curious, stay calm, and let them know you're on their side. That keeps the door open. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-teen",
+  "ring": "sober",
+  "title": "Getting Sober as a Teen",
+  "you": {
+   "id": "pn-g-sober-teen-you",
+   "guide": "sober-teen",
+   "side": "you",
+   "title": "Getting Sober as a Teen",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if you are getting sober as a teen: your body is healing, and every day counts.",
+   "sources": [
+    "samhsarec"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Getting Sober as a Teen",
+     "sub": "For You",
+     "say": "If you're getting sober, from drinking, pills, weed, or anything else, this is for you. Maybe you chose it. Maybe someone chose it for you. Either way, your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "This takes real courage.",
+     "sub": "At any age.",
+     "say": "Getting sober as a teen takes real courage. It's one of the bravest things a person can do, at any age. You're doing something strong, even on the days it feels messy."
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Daily drinking or pills like Xanax? Talk with a doctor before you stop.",
+     "say": "One thing first, for your safety. If you've been drinking every day, or taking pills like Xanax or opioids, talk with a doctor before you stop. Stopping some of these suddenly can be dangerous. A doctor can help you stop safely. In Minnesota, you can ask for that help on your own, at any age."
+    },
+    {
+     "k": "points",
+     "h": "The first weeks",
+     "items": [
+      [
+       "Bad sleep",
+       "It gets better"
+      ],
+      [
+       "Big moods",
+       "Your brain is resetting"
+      ],
+      [
+       "Cravings",
+       "They rise, and they pass"
+      ]
+     ],
+     "say": "The first weeks can be rough on your body. Sleep can be bad for a while, and it gets better. Moods can swing, because your brain is resetting. And cravings show up out of nowhere. Every craving rises, peaks, and passes, usually within minutes.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris",
+     "title": "Eighteen Years",
+     "lines": [
+      "Chris started drinking heavily at nine.",
+      "At thirteen he was in treatment, and he started running and lifting.",
+      "He has been sober since April 1, 2008."
+     ],
+     "lesson": "The only disease we have is the dis-ease of painful emotions.",
+     "say": "Chris, one of Grounded's founders, started drinking heavily at nine. At thirteen he was in treatment, and that same year he started running and lifting weights, and loved it. His path took years and had ups and downs. He has been sober since April first, two thousand eight. What he learned is this: drinking was how he numbed painful emotions. Healing those emotions, and growing a healthy life, is what gave him his life back."
+    },
+    {
+     "k": "big",
+     "h": "Heal the roots.",
+     "sub": "Mind, body, spirit, and people.",
+     "say": "So getting sober is more than stopping. It's growing. Your roots: sleep, water, real food, and moving your body. Your trunk: learning to feel a hard feeling and let it move through you. Your branches: people who are glad you're sober. And your fruit: things you love that make you feel alive."
+    },
+    {
+     "k": "big",
+     "h": "Name it. Let it pass.",
+     "sub": "A craving is a wave.",
+     "say": "Let's practice for the next craving. Sit back and feel your feet on the floor. Picture the craving like a wave coming toward the shore. Say quietly: this is a craving, it rises, and it passes. Now breathe out slowly, and let the wave roll by.",
+     "beats": [
+      "Let's practice for the next craving.",
+      "Sit back and feel your feet on the floor.",
+      "Picture the craving like a wave coming toward the shore.",
+      "Say quietly: this is a craving, it rises, and it passes.",
+      {
+       "t": "Now breathe out slowly, and let the wave roll by.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Your people and your plan",
+     "body": "One grown-up who knows. A text for hard moments. Danger: 911.",
+     "say": "Pick one grown-up who knows the whole story and is on your side. Have a friend you can text when it gets hard. A therapist, a teen program, or a group like Alateen, NA, AA, or SMART Recovery can help too, whatever fits you. If someone can't wake up, call nine one one. And if you ever think about not wanting to be alive, call or text nine eight eight."
+    },
+    {
+     "k": "big",
+     "h": "You're worth it.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Sobriety is rarely a straight line, and every return to the path counts. Live sober, because you're worth it. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-teen-helper",
+   "guide": "sober-teen",
+   "side": "helper",
+   "title": "Getting Sober as a Teen",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "blurb": "For the grown-up beside a teen getting sober: safety first, then a full life to grow into.",
+   "sources": [
+    "samhsarec",
+    "mdhminor"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Getting Sober as a Teen",
+     "sub": "For the Grown-up",
+     "say": "This is for the parent, guardian, coach, or youth leader beside a teen who is getting sober. You may be relieved, scared, and tired all at once. That makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Treat it as growth.",
+     "sub": "Something they are building.",
+     "say": "Start here. Your teen is doing something brave. Treat sobriety as growth, something they're building, more than a punishment they're serving. Teens stay with what feels like theirs."
+    },
+    {
+     "k": "card",
+     "title": "A doctor before stopping",
+     "body": "Daily drinking or sedative pills can be dangerous to stop suddenly.",
+     "say": "Safety first. If your teen has been drinking every day, or taking pills like Xanax, Valium, or opioids, bring in a doctor before they stop. Stopping some of these suddenly can cause seizures or other danger. A doctor can help them stop safely. In Minnesota, a teen can agree to this kind of care on their own."
+    },
+    {
+     "k": "card",
+     "title": "Ask what it did for them.",
+     "body": "Stress, sleep, friends, or a hard feeling underneath.",
+     "say": "Ask what drinking or using was doing for them. Quieting anxiety? Helping them sleep? Fitting in? Numbing a loss or an old hurt? The answer shows you what they need now. Healing what's underneath is part of the path, and a therapist can help with that."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "I'm proud of you.",
+      "What helps most this week?",
+      "A hard day doesn't erase your progress."
+     ],
+     "say": "Words that help. I'm proud of you. What helps most this week? And, a hard day doesn't erase your progress. Use the words they choose for themselves. Growing sober says it well."
+    },
+    {
+     "k": "big",
+     "h": "Say it once, out loud.",
+     "sub": "Calm and warm.",
+     "say": "Let's practice the hardest one. Picture your teen telling you about a rough night. Take a slow breath first. Now say out loud, calmly: thank you for telling me, let's figure out the next step together.",
+     "beats": [
+      "Let's practice the hardest one.",
+      "Picture your teen telling you about a rough night.",
+      "Take a slow breath first.",
+      {
+       "t": "Now say out loud, calmly: thank you for telling me, let's figure out the next step together.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Make home a good place to heal",
+     "items": [
+      [
+       "Clear the alcohol",
+       "And lock up medicines"
+      ],
+      [
+       "Fill the evenings",
+       "A sport, a job, a trail"
+      ],
+      [
+       "Find their support",
+       "Therapist, program, group"
+      ],
+      [
+       "Keep naloxone",
+       "If opioids were involved"
+      ]
+     ],
+     "say": "Make home a good place to heal. Clear out the alcohol, and lock up or safely get rid of medicines. Fill the evenings and weekends with real things: a sport, a job, a gym, a trail, a meal together. Help them find their support: a therapist, a teen program, and a group that fits them. And if opioids or pills were part of the story, keep naloxone at home and learn how to use it.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Lines to know",
+     "body": "SAMHSA 1-800-662-4357. Danger: 911. 988 any time.",
+     "say": "The SAMHSA National Helpline, at 1-800-662-4357, can point you to teen treatment and family support, any time. If someone can't wake up or is struggling to breathe, call nine one one. If your teen talks about not wanting to live, call or text nine eight eight together."
+    },
+    {
+     "k": "big",
+     "h": "Steady, calm, and close.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Get support for yourself too. A family group, a therapist, or a friend who listens. Steady, calm, and close is what helps most. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-party",
+  "ring": "sober",
+  "title": "Party Pressure and Saying No Your Way",
+  "you": {
+   "id": "pn-g-sober-party-you",
+   "guide": "sober-party",
+   "side": "you",
+   "title": "Party Pressure and Saying No Your Way",
+   "sideName": "For You",
+   "mins": 3,
+   "blurb": "For you, at the party: decide ahead, say it your way, and leave whenever you want.",
+   "sources": [
+    "mtf24"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Party Pressure and Saying No Your Way",
+     "sub": "For You",
+     "say": "If you're sober, or you're choosing to wait, and parties feel like a test, this is for you. Your feelings make sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "You're with the majority.",
+     "sub": "Even when it seems otherwise.",
+     "say": "Here's something to know going in. Most high schoolers aren't drinking, vaping, or using in a given month. It can seem like everyone is, because the ones who are tend to be the loudest. Choosing to wait puts you with the majority."
+    },
+    {
+     "k": "words",
+     "h": "Lines that sound like you",
+     "items": [
+      "I'm good, thanks.",
+      "I've got a game tomorrow.",
+      "I'm driving.",
+      "Not my thing."
+     ],
+     "say": "Pick lines that sound like you. I'm good, thanks. I've got a game tomorrow. I'm driving. Not my thing. Say it once, kindly, then change the subject. You owe nobody an explanation.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Small moves that help",
+     "items": [
+      [
+       "A drink of your own",
+       "Water, sparkling water, soda"
+      ],
+      [
+       "Something to do",
+       "Music, food, the game"
+      ],
+      [
+       "A friend with you",
+       "Who leaves when you leave"
+      ]
+     ],
+     "say": "A few small moves make it easier. Keep a drink of your own in your hand, like water or sparkling water. Fewer people offer. Find something to do: the music, the food, the fire, the game. And bring a friend who has your back and leaves when you leave.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Your code word",
+     "body": "Text it, and a grown-up comes. No questions that night.",
+     "say": "Set up a code word with a parent or a trusted grown-up. Something ordinary. You text it, they come get you, and nobody asks questions that night. You talk the next day. Leaving is always an option."
+    },
+    {
+     "k": "big",
+     "h": "Type your code word now.",
+     "sub": "A draft, ready to send.",
+     "say": "Let's set it up right now. Open your phone. Start a text to the grown-up you'd call. Type your code word, and save it as a draft, ready to send.",
+     "beats": [
+      "Let's set it up right now.",
+      "Open your phone.",
+      "Start a text to the grown-up you'd call.",
+      {
+       "t": "Type your code word, and save it as a draft, ready to send.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "If someone needs help",
+     "body": "Can't wake up or breathing strangely: call 911 and stay.",
+     "say": "If someone can't wake up, is breathing slowly or strangely, or seems very confused, call nine one one right away and stay with them. Getting help fast matters most. And never ride with someone who has been drinking or using. Text your code word instead."
+    },
+    {
+     "k": "card",
+     "title": "Fun that starts sober",
+     "body": "Food runs, game nights, hikes, concerts, hosting.",
+     "say": "The best nights often start without alcohol. A late food run. A game night. A hike, a bonfire, a concert. Hosting at your place, with your rules and your playlist. And waking up the next morning feeling good is its own kind of win."
+    },
+    {
+     "k": "big",
+     "h": "You get to be you.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "The people who matter will still be there. You get to be you, in any room. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-party-helper",
+   "guide": "sober-party",
+   "side": "helper",
+   "title": "Party Pressure and Saying No Your Way",
+   "sideName": "For the Grown-up",
+   "mins": 3,
+   "blurb": "For the grown-up beside a teen facing party pressure: a code word, a plan, and a steady welcome home.",
+   "sources": [
+    "mtf24"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Party Pressure and Saying No Your Way",
+     "sub": "For the Grown-up",
+     "say": "This is for the parent, guardian, coach, or youth leader of a teen who is sober, or choosing to wait, and heading into parties, dances, and weekends. You can make it much easier for them."
+    },
+    {
+     "k": "big",
+     "h": "Most teens are choosing to wait.",
+     "sub": "Say so out loud.",
+     "say": "Start with good news. Most high schoolers aren't drinking, vaping, or using in a given month. Many teens believe everyone else is. Telling them the truth helps them feel normal for choosing to wait."
+    },
+    {
+     "k": "card",
+     "title": "Belonging is the real need.",
+     "body": "Help them say no and keep their friends.",
+     "say": "Teens want to belong, and parties are where belonging seems to happen. Most teens want a way to say no that keeps their friends. Help with that, and you help with everything."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "Text me the code word. I will come.",
+      "No questions that night.",
+      "If a friend is in trouble, call 911 first."
+     ],
+     "say": "Words that help. If you ever want out, text me the code word, and I'll come. No questions that night. We'll talk tomorrow. And, if a friend is ever in trouble, call nine one one first. We'll sort out the rest later."
+    },
+    {
+     "k": "big",
+     "h": "Make the promise out loud.",
+     "sub": "Then keep it, every time.",
+     "say": "Let's practice the promise. Picture your teen at the door, keys in hand. Keep your voice easy. Now say out loud: if you text me the code word, I'll come, no questions tonight, and I'll be glad you called.",
+     "beats": [
+      "Let's practice the promise.",
+      "Picture your teen at the door, keys in hand.",
+      "Keep your voice easy.",
+      {
+       "t": "Now say out loud: if you text me the code word, I'll come, no questions tonight, and I'll be glad you called.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps",
+     "items": [
+      [
+       "Practice their lines",
+       "Two that sound like them"
+      ],
+      [
+       "Know the plan",
+       "Where, who drives, when home"
+      ],
+      [
+       "Host sometimes",
+       "Food, music, a sober welcome"
+      ],
+      [
+       "Celebrate wins",
+       "A night they loved"
+      ]
+     ],
+     "say": "What helps. Practice two lines that sound like them. Know the plan, where, who's driving, and when they'll be home, the same calm way every time. Host sometimes, with food, music, space, and a sober welcome. And celebrate their wins, like a party they walked out of, or a weekend they loved.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Waiting is the healthy choice.",
+     "body": "Keep alcohol out of teen gatherings at home.",
+     "say": "Some adults offer alcohol at home so teens learn safely. For teens, waiting until adulthood is the healthy choice, and your home can show that. Keep alcohol out of teen gatherings, and keep medicines put away."
+    },
+    {
+     "k": "card",
+     "title": "If someone needs help",
+     "body": "Can't wake up or breathing strangely: 911.",
+     "say": "Teach them this, plainly. If someone can't wake up, is breathing slowly or strangely, or seems very confused, call nine one one right away and stay with them. Poison Help, at 1-800-222-1222, answers questions any time."
+    },
+    {
+     "k": "big",
+     "h": "A steady welcome home.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your steady welcome when they walk in the door matters more than any rule. Ask how it went, and listen. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-parent",
+  "ring": "sober",
+  "title": "A Parent's Drinking or Using",
+  "you": {
+   "id": "pn-g-sober-parent-you",
+   "guide": "sober-parent",
+   "side": "you",
+   "title": "A Parent's Drinking or Using",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if a parent drinks or uses, or is getting sober: it's safe to talk, and your story is yours.",
+   "sources": [
+    "sevencs",
+    "mccabe25"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "A Parent's Drinking or Using",
+     "sub": "For You",
+     "say": "If your mom, your dad, or a parent figure drinks too much or uses drugs, or is trying to get sober, this is for you. Whatever you're feeling, it makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "It's safe to talk about this.",
+     "sub": "Honest talk is how families heal.",
+     "say": "Here's the first thing. It's safe to talk about a parent's drinking or using. Silence and secrets keep families stuck. Honest talk with a safe person is how you start to feel lighter. Researchers estimate that millions of kids in the US live with this too, so you're in very good company."
+    },
+    {
+     "k": "words",
+     "h": "All of this makes sense",
+     "items": [
+      "Hope",
+      "Doubt",
+      "Anger",
+      "Embarrassment",
+      "Worry",
+      "Love"
+     ],
+     "say": "You might feel hope and doubt at the same time. Anger about broken promises. Embarrassment. Worry, every night. And love, through all of it. You can love your parent and still feel every one of those things."
+    },
+    {
+     "k": "flow",
+     "h": "The Seven Cs",
+     "steps": [
+      [
+       "I didn't cause it",
+       "Or control it, or cure it"
+      ],
+      [
+       "I can take care of myself",
+       "Starting today"
+      ],
+      [
+       "Say it, choose well",
+       "Feelings, healthy choices"
+      ],
+      [
+       "Celebrate myself",
+       "Who I am counts"
+      ]
+     ],
+     "say": "Many teens hold onto something called the Seven Cs. I didn't cause it. I can't control it. I can't cure it. But I can take care of myself, by communicating my feelings, making healthy choices, and celebrating myself.",
+     "cue": {
+      "at": [
+       1,
+       4,
+       4,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If your parent is getting sober",
+     "body": "Trust comes back in small pieces. Your pace is okay.",
+     "say": "If your parent is in treatment or newly sober, you might be waiting to see if this time is different. That's okay. Trust comes back in small pieces, through steady days. Their recovery is their job. Your job is to be a teenager, and to tell someone when it's hard."
+    },
+    {
+     "k": "big",
+     "h": "Say your first sentence.",
+     "sub": "To one safe grown-up.",
+     "say": "Let's practice reaching out. Think of one safe grown-up, a relative, a coach, a school counselor, a friend's parent. Picture their face. Now say quietly the first sentence you'd tell them: things at home are hard, and I want to talk.",
+     "beats": [
+      "Let's practice reaching out.",
+      "Think of one safe grown-up, a relative, a coach, a school counselor, a friend's parent.",
+      "Picture their face.",
+      {
+       "t": "Now say quietly the first sentence you'd tell them: things at home are hard, and I want to talk.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Your story is yours.",
+     "body": "Your family history is part of it. You write what comes next.",
+     "say": "You might wonder if you'll end up the same way. Your family's story is part of your story, and you get to write the next chapter. Waiting until adulthood, growing healthy roots, and choosing a sober life if you want it, are strong ways to write it."
+    },
+    {
+     "k": "card",
+     "title": "Safety",
+     "body": "Can't wake up or danger: 911. Being hurt: Childhelp 1-800-422-4453. 988 any time.",
+     "say": "Keep your safety plan simple. Never ride with someone who has been drinking or using. If someone can't wake up, or there's danger, call nine one one. If anyone is hurting you, call or text Childhelp, any time. And if you ever think about not wanting to be alive, call or text nine eight eight."
+    },
+    {
+     "k": "big",
+     "h": "You get to grow.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your life is yours to grow, no matter what is happening at home. Talk about it, take care of yourself, and keep growing. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-parent-helper",
+   "guide": "sober-parent",
+   "side": "helper",
+   "title": "A Parent's Drinking or Using",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "blurb": "For the grown-ups around a teen whose parent drinks or uses, including the parent who is getting sober.",
+   "sources": [
+    "sevencs",
+    "mccabe25"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "A Parent's Drinking or Using",
+     "sub": "For the Grown-up",
+     "say": "This is for the other parent, a relative, a coach, or a youth leader beside a teen whose parent drinks or uses. It's also for the parent who is getting sober. Whatever your part, you can make a real difference, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Make it safe to talk.",
+     "sub": "Silence keeps families stuck.",
+     "say": "The most helpful thing you can do is make it safe to talk. Silence and secrets keep families stuck. A teen who can say it out loud to a steady adult carries a much lighter load."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "It's not your fault, and not your job to fix.",
+      "You can talk to me any time.",
+      "Take your time trusting again."
+     ],
+     "say": "Words that help. It's not your fault, and it's not your job to fix. You can talk to me about it any time, and nothing you say will get you in trouble. And, you can take your time trusting again."
+    },
+    {
+     "k": "card",
+     "title": "Guarded is healthy.",
+     "body": "Trust grows back through steady days.",
+     "say": "When a parent gets help, teens often stay guarded for a long time. That's a healthy way to protect a heart. Trust grows back through steady days, more than through promises. Let the teen set the pace."
+    },
+    {
+     "k": "card",
+     "title": "If you are the parent",
+     "body": "Your recovery is your job. Let steady days speak.",
+     "say": "If you're the parent who drinks or uses, getting help is one of the strongest gifts you can give your teen. In a calm, sober moment, tell them honestly what you're doing to heal, and that it was never their fault. Then let your steady days do the talking. Their forgiveness can come on its own timeline."
+    },
+    {
+     "k": "big",
+     "h": "Say it plainly, once.",
+     "sub": "Warm and steady.",
+     "say": "Let's practice the words a teen needs most. Picture them across the kitchen table. Let your shoulders drop. Now say out loud: it's not your fault, it's not your job to fix, and I'm here.",
+     "beats": [
+      "Let's practice the words a teen needs most.",
+      "Picture them across the kitchen table.",
+      "Let your shoulders drop.",
+      {
+       "t": "Now say out loud: it's not your fault, it's not your job to fix, and I'm here.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps most",
+     "items": [
+      [
+       "Safe adults",
+       "Numbers in their phone"
+      ],
+      [
+       "A safety plan",
+       "Rides, a place to go, 911"
+      ],
+      [
+       "Their own support",
+       "Alateen, a group, a therapist"
+      ],
+      [
+       "Normal teen life",
+       "Sleep, school, friends"
+      ]
+     ],
+     "say": "What helps most. Safe adults, with names and numbers in their phone. A safety plan, rides, a place to go, and nine one one if someone can't wake up. Their own support, like Alateen, a school group, or a therapist. And normal teen life, sleep, school, sports, and friends.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Support for you",
+     "body": "Al-Anon, Nar-Anon, SAMHSA 1-800-662-4357.",
+     "say": "You need support too. Al-Anon and Nar-Anon are there for family members. The SAMHSA National Helpline can point you to treatment and family support, any time. If a teen is being hurt or left without what they need, Childhelp can help. And if your teen talks about not wanting to live, call or text nine eight eight together."
+    },
+    {
+     "k": "big",
+     "h": "Steady love helps a family heal.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Honest talk, safe adults, and steady love help a family heal. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-vaping",
+  "ring": "sober",
+  "title": "Quitting Vaping",
+  "you": {
+   "id": "pn-g-sober-vaping-you",
+   "guide": "sober-vaping",
+   "side": "you",
+   "title": "Quitting Vaping",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, if you want to quit vaping: a plan, a swap for every trigger, and support in your pocket.",
+   "sources": [
+    "graham24",
+    "bowen09"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Quitting Vaping",
+     "sub": "For You",
+     "say": "If you vape and you want to quit, or you're thinking about it, this is for you. Wanting to quit is a big step, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Nicotine is built to hook.",
+     "sub": "Quitting takes real effort.",
+     "say": "Nicotine is built to keep you coming back. That's why it can feel so hard to stop, even when you really want to. Needing a plan and some help is normal. Many teens are quitting right now, and so can you."
+    },
+    {
+     "k": "points",
+     "h": "The first days",
+     "items": [
+      [
+       "Cravings",
+       "Strong, then shorter"
+      ],
+      [
+       "Cranky or foggy",
+       "Your brain adjusting"
+      ],
+      [
+       "Hungry or restless",
+       "It settles"
+      ]
+     ],
+     "say": "Here's what the first days can feel like. Strong cravings that come and go. Feeling cranky, jumpy, or foggy, while your brain adjusts. Feeling hungry or restless. These are strongest in the first days, and they ease week by week.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "flow",
+     "h": "Your quit plan",
+     "steps": [
+      [
+       "Pick a day",
+       "Soon, and tell someone"
+      ],
+      [
+       "Text for support",
+       "DITCHVAPE to 88709"
+      ],
+      [
+       "Clear it out",
+       "Every vape and pod"
+      ]
+     ],
+     "say": "Make a simple plan. Pick a quit day in the next week or two, and tell one person. Sign up for support by text: teens can text DITCHVAPE to 88709. In Minnesota, teens can also text Start My Quit to 36072 for a quit coach. Research finds that teens who use a texting program like this are more likely to quit. Then, on your quit day, get rid of every vape, pod, and charger.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       5
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "A swap for every trigger",
+     "items": [
+      [
+       "After school",
+       "A fast walk or a snack"
+      ],
+      [
+       "In the car",
+       "Gum and music"
+      ],
+      [
+       "Stressed",
+       "Slow breaths"
+      ],
+      [
+       "Friends vaping",
+       "Step away for a minute"
+      ]
+     ],
+     "say": "Cravings show up at the same times. Plan a swap for each. After school, a fast walk or a real snack. In the car, gum and your music. When you're stressed, a few slow breaths. When friends hit theirs, step away for a minute.",
+     "cue": {
+      "at": [
+       2,
+       3,
+       4,
+       5
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Name your trigger and your swap.",
+     "sub": "Out loud, once.",
+     "say": "Let's plan yours right now. Think of the time of day you reach for it most. Pick one swap you could really do then. Say both out loud, like this: after school, I take a fast walk.",
+     "beats": [
+      "Let's plan yours right now.",
+      "Think of the time of day you reach for it most.",
+      "Pick one swap you could really do then.",
+      {
+       "t": "Say both out loud, like this: after school, I take a fast walk.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Ride the craving out.",
+     "body": "It rises, peaks, and passes within minutes.",
+     "say": "When a craving hits, try riding it out. Notice where you feel it in your body. Breathe slowly, and watch it rise, peak, and pass, usually within minutes. Each craving you ride out makes the next one weaker."
+    },
+    {
+     "k": "card",
+     "title": "A slip is a moment.",
+     "body": "Start again right away. Your doctor can help too.",
+     "say": "If you slip, it's a moment, and you can start again right away. Ask what led to it, and add a swap for next time. Your doctor can help with a quit plan, and with medicine if it fits you. And if you ever feel like you don't want to be alive, call or text nine eight eight."
+    },
+    {
+     "k": "big",
+     "h": "Every hour without it counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your lungs, your sleep, your money, and your focus all start getting better soon after you quit. Every hour without it counts. The full guide has more, whenever you want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-vaping-helper",
+   "guide": "sober-vaping",
+   "side": "helper",
+   "title": "Quitting Vaping",
+   "sideName": "For the Grown-up",
+   "mins": 3,
+   "blurb": "For the grown-up beside a teen quitting vaping: stay calm, make a plan together, and celebrate every step.",
+   "sources": [
+    "graham24"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Quitting Vaping",
+     "sub": "For the Grown-up",
+     "say": "This is for the parent, guardian, coach, or youth leader of a teen who vapes and wants to quit, or who you hope will. You can make quitting much easier."
+    },
+    {
+     "k": "big",
+     "h": "A health goal, worked on together.",
+     "sub": "More than a rule broken.",
+     "say": "Many teens who vape started with friends and got hooked fast. Nicotine is built that way. Teens quit best when adults treat it as a health goal you work on together, more than a rule they broke."
+    },
+    {
+     "k": "card",
+     "title": "Expect a hard first week.",
+     "body": "Cravings, crankiness, and trouble focusing ease with time.",
+     "say": "Expect the first week to be hard. Cravings, crankiness, poor sleep, and trouble focusing are common, and they ease week by week. A little extra patience at home goes a long way."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "Thank you for telling me.",
+      "What times of day are hardest?",
+      "A slip is part of quitting."
+     ],
+     "say": "Words that help. Thank you for telling me, let's make a plan together. What times of day are hardest? And after a slip: a slip is part of quitting. What did you learn from it?"
+    },
+    {
+     "k": "flow",
+     "h": "Help with the plan",
+     "steps": [
+      [
+       "Text support",
+       "DITCHVAPE to 88709"
+      ],
+      [
+       "Their doctor",
+       "A quit plan, medicine questions"
+      ],
+      [
+       "Swaps",
+       "For the hardest times"
+      ]
+     ],
+     "say": "Help with the plan. Sign up together for a texting program: DITCHVAPE to 88709, or in Minnesota, Start My Quit to 36072. Research finds these programs help teens quit. Book a visit with their doctor about a quit plan, and whether medicine fits. And plan swaps for the hardest times of day.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Ask about the hardest time.",
+     "sub": "Curious and calm.",
+     "say": "Let's practice. Picture your teen after school, a little irritable. Soften your voice. Now ask out loud: when is it hardest for you, and what could we try then?",
+     "beats": [
+      "Let's practice.",
+      "Picture your teen after school, a little irritable.",
+      "Soften your voice.",
+      {
+       "t": "Now ask out loud: when is it hardest for you, and what could we try then?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps",
+     "items": [
+      [
+       "Celebrate milestones",
+       "A day, a week, a month"
+      ],
+      [
+       "A goal for the money",
+       "Something they choose"
+      ],
+      [
+       "Quit together",
+       "If you use nicotine too"
+      ]
+     ],
+     "say": "What helps keep it going. Celebrate milestones: one day, one week, one month. Give the money they save a purpose they choose. And if you use nicotine too, consider quitting together. Adults can call one eight hundred QUIT NOW for support.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Calm over punishment",
+     "body": "Punishment tends to push vaping out of sight.",
+     "say": "Punishment as the main response tends to push vaping out of sight, where it's harder to help. Calm talks, clear support, and a plan keep it in the open. Many people need a few tries, and each one teaches something."
+    },
+    {
+     "k": "big",
+     "h": "Every step counts.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Stay calm, stay close, and celebrate every step. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-pills",
+  "ring": "sober",
+  "title": "Pills, Fentanyl, and Staying Alive",
+  "you": {
+   "id": "pn-g-sober-pills-you",
+   "guide": "sober-pills",
+   "side": "you",
+   "title": "Pills, Fentanyl, and Staying Alive",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you: the truth about fake pills, and the three steps that save a life.",
+   "sources": [
+    "deaonepill",
+    "narcanotc",
+    "mngoodsam"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Pills, Fentanyl, and Staying Alive",
+     "sub": "For You",
+     "say": "This is for you, whether pills have never touched your life, or you've seen them passed around, or you're worried about someone. What you learn here could save a life, maybe a friend's."
+    },
+    {
+     "k": "big",
+     "h": "Pills can be fake.",
+     "sub": "Even when they look exactly real.",
+     "say": "Here's the most important thing. A pill from a friend, a dealer, or social media can be fake. It can look exactly like a real Percocet, Xanax, or Adderall, and still hold fentanyl. You can't see it, smell it, or taste it. A tiny amount can stop someone's breathing."
+    },
+    {
+     "k": "card",
+     "title": "From a pharmacy, with your name",
+     "body": "The only safe medicine.",
+     "say": "So make this your rule. The only pills you take come from a pharmacy, with your name on the label. If it isn't from a pharmacy, it isn't for you. That one rule keeps you safe."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris",
+     "title": "Norco",
+     "lines": [
+      "Chris's first real experience with drugs was pain pills.",
+      "He lost a close friend he used to take pills with to an accidental overdose.",
+      "He tells the story hoping it helps the next person."
+     ],
+     "lesson": "Honest talk saves lives.",
+     "say": "Chris, one of Grounded's founders, says his first real experience with drugs was pain pills. Years later, a close friend he used to take pills with died of an accidental overdose. Chris tells that story plainly, hoping it helps the next person stay alive. Honest talk about pills saves lives."
+    },
+    {
+     "k": "points",
+     "h": "Signs of an overdose",
+     "items": [
+      [
+       "Won't wake up",
+       "Even when you shout"
+      ],
+      [
+       "Slow or no breathing",
+       "Or gurgling sounds"
+      ],
+      [
+       "Blue or gray lips",
+       "Or fingertips"
+      ]
+     ],
+     "say": "Know the signs of an overdose. Someone won't wake up, even when you shout their name. Their breathing is slow, or stops, or sounds like gurgling or snoring. Their lips or fingertips turn blue or gray.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "flow",
+     "h": "Three steps",
+     "steps": [
+      [
+       "Call 911",
+       "Right away"
+      ],
+      [
+       "Give naloxone",
+       "Narcan, if you have it"
+      ],
+      [
+       "Stay",
+       "Until help arrives"
+      ]
+     ],
+     "say": "Then do three things. Call nine one one, right away. Give naloxone, also called Narcan, if you have it: one spray in the nose. It's safe, and it does no harm if it isn't an opioid. Then stay with them until help arrives. In Minnesota, the law protects a person who calls for help and stays.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "911. Naloxone. Stay.",
+     "sub": "Say the steps out loud.",
+     "say": "Let's lock it in. Picture a friend who won't wake up. Take one steady breath. Now say the three steps out loud: nine one one, naloxone, stay.",
+     "beats": [
+      "Let's lock it in.",
+      "Picture a friend who won't wake up.",
+      "Take one steady breath.",
+      {
+       "t": "Now say the three steps out loud: nine one one, naloxone, stay.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "If pills are part of your life",
+     "body": "Talk with a doctor. SAMHSA: 1-800-662-4357.",
+     "say": "If pills are already part of your life, you deserve help, and it's safe to ask. Talk with a doctor or a trusted adult. Stopping opioids or sedatives goes best with a doctor's help. In Minnesota, you can ask for that care on your own. And if you ever think about not wanting to be alive, call or text nine eight eight."
+    },
+    {
+     "k": "big",
+     "h": "You can be the one who knows.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Calling for help is always the right call. You can be the one who knows what to do. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up or is breathing slowly",
+    "Naloxone (Narcan): give it, then stay",
+    "Poison Help: 1-800-222-1222",
+    "988: call or text, any time"
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-pills-helper",
+   "guide": "sober-pills",
+   "side": "helper",
+   "title": "Pills, Fentanyl, and Staying Alive",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "blurb": "For the grown-up: talk plainly about fake pills, keep naloxone at home, and make 911 the easy call.",
+   "sources": [
+    "deaonepill",
+    "narcanotc",
+    "cdcnaloxone",
+    "mngoodsam"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "Pills, Fentanyl, and Staying Alive",
+     "sub": "For the Grown-up",
+     "say": "This is for every parent, guardian, coach, and youth leader of a high schooler. Fake pills and fentanyl are a real danger for teens today. A few calm steps at home make a big difference."
+    },
+    {
+     "k": "big",
+     "h": "Any pill can be fake.",
+     "sub": "Say it plainly, more than once.",
+     "say": "Here's the truth to share. Pills sold by friends, dealers, or on social media are often fake. They can look exactly like real medicine and hold fentanyl, which can stop breathing. Many teens still believe a pill from a friend is safe. Say it plainly, more than once."
+    },
+    {
+     "k": "points",
+     "h": "A safer home",
+     "items": [
+      [
+       "Naloxone",
+       "Where everyone knows"
+      ],
+      [
+       "Old medicines out",
+       "Take-back site or drop box"
+      ],
+      [
+       "A plain talk",
+       "Calm, and more than once"
+      ]
+     ],
+     "say": "Make your home safer. Get naloxone, the nasal spray also called Narcan. It's sold without a prescription. Keep it where everyone knows. Clear out old pain pills and sedatives through a take-back site or a pharmacy drop box. And have a plain, calm talk about fake pills.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Say where your naloxone lives.",
+     "sub": "Or where it will.",
+     "say": "Let's make it real. Picture your home, room by room. Choose one spot everyone can find fast. Now say out loud where your naloxone lives, or where it will live this week.",
+     "beats": [
+      "Let's make it real.",
+      "Picture your home, room by room.",
+      "Choose one spot everyone can find fast.",
+      {
+       "t": "Now say out loud where your naloxone lives, or where it will live this week.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "flow",
+     "h": "Teach the three steps",
+     "steps": [
+      [
+       "Call 911",
+       "Right away"
+      ],
+      [
+       "Give naloxone",
+       "One spray in the nose"
+      ],
+      [
+       "Stay",
+       "Until help arrives"
+      ]
+     ],
+     "say": "Teach the whole family three steps. If someone won't wake up or is breathing slowly, call nine one one. Give naloxone, one spray in the nose. It's safe, even if it turns out not to be an opioid. Then stay until help arrives.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Make 911 the easy call.",
+     "body": "No trouble with you, ever, for calling.",
+     "say": "Fear of getting in trouble is the main reason people wait to call. So promise, out loud, that calling nine one one for a friend will never get your teen in trouble with you. In Minnesota, a Good Samaritan law protects a person who calls for help with an overdose and stays."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "If it isn't from a pharmacy, it could be fake.",
+      "Call 911 first. Always.",
+      "Let's learn naloxone together."
+     ],
+     "say": "Words that help. If it isn't from a pharmacy with your name on it, it could be fake. If anyone ever won't wake up, call nine one one first, always. And, let's learn how to use naloxone together."
+    },
+    {
+     "k": "card",
+     "title": "If your teen uses pills",
+     "body": "Their doctor today. SAMHSA: 1-800-662-4357.",
+     "say": "If you learn your teen is using pills, stay calm, and ask what they're doing for them: stress, sleep, pain, or a hard feeling. Talk with their doctor right away, and keep naloxone close. The SAMHSA National Helpline can point you to teen treatment, any time."
+    },
+    {
+     "k": "big",
+     "h": "Calm, prepared, and close.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Calm talks, naloxone at home, and a promise about nine one one. That's how families stay ready. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up or is breathing slowly",
+    "Naloxone (Narcan): give it, then stay",
+    "Poison Help: 1-800-222-1222",
+    "988: call or text, any time"
+   ]
+  }
+ },
+ {
+  "id": "sober-friend-od",
+  "ring": "sober",
+  "title": "When a Friend Overdoses",
+  "you": {
+   "id": "pn-g-sober-friend-od-you",
+   "guide": "sober-friend-od",
+   "side": "you",
+   "title": "When a Friend Overdoses",
+   "sideName": "For You",
+   "mins": 4,
+   "blurb": "For you, after a friend overdoses: whatever you feel makes sense, and you deserve support.",
+   "sources": [
+    "narcanotc",
+    "mngoodsam"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "When a Friend Overdoses",
+     "sub": "For You",
+     "say": "If a friend overdosed, whether they're in the hospital, back home, or gone, this is for you. Whatever you're feeling right now makes sense, and we're with you."
+    },
+    {
+     "k": "card",
+     "title": "If it's happening now",
+     "body": "Call 911. Give naloxone if you have it. Stay.",
+     "say": "First, if it's happening right now, stop this video. Call nine one one. Give naloxone, also called Narcan, if you have it. And stay with them. In Minnesota, the law protects a person who calls for help and stays."
+    },
+    {
+     "k": "words",
+     "h": "All of this makes sense",
+     "items": [
+      "Shaky",
+      "Numb",
+      "Angry",
+      "Guilty",
+      "Relieved",
+      "Heartbroken"
+     ],
+     "say": "After an overdose, people feel all kinds of things. Shaky. Numb. Angry at your friend, or at whoever sold the pills. Guilty for not seeing it, or for being okay. Relieved, if they survived. Heartbroken, if they didn't. All of it makes sense."
+    },
+    {
+     "k": "big",
+     "h": "You aren't to blame.",
+     "sub": "Wishing you had known comes from love.",
+     "say": "Here's something true. You aren't to blame for your friend's overdose. If you called for help, that was brave and right. If you wish you had known, that wish comes from love. Nobody can see everything coming."
+    },
+    {
+     "k": "big",
+     "h": "Feet on the floor. Name three things you see.",
+     "sub": "Come back to right here.",
+     "say": "Shock lives in the body, so let's settle yours for a moment. Press your feet into the floor. Feel the seat holding you. Now look around and name three things you can see, quietly, one at a time.",
+     "beats": [
+      "Shock lives in the body, so let's settle yours for a moment.",
+      "Press your feet into the floor.",
+      "Feel the seat holding you.",
+      {
+       "t": "Now look around and name three things you can see, quietly, one at a time.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "The next few days",
+     "items": [
+      [
+       "Tell a grown-up",
+       "Today or tomorrow"
+      ],
+      [
+       "Care for your body",
+       "Water, food, sleep, a walk"
+      ],
+      [
+       "Be with people",
+       "Who knew your friend"
+      ]
+     ],
+     "say": "For the next few days, keep it simple. Tell a trusted grown-up what happened, today or tomorrow. Take care of your body: water, food, sleep, and a walk outside. And spend time with people who know your friend, so nobody carries this alone.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If your friend survived",
+     "body": "\"I am so glad you are here.\"",
+     "say": "If your friend survived, you might feel scared and angry at the same time. Let them know you care, simply: I'm so glad you're here. I'm not going anywhere. Their healing belongs to them and the grown-ups helping them. You can still be a good friend."
+    },
+    {
+     "k": "card",
+     "title": "If your friend died",
+     "body": "Grieve together. Remember them. Ask for help.",
+     "say": "If your friend died, grief can come in waves for a long time. Be with others who loved them, and find ways to remember them. If the pictures keep replaying, or sleep won't come back, a school counselor or therapist can help. If you ever think about not wanting to be alive, call or text nine eight eight, any time."
+    },
+    {
+     "k": "big",
+     "h": "You don't have to carry this alone.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Ask for help, and let people stay close. Small steps still count. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up or is breathing slowly",
+    "988: call or text, any time",
+    "Text HOME to 741741 (in Minnesota, MN to 741741)"
+   ]
+  },
+  "helper": {
+   "id": "pn-g-sober-friend-od-helper",
+   "guide": "sober-friend-od",
+   "side": "helper",
+   "title": "When a Friend Overdoses",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "blurb": "For the grown-up beside a teen whose friend overdosed: calm presence first, then steady watching over the weeks ahead.",
+   "sources": [
+    "pfas",
+    "narcanotc"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "pine",
+     "eyebrow": "When Life Changes",
+     "h": "When a Friend Overdoses",
+     "sub": "For the Grown-up",
+     "say": "This is for the parent, guardian, coach, or youth leader of a teen whose friend overdosed, whether the friend survived or died. Your calm presence matters more than perfect words."
+    },
+    {
+     "k": "big",
+     "h": "Calm, safe, and close.",
+     "sub": "Comfort comes before questions.",
+     "say": "In the first hours, comfort comes before questions. Help your teen feel safe. Offer food, water, and quiet. Stay close. The questions about who, what, and how can wait for a calmer time."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "I'm so glad you told me.",
+      "Whatever you feel makes sense.",
+      "You did the right thing by calling."
+     ],
+     "say": "Words that help. I'm so glad you told me. You're safe now. Whatever you're feeling makes sense. And, if they called for help: you did the right thing. If they weren't there: nobody could have known for sure."
+    },
+    {
+     "k": "card",
+     "title": "Shock can look like fine.",
+     "body": "Watch gently over the next weeks.",
+     "say": "A teen in shock can seem fine. They may joke, go quiet, or want to go straight back to normal. Watch gently over the next weeks for trouble sleeping, pulling away, anger, or using. If it lasts, bring in a therapist."
+    },
+    {
+     "k": "big",
+     "h": "Steady your own breath first.",
+     "sub": "Then go to them.",
+     "say": "Your steadiness is the gift here, so let's practice it. Picture yourself just outside your teen's door. Rest a hand on your chest. Breathe in slowly, and let a long breath out before you knock.",
+     "beats": [
+      "Your steadiness is the gift here, so let's practice it.",
+      "Picture yourself just outside your teen's door.",
+      "Rest a hand on your chest.",
+      {
+       "t": "Breathe in slowly, and let a long breath out before you knock.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps next",
+     "items": [
+      [
+       "Tell the school",
+       "The counselor can watch over friends"
+      ],
+      [
+       "Ask about their own use",
+       "Directly and calmly"
+      ],
+      [
+       "Naloxone at home",
+       "Where everyone knows"
+      ],
+      [
+       "Room to grieve",
+       "A memorial, a memory"
+      ]
+     ],
+     "say": "What helps next. Tell the school counselor, so they can watch over your teen and their friends. Ask, directly and calmly, about your teen's own use, and listen. Keep naloxone at home. And if the friend died, give room to grieve, a memorial if they want to go, and a home where the friend's memory is welcome.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Set the blame aside.",
+     "body": "For their friend, and for themselves.",
+     "say": "Your teen may hear adults blame the friend, or may blame themselves. Gently set both aside. Their friend was a person they loved. And they aren't to blame. Speak about the danger of fake pills, and about the friend with kindness."
+    },
+    {
+     "k": "card",
+     "title": "Lines to know",
+     "body": "988 any time. **CRISIS in Minnesota. 911 for danger.",
+     "say": "If your teen talks about not wanting to live, or the grief feels like too much, call or text nine eight eight together. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. For danger right now, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Stay close for the long road.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Grief and fear can take a long time to settle. Stay close, keep checking in, and take care of yourself too. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up or is breathing slowly",
+    "988: call or text, any time",
+    "Text HOME to 741741 (in Minnesota, MN to 741741)"
+   ]
+  }
+ }
+];
+  V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); }); })();
+/* Living Sober videos end, GWG BLD 789 */

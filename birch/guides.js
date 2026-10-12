@@ -5859,3 +5859,814 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 (function () { var G = window.BIRCH_GUIDES; if (!G || !G.topics) return; var L = {"adhd": ["learning"], "health-26": ["health", "serious"], "first-signs": ["mind", "close"], "eating": ["mind", "health"], "anxiety": ["mind"], "depression": ["mind"], "after-baby": ["mind", "health"], "pressure-burnout": ["mind", "learning"], "substances": ["mind"], "selfharm": ["mind"], "coming-home": ["mind"], "friend-suicide": ["close", "mind"], "suicide-thoughts": ["mind"]};
   G.topics.forEach(function (t) { if (L[t.id]) t.life = L[t.id].slice(); }); })();
 /* LIFE tags end */
+/* Living Sober guides start, GWG BLD 789: Birch's seven Living Sober guides (ring 'sober', life ['sober'], sober: the stages each fits most). The ring itself
+   comes from GGLife.ring('birch') and shows only when Living Sober is chosen; search and Picked for You always find them.
+   Generated from patches/bld789/B in grounded-workshop by gen.py: edit the data there and rebuild. */
+(function () { var G = window.BIRCH_GUIDES; if (!G || !G.topics) return;
+  var T = [
+ {
+  "id": "sober-first-year",
+  "ring": "sober",
+  "title": "Your First Year Sober",
+  "keys": "first year sober sobriety newly sober early sobriety just quit drinking quit alcohol stopped drinking stopped using drugs getting sober staying sober sober for a month sober for 90 days days sober sober anniversary chip cravings craving a drink urge to drink boredom sober lonely sober cant sleep sober sleep problems sober energy mood swings early recovery recovery aa na smart recovery refuge recovery sponsor meeting detox rehab treatment withdrawal sober curious sober life what to do instead of drinking sober weekends sober holidays first sober birthday my friend just got sober my son is newly sober my partner quit drinking",
+  "parts": [
+   "bark",
+   "leaves",
+   "branches",
+   "trunk",
+   "fruit"
+  ],
+  "quick": [
+   "The first year sober is a real season of growth. Your body, your sleep, your feelings, and your friendships all shift as you find your footing.",
+   "Drinking or using often did a job, like quieting painful feelings or filling empty hours. Growing sober means finding healthier ways to do that job: your body, your mind, your people, and your sense of purpose.",
+   "Cravings rise and fall like waves. Each one passes, and they tend to come less often as the months go by.",
+   "If you're stopping alcohol, or pills like Xanax or Valium, talk with a doctor first. Stopping suddenly can be dangerous. Every kind of help is welcome: a doctor, treatment, therapy, medication, and peer groups."
+  ],
+  "feel": "Maybe you just stopped, and every evening feels long. Maybe you're a few months in, proud and tired at the same time. You might sleep badly for a while, feel emotions you used to quiet, or notice how much of your social life was built around drinking or using. Some days feel bright and clear, like waking up. Other days feel raw. All of that is part of the first year, and it makes sense. You chose something brave, and you're learning a new way to live, one day at a time.",
+  "self": {
+   "first": [
+    "If you're stopping alcohol, benzodiazepines (like Xanax or Valium), or other sedatives, talk with a doctor before you stop or cut down quickly. Withdrawal from these can be dangerous, and a doctor can make it safe.",
+    "Write down why you're choosing sober, in your own words. Keep it on your phone, where you can read it on a hard night.",
+    "Plan your evenings and weekends for the next two weeks: a walk, a meal with someone, a class, a meeting, a shift, a run. Open hours are where cravings like to show up."
+   ],
+   "helps": [
+    "Steady basics for your body: water, real meals at regular times, a set wake time, daylight, and movement you enjoy. Sleep often takes weeks to settle, and it does settle.",
+    "A plan for cravings: notice it, name it, breathe slowly, and let it rise and fall like a wave. Move, drink water, eat something, or call someone while you wait.",
+    "Your people. One or two friends who support your choice, a peer group, a mentor, or a sober community. Many people find AA, NA, SMART Recovery, Refuge Recovery, or a faith community helpful. Choose what fits you.",
+    "Healthy ways to change how you feel: a run, a long walk outdoors, a hot shower, music, writing it out, time with a friend, a workout, or slow breathing.",
+    "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal those roots at your own pace.",
+    "Purpose and fun. Try something new: a class, a team, volunteering, a trail, a craft. Many people find serving others steadies them.",
+    "Marking the wins: a week, a month, ninety days, your first sober holiday. Celebrate with sparkling water, a good meal, a hike, or people you love."
+   ],
+   "tell": [
+    "“This craving is a wave. It will rise and it will pass.”",
+    "“I'm growing a healthy life, one day at a time.”",
+    "“Small steps still count.”"
+   ],
+   "people": "Try, to a friend: “I've stopped drinking, and it matters a lot to me. Would you do sober things with me this month, like a hike or dinner?” To family: “I'm a few weeks sober. What helps most is you asking how I'm doing.” To a doctor: “I've stopped drinking (or using), and I'd like help doing it safely. What are my options?”"
+  },
+  "helper": {
+   "feel": "A parent, partner, roommate, or friend may feel relief, hope, and worry all at once. You may wonder whether to bring up drinking or stay quiet, or feel unsure what to do at gatherings. They're an adult choosing a new way to live, and your steady, warm support is one of the strongest things they can have.",
+   "say": [
+    "“I'm proud of you. How are you doing, really?”",
+    "“What would help this week?”",
+    "“Want to come for dinner, or take a walk Saturday?”",
+    "“You can tell me about the hard days too.”"
+   ],
+   "avoid": [
+    "Offering a drink, or pushing “just one” at a party or family dinner.",
+    "Watching every move, counting days for them, or quizzing them.",
+    "Bringing up old mistakes when you're upset.",
+    "Treating sobriety as a phase. It's a real choice, and they get to define it."
+   ],
+   "help": [
+    "Make plans that center on something other than drinking: meals, hikes, games, a movie, a class, a workout.",
+    "Keep sparkling water, tea, or other good drinks on hand when they visit.",
+    "Ask what they'd like you to do if they're having a hard night, and do that.",
+    "Learn a little about early sobriety. Al-Anon and SMART Recovery Family and Friends welcome people who love someone growing sober.",
+    "If they talk about wanting to harm themselves, call or text 988 together. If someone can't wake up or is breathing slowly, call 911."
+   ],
+   "you": "Watching someone you love grow sober brings up a lot. Your feelings count too, including old hurt. Find your own support, keep your own rhythm, and remember that their sobriety is theirs to tend. Your part is warmth and steadiness. If they use Birch, they choose what you see, and no alert goes to anyone."
+  },
+  "faith": "If faith is part of your life, it may be a deep source of strength right now: prayer, a faith community, or a sense of grace for each new day. Some people also carry old shame from faith settings. You get to bring both to a trusted faith leader, a mentor, or a therapist. If faith isn't part of your life, steadiness can come from your values, your people, time outdoors, and the practices that ground you.",
+  "practices": [
+   "bark|Name It",
+   "bark|Slow Exhale",
+   "bark|Hard-Day Plan",
+   "leaves|Steady Wake Time",
+   "leaves|Walk or Jog",
+   "branches|One Reach-Out a Day",
+   "fruit|Celebrate a Win"
+  ],
+  "reach": [
+   "Stopping alcohol, benzodiazepines, or other sedatives: talk with a doctor first. Shaking, sweating, seeing or hearing things, confusion, or a seizure after stopping need medical help right away. Call 911 for a seizure.",
+   "Help finding treatment, a doctor, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish.",
+   "If you use opioids or pills from anywhere but a pharmacy: after a break, your body's tolerance drops, so an old amount can be deadly. Keep naloxone (Narcan) close; it's sold without a prescription. If someone can't wake up or is breathing slowly, call 911.",
+   "Thoughts of not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Questions about mixing substances or medicines: Poison Help, 1-800-222-1222, any time."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "Alcoholics Anonymous",
+    "https://www.aa.org"
+   ],
+   [
+    "Narcotics Anonymous",
+    "https://na.org"
+   ],
+   [
+    "Al-Anon Family Groups",
+    "https://al-anon.org"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing"
+  ],
+  "lines": [
+   "samhsa",
+   "poison"
+  ],
+  "sources": [
+   "samhsarec",
+   "nidatreat",
+   "bowen09"
+  ]
+ },
+ {
+  "id": "sober-college-nightlife",
+  "ring": "sober",
+  "title": "Sober in College and Nightlife",
+  "keys": "sober in college sober at college sober student sober party sober at a party sober at the bar sober night out going out sober clubs concerts festivals tailgate frat party greek life drinking culture binge drinking peer pressure everyone drinks what to say when offered a drink saying no to a drink mocktail non alcoholic drink sober curious dry january taking a break from drinking roommate drinks collegiate recovery program sober dorm recovery housing sober house work happy hour work party wedding bachelor party 21st birthday sober birthday sober friends",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit",
+   "leaves"
+  ],
+  "quick": [
+   "You can have a full, fun social life sober, at college, at work, or out with friends. Many young adults are choosing to drink less or not at all.",
+   "A plan makes nights easier: your answer ready, a drink of your own in hand, a friend who has your back, and your own way home.",
+   "Many campuses have collegiate recovery programs, sober housing, and sober events. Ask the dean of students or the campus wellness office what yours offers.",
+   "You define your own sobriety. Whatever your reason, you never owe anyone an explanation."
+  ],
+  "feel": "Maybe you're newly sober and the first party, tailgate, or happy hour feels like a big test. Maybe you're curious about a sober semester, or you've decided drinking isn't for you, and you're tired of the questions. You might worry about losing friends, missing out, or being the odd one out. It's normal to feel nervous at first, and it's normal for it to get easier. Lots of people your age are building social lives around music, sports, food, games, and adventure, with clear heads and good mornings.",
+  "self": {
+   "first": [
+    "Plan your answer before you go: “I'm good,” “I'm driving,” “I've got an early morning,” or just “No thanks.” Short and friendly works best.",
+    "Bring or grab a drink of your own right away, like sparkling water with lime. A full cup means fewer offers.",
+    "Set your exit plan: your own ride or rideshare, a time to leave, and a friend who knows your plan."
+   ],
+   "helps": [
+    "Going with a friend who supports your choice, and agreeing on a signal for when you want to leave.",
+    "Leaving early when you've had your fun. You can go home happy and wake up feeling great.",
+    "Choosing events built around something to do: concerts, games, intramurals, trivia, open mics, climbing, hikes, late breakfasts.",
+    "Finding sober people. Collegiate recovery programs, sober dorms or recovery housing, peer groups like AA, NA, SMART Recovery, or Refuge Recovery, and sober clubs and meetups.",
+    "Tending the basics that make nights easier: sleep, real meals, and a plan for the hours when you used to drink.",
+    "Noticing your early warning signs, like feeling lonely, bored, or stressed before a big night, and calling someone first.",
+    "Hosting. A game night, a cookout, or a movie night with good drinks and food puts you in charge of the vibe."
+   ],
+   "tell": [
+    "“I don't owe anyone an explanation.”",
+    "“Leaving is always an option.”",
+    "“Clear head, good morning.”"
+   ],
+   "people": "Try, to a friend before you go: “I'm staying sober tonight. Can you have my back if people push?” To someone offering: “I'm good, thanks. What else is going on?” To a roommate: “I'm sober now. Could we keep alcohol out of the shared fridge, or on one shelf?” To an advisor or the dean of students: “Does campus have a collegiate recovery program or sober housing?”"
+  },
+  "helper": {
+   "feel": "A parent, roommate, friend, RA, or coach may feel proud and protective at once. You might wonder whether to invite them out, or worry that every party is a risk. They're an adult who gets to define their own sobriety, and they're more likely to stay connected when people include them warmly and follow their lead.",
+   "say": [
+    "“Want to come? We'll do something besides drinking too.”",
+    "“What would make tonight easier for you?”",
+    "“I've got your back if anyone pushes.”",
+    "“Want to grab breakfast tomorrow instead?”"
+   ],
+   "avoid": [
+    "Pushing “just one,” or treating their choice as a joke.",
+    "Announcing to the group that they're sober. That's their story to tell.",
+    "Leaving them out of every plan because you assume they won't want to come.",
+    "Making every hangout about drinking."
+   ],
+   "help": [
+    "Invite them, and plan at least some things that center on something else: food, music, sports, the outdoors.",
+    "Have good drinks on hand when you host, like sparkling water, juice, or tea.",
+    "Back up their answer kindly if someone pushes, and change the subject.",
+    "Ask what they'd like you to do if they want to leave early, and help them get home.",
+    "If someone can't wake up or is breathing slowly or strangely, call 911 and stay with them."
+   ],
+   "you": "You can be a great friend without being their guard. Their sobriety is theirs to tend, and your kindness and invitations help more than any watching. Keep your own rhythm and your own support."
+  },
+  "faith": "If faith is part of your life, a campus ministry or faith community can be a place to find friends and fun without drinking at the center. If faith isn't part of your life, clubs, teams, service groups, and sober communities can give you that same belonging.",
+  "practices": [
+   "branches|Plan Your Answer",
+   "branches|Look Out for a Friend",
+   "branches|Join and Go Three Times",
+   "bark|Slow Exhale",
+   "fruit|Something to Look Forward To",
+   "leaves|Sleep"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, stay with them, and give naloxone (Narcan) if opioids may be involved. Minnesota, like many states, has a law that protects people who call for help for an overdose in many situations.",
+   "A drink that tastes odd or a sudden, strange drunk feeling: tell a friend, get to safety, and call 911 if you feel very unwell.",
+   "Help finding treatment or support: the SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Feeling pressured or hurt by someone you're dating: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522.",
+   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "Association of Recovery in Higher Education: find a collegiate recovery program",
+    "https://collegiaterecovery.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "NIAAA: Rethinking Drinking",
+    "https://www.rethinkingdrinking.niaaa.nih.gov/"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "change",
+   "early",
+   "growing"
+  ],
+  "lines": [
+   "samhsa",
+   "loveisrespect"
+  ],
+  "sources": [
+   "arhe"
+  ]
+ },
+ {
+  "id": "sober-friends-dating",
+  "ring": "sober",
+  "title": "Sober Friends and Dating",
+  "keys": "sober friends making sober friends losing friends after getting sober friends stopped inviting me friends who still drink drinking buddies old friends lonely sober sober and lonely sober dating dating sober first date without drinking coffee date telling a date i dont drink when to tell someone im sober dating someone who drinks partner drinks sober relationship sober community sober meetup recovery friends sponsor aa friends na friends smart recovery peer support new friends after rehab",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit"
+  ],
+  "quick": [
+   "Friendships often shift in the first years sober. Some grow closer, some drift, and new ones form around what you love now.",
+   "Feeling lonely for a while is common and it eases. Real connection is one of the strongest supports for living sober.",
+   "Sober dating is about getting to know someone with a clear head. You choose when and how to share that you're sober.",
+   "A partner who respects your sobriety is a good sign. Someone who pushes you to drink or use is showing you something important."
+  ],
+  "feel": "Maybe the invitations slowed down after you got sober, and the phone got quiet. Maybe some friends seem uneasy around you now, or make little comments. You might miss your old crew, even knowing those nights were hurting you. Dating may feel strange too: what do people do on a first date without drinks, and when do you tell them? All of this is common, and it makes sense to feel a little lonely while your circle changes. New friendships and new love can grow from who you're becoming.",
+  "self": {
+   "first": [
+    "Name two people who support your sobriety, and reach out to one of them this week.",
+    "Try one new place where sober people gather: a peer group, a run club, a climbing gym, a class, a volunteer shift, a faith community, or a sober meetup. Go three times before you decide.",
+    "Decide how you'd like to share your sobriety on a date. A short, calm sentence is plenty."
+   ],
+   "helps": [
+    "Telling the friends who matter most what you need: “I'm sober now, and I'd love to see you. Can we get breakfast or hike?”",
+    "Letting some friendships drift kindly when they keep pulling you back toward drinking or using. Some may come back later.",
+    "Peer support. AA, NA, SMART Recovery, Refuge Recovery, and other groups are full of people who get it. Many people meet lifelong friends there.",
+    "Shared activities that build friendship over time: a team, a class, a trail group, a service project, a weekly game night.",
+    "Sober first dates: coffee, a walk, a museum, a climbing gym, tacos, a concert, a farmers market.",
+    "Sharing your sobriety when it feels right. Many people say it early and simply: “I don't drink. I love coffee dates though.”",
+    "Watching for respect. A good match celebrates your choice and never pushes."
+   ],
+   "tell": [
+    "“The right people will be glad I'm here, clear-headed and whole.”",
+    "“My sobriety is mine to tend.”",
+    "“New friendships take time, and I'm worth the time.”"
+   ],
+   "people": "Try, to an old friend: “I'm sober now. I still want you in my life. Want to grab breakfast?” To a date: “I don't drink, so I'm all about good coffee and good food. What do you like to do?” To a partner who's pushing: “My sobriety matters to me. I need you to support it.”"
+  },
+  "helper": {
+   "feel": "A friend, sibling, parent, or partner may feel unsure where you fit now. Maybe you shared a lot of nights out together and miss that version of your friendship. Maybe you're glad and a little awkward. They may be feeling lonely and unsure who's still with them. Simple, steady friendship is one of the best gifts you can give.",
+   "say": [
+    "“I'm glad you're doing this. I'm still your friend.”",
+    "“What would you like to do together these days?”",
+    "“Want to come along? We're doing something besides drinking.”",
+    "“How's the dating side of things going?” (if they've shared that with you)"
+   ],
+   "avoid": [
+    "Slowly dropping them from plans because drinking was the plan.",
+    "Little comments, like “you used to be fun” or “just have one.”",
+    "Telling other people about their sobriety for them.",
+    "Setting them up with someone who drinks heavily, or a date at a bar."
+   ],
+   "help": [
+    "Keep inviting them, and plan some things around food, music, sports, or the outdoors.",
+    "Ask what kind of time together feels good now.",
+    "Keep good drinks on hand when they're over.",
+    "If you're dating them: learn what their sobriety means to them, and support it in how you plan dates.",
+    "If they seem very isolated or low, check in more often, and offer to go with them somewhere new."
+   ],
+   "you": "Friendships change shape, and that can be sad for you too. Your steady presence matters more than having the right words. Keep your own support and rhythm, and let the friendship grow into its new shape."
+  },
+  "faith": "If faith is part of your life, a faith community can be a place to find friends and even meet someone who shares your values, with no drinking at the center. If faith isn't part of your life, clubs, teams, service groups, and sober communities can offer the same belonging.",
+  "practices": [
+   "branches|Join and Go Three Times",
+   "branches|One Reach-Out a Day",
+   "branches|Say What You Need",
+   "branches|Respect Check",
+   "branches|Shared Meal",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "Someone you're dating pressures you to drink or use, controls you, or scares you: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522, any time.",
+   "Help finding a peer group, treatment, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Loneliness that feels heavy, or thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
+   "Danger right now: call 911."
+  ],
+  "more": [
+   [
+    "SMART Recovery: meetings",
+    "https://smartrecovery.org"
+   ],
+   [
+    "Alcoholics Anonymous: find a meeting",
+    "https://www.aa.org"
+   ],
+   [
+    "Narcotics Anonymous: find a meeting",
+    "https://na.org"
+   ],
+   [
+    "Love Is Respect",
+    "https://www.loveisrespect.org"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing",
+   "long"
+  ],
+  "lines": [
+   "samhsa",
+   "loveisrespect"
+  ],
+  "sources": [
+   "samhsarec"
+  ]
+ },
+ {
+  "id": "sober-after-slip",
+  "ring": "sober",
+  "title": "After a Slip",
+  "keys": "slip relapse relapsed i relapsed drank again used again after being sober broke my sobriety lost my sober time reset my days started over sober again back to day one ashamed i messed up drinking again using again pills again one night slip binge after sober overdose risk after a break tolerance naloxone narcan aa na smart recovery sponsor tell my sponsor tell my family how to get back on track recovery setback lapse my friend relapsed my son relapsed my partner is drinking again",
+  "parts": [
+   "bark",
+   "branches",
+   "leaves",
+   "roots"
+  ],
+  "quick": [
+   "A slip, or a return to use, is common on the path of growing sober. It's information, and the path is still right here.",
+   "Shame tends to pull people further back. Kindness toward yourself, and telling someone, helps you return sooner.",
+   "Look at what happened just before: a feeling, a place, a person, or a long, empty evening. That's where your plan can grow stronger.",
+   "Safety first: after a break, the body's tolerance drops, so an old amount of opioids can be deadly. Keep naloxone (Narcan) close, and call 911 if someone can't wake up."
+  ],
+  "feel": "Maybe it was one night. Maybe it's been a few days or weeks. You might feel embarrassed, angry at yourself, or afraid you've lost everything you built. You might be tempted to hide it, or to tell yourself it's all over, so why stop now. Those feelings make sense. Here's what's true: your days sober still happened, everything you learned is still yours, and every return to the path counts. Many people who live sober for years had slips along the way.",
+  "self": {
+   "first": [
+    "If you're unsafe right now, or someone can't wake up or is breathing slowly, call 911. If you used opioids or pills from anywhere but a pharmacy, keep naloxone close and stay with someone.",
+    "Tell one person today: a friend, a sponsor or peer, a therapist, or a doctor. Say it plainly. Secrets grow in the dark; honesty helps you grow.",
+    "Get back to your basics in the next 24 hours: water, a real meal, sleep, a walk, and your next meeting, appointment, or check-in."
+   ],
+   "helps": [
+    "Being kind to yourself, the way you would be with a friend. Research finds that shame tends to make a return to drinking more likely, and self-compassion helps people get back on track.",
+    "Looking at the hours before the slip. What were you feeling? Where were you, and who were you with? Was it a long, empty evening, a hard day, or pain?",
+    "Making one change to your plan from what you learned: a new answer, a new evening routine, a call before certain places, or more support on certain days.",
+    "Checking in with a doctor if you drank or used for more than a few days. Stopping alcohol or sedatives again can bring withdrawal, and a doctor can help you stop safely.",
+    "Letting your people back in. A peer group, a sponsor, a SMART Recovery meeting, a therapist, or treatment are all ways to get more support. Use what fits you.",
+    "Tending what you were trying to quiet. Slips often follow painful feelings. Healing those roots, with support, makes the path steadier.",
+    "Counting what you choose. Some people restart their day count, and some count their total sober days. Either way, the growth is yours."
+   ],
+   "tell": [
+    "“A slip is a moment, and I'm still on my path.”",
+    "“Everything I learned is still mine.”",
+    "“Every return counts.”"
+   ],
+   "people": "Try: “I want to be honest with you. I drank (or used) this weekend. I'm back on track, and I could use your support.” To a sponsor or peer: “I slipped. Can we talk today?” To a doctor: “I started drinking again for a few days, and I'd like help stopping safely.”"
+  },
+  "helper": {
+   "feel": "A parent, partner, roommate, or friend may feel disappointed, scared, or angry, especially if you've been hurt before. Those feelings are real. They're likely feeling deep shame right now. The way people respond in the first days after a slip can help someone return to the path sooner.",
+   "say": [
+    "“Thank you for telling me. I'm still with you.”",
+    "“What do you need right now?”",
+    "“What happened just before? Let's figure out the plan together.”",
+    "“Your time sober still counts.”"
+   ],
+   "avoid": [
+    "Calling them names or using labels as a verdict.",
+    "“I knew it,” or “you'll never change.”",
+    "Lecturing in the first hard hours. Safety and support come first.",
+    "Covering up consequences or giving money that might pay for using."
+   ],
+   "help": [
+    "Check safety first. If they used opioids or pills from anywhere but a pharmacy, keep naloxone (Narcan) nearby and know how to use it. If someone can't wake up or is breathing slowly, call 911.",
+    "Thank them for being honest, and stay calm.",
+    "Help them get support: their doctor, their peer group or sponsor, a therapist, treatment, or the SAMHSA National Helpline.",
+    "Keep your own boundaries clear and kind, and keep them.",
+    "Notice and say out loud what's going well as they get back on track."
+   ],
+   "you": "A slip can stir your own fear and old hurt. Talk with someone you trust, and find your own support: Al-Anon, SMART Recovery Family and Friends, or a therapist. Their path is theirs to walk. Your steadiness, and your own care, still matter."
+  },
+  "faith": "If faith is part of your life, this may be a moment for grace: prayer, confession if your tradition holds it, or a talk with a trusted faith leader. Some people hear harsh messages about failure from faith settings; grace and a new beginning are at the heart of many traditions. If faith isn't part of your life, kindness toward yourself and honest support do the same steadying work.",
+  "practices": [
+   "bark|Self-Compassion Break",
+   "bark|Bounce Back From a Setback",
+   "bark|Hard-Day Plan",
+   "branches|Ask for Help",
+   "leaves|Sleep",
+   "bark|Expressive Writing"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them. After a break, tolerance drops, so an old amount of opioids can be deadly.",
+   "Drank or used for more than a few days, especially alcohol, benzodiazepines, or other sedatives: talk with a doctor before stopping. Shaking, confusion, seeing or hearing things, or a seizure need medical help right away.",
+   "Help finding treatment or support: the SAMHSA National Helpline, 1-800-662-4357, any time, in English and Spanish.",
+   "Questions about a possible poisoning or mixing substances: Poison Help, 1-800-222-1222.",
+   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "Alcoholics Anonymous",
+    "https://www.aa.org"
+   ],
+   [
+    "Narcotics Anonymous",
+    "https://na.org"
+   ],
+   [
+    "Poison Help",
+    "https://poisonhelp.hrsa.gov/poison-centers/index.html"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early",
+   "growing",
+   "long"
+  ],
+  "lines": [
+   "samhsa",
+   "poison"
+  ],
+  "sources": [
+   "randles13",
+   "neff",
+   "witkiewitz04",
+   "narcanotc"
+  ]
+ },
+ {
+  "id": "sober-after-treatment",
+  "ring": "sober",
+  "title": "Life After Treatment",
+  "keys": "after rehab after treatment leaving rehab coming home from rehab out of treatment discharge aftercare plan continuing care outpatient iop intensive outpatient php partial hospitalization detox residential treatment inpatient sober living recovery housing halfway house medication for addiction treatment mat moud suboxone buprenorphine methadone naltrexone vivitrol going back to school after rehab going back to work after rehab telling people i was in rehab structure routine first weeks home aa na smart recovery refuge recovery sponsor therapist my son is coming home from rehab my partner finished treatment",
+  "parts": [
+   "leaves",
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "Coming home from treatment is a big step and a tender time. A steady plan for the first weeks helps you carry what you learned into everyday life.",
+   "Keep your aftercare going: outpatient sessions, therapy, a peer group, your doctor, and any medication you and your doctor chose. These are strengths, and they belong to you.",
+   "Structure helps: a set wake time, meals, movement, people, and something meaningful to do each day.",
+   "If you used opioids before treatment, your tolerance is lower now, so an old amount can be deadly. Keep naloxone (Narcan) at home."
+  ],
+  "feel": "Maybe you're proud and nervous at the same time. Treatment had a schedule, people who understood, and a clear purpose for each day, and home might feel wide open. You might worry about seeing old friends, going back to school or work, or what people will say. Family may be hopeful and watchful at once. All of that is normal. You did real work in treatment, and now you get to grow it in your own life, one day at a time.",
+  "self": {
+   "first": [
+    "Put your aftercare plan where you can see it, with your next appointments, your group times, and the names and numbers of your people.",
+    "Plan your first two weeks hour by hour for the evenings and weekends, the times that used to be for drinking or using.",
+    "If you used opioids before treatment, keep naloxone (Narcan) at home and tell someone where it is. Your tolerance is lower now."
+   ],
+   "helps": [
+    "Keeping every aftercare appointment for the first months: outpatient, therapy, your doctor, and your peer group. Many people step down slowly, and that's a strength.",
+    "Medication, if you and your doctor chose it, such as buprenorphine, methadone, or naltrexone. Medication for addiction treatment is a respected, welcome part of many people's path.",
+    "Sober living or recovery housing, if you need a steadier place to live right now.",
+    "A daily rhythm for your body: a set wake time, water, real meals, movement, and time outdoors.",
+    "Something meaningful each day: school, work, volunteering, a class, a skill, or helping someone else.",
+    "Your people: peers from treatment, a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a mentor, and family who support you.",
+    "Deciding what to share, and with whom. You can say as much or as little as you like: “I was taking care of my health.”"
+   ],
+   "tell": [
+    "“I did real work, and I get to keep growing it.”",
+    "“My plan is my strength.”",
+    "“One day at a time.”"
+   ],
+   "people": "Try, to family: “Here's my aftercare plan. What would help most is rides to group, sober dinners, and asking how I'm doing.” To a boss or school: “I was out for a health reason, and I'm ready to come back. I have a few appointments a week; can we plan around them?” To an old friend: “I'm sober now, and I'd love to see you. Want to get breakfast?”"
+  },
+  "helper": {
+   "feel": "A parent, partner, sibling, or friend may feel hope, relief, and fear all at once, especially if there's been a lot of hurt. You may wonder how much to watch and how much to trust. They're an adult who did real work in treatment, and they're carrying it home into everyday life. Calm, warm structure helps them most.",
+   "say": [
+    "“Welcome home. I'm proud of the work you did.”",
+    "“What's in your plan, and how can I help with it?”",
+    "“What would you like me to do if you're having a hard day?”",
+    "“Want to walk after dinner?”"
+   ],
+   "avoid": [
+    "Keeping alcohol in the house, or bringing it to family gatherings in the first months, without asking them first.",
+    "Questioning their medication. That's between them and their doctor.",
+    "Watching every move, searching their things, or bringing up the past in anger.",
+    "Telling relatives and friends about their treatment without asking."
+   ],
+   "help": [
+    "Ask to see the aftercare plan, and help with rides, schedules, and reminders they want.",
+    "Make the home steady: regular meals, a calm evening rhythm, and alcohol out of the house for now if you can.",
+    "Keep naloxone (Narcan) at home if opioids were part of their story, and learn how to use it.",
+    "Plan sober time together: meals, walks, games, a hike.",
+    "Find your own support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a family program at their treatment center."
+   ],
+   "you": "You've likely been carrying a lot for a long time. Rest, your own people, and your own support count. Their path is theirs to walk, and your warm, steady presence helps it. If they use Birch, they choose what you see, and no alert goes to anyone."
+  },
+  "faith": "If faith is part of your life, a faith community or a trusted faith leader can be one more steady place as you come home, alongside your aftercare. Some people carry old shame from faith settings; many traditions also hold deep words about grace and new life. If faith isn't part of your life, your values, your people, and the practices that ground you can do that steadying work.",
+  "practices": [
+   "leaves|Steady Wake Time",
+   "leaves|Appointment Prep",
+   "bark|Hard-Day Plan",
+   "trunk|Weekly Reset",
+   "branches|Ask for Help",
+   "trunk|Serve Someone"
+  ],
+  "reach": [
+   "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them. After treatment, tolerance is lower, so an old amount of opioids can be deadly.",
+   "A slip, or feeling close to one: call your treatment program, your therapist, your doctor, or a peer today. Every return counts.",
+   "Help finding outpatient care, sober housing, medication, or support near you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "In Minnesota, help with housing, food, or bills: dial 211.",
+   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "FindTreatment.gov",
+    "https://findtreatment.gov"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "Narcotics Anonymous",
+    "https://na.org"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "early"
+  ],
+  "lines": [
+   "samhsa",
+   "mn211"
+  ],
+  "sources": [
+   "nidatreat",
+   "samhsarec",
+   "narcanotc"
+  ]
+ },
+ {
+  "id": "sober-parent-grown",
+  "ring": "sober",
+  "title": "A Parent's Drinking or Using, Now That You're Grown",
+  "keys": "parent drinks my mom drinks my dad drinks alcoholic parent alcoholic mom alcoholic dad addict parent my mom uses drugs my dad uses drugs parent addiction parent on pills parent in recovery parent in rehab adult child of an alcoholic adult children growing up with drinking going home for the holidays visiting home drunk parent boundaries with my parent should i cut contact estranged worried about my parent overdose naloxone parent drinking and driving will i become like them family history al-anon nar-anon nacoa therapist childhood trauma aces healing from childhood",
+  "parts": [
+   "bark",
+   "branches",
+   "roots",
+   "trunk"
+  ],
+  "quick": [
+   "Growing up with a parent's drinking or using shapes a person, and healing is real. Many adult children build steady, joyful lives.",
+   "You didn't cause it, you can't control it, and you can't cure it. You can take care of yourself, say what you feel, and make healthy choices.",
+   "You get to set boundaries with a parent: how often you visit, when you talk, and what you do if they've been drinking or using.",
+   "Support is there for you: Al-Anon or Nar-Anon, a therapist, and people who understand. If your parent ever can't wake up or is breathing slowly, call 911."
+  ],
+  "feel": "Maybe your parent still drinks or uses, and every call or visit home comes with a knot in your stomach. Maybe they're getting sober now, and you're hopeful and guarded at once. Maybe it was years ago, and you're only now noticing how it shaped you: how you read moods, keep the peace, or carry other people's feelings. You might feel love, anger, grief, guilt, and worry all in the same day. Every one of those feelings makes sense. You're allowed to love your parent and also protect your own life.",
+  "self": {
+   "first": [
+    "Remember the Seven Cs: I didn't cause it. I can't control it. I can't cure it. I can take care of myself, communicate my feelings, make healthy choices, and celebrate myself.",
+    "Choose one boundary for your next visit or call: a time limit, a place to meet, or a plan to leave if they've been drinking or using.",
+    "Tell one safe person what it's really like: a friend, a partner, a mentor, or a therapist."
+   ],
+   "helps": [
+    "Planning visits home: stay somewhere you can leave, have your own way to get around, and keep a friend on text.",
+    "Boundaries said simply and kindly: “I'd love to see you. If you've been drinking, I'll head out and we'll try another day.”",
+    "Never riding with a parent who has been drinking or using, and never leaving kids in their care when they are.",
+    "Support made for you: Al-Anon or Nar-Anon meetings, NACoA's resources, or a therapist who understands families and drinking.",
+    "Looking at your own patterns with kindness: keeping the peace, reading moods, or how you use alcohol or other things to cope. Patterns can be healed.",
+    "If your parent is getting sober: let trust rebuild at your own pace. Their growth and your healing can both take time.",
+    "Your own healthy tree: sleep, movement, time outdoors, your people, and things that bring you joy."
+   ],
+   "tell": [
+    "“I didn't cause it, and I can't fix it. I can take care of me.”",
+    "“I can love them and still keep my boundaries.”",
+    "“A pattern can end with me.”"
+   ],
+   "people": "Try, to a parent: “I love you. I want to see you when you're sober. If you've been drinking, I'll leave and we'll try another day.” To a sibling: “Can we talk about Mom (or Dad)? I'd like us to be on the same page.” To a partner or friend: “Going home is hard for me. Could you check in on me while I'm there?”"
+  },
+  "helper": {
+   "feel": "A partner, friend, mentor, or other family member may see the toll before the young adult names it: the dread before holidays, the worry, the way they take care of everyone. They may feel loyal to their parent and protective of them at once. They usually need understanding far more than advice about the parent.",
+   "say": [
+    "“That sounds really hard. I'm glad you told me.”",
+    "“How are you feeling about going home?”",
+    "“What would help while you're there?”",
+    "“You're allowed to protect your own peace.”"
+   ],
+   "avoid": [
+    "Insulting their parent or using labels. They may love their parent deeply.",
+    "Pushing them to cut contact, or to keep trying, when that's their decision.",
+    "“Just get over it,” or “that was a long time ago.”",
+    "Drinking heavily around them, or joking about it."
+   ],
+   "help": [
+    "Offer to be their check-in person during visits home, and to pick them up if they want to leave.",
+    "Help them plan holidays they enjoy: a sober gathering, a friend's table, or a short visit with a clear end.",
+    "Encourage support made for them: Al-Anon, Nar-Anon, or a therapist.",
+    "If they worry about their own drinking, listen calmly and offer to help find support.",
+    "If their parent ever can't wake up or is breathing slowly, call 911."
+   ],
+   "you": "Walking with someone through family pain can stir your own. Keep your own support and rest. Your steady, nonjudging presence is a gift; their relationship with their parent is theirs to shape."
+  },
+  "faith": "If faith is part of your life, you may be wrestling with what honoring a parent means when that parent has hurt you. Many traditions hold both honor and safety, and a trusted faith leader, a mentor, or a therapist can help you sort it through. Some people find deep comfort in prayer or a faith community. If faith isn't part of your life, your values, your people, and your own healing can guide you.",
+  "practices": [
+   "bark|Name It",
+   "bark|Self-Compassion Break",
+   "branches|Say What You Need",
+   "branches|Ask for Help",
+   "roots|What Holds Me Up",
+   "bark|Expressive Writing"
+  ],
+  "reach": [
+   "Your parent can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them.",
+   "A parent driving after drinking or using: stay out of the car, and call 911 if someone is in danger on the road.",
+   "Help finding treatment for a parent, or support for you: the SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Someone at home hurting you or a younger sibling: call 911 in danger. In Minnesota, Day One, 1-866-223-1111, any time. To report a child being hurt or neglected, call your county's child protection line or 911.",
+   "Feeling overwhelmed, or thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "NACoA: National Association for Children of Addiction",
+    "https://nacoa.org"
+   ],
+   [
+    "Al-Anon Family Groups",
+    "https://al-anon.org"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "love"
+  ],
+  "lines": [
+   "samhsa",
+   "dayone"
+  ],
+  "sources": [
+   "sevencs",
+   "cdcaces"
+  ]
+ },
+ {
+  "id": "sober-swapped-habit",
+  "ring": "sober",
+  "title": "When Another Habit Takes Its Place",
+  "keys": "swapped one addiction for another cross addiction new addiction after getting sober replacement habit overeating after quitting drinking sugar cravings sober weight gain shopping addiction spending debt after sober online shopping gaming too much scrolling phone screens porn gambling sports betting workaholic working too much exercise obsession overtraining religion as escape church busyness perfectionism pride numbing feelings coping habits dopamine self medicating sober but still unhappy dry drunk healthy coping healthy ways to feel better",
+  "parts": [
+   "bark",
+   "leaves",
+   "trunk",
+   "roots",
+   "fruit"
+  ],
+  "quick": [
+   "After drinking or using stops, the pain it used to quiet is still there, and something else can step in to quiet it: food, spending, screens, betting, work, workouts, even religion.",
+   "Anything we do to change how we feel can become a way to avoid what hurts. Noticing it is a sign of growth, and it's common.",
+   "The goal is healing the roots: being honest about the pain underneath, and working on it a little at a time.",
+   "Build a wide toolbox of healthy ways to change how you feel: movement, time outdoors, breathing, writing, music, rest, and people."
+  ],
+  "feel": "Maybe you're sober and proud of it, and you've noticed something else growing in its place. Late-night eating. Packages arriving every day. Hours of scrolling, gaming, or betting. Working or training past the point of joy. Or staying so busy, or so perfect, that there's no room to feel. You might feel discouraged: didn't I already do the hard part? Here's the hopeful truth. Noticing this means you're growing. The habit is pointing at a feeling that still needs care, and you can heal it, one small piece at a time.",
+  "self": {
+   "first": [
+    "Ask yourself honestly: what do I do now to change how I feel? Write down everything, the helpful and the harmful, without judging.",
+    "Pick the one that worries you most, and notice when you reach for it this week: what were you feeling just before?",
+    "Choose one healthy swap for that moment: a walk, a run, a hot shower, slow breathing, writing it out, music, or calling someone."
+   ],
+   "helps": [
+    "Naming the feeling underneath: lonely, bored, anxious, ashamed, tired, or sad. A habit often shows up to quiet one of these.",
+    "Healing a little at a time. You can work on small pieces of old pain, with support, and keep moving in the right direction.",
+    "A wide toolbox for mind, body, and spirit: breathing and being present; a daily walk, a run at an easy, talking pace, swimming, or hiking; writing, art, music, or drumming.",
+    "Heat and quiet, for some people: a long hot shower, a bath, or a sauna can be a calm reset after a hard day.",
+    "Steady basics: real meals at regular times, water, sleep, and daylight. Hunger and exhaustion make every habit louder.",
+    "Guardrails for the new habit: a budget and a cooling-off day for purchases, app limits, a phone that charges across the room, a set end to the workday.",
+    "Support for the specific habit: a therapist, a doctor, a peer group, or a helpline for eating, gambling, or debt."
+   ],
+   "tell": [
+    "“Noticing this means I'm growing.”",
+    "“What am I really feeling right now?”",
+    "“I can heal a little at a time.”"
+   ],
+   "people": "Try, to a friend or partner: “I've noticed I've been using food (or shopping, or my phone) the way I used to use drinking. Would you help me notice it?” To a therapist: “I'm sober, and I've noticed new habits taking its place. I'd like to look at what's underneath.” To a sponsor or peer: “I think I swapped one thing for another. Can we talk?”"
+  },
+  "helper": {
+   "feel": "A partner, parent, friend, or roommate may notice a new pattern: more eating, more spending, longer hours, more screen time, an all-consuming new passion. You may feel relieved they're sober and worried at the same time. They may feel discouraged or defensive. Gentle, curious support helps far more than pointing it out sharply.",
+   "say": [
+    "“I'm so proud of how far you've come.”",
+    "“How are you really doing, underneath it all?”",
+    "“I've noticed you've been working (or spending) a lot lately. How's that feeling for you?”",
+    "“Want to take a walk and talk?”"
+   ],
+   "avoid": [
+    "“At least it isn't drinking.” The feeling underneath still matters.",
+    "Policing the new habit, like checking their bank account or phone.",
+    "Shaming their body, their spending, or their faith.",
+    "Assuming every passion is a problem. Many new interests are healthy and joyful."
+   ],
+   "help": [
+    "Invite them into healthy ways to feel better: walks, a hike, cooking real food together, a swim, a game night with your phones away.",
+    "Ask about feelings more than behavior: what's been hard lately?",
+    "If money is part of it, offer to sit with them while they make a budget, if they'd like that.",
+    "Encourage support for the specific habit: a therapist, a doctor, or a helpline.",
+    "Celebrate the healthy changes you see."
+   ],
+   "you": "It can be tiring to hope one hard season is over and see a new one start. Your patience and your own support matter. Their healing belongs to them, and your warmth helps it grow."
+  },
+  "faith": "If faith is part of your life, it can be a deep, healing resource. Sometimes, though, religious busyness, leadership, or a need to look perfect can become one more way to stay away from what hurts. Grace makes room for honesty, and many traditions say so. A trusted faith leader, a spiritual director, or a therapist can help you tell the difference. If faith isn't part of your life, the same question helps: is this filling me, or helping me hide?",
+  "practices": [
+   "bark|Name It",
+   "bark|Expressive Writing",
+   "leaves|Walk or Jog",
+   "leaves|Two Hours Outdoors",
+   "leaves|Charge It Across the Room",
+   "bark|Money Check-in",
+   "bark|Self-Compassion Break"
+  ],
+  "reach": [
+   "Help finding treatment, a therapist, or support: the SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Eating that feels out of control, or restricting: the ANAD Eating Disorders Helpline, 1-888-375-7767, weekdays.",
+   "Betting or gambling: the Minnesota Problem Gambling Helpline, 1-800-333-4673, or the National Problem Gambling Helpline, 1-800-MY-RESET, any time.",
+   "Debt that feels overwhelming: in Minnesota, dial 211 for help finding nonprofit credit guidance.",
+   "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741)."
+  ],
+  "more": [
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "SMART Recovery",
+    "https://smartrecovery.org"
+   ],
+   [
+    "ANAD",
+    "https://anad.org"
+   ]
+  ],
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "growing",
+   "long"
+  ],
+  "lines": [
+   "samhsa",
+   "anad",
+   "mngambling",
+   "ncpg"
+  ],
+  "sources": []
+ }
+];
+  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
+/* Living Sober guides end, GWG BLD 789 */

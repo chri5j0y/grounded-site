@@ -17291,3 +17291,1286 @@ window.GG_LEARN_GUIDES.maple = {
 ]
 };
 })();
+/* Living Sober guides start, GWG BLD 789: For You and For the Grown-up videos for the five Maple Living Sober guides,
+   in their own ring (core makes the Learn track wlc-maple-sober low-key: listed only when Living Sober is chosen).
+   Generated from patches/bld789/M in grounded-workshop by gen.py. */
+(function () { var O = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES.maple; if (!O) return;
+  if (!O.rings.some(function (r) { return r[0] === 'sober'; })) O.rings.push(['sober', 'When Someone Drinks or Uses']);
+  var V = [
+ {
+  "id": "sober-grown-up-drinks",
+  "ring": "sober",
+  "title": "When a Grown-up Drinks Too Much",
+  "you": {
+   "id": "mp-g-sober-grown-up-drinks-you",
+   "guide": "sober-grown-up-drinks",
+   "side": "you",
+   "title": "When a Grown-up Drinks Too Much",
+   "sideName": "For You",
+   "mins": 2,
+   "sources": [
+    "mccabe25",
+    [
+     "National Association for Children of Addiction (NACoA)",
+     "https://nacoa.org/"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When a Grown-up Drinks Too Much",
+     "sub": "For You",
+     "say": "If a grown-up in your family drinks too much, this is for you. Maybe it's a mom or dad, a grandparent, or a big brother or sister. We're glad you're here."
+    },
+    {
+     "k": "card",
+     "title": "Drinking can change how a grown-up acts.",
+     "body": "Louder, sleepy, grumpy, or far away.",
+     "say": "When grown-ups drink too much alcohol, it changes how they act. They might be louder, or sleepy, or grumpy. They might forget things they promised. That can feel confusing and scary. Lots of kids live with this, and you can talk about it."
+    },
+    {
+     "k": "words",
+     "h": "You might feel",
+     "items": [
+      "Scared",
+      "Mad",
+      "Sad",
+      "Embarrassed",
+      "Mixed up"
+     ],
+     "say": "You might feel scared, mad, sad, embarrassed, or mixed up. You might feel lots of things at once. Every feeling makes sense."
+    },
+    {
+     "k": "big",
+     "h": "It is never your fault.",
+     "sub": "Grown-ups can heal, with help.",
+     "say": "Here is something true. It is never your fault. Nothing you do or say makes a grown-up drink. Sometimes grown-ups drink to cover up hurting feelings inside. Grown-ups can heal, and grown-ups can get help."
+    },
+    {
+     "k": "points",
+     "h": "You can talk about it",
+     "items": [
+      [
+       "A safe grown-up",
+       "At home or at school"
+      ],
+      [
+       "Your feelings",
+       "Out loud, any time"
+      ],
+      [
+       "Your questions",
+       "As many as you have"
+      ]
+     ],
+     "say": "It is safe to talk about drinking. You can tell a safe grown-up how you feel, at home or at school. You can say your feelings out loud. And you can ask as many questions as you have.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Squeeze and let go.",
+     "sub": "Your body can help you feel calm.",
+     "say": "Let's help your body feel calm. Make two tight fists, and squeeze. Now let them go, soft and floppy. Breathe out slowly, and think of one safe grown-up you can tell.",
+     "beats": [
+      "Let's help your body feel calm.",
+      "Make two tight fists, and squeeze.",
+      "Now let them go, soft and floppy.",
+      {
+       "t": "Breathe out slowly, and think of one safe grown-up you can tell.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "big",
+     "h": "You are loved.",
+     "sub": "Grown-ups are here to help.",
+     "say": "Grown-ups take care of the grown-up problems. Your job is to be a kid: to play, to learn, and to rest. You are loved, and grown-ups are here to help."
+    }
+   ],
+   "crisis": [
+    "911: danger right now"
+   ]
+  },
+  "helper": {
+   "id": "mp-g-sober-grown-up-drinks-helper",
+   "guide": "sober-grown-up-drinks",
+   "side": "helper",
+   "title": "When a Grown-up Drinks Too Much",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "sources": [
+    "mccabe25",
+    "sevencs",
+    [
+     "SAMHSA National Helpline",
+     "https://www.samhsa.gov/find-help/national-helpline"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When a Grown-up Drinks Too Much",
+     "sub": "For the Grown-up",
+     "say": "When a grown-up in your child's life drinks too much, this is for you, the grown-up beside them. Maybe it's your partner, your child's other parent, a grandparent, or you. Thank you for being here. Your steady voice helps more than you know."
+    },
+    {
+     "k": "big",
+     "h": "Silence feels heavier than the truth.",
+     "sub": "It is safe to talk about drinking.",
+     "say": "Children notice far more than we think. When no one talks about it, a child fills the quiet with worry, and often with blame. It is safe and normal to talk about drinking at every age. Honest words at their level lift a weight."
+    },
+    {
+     "k": "points",
+     "h": "What this looks like by age",
+     "items": [
+      [
+       "K to 2nd grade",
+       "Notices changes, feels scared"
+      ],
+      [
+       "Grades 3 to 5",
+       "Embarrassed, angry, watchful"
+      ],
+      [
+       "Every age",
+       "May quietly feel at fault"
+      ]
+     ],
+     "say": "Here's what this can look like. Young children notice changes in voice, smell, sleep, and mood, even when no one names them. Older children may feel embarrassed, angry, or watchful, and some start looking after everyone. At every age, kids may quietly believe it is their fault.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "words",
+     "h": "Plain, kind words",
+     "items": [
+      "\"Dad drinks too much.\"",
+      "\"It changes how he acts.\"",
+      "\"It is never your fault.\""
+     ],
+     "say": "Try plain, kind words. Dad drinks too much, and it changes how he acts. Then add the words that lift the weight. It is never your fault. You can always talk to me. Say only what is true for your family."
+    },
+    {
+     "k": "card",
+     "title": "Why does she drink?",
+     "body": "Hurting feelings, then a body that keeps wanting it.",
+     "say": "Kids often ask why. You might say, sometimes grown-ups drink to cover up hurting feelings inside. After a while, the body and brain keep wanting it, and stopping gets really hard. Grown-ups can heal, with help. That answer is true, and it leaves room for hope."
+    },
+    {
+     "k": "points",
+     "h": "A simple safety plan",
+     "items": [
+      [
+       "A safe grown-up",
+       "Someone they can always call"
+      ],
+      [
+       "A number by heart",
+       "Practiced like a song"
+      ],
+      [
+       "A ride rule",
+       "Only with a sober driver"
+      ],
+      [
+       "A safe place",
+       "A neighbor or a relative"
+      ]
+     ],
+     "say": "Make a simple safety plan together. Name a safe grown-up they can always call. Practice that phone number until they know it like a song. Make a ride rule: they ride only with a sober driver, and they can always call you instead. And name a safe place to go if home ever feels scary.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "words",
+     "h": "Too heavy for a child",
+     "items": [
+      "Keeping the secret",
+      "Watching a grown-up",
+      "Keeping the peace"
+     ],
+     "say": "A few jobs are too heavy for a child. Keeping the secret. Watching a grown-up, or pouring out drinks. Keeping the peace at home. Grown-ups carry those. A child's job is to play, to learn, and to rest."
+    },
+    {
+     "k": "big",
+     "h": "Say the words out loud.",
+     "sub": "Practice once, right now.",
+     "say": "Let's practice. Picture your child beside you. Now say, out loud, in your kindest voice: it is never your fault, and you can always talk to me.",
+     "beats": [
+      "Let's practice.",
+      "Picture your child beside you.",
+      {
+       "t": "Now say, out loud, in your kindest voice: it is never your fault, and you can always talk to me.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Help for the whole family",
+     "body": "SAMHSA National Helpline: 1-800-662-4357. Danger right now: 911.",
+     "say": "You can share this load. The SAMHSA National Helpline can point your family toward treatment and support, any time, at 1 800 662 4357. Al-Anon and Alateen have groups for families, and NACoA has help made for kids. If anyone is in danger, call 911."
+    },
+    {
+     "k": "big",
+     "h": "Honest words. A simple plan. Steady love.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Take care of yourself too, with rest, real food, time outside, and people who lift you. Honest words, a simple plan, and steady love go a long way. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "SAMHSA Helpline: 1-800-662-4357, any time",
+    "911: danger right now"
+   ]
+  }
+ },
+ {
+  "id": "sober-never-your-fault",
+  "ring": "sober",
+  "title": "It's Never Your Fault",
+  "you": {
+   "id": "mp-g-sober-never-your-fault-you",
+   "guide": "sober-never-your-fault",
+   "side": "you",
+   "title": "It's Never Your Fault",
+   "sideName": "For You",
+   "mins": 2,
+   "sources": [
+    "sevencs"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "It's Never Your Fault",
+     "sub": "For You",
+     "say": "If someone you love drinks too much or uses drugs, this is for you. Maybe you've wondered if it's your fault. We have something true to tell you."
+    },
+    {
+     "k": "big",
+     "h": "It is never your fault.",
+     "sub": "Every single time.",
+     "say": "Here it is. It is never your fault. Nothing you do, say, or think makes a grown-up drink or use drugs. A messy room, a noisy day, or a grumpy word never causes it."
+    },
+    {
+     "k": "words",
+     "h": "You might think",
+     "items": [
+      "\"I made them mad.\"",
+      "\"If I'm really good, it will stop.\"",
+      "\"I should fix it.\""
+     ],
+     "say": "Lots of kids think, I made them mad. Or, if I'm really good, it will stop. Or, I should fix it. Those thoughts are common, and here is the truth. Grown-up drinking is a grown-up problem, and grown-ups can get help."
+    },
+    {
+     "k": "points",
+     "h": "Three Cs to remember",
+     "items": [
+      [
+       "I didn't cause it",
+       "Never because of me"
+      ],
+      [
+       "I can't cure it",
+       "Grown-ups and helpers do that"
+      ],
+      [
+       "I can't control it",
+       "It belongs to the grown-up"
+      ]
+     ],
+     "say": "Here are three words that start with C. I didn't cause it. I can't cure it. I can't control it.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "And four Cs I can do",
+     "items": [
+      [
+       "Care for myself",
+       "Rest, play, and fun"
+      ],
+      [
+       "Communicate",
+       "Say how I feel"
+      ],
+      [
+       "Make healthy choices",
+       "Water, food, outside play"
+      ],
+      [
+       "Celebrate me",
+       "Just as I am"
+      ]
+     ],
+     "say": "And here are four Cs you can do. I can care for myself. I can communicate my feelings, by saying them out loud to a safe grown-up. I can make healthy choices, like water, good food, and playing outside. And I can celebrate me, just as I am.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "One finger for each C.",
+     "sub": "Then wiggle them all.",
+     "say": "Let's say them together. Hold up one finger for each one. I didn't cause it. I can't cure it. I can't control it. Now wiggle all your fingers, and say: I can take care of me.",
+     "beats": [
+      "Let's say them together.",
+      "Hold up one finger for each one.",
+      "I didn't cause it.",
+      "I can't cure it.",
+      "I can't control it.",
+      {
+       "t": "Now wiggle all your fingers, and say: I can take care of me.",
+       "w": 8
+      }
+     ]
+    },
+    {
+     "k": "big",
+     "h": "You are loved, just as you are.",
+     "sub": "And it is never your fault.",
+     "say": "You are a kid, and you are loved, just as you are. Tell a safe grown-up how you feel, any time. And remember: it is never, ever your fault."
+    }
+   ]
+  },
+  "helper": {
+   "id": "mp-g-sober-never-your-fault-helper",
+   "guide": "sober-never-your-fault",
+   "side": "helper",
+   "title": "It's Never Your Fault",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "sources": [
+    "sevencs",
+    [
+     "HealthyChildren.org (American Academy of Pediatrics)",
+     "https://www.healthychildren.org"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "It's Never Your Fault",
+     "sub": "For the Grown-up",
+     "say": "When a child you love lives with someone who drinks or uses drugs, this is for you. One of the kindest gifts you can give them is a simple, true message, said again and again."
+    },
+    {
+     "k": "big",
+     "h": "Kids often blame themselves.",
+     "sub": "Quietly, and for a long time.",
+     "say": "Children who love someone who drinks or uses often decide it is somehow their fault. Young children think the world turns around them. Older children try to fix it. Many carry that blame quietly, for years."
+    },
+    {
+     "k": "points",
+     "h": "What self-blame looks like",
+     "items": [
+      [
+       "Being extra good",
+       "Hoping to make it stop"
+      ],
+      [
+       "Fixing it",
+       "Hiding drinks, hushing siblings"
+      ],
+      [
+       "Upset by small mistakes",
+       "As if it all depends on them"
+      ]
+     ],
+     "say": "Here's what self-blame can look like. A child being extra good, hoping to make it stop. A child trying to fix it, by hiding drinks or keeping brothers and sisters quiet. And a child very upset by small mistakes, as if everything depends on them.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "The Seven Cs",
+     "body": "Three to set down. Four to grow.",
+     "say": "A tool many families love is called the Seven Cs. Three let a child set the weight down. I didn't cause it. I can't cure it. I can't control it. Four help them grow. I can care for myself, communicate my feelings, make healthy choices, and celebrate myself."
+    },
+    {
+     "k": "words",
+     "h": "Words that help",
+     "items": [
+      "\"It is never your fault.\"",
+      "\"Grown-ups get help for grown-up problems.\"",
+      "\"Your job is to be a kid.\""
+     ],
+     "say": "Words that help. It is never your fault. Grown-ups get help for grown-up problems. Your job is to be a kid. Say them often, especially after a hard night."
+    },
+    {
+     "k": "points",
+     "h": "Help the words stick",
+     "items": [
+      [
+       "A Seven Cs card",
+       "On the fridge or by the bed"
+      ],
+      [
+       "Bedtime words",
+       "Said together"
+      ],
+      [
+       "Healthy choices",
+       "Water, food, outside, rest"
+      ]
+     ],
+     "say": "Help the words stick. Make a Seven Cs card together, and keep it on the fridge or by the bed. Say the words together at bedtime. And make healthy choices side by side, like water, a good meal, time outside, and an early night.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If you are the one who drinks or uses",
+     "body": "You can still say these words.",
+     "say": "If you are the grown-up who drinks or uses, you can still say these words, and hearing them from you can mean the most. You might say, my drinking is never your fault. I'm working on it, and I love you."
+    },
+    {
+     "k": "big",
+     "h": "Say it the way you will tonight.",
+     "sub": "Slow and warm.",
+     "say": "Let's practice. Picture your child at bedtime. Now say, out loud and slowly: nothing you do makes a grown-up drink, and I love you just as you are.",
+     "beats": [
+      "Let's practice.",
+      "Picture your child at bedtime.",
+      {
+       "t": "Now say, out loud and slowly: nothing you do makes a grown-up drink, and I love you just as you are.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "When to reach out",
+     "body": "Lasting guilt, worry, or sadness: their doctor or school counselor.",
+     "say": "If guilt, worry, or sadness lasts more than a couple of weeks, talk with their doctor or school counselor. NACoA has resources made for kids, and Alateen can help as they grow. If anyone is in danger right now, call 911."
+    },
+    {
+     "k": "big",
+     "h": "Never their fault. Always loved.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Simple, true words, said again and again, can lift a weight from a child that was never theirs to carry. Never their fault, and always loved. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-getting-better",
+  "ring": "sober",
+  "title": "When Mom or Dad Is Getting Better",
+  "you": {
+   "id": "mp-g-sober-getting-better-you",
+   "guide": "sober-getting-better",
+   "side": "you",
+   "title": "When Mom or Dad Is Getting Better",
+   "sideName": "For You",
+   "mins": 2,
+   "sources": [
+    [
+     "National Association for Children of Addiction (NACoA)",
+     "https://nacoa.org/"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When Mom or Dad Is Getting Better",
+     "sub": "For You",
+     "say": "If your mom or dad is getting better from drinking or using drugs, this is for you. Maybe they went somewhere to get help, or they go to meetings or see a doctor. We're so glad you're here."
+    },
+    {
+     "k": "card",
+     "title": "Getting better is called healing.",
+     "body": "One day at a time, with lots of help.",
+     "say": "Getting better from drinking or drugs is called healing, or getting sober. Your mom or dad is learning new ways to handle hard feelings. They have doctors and helpers on their team. Healing happens one day at a time."
+    },
+    {
+     "k": "words",
+     "h": "You might feel",
+     "items": [
+      "Happy",
+      "Hopeful",
+      "Shy",
+      "Worried",
+      "Still mad"
+     ],
+     "say": "You might feel happy and hopeful. You might feel a little shy, or worried. You might still feel mad about things that happened. Mad and glad can live together. Every feeling makes sense."
+    },
+    {
+     "k": "points",
+     "h": "Things that help",
+     "items": [
+      [
+       "Your feelings",
+       "Said out loud"
+      ],
+      [
+       "Small promises",
+       "Kept, one by one"
+      ],
+      [
+       "Fun together",
+       "A walk, a game, a story"
+      ]
+     ],
+     "say": "Here are things that help. Say your feelings out loud to a grown-up you trust. Notice small promises, kept one by one. And find fun together, like a walk, a game, or a story.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Picture a happy day.",
+     "sub": "Then draw it later.",
+     "say": "Close your eyes for a moment. Picture a happy day with your mom or dad. Where are you? What are you doing together?",
+     "beats": [
+      "Close your eyes for a moment.",
+      "Picture a happy day with your mom or dad.",
+      "Where are you?",
+      {
+       "t": "What are you doing together?",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "If they slip",
+     "body": "Grown-ups handle it. You are safe and loved.",
+     "say": "Sometimes a grown-up who is getting better drinks or uses again. That's called a slip. If it happens, it is never your fault. Grown-ups will handle it, and you are safe and loved. Tell a safe grown-up how you feel."
+    },
+    {
+     "k": "big",
+     "h": "Healing takes time.",
+     "sub": "And you are loved the whole way.",
+     "say": "Draw your happy day later, and show it to your grown-up. Healing takes time, for grown-ups and for families. Every good day counts. And you are loved the whole way."
+    }
+   ]
+  },
+  "helper": {
+   "id": "mp-g-sober-getting-better-helper",
+   "guide": "sober-getting-better",
+   "side": "helper",
+   "title": "When Mom or Dad Is Getting Better",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "sources": [
+    "samhsarec",
+    [
+     "SAMHSA National Helpline",
+     "https://www.samhsa.gov/find-help/national-helpline"
+    ],
+    [
+     "Al-Anon Family Groups and Alateen",
+     "https://al-anon.org/"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When Mom or Dad Is Getting Better",
+     "sub": "For the Grown-up",
+     "say": "When your child's mom or dad is getting better from drinking or drug use, this is for you. Maybe that parent is you. Thank you for being here. Healing is real, and families heal too."
+    },
+    {
+     "k": "big",
+     "h": "Healing is real.",
+     "sub": "For the parent, and for the family.",
+     "say": "Healing is real. Drinking and using are often how people numbed painful feelings and old hurts. Healing those roots, and growing a healthy life in body, mind, spirit, and relationships, is the path. Families heal too, at their own pace."
+    },
+    {
+     "k": "points",
+     "h": "What kids may feel",
+     "items": [
+      [
+       "K to 2nd grade",
+       "Clingy, excited, or shy"
+      ],
+      [
+       "Grades 3 to 5",
+       "Hopeful and guarded"
+      ],
+      [
+       "Every age",
+       "Watching for signs"
+      ]
+     ],
+     "say": "Here's what this can look like. Young children may be clingy, excited, or shy, especially after time apart. Older children may feel hopeful and guarded at the same time. At every age, kids may watch closely, worried each time a parent is late or tired.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "words",
+     "h": "Simple, true words",
+     "items": [
+      "\"Mom is getting better.\"",
+      "\"She has helpers on her team.\"",
+      "\"You can tell us anything.\""
+     ],
+     "say": "Use simple, true words. Mom is getting better. She's learning new ways to handle hard feelings, and she has helpers on her team. You can tell us anything, even mad feelings."
+    },
+    {
+     "k": "points",
+     "h": "Trust grows back",
+     "items": [
+      [
+       "Small promises",
+       "Then keep them"
+      ],
+      [
+       "Steady routines",
+       "Meals, bedtime, walks"
+      ],
+      [
+       "Their pace",
+       "For closeness"
+      ]
+     ],
+     "say": "Trust grows back slowly, through small things. Make small promises, and keep them. Build steady routines, like dinner together, bedtime stories, and a walk after school. And let your child set the pace for closeness.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris",
+     "title": "18 Years",
+     "lines": [
+      "Chris got sober when his children were a baby and an infant.",
+      "His first sober Fourth of July, he saw the fireworks again.",
+      "His children never had to see him drunk."
+     ],
+     "lesson": "Every sober day is a gift to a child.",
+     "note": "Names and details changed",
+     "hold": 2,
+     "say": "Chris, one of Grounded's founders, has been sober for eighteen years. He got sober when his children were a baby and an infant. He remembers his first sober Fourth of July. He had always missed the fireworks, and that night he saw them for the first time since he was a little kid. One of his greatest joys is that his children never had to see him drunk."
+    },
+    {
+     "k": "points",
+     "h": "Celebrate the sober way",
+     "items": [
+      [
+       "A milestone walk",
+       "Or a picnic outside"
+      ],
+      [
+       "A favorite meal",
+       "With sparkling water or juice"
+      ],
+      [
+       "A card they make",
+       "For the fridge"
+      ]
+     ],
+     "say": "Celebrate the healing, the sober way. A milestone walk, or a picnic outside. A favorite meal, with sparkling water or juice. A card your child makes for the fridge. Joy shared is how a family remembers.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If a slip happens",
+     "body": "Honest words. A current plan. Steady routines.",
+     "say": "Sobriety is rarely a straight line. If a slip happens, talk about it honestly at your child's level, keep the safety plan current, and keep the routines going. Tell your child it is never their fault. Every return to the path counts."
+    },
+    {
+     "k": "big",
+     "h": "Plan one small promise.",
+     "sub": "Then keep it this week.",
+     "say": "Take a slow breath. Think of one small promise you can keep this week. Say it out loud now, the way you'll say it to your child.",
+     "beats": [
+      "Take a slow breath.",
+      "Think of one small promise you can keep this week.",
+      {
+       "t": "Say it out loud now, the way you'll say it to your child.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Help along the way",
+     "body": "Family programs, Al-Anon, Alateen. SAMHSA: 1-800-662-4357.",
+     "say": "Ask the treatment program about family sessions and children's groups. Al-Anon and Alateen offer groups for family members. The SAMHSA National Helpline can point you to support any time, at 1 800 662 4357."
+    },
+    {
+     "k": "big",
+     "h": "One day at a time, together.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Take care of yourself too, with rest, good food, time outside, and people who lift you. Healing happens one day at a time, together. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-staying-safe",
+  "ring": "sober",
+  "title": "Staying Safe When a Grown-up Is Using",
+  "you": {
+   "id": "mp-g-sober-staying-safe-you",
+   "guide": "sober-staying-safe",
+   "side": "you",
+   "title": "Staying Safe When a Grown-up Is Using",
+   "sideName": "For You",
+   "mins": 3,
+   "sources": [
+    [
+     "HealthyChildren.org (American Academy of Pediatrics)",
+     "https://www.healthychildren.org"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "Staying Safe When a Grown-up Is Using",
+     "sub": "For You",
+     "say": "If a grown-up you live with drinks too much or uses drugs, this is for you. Let's learn how to stay safe, the way we practice a fire drill."
+    },
+    {
+     "k": "big",
+     "h": "Keeping you safe is the grown-ups' job.",
+     "sub": "Your job is to know your plan.",
+     "say": "First, something true. Keeping kids safe is the grown-ups' job. Your job is to know your plan and ask for help. Asking for help is always right."
+    },
+    {
+     "k": "points",
+     "h": "My safety plan",
+     "items": [
+      [
+       "A safe grown-up",
+       "Someone I can call"
+      ],
+      [
+       "A number by heart",
+       "Like a song"
+      ],
+      [
+       "My address",
+       "To tell a helper"
+      ],
+      [
+       "A safe place",
+       "Where I can go"
+      ]
+     ],
+     "say": "Every family can have a safety plan. Mine has a safe grown-up I can call. A phone number I know by heart, like a song. My address, so I can tell a helper where I am. And a safe place I can go.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "If a grown-up won't wake up",
+     "body": "Call 911. That is always the right thing.",
+     "say": "If a grown-up won't wake up, or is breathing in a strange way, call 911 right away. Tell them your address. Then stay on the phone and do what they say. Calling 911 is always the right thing, and you will never be in trouble for it."
+    },
+    {
+     "k": "card",
+     "title": "Pills, powders, or needles?",
+     "body": "Leave them. Tell a grown-up.",
+     "say": "If you ever find pills, powders, or a needle, leave them right where they are. They can make kids very sick, even a tiny bit. Walk away, and tell a grown-up right away."
+    },
+    {
+     "k": "card",
+     "title": "Ride with a sober driver.",
+     "body": "Or call your safe grown-up.",
+     "say": "Ride only with a sober driver. If a grown-up has been drinking or using, call your safe grown-up instead. You can say, I feel unsafe, please come get me."
+    },
+    {
+     "k": "big",
+     "h": "Practice your number.",
+     "sub": "Say it like a song.",
+     "say": "Let's practice. Think of your safe grown-up's phone number. Now say it out loud, slowly, like a song.",
+     "beats": [
+      "Let's practice.",
+      "Think of your safe grown-up's phone number.",
+      {
+       "t": "Now say it out loud, slowly, like a song.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "big",
+     "h": "You are brave, and you are loved.",
+     "sub": "Grown-ups are here to help.",
+     "say": "If you're still learning your number, ask a grown-up to teach you today. Knowing your plan is brave. You are brave, and you are loved."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up, or danger now"
+   ]
+  },
+  "helper": {
+   "id": "mp-g-sober-staying-safe-helper",
+   "guide": "sober-staying-safe",
+   "side": "helper",
+   "title": "Staying Safe When a Grown-up Is Using",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "sources": [
+    "narcanotc",
+    [
+     "Poison Control",
+     "https://www.poison.org/"
+    ],
+    [
+     "SAMHSA National Helpline",
+     "https://www.samhsa.gov/find-help/national-helpline"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "Staying Safe When a Grown-up Is Using",
+     "sub": "For the Grown-up",
+     "say": "When a grown-up in a child's home drinks heavily or uses drugs, this is for you. A short, clear plan, practiced like a fire drill, helps a child feel calm and know what to do."
+    },
+    {
+     "k": "big",
+     "h": "Safety first, always.",
+     "sub": "Calm steps a child can remember.",
+     "say": "Safety comes first, always. Children do best with a few clear steps they can remember, practiced like a game. Knowing what to do calms a child, and it can save a life."
+    },
+    {
+     "k": "points",
+     "h": "The child's plan",
+     "items": [
+      [
+       "A safe grown-up",
+       "Name and number by heart"
+      ],
+      [
+       "Their address",
+       "Said out loud"
+      ],
+      [
+       "A safe place",
+       "A neighbor or relative"
+      ],
+      [
+       "A plan card",
+       "In the backpack"
+      ]
+     ],
+     "say": "Build the child's plan together. A safe grown-up, with a number they know by heart. Their address, practiced out loud. A safe place to go, like a neighbor or a relative. And a plan card with names and numbers, kept in their backpack.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "The 911 rule",
+     "body": "Won't wake up, or strange breathing: call 911.",
+     "say": "Teach the 911 rule. If a grown-up won't wake up, or is breathing in a strange way, call 911 right away. Tell your child, plainly, that calling for help is always right, and they will never be in trouble for it."
+    },
+    {
+     "k": "points",
+     "h": "Signs of an opioid overdose",
+     "items": [
+      [
+       "Won't wake up",
+       "Or can't speak"
+      ],
+      [
+       "Slow or no breathing",
+       "Or gurgling sounds"
+      ],
+      [
+       "Blue or gray lips",
+       "Or fingertips"
+      ]
+     ],
+     "say": "Grown-ups, know the signs of an opioid overdose. The person won't wake up, or can't speak. Their breathing is slow, stopped, or making gurgling sounds. Their lips or fingertips turn blue or gray. Call 911 right away.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "Naloxone saves lives.",
+     "body": "Sold without a prescription. Keep it where grown-ups can find it.",
+     "say": "Naloxone, often called Narcan, reverses an opioid overdose. It is sold without a prescription. If anyone at home uses opioids, keep it where grown-ups can find it fast. Give it, call 911, and stay with the person until help arrives."
+    },
+    {
+     "k": "points",
+     "h": "Make home safer",
+     "items": [
+      [
+       "Lock it up",
+       "Medicines, alcohol, substances"
+      ],
+      [
+       "Found pills or powders",
+       "Kids leave them and tell"
+      ],
+      [
+       "Swallowed something",
+       "Poison Control: 1-800-222-1222"
+      ]
+     ],
+     "say": "Make home safer. Lock up medicines, alcohol, and any substances. Teach kids to leave any pills, powders, or needles where they are, and tell a grown-up. If a child swallows something, call Poison Control at 1 800 222 1222, or 911 if they are very sleepy or struggling to breathe.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice it like a fire drill.",
+     "sub": "Out loud, the way you will teach it.",
+     "say": "Let's practice. Picture your child, and the safe place in your plan. Now say the 911 rule out loud, the way you'll teach it tonight.",
+     "beats": [
+      "Let's practice.",
+      "Picture your child, and the safe place in your plan.",
+      {
+       "t": "Now say the 911 rule out loud, the way you'll teach it tonight.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Too heavy for a child",
+     "body": "Watching a grown-up. Guarding siblings. Keeping secrets.",
+     "say": "Some jobs are too heavy for a child. Watching over a grown-up who is using. Guarding younger brothers and sisters during danger. Keeping secrets about safety. If a child is being hurt or left without care, call the Childhelp hotline at 1 800 422 4453, and follow mandated reporting law if it applies to you."
+    },
+    {
+     "k": "big",
+     "h": "A plan, practiced, brings calm.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "For treatment and support for the grown-up who uses, the SAMHSA National Helpline is open any time, at 1 800 662 4357. A simple plan, practiced with love, brings calm. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "911: someone won't wake up, or danger now",
+    "Poison Control: 1-800-222-1222",
+    "Childhelp: 1-800-422-4453, any time"
+   ]
+  }
+ },
+ {
+  "id": "sober-loved-one-dies",
+  "ring": "sober",
+  "title": "When Someone We Love Dies from Drinking or Drugs",
+  "you": {
+   "id": "mp-g-sober-loved-one-dies-you",
+   "guide": "sober-loved-one-dies",
+   "side": "you",
+   "title": "When Someone We Love Dies from Drinking or Drugs",
+   "sideName": "For You",
+   "mins": 2,
+   "sources": [
+    "dougy"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When Someone We Love Dies from Drinking or Drugs",
+     "sub": "For You",
+     "say": "If someone you love died from drinking or drugs, this is for you. We're so sorry. You have people with you."
+    },
+    {
+     "k": "big",
+     "h": "Died means their body stopped working.",
+     "sub": "It is never your fault.",
+     "say": "When someone dies, their body stops working. They can't breathe, eat, or feel pain anymore. Drinking or drugs can make a body stop working. It is never your fault. Nothing you thought, said, or did made it happen."
+    },
+    {
+     "k": "words",
+     "h": "All your feelings make sense",
+     "items": [
+      "Sad",
+      "Mad",
+      "Mixed up",
+      "Embarrassed",
+      "Quiet inside"
+     ],
+     "say": "You might feel sad, mad, or mixed up. You might feel embarrassed, or very quiet inside. You might cry, and then want to play. All of it makes sense."
+    },
+    {
+     "k": "card",
+     "title": "They were hurting inside.",
+     "body": "And they loved you.",
+     "say": "Sometimes people drink or use drugs because they're hurting inside, and stopping gets very hard. Your person was so much more than the drinking or the drugs. They loved you, and you can keep loving them."
+    },
+    {
+     "k": "points",
+     "h": "Ways to remember",
+     "items": [
+      [
+       "Say their name",
+       "And tell a story"
+      ],
+      [
+       "Look at pictures",
+       "Or a video"
+      ],
+      [
+       "Draw a memory",
+       "Something you did together"
+      ]
+     ],
+     "say": "There are lots of ways to remember. Say their name, and tell a story about them. Look at pictures, or a video. Draw a memory of something you did together.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Draw it in the air.",
+     "sub": "One happy memory.",
+     "say": "Take a slow breath. Think of one happy time with your person. Now use your finger to draw it in the air, slowly.",
+     "beats": [
+      "Take a slow breath.",
+      "Think of one happy time with your person.",
+      {
+       "t": "Now use your finger to draw it in the air, slowly.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "big",
+     "h": "Missing them is part of loving them.",
+     "sub": "Your grown-ups are here with you.",
+     "say": "Tell a grown-up who takes care of you how you feel: a parent, a grandparent, a teacher, or your school counselor. Missing them is part of loving them, and your grown-ups are here with you."
+    }
+   ]
+  },
+  "helper": {
+   "id": "mp-g-sober-loved-one-dies-helper",
+   "guide": "sober-loved-one-dies",
+   "side": "helper",
+   "title": "When Someone We Love Dies from Drinking or Drugs",
+   "sideName": "For the Grown-up",
+   "mins": 4,
+   "sources": [
+    "dougy",
+    [
+     "SAMHSA National Helpline",
+     "https://www.samhsa.gov/find-help/national-helpline"
+    ],
+    [
+     "988 Suicide and Crisis Lifeline",
+     "https://988lifeline.org"
+    ]
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "maple",
+     "eyebrow": "When Life Changes",
+     "h": "When Someone We Love Dies from Drinking or Drugs",
+     "sub": "For the Grown-up",
+     "say": "When a child you love is grieving someone who died from drinking or drugs, this is for you. You may be grieving too. Honest, gentle words are enough."
+    },
+    {
+     "k": "big",
+     "h": "This grief often comes with silence.",
+     "sub": "Your honest words open the door.",
+     "say": "A death from drinking or drugs often comes with shame and whispers. Children feel the silence, and fill it with worry or blame. Simple, honest words, and the person's name said out loud, open the door to healthy grief."
+    },
+    {
+     "k": "words",
+     "h": "Use the real words",
+     "items": [
+      "\"Uncle Joe died.\"",
+      "\"His body stopped working.\"",
+      "\"It was because of drugs.\""
+     ],
+     "say": "Use the real words. Uncle Joe died. His body stopped working because of drugs he took. He was hurting inside, and stopping was very hard for him. Leave out graphic details, and keep it true."
+    },
+    {
+     "k": "points",
+     "h": "Grief at this age",
+     "items": [
+      [
+       "K to 2nd grade",
+       "May ask when they'll come back"
+      ],
+      [
+       "Grades 3 to 5",
+       "Why, anger, embarrassment"
+      ],
+      [
+       "Every age",
+       "Worry about other grown-ups"
+      ]
+     ],
+     "say": "Grief looks different by age. Young children may not understand that death is forever, and may ask when the person is coming back. Older children may ask why, and feel angry or embarrassed. At every age, kids may worry about other grown-ups who drink or take medicine.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3
+      ]
+     }
+    },
+    {
+     "k": "points",
+     "h": "Questions they may ask",
+     "items": [
+      [
+       "\"Why couldn't he stop?\"",
+       "\"It was very hard for him.\""
+      ],
+      [
+       "\"Is it my fault?\"",
+       "\"Nothing you did made this happen.\""
+      ],
+      [
+       "\"Will that happen to you?\"",
+       "\"I plan to be here a long time.\""
+      ]
+     ],
+     "say": "Answer the same questions each time they come. Why couldn't he just stop? Stopping can be really, really hard, even for grown-ups who try their best. Is it my fault? No, nothing you did made this happen. Will that happen to you? I take good care of my body, and I plan to be here a long, long time.",
+     "cue": {
+      "at": [
+       1,
+       3,
+       5
+      ]
+     }
+    },
+    {
+     "k": "card",
+     "title": "The whole person",
+     "body": "So much more than how they died.",
+     "say": "Remember the whole person, so much more than how they died. Share stories, look at pictures, and say their name. A child who loved them needs to know it is good to keep loving them."
+    },
+    {
+     "k": "big",
+     "h": "Say their name.",
+     "sub": "Choose one memory to share.",
+     "say": "Take a slow breath. Say the person's name softly, out loud. Now choose one happy memory you'll share with your child this week.",
+     "beats": [
+      "Take a slow breath.",
+      "Say the person's name softly, out loud.",
+      {
+       "t": "Now choose one happy memory you'll share with your child this week.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Look after yourself too.",
+     "body": "Your grief matters. Lean on your people.",
+     "say": "You may be grieving too, and carrying anger or guilt of your own. That's normal. Lean on your people. A grief group, Al-Anon, or Nar-Anon can help family members. If anyone else in the family is struggling with drinking or drugs, the SAMHSA National Helpline is open any time, at 1 800 662 4357."
+    },
+    {
+     "k": "card",
+     "title": "When to reach out",
+     "body": "Lasting grief: their doctor or school counselor. Talk of wanting to die: 988.",
+     "say": "If grief stays intense for many months, or school and friendships fall apart, talk with their doctor or school counselor. Grief centers for children can help too. If your child ever talks about wanting to die, stay with them and call or text 988."
+    },
+    {
+     "k": "big",
+     "h": "Say their name. Keep talking.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Grief comes back on birthdays and holidays. Mark those days together. Say their name, and keep talking. The full guide has more, whenever you want it."
+    }
+   ],
+   "crisis": [
+    "988: call or text, any time",
+    "911: danger right now"
+   ]
+  }
+ }
+];
+  V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); }); })();
+/* Living Sober guides end, GWG BLD 789 */
