@@ -5,7 +5,7 @@
    first time Oak's Learn opens. So far: Inside Me and Loss and Grief (BLD 719), Health and the End of Life (BLD 720), Relationships and Family and Safety (BLD 721), Work and Money, Faith and Meaning, and Community, Country, and World (BLD 722): 67 guides, 134 videos, every ring.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
    the same as shared/learn-lessons.js. Generated from patches/bld722/source (bld719, bld720, and bld721 source for the earlier rings) in grounded-workshop:
-   edit the data there and rebuild. Proofreading lines are in the Founder library.
+   edit the data there and rebuild.
    ===================================================================== */
 (function(){
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
@@ -11026,7 +11026,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Coming Home From Military Service",
 "sideName": "For You",
 "mins": 4,
-"sources": [],
+"sources": ["litz"],
 "scenes": [
 {
 "k": "title",
@@ -15774,12 +15774,12 @@ window.GG_LEARN_GUIDES.oak = {
  {
   "id": "work-ability",
   "ring": "life",
-  "title": "Working With a Disability or Illness, or Stepping Away",
+  "title": "Working with a Disability or Illness, or Stepping Away",
   "you": {
    "id": "ok-g-work-ability-you",
    "guide": "work-ability",
    "side": "you",
-   "title": "Working With a Disability or Illness, or Stepping Away",
+   "title": "Working with a Disability or Illness, or Stepping Away",
    "sideName": "For You",
    "mins": 4,
    "sources": [],
@@ -15788,7 +15788,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Working With a Disability or Illness, or Stepping Away",
+     "h": "Working with a Disability or Illness, or Stepping Away",
      "sub": "For You",
      "say": "If you're working with a disability or a health condition, or wondering whether to cut back or step away, this is for you. Whatever you decide, you can decide it with good information and without shame."
     },
@@ -15899,7 +15899,7 @@ window.GG_LEARN_GUIDES.oak = {
    "id": "ok-g-work-ability-helper",
    "guide": "work-ability",
    "side": "helper",
-   "title": "Working With a Disability or Illness, or Stepping Away",
+   "title": "Working with a Disability or Illness, or Stepping Away",
    "sideName": "For the Helper",
    "mins": 3,
    "sources": [],
@@ -15908,7 +15908,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Working With a Disability or Illness, or Stepping Away",
+     "h": "Working with a Disability or Illness, or Stepping Away",
      "sub": "For the Helper",
      "say": "This is for the partner, family member, friend, coworker, or manager of someone working with a disability or illness, or stepping away from work. You can make a hard choice feel less lonely."
     },
@@ -16036,12 +16036,12 @@ window.GG_LEARN_GUIDES.oak = {
  {
   "id": "parenting-ability",
   "ring": "life",
-  "title": "Parenting With a Disability or Chronic Illness",
+  "title": "Parenting with a Disability or Chronic Illness",
   "you": {
    "id": "ok-g-parenting-ability-you",
    "guide": "parenting-ability",
    "side": "you",
-   "title": "Parenting With a Disability or Chronic Illness",
+   "title": "Parenting with a Disability or Chronic Illness",
    "sideName": "For You",
    "mins": 4,
    "sources": [],
@@ -16050,7 +16050,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Parenting With a Disability or Chronic Illness",
+     "h": "Parenting with a Disability or Chronic Illness",
      "sub": "For You",
      "say": "If you're raising children while living with a disability or a long-term illness, this is for you. Whatever your parenting looks like today, you belong here."
     },
@@ -16172,7 +16172,7 @@ window.GG_LEARN_GUIDES.oak = {
    "id": "ok-g-parenting-ability-helper",
    "guide": "parenting-ability",
    "side": "helper",
-   "title": "Parenting With a Disability or Chronic Illness",
+   "title": "Parenting with a Disability or Chronic Illness",
    "sideName": "For the Helper",
    "mins": 3,
    "sources": [],
@@ -16181,7 +16181,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Parenting With a Disability or Chronic Illness",
+     "h": "Parenting with a Disability or Chronic Illness",
      "sub": "For the Helper",
      "say": "This is for the partner, grandparent, friend, neighbor, or teacher beside a parent living with a disability or chronic illness. Your help can lighten a family's load, and keep the parent in their place as the parent."
     },
@@ -16281,12 +16281,12 @@ window.GG_LEARN_GUIDES.oak = {
  {
   "id": "child-ability",
   "ring": "life",
-  "title": "Raising a Child With a Disability or Serious Illness",
+  "title": "Raising a Child with a Disability or Serious Illness",
   "you": {
    "id": "ok-g-child-ability-you",
    "guide": "child-ability",
    "side": "you",
-   "title": "Raising a Child With a Disability or Serious Illness",
+   "title": "Raising a Child with a Disability or Serious Illness",
    "sideName": "For You",
    "mins": 3,
    "sources": [
@@ -16297,7 +16297,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Raising a Child With a Disability or Serious Illness",
+     "h": "Raising a Child with a Disability or Serious Illness",
      "sub": "For You",
      "say": "If you're raising a child with a disability or a serious illness, this is for you. Take a breath. For the next few minutes, nothing on your list needs you."
     },
@@ -16407,7 +16407,7 @@ window.GG_LEARN_GUIDES.oak = {
    "id": "ok-g-child-ability-helper",
    "guide": "child-ability",
    "side": "helper",
-   "title": "Raising a Child With a Disability or Serious Illness",
+   "title": "Raising a Child with a Disability or Serious Illness",
    "sideName": "For the Helper",
    "mins": 3,
    "sources": [],
@@ -16416,7 +16416,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Raising a Child With a Disability or Serious Illness",
+     "h": "Raising a Child with a Disability or Serious Illness",
      "sub": "For the Helper",
      "say": "This is for the grandparent, friend, neighbor, coworker, or community member beside a family raising a child with a disability or serious illness. Steady friendship can mean more than you know."
     },
@@ -17258,12 +17258,12 @@ window.GG_LEARN_GUIDES.oak = {
  {
   "id": "serious-mi",
   "ring": "life",
-  "title": "Living With a Serious Mental Illness",
+  "title": "Living with a Serious Mental Illness",
   "you": {
    "id": "ok-g-serious-mi-you",
    "guide": "serious-mi",
    "side": "you",
-   "title": "Living With a Serious Mental Illness",
+   "title": "Living with a Serious Mental Illness",
    "sideName": "For You",
    "mins": 3,
    "sources": [
@@ -17274,7 +17274,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Living With a Serious Mental Illness",
+     "h": "Living with a Serious Mental Illness",
      "sub": "For You",
      "say": "If you're living with a serious mental illness, like bipolar disorder, schizophrenia, major depression, or another long-term condition, this is for you. You're a whole person, and this is about living well."
     },
@@ -17373,7 +17373,7 @@ window.GG_LEARN_GUIDES.oak = {
    "id": "ok-g-serious-mi-helper",
    "guide": "serious-mi",
    "side": "helper",
-   "title": "Living With a Serious Mental Illness",
+   "title": "Living with a Serious Mental Illness",
    "sideName": "For the Helper",
    "mins": 3,
    "sources": [
@@ -17384,7 +17384,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "title",
      "hero": "oak",
      "eyebrow": "When Life Changes",
-     "h": "Living With a Serious Mental Illness",
+     "h": "Living with a Serious Mental Illness",
      "sub": "For the Helper",
      "say": "This is for the partner, parent, grown child, sibling, or friend of someone living with a serious mental illness. Your steady presence matters, through good stretches and hard ones."
     },

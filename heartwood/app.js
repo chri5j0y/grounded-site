@@ -159,7 +159,7 @@
   function needRoot() {
     if (window.GGRoot) return Promise.resolve(window.GGRoot);
     if (!rootP) rootP = new Promise(function (ok, no) {
-      var s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b782';
+      var s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b788';
       s.onload = function () { if (window.GGRoot) ok(window.GGRoot); else { rootP = null; no(new Error('load')); } };
       s.onerror = function () { rootP = null; s.remove(); no(new Error('load')); };
       document.head.appendChild(s);
@@ -572,7 +572,7 @@
     return '<div class="ff-row gm-send"><a class="btn btn-primary" id="gm-send-mail" href="' + esc(mail) + '">Email to Chris and Kayti</a>' +
       '<a class="btn btn-secondary ff-sm" id="gm-send-text" href="' + esc(text) + '">Text to Chris and Kayti</a></div>' +
       '<p class="btv-small">Each opens your own mail or messages app with the link inside. Tell Chris and Kayti your shared word in person, apart from the message.</p>' +
-      '<details class="btv-more gm-mailcopy"><summary>Email did not open? Copy the message</summary>' +
+      '<details class="btv-more gm-mailcopy"><summary>Copy the message to send it yourself</summary>' +
       '<p class="btv-small">Send it to <b>' + esc(GG_MAIL) + '</b> from any email you use.</p>' +
       '<textarea readonly rows="7" aria-label="The message to copy">' + esc('To: ' + GG_MAIL + '\nSubject: ' + sub + '\n\n' + body) + '</textarea>' +
       '<div class="ff-row"><button type="button" class="btn btn-secondary ff-sm" data-act="copy-mail">Copy the Message</button></div><p class="btv-small gm-cpst" aria-live="polite"></p></details>';
@@ -667,7 +667,7 @@
       '<div class="btv-lessons">' + WB.chapters.map(function (ch, i) {
         var n = ch.exercises.filter(function (ex) { return hasWords(DATA[w].wb[ex.id]); }).length;
         return '<button type="button" class="btv-lesson" data-act="wb-ch" data-i="' + i + '"><span class="btv-ln">' + esc(String(ch.n || i + 1)) + '</span><span><b>' + esc(ch.title) + '</b><small>' + (ch.session ? 'Session ' + esc(String(ch.session)) + ' &middot; ' : '') + n + ' of ' + ch.exercises.length + ' started</small></span></button>';
-      }).join('') + '</div><div class="ff-row">' + btn('wb-print', 'Print the Workbook', { w: w, cls: 'btn-secondary ff-sm' }) + btn('wb-print-mine', 'Print With My Answers', { w: w, cls: 'btn-secondary ff-sm' }) + btn('wb-away', 'Lock and Step Away', sec()) + '</div></div>';
+      }).join('') + '</div><div class="ff-row">' + btn('wb-print', 'Print the Workbook', { w: w, cls: 'btn-secondary ff-sm' }) + btn('wb-print-mine', 'Print with My Answers', { w: w, cls: 'btn-secondary ff-sm' }) + btn('wb-away', 'Lock and Step Away', sec()) + '</div></div>';
   }
   function exHtml(ex, e) {
     var id = esc(ex.id), body = '';
@@ -722,7 +722,7 @@
   }
 
   // The workbook on paper (Letter size, one chapter a page or more). Blank lines unless the partner who is
-  // unlocked chooses Print With My Answers; nobody's writing is printed otherwise.
+  // unlocked chooses Print with My Answers; nobody's writing is printed otherwise.
   function lines(n) { var h = '<div class="p-lines">'; for (var i = 0; i < n; i++) h += '<i></i>'; return h + '</div>'; }
   function reflectFor(r, w) {
     if (!r) return '';
@@ -1321,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b787', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b788', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

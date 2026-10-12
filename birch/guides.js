@@ -62,7 +62,7 @@ const LC_TOPICS = [
  {
   "id": "first-year",
   "ring": "br-school",
-  "title": "College: the first year",
+  "title": "College: The First Year",
   "keys": "college first year freshman first semester new student community college university commuter student living on campus dorm roommate homesick lonely at college no friends at college hard classes failing a class first exam financial aid working while in school first generation college student going back to school older student transfer student orientation counseling center ra parents calling too much grades dropping should i drop out overwhelmed at college",
   "parts": [
    "branches",
@@ -161,7 +161,7 @@ const LC_TOPICS = [
  {
   "id": "not-college",
   "ring": "br-school",
-  "title": "Not college, or not yet: work, trades, and apprenticeships",
+  "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
   "keys": "not going to college didn't go to college no degree skip college college isn't for me not yet gap year trade school trades apprenticeship electrician plumber welder carpenter hvac lineworker cosmetology cdl truck driving certificate program technical college community college later working full time first real job earn while you learn union apprenticeship military service americorps family expects college everyone else went to college feel behind no plan figuring it out",
   "parts": [
    "trunk",
@@ -257,7 +257,7 @@ const LC_TOPICS = [
  {
   "id": "changing-plans",
   "ring": "br-school",
-  "title": "Changing plans: stopping out, switching majors, starting over",
+  "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
   "keys": "changing my major switch majors wrong major dropping out drop out stopping out taking a break from college leave of absence withdraw from classes medical leave failing out academic probation transfer schools changing programs quit my apprenticeship quit training start over starting over wasted time wasted money disappointed my parents going back to school returning student plans fell apart don't know what to do now",
   "parts": [
    "trunk",
@@ -349,7 +349,7 @@ const LC_TOPICS = [
  {
   "id": "pressure-burnout",
   "ring": "br-school",
-  "title": "Pressure, grades, and burnout",
+  "title": "Pressure, Grades, and Burnout",
   "keys": "pressure stress grades gpa perfectionism perfectionist burnout burned out burnt out exhausted tired all the time can't keep up overwhelmed too much on my plate working and going to school two jobs all nighter no sleep failing a class not good enough never enough imposter syndrome don't care anymore numb about school dread work procrastination afraid to fail comparing myself scholarship pressure family expectations",
   "parts": [
    "bark",
@@ -444,7 +444,7 @@ const LC_TOPICS = [
  {
   "id": "adhd",
   "ring": "br-school",
-  "title": "ADHD and learning differences on your own",
+  "title": "ADHD and Learning Differences on Your Own",
   "keys": "adhd add attention focus can't focus distracted forgetful lose things late to everything time blindness procrastination executive function learning disability learning difference dyslexia dyscalculia slow reader iep ended 504 plan ended accommodations in college disability services disability resource center extra time testing accommodations at work job accommodations tell my boss diagnosed as an adult late diagnosis do i have adhd evaluation medication meds refill prescription driving with adhd my brain works differently",
   "parts": [
    "trunk",
@@ -542,7 +542,7 @@ const LC_TOPICS = [
  {
   "id": "what-now",
   "ring": "br-school",
-  "title": "After graduation: the “what now?” season",
+  "title": "After Graduation: The “What Now?” Season",
   "keys": "after graduation just graduated college graduate finished my degree finished training what now what's next no job yet can't find a job job search post grad depression post graduation blues lost after college moved back home living with my parents again friends moved away miss college no structure no routine feel behind everyone else has a job wrong degree grad school or work student loan grace period losing student health insurance quarter life crisis don't know what i want",
   "parts": [
    "trunk",
@@ -639,7 +639,7 @@ const LC_TOPICS = [
  {
   "id": "first-job",
   "ring": "br-work",
-  "title": "A first full-time job",
+  "title": "A First Full-Time Job",
   "keys": "first job first full time job new job started a job just hired first real job onboarding training new boss manager coworkers benefits health insurance 401k retirement match pay stub paycheck taxes w-4 direct deposit sick time pto vacation schedule shift work night shift overtime hate my job imposter syndrome don't know what i'm doing exhausted after work no time no friends at work harassment at work boss yells unsafe job hurt at work quit too soon how long should i stay my kid started a job",
   "parts": [
    "trunk",
@@ -737,7 +737,7 @@ const LC_TOPICS = [
  {
   "id": "job-loss",
   "ring": "br-work",
-  "title": "Losing a job, or not finding one",
+  "title": "Losing a Job, or Not Finding One",
   "keys": "lost my job fired let go laid off layoff hours cut quit job loss unemployed unemployment benefits can't find a job no one is hiring applied everywhere no callbacks rejected ghosted after interview job search no experience entry level needs experience graduated and no job living at home again behind my friends embarrassed out of work health insurance lost coverage resume interview networking temp work gig work my son lost his job my daughter can't find work",
   "parts": [
    "trunk",
@@ -837,7 +837,7 @@ const LC_TOPICS = [
  {
   "id": "career-change",
   "ring": "br-work",
-  "title": "Changing careers early",
+  "title": "Changing Careers Early",
   "keys": "career change change careers wrong career wrong major hate my job not what i thought switch fields start over new direction quit to go back to school trade school career switch is it too late wasted my degree wasted time what should i do with my life burned out already second career try something new job hopping parents disappointed calling vocation bootcamp certificate apprenticeship",
   "parts": [
    "trunk",
@@ -931,7 +931,7 @@ const LC_TOPICS = [
  {
   "id": "money-basics",
   "ring": "br-work",
-  "title": "Money basics: paychecks, budgets, and credit",
+  "title": "Money Basics: Paychecks, Budgets, and Credit",
   "keys": "money budget budgeting paycheck pay stub taxes withholding w-4 why is my check so small bank account checking savings overdraft fees credit card credit score credit report build credit first credit card interest apr minimum payment buy now pay later afterpay klarna emergency fund saving rent bills splitting bills venmo cash app broke living paycheck to paycheck money stress can't afford spending too much scam fake check identity theft my kid is bad with money",
   "parts": [
    "trunk",
@@ -1028,7 +1028,7 @@ const LC_TOPICS = [
  {
   "id": "debt",
   "ring": "br-work",
-  "title": "Student loans and other debt",
+  "title": "Student Loans and Other Debt",
   "keys": "debt student loans student loan payments can't pay my loans loan servicer repayment plan income driven repayment deferment forbearance default grace period private loans credit card debt maxed out minimum payment interest collections debt collector calling me payday loan car loan medical bills buy now pay later behind on bills owe money drowning in debt ashamed of debt loan forgiveness scam debt relief company my kid has debt cosigner",
   "parts": [
    "bark",
@@ -1125,7 +1125,7 @@ const LC_TOPICS = [
  {
   "id": "gambling",
   "ring": "br-work",
-  "title": "Gambling and sports betting",
+  "title": "Gambling and Sports Betting",
   "keys": "gambling sports betting betting apps sportsbook parlay same game parlay odds prop bets live betting fantasy sports daily fantasy online casino slots poker crypto trading lottery scratch tickets chasing losses lost my paycheck lost rent money owe money borrowed to bet credit card cash advance can't stop betting hiding betting self exclusion delete the app deposit limit my boyfriend bets my girlfriend bets my partner gambles my son is betting my friend is betting gambling debt gamblers anonymous",
   "parts": [
    "leaves",
@@ -1225,7 +1225,7 @@ const LC_TOPICS = [
  {
   "id": "moving-out",
   "ring": "br-home",
-  "title": "Moving out for the first time",
+  "title": "Moving Out for the First Time",
   "keys": "moving out first apartment leaving home first place on my own living alone dorm leaving my parents house independence homesick miss home lonely after moving out can't afford it cooking for myself first time paying rent adulting scared to move out excited to move out parents upset I moved out moving out of a hard home moving in with a partner moving in with friends",
   "parts": [
    "roots",
@@ -1413,7 +1413,7 @@ const LC_TOPICS = [
  {
   "id": "first-apartment",
   "ring": "br-home",
-  "title": "A first apartment: leases, bills, and repairs",
+  "title": "A First Apartment: Leases, Bills, and Repairs",
   "keys": "first apartment lease signing a lease rental application security deposit deposit back rent due late fee landlord property manager repairs maintenance request broken heat no hot water mold bugs pests renters insurance utilities electric bill internet setup move in checklist move out cleaning breaking a lease co-signer guarantor credit check rental scam fake listing apartment hunting can't afford rent eviction notice tenant rights home line",
   "parts": [
    "trunk",
@@ -1514,7 +1514,7 @@ const LC_TOPICS = [
  {
   "id": "moving-back",
   "ring": "br-home",
-  "title": "Moving back home",
+  "title": "Moving Back Home",
   "keys": "moving back home moved back in with my parents living with parents again boomerang back in my childhood bedroom after college lost my job couldn't afford rent saving money paying rent to parents house rules curfew as an adult treated like a kid embarrassed to live at home feel like a failure living at home after a breakup after a hard year mental health break parents fighting siblings privacy how long can I stay plan to move out again",
   "parts": [
    "trunk",
@@ -1606,7 +1606,7 @@ const LC_TOPICS = [
  {
   "id": "new-city",
   "ring": "br-home",
-  "title": "Moving to a new city",
+  "title": "Moving to a New City",
   "keys": "moving to a new city new town new state relocating for a job moved for school moved for a partner don't know anyone no friends here homesick lonely in a new city starting over how to make friends as an adult new job new city long distance friends miss home miss my family exploring city meetups clubs finding a doctor finding a church finding community military move first move away from home",
   "parts": [
    "branches",
@@ -1700,7 +1700,7 @@ const LC_TOPICS = [
  {
   "id": "housing",
   "ring": "br-home",
-  "title": "When housing falls through",
+  "title": "When Housing Falls Through",
   "keys": "nowhere to live nowhere to go homeless couch surfing sleeping in my car staying with friends lost my apartment evicted eviction notice can't pay rent lease ended roommate left kicked out parents kicked me out aged out of foster care shelter youth shelter emergency housing housing help rental assistance 211 runaway safeline transitional housing dorm closed over break housing insecurity unsafe home need a place tonight",
   "parts": [
    "roots",
@@ -1799,7 +1799,7 @@ const LC_TOPICS = [
  {
   "id": "friends",
   "ring": "br-people",
-  "title": "Making friends after school",
+  "title": "Making Friends After School",
   "keys": "making friends after school how to make friends as an adult no friends after graduation friends moved away new job no friends new city no friends lost touch with high school friends friend group fell apart everyone has their own life adult friendships hard to make friends awkward starting conversations how to ask someone to hang out work friends where to meet people clubs groups teams friend breakup drifting apart lonely weekends",
   "parts": [
    "branches",
@@ -1998,7 +1998,7 @@ const LC_TOPICS = [
  {
   "id": "dating",
   "ring": "br-people",
-  "title": "Dating and finding someone",
+  "title": "Dating and Finding Someone",
   "keys": "dating how to date dating apps swiping matches no matches ghosted ghosting first date nervous before a date talking stage situationship what are we define the relationship single everyone is in a relationship but me never been in a relationship will i ever find someone rejection getting rejected asked someone out how to ask someone out meeting someone from an app safely red flags green flags moving too fast pressure going slow what do i want in a partner dating with faith dating and my parents dont like who im dating",
   "parts": [
    "branches",
@@ -2199,7 +2199,7 @@ const LC_TOPICS = [
  {
   "id": "controlling",
   "ring": "br-people",
-  "title": "Controlling or abusive relationships",
+  "title": "Controlling or Abusive Relationships",
   "keys": "abusive relationship controlling partner domestic violence dating violence partner checks my phone tracks my location wants my passwords jealous won't let me see friends controls my money takes my paycheck tells me what to wear yells calls me names threatens me hits me pushed me grabbed me choked me pressured me forced me says they'll hurt themselves if i leave scared of my partner walking on eggshells is this abuse how do i leave safely we live together safety plan protective order stalking my ex won't leave me alone friend in an abusive relationship",
   "parts": [
    "branches",
@@ -2306,7 +2306,7 @@ const LC_TOPICS = [
  {
   "id": "engaged",
   "ring": "br-people",
-  "title": "Engaged or newly married",
+  "title": "Engaged or Newly Married",
   "keys": "engaged engagement getting married newly married newlywed first year of marriage wedding planning stress wedding budget wedding costs family pressure about the wedding in-laws mother-in-law father-in-law premarital counseling premarital education marriage prep fighting with my fiance fighting with my spouse arguing about money moving in together merging finances joint account who does the chores getting married young are we too young cold feet second thoughts different faiths interfaith couple marriage license minnesota",
   "parts": [
    "branches",
@@ -2403,7 +2403,7 @@ const LC_TOPICS = [
  {
   "id": "parents-adult",
   "ring": "br-family",
-  "title": "You and your parents, as adults",
+  "title": "You and Your Parents, as Adults",
   "keys": "parents mom dad relationship with my parents adult child grown child parents treat me like a kid boundaries with parents parents too involved helicopter parents parents giving advice parents disagree with my choices money from parents financial help living at home moving out parents worry calling home how often to call parents guilt trip parents fighting different values politics religion parents divorce parents health insurance on parents plan becoming independent adult relationship with parents my son is an adult my daughter is an adult letting go",
   "parts": [
    "branches",
@@ -2496,7 +2496,7 @@ const LC_TOPICS = [
  {
   "id": "estrangement",
   "ring": "br-family",
-  "title": "Hard family ties and estrangement",
+  "title": "Hard Family Ties and Estrangement",
   "keys": "estranged estrangement cut off from my family not speaking to my parents no contact low contact my parents cut me off my family disowned me kicked out toxic family hurtful parents abusive parent family conflict sibling estrangement distance from family holidays without family chosen family should i reconnect reconciliation boundaries with family guilt about cutting off family grief family financial aid without parents fafsa independent student no family support",
   "parts": [
    "branches",
@@ -2603,7 +2603,7 @@ const LC_TOPICS = [
  {
   "id": "unplanned-pregnancy",
   "ring": "br-family",
-  "title": "An unplanned pregnancy",
+  "title": "An Unplanned Pregnancy",
   "keys": "unplanned pregnancy pregnant surprise pregnancy positive pregnancy test i think i'm pregnant my girlfriend is pregnant my partner is pregnant not ready scared pregnant how do i tell my parents how do i tell my partner who to tell what do i do now shock panic overwhelmed pregnant and alone pregnant in college pregnant and broke pressured about pregnancy partner pressuring me family pressuring me doctor clinic appointment questions about pregnancy insurance on parents plan privacy my daughter is pregnant my friend is pregnant",
   "parts": [
    "bark",
@@ -2704,7 +2704,7 @@ const LC_TOPICS = [
  {
   "id": "young-parent",
   "ring": "br-family",
-  "title": "Becoming a parent young",
+  "title": "Becoming a Parent Young",
   "keys": "young parent young mom young dad new parent new baby newborn expecting a baby having a baby at 19 having a baby at 20 having a baby in my twenties single parent co-parenting the other parent baby's mom baby's dad tired no sleep baby won't stop crying overwhelmed parenting and school parenting and work child care daycare money for diapers formula wic help judged for being a young parent friends don't get it my parents helping with the baby custody child support my son had a baby my daughter had a baby",
   "parts": [
    "leaves",
@@ -2813,7 +2813,7 @@ const LC_TOPICS = [
  {
   "id": "after-baby",
   "ring": "br-family",
-  "title": "After the baby: depression and anxiety for moms and dads",
+  "title": "After the Baby: Depression and Anxiety for Moms and Dads",
   "keys": "postpartum depression postpartum anxiety ppd baby blues perinatal depression depressed after baby anxious after baby can't stop worrying about the baby scary thoughts intrusive thoughts not bonding with my baby don't feel like myself crying all the time can't sleep even when baby sleeps numb irritable rage new mom new dad paternal postpartum depression dad depression after baby my wife is depressed after the baby my partner after the baby postpartum psychosis seeing things hearing things maternal mental health hotline",
   "parts": [
    "bark",
@@ -2912,7 +2912,7 @@ const LC_TOPICS = [
  {
   "id": "pregnancy-loss",
   "ring": "br-family",
-  "title": "Pregnancy or infant loss",
+  "title": "Pregnancy or Infant Loss",
   "keys": "miscarriage pregnancy loss lost the baby lost our baby stillbirth stillborn infant loss baby died sids early loss ectopic chemical pregnancy grief after miscarriage partner miscarried my girlfriend miscarried was it my fault guilt nobody knew i was pregnant due date anniversary empty arms jealous of pregnant friends afraid to try again going back to work after miscarriage my daughter had a miscarriage my friend lost her baby",
   "parts": [
    "roots",
@@ -3015,7 +3015,7 @@ const LC_TOPICS = [
  {
   "id": "anxiety",
   "ring": "br-mind",
-  "title": "Anxiety and panic",
+  "title": "Anxiety and Panic",
   "keys": "anxiety anxious worry worried nervous stress stressed panic attack panicking cant breathe heart racing chest tight overthinking racing thoughts cant sleep dread 3am social anxiety work anxiety job interview calling in sick avoiding things shaky nauseous on edge always waiting for something bad my roommate has panic attacks my partner is anxious",
   "parts": [
    "bark",
@@ -3109,7 +3109,7 @@ const LC_TOPICS = [
  {
   "id": "depression",
   "ring": "br-mind",
-  "title": "Depression and feeling stuck",
+  "title": "Depression and Feeling Stuck",
   "keys": "depression depressed sad low numb empty flat stuck behind everyone else is ahead nothing matters dont care anymore tired all the time cant get out of bed no motivation hopeless crying sleeping too much cant sleep lost interest stopped going quit everything not myself whats the point failing at adulting falling behind at work my friend is depressed my partner is depressed my son seems depressed",
   "parts": [
    "bark",
@@ -3204,7 +3204,7 @@ const LC_TOPICS = [
  {
   "id": "first-signs",
   "ring": "br-mind",
-  "title": "First signs of a serious mental illness",
+  "title": "First Signs of a Serious Mental Illness",
   "keys": "something is wrong with my mind not myself scared of my own thoughts hearing voices seeing things paranoid people are watching me suspicious thoughts racing not sleeping and not tired manic mania bipolar psychosis schizophrenia first episode breakdown losing touch with reality confused cant think straight strange ideas my friend is acting strange my son is not making sense my roommate stopped sleeping my partner thinks people are following them weed made me paranoid",
   "parts": [
    "bark",
@@ -3303,7 +3303,7 @@ const LC_TOPICS = [
  {
   "id": "substances",
   "ring": "br-mind",
-  "title": "Drinking, cannabis, and other drugs",
+  "title": "Drinking, Cannabis, and Other Drugs",
   "keys": "drinking alcohol beer binge drinking blackout hungover party bar weed cannabis marijuana thc edibles dab pen vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse aa meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
   "parts": [
    "leaves",
@@ -3406,7 +3406,7 @@ const LC_TOPICS = [
  {
   "id": "eating",
   "ring": "br-mind",
-  "title": "Eating disorders",
+  "title": "Eating Disorders",
   "keys": "eating disorder eating disorders anorexia bulimia binge eating arfid restricting not eating skipping meals food rules counting calories macros clean eating cutting bulking making weight over exercising cant skip the gym purging throwing up laxatives guilt after eating out of control around food scared to eat body image hate my body food noise relapse my roommate is not eating my partner throws up after meals my friend is obsessed with food",
   "parts": [
    "leaves",
@@ -3499,7 +3499,7 @@ const LC_TOPICS = [
  {
   "id": "health-26",
   "ring": "br-mind",
-  "title": "Your own health: insurance, doctors, and turning 26",
+  "title": "Your Own Health: Insurance, Doctors, and Turning 26",
   "keys": "health insurance insurance card turning 26 aging off parents plan parents insurance losing coverage mnsure marketplace medical assistance minnesotacare medicaid find a doctor primary care clinic urgent care emergency room er nurse line pharmacy prescription refill deductible copay premium in network out of network explanation of benefits eob bills medical bill privacy parents see my visits therapist counselor dentist eye doctor making my own appointments health records first time on my own",
   "parts": [
    "leaves",
@@ -3597,7 +3597,7 @@ const LC_TOPICS = [
  {
   "id": "suicide-thoughts",
   "ring": "br-safety",
-  "title": "Thoughts of suicide, and a safety plan",
+  "title": "Thoughts of Suicide, and a Safety Plan",
   "keys": "suicide suicidal thoughts of suicide want to die wish i was dead dont want to be here dont want to be alive kill myself end my life end it all no point everyone would be better off without me burden no way out hopeless tired of living safety plan crisis plan 988 crisis line veteran",
   "parts": [
    "fruit",
@@ -3703,7 +3703,7 @@ const LC_TOPICS = [
  {
   "id": "friend-suicide",
   "ring": "br-safety",
-  "title": "When a friend is thinking about suicide",
+  "title": "When a Friend Is Thinking About Suicide",
   "keys": "friend suicidal my friend wants to die worried about my friend roommate suicidal partner suicidal boyfriend girlfriend talking about suicide said they want to kill themselves posted goodbye message group chat warning signs how to help a friend what do i say should i tell someone keep it secret 988",
   "parts": [
    "branches",
@@ -3804,7 +3804,7 @@ const LC_TOPICS = [
  {
   "id": "selfharm",
   "ring": "br-safety",
-  "title": "Self-harm",
+  "title": "Self-Harm",
   "keys": "self harm self-harm selfharm self injury cutting hurting myself on purpose urge to hurt myself scars hiding marks long sleeves relapse started again after years numb release punish myself my partner hurts themselves roommate hurting themselves friend cutting 988",
   "parts": [
    "bark",
@@ -3909,7 +3909,7 @@ const LC_TOPICS = [
  {
   "id": "sexual-assault",
   "ring": "br-safety",
-  "title": "After a sexual assault",
+  "title": "After a Sexual Assault",
   "keys": "sexual assault rape raped unwanted touching groped forced pressured into sex didn't say yes i froze my fault was drinking was drunk party date someone i know ex partner coworker boss roommate campus assault title ix i think i was drugged is it assault what do i do after survivor rainn day one report or not",
   "parts": [
    "bark",
@@ -4011,7 +4011,7 @@ const LC_TOPICS = [
  {
   "id": "images",
   "ring": "br-safety",
-  "title": "Images shared without consent, and online threats",
+  "title": "Images Shared Without Consent, and Online Threats",
   "keys": "nudes leaked my ex posted my pictures someone shared my nudes intimate images without consent revenge porn sextortion someone threatening me picture pay or they post it blackmail catfished fake account deepfake ai fake nude photoshopped harassment online stalking doxxed doxxing threats online someone threatening me stopncii take it down report",
   "parts": [
    "bark",
@@ -4110,7 +4110,7 @@ const LC_TOPICS = [
  {
   "id": "porn",
   "ring": "br-safety",
-  "title": "Pornography that's hard to stop",
+  "title": "Pornography That's Hard to Stop",
   "keys": "porn pornography can't stop watching porn porn addiction compulsive sexual behavior watching too much every night late at night guilty ashamed relapse quit porn nofap filters accountability partner found my porn my partner watches porn betrayal hurt values counselor",
   "parts": [
    "bark",
@@ -4205,7 +4205,7 @@ const LC_TOPICS = [
  {
   "id": "military",
   "ring": "br-meaning",
-  "title": "Joining the military, and military life",
+  "title": "Joining the Military, and Military Life",
   "keys": "military joining the military enlist enlisting recruiter talking to a recruiter army navy air force marines coast guard space force national guard reserves rotc basic training boot camp meps asvab contract signing bonus first duty station deployment pcs moving bases away from home homesick barracks military life new soldier sailor airman marine guardian my kid is enlisting my partner joined my friend enlisted military spouse young service member",
   "parts": [
    "trunk",
@@ -4302,7 +4302,7 @@ const LC_TOPICS = [
  {
   "id": "coming-home",
   "ring": "br-meaning",
-  "title": "Coming home from service",
+  "title": "Coming Home From Service",
   "keys": "coming home from service getting out of the military separating discharge ets eas leaving the army leaving the navy leaving the marines leaving the air force back from deployment home from deployment veteran young veteran guard reserve drill civilian life miss my unit miss my friends don't fit in no purpose bored angry can't sleep nightmares drinking more moral injury ptsd tap transition va benefits gi bill county veterans service officer cvso my son is home my daughter is home my partner came home",
   "parts": [
    "trunk",
@@ -4403,7 +4403,7 @@ const LC_TOPICS = [
  {
   "id": "grief-young",
   "ring": "br-meaning",
-  "title": "Grief when you're young: a parent, a friend, or a peer dies",
+  "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
   "keys": "grief grieving my mom died my dad died parent died lost my mother lost my father friend died best friend died classmate died coworker died roommate died someone my age died overdose car crash accident suicide loss died by suicide sudden death funeral can't focus can't stop crying numb angry guilty why didn't i see it no one gets it my friends don't understand anniversary first holidays without them how to help a grieving friend my friend's parent died",
   "parts": [
    "roots",
@@ -4500,7 +4500,7 @@ const LC_TOPICS = [
  {
   "id": "faith-own",
   "ring": "br-meaning",
-  "title": "Faith on your own: questions, doubt, and finding a community",
+  "title": "Faith on Your Own: Questions, Doubt, and Finding a Community",
   "keys": "faith on my own my own faith questions about faith doubt doubting god not sure what i believe anymore believe anymore stopped going to church going to church on my own finding a church finding a faith community mosque temple synagogue new to town no faith community deconstructing deconstruction exploring faith spiritual not religious faith in college faith away from home parents' faith different from mine converting changing religion coming back to faith prayer feels empty my kid stopped going to church my kid's faith is changing",
   "parts": [
    "roots",
@@ -4592,7 +4592,7 @@ const LC_TOPICS = [
  {
   "id": "faith-hurt",
   "ring": "br-meaning",
-  "title": "Hurt by a faith community",
+  "title": "Hurt by a Faith Community",
   "keys": "hurt by church church hurt religious hurt religious trauma spiritual abuse hurt by my faith community pastor hurt me leader hurt me youth pastor campus ministry judged shamed kicked out shunned gossip controlling church high control group cult pressured to give money pressured to volunteer told i'm going to hell told my doubts were sin leader crossed a line leader touched me covered up abuse hypocrites can't go back to church scared of god anxious in church mosque temple synagogue church hurt my friend was hurt at church",
   "parts": [
    "roots",
@@ -4685,7 +4685,7 @@ const LC_TOPICS = [
  {
   "id": "purpose",
   "ring": "br-meaning",
-  "title": "Finding purpose and calling",
+  "title": "Finding Purpose and Calling",
   "keys": "purpose calling vocation meaning lost no direction stuck don't know what to do with my life what's the point going through the motions everyone else has it figured out behind compared to friends what am i good at passion find my passion career direction gap year quarter life crisis restless empty bored why am i here what matters to me my kid seems lost my friend has no direction",
   "parts": [
    "trunk",
@@ -4776,7 +4776,7 @@ const LC_TOPICS = [
  {
   "id": "college-disability",
   "ring": "life",
-  "title": "Disability at college: accommodations and asking",
+  "title": "Disability at College: Accommodations and Asking",
   "keys": "disability at college disability services disability resource center accessibility office accommodations academic adjustments extra time on tests testing center note taker captions interpreter asl audio textbooks screen reader accessible housing elevator flare missed class attendance chronic illness at college mental health accommodations iep ended 504 plan ended documentation do i have to tell my professor disclose my disability trade school apprenticeship community college online classes registering with disability services professor said no",
   "parts": [
    "trunk",
@@ -4887,7 +4887,7 @@ const LC_TOPICS = [
  {
   "id": "work-disability",
   "ring": "life",
-  "title": "Disability or illness at work: accommodations and telling your boss",
+  "title": "Disability or Illness at Work: Accommodations and Telling Your Boss",
   "keys": "disability at work illness at work reasonable accommodation accommodations at work ada americans with disabilities act tell my boss tell my manager disclose disability disclosure job interview should i tell them chronic illness at work flare days time off for appointments schedule change work from home standing desk screen reader captions interpreter quiet workspace written instructions mental health at work hr human resources job accommodation network jan eeoc fired because of disability first job with a disability",
   "parts": [
    "trunk",
@@ -4999,7 +4999,7 @@ const LC_TOPICS = [
  {
   "id": "pain-fatigue",
   "ring": "life",
-  "title": "Chronic pain, fatigue, and pacing",
+  "title": "Chronic Pain, Fatigue, and Pacing",
   "keys": "chronic pain chronic fatigue always tired exhausted no energy pacing spoons spoon theory spoonie flare flare up crash boom and bust push and crash fibromyalgia migraine endometriosis arthritis back pain long covid me cfs pots autoimmune lupus crohns invisible illness you dont look sick tired of explaining canceling plans again friends dont understand pain at work pain at school rest without guilt good days bad days",
   "parts": [
    "leaves",
@@ -5108,7 +5108,7 @@ const LC_TOPICS = [
  {
   "id": "living-well-mi",
   "ring": "life",
-  "title": "Living well with a serious mental illness",
+  "title": "Living Well with a Serious Mental Illness",
   "keys": "living with mental illness serious mental illness bipolar disorder schizophrenia schizoaffective psychosis recovery major depression ocd ptsd long term mental health diagnosis after a hospital stay after the psych ward relapse warning signs staying well taking meds side effects treatment team therapist psychiatrist peer support nami peer to peer back to school after hospital back to work stigma telling people about my diagnosis my brother has bipolar my partner has schizophrenia living a full life",
   "parts": [
    "bark",
@@ -5215,7 +5215,7 @@ const LC_TOPICS = [
  {
   "id": "autistic-adult",
   "ring": "life",
-  "title": "Autistic adult life",
+  "title": "Autistic Adult Life",
   "keys": "autistic autism autism spectrum asperger diagnosed as an adult late diagnosis do i have autism sensory overload too loud too bright meltdown shutdown burnout masking exhausted after people routine change stims stimming special interest friendships small talk dating work interview job accommodations living on my own executive function college independence developmental disability intellectual disability my brother is autistic my partner is autistic",
   "parts": [
    "branches",
@@ -5320,7 +5320,7 @@ const LC_TOPICS = [
  {
   "id": "deaf-hoh",
   "ring": "life",
-  "title": "Deaf or hard of hearing",
+  "title": "Deaf or Hard of Hearing",
   "keys": "deaf hard of hearing hoh hearing loss losing my hearing hearing aids cochlear implant asl american sign language interpreter captions cart live captioning lip reading listening fatigue tired from listening group conversations restaurants too loud masks phone calls video calls deaf community deaf culture deafblind college interpreter work accommodations job interview dating hearing people my friend is deaf my brother is deaf 988 asl videophone",
   "parts": [
    "branches",
@@ -5427,7 +5427,7 @@ const LC_TOPICS = [
  {
   "id": "blind-low-vision",
   "ring": "life",
-  "title": "Blind or low vision",
+  "title": "Blind or Low Vision",
   "keys": "blind low vision visually impaired vision loss losing my sight legally blind white cane guide dog screen reader voiceover talkback magnifier large print braille audio books accessible materials orientation and mobility getting around transit rides driving cant drive job with low vision college with low vision accessible website inaccessible app reading menus my friend is blind my sister is blind state services for the blind",
   "parts": [
    "branches",
@@ -5530,7 +5530,7 @@ const LC_TOPICS = [
  {
   "id": "dating-disability",
   "ring": "life",
-  "title": "Dating and marriage with a disability or illness",
+  "title": "Dating and Marriage with a Disability or Illness",
   "keys": "dating with a disability dating with chronic illness when to tell a date disclose my disability on a dating app first date accessible date ideas will anyone want me am i a burden relationship with a disability partner with a disability caregiving partner marriage and disability benefits ssi marriage getting married with a disability intimacy sex and disability fatigue and dating mental illness and dating my partner is sick my boyfriend has a disability my girlfriend has a chronic illness engaged",
   "parts": [
    "branches",
@@ -5639,7 +5639,7 @@ const LC_TOPICS = [
  {
   "id": "young-carer",
   "ring": "life",
-  "title": "Caring for a parent or sibling in your twenties",
+  "title": "Caring for a Parent or Sibling in Your Twenties",
   "keys": "young caregiver young adult caregiver caring for my mom caring for my dad caring for a parent caring for my brother caring for my sister sibling with a disability parent with mental illness parent with cancer parent with ms chronically ill parent living at home to help moved home to take care of family missing out friends dont get it guilt resentment burned out caregiver burnout college and caregiving work and caregiving future plans who will care for my sibling respite care support group",
   "parts": [
    "branches",
@@ -5744,7 +5744,7 @@ const LC_TOPICS = [
  {
   "id": "faith-disability",
   "ring": "life",
-  "title": "Faith and disability: finding a community that welcomes you",
+  "title": "Faith and Disability: Finding a Community That Welcomes You",
   "keys": "faith and disability church accessibility accessible worship wheelchair church no ramp no interpreter at church asl worship large print braille bible sensory friendly service autism at church mental illness at church chronic illness and faith why me is this a punishment pray for healing told i need more faith healing pressure people praying over me without asking left church because of disability disability ministry inclusion congregation synagogue mosque temple online worship worship from home finding a faith community belonging questions for god",
   "parts": [
    "roots",

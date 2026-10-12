@@ -59,18 +59,16 @@ const FILTERS = [['all', 'All'], ['posted', 'Posted'], ['early', 'Early Preview'
 const hasNote = s => Array.isArray(s.behind) && s.behind.some(p => String(p).trim());
 const NOTEBOOK = 'Story: Chris Joy, from my notebook. Names and details changed.';
 const pubCredit = t => 'Story: Chris Joy, ' + t + ' · Read it on Grounded';
-const TOPICS = [['dying', 'Dying and saying goodbye'], ['grief', 'Grief and after'], ['faith', 'Faith and doubt'], ['kids', 'Kids and families']];
+const TOPICS = [['dying', 'Dying and Saying Goodbye'], ['grief', 'Grief and After'], ['faith', 'Faith and Doubt'], ['kids', 'Kids and Families']];
 // The topics a story shows under now: its own, or the page's fallback (GGStories.themesOf) for a story with none set yet.
 const topicsNow = s => Array.isArray(s.topics) ? s.topics.slice() : (window.GGStories && GGStories.themesOf ? String(GGStories.themesOf({slug: GGStories.slug(s.title), title: s.title}) || '').split(' ').filter(Boolean) : []);
 const needsVoice = s => !s.voiced && s.voice !== false;
 const charsOf = paras => paras.join('\n\n').length;
-// Visitors see the opening paragraphs up to about 1,500 characters: at least one, and always short of the whole story.
-function previewOf(paras){
-  let n = 0, c = 0;
-  while (n < paras.length && c < 1500){ c += paras[n].length; n++; }
-  if (n >= paras.length) n = paras.length - 1;
-  return paras.length < 2 ? 0 : Math.max(1, n); // a one paragraph piece has no separate preview (stories.json's rule)
-}
+// Visitors see a locked story's opening (BLD 788, GGStories.previewCut, the rule Seal Grounded Stories uses): at most about
+// 1,500 characters and at most 40 percent of the story, whole paragraphs while they fit, else the first paragraph's opening
+// sentences. previewOf gives the count of whole paragraphs (0 when the preview is the first paragraph's opening sentences).
+const cutOf = paras => window.GGStories && GGStories.previewCut ? GGStories.previewCut(paras) : {paras: [], cut: false};
+function previewOf(paras){ const c = cutOf(paras); return c.cut ? 0 : c.paras.length; }
 const splitParas = t => String(t || '').replace(/\r\n?/g, '\n').split(/\n\s*\n/).map(p => p.replace(/\s*\n\s*/g, ' ').trim()).filter(Boolean);
 
 const UI = {f: 'all', q: '', open: null, adding: false, out: null, busy: false, err: '', groups: null, saved: 0, letter: null, card: null, cq: '', lib: null};
@@ -79,17 +77,22 @@ const UI = {f: 'all', q: '', open: null, adding: false, out: null, busy: false, 
 const liveWraps = V => C.wraps ? C.wraps() : (V.codes || []).filter(c => !c.cancelled).map(c => ({c: c.c, salt: c.salt, iv: c.iv, ct: c.ct}));
 
 // ---------- saving ----------
-let saveT = null, chain = Promise.resolve();
+// keep(): C.keep() resolves false when saving waits (BLD 788: index.html's persist() reports it), and the line says so.
+// While a save waits for its moment the line says Saving..., and flush() (on closing or switching away) runs it at once.
+let saveT = null, chain = Promise.resolve(), waitGo = null, busyN = 0;
+const savedShow = () => { const el = document.getElementById('sv-saved'); if (el) el.innerHTML = savedLine(); };
 function keep(now){
-  clearTimeout(saveT);
-  const go = () => { chain = chain.then(async () => {
+  clearTimeout(saveT); waitGo = null;
+  const go = () => { waitGo = null; busyN++; chain = chain.then(async () => {
     let ok = false; try { ok = await (C.keep ? C.keep() : false); } catch (e) { ok = false; }
-    UI.saved = ok ? Date.now() : -1; const el = document.getElementById('sv-saved'); if (el) el.innerHTML = savedLine();
+    busyN--; UI.saved = ok ? Date.now() : -1; savedShow();
   }); return chain; };
-  if (now) return go();
-  saveT = setTimeout(go, 700); return chain;
+  if (now){ const r = go(); savedShow(); return r; }
+  waitGo = go; saveT = setTimeout(go, 700); savedShow(); return chain;
 }
+function flush(){ if (!waitGo) return false; clearTimeout(saveT); waitGo(); return true; }
 function savedLine(){
+  if (waitGo || busyN > 0) return 'Saving...';
   if (UI.saved === -1) return '<span class="pill warn">Saving needs a moment</span> Try that change again in a moment.';
   return UI.saved ? 'Saved on this device. Upload lib-founder.js from Ready to Upload to carry it to every Founder device.' : 'Changes save on this device as you go.';
 }
@@ -107,9 +110,18 @@ function matches(s){
   const q = UI.q.trim().toLowerCase(); if (!q) return true;
   return [s.title, s.sub, s.col, s.note].concat(s.paras || []).some(t => String(t || '').toLowerCase().includes(q));
 }
+// Ten stories have a second (or third) copy under Reflections (BLD 788). The main copy is the Posted or Early Preview one,
+// else the first; every other copy shows Other Copy, and its page points to the main one, so a fix lands where it shows.
+const slugOf = t => String(t || '').toLowerCase().replace(/[\u2018\u2019']/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+function mainCopy(s){
+  const V = SV(); if (!V) return null;
+  const same = V.stories.filter(x => slugOf(x.title) === slugOf(s.title)); if (same.length < 2) return null;
+  const m = same.find(x => x.status !== 'vault') || same[0];
+  return m === s ? null : m;
+}
 function pills(s){
   const st = s.status === 'posted' ? 'sage' : s.status === 'early' ? 'gold' : '';
-  return `<span class="pill ${st}">${esc(stName(s.status))}</span>${s.open ? ' <span class="pill sage">Open to Everyone</span>' : ''}${needsVoice(s) ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
+  return `<span class="pill ${st}">${esc(stName(s.status))}</span>${mainCopy(s) ? ' <span class="pill">Other Copy</span>' : ''}${s.open ? ' <span class="pill sage">Open to Everyone</span>' : ''}${needsVoice(s) ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
 }
 function listHTML(){
   const V = SV(); if (!V) return '';
@@ -170,7 +182,8 @@ function codesCard(){
 function storyView(V, s){
   const lock = waits() ? ' disabled' : '', cols = [...new Set(V.stories.map(x => x.col).filter(Boolean))];
   const sw = ST.map(([k, t]) => `<button type="button" class="btn btn-sm ${s.status === k ? 'btn-gold' : 'btn-line'}" data-sva="st" data-v="${k}" aria-pressed="${s.status === k}"${lock}>${t}</button>`).join('');
-  const paras = (s.paras || []).map((p, i) => `<div class="sv-p"><label class="f" for="sv-p${i}">Paragraph ${i + 1}${i < s.preview ? ' <span class="pill">Preview</span>' : ''}</label>
+  const pv = cutOf(s.paras || []), pvN = pv.cut ? 0 : pv.paras.length, pvTag = i => s.open ? '' : i < pvN ? ' <span class="pill">Preview</span>' : pv.cut && i === 0 ? ' <span class="pill">Opening Sentences Preview</span>' : '';
+  const paras = (s.paras || []).map((p, i) => `<div class="sv-p"><label class="f" for="sv-p${i}">Paragraph ${i + 1}${pvTag(i)}</label>
      <textarea id="sv-p${i}" rows="${Math.min(12, Math.max(3, Math.ceil(p.length / 70)))}" data-svf="para" data-v="${i}"${lock}>${esc(p)}</textarea>
      <button type="button" class="linkbtn sv-small" data-sva="pdel" data-v="${i}"${lock}>Remove This Paragraph</button></div>`).join('');
   return `<div id="sv-top" class="sv-story"><button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button>
@@ -178,6 +191,7 @@ function storyView(V, s){
    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold" data-sva="watch">Watch This Story</button></div>
    ${needsVoice(s) ? '<p class="muted" style="font-size:14px;margin-top:6px">Sentences you changed play in the device voice until the next build records them.</p>' : ''}</div>
   ${waits() ? '<p class="tipbox" style="border-left:3px solid var(--gold)">An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and this story is ready for changes again.</p>' : ''}
+  ${(() => { const m = mainCopy(s); return m ? `<div class="tipbox" style="border-left:3px solid var(--gold)"><p>This is another copy of <b>${esc(m.title)}</b>. The main copy is in ${esc(m.col || 'Stories')} (${esc(stName(m.status))}), and it is the one Grounded Stories uses. Make changes there.</p><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="open" data-v="${esc(m.id)}">Open the Main Copy</button></div></div>` : ''; })()}
   <div class="card"><h3>Where It Stands</h3><div class="row" style="margin-top:8px">${sw}</div>
    <p class="muted" style="font-size:14px;margin-top:8px">${{vault: 'Vault: kept here while you tend it. Visitors and members see it once you mark it Early Preview or Posted and seal.', early: 'Early Preview: members see the whole story first, often before it goes on Substack.', posted: 'Posted: on Grounded Stories, with a preview for everyone and the whole story for members.'}[s.status] || ''}</p>
    <label class="sv-tick"><input type="checkbox" data-svf="open"${s.open ? ' checked' : ''}${lock}> <span><b>Open to Everyone</b><br><small class="muted">The whole story plays and reads for every visitor once it is Posted.</small></span></label>
@@ -194,7 +208,7 @@ function storyView(V, s){
    ${s.note ? `<p class="muted" style="margin-top:10px"><b>Note:</b> ${esc(s.note)}</p>` : ''}</div>
   <div class="card"><h3>The Story</h3>
    <p id="sv-voice">${voiceLine(s)}</p>
-   <p class="muted" style="font-size:14px;margin-top:6px">Each box is one paragraph. A blank line inside a box makes two paragraphs when you leave the box. Visitors see the paragraphs marked Preview; members see them all.</p>
+   <p class="muted" style="font-size:14px;margin-top:6px">Each box is one paragraph. A blank line inside a box makes two paragraphs when you leave the box. Visitors see the part marked Preview (at most about 1,500 characters, and 40 percent of the story); members see it all.</p>
    <div style="margin-top:8px">${paras}</div>
    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-sva="padd"${lock}>Add a Paragraph</button></div></div>
   ${behindHTML(s, lock)}
@@ -226,20 +240,28 @@ function behindVoice(s){
   if (s.behindVoiced) return '<span class="pill sage">Recorded</span> The narrator reads your note as written.';
   return '<span class="pill gold">Needs a Voice</span> The next build records your note. Until then, it plays in the device voice.';
 }
-// Story pictures (BLD 787): public files in the stories folder.
+// Story pictures (BLD 787): public files in the stories folder. PICS lists the stories that have one on the site (the 20
+// shipped in BLD 787), so the Vault asks the site only for those (BLD 788); any other story shows Look for a Picture,
+// for a picture uploaded since.
+const PICS = new Set(['s002', 's003', 's004', 's005', 's006', 's007', 's008', 's009', 's010', 's011', 's012', 's013', 's014', 's015', 's016', 's017', 's019', 's020', 's021', 's022']);
+const picImg = s => `<div class="sv-pic"><img src="../stories/img/${esc(s.id)}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>`;
 function picHTML(s){
-  const id = esc(s.id);
-  return `<div class="card" id="sv-pic"><h3>Picture</h3><div class="sv-pic"><img src="../stories/img/${id}.webp" alt="${esc(s.title)}" onerror="GGVault._picErr(this)" onload="this.parentNode.classList.add('sv-in')"></div>
-   <p class="muted" style="font-size:14px;margin-top:8px">Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.</p></div>`;
+  const id = esc(s.id), has = PICS.has(s.id) || UI.pic === s.id;
+  return `<div class="card" id="sv-pic"><h3>Picture</h3>${has ? picImg(s) : ''}
+   <p class="muted" style="font-size:14px;margin-top:8px">Picture: upload ${id}.jpg or ${id}.webp into the stories/img folder.</p>
+   ${has ? '' : `<div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-sva="piclook">Look for a Picture</button></div>`}</div>`;
 }
-function picErr(el){ const src = el.getAttribute('src') || ''; if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode) el.parentNode.hidden = true; }
+function picErr(el){ const src = el.getAttribute('src') || ''; if (/\.webp$/.test(src)) el.setAttribute('src', src.replace(/\.webp$/, '.jpg')); else if (el.parentNode){ el.parentNode.hidden = true; if (UI.pic && el.closest('#sv-pic')){ const n = el.closest('#sv-pic').querySelector('.sv-pic + p'); if (n) n.textContent = 'The picture shows here once ' + UI.pic + '.jpg or ' + UI.pic + '.webp is in the stories/img folder on the site.'; } } }
 
 // ---------- the Monthly Letter and Reflection Cards (BLD 787) ----------
 const MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const monthName = m => { const x = /^(\d{4})-(\d\d)/.exec(m || ''); return x ? MONTHS[+x[2] - 1] + ' ' + x[1] : ''; };
 const nextMonth = () => { const d = new Date(); d.setDate(1); d.setMonth(d.getMonth() + 1); return d.getFullYear() + '-' + pad(d.getMonth() + 1); };
 const fromName = f => f === 'chris' ? 'Chris Joy' : 'Grow With Grounded';
-const perkPills = x => `${x.status === 'posted' ? '<span class="pill sage">Posted</span>' : '<span class="pill">Vault</span>'}${x.approvedAt ? ' <span class="pill sage">Approved</span>' : ' <span class="pill gold">Drafted for You</span>'}${x.voiced === false && x.paras ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
+// A card Chris makes himself (Make a Card, own: 1) is his own: no approval step; it counts as approved once it has a line
+// and a practice (BLD 788), the way a letter he adds is approved at once.
+const ownApprove = c => { if (c && c.own){ const ok = !!(c.line && (c.practice || {}).name); if (ok && !c.approvedAt) c.approvedAt = today(); else if (!ok && c.approvedAt) c.approvedAt = ''; } };
+const perkPills = x => `${x.status === 'posted' ? '<span class="pill sage">Posted</span>' : '<span class="pill">Vault</span>'}${x.own ? ' <span class="pill sage">Your Card</span>' : x.approvedAt ? ' <span class="pill sage">Approved</span>' : ' <span class="pill gold">Drafted for You</span>'}${x.voiced === false && x.paras ? ' <span class="pill gold">Needs a Voice</span>' : ''}`;
 function perksCards(V){
   const L = (V.letters || []).slice().sort((a, b) => (b.month || '').localeCompare(a.month || '')), Cd = (V.cards || []).slice().sort((a, b) => (b.month || '').localeCompare(a.month || ''));
   const lock = waits() ? ' disabled' : '';
@@ -293,18 +315,19 @@ function letterAddView(){
 function cardLines(s){ if (!s || !window.GGStories) return []; const out = []; (s.paras || []).forEach(p => GGStories.sentences(p).forEach(x => { if (x.split(/\s+/).length <= 32) out.push(x); })); return out; }
 function cardModel(V, c, test){ const s = V.stories.find(x => x.id === c.story) || {}; return {month: c.month, line: c.line, story: {title: s.title || '', slug: window.GGStories ? GGStories.slug(s.title || '') : '', credit: s.credit || ''}, practice: c.practice || {}, test: !!test}; }
 function cardView(V, c){
+  ownApprove(c);
   const lock = waits() ? ' disabled' : '', ok = !!c.approvedAt, posted = V.stories.filter(s => s.status === 'posted'), s = V.stories.find(x => x.id === c.story);
   const lines = cardLines(s), P = c.practice || {};
   const res = UI.lib && UI.cq.trim() ? UI.lib.slice(0, 8) : [];
   const storyOk = !!(s && s.status === 'posted'), ready = ok && storyOk && c.line && P.name;
   return `<div id="sv-top" class="sv-story"><button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Reflection Cards</div><h1>Reflection Card, ${esc(monthName(c.month))}</h1><p class="sv-pills">${perkPills(c)}</p></div>
-  ${ok ? '' : `<div class="card" id="sv-capprove" style="border-left:4px solid var(--gold)"><p><span class="pill gold">Drafted for You</span></p><p style="margin-top:8px">Check the line, the story, and the practice, print a test card, then approve it. It can be Posted once you approve it.</p>
+  ${ok ? '' : c.own ? `<div class="card" id="sv-capprove" style="border-left:4px solid var(--sage)"><p><span class="pill sage">Your Card</span></p><p style="margin-top:8px">Choose a line from a Posted story and a practice below, and your card is ready to mark Posted.</p></div>` : `<div class="card" id="sv-capprove" style="border-left:4px solid var(--gold)"><p><span class="pill gold">Drafted for You</span></p><p style="margin-top:8px">Check the line, the story, and the practice, print a test card, then approve it. It can be Posted once you approve it.</p>
    <div class="row" style="margin-top:10px"><button type="button" class="btn btn-gold" data-sva="capprove"${c.line && P.name ? lock : ' disabled'}>I Approve This Card</button></div></div>`}
   <div class="card"><h3>Where It Stands</h3><div class="row" style="margin-top:8px">
    <button type="button" class="btn btn-sm ${c.status !== 'posted' ? 'btn-gold' : 'btn-line'}" data-sva="cst" data-v="vault" aria-pressed="${c.status !== 'posted'}"${lock}>Vault</button>
    <button type="button" class="btn btn-sm ${c.status === 'posted' ? 'btn-gold' : 'btn-line'}" data-sva="cst" data-v="posted" aria-pressed="${c.status === 'posted'}"${ready ? lock : ' disabled'}>Posted</button></div>
-   <p class="muted" style="font-size:14px;margin-top:8px">${c.status === 'posted' ? 'Posted: members print it on Grounded Stories once you seal and upload data.js. Visitors see its month and practice name.' : !storyOk ? 'Cards use Posted stories. Choose a Posted story below.' : ok ? 'Approved. Mark it Posted when it is ready for members.' : 'Approve it first, then mark it Posted.'}</p>
+   <p class="muted" style="font-size:14px;margin-top:8px">${c.status === 'posted' ? 'Posted: members print it on Grounded Stories once you seal and upload data.js. Visitors see its month and practice name.' : !storyOk ? 'Cards use Posted stories. Choose a Posted story below.' : ok ? (c.own ? 'Ready. Mark it Posted when it is ready for members.' : 'Approved. Mark it Posted when it is ready for members.') : c.own ? 'Choose a line and a practice, then mark it Posted.' : 'Approve it first, then mark it Posted.'}</p>
    <p class="muted" id="sv-saved" style="font-size:14px;margin-top:10px">${savedLine()}</p></div>
   <div class="card"><h3>1. The Month</h3><label class="f" for="sv-cm">Month</label><input type="month" id="sv-cm" data-svc="month" value="${esc(c.month || '')}"${lock}></div>
   <div class="card"><h3>2. The Story</h3><label class="f" for="sv-cs">A Posted story</label><select id="sv-cs" data-svc="story"${lock}><option value="">Choose a story</option>${posted.map(x => `<option value="${esc(x.id)}"${x.id === c.story ? ' selected' : ''}>${esc(x.title)}</option>`).join('')}</select></div>
@@ -324,7 +347,7 @@ function cardView(V, c){
   ${c.status !== 'posted' ? `<button class="linkbtn" data-sva="cdel"${lock}>Remove This Card</button><br>` : ''}
   <button class="linkbtn" data-sva="back">&larr; Back to the Story Vault</button></div>`;
 }
-function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=b787'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
+function needLib(){ return new Promise(ok => { if (window.GGLibrary) return ok(); const sc = document.createElement('script'); sc.src = '../shared/gg-library.js?v=b788'; sc.onload = sc.onerror = () => ok(); document.head.appendChild(sc); }).then(() => window.GGLibrary ? GGLibrary.ready() : false); }
 function libSearch(){ const q = UI.cq.trim(); if (!q){ UI.lib = null; return Promise.resolve(); } return needLib().then(okl => { UI.lib = okl ? GGLibrary.search(q, 'oak') : []; }); }
 function voiceLine(s){
   if (s.voiced) return '<span class="pill sage">Recorded</span> The narrator\'s voice reads this story as written.';
@@ -378,6 +401,8 @@ function download(text, name){ const a = document.createElement('a'); a.href = U
 async function sealStories(){
   const V = SV(); if (!V || UI.busy || waits()) return;
   if (!window.GGStories || typeof GGStories.seal !== 'function') return alert('The stories tools are still loading. Try again in a moment.');
+  // BLD 788: members open locked stories with a code, so ask before sealing a data.js that no code opens yet.
+  if (!liveWraps(V).length && !confirm('Members open these stories with a code from the Access list, and none is in use yet. Seal now anyway? Visitors would see the previews and the stories Open to Everyone. To make a code first, tap Cancel and open the Access list.')) return false;
   UI.busy = true; UI.err = ''; UI.out = null; rr();
   try {
     await keep(true);
@@ -408,6 +433,7 @@ document.addEventListener('click', e => {
   else if (a === 'watch' && s){ if (window.GGStories && GGStories.listen) GGStories.listen(s, SV().key); }
   else if (a === 'seal') sealStories();
   else if (a === 'dl' && UI.out) download(UI.out.js, 'data.js');
+  else if (a === 'piclook' && s){ UI.pic = s.id; rr(); }
   else if (waits()) return;
   else if (a === 'st' && s){ if (s.status !== v){ if (v === 'vault') delete s.postedAt; else if (s.status === 'vault' || !s.postedAt) s.postedAt = new Date().toISOString(); } s.status = v; rr(); keep(); }
   else if (a === 'padd' && s){ s.paras.push(''); rr(); const t = document.getElementById('sv-p' + (s.paras.length - 1)); if (t) t.focus(); }
@@ -449,7 +475,7 @@ function perkClick(a, v){
     case 'ldel': if (l && l.status !== 'posted' && confirm('Remove this letter from the Vault?')){ V.letters = V.letters.filter(x => x !== l); UI.letter = null; top(); keep(); } return true;
     case 'cadd': {
       V.cards = V.cards || []; const m = nextMonth();
-      const cd = {id: uniqueId(V.cards, 'R' + m), month: m, story: '', line: '', practice: {name: '', why: '', steps: [], src: []}, status: 'vault', approvedAt: '', postedAt: ''};
+      const cd = {id: uniqueId(V.cards, 'R' + m), month: m, story: '', line: '', practice: {name: '', why: '', steps: [], src: []}, status: 'vault', approvedAt: '', postedAt: '', own: 1};
       V.cards.push(cd); UI.card = cd.id; UI.cq = ''; UI.lib = null; top(); keep(); return true;
     }
     case 'capprove': if (c && c.line && (c.practice || {}).name){ c.approvedAt = today(); rr(); keep(); toast('Approved. Mark it Posted when it is ready.'); } return true;
@@ -473,7 +499,7 @@ document.addEventListener('input', e => {
   if (kc && !waits()){ const c = curC(); if (!c) return;
     if (kc === 'q'){ UI.cq = t.value; clearTimeout(cqT); cqT = setTimeout(() => libSearch().then(() => { const r = document.getElementById('sv-cres'); if (r) r.innerHTML = (UI.lib || []).slice(0, 8).map(it => `<button type="button" class="sv-row" data-sva="cpick" data-v="${esc(it.name)}"><b>${esc(it.name)}</b>${it.text ? `<small class="muted">${esc(it.text)}</small>` : ''}</button>`).join('') || (UI.cq.trim() ? '<p class="muted">Try another word.</p>' : ''); }), 250); return; }
     c.practice = c.practice || {name: '', why: '', steps: [], src: []};
-    if (kc === 'pname'){ c.practice.name = t.value.trim(); c.practice.src = []; keep(); }
+    if (kc === 'pname'){ c.practice.name = t.value.trim(); c.practice.src = []; ownApprove(c); keep(); }
     else if (kc === 'pwhy'){ c.practice.why = t.value.trim(); keep(); }
     else if (kc === 'psteps'){ c.practice.steps = t.value.split('\n').map(x => x.trim()).filter(Boolean).slice(0, 5); keep(); }
     return; }
@@ -547,6 +573,8 @@ window.GGVault = {
   count: () => { const V = SV(); return V ? V.stories.length : 0; },
   // Seal Grounded Stories from anywhere (the Access list and Ready to Upload): downloads data.js. Resolves true when done.
   seal: () => sealStories(),
+  // Run a Story Vault save that is waiting, now (BLD 788: index.html calls it when the page closes). True when one ran.
+  flush: () => flush(),
   busy: () => UI.busy,
   // for tests
   _previewOf: previewOf, _splitParas: splitParas, _ui: UI, _picErr: picErr, _cardLines: cardLines

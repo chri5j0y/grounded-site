@@ -3864,12 +3864,12 @@ window.GG_LEARN_GUIDES.grove = {
   {
    "id": "disability-together",
    "ring": "gw-illness",
-   "title": "Living With a Disability or Chronic Illness Together",
+   "title": "Living with a Disability or Chronic Illness Together",
    "you": {
     "id": "gr-g-disability-together-you",
     "guide": "disability-together",
     "side": "you",
-    "title": "Living With a Disability or Chronic Illness Together",
+    "title": "Living with a Disability or Chronic Illness Together",
     "sideName": "For the Group",
     "mins": 3,
     "blurb": "For everyone in a family or group living with a disability or long illness: every body welcome, every person known.",
@@ -3879,7 +3879,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Living With a Disability or Chronic Illness Together",
+      "h": "Living with a Disability or Chronic Illness Together",
       "sub": "For the Group",
       "say": "This is for all of us together, when someone we love lives with a disability or an illness that lasts a long time."
      },
@@ -3968,7 +3968,7 @@ window.GG_LEARN_GUIDES.grove = {
     "id": "gr-g-disability-together-helper",
     "guide": "disability-together",
     "side": "helper",
-    "title": "Living With a Disability or Chronic Illness Together",
+    "title": "Living with a Disability or Chronic Illness Together",
     "sideName": "For the Leader",
     "mins": 3,
     "blurb": "For the grown-up or group leader: ask, don't assume; plan for every body; and keep the helpers going.",
@@ -3981,7 +3981,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "title",
       "hero": "grove",
       "eyebrow": "When Life Changes Together",
-      "h": "Living With a Disability or Chronic Illness Together",
+      "h": "Living with a Disability or Chronic Illness Together",
       "sub": "For the Leader",
       "say": "This is for the parent, caregiver, or group leader walking with a family or group where someone lives with a disability or a long illness."
      },
@@ -4910,7 +4910,7 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Do less this year",
       "items": [
        [
-        "Buy the pie",
+        "Keep the meal simple",
         "Skip what drains you"
        ],
        [
@@ -4922,7 +4922,7 @@ window.GG_LEARN_GUIDES.grove = {
         "More rest"
        ]
       ],
-      "say": "It is okay to do less this year. Buy the pie. Skip the cards. Hand off one task to someone who offered to help. Fewer events, and more rest, leave room for grief.",
+      "say": "It is okay to do less this year. Keep the meal simple. Skip the cards. Hand off one task to someone who offered to help. Fewer events, and more rest, leave room for grief.",
       "cue": {
        "at": [
         1,
@@ -9829,7 +9829,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it is more than conflict",
-      "body": "Threats, harassment, or abuse: safety first. 911. MAARC.",
+      "body": "Threats, harassment, or abuse: safety first. 911. MAARC 1-844-880-1574.",
       "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center. If there is danger right now, call nine one one."
      },
      {
@@ -9937,7 +9937,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it is more than conflict",
-      "body": "Threats, harassment, or abuse: safety first. 911. MAARC.",
+      "body": "Threats, harassment, or abuse: safety first. 911. MAARC 1-844-880-1574.",
       "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center. If there is danger right now, call nine one one."
      },
      {
@@ -11096,7 +11096,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Abuse or neglect",
-      "body": "Follow your policy and the law. MAARC. Child protection. 911.",
+      "body": "Follow your policy and the law. MAARC 1-844-880-1574. Child protection. 911.",
       "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a vulnerable adult at risk to the Minnesota Adult Abuse Reporting Center, and a child at risk to child protection or nine one one. Never promise to keep harm a secret."
      },
      {
@@ -11211,7 +11211,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Abuse or neglect",
-      "body": "Follow your policy and the law. MAARC. Child protection. 911.",
+      "body": "Follow your policy and the law. MAARC 1-844-880-1574. Child protection. 911.",
       "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a vulnerable adult at risk to the Minnesota Adult Abuse Reporting Center, and a child at risk to child protection or nine one one. Never promise to keep harm a secret."
      },
      {

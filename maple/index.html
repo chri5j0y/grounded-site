@@ -3,8 +3,8 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
-<script src="/shared/gg-shelf.js?v=b787"></script>
-<script src="/shared/gg-sources.js?v=b787"></script>
+<script src="/shared/gg-shelf.js?v=b788"></script>
+<script src="/shared/gg-sources.js?v=b788"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -26,7 +26,7 @@
 <meta name="twitter:title" content="Maple by Grow With Grounded">
 <meta name="twitter:description" content="Bright leaves, strong roots. From Grow With Grounded.">
 <meta name="twitter:image" content="https://growwithgrounded.com/maple/share-image.png">
-<link rel="stylesheet" href="/fonts/fonts.css">
+<link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <link rel="stylesheet" href="/shared/gg-hero.css?v=b760">
 <style>
 :root{
@@ -870,7 +870,7 @@ a.big-btn{text-decoration:none;}
         <button class="soft-btn" onclick="go('life')">Find a guide</button>
       </div>
       <div class="grown-note">
-        <b>For grown-ups</b>
+        <b>For Grown-ups</b>
         <p>Maple builds spiritual and emotional resilience. It isn't a test and it doesn't diagnose anything. A check-in takes about 10 to 15 minutes.</p>
         <p>Everything stays on this device, private to your family.</p>
         <p><button class="link-btn" onclick="go('guide')">Read the grown-up guide</button></p>
@@ -922,13 +922,13 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-profiles.js?v=b782"></script>
-<script src="/shared/gg-life.js?v=b782"></script>
+<script src="/shared/gg-life.js?v=b788"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/maple/guides.js?v=b782"></script>
+<script src="/maple/guides.js?v=b788"></script>
 <script src="/maple/checkin.js?v=b782"></script>
 <script src="/maple/life.js?v=b782"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b787"></script>
+<script src="/shared/gg-library.js?v=b788"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
@@ -1988,12 +1988,12 @@ function renderResults(rec, lastKey) {
     note = `<div class="grown-open"><h3>For the grown-up</h3>${grownNoteHTML(info, name, rec)}</div>`;
   } else if (info.safe.length) {
     note = `<div class="calm-card"><h3>Thank you for telling</h3><p>That took courage. Please show this to a grown-up you trust today, like a parent, a teacher, or a school counselor.</p><p>You can call or text 988 any time to talk to someone kind. If you are in danger right now, call 911.</p><div class="action-row"><a class="big-btn" href="tel:911">Call 911</a><a class="soft-btn" href="tel:988">Call 988</a><a class="soft-btn" href="sms:988">Text 988</a></div></div>
-      <details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
+      <details class="grown-box"><summary>For Grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   } else if (info.concern) {
     note = `<div class="invite"><p>Your tree has had some rainy days. Show it to a grown-up you trust.</p></div>
-      <details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
+      <details class="grown-box"><summary>For Grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   } else {
-    note = `<details class="grown-box"><summary>For grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
+    note = `<details class="grown-box"><summary>For Grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   }
   $('view-results').innerHTML = `
     <div class="results">
@@ -2266,7 +2266,7 @@ function renderTree() {
       <div id="tree-body">${S.seasonSub === 'grown' ? grownTabHTML(kid) : checkinsTabHTML(kid)}</div>` : ''}</div>
     <div class="mp-pane" id="mp-plan" role="tabpanel"${tab === 'plan' ? '' : ' hidden'}></div>
     <div class="mp-pane" id="mp-guides" role="tabpanel"${tab === 'guides' ? '' : ' hidden'}></div>
-    <details class="grown-box grown-section"${S.mode === 'grown' ? ' open' : ''}><summary>For grown-ups</summary><div class="inner">
+    <details class="grown-box grown-section"${S.mode === 'grown' ? ' open' : ''}><summary>For Grown-ups</summary><div class="inner">
       ${info ? grownNoteHTML(info, kid.name, last) : '<p>No check-ins yet.</p>'}
       ${mpGrownTending(kid)}
       ${window.GGLife ? `<p style="margin-top:10px"><b>Their Health and Ability.</b> Choose together anything that's part of ${esc(kid.name)}'s life right now, so activities and guides that fit come first. It stays locked in ${esc(kid.name)}'s profile. <button class="link-btn" onclick="mpLifeDialog()">Their Health and Ability</button></p>${mpLifeLinesHtml()}` : ''}
@@ -2348,7 +2348,7 @@ function mpPracticeInfo(key, name) {
 }
 
 /* ---------- Their Health and Ability (GWG BLD 756, HA 1) ----------
-   The grown-up chooses it together with the child, in Settings or For grown-ups. It lives in the
+   The grown-up chooses it together with the child, in Settings or For Grown-ups. It lives in the
    child's locked Kids profile (shared/gg-life.js), never in open storage, a printout, or The Grove.
    The child sees only the effects: activities that fit come first with Fits You and their other
    way, guides Picked for You, and a few examples. Questions, scores, flags, and help lines never change.
@@ -2626,7 +2626,7 @@ function mpVisitCheck(force) {
   if (!force && MP_VISIT_ASKED === key) return;
   MP_VISIT_ASKED = key;
   const intro = `<p>${v.n ? esc(v.n) + ', here' : 'Here'} is a card from your Maple visit on ${esc(fmtKey(v.d, { month: 'long', day: 'numeric', year: 'numeric' }))}! It shows your strong parts and what you chose to try. It goes on your own tree.</p>
-    <p class="ggx-small">Grown-ups: the card holds only a first name, the date, the strong parts, and the practices chosen. You can remove it any time.</p>${v.pl === 1 ? `<p class="ggx-small"><b>For grown-ups:</b> ${MP_VISIT_PL}</p>` : ''}`;
+    <p class="ggx-small">Grown-ups: the card holds only a first name, the date, the strong parts, and the practices chosen. You can remove it any time.</p>${v.pl === 1 ? `<p class="ggx-small"><b>For Grown-ups:</b> ${MP_VISIT_PL}</p>` : ''}`;
   const drop = { t: "Skip for Now", kind: 'quiet', fn: () => { GGApp.visit.clear(); toast('The card was set aside.'); } };
   const nm = (v.n || '').toLowerCase(), first = id => String(kids[id].name || '').toLowerCase().split(/\s+/)[0];
   const order = ids.slice().sort((a, b) => (first(b) === nm) - (first(a) === nm) || String(kids[a].name).localeCompare(String(kids[b].name)));
@@ -2808,11 +2808,11 @@ function mpRenderGuides() {
   const young = isK2(MP_KID.grade);
   box.innerHTML = `<div class="banner-note mp-guides"><h3 class="kid">Your Six Parts</h3>
       ${PARTS.map(p => `<p>${dot(p)}<span><b style="color:${p.hex}">${p.name}</b> <span class="mp-sub">${esc(p.value)}</span><br>${esc(gradeData(p, young ? 'K' : '5').you)}</span></p>`).join('')}</div>
-    <div class="banner-note"><h3 class="kid">For grown-ups</h3><p>When Life Changes guides, and how Maple works.</p>
+    <div class="banner-note"><h3 class="kid">For Grown-ups</h3><p>When Life Changes guides, and how Maple works.</p>
       <div class="action-row"><button class="soft-btn" onclick="go('life')">When Life Changes</button><button class="soft-btn" onclick="go('guide')">Grown-up Guide</button></div></div>`;
 }
 
-/* For grown-ups: the big picture of tending, the week's story, and reflections the child shared. */
+/* For Grown-ups: the big picture of tending, the week's story, and reflections the child shared. */
 function mpGrownTending(kid) {
   const t = kid.tend || {}, days = t.days || {}, J = window.GGJourney || {};
   const recent = []; for (let i = 0; i < 7; i++) recent.push(addDays(dkey(), -i));
@@ -3039,9 +3039,9 @@ function renderGuide() {
   $('view-guide').innerHTML = `<div class="guide">
     <h2 class="grown">The Grown-up Guide</h2>
     <p class="lead">Maple&trade; is a gentle check-in for kids in grades K to 5. It helps children notice how they are growing inside and gives them small, doable ways to grow stronger. This guide is for parents, guardians, and teachers.</p>
-    <div class="action-row no-print" style="margin-top:0"><button class="soft-btn" onclick="printGuide()">Save or print this guide</button></div>
+    <div class="action-row no-print" style="margin-top:0"><button class="soft-btn" onclick="printGuide()">Save or Print This Guide</button></div>
     <nav class="guide-toc no-print" aria-label="Guide sections">
-      <a href="#g-what">What Maple is</a><a href="#g-how">How it works</a><a href="#g-talk">Talking about answers</a><a href="#g-parts">The Six Parts</a><a href="#g-parents">For parents and guardians</a><a href="#g-teachers">For teachers</a><a href="#g-changes">When life changes</a><a href="#g-reach">When to reach out</a><a href="#g-sources">Sources</a>
+      <a href="#g-what">What Maple is</a><a href="#g-how">How it works</a><a href="#g-talk">Talking about answers</a><a href="#g-parts">The Six Parts</a><a href="#g-parents">For parents and guardians</a><a href="#g-teachers">For teachers</a><a href="#g-changes">When Life Changes</a><a href="#g-reach">When to reach out</a><a href="#g-sources">Sources</a>
     </nav>
 
     <h3 class="grown" id="g-what">What Maple is</h3>
@@ -3099,7 +3099,7 @@ function renderGuide() {
       <li><b>About faith.</b> Roots, what grounds you, leaves room for children of all faith traditions and everything in-between to answer from their own family's tradition. Plain wording asks the same things without religious words, and a Maple Guide can set Plain for a whole school or group. Check with your school about how it fits your classroom.</li>
     </ul>
 
-    <h3 class="grown" id="g-changes">When life changes</h3>
+    <h3 class="grown" id="g-changes">When Life Changes</h3>
     <p>Big changes shake a child's whole tree: loss, illness, divorce, moves, scary news, and more. Maple has a full section called <b>When Life Changes</b> with 68 guides for parents, guardians, and teachers. Each has a quick reference and a full <b>Talking It Through</b> guide with what to say, questions kids ask, and when to get more help.</p>
     <p class="no-print"><button class="soft-btn" onclick="go('life')">Open When Life Changes</button></p>
 
@@ -3238,7 +3238,7 @@ function openTalk(id, from) {
   $('view-talk').innerHTML = `<article class="talk" style="--rc:${r.color}">
     <div class="action-row no-print" style="margin:0 0 14px">
       <button class="link-btn" onclick="${LIFE.from === 'tree' ? "go('tree')" : "go('life')"}">${LIFE.from === 'tree' ? 'Back to the tree' : 'Back to all guides'}</button>
-      <button class="soft-btn" style="margin-left:auto" onclick="printTalk()">Save or print this guide</button>
+      <button class="soft-btn" style="margin-left:auto" onclick="printTalk()">Save or Print This Guide</button>
     </div>
     <span class="ring-tag">${esc(r.name)}</span>
     <h2>${esc(t.title)}</h2>
@@ -3330,9 +3330,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b787" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b787';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b788';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b787" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b787';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b787" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b788';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b788" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

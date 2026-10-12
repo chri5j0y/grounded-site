@@ -379,7 +379,7 @@ function vFinish(){
     <ul class="fw-flist"><li><span>Date</span><span>${esc(nice(c.date))}</span></li>
     <li><span>${fam ? 'Check-in' : 'Quick Group Check-in'}</span><span>${answered() ? (c.quick ? 'Quick, held' : 'Full, held') : 'Not held'}</span></li>
     ${fam ? `<li><span>Plan parts</span><span>${esc(parts.join(', ') || 'None chosen')}</span></li><li><span>Practices</span><span>${esc(ps.join(', ') || 'None chosen')}</span></li>
-    <li><span>Send to The Grove</span><span>${c.code ? 'Sent, with their yes' : c.send === 'no' ? 'Not today' : 'Not sent'}</span></li><li><span>Next visit</span><span>${esc(c.next ? nice(c.next) : 'Not set')}</span></li>` : `<li><span>Session</span><span>${c.n || ''}</span></li>`}
+    <li><span>Send to The Grove</span><span>${c.code ? 'Sent, with their yes' : c.send === 'no' ? 'Not today' : 'Kept here'}</span></li><li><span>Next visit</span><span>${esc(c.next ? nice(c.next) : 'Not set')}</span></li>` : `<li><span>Session</span><span>${c.n || ''}</span></li>`}
     <li><span>Private notes</span><span>${Object.values(c.notes).filter(x => (x || '').trim()).length} ${Object.values(c.notes).filter(x => (x || '').trim()).length === 1 ? 'note' : 'notes'}</span></li></ul></div>
     <label class="f" for="gv-vdate">Visit date</label><input type="date" id="gv-vdate" data-gvm="date" value="${esc(c.date)}" style="max-width:220px">
     <div class="row" style="margin-top:14px"><button type="button" class="btn btn-gold" data-gva="save">Save the ${fam ? 'Visit' : 'Session'}</button><button type="button" class="btn btn-line" data-gva="discard">Leave Without Saving</button></div>`;

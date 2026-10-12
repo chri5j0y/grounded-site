@@ -217,7 +217,7 @@ const CHAPTERS = [
 // before the dash, so the From Pine list can group what was written.
 const PINE_CHAPTERS = {
   values: 'What Matters to Me',
-  strengths: 'What I\'m Good At and What I Love',
+  strengths: 'What I\'m Good at and What I Love',
   people: 'People in My Corner',
   paths: 'Paths I\'m Curious About',
   steps: 'My Next Small Steps',

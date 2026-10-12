@@ -8455,7 +8455,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "card",
-      "title": "Birch sends no alerts.",
+      "title": "Birch keeps their answers private.",
       "body": "Safety answers stay with them. Asking is how you find out.",
       "say": "If they use Birch, know this. Birch sends no alerts to anyone, and a helper never sees safety answers, even when they share their check-in. That privacy is on purpose, for adults. So asking them directly is how you find out."
      },
@@ -11665,12 +11665,12 @@ window.GG_LEARN_GUIDES.birch = {
   {
    "id": "living-well-mi",
    "ring": "life",
-   "title": "Living Well With a Serious Mental Illness",
+   "title": "Living Well with a Serious Mental Illness",
    "you": {
     "id": "br-g-living-well-mi-you",
     "guide": "living-well-mi",
     "side": "you",
-    "title": "Living Well With a Serious Mental Illness",
+    "title": "Living Well with a Serious Mental Illness",
     "sideName": "For You",
     "mins": 3,
     "blurb": "For the young adult living with a serious mental illness: recovery as a whole life, your warning signs, and your own team.",
@@ -11683,7 +11683,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Living Well With a Serious Mental Illness",
+      "h": "Living Well with a Serious Mental Illness",
       "sub": "For You",
       "say": "If you live with a serious mental illness, like bipolar disorder, schizophrenia, or severe depression, this is for you. Many people your age are building good lives with one. You can too."
      },
@@ -11782,7 +11782,7 @@ window.GG_LEARN_GUIDES.birch = {
     "id": "br-g-living-well-mi-helper",
     "guide": "living-well-mi",
     "side": "helper",
-    "title": "Living Well With a Serious Mental Illness",
+    "title": "Living Well with a Serious Mental Illness",
     "sideName": "For the Helper",
     "mins": 3,
     "blurb": "For the family member, partner, or friend of a young adult living with a serious mental illness: steady, respectful, and in it for the long haul.",
@@ -11795,7 +11795,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Living Well With a Serious Mental Illness",
+      "h": "Living Well with a Serious Mental Illness",
       "sub": "For the Helper",
       "say": "This is for the parent, partner, sibling, or friend of a young adult living with a serious mental illness. Your steady, respectful presence is one of the strongest supports they can have."
      },
@@ -12550,12 +12550,12 @@ window.GG_LEARN_GUIDES.birch = {
   {
    "id": "dating-disability",
    "ring": "life",
-   "title": "Dating and Marriage With a Disability or Illness",
+   "title": "Dating and Marriage with a Disability or Illness",
    "you": {
     "id": "br-g-dating-disability-you",
     "guide": "dating-disability",
     "side": "you",
-    "title": "Dating and Marriage With a Disability or Illness",
+    "title": "Dating and Marriage with a Disability or Illness",
     "sideName": "For You",
     "mins": 3,
     "blurb": "For the young adult dating or married with a disability or illness: your worth, your timing, and partners who treat you as an equal.",
@@ -12565,7 +12565,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Dating and Marriage With a Disability or Illness",
+      "h": "Dating and Marriage with a Disability or Illness",
       "sub": "For You",
       "say": "If you live with a disability or a health condition and you're dating, in a relationship, or thinking about marriage, this is for you. You deserve love and respect, and you have a lot to offer."
      },
@@ -12645,7 +12645,7 @@ window.GG_LEARN_GUIDES.birch = {
     "id": "br-g-dating-disability-helper",
     "guide": "dating-disability",
     "side": "helper",
-    "title": "Dating and Marriage With a Disability or Illness",
+    "title": "Dating and Marriage with a Disability or Illness",
     "sideName": "For the Helper",
     "mins": 3,
     "blurb": "For the family member, friend, or partner of a young adult dating with a disability or illness: cheer them on, respect their choices, and share the load.",
@@ -12655,7 +12655,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Dating and Marriage With a Disability or Illness",
+      "h": "Dating and Marriage with a Disability or Illness",
       "sub": "For the Helper",
       "say": "This is for the parent, sibling, friend, or partner of a young adult dating with a disability or a health condition. They have the same hopes as anyone: love, respect, and a life together."
      },

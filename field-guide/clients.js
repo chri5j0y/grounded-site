@@ -299,7 +299,7 @@ function custom(f, sid){
 }
 function star(f, key, lab){
   const on = !!f.stars[key];
-  return `<button type="button" class="fw-star" data-cla="star" data-clv="${esc(key)}" data-cll="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back To This</button>`;
+  return `<button type="button" class="fw-star" data-cla="star" data-clv="${esc(key)}" data-cll="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back to This</button>`;
 }
 function blk(f, title, key, inner, sub){
   return `<section class="fw-blk"><div class="fw-blk-h"><h3>${esc(title)}</h3>${f && key ? star(f, key, title) : ''}</div>${sub ? `<p class="fw-sub">${esc(sub)}</p>` : ''}${inner}</section>`;
@@ -359,7 +359,7 @@ function waBlk(f){ const W = cfg().writingAssistant, w = (f.privacy || {}).wa ||
     <div class="fw-chips" role="group" aria-label="Their answer">${[['yes', 'Yes'], ['no', 'No, Thank You']].map(([k, l]) => `<button type="button" class="chip" data-cla="wa" data-clv="${k}" aria-pressed="${w.ans === k}"${fk('wa|' + k)}>${l}</button>`).join('')}</div>
     <div class="fw-who"><span class="fw-lbl">How</span>${WA_HOW.map(([k, l]) => `<button type="button" class="chip fw-sm" data-cla="wa-how" data-clv="${k}" aria-pressed="${w.how === k}"${fk('wah|' + k)}>${l}</button>`).join('')}</div>
     ${w.ans ? `<p class="cl-ok" role="status">Writing help: ${w.ans === 'yes' ? 'yes' : 'no'}${w.how ? ', ' + esc((WA_HOW.find(x => x[0] === w.how) || ['', w.how])[1].toLowerCase()) : ''}, ${esc(nice(w.date))}. Saved with the file.</p>` : ''}`, W.sub); }
-const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${noticeItems().map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What Stays With You</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
+const NOTICE = big => `<div class="cl-notice${big ? ' big' : ''}">${noticeItems().map(n => `<div class="cl-ni"><h4>${esc(n.h)}</h4><p>${esc(n.p)}</p></div>`).join('')}<div class="cl-ni never"><h4>What Stays with You</h4><p>${esc(cfg().neverKeep)}</p></div></div>`;
 const V = {};
 V[1] = f => sayBox(STEP(1).say, '', f) +
   (saved(f) ? '' : `<div class="cl-banner" role="note">Nothing is saved yet. Record their yes below, and the file is saved, encrypted on this device.</div>`) +
@@ -461,7 +461,7 @@ const fChips = (f, id) => `<div class="fw-fchips">${items(f, LMAP[id] || id).map
 const fsec = (h, x) => `<div class="fw-fsec"><h3>${esc(h)}</h3>${x}</div>`;
 const flist = rows => `<ul class="fw-flist">${rows.map(r => `<li><span>${r[0]}</span><span>${r[1] || ''}</span></li>`).join('')}</ul>`;
 const FV = {};
-FV[1] = f => fsec('How We Keep What You Share', NOTICE(true)) + fsec('Is That All Right With You?', fChips(f, 'yesHow')) +
+FV[1] = f => fsec('How We Keep What You Share', NOTICE(true)) + fsec('Is That All Right with You?', fChips(f, 'yesHow')) +
   fsec(cfg().writingAssistant.h || 'Writing Help', `<p class="fw-big">${esc(cfg().writingAssistant.ask)}</p>${((f.privacy || {}).wa || {}).ans ? `<p class="fw-soft">${f.privacy.wa.ans === 'yes' ? '&#10003; Yes' : 'No, thank you'}</p>` : ''}`);
 FV[2] = f => fsec("How We'll Reach You", flist([['Name', esc(fTitle(f))], ['Phone', esc(f.c.phone)], ['Email', esc(f.c.email)], ['Address', esc([f.c.addr, f.c.city].filter(Boolean).join(', '))]])) + fsec('Best Ways', fChips(f, 'reach')) + fsec('Best Times', fChips(f, 'times'));
 FV[3] = f => fsec("What We're Planning", `<p class="fw-big">${esc(picked(f, 'svc').join(', ') || 'Still choosing')}</p>`) +
@@ -520,14 +520,14 @@ function vPhone(f){
 // ---------- the Intake page ----------
 function cbt(f){
   const ks = Object.keys(f.stars);
-  return `<h2>Come Back To This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-cla="step" data-clv="${f.stars[k].step}">&#9733; ${esc(f.stars[k].label)} <span class="muted">(Step ${f.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
+  return `<h2>Come Back to This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-cla="step" data-clv="${f.stars[k].step}">&#9733; ${esc(f.stars[k].label)} <span class="muted">(Step ${f.stars[k].step})</span></button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
 }
 function vIntake(){
   let f = cur();
   if (!f){ S.draft = f = newFile(); S.step = 1; }
   const n = S.step, st = STEP(n), mode = S.mode;
   const body = mode === 'family' ? `<div class="fw-famwrap">${famBody(f, true)}</div>` : mode === 'phone' ? vPhone(f) : V[n](f);
-  return `<div class="fw-head"><div style="min-width:0"><div class="eyebrow">Intake Session${saved(f) ? '' : ' · Not Saved Yet'}</div><h1 id="cl-title">${esc(fTitle(f))}</h1></div>
+  return `<div class="fw-head"><div style="min-width:0"><div class="eyebrow">Intake Session${saved(f) ? '' : ' · Saves Once They Say Yes'}</div><h1 id="cl-title">${esc(fTitle(f))}</h1></div>
     <div class="fw-modes" role="group" aria-label="View">${[['chris', me() + "'s View"], ['family', 'Family View Here'], ['phone', 'Phone Mode']].map(([k, l]) => `<button type="button" class="chip" data-cla="mode" data-clv="${k}" aria-pressed="${mode === k}"${fk('md|' + k)}>${esc(l)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-cla="famwin">Open Family View Window</button></div></div>
   <div class="fw-lay"><nav class="fw-rail" aria-label="Steps"><ol>${cfg().steps.map((s, i) => `<li><button type="button" data-cla="step" data-clv="${i + 1}"${n === i + 1 ? ' aria-current="step"' : ''}${fk('rs|' + (i + 1))}><span class="n">${i + 1}</span><span>${esc(s.title)}</span></button></li>`).join('')}</ol><div class="fw-cbt">${cbt(f)}</div></nav>
   <div id="cl-main" style="min-width:0"><div class="fw-kick">Step ${n} of ${CNT}${mode === 'family' ? ' &middot; Family View' : mode === 'phone' ? ' &middot; Phone Mode' : ''}</div><h2 style="margin:2px 0 6px">${esc(st.title)}</h2>

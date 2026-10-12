@@ -632,7 +632,7 @@ function faithStep(ck) {
   const head = `<div class="step-head"><div><div class="step-count">${self ? '' : 'Asked of ' + n + ', in their own words'}</div><h2 class="step-title" style="--domain-color:var(--p-roots)">Faith, spirit, or something else</h2></div></div>`;
   if (r.faith && !ck.faithEdit) {
     return head + `<p class="lead">Last time${r.faith.date ? ', on ' + nice(r.faith.date) : ''}: ${faithSummary(r.faith)}</p>
-      ${r.faith.never ? `<p class="w-small"><b>Never do:</b> ${esc(r.faith.never)}</p>` : ''}
+      ${r.faith.never ? `<p class="w-small"><b>Please Keep in Mind:</b> ${esc(r.faith.never)}</p>` : ''}
       <p class="lead">Is that still true${self ? ' for you' : ' for ' + n}?</p>
       <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.step(1)">Yes, still true</button><button type="button" class="btn btn-secondary" onclick="W.S.ck.faithEdit=true;W.render()">Something has changed</button></div>`;
   }
@@ -772,7 +772,7 @@ const MATTERS = [
   ['worry', 'What worries me', 'Pain, the people I\'m leaving, the money, what comes after.'],
   ['close', 'Who I want close', 'And who I wish were here.'],
   ['comfort', 'What comforts me', 'Music, readings, prayers, touch, light or dark, a window open.'],
-  ['never', 'Anything we should never do', F.intake.neverEx.replace(/"/g, '')]
+  ['never', 'Anything we should steer clear of', F.intake.neverEx.replace(/"/g, '')]
 ];
 const VIGIL = (C.guide.vigil || []).map((v, i) => ['vigil' + i, v[0], v[1]]);
 VIEWS.matters = () => {
@@ -896,10 +896,10 @@ VIEWS.bedside = () => {
   h += lineHtml();
   if (person && r.faith && (r.faith.trad || r.faith.never) && sees('faith')) {
     h += `<h3 class="section-title">${a && t === a.id ? 'Your' : n + '\'s'} faith</h3>`;
-    if (r.faith.never) h += `<div class="w-card w-never"><p class="w-eyebrow">Never do</p><p>${esc(r.faith.never)}</p></div>`;
+    if (r.faith.never) h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.faith.never)}</p></div>`;
     if (r.faith.trad && F.cards[r.faith.trad]) h += cardHtml(r.faith.trad, (a && t === a.id ? 'Your' : n + '\'s') + ' tradition');
   } else if (person && r.matters && r.matters.never && sees('matters')) {
-    h += `<div class="w-card w-never"><p class="w-eyebrow">Never do</p><p>${esc(r.matters.never)}</p></div>`;
+    h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.matters.never)}</p></div>`;
   }
   h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud">${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
   h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud">${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
@@ -936,7 +936,7 @@ VIEWS.guides = () => {
       <button class="lc-chip" style="--rc:var(--ink-soft)" aria-pressed="${st.ring === 'all'}" onclick="W.S.guide.ring='all';W.render()">All</button>
       ${G.rings.map(r => `<button class="lc-chip" style="--rc:${RING_COLOR[r[0]]}" aria-pressed="${st.ring === r[0]}" onclick="W.S.guide.ring='${r[0]}';W.render()">${esc(r[1])}</button>`).join('')}
     </div><div id="w-glist">${gListHtml()}</div>
-    <p class="lc-note">${esc(G.foot)} These guides offer general spiritual and emotional support. They are not medical care, therapy, or legal advice. In danger now, call 911. Thinking about ending your life, call or text 988.</p>`;
+    <p class="lc-note">Worried? Call your hospice's 24/7 line first, day or night. In danger now, call 911. Thinking about ending your life, call or text 988. These guides offer spiritual and emotional support alongside your hospice team. For medical, therapy, or legal questions, turn to your hospice nurse, your doctor, a therapist, or a lawyer.</p>`;
   return h;
 };
 function gListHtml() {
@@ -963,7 +963,7 @@ function guideHtml(g) {
   const body = g.parts.filter(p => p[0] !== 'pro').map(p => p[0] === 'say' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-say"><p>${esc(p[1])}</p></div>` : p[0] === 'dont' ? `<h3>${esc(G.labels[p[0]])}</h3><div class="lc-reach"><p>${esc(p[1])}</p></div>` : `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('');
   const pro = g.parts.find(p => p[0] === 'pro');
   return `<article class="lc-article" id="w-guide" style="--rc:${rc}">
-    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeGuide()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or print this guide</button></div>
+    <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeGuide()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or Print This Guide</button></div>
     <span class="lc-tag">${esc(ring ? ring[1] : '')}</span><h2>${esc(g.title)}</h2>
     ${guideVids(g.id)}
     <div data-read="Read this guide aloud">${body}</div>
@@ -991,9 +991,14 @@ function watchGuide(gid, side) { if (window.GGLearn) GGLearn.open('willow', 'wl-
 window.GG_GUIDE_OPEN = window.GG_GUIDE_OPEN || {};
 window.GG_GUIDE_OPEN.willow = id => { if (G.guides.some(g => g.id === id)) openGuide(id); };
 ['gg-learn-close', 'gg-learn-marks'].forEach(ev => window.addEventListener(ev, () => { if (S.tab === 'guides' && S.guide.open) { const y = window.scrollY; render(); window.scrollTo(0, y); } }));
+// Save or Print This Guide (BLD 788): the share sheet with a real PDF (shared/gg-pdf.js), Print as the backup.
 function printGuide(id) {
   const g = G.guides.find(x => x.id === id); if (!g) return;
-  printHtml(g.title, g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>` + (window.GGSources ? GGSources.html('willow:' + g.id) : ''));
+  const html = g.parts.map(p => `<h3>${esc(G.labels[p[0]] || p[0])}</h3><p>${esc(p[1])}</p>`).join('') + `<p>${esc(G.foot)}</p>` + (window.GGSources ? GGSources.html('willow:' + g.id) : '');
+  const now = () => printHtml(g.title, html);
+  if (!window.GGApp || !window.ggPdfFromHTML) { now(); return; }
+  GGApp.sheet({ title: g.title, file: 'willow-' + g.id + '.pdf', print: now,
+    blocks: () => ggPdfFromHTML(`<h1>${esc(g.title)}</h1>` + html, { eyebrow: 'Willow by Grow With Grounded', foot: 'Willow(TM) by Grow With Grounded. growwithgrounded.com/willow' }) });
 }
 
 /* ---------- Readings ---------- */

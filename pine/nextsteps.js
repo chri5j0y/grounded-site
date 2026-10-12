@@ -72,7 +72,7 @@ const CHAPTERS = [
       { id: 'values-5', t: 'Someone whose way of living you respect.', help: 'Someone you know, or someone you have only read about. What do they get right?' },
       { id: 'values-6', t: 'A way you want to make a difference, now or someday.', help: 'At home, at school, at work, on a team, in your town, or for people you will never meet.' }
     ] },
-  { id: 'strengths', title: 'What I\'m Good At and What I Love', optIn: false,
+  { id: 'strengths', title: 'What I\'m Good at and What I Love', optIn: false,
     lead: 'Strengths are what you do well. Sparks are what light you up. Both point somewhere.',
     prompts: [
       { id: 'strengths-1', t: 'Something people count on you for.', help: 'Fixing things, listening, making people laugh, showing up on time, keeping the group organized.' },

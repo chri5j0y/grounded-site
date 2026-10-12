@@ -261,7 +261,7 @@
       build: "Ask to meet once a month. Bring your questions, not just answers.",
       hard: "A good director or leader listens more than they tell. If anyone in a faith setting makes you feel unsafe, pressured, or asked to keep secrets, that's not okay. Step away and talk with someone you trust.",
       vary: "If faith isn't part of your life, talk with someone wise you trust about what matters most to you." },
-    plain: { n: 'Talk With Someone Wise', d: "Talk with someone further along the road about what matters most to you right now.",
+    plain: { n: 'Talk with Someone Wise', d: "Talk with someone further along the road about what matters most to you right now.",
       g: { why: "Big questions can be hard to sort out alone, especially when life is changing. Someone who listens without pushing can help you think in your own way.",
         today: "Name one person you trust: a mentor, a counselor, an older relative, a boss you respect. Write down one thing you'd like to talk about.",
         build: "Ask to talk once a month. Bring your questions, not just answers.",

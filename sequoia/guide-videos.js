@@ -7151,7 +7151,9 @@ window.GG_LEARN_GUIDES.sequoia = {
     "blurb": "For anyone caring for a husband, wife, or partner who needs more help now.",
     "sources": [
      "aarpcg",
-     "schulzbeach"
+     "schulzbeach",
+     "metta",
+     "fredrickson"
     ],
     "scenes": [
      {
@@ -9608,12 +9610,12 @@ window.GG_LEARN_GUIDES.sequoia = {
   {
    "id": "veterans",
    "ring": "belong",
-   "title": "Veterans Aging",
+   "title": "Growing Older as a Veteran",
    "you": {
     "id": "sq-g-veterans-you",
     "guide": "veterans",
     "side": "you",
-    "title": "Veterans Aging",
+    "title": "Growing Older as a Veteran",
     "sideName": "For You",
     "mins": 4,
     "blurb": "For the veteran growing older, with pride, memories, and maybe some pain.",
@@ -9625,7 +9627,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Veterans Aging",
+      "h": "Growing Older as a Veteran",
       "sub": "For You",
       "say": "If you served in the military, in war or in peace, and you are growing older, this is for you. Your service is part of your story, and it still matters."
      },
@@ -9722,7 +9724,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "id": "sq-g-veterans-helper",
     "guide": "veterans",
     "side": "helper",
-    "title": "Veterans Aging",
+    "title": "Growing Older as a Veteran",
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For anyone who loves or helps an older veteran.",
@@ -9734,7 +9736,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Veterans Aging",
+      "h": "Growing Older as a Veteran",
       "sub": "For the Helper",
       "say": "If you love or help an older veteran, this is for you. Your interest and respect can mean a great deal, even if they say very little."
      },
@@ -9834,12 +9836,12 @@ window.GG_LEARN_GUIDES.sequoia = {
   {
    "id": "invisible",
    "ring": "belong",
-   "title": "Feeling Invisible Because of Age",
+   "title": "Feeling Invisible or Written Off Because of Age",
    "you": {
     "id": "sq-g-invisible-you",
     "guide": "invisible",
     "side": "you",
-    "title": "Feeling Invisible Because of Age",
+    "title": "Feeling Invisible or Written Off Because of Age",
     "sideName": "For You",
     "mins": 3,
     "blurb": "For the older adult who feels overlooked, talked over, or written off because of age.",
@@ -9853,7 +9855,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Feeling Invisible Because of Age",
+      "h": "Feeling Invisible or Written Off Because of Age",
       "sub": "For You",
       "say": "If people have started looking past you, talking over you, or treating you as if you have less to offer because of your age, this is for you. You are still here, and you still count."
      },
@@ -9954,7 +9956,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "id": "sq-g-invisible-helper",
     "guide": "invisible",
     "side": "helper",
-    "title": "Feeling Invisible Because of Age",
+    "title": "Feeling Invisible or Written Off Because of Age",
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For anyone who wants to help an older adult stay seen and heard.",
@@ -9967,7 +9969,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Feeling Invisible Because of Age",
+      "h": "Feeling Invisible or Written Off Because of Age",
       "sub": "For the Helper",
       "say": "If someone you love is being overlooked, talked over, or written off because of their age, this is for you. Small habits from you can help them stay seen and heard."
      },
@@ -11681,12 +11683,12 @@ window.GG_LEARN_GUIDES.sequoia = {
   {
    "id": "adult-child-disability",
    "ring": "life",
-   "title": "Who Will Help My Adult Child?",
+   "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
    "you": {
     "id": "sq-g-adult-child-disability-you",
     "guide": "adult-child-disability",
     "side": "you",
-    "title": "Who Will Help My Adult Child?",
+    "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
     "sideName": "For You",
     "mins": 4,
     "blurb": "For the parent wondering who will help their adult son or daughter someday.",
@@ -11698,7 +11700,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Who Will Help My Adult Child?",
+      "h": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
       "sub": "For You",
       "say": "If you are the parent of an adult son or daughter with a disability, and you wonder who will help them when you can't, this is for you. Stay with me for a few minutes."
      },
@@ -11808,7 +11810,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "id": "sq-g-adult-child-disability-helper",
     "guide": "adult-child-disability",
     "side": "helper",
-    "title": "Who Will Help My Adult Child?",
+    "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
     "sideName": "For the Helper",
     "mins": 3,
     "blurb": "For anyone walking beside an older parent of an adult with a disability.",
@@ -11820,7 +11822,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "title",
       "hero": "sequoia",
       "eyebrow": "When Life Changes",
-      "h": "Who Will Help My Adult Child?",
+      "h": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
       "sub": "For the Helper",
       "say": "If you are close to an older parent who cares for an adult son or daughter with a disability, this is for you. You might be a sibling, a relative, a friend, or a neighbor. You can help the future feel less lonely."
      },
@@ -11886,7 +11888,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Point to the right helpers.",
-      "sub": "The Arc, the county, a lawyer.",
+      "sub": "The Arc, the county, a lawyer. MAARC 1-844-880-1574.",
       "say": "Point them to the right helpers, instead of giving legal or money advice yourself. Future planning help through The Arc. Their county case manager. And a lawyer who knows disability planning. If you ever believe a vulnerable adult is being hurt or neglected, in Minnesota call MAARC, and for danger right now, call 911."
      },
      {

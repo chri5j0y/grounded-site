@@ -3,7 +3,7 @@
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // One shared engine every session guide plugs into, to the Farewell standard: built for eye contact (big Say lines,
 // tap chips, a custom box and Add Your Own everywhere, little typing), a Family View in its own window with Follow My
-// Scroll, Phone Mode, Come Back To This, Tidy Up Later, a plan that grows across meetings with Since Last Time, the
+// Scroll, Phone Mode, Come Back to This, Tidy Up Later, a plan that grows across meetings with Since Last Time, the
 // client file link, printouts and Send Everything, approval, a follow-up plan with ready emails and call prompts,
 // Copy for Writing Help with placeholders, the session saved into Start a Session's records, the debrief offer, and
 // the crisis lines.
@@ -181,7 +181,7 @@ const pageT = (p, k) => typeof k === 'number' ? fill((steps(p)[k] || {}).title |
 const sayBox = (p, L) => arr(L).map(t => fill(t, p)).filter(Boolean).map(t => `<div class="fw-say"><b>Say</b><q>${esc(t)}</q></div>`).join('');
 function star(p, key, lab){
   const on = !!p.stars[key];
-  return `<button type="button" class="fw-star" data-rka="star" data-rkv="${esc(key)}" data-rkl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back To This</button>`;
+  return `<button type="button" class="fw-star" data-rka="star" data-rkv="${esc(key)}" data-rkl="${esc(lab)}" aria-pressed="${on}"${fk('st|' + key)}><span aria-hidden="true">${on ? '&#9733;' : '&#9734;'}</span> Come Back to This</button>`;
 }
 const blk = (p, title, key, inner, sub) => `<section class="fw-blk" data-rkanc="${esc(key)}"><div class="fw-blk-h"><h3>${esc(title)}</h3>${key ? star(p, key, title) : ''}</div>${sub ? `<p class="fw-sub">${esc(sub)}</p>` : ''}${inner}</section>`;
 const addOwn = (id, ph) => `<div class="fw-add"><input type="text" data-rkown="${esc(id)}" aria-label="Add your own" placeholder="${esc(ph || 'Something else? Type it here')}" autocomplete="off"><button type="button" class="btn btn-line btn-sm" data-rka="own" data-rkv="${esc(id)}"${fk('own|' + id)}>Add Your Own</button></div>`;
@@ -295,7 +295,7 @@ function sinceBlk(p){
   return `<section class="fw-blk rk-sl" data-rkanc="since"><div class="fw-blk-h"><h3>Since Last Time</h3><span class="muted">${esc(nice(last.date))}${g.title ? ', ' + esc(g.title) : ''}</span></div>
     ${last.summary ? `<p>${esc(last.summary)}</p>` : ''}${last.nx ? `<p><b>Next steps we set:</b> ${esc(last.nx)}</p>` : ''}
     ${rows.length ? `<ul class="fw-flist">${rows.map(r => `<li><span>${esc(r[0])}</span><span>${esc(r[1]).replace(/\n/g, '<br>')}</span></li>`).join('')}</ul>` : ''}
-    ${st.length ? `<p class="fw-sub"><b>Come Back To This:</b> ${esc(st.join('; '))}</p>` : ''}
+    ${st.length ? `<p class="fw-sub"><b>Come Back to This:</b> ${esc(st.join('; '))}</p>` : ''}
     ${fuDone.length ? `<p class="fw-sub"><b>Follow-ups done since:</b> ${esc(fuDone.map(t => t.title).join('; '))}</p>` : ''}
     <p class="fw-sub" style="margin-bottom:0">${L.length} earlier ${L.length === 1 ? 'meeting' : 'meetings'} in this plan.</p></section>`;
 }
@@ -332,7 +332,7 @@ function touches(p){
       const b2 = ta ? (ta === 'meeting' ? (m0 ? m0.date : '') : /^\d{4}-\d\d-\d\d$/.test(p.v[ta] || '') ? p.v[ta] : '') : base, dt = b2 ? addDays(b2, +t.days || 0) : '';
       const an = ta ? (ta === 'meeting' ? '' : ta) : F.anchor && F.anchor !== 'meeting' ? F.anchor : '';
       out.push({id: id + ':' + t.id, g: id, f: t, anchor: an, title: fill(t.title || 'Follow-Up', p), date: dt, past: !!(dt && from && dt < from)}); }); });
-  arr(p.fuOwn).forEach(o => out.push({id: o.id, own: true, f: {title: o.title}, title: o.title || 'My Own Check-In', date: o.date || ''}));
+  arr(p.fuOwn).forEach(o => out.push({id: o.id, own: true, f: {title: o.title}, title: o.title || 'My Own Check-in', date: o.date || ''}));
   return out.sort((a, b) => (a.date || '9999').localeCompare(b.date || '9999'));
 }
 const cfu = (p, t) => { const c = person(p); return c ? arr(c.followups).find(f => f.rk === p.id && f.tid === t.id) || null : null; };
@@ -362,9 +362,9 @@ function vFu(p){
         ${t.own ? '' : `${em.body ? `<div class="fw-box"><h4>Ready-to-Send Email</h4><div class="fw-words">${esc(body)}</div><div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-rka="fu-copy" data-rkv="${esc(t.id)}">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(p.ct.em, sub, body))}">Open in Mail</a></div></div>` : ''}
         ${cl.open || arr(cl.questions).length ? `<div class="fw-box"><h4>Phone Call</h4>${cl.open ? `<div class="fw-lbl">Opening</div><p>"${esc(fill(cl.open, p))}"</p>` : ''}${arr(cl.questions).length ? `<div class="fw-lbl">Gentle questions</div><ul>${cl.questions.map(q => `<li>${esc(fill(q, p))}</li>`).join('')}</ul>` : ''}${cl.listenFor ? `<div class="fw-lbl">Listen for</div><p>${esc(fill(cl.listenFor, p))}</p>` : ''}${cl.moreSupport ? `<div class="fw-lbl">When to suggest more support</div><p>${esc(fill(cl.moreSupport, p))}</p>` : ''}<div class="fw-crisis">${esc(crisisText(p))}</div></div>` : ''}
         ${f.resource ? `<div class="fw-box fw-full"><h4>Resource to Share</h4><p>${esc(fill(f.resource, p))}</p></div>` : ''}`}
-        <div class="fw-box fw-full"><label class="fw-ck"><input type="checkbox" data-rkfd="${esc(t.id)}"${dn ? ' checked' : ''}> Done</label><textarea rows="2" data-rki="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-rka="fu-del" data-rkv="${esc(t.id)}">Remove This Check-In</button>` : ''}</div>
+        <div class="fw-box fw-full"><label class="fw-ck"><input type="checkbox" data-rkfd="${esc(t.id)}"${dn ? ' checked' : ''}> Done</label><textarea rows="2" data-rki="fu.${esc(t.id)}.note" aria-label="Note for ${esc(t.title)}" placeholder="How it went, a few words">${esc(st.note || '')}</textarea>${t.own ? `<button type="button" class="linkbtn" data-rka="fu-del" data-rkv="${esc(t.id)}">Remove This Check-in</button>` : ''}</div>
       </div></details>`; }).join('') || '<p class="muted">No follow-ups in this plan yet.</p>'}</div>
-    <section class="fw-blk"><h3>Add Your Own Check-In</h3><div class="fw-g3"><div class="fw-fld"><label class="f" for="rk-fuo-t">What</label><input type="text" id="rk-fuo-t" placeholder="A hard date, a birthday, a milestone..." autocomplete="off"></div><div class="fw-fld"><label class="f" for="rk-fuo-d">Date</label><input type="date" id="rk-fuo-d"></div><div class="fw-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-rka="fu-add">Add Your Own</button></div></div></section>` +
+    <section class="fw-blk"><h3>Add Your Own Check-in</h3><div class="fw-g3"><div class="fw-fld"><label class="f" for="rk-fuo-t">What</label><input type="text" id="rk-fuo-t" placeholder="A hard date, a birthday, a milestone..." autocomplete="off"></div><div class="fw-fld"><label class="f" for="rk-fuo-d">Date</label><input type="date" id="rk-fuo-d"></div><div class="fw-fld" style="align-self:end"><button type="button" class="btn btn-line btn-sm" data-rka="fu-add">Add Your Own</button></div></div></section>` +
     custom(p, 'followup') + note(p, 'followup');
 }
 
@@ -658,7 +658,7 @@ function rail(p){
 }
 function cbt(p){
   const ks = Object.keys(p.stars);
-  return `<h2>Come Back To This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-rka="goto" data-rkv="${esc(k)}">&#9733; ${esc(p.stars[k].label)}</button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
+  return `<h2>Come Back to This</h2>${ks.length ? `<ul>${ks.map(k => `<li><button type="button" data-rka="goto" data-rkv="${esc(k)}">&#9733; ${esc(p.stars[k].label)}</button></li>`).join('')}</ul>` : '<p class="empty">Tap a star on any step to save it here.</p>'}`;
 }
 function vPlan(p){
   const n = S.step, P = pages(p), k = kit(p), m = meet(p), g = G(curG(p)) || {}, mode = S.mode, num = typeof n === 'number', st = num ? steps(p)[n] : null;

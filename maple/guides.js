@@ -57,7 +57,7 @@ const M = {
 
 const TOPICS = [
 /* ---------------- INSIDE ME ---------------- */
-{ id: 'worry', ring: 'inside', title: "Worry that won't let go", keys: 'anxiety anxious nervous fear scared stomachaches worry',
+{ id: 'worry', ring: 'inside', title: "Worry That Won't Let Go", keys: 'anxiety anxious nervous fear scared stomachaches worry',
   quick: ['Worry is a feeling, not a fact. Name it together and help it shrink.', 'Stay calm and brief. Long reassurance can feed worry.', 'Help them face small fears in small steps instead of avoiding them.', 'Tummy aches and trouble sleeping can be worry in disguise.'],
   rainy: 'Bark and Fruit', acts: ['name-it', 'balloon-breaths', 'feelings-weather'],
   k2: 'Younger kids often show worry in their bodies: tummy aches, clinging, tears at drop-off, or lots of "what if" questions at bedtime.',
@@ -73,7 +73,7 @@ const TOPICS = [
   reach: ['Worry keeps them from school, sleep, or friends for more than a few weeks.', 'Panic attacks, or worries that come with rituals they must repeat.'],
   more: [M.cmi, M.aap] },
 
-{ id: 'anger', ring: 'inside', title: 'Anger and big outbursts', keys: 'anger mad meltdown tantrum hitting yelling outbursts',
+{ id: 'anger', ring: 'inside', title: 'Anger and Big Outbursts', keys: 'anger mad meltdown tantrum hitting yelling outbursts',
   quick: ['Anger is okay. Hurting people or things is not. Say both.', 'Talk after the storm, not during it. First help their body calm down.', 'Look for the feeling under the anger: hurt, scared, tired, or embarrassed.', 'Stay steady. Your calm is the lighthouse.'],
   rainy: 'Bark and Leaves', acts: ['name-it', 'balloon-breaths', 'move-wiggle'],
   k2: 'Young kids have small words for big feelings, so anger comes out in hitting, throwing, screaming, or collapsing on the floor.',
@@ -89,7 +89,7 @@ const TOPICS = [
   reach: ['Outbursts are frequent, dangerous, or getting worse.', 'Anger seems to cover deep sadness or something that happened to them.'],
   more: [M.cmi, M.aap] },
 
-{ id: 'meltdown', ring: 'inside', title: 'In the middle of a meltdown', keys: 'meltdown tantrum de-escalate deescalate de-escalation calm down out of control screaming hitting kicking biting throwing running away bolting escalating escalate blowup blow up losing it flipping out classroom',
+{ id: 'meltdown', ring: 'inside', title: 'In the Middle of a Meltdown', keys: 'meltdown tantrum de-escalate deescalate de-escalation calm down out of control screaming hitting kicking biting throwing running away bolting escalating escalate blowup blow up losing it flipping out classroom',
   quick: ['Safety first. Move other kids and breakable things away. Hold the child only if someone is about to get hurt.', 'Calm your own body first: slow breath, soft voice, get low and a little to the side.', 'Use very few words, the same ones each time: “I’m here. You’re safe. I’ll wait.”', 'No lessons, questions, or consequences until they are calm. Talk it through later.'],
   rainy: 'Bark and Leaves', acts: ['balloon-breaths', 'name-it', 'move-wiggle'],
   k2: 'Younger kids may scream, drop to the floor, hit, kick, bolt, or cry so hard they can’t catch their breath. The thinking part of the brain is offline for now. Words bounce off, but your calm body and voice still get through.',
@@ -105,7 +105,7 @@ const TOPICS = [
   reach: ['Meltdowns happen most days, last a long time, or are getting worse.', 'Someone gets hurt, or the child talks about hurting themselves or not wanting to be alive. Call or text 988, or call 911 in an emergency.', 'Meltdowns seem tied to something that happened to them, or to trouble with sleep, hearing, or learning. Talk with your pediatrician or school counselor.'],
   more: [M.cmi, M.aap, M.nctsn] },
 
-{ id: 'sadness', ring: 'inside', title: 'Sadness that lingers', keys: 'sad sadness depressed down unhappy crying withdrawn lonely alone hopeless',
+{ id: 'sadness', ring: 'inside', title: 'Sadness That Lingers', keys: 'sad sadness depressed down unhappy crying withdrawn lonely alone hopeless',
   quick: ['Sadness is normal. Sadness that lasts weeks deserves attention.', 'Sit with them. Being close matters more than fixing.', 'Watch for changes: sleep, appetite, play, and friends.', 'Ask directly about hopeless thoughts. Asking does not plant ideas.'],
   rainy: 'Roots, Fruit, and Branches', acts: ['three-good', 'people-tree', 'looking-forward'],
   k2: 'Young kids may seem cranky, clingy, tired, or less interested in play. They may say "nobody likes me" or "I’m bad."',
@@ -121,7 +121,7 @@ const TOPICS = [
   reach: ['Sadness lasts more than two weeks or gets in the way of daily life.', 'They talk about being better off gone, wanting to die, or hurting themselves: see the guide on when a child talks about wanting to die, and call their doctor or 988 right away.'],
   more: [M.cmi, M.aap, M.lifeline] },
 
-{ id: 'bedtime', ring: 'inside', title: 'Bedtime fears and nightmares', keys: 'nightmares bedtime dark monsters sleep scared at night',
+{ id: 'bedtime', ring: 'inside', title: 'Bedtime Fears and Nightmares', keys: 'nightmares bedtime dark monsters sleep scared at night',
   quick: ['Night fears are very common and usually pass with time.', 'Keep bedtime calm, predictable, and unplugged.', 'After a nightmare, comfort first and talk in the morning.', 'Take fears seriously without agreeing monsters are real.'],
   rainy: 'Bark and Leaves', acts: ['screens-off', 'quiet-together', 'tomorrow-wish'],
   k2: 'Young kids mix pretend and real, so shadows become monsters and bad dreams feel true.',
@@ -137,7 +137,7 @@ const TOPICS = [
   reach: ['Nightmares after a frightening event that keep happening for weeks.', 'Sleep problems that affect school or health.'],
   more: [M.aap, M.cmi] },
 
-{ id: 'different', ring: 'inside', title: 'Feeling different', keys: 'different left out weird body looks teased disability learning differences self-esteem',
+{ id: 'different', ring: 'inside', title: 'Feeling Different', keys: 'different left out weird body looks teased disability learning differences self-esteem',
   quick: ['Every child wonders if they fit in. Name what makes them wonderfully them.', 'Listen for where the feeling comes from: a comment, a comparison, or a hard day.', 'Help them find their people.', 'Talk about bodies with kindness. Focus on what bodies do, not how they look.'],
   rainy: 'Trunk and Branches', acts: ['strength-detective', 'all-about-me', 'people-tree'],
   k2: 'Young kids notice differences out loud: skin, clothes, glasses, how someone talks. They may repeat a hurtful comment without knowing it hurts.',
@@ -154,7 +154,7 @@ const TOPICS = [
   more: [M.cmi, M.sesame] },
 
 /* ---------------- SAFETY ---------------- */
-{ id: 'hurt-disclosure', ring: 'safety', title: 'When a child tells you someone hurt them', keys: 'abuse disclosure hurt touched hit safety report neglect secret',
+{ id: 'hurt-disclosure', ring: 'safety', title: 'When a Child Tells You Someone Hurt Them', keys: 'abuse disclosure hurt touched hit safety report neglect secret',
   quick: ['Stay calm. Your face and voice tell them whether it was safe to tell.', 'Believe them and thank them: “Thank you for telling me. It is not your fault.”', 'Do not ask for details or lead with questions. Listen, then get help.', 'Do not promise to keep it a secret. Report it the same day.'],
   rainy: 'Roots and Bark', acts: ['quiet-together', 'people-tree', 'balloon-breaths'],
   k2: 'Young children may tell in bits and pieces, in play, or by saying something that seems odd. They may tell and then take it back.',
@@ -170,7 +170,7 @@ const TOPICS = [
   reach: ['Every disclosure is reported. Call 911 if a child is in danger right now.', 'Childhelp National Child Abuse Hotline: 1-800-422-4453, call or text, 24 hours a day.'],
   more: [M.childhelp, M.stopit, M.nctsn] },
 
-{ id: 'wanting-die', ring: 'safety', title: 'When a child talks about wanting to die', keys: 'suicide die dying hurt myself self harm hopeless kill myself dont want tomorrow 988',
+{ id: 'wanting-die', ring: 'safety', title: 'When a Child Talks About Wanting to Die', keys: 'suicide die dying hurt myself self harm hopeless kill myself dont want tomorrow 988',
   quick: ['Take it seriously every time, even from a young child.', 'Ask directly: “Are you thinking about killing yourself?” Asking does not put the idea in their head.', 'Stay with them, stay calm, and get help today.', 'Call their doctor or call or text 988. Call 911 if they are in danger right now.'],
   rainy: 'Fruit and Roots', acts: ['looking-forward', 'people-tree', 'three-good'],
   k2: 'Young children may say "I wish I was dead" or "I want to go away forever" when overwhelmed. It still deserves a calm, caring response and a call to their doctor.',
@@ -186,7 +186,7 @@ const TOPICS = [
   reach: ['Call or text 988, the Suicide and Crisis Lifeline, any time.', 'Call 911 if a child has hurt themselves or is in immediate danger.', 'Crisis Text Line: text HOME to 741741.'],
   more: [M.lifeline, M.afsp, M.aap] },
 
-{ id: 'body-safety', ring: 'safety', title: 'Teaching body safety', keys: 'body safety private parts touch consent safe adults secrets',
+{ id: 'body-safety', ring: 'safety', title: 'Teaching Body Safety', keys: 'body safety private parts touch consent safe adults secrets',
   quick: ['Use correct names for body parts. It helps kids speak up clearly.', 'Teach: your body belongs to you, and you can say no.', 'Surprises are fun and short. Secrets that feel bad get told to a safe grown-up.', 'Name several safe grown-ups a child can go to.'],
   rainy: 'Roots and Branches', acts: ['people-tree', 'strength-detective'],
   k2: 'Short, simple, and often. Tie lessons to bath time, doctor visits, or getting dressed.',
@@ -202,7 +202,7 @@ const TOPICS = [
   reach: ['A child shares something worrying: see the guide on when a child tells you someone hurt them.', 'Stop It Now helps worried adults: 1-888-773-8368.'],
   more: [M.stopit, M.aap, M.netsmartz] },
 
-{ id: 'online-secrets', ring: 'safety', title: 'When someone online asks for secrets', keys: 'online internet game chat stranger pictures secrets tablet phone',
+{ id: 'online-secrets', ring: 'safety', title: 'When Someone Online Asks for Secrets', keys: 'online internet game chat stranger pictures secrets tablet phone',
   quick: ['Kids should know: a safe person never asks you to keep secrets from your family.', 'Anyone asking for pictures, private information, or to meet up gets told to a grown-up.', 'Keep devices in shared spaces and know what apps and games they use.', 'Promise: you will never lose your tablet for telling me something scary.'],
   rainy: 'Roots and Branches', acts: ['people-tree', 'screens-off'],
   k2: 'Young kids trust easily and may not know that a friendly game character can be a real stranger.',
@@ -218,7 +218,7 @@ const TOPICS = [
   reach: ['Report online exploitation to the CyberTipline at report.cybertip.org or 1-800-843-5678.', 'Call police if someone threatens a child or asks to meet.'],
   more: [M.netsmartz, M.common, M.stopit] },
 /* ---------------- LOSS ---------------- */
-{ id: 'family-death', ring: 'loss', title: 'A family member died', keys: 'death died grief funeral grandparent parent sibling loss mourning grandma grandpa mom dad brother sister aunt uncle',
+{ id: 'family-death', ring: 'loss', title: 'A Family Member Died', keys: 'death died grief funeral grandparent parent sibling loss mourning grandma grandpa mom dad brother sister aunt uncle',
   quick: ['Use real words: “died” and “dead.” Softer phrases confuse and frighten kids.', 'Kids grieve in bursts, sad one minute and playing the next. That is normal.', 'Answer the same questions as many times as they ask.', 'Let them help remember: stories, pictures, candles, prayers.'],
   rainy: 'Roots, Bark, and Fruit', acts: ['quiet-together', 'name-it', 'looking-forward'],
   k2: 'Young children may not understand that death is permanent. They may ask when the person is coming back, act out, regress, or seem unbothered, then grieve later.',
@@ -234,7 +234,7 @@ const TOPICS = [
   reach: ['Grief stays intense or stuck for many months, or school and friendships fall apart.', 'Many communities have free children’s grief groups; hospices often run them.'],
   more: [M.dougy, M.sesame, M.nctsn] },
 
-{ id: 'dying', ring: 'loss', title: 'Someone they love is dying', keys: 'dying hospice terminal cancer end of life goodbye illness grandma grandpa mom dad',
+{ id: 'dying', ring: 'loss', title: 'Someone They Love Is Dying', keys: 'dying hospice terminal cancer end of life goodbye illness grandma grandpa mom dad',
   quick: ['Kids do better with honest, gentle information than with surprises.', 'Tell them before the death if you can, so they can say goodbye in their own way.', 'Let them choose how involved to be: visits, cards, drawings, video calls.', 'Hospice teams include chaplains and social workers who help children too. Ask.'],
   rainy: 'Roots, Bark, and Fruit', acts: ['thanks-note', 'quiet-together', 'name-it'],
   k2: 'Young children need simple, concrete words and short visits. They may ask the same things again and again, or ask very direct questions at the bedside.',
@@ -250,7 +250,7 @@ const TOPICS = [
   reach: ['Ask the hospice team for their child life, social work, or chaplain support.', 'Seek grief support for the child if worry or sadness becomes overwhelming.'],
   more: [M.dougy, M.sesame, M.aap] },
 
-{ id: 'pet-death', ring: 'loss', title: 'A pet died', keys: 'pet dog cat died put down euthanasia animal loss puppy kitten hamster fish',
+{ id: 'pet-death', ring: 'loss', title: 'A Pet Died', keys: 'pet dog cat died put down euthanasia animal loss puppy kitten hamster fish',
   quick: ['For many kids, a pet’s death is their first big loss. Take it seriously.', 'Use real words. Avoid “put to sleep,” which can make kids afraid of sleep.', 'A small goodbye ritual helps: a drawing, a burial, a candle.', 'Let them grieve on their own timeline. A new pet is not a replacement.'],
   rainy: 'Roots and Fruit', acts: ['thanks-note', 'quiet-together', 'three-good'],
   k2: 'Young children may ask if the pet will come back or where it went. They may play out the death in pretend play.',
@@ -266,7 +266,7 @@ const TOPICS = [
   reach: ['Sadness keeps them from normal life for several weeks.'],
   more: [M.aap, M.dougy] },
 
-{ id: 'suicide-loss', ring: 'loss', title: 'Someone died by suicide', keys: 'suicide died by suicide grief loss survivor',
+{ id: 'suicide-loss', ring: 'loss', title: 'Someone Died by Suicide', keys: 'suicide died by suicide grief loss survivor',
   quick: ['Tell the truth in simple words. Kids usually find out, and secrets add confusion.', 'Say “died by suicide,” not “committed.” No details about how.', 'Make sure they know it was not their fault, and no one could have made it happen by one thing they said.', 'Name that the person had an illness in their thinking or feelings, and that help exists.'],
   rainy: 'Roots, Bark, and Fruit', acts: ['name-it', 'quiet-together', 'people-tree'],
   k2: 'Young children need simple words: “Uncle Ray’s brain got very sick, and he died. He made his body stop working.” They may ask many times.',
@@ -282,7 +282,7 @@ const TOPICS = [
   reach: ['Any talk of wanting to die: call or text 988.', 'Find a counselor experienced in suicide loss for the child and yourself.'],
   more: [M.dougy, M.afsp, M.lifeline] },
 
-{ id: 'baby-loss', ring: 'loss', title: 'Losing a baby in the family', keys: 'miscarriage stillbirth baby died infant loss pregnancy loss',
+{ id: 'baby-loss', ring: 'loss', title: 'Losing a Baby in the Family', keys: 'miscarriage stillbirth baby died infant loss pregnancy loss',
   quick: ['If a child knew about the baby, tell them simply and truthfully.', 'Children may feel confused about grieving someone they never met. All feelings are okay.', 'Reassure them nothing they did or thought caused it.', 'Parents grieve too. It is okay for kids to see you sad.'],
   rainy: 'Roots and Fruit', acts: ['quiet-together', 'name-it', 'three-good'],
   k2: 'Young children may ask where the baby went or when it is coming. They may worry that babies or moms can easily get sick.',
@@ -298,7 +298,7 @@ const TOPICS = [
   reach: ['Share Pregnancy and Infant Loss Support offers help for whole families.'],
   more: [M.share, M.dougy] },
 
-{ id: 'grief-days', ring: 'loss', title: 'Holidays and anniversaries after a loss', keys: 'holidays anniversary birthday grief christmas memorial special days first year',
+{ id: 'grief-days', ring: 'loss', title: 'Holidays and Anniversaries After a Loss', keys: 'holidays anniversary birthday grief christmas memorial special days first year',
   quick: ['Hard days are often harder before they arrive. Plan ahead together.', 'Keep some old traditions, change others, and add one that honors the person.', 'Let kids help decide how to remember.', 'It is okay to feel happy and sad on the same day.'],
   rainy: 'Roots and Fruit', acts: ['quiet-together', 'thanks-note', 'looking-forward'],
   k2: 'Young children may not know why a day feels heavy, but they sense the adults’ sadness and may act out.',
@@ -314,7 +314,7 @@ const TOPICS = [
   reach: ['Grief that seems stuck or worse each year may need support.'],
   more: [M.dougy, M.sesame] },
 /* ---------------- HEALTH ---------------- */
-{ id: 'family-illness', ring: 'health', title: 'Serious illness in the family', keys: 'cancer sick illness hospital surgery treatment parent sick grandparent sick grandma grandpa mom dad',
+{ id: 'family-illness', ring: 'health', title: 'Serious Illness in the Family', keys: 'cancer sick illness hospital surgery treatment parent sick grandparent sick grandma grandpa mom dad',
   quick: ['Tell the truth in words they understand, including the name of the illness.', 'Tell them who will take care of them and what will stay the same.', 'Keep routines as normal as you can. Routines feel like safety.', 'Give them a way to help, like drawing a card or picking a song.'],
   rainy: 'Roots, Bark, and Leaves', acts: ['feelings-weather', 'balloon-breaths', 'helper-job'],
   k2: 'Young children may worry they caused the illness or can catch it. They may cling, regress, or act out when routines change.',
@@ -330,7 +330,7 @@ const TOPICS = [
   reach: ['Many hospitals have child life specialists who help children of patients. Ask.'],
   more: [M.aap, M.cmi] },
 
-{ id: 'own-illness', ring: 'health', title: 'Their own illness or hospital stay', keys: 'hospital surgery sick child diagnosis chronic illness shots doctor',
+{ id: 'own-illness', ring: 'health', title: 'Their Own Illness or Hospital Stay', keys: 'hospital surgery sick child diagnosis chronic illness shots doctor',
   quick: ['Prepare them honestly for what will happen and what it will feel like.', 'Never promise “it won’t hurt” if it might.', 'Give them choices wherever you can: which arm, which toy, which song.', 'Ask for the hospital’s child life specialist.'],
   rainy: 'Leaves and Bark', acts: ['balloon-breaths', 'looking-forward', 'feelings-weather'],
   k2: 'Young children may think being sick or getting shots is a punishment. They are most afraid of being separated from you.',
@@ -346,7 +346,7 @@ const TOPICS = [
   reach: ['Fear or nightmares about medical care that last long after treatment.'],
   more: [M.aap, M.nctsn] },
 
-{ id: 'family-mental-health', ring: 'health', title: "A family member's mental health struggle", keys: 'depression anxiety bipolar mental illness parent sad hospitalization',
+{ id: 'family-mental-health', ring: 'health', title: "A Family Member's Mental Health Struggle", keys: 'depression anxiety bipolar mental illness parent sad hospitalization',
   quick: ['Kids notice when a parent is struggling. Name it simply: an illness in how someone thinks and feels.', 'It is not their fault, and it is not their job to fix it.', 'Keep other caring adults close.', 'Talk about it like any other illness, with hope and kindness.'],
   rainy: 'Roots, Bark, and Branches', acts: ['people-tree', 'feelings-weather', 'move-wiggle'],
   k2: 'Young children may think a parent’s sadness or anger is about them. They may try hard to be extra good.',
@@ -362,7 +362,7 @@ const TOPICS = [
   reach: ['NAMI offers family programs and a helpline. Call 988 if anyone is in crisis.'],
   more: [M.nami, M.cmi] },
 
-{ id: 'addiction', ring: 'health', title: "A family member's addiction", keys: 'addiction alcohol drugs drinking substance use recovery rehab gambling betting',
+{ id: 'addiction', ring: 'health', title: "A Family Member's Addiction", keys: 'addiction alcohol drugs drinking substance use recovery rehab gambling betting',
   quick: ['Addiction is an illness. It is never the child’s fault.', 'Kids need truth at their level and permission to talk about it.', 'Teach the three C’s: you didn’t cause it, you can’t control it, you can’t cure it.', 'Keep them safe first: no rides with anyone impaired, and a safe adult to call.'],
   rainy: 'Roots, Branches, and Bark', acts: ['people-tree', 'name-it', 'strength-detective'],
   k2: 'Young children notice unpredictability and may feel scared or confused by a parent who acts different.',
@@ -378,7 +378,7 @@ const TOPICS = [
   reach: ['SAMHSA National Helpline: 1-800-662-4357, free and 24 hours.', 'Call 911 if anyone is in danger.'],
   more: [M.samhsa, M.aap] },
 
-{ id: 'dementia', ring: 'health', title: 'A grandparent with dementia', keys: 'dementia alzheimers memory loss grandparent forgets confused grandma grandpa',
+{ id: 'dementia', ring: 'health', title: 'A Grandparent with Dementia', keys: 'dementia alzheimers memory loss grandparent forgets confused grandma grandpa',
   quick: ['Explain that dementia is an illness that makes the brain forget.', 'When a grandparent forgets their name, it is the illness, not a lack of love.', 'Give kids easy ways to connect: music, photos, simple games, holding hands.', 'Let them share their feelings, including frustration and sadness.'],
   rainy: 'Roots and Branches', acts: ['people-tree', 'thanks-note', 'quiet-together'],
   k2: 'Young children may be confused or scared by changes, or think Grandpa is being silly or mean.',
@@ -394,7 +394,7 @@ const TOPICS = [
   reach: ["The Alzheimer's Association has family resources and a 24/7 helpline: 1-800-272-3900."],
   more: [M.alz, M.aap] },
 
-{ id: 'disability', ring: 'health', title: 'Disability in the family', keys: 'disability special needs sibling wheelchair autism down syndrome brother sister',
+{ id: 'disability', ring: 'health', title: 'Disability in the Family', keys: 'disability special needs sibling wheelchair autism down syndrome brother sister',
   quick: ['Give kids clear, positive language about their family member’s disability.', 'Siblings need their own time and attention too.', 'All feelings are okay, including jealousy and frustration.', 'Help them answer friends’ questions with confidence.'],
   rainy: 'Branches and Trunk', acts: ['all-about-me', 'people-tree', 'strength-detective'],
   k2: 'Young siblings may be curious, worried they can "catch" it, or jealous of the attention.',
@@ -411,7 +411,7 @@ const TOPICS = [
   more: [M.cmi, M.aap] },
 
 /* ---------------- FAMILY CHANGES ---------------- */
-{ id: 'divorce', ring: 'family', title: 'Divorce or separation', keys: 'divorce separation parents splitting two homes custody mom dad two houses',
+{ id: 'divorce', ring: 'family', title: 'Divorce or Separation', keys: 'divorce separation parents splitting two homes custody mom dad two houses',
   quick: ['Tell them together if you can, before anything changes.', 'Say clearly, and more than once: it is not your fault, and both parents’ love stays.', 'Keep them out of adult conflict and messages.', 'Explain what will change and what will stay the same.'],
   rainy: 'Branches, Trunk, and Fruit', acts: ['people-tree', 'strength-detective', 'tomorrow-wish'],
   k2: 'Young children may believe they caused it or can fix it. They may regress, cling, or have trouble at bedtime.',
@@ -427,7 +427,7 @@ const TOPICS = [
   reach: ['Ongoing conflict, big behavior changes, or a child stuck in the middle.'],
   more: [M.aap, M.cmi, M.sesame] },
 
-{ id: 'new-baby', ring: 'family', title: 'A new baby', keys: 'new baby sibling brother sister pregnant jealous',
+{ id: 'new-baby', ring: 'family', title: 'A New Baby', keys: 'new baby sibling brother sister pregnant jealous',
   quick: ['Share the news early enough to prepare, but not too early for young kids.', 'Jealousy is normal. Name it and love them through it.', 'Give them an important big-sibling job.', 'Protect one-on-one time.'],
   rainy: 'Branches and Trunk', acts: ['helper-job', 'all-about-me', 'people-tree'],
   k2: 'Young children may regress (baby talk, potty accidents) and worry they will be replaced.',
@@ -443,7 +443,7 @@ const TOPICS = [
   reach: ['Aggression toward the baby that doesn’t ease with support.'],
   more: [M.aap, M.pbs] },
 
-{ id: 'blended', ring: 'family', title: 'A new stepparent or blended family', keys: 'stepparent stepfamily blended remarriage stepsiblings dating',
+{ id: 'blended', ring: 'family', title: 'A New Stepparent or Blended Family', keys: 'stepparent stepfamily blended remarriage stepsiblings dating',
   quick: ['Go slowly. Relationships with a new adult need time.', 'The new adult should build friendship first and leave discipline to the parent at first.', 'Kids may feel disloyal to their other parent. Give permission to care about everyone.', 'Protect time alone with each child.'],
   rainy: 'Branches and Roots', acts: ['people-tree', 'ask-to-play', 'feelings-weather'],
   k2: 'Young children may adjust faster but still need to know their parents are not being replaced.',
@@ -459,7 +459,7 @@ const TOPICS = [
   reach: ['Ongoing conflict or a child who seems very unhappy in either home.'],
   more: [M.aap, M.cmi] },
 
-{ id: 'deployed', ring: 'family', title: 'A parent deployed or away for work', keys: 'deployment military away travel work trucker long distance parent away',
+{ id: 'deployed', ring: 'family', title: 'A Parent Deployed or Away for Work', keys: 'deployment military away travel work trucker long distance parent away',
   quick: ['Tell them before the parent leaves, with a calendar they can see.', 'Plan ways to stay connected: recorded stories, letters, calls, a shared journal.', 'Keep home routines steady.', 'Expect ups and downs at leaving, the middle, and coming home.'],
   rainy: 'Branches and Fruit', acts: ['thanks-note', 'looking-forward', 'people-tree'],
   k2: 'Young children don’t understand time well. A paper chain or jar of marbles to count down helps.',
@@ -475,7 +475,7 @@ const TOPICS = [
   reach: ['Military OneSource offers free counseling for military families.'],
   more: [M.milone, M.sesame] },
 
-{ id: 'jail', ring: 'family', title: 'A parent in jail or prison', keys: 'jail prison incarceration arrested parent locked up',
+{ id: 'jail', ring: 'family', title: 'A Parent in Jail or Prison', keys: 'jail prison incarceration arrested parent locked up',
   quick: ['Tell the truth. Kids who are lied to often find out, and trust is harmed.', 'Separate the person from the choice: a parent can make a bad choice and still love them.', 'It is not the child’s fault, and not their secret to keep in shame.', 'Help them stay connected if it is safe: letters, calls, visits.'],
   rainy: 'Branches, Roots, and Trunk', acts: ['thanks-note', 'people-tree', 'name-it'],
   k2: 'Young children may be told a parent is "away at school" or "working." Simple truth is better: “Dad broke a rule, and he has to stay in a place called jail for a while.”',
@@ -491,7 +491,7 @@ const TOPICS = [
   reach: ['Big changes in behavior or signs of shame and withdrawal.'],
   more: [M.sesame, M.aap] },
 
-{ id: 'foster', ring: 'family', title: 'Foster care or adoption', keys: 'foster care adoption adopted birth parents kinship care',
+{ id: 'foster', ring: 'family', title: 'Foster Care or Adoption', keys: 'foster care adoption adopted birth parents kinship care',
   quick: ['Share the child’s story with them, truthfully and at their level, from early on.', 'Honor their birth family with respect, even when the story is hard.', 'Loss and love can live together. Let them grieve and belong.', 'Expect big feelings around birthdays, holidays, and family projects.'],
   rainy: 'Roots and Branches', acts: ['people-tree', 'all-about-me', 'quiet-together'],
   k2: 'Young children may have simple questions and need a simple, loving story to return to again and again.',
@@ -507,15 +507,15 @@ const TOPICS = [
   reach: ['Adoption-competent counselors help with trauma, attachment, and identity.'],
   more: [M.gateway, M.nctsn] },
 
-{ id: 'money', ring: 'family', title: 'Money worries or a job loss', keys: 'money job loss laid off unemployed bills poor can’t afford budget',
+{ id: 'money', ring: 'family', title: 'Money Worries or a Job Loss', keys: 'money job loss laid off unemployed bills poor can’t afford budget',
   quick: ['Kids notice stress. Give simple truth without adult details.', 'Reassure them about the basics: food, home, and love.', 'Let them help in small, real ways without carrying adult worry.', 'Focus on what your family has.'],
   rainy: 'Roots and Fruit', acts: ['three-good', 'helper-job', 'looking-forward'],
   k2: 'Young children may worry when they overhear adults. They may ask for fewer things or feel guilty asking.',
   g35: 'Older children may worry about moving, losing activities, or feel embarrassed compared to friends.',
   before: ['Decide what kids need to know and what stays between adults.'],
   start: ['“Dad’s job ended, so we are being careful with money for a while. We will always make sure you have what you need.”'],
-  asks: [['Are we poor?', '“We have less money right now. We have each other, and we are figuring it out together.”'], ['Can I still do soccer?', 'Be honest. If not, look for free options together.']],
-  helps: ['Free fun: library, parks, game nights.', 'Simple talk about needs and wants.'],
+  asks: [['Are we poor?', '“We have less money right now. We have each other, and we are figuring it out together.”'], ['Can I still do soccer?', 'Be honest, and look together for options that fit, like a park program or a school club.']],
+  helps: ['Simple fun nearby: the library, parks, game nights.', 'Simple talk about needs and wants.'],
   avoid: ['Sharing money fears in detail with kids.', 'Making them feel guilty for asking.'],
   faith: 'Many faith communities quietly help families in hard seasons. Gratitude practices can also help kids notice what is still good.',
   after: ['Keep reassuring them as things change.'],
@@ -523,7 +523,7 @@ const TOPICS = [
   reach: ['Dialing 211 connects families with local help for food, rent, and utilities.'],
   more: [M.aap, M.sesame] },
 
-{ id: 'home-loss', ring: 'family', title: 'Losing a home', keys: 'homeless eviction shelter losing home living in car doubled up housing',
+{ id: 'home-loss', ring: 'family', title: 'Losing a Home', keys: 'homeless eviction shelter losing home living in car doubled up housing',
   quick: ['Tell them what is happening and where they will sleep, as clearly as you can.', 'Bring familiar things: a pillow, a stuffed animal, a routine.', 'Kids experiencing homelessness have the right to stay in their school.', 'This is a hard situation, not a failure. Protect their dignity.'],
   rainy: 'Roots, Leaves, and Fruit', acts: ['quiet-together', 'looking-forward', 'people-tree'],
   k2: 'Young children need to know where they will sleep, who will be with them, and that their comfort items are coming too.',
@@ -539,7 +539,7 @@ const TOPICS = [
   reach: ['Call 211 for local housing help.'],
   more: [M.schoolhouse, M.aap] },
 
-{ id: 'home-conflict', ring: 'family', title: 'Arguing and tension at home', keys: 'fighting arguing yelling tension conflict parents fight stress home',
+{ id: 'home-conflict', ring: 'family', title: 'Arguing and Tension at Home', keys: 'fighting arguing yelling tension conflict parents fight stress home',
   quick: ['Kids notice conflict even when you think they don’t.', 'If they saw a fight, let them see the repair too.', 'It is never their job to fix grown-up problems.', 'If anyone is being hurt or afraid, safety comes first.'],
   rainy: 'Roots and Branches', acts: ['name-it', 'balloon-breaths', 'people-tree'],
   k2: 'Young children may feel scared, hide, or try to distract with silly or naughty behavior.',
@@ -555,7 +555,7 @@ const TOPICS = [
   reach: ['If there is violence or fear at home, the National Domestic Violence Hotline is 1-800-799-7233. Call 911 in danger.'],
   more: [M.cmi, M.aap] },
 /* ---------------- SCHOOL ---------------- */
-{ id: 'bullied', ring: 'school', title: 'Being bullied', keys: 'bullying bullied mean teased picked on excluded someone is being mean',
+{ id: 'bullied', ring: 'school', title: 'Being Bullied', keys: 'bullying bullied mean teased picked on excluded someone is being mean',
   quick: ['Thank them for telling, and believe them.', 'It is not their fault, and grown-ups help them handle it.', 'Work with the school. Write down what happened, when, and who was there.', 'Help them build a plan: safe friends, safe places, and who to tell.'],
   rainy: 'Branches and Bark', acts: ['people-tree', 'kindness-three', 'name-it'],
   k2: 'Young children may say someone is "mean" or "won’t let me play." They may not want to go to school, or have tummy aches.',
@@ -571,7 +571,7 @@ const TOPICS = [
   reach: ['Bullying continues after the school is told, or includes threats or physical harm.', 'Your child seems very sad, scared, or talks about not wanting to live: see the guide on when a child talks about wanting to die.'],
   more: [M.bully, M.aap] },
 
-{ id: 'unkind', ring: 'school', title: 'When your child is the one being unkind', keys: 'my child is a bully mean to others hurting others unkind aggressive',
+{ id: 'unkind', ring: 'school', title: 'When Your Child Is the One Being Unkind', keys: 'my child is a bully mean to others hurting others unkind aggressive',
   quick: ['Stay calm and curious. Find out what happened before deciding what it means.', 'Separate the child from the behavior: you are a good kid who made a hurtful choice.', 'Focus on empathy and repair, not just punishment.', 'Look for what is underneath: stress, hurt, or wanting to fit in.'],
   rainy: 'Branches and Bark', acts: ['kindness-three', 'name-it', 'strength-detective'],
   k2: 'Young children are still learning impulse control and sharing. Clear, immediate teaching works best.',
@@ -587,7 +587,7 @@ const TOPICS = [
   reach: ['Ongoing aggression or cruelty despite support.'],
   more: [M.bully, M.cmi] },
 
-{ id: 'friendship', ring: 'school', title: 'Friendship troubles', keys: 'friends friendship left out lonely no friends best friend fight',
+{ id: 'friendship', ring: 'school', title: 'Friendship Troubles', keys: 'friends friendship left out lonely no friends best friend fight',
   quick: ['Listen first. Kids often just need to vent.', 'Help them name what happened and how they felt.', 'Coach, don’t fix: brainstorm what they could try.', 'One good friend matters more than being popular.'],
   rainy: 'Branches', acts: ['ask-to-play', 'kindness-three', 'people-tree'],
   k2: 'Friendships change quickly. "You’re not my friend" can be forgotten by lunch.',
@@ -603,7 +603,7 @@ const TOPICS = [
   reach: ['Ongoing isolation or signs of bullying.'],
   more: [M.cmi, M.pbs] },
 
-{ id: 'new-school', ring: 'school', title: 'Starting or changing schools', keys: 'new school starting kindergarten first day transfer changing schools',
+{ id: 'new-school', ring: 'school', title: 'Starting or Changing Schools', keys: 'new school starting kindergarten first day transfer changing schools',
   quick: ['Visit ahead of time if you can: walk the halls, see the classroom, meet the teacher.', 'Talk about what will be the same and what will be new.', 'Give a simple goodbye routine at drop-off.', 'Expect a few rough weeks. Adjusting takes time.'],
   rainy: 'Branches and Bark', acts: ['ask-to-play', 'balloon-breaths', 'looking-forward'],
   k2: 'Young children may cling, cry at drop-off, or be exhausted after school.',
@@ -619,7 +619,7 @@ const TOPICS = [
   reach: ['Refusal or distress that lasts more than a few weeks.'],
   more: [M.aap, M.pbs] },
 
-{ id: 'school-worry', ring: 'school', title: 'School and test worries', keys: 'test anxiety grades homework school stress reading math struggles',
+{ id: 'school-worry', ring: 'school', title: 'School and Test Worries', keys: 'test anxiety grades homework school stress reading math struggles',
   quick: ['Praise effort, not just grades.', 'Break big tasks into small steps.', 'Sleep, food, and play help learning more than cramming.', 'Mistakes are how brains grow. Say it often.'],
   rainy: 'Trunk and Bark', acts: ['strength-detective', 'balloon-breaths', 'hope-map'],
   k2: 'Young children may say "I’m dumb" or avoid reading or math.',
@@ -635,7 +635,7 @@ const TOPICS = [
   reach: ['Worry that makes them sick, or struggles that could be a learning difference.'],
   more: [M.cmi, M.aap] },
 
-{ id: 'lockdown', ring: 'school', title: 'Lockdown drills', keys: 'lockdown drill intruder hide school safety drill scared',
+{ id: 'lockdown', ring: 'school', title: 'Lockdown Drills', keys: 'lockdown drill intruder hide school safety drill scared',
   quick: ['Frame drills like fire drills: practice so everyone knows what to do.', 'Keep it simple and calm. Kids take their cue from you.', 'Let them share feelings and questions after drills.', 'Remind them that many adults work every day to keep schools safe.'],
   rainy: 'Bark and Roots', acts: ['balloon-breaths', 'people-tree', 'feelings-weather'],
   k2: 'Young children may not understand why they are hiding, and may fear the dark or the quiet.',
@@ -651,7 +651,7 @@ const TOPICS = [
   reach: ['Ongoing fear of school after drills.'],
   more: [M.nasp, M.nctsn] },
 
-{ id: 'online-trouble', ring: 'school', title: 'Trouble online', keys: 'online cyberbullying group chat game mean messages saw something scary video',
+{ id: 'online-trouble', ring: 'school', title: 'Trouble Online', keys: 'online cyberbullying group chat game mean messages saw something scary video',
   quick: ['Keep talking about what they do online, casually and often.', 'If they saw something upsetting, thank them for telling and help them process it.', 'Save evidence of cyberbullying and block the account.', 'Promise: you won’t lose your device for telling me.'],
   rainy: 'Branches and Bark', acts: ['screens-off', 'name-it', 'people-tree'],
   k2: 'Young children may stumble on scary videos or games.',
@@ -684,7 +684,7 @@ const TOPICS = [
   reach: ['Ongoing withdrawal or sadness months after the move.'],
   more: [M.aap, M.pbs] },
 
-{ id: 'community-tragedy', ring: 'community', title: 'A tragedy in the community', keys: 'tragedy accident death in community shooting crash local news',
+{ id: 'community-tragedy', ring: 'community', title: 'A Tragedy in the Community', keys: 'tragedy accident death in community shooting crash local news',
   quick: ['Share simple facts before they hear rumors.', 'Reassure them about their own safety and the helpers who responded.', 'Limit news and social media, especially videos.', 'Let them do something: a card, a donation, a prayer.'],
   rainy: 'Roots and Bark', acts: ['thanks-note', 'quiet-together', 'feelings-weather'],
   k2: 'Young children need short, simple facts and lots of reassurance.',
@@ -700,7 +700,7 @@ const TOPICS = [
   reach: ['Nightmares or fears that last weeks, especially for kids close to the event.'],
   more: [M.nctsn, M.nasp] },
 
-{ id: 'fire', ring: 'community', title: 'A house fire', keys: 'fire house fire burned lost home fire safety',
+{ id: 'fire', ring: 'community', title: 'A House Fire', keys: 'fire house fire burned lost home fire safety',
   quick: ['Safety first: everyone is here, and that is what matters most.', 'Let them grieve lost things, even small ones.', 'Keep routines and comfort items wherever you are staying.', 'Practice a family fire plan together to rebuild a sense of control.'],
   rainy: 'Roots and Bark', acts: ['balloon-breaths', 'quiet-together', 'looking-forward'],
   k2: 'Young children may have nightmares or play out the fire.',
@@ -716,7 +716,7 @@ const TOPICS = [
   reach: ['The American Red Cross helps families after home fires.'],
   more: [M.redcross, M.nctsn] },
 
-{ id: 'crime', ring: 'community', title: 'Crime in the neighborhood', keys: 'crime break in robbery police neighborhood unsafe sirens',
+{ id: 'crime', ring: 'community', title: 'Crime in the Neighborhood', keys: 'crime break in robbery police neighborhood unsafe sirens',
   quick: ['Share age-right facts and focus on what keeps your family safe.', 'Name the helpers: neighbors, police, and community members.', 'Limit exposure to scary news and adult talk.', 'Keep routines steady.'],
   rainy: 'Roots and Bark', acts: ['balloon-breaths', 'people-tree', 'feelings-weather'],
   k2: 'Young children may fear bad people coming into their home.',
@@ -732,7 +732,7 @@ const TOPICS = [
   reach: ['Fear that persists, especially if the child witnessed a crime.'],
   more: [M.nctsn, M.aap] },
 
-{ id: 'immigration', ring: 'community', title: 'Immigration raids and fear of family separation', keys: 'ice immigration raids deportation undocumented family separation fear border',
+{ id: 'immigration', ring: 'community', title: 'Immigration Raids and Fear of Family Separation', keys: 'ice immigration raids deportation undocumented family separation fear border',
   quick: ['Children’s fear is real, whatever a family’s situation. Name it and stay calm.', 'Share basic details of your family’s plan: who will take care of them if a parent is away.', 'Limit exposure to news and videos, and ask what they have heard.', 'Every family, of any status, can benefit from a family preparedness plan.'],
   rainy: 'Roots, Bark, and Branches', acts: ['people-tree', 'balloon-breaths', 'feelings-weather'],
   k2: 'Young children may cling, have trouble sleeping, or ask "Will they take you away?" They need simple, steady answers about who takes care of them.',
@@ -745,10 +745,10 @@ const TOPICS = [
   faith: 'Many faith communities offer support, accompaniment, and prayer for families living with fear. Children can know they belong and are held.',
   after: ['Check in often. Fear can rise with news or rumors.'],
   teach: ['Public schools must enroll and educate all children regardless of immigration status (Plyler v. Doe). Know your district’s current policies and emergency contact procedures.', 'Watch for students who seem anxious or stop coming, and connect families quietly with support.'],
-  reach: ['This guide is not legal advice. Contact a trusted immigration legal aid organization for your family’s situation.', 'Seek counseling if fear disrupts sleep, school, or daily life.'],
+  reach: ['For your family’s situation, a trusted immigration legal aid organization is the right helper.', 'If fear disrupts sleep, school, or daily life, talk with the school counselor or your child’s pediatrician about extra support.'],
   more: [M.aapimm, M.ilrc, M.informed] },
 
-{ id: 'deported-classmate', ring: 'community', title: "When a classmate's family is deported", keys: 'classmate deported friend moved away suddenly immigration missing student',
+{ id: 'deported-classmate', ring: 'community', title: "When a Classmate's Family Is Deported", keys: 'classmate deported friend moved away suddenly immigration missing student',
   quick: ['Share what you can, simply and without speculation.', 'Let kids name their feelings: sad, confused, scared, or angry.', 'Give them a way to care: a card, a drawing, a prayer.', 'Reassure them about their own safety and routines.'],
   rainy: 'Branches and Roots', acts: ['thanks-note', 'people-tree', 'name-it'],
   k2: 'Young children may simply miss their friend and wonder where they went.',
@@ -764,7 +764,7 @@ const TOPICS = [
   reach: ['Students who show ongoing fear or grief.'],
   more: [M.aapimm, M.nctsn] },
 /* ---------------- COUNTRY ---------------- */
-{ id: 'politics', ring: 'country', title: 'Elections and political disagreement', keys: 'politics election president vote voting disagree relatives argue political',
+{ id: 'politics', ring: 'country', title: 'Elections and Political Disagreement', keys: 'politics election president vote voting disagree relatives argue political',
   quick: ['Kids hear political talk everywhere. Help them understand it calmly.', 'Share your family’s values without teaching kids to see others as enemies.', 'People who love each other can disagree. Show them what respectful disagreement looks like.', 'Reassure them: grown-ups keep them safe no matter who wins.'],
   rainy: 'Branches and Bark', acts: ['kindness-three', 'name-it', 'people-tree'],
   k2: 'Young children may repeat what they hear, worry about scary words, or think someone "bad" will hurt them.',
@@ -780,7 +780,7 @@ const TOPICS = [
   reach: ['Fear or conflict that keeps a child from school or sleep.'],
   more: [M.cmi, M.pbs, M.sesame] },
 
-{ id: 'school-violence', ring: 'country', title: 'School shootings in the news', keys: 'school shooting gun violence news mass shooting safety scared school',
+{ id: 'school-violence', ring: 'country', title: 'School Shootings in the News', keys: 'school shooting gun violence news mass shooting safety scared school',
   quick: ['Reassure them they are safe, and that schools are among the safest places for kids.', 'Let their questions guide how much you share. Keep it brief with young kids.', 'Limit news and social media exposure, especially images and videos.', 'Name the adults who keep them safe at school and at home.'],
   rainy: 'Roots and Bark', acts: ['people-tree', 'balloon-breaths', 'feelings-weather'],
   k2: 'Young children need short, simple answers and lots of reassurance. They may not need to know details at all unless they heard about it.',
@@ -796,7 +796,7 @@ const TOPICS = [
   reach: ['Ongoing fear, nightmares, or refusal to go to school.'],
   more: [M.nasp, M.nctsn, M.cmi] },
 
-{ id: 'protests', ring: 'country', title: 'Protests and unrest', keys: 'protest unrest riot marches police news demonstrations curfew',
+{ id: 'protests', ring: 'country', title: 'Protests and Unrest', keys: 'protest unrest riot marches police news demonstrations curfew',
   quick: ['Explain protests simply: people gathering to show they care about something.', 'Separate peaceful protest from violence, which is never okay.', 'Limit news footage and share facts calmly.', 'Reassure them about their own safety.'],
   rainy: 'Roots and Bark', acts: ['feelings-weather', 'name-it', 'people-tree'],
   k2: 'Young children may be frightened by images of crowds, fire, or police.',
@@ -812,7 +812,7 @@ const TOPICS = [
   reach: ['Fears that don’t ease, especially if the child saw unrest firsthand.'],
   more: [M.nasp, M.nctsn] },
 
-{ id: 'prejudice', ring: 'country', title: 'When a child faces or sees prejudice', keys: 'racism prejudice discrimination hate slur treated unfairly religion race',
+{ id: 'prejudice', ring: 'country', title: 'When a Child Faces or Sees Prejudice', keys: 'racism prejudice discrimination hate slur treated unfairly religion race',
   quick: ['Believe them, and tell them it was wrong.', 'Help them name what happened and how it felt.', 'Talk about fairness, dignity, and standing up for others.', 'Work with the school when it happens there.'],
   rainy: 'Trunk, Branches, and Roots', acts: ['strength-detective', 'people-tree', 'kindness-three'],
   k2: 'Young children notice differences and can be hurt by comments about skin, hair, language, faith, or family.',
@@ -828,7 +828,7 @@ const TOPICS = [
   reach: ['Repeated harassment or signs the child feels unsafe.'],
   more: [M.embrace, M.sesame] },
 
-{ id: 'scary-news', ring: 'country', title: 'Scary news in general', keys: 'news scary world events tv tiktok headlines anxiety',
+{ id: 'scary-news', ring: 'country', title: 'Scary News in General', keys: 'news scary world events tv tiktok headlines anxiety',
   quick: ['Ask what they have heard before explaining.', 'Give simple, true answers and reassurance.', 'Turn off the TV and be careful with phones and tablets.', 'Point out the helpers.'],
   rainy: 'Roots and Bark', acts: ['feelings-weather', 'three-good', 'screens-off'],
   k2: 'Young children may not know the news is far away or already over.',
@@ -845,7 +845,7 @@ const TOPICS = [
   more: [M.nctsn, M.cmi] },
 
 /* ---------------- WORLD ---------------- */
-{ id: 'war', ring: 'world', title: 'War and conflict', keys: 'war conflict fighting countries bombs soldiers military news',
+{ id: 'war', ring: 'world', title: 'War and Conflict', keys: 'war conflict fighting countries bombs soldiers military news',
   quick: ['Ask what they have heard first.', 'Share simple facts and reassure them about their own safety.', 'Avoid graphic images.', 'Help them do something caring: donate, write, pray.'],
   rainy: 'Roots and Fruit', acts: ['thanks-note', 'three-good', 'quiet-together'],
   k2: 'Young children may worry that war will come to their home.',
@@ -861,7 +861,7 @@ const TOPICS = [
   reach: ['Ongoing fear, especially for children with family in conflict zones.'],
   more: [M.unicef, M.nctsn] },
 
-{ id: 'disasters', ring: 'world', title: 'Natural disasters and climate worries', keys: 'hurricane tornado flood earthquake wildfire storm climate change weather disaster',
+{ id: 'disasters', ring: 'world', title: 'Natural Disasters and Climate Worries', keys: 'hurricane tornado flood earthquake wildfire storm climate change weather disaster',
   quick: ['Reassure them about their own safety and your family’s plan.', 'Share simple facts about what happened.', 'Make a family emergency plan together. Preparing reduces fear.', 'For climate worries, focus on what people are doing and what your family can do.'],
   rainy: 'Roots and Fruit', acts: ['hope-map', 'helper-job', 'balloon-breaths'],
   k2: 'Young children may fear storms, especially after seeing news or experiencing one.',
@@ -877,7 +877,7 @@ const TOPICS = [
   reach: ['Ongoing fear after a disaster they experienced.'],
   more: [M.ready, M.redcross, M.nctsn] },
 
-{ id: 'outbreaks', ring: 'world', title: 'Illness outbreaks', keys: 'pandemic virus outbreak covid flu sick germs',
+{ id: 'outbreaks', ring: 'world', title: 'Illness Outbreaks', keys: 'pandemic virus outbreak covid flu sick germs',
   quick: ['Share simple facts and what your family does to stay healthy.', 'Give kids control: handwashing, sleep, healthy habits.', 'Limit scary news.', 'Reassure them that doctors and scientists are working hard.'],
   rainy: 'Leaves and Bark', acts: ['water-check', 'move-wiggle', 'balloon-breaths'],
   k2: 'Young children may worry about germs or about loved ones getting sick.',
@@ -894,7 +894,7 @@ const TOPICS = [
   more: [M.aap, M.cmi] },
 
 /* ---------------- ADDED IN SESSION 7 ---------------- */
-{ id: "self-harm", ring: "safety", title: "Self-harm: when a child hurts themselves", keys: "self harm self-harm self injury selfharm cutting cut scratching hurting themselves on purpose hitting themselves head banging picking skin burning 988",
+{ id: "self-harm", ring: "safety", title: "Self-Harm: When a Child Hurts Themselves", keys: "self harm self-harm self injury selfharm cutting cut scratching hurting themselves on purpose hitting themselves head banging picking skin burning 988",
   quick: ["Stay calm and kind. How you react decides whether they tell you again.", "Check for injuries that need care. Call 911 for anything serious.", "Ask gently and directly: “Are you thinking about killing yourself?” Asking is safe.", "Call their doctor today. Self-harm in a child always deserves a professional look."],
   rainy: "Bark and Fruit", acts: ["name-it", "balloon-breaths", "people-tree"],
   k2: "Young children may hit themselves, bang their head, bite, or pull their hair when they are overwhelmed. Some of this is common in very young kids. If it happens often, causes injury, or comes with sadness rather than frustration, talk with their doctor.",
@@ -910,7 +910,7 @@ const TOPICS = [
   reach: ["Call their doctor or a child mental health professional this week, or today if it keeps happening.", "Call or text 988 any time, or text HOME to 741741.", "Call 911 for a serious injury, or if a child is in danger right now."],
   more: [M.cmi, M.lifeline, ['Cornell Self-Injury and Recovery Resources', 'https://selfinjury.bctr.cornell.edu']] },
 
-{ id: "food-worries", ring: "health", title: "Worries about food and eating", keys: "eating disorder eating disorders anorexia bulimia binge eating arfid picky eating not eating skipping meals refusing food weight diet dieting body image throwing up after eating",
+{ id: "food-worries", ring: "health", title: "Worries About Food and Eating", keys: "eating disorder eating disorders anorexia bulimia binge eating arfid picky eating not eating skipping meals refusing food weight diet dieting body image throwing up after eating",
   quick: ["Picky eating is common. Losing weight, skipping meals, or fear of food is not. Call their doctor.", "Eating disorders can start in grade school. They are medical illnesses, not choices.", "Talk about bodies by what they can do, never by how much they weigh.", "Keep family meals calm, regular, and together."],
   rainy: "Leaves and Bark", acts: ["water-check", "name-it", "strength-detective"],
   k2: "Young children may be very picky, gag on textures, or fear choking or throwing up. When a child eats so few foods that they stop growing, lose weight, or panic at meals, it may be ARFID, an eating disorder that is not about body image. Their doctor can help.",
@@ -926,7 +926,7 @@ const TOPICS = [
   reach: ["Call their doctor for weight loss, missed growth, dizziness, fainting, throwing up after meals, or a child who eats only a few foods.", "ANAD Eating Disorders Helpline: 1-888-375-7767, weekdays.", "Call 911 for fainting, chest pain, or confusion."],
   more: [['ANAD Eating Disorders Helpline', 'https://anad.org'], M.aap, ['The Emily Program (Minnesota)', 'https://emilyprogram.com']] },
 
-{ id: "accident", ring: "health", title: "A car accident or sudden injury", keys: "car accident crash wreck collision injury injured hurt emergency room er icu hospital concussion head injury broken bone sudden accident",
+{ id: "accident", ring: "health", title: "A Car Accident or Sudden Injury", keys: "car accident crash wreck collision injury injured hurt emergency room er icu hospital concussion head injury broken bone sudden accident",
   quick: ["Tell them what happened in simple words, and who is taking care of it.", "Watch for head injury signs after any crash, even when a child seems fine.", "Expect fear of riding in the car. Go back to it in small steps.", "Let them help, draw, or play it out. That is how kids make sense of scary things."],
   rainy: "Bark and Leaves", acts: ["balloon-breaths", "quiet-together", "people-tree"],
   k2: "Young children may replay the crash in play, cling to you, have trouble sleeping, or act younger for a while. They may secretly worry it was their fault.",
@@ -942,7 +942,7 @@ const TOPICS = [
   reach: ["Get medical care right away for a headache that gets worse, vomiting, unusual sleepiness, confusion, or acting strange after a bump to the head.", "Talk with their doctor if fear, nightmares, or behavior changes last more than a month.", "Call 911 in an emergency."],
   more: [M.nctsn, ['CDC HEADS UP: Concussion', 'https://www.cdc.gov/heads-up/'], M.aap] },
 
-{ id: "saw-porn", ring: "safety", title: "When a child sees pornography", keys: "porn pornography saw something online inappropriate videos pictures naked sexual content explicit search tablet youtube accidentally exposure watching looking at",
+{ id: "saw-porn", ring: "safety", title: "When a Child Sees Pornography", keys: "porn pornography saw something online inappropriate videos pictures naked sexual content explicit search tablet youtube accidentally exposure watching looking at",
   quick: ["Stay calm. Most kids find it by accident, and they need to know they can tell you.", "Thank them for telling. They are not in trouble.", "Name it simply: “Those pictures show private parts. They are made for grown-ups and are not healthy for kids.”", "If someone showed it to them, or they show sexual knowledge far beyond their age, see the guide on when a child tells you someone hurt them."],
   rainy: "Bark and Roots", acts: ["name-it", "people-tree", "quiet-together"],
   k2: "Young children often stumble on it through a search, an autoplay video, or an older child’s device. They may feel confused, giggly, or yucky, without words for it.",
@@ -958,7 +958,7 @@ const TOPICS = [
   reach: ["If an adult or older child showed it to them, or asked for pictures of them, report it: county child protection, the CyberTipline at report.cybertip.org or 1-800-843-5678, or 911 if they are in danger.", "Talk with their doctor or a counselor if they seem troubled by it, or keep looking for it."],
   more: [M.netsmartz, M.common, M.stopit] },
 
-{ id: "attention", ring: "school", title: "Attention and learning differences", keys: "adhd add attention focus hyperactive impulsive cant sit still distracted learning disability learning differences dyslexia dyscalculia reading trouble iep 504 plan evaluation diagnosis",
+{ id: "attention", ring: "school", title: "Attention and Learning Differences", keys: "adhd add attention focus hyperactive impulsive cant sit still distracted learning disability learning differences dyslexia dyscalculia reading trouble iep 504 plan evaluation diagnosis",
   quick: ["Every brain learns differently. A hard time focusing or reading is not laziness.", "If school is a daily struggle, ask for an evaluation. You can request one from the school in writing.", "Tell your child the truth in kind words: their brain works a certain way, and there are tools for it.", "Notice and name their strengths often. Kids with ADHD or learning differences hear a lot of correction."],
   rainy: "Bark and Trunk", acts: ["strength-detective", "move-wiggle", "name-it"],
   k2: "Young children are wiggly and distractible by nature, so ADHD can be hard to tell apart from being five. What stands out is a child who struggles much more than peers, in more than one place, for months. Trouble learning letters and sounds can be an early sign of dyslexia.",
@@ -974,7 +974,7 @@ const TOPICS = [
   reach: ["Talk with their doctor if attention, behavior, or learning trouble lasts months and shows up at home and school.", "Ask the school for an evaluation if reading, writing, or math stays far behind.", "Talk with their doctor if your child seems very sad, anxious, or says they hate themselves."],
   more: [['CHADD', 'https://chadd.org'], ['Understood', 'https://www.understood.org'], ['PACER Center (Minnesota)', 'https://www.pacer.org'], M.aap] },
 
-{ id: "lying", ring: "school", title: "Lying and taking things", keys: "lying lies liar lie fibbing making things up stealing steals stole taking things shoplifting sneaking honesty truth",
+{ id: "lying", ring: "school", title: "Lying and Taking Things", keys: "lying lies liar lie fibbing making things up stealing steals stole taking things shoplifting sneaking honesty truth",
   quick: ["Lying and taking things are common in young kids, and part of learning right from wrong.", "Stay calm. Big reactions teach kids to lie better, not less.", "Make telling the truth safe: a smaller consequence when they own up.", "Help them make it right: return it, pay it back, or say sorry."],
   rainy: "Trunk and Branches", acts: ["name-it", "helper-job", "strength-detective"],
   k2: "Young children mix wishes and facts, and may not fully understand that things belong to other people. A child who says the dog ate the cookies is often testing, not scheming.",
@@ -1006,7 +1006,7 @@ const TOPICS = [
   reach: ["Talk with their doctor if a child who was dry for months starts wetting again, if there is pain, or if there are daytime accidents too. Stress, constipation, and infections can all play a part.", "Talk with their doctor about treatment if bedwetting continues past about age 7, or if it is causing a lot of worry."],
   more: [M.aap] },
 
-{ id: "sibling-leaves", ring: "family", title: "An older sibling leaves home", keys: "sibling leaving home brother sister college moving out graduation military enlist leaving for school dorm missing sibling empty room",
+{ id: "sibling-leaves", ring: "family", title: "An Older Sibling Leaves Home", keys: "sibling leaving home brother sister college moving out graduation military enlist leaving for school dorm missing sibling empty room",
   quick: ["Kids can grieve when a big brother or sister leaves, even for a happy reason.", "Tell them ahead of time, and let them help with the goodbye.", "Set up a simple way to stay in touch, like video calls or letters.", "Expect their place in the family to shift. Give it time."],
   rainy: "Branches and Fruit", acts: ["people-tree", "thanks-note", "looking-forward"],
   k2: "Young children may not understand how long “away” is. They may ask the same questions many times or feel the sibling left because of them.",
@@ -1025,7 +1025,7 @@ const TOPICS = [
 /* ---------------- HEALTH AND ABILITY (GWG BLD 757, HA 2) ----------------
    ring "life"; life: shared/gg-life.js ids for Picked for You; plain: the Plain wording of fields that name faith
    (shown when the child's wording is Plain). Generated from grounded-workshop patches/bld757/source/M. */
-{ id: "health-condition", ring: "life", life: ["health"], title: "A health condition every day", keys: "health condition asthma allergies food allergy diabetes epilepsy seizures eczema chronic illness long-term medicine inhaler shots school nurse sick days doctor",
+{ id: "health-condition", ring: "life", life: ["health"], title: "A Health Condition Every Day", keys: "health condition asthma allergies food allergy diabetes epilepsy seizures eczema chronic illness long-term medicine inhaler shots school nurse sick days doctor",
   quick: ["Use simple, true words for their condition, and use the same words each time.", "Give them a small, real job in their own care, like holding the inhaler or choosing the bandage.", "Make a written plan with the school nurse and teacher so school feels safe.", "Their condition is one part of them. Make room for play, friends, and fun every day."],
   rainy: "Leaves and Bark",
   acts: ["comfort-kit", "balloon-breaths", "good-day-plan"],
@@ -1042,7 +1042,7 @@ const TOPICS = [
   reach: ["Call their doctor about any new or worsening symptoms, and ask the clinic or hospital about a child life specialist for hard procedures.", "Talk with their doctor or school counselor if worry, sadness, or fear of medical care lasts more than a couple of weeks.", "PACER Center (952-838-9000) helps Minnesota families with school plans for a child with a health condition or disability."],
   more: [["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["CDC Healthy Schools: How Schools Can Support Students with Chronic Health Conditions", "https://www.cdc.gov/healthyschools/chronic_conditions/pdfs/2017_02_15-How-Schools-Can-Students-with-CHC_Final_508.pdf"], ["PACER Center", "https://www.pacer.org/"]] },
 
-{ id: "moving-differently", ring: "life", life: ["moving"], title: "Moving differently: wheels, braces, and joining in", keys: "moving differently wheelchair braces crutches walker cerebral palsy spina bifida physical disability mobility joining in recess playground adaptive pe physical therapy included left out",
+{ id: "moving-differently", ring: "life", life: ["moving"], title: "Moving Differently: Wheels, Braces, and Joining In", keys: "moving differently wheelchair braces crutches walker cerebral palsy spina bifida physical disability mobility joining in recess playground adaptive pe physical therapy included left out",
   quick: ["Speak about their body plainly and kindly: “You use a wheelchair to get around,” never “stuck” or “bound.”", "The barrier is often the stairs or the game, not your child. Look for what can change around them.", "Their wheelchair, braces, or crutches are part of their space. Others ask before touching or pushing.", "Help them find games and places where they can join in, and let them show you their own way."],
   rainy: "Branches and Leaves",
   acts: ["chair-dance", "ask-to-play", "my-own-way"],
@@ -1059,7 +1059,7 @@ const TOPICS = [
   reach: ["Talk with their doctor or physical therapist about pain, new changes in movement, or equipment that no longer fits.", "Talk with their doctor or school counselor if they seem sad, left out, or worried for more than a couple of weeks.", "PACER Center (952-838-9000) helps Minnesota families with school plans and joining in for a child with a disability."],
   more: [["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["PACER Center", "https://www.pacer.org/"]] },
 
-{ id: "hearing-differently", ring: "life", life: ["hearing"], title: "Hearing differently", keys: "hearing differently deaf hard of hearing hearing loss hearing aids cochlear implant sign language asl captions interpreter lipreading listening ears",
+{ id: "hearing-differently", ring: "life", life: ["hearing"], title: "Hearing Differently", keys: "hearing differently deaf hard of hearing hearing loss hearing aids cochlear implant sign language asl captions interpreter lipreading listening ears",
   quick: ["Every child and family chooses their own words, like Deaf, hard of hearing, or hearing differently, and their own way to talk: signing, speaking, or both.", "Make sure your child can see faces, signs, and captions. Get their attention before you talk.", "Talk with the school about what helps: seating, captions, an interpreter, or a teacher for the Deaf and hard of hearing.", "Help them find friends and grown-ups who share their way of talking. Belonging matters most."],
   rainy: "Branches and Bark",
   acts: ["help-me-card", "name-it", "friend-cheer"],
@@ -1076,7 +1076,7 @@ const TOPICS = [
   reach: ["Talk with their audiologist or doctor about any change in hearing, ear pain, or trouble with hearing aids or implants.", "Talk with their school team or school counselor if they seem lonely, left out, or worried for more than a couple of weeks.", "PACER Center (952-838-9000) helps Minnesota families with school plans for a child who is Deaf or hard of hearing."],
   more: [["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["PACER Center", "https://www.pacer.org/"]] },
 
-{ id: "seeing-differently", ring: "life", life: ["seeing"], title: "Seeing differently", keys: "seeing differently blind low vision visual impairment vision loss eyes cane braille large print magnifier screen reader guide glasses cannot see",
+{ id: "seeing-differently", ring: "life", life: ["seeing"], title: "Seeing Differently", keys: "seeing differently blind low vision visual impairment vision loss eyes cane braille large print magnifier screen reader guide glasses cannot see",
   quick: ["Every child and family chooses their own words, like blind, low vision, or seeing differently.", "Say your name when you come near, and say out loud what you are pointing at.", "Their cane, braille, magnifier, or screen reader are their tools. They are part of how your child learns and gets around.", "Ask the school about a teacher for students who are blind or have low vision, and someone to teach safe travel."],
   rainy: "Branches and Roots",
   acts: ["wonder-touch", "five-senses", "help-me-card"],
@@ -1093,7 +1093,7 @@ const TOPICS = [
   reach: ["Talk with their eye doctor about any change in vision, eye pain, or headaches.", "Talk with their school team or school counselor if they seem lonely, left out, or worried for more than a couple of weeks.", "PACER Center (952-838-9000) helps Minnesota families with school plans for a child who is blind or has low vision."],
   more: [["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["PACER Center", "https://www.pacer.org/"]] },
 
-{ id: "autism-brain", ring: "life", life: ["autism"], title: "Autism: how my brain works", keys: "autism autistic autism spectrum asd my brain works different thinking senses sensory noise routine stimming meltdown special interest diagnosis telling my child",
+{ id: "autism-brain", ring: "life", life: ["autism"], title: "Autism: How My Brain Works", keys: "autism autistic autism spectrum asd my brain works different thinking senses sensory noise routine stimming meltdown special interest diagnosis telling my child",
   quick: ["Tell your child about autism in simple, true, positive words: their brain works in its own way, with strengths and hard parts.", "Every family chooses their own words. Many autistic people say “autistic”; others say “has autism.” Ask your child what fits.", "Make room for what helps their brain: routines, a quiet spot, movement, and the things they love.", "Their interests are a strength and a doorway. Join them there."],
   rainy: "Bark and Branches",
   acts: ["calm-corner", "comfort-kit", "strength-detective"],
@@ -1110,7 +1110,7 @@ const TOPICS = [
   reach: ["Talk with their doctor or care team about sleep, eating, or new worries, and about any therapy questions.", "Talk with the school counselor or their doctor if they seem sad, very worried, or left out for more than a couple of weeks.", "PACER Center (952-838-9000) helps Minnesota families with school plans for an autistic child."],
   more: [["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["Child Mind Institute", "https://childmind.org"], ["PACER Center", "https://www.pacer.org/"]] },
 
-{ id: "sibling-health", ring: "life", life: ["close"], title: "A brother or sister with a disability or illness", keys: "sibling brother sister disability illness sick hospital chronic illness cancer autism wheelchair jealous left out sibshop worry guilt attention",
+{ id: "sibling-health", ring: "life", life: ["close"], title: "A Brother or Sister with a Disability or Illness", keys: "sibling brother sister disability illness sick hospital chronic illness cancer autism wheelchair jealous left out sibshop worry guilt attention",
   quick: ["Brothers and sisters carry a quiet share. Tell them what is happening in simple, true words.", "Set aside regular time that is just theirs, even ten minutes, and protect it.", "Every feeling is allowed: love, worry, jealousy, guilt, pride, and plain tiredness.", "Look for a sibling group, like a Sibshop, where they meet kids who understand."],
   rainy: "Roots and Branches",
   acts: ["just-us", "people-tree", "worry-box"],
@@ -1127,7 +1127,7 @@ const TOPICS = [
   reach: ["Talk with their doctor or school counselor if a sibling’s sadness, worry, anger, or trouble sleeping lasts more than a couple of weeks.", "Ask the hospital or clinic whether a child life specialist or social worker supports siblings.", "The Sibling Support Project (siblingsupport.org) lists Sibshops and support for brothers and sisters."],
   more: [["Sibling Support Project", "https://siblingsupport.org/"], ["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["Child Mind Institute", "https://childmind.org"]] },
 
-{ id: "ask-stare-tease", ring: "life", life: ["moving", "hearing", "seeing", "autism", "learning", "health"], title: "When other kids ask, stare, or tease", keys: "other kids ask questions stare staring tease teasing bullying mean comments disability difference wheelchair hearing aids glasses autism looks different what happened to you",
+{ id: "ask-stare-tease", ring: "life", life: ["moving", "hearing", "seeing", "autism", "learning", "health"], title: "When Other Kids Ask, Stare, or Tease", keys: "other kids ask questions stare staring tease teasing bullying mean comments disability difference wheelchair hearing aids glasses autism looks different what happened to you",
   quick: ["Curious questions, staring, and teasing are three different things. Help your child know which is which.", "Practice an easy answer for curious questions, and remind them they never owe anyone an explanation.", "Teasing about a disability or condition is bullying. Grown-ups step in, every time.", "Help your child find friends who like them just as they are."],
   rainy: "Branches and Trunk",
   acts: ["my-own-way", "kind-words-to-me", "ask-to-play"],
@@ -1144,7 +1144,7 @@ const TOPICS = [
   reach: ["Talk with the school right away if teasing keeps happening, gets physical, or spreads online.", "Talk with their doctor or school counselor if your child seems sad, scared to go to school, or withdrawn for more than a couple of weeks."],
   more: [["StopBullying.gov", "https://www.stopbullying.gov"], ["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["National Association of School Psychologists", "https://www.nasponline.org"]] },
 
-{ id: "why-happen", ring: "life", life: ["health", "moving", "hearing", "seeing", "autism", "learning", "close"], title: "Big questions: why did this happen?", keys: "big questions why me why did this happen is it my fault punishment god faith prayer wonder fair unfair disability illness condition sibling meaning comfort",
+{ id: "why-happen", ring: "life", life: ["health", "moving", "hearing", "seeing", "autism", "learning", "close"], title: "Big Questions: Why Did This Happen?", keys: "big questions why me why did this happen is it my fault punishment god faith prayer wonder fair unfair disability illness condition sibling meaning comfort",
   quick: ["“Why did this happen?” is a big, normal question. Welcome it, and listen first.", "Say clearly, more than once: it is not your fault, and it is not a punishment.", "It is okay to say, “I don’t know all the answers. I wonder too.” Then stay close.", "Share what steadies your family, in your own words: a prayer, a song, quiet, nature, or each other."],
   rainy: "Roots and Trunk",
   acts: ["big-question", "wonder-touch", "kind-words-to-me"],

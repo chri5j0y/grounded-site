@@ -334,7 +334,7 @@ function choosePass(reason, keep) {
 let rootP = null;
 function needRoot() {
   if (window.GGRoot) return Promise.resolve(window.GGRoot);
-  if (!rootP) rootP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b782'; s.onload = () => window.GGRoot ? ok(window.GGRoot) : (rootP = null, no(new Error('load'))); s.onerror = () => { rootP = null; s.remove(); no(new Error('load')); }; document.head.appendChild(s); });
+  if (!rootP) rootP = new Promise((ok, no) => { const s = document.createElement('script'); s.src = '/shared/gg-rootwords.js?v=b788'; s.onload = () => window.GGRoot ? ok(window.GGRoot) : (rootP = null, no(new Error('load'))); s.onerror = () => { rootP = null; s.remove(); no(new Error('load')); }; document.head.appendChild(s); });
   return rootP;
 }
 function rootShowG(g, words, again) {
@@ -558,7 +558,7 @@ function viewSetup() {
     if (st.kind === 'classroom') h += `<p class="lbl">Where is this class?</p><div class="gv-chips">${[['public', 'Public School'], ['faith', 'Faith-Based School'], ['other', 'Homeschool or Program']].map(([id, l]) => `<button type="button" class="chip${st.school === id ? ' on' : ''}" aria-pressed="${st.school === id}" data-act="setschool" data-id="${id}">${l}</button>`).join('')}</div><p class="muted">${st.school === 'faith' ? 'A faith-based school may choose Faith wording in Settings.' : 'Plain wording, about class life only. No names are kept.'}</p>`;
     if (st.kind === 'group') h += `<p class="lbl">Faith or Plain wording?</p><div class="gv-chips">${[['faith', 'Faith'], ['plain', 'Plain']].map(([id, l]) => `<button type="button" class="chip${st.faith === id ? ' on' : ''}" aria-pressed="${st.faith === id}" data-act="setfaith" data-id="${id}">${l}</button>`).join('')}</div><p class="muted">Decide together in your first time. Change it any time in Settings.</p>`;
     if (st.kind !== 'team') h += switchHtml('setchildren', st.children, 'Children Take Part', st.children ? 'On. Kid lines show under each question.' : 'Off. Turn it on when children join in.');
-    h += switchHtml('setlock', st.lock, 'Lock the Check-ins and Plan With a Passcode', st.lock ? 'On, as recommended. Only people with the passcode open them.' : 'Off. Anyone using this device can open them.');
+    h += switchHtml('setlock', st.lock, 'Lock the Check-ins and Plan with a Passcode', st.lock ? 'On, as recommended. Only people with the passcode open them.' : 'Off. Anyone using this device can open them.');
     if (st.lock) h += `<label class="lbl" for="gv-sp1">Grove passcode</label><input id="gv-sp1" class="gv-input" type="password" autocomplete="new-password"><label class="lbl" for="gv-sp2">Passcode again</label><input id="gv-sp2" class="gv-input" type="password" autocomplete="new-password"><p class="muted">At least 6 characters. Grow With Grounded never sees it and cannot recover it. Next you get 12 Root Words that open the grove if the passcode is ever forgotten.</p>`;
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
@@ -698,7 +698,7 @@ function nextStepHtml() {
   const K = KW();
   if (G.lockOn && !vaultOpen()) return `<div class="card gv-next"><h3>${icon('lock')} ${esc(K.checkin)} and ${esc(K.plan)}</h3><p class="muted">Locked with the grove passcode.</p><button class="btn btn-gold btn-sm" data-act="unlock">Unlock</button></div>`;
   const v = V() || blankVault(), last = v.checkins[v.checkins.length - 1];
-  if (!last) return `<div class="card gv-next"><h3>Start With a ${esc(K.checkin)}</h3><p>${esc(K.time)}, together. One shared answer for each question, talked over as ${esc(K.we)}. Words only, never scores.</p><button class="btn btn-gold btn-sm" data-tab="checkin">Begin</button></div>`;
+  if (!last) return `<div class="card gv-next"><h3>Start with a ${esc(K.checkin)}</h3><p>${esc(K.time)}, together. One shared answer for each question, talked over as ${esc(K.we)}. Words only, never scores.</p><button class="btn btn-gold btn-sm" data-tab="checkin">Begin</button></div>`;
   if (!v.plan) return `<div class="card gv-next"><h3>Make ${esc(K.plan)}</h3><p>About five minutes, from your last check-in on ${esc(nice(last.date))}.</p><button class="btn btn-gold btn-sm" data-act="startplan">Make Our Plan</button></div>`;
   const wk = planWeek(v.plan), its = (v.plan.items || []).map(x => TP[x.pid]).filter(Boolean);
   return `<div class="card gv-next"><h3>${esc(K.plan)}</h3><p class="muted">Week ${Math.min(12, wk)} of 12${wk > 12 ? ', twelve weeks together' : ''}.</p>${its.length ? `<p>${its.map(p => `<span class="gv-part" style="--pc:${(PARTS6.find(x => x.key === p.part) || {}).color}">${esc(pv(p).name)}</span>`).join(' ')}</p>` : ''}<button class="btn btn-line btn-sm" data-tab="plan">Open Our Plan</button></div>`;
@@ -887,7 +887,7 @@ function viewTogether() {
    Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
 const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
-const GV_SRC = '/grove/guide-videos.js?v=b783';
+const GV_SRC = '/grove/guide-videos.js?v=b788';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
 const HOSPICE_FIRST = ['hospice', 'hard-death'];
@@ -1032,9 +1032,10 @@ function lcDetail(t0) {
   </article>`;
 }
 // Print: both views, the practices, the tree guides, the help lines, and the Sources line.
+// Save or Print This Guide (BLD 788): the share sheet with a real PDF (shared/gg-pdf.js), the print page as the backup.
 function lcPrint(id) {
   const t0 = LC.find(x => x.id === id); if (!t0) return;
-  const t = lcT(t0), tg = t.together || {}, ld = t.leader || {}, faith = lcFaith(t0), win = window.open('', '_blank');
+  const t = lcT(t0), tg = t.together || {}, ld = t.leader || {}, faith = lcFaith(t0);
   const ul = a => (a || []).length ? '<ul>' + a.map(x => '<li>' + esc(x) + '</li>').join('') + '</ul>' : '';
   const ps = (t.practices || []).map(x => TP[x]).filter(Boolean).map(pv);
   const trees = (t.trees || []).filter(x => TREE_LINK[x[0]]);
@@ -1047,7 +1048,11 @@ function lcPrint(id) {
     <h2>When to Reach Out for More Help</h2>${ul(t.reach)}
     ${HOSPICE_FIRST.includes(t0.id) ? '<p><b>In hospice, call your hospice 24/7 line first, day or night.</b></p>' : ''}<p>If a vulnerable adult in Minnesota may be harmed, neglected, or taken advantage of, call MAARC at 1-844-880-1574, any time.</p>
     <div class="muted" style="font-size:13px">${lcSources(t0)}</div>`;
-  printDoc(t.title, inner, win);
+  const now = () => printDoc(t.title, inner);
+  if (!window.GGApp || !window.ggPdfFromHTML) { now(); return; }
+  const help = W('print.footer') ? '' : '<p>If someone needs help now: call or text 988, any time. If anyone is in danger, call 911.</p>';
+  GGApp.sheet({ title: t.title, file: 'grove-' + t0.id + '.pdf', print: now,
+    blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner + help, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded. growwithgrounded.com/grove' }) });
 }
 function lcReadAloud() {
   const a = $('#gv-lc-article'); if (!a) return;
@@ -1108,7 +1113,7 @@ function viewCheckin() {
   if (list.length) {
     h += resultsHtml(list[0]);
     h += seasonsHtml();
-    h += `<div class="card"><h3>Earlier Check-ins</h3><ul class="gv-fam-list">${list.map(c => `<li><div><b>${esc(longDate(c.date))}</b><span>${c.quick ? 'Quick check-in' : 'Full check-in'}</span></div><button class="btn btn-line btn-sm" data-act="ciview" data-id="${esc(c.id)}">Open</button></li>`).join('')}</ul></div>`;
+    h += `<div class="card"><h3>Earlier Check-ins</h3><ul class="gv-fam-list">${list.map(c => `<li><div><b>${esc(longDate(c.date))}</b><span>${c.quick ? 'Quick Check-in' : 'Full Check-in'}</span></div><button class="btn btn-line btn-sm" data-act="ciview" data-id="${esc(c.id)}">Open</button></li>`).join('')}</ul></div>`;
   }
   return h + helpCardHtml(true) + srcFor('checkin');
 }
@@ -1121,7 +1126,7 @@ function runnerHtml() {
   }
   const list = qList(G.kind, ci.quick), item = list[ci.i], q = item.q, part = PARTS6.find(p => p.key === item.part), cur = ci.ans[item.key];
   const kid = kidsOn() && kidText(q);
-  return `<div class="section-head"><h2>${esc(K.checkin)}</h2><p>Question ${ci.i + 1} of ${list.length}. ${ci.quick ? 'Quick check-in.' : ''}</p></div>
+  return `<div class="section-head"><h2>${esc(K.checkin)}</h2><p>Question ${ci.i + 1} of ${list.length}. ${ci.quick ? 'Quick Check-in.' : ''}</p></div>
     <div class="card gv-q" style="--pc:${part.color}"><p class="gv-kicker">${icon(part.key, 'gv-ic-inline')} ${esc(part.name)}, ${esc(part.sub)}</p>
     ${G.kidsFirst && kidsOn() ? `<p class="gv-tip"><b>Children first.</b> Let the children answer before the grown-ups speak.</p>` : ''}
     <p class="gv-qtext" id="gv-qtext">${esc(qText(q))}</p>${kid ? `<p class="gv-qkid">For children: ${esc(kid)}</p>` : ''}
@@ -1226,7 +1231,7 @@ function viewPlan() {
   const v = V();
   if (v.plan) return planHtml(v.plan);
   let h = `<div class="section-head"><h2>${esc(K.plan)}</h2><p>${esc(W('plan.intro', 'Built from your check-in, together, in about five minutes: one or two Growing Edges, two or three practices, each anchored to a time you are already together.'))}</p></div>`;
-  if (!v.checkins.length) h += `<div class="card"><h3>Start With a Check-in</h3><p>The plan grows from your ${esc(K.checkin)}. You can also make a plan now and check in later.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-tab="checkin">Go to the Check-in</button><button class="btn btn-line btn-sm" data-act="startplan">Make a Plan Now</button></div></div>`;
+  if (!v.checkins.length) h += `<div class="card"><h3>Start with a Check-in</h3><p>The plan grows from your ${esc(K.checkin)}. You can also make a plan now and check in later.</p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-tab="checkin">Go to the Check-in</button><button class="btn btn-line btn-sm" data-act="startplan">Make a Plan Now</button></div></div>`;
   else h += `<div class="card"><h3>Make ${esc(K.plan)}</h3><p>From your check-in on ${esc(nice(latestCheckin().date))}.</p><button class="btn btn-gold btn-sm" data-act="startplan">Make Our Plan</button></div>`;
   if (v.plans.length) h += earlierPlansHtml();
   return h + helpCardHtml();
@@ -1389,7 +1394,7 @@ function printWhat(id, ciId) {
     const L = levelsOf(ci), Q = questionsFor(G.kind), line = (kd, k) => Wk(W('results.' + kd + '.' + k), G.kind);
     const st = PARTS6.filter(p => L[p.key] === 'strength'), sd = PARTS6.filter(p => L[p.key] === 'steady'), ed = PARTS6.filter(p => L[p.key] === 'edge');
     const talk = []; PARTS6.forEach(p => (Q[p.key] || []).forEach((q, i) => { if ((ci.ans || {})[p.key + '.' + i] === 'd') talk.push(qText(q)); }));
-    let b = `<p class="muted">${ci.quick ? 'Quick check-in' : esc(K.checkin)}, ${esc(longDate(ci.date))}. Words only.</p>`;
+    let b = `<p class="muted">${ci.quick ? 'Quick Check-in' : esc(K.checkin)}, ${esc(longDate(ci.date))}. Words only.</p>`;
     if (st.length) b += `<h2>Our Shared Strengths</h2><ul>${st.map(p => `<li>${part(p.key)} ${esc(line('strength', p.key))}</li>`).join('')}</ul>`;
     if (sd.length) b += `<h2>Steady</h2><p>${sd.map(p => part(p.key)).join(' ')}</p>`;
     if (ed.length) b += `<h2>Our Growing Edges</h2><ul>${ed.map(p => `<li>${part(p.key)} ${esc(line('edge', p.key))}</li>`).join('')}</ul>`;

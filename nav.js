@@ -10,7 +10,8 @@
    One file, loaded by every Grounded site. To add a tool, add it to GN_GROUPS below.
    If this file ever fails to load, each site's plain Tools link still works. */
 (function () {
-  var HOME = 'https://growwithgrounded.com';
+  // the live site, or this same copy when testing on this computer (the same check as the profiles loader above)
+  var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
   var ic = {
     maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'), fieldguide: mk('fieldguide'), library: mk('library'), marriage: mk('marriage'), farewell: mk('farewell'), obituary: mk('obituary'), eulogy: mk('eulogy'),
@@ -75,7 +76,7 @@
     '.gn-panel{position:fixed;z-index:9999;max-height:calc(100vh - 90px);overflow-y:auto;background:#fff;color:#2A2A2A;border:1px solid #EADFC6;border-radius:16px;box-shadow:0 18px 40px rgba(0,0,0,.16);padding:18px 18px 16px;width:min(760px,calc(100vw - 24px));display:none;font-family:Barlow,system-ui,sans-serif;text-align:left;}' +
     '.gn-panel.gn-show{display:block;}' +
     '.gn-grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 18px;}' +
-    '.gn-group h4{font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8B5E1A;margin:0 0 6px;}' +
+    '.gn-group .gn-h{line-height:1.3;font-family:"Barlow Condensed",Barlow,sans-serif;font-weight:700;font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:#8B5E1A;margin:0 0 6px;}' +
     'a.gn-tool{display:flex;gap:12px;align-items:center;padding:8px !important;border-radius:12px !important;white-space:normal !important;font-size:15px !important;text-decoration:none !important;color:#2A2A2A !important;border:none !important;text-transform:none !important;letter-spacing:0 !important;font-family:Barlow,system-ui,sans-serif !important;}' +
     'a.gn-tool:hover,a.gn-tool:focus-visible,a.gn-tool.gn-here{background:#F6EEDB;}' +
     'a.gn-tool > span:last-child{min-width:0;flex:1;}' +
@@ -105,7 +106,7 @@
       'a.gn-tool{color:#F3EDE3 !important;}' +
       'a.gn-tool:hover,a.gn-tool:focus-visible,a.gn-tool.gn-here{background:#332A20;}' +
       '.gn-tool small{color:#C2B6A4;}' +
-      '.gn-group h4,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
+      '.gn-group .gn-h,a.gn-all,.gn-back,.gn-lock{color:#D9A847 !important;}' +
       '.gn-foot{border-color:#3A322A;}' +
       '.gn-sub-mode.gn-panel{background:transparent;}';
 
@@ -140,7 +141,7 @@
   function toolsBody() {
     var cur = here();
     return GN_GROUPS.map(function (g) {
-      return '<div class="gn-group">' + '<h4>' + g.name + '</h4>' +
+      return '<div class="gn-group">' + '<div class="gn-h">' + g.name + '</div>' +
         g.items.map(function (t) {
         var row;
         if (t.soon) row = '<div class="gn-tool gn-soon" aria-disabled="true"><span class="gn-ic" style="background:' + t.bg + '">' + t.icon + '</span><span><b>' + t.title + ' <span class="gn-tag gn-tag-soon">Coming soon</span></b><small>' + t.desc + '</small></span></div>';
@@ -156,10 +157,10 @@
   }
   function svcBody() {
     var f = SVC_FEATURED, fh = onPage(f.href);
-    return '<div class="gn-group"><h4>Featured Program</h4>' +
+    return '<div class="gn-group"><div class="gn-h">Featured Program</div>' +
       '<a class="gn-tool' + (fh ? ' gn-here' : '') + '" href="' + f.href + '"' + (fh ? ' aria-current="page"' : '') + '><span class="gn-ic" style="background:' + f.bg + '">' + f.icon + '</span>' +
       '<span><b>' + f.title + (fh ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + f.desc + '</small></span></a></div>' +
-      '<div class="gn-group"><h4>Services</h4>' +
+      '<div class="gn-group"><div class="gn-h">Services</div>' +
       SVC_FAMILIES.map(function (x) { return '<a class="gn-tool gn-row" href="' + HOME + '/services.html#' + x[2] + '"><span><b>' + x[0] + '</b><small>' + x[1] + '</small></span></a>'; }).join('') +
       '</div>';
   }
@@ -392,7 +393,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b787';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b788';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

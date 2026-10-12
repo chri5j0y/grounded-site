@@ -5,7 +5,7 @@
    Maple's Learn opens. Inside Me, Close to Home: Loss, and Safety (BLD 727); the other six groups (BLD 731); Health and Ability (BLD 757): all 68 guides, 136 videos.
    Each video: {id, guide, side, title, sideName, mins, sources, scenes}. Scene kinds and cue timing are
    the same as shared/learn-lessons.js. Generated from patches/bld731/source (bld727 source for its groups) in grounded-workshop:
-   edit the data there and rebuild. Proofreading lines are in the Founder library.
+   edit the data there and rebuild.
    ===================================================================== */
 (function(){
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
@@ -6478,7 +6478,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "You have people with you in this.",
 "body": "A teacher. The school counselor. Military OneSource.",
-"say": "Let your child's teacher know, so school can watch for stress around news events. Military families can reach Military OneSource for counseling. Some families pray for the away parent each night, and it can give children a way to feel close. And look after yourself too. Your steadiness is a gift to your child."
+"say": "Let your child's teacher know, so school can watch for stress around news events. Military families can reach Military OneSource for support. Some families pray for the away parent each night, and it can give children a way to feel close. And look after yourself too. Your steadiness is a gift to your child."
 },
 {
 "k": "big",
@@ -11464,8 +11464,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Trusted help",
-"body": "Legal aid for your situation. Counseling if fear stays.",
-"say": "This video is not legal advice. For your family's situation, a trusted immigration legal aid organization is the right helper. If fear disrupts sleep, school, or daily life, talk with the school counselor or your child's pediatrician about counseling. Many faith communities also offer support, accompaniment, and prayer, so children know they belong and are held."
+"body": "Legal aid for your situation. Extra support if fear stays.",
+"say": "For your family's situation, a trusted immigration legal aid organization is the right helper. If fear disrupts sleep, school, or daily life, talk with the school counselor or your child's pediatrician about extra support. Many faith communities also offer support, accompaniment, and prayer, so children know they belong and are held."
 },
 {
 "k": "big",
@@ -14513,6 +14513,11 @@ window.GG_LEARN_GUIDES.maple = {
 "sub": "Your body is yours. You can always tell me.",
 "say": "Revisit the talk every few months. Notice and praise them when they speak up for themselves. Every small talk tells your child the same thing. Your body is yours, and you can always tell me."
 }
+],
+"crisis": [
+"Childhelp: 1-800-422-4453, any time",
+"Stop It Now: 1-888-773-8368",
+"911: danger right now"
 ]
 }
 },

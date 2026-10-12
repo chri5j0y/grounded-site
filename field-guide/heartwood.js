@@ -351,6 +351,9 @@ window.GGHw = {
   init(ctx){ C = ctx || {}; },
   sealView, inviteBlock, headBits, content, openView, atvCard,
   hasKey: () => !!hwKey(),
+  // Ready to Upload (BLD 788): a sealed lib-heartwood.js waiting on this page to upload, and its download.
+  waiting: () => HS.out ? {made: HS.out.made, newKey: !!HS.out.newKey} : null,
+  download: () => { if (HS.out) download(HS.out.js, 'lib-heartwood.js'); },
   stamp: () => STAMP + ':' + ((hwKey() || {}).key || '').slice(0, 6),
   // for tests and the Premarital tab
   _normCode: normCode, _newCode: newCode, _partners: partners

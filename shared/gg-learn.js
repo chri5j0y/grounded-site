@@ -54,7 +54,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b787';
+  var V = 'b788';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -105,7 +105,9 @@
     switch (sc.k) {
       case 'title': {
         var hid = heroId(sc.hero || 'oak'), F = FRAME[hid] || { x: 50, s: 'l', w: 520 }, tl = String(sc.h || '').length;
-        return '<img class="ln-hero" src="' + HERO(hid) + '" alt="" style="object-position:' + F.x + '% 50%"><div class="ln-shade ln-sh-' + F.s + '"></div><div class="ln-tt ln-tt-' + F.s + '" style="max-width:' + F.w + 'px"><div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow || '') + '</div><h2' + A(.9, tl > 52 ? 'ln-h4' : tl > 38 ? 'ln-h3' : tl > 24 ? 'ln-h2' : '') + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '') + '<div' + A(1.9, 'ln-by') + '>GROW WITH GROUNDED</div></div>';
+        // sc.heroNarrow (BLD 788): a narrow painting for phones, so a phone skips the wide one (Grounded Stories uses it).
+        var hsrc = sc.heroNarrow && typeof window !== 'undefined' && window.matchMedia && window.matchMedia('(max-width: 600px)').matches ? url('/shared/heroes/' + sc.heroNarrow + '.webp') : HERO(hid);
+        return '<img class="ln-hero" src="' + hsrc + '" alt="" style="object-position:' + F.x + '% 50%"><div class="ln-shade ln-sh-' + F.s + '"></div><div class="ln-tt ln-tt-' + F.s + '" style="max-width:' + F.w + 'px"><div' + A(.5, 'ln-eb') + '>' + h(sc.eyebrow || '') + '</div><h2' + A(.9, tl > 52 ? 'ln-h4' : tl > 38 ? 'ln-h3' : tl > 24 ? 'ln-h2' : '') + '>' + h(sc.h) + '</h2>' + (sc.sub ? '<p' + A(1.5) + '>' + h(sc.sub) + '</p>' : '') + '<div' + A(1.9, 'ln-by') + '>GROW WITH GROUNDED</div></div>';
       }
       case 'parts': {
         // The six parts labeled on the painted Oak (GWG BLD 760), in the painting's own pixels (2000 by 800):
@@ -186,6 +188,8 @@
       '.ln-copyline{display:block;font-size:13px;line-height:1.4;color:var(--ggl-soft,#6B5A4D);margin-top:6px;}',
       '.ggl-btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:48px;padding:10px 18px;border-radius:12px;border:1.5px solid var(--ggl-acc);background:transparent;color:var(--ggl-acc);font:inherit;font-weight:600;cursor:pointer;text-align:center;line-height:1.2;}',
       '.ggl-btn.pri{background:var(--ggl-acc);color:#FFF8EC;}.ggl-btn.quiet{border-color:var(--ggl-line);color:var(--ggl-soft);}',
+      // dark mode accents are light, so the filled Play button takes dark text there, like .btn-primary in style.css (GWG BLD 788)
+      '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-btn.pri{color:#1F1A14;}}:root[data-theme="dark"] .ggl-btn.pri{color:#1F1A14;}',
       '.ggl-btn svg{width:20px;height:20px;flex:none;}.ggl-btn:focus-visible,.ln-item:focus-visible{outline:3px solid var(--ggl-acc);outline-offset:2px;}',
       /* Read Instead (BLD 756): the whole script as text, one tap away */
       '.ln-read{margin:12px 0 4px;padding:16px 18px;border:1px solid var(--ggl-line);border-radius:14px;background:var(--ggl-card);color:var(--ggl-ink);font-size:calc(18px * var(--ggl-scale));line-height:1.6;}.ln-read[hidden]{display:none;}',
@@ -555,11 +559,11 @@
     w.innerHTML = '<span class="ln-mu-k">Music</span>'
       + '<label><span class="ggl-sr">Music volume</span><select data-mu="vol">' + [['off', 'Off'], ['soft', 'Soft'], ['medium', 'Medium']].map(function (o) { return '<option value="' + o[0] + '"' + (musicVol() === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>'
       + (safe ? '' : '<label><span class="ggl-sr">Music mood</span><select data-mu="mood">' + MOODS.map(function (o) { return '<option value="' + o[0] + '"' + (musicMood() === o[0] ? ' selected' : '') + '>' + o[1] + '</option>'; }).join('') + '</select></label>')
-      + '<button type="button" class="ln-mu-b" data-mu="next">Another Track</button>';
+      + '<button type="button" class="ln-mu-b" data-mu="next"' + (musicOn() ? '' : ' hidden') + '>Another Track</button>'; // shows while music plays (BLD 788)
     var replay = function () { if (P.playing && !P.last && musicOn()) bgPlay(cfg); };
     w.addEventListener('change', function (e) {
       var k = e.target.getAttribute('data-mu');
-      if (k === 'vol') { lsSet('gg-music', e.target.value); if (!musicOn()) bgStop(300); else if (BG.el && !BG.el.paused) bgFade(musicLevel(cfg), 400); else replay(); }
+      if (k === 'vol') { lsSet('gg-music', e.target.value); var nb = w.querySelector('[data-mu="next"]'); if (nb) nb.hidden = !musicOn(); if (!musicOn()) bgStop(300); else if (BG.el && !BG.el.paused) bgFade(musicLevel(cfg), 400); else replay(); }
       if (k === 'mood') { lsSet('gg-music-mood', e.target.value); replay(); }
     });
     w.addEventListener('click', function (e) { if (e.target.getAttribute('data-mu') !== 'next') return; musicTurn(String((cfg.lesson || {}).id || '')); if (musicOn()) { if (P.playing && !P.last) bgPlay(cfg); } });
@@ -569,7 +573,7 @@
   function srcLine(l) { if (l && typeof l.srcHtml === 'string') return l.srcHtml; /* a ready Sources line (Grounded Stories, BLD 784) */ try { return window.GGSources ? GGSources.lesson('', l, { tag: 'small' }) : ''; } catch (e) { return ''; } }
   function needSources() {
     if (window.GGSources || document.getElementById('gg-src-js')) return;
-    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b787'); document.head.appendChild(s);
+    var s = document.createElement('script'); s.id = 'gg-src-js'; s.src = url('/shared/gg-sources.js?v=b788'); document.head.appendChild(s);
   }
   // The watermark (GWG BLD 728): Grow With Grounded top left, the app's own mark bottom right, on every frame,
   // so a screen recording always shows where it came from. White on the colored cover, brown elsewhere (on a phone, the two marks without words);
@@ -959,7 +963,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b782', aspen: '/aspen/guide-videos.js?v=b782', maple: '/maple/guide-videos.js?v=b782', sequoia: '/sequoia/guide-videos.js?v=b782', pine: '/pine/guide-videos.js?v=b782', birch: '/birch/guide-videos.js?v=b782', grove: '/grove/guide-videos.js?v=b783' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b788', aspen: '/aspen/guide-videos.js?v=b788', maple: '/maple/guide-videos.js?v=b788', sequoia: '/sequoia/guide-videos.js?v=b788', pine: '/pine/guide-videos.js?v=b788', birch: '/birch/guide-videos.js?v=b788', grove: '/grove/guide-videos.js?v=b788' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -973,11 +977,11 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b782', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b788', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
-      return script(url('/shared/gg-life.js?v=b782'), function () { return !!window.GGLife; });
+      return script(url('/shared/gg-life.js?v=b788'), function () { return !!window.GGLife; });
     });
   }
   // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first
