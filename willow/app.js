@@ -732,7 +732,7 @@ VIEWS.results = () => {
     ${flags ? `<div class="w-card"><p class="w-eyebrow">Gently</p>${flags}</div>` : ''}
     ${need && !seen ? `<div class="w-card"><p class="w-eyebrow">One small thing</p><p>Today's practice in Today leans toward the ${esc(need.part.toLowerCase())}: ${esc(need.name.toLowerCase())}.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button>${!(r.matters || {}).who && ck.role === 'person' ? `<button type="button" class="btn btn-secondary" onclick="W.go('matters')">Write what matters</button>` : ''}</div></div>` : `<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button></div>`}
     ${st ? `<div class="w-card w-story"><p class="w-eyebrow">A Grounded story</p><h3><a class="text-link" href="${storyUrl(st[0])}" target="_blank" rel="noopener">${esc(st[0])}</a></h3><p class="w-quote">${esc(st[1])}</p></div>` : ''}
-    <p class="w-small" style="text-align:center">Stories from the bedside arrive by email. <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></p>`;
+    <p class="w-small" style="text-align:center">Stories from the edge of life arrive by email. <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></p>`;
 };
 VIEWS.history = () => {
   const t = target(), r = rec(t); if (!r) return VIEWS.today();
