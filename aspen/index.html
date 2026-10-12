@@ -336,7 +336,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 .as-cards-h{margin:28px 0 12px;}
 .as-gh{display:flex;align-items:center;gap:10px;margin:0 0 4px;}
 .as-gh i{width:14px;height:14px;border-radius:50%;background:var(--rc);flex:none;}
-#life-ring-h:focus{outline:none;}#life-ring-h:focus-visible{outline:3px solid var(--sun);outline-offset:3px;}
+.as-ring-h:focus{outline:none;}.as-ring-h:focus-visible{outline:3px solid var(--sun);outline-offset:3px;}
 .as-gcards{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:12px;margin-top:10px;}
 .as-gcard{display:flex;flex-direction:column;gap:6px;background:var(--card);border:1px solid var(--line);border-top:5px solid var(--rc);border-radius:14px;padding:14px 16px;}
 .as-gcard h4,.ggf .ss-group .as-gcard h4{font-family:var(--serif);font-weight:700;font-size:21px;line-height:1.2;letter-spacing:0;text-transform:none;color:var(--ink);margin:0;}
@@ -1492,15 +1492,16 @@ function aspExtraSettings(){
 /* The Guides tab: the six parts, and the When Life Changes guides (written for grown-ups). */
 function renderGuidesTab(){
   const box = $('asp-guides'); if (!box) return;
-  const G = guidesData();
   box.innerHTML = `<div class="panel"><h3 style="margin-top:0">Your Six Parts</h3>
       ${PARTS.map(p => `<p style="margin:10px 0 0"><b style="color:${pcolor(p.key)}">${p.name}</b> <span class="muted">${esc(p.sub)}</span><br>${esc(p.about)}</p>`).join('')}</div>
     <div class="panel"><h3 style="margin-top:0">When life gets hard</h3>
       <p class="muted">These guides are written for grown-ups, to help them talk with you about hard things. You can read them too, or ask your grown-up to read one with you.</p>
-      ${(LG => LG.picks.length ? `<div class="life-group"><h4>Picked for You</h4><div class="topics">${LG.picks.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}
-      ${asOtherGroups(G).map(g => `<div class="life-group"><h4>${esc(g.name)}</h4><div class="topics">${g.topics.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>`).join('') || '<p class="muted">Guides are loading.</p>'}
-      ${(LG => LG.all.length ? `<div class="life-group"><h4>Health and Ability</h4><div class="topics">${LG.all.map(t => `<button class="topic" onclick="go('guide',{id:'${t.id}'})">${esc(t.title)}</button>`).join('')}</div></div>` : '')(asLifeGroups())}</div>
+      <input class="life-search" id="asg-search" type="search" placeholder="Search: friends, grief, phones, sleep..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(ASG_FIND)}" oninput="asgFind(this)" enterkeyhint="search">
+      ${asChipsHtml('stu', asGroupsShown())}
+      <div id="asg-groups"></div></div>
     <div class="help-strip"><div><b>Need to talk to someone right now?</b><br><span class="muted">Help is private and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>${asLifeLinesHtml()}`;
+  asLifeList('stu');
+  if (ASG_FIND) asgFind($('asg-search'));
 }
 
 /* ---------- a card from an Aspen Guide visit ----------
@@ -2167,54 +2168,66 @@ function asGroupsShown(){
 }
 // One guide's group (its own home in aspen/guides.js), for the card's label and color.
 function asHomeGroup(id){ const g = guidesData().groups.find(x => x.topics.some(t => t.id === id)); if (!g) return { name: '', color: 'var(--hero)' }; const sob = asSoberGroup(g) && window.GGLife ? GGLife.ring('aspen') : null; return sob ? { name: g.name, color: sob.color } : { name: g.name, color: (AS_LOOK[g.name] || [])[0] || 'var(--hero)' }; }
-function asGuideCard(t){
+function asGuideCard(t, stu){
   const h = asHomeGroup(t.id), vb = (side, name) => { const w = avVidWatched('as-g-' + t.id + '-' + side);
     return `<button type="button" class="btn ghost small" onclick="avWatch('${t.id}','${side}')" aria-label="Watch ${name}: ${esc(t.title)}${w ? ', watched' : ''}">${w ? '&#10003;' : '&#9654;'} ${name}</button>`; };
   return `<article class="as-gcard" style="--rc:${h.color}"><span class="as-glabel">${esc(h.name)}</span><h4>${esc(t.title)}</h4>${t.quick && t.quick[0] ? `<p>${esc(asShort(t.quick[0]))}</p>` : ''}
-    <div class="as-gbtns"><button type="button" class="btn small" onclick="go('guide',{id:'${t.id}'})" aria-label="Read the Guide: ${esc(t.title)}">Read the Guide</button>${AV_VIDS.includes(t.id) ? vb('you', 'For You') + vb('helper', 'For the Grown-up') : ''}</div></article>`;
+    <div class="as-gbtns"><button type="button" class="btn small" onclick="go('guide',{id:'${t.id}'})" aria-label="Read the Guide: ${esc(t.title)}">Read the Guide</button>${AV_VIDS.includes(t.id) ? vb('you', 'For You') + (stu ? '' : vb('helper', 'For the Grown-up')) : ''}</div></article>`;
 }
-const asGuideGrid = ts => `<div class="as-gcards">${ts.map(asGuideCard).join('')}</div>`;
+const asGuideGrid = (ts, stu) => `<div class="as-gcards">${ts.map(t => asGuideCard(t, stu)).join('')}</div>`;
 function renderLife(){
   const shown = asGroupsShown();
   if (AS_RING !== 'all' && !shown.some(g => g.key === AS_RING)) AS_RING = 'all';
   $('view-life').innerHTML = `<h2>When Life Changes</h2>
     <p class="lede"><b>How to show up.</b> Guides for grown-ups talking with a middle schooler about hard things. Each has a quick card for right now and a full "Talking It Through" guide, with trusted sources.</p>
     <input class="life-search" id="life-search" type="search" placeholder="Search: vaping, group chats, grief, bullying..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(LIFE_FIND)}" oninput="lifeFind(this)" enterkeyhint="search">
-    <div class="ring-chips" id="life-chips" role="group" aria-label="Filter by topic"><button type="button" class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="asSetRing('all')">All topics</button>${shown.map(g => `<button type="button" class="ring-chip" style="--rc:${g.color}" data-ring="${g.key}" onclick="asSetRing('${g.key}')">${esc(g.name)}</button>`).join('')}</div>
+    ${asChipsHtml('life', shown)}
     <div id="life-groups"></div>
     <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>${asLifeLinesHtml()}`;
   asLifeList();
   if (LIFE_FIND) lifeFind($('life-search'));
 }
-function asLifeList(){
-  const shown = asGroupsShown(), el = $('life-groups'); if (!el) return;
-  if (AS_RING !== 'all' && !shown.some(g => g.key === AS_RING)) AS_RING = 'all';
-  document.querySelectorAll('#life-chips .ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === AS_RING ? 'true' : 'false'));
+/* Two homes share the cards: the grown-ups' When Life Changes tab ('life') and the student's own Guides tab ('stu', GWG BLD 791).
+   Each keeps its own chosen group; the student's cards offer Read and For You. */
+let ASG_RING = 'all';
+const AS_CV = {
+  life: { chips: 'life-chips', list: 'life-groups', head: 'life-ring-h', get: () => AS_RING, set: k => { AS_RING = k; }, stu: false, picks: () => me() ? 'Picked for ' + me().name : '' },
+  stu: { chips: 'asg-chips', list: 'asg-groups', head: 'asg-ring-h', get: () => ASG_RING, set: k => { ASG_RING = k; }, stu: true, picks: () => 'Picked for You' }
+};
+const asChipsHtml = (v, shown) => `<div class="ring-chips" id="${AS_CV[v].chips}" role="group" aria-label="Filter by topic"><button type="button" class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="asSetRing('all','${v}')">All topics</button>${shown.map(g => `<button type="button" class="ring-chip" style="--rc:${g.color}" data-ring="${g.key}" onclick="asSetRing('${g.key}','${v}')">${esc(g.name)}</button>`).join('')}</div>`;
+function asLifeList(v){
+  v = v || 'life';
+  const C = AS_CV[v], shown = asGroupsShown(), el = $(C.list); if (!el) return;
+  if (C.get() !== 'all' && !shown.some(g => g.key === C.get())) C.set('all');
+  const R = C.get();
+  document.querySelectorAll('#' + C.chips + ' .ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === R ? 'true' : 'false'));
   if (!guidesData().groups.length){ el.innerHTML = '<p class="muted">Guides are loading.</p>'; return; }
-  if (AS_RING === 'all'){
-    const LG = asLifeGroups();
-    el.innerHTML = (LG.picks.length && me() ? `<div class="life-group" style="--rc:${AS_LOOK[AS_LIFE_GROUP][0]}"><h3 class="as-gh"><i></i>Picked for ${esc(me().name)}</h3>${asGuideGrid(LG.picks)}</div><h3 class="as-cards-h">All Groups</h3>` : '') +
-      `<div class="as-rcards" role="group" aria-label="Guide groups">${shown.map(g => `<button type="button" class="as-rcard" style="--rc:${g.color}" data-ring="${g.key}" onclick="asOpenRing('${g.key}')"><b>${esc(g.name)}</b><span class="as-rblurb">${esc(g.blurb)}</span><span class="as-rcount">${asNGuides(g.topics.length)}</span></button>`).join('')}</div>`;
+  if (R === 'all'){
+    const LG = asLifeGroups(), pt = C.picks();
+    el.innerHTML = (LG.picks.length && pt ? `<div class="life-group" style="--rc:${AS_LOOK[AS_LIFE_GROUP][0]}"><h3 class="as-gh"><i></i>${esc(pt)}</h3>${asGuideGrid(LG.picks, C.stu)}</div><h3 class="as-cards-h">All Groups</h3>` : '') +
+      `<div class="as-rcards" role="group" aria-label="Guide groups">${shown.map(g => `<button type="button" class="as-rcard" style="--rc:${g.color}" data-ring="${g.key}" onclick="asOpenRing('${g.key}','${v}')"><b>${esc(g.name)}</b><span class="as-rblurb">${esc(g.blurb)}</span><span class="as-rcount">${asNGuides(g.topics.length)}</span></button>`).join('')}</div>`;
   } else {
-    const g = shown.find(x => x.key === AS_RING);
-    el.innerHTML = `<div class="life-group" style="--rc:${g.color}"><button type="button" class="back" onclick="asAllGroups('${g.key}')">&larr; All Groups</button>
-      <h3 class="as-gh" id="life-ring-h" tabindex="-1"><i></i>${esc(g.name)}</h3><p class="muted small">${esc(g.blurb)} <span class="as-rn">${asNGuides(g.topics.length)}</span></p>${asGuideGrid(g.topics)}</div>`;
+    const g = shown.find(x => x.key === R);
+    el.innerHTML = `<div class="life-group" style="--rc:${g.color}"><button type="button" class="back" onclick="asAllGroups('${g.key}','${v}')">&larr; All Groups</button>
+      <h3 class="as-gh as-ring-h" id="${C.head}" tabindex="-1"><i></i>${esc(g.name)}</h3><p class="muted small">${esc(g.blurb)} <span class="as-rn">${asNGuides(g.topics.length)}</span></p>${asGuideGrid(g.topics, C.stu)}</div>`;
   }
 }
-function asSetRing(k){ AS_RING = k; asLifeList(); }
+function asSetRing(k, v){ AS_CV[v || 'life'].set(k); asLifeList(v || 'life'); }
 // A group card opens its group (the same as its chip) and brings its heading into view.
-function asOpenRing(k){
-  asSetRing(k);
-  const c = $('life-chips'), h = $('life-ring-h');
+function asOpenRing(k, v){
+  const C = AS_CV[v || 'life'];
+  asSetRing(k, v);
+  const c = $(C.chips), h = $(C.head);
   if (c) window.scrollTo({ top: Math.max(0, c.getBoundingClientRect().top + window.scrollY - (document.querySelector('.tabs') ? document.querySelector('.tabs').offsetHeight : 0) - 12), behavior: 'auto' });
   if (h) try { h.focus({ preventScroll: true }); } catch(e){}
 }
 // All Groups: back to the cards, with the card just left in focus.
-function asAllGroups(k){
-  asSetRing('all');
-  const b = document.querySelector(`#life-groups .as-rcard[data-ring="${k}"]`);
+function asAllGroups(k, v){
+  asSetRing('all', v);
+  const b = document.querySelector(`#${AS_CV[v || 'life'].list} .as-rcard[data-ring="${k}"]`);
   if (b){ try { b.focus({ preventScroll: true }); } catch(e){} b.scrollIntoView({ block: 'center' }); }
 }
+const asAllTopics = () => { const all = []; guidesData().groups.forEach(g => g.topics.forEach(t => all.push(t))); return all; };
 /* Search: the same engine as the header search. Aspen's guides first, then the rest of Grow With Grounded (kid-safe). */
 let LIFE_FIND = '';
 function lifeFind(el) {
@@ -2222,7 +2235,16 @@ function lifeFind(el) {
   if (!window.GGFind) return;
   GGFind(el, { here: 'aspen', kid: 'aspen', localType: 'talk', open: id => go('guide', {id}), openLabel: 'Talking It Through',
     hide: ['#life-groups', '#life-chips'], accent: 'var(--btn-ink)',
-    localHTML: items => { const all = []; guidesData().groups.forEach(g => g.topics.forEach(t => all.push(t))); return asGuideGrid(items.map(it => all.find(t => t.id === it.id)).filter(Boolean)); } });
+    localHTML: items => { const all = asAllTopics(); return asGuideGrid(items.map(it => all.find(t => t.id === it.id)).filter(Boolean)); } });
+}
+// The student's Guides tab search (GWG BLD 791): the same engine, drawing student guide cards.
+let ASG_FIND = '';
+function asgFind(el) {
+  ASG_FIND = el.value;
+  if (!window.GGFind) return;
+  GGFind(el, { here: 'aspen', kid: 'aspen', localType: 'talk', open: id => go('guide', {id}), openLabel: 'Read the Guide',
+    hide: ['#asg-groups', '#asg-chips'], accent: 'var(--btn-ink)',
+    localHTML: items => { const all = asAllTopics(); return asGuideGrid(items.map(it => all.find(t => t.id === it.id)).filter(Boolean), true); } });
 }
 function renderGuide(opts){
   const G = guidesData(); let t = null, grp = null;
