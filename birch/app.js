@@ -630,7 +630,7 @@ function renderGrowthPlanBuilder(mode) {
 // come first. It never changes scores, and every practice stays on the list.
 // Health and Ability (GWG BLD 756): practices that fit the person's choice come first with a
 // "Fits You" tag and their adapt line. Nothing is hidden, and the plan never shows the choice.
-function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '', sober: f.sober || [] }; }
 function lifeFits(key, name) { return !!window.GGLifeKit && GGLifeKit.fits(lifeTags(key, name)); }
 function lifeFitHtml(key, name) { return lifeFits(key, name) ? GGLifeKit.fitHtml(lifeTags(key, name).adapt) : ''; }
 function lifeOrder(key, rows) { return window.GGLife ? GGLife.order(rows, r => lifeTags(key, r[0])) : rows; }
@@ -864,7 +864,7 @@ const LC_RINGS = (window.BIRCH_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.BIRCH_GUIDES || {}).topics || [];
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
 // Health and Ability guides (GWG BLD 757) sit in ring 'life', drawn from GGLifeKit.RING (not in LC_RINGS).
-const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || (k === 'sober' && window.GGLife ? GGLife.ring('birch') : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -904,7 +904,7 @@ function renderLC(mode) {
   if (!el) return;
   if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
-  if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring !== 'all' && st.ring !== 'life' && !(st.ring === 'sober' && lcSober()) && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the years of new ground</h2>
@@ -913,7 +913,7 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: roommates, a first job, debt, a breakup..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
-      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
+      ${lcSoberChip(mode)}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
@@ -930,8 +930,10 @@ function lcRenderList(mode) {
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
-  LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = (r.key === 'life' ? LC_LIFE_FIRST : LC_TOPICS).filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
+  const sob = lcSober() || (st.q && window.GGLife ? GGLife.ring('birch') : null); // a search looks in every ring
+  if (st.ring === 'sober' && !sob) st.ring = 'all';
+  (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = (r.key === 'life' ? LC_LIFE_FIRST : LC_TOPICS).filter(t => (r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -948,7 +950,12 @@ function lcRenderList(mode) {
 }
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    birch/guides.js, and Picked for You at the top when the person has made a choice. */
-const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+const LC_LIFE = window.GGLifeKit && GGLifeKit.lifeOnly(LC_TOPICS).length ? GGLifeKit.RING : null;
+/* Living Sober (GWG BLD 789): ring 'sober' is low-key. Its chip and section show only when Living Sober is chosen in
+   Settings; its guides are always found by search and by Picked for You. */
+const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
+function lcSober() { return window.GGLifeKit ? GGLifeKit.sober('birch') : null; }
+function lcSoberChip(mode) { const r = lcSober(); return r ? `<button class="lc-chip" style="--rc:${r.color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(r.name)}</button>` : ''; }
 const LC_LIFE_FIRST = LC_TOPICS.filter(t => t.ring === 'life').concat(LC_TOPICS.filter(t => t.ring !== 'life'));
 function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
 function lcPickedHtml(mode) {
@@ -956,10 +963,10 @@ function lcPickedHtml(mode) {
   return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 function lcLifeRingHtml(mode) {
-  const ts = LC_LIFE ? GGLifeKit.tagged(LC_LIFE_FIRST) : [];
+  const ts = LC_LIFE ? GGLifeKit.lifeOnly(LC_LIFE_FIRST) : [];
   return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
-if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) lcRenderList('client'); });
+if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) renderLC('client'); });
 /* Search: the same engine as the header search. Birch's guides first, then the rest of Grow With Grounded.
    Birch is an adult app, so nothing is held back. */
 function lcFind(el, mode) {
@@ -1034,7 +1041,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 743): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from birch/guide-videos.js. BR_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
-/* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "adhd", "what-now", "first-job", "job-loss", "career-change", "money-basics", "debt", "gambling", "moving-out", "roommates", "first-apartment", "moving-back", "new-city", "housing", "friends", "loneliness", "dating", "breakup", "controlling", "engaged", "parents-adult", "estrangement", "unplanned-pregnancy", "young-parent", "after-baby", "pregnancy-loss", "anxiety", "depression", "first-signs", "substances", "eating", "health-26", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "images", "porn", "military", "coming-home", "grief-young", "faith-own", "faith-hurt", "purpose", "college-disability", "work-disability", "pain-fatigue", "living-well-mi", "autistic-adult", "deaf-hoh", "blind-low-vision", "dating-disability", "young-carer", "faith-disability"];/* BR_VIDS end */
+/* BR_VIDS start */const BR_VIDS = ["first-year", "not-college", "changing-plans", "pressure-burnout", "adhd", "what-now", "first-job", "job-loss", "career-change", "money-basics", "debt", "gambling", "moving-out", "roommates", "first-apartment", "moving-back", "new-city", "housing", "friends", "loneliness", "dating", "breakup", "controlling", "engaged", "parents-adult", "estrangement", "unplanned-pregnancy", "young-parent", "after-baby", "pregnancy-loss", "anxiety", "depression", "first-signs", "substances", "eating", "health-26", "suicide-thoughts", "friend-suicide", "selfharm", "sexual-assault", "images", "porn", "military", "coming-home", "grief-young", "faith-own", "faith-hurt", "purpose", "college-disability", "work-disability", "pain-fatigue", "living-well-mi", "autistic-adult", "deaf-hoh", "blind-low-vision", "dating-disability", "young-carer", "faith-disability", "sober-first-year", "sober-college-nightlife", "sober-friends-dating", "sober-after-slip", "sober-after-treatment", "sober-parent-grown", "sober-swapped-habit"];/* BR_VIDS end */
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('birch', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!BR_VIDS.includes(gid)) return '';

@@ -796,7 +796,7 @@
       var minor = isMinor(p.age);
       d.show('<h2 id="ggp-title">We updated our terms</h2><p>Please take a look at the updated ' + TERMS_LINKS + ' before saving anything new.</p>' +
         (minor ? grownBlock(p.name, p.age) : '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I have read and agree to the updated ' + TERMS_LINKS + '.</span></label>') +
-        '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Not now</button><button type="button" class="ggp-b ggp-go" data-go>Agree</button></div>');
+        '<div class="ggp-row"><button type="button" class="ggp-b" data-x>Maybe later</button><button type="button" class="ggp-b ggp-go" data-go>Agree</button></div>');
       $(d, '[data-x]').onclick = function () { d.close(false); lock(); toast('Locked. Agree to the updated terms to keep saving.'); };
       $(d, '[data-go]').onclick = function () {
         var g = null;
@@ -1046,7 +1046,7 @@
   function lifeGo(fn) {
     if (window.GGLife) return fn();
     var s = document.querySelector('script[data-gglife]');
-    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b788'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
+    if (!s) { s = document.createElement('script'); s.src = HOME + '/shared/gg-life.js?v=b789'; s.setAttribute('data-gglife', '1'); document.head.appendChild(s); }
     s.addEventListener('load', function () { if (window.GGLife) fn(); });
     s.addEventListener('error', function () { toast('That could not load. Check the connection and try again.'); });
   }

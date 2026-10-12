@@ -10,6 +10,8 @@
      GGLifeKit.RING            {key: 'life', name: 'Health and Ability', color, blurb}
                                the When Life Changes ring, open to everyone
      GGLifeKit.tagged(topics)  guides with a life tag, in their own order
+     GGLifeKit.lifeOnly(topics)  the Health and Ability ring's guides (tagged, less Living Sober)
+     GGLifeKit.sober(tree)     the Living Sober ring {key: 'sober', ...} when chosen, else null (low-key, GWG BLD 789)
      GGLifeKit.picked(tree, topics)  guides that fit the choice (Picked for You)
      GGLifeKit.fits(tags)      GGLife.fits, false when GGLife is missing
      GGLifeKit.fitHtml(adapt)  the "Fits You" tag and the adapt line, for a practice row
@@ -50,6 +52,9 @@
     blurb: 'Guides that touch living with a health condition or a disability, and walking beside someone who is. Open to everyone, whatever you chose in Settings.' };
 
   function tagged(topics) { return (topics || []).filter(function (t) { return t && Array.isArray(t.life) && t.life.length; }); }
+  // Living Sober guides have their own ring, so the Health and Ability ring leaves them out.
+  function lifeOnly(topics) { return tagged(topics).filter(function (t) { return t.ring !== 'sober' && !(t.life.length === 1 && t.life[0] === 'sober'); }); }
+  function sober(tree) { var g = G(); try { return g && g.sober && g.sober(tree) ? g.ring(tree) : null; } catch (e) { return null; } }
   function picked(tree, topics) {
     var g = G(); if (!g) return [];
     var ids = g.picks(tree, tagged(topics));
@@ -121,6 +126,7 @@
     var g = G(); if (!g) return [];
     var out = [];
     g.chosen(tree).forEach(function (id) { var x = (STEPS[part] || {})[id] || STEPS.any[id]; if (x && out.indexOf(x) < 0) out.push(x); });
+    if (g.soberSteps) g.soberSteps(tree, part).forEach(function (x) { if (out.indexOf(x) < 0) out.push(x); });
     return out;
   }
   function stepsHtml(tree, part) { return steps(tree, part).map(function (x) { return '<li class="glk-step">' + esc(x) + '</li>'; }).join(''); }
@@ -148,7 +154,7 @@
       var href = x.tel ? 'tel:' + x.tel : x.url || '';
       return '<li><b>' + esc(x.name) + '</b>' + (href ? '<a href="' + esc(href) + '"' + (x.tel ? '' : ' target="_blank" rel="noopener"') + '>' + esc(x.show || x.how || '') + '</a>' : '') + (x.note ? '<span class="sq-linenote">' + esc(x.note) + '</span>' : '') + '</li>';
     };
-    return '<div class="glk-lines"><h4>' + esc(g.LINES_TITLE || 'Information and Support') + '</h4><p>Information and support for what you chose in Health and Ability. In a crisis, use the lines above.</p><ul class="calm-list sq-lines">' + L.map(function (x) { return row(x); }).join('') + '</ul></div>';
+    return '<div class="glk-lines"><h4>' + esc(g.LINES_TITLE || 'Information and Support') + '</h4><p>Information and support for what you chose in Health and Ability. In a crisis, use the lines above.' + (g.sober && g.sober(tree) ? ' If someone is hard to wake or breathing slowly, call 911.' : '') + '</p><ul class="calm-list sq-lines">' + L.map(function (x) { return row(x); }).join('') + '</ul></div>';
   }
 
   /* Settings: a section that holds the one-screen chooser. */
@@ -161,6 +167,6 @@
 
   function on(fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
 
-  window.GGLifeKit = { RING: RING, tagged: tagged, picked: picked, fits: fits, fitHtml: fitHtml, steps: steps, stepsHtml: stepsHtml,
+  window.GGLifeKit = { RING: RING, tagged: tagged, lifeOnly: lifeOnly, sober: sober, picked: picked, fits: fits, fitHtml: fitHtml, steps: steps, stepsHtml: stepsHtml,
     notes: notes, notesHtml: notesHtml, linesHtml: linesHtml, settingsHtml: settingsHtml, on: on, esc: esc };
 })();

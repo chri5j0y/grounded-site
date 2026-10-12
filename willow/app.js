@@ -576,7 +576,7 @@ function answer(key, i, v) {
 }
 function ckNav(ck, steps, nextLabel) {
   const i = ck.i, last = i === steps.length - 1;
-  return `<div class="btn-row step-nav">${i > 0 ? `<button type="button" class="btn btn-secondary" onclick="W.step(-1)">Back</button>` : `<button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button>`}
+  return `<div class="btn-row step-nav">${i > 0 ? `<button type="button" class="btn btn-secondary" onclick="W.step(-1)">Back</button>` : `<button type="button" class="btn btn-secondary" onclick="W.go('today')">Maybe later</button>`}
     ${last ? `<button type="button" class="btn btn-primary" onclick="W.finish()">See the tree</button>` : `<button type="button" class="btn btn-primary" onclick="W.step(1)">${esc(nextLabel || 'Next')}</button>`}</div>`;
 }
 function step(d) {
@@ -1175,7 +1175,7 @@ VIEWS.share = () => {
       ${row('matters', 'What Matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Ready when you are.')}
       ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'Notes will show here.')}
       <p class="w-small">Never shared: the answer about feeling safe at home.</p>
-      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div>
+      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Maybe later</button></div>
     </div>`;
 };
 function sharePick(k, v) { SHARE_PICK[k] = !!v; }
@@ -1216,7 +1216,7 @@ VIEWS.visitin = () => {
   if (!INV.card) return `<div class="w-head"><p class="w-eyebrow">A card from your visit</p><h2>Type the words they read to you</h2><p class="lead">Two words and a number, like "cedar lantern 47." The card only opens with them.</p></div>
     <div class="w-card"><label class="w-l" for="w-invc">The words</label><input type="text" id="w-invc" autocomplete="off" autocapitalize="none" spellcheck="false" value="${esc(INV.code)}" oninput="W.INV.code=this.value">
     ${INV.err ? `<p class="w-flagnote">${esc(INV.err)}</p>` : ''}
-    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.visitOpen()">Open it</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Not now</button></div></div>`;
+    <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.visitOpen()">Open it</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Maybe later</button></div></div>`;
   const c = INV.card, mine = [a].concat(helped());
   const def = INV.to || (c.who === 'helper' ? a.id : (mine.find(p => p.id === target() && roleOf(p.id) === 'person') || mine.find(p => roleOf(p.id) === 'person') || a).id);
   INV.to = def;

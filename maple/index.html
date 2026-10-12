@@ -3,8 +3,8 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
-<script src="/shared/gg-shelf.js?v=b788"></script>
-<script src="/shared/gg-sources.js?v=b788"></script>
+<script src="/shared/gg-shelf.js?v=b789"></script>
+<script src="/shared/gg-sources.js?v=b789"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -921,12 +921,12 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b782"></script>
-<script src="/shared/gg-life.js?v=b788"></script>
+<script src="/shared/gg-profiles.js?v=b789"></script>
+<script src="/shared/gg-life.js?v=b789"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/maple/guides.js?v=b788"></script>
+<script src="/maple/guides.js?v=b789"></script>
 <script src="/maple/checkin.js?v=b782"></script>
-<script src="/maple/life.js?v=b782"></script>
+<script src="/maple/life.js?v=b789"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
 <script src="/shared/gg-library.js?v=b788"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
@@ -1966,7 +1966,7 @@ function grownNoteHTML(info, name, rec) {
   else if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
   if (info.skipped.length) h += `<p><b>Skipped:</b> ${info.skipped.map(p => p.name).join(', ')}. A skip can be a quiet signal too. You might gently ask about it later.</p>`;
   if (!h) h = `<p>${esc(name)}'s tree is growing well. Celebrate it together and keep the growth plan going.</p>`;
-  return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 68 hard talks.</p>`;
+  return h + answersHTML(rec) + `<p>The <button class="link-btn" onclick="go('guide')">grown-up guide</button> has conversation starters for each part, and <button class="link-btn" onclick="go('life')">When Life Changes</button> has guides for 73 hard talks.</p>`;
 }
 // One kind line naming what grew since the last check-in (the paintings live in Season, How I've grown).
 function thenNowHTML(prev, cur, name) {
@@ -2368,7 +2368,7 @@ function mpNote(part, i, k) {
   (MPL.notes || []).forEach(n => { if (n.part !== part || n.i !== i || (n.grades && !n.grades.includes(String(S.grade)))) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
   out.ex = mpUniq(out.ex); out.tip = mpUniq(out.tip); return out;
 }
-function mpSteps(part) { const St = MPL.steps || {}; return mpUniq(mpLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '')); }
+function mpSteps(part) { const St = MPL.steps || {}; return mpUniq(mpLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '').concat(mpLifeIds().includes('sober') && GGLife.soberSteps ? GGLife.soberSteps('maple', part) : [])); }
 function mpLifeLinesHtml() {
   const L = mpLifeUse() ? GGLife.lines('maple') : []; if (!L.length) return '';
   const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
@@ -2633,12 +2633,12 @@ function mpVisitCheck(force) {
   const opens = locked.slice(0, 3).map(p => ({ t: 'Open ' + p.name + '\'s Tree', kind: 'line', fn: () => { MP_VISIT_ASKED = null; openKidProfile(p.id, 'today'); } }));
   if (!order.length) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or start one, and this card will ask again.</p>',
-      buttons: (opens.length ? opens : [{ t: 'Start My Tree', kind: 'main', fn: () => { MP_VISIT_ASKED = null; go('home'); } }]).concat([{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+      buttons: (opens.length ? opens : [{ t: 'Start My Tree', kind: 'main', fn: () => { MP_VISIT_ASKED = null; go('home'); } }]).concat([{ t: 'Maybe Later', kind: 'line', fn: () => {} }, drop]) });
     return;
   }
   GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree does it go on?</p>',
     buttons: order.slice(0, 4).map((id, i) => ({ t: 'Add to ' + kids[id].name + '\'s Tree', kind: i ? 'line' : 'main', fn: () => mpVisitAdd(id, v) }))
-      .concat(opens, [{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+      .concat(opens, [{ t: 'Maybe Later', kind: 'line', fn: () => {} }, drop]) });
 }
 window.addEventListener('gg-visit', () => mpVisitCheck(true));
 function mpTodayExtra(s) {
@@ -3161,7 +3161,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape') { const m = 
 
 /* ---------- When Life Changes ---------- */
 const LIFE = { ring: 'all', q: '', from: null };
-const ringBy = k => RINGS.find(r => r.key === k);
+const ringBy = k => RINGS.find(r => r.key === k) || (k === 'sober' && window.GGLife && GGLife.ring ? GGLife.ring('maple') : undefined); // 'sober': Living Sober, from shared/gg-life.js (GWG BLD 789)
 const actTitle = id => { const a = ACTIVITIES.find(x => x.id === id); return a ? a.title : id; };
 function topicMatches(t, q) {
   if (!q) return true;
@@ -3180,7 +3180,7 @@ function renderLife() {
       </div>
       <div class="ring-chips no-print" role="group" aria-label="Filter by topic">
         <button class="ring-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="setLifeRing('all')">All topics</button>
-        ${RINGS.filter(r => r.key !== 'life').map(r => `<button class="ring-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="setLifeRing('${r.key}')">${esc(r.name)}</button>`).join('')}
+        <span id="mp-sober-chip" style="display:contents"></span>${RINGS.filter(r => r.key !== 'life').map(r => `<button class="ring-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="setLifeRing('${r.key}')">${esc(r.name)}</button>`).join('')}
         ${lifeTagged().length ? `<button class="ring-chip" style="--rc:${LIFE_RING.color}" data-ring="life" onclick="setLifeRing('life')">${esc(LIFE_RING.name)}</button>` : ''}
       </div>
       <div id="life-list"></div>
@@ -3194,7 +3194,12 @@ function setLifeRing(k) { LIFE.ring = k; renderLifeList(); }
    the ring here shows them first, then every other guide tagged with life. */
 const LIFE_RING = ringBy('life') || { key: 'life', name: 'Health and Ability', color: '#2F6E8C', blurb: 'For a child living with a health condition or a disability, or with someone in the family who is. Open to every family.' };
 const lifeFirst = list => list.filter(t => t.ring === 'life').concat(list.filter(t => t.ring !== 'life'));
-function lifeTagged() { return lifeFirst(TOPICS.filter(t => Array.isArray(t.life) && t.life.length)); }
+function lifeTagged() { return lifeFirst(TOPICS.filter(t => Array.isArray(t.life) && t.life.length && !mpIsSober(t))); }
+/* Living Sober (GWG BLD 789): ring 'sober' (When Someone Drinks or Uses) is low-key. Its chip and section show only when
+   it is chosen in the open child's Health and Ability; its guides are always found by search and by Picked for You.
+   They stay out of the Health and Ability ring. */
+const mpIsSober = t => t.ring === 'sober' || ((t.life || []).length === 1 && t.life[0] === 'sober');
+function mpSober() { return MP_KID && window.GGLife && GGLife.sober && mpLifeUse(MP_KID) && GGLife.sober('maple') ? GGLife.ring('maple') : null; }
 /* Search: the same engine as the header search. Maple's guides first, then the rest of Grow With Grounded (kid-safe). */
 function lifeFind(el) {
   if (!window.GGFind) return;
@@ -3202,8 +3207,11 @@ function lifeFind(el) {
     after: '.life-tools', hide: ['#life-list', '.ring-chips'], accent: 'var(--btn-ink)' });
 }
 function renderLifeList() {
+  const sob0 = mpSober(), sob = sob0 || (LIFE.q && window.GGLife ? GGLife.ring('maple') : null), sc = $('mp-sober-chip'); // a search looks in every ring
+  if (LIFE.ring === 'sober' && !sob0) LIFE.ring = 'all';
+  if (sc) sc.innerHTML = sob0 ? `<button class="ring-chip" style="--rc:${sob.color}" data-ring="sober" onclick="setLifeRing('sober')">${esc(sob.name)}</button>` : '';
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
-  const rings = RINGS.filter(r => r.key !== 'life' && (LIFE.ring === 'all' || r.key === LIFE.ring));
+  const rings = (sob ? [sob] : []).concat(RINGS).filter(r => r.key !== 'life' && (LIFE.ring === 'all' || r.key === LIFE.ring));
   let html = '', count = 0;
   const block = (r, ts, label) => `<div class="ring-block" style="--rc:${r.color}"><h3><i></i>${esc(r.name)}</h3><p>${esc(r.blurb)}</p><div class="talk-grid">${ts.map(t => `
       <article class="talk-card" style="--rc:${(ringBy(t.ring) || r).color}">
@@ -3214,10 +3222,11 @@ function renderLifeList() {
         <button class="soft-btn" onclick="openTalk('${t.id}')">Talking It Through</button>
       </article>`).join('')}</div></div>`;
   // Picked for You: guides tagged for the open child's Health and Ability choice, first.
-  const picks = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? lifeFirst(GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean)) : [];
+  const pk = LIFE.ring === 'all' && !LIFE.q && MP_KID && mpLifeUse(MP_KID) ? GGLife.picks('maple', TOPICS).map(id => TOPICS.find(t => t.id === id)).filter(Boolean) : [];
+  const picks = pk.filter(mpIsSober).concat(lifeFirst(pk.filter(t => !mpIsSober(t))));
   if (picks.length) html += block({ name: 'Picked for You', color: LIFE_RING.color, blurb: `Guides that fit ${MP_KID.name}'s Health and Ability. Every guide stays open.` }, picks, 'Picked for You');
   rings.forEach(r => {
-    const ts = TOPICS.filter(t => t.ring === r.key && topicMatches(t, LIFE.q));
+    const ts = TOPICS.filter(t => (r.key === 'sober' ? t.ring === 'sober' || (t.life || []).includes('sober') : t.ring === r.key) && topicMatches(t, LIFE.q));
     if (!ts.length) return;
     count += ts.length;
     html += block(r, ts);
@@ -3282,7 +3291,7 @@ function printTalkNow() {
    Two narrated videos per guide, For You (the child) and For the Grown-up, played by shared/gg-learn.js
    from maple/guide-videos.js. MV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:maple). */
-/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn", "health-condition", "moving-differently", "hearing-differently", "seeing-differently", "autism-brain", "sibling-health", "ask-stare-tease", "why-happen"];/* MV_VIDS end */
+/* MV_VIDS start */const MV_VIDS = ["worry", "anger", "meltdown", "sadness", "bedtime", "different", "family-death", "dying", "pet-death", "suicide-loss", "baby-loss", "grief-days", "family-illness", "own-illness", "family-mental-health", "addiction", "dementia", "disability", "food-worries", "accident", "bedwetting", "divorce", "new-baby", "blended", "deployed", "jail", "foster", "money", "home-loss", "home-conflict", "sibling-leaves", "bullied", "unkind", "friendship", "new-school", "school-worry", "lockdown", "online-trouble", "attention", "lying", "moving", "community-tragedy", "fire", "crime", "immigration", "deported-classmate", "politics", "school-violence", "protests", "prejudice", "scary-news", "war", "disasters", "outbreaks", "hurt-disclosure", "wanting-die", "body-safety", "online-secrets", "self-harm", "saw-porn", "health-condition", "moving-differently", "hearing-differently", "seeing-differently", "autism-brain", "sibling-health", "ask-stare-tease", "why-happen", "sober-grown-up-drinks", "sober-never-your-fault", "sober-getting-better", "sober-staying-safe", "sober-loved-one-dies"];/* MV_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function mvVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('maple', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-talk'); if (v && v.offsetParent !== null && openTalk.last) { const y = window.scrollY; openTalk(openTalk.last, LIFE.from); window.scrollTo(0, y); } });
@@ -3330,9 +3339,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b788';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b789';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b788';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b788" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b789';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b789" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

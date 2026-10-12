@@ -2630,7 +2630,7 @@
 "maple:family-illness": "Serious Illness in the Family",
 "maple:own-illness": "Their Own Illness or Hospital Stay",
 "maple:family-mental-health": "A Family Member's Mental Health Struggle",
-"maple:addiction": "A Family Member's Addiction",
+"maple:addiction": "When a Family Member Drinks or Uses",
 "maple:dementia": "A Grandparent with Dementia",
 "maple:disability": "Disability in the Family",
 "maple:divorce": "Divorce or Separation",

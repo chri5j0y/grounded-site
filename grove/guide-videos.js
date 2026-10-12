@@ -4287,7 +4287,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Recovery means getting better.",
       "sub": "One day at a time.",
-      "say": "Recovery means someone is getting better from an illness, like addiction, or an illness in their mind. It takes a long time, and it happens one day at a time. Our whole family is part of it."
+      "say": "Recovery means someone is getting better and healing, from drinking or using, or from a struggle in their mind. It takes a long time, and it happens one day at a time. Our whole family is part of it."
      },
      {
       "k": "points",
@@ -4396,7 +4396,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Recovery in the Family",
       "sub": "For the Leader",
-      "say": "This is for the grown-up leading a family where someone is in recovery from addiction or a mental illness, and for anyone leading a family support group."
+      "say": "This is for the grown-up leading a family where someone is in recovery, healing from drinking or using or from a mental illness, and for anyone leading a family support group."
      },
      {
       "k": "big",
@@ -4408,7 +4408,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "What children need to hear",
       "body": "You didn't cause it. You can't cure it. You can't control it.",
-      "say": "Children need simple, true words. It's an illness, and their parent is getting help. They didn't cause it, they can't cure it, and they can't control it. They can look after themselves by talking about their feelings and making healthy choices. And they never have to keep it secret."
+      "say": "Children need simple, true words. Their parent is healing, and getting help. They didn't cause it, they can't cure it, and they can't control it. They can look after themselves by talking about their feelings and making healthy choices. And they never have to keep it secret."
      },
      {
       "k": "points",
@@ -4431,7 +4431,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Sober fun together"
        ]
       ],
-      "say": "Recovery goes better when everyone has support. The person in recovery, with their plan and meetings. The grown-ups, through Al-Anon, NAMI family programs, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good, sober time together."
+      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through Al-Anon, NAMI family programs, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good, sober time together."
      },
      {
       "k": "big",
@@ -17532,3 +17532,1482 @@ window.GROVE_VIDS_WORDING = function (plain) {
 // The Grove sets GROVE_PLAIN on every render, so a video opened from Learn plays in the grove's own words.
 if (window.GROVE_PLAIN) window.GROVE_VIDS_WORDING(true);
 })();
+/* ===== Living Sober guides start, GWG BLD 789 =====
+   The Grove: Living Sober videos, For the Group (side 'you') and For the Leader (side 'helper') for each Living Sober guide
+   in grove/guides.js, in the Living Sober ring (core lists that Learn track only when Living Sober is chosen; the guide's
+   Watch buttons always open them). Plain scenes swap in for a Plain grove, the same way as every Grove guide video.
+   Generated from grounded-workshop patches/bld789/G/gen.py: edit the data there and rebuild.
+   ===== */
+(function(){
+var O = window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES.grove; if (!O) return;
+if (!O.rings.some(function (r) { return r[0] === 'sober'; })) O.rings.push(['sober', 'Living Sober']);
+var V = [
+ {
+  "id": "sober-family",
+  "ring": "sober",
+  "title": "A Family Growing Sober Together",
+  "you": {
+   "id": "gr-g-sober-family-you",
+   "guide": "sober-family",
+   "side": "you",
+   "title": "A Family Growing Sober Together",
+   "sideName": "For the Group",
+   "mins": 3,
+   "blurb": "For the whole family when someone is growing sober: honest talk, healthy habits, and good time together.",
+   "sources": [
+    "sevencs"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "A Family Growing Sober Together",
+     "sub": "For the Group",
+     "say": "This is for all of us together, when someone in our family is growing sober. Every feeling we have makes sense, and we're in this together."
+    },
+    {
+     "k": "big",
+     "h": "Growing sober means a fresh start.",
+     "sub": "Learning healthy ways to feel better.",
+     "say": "Growing sober means someone in our family stopped drinking or using drugs. Now they are learning healthy ways to handle big feelings. It takes time. It happens one day at a time, and our whole family grows along with them."
+    },
+    {
+     "k": "points",
+     "h": "Three things that are true",
+     "items": [
+      [
+       "You didn't cause it",
+       "Nothing you did"
+      ],
+      [
+       "You can't fix it",
+       "Grown-ups and helpers do that"
+      ],
+      [
+       "You can talk about it",
+       "Anytime, with us"
+      ]
+     ],
+     "say": "Here are three things that are true for every kid. You didn't cause it. Nothing you did or said made this happen. Fixing it is grown-up work, for grown-ups and helpers. And you can talk about it, anytime. In our family, we say things out loud."
+    },
+    {
+     "k": "words",
+     "h": "Feelings that fit",
+     "items": [
+      "Glad",
+      "Hopeful",
+      "Proud",
+      "Worried",
+      "Mad",
+      "Unsure"
+     ],
+     "say": "You might feel glad and hopeful. You might feel proud. You might also feel worried, or mad, or unsure, especially if things were hard before. All of these feelings fit, and every one of them is welcome here."
+    },
+    {
+     "k": "big",
+     "h": "Hands on the table. One good thing.",
+     "sub": "All of us, together.",
+     "say": "Let's do this together. Everyone, put your hands flat on the table, or on your knees. Take one slow breath. Now think of one good thing about our home this week, even a small one. When you're ready, say it out loud.",
+     "beats": [
+      "Let's do this together.",
+      "Everyone, put your hands flat on the table, or on your knees.",
+      "Take one slow breath.",
+      "Now think of one good thing about our home this week, even a small one.",
+      {
+       "t": "When you're ready, say it out loud.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What helps our family grow",
+     "items": [
+      [
+       "Talking honestly",
+       "No secrets to guard"
+      ],
+      [
+       "Healthy bodies",
+       "Sleep, water, food, outside"
+      ],
+      [
+       "Sober Night",
+       "A meal, a walk, a game"
+      ],
+      [
+       "Everyone's helpers",
+       "Kids have them too"
+      ]
+     ],
+     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A Family Sober Night each week, with a meal, a walk, or a game. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "We can talk about anything.",
+      "Every day counts.",
+      "One day at a time, together."
+     ],
+     "say": "Here are words our family can say. We can talk about anything in this family. Every day counts, and so does every person. One day at a time, together. And if you ever feel unsafe, tell a grown-up you trust right away."
+    },
+    {
+     "k": "big",
+     "h": "One day at a time, together.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "Every sober day is a good day for our whole family. Small steps still count. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-family-helper",
+   "guide": "sober-family",
+   "side": "helper",
+   "title": "A Family Growing Sober Together",
+   "sideName": "For the Leader",
+   "mins": 4,
+   "blurb": "For the grown-up leading a family where someone is growing sober: honest words, healthy rhythms, and support for each person.",
+   "sources": [
+    "samhsarec",
+    "sevencs"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "A Family Growing Sober Together",
+     "sub": "For the Leader",
+     "say": "This is for the grown-up leading a family where someone is growing sober, and for the one who is growing sober. Whatever you are carrying right now makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "A whole-family season.",
+     "sub": "Health, home, purpose, and people.",
+     "say": "Growing sober is a season for the whole family. It's more than stopping. It's building health, a steady home, a sense of purpose, and people to belong to. It is rarely a straight line, and every step forward counts."
+    },
+    {
+     "k": "card",
+     "title": "Feelings come back first.",
+     "body": "What drinking once covered rises to the surface.",
+     "say": "Here's something many families are surprised by. Drinking or using often covered painful feelings and old hurts. When it stops, those feelings come back, sometimes loud. Restless nights, short tempers, and tears are common in the early months. They are signs of healing, and they ease with time, rest, and support."
+    },
+    {
+     "k": "points",
+     "h": "Tend the body at home",
+     "items": [
+      [
+       "Sleep",
+       "A steady bedtime"
+      ],
+      [
+       "Water and real food",
+       "Regular meals together"
+      ],
+      [
+       "Movement",
+       "A daily walk outside"
+      ],
+      [
+       "A sober home",
+       "Easy to keep steady"
+      ]
+     ],
+     "say": "Start with the body, for everyone. Sleep, with a steady bedtime. Water and real food, with regular meals together. Movement, like a walk outside every day. And a sober home that is easy for everyone to keep steady. Healthy habits make the hard days lighter."
+    },
+    {
+     "k": "big",
+     "h": "One slow breath. One habit to tend.",
+     "sub": "Sleep, water, a walk, or a meal together.",
+     "say": "Let's take a moment. You have been holding a lot. Breathe in slowly through your nose, and let it out even slower. Now pick one healthy habit you'll tend this week, for yourself or for the family. Say it out loud, and say when.",
+     "beats": [
+      "Let's take a moment.",
+      "You have been holding a lot.",
+      "Breathe in slowly through your nose, and let it out even slower.",
+      "Now pick one healthy habit you'll tend this week, for yourself or for the family.",
+      {
+       "t": "Say it out loud, and say when.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Support for each person",
+     "items": [
+      [
+       "The one growing sober",
+       "Their plan and their people"
+      ],
+      [
+       "The grown-ups",
+       "Al-Anon, Nar-Anon, a therapist"
+      ],
+      [
+       "The children",
+       "Alateen, a school counselor"
+      ],
+      [
+       "The family",
+       "Sober Night, together"
+      ]
+     ],
+     "say": "Healing goes better when everyone has support. The person growing sober, with their own plan and their own people. The other grown-ups, through Al-Anon, Nar-Anon, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good sober time together."
+    },
+    {
+     "k": "card",
+     "title": "Safety first",
+     "body": "Doctor before stopping alcohol or sedatives. Overdose or danger: 911. Crisis: 988.",
+     "say": "Keep safety simple and close. Stopping alcohol or sedative pills suddenly can be dangerous, so a doctor is the first call. For an overdose, or anyone who won't wake up, call nine one one. In a crisis, call or text nine eight eight. And the SAMHSA National Helpline answers any time, for treatment and information. A slip is a reason to reach for help, and keep going."
+    },
+    {
+     "k": "big",
+     "h": "You can hope and keep your limits.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Your rest, your people, and your honesty help the whole family heal. You can hope with your whole heart and still keep your limits. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-kids-talk",
+  "ring": "sober",
+  "title": "Talking with Kids About a Parent's Recovery",
+  "you": {
+   "id": "gr-g-sober-kids-talk-you",
+   "guide": "sober-kids-talk",
+   "side": "you",
+   "title": "Talking with Kids About a Parent's Recovery",
+   "sideName": "For the Group",
+   "mins": 4,
+   "blurb": "For the whole family together, when a parent is growing sober: true words, every question welcome.",
+   "sources": [
+    "sevencs"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Talking with Kids About a Parent's Recovery",
+     "sub": "For the Group",
+     "say": "This is for all of us together, when a mom or dad in our family is growing sober. Your questions matter, and so do your feelings."
+    },
+    {
+     "k": "big",
+     "h": "Growing sober means getting healthier.",
+     "sub": "One day at a time.",
+     "say": "Sometimes a grown-up drinks too much alcohol, or uses drugs, to try to feel better. It doesn't really help, and it can make hard things harder. Growing sober means they stopped, and now they are learning healthy ways to feel better, like walks, talking, and rest."
+    },
+    {
+     "k": "points",
+     "h": "Things that are true",
+     "items": [
+      [
+       "You didn't cause it",
+       "Nothing you did"
+      ],
+      [
+       "You can't fix it",
+       "That's grown-up work"
+      ],
+      [
+       "You can take care of you",
+       "Talk, play, rest"
+      ],
+      [
+       "You can talk about it",
+       "Anytime, with us"
+      ]
+     ],
+     "say": "Here are things that are true for every kid. You didn't cause it. Nothing you did or said made it happen. You can't fix it, because that's grown-up work. You can take care of you, by telling someone how you feel, making healthy choices, and having fun. And you can talk about it, anytime."
+    },
+    {
+     "k": "words",
+     "h": "Questions kids ask",
+     "items": [
+      "Is it my fault?",
+      "Will it happen again?",
+      "Can I tell my friend?",
+      "Is Mom okay?"
+     ],
+     "say": "Kids often wonder about things like this. Is it my fault? Will it happen again? Can I tell my friend? Is Mom okay? Every one of these is a good question. The grown-ups in our family want to hear yours."
+    },
+    {
+     "k": "big",
+     "h": "Think of one question.",
+     "sub": "Ask it now, or put it in the question jar.",
+     "say": "Let's do this together. Everyone, get quiet for a moment. Think of one question you have about our family, big or small. You can ask it out loud right now, or write it down for our question jar, to talk about later.",
+     "beats": [
+      "Let's do this together.",
+      "Everyone, get quiet for a moment.",
+      "Think of one question you have about our family, big or small.",
+      {
+       "t": "You can ask it out loud right now, or write it down for our question jar, to talk about later.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "words",
+     "h": "Feelings that fit",
+     "items": [
+      "Glad",
+      "Proud",
+      "Mad",
+      "Worried",
+      "Mixed up",
+      "Hopeful"
+     ],
+     "say": "You might feel glad, or proud. You might feel mad, or worried, or all mixed up. You might feel hopeful. Feelings can change from day to day, and all of them are welcome in our family."
+    },
+    {
+     "k": "card",
+     "title": "If a grown-up won't wake up",
+     "body": "Call 911, and find another grown-up right away.",
+     "say": "Here is one safety rule for every kid, in every family. If a grown-up won't wake up, or is very hard to wake, call nine one one, and find another grown-up right away. That is a brave and helpful thing to do."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "In our family, we say true things.",
+      "There are no wrong questions.",
+      "We love you, all the way."
+     ],
+     "say": "Here are words our family can say. In our family, we say true things out loud. There are no wrong questions. And we love you, all the way."
+    },
+    {
+     "k": "big",
+     "h": "True words, said with love.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "True words, said with love, help a whole family heal. Keep asking, and keep talking. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-kids-talk-helper",
+   "guide": "sober-kids-talk",
+   "side": "helper",
+   "title": "Talking with Kids About a Parent's Recovery",
+   "sideName": "For the Leader",
+   "mins": 4,
+   "blurb": "For the parent or grown-up getting ready to talk with children about a parent growing sober: what to say, by age, and how to keep the door open.",
+   "sources": [
+    "sevencs"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Talking with Kids About a Parent's Recovery",
+     "sub": "For the Leader",
+     "say": "This is for the parent growing sober, and for any grown-up getting ready to talk with children about it. Feeling nervous about this talk makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Children already sense it.",
+     "sub": "Words help them feel safe.",
+     "say": "Children notice much more than anyone tells them. Without words, they fill in the blanks, and the story they tell themselves often makes it their fault. Honest, simple words, sized to their age, help them feel safe again."
+    },
+    {
+     "k": "points",
+     "h": "Words by age",
+     "items": [
+      [
+       "Little ones",
+       "Short, concrete, and loving"
+      ],
+      [
+       "School age",
+       "What sober means, what helps"
+      ],
+      [
+       "Teens",
+       "The why, and their own choices"
+      ]
+     ],
+     "say": "Fit the words to the age. For little ones, keep it short, concrete, and loving. Dad was drinking too much, and now he is getting better. For school-age children, say what growing sober means and what helps. For teens, share more of the why, and talk plainly about their own choices: drinking and drugs wait until adulthood, and a family history is a good reason for extra care."
+    },
+    {
+     "k": "card",
+     "title": "What every child needs to hear",
+     "body": "You didn't cause it. You can't fix it. You can talk about it.",
+     "say": "Every child needs to hear a few things, many times. You didn't cause it. You can't fix it, or control it. You can take care of you, by sharing feelings and making healthy choices. And you can talk about it, anytime. It's never a secret to keep."
+    },
+    {
+     "k": "big",
+     "h": "Say your first sentence out loud.",
+     "sub": "Slowly, the way you would at home.",
+     "say": "Let's practice. Picture your child beside you, on a walk or at the kitchen table. Take one slow breath. Now say your first sentence out loud, slowly: I want to tell you something true about our family.",
+     "beats": [
+      "Let's practice.",
+      "Picture your child beside you, on a walk or at the kitchen table.",
+      "Take one slow breath.",
+      {
+       "t": "Now say your first sentence out loud, slowly: I want to tell you something true about our family.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "When they ask, will you drink again?",
+     "items": [
+      [
+       "Say what you're doing today",
+       "And who helps you"
+      ],
+      [
+       "Skip big promises",
+       "Today is enough"
+      ],
+      [
+       "Name the plan",
+       "If I slip, I get help"
+      ]
+     ],
+     "say": "Many children ask, will you drink again? Answer with what's true today. Say what you're doing, and who helps you. Skip the big promises; today is enough. And name the plan: if I ever slip, I'll get help, and it will never be your job to fix it."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "No More Silence",
+     "lines": [
+      "“If we do not have the opportunity to be honest, then we will no longer have the capacity to grow.”"
+     ],
+     "lesson": "Honest talk is how a family grows.",
+     "note": "From Chris's notebook",
+     "say": "Chris, one of Grounded's founders, is long sober, and he writes about this. If we do not have the opportunity to be honest, then we will no longer have the capacity to grow. For a family, honest talk at every age is how everyone grows."
+    },
+    {
+     "k": "card",
+     "title": "Keep the door open",
+     "body": "Many small talks. Alateen. 911 if someone won't wake up.",
+     "say": "One talk opens the door. Many small talks keep it open. Give each child a place of their own, like Alateen or the school counselor. And teach every child one safety rule: if a grown-up won't wake up, call nine one one and find another grown-up."
+    },
+    {
+     "k": "big",
+     "h": "True words, said with love, and said again.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You don't need perfect words. You need true ones, said with love, and then said again. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-celebrations",
+  "ring": "sober",
+  "title": "Sober Celebrations",
+  "you": {
+   "id": "gr-g-sober-celebrations-you",
+   "guide": "sober-celebrations",
+   "side": "you",
+   "title": "Sober Celebrations",
+   "sideName": "For the Group",
+   "mins": 3,
+   "blurb": "For everyone planning a celebration together: joy, good food, and everyone welcome.",
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Sober Celebrations",
+     "sub": "For the Group",
+     "say": "This is for all of us together, as we plan a celebration that everyone can enjoy, all the way through."
+    },
+    {
+     "k": "big",
+     "h": "The best part is the people.",
+     "sub": "Joy needs no alcohol.",
+     "say": "When we remember a great celebration, we remember the people. The laughing, the music, the food, the stories. A sober celebration keeps all of that, and everyone gets to enjoy it, and remember it."
+    },
+    {
+     "k": "big",
+     "h": "Picture a favorite celebration.",
+     "sub": "Name the one thing that made it joyful.",
+     "say": "Let's do this together. Close your eyes, or look down. Picture a celebration you loved. Who was there? What were you doing? Now name out loud the one thing that made it joyful.",
+     "beats": [
+      "Let's do this together.",
+      "Close your eyes, or look down.",
+      "Picture a celebration you loved.",
+      "Who was there?",
+      "What were you doing?",
+      {
+       "t": "Now name out loud the one thing that made it joyful.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "What makes it joyful",
+     "items": [
+      [
+       "Something to do",
+       "Music, games, a walk"
+      ],
+      [
+       "Good food",
+       "Shared slowly"
+      ],
+      [
+       "Special drinks",
+       "Sparkling water, juice, tea"
+      ],
+      [
+       "Good words",
+       "Thanks for each other"
+      ]
+     ],
+     "say": "Here's what makes a celebration joyful. Something to do together, like music, games, or a walk. Good food, shared slowly. Special drinks, like sparkling water, juice, or tea, in the good glasses. And good words, a round of thanks for each other."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "For years, drinking kept him from ever seeing the fireworks.",
+      "His first sober Fourth of July, he watched the whole show.",
+      "It was the first time since he was a little kid."
+     ],
+     "lesson": "Sober, you get to see the whole show.",
+     "note": "From Chris's notebook",
+     "say": "Chris, one of Grounded's founders, remembers his first sober Fourth of July. For years, drinking had kept him from ever seeing the fireworks. That night, sober, he watched the whole light show, for the first time since he was a little kid. He says he will never forget it."
+    },
+    {
+     "k": "card",
+     "title": "Everyone belongs here.",
+     "body": "A special drink and something fun for every person.",
+     "say": "Some people we love are growing sober. That means they stopped drinking alcohol, and they are learning healthy ways to feel good. When everyone has a special drink and something fun to do, everyone belongs, and that helps all of us enjoy the day."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "We're glad you're here.",
+      "What sounds good to drink?",
+      "No thanks, I'm good."
+     ],
+     "say": "Here are words that help at any celebration. We're glad you're here. There's sparkling water, juice, and tea. What sounds good? And if anyone offers you something you don't want, no thanks, I'm good, is a whole answer."
+    },
+    {
+     "k": "card",
+     "title": "Everyone can help plan",
+     "body": "A game, a song, the table, a few good words.",
+     "say": "Everyone can help plan. Pick a game, choose a song, set the table, or write a few good words for the person we're celebrating. When everyone has a part, everyone belongs."
+    },
+    {
+     "k": "big",
+     "h": "Joy, together.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "The best celebrations are the ones where everyone is fully here. Joy, together. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-celebrations-helper",
+   "guide": "sober-celebrations",
+   "side": "helper",
+   "title": "Sober Celebrations",
+   "sideName": "For the Leader",
+   "mins": 3,
+   "blurb": "For the host, parent, pastor, or team lead planning a sober celebration that welcomes everyone, including someone growing sober.",
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Sober Celebrations",
+     "sub": "For the Leader",
+     "say": "This is for the host, parent, pastor, group leader, or team lead planning a celebration, and for anyone growing sober who wants to enjoy it fully. Wanting a good day for everyone makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Build it around people.",
+     "sub": "A meal, music, a walk, a few good words.",
+     "say": "Start with what the celebration is really about: the person, the season, the win, the people. Then build the day around something you do together. A meal, music, a walk, games, or a few good words of thanks."
+    },
+    {
+     "k": "points",
+     "h": "Make sober drinks special",
+     "items": [
+      [
+       "Set them out first",
+       "Front and center"
+      ],
+      [
+       "The good glasses",
+       "Served with care"
+      ],
+      [
+       "A few choices",
+       "Sparkling, juice, tea"
+      ]
+     ],
+     "say": "Make the sober drinks the special ones. Set them out first, front and center. Serve them in the good glasses, with the same care as anything else. And offer a few choices, like sparkling water with fruit, a fresh juice, iced tea, or hot tea on a cold night."
+    },
+    {
+     "k": "card",
+     "title": "For someone growing sober",
+     "body": "Ask privately what helps. An easy goodbye. A friend close by.",
+     "say": "For someone growing sober, a celebration can stir old memories, especially a first sober holiday. Ask privately, what would make this feel good for you? Offer an easy arrival and an easy goodbye. A friend close by, and a plan for when to head home, can make the day a good one."
+    },
+    {
+     "k": "big",
+     "h": "Name one celebration you'll plan.",
+     "sub": "And what it will be built around.",
+     "say": "Let's take a moment. Think of one celebration coming up this month, big or small. Picture the people who will be there. Now say out loud what you'll build it around: a meal, a walk, music, or a round of thanks.",
+     "beats": [
+      "Let's take a moment.",
+      "Think of one celebration coming up this month, big or small.",
+      "Picture the people who will be there.",
+      {
+       "t": "Now say out loud what you'll build it around: a meal, a walk, music, or a round of thanks.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Gentle hosting",
+     "items": [
+      [
+       "One offer is enough",
+       "A no is a whole answer"
+      ],
+      [
+       "Their story is theirs",
+       "Never announced"
+      ],
+      [
+       "Milestones count",
+       "A day, a month, a year"
+      ]
+     ],
+     "say": "A few gentle habits help. One offer is enough, and a no is a whole answer. Someone's sobriety is their story to share, so it's never announced to the room. And sober milestones count, a day, a month, a year, celebrated with the same joy as any birthday."
+    },
+    {
+     "k": "card",
+     "title": "For teams and groups",
+     "body": "Breakfast, a walk, a service day, a shared meal.",
+     "say": "For a team, a faith community, or a group, choose a format everyone can enjoy fully. A breakfast, a walk, a service day, or a shared meal. Where a ritual uses alcohol, offer grape juice and say so plainly, so everyone can take part."
+    },
+    {
+     "k": "big",
+     "h": "Warmth is the main ingredient.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You don't need every detail right. Warmth is the main ingredient. Let the joy be the point. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-trust",
+  "ring": "sober",
+  "title": "Rebuilding Trust at Home",
+  "you": {
+   "id": "gr-g-sober-trust-you",
+   "guide": "sober-trust",
+   "side": "you",
+   "title": "Rebuilding Trust at Home",
+   "sideName": "For the Group",
+   "mins": 3,
+   "blurb": "For the whole family, learning to trust again after drinking or using hurt the family: one kept promise at a time.",
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Rebuilding Trust at Home",
+     "sub": "For the Group",
+     "say": "This is for all of us together, as our family learns to trust again. Every feeling we have about it makes sense, and we're in this together."
+    },
+    {
+     "k": "big",
+     "h": "Trust grows like a tree.",
+     "sub": "Slowly, steadily, one ring at a time.",
+     "say": "When drinking or using was part of our family, promises got broken, and that hurt. Now someone is growing sober, and trust is growing back. Trust grows like a tree. Slowly, steadily, one ring at a time."
+    },
+    {
+     "k": "points",
+     "h": "How trust grows",
+     "items": [
+      [
+       "Small promises",
+       "Kept on time"
+      ],
+      [
+       "Words and actions",
+       "That match"
+      ],
+      [
+       "Telling the truth",
+       "Even when it is hard"
+      ],
+      [
+       "Time",
+       "Lots of it"
+      ]
+     ],
+     "say": "Here's how trust grows. Small promises, kept on time. Words and actions that match. Telling the truth, even when it's hard. And time, lots of it. Every kept promise is a new ring on the tree."
+    },
+    {
+     "k": "words",
+     "h": "Feelings that fit",
+     "items": [
+      "Hopeful",
+      "Careful",
+      "Still hurt",
+      "Proud",
+      "Unsure",
+      "Glad"
+     ],
+     "say": "You might feel hopeful, and careful at the same time. You might still feel hurt. You might feel proud, or unsure, or glad. It's okay if trusting takes a while. Every one of these feelings fits."
+    },
+    {
+     "k": "big",
+     "h": "One small promise each.",
+     "sub": "Something you will really do this week.",
+     "say": "Let's do this together. Everyone, think of one small promise you can keep this week. Something real, like I'll help with dinner on Tuesday. Now say your promise out loud, one at a time.",
+     "beats": [
+      "Let's do this together.",
+      "Everyone, think of one small promise you can keep this week.",
+      "Something real, like I'll help with dinner on Tuesday.",
+      {
+       "t": "Now say your promise out loud, one at a time.",
+       "w": 14
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Notice the kept promises.",
+     "body": "Say thank you out loud.",
+     "say": "When someone keeps a promise, notice it, and say thank you out loud. Thank you for picking me up on time. Thank you for keeping your word. Trust grows faster when we see it, and a kind word helps everyone keep going."
+    },
+    {
+     "k": "card",
+     "title": "Grown-ups fix grown-up problems.",
+     "body": "Kids can always tell a grown-up they trust.",
+     "say": "Fixing trust between grown-ups is grown-up work. Kids never have to watch or check on anyone. If something ever feels wrong, you can tell a grown-up you trust, and you'll never be in trouble for telling."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "Thank you for keeping your word.",
+      "I'm still hurt, and I'm still here.",
+      "One day at a time."
+     ],
+     "say": "Here are words our family can say. Thank you for keeping your word. I'm still hurt, and I'm still here. We're rebuilding, one day at a time."
+    },
+    {
+     "k": "big",
+     "h": "One kept promise at a time.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "Trust grows back, one kept promise at a time. Small steps still count. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-trust-helper",
+   "guide": "sober-trust",
+   "side": "helper",
+   "title": "Rebuilding Trust at Home",
+   "sideName": "For the Leader",
+   "mins": 4,
+   "blurb": "For the grown-ups rebuilding trust after drinking or using: small promises, chosen openness, and room for hurt.",
+   "sources": [],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Rebuilding Trust at Home",
+     "sub": "For the Leader",
+     "say": "This is for the grown-ups rebuilding trust at home after drinking or using hurt the family, both the one growing sober and the ones who were hurt. Whatever you're feeling makes sense, and we're with you."
+    },
+    {
+     "k": "big",
+     "h": "Hurt and hope can share a home.",
+     "sub": "Both sides have a part.",
+     "say": "If you were hurt, you may want to believe and still feel braced. If you're the one growing sober, you may feel tired of being watched, even when you understand why. Both are honest. Hurt and hope can share a home, and both sides have a part in rebuilding."
+    },
+    {
+     "k": "points",
+     "h": "For the one growing sober",
+     "items": [
+      [
+       "Small, clear promises",
+       "Kept on time"
+      ],
+      [
+       "Openness, freely chosen",
+       "Plans, schedule, support"
+      ],
+      [
+       "Patience",
+       "Their timeline, their hurt"
+      ]
+     ],
+     "say": "For the one growing sober. Make small, clear promises, and keep them on time. Home by six. A call if plans change. Offer openness freely, like sharing your plans or your recovery schedule. And be patient with their timeline. Their hurt is real, and it heals at its own pace."
+    },
+    {
+     "k": "points",
+     "h": "For the ones who were hurt",
+     "items": [
+      [
+       "Say what helps",
+       "What makes you feel safer"
+      ],
+      [
+       "Notice kept promises",
+       "Out loud"
+      ],
+      [
+       "Your own support",
+       "So hurt has a place"
+      ]
+     ],
+     "say": "For the ones who were hurt. Say what helps you feel safer, plainly and kindly. Notice the kept promises, out loud. And find support of your own, like Al-Anon, Nar-Anon, or a therapist, so the hurt has somewhere to go besides the kitchen table."
+    },
+    {
+     "k": "big",
+     "h": "Say a repair sentence out loud.",
+     "sub": "Slowly, without explaining or defending.",
+     "say": "Let's practice. Whether you're the one growing sober or practicing to hear it, take one slow breath. Now say this out loud, slowly: I know my drinking hurt you. I'm working on it every day. Take all the time you need.",
+     "beats": [
+      "Let's practice.",
+      "Whether you're the one growing sober or practicing to hear it, take one slow breath.",
+      {
+       "t": "Now say this out loud, slowly: I know my drinking hurt you. I'm working on it every day. Take all the time you need.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "A slip, told early",
+     "body": "Honesty about a slip builds trust. Get help right away.",
+     "say": "Plan ahead for a hard day or a slip. Agree that it will be shared early, honestly, with a call to support. A slip told early is a reason to reach for help, and it can even build trust. Hiding it is what breaks it."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "You don't have to heal everything at once.",
+      "Work on small pieces at a time.",
+      "Moving in the right direction is progress."
+     ],
+     "lesson": "Small pieces, in the right direction.",
+     "note": "From Chris's notebook",
+     "say": "Chris, one of Grounded's founders, has been sober since two thousand eight. He writes that you don't have to heal everything at once. He learned to work on small pieces at a time, and as long as he kept moving in the right direction, he was making progress. Trust at home grows the same way."
+    },
+    {
+     "k": "card",
+     "title": "Safety comes first",
+     "body": "Anyone hurt or threatened: 911. Crisis: 988.",
+     "say": "Rebuilding trust happens in a safe home. If anyone at home is being hurt or threatened, call nine one one. The National Domestic Violence Hotline answers any time. For a crisis, call or text nine eight eight."
+    },
+    {
+     "k": "big",
+     "h": "Small pieces, in the right direction.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "Rebuilding trust is slow work, and it is real work. Small pieces, in the right direction, are progress. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-teammate",
+  "ring": "sober",
+  "title": "When a Teammate Is Getting Sober",
+  "you": {
+   "id": "gr-g-sober-teammate-you",
+   "guide": "sober-teammate",
+   "side": "you",
+   "title": "When a Teammate Is Getting Sober",
+   "sideName": "For the Group",
+   "mins": 3,
+   "blurb": "For a team together, when a teammate is growing sober: respect, privacy, and keeping everyone close.",
+   "sources": [
+    "kelly10"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "When a Teammate Is Getting Sober",
+     "sub": "For the Group",
+     "say": "This is for our team together, when one of us is growing sober, or coming back after time away for treatment. Wanting to do this well makes sense, and it's simpler than it seems."
+    },
+    {
+     "k": "big",
+     "h": "Brave, healthy work.",
+     "sub": "Respect and privacy help most.",
+     "say": "Growing sober is brave, healthy work. A teammate who chooses it is caring for their health, their family, and their future. What helps most from a team is simple. Respect, privacy, and keeping them close."
+    },
+    {
+     "k": "points",
+     "h": "What helps",
+     "items": [
+      [
+       "Let them lead",
+       "Their story, their pace"
+      ],
+      [
+       "Same as always",
+       "Work, respect, jokes"
+      ],
+      [
+       "Keep inviting",
+       "Lunch, a walk, breakfast"
+      ],
+      [
+       "Keep it private",
+       "Never passed along"
+      ]
+     ],
+     "say": "Here's what helps. Let them lead. Their story is theirs, and they share it at their own pace, or keep it private. Treat them the same as always, with the same work, respect, and jokes. Keep inviting them, to lunch, a walk, or breakfast. And keep it private. What they share stays with the person they told."
+    },
+    {
+     "k": "card",
+     "title": "Words matter.",
+     "body": "Growing sober. In recovery. Taking care of their health.",
+     "say": "The words we use matter. Research finds that the labels we put on people change how even professionals treat them. So we say growing sober, or in recovery, or taking care of their health. People can always choose their own words for themselves."
+    },
+    {
+     "k": "big",
+     "h": "Who could you invite this week?",
+     "sub": "Something simple: a walk, a lunch, a breakfast.",
+     "say": "Let's take a moment, each on our own. Think of one teammate you could invite to something simple this week, like a walk at lunch or breakfast before a shift. Picture asking them, warmly and easily.",
+     "beats": [
+      "Let's take a moment, each on our own.",
+      "Think of one teammate you could invite to something simple this week, like a walk at lunch or breakfast before a shift.",
+      {
+       "t": "Picture asking them, warmly and easily.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Team time for everyone",
+     "items": [
+      [
+       "Breakfast or lunch",
+       "Instead of happy hour"
+      ],
+      [
+       "A walk or a service day",
+       "Outside together"
+      ],
+      [
+       "Special sober drinks",
+       "Set out first"
+      ]
+     ],
+     "say": "Look at how our team spends time together. Add gatherings everyone can enjoy fully, like a breakfast or lunch instead of a happy hour, a walk, or a service day outside. And at any celebration, set out good sober drinks first. Nobody needs to explain their choices."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "Good to have you here.",
+      "Want to come to lunch?",
+      "We've got your back."
+     ],
+     "say": "Here are words that help. Good to have you here. We're grabbing lunch, want to come? And, we've got your back. Ordinary, kind words go a long way."
+    },
+    {
+     "k": "card",
+     "title": "Help is close by.",
+     "body": "EAP, human resources, and 911 for danger.",
+     "say": "Help is close by, for anyone on the team. The employee assistance program offers confidential support. Human resources knows the policies. And if anyone at work ever won't wake up, or is breathing slowly, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Respect. Privacy. Belonging.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "Respect, privacy, and belonging. That's how a team walks with someone growing sober. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-teammate-helper",
+   "guide": "sober-teammate",
+   "side": "helper",
+   "title": "When a Teammate Is Getting Sober",
+   "sideName": "For the Leader",
+   "mins": 4,
+   "blurb": "For the team lead or manager when a teammate is growing sober or back from treatment: confidentiality, dignity, and the right help.",
+   "sources": [
+    "kelly10"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "When a Teammate Is Getting Sober",
+     "sub": "For the Leader",
+     "say": "This is for the team lead, supervisor, or manager when someone on the team is growing sober or back from treatment. Wanting to protect them and the team's work makes sense, and you can do both."
+    },
+    {
+     "k": "big",
+     "h": "Your tone sets the team's tone.",
+     "sub": "Steady, private, respectful.",
+     "say": "A teammate growing sober may feel grateful, exposed, and anxious about their job, all at once. Your response sets the tone for everyone. Steady, private, and respectful is the whole posture."
+    },
+    {
+     "k": "flow",
+     "h": "When they tell you",
+     "steps": [
+      [
+       "Thank them",
+       "For trusting you"
+      ],
+      [
+       "Listen",
+       "Let them lead"
+      ],
+      [
+       "Ask what helps",
+       "At work, right now"
+      ],
+      [
+       "Point to help",
+       "EAP and HR"
+      ]
+     ],
+     "say": "When a teammate tells you, thank them for trusting you. Listen, and let them lead. Ask what would help at work right now, like a schedule for appointments or a quieter week. Then point to help, the employee assistance program and human resources.",
+     "cue": {
+      "at": [
+       1,
+       2,
+       3,
+       4
+      ]
+     }
+    },
+    {
+     "k": "big",
+     "h": "Practice the welcome back.",
+     "sub": "Warm, brief, and theirs to continue.",
+     "say": "Let's practice. Picture your teammate's first morning back after treatment. They walk in a little nervous. Take one breath. Now say out loud, warmly: Welcome back. We're glad you're here. Whatever you'd like to share is up to you.",
+     "beats": [
+      "Let's practice.",
+      "Picture your teammate's first morning back after treatment.",
+      "They walk in a little nervous.",
+      "Take one breath.",
+      {
+       "t": "Now say out loud, warmly: Welcome back. We're glad you're here. Whatever you'd like to share is up to you.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "points",
+     "h": "Keep confidences",
+     "items": [
+      [
+       "Never pass it along",
+       "Even with good intent"
+      ],
+      [
+       "No questions",
+       "About treatment or time away"
+      ],
+      [
+       "Their story",
+       "Theirs to share"
+      ]
+     ],
+     "say": "Keep confidences completely. Never pass along what they told you, even with good intent. Skip questions about treatment or where they've been. If others ask, a simple answer works: that's their story to share, let's make them welcome."
+    },
+    {
+     "k": "card",
+     "title": "Work talks about the work.",
+     "body": "Follow policy. Point to help. Same for everyone.",
+     "say": "Keep work conversations about the work, and point to help. If the work involves safety, follow your organization's policies, kindly and the same for everyone. Human resources knows the details of leave, return to work, and accommodations."
+    },
+    {
+     "k": "points",
+     "h": "Shape the team's time",
+     "items": [
+      [
+       "Breakfasts and lunches",
+       "Over happy hours"
+      ],
+      [
+       "Walks and service days",
+       "Outside together"
+      ],
+      [
+       "Words without labels",
+       "Growing sober, in recovery"
+      ]
+     ],
+     "say": "Shape how the team spends time together. Breakfasts and lunches over happy hours. Walks and service days outside. And model words without labels: growing sober, in recovery, taking care of their health. Research finds that labels change how people are treated, so your words matter."
+    },
+    {
+     "k": "card",
+     "title": "If you notice a struggle",
+     "body": "Talk about the work, offer the EAP, and 911 for danger.",
+     "say": "If you notice a teammate struggling, talk privately about what you see at work, offer the employee assistance program, and follow policy. A slip is a reason to reach for help. If anyone won't wake up or is breathing slowly, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Dignity, discretion, and the right help.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You don't need to be an expert in recovery. Keep confidences, treat people with dignity, and know where the help is. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ },
+ {
+  "id": "sober-welcome",
+  "ring": "sober",
+  "title": "Welcoming Someone Growing Sober",
+  "you": {
+   "id": "gr-g-sober-welcome-you",
+   "guide": "sober-welcome",
+   "side": "you",
+   "title": "Welcoming Someone Growing Sober",
+   "sideName": "For the Group",
+   "mins": 3,
+   "blurb": "For a whole community or group: welcoming people growing sober, and their families, so everyone belongs.",
+   "sources": [
+    "kelly10"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Welcoming Someone Growing Sober",
+     "sub": "For the Group",
+     "say": "This is for all of us together, as a community that wants everyone to belong, including people growing sober and the families who love them."
+    },
+    {
+     "k": "big",
+     "h": "They are already here.",
+     "sub": "Often carrying their story quietly.",
+     "say": "People growing sober, people still struggling, and families who love someone who drinks or uses are already in every community. Many carry their story quietly, afraid of being judged. A clear welcome helps them stay, and helps them heal."
+    },
+    {
+     "k": "big",
+     "h": "Turn and say: I'm glad you're here.",
+     "sub": "Everyone at once.",
+     "say": "Let's do this together. Turn to someone near you. Look at them kindly. Now say, out loud, I'm glad you're here.",
+     "beats": [
+      "Let's do this together.",
+      "Turn to someone near you.",
+      "Look at them kindly.",
+      {
+       "t": "Now say, out loud, I'm glad you're here.",
+       "w": 10
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Words matter.",
+     "body": "Growing sober. In recovery. People choose their own words.",
+     "say": "The words we use matter. Research finds that labels change how people are treated, even by trained professionals. So in our community we say growing sober, or in recovery. People can always choose their own words for themselves."
+    },
+    {
+     "k": "points",
+     "h": "Gatherings for everyone",
+     "items": [
+      [
+       "Food, music, service",
+       "People at the center"
+      ],
+      [
+       "Sober drinks first",
+       "Served with care"
+      ],
+      [
+       "Easy to join",
+       "Easy to leave"
+      ]
+     ],
+     "say": "Let's make every gathering one everyone can enjoy fully. Food, music, service, and people at the center. Good sober drinks set out first, and served with care. And gatherings that are easy to join, and easy to leave."
+    },
+    {
+     "k": "points",
+     "h": "A welcome without a spotlight",
+     "items": [
+      [
+       "A warm greeting",
+       "A name remembered"
+      ],
+      [
+       "A seat saved",
+       "Beside a friend"
+      ],
+      [
+       "Stories kept private",
+       "Shared only with an okay"
+      ]
+     ],
+     "say": "A welcome without a spotlight looks like this. A warm greeting, and a name remembered. A seat saved, beside a friend. And stories kept private. Someone's sobriety is shared only with their clear okay."
+    },
+    {
+     "k": "card",
+     "title": "Families belong here too.",
+     "body": "Parents, partners, and children who love someone who drinks or uses.",
+     "say": "Families belong here too. Parents, partners, and children who love someone who drinks or uses often carry a heavy, quiet load. A kind word, a seat saved, and a question like, who supports you, can mean a great deal."
+    },
+    {
+     "k": "words",
+     "h": "Words we can say",
+     "items": [
+      "We're glad you're here.",
+      "You belong here.",
+      "Want to help with something?"
+     ],
+     "say": "Here are words that help. We're glad you're here. You belong here, wherever you are on your path. And, would you like to help with something, at your own pace?"
+    },
+    {
+     "k": "card",
+     "title": "Help is close by.",
+     "body": "SAMHSA 1-800-662-4357. Danger: 911.",
+     "say": "Help is close by. The SAMHSA National Helpline answers any time, for treatment and information. And if anyone ever won't wake up, or is breathing slowly, call nine one one."
+    },
+    {
+     "k": "big",
+     "h": "Everyone belongs here.",
+     "sub": "The full guide has more, whenever we want it.",
+     "say": "Grace, plain words, and a warm welcome. Everyone belongs here. The full guide has more, whenever we want it."
+    }
+   ]
+  },
+  "helper": {
+   "id": "gr-g-sober-welcome-helper",
+   "guide": "sober-welcome",
+   "side": "helper",
+   "title": "Welcoming Someone Growing Sober",
+   "sideName": "For the Leader",
+   "mins": 4,
+   "blurb": "For the pastor, faith leader, or group facilitator making a community welcoming for people growing sober and their families.",
+   "sources": [
+    "kelly10"
+   ],
+   "scenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Welcoming Someone Growing Sober",
+     "sub": "For the Leader",
+     "say": "This is for the pastor, faith leader, or group facilitator who wants the community to truly welcome people growing sober, and their families. Wanting to get this right makes sense, and small changes go a long way."
+    },
+    {
+     "k": "big",
+     "h": "Someone is watching to see if they belong.",
+     "sub": "Small, clear changes tell them they do.",
+     "say": "Someone growing sober may be watching closely to see whether they truly belong. A family member may be watching too. Small, clear changes, in your words, your gatherings, and your rituals, tell them they do."
+    },
+    {
+     "k": "points",
+     "h": "From the front",
+     "items": [
+      [
+       "Plain words",
+       "Growing sober, in recovery"
+      ],
+      [
+       "Grace over shame",
+       "Every person can begin again"
+      ],
+      [
+       "A spoken welcome",
+       "Wherever you are on your path"
+      ]
+     ],
+     "say": "Start from the front. Use plain words, like growing sober and in recovery. Speak about drinking and drugs with grace, never shame, because every person can begin again. And say the welcome out loud, often: wherever you are on your path, you belong here."
+    },
+    {
+     "k": "big",
+     "h": "Say your welcome out loud.",
+     "sub": "As if from the front, slowly.",
+     "say": "Let's practice. Picture your community gathered, and someone newly sober in the back row. Take one slow breath. Now say out loud, slowly: Whoever you are and wherever you are on your path, including growing sober, you belong here.",
+     "beats": [
+      "Let's practice.",
+      "Picture your community gathered, and someone newly sober in the back row.",
+      "Take one slow breath.",
+      {
+       "t": "Now say out loud, slowly: Whoever you are and wherever you are on your path, including growing sober, you belong here.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Rituals everyone can share",
+     "body": "Grape juice offered plainly, with the same dignity.",
+     "say": "Look at your rituals. Wherever a ritual uses alcohol, like communion in many churches, offer grape juice plainly, say so from the front, and serve it with the same dignity. That one change lets a person growing sober take part fully."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "Almost right after getting sober, he began volunteering.",
+      "Setting up, handing out food, sitting with people.",
+      "He calls it a critical step in his recovery."
+     ],
+     "lesson": "A place to serve is a place to belong.",
+     "note": "From Chris's notebook",
+     "say": "Chris, one of Grounded's founders, has been sober since two thousand eight. Almost right after he got sober, he started volunteering with a homeless ministry. He set up for the band, handed out food, and prayed with people. He calls that time a critical step in his recovery. A place to serve can be a place to belong."
+    },
+    {
+     "k": "points",
+     "h": "At their own pace",
+     "items": [
+      [
+       "Offer service gently",
+       "A small, real role"
+      ],
+      [
+       "Hold the spotlight",
+       "Let roots grow first"
+      ],
+      [
+       "Keep stories private",
+       "Only with an okay"
+      ]
+     ],
+     "say": "Offer service gently, a small, real role. Hold off on the big spotlight for someone newly sober, and let their roots grow first. And keep stories private. A prayer request, an announcement, or news travels only with the person's clear okay."
+    },
+    {
+     "k": "card",
+     "title": "Open your doors",
+     "body": "Recovery meetings, family groups, and help numbers.",
+     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: the SAMHSA National Helpline, nine eight eight for a crisis, and nine one one if anyone won't wake up."
+    },
+    {
+     "k": "big",
+     "h": "Grace, plain words, and a warm welcome.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You don't need a recovery program to be a recovery-friendly community. Grace, plain words, and a warm welcome. The full guide has more, whenever you want it."
+    }
+   ],
+   "plainScenes": [
+    {
+     "k": "title",
+     "hero": "grove",
+     "eyebrow": "When Life Changes Together",
+     "h": "Welcoming Someone Growing Sober",
+     "sub": "For the Leader",
+     "say": "This is for the pastor, faith leader, or group facilitator who wants the community to truly welcome people growing sober, and their families. Wanting to get this right makes sense, and small changes go a long way."
+    },
+    {
+     "k": "big",
+     "h": "Someone is watching to see if they belong.",
+     "sub": "Small, clear changes tell them they do.",
+     "say": "Someone growing sober may be watching closely to see whether they truly belong. A family member may be watching too. Small, clear changes, in your words, your gatherings, and your rituals, tell them they do."
+    },
+    {
+     "k": "points",
+     "h": "From the front",
+     "items": [
+      [
+       "Plain words",
+       "Growing sober, in recovery"
+      ],
+      [
+       "Respect over shame",
+       "Every person can begin again"
+      ],
+      [
+       "A spoken welcome",
+       "Wherever you are on your path"
+      ]
+     ],
+     "say": "Start from the front. Use plain words, like growing sober and in recovery. Speak about drinking and drugs with respect, never shame, because every person can begin again. And say the welcome out loud, often: wherever you are on your path, you belong here."
+    },
+    {
+     "k": "big",
+     "h": "Say your welcome out loud.",
+     "sub": "As if from the front, slowly.",
+     "say": "Let's practice. Picture your community gathered, and someone newly sober in the back row. Take one slow breath. Now say out loud, slowly: Whoever you are and wherever you are on your path, including growing sober, you belong here.",
+     "beats": [
+      "Let's practice.",
+      "Picture your community gathered, and someone newly sober in the back row.",
+      "Take one slow breath.",
+      {
+       "t": "Now say out loud, slowly: Whoever you are and wherever you are on your path, including growing sober, you belong here.",
+       "w": 12
+      }
+     ]
+    },
+    {
+     "k": "card",
+     "title": "Traditions everyone can share",
+     "body": "Good sober drinks, offered plainly, with the same care.",
+     "say": "Look at your traditions. Wherever a gathering or ritual has centered on alcohol, offer good sober drinks plainly, and serve them with the same care. That one change lets a person growing sober take part fully."
+    },
+    {
+     "k": "story",
+     "eyebrow": "From Chris's Story",
+     "title": "18 Years",
+     "lines": [
+      "Almost right after getting sober, he began volunteering.",
+      "Setting up, handing out food, sitting with people.",
+      "He calls it a critical step in his recovery."
+     ],
+     "lesson": "A place to serve is a place to belong.",
+     "note": "From Chris's notebook",
+     "say": "Chris, one of Grounded's founders, has been sober since two thousand eight. Almost right after he got sober, he started volunteering with a group serving people without homes. He set up for the band, handed out food, and sat with people. He calls that time a critical step in his recovery. A place to serve can be a place to belong."
+    },
+    {
+     "k": "points",
+     "h": "At their own pace",
+     "items": [
+      [
+       "Offer service gently",
+       "A small, real role"
+      ],
+      [
+       "Hold the spotlight",
+       "Let roots grow first"
+      ],
+      [
+       "Keep stories private",
+       "Only with an okay"
+      ]
+     ],
+     "say": "Offer service gently, a small, real role. Hold off on the big spotlight for someone newly sober, and let their roots grow first. And keep stories private. Any sharing or news travels only with the person's clear okay."
+    },
+    {
+     "k": "card",
+     "title": "Open your doors",
+     "body": "Recovery meetings, family groups, and help numbers.",
+     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: the SAMHSA National Helpline, nine eight eight for a crisis, and nine one one if anyone won't wake up."
+    },
+    {
+     "k": "big",
+     "h": "Respect, plain words, and a warm welcome.",
+     "sub": "The full guide has more, whenever you want it.",
+     "say": "You don't need a recovery program to be a recovery-friendly group. Respect, plain words, and a warm welcome. The full guide has more, whenever you want it."
+    }
+   ]
+  }
+ }
+];
+V.forEach(function (g) { if (!O.guides.some(function (x) { return x.id === g.id; })) O.guides.push(g); });
+if (window.GROVE_PLAIN && window.GROVE_VIDS_WORDING) window.GROVE_VIDS_WORDING(true);
+})();
+/* ===== Living Sober guides end, GWG BLD 789 ===== */

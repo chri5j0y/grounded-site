@@ -573,7 +573,7 @@ function signsHtml(d) {
 // Health and Ability (GWG BLD 756): practices that fit the person's choice come first with a "Fits You"
 // tag and their adapt line (Sequoia's seated, bed, and chronic flags count, see sequoia/practices.js).
 // Nothing is hidden, and Easier today stays on every tending card as before.
-function lifeTags(key, name) { const f = FLAGS[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeTags(key, name) { const f = FLAGS[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '', sober: f.sober || [] }; }
 function lifeFitHtml(key, name) { return window.GGLifeKit && GGLifeKit.fits(lifeTags(key, name)) ? GGLifeKit.fitHtml(lifeTags(key, name).adapt) : ''; }
 function lifeOrder(mode, key, rows) { return mode === 'client' && window.GGLife ? GGLife.order(rows, r => lifeTags(key, r[0])) : rows; }
 function renderGrowthPlanBuilder(mode) {
@@ -1184,7 +1184,7 @@ const LC_RINGS = (window.SEQUOIA_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.SEQUOIA_GUIDES || {}).topics || [];
 const SAP = 'https://growwithgrounded.com/maple/#talk=';
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' }; // 'life': Health and Ability (BLD 757)
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' && window.GGLifeKit ? GGLifeKit.RING : null) || (k === 'sober' && window.GGLife ? GGLife.ring('sequoia') : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' }; // 'life': Health and Ability (BLD 757)
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -1201,7 +1201,7 @@ function renderLC(mode) {
   if (!el) return;
   if (st.open) { el.innerHTML = lcDetail(mode, LC_TOPICS.find(t => t.id === st.open)); if (st.open) return; }
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
-  if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
+  if (st.ring !== 'all' && st.ring !== 'life' && !(st.ring === 'sober' && lcSober()) && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for this season of life</h2>
@@ -1210,7 +1210,7 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: retirement, grief, a fall, memory..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All topics</button>
-      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
+      ${lcSoberChip(mode)}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
@@ -1226,8 +1226,10 @@ function lcRenderList(mode) {
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
-  LC_RINGS.concat(LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? (t.life || []).length : t.ring === r.key) && lcMatches(t, st.q));
+  const sob = lcSober() || (st.q && window.GGLife ? GGLife.ring('sequoia') : null); // a search looks in every ring
+  if (st.ring === 'sober' && !sob) st.ring = 'all';
+  (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => (r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += `<div class="lc-ring" style="--rc:${r.color}"><h3><i></i>${lcEsc(r.name)}</h3><p>${lcEsc(r.blurb)}</p><div class="lc-grid">${ts.map(t => `
@@ -1244,14 +1246,19 @@ function lcRenderList(mode) {
 }
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    sequoia/guides.js, and Picked for You at the top when the person has made a choice. */
-const LC_LIFE = window.GGLifeKit && GGLifeKit.tagged(LC_TOPICS).length ? GGLifeKit.RING : null;
+const LC_LIFE = window.GGLifeKit && GGLifeKit.lifeOnly(LC_TOPICS).length ? GGLifeKit.RING : null;
+/* Living Sober (GWG BLD 789): ring 'sober' is low-key. Its chip and section show only when Living Sober is chosen in
+   Settings; its guides are always found by search and by Picked for You. */
+const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
+function lcSober() { return window.GGLifeKit ? GGLifeKit.sober('sequoia') : null; }
+function lcSoberChip(mode) { const r = lcSober(); return r ? `<button class="lc-chip" style="--rc:${r.color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(r.name)}</button>` : ''; }
 function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
 function lcPickedHtml(mode) {
   const ts = window.GGLifeKit ? GGLifeKit.picked('sequoia', LC_TOPICS) : [];
   return ts.length ? `<div class="glk-picks no-print"><h3>Picked for You</h3><p>Guides that fit what you chose in Health and Ability. Every guide stays open to you below.</p><div class="lc-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 function lcLifeRingHtml(mode) {
-  const ts = LC_LIFE ? GGLifeKit.tagged(LC_TOPICS) : [];
+  const ts = LC_LIFE ? GGLifeKit.lifeOnly(LC_TOPICS) : [];
   return ts.length ? `<div class="lc-ring" style="--rc:${LC_LIFE.color}"><h3><i></i>${lcEsc(LC_LIFE.name)}</h3><p>${lcEsc(LC_LIFE.blurb)}</p><div class="lc-links lc-life-links">${ts.map(t => `<button type="button" onclick="lcOpen('${mode}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}</div></div>` : '';
 }
 if (window.GGLifeKit) GGLifeKit.on(() => { const v = document.getElementById('client-life'); if (v && v.classList.contains('active') && !LCS.client.open) renderLC('client'); });
@@ -1330,7 +1337,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js
    from sequoia/guide-videos.js. SQ_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched (kept inside the unlocked profile's vault by gg-learn.js, BLD 756). */
-/* SQ_VIDS start */const SQ_VIDS = ["retirement", "purpose-again", "volunteering", "working-longer", "burden", "spouse-death", "friend-death", "child-death", "sibling-death", "grief-stuck", "holidays-alone", "pet-death", "new-diagnosis", "pain", "falls", "hearing", "vision", "driving", "hospital", "appetite", "memory-worry", "dementia", "depression", "anxiety", "old-memories", "moving-home", "downsizing", "care-move", "fixed-income", "scams", "affairs", "spouse-caregiving", "grandparenting", "raising-grandkids", "estrangement", "worry-adult-children", "kids-deciding", "new-love", "gray-divorce", "elder-abuse", "loneliness", "friendship", "veterans", "invisible", "faith-questions", "facing-death", "regrets", "legacy", "several-conditions", "energy-pacing", "lifelong-disability", "adult-child-disability", "stroke", "heart-lung"];/* SQ_VIDS end */
+/* SQ_VIDS start */const SQ_VIDS = ["retirement", "purpose-again", "volunteering", "working-longer", "burden", "spouse-death", "friend-death", "child-death", "sibling-death", "grief-stuck", "holidays-alone", "pet-death", "new-diagnosis", "pain", "falls", "hearing", "vision", "driving", "hospital", "appetite", "memory-worry", "dementia", "depression", "anxiety", "old-memories", "moving-home", "downsizing", "care-move", "fixed-income", "scams", "affairs", "spouse-caregiving", "grandparenting", "raising-grandkids", "estrangement", "worry-adult-children", "kids-deciding", "new-love", "gray-divorce", "elder-abuse", "loneliness", "friendship", "veterans", "invisible", "faith-questions", "facing-death", "regrets", "legacy", "several-conditions", "energy-pacing", "lifelong-disability", "adult-child-disability", "stroke", "heart-lung", "sober-retirement", "sober-meds", "sober-adult-child", "sober-grandkids", "sober-long"];/* SQ_VIDS end */
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('sequoia', id)); } catch (e) { return false; } }
 function lcVids(gid, self) {
   if (!SQ_VIDS.includes(gid)) return '';

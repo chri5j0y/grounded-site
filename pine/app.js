@@ -232,7 +232,7 @@ function toggleGuide(btn) {
 // =====================================================================
 const PL = window.PINE_LIFE || { notes: [], steps: {} };
 const lifeOn = () => !!window.GGLife;
-function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '' }; }
+function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GUIDES[key + '|' + name] || {}; return { life: f.life || [], adapt: f.adapt || g.adapt || '', sober: f.sober || [] }; }
 function lifeFits(key, name) { return lifeOn() && GGLife.fits(lifeTags(key, name)); }
 function lifeIds() { return lifeOn() ? GGLife.chosen('pine') : []; }
 const lifeUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
@@ -244,7 +244,7 @@ function lifeNote(q) {
   out.ex = lifeUniq(out.ex); out.tip = lifeUniq(out.tip); return out;
 }
 // One growth idea line per chosen id, for a Growing Edge part.
-function lifeSteps(key) { const S = PL.steps || {}; return lifeUniq(lifeIds().map(id => ((S[key] || {})[id]) || ((S.any || {})[id]) || '')); }
+function lifeSteps(key) { const S = PL.steps || {}; return lifeUniq(lifeIds().map(id => ((S[key] || {})[id]) || ((S.any || {})[id]) || '').concat(lifeOn() && GGLife.soberSteps ? GGLife.soberSteps('pine', key) : [])); }
 // Information and support lines for the choice, always shown BELOW the crisis lines.
 function lifeLinesHtml(collapsed) {
   const L = lifeOn() ? GGLife.lines('pine') : []; if (!L.length) return '';
@@ -600,10 +600,10 @@ function askGrade(change, then) {
   wrap.innerHTML = `<div class="calm-box pn-box" role="dialog" aria-modal="true" aria-labelledby="pn-grade-title"><h2 id="pn-grade-title">${change ? 'Change your grade' : 'Which grade are you in?'}</h2>
     <p>Pine asks a few questions differently for grades 9 and 10 and for grades 11 and 12. ${change ? 'Your earlier check-ins stay, and compare only with check-ins from the same grades.' : 'You only need to answer this once. You can change it in Settings.'}</p>
     <div class="pn-grades">${G.map(g => `<button type="button" class="btn ${cur === g[0] ? 'btn-primary' : 'btn-secondary'}" onclick="setGrade('${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
-    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="gradeClose()">Not now</button></div></div>`;
+    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="gradeClose()">Maybe later</button></div></div>`;
   document.body.appendChild(wrap);
   askGrade.then = then || null;
-  // Escape closes the dialog, just like Not now.
+  // Escape closes the dialog, just like Maybe later.
   askGrade.key = e => { if (e.key === 'Escape') { e.preventDefault(); gradeClose(); } };
   document.addEventListener('keydown', askGrade.key);
   const b = wrap.querySelector('.pn-grades button'); if (b) b.focus();
@@ -945,7 +945,7 @@ function printGrowthPlanNow(sheetId) {
 const LC_RINGS = (window.PINE_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.PINE_GUIDES || {}).topics || [];
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' ? LC_LIFE : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' ? LC_LIFE : null) || (k === 'sober' && window.GGLife && GGLife.ring ? GGLife.ring('pine') : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
@@ -970,6 +970,7 @@ function renderLC(mode) {
   const filled = lcFilled(), waiting = LC_RINGS.filter(r => !filled.includes(r));
   if (st.ring !== 'all' && st.ring !== 'life' && !filled.some(r => r.key === st.ring)) st.ring = 'all';
   if (st.ring === 'life' && !lcLifeTopics().length) st.ring = 'all';
+  if (st.ring === 'sober' && !lcSober()) st.ring = 'all';
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the seasons of high school</h2>
@@ -978,7 +979,7 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: breakup, grades, sleep, a move..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
-      ${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
+      ${lcSober() ? `<button class="lc-chip" style="--rc:${lcSober().color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(lcSober().name)}</button>` : ''}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}
       ${lcLifeTopics().length ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
@@ -989,8 +990,12 @@ function renderLC(mode) {
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
 }
 const LC_LIFE = { key: 'life', name: 'Health and Ability', color: '#3F6E8C', blurb: 'Living with a health condition, pain, a disability, or mental health, or caring about someone who is. Open to everyone.' };
+/* Living Sober (GWG BLD 789): ring 'sober' is low-key. Its chip and section show only when Living Sober is chosen in
+   Settings; its guides are always found by search and by Picked for You. They stay out of the Health and Ability ring. */
+const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
+function lcSober() { return lifeOn() && GGLife.sober && GGLife.sober('pine') ? GGLife.ring('pine') : null; }
 // The guides written for this ring (ring 'life', GWG BLD 757) come first, then the other guides tagged for it.
-function lcLifeTopics() { const ts = LC_TOPICS.filter(t => Array.isArray(t.life) && t.life.length); return ts.filter(t => t.ring === 'life').concat(ts.filter(t => t.ring !== 'life')); }
+function lcLifeTopics() { const ts = LC_TOPICS.filter(t => Array.isArray(t.life) && t.life.length && t.ring !== 'sober' && !(t.life.length === 1 && t.life[0] === 'sober')); return ts.filter(t => t.ring === 'life').concat(ts.filter(t => t.ring !== 'life')); }
 function lcJoin(a) { return a.length < 2 ? a.join('') : a.length === 2 ? a.join(' and ') : a.slice(0, -1).join('; ') + '; and ' + a[a.length - 1]; }
 function lcRenderList(mode) {
   const st = LCS[mode];
@@ -1010,8 +1015,9 @@ function lcRenderList(mode) {
   // Picked for You: guides tagged for the teen's Health and Ability choice, first.
   const picks = st.ring === 'all' && !st.q && lifeOn() ? GGLife.picks('pine', LC_TOPICS).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean) : [];
   if (picks.length) html += ringBlock({ name: 'Picked for You', color: LC_LIFE.color, blurb: 'Guides that fit what you chose in Health and Ability. Every guide stays open to you.' }, picks, 'Picked for You');
-  LC_RINGS.filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
-    const ts = LC_TOPICS.filter(t => t.ring === r.key && lcMatches(t, st.q));
+  const sob = lcSober() || (st.q && lifeOn() ? GGLife.ring('pine') : null); // a search looks in every ring
+  (sob ? [sob] : []).concat(LC_RINGS).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+    const ts = LC_TOPICS.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;
     n += ts.length;
     html += ringBlock(r, ts);
@@ -1094,7 +1100,7 @@ function lcDetail(mode, t) {
 /* When Life Changes videos (GWG BLD 740): two per guide, For You and For the Grown-up, played by shared/gg-learn.js
    from pine/guide-videos.js. PN_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:pine). */
-/* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service", "own-health", "pain-fatigue", "iep-transition", "deaf-hoh", "blind-low-vision", "autistic-hs", "serious-illness", "mh-longterm", "young-carer", "faith-body"];/* PN_VIDS end */
+/* PN_VIDS start */const PN_VIDS = ["start-hs", "grades-pressure", "adhd", "sports-cut", "path-after", "graduation", "friend-changes", "left-out", "bullying", "first-relationship", "breakup", "dating-abuse", "divorce", "stepfamily", "moving", "deployed", "family-substance", "parent-jail", "blowup", "lying", "parent-death", "friend-death", "grandparent-death", "car-crash", "loved-one-ill", "sleep", "body-image", "eating", "concussion", "chronic-illness", "substances", "anxiety", "depression", "selfharm", "suicide-thoughts", "counseling", "sextortion", "porn", "social-media", "ai-companions", "gambling", "sexual-assault", "school-threats", "first-job", "money", "faith-doubt", "faith-hurt", "purpose-service", "own-health", "pain-fatigue", "iep-transition", "deaf-hoh", "blind-low-vision", "autistic-hs", "serious-illness", "mh-longterm", "young-carer", "faith-body", "sober-cutting-back", "sober-teen", "sober-party", "sober-parent", "sober-vaping", "sober-pills", "sober-friend-od"];/* PN_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function lcVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('pine', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { if (LCS.client.open && document.getElementById('client-life') && document.getElementById('client-life').classList.contains('active')) { const y = window.scrollY; renderLC('client'); window.scrollTo(0, y); } });
@@ -1416,7 +1422,7 @@ function vcCheck(force) {
   const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Pine Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
     <p class="ggx-small">You can remove it any time.</p>`;
   const drop = { t: "Skip for Now", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was set aside.'); } };
-  const later = { t: 'Not Now', kind: 'line', fn: () => {} };
+  const later = { t: 'Maybe Later', kind: 'line', fn: () => {} };
   if (!PROF) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
       buttons: [{ t: 'Open My Profile', kind: 'main', fn: () => { if (window.GGP) pnOpenAny(); } }, later, drop] });
@@ -1510,7 +1516,7 @@ function bringOakHtml() {
   const oak = GGP.data(PROF.id, 'oak'), r = rec();
   const n = ((oak && oak.history) || []).filter(e => e && e.scores).length;
   if (!n || r.oakBrought) return '';
-  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so Pine shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so Pine shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Maybe Later</button></div></div>`;
 }
 function bringOak(skip) {
   if (!PROF || !window.GGP) return;
@@ -1797,7 +1803,7 @@ function nsChapterHtml(c, L) {
   let h = `<button type="button" class="lc-back" onclick="nsOpen(null)">Back to all chapters</button>
     <h2 class="section-title" style="margin-top:10px">${escapeHtml(nsT(c, 'title'))}</h2>${nsT(c, 'lead') ? `<p class="lead">${escapeHtml(nsT(c, 'lead'))}</p>` : ''}`;
   if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(nsT(c, 'note') || NS.careLine || '')}</p>
-      <div class="btn-row"><button class="btn btn-primary" onclick="nsOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="nsOpen(null)">Not Now</button></div></div>`;
+      <div class="btn-row"><button class="btn btn-primary" onclick="nsOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="nsOpen(null)">Maybe Later</button></div></div>`;
   h += `<p class="gt-small">Skip any prompt. Write a little or a lot. The microphone key on your phone's keyboard lets you speak instead of type.</p>`;
   h += (c.prompts || []).map(p => {
     const a = L.answers[p.id] || null, editing = NX.edit === p.id, has = a && String(a.text || '').trim();

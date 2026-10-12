@@ -114,12 +114,19 @@
     lie: 'lying lies', lies: 'lying lies', lied: 'lying lies', liar: 'lying liar', steal: 'stealing taking', stealing: 'stealing taking', stole: 'stealing taking', steals: 'stealing taking', shoplifting: 'stealing shoplifting', sneaking: 'sneaking lying',
     gamble: 'gambling', gambling: 'gambling', betting: 'gambling betting', bet: 'gambling betting', bets: 'gambling betting', sportsbetting: 'gambling betting sports', lootbox: 'gambling loot', casino: 'gambling casino', lottery: 'gambling lottery', parlay: 'gambling betting', draftkings: 'gambling betting', fanduel: 'gambling betting',
     bedwetting: 'bedwetting', enuresis: 'bedwetting', pullups: 'bedwetting',
+    // Living Sober (GWG BLD 789): the words people type about drinking and drugs find the Living Sober guides.
+    sober: 'sober sobriety drinking', sobriety: 'sober sobriety drinking', drink: 'drinking alcohol', drinks: 'drinking alcohol', drank: 'drinking alcohol', hungover: 'drinking alcohol', hangover: 'drinking alcohol',
+    beer: 'drinking alcohol', wine: 'drinking alcohol', liquor: 'drinking alcohol', booze: 'drinking alcohol', partying: 'party drinking', addict: 'addiction drinking drug', addicted: 'addiction drinking drug', alcoholic: 'drinking alcohol addiction', alcoholism: 'drinking alcohol addiction',
+    rehab: 'treatment rehab recovery', detox: 'detox withdrawal treatment', withdrawal: 'withdrawal detox', relapse: 'slip relapse', relapsed: 'slip relapse', slipped: 'slip relapse', craving: 'craving cravings urge', cravings: 'craving cravings urge', urge: 'craving urge', urges: 'craving urge',
+    narcan: 'naloxone narcan overdose', naloxone: 'naloxone narcan overdose', fentanyl: 'fentanyl pills overdose', opioid: 'opioid opioids pills', opioids: 'opioid opioids pills', painpills: 'pills opioid', pills: 'pills', heroin: 'opioid drug', meth: 'drug', cocaine: 'drug',
+    aa: 'aa recovery sober', na: 'na recovery sober', alanon: 'alanon family drinking', alateen: 'alateen alanon family drinking', recovery: 'recovery sober', overdose: 'overdose', overdosed: 'overdose', od: 'overdose',
     college: 'college graduation', graduation: 'graduation college leaving', dorm: 'college dorm', homesick: 'college leaving homesick', leavinghome: 'college sibling graduation', movingout: 'college sibling moving',
     angry: 'anger angry blowup meltdown escalating', mad: 'anger mad meltdown', selfharm: 'harm hurting suicide wanting cutting', selfinjury: 'harm hurting cutting', panicattack: 'panic anxiety', stepmom: 'stepfamily', stepdad: 'stepfamily', stepparent: 'stepfamily'
   };
   var PHRASES = [
     [/blow(ing|s)? up|blew up/g, 'blowup'], [/freak(ing|ed|s)? out/g, 'freakout'], [/losing it|lost it/g, 'losingit'], [/out of control/g, 'outofcontrol'],
     [/calm(ing)? (them |him |her |me )?down/g, 'calmdown'], [/de[\s-]?escalat\w*/g, 'deescalate'], [/picked on|picking on/g, 'pickedon'], [/end of life/g, 'endoflife'], [/nursing homes?/g, 'nursinghome'], [/assisted living/g, 'assistedliving'], [/memory care/g, 'memorycare'], [/elder abuse/g, 'elderabuse'],
+    [/pain ?pills?/g, 'painpills'], [/al[\s-]?anon/g, 'alanon'], [/12[\s-]?step\w*|twelve[\s-]?step\w*/g, 'aa'],
     [/two homes/g, 'twohomes'], [/screen time/g, 'screentime'], [/can'?t sleep|trouble sleeping/g, 'cantsleep'], [/laid off|lay ?off/g, 'laidoff'],
     [/new school/g, 'newschool'], [/e[\s-]?cig\w*/g, 'ecig'], [/alzheimer'?s/g, 'alzheimers'], [/school shooting/g, 'shooting'], [/self[\s-]?harm\w*|cutting|cut (my|him|her|them)sel\w*/g, 'selfharm'], [/panic attacks?/g, 'panicattack'], [/self[\s-]?esteem/g, 'esteem'],
     [/self[\s-]?injur\w*/g, 'selfinjury'], [/burn(ing|ed|s)? (my|him|her|them)sel\w*/g, 'selfharm'],
@@ -133,6 +140,8 @@
 
   /* ---------- crisis words ---------- */
   var CRISIS = /suicid|kill (my|him|her|them)sel|killing (my|him|her|them)sel|want(s|ed)? to die|end (my|his|her|their) life|self[\s-]?harm|cutting|hurt(ing)? (my|him|her|them)sel|burn(ing|s)? (my|him|her|them)sel|overdos|not safe|unsafe|weapon|\bgun\b|shooter/;
+  // Living Sober (GWG BLD 789): drinking and drug words add a short card of Living Sober help lines under any crisis card.
+  var SOBER = /\b(drink(s|ing)?|drank|drunk|alcohol\w*|beer|wine|liquor|booze|hungover|hangover|sober\w*|drugs?|pills?|opioids?|opiates?|heroin|fentanyl|meth|cocaine|overdos\w*|od|withdrawal|withdrawing|detox\w*|narcan|naloxone|rehab|relapse\w*|addict\w*|high on|blacked out|blackout)\b/;
   var ABUSE = /abuse|abused|molest|rape|assault|touched me|hits me|hitting me|beat(s|ing)? me|domestic/;
 
   /* ---------- helpers ---------- */
@@ -188,7 +197,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b788'), load('/aspen/guides.js?v=b788'), load('/pine/guides.js?v=b788'), load('/birch/guides.js?v=b788'), load('/oak/guides.js?v=b788'), load('/sequoia/guides.js?v=b788'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b788'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b789'), load('/aspen/guides.js?v=b789'), load('/pine/guides.js?v=b789'), load('/birch/guides.js?v=b789'), load('/oak/guides.js?v=b789'), load('/sequoia/guides.js?v=b789'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b789'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
@@ -376,13 +385,21 @@
   var APPNAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var SHOW = 5, uid = 0;
 
+  function soberHTML(raw, crisisShown) {
+    if (!SOBER.test(raw)) return '';
+    return '<div class="ss-crisis ss-sober" role="note"><b>If someone is hard to wake, breathing slowly, or has blue or gray lips, call <a href="tel:911">911</a> now.</b>' +
+      '<p>If you have naloxone (Narcan), give it, and stay with them until help comes.</p>' +
+      '<p>For treatment referral and information, any time: the SAMHSA National Helpline, <a href="tel:18006624357">1-800-662-4357</a>. For a question about a medicine, a drug, or a possible poisoning: Poison Control, <a href="tel:18002221222">1-800-222-1222</a>.</p>' +
+      (crisisShown ? '' : '<p>For a crisis or thoughts of suicide, call or text <a href="tel:988">988</a>, any time, day or night.</p>') +
+      '<p>If you drink every day or take sedatives, talk with a doctor before you stop, so stopping stays safe.</p></div>';
+  }
   function crisisHTML(raw) {
     var c = CRISIS.test(raw), a = ABUSE.test(raw);
-    if (!c && !a) return '';
+    if (!c && !a) return soberHTML(raw, false);
     return '<div class="ss-crisis" role="note"><b>If someone is in danger right now, call 911.</b>' +
       '<p>For thoughts of suicide or any mental health crisis, call or text <a href="tel:988">988</a>, any time, day or night.</p>' +
       (a ? '<p>For child abuse: Childhelp, <a href="tel:18004224453">1-800-422-4453</a>. For abuse at home: the National Domestic Violence Hotline, <a href="tel:18007997233">1-800-799-7233</a>. For a vulnerable adult in Minnesota: MAARC, <a href="tel:18448801574">1-844-880-1574</a>, any time.</p>' : '') +
-      '</div>';
+      '</div>' + soberHTML(raw, true);
   }
   function rowHTML(it, opts) {
     var id = 'ss-x' + (++uid);
@@ -525,12 +542,12 @@
       '.ggf .ss-more{font:inherit;font-size:15px;font-weight:600;color:var(--ggf-acc,#8B5E1A);background:none;border:none;border-bottom:1px solid currentColor;padding:0;margin-top:10px;cursor:pointer;}' +
       '.ggf .ss-note,.ggf .ss-empty{margin-top:10px;font-size:16px;}' +
       '.ggf .ss-crisis{margin-top:6px;padding:14px 18px;border-left:4px solid #9C2F2F;background:rgba(156,47,47,.10);border-radius:0 10px 10px 0;font-size:16.5px;}' +
-      '.ggf .ss-crisis p{margin:6px 0 0;}.ggf .ss-crisis a{color:inherit;font-weight:700;}' +
+      '.ggf .ss-crisis p{margin:6px 0 0;}.ggf .ss-sober{border-left-color:#4E7D6A;background:rgba(78,125,106,.10);}.ggf .ss-crisis a{color:inherit;font-weight:700;}' +
       '.ggf a.text-link{color:inherit;font-weight:600;}';
     document.head.appendChild(st);
   }
   function attach(input, opts) {
-    if (!input) return;
+    if (!input || !input.isConnected || !input.parentNode) return; // the page re-rendered while search.js loaded: the new box attaches itself
     opts = opts || {}; css();
     var panel = input._ggPanel;
     if (!panel || !panel.isConnected) {
@@ -538,6 +555,7 @@
       if (opts.accent) panel.style.setProperty('--ggf-acc', opts.accent);
       panel.innerHTML = '<p class="ss-status"></p><div class="ggf-out"></div>';
       var after = (opts.after && document.querySelector(opts.after)) || input;
+      if (!after.parentNode) return;
       after.parentNode.insertBefore(panel, after.nextSibling);
       input._ggPanel = panel;
     }

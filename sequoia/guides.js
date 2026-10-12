@@ -5159,3 +5159,566 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
 (function () { var G = window.SEQUOIA_GUIDES; if (!G || !G.topics) return; var L = {"new-diagnosis": ["health", "serious"], "pain": ["pain", "health"], "falls": ["moving"], "hearing": ["hearing"], "vision": ["seeing"], "driving": ["seeing", "moving", "memory"], "hospital": ["serious", "health"], "memory-worry": ["memory"], "dementia": ["memory", "close"], "depression": ["mind"], "anxiety": ["mind"], "spouse-caregiving": ["close", "memory"], "burden": ["health", "moving", "serious", "close"], "faith-questions": ["serious", "health"], "appetite": ["health", "serious"], "care-move": ["moving", "memory", "health"], "kids-deciding": ["memory", "moving"], "old-memories": ["mind"], "worry-adult-children": ["close"]};
   G.topics.forEach(function (t) { if (L[t.id]) t.life = L[t.id].slice(); }); })();
 /* LIFE tags end */
+/* Living Sober guides start: GWG BLD 789. Five Sequoia guides in the low-key Living Sober ring (ring 'sober', life ['sober'],
+   sober: the stages each fits most; [] fits every stage). The ring itself comes from shared/gg-life.js (GGLife.ring) and shows only
+   when Living Sober is chosen; search and Picked for You always find these. Generated from patches/bld789/Q in grounded-workshop. */
+(function () { var G = window.SEQUOIA_GUIDES; if (!G || !G.topics) return;
+  var T = [
+ {
+  "id": "sober-retirement",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "change",
+   "early"
+  ],
+  "title": "Drinking in retirement and loneliness",
+  "keys": "drinking more retired retirement lonely loneliness alone drinking alone evenings wine beer cocktails happy hour five o clock drink a day too much alcohol cutting back cut down quit drinking stop drinking sober sobriety thinking about a change widow widower bored empty days grief drinking to sleep nightcap hangover falls",
+  "parts": [
+   "leaves",
+   "branches",
+   "trunk",
+   "bark"
+  ],
+  "quick": [
+   "Many people drink more after retiring, after a loss, or when the days grow quiet. You are in good company, and it is safe to talk about.",
+   "With age, the body feels alcohol more strongly. The same drink you had at fifty can land harder at seventy, especially with medicines.",
+   "Drinking often fills a space: an empty evening, a long afternoon, a missing person. Filling that space another way is the heart of the change.",
+   "If you drink every day and want to stop, talk with your doctor first. Stopping all at once can be dangerous, and help makes it safer.",
+   "Small steps still count: one sober evening, one standing call, one walk at five o'clock."
+  ],
+  "feel": "The days were full, and now they are wide open. Maybe a spouse died, friends moved away, or work ended and took its people with it. A drink at five became a drink at four, then a few through the evening, because it softens the quiet. You may feel a little embarrassed to notice it, or unsure whether it is a problem at all. Those feelings make sense. Noticing is a good sign. It means part of you is already looking for something better for your days.",
+  "self": {
+   "first": [
+    "Notice, for one week, when and why you pour a drink. Write the time and one word for the feeling: bored, lonely, sad, restless.",
+    "Choose one evening this week to stay sober, and plan something warm for that hour: a call, a walk, a good meal, music.",
+    "Tell your doctor or pharmacist how much you drink, and list your medicines. Ask whether any of them mix poorly with alcohol.",
+    "If you drink every day and want to stop, ask your doctor for help first. Stopping suddenly after daily drinking can bring shaking, seizures, or confusion."
+   ],
+   "helps": [
+    "A new five o'clock: tea or sparkling water in a favorite glass, a walk around the block, a phone call you look forward to.",
+    "One standing date a week with another person, the same day and time, so the week has people in it.",
+    "A reason to get up: a volunteer shift, a class, a garden, a grandchild's game, someone who counts on you.",
+    "Moving your body every day, outdoors when you can. Daylight and movement lift mood and help sleep.",
+    "A wind-down hour before bed in place of a nightcap: warm light, a book, a slow breath.",
+    "Talking with others who are making the same change, in person or online, in a peer group like AA, SMART Recovery, or a faith community group."
+   ],
+   "tell": [
+    "“I am filling my days with what feeds me.”",
+    "“A quiet evening can be a peaceful one.”",
+    "“Small steps still count.”"
+   ],
+   "people": "Try: “I've noticed I'm drinking more since I retired, and I'd like to cut back. Would you join me for a walk on Thursday evenings?” Or to your doctor: “I'd like help drinking less. Where do I start?”"
+  },
+  "helper": {
+   "feel": "They may feel embarrassed, defensive, or worried you will treat them like a child. Many older adults grew up when drinking was simply part of the day, and talking about it felt private. Underneath, there is often loneliness or grief that has had nowhere else to go.",
+   "say": [
+    "“I've missed our time together. Could we start a standing lunch?”",
+    "“I've noticed you seem tired lately. How are the evenings for you?”",
+    "“I care about you, and I'd love to see you feeling strong.”",
+    "“Would you like company when you talk with your doctor?”"
+   ],
+   "avoid": [
+    "Labels or lectures. They close the door that kind questions open.",
+    "Counting their drinks out loud, or hiding the bottles.",
+    "Talking about it in front of others, or at a holiday table.",
+    "Bringing alcohol as a gift, or planning visits around a drink."
+   ],
+   "help": [
+    "Fill the empty hours together: a standing call, a weekly meal, a walk at the hour they usually drink.",
+    "Help them find people and purpose: a senior center, a class, a volunteer role, a faith community.",
+    "Offer a ride to the doctor, and encourage them to bring their medicine list.",
+    "Learn the signs of danger: confusion, a fall, slurred speech, or very slow breathing after drinking with medicines. Call 911."
+   ],
+   "you": "You can be one warm thread in their days, alongside others. Your steady company may matter more than anything you say about drinking. Share the visits and calls with family and friends, and find your own support too. Al-Anon and SMART Recovery Family and Friends welcome people who love someone who drinks."
+  },
+  "faith": "For some people, a faith community is a ready place to belong when the days grow quiet: a coffee hour, a choir, a service team, a small group. Many traditions also have words for starting fresh. If faith is part of your life, it can be one of the places your evenings go. If it isn't, clubs, classes, and volunteer teams offer the same steady faces. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "branches|Standing Call",
+   "branches|One Reach-Out a Day",
+   "trunk|Reason to Get Up",
+   "leaves|Walk Your Way",
+   "leaves|Wind-Down Hour",
+   "bark|Name It",
+   "fruit|Something to Look Forward To"
+  ],
+  "reach": [
+   "If you drink every day and want to stop or cut back: talk with your doctor first. Stopping suddenly can cause seizures, and a doctor can make it safe.",
+   "Confusion, a fall, a seizure, or very slow breathing after drinking: call 911.",
+   "Treatment and support near you: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential, and they can point you to help in your area.",
+   "Questions about alcohol and your medicines: ask your pharmacist or doctor. Poison Control, 1-800-222-1222, any time.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Senior centers, meals, rides, and visiting programs: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433."
+  ],
+  "more": [
+   [
+    "National Institute on Aging: Facts About Aging and Alcohol",
+    "https://www.nia.nih.gov/health/alcohol-misuse-or-alcohol-use-disorder/facts-about-aging-and-alcohol"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "NIAAA Alcohol Treatment Navigator",
+    "https://alcoholtreatment.niaaa.nih.gov/"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ],
+  "sources": [
+   "sqsonia",
+   "sqsoniaaa",
+   "murthy"
+  ]
+ },
+ {
+  "id": "sober-meds",
+  "ring": "sober",
+  "life": [
+   "sober",
+   "pain"
+  ],
+  "sober": [],
+  "title": "Medications, pain pills, and alcohol",
+  "keys": "pain pills painkillers opioids oxycodone hydrocodone norco vicodin percocet tramadol oxy sleeping pills benzodiazepines xanax valium ativan klonopin anxiety pills mixing alcohol and medicine drinking with medication surgery dental work root canal prescription too many pills taking more than prescribed running out early tolerance withdrawal overdose naloxone narcan sober sobriety recovery staying sober after surgery",
+  "parts": [
+   "leaves",
+   "bark",
+   "branches"
+  ],
+  "quick": [
+   "Later life often brings more medicines, more surgeries, and more pain to manage. Talking openly about pain pills and alcohol is part of staying safe.",
+   "Alcohol, pain pills, and sleep or anxiety pills can each slow breathing. Together they are far stronger. Ask your pharmacist about every mix.",
+   "If you are growing sober, or ever struggled with pills or drinking, tell your doctor and dentist before any procedure. A plan made ahead is a strong plan.",
+   "Stopping sleep or anxiety pills (like Xanax or Valium) or daily drinking all at once can be dangerous. Change them with your doctor.",
+   "Keep naloxone (Narcan) at home if opioids are in the house. It reverses an opioid overdose and is sold without a prescription."
+  ],
+  "feel": "Pain is real, and so is the worry about what helps it. You may be taking more medicines than ever, and it can be hard to keep track. Maybe a pill that helped after surgery became a pill you look forward to. Maybe a drink at night now sits beside a sleeping pill. Or maybe you are growing sober and dread the next surgery or dental visit, wondering how you will handle the pain. All of this makes sense. Being honest about it, with yourself and your care team, is how you stay safe and well.",
+  "self": {
+   "first": [
+    "Make one list of every medicine, vitamin, and supplement, with the dose, and add how much alcohol you drink. Bring it to your pharmacist and ask, “Do any of these mix poorly?”",
+    "Before any surgery, dental work, or new prescription, tell the doctor or dentist plainly: “I am growing sober,” or “Pain pills have been hard for me.” Ask for a pain plan that fits.",
+    "Keep pills in their bottles, take them as prescribed, and ask a trusted person to hold extras.",
+    "If opioids are in your home, keep naloxone (Narcan) where others can find it, and show someone how to use it."
+   ],
+   "helps": [
+    "A pain plan made ahead: what to take, how long, who holds the bottle, and what to do on a hard night.",
+    "Non-opioid choices your doctor approves, plus heat, ice, gentle movement, physical therapy, rest, and slow breathing.",
+    "Taking unused pills to a pharmacy or drug take-back site once you are done with them.",
+    "One person you tell the truth to each day while you are healing: “Here is how the pain is. Here is how many I took.”",
+    "A once-a-year medicine review with your pharmacist, or after any hospital stay.",
+    "Peer support, if you want it: AA, NA, SMART Recovery, a faith community group, or a friend who is growing sober too."
+   ],
+   "tell": [
+    "“A plan made ahead is a strong plan.”",
+    "“Telling the truth keeps me safe.”",
+    "“I can tend my pain and my sobriety together.”"
+   ],
+   "people": "Try, to your doctor or dentist: “I've been sober for a while, and pain pills have been hard for me. Can we plan for the pain together?” Or to someone you trust: “Will you hold my pills while I heal and check on me each evening?”"
+  },
+  "helper": {
+   "feel": "They may be hurting, frightened of the pain, and ashamed to say a medicine has a hold on them. Many older adults trust their prescriptions completely and rarely think to ask about mixing them with a drink. Someone growing sober may worry that taking any pain medicine undoes their progress.",
+   "say": [
+    "“How is the pain today, really?”",
+    "“Would it help if I came to the appointment and took notes?”",
+    "“Let's bring your list to the pharmacist together.”",
+    "“Your sobriety matters. Let's make a pain plan that protects it.”"
+   ],
+   "avoid": [
+    "Sharing your own pills, or offering a drink to help them sleep.",
+    "Changing or stopping their medicines yourself. Those choices belong with their doctor or pharmacist.",
+    "Shaming words. Honest, calm questions keep them talking to you.",
+    "Waiting to call for help when they seem very sleepy, confused, or breathe slowly."
+   ],
+   "help": [
+    "Help keep one up-to-date medicine list, with their say on every line.",
+    "Offer to hold the bottle and hand out doses as prescribed, if they want that.",
+    "Keep naloxone in the home if opioids are there, and learn how to use it.",
+    "Know the signs of an overdose: very sleepy or hard to wake, slow or noisy breathing, blue or gray lips. Call 911, give naloxone, and stay with them."
+   ],
+   "you": "Watching someone you love in pain is hard, and worrying about their medicines adds weight. You can help with calm, practical care: a list, a ride, a held bottle, a nightly check-in. Bring your own questions to the pharmacist too, and keep your own rest."
+  },
+  "faith": "For some people, faith steadies them through pain: a prayer before surgery, a community that brings meals, a sense of being held on a hard night. For others, pain and struggle with pills can stir guilt or hard questions. Both belong. If faith is part of your life, a chaplain or faith leader can visit while you heal. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "leaves|Medicine",
+   "leaves|Appointment Prep",
+   "bark|Slow Exhale",
+   "bark|Hard-Day Plan",
+   "branches|Ask for Help",
+   "leaves|Chair Stretch"
+  ],
+  "reach": [
+   "Someone is very hard to wake, breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it, and stay with them.",
+   "Questions about a pill, a mix, or a possible overdose: Poison Control, 1-800-222-1222, any time.",
+   "Before stopping daily drinking, or sleep or anxiety pills like Xanax or Valium: talk with your doctor. Stopping suddenly can cause seizures.",
+   "Treatment and support for pills or drinking: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
+   "Questions about any medicine: ask your pharmacist or doctor.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+  ],
+  "more": [
+   [
+    "National Institute on Aging: Facts About Aging and Alcohol",
+    "https://www.nia.nih.gov/health/alcohol-misuse-or-alcohol-use-disorder/facts-about-aging-and-alcohol"
+   ],
+   [
+    "FDA: combining opioids with benzodiazepines",
+    "https://www.fda.gov/drugs/drug-safety-and-availability/fda-drug-safety-communication-fda-warns-about-serious-risks-and-death-when-combining-opioid-pain-or"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "Poison Control",
+    "https://www.poison.org/"
+   ]
+  ],
+  "sources": [
+   "sqsonia",
+   "sqsofda",
+   "narcanotc"
+  ]
+ },
+ {
+  "id": "sober-adult-child",
+  "ring": "sober",
+  "life": [
+   "sober",
+   "close"
+  ],
+  "sober": [
+   "love"
+  ],
+  "title": "When your adult child drinks or uses",
+  "keys": "my son drinks my daughter drinks adult child drinking using drugs addiction alcohol opioids pills meth heroin fentanyl overdose rehab treatment detox borrowing money asking for money lying stealing worried sick cant sleep enabling tough love cut off al-anon nar-anon smart recovery family and friends craft grown child substance use recovery sober",
+  "parts": [
+   "branches",
+   "bark",
+   "roots"
+  ],
+  "quick": [
+   "Loving a grown child who drinks or uses is one of the heaviest things a parent carries. Your worry makes sense, and you can talk about it openly.",
+   "You can love your child and still say plainly what you will do and what you will set down. Kind, steady words keep the door open.",
+   "Research finds that families who learn warm, calm ways to talk often help a loved one move toward help, and feel better themselves.",
+   "Notice and welcome their sober moments. Let the hard results of using rest with them, gently and without rescue.",
+   "If opioids are in the picture, keep naloxone (Narcan) on hand. Pressure for money or fear in your own home is a reason to call for help."
+  ],
+  "feel": "Lying awake listening for the phone. Wondering where they are tonight. Replaying the years, asking what you could have done differently. Giving money and hoping it helps, then fearing it hurts. You may feel love, anger, grief, and shame all in the same hour, and keep it quiet from friends. Every one of those feelings makes sense. Your child is still your child, and you deserve support too.",
+  "self": {
+   "first": [
+    "Tell one trusted person the whole truth this week. Carrying it alone makes it heavier.",
+    "Write down what you will gladly do and what you will set down. For example: rides to treatment, yes. Cash, set down.",
+    "Visit a family group once, like Al-Anon, Nar-Anon, or SMART Recovery Family and Friends, in person or online.",
+    "If opioids are part of your child's life, get naloxone (Narcan) from a pharmacy and learn how to use it."
+   ],
+   "helps": [
+    "Talking when they are sober, calm, and rested, in short, warm sentences that start with “I”.",
+    "Noticing and enjoying sober time together: a meal, a drive, a project, a laugh.",
+    "Letting the results of using stay with them: the missed work, the empty wallet. Rescue can keep the cycle going.",
+    "Having treatment information ready, so you can offer it the moment they say “I want help.”",
+    "Protecting your money, medicines, and home. A locked cabinet and a firm “no” are acts of love.",
+    "Keeping your own life full: rest, friends, faith or meaning, and things you enjoy."
+   ],
+   "tell": [
+    "“I can love my child and tend my own peace.”",
+    "“Their path is theirs. My part is love, honesty, and safety.”",
+    "“Every return to the path counts.”"
+   ],
+   "people": "Try, to your grown child, at a calm moment: “I love you. I miss the times we laugh together. If you ever want help, I will drive you, any day.” Or: “I can't give money right now. I'd love to have you for dinner Sunday.”"
+  },
+  "helper": {
+   "feel": "They may feel worn out, frightened, and ashamed, as if their child's struggle is a verdict on their parenting. Many keep it secret, give money they need, and lose sleep for years. If you are another of their children, you may have your own feelings about your sibling, and about the attention it takes.",
+   "say": [
+    "“You love them so much. That's a lot to carry.”",
+    "“What is keeping you up at night?”",
+    "“What would help you this week?”",
+    "“Would you like me to come with you to a family group?”"
+   ],
+   "avoid": [
+    "Labels for their child, or blame for how they raised them.",
+    "“You need to cut them off,” or “You're enabling them.” Those choices are theirs to make.",
+    "Taking sides in a family quarrel.",
+    "Telling them to stop worrying. Worry eases with support."
+   ],
+   "help": [
+    "Listen first. Help them sort what is theirs to do and what belongs to their child.",
+    "Help them find a family group or a therapist who understands substance use.",
+    "Watch gently for money pressure, missing medicines, or fear in their home, and help them call for support.",
+    "Plan time together that has nothing to do with the worry."
+   ],
+   "you": "If the struggling one is your sibling, your nephew, or your own child, you are inside this too. Find your own place to talk. Keep your love for each person steady, and remember that a whole family can heal, one honest conversation at a time."
+  },
+  "faith": "For many parents, faith is where worry goes at three in the morning: a prayer said by name, a candle, a congregation that prays too. Many traditions speak of entrusting the people we love to a care larger than our own. If faith is part of your life, that can lighten the load. If it isn't, you can still hold your child in your heart, wish them well, and set the worry down for a while. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "roots|Hold Someone in Light",
+   "bark|Worry Window",
+   "branches|Support Group",
+   "branches|Say What You Need",
+   "bark|Self-Compassion Break",
+   "leaves|Sleep"
+  ],
+  "reach": [
+   "Your child is very hard to wake, breathing slowly, or has blue or gray lips: call 911, give naloxone (Narcan) if you have it, and stay with them.",
+   "Your child is in crisis or talks about ending their life: call or text 988, any time, for them or with them. Danger right now: 911.",
+   "Treatment and support near your child, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
+   "Families of people who drink or use: Al-Anon, Nar-Anon, and SMART Recovery Family and Friends offer groups in person and online.",
+   "A grown child, or anyone, pressures you for money, takes it, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential. Danger right now: 911.",
+   "Your own worry turns into hopelessness: call or text 988, any time. Veterans: dial 988, then press 1."
+  ],
+  "more": [
+   [
+    "Al-Anon Family Groups",
+    "https://al-anon.org/newcomers/faq/"
+   ],
+   [
+    "Nar-Anon Family Groups",
+    "https://www.nar-anon.org/"
+   ],
+   [
+    "SMART Recovery, including Family and Friends meetings",
+    "https://smartrecovery.org/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "Community Reinforcement and Family Training (CRAFT), Robert J. Meyers",
+    "https://www.robertjmeyersphd.com/cra-approach/community-reinforcement-and-family-training-approach"
+   ]
+  ],
+  "sources": [
+   "sqsocraft"
+  ]
+ },
+ {
+  "id": "sober-grandkids",
+  "ring": "sober",
+  "life": [
+   "sober",
+   "close"
+  ],
+  "sober": [
+   "love"
+  ],
+  "title": "Raising grandchildren through a parent's drinking or using",
+  "keys": "raising grandchildren grandkids live with me grandparent raising grandkids kinship care grandfamilies custody guardianship my son my daughter drinking using drugs addiction opioids meth overdose in treatment in jail parent visits what to tell the kids explaining to children seven cs alateen nacoa tired too old for this money worries sober recovery",
+  "parts": [
+   "branches",
+   "bark",
+   "fruit",
+   "leaves"
+  ],
+  "quick": [
+   "Many grandparents are raising grandchildren because a parent is struggling with drinking or drugs. You are part of a large, strong community.",
+   "Children do best with the truth told simply, kindly, and often: it is safe to talk about, and it is never their fault.",
+   "You are grieving your own child while raising theirs. Both feelings belong, and both deserve support.",
+   "Steady routines, a calm home, and one safe grown-up are among the greatest gifts a child can receive.",
+   "You are allowed to need help: rest, respite, support groups, and the services built for grandfamilies."
+  ],
+  "feel": "You may feel love so strong it surprises you, and tiredness that reaches your bones. You may grieve the retirement you planned, and grieve your own son or daughter, who is somewhere on a hard road. You may feel angry, and then guilty for being angry. The grandchildren may ask questions you have no easy answers for. All of this makes sense. You stepped in, and that matters more than any perfect answer.",
+  "self": {
+   "first": [
+    "Tell the children the truth in a few simple words, for example: “Your mom is struggling with drinking. It is never your fault, and you are safe with me.”",
+    "Teach them the Seven Cs: I didn't cause it. I can't cure it. I can't control it. I can take care of myself by talking about my feelings, making healthy choices, and celebrating me.",
+    "Choose one person or group to lean on, for rest, rides, or a listening ear.",
+    "Ask your county, a kinship or grandfamily program, or legal aid what help fits your family: money, school forms, health coverage, or legal steps."
+   ],
+   "helps": [
+    "A predictable day: the same wake time, meals, bedtime, and a goodnight ritual.",
+    "Letting the children love their parent, and keeping visits safe and calm. Visits happen when the parent is sober.",
+    "Answering their questions in short, honest pieces, as often as they ask.",
+    "A therapist or school counselor who understands families touched by drinking or drugs.",
+    "Groups for kids, like Alateen for teens, and for you, like Al-Anon, Nar-Anon, or a grandparents raising grandchildren group.",
+    "Your own rest, food, movement, and joy. A tended grandparent can tend a child."
+   ],
+   "tell": [
+    "“Love and steadiness are what these children need most.”",
+    "“I can grieve my child and still raise theirs with joy.”",
+    "“Asking for help is part of doing this well.”"
+   ],
+   "people": "Try, with a grandchild: “You can ask me anything about your dad, any time. I'll tell you the truth in a way that fits.” Or to a friend: “I'm raising the kids now, and I'm tired. Could you take them to the park Saturday so I can rest?”"
+  },
+  "helper": {
+   "feel": "They may be exhausted, worried about money and their own health, and grieving their adult child. Many feel embarrassed that their family is going through this, and some feel judged by others. They may also love these children fiercely and be determined to give them a better start.",
+   "say": [
+    "“You're doing something remarkable.”",
+    "“What is the hardest part of the week?”",
+    "“Can I take the kids one afternoon so you can rest?”",
+    "“How are you doing about your son or daughter?”"
+   ],
+   "avoid": [
+    "Labels for the children's parent, especially where the children can hear.",
+    "“At least the kids have you.” True, and it can skip past their grief.",
+    "Asking for the whole story in front of the grandchildren.",
+    "Offering help once and then disappearing."
+   ],
+   "help": [
+    "Offer regular, specific help: a school pickup, a meal each week, an afternoon of childcare.",
+    "Help them find a grandfamily program, legal aid, or a support group, and offer a ride.",
+    "Be one more safe, kind grown-up in the children's lives.",
+    "Ask about the grandparent's own health and grief, and listen."
+   ],
+   "you": "Grandfamilies do well with a circle around them. You can be one steady part of that circle. Share the load with others, keep your help regular, and take care of yourself too."
+  },
+  "faith": "For some grandparents, faith is a deep well during these years: prayer for their child by name, a faith community that welcomes the children, a sense of being given strength for each day. For others, it raises hard questions about why this happened. Both belong. If faith is part of your life, a faith community can offer friendship, respite, and programs for children. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "branches|Grandchildren",
+   "branches|Ask for Help",
+   "branches|Caregiver Pause",
+   "bark|Grief Time",
+   "roots|Hold Someone in Light",
+   "leaves|Rest Before You're Spent",
+   "fruit|Joy List"
+  ],
+  "reach": [
+   "A parent arrives intoxicated, a child is in danger, or someone is very hard to wake or breathing slowly: call 911.",
+   "Treatment and support for the children's parent, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
+   "A grandchild, or you, has thoughts of ending a life: call or text 988, any time. Veterans: dial 988, then press 1.",
+   "Groups for families: Al-Anon and Alateen (for teens), Nar-Anon, and SMART Recovery Family and Friends.",
+   "Help for grandfamilies, rides, and respite near you: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
+   "If you believe a vulnerable adult is being harmed or exploited, including pressure for money: in Minnesota, MAARC, 1-844-880-1574, any time."
+  ],
+  "more": [
+   [
+    "National Association for Children of Addiction (NACoA): the Seven Cs",
+    "https://nacoa.org/the-seven-cs/"
+   ],
+   [
+    "Generations United: grandfamilies",
+    "https://www.gu.org/explore-our-topics/grandfamilies/"
+   ],
+   [
+    "Al-Anon and Alateen",
+    "https://al-anon.org/newcomers/teen-corner-alateen/"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "Eldercare Locator",
+    "https://eldercare.acl.gov/home"
+   ]
+  ],
+  "sources": [
+   "sevencs",
+   "grandfam",
+   "sqsogu"
+  ]
+ },
+ {
+  "id": "sober-long",
+  "ring": "sober",
+  "life": [
+   "sober"
+  ],
+  "sober": [
+   "long",
+   "growing"
+  ],
+  "title": "Long-term sober, still growing",
+  "keys": "long term sober years sober decades sober sobriety anniversary sober birthday chip still growing recovery old cravings craving again after surgery pain pills retirement grief losses swapped habits food shopping work religion pride sponsor mentor giving back aa na smart recovery refuge recovery healing old wounds painful emotions staying sober later life",
+  "parts": [
+   "bark",
+   "trunk",
+   "branches",
+   "leaves",
+   "fruit"
+  ],
+  "quick": [
+   "Years of sobriety are a real achievement, and growth keeps going for a lifetime. Long-term sober is a season of deepening.",
+   "Drinking or using often numbed painful feelings and old hurts. Healing those old hurts, a little at a time, is the work that keeps a life steady.",
+   "Later life brings its own tests: retirement, losses, surgeries, pain medicines, and quieter days. Naming them early keeps you strong.",
+   "Watch for swapped habits. Food, shopping, work, screens, even religion or pride can quietly take a drink's old place.",
+   "Your story is a gift. Mentoring, sponsoring, and showing up for others keep sobriety bright for you and for them."
+  ],
+  "feel": "You may feel grateful and steady, and still surprised by an old craving at a funeral, after a surgery, or on a long quiet afternoon. You may notice that the drinking stopped years ago, and some of the pain underneath is still asking for attention. You may miss old friends from your sober community who have moved or died. All of this makes sense. Long-term sobriety is a living thing, and living things keep growing.",
+  "self": {
+   "first": [
+    "Name the season you are in: retirement, a loss, a health change, a move. Ask, “What does my sobriety need in this season?”",
+    "Choose one old hurt or painful feeling to tend gently this month, with writing, a therapist, a trusted friend, or prayer.",
+    "Before any surgery or new prescription, tell your doctor and dentist about your sobriety, and make a pain plan together.",
+    "Look honestly at what you reach for when you feel low. If something has taken a drink's old place, name it kindly."
+   ],
+   "helps": [
+    "A daily rhythm for mind, body, and spirit: a few minutes of quiet breathing, a daily walk, and time to write out what you feel.",
+    "Keeping sober people close as the years change who is nearby: a meeting, a group, a standing call, a new friend.",
+    "Mentoring, sponsoring, volunteering, or simply telling your story to someone who is just starting out.",
+    "Marking your sober anniversaries with joy: a favorite meal, a walk, sparkling water, the people who walked with you.",
+    "Rest, whole food, water, movement, and time outdoors. A well-tended body steadies the mind.",
+    "Peer support in whatever form fits you: AA, NA, SMART Recovery, Refuge Recovery, a faith community, or friends who share the path."
+   ],
+   "tell": [
+    "“The only disease we have is the dis-ease of painful emotions, and healing is real.”",
+    "“I am still growing.”",
+    "“My story can light the way for someone else.”"
+   ],
+   "people": "Try, to a sober friend: “It's been a quiet season, and I've noticed old feelings coming up. Could we have coffee this week?” Or to someone just starting: “I've been where you are. Call me any time.”"
+  },
+  "helper": {
+   "feel": "They may carry long sobriety with quiet pride, and also feel that others assume it is finished business. Later-life changes can stir old feelings, and many hesitate to mention a craving after so many years, for fear of worrying people.",
+   "say": [
+    "“I'm proud of you. How is your sobriety these days?”",
+    "“What does this season ask of you?”",
+    "“Would you like to celebrate your anniversary together?”",
+    "“Is there anything about this surgery or this loss you want to plan for?”"
+   ],
+   "avoid": [
+    "Offering a drink “since it's been so long.”",
+    "Assuming long sobriety means there is nothing left to tend.",
+    "Planning gatherings around alcohol without a warm sober choice.",
+    "Treating a craving they mention as a crisis. Calm listening helps most."
+   ],
+   "help": [
+    "Celebrate their milestones with them, with good food, sparkling water, and real words of pride.",
+    "Plan sober gatherings that feel generous: great food, music, games, time outdoors.",
+    "Help them stay close to their sober people as life changes: rides to a meeting, a call, a visit.",
+    "Before a surgery, support their pain plan and their honesty with the care team."
+   ],
+   "you": "Walking with someone through decades of sobriety is a quiet honor. Your steady interest tells them their growth still matters. Keep your own life full too, and let their example encourage your own healthy choices."
+  },
+  "faith": "For many people, faith and long sobriety grow together: gratitude each morning, a sense of grace, a community that knows their story. For some, faith became a place they hid from pain, or a source of pride, and later life is a chance to make it gentler and more honest. Both belong. If faith is part of your life, bring your honest questions to it. Sequoia welcomes all faith traditions and everything in-between.",
+  "practices": [
+   "bark|Name It",
+   "trunk|Write Your Story",
+   "trunk|Mentor Someone",
+   "leaves|Walk Your Way",
+   "bark|Meditation",
+   "fruit|Three Good Things",
+   "branches|Standing Call"
+  ],
+  "reach": [
+   "A strong craving, or a return to drinking or using: tell someone you trust today, and reach for your people. Every return to the path counts.",
+   "Treatment, support, or a new group near you: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
+   "Before stopping daily drinking, or sleep or anxiety pills: talk with your doctor. Stopping suddenly can cause seizures.",
+   "Someone is very hard to wake or breathing slowly: call 911, give naloxone (Narcan) if you have it, and stay with them.",
+   "Feeling hopeless, or thoughts of ending your life: call or text 988, any time. Veterans: dial 988, then press 1."
+  ],
+  "more": [
+   [
+    "SAMHSA: Working Definition of Recovery",
+    "https://store.samhsa.gov/sites/default/files/d7/priv/pep12-recdef.pdf"
+   ],
+   [
+    "SAMHSA National Helpline",
+    "https://www.samhsa.gov/find-help/helplines/national-helpline"
+   ],
+   [
+    "National Institute on Aging: Facts About Aging and Alcohol",
+    "https://www.nia.nih.gov/health/alcohol-misuse-or-alcohol-use-disorder/facts-about-aging-and-alcohol"
+   ]
+  ],
+  "sources": [
+   "samhsarec",
+   "hanson09"
+  ]
+ }
+];
+  T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); }); })();
+/* Living Sober guides end */

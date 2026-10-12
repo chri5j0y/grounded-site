@@ -3,8 +3,8 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
-<script src="/shared/gg-shelf.js?v=b788"></script>
-<script src="/shared/gg-sources.js?v=b788"></script>
+<script src="/shared/gg-shelf.js?v=b789"></script>
+<script src="/shared/gg-sources.js?v=b789"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -465,8 +465,8 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b782"></script>
-<script src="/shared/gg-life.js?v=b788"></script>
+<script src="/shared/gg-profiles.js?v=b789"></script>
+<script src="/shared/gg-life.js?v=b789"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="checkin.js?v=b782"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
@@ -1000,7 +1000,7 @@ const PLAIN_PR = {
 };
 
 </script>
-<script src="guides.js?v=b788"></script>
+<script src="guides.js?v=b789"></script>
 <script src="life.js?v=b782"></script>
 <script>
 const $ = id => document.getElementById(id);
@@ -1514,7 +1514,7 @@ function visitCheck(){
   const people = DB.students.slice().sort((a, b) => (b.name.toLowerCase().split(/\s+/)[0] === nm) - (a.name.toLowerCase().split(/\s+/)[0] === nm));
   if (!people.length){
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or add yourself, then this card will ask again.</p>',
-      buttons: [{ t: 'Open My Tree', kind: 'main', fn: () => { VISIT_SHOWN = false; go('students'); } }, { t: 'Not Now', kind: 'line', fn: () => { VISIT_SHOWN = false; } }, drop] });
+      buttons: [{ t: 'Open My Tree', kind: 'main', fn: () => { VISIT_SHOWN = false; go('students'); } }, { t: 'Maybe Later', kind: 'line', fn: () => { VISIT_SHOWN = false; } }, drop] });
     return;
   }
   GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree is it for?</p>',
@@ -2079,7 +2079,7 @@ function asNote(part, i, grade){
   (ASL.notes || []).forEach(n => { if (n.part !== part || n.i !== i || (n.grades && !n.grades.includes(String(grade)))) return; ids.forEach(id => { const x = (n.n || {})[id]; if (x) { if (x.ex) out.ex.push(x.ex); if (x.tip) out.tip.push(x.tip); } }); });
   out.ex = asUniq(out.ex); out.tip = asUniq(out.tip); return out;
 }
-function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '')); }
+function asSteps(part){ const St = ASL.steps || {}; return asUniq(asLifeIds().map(id => ((St[part] || {})[id]) || ((St.any || {})[id]) || '').concat(asLifeIds().includes('sober') && GGLife.soberSteps ? GGLife.soberSteps('aspen', part) : [])); }
 function asLifeLinesHtml(){
   const L = asLifeUse() ? GGLife.lines('aspen') : []; if (!L.length) return '';
   const href = x => x.tel ? 'tel:' + x.tel : x.url || '';
@@ -2092,11 +2092,18 @@ function asHardyRests(){ return asLifeIds().some(id => id === 'pain' || id === '
 // other groups. That group shows only here, never twice. Faith-topic guides stay out of Picked for You when Plain
 // wording is set, like the faith guide's part links (guideLinks); they stay in the group, one tap away.
 const AS_LIFE_GROUP = 'Health and Ability', AS_FAITH_GUIDES = ['faith', 'why-me'];
-function asOtherGroups(G){ return (G || guidesData()).groups.filter(g => g.name !== AS_LIFE_GROUP); }
+function asOtherGroups(G){ const gs = (G || guidesData()).groups.filter(g => g.name !== AS_LIFE_GROUP), sob = asSober(); return gs.filter(g => asSoberGroup(g) && sob).map(g => Object.assign({}, g, { name: sob.name })).concat(gs.filter(g => !asSoberGroup(g))); }
+/* Living Sober (GWG BLD 789): the group with key 'sober' (When Someone Drinks or Uses) is low-key. It shows only when it is
+   chosen in the student's Health and Ability, first among the groups; its guides are always found by search and by Picked
+   for You (first there, in stage order). They stay out of the Health and Ability group. */
+const asSoberGroup = g => g.key === 'sober' || (g.topics.length && g.topics.every(t => t.ring === 'sober'));
+const asIsSober = t => t.ring === 'sober' || ((t.life || []).length === 1 && t.life[0] === 'sober');
+function asSober(){ return window.GGLife && GGLife.sober && asLifeIds().includes('sober') ? GGLife.ring('aspen') : null; }
 function asLifeGroups(){
   const all = [], picks = [], ids = asLifeIds(), plain = isPlain(), gs = guidesData().groups;
-  gs.filter(g => g.name === AS_LIFE_GROUP).concat(asOtherGroups()).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
-  return { all, picks };
+  gs.filter(g => g.name === AS_LIFE_GROUP).concat(gs.filter(g => g.name !== AS_LIFE_GROUP)).forEach(g => g.topics.forEach(t => { if (Array.isArray(t.life) && t.life.length) { if (!asIsSober(t)) all.push(t); if (t.life.some(x => ids.includes(x)) && !(plain && AS_FAITH_GUIDES.includes(t.id))) picks.push(t); } }));
+  const sp = picks.filter(t => t.ring === 'sober' || t.life.includes('sober'));
+  return { all, picks: (sp.length && window.GGLife ? GGLife.order(sp, null, 'aspen') : sp).concat(picks.filter(t => !sp.includes(t))) };
 }
 function asLifePanel(s){
   if (!window.GGLife) return '';
@@ -2161,7 +2168,7 @@ function asPrintGuide(){
    Two narrated videos per guide, For You (the student) and For the Grown-up, played by shared/gg-learn.js
    from aspen/guide-videos.js. AV_VIDS lists the guides that have them so far (written by the build's generator).
    A quiet check shows once a video has been watched on this device (gg-learn:aspen). */
-/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting", "school-health", "pain-headaches", "moving-included", "deaf-hoh", "blind-low-vision", "autistic-ms", "sibling-disability", "telling-friends", "why-me"];/* AV_VIDS end */
+/* AV_VIDS start */const AV_VIDS = ["blowup", "death", "sick", "accident", "divorce", "stepfamily", "moving", "money", "lying", "deployed", "baby", "drinking", "jail", "foster", "pet", "startms", "friends", "leftout", "bullying", "grades", "adhd", "cut", "crush", "teacher", "body", "bedwetting", "compare", "phone", "pictures", "porn", "vaping", "gambling", "ai", "sleep", "looks", "eating", "wholike", "faith", "identity", "illness", "lockdown", "news", "immigration", "unfair", "suicide", "disaster", "war", "selfharm", "friendhurting", "school-health", "pain-headaches", "moving-included", "deaf-hoh", "blind-low-vision", "autistic-ms", "sibling-disability", "telling-friends", "why-me", "sober-family", "sober-treatment", "sober-offered", "sober-friend", "sober-overdose", "sober-feelings"];/* AV_VIDS end */
 // Watched marks live in the unlocked profile's vault now (gg-learn.js, BLD 756), never in open storage.
 function avVidWatched(id) { try { return !!(window.GGLearn && GGLearn.watched && GGLearn.watched('aspen', id)); } catch (e) { return false; } }
 window.addEventListener('gg-learn-marks', () => { const v = document.getElementById('view-guide'); if (v && v.offsetParent !== null && renderGuide.last) { const y = window.scrollY; renderGuide({id: renderGuide.last}); window.scrollTo(0, y); } });
@@ -2521,9 +2528,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b788';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b789';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b788" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b788';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b788" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b789" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b789';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b789" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

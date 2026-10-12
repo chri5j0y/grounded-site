@@ -23,6 +23,12 @@
      lines(tree), picks(tree, guides), addGuides(tree, guides),
      label(tree, grownView), chooser(host, opt), dialog(tree, opt),
      offerCard(host, tree, opt), use(id), who(), on(fn)
+   Living Sober (GWG BLD 789, patches/bld789/C/API.md in grounded-workshop):
+     STAGES, stages(tree), sober(tree), soberStage(tree), ring(tree),
+     ringShows(tree, key), soberSteps(tree, part). The category 'sober'
+     keeps its stage in vault.life.sober; ring 'sober' is low-key (shown
+     only when chosen); picks() and order() put Living Sober rows first,
+     in stage order (a row's sober: [stage ids], [] fits every stage).
    ===================================================================== */
 (function () {
   'use strict';
@@ -84,11 +90,43 @@
         maple: 'A brother, sister, parent, or grandparent who lives with any of these.',
         aspen: 'A parent, brother, sister, or grandparent living with any of these.',
         pine: 'A parent, brother, sister, grandparent, or friend living with any of these.' }) },
+    { id: 'sober', trees: TREES,
+      words: over(same('Living Sober'), { maple: 'Someone in Our Family Drinks or Uses', aspen: 'Someone in Our Family Drinks or Uses' }),
+      line: over(same('Growing sober, thinking about a change, or loving someone who drinks or uses.'), {
+        maple: 'A parent, grandparent, brother, or sister whose drinking or drug use is hard for the family.',
+        aspen: 'A parent, grandparent, brother, or sister whose drinking or drug use is hard for the family.',
+        pine: 'Your own drinking, vaping, or using, or someone you love who drinks or uses.' }) },
     { id: 'none', special: true, trees: TREES, words: same('None Right Now'), line: same('Nothing to choose today. Come back any time.') },
     { id: 'rather', special: true, trees: TREES, words: same('I\'d Rather Not Say'), line: same('Gentler ways show first, without naming anything.') }
   ];
   var CAT = {}; CATS.forEach(function (c) { CAT[c.id] = c; });
   var IDS = CATS.filter(function (c) { return !c.special; }).map(function (c) { return c.id; });
+
+  /* ---------- Living Sober (GWG BLD 789) ----------
+     The category 'sober' opens one short follow-up, the stage, kept in the same locked
+     vault object (vault.life.sober). Maple and Aspen offer only 'love', set automatically.
+     Guides for it sit in ring 'sober', which is low-key: a tree's ring list shows it only
+     when Living Sober is chosen. Search and Picked for You always find its guides.
+     A topic's sober: [stage ids] names the stages it fits most ([] fits every stage). */
+  var STAGES = [
+    { id: 'change', name: 'Thinking About a Change', line: 'Curious about drinking or using less, or stopping.' },
+    { id: 'early', name: 'Early Days', line: 'The first 90 days.' },
+    { id: 'growing', name: 'Growing Sober', line: 'The first years.' },
+    { id: 'long', name: 'Long-Term Sober', line: 'Years along the path, still growing.' },
+    { id: 'love', name: 'Someone I Love', line: 'A parent, partner, child, or friend who drinks or uses.' }
+  ];
+  var STAGE_IDS = STAGES.map(function (x) { return x.id; });
+  var KID_STAGES = ['love'];
+  function stagesFor(tree) { return KIDS.indexOf(tree) >= 0 ? KID_STAGES.slice() : STAGE_IDS.slice(); }
+  var SOBER_RING = {
+    adult: { key: 'sober', name: 'Living Sober', color: '#4E7D6A',
+      blurb: 'Guides for growing sober, thinking about a change, and loving someone who drinks or uses. Honest talk, real healing, and every kind of help, one small step at a time.' },
+    pine: { key: 'sober', name: 'Living Sober', color: '#4E7D6A',
+      blurb: 'Guides for your own choices about drinking, vaping, and using, and for loving someone who drinks or uses. It is safe and normal to talk about.' },
+    kid: { key: 'sober', name: 'When Someone Drinks or Uses', color: '#4E7D6A',
+      blurb: 'For a child whose parent, grandparent, brother, or sister drinks or uses. It is never the child\'s fault, and it is safe to talk about.' }
+  };
+  function ring(tree) { var r = KIDS.indexOf(tree) >= 0 ? SOBER_RING.kid : tree === 'pine' ? SOBER_RING.pine : SOBER_RING.adult; return Object.assign({}, r); }
 
   /* ---------- help lines: information and support, always BELOW the crisis lines ----------
      From conditions-research.md, Section 4: Minnesota first, then national. Numbers marked
@@ -104,28 +142,119 @@
     transition: { name: 'Got Transition', how: 'Open the website', url: 'https://gottransition.org/six-core-elements', note: 'Help for teens and young adults moving from children\'s health care to adult health care.' },
     sibs: { name: 'Sibling Support Project', how: 'Open the website', url: 'https://siblingsupport.org/', note: 'Sibshops and support for brothers and sisters of people with disabilities or health needs.', grownup: true },
     aacy: { name: 'American Association of Caregiving Youth', how: 'Open the website', url: 'https://aacy.org/', note: 'Support for kids and teens who help care for someone in their family.' },
+    // Living Sober (GWG BLD 789). SAMHSA and Poison Control numbers confirmed in the BLD 789 spec; the rest link to each group's own site.
+    samhsa: { name: 'SAMHSA National Helpline', how: '1-800-662-4357', tel: '18006624357', url: 'https://www.samhsa.gov/find-help/helplines/national-helpline', note: 'Treatment referral and information for drinking and drug use, any time, day or night, in English and Spanish. Confidential.' },
+    findtx: { name: 'FindTreatment.gov', how: 'Open the website', url: 'https://findtreatment.gov/', note: 'SAMHSA\'s national directory of treatment for drinking and drug use, including medication, by place.' },
+    alanon: { name: 'Al-Anon and Alateen', how: 'Find a meeting', url: 'https://al-anon.org/', note: 'Groups for family and friends of someone who drinks, and Alateen for teens, in person and online.', grownup: true },
+    smart: { name: 'SMART Recovery', how: 'Find a meeting', url: 'https://smartrecovery.org/', note: 'Peer groups for growing sober, and Family and Friends meetings, in person and online.' },
+    poison: { name: 'Poison Control', how: '1-800-222-1222', tel: '18002221222', url: 'https://www.poison.org/', note: 'Any time, day or night, for questions about a medicine, a drug, or a possible poisoning. If someone is hard to wake or breathing slowly, call 911 first.' },
+    nacoa: { name: 'NACoA', how: 'Open the website', url: 'https://nacoa.org/', note: 'The National Association for Children of Addiction: help for kids whose family member drinks or uses, and for the grown-ups who love them.', grownup: true },
     cpn: { name: 'Courageous Parents Network', how: 'Open the website', url: 'https://courageousparentsnetwork.org/', note: 'Videos, guides, and community for parents caring for a child with a serious medical condition.' }
   };
   Object.keys(LINES).forEach(function (k) { LINES[k].id = 'life-' + k; LINES[k].show = LINES[k].how; });
   var KIDLINES = { health: ['pacer'], pain: ['pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami', 'pacer'], close: ['sibs', 'nami'] };
   var LINEMAP = {
-    maple: KIDLINES,
-    aspen: KIDLINES,
-    pine: { health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
-    birch: { health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
-    oak: { health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
-    sequoia: { health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
+    maple: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
+    aspen: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
+    pine: { sober: ['samhsa', 'alanon', 'poison'], soberLove: ['alanon', 'nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
+    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
+    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
+    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
   };
+
+  /* ---------- Living Sober growth plan ideas (GWG BLD 789) ----------
+     One idea per part of the tree for each stage, said the forward way. A tree's growth plan
+     shows the idea for a Growing Edge part (soberSteps); safe is the safety line for the stages
+     where stopping may need a doctor, shown with the Leaves idea. Kids trees have their own words. */
+  var SOBER_STEPS = {
+    change: {
+      leaves: 'Notice how your body feels after a sober evening, and write one word for it in the morning.',
+      bark: 'When the pull to drink or use comes, wait ten minutes first: drink a glass of water, take a slow walk, then decide.',
+      branches: 'Tell one person you trust that you are thinking about a change.',
+      roots: 'Take one quiet minute each morning to ask what you want more of today.',
+      trunk: 'Write down what you want more of in your life, and one reason this change matters to you.',
+      fruit: 'Plan one good evening this week that is sober from start to finish: a meal, a walk, a friend.'
+    },
+    early: {
+      leaves: 'Keep the basics close: water within reach, three real meals, and a steady bedtime. Early days run on rest.',
+      bark: 'Plan your hard hour ahead of time: a walk, a shower, a call, a cup of tea, then bed.',
+      branches: 'Choose one person you can text when a craving comes, and tell them today that you might.',
+      roots: 'Begin and end each day with one quiet minute, a prayer, or three slow breaths.',
+      trunk: 'Count every sober day as a win, and write down one thing you handled well today.',
+      fruit: 'Plan one small sober joy for each weekend: a hike, a new recipe, coffee with a friend.'
+    },
+    growing: {
+      leaves: 'Build on the healing in your body: add one kind of movement you enjoy, like walking, lifting, or swimming.',
+      bark: 'Name the feeling under a craving, and tend that feeling with a practice, like writing it out or a walk among trees.',
+      branches: 'Repair one relationship with a small, steady act, and let trust grow at its own pace.',
+      roots: 'Keep one practice that steadies you each day: a quiet minute, gratitude, or time outdoors.',
+      trunk: 'Write a sentence or two about who you are becoming, and read it on hard mornings.',
+      fruit: 'Try one new thing your sober life has room for now: a class, a trail, a team, or a project.'
+    },
+    long: {
+      leaves: 'Keep tending the habits that carried you here: sleep, whole food, water, and movement.',
+      bark: 'Notice when an old habit tries a new shape, like work, food, spending, or screens, and tend the feeling underneath.',
+      branches: 'Offer your story or your time to someone newer on the path, in whatever way fits you.',
+      roots: 'Return to the practice that first steadied you, and let it grow with you.',
+      trunk: 'Mark your sober anniversary in a way that honors how far you have come.',
+      fruit: 'Set one goal your sober years make possible, and take its first step this week.'
+    },
+    love: {
+      leaves: 'Keep your own sleep, meals, and movement steady. Tending yourself helps the person you love.',
+      bark: 'When worry rises, take three slow breaths and come back to what is yours to tend today.',
+      branches: 'Find one place where people understand, like Al-Anon, Nar-Anon, a family group, or a trusted friend.',
+      roots: 'Give yourself a few quiet minutes each day that are only for you.',
+      trunk: 'Name what gives your own life meaning in this season, and give it a little time each week.',
+      fruit: 'Plan one good thing for yourself this week, whatever choices the person you love makes.'
+    },
+    safe: 'If you have been drinking every day or taking sedatives or opioids, talk with a doctor before you stop, so your body stays safe.',
+    maple: {
+      leaves: 'Keep bedtime, meals, and water steady at home. Steady days help a child feel safe.',
+      bark: 'Practice balloon breaths together for the times home feels big or loud.',
+      branches: 'Name two safe grown-ups your child can talk to any time, and tell them together.',
+      roots: 'Share a calm, cozy minute together before bed each night.',
+      trunk: 'Say it often: it is never your fault, and your feelings make sense.',
+      fruit: 'Plan one fun, calm thing to do together each week.'
+    },
+    aspen: {
+      leaves: 'Keep your own sleep and meals steady, whatever the day brings at home.',
+      bark: 'When feelings get big, try slow breathing, a walk, or writing it out.',
+      branches: 'Pick one safe grown-up to talk to, like a relative, a coach, or your school counselor.',
+      roots: 'Find one quiet spot that feels calm, and spend a few minutes there each day.',
+      trunk: 'Remember: it is never your fault. You can love someone and still feel upset with them.',
+      fruit: 'Do one thing each week that is just for you and makes you glad.'
+    },
+    pineLove: {
+      leaves: 'Keep your own sleep, meals, and movement steady, whatever the day brings at home.',
+      bark: 'When worry or anger rises, move it out: a run, a walk, music, or writing it down.',
+      branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into Alateen.',
+      roots: 'Give yourself a few quiet minutes each day that are only for you.',
+      trunk: 'It is never your fault, and their choices are theirs. Your own path is yours to grow.',
+      fruit: 'Plan one thing each week that is just for you and makes you glad.'
+    }
+  };
+  function soberSteps(tree, part) {
+    if (!sober(tree)) return [];
+    var st = soberStage(tree), set;
+    if (tree === 'maple' || tree === 'aspen') set = SOBER_STEPS[tree];
+    else if (tree === 'pine' && st === 'love') set = SOBER_STEPS.pineLove;
+    else set = SOBER_STEPS[st || 'change'];
+    var out = [];
+    if (set && set[part]) out.push(set[part]);
+    if ((st === 'change' || st === 'early' || !st) && part === 'leaves' && KIDS.indexOf(tree) < 0) out.push(SOBER_STEPS.safe);
+    return out;
+  }
 
   /* ---------- small helpers ---------- */
   function today() { var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function blank() { return { ids: [], none: false, rather: false, gentle: false, shareHelpers: false, set: '' }; }
+  function blank() { return { ids: [], none: false, rather: false, gentle: false, shareHelpers: false, sober: '', set: '' }; }
   function clean(o) {
     var r = blank(); if (!o || typeof o !== 'object') return r;
     (Array.isArray(o.ids) ? o.ids : []).forEach(function (id) { if (IDS.indexOf(id) >= 0 && r.ids.indexOf(id) < 0) r.ids.push(id); });
     r.none = !!o.none && !r.ids.length; r.rather = !!o.rather && !r.ids.length && !r.none;
     r.gentle = !!o.gentle; r.shareHelpers = !!o.shareHelpers;
+    r.sober = r.ids.indexOf('sober') >= 0 && STAGE_IDS.indexOf(o.sober) >= 0 ? o.sober : '';
     r.set = /^\d{4}-\d\d-\d\d$/.test(String(o.set || '')) ? o.set : '';
     return r;
   }
@@ -183,6 +312,22 @@
   function has() { return get().ids.length > 0; }
   function chosen(tree) { var c = get(); return cats(tree).filter(function (x) { return c.ids.indexOf(x.id) >= 0; }).map(function (x) { return x.id; }); }
   function gentle() { var c = get(); return !!(c.gentle || c.rather); }
+  /* Living Sober readers. stage(tree): Maple and Aspen are always 'love' once chosen. */
+  function sober(tree) { var c = get(); return c.ids.indexOf('sober') >= 0 && (!tree || cats(tree).some(function (x) { return x.id === 'sober'; })); }
+  function soberStage(tree) { if (!sober(tree)) return ''; if (tree && KIDS.indexOf(tree) >= 0) return 'love'; var st = get().sober; return tree && stagesFor(tree).indexOf(st) < 0 ? '' : st; }
+  function ringShows(tree, key) { return key !== 'sober' || sober(tree); }
+  // How well a row fits the stage: 2 its sober list holds the stage, 1 it fits every stage ([] or none given), 0 another stage.
+  function stageRank(row, st) {
+    var l = row && Array.isArray(row.sober) ? row.sober : [];
+    if (!l.length) return 1;
+    return st && l.indexOf(st) >= 0 ? 2 : 0;
+  }
+  function isSober(row) { return !!row && (row.ring === 'sober' || (Array.isArray(row.life) && row.life.indexOf('sober') >= 0)); }
+  function byStage(list, st) {
+    var a = [], b = [], c = [];
+    list.forEach(function (r) { var k = stageRank(r, st); (k === 2 ? a : k === 1 ? b : c).push(r); });
+    return a.concat(b, c);
+  }
   function fits(tags, adapt) {
     var life = tags, ad = adapt;
     if (tags && !Array.isArray(tags) && typeof tags === 'object') { life = tags.life; ad = ad || tags.adapt; }
@@ -191,17 +336,25 @@
     if (life.some(function (t) { return c.ids.indexOf(t) >= 0; })) return true;
     return !!((c.gentle || c.rather) && (life.indexOf('gentle') >= 0 || !!ad));
   }
-  function order(rows, tagOf) {
+  function order(rows, tagOf, tree) {
     var list = Array.isArray(rows) ? rows.slice() : [];
-    var f = typeof tagOf === 'function' ? tagOf : function (r) { return r && (r.life || r.adapt) ? { life: r.life, adapt: r.adapt } : []; };
+    var f = typeof tagOf === 'function' ? tagOf : function (r) { return r && (r.life || r.adapt) ? { life: r.life, adapt: r.adapt, sober: r.sober } : []; };
     var yes = [], no = [];
     list.forEach(function (r) { (fits(f(r)) ? yes : no).push(r); });
+    // Living Sober chosen: within the rows that fit, Living Sober rows come first, in stage order.
+    if (get().ids.indexOf('sober') >= 0) {
+      var st = tree ? soberStage(tree) : get().sober, tg = function (r) { var t = f(r); return Array.isArray(t) ? { life: t } : (t || {}); };
+      var sy = yes.filter(function (r) { return isSober(tg(r)); }), so = yes.filter(function (r) { return !isSober(tg(r)); });
+      var ranked = sy.map(function (r) { return { r: r, k: stageRank(tg(r), st) }; });
+      yes = ranked.filter(function (x) { return x.k === 2; }).concat(ranked.filter(function (x) { return x.k === 1; }), ranked.filter(function (x) { return x.k === 0; })).map(function (x) { return x.r; }).concat(so);
+    }
     return yes.concat(no);
   }
   function lines(tree) {
     var map = LINEMAP[tree]; if (!map) return [];
     var out = [], seen = {};
-    chosen(tree).forEach(function (id) { (map[id] || []).forEach(function (k) { if (!seen[k] && LINES[k]) { seen[k] = 1; out.push(Object.assign({}, LINES[k])); } }); });
+    var st = soberStage(tree);
+    chosen(tree).forEach(function (id) { (id === 'sober' && st === 'love' && map.soberLove ? map.soberLove : map[id] || []).forEach(function (k) { if (!seen[k] && LINES[k]) { seen[k] = 1; out.push(Object.assign({}, LINES[k])); } }); });
     return out;
   }
   var GUIDES = {};
@@ -209,7 +362,13 @@
   function picks(tree, list) {
     var ids = chosen(tree); if (!ids.length) return [];
     var src = Array.isArray(list) ? list : (GUIDES[tree] || []);
-    return src.filter(function (g) { return g && Array.isArray(g.life) && g.life.some(function (t) { return ids.indexOf(t) >= 0; }); }).map(function (g) { return g.id; });
+    var hit = src.filter(function (g) { return g && Array.isArray(g.life) && g.life.some(function (t) { return ids.indexOf(t) >= 0; }); });
+    // Living Sober guides first, in stage order (GWG BLD 789); then the Health and Ability picks.
+    if (ids.indexOf('sober') >= 0) {
+      var sy = hit.filter(function (g) { return isSober(g); });
+      hit = byStage(sy, soberStage(tree)).concat(hit.filter(function (g) { return !isSober(g); }));
+    }
+    return hit.map(function (g) { return g.id; });
   }
   function label(tree, grownView) { return grownView ? 'Their Health and Ability' : 'Health and Ability'; }
 
@@ -230,6 +389,13 @@
     '.gglife .gl-box[aria-pressed=true] .gl-tick{background:var(--gl-gold);}' +
     '.gglife .gl-box b{display:block;font-weight:600;}' +
     '.gglife .gl-box small{display:block;color:var(--gl-soft);font-size:13.5px;margin-top:2px;}' +
+    '.gglife .gl-stage{margin:0 0 12px;padding:12px;border:1.5px solid var(--gl-line);border-radius:12px;background:var(--gl-card);}' +
+    '.gglife .gl-st-h{margin:0 0 8px;font-size:15px;}.gglife .gl-st-h small{color:var(--gl-soft);font-size:13.5px;}' +
+    '.gglife .gl-st-row{display:grid;grid-template-columns:repeat(auto-fill,minmax(170px,1fr));gap:6px;}' +
+    '.gglife .gl-st{display:block;width:100%;min-height:44px;padding:8px 10px;border:1.5px solid var(--gl-line);border-radius:10px;background:transparent;color:var(--gl-ink);cursor:pointer;font:14.5px/1.3 Barlow,system-ui,sans-serif;text-align:left;text-transform:none;letter-spacing:0;}' +
+    '.gglife .gl-st b{display:block;font-weight:600;}.gglife .gl-st small{display:block;color:var(--gl-soft);font-size:13px;}' +
+    '.gglife .gl-st[aria-checked=true]{border-color:var(--gl-gold);background:var(--gl-gold-soft);}.gglife .gl-st:hover{border-color:var(--gl-gold);}' +
+    '.gglife .gl-st:focus-visible{outline:3px solid var(--gl-gold);outline-offset:2px;}' +
     '.gglife .gl-specials{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin:0 0 6px;}' +
     '.gglife .gl-sw{display:flex;gap:12px;align-items:flex-start;width:100%;padding:12px 2px;border:0;border-top:1px solid var(--gl-line);background:none;color:var(--gl-ink);cursor:pointer;font:15px/1.4 Barlow,system-ui,sans-serif;text-align:left;text-transform:none;letter-spacing:0;}' +
     '.gglife .gl-sw b{display:block;font-weight:600;}.gglife .gl-sw small{display:block;color:var(--gl-soft);font-size:13.5px;}' +
@@ -272,12 +438,23 @@
       var box = function (id, name, line, on, kind) {
         return '<button type="button" class="gl-box" data-gl="' + kind + '" data-id="' + id + '" aria-pressed="' + on + '"><span class="gl-tick">' + (on ? TICK : '') + '</span><span><b>' + esc(name) + '</b><small>' + esc(line) + '</small></span></button>';
       };
+      // Living Sober: one short follow-up for the stage (Pine and the adult trees). Maple and Aspen are always Someone I Love.
+      var stageHtml = function (c) {
+        if (c.ids.indexOf('sober') < 0 || KIDS.indexOf(tree) >= 0) return '';
+        var own = kid ? 'Where are they right now?' : 'Where are you right now?';
+        return '<div class="gl-stage" role="radiogroup" aria-labelledby="gl-st-' + n + '"><p class="gl-st-h" id="gl-st-' + n + '"><b>Living Sober.</b> ' + esc(own) + ' <small>Optional. Guides for this stage show first.</small></p>' +
+          '<div class="gl-st-row">' + STAGES.filter(function (x) { return stagesFor(tree).indexOf(x.id) >= 0; }).map(function (x) {
+            var on = c.sober === x.id;
+            return '<button type="button" class="gl-st" role="radio" data-gl="stage" data-id="' + x.id + '" aria-checked="' + on + '"><b>' + esc(x.name) + '</b><small>' + esc(x.line) + '</small></button>';
+          }).join('') + '</div></div>';
+      };
       var sw = function (key, name, line, on) {
         return '<button type="button" class="gl-sw" role="switch" data-gl="sw" data-id="' + key + '" aria-checked="' + on + '"><span class="gl-track" aria-hidden="true"></span><span><b>' + esc(name) + '</b><small>' + esc(line) + '</small></span></button>';
       };
       wrap.innerHTML = '<h3 id="gl-h-' + n + '">' + esc(label(tree, kid)) + '</h3>' +
         '<p class="gl-intro">' + esc(intro) + '</p>' +
         '<div class="gl-grid" role="group" aria-labelledby="gl-h-' + n + '">' + list.map(function (x) { return box(x.id, x.name, x.line, c.ids.indexOf(x.id) >= 0, 'id'); }).join('') + '</div>' +
+        stageHtml(c) +
         '<div class="gl-specials">' + box('none', CAT.none.words[tree], CAT.none.line[tree], c.none, 'sp') + box('rather', CAT.rather.words[tree], CAT.rather.line[tree], c.rather, 'sp') + '</div>' +
         sw('gentle', 'Show Gentler Ways First', 'Practices with a seated, lying down, short, or low-energy way come first, and show that way.' + (c.rather ? ' On while I\'d Rather Not Say is chosen.' : ''), c.gentle || c.rather) +
         (helperOn ? sw('shareHelpers', 'Share My Health and Ability with my helpers', c.shareHelpers ? 'On. Helpers you added can see these choices, so they can help in ways that fit.' : 'Off. These choices stay private to you until you turn this on.', c.shareHelpers) : '') +
@@ -293,7 +470,8 @@
       var b = e.target.closest('[data-gl]'); if (!b || !wrap.contains(b)) return;
       var k = b.getAttribute('data-gl'), id = b.getAttribute('data-id'), c = get(pid), focusSel = '[data-gl="' + k + '"]' + (id ? '[data-id="' + id + '"]' : '');
       var after = function () { var f = wrap.querySelector(focusSel); if (f) f.focus(); };
-      if (k === 'id') { var ids = c.ids.slice(), i = ids.indexOf(id); if (i >= 0) ids.splice(i, 1); else ids.push(id); save({ ids: ids, none: false, rather: false }).then(after); }
+      if (k === 'id') { var ids = c.ids.slice(), i = ids.indexOf(id); if (i >= 0) ids.splice(i, 1); else ids.push(id); var pt = { ids: ids, none: false, rather: false }; if (id === 'sober' && i < 0 && KIDS.indexOf(tree) >= 0) pt.sober = 'love'; save(pt).then(after); }
+      else if (k === 'stage') { save({ sober: c.sober === id ? '' : id }).then(after); }
       else if (k === 'sp') {
         if (id === 'none') save({ ids: [], none: !c.none, rather: false }).then(after);
         else save({ ids: [], none: false, rather: !c.rather }).then(after);
@@ -375,9 +553,10 @@
   if (!hooked) { var tries = 0, t = setInterval(function () { hook(); if (hooked || ++tries > 40) clearInterval(t); }, 250); }
 
   window.GGLife = {
-    version: 'lf1', CATS: CATS, TREES: TREES.slice(), FITS: 'Fits You', LINES_TITLE: 'Information and Support',
+    version: 'lf2', CATS: CATS, TREES: TREES.slice(), FITS: 'Fits You', LINES_TITLE: 'Information and Support',
     cats: cats, get: get, set: set, clear: clear, has: has, chosen: chosen, gentle: gentle, fits: fits, order: order,
     lines: lines, picks: picks, addGuides: addGuides, label: label, chooser: chooser, dialog: dialog, offerCard: offerCard,
+    STAGES: STAGES, stages: stagesFor, sober: sober, soberStage: soberStage, ring: ring, ringShows: ringShows, soberSteps: soberSteps,
     use: function (id) { ctx = id || null; fire(who()); }, who: who,
     on: function (fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
   };

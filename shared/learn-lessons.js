@@ -19,6 +19,9 @@
    Do This Together grows (GWG BLD 783): For Classes, For Faith Communities and Groups, and For Teams, with eight new videos.
    From Chris's Shelf (GWG BLD 787): Learn videos drawn from the books on Chris's shelf, in our own words, added insert only from
    patches/bld787/source/gl/add.py in grounded-workshop: <app>-shelf, <app>-shelf-try, and the unlisted willow-faith track.
+   Living Sober (GWG BLD 789): Growing a Healthy Tree in Birch, Oak, Sequoia (12) and Pine (5), low-key tracks (lowkey: 'sober',
+   listed only when Living Sober is chosen, still opened by id), and the Grove's Family Sober Night, added insert only from
+   patches/bld789/L/add.py in grounded-workshop.
    Wording rules: no em dashes or en dashes, positive frames, Title Case for names of things.
    ===================================================================== */
 window.GG_LEARN = {
@@ -1321,7 +1324,7 @@ window.GG_LEARN = {
        "body": "A Kids profile keeps a tree locked with a secret picture code.",
        "btns": [
         "Save Maya's tree",
-        "Not Now"
+        "Maybe Later"
        ],
        "tap": 0,
        "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree. The first time a child's tree opens, a card called Set Up Maple Together lets the grown-up choose Faith or Plain wording, then tap All Set. You can change it any time in Settings, under Faith or Plain Wording. If a Maple Guide set Plain for a school or group, it stays locked, with a short line that says why."
@@ -10174,7 +10177,7 @@ window.GG_LEARN = {
 
         { id: 'ok-u-checkin', n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
-          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Not Now'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
+          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
@@ -11335,6 +11338,1899 @@ window.GG_LEARN = {
            "right": 1,
            "why": "A real meeting turns toward the whole person, with full attention, and goes both ways.",
            "say": "Quick question. What makes a real meeting?"
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "id": "oak-sober",
+       "title": "Growing a Healthy Tree",
+       "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
+       "lowkey": "sober",
+       "certTitle": "Growing a Healthy Tree",
+       "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+       "lessons": [
+        {
+         "id": "ok-ls-tree",
+         "n": 1,
+         "title": "The Healthy Tree",
+         "mins": 6,
+         "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+         "sources": [
+          "samhsarec"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 1",
+           "h": "The Healthy Tree",
+           "sub": "Six parts, tended a little each day.",
+           "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
+          },
+          {
+           "k": "big",
+           "h": "Underneath, there is often a hurt.",
+           "sub": "Drinking and using often began as a way to feel better.",
+           "say": "Many people drink or use to change how they feel. To quiet a hard memory, to ease a lonely night, or to get through a painful day. That makes sense. It worked, for a while. Living Sober means finding new ways to feel better, ways that help you grow."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Living Sober Is Hard",
+           "lines": [
+            "We go through storms in life, great and small, and we carry the hurts they leave.",
+            "Without a healthy way to heal them, we turn to whatever works.",
+            "The only disease we have is the dis-ease of painful emotions."
+           ],
+           "lesson": "Painful emotions can heal.",
+           "say": "Chris, one of Grounded's founders, has been sober since April first, two thousand eight. He teaches it this way. We all go through storms in life, great and small, and we carry the hurts they leave. Without a healthy way to heal them, we turn to whatever works. For many people, that was drinking. In his words, the only disease we have is the dis-ease of painful emotions. And painful emotions can heal."
+          },
+          {
+           "k": "points",
+           "h": "Your tree, whole and growing",
+           "items": [
+            [
+             "Roots",
+             "What you are anchored in"
+            ],
+            [
+             "Trunk",
+             "Meaning"
+            ],
+            [
+             "Bark",
+             "Your mind"
+            ],
+            [
+             "Branches",
+             "Your people"
+            ],
+            [
+             "Leaves",
+             "Your body"
+            ],
+            [
+             "Fruit",
+             "Hope"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             4,
+             5,
+             7,
+             8,
+             10
+            ]
+           },
+           "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+          },
+          {
+           "k": "flow",
+           "h": "Mind, body, and spirit",
+           "steps": [
+            [
+             "Mind, in Bark",
+             "Breath and being present"
+            ],
+            [
+             "Body, in Leaves",
+             "A daily walk, a weekly long run"
+            ],
+            [
+             "Spirit, in Bark and Roots",
+             "Write it out"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             3,
+             5
+            ]
+           },
+           "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
+          },
+          {
+           "k": "big",
+           "h": "Check your tree right now",
+           "sub": "One word for each part.",
+           "beats": [
+            "Let's try a quick check-in, right where you are.",
+            "Take one slow breath.",
+            {
+             "t": "Roots. What steadies you today? One word.",
+             "w": 5
+            },
+            {
+             "t": "Trunk. What gives today meaning? One word.",
+             "w": 5
+            },
+            {
+             "t": "Bark. How is your mind, and how are your feelings? One word.",
+             "w": 5
+            },
+            {
+             "t": "Branches. Picture one person who is on your side today.",
+             "w": 5
+            },
+            {
+             "t": "Leaves. How did you sleep, eat, and move? One word.",
+             "w": 5
+            },
+            {
+             "t": "Fruit. What is one thing you are looking forward to?",
+             "w": 5
+            },
+            "Whatever you found is welcome. That is your tree today."
+           ],
+           "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+          },
+          {
+           "k": "big",
+           "h": "Small steps still count.",
+           "sub": "Tend one part a little each day.",
+           "say": "You get to heal one small piece at a time. Chris puts it simply. As long as he keeps moving in the right direction, he is making progress. Each video in this series offers one tool for one part of your tree."
+          },
+          {
+           "k": "big",
+           "h": "Help is here any time.",
+           "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
+           "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+          },
+          {
+           "k": "quiz",
+           "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
+           "opts": [
+            "Trunk",
+            "Leaves",
+            "Fruit"
+           ],
+           "right": 1,
+           "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+           "say": "Quick question. Which part of your tree is your body?"
+          },
+          {
+           "k": "big",
+           "h": "Painful emotions can heal.",
+           "sub": "One part, one small step, one day.",
+           "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-morning",
+         "n": 2,
+         "title": "A First Morning Rhythm",
+         "mins": 4,
+         "blurb": "Water, light, breath, a choice, and a short walk to start a Sober day.",
+         "sources": [
+          "huberman25"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 2",
+           "h": "A First Morning Rhythm",
+           "sub": "Start the day on purpose.",
+           "say": "This lesson is for the first part of your day. Mornings can set the tone for a Sober day, especially early on. Here is a short rhythm you can make your own."
+          },
+          {
+           "k": "big",
+           "h": "The first hour sets the tone.",
+           "sub": "A steady start makes the day lighter.",
+           "say": "Early mornings can be hard. Sleep may be thin, and the mind can start the day already racing. A steady first hour gives your body and mind something they can count on. Simple, and the same each day, works best."
+          },
+          {
+           "k": "flow",
+           "h": "Five small steps",
+           "steps": [
+            [
+             "Water",
+             "A full glass first"
+            ],
+            [
+             "Light",
+             "Step outside or open a window"
+            ],
+            [
+             "Breath",
+             "Two minutes, slow and steady"
+            ],
+            [
+             "Choose",
+             "A Sober day, in your own words"
+            ],
+            [
+             "Move",
+             "A short walk, even five minutes"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             5,
+             6,
+             8
+            ]
+           },
+           "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Living Sober",
+           "lines": [
+            "Even a short morning meditation can change the whole day."
+           ],
+           "lesson": "A few minutes can set the tone.",
+           "say": "Meditation is one of the healthy ways Chris, one of Grounded's founders, turns to when he wants to feel better. He says even a short morning meditation can change the whole day."
+          },
+          {
+           "k": "big",
+           "h": "Choose your day",
+           "sub": "In your own words.",
+           "beats": [
+            "Let's practice the choosing step now, whatever time it is.",
+            "Sit tall, and let your feet rest on the floor.",
+            {
+             "t": "Breathe in slowly, and let a long breath out.",
+             "w": 5
+            },
+            {
+             "t": "Now say your intention for the rest of today, quietly or out loud, in your own words.",
+             "w": 10
+            },
+            "Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+           ],
+           "say": "Let's practice the choosing step now, whatever time it is. Sit tall, and let your feet rest on the floor. Breathe in slowly, and let a long breath out. Now say your intention for the rest of today, quietly or out loud, in your own words. Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+          },
+          {
+           "k": "points",
+           "h": "Make it easy to keep",
+           "items": [
+            [
+             "Set it up the night before",
+             "A glass by the sink, shoes by the door"
+            ],
+            [
+             "Phone after",
+             "Your first minutes are yours"
+            ],
+            [
+             "Same order each day",
+             "Your body learns it"
+            ],
+            [
+             "Short counts",
+             "Five minutes is a whole rhythm"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
+          },
+          {
+           "k": "big",
+           "h": "Hard mornings in the first days",
+           "sub": "Shaking, sweating, or sick? See a doctor today.",
+           "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+          },
+          {
+           "k": "quiz",
+           "q": "What does a steady morning rhythm give you?",
+           "opts": [
+            "A long list of chores",
+            "A test to pass",
+            "Something steady to count on"
+           ],
+           "right": 2,
+           "why": "A simple rhythm, the same each day, gives your body and mind something to count on.",
+           "say": "Quick question. What does a steady morning rhythm give you?"
+          },
+          {
+           "k": "big",
+           "h": "A Sober day starts with one small step.",
+           "sub": "Water, light, breath, choose, move.",
+           "say": "A Sober day starts with one small step. Water, light, breath, a choice, and a short walk. Tomorrow morning, try one of them."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-craving",
+         "n": 3,
+         "title": "Surfing a Craving",
+         "mins": 4,
+         "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
+         "sources": [
+          "bowen09"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 3",
+           "h": "Surfing a Craving",
+           "sub": "Ride the wave until it passes.",
+           "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
+          },
+          {
+           "k": "big",
+           "h": "A craving is a wave.",
+           "sub": "It rises, peaks, and passes.",
+           "say": "A craving can feel like it will keep growing until you give in. Here is what people find when they watch one closely. It rises, it peaks, and it passes. Each wave you ride out tends to make the next one a little smaller."
+          },
+          {
+           "k": "points",
+           "h": "How a craving shows up",
+           "items": [
+            [
+             "In the body",
+             "A tight chest, restless hands, a dry mouth"
+            ],
+            [
+             "In the mind",
+             "\"Just this once.\" \"I deserve it.\""
+            ],
+            [
+             "In the moment",
+             "A certain time, place, or feeling"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             1,
+             2
+            ]
+           },
+           "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
+          },
+          {
+           "k": "flow",
+           "h": "Surfing the urge",
+           "steps": [
+            [
+             "Notice",
+             "Name it: a craving is here"
+            ],
+            [
+             "Find it",
+             "Where do you feel it?"
+            ],
+            [
+             "Breathe",
+             "Slow and steady"
+            ],
+            [
+             "Watch",
+             "Let it rise, peak, and fall"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             3,
+             4,
+             5
+            ]
+           },
+           "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+          },
+          {
+           "k": "big",
+           "h": "Surf one now",
+           "sub": "Notice. Find it. Breathe. Watch.",
+           "beats": [
+            "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",
+            "Sit comfortably, with your feet on the floor.",
+            {
+             "t": "Notice the urge, and say to yourself, an urge is here.",
+             "w": 5
+            },
+            {
+             "t": "Find where you feel it. Your chest, your hands, your stomach, or your mouth.",
+             "w": 8
+            },
+            {
+             "t": "Breathe slowly into that place, and watch the feeling, like a wave rising and falling.",
+             "w": 20
+            },
+            "Notice that it changed, even a little. You rode a wave."
+           ],
+           "say": "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone. Sit comfortably, with your feet on the floor. Notice the urge, and say to yourself, an urge is here. Find where you feel it. Your chest, your hands, your stomach, or your mouth. Breathe slowly into that place, and watch the feeling, like a wave rising and falling. Notice that it changed, even a little. You rode a wave."
+          },
+          {
+           "k": "points",
+           "h": "After the wave",
+           "items": [
+            [
+             "Change the scene",
+             "Step outside, or into another room"
+            ],
+            [
+             "Reach out",
+             "Text one person in your corner"
+            ],
+            [
+             "Water and food",
+             "Hunger can feel like a craving"
+            ],
+            [
+             "Write the time",
+             "Next time, plan for it"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             3,
+             4,
+             5
+            ]
+           },
+           "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
+          },
+          {
+           "k": "big",
+           "h": "Strong cravings deserve real support.",
+           "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
+           "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+          },
+          {
+           "k": "quiz",
+           "q": "What usually happens to a craving you ride out?",
+           "opts": [
+            "It rises, peaks, and passes",
+            "It grows forever",
+            "It means you failed"
+           ],
+           "right": 0,
+           "why": "Cravings come in waves. Each one you ride out tends to make the next one smaller.",
+           "say": "Quick question. What usually happens to a craving you ride out?"
+          },
+          {
+           "k": "big",
+           "h": "Every wave passes.",
+           "sub": "You can ride this one.",
+           "say": "Here is a line to keep. Every wave passes. You can ride this one, one breath at a time."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-breathe",
+         "n": 4,
+         "title": "Breathe Through It",
+         "mins": 4,
+         "blurb": "Slow, low, and long: a breath for cravings, anger, and hard nights.",
+         "sources": [
+          "nestor20",
+          "lieberman"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 4",
+           "h": "Breathe Through It",
+           "sub": "Slow, low, and long.",
+           "say": "This lesson is a breathing tool for hard moments. A craving, a flash of anger, a lonely night. Your breath goes everywhere you go, and it can help your whole body settle."
+          },
+          {
+           "k": "big",
+           "h": "Your breath talks to your body.",
+           "sub": "A long breath out says, you are safe.",
+           "say": "When stress rises, breathing gets fast and high in the chest. Slowing it down sends a message the other way. A long, slow breath out tells your body, you are safe right now, and your heart and your mind follow."
+          },
+          {
+           "k": "flow",
+           "h": "Slow, low, and long",
+           "steps": [
+            [
+             "Slow",
+             "In gently through your nose"
+            ],
+            [
+             "Low",
+             "Let your belly rise"
+            ],
+            [
+             "Long",
+             "Out a little longer"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             3,
+             5
+            ]
+           },
+           "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
+          },
+          {
+           "k": "breathe",
+           "h": "Breathe with the circle",
+           "sub": "In for four. Out for six.",
+           "hold": 24,
+           "cue": {
+            "p": {
+             "1": 3,
+             "2": 4,
+             "3": 5
+            }
+           },
+           "say": "Let's breathe together now. Follow the circle. Breathe in for four. And out for six. Let your shoulders drop."
+          },
+          {
+           "k": "big",
+           "h": "Breathe and name it",
+           "sub": "One breath, one word.",
+           "beats": [
+            "Let's add one more step.",
+            {
+             "t": "Take one slow breath, in through your nose, and out a little longer.",
+             "w": 6
+            },
+            {
+             "t": "Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful.",
+             "w": 8
+            },
+            "Naming a feeling helps it settle. A breath and a name, together."
+           ],
+           "say": "Let's add one more step. Take one slow breath, in through your nose, and out a little longer. Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful. Naming a feeling helps it settle. A breath and a name, together."
+          },
+          {
+           "k": "points",
+           "h": "When to use it",
+           "items": [
+            [
+             "A craving",
+             "Breathe while the wave passes"
+            ],
+            [
+             "Anger",
+             "Three breaths before you answer"
+            ],
+            [
+             "A hard night",
+             "Lying down, eyes closed"
+            ],
+            [
+             "Anywhere",
+             "At work, in line, in the car"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             1,
+             2,
+             3
+            ]
+           },
+           "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
+          },
+          {
+           "k": "big",
+           "h": "Panic and hard breathing deserve care.",
+           "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
+           "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+          },
+          {
+           "k": "quiz",
+           "q": "Which part of the breath helps your body settle most?",
+           "opts": [
+            "Quick breaths high in the chest",
+            "A long, slow breath out",
+            "Holding your breath as long as you can"
+           ],
+           "right": 1,
+           "why": "A long, slow breath out tells your body it is safe.",
+           "say": "Quick question. Which part of the breath helps your body settle most?"
+          },
+          {
+           "k": "big",
+           "h": "Slow, low, and long.",
+           "sub": "Your breath goes everywhere you go.",
+           "say": "Slow, low, and long. Your breath goes everywhere you go, and it is ready whenever you need it."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-move",
+         "n": 5,
+         "title": "Move It Out",
+         "mins": 4,
+         "blurb": "Walk, run, or ride hard feelings through, at an easy pace set by your heart rate.",
+         "sources": [
+          "ratey08",
+          "maf180"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 5",
+           "h": "Move It Out",
+           "sub": "Walk, run, or ride it through.",
+           "say": "This lesson is about moving your body to move hard feelings through. Walking, running, riding a bike, or whatever kind of moving fits your body today."
+          },
+          {
+           "k": "big",
+           "h": "Moving feeds your brain.",
+           "sub": "Calmer, clearer, steadier.",
+           "say": "Research finds that moving your body boosts the brain's own chemistry for mood and focus. Many people feel calmer and clearer after a walk, and they sleep better that night. For someone Living Sober, that lift is a healthy way to change how you feel."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Living Sober",
+           "lines": [
+            "I love the way I feel after I run for about an hour.",
+            "You don't need to run fast.",
+            "I watch my heart rate instead of my pace."
+           ],
+           "lesson": "Easy and steady is enough.",
+           "say": "Chris walks every day, and running is one of his strongest tools. He says he loves the way he feels after a run of about an hour, and a long run leaves him relaxed for days. His advice is simple. Run easy, and watch your heart rate instead of your pace."
+          },
+          {
+           "k": "flow",
+           "h": "An easy pace, by heart rate",
+           "steps": [
+            [
+             "Start easy",
+             "A pace where you can talk"
+            ],
+            [
+             "Find your number",
+             "180 minus your age"
+            ],
+            [
+             "Stay under it",
+             "Slow down or walk when you pass it"
+            ],
+            [
+             "Add time slowly",
+             "A few minutes more each week"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3,
+             5
+            ]
+           },
+           "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
+          },
+          {
+           "k": "big",
+           "h": "Move it out now",
+           "sub": "Thirty seconds, then notice.",
+           "beats": [
+            "Let's move right now, wherever you are.",
+            "Stand up if you can, or sit up tall.",
+            {
+             "t": "March in place, or swing your arms, at a pace that feels good, for thirty seconds.",
+             "w": 30
+            },
+            {
+             "t": "Now stop, take one slow breath, and notice your heart, your breath, and your mood.",
+             "w": 6
+            },
+            "That lift is yours, and it came from you."
+           ],
+           "say": "Let's move right now, wherever you are. Stand up if you can, or sit up tall. March in place, or swing your arms, at a pace that feels good, for thirty seconds. Now stop, take one slow breath, and notice your heart, your breath, and your mood. That lift is yours, and it came from you."
+          },
+          {
+           "k": "points",
+           "h": "Find your kind of moving",
+           "items": [
+            [
+             "A daily walk",
+             "Outside whenever you can"
+            ],
+            [
+             "A run or a ride",
+             "Easy and steady"
+            ],
+            [
+             "With someone",
+             "A friend, a group, a team"
+            ],
+            [
+             "Gentle days",
+             "Stretching or a slow walk counts"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
+          },
+          {
+           "k": "big",
+           "h": "Check with your doctor first",
+           "sub": "New to exercise, a heart condition, or the first days?",
+           "say": "If you are new to exercise, have a heart or health condition, or are in your first days without drinking, check with your doctor before you push hard. Start with walking. It counts."
+          },
+          {
+           "k": "quiz",
+           "q": "What is a good pace for an easy run or walk?",
+           "opts": [
+            "As fast as you can go",
+            "Only a pace that hurts",
+            "One where you can still talk"
+           ],
+           "right": 2,
+           "why": "An easy pace, where you can still talk, is one you can keep coming back to.",
+           "say": "Quick question. What is a good pace for an easy run or walk?"
+          },
+          {
+           "k": "big",
+           "h": "Move a little. Feel a little better.",
+           "sub": "Your body knows the way through.",
+           "say": "When feelings pile up, move a little. A walk, a run, a ride. Your body knows the way through."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-heat",
+         "n": 6,
+         "title": "Cold Water and the Sauna",
+         "mins": 4,
+         "blurb": "Heat to unwind and cool water to reset, tried gently and safely.",
+         "sources": [
+          "wimhof20",
+          "linehan15"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 6",
+           "h": "Cold Water and the Sauna",
+           "sub": "Heat to unwind, cool water to reset.",
+           "say": "This lesson is about two old ways people change how they feel: warm heat and cool water. Chris, one of Grounded's founders, uses the sauna often. Here is how to try them gently and safely."
+          },
+          {
+           "k": "big",
+           "h": "A healthy way to change how you feel",
+           "sub": "Heat and cool water give a real reset.",
+           "say": "Living Sober means finding healthy ways to change your state of mind. Warm heat and cool water both bring a strong, clear feeling to the body, and many people feel calm and steady afterward. They are tools for feeling good, and a Sober body gets the most from them."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Living Sober",
+           "lines": [
+            "Regular sauna sessions have become a strong resource for me.",
+            "After a very long day, a long hot sauna is a relaxing getaway."
+           ],
+           "lesson": "A healthy way to unwind.",
+           "say": "Chris calls the sauna one of his strongest resources. After a very long day, when he wants to escape, a long, hot sauna gives him a relaxing getaway."
+          },
+          {
+           "k": "flow",
+           "h": "Try heat gently",
+           "steps": [
+            [
+             "Water first",
+             "Drink before and after"
+            ],
+            [
+             "Start short",
+             "Five to ten minutes"
+            ],
+            [
+             "Listen to your body",
+             "Step out if dizzy or unwell"
+            ],
+            [
+             "Cool down slowly",
+             "Rest and sip water"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
+          },
+          {
+           "k": "points",
+           "h": "Try cool water gently",
+           "items": [
+            [
+             "A face splash",
+             "Cool water for a few breaths"
+            ],
+            [
+             "A cool finish",
+             "The last thirty seconds of your shower"
+            ],
+            [
+             "Breathe slowly",
+             "Long breaths out the whole time"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3
+            ]
+           },
+           "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
+          },
+          {
+           "k": "big",
+           "h": "Try a cool reset",
+           "sub": "Cool water, slow breath.",
+           "beats": [
+            "If you are near a sink, let's try a small one now. If you are away from water, picture it.",
+            {
+             "t": "Run cool water, and cup some in your hands.",
+             "w": 4
+            },
+            {
+             "t": "Bring it to your face, hold your breath for a moment, then breathe out long and slow.",
+             "w": 8
+            },
+            {
+             "t": "Notice how your body feels now. More awake, and a little steadier.",
+             "w": 6
+            }
+           ],
+           "say": "If you are near a sink, let's try a small one now. If you are away from water, picture it. Run cool water, and cup some in your hands. Bring it to your face, hold your breath for a moment, then breathe out long and slow. Notice how your body feels now. More awake, and a little steadier."
+          },
+          {
+           "k": "big",
+           "h": "Safety first",
+           "sub": "Heart condition, pregnant, or on medicines? Ask your doctor first.",
+           "say": "Safety first. Talk with your doctor before trying sauna or cold water if you have a heart condition, high or low blood pressure, are pregnant, or take medicines that affect your heart. Keep heat and cold for clear, Sober days, and stay with a friend near very cold water."
+          },
+          {
+           "k": "quiz",
+           "q": "What is a safe way to start with the sauna?",
+           "opts": [
+            "Short sessions, with water before and after",
+            "As long as you can stand it",
+            "Alone, in the hottest room, for an hour"
+           ],
+           "right": 0,
+           "why": "Start short, drink water, and step out the moment you feel dizzy.",
+           "say": "Quick question. What is a safe way to start with the sauna?"
+          },
+          {
+           "k": "big",
+           "h": "Warm, cool, and calm.",
+           "sub": "A healthy way to change how you feel.",
+           "say": "Warm heat, cool water, and a slow breath. A healthy way to change how you feel, and a gift to your body."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-trees",
+         "n": 7,
+         "title": "A Walk Among Trees",
+         "mins": 3,
+         "blurb": "Slow, unplugged time among trees, one sense at a time.",
+         "sources": [
+          "li18"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 7",
+           "h": "A Walk Among Trees",
+           "sub": "Slow, unplugged, and all five senses.",
+           "say": "This lesson is an invitation to slow down among trees. It is a simple practice that calms the body, and it fits a Sober life beautifully."
+          },
+          {
+           "k": "big",
+           "h": "Trees help us settle.",
+           "sub": "Slow time in nature eases stress.",
+           "say": "In Japan, slow time among trees is called forest bathing. Research finds that time in forests can lower stress, ease the heart rate, and lift mood. Any green place works. A park, a tree lined street, or one tree in a backyard."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "My Fitness Journey",
+           "lines": [
+            "I found so much peace and refreshment in the forests, beaches, and rivers.",
+            "I never stopped exploring."
+           ],
+           "lesson": "Peace grows outdoors.",
+           "say": "When Chris began hiking every weekend, he found something he had been missing. He found so much peace and refreshment in the forests, beaches, and rivers that he never stopped exploring."
+          },
+          {
+           "k": "flow",
+           "h": "Walk slowly, one sense at a time",
+           "steps": [
+            [
+             "See",
+             "Light, leaves, and colors"
+            ],
+            [
+             "Hear",
+             "Birds, wind, water"
+            ],
+            [
+             "Smell",
+             "Earth and green things"
+            ],
+            [
+             "Touch",
+             "Bark, leaves, the air"
+            ],
+            [
+             "Breathe",
+             "Slow and deep"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3,
+             4,
+             5
+            ]
+           },
+           "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
+          },
+          {
+           "k": "big",
+           "h": "A tree, right now",
+           "sub": "Roots to branches.",
+           "beats": [
+            "Let's take a short walk among trees, right where you are.",
+            "If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well.",
+            {
+             "t": "Look at it slowly, from the roots all the way up to the top branches.",
+             "w": 8
+            },
+            {
+             "t": "Listen for three sounds around you.",
+             "w": 8
+            },
+            {
+             "t": "Breathe in slowly, as if you could smell the leaves, and breathe out long.",
+             "w": 6
+            },
+            "Your body knows how to rest here."
+           ],
+           "say": "Let's take a short walk among trees, right where you are. If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well. Look at it slowly, from the roots all the way up to the top branches. Listen for three sounds around you. Breathe in slowly, as if you could smell the leaves, and breathe out long. Your body knows how to rest here."
+          },
+          {
+           "k": "points",
+           "h": "Make it a habit",
+           "items": [
+            [
+             "Unplugged",
+             "Phone in your pocket, sound off"
+            ],
+            [
+             "Twenty minutes",
+             "Or start with five"
+            ],
+            [
+             "Same place",
+             "Watch it change with the seasons"
+            ],
+            [
+             "Invite someone",
+             "Walk together, quietly"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
+          },
+          {
+           "k": "quiz",
+           "q": "What is the heart of forest bathing?",
+           "opts": [
+            "Taking a photo of every tree",
+            "Slow time among trees, with all your senses",
+            "Hiking as fast as you can"
+           ],
+           "right": 1,
+           "why": "Slow down, unplug, and take the trees in one sense at a time.",
+           "say": "Quick question. What is the heart of forest bathing?"
+          },
+          {
+           "k": "big",
+           "h": "Slow down among trees.",
+           "sub": "Your whole tree grows strong outdoors.",
+           "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-write",
+         "n": 8,
+         "title": "Write It Out",
+         "mins": 4,
+         "blurb": "A pen, a page, and ten honest minutes to help stuck feelings move.",
+         "sources": [
+          "pennebaker"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 8",
+           "h": "Write It Out",
+           "sub": "Put feelings into words.",
+           "say": "This lesson is about writing as a way to heal. You need a pen and a page, or the notes on your phone. What you write is yours to keep or let go."
+          },
+          {
+           "k": "big",
+           "h": "Words help feelings move.",
+           "sub": "Stuck feelings get lighter on the page.",
+           "say": "Feelings that stay stuck inside tend to get heavier. Research finds that writing about hard experiences for a few minutes, a few days in a row, can ease stress and help people make sense of what happened. Putting feelings into words helps them move."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Living Sober Is Hard",
+           "lines": [
+            "Writing is how I process stuck emotions.",
+            "I am able to literally write it out.",
+            "As I write, I find out how I truly feel."
+           ],
+           "lesson": "Write it out.",
+           "say": "For Chris, writing is how he processes stuck emotions. He says he can literally write it out. As he puts words to what he feels, he discovers how he truly feels."
+          },
+          {
+           "k": "flow",
+           "h": "Write it out",
+           "steps": [
+            [
+             "Set a timer",
+             "Ten minutes"
+            ],
+            [
+             "Write freely",
+             "Any words are welcome"
+            ],
+            [
+             "Go to the feeling",
+             "What happened, and how it felt"
+            ],
+            [
+             "Close kindly",
+             "One line about what you need"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             4,
+             6
+            ]
+           },
+           "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
+          },
+          {
+           "k": "big",
+           "h": "Start with one line",
+           "sub": "Today I feel...",
+           "beats": [
+            "Let's begin with one line, right now.",
+            "Get a pen, or open a note on your phone.",
+            {
+             "t": "Write these words. Today I feel. Then finish the sentence, honestly.",
+             "w": 30
+            },
+            {
+             "t": "Now write one more line. What I need right now is.",
+             "w": 20
+            },
+            "That is writing it out. Small, honest, and yours."
+           ],
+           "say": "Let's begin with one line, right now. Get a pen, or open a note on your phone. Write these words. Today I feel. Then finish the sentence, honestly. Now write one more line. What I need right now is. That is writing it out. Small, honest, and yours."
+          },
+          {
+           "k": "points",
+           "h": "Prompts for hard days",
+           "items": [
+            [
+             "A craving",
+             "What am I really hungry for?"
+            ],
+            [
+             "An old hurt",
+             "What happened, and what did I need?"
+            ],
+            [
+             "Anger",
+             "What matters to me here?"
+            ],
+            [
+             "A good day",
+             "What went well today?"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             1,
+             2,
+             3
+            ]
+           },
+           "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
+          },
+          {
+           "k": "big",
+           "h": "Keep it safe, and get support for the deep ones.",
+           "sub": "A therapist can walk with you.",
+           "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+          },
+          {
+           "k": "quiz",
+           "q": "What does writing about feelings help them do?",
+           "opts": [
+            "Stay hidden",
+            "Get louder",
+            "Move and make sense"
+           ],
+           "right": 2,
+           "why": "Putting feelings into words helps them move, and helps you make sense of them.",
+           "say": "Quick question. What does writing about feelings help them do?"
+          },
+          {
+           "k": "big",
+           "h": "Write it out.",
+           "sub": "One honest page at a time.",
+           "say": "When feelings get stuck, write it out. One honest page at a time."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-story",
+         "n": 9,
+         "title": "Telling Your Story",
+         "mins": 4,
+         "blurb": "Honest talk is how we grow: one true sentence, to one safe person.",
+         "sources": [
+          "kelly10"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 9",
+           "h": "Telling Your Story",
+           "sub": "Honesty is how we grow.",
+           "say": "This lesson is about telling your story. To yourself, to someone you trust, and someday, maybe, to someone who needs to hear it. It is safe and normal to talk about drinking and drugs here."
+          },
+          {
+           "k": "big",
+           "h": "Honest talk helps us heal.",
+           "sub": "Shame grows in secret. Healing grows in the light.",
+           "say": "Shame and secrecy keep people stuck. Honest talk is how we heal and grow. Saying the true thing out loud, to someone safe, often makes it lighter to carry."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "No More Silence",
+           "lines": [
+            "If we do not have the opportunity to be honest, then we will no longer have the capacity to grow.",
+            "There is healing available for your pain.",
+            "There is freedom from suffering. There is more than enough grace for all of us."
+           ],
+           "lesson": "Honesty is how we grow.",
+           "say": "Chris, one of Grounded's founders, wrote this. If we do not have the opportunity to be honest, then we will no longer have the capacity to grow. There is healing available for your pain. There is freedom from suffering. There is more than enough grace for all of us."
+          },
+          {
+           "k": "points",
+           "h": "Your story, your words",
+           "items": [
+            [
+             "Your own words",
+             "For who you are"
+            ],
+            [
+             "What happened",
+             "Plain and honest"
+            ],
+            [
+             "What helps now",
+             "What you are growing"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             4,
+             5
+            ]
+           },
+           "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
+          },
+          {
+           "k": "flow",
+           "h": "Start small",
+           "steps": [
+            [
+             "One true sentence",
+             "Write it first"
+            ],
+            [
+             "One safe person",
+             "Steady and kind"
+            ],
+            [
+             "One good time",
+             "Calm, private, and Sober"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3
+            ]
+           },
+           "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
+          },
+          {
+           "k": "big",
+           "h": "Write one true sentence",
+           "sub": "Yours, and brave.",
+           "beats": [
+            "Let's practice the first step now.",
+            {
+             "t": "Think of one true sentence about your drinking or using, or about someone you love who drinks or uses.",
+             "w": 10
+            },
+            {
+             "t": "Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it.",
+             "w": 10
+            },
+            "That sentence is the start of your story. It is brave, and it is yours."
+           ],
+           "say": "Let's practice the first step now. Think of one true sentence about your drinking or using, or about someone you love who drinks or uses. Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it. That sentence is the start of your story. It is brave, and it is yours."
+          },
+          {
+           "k": "points",
+           "h": "Who to tell",
+           "items": [
+            [
+             "A trusted friend",
+             "Steady and kind"
+            ],
+            [
+             "A doctor or therapist",
+             "Private and trained to help"
+            ],
+            [
+             "A peer group",
+             "People walking the same road"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3
+            ]
+           },
+           "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+          },
+          {
+           "k": "big",
+           "h": "Someday, your story helps someone else.",
+           "sub": "A gift, at the right time.",
+           "say": "Over time, many people find that their story becomes a gift. Soon after he got sober, Chris began volunteering with a homeless ministry. He connected with people easily, because he knew how close he had come to the same place. Your story, told at the right time, can give someone hope."
+          },
+          {
+           "k": "quiz",
+           "q": "What helps shame lose its grip?",
+           "opts": [
+            "Honest talk with someone safe",
+            "Keeping it secret",
+            "Telling everyone at once"
+           ],
+           "right": 0,
+           "why": "Shame grows in secret. Honest talk with someone safe helps it lose its grip.",
+           "say": "Quick question. What helps shame lose its grip?"
+          },
+          {
+           "k": "big",
+           "h": "No more silence.",
+           "sub": "Your story is safe here.",
+           "say": "Here is a line to keep. No more silence. Your story is safe here, and honest talk is how we grow."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-celebrate",
+         "n": 10,
+         "title": "Sober Celebrations",
+         "mins": 3,
+         "blurb": "Holidays, parties, and your own milestones, fully awake for every minute.",
+         "sources": [],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 10",
+           "h": "Sober Celebrations",
+           "sub": "Joy, fully awake.",
+           "say": "This lesson is about celebrating Sober. Birthdays, holidays, weddings, and the big days of your own growth. Joy is even sweeter when you are fully awake for it."
+          },
+          {
+           "k": "big",
+           "h": "Celebrations can be the hardest days.",
+           "sub": "They can also become the best ones.",
+           "say": "Holidays and parties can be hard when you are Living Sober, because so many of them have centered on drinking. They can also become some of your best days, because you are there for every minute."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Eighteen Years",
+           "lines": [
+            "I'll never forget that first sober Fourth of July.",
+            "I had always been blacked out long before the fireworks.",
+            "I hadn't really seen them since I was a little kid."
+           ],
+           "lesson": "Being awake for it is the gift.",
+           "say": "Chris remembers his first Sober Fourth of July. For years, drinking had carried him away long before the fireworks began. That night, he watched them for the first time since he was a little kid. Being awake for it was the gift."
+          },
+          {
+           "k": "points",
+           "h": "Ideas for a Sober celebration",
+           "items": [
+            [
+             "Something to sip",
+             "Sparkling water, juice, or tea"
+            ],
+            [
+             "Good food",
+             "Made and shared together"
+            ],
+            [
+             "Music and movement",
+             "A dance, a song, a walk"
+            ],
+            [
+             "A blessing",
+             "Words for the day or the person"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3,
+             5
+            ]
+           },
+           "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
+          },
+          {
+           "k": "flow",
+           "h": "A plan for the party",
+           "steps": [
+            [
+             "Bring your own drink",
+             "Something you love"
+            ],
+            [
+             "Bring a friend",
+             "Someone in your corner"
+            ],
+            [
+             "Plan your way home",
+             "Your own ride, a set time"
+            ],
+            [
+             "Ready your answer",
+             "\"No thanks, I'm good.\""
+            ]
+           ],
+           "cue": {
+            "at": [
+             2,
+             3,
+             4,
+             5
+            ]
+           },
+           "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
+          },
+          {
+           "k": "big",
+           "h": "Practice your answer",
+           "sub": "Calm, kind, and enough.",
+           "beats": [
+            "Let's practice the answer, so it is ready when you need it.",
+            {
+             "t": "Picture someone offering you a drink at a party.",
+             "w": 4
+            },
+            {
+             "t": "Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can.",
+             "w": 8
+            },
+            "That answer is enough, all on its own."
+           ],
+           "say": "Let's practice the answer, so it is ready when you need it. Picture someone offering you a drink at a party. Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can. That answer is enough, all on its own."
+          },
+          {
+           "k": "points",
+           "h": "Celebrate your own growth",
+           "items": [
+            [
+             "Mark your days",
+             "Thirty days, ninety days, a year"
+            ],
+            [
+             "Tell someone",
+             "Let them celebrate with you"
+            ],
+            [
+             "Give yourself a gift",
+             "Something that feeds your tree"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             3,
+             4
+            ]
+           },
+           "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
+          },
+          {
+           "k": "quiz",
+           "q": "Which of these is a Sober way to celebrate?",
+           "opts": [
+            "Staying home alone",
+            "Sparkling water, good food, music, and a blessing",
+            "Skipping every celebration"
+           ],
+           "right": 1,
+           "why": "Celebrations are for you too. Bring something to sip, good food, music, and people you love.",
+           "say": "Quick question. Which of these is a Sober way to celebrate?"
+          },
+          {
+           "k": "big",
+           "h": "Joy, fully awake.",
+           "sub": "Every Sober day is worth celebrating.",
+           "say": "Here is a line to keep. Joy is sweeter when you are awake for it. Every Sober day is worth celebrating."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-sleep",
+         "n": 11,
+         "title": "Rest and Sleep",
+         "mins": 3,
+         "blurb": "Sleep can be rocky at first, and it gets better. A steady wind down helps it along.",
+         "sources": [
+          "huberman25",
+          "unknown"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 11",
+           "h": "Rest and Sleep",
+           "sub": "Rest is part of healing.",
+           "say": "This lesson is about sleep. Sleep can be rocky in the first weeks of Living Sober, and it gets better. Here are ways to help it along."
+          },
+          {
+           "k": "big",
+           "h": "Sleep takes time to settle.",
+           "sub": "Weeks, sometimes months. It gets better.",
+           "say": "Many people used drinking to fall asleep, so sleeping without it can feel strange at first. In the early weeks, sleep is often light and broken, and dreams can be vivid. That is a body healing. With time and steady habits, deeper sleep usually returns."
+          },
+          {
+           "k": "flow",
+           "h": "A steady wind down",
+           "steps": [
+            [
+             "Same wake time",
+             "Even on weekends"
+            ],
+            [
+             "Morning light",
+             "Outside, early"
+            ],
+            [
+             "An Unplugged hour",
+             "Screens away before bed"
+            ],
+            [
+             "Cool and dark",
+             "A calm room"
+            ],
+            [
+             "Wind down",
+             "A warm shower, a book, a slow breath"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             1,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
+          },
+          {
+           "k": "big",
+           "h": "A wind down for tonight",
+           "sub": "Heavy, warm, and slow.",
+           "beats": [
+            "Let's try a short wind down you can use in bed tonight.",
+            "Let your body be heavy, wherever you are sitting or lying.",
+            {
+             "t": "Breathe in for four, and out for six.",
+             "w": 8
+            },
+            {
+             "t": "Let your forehead soften, then your jaw, then your shoulders.",
+             "w": 8
+            },
+            {
+             "t": "Let your hands and feet grow warm and heavy.",
+             "w": 8
+            },
+            "Rest is part of healing. You are welcome to rest."
+           ],
+           "say": "Let's try a short wind down you can use in bed tonight. Let your body be heavy, wherever you are sitting or lying. Breathe in for four, and out for six. Let your forehead soften, then your jaw, then your shoulders. Let your hands and feet grow warm and heavy. Rest is part of healing. You are welcome to rest."
+          },
+          {
+           "k": "points",
+           "h": "If you wake at night",
+           "items": [
+            [
+             "Stay calm",
+             "Quiet rest still helps"
+            ],
+            [
+             "Breathe slowly",
+             "In for four, out for six"
+            ],
+            [
+             "Get up after a while",
+             "Dim light, a calm book, then back to bed"
+            ],
+            [
+             "Turn the clock away",
+             "Let time stay a mystery"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
+          },
+          {
+           "k": "big",
+           "h": "Ask your doctor about lasting sleep trouble.",
+           "sub": "Some sleep medicines carry risks. Ask what fits you.",
+           "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+          },
+          {
+           "k": "quiz",
+           "q": "What helps sleep settle in the first months?",
+           "opts": [
+            "Staying up until you are exhausted",
+            "Napping all afternoon",
+            "A steady wake time and a calm wind down"
+           ],
+           "right": 2,
+           "why": "A steady wake time, morning light, and a calm wind down help sleep settle.",
+           "say": "Quick question. What helps sleep settle in the first months?"
+          },
+          {
+           "k": "big",
+           "h": "Rest is part of healing.",
+           "sub": "Your body rebuilds while you sleep.",
+           "say": "Rest is part of healing. Each night, your body is rebuilding. Be patient with it, and with yourself."
+          }
+         ]
+        },
+        {
+         "id": "ok-ls-good",
+         "n": 12,
+         "title": "Gratitude and the Good",
+         "mins": 3,
+         "blurb": "Let good moments sink in, and grow a Sober life full of them.",
+         "sources": [
+          "hanson09",
+          "seligman"
+         ],
+         "crisis": [
+          "SAMHSA National Helpline: 1-800-662-4357, any time",
+          "988: call or text, any time",
+          "911: danger right now"
+         ],
+         "life": [
+          "sober"
+         ],
+         "scenes": [
+          {
+           "k": "title",
+           "hero": "oak",
+           "eyebrow": "Growing a Healthy Tree, Lesson 12",
+           "h": "Gratitude and the Good",
+           "sub": "Let the good sink in.",
+           "say": "This last lesson in the series is about the good. A Sober life holds more good than you might notice at first. Here is how to let it sink in."
+          },
+          {
+           "k": "big",
+           "h": "The good needs a little help to stick.",
+           "sub": "Hard moments stick fast. Good ones slip by.",
+           "say": "Our brains learn quickly from hard things, to keep us safe. Good moments often slip right by. Staying with a good moment for a few extra breaths helps it sink in, and over time the brain learns from the good too."
+          },
+          {
+           "k": "story",
+           "eyebrow": "From Chris's Notebook",
+           "title": "Eighteen Years",
+           "lines": [
+            "I started to experience life for the first time.",
+            "Simple things became precious.",
+            "Going to the park, and spreading a blanket in the sun."
+           ],
+           "lesson": "Simple things become precious.",
+           "say": "After Chris got sober, he says he started to experience life for the first time. It felt like waking up after a long sleep. Simple things became precious, like going to the park and spreading a blanket in the sun."
+          },
+          {
+           "k": "flow",
+           "h": "Three steps",
+           "steps": [
+            [
+             "Notice",
+             "A good moment"
+            ],
+            [
+             "Stay",
+             "Ten to twenty seconds"
+            ],
+            [
+             "Soak it in",
+             "Let it become part of you"
+            ]
+           ],
+           "cue": {
+            "at": [
+             1,
+             2,
+             3
+            ]
+           },
+           "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
+          },
+          {
+           "k": "big",
+           "h": "Try it now",
+           "sub": "One good moment. A few breaths.",
+           "beats": [
+            "Let's try it now.",
+            "Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh.",
+            {
+             "t": "Stay with it, and let it fill your mind.",
+             "w": 12
+            },
+            {
+             "t": "Now feel it in your body, like warm sun, soaking in.",
+             "w": 12
+            },
+            "Let it become part of you."
+           ],
+           "say": "Let's try it now. Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh. Stay with it, and let it fill your mind. Now feel it in your body, like warm sun, soaking in. Let it become part of you."
+          },
+          {
+           "k": "points",
+           "h": "Good to look for",
+           "items": [
+            [
+             "Clear mornings",
+             "Waking up rested and present"
+            ],
+            [
+             "Your people",
+             "A call returned, trust growing back"
+            ],
+            [
+             "Your body",
+             "Stronger, steadier, healthier"
+            ],
+            [
+             "Small wins",
+             "Another Sober day"
+            ]
+           ],
+           "cue": {
+            "at": [
+             0,
+             2,
+             3,
+             4
+            ]
+           },
+           "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
+          },
+          {
+           "k": "big",
+           "h": "Three good things tonight",
+           "sub": "Name them, and what helped them happen.",
+           "say": "Tonight, before you sleep, name three good things from the day, and what helped them happen. It takes two minutes, and it trains your eyes to find the good."
+          },
+          {
+           "k": "quiz",
+           "q": "How long do you stay with a good moment to help it sink in?",
+           "opts": [
+            "Ten to twenty seconds",
+            "Less than a second",
+            "An hour"
+           ],
+           "right": 0,
+           "why": "A few breaths, ten to twenty seconds, helps the good sink in.",
+           "say": "Quick question. How long do you stay with a good moment to help it sink in?"
+          },
+          {
+           "k": "big",
+           "h": "Let the good sink in.",
+           "sub": "Your tree is growing.",
+           "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
           }
          ]
         }
@@ -19237,7 +21133,7 @@ window.GG_LEARN = {
          "What the chapter holds"
         ],
         [
-         "Open This Chapter, or Not Now",
+         "Open This Chapter, or Maybe Later",
          "Always your choice"
         ],
         [
@@ -19245,7 +21141,7 @@ window.GG_LEARN = {
          "What you wrote stays"
         ]
        ],
-       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Not Now. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
+       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Maybe Later. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
       },
       {
        "k": "points",
@@ -22307,6 +24203,1899 @@ window.GG_LEARN = {
        "right": 1,
        "why": "Eldering is the inner growth we choose, and the wisdom we pass on.",
        "say": "Quick question. What is eldering?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "sequoia-sober",
+   "title": "Growing a Healthy Tree",
+   "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
+   "lowkey": "sober",
+   "certTitle": "Growing a Healthy Tree",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "lessons": [
+    {
+     "id": "sq-ls-tree",
+     "n": 1,
+     "title": "The Healthy Tree",
+     "mins": 6,
+     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+     "sources": [
+      "samhsarec"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 1",
+       "h": "The Healthy Tree",
+       "sub": "Six parts, tended a little each day.",
+       "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
+      },
+      {
+       "k": "big",
+       "h": "Underneath, there is often a hurt.",
+       "sub": "Drinking and using often began as a way to feel better.",
+       "say": "Many people drink or use to change how they feel. To quiet a hard memory, to ease a lonely night, or to get through a painful day. That makes sense. It worked, for a while. Living Sober means finding new ways to feel better, ways that help you grow."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober Is Hard",
+       "lines": [
+        "We go through storms in life, great and small, and we carry the hurts they leave.",
+        "Without a healthy way to heal them, we turn to whatever works.",
+        "The only disease we have is the dis-ease of painful emotions."
+       ],
+       "lesson": "Painful emotions can heal.",
+       "say": "Chris, one of Grounded's founders, has been sober since April first, two thousand eight. He teaches it this way. We all go through storms in life, great and small, and we carry the hurts they leave. Without a healthy way to heal them, we turn to whatever works. For many people, that was drinking. In his words, the only disease we have is the dis-ease of painful emotions. And painful emotions can heal."
+      },
+      {
+       "k": "points",
+       "h": "Your tree, whole and growing",
+       "items": [
+        [
+         "Roots",
+         "What you are anchored in"
+        ],
+        [
+         "Trunk",
+         "Meaning"
+        ],
+        [
+         "Bark",
+         "Your mind"
+        ],
+        [
+         "Branches",
+         "Your people"
+        ],
+        [
+         "Leaves",
+         "Your body"
+        ],
+        [
+         "Fruit",
+         "Hope"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         4,
+         5,
+         7,
+         8,
+         10
+        ]
+       },
+       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+      },
+      {
+       "k": "flow",
+       "h": "Mind, body, and spirit",
+       "steps": [
+        [
+         "Mind, in Bark",
+         "Breath and being present"
+        ],
+        [
+         "Body, in Leaves",
+         "A daily walk, a weekly long run"
+        ],
+        [
+         "Spirit, in Bark and Roots",
+         "Write it out"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
+      },
+      {
+       "k": "big",
+       "h": "Check your tree right now",
+       "sub": "One word for each part.",
+       "beats": [
+        "Let's try a quick check-in, right where you are.",
+        "Take one slow breath.",
+        {
+         "t": "Roots. What steadies you today? One word.",
+         "w": 5
+        },
+        {
+         "t": "Trunk. What gives today meaning? One word.",
+         "w": 5
+        },
+        {
+         "t": "Bark. How is your mind, and how are your feelings? One word.",
+         "w": 5
+        },
+        {
+         "t": "Branches. Picture one person who is on your side today.",
+         "w": 5
+        },
+        {
+         "t": "Leaves. How did you sleep, eat, and move? One word.",
+         "w": 5
+        },
+        {
+         "t": "Fruit. What is one thing you are looking forward to?",
+         "w": 5
+        },
+        "Whatever you found is welcome. That is your tree today."
+       ],
+       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+      },
+      {
+       "k": "big",
+       "h": "Small steps still count.",
+       "sub": "Tend one part a little each day.",
+       "say": "You get to heal one small piece at a time. Chris puts it simply. As long as he keeps moving in the right direction, he is making progress. Each video in this series offers one tool for one part of your tree."
+      },
+      {
+       "k": "big",
+       "h": "Help is here any time.",
+       "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
+       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
+       "opts": [
+        "Trunk",
+        "Leaves",
+        "Fruit"
+       ],
+       "right": 1,
+       "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+       "say": "Quick question. Which part of your tree is your body?"
+      },
+      {
+       "k": "big",
+       "h": "Painful emotions can heal.",
+       "sub": "One part, one small step, one day.",
+       "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-morning",
+     "n": 2,
+     "title": "A First Morning Rhythm",
+     "mins": 4,
+     "blurb": "Water, light, breath, a choice, and a short walk to start a Sober day.",
+     "sources": [
+      "huberman25"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 2",
+       "h": "A First Morning Rhythm",
+       "sub": "Start the day on purpose.",
+       "say": "This lesson is for the first part of your day. Mornings can set the tone for a Sober day, especially early on. Here is a short rhythm you can make your own."
+      },
+      {
+       "k": "big",
+       "h": "The first hour sets the tone.",
+       "sub": "A steady start makes the day lighter.",
+       "say": "Early mornings can be hard. Sleep may be thin, and the mind can start the day already racing. A steady first hour gives your body and mind something they can count on. Simple, and the same each day, works best."
+      },
+      {
+       "k": "flow",
+       "h": "Five small steps",
+       "steps": [
+        [
+         "Water",
+         "A full glass first"
+        ],
+        [
+         "Light",
+         "Step outside or open a window"
+        ],
+        [
+         "Breath",
+         "Two minutes, slow and steady"
+        ],
+        [
+         "Choose",
+         "A Sober day, in your own words"
+        ],
+        [
+         "Move",
+         "A short walk, even five minutes"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         5,
+         6,
+         8
+        ]
+       },
+       "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "Even a short morning meditation can change the whole day."
+       ],
+       "lesson": "A few minutes can set the tone.",
+       "say": "Meditation is one of the healthy ways Chris, one of Grounded's founders, turns to when he wants to feel better. He says even a short morning meditation can change the whole day."
+      },
+      {
+       "k": "big",
+       "h": "Choose your day",
+       "sub": "In your own words.",
+       "beats": [
+        "Let's practice the choosing step now, whatever time it is.",
+        "Sit tall, and let your feet rest on the floor.",
+        {
+         "t": "Breathe in slowly, and let a long breath out.",
+         "w": 5
+        },
+        {
+         "t": "Now say your intention for the rest of today, quietly or out loud, in your own words.",
+         "w": 10
+        },
+        "Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+       ],
+       "say": "Let's practice the choosing step now, whatever time it is. Sit tall, and let your feet rest on the floor. Breathe in slowly, and let a long breath out. Now say your intention for the rest of today, quietly or out loud, in your own words. Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+      },
+      {
+       "k": "points",
+       "h": "Make it easy to keep",
+       "items": [
+        [
+         "Set it up the night before",
+         "A glass by the sink, shoes by the door"
+        ],
+        [
+         "Phone after",
+         "Your first minutes are yours"
+        ],
+        [
+         "Same order each day",
+         "Your body learns it"
+        ],
+        [
+         "Short counts",
+         "Five minutes is a whole rhythm"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
+      },
+      {
+       "k": "big",
+       "h": "Hard mornings in the first days",
+       "sub": "Shaking, sweating, or sick? See a doctor today.",
+       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "What does a steady morning rhythm give you?",
+       "opts": [
+        "A long list of chores",
+        "A test to pass",
+        "Something steady to count on"
+       ],
+       "right": 2,
+       "why": "A simple rhythm, the same each day, gives your body and mind something to count on.",
+       "say": "Quick question. What does a steady morning rhythm give you?"
+      },
+      {
+       "k": "big",
+       "h": "A Sober day starts with one small step.",
+       "sub": "Water, light, breath, choose, move.",
+       "say": "A Sober day starts with one small step. Water, light, breath, a choice, and a short walk. Tomorrow morning, try one of them."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-craving",
+     "n": 3,
+     "title": "Surfing a Craving",
+     "mins": 4,
+     "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
+     "sources": [
+      "bowen09"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 3",
+       "h": "Surfing a Craving",
+       "sub": "Ride the wave until it passes.",
+       "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
+      },
+      {
+       "k": "big",
+       "h": "A craving is a wave.",
+       "sub": "It rises, peaks, and passes.",
+       "say": "A craving can feel like it will keep growing until you give in. Here is what people find when they watch one closely. It rises, it peaks, and it passes. Each wave you ride out tends to make the next one a little smaller."
+      },
+      {
+       "k": "points",
+       "h": "How a craving shows up",
+       "items": [
+        [
+         "In the body",
+         "A tight chest, restless hands, a dry mouth"
+        ],
+        [
+         "In the mind",
+         "\"Just this once.\" \"I deserve it.\""
+        ],
+        [
+         "In the moment",
+         "A certain time, place, or feeling"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
+      },
+      {
+       "k": "flow",
+       "h": "Surfing the urge",
+       "steps": [
+        [
+         "Notice",
+         "Name it: a craving is here"
+        ],
+        [
+         "Find it",
+         "Where do you feel it?"
+        ],
+        [
+         "Breathe",
+         "Slow and steady"
+        ],
+        [
+         "Watch",
+         "Let it rise, peak, and fall"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+      },
+      {
+       "k": "big",
+       "h": "Surf one now",
+       "sub": "Notice. Find it. Breathe. Watch.",
+       "beats": [
+        "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",
+        "Sit comfortably, with your feet on the floor.",
+        {
+         "t": "Notice the urge, and say to yourself, an urge is here.",
+         "w": 5
+        },
+        {
+         "t": "Find where you feel it. Your chest, your hands, your stomach, or your mouth.",
+         "w": 8
+        },
+        {
+         "t": "Breathe slowly into that place, and watch the feeling, like a wave rising and falling.",
+         "w": 20
+        },
+        "Notice that it changed, even a little. You rode a wave."
+       ],
+       "say": "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone. Sit comfortably, with your feet on the floor. Notice the urge, and say to yourself, an urge is here. Find where you feel it. Your chest, your hands, your stomach, or your mouth. Breathe slowly into that place, and watch the feeling, like a wave rising and falling. Notice that it changed, even a little. You rode a wave."
+      },
+      {
+       "k": "points",
+       "h": "After the wave",
+       "items": [
+        [
+         "Change the scene",
+         "Step outside, or into another room"
+        ],
+        [
+         "Reach out",
+         "Text one person in your corner"
+        ],
+        [
+         "Water and food",
+         "Hunger can feel like a craving"
+        ],
+        [
+         "Write the time",
+         "Next time, plan for it"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
+      },
+      {
+       "k": "big",
+       "h": "Strong cravings deserve real support.",
+       "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
+       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What usually happens to a craving you ride out?",
+       "opts": [
+        "It rises, peaks, and passes",
+        "It grows forever",
+        "It means you failed"
+       ],
+       "right": 0,
+       "why": "Cravings come in waves. Each one you ride out tends to make the next one smaller.",
+       "say": "Quick question. What usually happens to a craving you ride out?"
+      },
+      {
+       "k": "big",
+       "h": "Every wave passes.",
+       "sub": "You can ride this one.",
+       "say": "Here is a line to keep. Every wave passes. You can ride this one, one breath at a time."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-breathe",
+     "n": 4,
+     "title": "Breathe Through It",
+     "mins": 4,
+     "blurb": "Slow, low, and long: a breath for cravings, anger, and hard nights.",
+     "sources": [
+      "nestor20",
+      "lieberman"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 4",
+       "h": "Breathe Through It",
+       "sub": "Slow, low, and long.",
+       "say": "This lesson is a breathing tool for hard moments. A craving, a flash of anger, a lonely night. Your breath goes everywhere you go, and it can help your whole body settle."
+      },
+      {
+       "k": "big",
+       "h": "Your breath talks to your body.",
+       "sub": "A long breath out says, you are safe.",
+       "say": "When stress rises, breathing gets fast and high in the chest. Slowing it down sends a message the other way. A long, slow breath out tells your body, you are safe right now, and your heart and your mind follow."
+      },
+      {
+       "k": "flow",
+       "h": "Slow, low, and long",
+       "steps": [
+        [
+         "Slow",
+         "In gently through your nose"
+        ],
+        [
+         "Low",
+         "Let your belly rise"
+        ],
+        [
+         "Long",
+         "Out a little longer"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe with the circle",
+       "sub": "In for four. Out for six.",
+       "hold": 24,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4,
+         "3": 5
+        }
+       },
+       "say": "Let's breathe together now. Follow the circle. Breathe in for four. And out for six. Let your shoulders drop."
+      },
+      {
+       "k": "big",
+       "h": "Breathe and name it",
+       "sub": "One breath, one word.",
+       "beats": [
+        "Let's add one more step.",
+        {
+         "t": "Take one slow breath, in through your nose, and out a little longer.",
+         "w": 6
+        },
+        {
+         "t": "Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful.",
+         "w": 8
+        },
+        "Naming a feeling helps it settle. A breath and a name, together."
+       ],
+       "say": "Let's add one more step. Take one slow breath, in through your nose, and out a little longer. Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful. Naming a feeling helps it settle. A breath and a name, together."
+      },
+      {
+       "k": "points",
+       "h": "When to use it",
+       "items": [
+        [
+         "A craving",
+         "Breathe while the wave passes"
+        ],
+        [
+         "Anger",
+         "Three breaths before you answer"
+        ],
+        [
+         "A hard night",
+         "Lying down, eyes closed"
+        ],
+        [
+         "Anywhere",
+         "At work, in line, in the car"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
+      },
+      {
+       "k": "big",
+       "h": "Panic and hard breathing deserve care.",
+       "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
+       "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "Which part of the breath helps your body settle most?",
+       "opts": [
+        "Quick breaths high in the chest",
+        "A long, slow breath out",
+        "Holding your breath as long as you can"
+       ],
+       "right": 1,
+       "why": "A long, slow breath out tells your body it is safe.",
+       "say": "Quick question. Which part of the breath helps your body settle most?"
+      },
+      {
+       "k": "big",
+       "h": "Slow, low, and long.",
+       "sub": "Your breath goes everywhere you go.",
+       "say": "Slow, low, and long. Your breath goes everywhere you go, and it is ready whenever you need it."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-move",
+     "n": 5,
+     "title": "Move It Out",
+     "mins": 4,
+     "blurb": "Walk, run, or ride hard feelings through, at an easy pace set by your heart rate.",
+     "sources": [
+      "ratey08",
+      "maf180"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 5",
+       "h": "Move It Out",
+       "sub": "Walk, run, or ride it through.",
+       "say": "This lesson is about moving your body to move hard feelings through. Walking, running, riding a bike, or whatever kind of moving fits your body today."
+      },
+      {
+       "k": "big",
+       "h": "Moving feeds your brain.",
+       "sub": "Calmer, clearer, steadier.",
+       "say": "Research finds that moving your body boosts the brain's own chemistry for mood and focus. Many people feel calmer and clearer after a walk, and they sleep better that night. For someone Living Sober, that lift is a healthy way to change how you feel."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "I love the way I feel after I run for about an hour.",
+        "You don't need to run fast.",
+        "I watch my heart rate instead of my pace."
+       ],
+       "lesson": "Easy and steady is enough.",
+       "say": "Chris walks every day, and running is one of his strongest tools. He says he loves the way he feels after a run of about an hour, and a long run leaves him relaxed for days. His advice is simple. Run easy, and watch your heart rate instead of your pace."
+      },
+      {
+       "k": "flow",
+       "h": "An easy pace, by heart rate",
+       "steps": [
+        [
+         "Start easy",
+         "A pace where you can talk"
+        ],
+        [
+         "Find your number",
+         "180 minus your age"
+        ],
+        [
+         "Stay under it",
+         "Slow down or walk when you pass it"
+        ],
+        [
+         "Add time slowly",
+         "A few minutes more each week"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
+      },
+      {
+       "k": "big",
+       "h": "Move it out now",
+       "sub": "Thirty seconds, then notice.",
+       "beats": [
+        "Let's move right now, wherever you are.",
+        "Stand up if you can, or sit up tall.",
+        {
+         "t": "March in place, or swing your arms, at a pace that feels good, for thirty seconds.",
+         "w": 30
+        },
+        {
+         "t": "Now stop, take one slow breath, and notice your heart, your breath, and your mood.",
+         "w": 6
+        },
+        "That lift is yours, and it came from you."
+       ],
+       "say": "Let's move right now, wherever you are. Stand up if you can, or sit up tall. March in place, or swing your arms, at a pace that feels good, for thirty seconds. Now stop, take one slow breath, and notice your heart, your breath, and your mood. That lift is yours, and it came from you."
+      },
+      {
+       "k": "points",
+       "h": "Find your kind of moving",
+       "items": [
+        [
+         "A daily walk",
+         "Outside whenever you can"
+        ],
+        [
+         "A run or a ride",
+         "Easy and steady"
+        ],
+        [
+         "With someone",
+         "A friend, a group, a team"
+        ],
+        [
+         "Gentle days",
+         "Stretching or a slow walk counts"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
+      },
+      {
+       "k": "big",
+       "h": "Check with your doctor first",
+       "sub": "New to exercise, a heart condition, or the first days?",
+       "say": "If you are new to exercise, have a heart or health condition, or are in your first days without drinking, check with your doctor before you push hard. Start with walking. It counts."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a good pace for an easy run or walk?",
+       "opts": [
+        "As fast as you can go",
+        "Only a pace that hurts",
+        "One where you can still talk"
+       ],
+       "right": 2,
+       "why": "An easy pace, where you can still talk, is one you can keep coming back to.",
+       "say": "Quick question. What is a good pace for an easy run or walk?"
+      },
+      {
+       "k": "big",
+       "h": "Move a little. Feel a little better.",
+       "sub": "Your body knows the way through.",
+       "say": "When feelings pile up, move a little. A walk, a run, a ride. Your body knows the way through."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-heat",
+     "n": 6,
+     "title": "Cold Water and the Sauna",
+     "mins": 4,
+     "blurb": "Heat to unwind and cool water to reset, tried gently and safely.",
+     "sources": [
+      "wimhof20",
+      "linehan15"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 6",
+       "h": "Cold Water and the Sauna",
+       "sub": "Heat to unwind, cool water to reset.",
+       "say": "This lesson is about two old ways people change how they feel: warm heat and cool water. Chris, one of Grounded's founders, uses the sauna often. Here is how to try them gently and safely."
+      },
+      {
+       "k": "big",
+       "h": "A healthy way to change how you feel",
+       "sub": "Heat and cool water give a real reset.",
+       "say": "Living Sober means finding healthy ways to change your state of mind. Warm heat and cool water both bring a strong, clear feeling to the body, and many people feel calm and steady afterward. They are tools for feeling good, and a Sober body gets the most from them."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "Regular sauna sessions have become a strong resource for me.",
+        "After a very long day, a long hot sauna is a relaxing getaway."
+       ],
+       "lesson": "A healthy way to unwind.",
+       "say": "Chris calls the sauna one of his strongest resources. After a very long day, when he wants to escape, a long, hot sauna gives him a relaxing getaway."
+      },
+      {
+       "k": "flow",
+       "h": "Try heat gently",
+       "steps": [
+        [
+         "Water first",
+         "Drink before and after"
+        ],
+        [
+         "Start short",
+         "Five to ten minutes"
+        ],
+        [
+         "Listen to your body",
+         "Step out if dizzy or unwell"
+        ],
+        [
+         "Cool down slowly",
+         "Rest and sip water"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
+      },
+      {
+       "k": "points",
+       "h": "Try cool water gently",
+       "items": [
+        [
+         "A face splash",
+         "Cool water for a few breaths"
+        ],
+        [
+         "A cool finish",
+         "The last thirty seconds of your shower"
+        ],
+        [
+         "Breathe slowly",
+         "Long breaths out the whole time"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
+      },
+      {
+       "k": "big",
+       "h": "Try a cool reset",
+       "sub": "Cool water, slow breath.",
+       "beats": [
+        "If you are near a sink, let's try a small one now. If you are away from water, picture it.",
+        {
+         "t": "Run cool water, and cup some in your hands.",
+         "w": 4
+        },
+        {
+         "t": "Bring it to your face, hold your breath for a moment, then breathe out long and slow.",
+         "w": 8
+        },
+        {
+         "t": "Notice how your body feels now. More awake, and a little steadier.",
+         "w": 6
+        }
+       ],
+       "say": "If you are near a sink, let's try a small one now. If you are away from water, picture it. Run cool water, and cup some in your hands. Bring it to your face, hold your breath for a moment, then breathe out long and slow. Notice how your body feels now. More awake, and a little steadier."
+      },
+      {
+       "k": "big",
+       "h": "Safety first",
+       "sub": "Heart condition, pregnant, or on medicines? Ask your doctor first.",
+       "say": "Safety first. Talk with your doctor before trying sauna or cold water if you have a heart condition, high or low blood pressure, are pregnant, or take medicines that affect your heart. Keep heat and cold for clear, Sober days, and stay with a friend near very cold water."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a safe way to start with the sauna?",
+       "opts": [
+        "Short sessions, with water before and after",
+        "As long as you can stand it",
+        "Alone, in the hottest room, for an hour"
+       ],
+       "right": 0,
+       "why": "Start short, drink water, and step out the moment you feel dizzy.",
+       "say": "Quick question. What is a safe way to start with the sauna?"
+      },
+      {
+       "k": "big",
+       "h": "Warm, cool, and calm.",
+       "sub": "A healthy way to change how you feel.",
+       "say": "Warm heat, cool water, and a slow breath. A healthy way to change how you feel, and a gift to your body."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-trees",
+     "n": 7,
+     "title": "A Walk Among Trees",
+     "mins": 3,
+     "blurb": "Slow, unplugged time among trees, one sense at a time.",
+     "sources": [
+      "li18"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 7",
+       "h": "A Walk Among Trees",
+       "sub": "Slow, unplugged, and all five senses.",
+       "say": "This lesson is an invitation to slow down among trees. It is a simple practice that calms the body, and it fits a Sober life beautifully."
+      },
+      {
+       "k": "big",
+       "h": "Trees help us settle.",
+       "sub": "Slow time in nature eases stress.",
+       "say": "In Japan, slow time among trees is called forest bathing. Research finds that time in forests can lower stress, ease the heart rate, and lift mood. Any green place works. A park, a tree lined street, or one tree in a backyard."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "My Fitness Journey",
+       "lines": [
+        "I found so much peace and refreshment in the forests, beaches, and rivers.",
+        "I never stopped exploring."
+       ],
+       "lesson": "Peace grows outdoors.",
+       "say": "When Chris began hiking every weekend, he found something he had been missing. He found so much peace and refreshment in the forests, beaches, and rivers that he never stopped exploring."
+      },
+      {
+       "k": "flow",
+       "h": "Walk slowly, one sense at a time",
+       "steps": [
+        [
+         "See",
+         "Light, leaves, and colors"
+        ],
+        [
+         "Hear",
+         "Birds, wind, water"
+        ],
+        [
+         "Smell",
+         "Earth and green things"
+        ],
+        [
+         "Touch",
+         "Bark, leaves, the air"
+        ],
+        [
+         "Breathe",
+         "Slow and deep"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
+      },
+      {
+       "k": "big",
+       "h": "A tree, right now",
+       "sub": "Roots to branches.",
+       "beats": [
+        "Let's take a short walk among trees, right where you are.",
+        "If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well.",
+        {
+         "t": "Look at it slowly, from the roots all the way up to the top branches.",
+         "w": 8
+        },
+        {
+         "t": "Listen for three sounds around you.",
+         "w": 8
+        },
+        {
+         "t": "Breathe in slowly, as if you could smell the leaves, and breathe out long.",
+         "w": 6
+        },
+        "Your body knows how to rest here."
+       ],
+       "say": "Let's take a short walk among trees, right where you are. If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well. Look at it slowly, from the roots all the way up to the top branches. Listen for three sounds around you. Breathe in slowly, as if you could smell the leaves, and breathe out long. Your body knows how to rest here."
+      },
+      {
+       "k": "points",
+       "h": "Make it a habit",
+       "items": [
+        [
+         "Unplugged",
+         "Phone in your pocket, sound off"
+        ],
+        [
+         "Twenty minutes",
+         "Or start with five"
+        ],
+        [
+         "Same place",
+         "Watch it change with the seasons"
+        ],
+        [
+         "Invite someone",
+         "Walk together, quietly"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
+      },
+      {
+       "k": "quiz",
+       "q": "What is the heart of forest bathing?",
+       "opts": [
+        "Taking a photo of every tree",
+        "Slow time among trees, with all your senses",
+        "Hiking as fast as you can"
+       ],
+       "right": 1,
+       "why": "Slow down, unplug, and take the trees in one sense at a time.",
+       "say": "Quick question. What is the heart of forest bathing?"
+      },
+      {
+       "k": "big",
+       "h": "Slow down among trees.",
+       "sub": "Your whole tree grows strong outdoors.",
+       "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-write",
+     "n": 8,
+     "title": "Write It Out",
+     "mins": 4,
+     "blurb": "A pen, a page, and ten honest minutes to help stuck feelings move.",
+     "sources": [
+      "pennebaker"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 8",
+       "h": "Write It Out",
+       "sub": "Put feelings into words.",
+       "say": "This lesson is about writing as a way to heal. You need a pen and a page, or the notes on your phone. What you write is yours to keep or let go."
+      },
+      {
+       "k": "big",
+       "h": "Words help feelings move.",
+       "sub": "Stuck feelings get lighter on the page.",
+       "say": "Feelings that stay stuck inside tend to get heavier. Research finds that writing about hard experiences for a few minutes, a few days in a row, can ease stress and help people make sense of what happened. Putting feelings into words helps them move."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober Is Hard",
+       "lines": [
+        "Writing is how I process stuck emotions.",
+        "I am able to literally write it out.",
+        "As I write, I find out how I truly feel."
+       ],
+       "lesson": "Write it out.",
+       "say": "For Chris, writing is how he processes stuck emotions. He says he can literally write it out. As he puts words to what he feels, he discovers how he truly feels."
+      },
+      {
+       "k": "flow",
+       "h": "Write it out",
+       "steps": [
+        [
+         "Set a timer",
+         "Ten minutes"
+        ],
+        [
+         "Write freely",
+         "Any words are welcome"
+        ],
+        [
+         "Go to the feeling",
+         "What happened, and how it felt"
+        ],
+        [
+         "Close kindly",
+         "One line about what you need"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         4,
+         6
+        ]
+       },
+       "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
+      },
+      {
+       "k": "big",
+       "h": "Start with one line",
+       "sub": "Today I feel...",
+       "beats": [
+        "Let's begin with one line, right now.",
+        "Get a pen, or open a note on your phone.",
+        {
+         "t": "Write these words. Today I feel. Then finish the sentence, honestly.",
+         "w": 30
+        },
+        {
+         "t": "Now write one more line. What I need right now is.",
+         "w": 20
+        },
+        "That is writing it out. Small, honest, and yours."
+       ],
+       "say": "Let's begin with one line, right now. Get a pen, or open a note on your phone. Write these words. Today I feel. Then finish the sentence, honestly. Now write one more line. What I need right now is. That is writing it out. Small, honest, and yours."
+      },
+      {
+       "k": "points",
+       "h": "Prompts for hard days",
+       "items": [
+        [
+         "A craving",
+         "What am I really hungry for?"
+        ],
+        [
+         "An old hurt",
+         "What happened, and what did I need?"
+        ],
+        [
+         "Anger",
+         "What matters to me here?"
+        ],
+        [
+         "A good day",
+         "What went well today?"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
+      },
+      {
+       "k": "big",
+       "h": "Keep it safe, and get support for the deep ones.",
+       "sub": "A therapist can walk with you.",
+       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What does writing about feelings help them do?",
+       "opts": [
+        "Stay hidden",
+        "Get louder",
+        "Move and make sense"
+       ],
+       "right": 2,
+       "why": "Putting feelings into words helps them move, and helps you make sense of them.",
+       "say": "Quick question. What does writing about feelings help them do?"
+      },
+      {
+       "k": "big",
+       "h": "Write it out.",
+       "sub": "One honest page at a time.",
+       "say": "When feelings get stuck, write it out. One honest page at a time."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-story",
+     "n": 9,
+     "title": "Telling Your Story",
+     "mins": 4,
+     "blurb": "Honest talk is how we grow: one true sentence, to one safe person.",
+     "sources": [
+      "kelly10"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 9",
+       "h": "Telling Your Story",
+       "sub": "Honesty is how we grow.",
+       "say": "This lesson is about telling your story. To yourself, to someone you trust, and someday, maybe, to someone who needs to hear it. It is safe and normal to talk about drinking and drugs here."
+      },
+      {
+       "k": "big",
+       "h": "Honest talk helps us heal.",
+       "sub": "Shame grows in secret. Healing grows in the light.",
+       "say": "Shame and secrecy keep people stuck. Honest talk is how we heal and grow. Saying the true thing out loud, to someone safe, often makes it lighter to carry."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "No More Silence",
+       "lines": [
+        "If we do not have the opportunity to be honest, then we will no longer have the capacity to grow.",
+        "There is healing available for your pain.",
+        "There is freedom from suffering. There is more than enough grace for all of us."
+       ],
+       "lesson": "Honesty is how we grow.",
+       "say": "Chris, one of Grounded's founders, wrote this. If we do not have the opportunity to be honest, then we will no longer have the capacity to grow. There is healing available for your pain. There is freedom from suffering. There is more than enough grace for all of us."
+      },
+      {
+       "k": "points",
+       "h": "Your story, your words",
+       "items": [
+        [
+         "Your own words",
+         "For who you are"
+        ],
+        [
+         "What happened",
+         "Plain and honest"
+        ],
+        [
+         "What helps now",
+         "What you are growing"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         4,
+         5
+        ]
+       },
+       "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
+      },
+      {
+       "k": "flow",
+       "h": "Start small",
+       "steps": [
+        [
+         "One true sentence",
+         "Write it first"
+        ],
+        [
+         "One safe person",
+         "Steady and kind"
+        ],
+        [
+         "One good time",
+         "Calm, private, and Sober"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
+      },
+      {
+       "k": "big",
+       "h": "Write one true sentence",
+       "sub": "Yours, and brave.",
+       "beats": [
+        "Let's practice the first step now.",
+        {
+         "t": "Think of one true sentence about your drinking or using, or about someone you love who drinks or uses.",
+         "w": 10
+        },
+        {
+         "t": "Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it.",
+         "w": 10
+        },
+        "That sentence is the start of your story. It is brave, and it is yours."
+       ],
+       "say": "Let's practice the first step now. Think of one true sentence about your drinking or using, or about someone you love who drinks or uses. Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it. That sentence is the start of your story. It is brave, and it is yours."
+      },
+      {
+       "k": "points",
+       "h": "Who to tell",
+       "items": [
+        [
+         "A trusted friend",
+         "Steady and kind"
+        ],
+        [
+         "A doctor or therapist",
+         "Private and trained to help"
+        ],
+        [
+         "A peer group",
+         "People walking the same road"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+      },
+      {
+       "k": "big",
+       "h": "Someday, your story helps someone else.",
+       "sub": "A gift, at the right time.",
+       "say": "Over time, many people find that their story becomes a gift. Soon after he got sober, Chris began volunteering with a homeless ministry. He connected with people easily, because he knew how close he had come to the same place. Your story, told at the right time, can give someone hope."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps shame lose its grip?",
+       "opts": [
+        "Honest talk with someone safe",
+        "Keeping it secret",
+        "Telling everyone at once"
+       ],
+       "right": 0,
+       "why": "Shame grows in secret. Honest talk with someone safe helps it lose its grip.",
+       "say": "Quick question. What helps shame lose its grip?"
+      },
+      {
+       "k": "big",
+       "h": "No more silence.",
+       "sub": "Your story is safe here.",
+       "say": "Here is a line to keep. No more silence. Your story is safe here, and honest talk is how we grow."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-celebrate",
+     "n": 10,
+     "title": "Sober Celebrations",
+     "mins": 3,
+     "blurb": "Holidays, parties, and your own milestones, fully awake for every minute.",
+     "sources": [],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 10",
+       "h": "Sober Celebrations",
+       "sub": "Joy, fully awake.",
+       "say": "This lesson is about celebrating Sober. Birthdays, holidays, weddings, and the big days of your own growth. Joy is even sweeter when you are fully awake for it."
+      },
+      {
+       "k": "big",
+       "h": "Celebrations can be the hardest days.",
+       "sub": "They can also become the best ones.",
+       "say": "Holidays and parties can be hard when you are Living Sober, because so many of them have centered on drinking. They can also become some of your best days, because you are there for every minute."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Eighteen Years",
+       "lines": [
+        "I'll never forget that first sober Fourth of July.",
+        "I had always been blacked out long before the fireworks.",
+        "I hadn't really seen them since I was a little kid."
+       ],
+       "lesson": "Being awake for it is the gift.",
+       "say": "Chris remembers his first Sober Fourth of July. For years, drinking had carried him away long before the fireworks began. That night, he watched them for the first time since he was a little kid. Being awake for it was the gift."
+      },
+      {
+       "k": "points",
+       "h": "Ideas for a Sober celebration",
+       "items": [
+        [
+         "Something to sip",
+         "Sparkling water, juice, or tea"
+        ],
+        [
+         "Good food",
+         "Made and shared together"
+        ],
+        [
+         "Music and movement",
+         "A dance, a song, a walk"
+        ],
+        [
+         "A blessing",
+         "Words for the day or the person"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
+      },
+      {
+       "k": "flow",
+       "h": "A plan for the party",
+       "steps": [
+        [
+         "Bring your own drink",
+         "Something you love"
+        ],
+        [
+         "Bring a friend",
+         "Someone in your corner"
+        ],
+        [
+         "Plan your way home",
+         "Your own ride, a set time"
+        ],
+        [
+         "Ready your answer",
+         "\"No thanks, I'm good.\""
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
+      },
+      {
+       "k": "big",
+       "h": "Practice your answer",
+       "sub": "Calm, kind, and enough.",
+       "beats": [
+        "Let's practice the answer, so it is ready when you need it.",
+        {
+         "t": "Picture someone offering you a drink at a party.",
+         "w": 4
+        },
+        {
+         "t": "Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can.",
+         "w": 8
+        },
+        "That answer is enough, all on its own."
+       ],
+       "say": "Let's practice the answer, so it is ready when you need it. Picture someone offering you a drink at a party. Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can. That answer is enough, all on its own."
+      },
+      {
+       "k": "points",
+       "h": "Celebrate your own growth",
+       "items": [
+        [
+         "Mark your days",
+         "Thirty days, ninety days, a year"
+        ],
+        [
+         "Tell someone",
+         "Let them celebrate with you"
+        ],
+        [
+         "Give yourself a gift",
+         "Something that feeds your tree"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         3,
+         4
+        ]
+       },
+       "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
+      },
+      {
+       "k": "quiz",
+       "q": "Which of these is a Sober way to celebrate?",
+       "opts": [
+        "Staying home alone",
+        "Sparkling water, good food, music, and a blessing",
+        "Skipping every celebration"
+       ],
+       "right": 1,
+       "why": "Celebrations are for you too. Bring something to sip, good food, music, and people you love.",
+       "say": "Quick question. Which of these is a Sober way to celebrate?"
+      },
+      {
+       "k": "big",
+       "h": "Joy, fully awake.",
+       "sub": "Every Sober day is worth celebrating.",
+       "say": "Here is a line to keep. Joy is sweeter when you are awake for it. Every Sober day is worth celebrating."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-sleep",
+     "n": 11,
+     "title": "Rest and Sleep",
+     "mins": 3,
+     "blurb": "Sleep can be rocky at first, and it gets better. A steady wind down helps it along.",
+     "sources": [
+      "huberman25",
+      "unknown"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 11",
+       "h": "Rest and Sleep",
+       "sub": "Rest is part of healing.",
+       "say": "This lesson is about sleep. Sleep can be rocky in the first weeks of Living Sober, and it gets better. Here are ways to help it along."
+      },
+      {
+       "k": "big",
+       "h": "Sleep takes time to settle.",
+       "sub": "Weeks, sometimes months. It gets better.",
+       "say": "Many people used drinking to fall asleep, so sleeping without it can feel strange at first. In the early weeks, sleep is often light and broken, and dreams can be vivid. That is a body healing. With time and steady habits, deeper sleep usually returns."
+      },
+      {
+       "k": "flow",
+       "h": "A steady wind down",
+       "steps": [
+        [
+         "Same wake time",
+         "Even on weekends"
+        ],
+        [
+         "Morning light",
+         "Outside, early"
+        ],
+        [
+         "An Unplugged hour",
+         "Screens away before bed"
+        ],
+        [
+         "Cool and dark",
+         "A calm room"
+        ],
+        [
+         "Wind down",
+         "A warm shower, a book, a slow breath"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
+      },
+      {
+       "k": "big",
+       "h": "A wind down for tonight",
+       "sub": "Heavy, warm, and slow.",
+       "beats": [
+        "Let's try a short wind down you can use in bed tonight.",
+        "Let your body be heavy, wherever you are sitting or lying.",
+        {
+         "t": "Breathe in for four, and out for six.",
+         "w": 8
+        },
+        {
+         "t": "Let your forehead soften, then your jaw, then your shoulders.",
+         "w": 8
+        },
+        {
+         "t": "Let your hands and feet grow warm and heavy.",
+         "w": 8
+        },
+        "Rest is part of healing. You are welcome to rest."
+       ],
+       "say": "Let's try a short wind down you can use in bed tonight. Let your body be heavy, wherever you are sitting or lying. Breathe in for four, and out for six. Let your forehead soften, then your jaw, then your shoulders. Let your hands and feet grow warm and heavy. Rest is part of healing. You are welcome to rest."
+      },
+      {
+       "k": "points",
+       "h": "If you wake at night",
+       "items": [
+        [
+         "Stay calm",
+         "Quiet rest still helps"
+        ],
+        [
+         "Breathe slowly",
+         "In for four, out for six"
+        ],
+        [
+         "Get up after a while",
+         "Dim light, a calm book, then back to bed"
+        ],
+        [
+         "Turn the clock away",
+         "Let time stay a mystery"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
+      },
+      {
+       "k": "big",
+       "h": "Ask your doctor about lasting sleep trouble.",
+       "sub": "Some sleep medicines carry risks. Ask what fits you.",
+       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps sleep settle in the first months?",
+       "opts": [
+        "Staying up until you are exhausted",
+        "Napping all afternoon",
+        "A steady wake time and a calm wind down"
+       ],
+       "right": 2,
+       "why": "A steady wake time, morning light, and a calm wind down help sleep settle.",
+       "say": "Quick question. What helps sleep settle in the first months?"
+      },
+      {
+       "k": "big",
+       "h": "Rest is part of healing.",
+       "sub": "Your body rebuilds while you sleep.",
+       "say": "Rest is part of healing. Each night, your body is rebuilding. Be patient with it, and with yourself."
+      }
+     ]
+    },
+    {
+     "id": "sq-ls-good",
+     "n": 12,
+     "title": "Gratitude and the Good",
+     "mins": 3,
+     "blurb": "Let good moments sink in, and grow a Sober life full of them.",
+     "sources": [
+      "hanson09",
+      "seligman"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "sequoia",
+       "eyebrow": "Growing a Healthy Tree, Lesson 12",
+       "h": "Gratitude and the Good",
+       "sub": "Let the good sink in.",
+       "say": "This last lesson in the series is about the good. A Sober life holds more good than you might notice at first. Here is how to let it sink in."
+      },
+      {
+       "k": "big",
+       "h": "The good needs a little help to stick.",
+       "sub": "Hard moments stick fast. Good ones slip by.",
+       "say": "Our brains learn quickly from hard things, to keep us safe. Good moments often slip right by. Staying with a good moment for a few extra breaths helps it sink in, and over time the brain learns from the good too."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Eighteen Years",
+       "lines": [
+        "I started to experience life for the first time.",
+        "Simple things became precious.",
+        "Going to the park, and spreading a blanket in the sun."
+       ],
+       "lesson": "Simple things become precious.",
+       "say": "After Chris got sober, he says he started to experience life for the first time. It felt like waking up after a long sleep. Simple things became precious, like going to the park and spreading a blanket in the sun."
+      },
+      {
+       "k": "flow",
+       "h": "Three steps",
+       "steps": [
+        [
+         "Notice",
+         "A good moment"
+        ],
+        [
+         "Stay",
+         "Ten to twenty seconds"
+        ],
+        [
+         "Soak it in",
+         "Let it become part of you"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "One good moment. A few breaths.",
+       "beats": [
+        "Let's try it now.",
+        "Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh.",
+        {
+         "t": "Stay with it, and let it fill your mind.",
+         "w": 12
+        },
+        {
+         "t": "Now feel it in your body, like warm sun, soaking in.",
+         "w": 12
+        },
+        "Let it become part of you."
+       ],
+       "say": "Let's try it now. Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh. Stay with it, and let it fill your mind. Now feel it in your body, like warm sun, soaking in. Let it become part of you."
+      },
+      {
+       "k": "points",
+       "h": "Good to look for",
+       "items": [
+        [
+         "Clear mornings",
+         "Waking up rested and present"
+        ],
+        [
+         "Your people",
+         "A call returned, trust growing back"
+        ],
+        [
+         "Your body",
+         "Stronger, steadier, healthier"
+        ],
+        [
+         "Small wins",
+         "Another Sober day"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
+      },
+      {
+       "k": "big",
+       "h": "Three good things tonight",
+       "sub": "Name them, and what helped them happen.",
+       "say": "Tonight, before you sleep, name three good things from the day, and what helped them happen. It takes two minutes, and it trains your eyes to find the good."
+      },
+      {
+       "k": "quiz",
+       "q": "How long do you stay with a good moment to help it sink in?",
+       "opts": [
+        "Ten to twenty seconds",
+        "Less than a second",
+        "An hour"
+       ],
+       "right": 0,
+       "why": "A few breaths, ten to twenty seconds, helps the good sink in.",
+       "say": "Quick question. How long do you stay with a good moment to help it sink in?"
+      },
+      {
+       "k": "big",
+       "h": "Let the good sink in.",
+       "sub": "Your tree is growing.",
+       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
       }
      ]
     }
@@ -26990,6 +30779,681 @@ window.GG_LEARN = {
    ]
   },
   {
+   "id": "pine-sober",
+   "title": "Growing a Healthy Tree",
+   "who": "For teens growing strong and Sober, and for anyone who loves someone who drinks, vapes, or uses.",
+   "lowkey": "sober",
+   "certTitle": "Growing a Healthy Tree",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "lessons": [
+    {
+     "id": "pn-ls-feelings",
+     "n": 1,
+     "title": "Feelings Without Numbing",
+     "mins": 4,
+     "blurb": "Feel it, name it, and help it move, the healthy way.",
+     "sources": [
+      "lieberman",
+      "unknown"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Growing a Healthy Tree, Lesson 1",
+       "h": "Feelings Without Numbing",
+       "sub": "Feel it, name it, move it.",
+       "say": "This lesson is for you if you have ever wanted to drink, vape, or use something to make a feeling go away, or if someone you love does. Your feelings make sense, and we're with you."
+      },
+      {
+       "k": "big",
+       "h": "Everyone wants to feel better.",
+       "sub": "The question is how.",
+       "say": "Wanting to feel different is human. Stress, loneliness, pressure, and old hurts are real. Some people reach for alcohol, vapes, pills, or other drugs to numb those feelings. Numbing pushes a feeling down for a while, and it comes back, often stronger. Healthy tools help a feeling move through and out."
+      },
+      {
+       "k": "big",
+       "h": "Every substance waits until adulthood.",
+       "sub": "Your brain is still growing.",
+       "say": "Here is something plain and kind. Your brain keeps growing into your mid twenties, and alcohol, nicotine, and other drugs can change how it grows. So every substance waits until you are an adult. That is about protecting the amazing brain you have."
+      },
+      {
+       "k": "flow",
+       "h": "Feel it, name it, move it",
+       "steps": [
+        [
+         "Feel it",
+         "Where is it in your body?"
+        ],
+        [
+         "Name it",
+         "Angry, lonely, scared, sad"
+        ],
+        [
+         "Move it",
+         "Walk, breathe, write, talk"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         4
+        ]
+       },
+       "say": "First, feel it. Where is it in your body? Then name it. Angry, lonely, scared, or sad. Then move it. Walk, breathe, write, or talk."
+      },
+      {
+       "k": "big",
+       "h": "Try it right now",
+       "sub": "Feel. Name. Breathe.",
+       "beats": [
+        "Let's try it right now.",
+        {
+         "t": "Think of a feeling you have had this week.",
+         "w": 5
+        },
+        {
+         "t": "Find where you feel it in your body. Your chest, your stomach, your throat, or your hands.",
+         "w": 6
+        },
+        {
+         "t": "Name it in one word.",
+         "w": 5
+        },
+        {
+         "t": "Now take one long, slow breath out, and let your shoulders drop.",
+         "w": 5
+        },
+        "You just felt a feeling all the way through."
+       ],
+       "say": "Let's try it right now. Think of a feeling you have had this week. Find where you feel it in your body. Your chest, your stomach, your throat, or your hands. Name it in one word. Now take one long, slow breath out, and let your shoulders drop. You just felt a feeling all the way through."
+      },
+      {
+       "k": "points",
+       "h": "Healthy ways to change how you feel",
+       "items": [
+        [
+         "Move",
+         "A run, a ride, a dance"
+        ],
+        [
+         "Get outside",
+         "Fresh air and trees"
+        ],
+        [
+         "Music",
+         "Play it, sing it, drum it"
+        ],
+        [
+         "Your people",
+         "Talk to someone you trust"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Here are healthy ways to change how you feel. Move your body, with a run, a ride, or a dance. Get outside, into fresh air and trees. Play music, sing, or drum. And talk to someone you trust."
+      },
+      {
+       "k": "big",
+       "h": "Help is here.",
+       "sub": "Call or text 988. Danger now? Call 911.",
+       "say": "If you are using something to get through the day, or you are worried about someone, talk with a parent, a school counselor, or a doctor. Call or text nine eight eight any time. If someone will not wake up, or is breathing very slowly, call nine one one right away. Naloxone, also called Narcan, can reverse an opioid overdose, and you can buy it at a pharmacy without a prescription."
+      },
+      {
+       "k": "quiz",
+       "q": "What happens to a feeling you numb?",
+       "opts": [
+        "It turns into a good feeling",
+        "It usually comes back, often stronger",
+        "It disappears forever"
+       ],
+       "right": 1,
+       "why": "Numbing pushes a feeling down for a while. Feeling it and moving it helps it pass.",
+       "say": "Quick question. What happens to a feeling you numb?"
+      },
+      {
+       "k": "big",
+       "h": "Feelings move through.",
+       "sub": "You can feel this, and grow.",
+       "say": "Here is a line to keep. Feelings move through. You can feel this, and grow."
+      }
+     ]
+    },
+    {
+     "id": "pn-ls-urge",
+     "n": 2,
+     "title": "Surfing an Urge",
+     "mins": 3,
+     "blurb": "An urge to vape, drink, or use is a wave. Here is how to ride it out.",
+     "sources": [
+      "bowen09"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Growing a Healthy Tree, Lesson 2",
+       "h": "Surfing an Urge",
+       "sub": "Ride the wave until it passes.",
+       "say": "This lesson is for when an urge hits. To vape, to drink, to use, or to grab your phone and scroll. Urges are normal, and you can ride one like a wave."
+      },
+      {
+       "k": "big",
+       "h": "An urge is a wave.",
+       "sub": "It rises, peaks, and passes.",
+       "say": "An urge can feel like it will only get stronger until you give in. When people watch one closely, they find it rises, it peaks, and it passes. Each time you ride one out, the next one tends to be a little smaller."
+      },
+      {
+       "k": "flow",
+       "h": "Surf it",
+       "steps": [
+        [
+         "Notice",
+         "An urge is here"
+        ],
+        [
+         "Find it",
+         "Where is it in your body?"
+        ],
+        [
+         "Breathe",
+         "Slow and steady"
+        ],
+        [
+         "Watch",
+         "Rise, peak, and fall"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Here is how. Notice it, and say to yourself, an urge is here. Find where you feel it in your body. Breathe slowly, like a surfer riding a wave. And watch it rise, peak, and fall."
+      },
+      {
+       "k": "big",
+       "h": "Surf one now",
+       "sub": "Even a small urge works.",
+       "beats": [
+        "Let's practice with any small urge you notice right now, like the urge to check your phone.",
+        {
+         "t": "Notice it, and say, an urge is here.",
+         "w": 5
+        },
+        {
+         "t": "Find where you feel it.",
+         "w": 6
+        },
+        {
+         "t": "Breathe slowly into that spot, and watch the feeling rise and fall.",
+         "w": 20
+        },
+        "You rode a wave. That skill is yours now."
+       ],
+       "say": "Let's practice with any small urge you notice right now, like the urge to check your phone. Notice it, and say, an urge is here. Find where you feel it. Breathe slowly into that spot, and watch the feeling rise and fall. You rode a wave. That skill is yours now."
+      },
+      {
+       "k": "points",
+       "h": "After the wave",
+       "items": [
+        [
+         "Move",
+         "Walk, stretch, or shoot hoops"
+        ],
+        [
+         "Text a friend",
+         "Someone on your side"
+        ],
+        [
+         "Change the place",
+         "Leave the spot where it started"
+        ],
+        [
+         "Plan ahead",
+         "Notice when urges show up"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "After the wave, move. Walk, stretch, or shoot hoops. Text a friend who is on your side. Change the place, and leave the spot where the urge started. And plan ahead. Notice when urges show up, so you can be ready next time."
+      },
+      {
+       "k": "big",
+       "h": "Quitting vaping takes support.",
+       "sub": "Text, call, or ask a doctor.",
+       "say": "If you vape and want to quit, nicotine urges can be strong, and support makes it much easier. Talk with a parent, a school nurse, or your doctor. Call or text nine eight eight in a crisis, and nine one one if anyone is in danger."
+      },
+      {
+       "k": "quiz",
+       "q": "What usually happens to an urge you ride out?",
+       "opts": [
+        "It grows forever",
+        "It means you are weak",
+        "It rises, peaks, and passes"
+       ],
+       "right": 2,
+       "why": "Urges come in waves. Each one you ride out tends to make the next one smaller.",
+       "say": "Quick question. What usually happens to an urge you ride out?"
+      },
+      {
+       "k": "big",
+       "h": "Every wave passes.",
+       "sub": "You can ride this one.",
+       "say": "Here is a line to keep. Every wave passes. You can ride this one."
+      }
+     ]
+    },
+    {
+     "id": "pn-ls-breathe",
+     "n": 3,
+     "title": "Breathe Through It",
+     "mins": 3,
+     "blurb": "Slow, low, and long: a breath for stress, pressure, and hard nights.",
+     "sources": [
+      "nestor20"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Growing a Healthy Tree, Lesson 3",
+       "h": "Breathe Through It",
+       "sub": "Slow, low, and long.",
+       "say": "This lesson is a breathing tool for hard moments. Before a test, after a fight, at a party, or late at night. Your breath goes everywhere you go."
+      },
+      {
+       "k": "big",
+       "h": "Your breath talks to your body.",
+       "sub": "A long breath out says, you are safe.",
+       "say": "When stress rises, breathing gets fast and high in your chest. A long, slow breath out tells your body, you are safe right now, and your heart and your mind slow down with it."
+      },
+      {
+       "k": "flow",
+       "h": "Slow, low, and long",
+       "steps": [
+        [
+         "Slow",
+         "In through your nose"
+        ],
+        [
+         "Low",
+         "Let your belly rise"
+        ],
+        [
+         "Long",
+         "Out a little longer"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         4
+        ]
+       },
+       "say": "Slow. Breathe in gently through your nose. Low. Let your belly rise. Long. Breathe out a little longer than you breathed in."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe with the circle",
+       "sub": "In for four. Out for six.",
+       "hold": 24,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4,
+         "3": 5
+        }
+       },
+       "say": "Let's breathe together. Follow the circle. In for four. And out for six. Let your shoulders drop."
+      },
+      {
+       "k": "big",
+       "h": "Three breaths before you answer",
+       "sub": "Pressure can wait three breaths.",
+       "beats": [
+        "Here is one more way to use it.",
+        {
+         "t": "Picture someone pushing you to do something you don't want to do.",
+         "w": 4
+        },
+        {
+         "t": "Before you answer, take three slow breaths, with long breaths out.",
+         "w": 15
+        },
+        "Now your answer comes from you, calm and clear."
+       ],
+       "say": "Here is one more way to use it. Picture someone pushing you to do something you don't want to do. Before you answer, take three slow breaths, with long breaths out. Now your answer comes from you, calm and clear."
+      },
+      {
+       "k": "big",
+       "h": "Panic deserves care.",
+       "sub": "Talk to an adult you trust. In crisis? Call or text 988.",
+       "say": "If panic keeps coming back, talk with a parent, a school counselor, or a doctor. If your chest hurts or you struggle to breathe, call nine one one. And any time you need someone right now, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "Which part of the breath helps you calm down most?",
+       "opts": [
+        "A long, slow breath out",
+        "Holding your breath",
+        "Fast breaths"
+       ],
+       "right": 0,
+       "why": "A long, slow breath out tells your body it is safe.",
+       "say": "Quick question. Which part of the breath helps you calm down most?"
+      },
+      {
+       "k": "big",
+       "h": "Slow, low, and long.",
+       "sub": "Your calm goes with you.",
+       "say": "Slow, low, and long. Your calm goes with you, everywhere you go."
+      }
+     ]
+    },
+    {
+     "id": "pn-ls-move",
+     "n": 4,
+     "title": "Move It Out",
+     "mins": 3,
+     "blurb": "Run, ride, dance, or play hard feelings through.",
+     "sources": [
+      "ratey08",
+      "cdcpa"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Growing a Healthy Tree, Lesson 4",
+       "h": "Move It Out",
+       "sub": "Run, ride, dance, or play.",
+       "say": "This lesson is about moving your body to move hard feelings through. It is one of the strongest tools you have, and it is always with you."
+      },
+      {
+       "k": "big",
+       "h": "Moving lifts your mood.",
+       "sub": "Calmer, clearer, stronger.",
+       "say": "Research finds that moving gives your brain a boost of natural chemistry for mood and focus. Many teens feel calmer after a run, a ride, or a game, and they sleep better that night. That is a real, healthy way to change how you feel."
+      },
+      {
+       "k": "big",
+       "h": "Move it out now",
+       "sub": "Thirty seconds, then notice.",
+       "beats": [
+        "Let's move right now.",
+        "Stand up if you can, or sit up tall.",
+        {
+         "t": "March in place, or pump your arms, as fast as feels good, for thirty seconds.",
+         "w": 30
+        },
+        {
+         "t": "Now stop, take one slow breath, and notice your heart and your mood.",
+         "w": 6
+        },
+        "That lift came from you."
+       ],
+       "say": "Let's move right now. Stand up if you can, or sit up tall. March in place, or pump your arms, as fast as feels good, for thirty seconds. Now stop, take one slow breath, and notice your heart and your mood. That lift came from you."
+      },
+      {
+       "k": "points",
+       "h": "Find your kind of moving",
+       "items": [
+        [
+         "With friends",
+         "A game, a walk, a team"
+        ],
+        [
+         "On your own",
+         "A run, a ride, a dance"
+        ],
+        [
+         "Outside",
+         "Fresh air adds a lift"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Find your kind of moving. With friends, like a game, a walk, or a team. On your own, like a run, a ride, or dancing in your room. And outside whenever you can, because fresh air and trees add a lift of their own. Teens do best with about an hour of moving spread through the day, and every bit counts."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "I love the way I feel after I run.",
+        "You don't need to run fast."
+       ],
+       "lesson": "Easy and steady is enough.",
+       "say": "Chris, one of Grounded's founders, says he loves the way he feels after a run. And an easy pace is enough. Easy and steady works."
+      },
+      {
+       "k": "big",
+       "h": "Move instead of numb",
+       "sub": "When you want to escape, go outside.",
+       "say": "Next time you want to escape a feeling, try moving first. A walk around the block, a few songs to dance to, or a ride. Moving with friends who live healthy gives you a team, too."
+      },
+      {
+       "k": "quiz",
+       "q": "Which kinds of moving can lift your mood?",
+       "opts": [
+        "Only team sports",
+        "A walk, a run, a ride, or a dance",
+        "Only long, hard workouts"
+       ],
+       "right": 1,
+       "why": "Every kind of moving counts, and short bursts add up.",
+       "say": "Quick question. Which kinds of moving can lift your mood?"
+      },
+      {
+       "k": "big",
+       "h": "Move a little. Feel a little better.",
+       "sub": "Your body knows the way.",
+       "say": "When the day feels heavy, move a little. Your body knows the way through."
+      }
+     ]
+    },
+    {
+     "id": "pn-ls-adult",
+     "n": 5,
+     "title": "Telling a Safe Adult",
+     "mins": 4,
+     "blurb": "Who to tell, what to say, and the dangers that mean call 911 right now.",
+     "sources": [
+      "deaonepill",
+      "fdanarcan23"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "pine",
+       "eyebrow": "Growing a Healthy Tree, Lesson 5",
+       "h": "Telling a Safe Adult",
+       "sub": "You have people on your side.",
+       "say": "This lesson is for you if you are worried about your own drinking, vaping, or using, or about someone you love. It is safe and normal to talk about this. Telling a safe adult is a strong, brave step."
+      },
+      {
+       "k": "big",
+       "h": "No more silence.",
+       "sub": "Honest talk is how we grow.",
+       "say": "Secrets about drinking and drugs tend to grow heavier the longer they stay hidden. Saying it out loud to a safe adult makes it lighter to carry, and it opens the door to help."
+      },
+      {
+       "k": "points",
+       "h": "Safe adults to tell",
+       "items": [
+        [
+         "A parent or guardian",
+         "Or another family member you trust"
+        ],
+        [
+         "At school",
+         "A school counselor, nurse, coach, or teacher"
+        ],
+        [
+         "A doctor",
+         "Private and trained to help"
+        ],
+        [
+         "Another trusted adult",
+         "A coach, a mentor, a youth leader"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Safe adults to tell include a parent or guardian, or another family member you trust. At school, a school counselor, a nurse, a coach, or a teacher. A doctor, who keeps it private and is trained to help. Or another trusted adult, like a coach, a mentor, or a youth leader."
+      },
+      {
+       "k": "big",
+       "h": "Practice what to say",
+       "sub": "One true sentence.",
+       "beats": [
+        "Let's practice what to say.",
+        {
+         "t": "Picture one safe adult.",
+         "w": 4
+        },
+        {
+         "t": "Now say it out loud or in your head. I need to talk to you about something important. I've been drinking, or vaping, or using, and I want help.",
+         "w": 8
+        },
+        {
+         "t": "Or, I'm worried about someone I love, and I don't know what to do.",
+         "w": 6
+        },
+        "That is all it takes to start."
+       ],
+       "say": "Let's practice what to say. Picture one safe adult. Now say it out loud or in your head. I need to talk to you about something important. I've been drinking, or vaping, or using, and I want help. Or, I'm worried about someone I love, and I don't know what to do. That is all it takes to start."
+      },
+      {
+       "k": "big",
+       "h": "Pills can be fake, and deadly.",
+       "sub": "Fentanyl hides in pills that look real.",
+       "say": "Here is something every teen needs to know. Pills bought from a friend or online can be fake, and many contain fentanyl, a drug strong enough to kill in a tiny amount. They can look exactly like real medicine. The only safe pills come from a pharmacy, with your name on the label."
+      },
+      {
+       "k": "points",
+       "h": "Call 911 right now if someone",
+       "items": [
+        [
+         "Will not wake up",
+         "Or won't respond to your voice"
+        ],
+        [
+         "Breathes slowly",
+         "Or makes gurgling or snoring sounds"
+        ],
+        [
+         "Has blue lips",
+         "Or tiny pupils"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "Call nine one one right now if someone will not wake up, or won't respond to your voice. If they are breathing very slowly, or making gurgling or snoring sounds. If their lips or fingertips turn blue, or their pupils are tiny. Naloxone, also called Narcan, reverses an opioid overdose. Use it if you have it, then stay with them until help comes."
+      },
+      {
+       "k": "big",
+       "h": "Help any time",
+       "sub": "Call or text 988. SAMHSA 1-800-662-4357.",
+       "say": "You can call or text nine eight eight any time, about anything. The SAMHSA National Helpline, at one, eight hundred, six six two, four three five seven, helps families find support too. Poison Control is one, eight hundred, two two two, one two two two."
+      },
+      {
+       "k": "quiz",
+       "q": "What should you do if someone will not wake up?",
+       "opts": [
+        "Let them sleep it off",
+        "Wait and see",
+        "Call 911 right away"
+       ],
+       "right": 2,
+       "why": "Someone who will not wake up needs help right now. Call 911, use naloxone if you have it, and stay with them.",
+       "say": "Quick question. What should you do if someone will not wake up?"
+      },
+      {
+       "k": "big",
+       "h": "You have people on your side.",
+       "sub": "One safe adult. One true sentence.",
+       "say": "Here is a line to keep. You have people on your side. One safe adult, and one true sentence, is how help begins."
+      }
+     ]
+    }
+   ]
+  },
+  {
    "id": "pine-support",
    "kind": "support",
    "title": "Support for Right Now",
@@ -29131,7 +33595,7 @@ window.GG_LEARN = {
        ],
        "btns": [
         "Create My Profile",
-        "Not Now"
+        "Maybe Later"
        ],
        "tap": 0,
        "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. There is no alert to anyone."
@@ -31276,6 +35740,1899 @@ window.GG_LEARN = {
        "right": 1,
        "why": "Strain is a sign to share the load. It says the load is heavy, not that you are failing.",
        "say": "Last question. What do strain and guilt usually mean for someone who walks with a young adult?"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "id": "birch-sober",
+   "title": "Growing a Healthy Tree",
+   "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
+   "lowkey": "sober",
+   "certTitle": "Growing a Healthy Tree",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
+   "lessons": [
+    {
+     "id": "br-ls-tree",
+     "n": 1,
+     "title": "The Healthy Tree",
+     "mins": 6,
+     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
+     "sources": [
+      "samhsarec"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 1",
+       "h": "The Healthy Tree",
+       "sub": "Six parts, tended a little each day.",
+       "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
+      },
+      {
+       "k": "big",
+       "h": "Underneath, there is often a hurt.",
+       "sub": "Drinking and using often began as a way to feel better.",
+       "say": "Many people drink or use to change how they feel. To quiet a hard memory, to ease a lonely night, or to get through a painful day. That makes sense. It worked, for a while. Living Sober means finding new ways to feel better, ways that help you grow."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober Is Hard",
+       "lines": [
+        "We go through storms in life, great and small, and we carry the hurts they leave.",
+        "Without a healthy way to heal them, we turn to whatever works.",
+        "The only disease we have is the dis-ease of painful emotions."
+       ],
+       "lesson": "Painful emotions can heal.",
+       "say": "Chris, one of Grounded's founders, has been sober since April first, two thousand eight. He teaches it this way. We all go through storms in life, great and small, and we carry the hurts they leave. Without a healthy way to heal them, we turn to whatever works. For many people, that was drinking. In his words, the only disease we have is the dis-ease of painful emotions. And painful emotions can heal."
+      },
+      {
+       "k": "points",
+       "h": "Your tree, whole and growing",
+       "items": [
+        [
+         "Roots",
+         "What you are anchored in"
+        ],
+        [
+         "Trunk",
+         "Meaning"
+        ],
+        [
+         "Bark",
+         "Your mind"
+        ],
+        [
+         "Branches",
+         "Your people"
+        ],
+        [
+         "Leaves",
+         "Your body"
+        ],
+        [
+         "Fruit",
+         "Hope"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         4,
+         5,
+         7,
+         8,
+         10
+        ]
+       },
+       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
+      },
+      {
+       "k": "flow",
+       "h": "Mind, body, and spirit",
+       "steps": [
+        [
+         "Mind, in Bark",
+         "Breath and being present"
+        ],
+        [
+         "Body, in Leaves",
+         "A daily walk, a weekly long run"
+        ],
+        [
+         "Spirit, in Bark and Roots",
+         "Write it out"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
+      },
+      {
+       "k": "big",
+       "h": "Check your tree right now",
+       "sub": "One word for each part.",
+       "beats": [
+        "Let's try a quick check-in, right where you are.",
+        "Take one slow breath.",
+        {
+         "t": "Roots. What steadies you today? One word.",
+         "w": 5
+        },
+        {
+         "t": "Trunk. What gives today meaning? One word.",
+         "w": 5
+        },
+        {
+         "t": "Bark. How is your mind, and how are your feelings? One word.",
+         "w": 5
+        },
+        {
+         "t": "Branches. Picture one person who is on your side today.",
+         "w": 5
+        },
+        {
+         "t": "Leaves. How did you sleep, eat, and move? One word.",
+         "w": 5
+        },
+        {
+         "t": "Fruit. What is one thing you are looking forward to?",
+         "w": 5
+        },
+        "Whatever you found is welcome. That is your tree today."
+       ],
+       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+      },
+      {
+       "k": "big",
+       "h": "Small steps still count.",
+       "sub": "Tend one part a little each day.",
+       "say": "You get to heal one small piece at a time. Chris puts it simply. As long as he keeps moving in the right direction, he is making progress. Each video in this series offers one tool for one part of your tree."
+      },
+      {
+       "k": "big",
+       "h": "Help is here any time.",
+       "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
+       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
+       "opts": [
+        "Trunk",
+        "Leaves",
+        "Fruit"
+       ],
+       "right": 1,
+       "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+       "say": "Quick question. Which part of your tree is your body?"
+      },
+      {
+       "k": "big",
+       "h": "Painful emotions can heal.",
+       "sub": "One part, one small step, one day.",
+       "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-morning",
+     "n": 2,
+     "title": "A First Morning Rhythm",
+     "mins": 4,
+     "blurb": "Water, light, breath, a choice, and a short walk to start a Sober day.",
+     "sources": [
+      "huberman25"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 2",
+       "h": "A First Morning Rhythm",
+       "sub": "Start the day on purpose.",
+       "say": "This lesson is for the first part of your day. Mornings can set the tone for a Sober day, especially early on. Here is a short rhythm you can make your own."
+      },
+      {
+       "k": "big",
+       "h": "The first hour sets the tone.",
+       "sub": "A steady start makes the day lighter.",
+       "say": "Early mornings can be hard. Sleep may be thin, and the mind can start the day already racing. A steady first hour gives your body and mind something they can count on. Simple, and the same each day, works best."
+      },
+      {
+       "k": "flow",
+       "h": "Five small steps",
+       "steps": [
+        [
+         "Water",
+         "A full glass first"
+        ],
+        [
+         "Light",
+         "Step outside or open a window"
+        ],
+        [
+         "Breath",
+         "Two minutes, slow and steady"
+        ],
+        [
+         "Choose",
+         "A Sober day, in your own words"
+        ],
+        [
+         "Move",
+         "A short walk, even five minutes"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         5,
+         6,
+         8
+        ]
+       },
+       "say": "Here is one rhythm. Water first, a full glass, before anything else. Then light. Step outside, or open a window, and let morning light reach your eyes. It helps set your body clock for the day and for sleep tonight. Then breath, two minutes, slow and steady. Then choose. Say your intention for a Sober day, in your own words. And move. A walk around the block, even five minutes."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "Even a short morning meditation can change the whole day."
+       ],
+       "lesson": "A few minutes can set the tone.",
+       "say": "Meditation is one of the healthy ways Chris, one of Grounded's founders, turns to when he wants to feel better. He says even a short morning meditation can change the whole day."
+      },
+      {
+       "k": "big",
+       "h": "Choose your day",
+       "sub": "In your own words.",
+       "beats": [
+        "Let's practice the choosing step now, whatever time it is.",
+        "Sit tall, and let your feet rest on the floor.",
+        {
+         "t": "Breathe in slowly, and let a long breath out.",
+         "w": 5
+        },
+        {
+         "t": "Now say your intention for the rest of today, quietly or out loud, in your own words.",
+         "w": 10
+        },
+        "Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+       ],
+       "say": "Let's practice the choosing step now, whatever time it is. Sit tall, and let your feet rest on the floor. Breathe in slowly, and let a long breath out. Now say your intention for the rest of today, quietly or out loud, in your own words. Some people say, today I choose a Sober day. Others say, today I tend my tree. Your words are the right ones."
+      },
+      {
+       "k": "points",
+       "h": "Make it easy to keep",
+       "items": [
+        [
+         "Set it up the night before",
+         "A glass by the sink, shoes by the door"
+        ],
+        [
+         "Phone after",
+         "Your first minutes are yours"
+        ],
+        [
+         "Same order each day",
+         "Your body learns it"
+        ],
+        [
+         "Short counts",
+         "Five minutes is a whole rhythm"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "A few things make it easy to keep. Set it up the night before, with a glass by the sink and shoes by the door. Let your phone wait until after your rhythm, so your first minutes are yours. Keep the same order each day, so your body learns it. And short counts. Five minutes is a whole rhythm."
+      },
+      {
+       "k": "big",
+       "h": "Hard mornings in the first days",
+       "sub": "Shaking, sweating, or sick? See a doctor today.",
+       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+      },
+      {
+       "k": "quiz",
+       "q": "What does a steady morning rhythm give you?",
+       "opts": [
+        "A long list of chores",
+        "A test to pass",
+        "Something steady to count on"
+       ],
+       "right": 2,
+       "why": "A simple rhythm, the same each day, gives your body and mind something to count on.",
+       "say": "Quick question. What does a steady morning rhythm give you?"
+      },
+      {
+       "k": "big",
+       "h": "A Sober day starts with one small step.",
+       "sub": "Water, light, breath, choose, move.",
+       "say": "A Sober day starts with one small step. Water, light, breath, a choice, and a short walk. Tomorrow morning, try one of them."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-craving",
+     "n": 3,
+     "title": "Surfing a Craving",
+     "mins": 4,
+     "blurb": "Ride a craving like a wave: notice it, find it, breathe, and watch it pass.",
+     "sources": [
+      "bowen09"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 3",
+       "h": "Surfing a Craving",
+       "sub": "Ride the wave until it passes.",
+       "say": "This lesson is for the moments when a craving shows up, strong and loud. Cravings are normal, and you can ride one like a wave. Here is how."
+      },
+      {
+       "k": "big",
+       "h": "A craving is a wave.",
+       "sub": "It rises, peaks, and passes.",
+       "say": "A craving can feel like it will keep growing until you give in. Here is what people find when they watch one closely. It rises, it peaks, and it passes. Each wave you ride out tends to make the next one a little smaller."
+      },
+      {
+       "k": "points",
+       "h": "How a craving shows up",
+       "items": [
+        [
+         "In the body",
+         "A tight chest, restless hands, a dry mouth"
+        ],
+        [
+         "In the mind",
+         "\"Just this once.\" \"I deserve it.\""
+        ],
+        [
+         "In the moment",
+         "A certain time, place, or feeling"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2
+        ]
+       },
+       "say": "A craving shows up in the body, like a tight chest, restless hands, or a dry mouth. It shows up in the mind, with thoughts like, just this once, or, I deserve it. And it often comes with a certain time, place, or feeling, like the end of a workday, payday, or a lonely evening."
+      },
+      {
+       "k": "flow",
+       "h": "Surfing the urge",
+       "steps": [
+        [
+         "Notice",
+         "Name it: a craving is here"
+        ],
+        [
+         "Find it",
+         "Where do you feel it?"
+        ],
+        [
+         "Breathe",
+         "Slow and steady"
+        ],
+        [
+         "Watch",
+         "Let it rise, peak, and fall"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Here is how to surf it. Notice it, and name it. A craving is here. Find where you feel it in your body. Breathe with it, slow and steady, like a surfer riding a wave. And watch it rise, peak, and fall, with curiosity instead of a fight."
+      },
+      {
+       "k": "big",
+       "h": "Surf one now",
+       "sub": "Notice. Find it. Breathe. Watch.",
+       "beats": [
+        "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone.",
+        "Sit comfortably, with your feet on the floor.",
+        {
+         "t": "Notice the urge, and say to yourself, an urge is here.",
+         "w": 5
+        },
+        {
+         "t": "Find where you feel it. Your chest, your hands, your stomach, or your mouth.",
+         "w": 8
+        },
+        {
+         "t": "Breathe slowly into that place, and watch the feeling, like a wave rising and falling.",
+         "w": 20
+        },
+        "Notice that it changed, even a little. You rode a wave."
+       ],
+       "say": "Let's practice with any urge you notice right now, even a small one, like the urge to check your phone. Sit comfortably, with your feet on the floor. Notice the urge, and say to yourself, an urge is here. Find where you feel it. Your chest, your hands, your stomach, or your mouth. Breathe slowly into that place, and watch the feeling, like a wave rising and falling. Notice that it changed, even a little. You rode a wave."
+      },
+      {
+       "k": "points",
+       "h": "After the wave",
+       "items": [
+        [
+         "Change the scene",
+         "Step outside, or into another room"
+        ],
+        [
+         "Reach out",
+         "Text one person in your corner"
+        ],
+        [
+         "Water and food",
+         "Hunger can feel like a craving"
+        ],
+        [
+         "Write the time",
+         "Next time, plan for it"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "When the wave settles, take care of yourself. Change the scene. Step outside, or into another room. Reach out, and text one person in your corner. Have water and something to eat, because hunger and thirst can feel a lot like a craving. And write down the time and the place, so next time you can plan for it."
+      },
+      {
+       "k": "big",
+       "h": "Strong cravings deserve real support.",
+       "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
+       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What usually happens to a craving you ride out?",
+       "opts": [
+        "It rises, peaks, and passes",
+        "It grows forever",
+        "It means you failed"
+       ],
+       "right": 0,
+       "why": "Cravings come in waves. Each one you ride out tends to make the next one smaller.",
+       "say": "Quick question. What usually happens to a craving you ride out?"
+      },
+      {
+       "k": "big",
+       "h": "Every wave passes.",
+       "sub": "You can ride this one.",
+       "say": "Here is a line to keep. Every wave passes. You can ride this one, one breath at a time."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-breathe",
+     "n": 4,
+     "title": "Breathe Through It",
+     "mins": 4,
+     "blurb": "Slow, low, and long: a breath for cravings, anger, and hard nights.",
+     "sources": [
+      "nestor20",
+      "lieberman"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 4",
+       "h": "Breathe Through It",
+       "sub": "Slow, low, and long.",
+       "say": "This lesson is a breathing tool for hard moments. A craving, a flash of anger, a lonely night. Your breath goes everywhere you go, and it can help your whole body settle."
+      },
+      {
+       "k": "big",
+       "h": "Your breath talks to your body.",
+       "sub": "A long breath out says, you are safe.",
+       "say": "When stress rises, breathing gets fast and high in the chest. Slowing it down sends a message the other way. A long, slow breath out tells your body, you are safe right now, and your heart and your mind follow."
+      },
+      {
+       "k": "flow",
+       "h": "Slow, low, and long",
+       "steps": [
+        [
+         "Slow",
+         "In gently through your nose"
+        ],
+        [
+         "Low",
+         "Let your belly rise"
+        ],
+        [
+         "Long",
+         "Out a little longer"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         3,
+         5
+        ]
+       },
+       "say": "Here is the shape of it. Slow. Breathe in gently through your nose. Low. Let your belly rise, and let your shoulders stay soft. Long. Let the breath out a little longer than the breath in."
+      },
+      {
+       "k": "breathe",
+       "h": "Breathe with the circle",
+       "sub": "In for four. Out for six.",
+       "hold": 24,
+       "cue": {
+        "p": {
+         "1": 3,
+         "2": 4,
+         "3": 5
+        }
+       },
+       "say": "Let's breathe together now. Follow the circle. Breathe in for four. And out for six. Let your shoulders drop."
+      },
+      {
+       "k": "big",
+       "h": "Breathe and name it",
+       "sub": "One breath, one word.",
+       "beats": [
+        "Let's add one more step.",
+        {
+         "t": "Take one slow breath, in through your nose, and out a little longer.",
+         "w": 6
+        },
+        {
+         "t": "Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful.",
+         "w": 8
+        },
+        "Naming a feeling helps it settle. A breath and a name, together."
+       ],
+       "say": "Let's add one more step. Take one slow breath, in through your nose, and out a little longer. Now name what you feel, in one word. Tired, angry, lonely, restless, or hopeful. Naming a feeling helps it settle. A breath and a name, together."
+      },
+      {
+       "k": "points",
+       "h": "When to use it",
+       "items": [
+        [
+         "A craving",
+         "Breathe while the wave passes"
+        ],
+        [
+         "Anger",
+         "Three breaths before you answer"
+        ],
+        [
+         "A hard night",
+         "Lying down, eyes closed"
+        ],
+        [
+         "Anywhere",
+         "At work, in line, in the car"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Use it during a craving, and breathe while the wave passes. Use it with anger, with three slow breaths before you answer. Use it on a hard night, lying down with your eyes closed. And use it anywhere. At work, in line, or in the car. It stays quiet and private."
+      },
+      {
+       "k": "big",
+       "h": "Panic and hard breathing deserve care.",
+       "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
+       "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "Which part of the breath helps your body settle most?",
+       "opts": [
+        "Quick breaths high in the chest",
+        "A long, slow breath out",
+        "Holding your breath as long as you can"
+       ],
+       "right": 1,
+       "why": "A long, slow breath out tells your body it is safe.",
+       "say": "Quick question. Which part of the breath helps your body settle most?"
+      },
+      {
+       "k": "big",
+       "h": "Slow, low, and long.",
+       "sub": "Your breath goes everywhere you go.",
+       "say": "Slow, low, and long. Your breath goes everywhere you go, and it is ready whenever you need it."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-move",
+     "n": 5,
+     "title": "Move It Out",
+     "mins": 4,
+     "blurb": "Walk, run, or ride hard feelings through, at an easy pace set by your heart rate.",
+     "sources": [
+      "ratey08",
+      "maf180"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 5",
+       "h": "Move It Out",
+       "sub": "Walk, run, or ride it through.",
+       "say": "This lesson is about moving your body to move hard feelings through. Walking, running, riding a bike, or whatever kind of moving fits your body today."
+      },
+      {
+       "k": "big",
+       "h": "Moving feeds your brain.",
+       "sub": "Calmer, clearer, steadier.",
+       "say": "Research finds that moving your body boosts the brain's own chemistry for mood and focus. Many people feel calmer and clearer after a walk, and they sleep better that night. For someone Living Sober, that lift is a healthy way to change how you feel."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "I love the way I feel after I run for about an hour.",
+        "You don't need to run fast.",
+        "I watch my heart rate instead of my pace."
+       ],
+       "lesson": "Easy and steady is enough.",
+       "say": "Chris walks every day, and running is one of his strongest tools. He says he loves the way he feels after a run of about an hour, and a long run leaves him relaxed for days. His advice is simple. Run easy, and watch your heart rate instead of your pace."
+      },
+      {
+       "k": "flow",
+       "h": "An easy pace, by heart rate",
+       "steps": [
+        [
+         "Start easy",
+         "A pace where you can talk"
+        ],
+        [
+         "Find your number",
+         "180 minus your age"
+        ],
+        [
+         "Stay under it",
+         "Slow down or walk when you pass it"
+        ],
+        [
+         "Add time slowly",
+         "A few minutes more each week"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Here is a simple way to keep it easy. Start at a pace where you can still talk. If you have a heart rate watch, one well known guide sets a top number of one hundred eighty, minus your age. Stay under it. Slow down, or walk, when you pass it. Then add a few minutes each week."
+      },
+      {
+       "k": "big",
+       "h": "Move it out now",
+       "sub": "Thirty seconds, then notice.",
+       "beats": [
+        "Let's move right now, wherever you are.",
+        "Stand up if you can, or sit up tall.",
+        {
+         "t": "March in place, or swing your arms, at a pace that feels good, for thirty seconds.",
+         "w": 30
+        },
+        {
+         "t": "Now stop, take one slow breath, and notice your heart, your breath, and your mood.",
+         "w": 6
+        },
+        "That lift is yours, and it came from you."
+       ],
+       "say": "Let's move right now, wherever you are. Stand up if you can, or sit up tall. March in place, or swing your arms, at a pace that feels good, for thirty seconds. Now stop, take one slow breath, and notice your heart, your breath, and your mood. That lift is yours, and it came from you."
+      },
+      {
+       "k": "points",
+       "h": "Find your kind of moving",
+       "items": [
+        [
+         "A daily walk",
+         "Outside whenever you can"
+        ],
+        [
+         "A run or a ride",
+         "Easy and steady"
+        ],
+        [
+         "With someone",
+         "A friend, a group, a team"
+        ],
+        [
+         "Gentle days",
+         "Stretching or a slow walk counts"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Find your kind of moving. A daily walk, outside whenever you can. A run or a bike ride, easy and steady. Moving with someone, a friend, a walking group, or a team, which adds connection too. And on gentle days, stretching or a slow walk counts."
+      },
+      {
+       "k": "big",
+       "h": "Check with your doctor first",
+       "sub": "New to exercise, a heart condition, or the first days?",
+       "say": "If you are new to exercise, have a heart or health condition, or are in your first days without drinking, check with your doctor before you push hard. Start with walking. It counts."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a good pace for an easy run or walk?",
+       "opts": [
+        "As fast as you can go",
+        "Only a pace that hurts",
+        "One where you can still talk"
+       ],
+       "right": 2,
+       "why": "An easy pace, where you can still talk, is one you can keep coming back to.",
+       "say": "Quick question. What is a good pace for an easy run or walk?"
+      },
+      {
+       "k": "big",
+       "h": "Move a little. Feel a little better.",
+       "sub": "Your body knows the way through.",
+       "say": "When feelings pile up, move a little. A walk, a run, a ride. Your body knows the way through."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-heat",
+     "n": 6,
+     "title": "Cold Water and the Sauna",
+     "mins": 4,
+     "blurb": "Heat to unwind and cool water to reset, tried gently and safely.",
+     "sources": [
+      "wimhof20",
+      "linehan15"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 6",
+       "h": "Cold Water and the Sauna",
+       "sub": "Heat to unwind, cool water to reset.",
+       "say": "This lesson is about two old ways people change how they feel: warm heat and cool water. Chris, one of Grounded's founders, uses the sauna often. Here is how to try them gently and safely."
+      },
+      {
+       "k": "big",
+       "h": "A healthy way to change how you feel",
+       "sub": "Heat and cool water give a real reset.",
+       "say": "Living Sober means finding healthy ways to change your state of mind. Warm heat and cool water both bring a strong, clear feeling to the body, and many people feel calm and steady afterward. They are tools for feeling good, and a Sober body gets the most from them."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober",
+       "lines": [
+        "Regular sauna sessions have become a strong resource for me.",
+        "After a very long day, a long hot sauna is a relaxing getaway."
+       ],
+       "lesson": "A healthy way to unwind.",
+       "say": "Chris calls the sauna one of his strongest resources. After a very long day, when he wants to escape, a long, hot sauna gives him a relaxing getaway."
+      },
+      {
+       "k": "flow",
+       "h": "Try heat gently",
+       "steps": [
+        [
+         "Water first",
+         "Drink before and after"
+        ],
+        [
+         "Start short",
+         "Five to ten minutes"
+        ],
+        [
+         "Listen to your body",
+         "Step out if dizzy or unwell"
+        ],
+        [
+         "Cool down slowly",
+         "Rest and sip water"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "To try heat gently, keep it simple. Drink water before and after. Start short, five to ten minutes. Listen to your body, and step out right away if you feel dizzy or unwell. Then cool down slowly, rest, and sip water. No sauna nearby? A warm bath works too."
+      },
+      {
+       "k": "points",
+       "h": "Try cool water gently",
+       "items": [
+        [
+         "A face splash",
+         "Cool water for a few breaths"
+        ],
+        [
+         "A cool finish",
+         "The last thirty seconds of your shower"
+        ],
+        [
+         "Breathe slowly",
+         "Long breaths out the whole time"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Cool water can be gentle too. Splash cool water on your face for a few breaths, which can help a racing heart slow down. Or turn your shower cool for the last thirty seconds. Either way, breathe slowly, with long breaths out, the whole time."
+      },
+      {
+       "k": "big",
+       "h": "Try a cool reset",
+       "sub": "Cool water, slow breath.",
+       "beats": [
+        "If you are near a sink, let's try a small one now. If you are away from water, picture it.",
+        {
+         "t": "Run cool water, and cup some in your hands.",
+         "w": 4
+        },
+        {
+         "t": "Bring it to your face, hold your breath for a moment, then breathe out long and slow.",
+         "w": 8
+        },
+        {
+         "t": "Notice how your body feels now. More awake, and a little steadier.",
+         "w": 6
+        }
+       ],
+       "say": "If you are near a sink, let's try a small one now. If you are away from water, picture it. Run cool water, and cup some in your hands. Bring it to your face, hold your breath for a moment, then breathe out long and slow. Notice how your body feels now. More awake, and a little steadier."
+      },
+      {
+       "k": "big",
+       "h": "Safety first",
+       "sub": "Heart condition, pregnant, or on medicines? Ask your doctor first.",
+       "say": "Safety first. Talk with your doctor before trying sauna or cold water if you have a heart condition, high or low blood pressure, are pregnant, or take medicines that affect your heart. Keep heat and cold for clear, Sober days, and stay with a friend near very cold water."
+      },
+      {
+       "k": "quiz",
+       "q": "What is a safe way to start with the sauna?",
+       "opts": [
+        "Short sessions, with water before and after",
+        "As long as you can stand it",
+        "Alone, in the hottest room, for an hour"
+       ],
+       "right": 0,
+       "why": "Start short, drink water, and step out the moment you feel dizzy.",
+       "say": "Quick question. What is a safe way to start with the sauna?"
+      },
+      {
+       "k": "big",
+       "h": "Warm, cool, and calm.",
+       "sub": "A healthy way to change how you feel.",
+       "say": "Warm heat, cool water, and a slow breath. A healthy way to change how you feel, and a gift to your body."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-trees",
+     "n": 7,
+     "title": "A Walk Among Trees",
+     "mins": 3,
+     "blurb": "Slow, unplugged time among trees, one sense at a time.",
+     "sources": [
+      "li18"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 7",
+       "h": "A Walk Among Trees",
+       "sub": "Slow, unplugged, and all five senses.",
+       "say": "This lesson is an invitation to slow down among trees. It is a simple practice that calms the body, and it fits a Sober life beautifully."
+      },
+      {
+       "k": "big",
+       "h": "Trees help us settle.",
+       "sub": "Slow time in nature eases stress.",
+       "say": "In Japan, slow time among trees is called forest bathing. Research finds that time in forests can lower stress, ease the heart rate, and lift mood. Any green place works. A park, a tree lined street, or one tree in a backyard."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "My Fitness Journey",
+       "lines": [
+        "I found so much peace and refreshment in the forests, beaches, and rivers.",
+        "I never stopped exploring."
+       ],
+       "lesson": "Peace grows outdoors.",
+       "say": "When Chris began hiking every weekend, he found something he had been missing. He found so much peace and refreshment in the forests, beaches, and rivers that he never stopped exploring."
+      },
+      {
+       "k": "flow",
+       "h": "Walk slowly, one sense at a time",
+       "steps": [
+        [
+         "See",
+         "Light, leaves, and colors"
+        ],
+        [
+         "Hear",
+         "Birds, wind, water"
+        ],
+        [
+         "Smell",
+         "Earth and green things"
+        ],
+        [
+         "Touch",
+         "Bark, leaves, the air"
+        ],
+        [
+         "Breathe",
+         "Slow and deep"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Walk slowly, and take it in one sense at a time. See the light, the leaves, and the colors. Hear the birds, the wind, or water. Smell the earth and the green things. Touch the bark, a leaf, or the air on your skin. And breathe, slow and deep."
+      },
+      {
+       "k": "big",
+       "h": "A tree, right now",
+       "sub": "Roots to branches.",
+       "beats": [
+        "Let's take a short walk among trees, right where you are.",
+        "If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well.",
+        {
+         "t": "Look at it slowly, from the roots all the way up to the top branches.",
+         "w": 8
+        },
+        {
+         "t": "Listen for three sounds around you.",
+         "w": 8
+        },
+        {
+         "t": "Breathe in slowly, as if you could smell the leaves, and breathe out long.",
+         "w": 6
+        },
+        "Your body knows how to rest here."
+       ],
+       "say": "Let's take a short walk among trees, right where you are. If you can step outside, find a tree. If you are inside, look out a window, or picture a tree you know well. Look at it slowly, from the roots all the way up to the top branches. Listen for three sounds around you. Breathe in slowly, as if you could smell the leaves, and breathe out long. Your body knows how to rest here."
+      },
+      {
+       "k": "points",
+       "h": "Make it a habit",
+       "items": [
+        [
+         "Unplugged",
+         "Phone in your pocket, sound off"
+        ],
+        [
+         "Twenty minutes",
+         "Or start with five"
+        ],
+        [
+         "Same place",
+         "Watch it change with the seasons"
+        ],
+        [
+         "Invite someone",
+         "Walk together, quietly"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Make it a habit. Go unplugged, with your phone in your pocket and the sound off. Aim for twenty minutes, or start with five. Return to the same place, and watch it change with the seasons. And invite someone to walk with you, quietly. A walk among trees is a strong answer to a craving, too."
+      },
+      {
+       "k": "quiz",
+       "q": "What is the heart of forest bathing?",
+       "opts": [
+        "Taking a photo of every tree",
+        "Slow time among trees, with all your senses",
+        "Hiking as fast as you can"
+       ],
+       "right": 1,
+       "why": "Slow down, unplug, and take the trees in one sense at a time.",
+       "say": "Quick question. What is the heart of forest bathing?"
+      },
+      {
+       "k": "big",
+       "h": "Slow down among trees.",
+       "sub": "Your whole tree grows strong outdoors.",
+       "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-write",
+     "n": 8,
+     "title": "Write It Out",
+     "mins": 4,
+     "blurb": "A pen, a page, and ten honest minutes to help stuck feelings move.",
+     "sources": [
+      "pennebaker"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 8",
+       "h": "Write It Out",
+       "sub": "Put feelings into words.",
+       "say": "This lesson is about writing as a way to heal. You need a pen and a page, or the notes on your phone. What you write is yours to keep or let go."
+      },
+      {
+       "k": "big",
+       "h": "Words help feelings move.",
+       "sub": "Stuck feelings get lighter on the page.",
+       "say": "Feelings that stay stuck inside tend to get heavier. Research finds that writing about hard experiences for a few minutes, a few days in a row, can ease stress and help people make sense of what happened. Putting feelings into words helps them move."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Living Sober Is Hard",
+       "lines": [
+        "Writing is how I process stuck emotions.",
+        "I am able to literally write it out.",
+        "As I write, I find out how I truly feel."
+       ],
+       "lesson": "Write it out.",
+       "say": "For Chris, writing is how he processes stuck emotions. He says he can literally write it out. As he puts words to what he feels, he discovers how he truly feels."
+      },
+      {
+       "k": "flow",
+       "h": "Write it out",
+       "steps": [
+        [
+         "Set a timer",
+         "Ten minutes"
+        ],
+        [
+         "Write freely",
+         "Any words are welcome"
+        ],
+        [
+         "Go to the feeling",
+         "What happened, and how it felt"
+        ],
+        [
+         "Close kindly",
+         "One line about what you need"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         4,
+         6
+        ]
+       },
+       "say": "Here is a simple way to begin. Set a timer for ten minutes. Write freely. Spelling and neatness are beside the point. Go to the feeling. What happened, and how did it feel? Then close kindly, with one line about what you need now."
+      },
+      {
+       "k": "big",
+       "h": "Start with one line",
+       "sub": "Today I feel...",
+       "beats": [
+        "Let's begin with one line, right now.",
+        "Get a pen, or open a note on your phone.",
+        {
+         "t": "Write these words. Today I feel. Then finish the sentence, honestly.",
+         "w": 30
+        },
+        {
+         "t": "Now write one more line. What I need right now is.",
+         "w": 20
+        },
+        "That is writing it out. Small, honest, and yours."
+       ],
+       "say": "Let's begin with one line, right now. Get a pen, or open a note on your phone. Write these words. Today I feel. Then finish the sentence, honestly. Now write one more line. What I need right now is. That is writing it out. Small, honest, and yours."
+      },
+      {
+       "k": "points",
+       "h": "Prompts for hard days",
+       "items": [
+        [
+         "A craving",
+         "What am I really hungry for?"
+        ],
+        [
+         "An old hurt",
+         "What happened, and what did I need?"
+        ],
+        [
+         "Anger",
+         "What matters to me here?"
+        ],
+        [
+         "A good day",
+         "What went well today?"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "When a craving comes, ask, what am I really hungry for? For an old hurt, ask, what happened, and what did I need back then? For anger, ask, what matters to me here? And on a good day, ask, what went well today?"
+      },
+      {
+       "k": "big",
+       "h": "Keep it safe, and get support for the deep ones.",
+       "sub": "A therapist can walk with you.",
+       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What does writing about feelings help them do?",
+       "opts": [
+        "Stay hidden",
+        "Get louder",
+        "Move and make sense"
+       ],
+       "right": 2,
+       "why": "Putting feelings into words helps them move, and helps you make sense of them.",
+       "say": "Quick question. What does writing about feelings help them do?"
+      },
+      {
+       "k": "big",
+       "h": "Write it out.",
+       "sub": "One honest page at a time.",
+       "say": "When feelings get stuck, write it out. One honest page at a time."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-story",
+     "n": 9,
+     "title": "Telling Your Story",
+     "mins": 4,
+     "blurb": "Honest talk is how we grow: one true sentence, to one safe person.",
+     "sources": [
+      "kelly10"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 9",
+       "h": "Telling Your Story",
+       "sub": "Honesty is how we grow.",
+       "say": "This lesson is about telling your story. To yourself, to someone you trust, and someday, maybe, to someone who needs to hear it. It is safe and normal to talk about drinking and drugs here."
+      },
+      {
+       "k": "big",
+       "h": "Honest talk helps us heal.",
+       "sub": "Shame grows in secret. Healing grows in the light.",
+       "say": "Shame and secrecy keep people stuck. Honest talk is how we heal and grow. Saying the true thing out loud, to someone safe, often makes it lighter to carry."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "No More Silence",
+       "lines": [
+        "If we do not have the opportunity to be honest, then we will no longer have the capacity to grow.",
+        "There is healing available for your pain.",
+        "There is freedom from suffering. There is more than enough grace for all of us."
+       ],
+       "lesson": "Honesty is how we grow.",
+       "say": "Chris, one of Grounded's founders, wrote this. If we do not have the opportunity to be honest, then we will no longer have the capacity to grow. There is healing available for your pain. There is freedom from suffering. There is more than enough grace for all of us."
+      },
+      {
+       "k": "points",
+       "h": "Your story, your words",
+       "items": [
+        [
+         "Your own words",
+         "For who you are"
+        ],
+        [
+         "What happened",
+         "Plain and honest"
+        ],
+        [
+         "What helps now",
+         "What you are growing"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         4,
+         5
+        ]
+       },
+       "say": "Your story belongs to you. Use your own words for who you are. Some people use a label for themselves, and some choose other words. Both are welcome here. Say what happened, plainly. And say what helps, and what you are growing now. Words matter. Research finds that the words we use about people can shape how they are treated, so Grounded speaks of people growing sober."
+      },
+      {
+       "k": "flow",
+       "h": "Start small",
+       "steps": [
+        [
+         "One true sentence",
+         "Write it first"
+        ],
+        [
+         "One safe person",
+         "Steady and kind"
+        ],
+        [
+         "One good time",
+         "Calm, private, and Sober"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3
+        ]
+       },
+       "say": "Start small. One true sentence, written down first. One safe person, someone steady and kind. And one good time to say it, calm, private, and Sober."
+      },
+      {
+       "k": "big",
+       "h": "Write one true sentence",
+       "sub": "Yours, and brave.",
+       "beats": [
+        "Let's practice the first step now.",
+        {
+         "t": "Think of one true sentence about your drinking or using, or about someone you love who drinks or uses.",
+         "w": 10
+        },
+        {
+         "t": "Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it.",
+         "w": 10
+        },
+        "That sentence is the start of your story. It is brave, and it is yours."
+       ],
+       "say": "Let's practice the first step now. Think of one true sentence about your drinking or using, or about someone you love who drinks or uses. Say it quietly to yourself, or write it down. For example, I've been drinking more than I want to, and I'm ready to talk about it. That sentence is the start of your story. It is brave, and it is yours."
+      },
+      {
+       "k": "points",
+       "h": "Who to tell",
+       "items": [
+        [
+         "A trusted friend",
+         "Steady and kind"
+        ],
+        [
+         "A doctor or therapist",
+         "Private and trained to help"
+        ],
+        [
+         "A peer group",
+         "People walking the same road"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+      },
+      {
+       "k": "big",
+       "h": "Someday, your story helps someone else.",
+       "sub": "A gift, at the right time.",
+       "say": "Over time, many people find that their story becomes a gift. Soon after he got sober, Chris began volunteering with a homeless ministry. He connected with people easily, because he knew how close he had come to the same place. Your story, told at the right time, can give someone hope."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps shame lose its grip?",
+       "opts": [
+        "Honest talk with someone safe",
+        "Keeping it secret",
+        "Telling everyone at once"
+       ],
+       "right": 0,
+       "why": "Shame grows in secret. Honest talk with someone safe helps it lose its grip.",
+       "say": "Quick question. What helps shame lose its grip?"
+      },
+      {
+       "k": "big",
+       "h": "No more silence.",
+       "sub": "Your story is safe here.",
+       "say": "Here is a line to keep. No more silence. Your story is safe here, and honest talk is how we grow."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-celebrate",
+     "n": 10,
+     "title": "Sober Celebrations",
+     "mins": 3,
+     "blurb": "Holidays, parties, and your own milestones, fully awake for every minute.",
+     "sources": [],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 10",
+       "h": "Sober Celebrations",
+       "sub": "Joy, fully awake.",
+       "say": "This lesson is about celebrating Sober. Birthdays, holidays, weddings, and the big days of your own growth. Joy is even sweeter when you are fully awake for it."
+      },
+      {
+       "k": "big",
+       "h": "Celebrations can be the hardest days.",
+       "sub": "They can also become the best ones.",
+       "say": "Holidays and parties can be hard when you are Living Sober, because so many of them have centered on drinking. They can also become some of your best days, because you are there for every minute."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Eighteen Years",
+       "lines": [
+        "I'll never forget that first sober Fourth of July.",
+        "I had always been blacked out long before the fireworks.",
+        "I hadn't really seen them since I was a little kid."
+       ],
+       "lesson": "Being awake for it is the gift.",
+       "say": "Chris remembers his first Sober Fourth of July. For years, drinking had carried him away long before the fireworks began. That night, he watched them for the first time since he was a little kid. Being awake for it was the gift."
+      },
+      {
+       "k": "points",
+       "h": "Ideas for a Sober celebration",
+       "items": [
+        [
+         "Something to sip",
+         "Sparkling water, juice, or tea"
+        ],
+        [
+         "Good food",
+         "Made and shared together"
+        ],
+        [
+         "Music and movement",
+         "A dance, a song, a walk"
+        ],
+        [
+         "A blessing",
+         "Words for the day or the person"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         5
+        ]
+       },
+       "say": "Here are a few ideas. Something special to sip, like sparkling water with fruit, juice, or a good tea. Good food, made and shared together. Music and movement. A dance, a song, or a walk at sunset. And a blessing, a few words for the day, or for the person you are celebrating."
+      },
+      {
+       "k": "flow",
+       "h": "A plan for the party",
+       "steps": [
+        [
+         "Bring your own drink",
+         "Something you love"
+        ],
+        [
+         "Bring a friend",
+         "Someone in your corner"
+        ],
+        [
+         "Plan your way home",
+         "Your own ride, a set time"
+        ],
+        [
+         "Ready your answer",
+         "\"No thanks, I'm good.\""
+        ]
+       ],
+       "cue": {
+        "at": [
+         2,
+         3,
+         4,
+         5
+        ]
+       },
+       "say": "Going to a party? Make a plan. Bring your own drink, something you love, so your hands are full. Bring a friend who is in your corner. Plan your way home, with your own ride and a time to leave. And have your answer ready. No thanks, I'm good."
+      },
+      {
+       "k": "big",
+       "h": "Practice your answer",
+       "sub": "Calm, kind, and enough.",
+       "beats": [
+        "Let's practice the answer, so it is ready when you need it.",
+        {
+         "t": "Picture someone offering you a drink at a party.",
+         "w": 4
+        },
+        {
+         "t": "Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can.",
+         "w": 8
+        },
+        "That answer is enough, all on its own."
+       ],
+       "say": "Let's practice the answer, so it is ready when you need it. Picture someone offering you a drink at a party. Now say, calmly and kindly, no thanks, I'm good. Say it out loud if you can. That answer is enough, all on its own."
+      },
+      {
+       "k": "points",
+       "h": "Celebrate your own growth",
+       "items": [
+        [
+         "Mark your days",
+         "Thirty days, ninety days, a year"
+        ],
+        [
+         "Tell someone",
+         "Let them celebrate with you"
+        ],
+        [
+         "Give yourself a gift",
+         "Something that feeds your tree"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         3,
+         4
+        ]
+       },
+       "say": "Celebrate your own growth too. Mark your days. Thirty days, ninety days, a year. Tell someone, and let them celebrate with you. And give yourself a gift that feeds your tree, like new running shoes, a day outdoors, or a good book."
+      },
+      {
+       "k": "quiz",
+       "q": "Which of these is a Sober way to celebrate?",
+       "opts": [
+        "Staying home alone",
+        "Sparkling water, good food, music, and a blessing",
+        "Skipping every celebration"
+       ],
+       "right": 1,
+       "why": "Celebrations are for you too. Bring something to sip, good food, music, and people you love.",
+       "say": "Quick question. Which of these is a Sober way to celebrate?"
+      },
+      {
+       "k": "big",
+       "h": "Joy, fully awake.",
+       "sub": "Every Sober day is worth celebrating.",
+       "say": "Here is a line to keep. Joy is sweeter when you are awake for it. Every Sober day is worth celebrating."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-sleep",
+     "n": 11,
+     "title": "Rest and Sleep",
+     "mins": 3,
+     "blurb": "Sleep can be rocky at first, and it gets better. A steady wind down helps it along.",
+     "sources": [
+      "huberman25",
+      "unknown"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 11",
+       "h": "Rest and Sleep",
+       "sub": "Rest is part of healing.",
+       "say": "This lesson is about sleep. Sleep can be rocky in the first weeks of Living Sober, and it gets better. Here are ways to help it along."
+      },
+      {
+       "k": "big",
+       "h": "Sleep takes time to settle.",
+       "sub": "Weeks, sometimes months. It gets better.",
+       "say": "Many people used drinking to fall asleep, so sleeping without it can feel strange at first. In the early weeks, sleep is often light and broken, and dreams can be vivid. That is a body healing. With time and steady habits, deeper sleep usually returns."
+      },
+      {
+       "k": "flow",
+       "h": "A steady wind down",
+       "steps": [
+        [
+         "Same wake time",
+         "Even on weekends"
+        ],
+        [
+         "Morning light",
+         "Outside, early"
+        ],
+        [
+         "An Unplugged hour",
+         "Screens away before bed"
+        ],
+        [
+         "Cool and dark",
+         "A calm room"
+        ],
+        [
+         "Wind down",
+         "A warm shower, a book, a slow breath"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Start with the same wake time every day, even on weekends. Get morning light, outside, early in the day. Give yourself an Unplugged hour before bed, with screens put away. Keep your room cool, dark, and calm. And wind down with a warm shower, a book, or a slow breath."
+      },
+      {
+       "k": "big",
+       "h": "A wind down for tonight",
+       "sub": "Heavy, warm, and slow.",
+       "beats": [
+        "Let's try a short wind down you can use in bed tonight.",
+        "Let your body be heavy, wherever you are sitting or lying.",
+        {
+         "t": "Breathe in for four, and out for six.",
+         "w": 8
+        },
+        {
+         "t": "Let your forehead soften, then your jaw, then your shoulders.",
+         "w": 8
+        },
+        {
+         "t": "Let your hands and feet grow warm and heavy.",
+         "w": 8
+        },
+        "Rest is part of healing. You are welcome to rest."
+       ],
+       "say": "Let's try a short wind down you can use in bed tonight. Let your body be heavy, wherever you are sitting or lying. Breathe in for four, and out for six. Let your forehead soften, then your jaw, then your shoulders. Let your hands and feet grow warm and heavy. Rest is part of healing. You are welcome to rest."
+      },
+      {
+       "k": "points",
+       "h": "If you wake at night",
+       "items": [
+        [
+         "Stay calm",
+         "Quiet rest still helps"
+        ],
+        [
+         "Breathe slowly",
+         "In for four, out for six"
+        ],
+        [
+         "Get up after a while",
+         "Dim light, a calm book, then back to bed"
+        ],
+        [
+         "Turn the clock away",
+         "Let time stay a mystery"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "If you wake at night, stay calm. Quiet rest still helps your body. Breathe slowly, in for four and out for six. After a while, get up, sit in dim light with a calm book, and go back to bed when you feel sleepy. And turn the clock away, so the hours stay a mystery."
+      },
+      {
+       "k": "big",
+       "h": "Ask your doctor about lasting sleep trouble.",
+       "sub": "Some sleep medicines carry risks. Ask what fits you.",
+       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+      },
+      {
+       "k": "quiz",
+       "q": "What helps sleep settle in the first months?",
+       "opts": [
+        "Staying up until you are exhausted",
+        "Napping all afternoon",
+        "A steady wake time and a calm wind down"
+       ],
+       "right": 2,
+       "why": "A steady wake time, morning light, and a calm wind down help sleep settle.",
+       "say": "Quick question. What helps sleep settle in the first months?"
+      },
+      {
+       "k": "big",
+       "h": "Rest is part of healing.",
+       "sub": "Your body rebuilds while you sleep.",
+       "say": "Rest is part of healing. Each night, your body is rebuilding. Be patient with it, and with yourself."
+      }
+     ]
+    },
+    {
+     "id": "br-ls-good",
+     "n": 12,
+     "title": "Gratitude and the Good",
+     "mins": 3,
+     "blurb": "Let good moments sink in, and grow a Sober life full of them.",
+     "sources": [
+      "hanson09",
+      "seligman"
+     ],
+     "crisis": [
+      "SAMHSA National Helpline: 1-800-662-4357, any time",
+      "988: call or text, any time",
+      "911: danger right now"
+     ],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "birch",
+       "eyebrow": "Growing a Healthy Tree, Lesson 12",
+       "h": "Gratitude and the Good",
+       "sub": "Let the good sink in.",
+       "say": "This last lesson in the series is about the good. A Sober life holds more good than you might notice at first. Here is how to let it sink in."
+      },
+      {
+       "k": "big",
+       "h": "The good needs a little help to stick.",
+       "sub": "Hard moments stick fast. Good ones slip by.",
+       "say": "Our brains learn quickly from hard things, to keep us safe. Good moments often slip right by. Staying with a good moment for a few extra breaths helps it sink in, and over time the brain learns from the good too."
+      },
+      {
+       "k": "story",
+       "eyebrow": "From Chris's Notebook",
+       "title": "Eighteen Years",
+       "lines": [
+        "I started to experience life for the first time.",
+        "Simple things became precious.",
+        "Going to the park, and spreading a blanket in the sun."
+       ],
+       "lesson": "Simple things become precious.",
+       "say": "After Chris got sober, he says he started to experience life for the first time. It felt like waking up after a long sleep. Simple things became precious, like going to the park and spreading a blanket in the sun."
+      },
+      {
+       "k": "flow",
+       "h": "Three steps",
+       "steps": [
+        [
+         "Notice",
+         "A good moment"
+        ],
+        [
+         "Stay",
+         "Ten to twenty seconds"
+        ],
+        [
+         "Soak it in",
+         "Let it become part of you"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "There are three steps. Notice a good moment, big or small. Stay with it, for ten to twenty seconds. And soak it in, letting it become part of you."
+      },
+      {
+       "k": "big",
+       "h": "Try it now",
+       "sub": "One good moment. A few breaths.",
+       "beats": [
+        "Let's try it now.",
+        "Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh.",
+        {
+         "t": "Stay with it, and let it fill your mind.",
+         "w": 12
+        },
+        {
+         "t": "Now feel it in your body, like warm sun, soaking in.",
+         "w": 12
+        },
+        "Let it become part of you."
+       ],
+       "say": "Let's try it now. Bring to mind one good moment from your Sober life, big or small. A clear morning, a kind word, a meal, a laugh. Stay with it, and let it fill your mind. Now feel it in your body, like warm sun, soaking in. Let it become part of you."
+      },
+      {
+       "k": "points",
+       "h": "Good to look for",
+       "items": [
+        [
+         "Clear mornings",
+         "Waking up rested and present"
+        ],
+        [
+         "Your people",
+         "A call returned, trust growing back"
+        ],
+        [
+         "Your body",
+         "Stronger, steadier, healthier"
+        ],
+        [
+         "Small wins",
+         "Another Sober day"
+        ]
+       ],
+       "cue": {
+        "at": [
+         0,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Here is good to look for. Clear mornings, waking up rested and present. Your people, a call returned, and trust growing back. Your body, growing stronger and steadier. And small wins, like another Sober day."
+      },
+      {
+       "k": "big",
+       "h": "Three good things tonight",
+       "sub": "Name them, and what helped them happen.",
+       "say": "Tonight, before you sleep, name three good things from the day, and what helped them happen. It takes two minutes, and it trains your eyes to find the good."
+      },
+      {
+       "k": "quiz",
+       "q": "How long do you stay with a good moment to help it sink in?",
+       "opts": [
+        "Ten to twenty seconds",
+        "Less than a second",
+        "An hour"
+       ],
+       "right": 0,
+       "why": "A few breaths, ten to twenty seconds, helps the good sink in.",
+       "say": "Quick question. How long do you stay with a good moment to help it sink in?"
+      },
+      {
+       "k": "big",
+       "h": "Let the good sink in.",
+       "sub": "Your tree is growing.",
+       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
       }
      ]
     }
@@ -39621,6 +45978,161 @@ window.GG_LEARN = {
        "h": "We listen, and we are heard.",
        "sub": "Come close. Listen. Wait.",
        "say": "Listening is one of the kindest things a family can do. Come close, listen, and wait. Everyone grows."
+      }
+     ]
+    },
+    {
+     "id": "gr-r-sobernight",
+     "n": 14,
+     "title": "Family Sober Night",
+     "mins": 4,
+     "blurb": "One evening a week of good sober time together: a meal, something fun, and a round of thanks.",
+     "sources": [],
+     "life": [
+      "sober"
+     ],
+     "scenes": [
+      {
+       "k": "title",
+       "hero": "grove",
+       "eyebrow": "Do This Together",
+       "h": "Family Sober Night",
+       "sub": "Good time together, every week.",
+       "say": "This is Family Sober Night. One evening a week, your family shares a meal, does something fun, and says thank you. It is good for every family, and it is a strong support when someone in your family is growing sober."
+      },
+      {
+       "k": "big",
+       "h": "The best part is us.",
+       "sub": "Real food, good fun, and each other.",
+       "say": "A Sober Night has no alcohol, and it is built around the best parts of being a family. Real food, good fun, and each other. Everyone is fully here, and everyone gets to remember it."
+      },
+      {
+       "k": "flow",
+       "h": "How it goes",
+       "steps": [
+        [
+         "Pick the night",
+         "The same one each week"
+        ],
+        [
+         "Share a meal",
+         "Everyone helps"
+        ],
+        [
+         "Do something fun",
+         "Move, play, or laugh"
+        ],
+        [
+         "Say thank you",
+         "One good thing each"
+        ]
+       ],
+       "say": "Here is how it goes. Pick the night, the same one each week, so everyone can count on it. Share a meal, and let everyone help. Do something fun together, something that moves you or makes you laugh. Then close with thanks, one good thing from the week, each."
+      },
+      {
+       "k": "points",
+       "h": "Special drinks",
+       "items": [
+        [
+         "Sparkling water",
+         "With a slice of fruit"
+        ],
+        [
+         "Fresh juice",
+         "In the good glasses"
+        ],
+        [
+         "Tea",
+         "Iced or warm"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3
+        ]
+       },
+       "say": "Make the drinks special. Sparkling water, with a slice of orange or a few berries. Fresh juice, poured into the good glasses. Or tea, iced in summer and warm in winter. Let the kids name the drink of the night."
+      },
+      {
+       "k": "points",
+       "h": "Fun to try",
+       "items": [
+        [
+         "A walk after dinner",
+         "Look for the moon"
+        ],
+        [
+         "Music",
+         "One song each, or a dance"
+        ],
+        [
+         "A game or a puzzle",
+         "Everyone plays"
+        ],
+        [
+         "A story round",
+         "Tell a family story"
+        ]
+       ],
+       "cue": {
+        "at": [
+         1,
+         2,
+         3,
+         4
+        ]
+       },
+       "say": "Here are some fun things to try. A walk after dinner, looking for the moon or the first star. Music, with one song picked by each person, or a kitchen dance. A game or a puzzle everyone can play. Or a story round, where someone tells a favorite family story."
+      },
+      {
+       "k": "big",
+       "h": "Plan our first Sober Night.",
+       "sub": "Each person picks one part.",
+       "beats": [
+        "Let us plan our first Sober Night right now.",
+        "Each person picks one part.",
+        "Who picks the meal?",
+        "Who picks the special drink?",
+        "Who picks the fun?",
+        {
+         "t": "Say your choices out loud, and choose the night together.",
+         "w": 30
+        }
+       ],
+       "say": "Let us plan our first Sober Night right now. Each person picks one part. Who picks the meal? Who picks the special drink? Who picks the fun? Say your choices out loud, and choose the night together."
+      },
+      {
+       "k": "card",
+       "title": "If someone is growing sober",
+       "body": "Ask them what helps. Keep it easy and kind.",
+       "say": "If someone in your family is growing sober, ask them what would make Sober Night good for them. Keep it easy and kind. A Sober Night is a celebration of the healthy home you are growing together, one week at a time."
+      },
+      {
+       "k": "points",
+       "h": "Find it in The Grove",
+       "items": [
+        [
+         "Family Sober Night",
+         "In Together, under Fruit"
+        ],
+        [
+         "Anchor it",
+         "In your Growth Plan"
+        ],
+        [
+         "We did this today",
+         "Tap it, and the grove grows"
+        ]
+       ],
+       "say": "You will find Family Sober Night in Together, under Fruit. Put it in your Growth Plan, anchored to your night. When you have done it, tap We did this today, and the grove grows."
+      },
+      {
+       "k": "big",
+       "h": "Good time together grows the whole tree.",
+       "sub": "See you at Sober Night.",
+       "say": "Good time together grows the whole family tree. See you at Sober Night."
       }
      ]
     }
