@@ -54,7 +54,7 @@
       strength_msg: "Strong bark means you already have real tools to self-regulate. That is a genuine skill, not luck, and it is worth naming clearly so you keep reaching for it on purpose.",
       growth_steps: [
         "Pick one calming practice and use it daily for two weeks, even on days you do not feel stressed, so it becomes automatic before you need it.",
-        "If you have never tried counseling or are not currently in it, consider one consultation simply to have an outside perspective.",
+        "One visit with a licensed counselor or therapist can give you an outside perspective, wherever you are with support right now.",
         "Notice and write down what actually triggers your stress this week. Naming the pattern is the first step to interrupting it."
       ]
     },

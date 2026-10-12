@@ -3109,6 +3109,10 @@ const LC_TOPICS = [
    [
     "National Institute on Aging",
     "https://www.nia.nih.gov/health"
+   ],
+   [
+    "The Grove by Grow With Grounded, for a family growing together",
+    "https://growwithgrounded.com/grove/"
    ]
   ]
  },
@@ -3209,6 +3213,14 @@ const LC_TOPICS = [
    [
     "Eldercare Locator",
     "https://eldercare.acl.gov/home"
+   ],
+   [
+    "The Grove by Grow With Grounded, for a family growing together",
+    "https://growwithgrounded.com/grove/"
+   ],
+   [
+    "Maple, Aspen, and Pine by Grow With Grounded, for kids and teens",
+    "https://growwithgrounded.com/tools.html"
    ]
   ]
  },
@@ -4370,6 +4382,14 @@ const LC_TOPICS = [
    [
     "CaringInfo: advance directives by state",
     "https://www.caringinfo.org"
+   ],
+   [
+    "Willow by Grow With Grounded, for hospice",
+    "https://growwithgrounded.com/willow/"
+   ],
+   [
+    "Planning a Farewell by Grow With Grounded",
+    "https://growwithgrounded.com/planning-a-farewell.html"
    ]
   ]
  },

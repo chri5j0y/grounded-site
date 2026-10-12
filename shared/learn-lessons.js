@@ -165,14 +165,18 @@ window.GG_LEARN = {
         ],
         [
          "When Life Changes",
-         "Guides for hard talks, like a pet dying"
+         "More than 70 guides for hard talks"
+        ],
+        [
+         "Health and Ability",
+         "Maple fits each child"
         ],
         [
          "Private by design",
          "Everything stays on this device"
         ]
        ],
-       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has guides for hard talks, from a pet dying to scary news. And everything stays on this device, yours alone."
+       "say": "For grown-ups, the Grown-up Guide has tips and conversation starters for every part. When Life Changes has more than seventy guides for hard talks, from a pet dying to scary news. Health and Ability, in Settings, helps Maple fit each child's body and health. And everything stays on this device, yours alone."
       },
       {
        "k": "big",
@@ -325,8 +329,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your tree grows as you go.",
-       "sub": "One new piece for every part.",
-       "say": "Watch your tree while you go. Each time you finish a part, a new piece of your tree grows. Roots, then a trunk, then bark, branches, leaves, and fruit."
+       "sub": "Each part lights up as you finish it.",
+       "say": "Watch your tree while you go. Each time you finish a part, that part of your tree lights up. Roots, then the trunk, then bark, branches, leaves, and fruit."
       },
       {
        "k": "points",
@@ -734,8 +738,8 @@ window.GG_LEARN = {
        "h": "Your tree in Today",
        "items": [
         [
-         "Bright leaves",
-         "One for each part you tend today"
+         "A warm glow",
+         "For each part you tend today"
         ],
         [
          "Days Tended",
@@ -746,7 +750,7 @@ window.GG_LEARN = {
          "One for every check-in"
         ]
        ],
-       "say": "Today has a morning stretch at the top, and a good thing to share at bedtime at the bottom. Your tree grows a bright leaf for each part you tend today. And you can count your Days Tended and your Rings."
+       "say": "Today has a morning stretch at the top, and a good thing to share at bedtime at the bottom. Each part you tend today glows on your tree, and the sun comes out. And you can count your Days Tended and your Rings."
       },
       {
        "k": "points",
@@ -783,7 +787,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your tree is always happy when you come back.",
        "sub": "Missed a few days? One practice wakes it up.",
-       "say": "If you miss a few days, your tree looks a little thirsty. One practice gives it a drink. It never droops, and it never goes away. Your tree is always happy when you come back."
+       "say": "If you miss a few days, a light mist rests on your tree. One practice brings the sun back. Your tree always stays. Your tree is always happy when you come back."
       },
       {
        "k": "tabs",
@@ -863,9 +867,9 @@ window.GG_LEARN = {
        "tap": 1,
        "note": {
         "h": "When Life Changes",
-        "p": "More than 50 guides for hard talks with kids."
+        "p": "More than 70 guides for hard talks with kids."
        },
-       "say": "Tap the When Life Changes tab. It has more than fifty guides for parents, guardians, and teachers. You can also reach it from Guides, inside your child's tree."
+       "say": "Tap the When Life Changes tab. It has more than seventy guides for parents, guardians, and teachers. You can also reach it from Guides, inside your child's tree."
       },
       {
        "k": "points",
@@ -886,9 +890,13 @@ window.GG_LEARN = {
         [
          "Country, World, and Safety",
          "Big news, and the first minutes"
+        ],
+        [
+         "Health and Ability",
+         "A health condition or a disability"
         ]
        ],
-       "say": "The guides come in groups. Inside Me, for feelings that live inside a child. Close to Home, for loss, illness, and changes at home. School and community, for friends, classrooms, and the town around you. And country, world, and safety, for big news, and for the first minutes when something scary happens."
+       "say": "The guides come in groups, each one a card, with tabs and a search bar on top. Inside Me, for feelings that live inside a child. Close to Home, for loss, illness, and changes at home. School and community, for friends, classrooms, and the town around you. Country, world, and safety, for big news, and for the first minutes when something scary happens. And Health and Ability, for a child living with a health condition or a disability, or with someone in the family who is."
       },
       {
        "k": "card",
@@ -920,7 +928,7 @@ window.GG_LEARN = {
          "The full guide, step by step"
         ]
        ],
-       "say": "Each guide starts as a card. The card is a quick reference to read right before a hard talk. Tap Talking It Through for the full guide."
+       "say": "Tap a group, and each guide shows as a card. Tap Read the Guide, and the Quick Reference comes first, to read right before a hard talk. Then Talking It Through is the full guide."
       },
       {
        "k": "points",
@@ -977,7 +985,7 @@ window.GG_LEARN = {
          "For the Grown-up: for you"
         ]
        },
-       "say": "More and more guides have two short videos at the top. Watch: For You is for the child going through it. Watch: For the Grown-up is for you, the parent or helper beside them. Each one is a few minutes long, and read aloud."
+       "say": "Every guide has two short videos, right on its card and at the top of the guide. Watch: For You is for the child going through it. Watch: For the Grown-up is for you, the parent or helper beside them. Each one is a few minutes long, and read aloud."
       },
       {
        "k": "points",
@@ -1004,7 +1012,11 @@ window.GG_LEARN = {
        "items": [
         [
          "When Life Changes",
-         "Every video, in groups"
+         "A door back to these guide cards"
+        ],
+        [
+         "Search",
+         "Finds every video"
         ],
         [
          "A quiet check",
@@ -1015,7 +1027,7 @@ window.GG_LEARN = {
          "Right from the last scene"
         ]
        ],
-       "say": "You'll find every one of these videos in the Learn tab too, under When Life Changes. There's no quiz. A quiet check marks the ones you've watched. And at the end, Open the Full Guide takes you right back to the guide."
+       "say": "In the Learn tab, the When Life Changes card brings you right back to these guide cards, and Learn's search bar finds every video. There's no quiz. A quiet check marks the ones you've watched. And at the end, Open the Full Guide takes you right back to the guide."
       },
       {
        "k": "big",
@@ -5354,7 +5366,7 @@ window.GG_LEARN = {
          "One tap, any time"
         ]
        ],
-       "say": "Aspen is yours. There is no account, and your tree stays on this device. Your grown-up sees the big picture of your tree, plus a few safety answers, so they can help. And the Need help now button is always one tap away."
+       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few safety answers, so they can help. And the Need help now button is always one tap away."
       },
       {
        "k": "points",
@@ -5369,11 +5381,15 @@ window.GG_LEARN = {
          "Lessons, and Support for Right Now"
         ],
         [
+         "Health and Ability",
+         "Aspen fits your body and health"
+        ],
+        [
          "The Grove",
          "Your tree beside your family"
         ]
        ],
-       "say": "There is more. When Life Changes has guides about hard things, written for grown-ups, and you can read them too. Learn has short lessons like this one, plus Support for Right Now videos for hard moments. And your tree can stand in The Grove beside your family's trees, showing only your growth, never your answers."
+       "say": "There is more. When Life Changes has guides about hard things, written for grown-ups, and you can read them too. Learn has short lessons like this one, plus Support for Right Now videos for hard moments. Health and Ability, set with your grown-up, helps Aspen fit your body and your health. And your tree can stand in The Grove beside your family's trees, showing only your growth, never your answers."
       },
       {
        "k": "quiz",
@@ -5810,7 +5826,7 @@ window.GG_LEARN = {
        "cue": {
         "at": [0, 4, 6]
        },
-       "say": "Your tree starts Steady. It is gentle, and nothing is ever lost. Miss a few days, and it may look a little dry, but one practice perks it up. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble, until one practice in that part heals it. And after a hard check-in, your tree holds still for two weeks either way, while you get support."
+       "say": "Your tree starts Steady. It is gentle, and everything you grow stays. Miss a few days, and a soft mist rests on it, and one practice brings the sun back. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble, until one practice in that part heals it. And after a hard check-in, your tree holds still for two weeks either way, while you get support."
       },
       {
        "k": "points",
@@ -5830,7 +5846,7 @@ window.GG_LEARN = {
         ],
         [
          "Your Scenery",
-         "New trees and lakes, in Season"
+         "New lakes, in Season"
         ]
        ],
        "cue": {
@@ -5841,7 +5857,7 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all six parts in one week, a balanced week. And in Season, Your Scenery opens new trees at ten, thirty five, and seventy five days tended, and new lakes at twenty, fifty, and one hundred. No streaks to lose, and nothing is ever taken away."
+       "say": "Every day you tend your tree moves it toward its next level, from Seed all the way to Golden Aspen. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, like tending all six parts in one week, a balanced week. And in Season, Your Scenery opens new lakes at twenty, fifty, and one hundred days tended. Growth only adds, and everything you grow stays yours."
       },
       {
        "k": "big",
@@ -6106,11 +6122,11 @@ window.GG_LEARN = {
         "h": "When Life Changes",
         "p": "Guides for hard things, open any time."
        },
-       "say": "Look at the tabs across the top of Aspen. Right after Grown-ups is When Life Changes. It holds forty nine guides for hard things, and you can open it any time."
+       "say": "Look at the tabs across the top of Aspen. Right after Grown-ups is When Life Changes. It holds more than sixty guides for hard things, and you can open it any time."
       },
       {
        "k": "points",
-       "h": "Guides in five groups",
+       "h": "Guides in six groups",
        "items": [
         [
          "Home and Family",
@@ -6127,9 +6143,13 @@ window.GG_LEARN = {
         [
          "Big World, Hard News",
          "Plus Safety, when someone is hurting"
+        ],
+        [
+         "Health and Ability",
+         "A health condition, pain, or a disability"
         ]
        ],
-       "say": "The guides come in five groups. Home and Family, for things like moving, divorce, or a death. Friends and School, for drama, being left out, and bullying. Growing Up and Online, for phones, sleep, big questions about faith, and figuring out who you are. Big World, Hard News, for things like storms and scary headlines. And Safety, for when you or a friend is hurting."
+       "say": "The guides come in six groups, each one a card, with tabs and a search bar on top. Home and Family, for things like moving, divorce, or a death. Friends and School, for drama, being left out, and bullying. Growing Up and Online, for phones, sleep, big questions about faith, and figuring out who you are. Big World, Hard News, for things like storms and scary headlines. Safety, for when you or a friend is hurting. And Health and Ability, for a student living with a health condition, pain, or a disability, or with someone in the family who is."
       },
       {
        "k": "points",
@@ -6218,7 +6238,7 @@ window.GG_LEARN = {
          "A quiet check marks them"
         ]
        ],
-       "say": "You will find guides inside your own tree too. The Guides tab shows your six parts, and the same guides under When life gets hard. In your Growth Plan, each part lists a few guides for your grown-up. And once you watch a guide's video, a quiet check marks it."
+       "say": "You will find guides inside your own tree too. The Guides tab shows your six parts, and the same guide cards, with tabs and a search bar, under When life gets hard. In your Growth Plan, each part lists a few guides for your grown-up. And once you watch a guide's video, a quiet check marks it."
       },
       {
        "k": "big",
@@ -6561,7 +6581,7 @@ window.GG_LEARN = {
         "Just try it without saving"
        ],
        "tap": 0,
-       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know. There is no account, and your answers stay right here. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
+       "say": "When you add yourself in the Students tab, Aspen saves your tree in your own Middle school profile. It stays on this device, locked with a passcode only you know, and your answers stay right here. A grown-up agrees when your profile is made. The grown-up also picks the wording. Faith wording names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Your scores compare the same either way. A grown-up can change it later on your page in the Grown-ups tab, or in Settings, and a school's Aspen Guide can set Plain for everyone there."
       },
       {
        "k": "points",
@@ -10165,8 +10185,8 @@ window.GG_LEARN = {
           { k: 'parts', say: 'You are made of six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope.' },
           { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
           { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend.' },
-          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', "Guides for more than 50 of life's hardest seasons"], ['A tree that grows', 'From Acorn to Heritage Oak']], cue: { at: [1, 3, 4, 5] }, say: "Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than fifty of life's hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak." },
-          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. There is no account. Your profile is locked with a passcode on this device, and nothing you enter is sent to Grounded or anyone else. And if you ever need to talk right now, call or text nine eight eight, any time.' },
+          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', 'Guides for more than 80 of life\'s hardest seasons'], ['A tree that grows', 'From Acorn to Heritage Oak'], ['Health and Ability', 'Oak fits your body and your life']], cue: { at: [1, 3, 4, 5, 6] }, say: 'Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life\'s hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life.' },
+          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you. And if you ever need to talk right now, call or text nine eight eight, any time.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
           { k: 'big', h: 'One part, one small step.', sub: 'One breath, and one way to tend a part today.', beats: ['Let us try a small practice now.', 'Sit however is comfortable.', 'Take one slow breath, in and out.', 'Think of one part of your life that has been carrying a lot lately.', { t: 'Now name one small thing that would tend it today.', w: 10 }], say: 'Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today.' },
           { k: 'big', h: 'Small and steady is how an oak grows.', sub: 'One practice a day is enough to start.', say: 'Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start.' },
@@ -10177,7 +10197,7 @@ window.GG_LEARN = {
 
         { id: 'ok-u-checkin', n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
-          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
+          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode.' },
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
@@ -10190,9 +10210,9 @@ window.GG_LEARN = {
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 2', h: 'Reading Your Levels', sub: 'Just a picture of right now.', say: 'After a check-in, each part of your tree gets a level. This lesson is about reading them well.' },
           { k: 'levels', say: 'There are three levels. Strong, from eight to ten. Steady, from five to seven. And Growing Edge, from one to four.' },
           { k: 'big', h: 'A Growing Edge is where your next growth begins.', sub: 'It is simply a part to tend.', say: 'A Growing Edge is not a failing grade. It is where your next growth begins. It is a part to tend, and Oak will help you tend it.' },
-          { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Your Results', rows: [['Roots', 'Strong, 8 of 10', '#5F7D48'], ['Trunk', 'Steady, 6 of 10', '#8B5E1A'], ['Bark', 'Growing Edge, 4 of 10', '#B8612F'], ['Branches', 'Steady, 7 of 10', '#8B5E1A'], ['Leaves', 'Steady, 5 of 10', '#8B5E1A'], ['Fruit', 'Strong, 9 of 10', '#5F7D48']], tap: 2, say: 'Your results show each part, with its level and its score. Oak also names your biggest growing edge right now. That is a good place to start.' },
+          { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Your Results', rows: [['Roots', 'Strong', '#5F7D48'], ['Trunk', 'Steady', '#8B5E1A'], ['Bark', 'Growing Edge', '#B8612F'], ['Branches', 'Steady', '#8B5E1A'], ['Leaves', 'Steady', '#8B5E1A'], ['Fruit', 'Strong', '#5F7D48']], tap: 2, say: 'Your results show Oak\'s painting, with each part glowing by its level, and the level in words beside it. Tap a part to open it in your growth plan. Oak also names your biggest growing edge right now. That is a good place to start.' },
           { k: 'points', h: 'Read it with kindness', items: [['Look for patterns', 'Which parts lean on each other?'], ['Notice your strengths', 'They can carry you while you grow'], ['Pick one part to start', 'One or two parts at a time']], cue: { w: { 6: 8 } }, say: 'Read your results with kindness. Look for patterns. When one part is hurting, another often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with. Think now of one strength that is carrying you this season.' },
-          { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick'], ['From Pine and From Birch', 'Rings that came along, shown apart']], cue: { at: [0, 1, 1, 2] }, say: 'Over time, every full check-in adds a growth ring to your tree. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print.' },
+          { k: 'points', h: 'Rings and changes', items: [['Each full check-in adds a ring', 'Your tree grows with you'], ['Grew, Dipped, or Same', 'Compared with your last check-in'], ['Like with like', 'Full with full, quick with quick'], ['From Pine and From Birch', 'Rings that came along, shown apart']], cue: { at: [0, 1, 1, 2] }, say: 'Over time, every full check-in adds a growth ring to your tree. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. Oak shows whether each part grew, dipped, or stayed the same since last time, and it only compares a full check-in with a full one, and a quick one with a quick one. Rings that came along from Pine or Birch are labeled From Pine or From Birch, and shown apart. And if you came from Birch, a Groundwork card opens your Groundwork notebook to read or print.' },
           { k: 'big', h: 'Every score is a starting point.', say: 'Remember, every score is a starting point. It tells you where you are, so you can choose where to grow.' },
           { k: 'quiz', q: 'What is a Growing Edge?', opts: ['A failing grade', 'A part to tend, where your next growth begins', 'A part you should ignore'], right: 1, why: 'A Growing Edge is simply a part to tend.', say: 'Quick question. What is a Growing Edge?' }
         ] },
@@ -10214,17 +10234,17 @@ window.GG_LEARN = {
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 1, note: { h: 'Week', p: 'A theme, a short check-in, and a question to sit with.' }, say: 'Each week brings a theme, a short check-in, and a question to sit with. The weekly check-in asks one question for each part, plus how you are moving, resting, and eating.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 2, note: { h: 'Season', p: 'Twelve weeks. It begins and ends with a full check-in, and each one adds a ring.' }, say: 'A season is twelve weeks. It begins with a full check-in, and the next full check-in closes it and adds a ring to your tree. The Season tab also has your Days Tended calendar.' },
           { k: 'points', h: 'Watch your tree grow', items: [['Tree levels', 'From Acorn to Heritage Oak'], ['Tried, Building, Mine', 'Practices you keep doing'], ['Milestones', 'And a balanced week'], ['Steady or Hardy', 'With two grace days a week']], cue: { at: [0, 1, 2, 3] }, say: 'Every day you tend moves your tree toward its next level, from Acorn all the way to Heritage Oak. Practices you keep doing move from Tried, to Building, to Mine. Milestones mark your firsts, and tending all six parts in one week makes a balanced week. Your tree starts Steady, and you can choose Hardy in Settings, where a part left untended for ten days shows trouble until one practice heals it. Two grace days a week are yours to rest, so five tended days make a full week, and Hardy never counts grace days. And after a hard check-in, your tree holds still for two weeks while you get support.' },
-          { k: 'big', h: 'Every day counts. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours.' },
+          { k: 'big', h: 'Every day counts. Growth only adds.', sub: 'Missed a few days? Pick up today.', say: 'There are no streaks to break in Oak. Growth only adds. If you miss a few days, just pick up today. Your tree is still yours. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days.' },
           { k: 'quiz', q: 'What waters your tree for the day?', opts: ['Checking off any one practice', 'Finishing every practice', 'A full check-in'], right: 0, why: 'Any one practice waters your tree. One is enough.', say: 'Quick question. What waters your tree for the day?' }
         ] },
 
         { id: 'ok-u-wlc', n: 5, title: 'When Life Changes', mins: 4, blurb: 'Guides for life’s hardest seasons, for you and for helpers.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 5', h: 'When Life Changes', sub: 'How to show up.', say: 'When life changes all at once, you need words and steps you can use right now. That is what When Life Changes is for.' },
-          { k: 'points', h: 'More than 60 guides', items: [['Inside Me', 'Anxiety, sadness, burnout, shame'], ['Loss and Grief', 'Every kind of goodbye'], ['Health and the End of Life', 'Diagnosis, caregiving, dying'], ['Relationships and Family', 'Marriage, divorce, aging parents'], ['Work, Money, Faith, and Community', 'And more']], say: 'There are more than sixty guides, in groups. Inside Me. Loss and Grief. Health and the End of Life. Relationships and Family. And Work, Money, Faith, and Community.' },
+          { k: 'points', h: 'More than 80 guides', items: [['Inside Me', 'Anxiety, sadness, burnout, shame'], ['Loss and Grief', 'Every kind of goodbye'], ['Health and the End of Life', 'Diagnosis, caregiving, dying'], ['Relationships and Family', 'Marriage, divorce, aging parents'], ['Work, Money, Faith, and the World', 'And Safety'], ['Health and Ability', 'A health condition or a disability']], say: 'There are more than eighty guides, in group cards, with tabs and a search bar on top. Inside Me. Loss and Grief. Health and the End of Life. Relationships and Family. Work and Money. Faith and Meaning. Community, Country, and World. Safety. And Health and Ability.' },
           { k: 'flow', h: 'Two sides to every guide', steps: [['For you', 'When you are going through it'], ['For the helper', 'When you are walking with someone']], cue: { w: { 3: 8 } }, say: 'Every guide has two sides. One for you, when you are the one going through it. And one for the helper, when you are walking with someone else. Think now of someone you are walking beside this season.' },
-          { k: 'points', h: 'Inside a guide', items: [['A Quick Card', 'The first things to know'], ['What to say, and what to skip', 'Words that help'], ['Faith and meaning', 'For all faith traditions and everything in-between'], ['Practices and where to get help', 'Real next steps']], say: 'Inside a guide, start with the Quick Card, the first things to know. Then words to say and words to skip. Faith and meaning, for all faith traditions and everything in-between. And practices, plus where to get help.' },
+          { k: 'points', h: 'Inside a guide', items: [['A Quick Reference', 'The first things to know'], ['What to say, and what to skip', 'Words that help'], ['Faith and meaning', 'For all faith traditions and everything in-between'], ['Practices and where to get help', 'Real next steps']], say: 'Tap Read on a guide card. Inside, start with the Quick Reference, the first things to know. Then words to say and words to skip. Faith and meaning, for all faith traditions and everything in-between. And practices, plus where to get help.' },
           { k: 'card', title: 'Search', body: 'Type what is happening in your own words.', fields: [['Search', 'my dad has dementia']], btns: ['Search'], tap: 0, result: 'Caring for Someone with Dementia', say: 'Search in your own words, like my dad has dementia, and Oak finds the right guide.' },
-          { k: 'big', h: 'Two short videos for every guide.', sub: 'For You, and For the Helper.', say: 'Every guide has two short videos at the top. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each one is a few minutes long, narrated aloud.' },
+          { k: 'big', h: 'Two short videos for every guide.', sub: 'For You, and For the Helper.', say: 'Every guide has two short videos, right on its card. For You, if this is what you are facing. And For the Helper, if you are walking beside someone who is. Each one is a few minutes long, narrated aloud.' },
           { k: 'quiz', q: 'Every When Life Changes guide has two sides. What are they?', opts: ['Easy and hard', 'For you, and for the helper', 'Short and long'], right: 1, why: 'Each guide speaks to the person going through it and the person walking with them.', say: 'Quick question. Every guide has two sides. What are they?' }
         ] },
 
@@ -15444,7 +15464,7 @@ window.GG_LEARN = {
       ],
       "tap": 0,
       "result": "\"Are they starving?\"",
-      "say": "To find one fast, type in the search box. Try a word like not eating, burden, or kids. Willow shows its own guides first, then anything else from Grow With Grounded that fits. You can also tap All, or one of the two groups, to narrow the list."
+      "say": "To find one fast, type in the search box. Try a word like not eating, burden, or kids. Willow shows its own guides first, then anything else from Grow With Grounded that fits. Or tap one of the two group cards, or its tab, to see its guides."
      },
      {
       "k": "screen",
@@ -15690,15 +15710,15 @@ window.GG_LEARN = {
        "For me"
       ],
       "tap": 0,
-      "say": "To narrow the list, choose a tradition, or search a word like shepherd, peace, river, or home. When the person has shared their faith answers, a For me button appears, or For, and their name, with readings that fit their tradition, and readings meant for everyone."
+      "say": "Each tradition has its own card, with tabs on top. Tap one, or search a word like shepherd, peace, river, or home. When the person has shared their faith answers, a For me button appears, or For, and their name, with readings that fit their tradition, and readings meant for everyone."
      },
      {
       "k": "points",
       "h": "Inside a reading",
       "items": [
        [
-        "Read this aloud",
-        "Willow reads it in a gentle voice"
+        "Listen",
+        "A warm recorded voice, line by line"
        ],
        [
         "Save or Print",
@@ -15709,7 +15729,7 @@ window.GG_LEARN = {
         "To find another"
        ]
       ],
-      "say": "Inside a reading, Read this aloud lets Willow read it in a gentle voice, for the times your own voice won't come. Save or Print gives you a page to keep, or tuck in a card. And Back to readings takes you to the list again."
+      "say": "Inside a reading, Listen reads it in a warm recorded voice, one line at a time, for the times your own voice won't come. Some readings use Read this aloud instead. Save or Print gives you a page to keep, or tuck in a card. And Back to readings takes you to the list again."
      },
      {
       "k": "big",
@@ -15842,7 +15862,7 @@ window.GG_LEARN = {
         "At the top of the page"
        ]
       ],
-      "say": "Please remember your passcode. It never leaves this device, so only you can open your profile. A backup file is your safety net. And when you step away, tap Lock at the top of the page."
+      "say": "Please remember your passcode. It never leaves this device, so only you can open your profile. When you set it, Willow also shows your twelve Root Words, once, and they open your profile if you ever forget your passcode. A backup file is your safety net. And when you step away, tap Lock at the top of the page."
      },
      {
       "k": "flow",
@@ -20225,7 +20245,7 @@ window.GG_LEARN = {
          "For the stories you want to pass on"
         ]
        ],
-       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide."
+       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide. Health and Ability, in Settings, with a private Living Sober choice, helps Sequoia fit your life."
       },
       {
        "k": "big",
@@ -20543,9 +20563,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "The fuller the color, the healthier that part.",
+       "h": "The brighter the glow, the stronger that part.",
        "sub": "Tap a part to work on it in your growth plan.",
-       "say": "First you see your tree. Each part is shaded by its score. The fuller the color, the healthier that part is right now. You can tap any part of the tree to go straight to it in your growth plan."
+       "say": "First you see your tree, Sequoia's own painting. Each part glows by its level. A full warm glow is Strong, a soft glow is Steady, and a new green light is a Growing Edge. You can tap any part of the tree to go straight to it in your growth plan."
       },
       {
        "k": "levels",
@@ -20559,37 +20579,37 @@ window.GG_LEARN = {
        "rows": [
         [
          "Roots",
-         "Strong, 8 of 10",
+         "Strong",
          "#5F7D48"
         ],
         [
          "Trunk",
-         "Steady, 7 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Bark",
-         "Steady, 6 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Branches",
-         "Growing Edge, 4 of 10",
+         "Growing Edge",
          "#B8612F"
         ],
         [
          "Leaves",
-         "Steady, 5 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Fruit",
-         "Strong, 9 of 10",
+         "Strong",
          "#5F7D48"
         ]
        ],
        "tap": 3,
-       "say": "Under the tree, each part shows its level and its score, like Steady, seven of ten. If you answered Not sure, or skipped, every question in a part, it says Not sure yet. That is fine. Under a Growing Edge, Sequoia adds a line: this growing edge is where the next growth begins."
+       "say": "Beside the tree, each part shows its level in words, like Steady. If you answered Not sure, or skipped, every question in a part, it says Not sure yet. That is fine. Under a Growing Edge, Sequoia adds a line: this growing edge is where the next growth begins."
       },
       {
        "k": "big",
@@ -20674,7 +20694,7 @@ window.GG_LEARN = {
         "h": "Your Growth Over Time",
         "p": "Days Tended, Week by Week, and Your Parts Over Time."
        },
-       "say": "Good. Over time, the Season tab shows how your tree is growing, in a card called Your Growth Over Time. It has two simple graphs."
+       "say": "Good. Over time, the Season tab shows how your tree is growing. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. Below it, a card called Your Growth Over Time has two simple graphs."
       },
       {
        "k": "points",
@@ -20886,8 +20906,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your tree rests, and it keeps living.",
-       "sub": "Tend it once, and watch it wake up.",
-       "say": "Your tree on Today is gentle. If a few days go by, it gets a little dry, then it droops, then it rests bare. It keeps living, and it keeps every ring. Nothing is lost. Tend it once, and watch it wake up. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
+       "sub": "Tend it once, and the sun comes back.",
+       "say": "Your tree on Today is gentle. If a few days go by, it rests in a soft morning mist. It keeps living, and it keeps every ring. Everything you grew stays. Tend it once, and the sun comes back. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days. And if a check-in shows you are losing hope or feeling alone, your tree holds still with you for two weeks, while you get support."
       },
       {
        "k": "points",
@@ -21453,8 +21473,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Please remember your passcode.",
-       "sub": "No one, including Grounded, can recover it.",
-       "say": "Please remember your passcode. It never leaves this device, so no one, including Grounded, can recover it. Many people write it down and keep it somewhere safe at home."
+       "sub": "Your Root Words are your way back in.",
+       "say": "Please remember your passcode. It never leaves this device. When you set it, Sequoia shows your twelve Root Words, once. Many people write them down and keep them somewhere safe at home. If you ever forget your passcode, tap Forgot your passcode, then Use My Root Words, and choose a new one."
       },
       {
        "k": "points",
@@ -27363,11 +27383,15 @@ window.GG_LEARN = {
          "A private notebook for life after high school"
         ],
         [
+         "When Life Changes",
+         "Guides, each with two short videos"
+        ],
+        [
          "A tree that grows",
          "Levels, milestones, and rings"
         ]
        ],
-       "say": "Here is what Pine gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. And a tree that grows as you tend it, with levels, milestones, and a new ring every season."
+       "say": "Here is what Pine gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Next Steps, a private notebook for your goals and your plans after high school. When Life Changes, guides for the seasons of high school, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, helps Pine fit your body and your health."
       },
       {
        "k": "big",
@@ -27385,6 +27409,7 @@ window.GG_LEARN = {
         "Season",
         "Growth Plan",
         "Next Steps",
+        "When Life Changes",
         "Learn"
        ],
        "tap": 0,
@@ -27392,7 +27417,7 @@ window.GG_LEARN = {
         "h": "Where to begin",
         "p": "Start a check-in. Your tree and your practices grow from there."
        },
-       "say": "Pine has six tabs. Today, Week, Season, Growth Plan, Next Steps, and Learn. The best place to begin is a check-in. Your tree, and your daily practices, grow from there."
+       "say": "Pine has seven tabs. Today, Week, Season, Growth Plan, Next Steps, When Life Changes, and Learn. The best place to begin is a check-in. Your tree, and your daily practices, grow from there."
       },
       {
        "k": "big",
@@ -27668,9 +27693,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "The fuller the color, the healthier that part.",
+       "h": "The brighter the glow, the stronger that part.",
        "sub": "Tap a part to tend it in your growth plan.",
-       "say": "First you see your tree. Each part is shaded by its score. The fuller the color, the healthier that part is right now. Tap any part to go straight to it in your growth plan."
+       "say": "First you see your tree, Pine's own painting. Each part glows by its level. A full warm glow is Strong, a soft glow is Steady, and a new green light is a Growing Edge. Tap any part to go straight to it in your growth plan."
       },
       {
        "k": "levels",
@@ -27684,37 +27709,37 @@ window.GG_LEARN = {
        "rows": [
         [
          "Roots",
-         "Steady, 6 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Trunk",
-         "Strong, 8 of 10",
+         "Strong",
          "#5F7D48"
         ],
         [
          "Bark",
-         "Growing Edge, 4 of 10",
+         "Growing Edge",
          "#B8612F"
         ],
         [
          "Branches",
-         "Strong, 9 of 10",
+         "Strong",
          "#5F7D48"
         ],
         [
          "Leaves",
-         "Steady, 5 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Fruit",
-         "Steady, 7 of 10",
+         "Steady",
          "#8B5E1A"
         ]
        ],
        "tap": 2,
-       "say": "Under the tree, each part shows its level and its score, like Steady, six of ten. If you answered Not sure, or skipped every question in a part, it says Not sure yet. That is fine. You can come back to it next time."
+       "say": "Beside the tree, each part shows its level in words, like Steady. If you answered Not sure, or skipped every question in a part, it says Not sure yet. That is fine. You can come back to it next time."
       },
       {
        "k": "big",
@@ -27794,7 +27819,7 @@ window.GG_LEARN = {
          "Same grades, same kind of check-in"
         ]
        ],
-       "say": "The Season tab shows how your tree is growing. Your Parts Over Time gives each part a small chart, with dashed lines at Steady and Strong. After your second check-in, each part says Grew, Dipped, or Same. Pine only compares check-ins from the same grades, so the questions match. And check-ins from Aspen or Oak stay with you, labeled From Aspen or From Oak, and never mixed in."
+       "say": "The Season tab shows how your tree is growing. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. Your Parts Over Time gives each part a small chart, with dashed lines at Steady and Strong. After your second check-in, each part says Grew, Dipped, or Same. Pine only compares check-ins from the same grades, so the questions match. And check-ins from Aspen or Oak stay with you, labeled From Aspen or From Oak, and never mixed in."
       },
       {
        "k": "big",
@@ -27952,7 +27977,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Rough stretch? Your tree holds still.",
        "sub": "For two weeks, nothing shows trouble.",
-       "say": "And if a check-in says you are losing hope or feeling alone, your tree holds still with you for two weeks. Hardy rests, and nothing shows trouble, while you get support. Missed days never shame you here. Just pick up today."
+       "say": "And if a check-in says you are losing hope or feeling alone, your tree holds still with you for two weeks. Hardy rests, and nothing shows trouble, while you get support. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days. Every day you come back is welcome. Just pick up today."
       },
       {
        "k": "big",
@@ -28173,8 +28198,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Please remember your passcode.",
-       "sub": "No one, including Grounded, can open your answers without it.",
-       "say": "Please remember your passcode. It never leaves this device, so no one, including Grounded, can recover it. If you forget it, a grown-up can clear your answers so you can start fresh with a new passcode. They are erased, never read."
+       "sub": "Your Root Words are your way back in.",
+       "say": "Please remember your passcode. It never leaves this device. When you set it, Pine shows your twelve Root Words, once. Keep them somewhere safe. If you forget your passcode, tap Forgot your passcode, then Use My Root Words, and choose a new one. If you have neither, a grown-up can clear your answers so you can start fresh with a new passcode. They are erased, never read."
       },
       {
        "k": "points",
@@ -28422,7 +28447,7 @@ window.GG_LEARN = {
          "If Oak fits you better"
         ]
        ],
-       "say": "Good. In grade twelve, Pine asks what you want next. You can stay in Pine as long as it fits. Or, once you are eighteen, tap Start My Birch. It makes your own Birch profile, the tree for ages eighteen to twenty six, and brings your Pine check-ins, labeled From Pine, your Next Steps notebook, and your Faith or Plain choice along. Pine keeps its own copy. If Oak fits you better, Start My Oak is there too. It is always your choice, and nothing is ever lost."
+       "say": "Good. When you turn eighteen, or in grade twelve, Pine asks what you want next. You can stay in Pine as long as it fits. Or, once you are eighteen, tap Start My Birch. It makes your own Birch profile, the tree for ages eighteen to twenty six, and brings your Pine check-ins, labeled From Pine, your Next Steps notebook, and your Faith or Plain choice along. Pine keeps its own copy. If Oak fits you better, Start My Oak is there too. It is always your choice, and nothing is ever lost."
       },
       {
        "k": "big",
@@ -32767,11 +32792,15 @@ window.GG_LEARN = {
          "A private notebook and Skills I’ve Got"
         ],
         [
+         "When Life Changes",
+         "Guides, each with two short videos"
+        ],
+        [
          "A tree that grows",
          "Levels, milestones, and rings"
         ]
        ],
-       "say": "Here is what Birch gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. And a tree that grows as you tend it, with levels, milestones, and a new ring every season."
+       "say": "Here is what Birch gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life."
       },
       {
        "k": "big",
@@ -32789,6 +32818,7 @@ window.GG_LEARN = {
         "Season",
         "Growth Plan",
         "Groundwork",
+        "When Life Changes",
         "Learn"
        ],
        "tap": 0,
@@ -32796,7 +32826,7 @@ window.GG_LEARN = {
         "h": "Where to begin",
         "p": "Start a check-in. Your tree and your practices grow from there."
        },
-       "say": "Birch has six tabs. Today, Week, Season, Growth Plan, Groundwork, and Learn. The best place to begin is a check-in. Your tree and your daily practices grow from there."
+       "say": "Birch has seven tabs. Today, Week, Season, Growth Plan, Groundwork, When Life Changes, and Learn. The best place to begin is a check-in. Your tree and your daily practices grow from there."
       },
       {
        "k": "big",
@@ -33072,9 +33102,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "The fuller the color, the healthier that part.",
+       "h": "The brighter the glow, the stronger that part.",
        "sub": "Tap a part to tend it in your growth plan.",
-       "say": "First you see your tree. Each part is shaded by its score. The fuller the color, the healthier that part is right now. Tap any part to go straight to it in your growth plan."
+       "say": "First you see your tree, Birch's own painting. Each part glows by its level. A full warm glow is Strong, a soft glow is Steady, and a new green light is a Growing Edge. Tap any part to go straight to it in your growth plan."
       },
       {
        "k": "levels",
@@ -33088,37 +33118,37 @@ window.GG_LEARN = {
        "rows": [
         [
          "Roots",
-         "Steady, 6 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Trunk",
-         "Steady, 5 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Bark",
-         "Growing Edge, 4 of 10",
+         "Growing Edge",
          "#B8612F"
         ],
         [
          "Branches",
-         "Strong, 8 of 10",
+         "Strong",
          "#5F7D48"
         ],
         [
          "Leaves",
-         "Steady, 6 of 10",
+         "Steady",
          "#8B5E1A"
         ],
         [
          "Fruit",
-         "Strong, 9 of 10",
+         "Strong",
          "#5F7D48"
         ]
        ],
        "tap": 2,
-       "say": "Under the tree, each part shows its level and its score, like Steady, six of ten. If you answered Not sure, or skipped every question in a part, it says Not sure yet. That is fine. You can come back to it next time."
+       "say": "Beside the tree, each part shows its level in words, like Steady. If you answered Not sure, or skipped every question in a part, it says Not sure yet. That is fine. You can come back to it next time."
       },
       {
        "k": "big",
@@ -33178,7 +33208,7 @@ window.GG_LEARN = {
          "The next full check-in adds it"
         ]
        ],
-       "say": "Good. A season is twelve weeks. It begins with your first full check-in. At the end of the season, another full check-in adds a ring to your tree, just like a real birch. The Season tab shows each part over time, and after your second check-in, whether it grew, dipped, or stayed the same."
+       "say": "Good. A season is twelve weeks. It begins with your first full check-in. At the end of the season, another full check-in adds a ring to your tree, just like a real birch. At the top of Season, Then and Now shows an earlier check-in beside today, with a kind line naming what grew. The Season tab also shows each part over time, and after your second check-in, whether it grew, dipped, or stayed the same."
       },
       {
        "k": "points",
@@ -33359,7 +33389,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Rough stretch? Your tree holds still.",
        "sub": "For two weeks, nothing shows trouble.",
-       "say": "And if a check-in says you are losing hope or feeling alone, your tree holds still with you for two weeks. Hardy rests, and nothing shows trouble, while you get support. Moves, new jobs, and new babies break routines. Missed days never shame you here. Just pick up today."
+       "say": "And if a check-in says you are losing hope or feeling alone, your tree holds still with you for two weeks. Hardy rests, and nothing shows trouble, while you get support. Moves, new jobs, and new babies break routines. On a hard week, tap Rest Week on Today, and your tree rests warm and still for seven days. Every day you come back is welcome. Just pick up today."
       },
       {
        "k": "big",
@@ -33603,8 +33633,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Please remember your passcode.",
-       "sub": "No one, including Grounded, can open your answers without it.",
-       "say": "Please remember your passcode. It never leaves this device, so no one, including Grounded, can recover it. Keep it somewhere safe that only you can reach."
+       "sub": "Your Root Words are your way back in.",
+       "say": "Please remember your passcode. It never leaves this device. When you set it, Birch shows your twelve Root Words, once. If you ever forget your passcode, tap Forgot your passcode, then Use My Root Words, and choose a new one. Keep both somewhere safe that only you can reach."
       },
       {
        "k": "points",
@@ -33807,7 +33837,7 @@ window.GG_LEARN = {
       },
       {
        "k": "flow",
-       "h": "From 25, you choose",
+       "h": "At 26, you choose",
        "steps": [
         [
          "Stay in Birch",
@@ -33822,7 +33852,7 @@ window.GG_LEARN = {
          "And prints whole"
         ]
        ],
-       "say": "Good. Birch is built for eighteen to twenty six, and Oak for adults twenty five to sixty. From twenty five, Birch shows a gentle card, Move My Tree to Oak. You can stay in Birch as long as it fits. If you move, the same profile switches to Oak, and your rings come along, labeled From Birch. Groundwork stays in Birch, and you can print it whole. It is always your choice, and nothing is ever lost."
+       "say": "Good. Birch is built for eighteen to twenty six, and Oak for adults twenty six to sixty. Add your birthday in Settings if you like, and on your twenty sixth birthday, Birch shows a gentle card, Move My Tree to Oak. You can stay in Birch as long as it fits. If you move, the same profile switches to Oak, and your rings come along, labeled From Birch. Groundwork stays in Birch, and you can print it whole. It is always your choice, and nothing is ever lost."
       },
       {
        "k": "big",
@@ -39566,7 +39596,7 @@ window.GG_LEARN = {
        "k": "trees",
        "h": "Each tree is shaped by its stage",
        "grove": true,
-       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in their own app. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, and Oak for grown-ups."
+       "say": "Once people are added, their trees appear in the grove, shaped by their stage of life. Each person tends their tree in their own app. Maple for kids, Aspen for middle schoolers, Pine for high schoolers, Birch for young adults, Oak for grown-ups, and Sequoia for sixty and up."
       },
       {
        "k": "card",
@@ -41606,11 +41636,11 @@ window.GG_LEARN = {
          "Stays on this device"
         ],
         [
-         "No one can recover it",
-         "So keep it somewhere safe"
+         "Twelve Root Words",
+         "Shown once, kept somewhere safe"
         ]
        ],
-       "say": "Those are locked with the grove passcode. The lock is on when you plant a grove, as recommended. The passcode stays on this device. Grow With Grounded never sees it, and cannot recover it. So keep it somewhere safe, and share it only with the people who lead the grove."
+       "say": "Those are locked with the grove passcode. The lock is on when you plant a grove, as recommended. The passcode stays on this device, and Grow With Grounded never sees it. When you choose it, The Grove shows the grove's twelve Root Words, once. Keep the passcode and the Root Words somewhere safe, and share them only with the people who lead the grove."
       },
       {
        "k": "card",
@@ -41627,7 +41657,7 @@ window.GG_LEARN = {
         "Unlock",
         "Forgot the passcode?"
        ],
-       "say": "When the grove is locked, the check-in and the plan show a lock. Tap Unlock, and enter the passcode. When you are done, tap Lock at the top, so the next person who picks up the device sees only the open parts. If the passcode is ever lost, the locked part starts fresh, and the practices you did together stay."
+       "say": "When the grove is locked, the check-in and the plan show a lock. Tap Unlock, and enter the passcode. When you are done, tap Lock at the top, so the next person who picks up the device sees only the open parts. If the passcode is ever lost, tap Forgot the passcode, then Use Our Root Words, and choose a new passcode, with everything kept."
       },
       {
        "k": "points",
@@ -41711,15 +41741,15 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "Who can recover a lost grove passcode?",
+       "q": "What opens the grove if the passcode is lost?",
        "opts": [
         "Grow With Grounded",
-        "No one, so keep it somewhere safe",
+        "The grove’s twelve Root Words",
         "Anyone who asks"
        ],
        "right": 1,
-       "why": "The passcode stays on the device. Grow With Grounded never sees it and cannot recover it.",
-       "say": "Last question. Who can recover a lost grove passcode?"
+       "why": "Use Our Root Words sets a new passcode and keeps everything. Grow With Grounded never sees either one.",
+       "say": "Last question. What opens the grove if the passcode is lost?"
       }
      ]
     }

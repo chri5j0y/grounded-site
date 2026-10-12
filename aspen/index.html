@@ -1028,7 +1028,7 @@ const PLAIN_PR = {
 };
 
 </script>
-<script src="guides.js?v=b789"></script>
+<script src="guides.js?v=b793"></script>
 <script src="life.js?v=b782"></script>
 <script>
 const $ = id => document.getElementById(id);
@@ -1342,7 +1342,7 @@ function artGrowthHtml(s, sel){
 function renderHome(){
   $('view-home').innerHTML = `
     <h2>One tree, six parts</h2>
-    <p class="lede">Aspen is a check-in for spiritual and emotional resilience in grades 6 to 8. A student looks at six parts of their own tree, tends it with small daily practices, and adds a growth ring each season.</p>
+    <p class="lede">Aspen is a check-in for spiritual and emotional resilience in grades 6 to 8. A student looks at six parts of their own tree, tends it with small daily practices, and adds a growth ring each season. When Life Changes guides and Learn videos walk beside them along the way.</p>
     <div class="panel as-how" id="as-how"></div>
     <div class="parts">${PARTS.map(p=>`<div class="part-tile" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><b>${p.name}</b><span>${p.sub}</span></div>`).join('')}</div>
     <div class="steps">
@@ -1877,7 +1877,7 @@ function renderHelpPlan(){
   const s = me();
   $('view-helpplan').innerHTML = `<button class="back" onclick="me() ? aspTab('plan') : go('students')">&larr; Back to my growth plan</button>
     <h2>How growth plans work</h2>
-    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a growing edge. There's no limit, and you can write your own. After a check-in, Aspen points to two parts that could use some care, but you can choose any.</p></div>
+    <div class="panel"><h3>Pick what fits</h3><p>Your tree has six parts. Aspen suggests about 3 practices for a part that's Strong, 4 for Steady, and 5 for a growing edge. There's no limit, and you can write your own. After a check-in, Aspen points to two parts to tend first, and you can choose any.</p></div>
     <div class="panel"><h3>Learn more</h3><p>Every practice has a <b>Learn more</b> button. It tells you why it helps, how to do it step by step, what to do if it's hard, and a way to try it with a grown-up.</p></div>
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
     <div class="panel"><h3>Grow at your pace</h3><p>Miss a few days and your tree rests in a soft mist, and everything you grew stays. One practice brings the light back, and a few days bring it all the way back.</p></div>
@@ -1976,6 +1976,7 @@ function renderGrown(){
       <p>Each part gets a score from 1 to 10 and a level: Strong (8 to 10), Steady (5 to 7), or Growing Edge (1 to 4). Students see the levels too, with a reminder that a growing edge is where the next growth begins. "Not sure" never counts against a part. Some questions are worded the other way around, like "Do you feel lonely or left out?", so for those a "Not really" is the strong answer. Rings show whether each part grew, dipped, or stayed the same since the last ring. Rings saved before the questions were updated in 2026 are kept and labeled as earlier, and they are never compared with newer rings.</p>
       <p>Roots questions and a few practices come in two wordings, and a grown-up chooses when a student is added. Faith wording, the starting choice, names God, prayer, and faith as one door among several. Plain wording asks the same things without religious words. Scores are the same either way, so rings compare across both. You can change it any time from the student's page here.</p>
       <p>Aspen follows the Grounded tree standard, the same one behind Maple, Pine, Birch, Oak, and Sequoia, so every check-in measures the same six parts the same way, written for each grade.</p>
+      <p>Inside Aspen: the check-in, the growth plan and daily tending, When Life Changes guides with two short videos each, Learn videos with tabs and search on top, Read Aloud, and Save or Print. Their Health and Ability, chosen together with a grown-up who agreed, opens guides and practices that fit a disability, illness, or difference, and Someone in Our Family Drinks or Uses opens gentle guides for that season too. Everything stays private on this device.</p>
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
@@ -2006,9 +2007,9 @@ function renderGrown(){
         <li><a href="https://chri5j0y.substack.com/p/if-she-is-still-here" target="_blank" rel="noopener">If She Is Still Here</a>: on not waiting for tomorrow.</li>
         <li><a href="https://chri5j0y.substack.com/p/welcome-home" target="_blank" rel="noopener">Welcome Home</a>: a quiet moment at the end of a life.</li>
       </ul>
-      <a class="btn small" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a>
+      <div class="row"><a class="btn small" href="https://growwithgrounded.com/stories.html">Open Grounded Stories</a><a class="btn ghost small" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></div>
     </div>
-    <div class="panel"><h3>When Life Changes</h3><p>58 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, scary news, and health and ability. Each has a quick card and a full "Talking It Through" guide with trusted sources.</p><button class="btn teal small" onclick="go('life')">Open When Life Changes</button></div>`;
+    <div class="panel"><h3>When Life Changes</h3><p>64 guides for talking with a middle schooler about hard things, from grief and divorce to group chats, AI chatbots, scary news, and health and ability, in group cards with tabs and search on top. Each has a quick card, a full "Talking It Through" guide with trusted sources, and two short videos: For You, for the student, and For the Grown-up.</p><button class="btn teal small" onclick="go('life')">Open When Life Changes</button></div>`;
 }
 let gSel = {};
 function openG(id){ CUR = id; go('gstudent'); }
@@ -2646,9 +2647,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b791" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b791';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b793';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b791" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b791';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b791" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b793';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b793" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

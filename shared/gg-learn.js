@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b791';
+  var V = 'b793';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -907,9 +907,9 @@
   }
 
   /* ---------------- Get Set Up: a good voice (first in every Learn tab and the Field Guide) ---------------- */
-  var SETUP = { id: 'gg-setup-voice', n: 1, title: 'Get Set Up: A Good Voice', mins: 4, blurb: 'Make every lesson sound warm and clear on this device.', scenes: [
-    { k: 'title', hero: 'grove', eyebrow: 'Get Set Up', h: 'A Good Voice', sub: 'A few minutes now, and every lesson sounds better.', say: 'Before you watch, let us make sure lessons sound good on this device. It takes a few minutes, and you only do it once.' },
-    { k: 'big', h: 'Every lesson is read by your device\u2019s own voice.', sub: 'The voice lives on your phone or computer.', say: 'Every lesson, and every Read Aloud button, uses your device\u2019s own voice. Some devices start with a basic voice that sounds robotic. Many computers and Android phones have natural voices waiting to be downloaded.' },
+  var SETUP = { id: 'gg-setup-voice', n: 1, title: 'Get Set Up: A Good Voice', mins: 4, blurb: 'Make Read Aloud sound warm and clear on this device.', scenes: [
+    { k: 'title', hero: 'grove', eyebrow: 'Get Set Up', h: 'A Good Voice', sub: 'A few minutes now, and Read Aloud sounds better.', say: 'Our videos play warm recorded voices. Read Aloud buttons use your device\u2019s own voice, so let us make sure it sounds good. It takes a few minutes, and you only do it once.' },
+    { k: 'big', h: 'Read Aloud uses your device\u2019s own voice.', sub: 'The voice lives on your phone or computer.', say: 'Our videos play recorded voices, and when a recording is missing, your device\u2019s own voice reads that sentence. Every Read Aloud button uses your device\u2019s own voice too. Some devices start with a basic voice that sounds robotic. Many computers and Android phones have natural voices waiting to be downloaded.' },
     { k: 'levels', levels: [['Premium', 'Sounds like a person', '#5F7D48'], ['Enhanced', 'Clear and warm', '#8B5E1A'], ['Basic', 'Robotic', '#B8612F']], say: 'Look for a voice marked Premium. Enhanced is good too, and on Windows, Natural. A basic voice works, but it can make a lesson hard to enjoy.' },
     { k: 'points', h: 'On an iPhone or iPad', items: [['Pick the clearest voice', 'In the Voice menu, under the video'], ['Try Slower', 'If the voice feels rushed'], ['Most natural of all', 'A computer, in Microsoft Edge']], say: 'On an iPhone or iPad, web pages use Apple\u2019s built-in voices for now, and they are already on your device. Open the Voice menu under the video, and pick the voice that sounds clearest to you. If it feels rushed, choose Slower. And for the most natural voices of all, watch on a computer in Microsoft Edge.' },
     { k: 'flow', h: 'On a Mac', steps: [['Best: Microsoft Edge', 'Its natural voices sound the most like a person'], ['Or System Settings', 'Accessibility, then Read & Speak'], ['Manage Voices', 'Download Premium or Enhanced']], say: 'On a Mac, the most natural voices are in Microsoft Edge. Or, open System Settings, then Accessibility. Open Read and Speak, then Manage Voices, and download a voice marked Premium or Enhanced.' },
@@ -927,7 +927,7 @@
     var col = I ? ({ great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' })[I.grade] : '#C07A26';
     var said = !I ? 'Open Voice Setup to get a good voice on this device.' : GGRead.saidText ? GGRead.saidText(I) : '';
     return '<div class="ggl-card ggl-voice" style="border-left:6px solid ' + col + '"><h3>Before You Watch: Set Up a Good Voice</h3>'
-      + '<p class="ggl-muted" style="margin:6px 0 0">Lessons and videos are read aloud by your device\u2019s own voice. A Premium, Enhanced, or Natural voice makes them sound like a person instead of a robot.</p>'
+      + '<p class="ggl-muted" style="margin:6px 0 0">Read Aloud uses your device\u2019s own voice, and it fills in when a recorded clip is missing. A Premium, Enhanced, or Natural voice sounds the most like a person.</p>'
       + '<p style="margin:10px 0 0"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:' + col + ';margin-right:8px;vertical-align:-1px"></span><b>' + (I && I.name ? 'Your voice: ' + esc(I.name) + '.' : 'Your voice') + '</b> ' + esc(said) + '</p>'
       + '<div class="ggl-row"><button class="ggl-btn' + (I && I.grade === 'great' ? '' : ' pri') + '" data-l="vcheck" data-act="ln-vcheck">Voice Check</button><a class="ggl-btn quiet" href="' + url('/voice-setup.html') + '" target="_blank" rel="noopener">Voice Setup Guide</a></div></div>';
   }
@@ -976,7 +976,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b790', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b789', grove: '/grove/guide-videos.js?v=b790' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b793', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b793', grove: '/grove/guide-videos.js?v=b790' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -990,7 +990,7 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b788', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b793', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
@@ -1009,7 +1009,7 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b787'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=b793'), function () { return !!window.GGPrint; }); }
   // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
   function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
   function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }

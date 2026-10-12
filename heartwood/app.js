@@ -410,7 +410,7 @@
         (setup() ? '' : '<p class="btv-small gm-newphone">New phone, or setting up again? ' + btn('hw-load', 'Load a Backup', { cls: 'btn-secondary ff-sm' }) + '</p>') + '</div>';
     }
     return '<div class="ff-card gold"><h2>Welcome</h2>' +
-      '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, and your First-Year Check-in.</p>' +
+      '<p>Heartwood is a private place for the two of you, in two parts. <b>Before the Vows</b> is for the season before the wedding: a check-in where each of you answers on your own, about 20 minutes each, in twelve areas of married life, then Talk About This, your Strengths and Growing Edges, The Couple Workbook, and The Money Map. <b>After the Vows</b> opens after your wedding day, with Practices for Two, a Monthly Check-in for Two, your First-Year Check-in, and Your Tree, Then Your Grove. A Week Card shares what you choose with Chris and Kayti, and Learn has short videos for the two of you.</p>' +
       '<p>It is a conversation tool. Every answer is simply a place to start talking.</p>' +
       '<p class="ff-private">' + ICON_LOCK + '<span>Private by design. Each of you answers behind your own passcode, and everything stays right here on this device.</span></p>' +
       (pc ? '<div class="btv-note"><p><b>A card from your partner is here.</b> Open it with the word the two of you chose.</p>' + btn('open-pending', 'Open the Card', { cls: 'btn-primary ff-sm' }) + '</div>' : '') +
@@ -1321,7 +1321,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b791', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b784', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b793', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

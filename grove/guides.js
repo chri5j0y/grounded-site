@@ -3003,6 +3003,18 @@ const TOPICS = [
    [
     "Coalition to Support Grieving Students",
     "https://grievingstudents.org/"
+   ],
+   [
+    "Planning a Farewell by Grow With Grounded",
+    "https://growwithgrounded.com/planning-a-farewell.html"
+   ],
+   [
+    "Obituary Helper by Grow With Grounded",
+    "https://growwithgrounded.com/obituary-helper.html"
+   ],
+   [
+    "Eulogy Helper by Grow With Grounded",
+    "https://growwithgrounded.com/eulogy-helper.html"
    ]
   ],
   "sources": [

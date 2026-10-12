@@ -565,7 +565,7 @@ function viewSetup() {
     h += `<p class="gv-err" id="gv-serr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="create-grove">Plant This Grove</button>${G ? '<button class="btn btn-line btn-sm" data-act="cancel-setup">Cancel</button>' : ''}</div></div>`;
   }
   if (!G) h += `<div class="card"><h3>From Your Guide's Visit</h3><p>Did a Grove Guide visit your family and send your check-in and plan? Open them here with the link or message and the 8-letter code.</p><button class="btn btn-line btn-sm" data-act="gvload">From Your Guide's Visit</button></div>`;
-  if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in their own app: Oak, Birch, Sequoia, Pine, Aspen, or Maple. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
+  if (!G) h += `<div class="card"><h3>Your tree is yours. The grove is ours.</h3><p>Everyone tends their own tree in their own app: Oak, Birch, Sequoia, Pine, Aspen, Maple, or Willow. The Grove is shared ground: check in together, make a plan together, and do a few things side by side.</p></div>`;
   return h + helpCardHtml();
 }
 function switchHtml(act, on, title, sub) { return `<div class="gv-joinrow"><button type="button" class="gv-switch" role="switch" aria-checked="${!!on}" data-act="${act}"><span class="gv-track" aria-hidden="true"></span><span><b>${esc(title)}</b><small>${esc(sub)}</small></span></button></div>`; }
@@ -1472,7 +1472,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b787').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b793').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1498,7 +1498,7 @@ function viewHow() {
   ${window.GGTreeArt ? `<div class="card gv-howart"><h3>The Six Parts</h3>${GGTreeArt.howItWorks(null, { app: 'grove', parts: artParts(true), label: 'The grove painting with six glowing parts to tap' })}</div>` : ''}
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
-    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, and <a class="text-link" href="/maple/">Maple</a> for kids. Personal check-ins, practices, and journals live there, private to each person.</p>
+    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, <a class="text-link" href="/maple/">Maple</a> for kids, and <a class="text-link" href="/willow/">Willow</a> for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person.</p>
     <h3>Kinds of Grove</h3>
     <p>A grove can be a Family, a Classroom, a Faith Community, a Small or Discussion Group, or a Team or Workplace. The kind sets the words, the check-in questions, and the practices. One device holds up to six groves, each with its own name, kind, and lock.</p>
     <h3>Checking In Together</h3>
@@ -1521,6 +1521,8 @@ function viewHow() {
     <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('make')">Back up everything</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGBackupGo('pick')">Load a backup</button></div>
     <h3>When Life Changes Together</h3>
     <p>Guides for the changes a family, class, faith community, group, or team goes through together: a new baby or a move, illness and hospice, a loss, scary news, a hard day at school, a leader leaving, a hard season at work. Each has a view For the Group and a view For the Leader, two short videos, Together practices, and links to the guides in each person's own tree app. Picked for Us puts first the guides that fit what your grove shared in its check-in and What's Changed Lately.</p>
+    <h3>Learn Together</h3>
+    <p>Learn has short videos for every grove: Start Here, Using The Grove, The Six Parts, Together, and Leading a Grove for the people who lead one. Finishing Using The Grove, The Six Parts, Together, or Leading a Grove brings a Certificate of Completion. Do This Together has practices to do side by side, For Families, For Classes, For Faith Communities and Groups, and For Teams. A Faith version plays only in a grove that chose Faith words.</p>
     <h3>Coming later</h3>
     <p>Groves that stay in step across phones on their own, after careful review.</p>
   </div>`;

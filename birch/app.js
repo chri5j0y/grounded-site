@@ -908,7 +908,7 @@ function renderLC(mode) {
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the years of new ground</h2>
-      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes these years can bring. Each guide has two views: For You, when you are the one going through it, and For the Helper, for a parent, partner, friend, mentor, or anyone walking beside you. Most guides have two short videos too.</p>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes these years can bring. Each guide has two views: For You, when you are the one going through it, and For the Helper, for a parent, partner, friend, mentor, or anyone walking beside you. Every guide has two short videos too.</p>
     </div>
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: roommates, a first job, debt, a breakup..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
@@ -1741,9 +1741,9 @@ function bcSettingsHtml() {
     <section id="pn-set-sens"><h3>Optional Question</h3><p class="gt-small">One extra question about betting and gambling, on sports, online games, or anything else for money. It never counts toward a score, is never shared, and is never shown to a helper. Only you can turn it on.</p>
       <label class="gt-switch"><input type="checkbox"${sensOn() ? ' checked' : ''}${open ? '' : ' disabled'} onchange="setSens(this.checked)"> Ask me the optional question</label></section>
     <section id="pn-set-game"><h3>Your Tree: Steady or Hardy</h3>
-      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. Missed days rest in soft mist, and nothing is ever lost.<span class="steady-fit">${steadyFits() ? ' Steady fits you best right now.' : ''}</span></span></label>
+      <label class="gt-radio"><input type="radio" name="pn-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('steady')"><span><b>Steady</b>The gentle tree. Missed days rest in soft mist, and everything you grew stays.<span class="steady-fit">${steadyFits() ? ' Steady fits you best right now.' : ''}</span></span></label>
       <label class="gt-radio"><input type="radio" name="pn-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${s ? '' : ' disabled'} onchange="setPnMode('hardy')"><span><b>Hardy</b><span class="hardy-pitch">${steadyFits() ? '' : 'A little more challenge. '}</span>A part of your plan left untended for ${HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
-      <p class="gt-small">No streaks to lose and no leaderboards. After a hard check-in, the tree holds still for two weeks either way.</p></section>
+      <p class="gt-small">Your tree grows at your own pace, just for you. After a hard check-in, the tree holds still for two weeks either way.</p></section>
     ${helperSettingsHtml()}
     ${PROF && !HELP && window.GGP && GGP.moveOn ? GGP.moveOn.birthdayHtml(PROF.id, { section: 'bc-set-birthday', why: 'Only used to offer the step into Oak, built for adults 26 to 60, on your 26th birthday.' }) : ''}
     <section class="asp-see" id="bc-see"><h3>What Stays Private</h3>${BC_SEE}</section>

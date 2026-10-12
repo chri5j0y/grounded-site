@@ -8,7 +8,7 @@
 window.GG_LEARN_GUIDES = window.GG_LEARN_GUIDES || {};
 window.GG_LEARN_GUIDES.birch = {
  "title": "When Life Changes",
- "intro": "Two short videos for every guide. For You, if this is what you are facing. For the Helper, if you are walking beside someone who is. Nothing to finish, and a quiet check marks the ones you have watched.",
+ "intro": "Two short videos for every guide. For You, if this is what you are facing. For the Helper, if you are walking beside someone who is. Watch at your own pace, and a quiet check marks the ones you have watched.",
  "rings": [
   [
    "br-school",

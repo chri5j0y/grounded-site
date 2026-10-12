@@ -28,7 +28,7 @@ T.sick = {
   talk:["Being left out usually makes a middle schooler more worried, not less. Simple, true facts help them feel steady: what the illness is, what the doctors are doing, and what will change at home. You don't need every answer. \"I don't know yet, and I'll tell you when I do\" is honest and calming.","Watch that they don't slide into a caregiver role that belongs to adults. Keep some normal life going for them. If the illness moves toward dying, move to the \"When someone dies\" guide and include them in saying goodbye in ways they choose."],
   say:["\"Grandpa is very sick. The doctors are working hard, and we don't know yet how it will go.\"","\"You can ask me anything, even the scary questions.\"","\"Your job is still to be a kid. The grown-ups have the hard jobs.\""],
   avoid:["Promising \"everything will be fine.\"","Making a child a main caregiver.","Hiding big changes until they find out on their own."],
-  help:[L('Dougy Center','https://www.dougy.org/'),'Your hospital or hospice social worker or chaplain.','Your school counselor.'],
+  help:[L('Dougy Center','https://www.dougy.org/'),'Your hospital or hospice social worker or chaplain.','In hospice, '+L('Willow','https://growwithgrounded.com/willow/')+', Grounded\'s tree for the person and the people who love them.','Your school counselor.'],
   sources:[["Dougy Center","https://www.dougy.org/"]]
 };
 T.divorce = {

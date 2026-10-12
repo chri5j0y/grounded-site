@@ -1143,7 +1143,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Your safety comes first.",
 "sub": "Danger right now: 911.",
-"say": "Before anything else, your safety comes first. If their anger ever turns threatening, or you or the children feel afraid, step away and get help. If anyone is in danger right now, call 911. Oak's guide on domestic violence has more."
+"say": "Before anything else, your safety comes first. If their anger ever turns threatening, or you or the children feel afraid, step away and get help. If anyone is in danger right now, call 911. Oak's guide When Home Isn't Safe has more."
 },
 {
 "k": "big",
