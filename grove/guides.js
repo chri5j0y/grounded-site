@@ -2827,7 +2827,7 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first.",
    "Al-Anon and Alateen, for family members and teens affected by someone's drinking. NAMI HelpLine: 1-800-950-6264, for families living with mental illness (not a crisis line).",
    "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
    "An overdose, or danger right now: call 911.",
