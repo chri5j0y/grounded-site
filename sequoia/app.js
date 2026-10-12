@@ -1226,7 +1226,7 @@ function lcRenderList(mode) {
   if (!box) return;
   document.querySelectorAll('#' + mode + '-life .lc-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === st.ring));
   let html = st.ring === 'all' && !st.q ? lcPickedHtml(mode) : '', n = 0;
-  const sob = lcSober();
+  const sob = lcSober() || (st.q && window.GGLife ? GGLife.ring('sequoia') : null); // a search looks in every ring
   if (st.ring === 'sober' && !sob) st.ring = 'all';
   (sob ? [sob] : []).concat(LC_RINGS, LC_LIFE && st.ring === 'life' ? [LC_LIFE] : []).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
     const ts = LC_TOPICS.filter(t => (r.key === 'life' ? GGLifeKit.lifeOnly([t]).length : r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));

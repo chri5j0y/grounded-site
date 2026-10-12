@@ -4287,7 +4287,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Recovery means getting better.",
       "sub": "One day at a time.",
-      "say": "Recovery means someone is getting better from an illness, like addiction, or an illness in their mind. It takes a long time, and it happens one day at a time. Our whole family is part of it."
+      "say": "Recovery means someone is getting better and healing, from drinking or using, or from a struggle in their mind. It takes a long time, and it happens one day at a time. Our whole family is part of it."
      },
      {
       "k": "points",
@@ -4396,7 +4396,7 @@ window.GG_LEARN_GUIDES.grove = {
       "eyebrow": "When Life Changes Together",
       "h": "Recovery in the Family",
       "sub": "For the Leader",
-      "say": "This is for the grown-up leading a family where someone is in recovery from addiction or a mental illness, and for anyone leading a family support group."
+      "say": "This is for the grown-up leading a family where someone is in recovery, healing from drinking or using or from a mental illness, and for anyone leading a family support group."
      },
      {
       "k": "big",
@@ -4408,7 +4408,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "What children need to hear",
       "body": "You didn't cause it. You can't cure it. You can't control it.",
-      "say": "Children need simple, true words. It's an illness, and their parent is getting help. They didn't cause it, they can't cure it, and they can't control it. They can look after themselves by talking about their feelings and making healthy choices. And they never have to keep it secret."
+      "say": "Children need simple, true words. Their parent is healing, and getting help. They didn't cause it, they can't cure it, and they can't control it. They can look after themselves by talking about their feelings and making healthy choices. And they never have to keep it secret."
      },
      {
       "k": "points",
@@ -4431,7 +4431,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Sober fun together"
        ]
       ],
-      "say": "Recovery goes better when everyone has support. The person in recovery, with their plan and meetings. The grown-ups, through Al-Anon, NAMI family programs, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good, sober time together."
+      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through Al-Anon, NAMI family programs, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good, sober time together."
      },
      {
       "k": "big",

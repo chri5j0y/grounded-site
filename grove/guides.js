@@ -2707,11 +2707,15 @@ const TOPICS = [
   "id": "recovery",
   "title": "Recovery in the Family",
   "ring": "gw-illness",
+  "life": [
+   "sober"
+  ],
+  "sober": [],
   "kinds": [
    "family",
    "group"
   ],
-  "short": "When someone in the family is in recovery from addiction or mental illness: hope, honesty, support for all.",
+  "short": "When someone in the family is in recovery, healing from drinking or using or from mental illness: hope, honesty, support for all.",
   "keys": "recovery addiction sober sobriety rehab treatment drinking alcohol drugs opioids relapse aa na al-anon alateen mom in recovery dad in recovery coming home from treatment mental illness recovery family recovery one day at a time trust again",
   "parts": [
    "fruit",
@@ -2725,7 +2729,7 @@ const TOPICS = [
   ],
   "quick": [
    "Recovery is a path, not a single day. It often has ups and downs, and each step forward counts.",
-   "Children need to hear simple, true words: it's an illness, it's not their fault, and they can't fix it.",
+   "Children need to hear simple, true words: their parent is healing, it's not their fault, and they can't fix it.",
    "Family members heal too. Support for each person, not only the one in recovery, helps the whole family.",
    "Trust rebuilds slowly, through small promises kept. Patience and honesty go a long way."
   ],
@@ -2733,7 +2737,7 @@ const TOPICS = [
   "together": {
    "first": [
     "Talk together, with help from the treatment team if you can, about what recovery means for your family and what will change at home.",
-    "Tell children simply: their parent has an illness and is getting help; it's not their fault; they can't cause it, cure it, or control it.",
+    "Tell children simply: their parent is healing and getting help; it's not their fault; they didn't cause it, and they can't cure it or control it.",
     "Agree on a few house routines that support recovery, like meals together, regular sleep, and a home without alcohol or drugs.",
     "Make sure each family member has their own support: a group, a counselor, a trusted friend, or a faith community."
    ],
@@ -2750,10 +2754,10 @@ const TOPICS = [
     "“It's not your fault, and it's not your job to fix.”",
     "“We can talk about hard things in this family.”"
    ],
-   "people": "Try, to a child: “Dad has an illness called addiction. He's working hard to get better. You didn't cause it, and you can't fix it. You can always tell me how you feel.” From the person in recovery: “I'm sorry for the hurt. I'm working on it every day.” To each other: “What do you need from me this week?”"
+   "people": "Try, to a child: “Dad is healing from his drinking, and he's getting help. He's working hard every day. You didn't cause it, and you can't fix it. You can always tell me how you feel.” From the person in recovery: “I'm sorry for the hurt. I'm working on it every day.” To each other: “What do you need from me this week?”"
   },
   "kids": [
-   "“Mom has an illness that made her drink too much. She is getting help so she can get better.”",
+   "“Mom was drinking too much, and now she is getting help. She is healing, one day at a time.”",
    "“You didn't cause it. You can't make it go away, and you can't control it. That's grown-up work.”",
    "“You can love her and still feel mad or scared. All your feelings are okay.”",
    "“If you ever feel unsafe, tell me or another grown-up you trust right away.”",
@@ -2770,12 +2774,12 @@ const TOPICS = [
    "avoid": [
     "Keeping recovery a family secret children must guard.",
     "Expecting instant trust, or punishing forever.",
-    "Making a child the one who watches for relapse.",
+    "Making a child the one who watches for a slip.",
     "Treating a slip as the end of recovery, instead of a reason to reach for help."
    ],
    "help": [
     "Learn about recovery together, with the treatment team or a family program.",
-    "Support the person's recovery plan: meetings, appointments, medicines, and sleep.",
+    "Support the person's own path: their doctor, treatment, medication, therapy, peer group, and sleep.",
     "Find your own support: Al-Anon, NAMI Family-to-Family, a therapist, or a faith community.",
     "Give children their own place to talk: Alateen, a school counselor, or a children's program.",
     "Plan what to do if worry rises or a crisis comes, and keep help numbers handy.",
@@ -2823,7 +2827,7 @@ const TOPICS = [
    ]
   ],
   "reach": [
-   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health.",
+   "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first.",
    "Al-Anon and Alateen, for family members and teens affected by someone's drinking. NAMI HelpLine: 1-800-950-6264, for families living with mental illness (not a crisis line).",
    "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
    "An overdose, or danger right now: call 911.",

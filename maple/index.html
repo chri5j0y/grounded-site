@@ -3207,9 +3207,9 @@ function lifeFind(el) {
     after: '.life-tools', hide: ['#life-list', '.ring-chips'], accent: 'var(--btn-ink)' });
 }
 function renderLifeList() {
-  const sob = mpSober(), sc = $('mp-sober-chip');
-  if (LIFE.ring === 'sober' && !sob) LIFE.ring = 'all';
-  if (sc) sc.innerHTML = sob ? `<button class="ring-chip" style="--rc:${sob.color}" data-ring="sober" onclick="setLifeRing('sober')">${esc(sob.name)}</button>` : '';
+  const sob0 = mpSober(), sob = sob0 || (LIFE.q && window.GGLife ? GGLife.ring('maple') : null), sc = $('mp-sober-chip'); // a search looks in every ring
+  if (LIFE.ring === 'sober' && !sob0) LIFE.ring = 'all';
+  if (sc) sc.innerHTML = sob0 ? `<button class="ring-chip" style="--rc:${sob.color}" data-ring="sober" onclick="setLifeRing('sober')">${esc(sob.name)}</button>` : '';
   document.querySelectorAll('.ring-chip').forEach(b => b.setAttribute('aria-pressed', b.dataset.ring === LIFE.ring));
   const rings = (sob ? [sob] : []).concat(RINGS).filter(r => r.key !== 'life' && (LIFE.ring === 'all' || r.key === LIFE.ring));
   let html = '', count = 0;

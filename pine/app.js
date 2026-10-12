@@ -1015,7 +1015,7 @@ function lcRenderList(mode) {
   // Picked for You: guides tagged for the teen's Health and Ability choice, first.
   const picks = st.ring === 'all' && !st.q && lifeOn() ? GGLife.picks('pine', LC_TOPICS).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean) : [];
   if (picks.length) html += ringBlock({ name: 'Picked for You', color: LC_LIFE.color, blurb: 'Guides that fit what you chose in Health and Ability. Every guide stays open to you.' }, picks, 'Picked for You');
-  const sob = lcSober();
+  const sob = lcSober() || (st.q && lifeOn() ? GGLife.ring('pine') : null); // a search looks in every ring
   (sob ? [sob] : []).concat(LC_RINGS).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
     const ts = LC_TOPICS.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q));
     if (!ts.length) return;

@@ -954,7 +954,7 @@ function lcListHtml() {
     const picks = lcPicks(6);
     if (picks.length) h += `<div class="gv-lc-ring gv-lc-picked" style="--rc:var(--gold)"><h3><i></i>Picked for Us</h3><p>Guides that fit ${esc(KW().we)} right now, from What's Changed Lately, our Growing Edges, and Who's in Our Circle. Every guide stays open.</p><div class="gv-lc-grid">${picks.map(lcCard).join('')}</div></div>`;
   }
-  lcRingsShown().filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => {
+  (st.q && !lcSoberOn() ? [SOBER_RING].concat(LC_RINGS) : lcRingsShown()).filter(r => st.ring === 'all' || r.key === st.ring).forEach(r => { // a search looks in every ring, Living Sober too
     const ts = LC.filter(t => (r.key === 'sober' ? lcIsSober(t) : t.ring === r.key) && lcMatches(t, st.q)); if (!ts.length) return;
     const ord = ts.filter(lcFits).concat(ts.filter(t => !lcFits(t)));
     n += ts.length;

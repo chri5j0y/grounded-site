@@ -204,7 +204,7 @@
       bark: 'When worry rises, take three slow breaths and come back to what is yours to tend today.',
       branches: 'Find one place where people understand, like Al-Anon, Nar-Anon, a family group, or a trusted friend.',
       roots: 'Give yourself a few quiet minutes each day that are only for you.',
-      trunk: 'Name one clear limit that keeps you and your home safe, and say it calmly and kindly.',
+      trunk: 'Name what gives your own life meaning in this season, and give it a little time each week.',
       fruit: 'Plan one good thing for yourself this week, whatever choices the person you love makes.'
     },
     safe: 'If you have been drinking every day or taking sedatives or opioids, talk with a doctor before you stop, so your body stays safe.',
