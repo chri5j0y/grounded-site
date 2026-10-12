@@ -945,7 +945,7 @@ function printGrowthPlanNow(sheetId) {
 const LC_RINGS = (window.PINE_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.PINE_GUIDES || {}).topics || [];
 const LCS = { client: { q: '', ring: 'all', open: null, persp: 'self', find: '' } };
-const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' ? LC_LIFE : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
+const lcRing = k => LC_RINGS.find(r => r.key === k) || (k === 'life' ? LC_LIFE : null) || (k === 'sober' && window.GGLife && GGLife.ring ? GGLife.ring('pine') : null) || { key: k, name: '', color: 'var(--gold)', blurb: '' };
 const lcPart = k => DOMAIN_BY_KEY[k];
 const lcEsc = s => escapeHtml(s == null ? '' : String(s));
 const lcFilled = () => LC_RINGS.filter(r => LC_TOPICS.some(t => t.ring === r.key));
