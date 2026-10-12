@@ -912,7 +912,7 @@ function lockScreen(mode, msg){
       <form id="lf"><label for="l1">Access code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
-      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who use Grounded tools with the people they serve: guided visits, tool guides, When Life Changes for every age, handouts, and session plans. Anything you write stays encrypted on your own device.</p>
+      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who walk with people using Grounded's tools: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For practitioners</b><span>Chaplains and doulas: $240 a year, or $24 a month. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
       <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
@@ -1502,6 +1502,7 @@ function vFieldHome(){
   ${gvOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(GVG().title)}</h3><p class="muted">${esc(GVG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="grove">${icon('grove')} Open</button></div></div>` : ''}
   ${htOpen() ? `<div class="card" style="margin-top:14px"><div class="spread"><div><h3>${esc(HTG().title)}</h3><p class="muted">${esc(HTG().lead)}</p></div><button class="btn btn-gold btn-sm" data-tab="talks">${icon('talk')} Open</button></div></div>` : ''}
   ${window.GGGv ? GGGv.homeCard() : ''}
+  ${FLD && FLD.storiesKey ? fgStoriesCard() : ''}
   ${fieldDue()}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
@@ -1980,7 +1981,7 @@ function vFounder(){
   const priceH = `  <div class="card"><h3>Private Pricing</h3><p class="muted">${esc(pr.intro)}</p>
    <div style="margin-top:8px">${pr.tiers.map(t => t.length < 2 || !t[1] ? `<h4 style="margin-top:14px">${esc(t[0])}</h4>` : `<div class="list-row"><div class="lr-main"><b>${esc(t[0])}</b></div><span>${esc(t[1])}</span></div>`).join('')}</div>
    ${pr.notes.map(n => `<p style="margin-top:10px"><b>${esc(n[0])}.</b> ${esc(n[1])}</p>`).join('')}</div>`;
-  const fieldH = () => `  <div class="card"><h3>What Guides See</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}${lgFieldRow()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Guide library yet.</p>'}</div>`;
+  const fieldH = () => `  <div class="card"><h3>What Guides See</h3>${FLD ? `${stFieldRow()}${gvFieldRow()}${htFieldRow()}${lgFieldRow()}${fgSeriesRows()}<p class="muted">Orientation first (version ${OR() ? OR().version : 0}, ${OR() ? OR().lessons.length : 0} lessons, ${OR() ? OR().quiz.items.length : 0} scenarios). Then this welcome:</p><p style="margin-top:8px"><b>${esc(FLD.welcome.title)}.</b></p>${FLD.welcome.body.map(t => `<p style="margin-top:8px">${esc(t)}</p>`).join('')}` : '<p class="muted">This device can\'t open the Guide library yet.</p>'}</div>`;
   const guidesH = () => `  ${FLD ? spFounderCard() : ''}
   ${FLD ? saFounderCard() : ''}
   ${FLD ? `<div class="card"><h3>Pine Guide</h3>${pnFieldRow()}</div>` : ''}
@@ -7922,6 +7923,15 @@ function lgCert(){
   fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree: 'house', name: D.name, title: C.title || LGM().title, body: C.body || C.line || 'Six lessons, practice scenarios across every age, and a signed agreement to walk with people living with illness or disability with presence and respect.', date: D.date, renew: st.renewBy, version: LGM().version, kind: 'training'}));
 }
 // ----- Founder: open or close this training to Guides (through Update a Library) -----
+// What Guides See (GWG BLD 793): the series a library update opens, shown read only, so every part of a Guide's Field Guide is listed in one place.
+function fgSeriesRows(){
+  const row = (name, on, note) => `<div class="list-row"><div class="lr-main"><b>${esc(name)}</b> <span class="pill ${on ? 'sage' : ''}">${on ? 'Open to Guides' : 'Staff and Founders only'}</span><br><small class="muted">${esc(note)}</small></div></div>`;
+  const ser = (S, name, note) => S ? row((S.forGuides && S.forGuides.title) || S.title || name, fgOpen(S.open), note) : '';
+  return (SGD() ? row(SGD().title || 'Support for Guides', true, 'Short practices and a page to read, for the Guide.') : '')
+    + (HPG() ? row(HPG().title || 'Hospital Guide', true, 'Its own tab, for everyone with the Guide library.') : '')
+    + ser(SHG(), 'Skills for Every Guide', 'In Learn once Orientation is done, with a Certificate of Completion for each ring. Set in the Guide library.')
+    + ser(SBG(), 'Walking with Someone Growing Sober', 'In Learn once Orientation is done, with a Certificate of Completion for each ring. Set in the Guide library.');
+}
 function lgFieldRow(){
   const S = LGG();
   if (!S) return `<p class="muted" style="margin-top:8px">Walking with Illness and Disability isn't in the Guide library yet. Add it with Update a Library.</p>`;
@@ -10324,7 +10334,7 @@ function vSettings(){
    <label class="f">Role</label><input type="text" data-set="role" value="${esc(s.role||'')}" placeholder="Founder, practitioner in training...">
    <label class="f">Lock automatically after</label><select data-set="autolock">${[2,5,10,15].map(m => `<option value="${m}" ${+s.autolock===m?'selected':''}>${m} minutes</option>`).join('')}<option value="0" ${!+s.autolock?'selected':''}>Only when my unlock time ends</option></select>
    <label class="f">Text Size</label><select data-set="scale">${[['1','Normal'],['1.12','Larger'],['1.25','Largest']].map(([v,l]) => `<option value="${v}" ${String(s.scale)===v?'selected':''}>${l}</option>`).join('')}</select></div>
-  <div class="card"><h3>Backup and Moving Devices</h3><p class="muted">One Grow With Grounded Backup file holds everything on this device: your Field Guide (sealed with your passcode, with every Founder and Staff record), plus any Grounded profiles, The Grove, and settings. Loading a backup combines it with what's here: new things are added, the newest version of anything edited on both devices is kept, and nothing is lost. Send a backup either direction, anytime. Older Field Guide backup files load here too.</p>
+  <div class="card"><h3>Backup and Moving Devices</h3><p class="muted">One Grow With Grounded Backup file holds everything on this device: your Field Guide (sealed with your passcode, with every Founder and Staff record), plus any Grounded profiles, The Grove, Heartwood, and settings. Loading a backup combines it with what's here: new things are added, the newest version of anything edited on both devices is kept, and nothing is lost. Send a backup either direction, anytime. Older Field Guide backup files load here too.</p>
    <p style="margin-top:8px">${DATA.lastBackup ? 'Last backup: ' + new Date(DATA.lastBackup).toLocaleString() : 'No backups yet.'}</p>
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Back Up Everything</button><label class="btn btn-line" style="cursor:pointer">Load a Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
   <div class="card"><h3>Change Passcode</h3><label class="f" for="cp0">Current passcode</label><input type="password" id="cp0" autocomplete="current-password"><label class="f" for="cp1">New passcode</label><input type="password" id="cp1" autocomplete="new-password"><label class="f" for="cp2">New passcode again</label><input type="password" id="cp2" autocomplete="new-password">
