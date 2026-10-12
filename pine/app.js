@@ -600,10 +600,10 @@ function askGrade(change, then) {
   wrap.innerHTML = `<div class="calm-box pn-box" role="dialog" aria-modal="true" aria-labelledby="pn-grade-title"><h2 id="pn-grade-title">${change ? 'Change your grade' : 'Which grade are you in?'}</h2>
     <p>Pine asks a few questions differently for grades 9 and 10 and for grades 11 and 12. ${change ? 'Your earlier check-ins stay, and compare only with check-ins from the same grades.' : 'You only need to answer this once. You can change it in Settings.'}</p>
     <div class="pn-grades">${G.map(g => `<button type="button" class="btn ${cur === g[0] ? 'btn-primary' : 'btn-secondary'}" onclick="setGrade('${g[0]}')">${escapeHtml(g[1])}</button>`).join('')}</div>
-    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="gradeClose()">Not now</button></div></div>`;
+    <div class="calm-row"><button type="button" class="btn btn-secondary" onclick="gradeClose()">Maybe later</button></div></div>`;
   document.body.appendChild(wrap);
   askGrade.then = then || null;
-  // Escape closes the dialog, just like Not now.
+  // Escape closes the dialog, just like Maybe later.
   askGrade.key = e => { if (e.key === 'Escape') { e.preventDefault(); gradeClose(); } };
   document.addEventListener('keydown', askGrade.key);
   const b = wrap.querySelector('.pn-grades button'); if (b) b.focus();
@@ -1416,7 +1416,7 @@ function vcCheck(force) {
   const intro = `<p>${v.n ? escapeHtml(v.n) + ', here' : 'Here'} is a card from your Pine Guide visit on ${escapeHtml(formatDate(v.d))}: your strong parts and what you chose to try. It goes on your own tree, kept in your own locked profile.</p>
     <p class="ggx-small">You can remove it any time.</p>`;
   const drop = { t: "Skip for Now", kind: 'quiet', fn: () => { GGApp.visit.clear(); showToast('The card was set aside.'); } };
-  const later = { t: 'Not Now', kind: 'line', fn: () => {} };
+  const later = { t: 'Maybe Later', kind: 'line', fn: () => {} };
   if (!PROF) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your profile first, and this card will ask again.</p>',
       buttons: [{ t: 'Open My Profile', kind: 'main', fn: () => { if (window.GGP) pnOpenAny(); } }, later, drop] });
@@ -1510,7 +1510,7 @@ function bringOakHtml() {
   const oak = GGP.data(PROF.id, 'oak'), r = rec();
   const n = ((oak && oak.history) || []).filter(e => e && e.scores).length;
   if (!n || r.oakBrought) return '';
-  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so Pine shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Not Now</button></div></div>`;
+  return `<div class="gt-card sq-bring"><h3>Bring My Oak Check-ins</h3><p>You have ${n} check-in${n === 1 ? '' : 's'} saved in Oak. Copy them here so Pine shows your whole story, labeled From Oak. Oak keeps its own copy.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="bringOak()">Bring Them Here</button><button class="btn btn-secondary btn-sm" onclick="bringOak(true)">Maybe Later</button></div></div>`;
 }
 function bringOak(skip) {
   if (!PROF || !window.GGP) return;
@@ -1797,7 +1797,7 @@ function nsChapterHtml(c, L) {
   let h = `<button type="button" class="lc-back" onclick="nsOpen(null)">Back to all chapters</button>
     <h2 class="section-title" style="margin-top:10px">${escapeHtml(nsT(c, 'title'))}</h2>${nsT(c, 'lead') ? `<p class="lead">${escapeHtml(nsT(c, 'lead'))}</p>` : ''}`;
   if (closed) return h + `<div class="sq-optin"><p>${escapeHtml(nsT(c, 'note') || NS.careLine || '')}</p>
-      <div class="btn-row"><button class="btn btn-primary" onclick="nsOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="nsOpen(null)">Not Now</button></div></div>`;
+      <div class="btn-row"><button class="btn btn-primary" onclick="nsOptIn('${c.id}', true)">Open This Chapter</button><button class="btn btn-secondary" onclick="nsOpen(null)">Maybe Later</button></div></div>`;
   h += `<p class="gt-small">Skip any prompt. Write a little or a lot. The microphone key on your phone's keyboard lets you speak instead of type.</p>`;
   h += (c.prompts || []).map(p => {
     const a = L.answers[p.id] || null, editing = NX.edit === p.id, has = a && String(a.text || '').trim();

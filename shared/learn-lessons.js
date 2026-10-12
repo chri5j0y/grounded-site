@@ -1321,7 +1321,7 @@ window.GG_LEARN = {
        "body": "A Kids profile keeps a tree locked with a secret picture code.",
        "btns": [
         "Save Maya's tree",
-        "Not Now"
+        "Maybe Later"
        ],
        "tap": 0,
        "say": "After a first check-in, a new tree is kept only until the page closes. To keep it, tap Save, with the child's name. That gives them a Kids profile, locked with a secret picture code. A grown-up makes their own profile first, then checks a box to agree. The first time a child's tree opens, a card called Set Up Maple Together lets the grown-up choose Faith or Plain wording, then tap All Set. You can change it any time in Settings, under Faith or Plain Wording. If a Maple Guide set Plain for a school or group, it stays locked, with a short line that says why."
@@ -10174,7 +10174,7 @@ window.GG_LEARN = {
 
         { id: 'ok-u-checkin', n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
-          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Not Now'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
+          { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone.' },
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
@@ -19237,7 +19237,7 @@ window.GG_LEARN = {
          "What the chapter holds"
         ],
         [
-         "Open This Chapter, or Not Now",
+         "Open This Chapter, or Maybe Later",
          "Always your choice"
         ],
         [
@@ -19245,7 +19245,7 @@ window.GG_LEARN = {
          "What you wrote stays"
         ]
        ],
-       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Not Now. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
+       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Maybe Later. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
       },
       {
        "k": "points",
@@ -29131,7 +29131,7 @@ window.GG_LEARN = {
        ],
        "btns": [
         "Create My Profile",
-        "Not Now"
+        "Maybe Later"
        ],
        "tap": 0,
        "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. There is no alert to anyone."

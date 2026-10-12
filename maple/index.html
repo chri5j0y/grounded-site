@@ -921,7 +921,7 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b782"></script>
+<script src="/shared/gg-profiles.js?v=b788"></script>
 <script src="/shared/gg-life.js?v=b788"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/maple/guides.js?v=b788"></script>
@@ -2633,12 +2633,12 @@ function mpVisitCheck(force) {
   const opens = locked.slice(0, 3).map(p => ({ t: 'Open ' + p.name + '\'s Tree', kind: 'line', fn: () => { MP_VISIT_ASKED = null; openKidProfile(p.id, 'today'); } }));
   if (!order.length) {
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or start one, and this card will ask again.</p>',
-      buttons: (opens.length ? opens : [{ t: 'Start My Tree', kind: 'main', fn: () => { MP_VISIT_ASKED = null; go('home'); } }]).concat([{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+      buttons: (opens.length ? opens : [{ t: 'Start My Tree', kind: 'main', fn: () => { MP_VISIT_ASKED = null; go('home'); } }]).concat([{ t: 'Maybe Later', kind: 'line', fn: () => {} }, drop]) });
     return;
   }
   GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree does it go on?</p>',
     buttons: order.slice(0, 4).map((id, i) => ({ t: 'Add to ' + kids[id].name + '\'s Tree', kind: i ? 'line' : 'main', fn: () => mpVisitAdd(id, v) }))
-      .concat(opens, [{ t: 'Not Now', kind: 'line', fn: () => {} }, drop]) });
+      .concat(opens, [{ t: 'Maybe Later', kind: 'line', fn: () => {} }, drop]) });
 }
 window.addEventListener('gg-visit', () => mpVisitCheck(true));
 function mpTodayExtra(s) {

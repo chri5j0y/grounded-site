@@ -465,7 +465,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b787"></script>
 <script src="/shared/gg-qr.js"></script>
-<script src="/shared/gg-profiles.js?v=b782"></script>
+<script src="/shared/gg-profiles.js?v=b788"></script>
 <script src="/shared/gg-life.js?v=b788"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="checkin.js?v=b782"></script>
@@ -1514,7 +1514,7 @@ function visitCheck(){
   const people = DB.students.slice().sort((a, b) => (b.name.toLowerCase().split(/\s+/)[0] === nm) - (a.name.toLowerCase().split(/\s+/)[0] === nm));
   if (!people.length){
     GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Open your tree first, or add yourself, then this card will ask again.</p>',
-      buttons: [{ t: 'Open My Tree', kind: 'main', fn: () => { VISIT_SHOWN = false; go('students'); } }, { t: 'Not Now', kind: 'line', fn: () => { VISIT_SHOWN = false; } }, drop] });
+      buttons: [{ t: 'Open My Tree', kind: 'main', fn: () => { VISIT_SHOWN = false; go('students'); } }, { t: 'Maybe Later', kind: 'line', fn: () => { VISIT_SHOWN = false; } }, drop] });
     return;
   }
   GGApp.dialog({ title: 'A card from your visit', html: intro + '<p>Whose tree is it for?</p>',
