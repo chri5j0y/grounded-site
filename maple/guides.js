@@ -52,7 +52,8 @@ const M = {
   embrace: ['EmbraceRace', 'https://www.embracerace.org'],
   schoolhouse: ['SchoolHouse Connection', 'https://schoolhouseconnection.org'],
   unicef: ['UNICEF Parenting', 'https://www.unicef.org/parenting'],
-  pbs: ['PBS KIDS for Parents', 'https://www.pbs.org/parents']
+  pbs: ['PBS KIDS for Parents', 'https://www.pbs.org/parents'],
+  willow: ['Willow by Grow With Grounded, for hospice: the person and the people who love them', 'https://growwithgrounded.com/willow/']
 };
 
 const TOPICS = [
@@ -248,7 +249,7 @@ const TOPICS = [
   after: ['Grief may begin before the death. Treat it gently.', 'After the death, see the guide on when a family member died.'],
   teach: ['Stay in touch with the family about what the child knows. Offer flexibility with work and a quiet place to go.'],
   reach: ['Ask the hospice team for their child life, social work, or chaplain support.', 'Seek grief support for the child if worry or sadness becomes overwhelming.'],
-  more: [M.dougy, M.sesame, M.aap] },
+  more: [M.dougy, M.sesame, M.aap, M.willow] },
 
 { id: 'pet-death', ring: 'loss', title: 'A Pet Died', keys: 'pet dog cat died put down euthanasia animal loss puppy kitten hamster fish',
   quick: ['For many kids, a pet’s death is their first big loss. Take it seriously.', 'Use real words. Avoid “put to sleep,” which can make kids afraid of sleep.', 'A small goodbye ritual helps: a drawing, a burial, a candle.', 'Let them grieve on their own timeline. A new pet is not a replacement.'],

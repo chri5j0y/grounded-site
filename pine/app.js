@@ -974,7 +974,7 @@ function renderLC(mode) {
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for the seasons of high school</h2>
-      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes high school can bring. Each guide has two views: For You, when you are the one going through it, and For the Grown-up, for a parent, guardian, coach, or other adult walking beside you. Most guides have two short videos too.</p>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes high school can bring. Each guide has two views: For You, when you are the one going through it, and For the Grown-up, for a parent, guardian, coach, or other adult walking beside you. Every guide has two short videos too.</p>
     </div>
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: breakup, grades, sleep, a move..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
@@ -1655,7 +1655,7 @@ function pineWho() { return window.GGP ? GGP.list().filter(p => p.age === 'pine'
 function pineOthers() { return window.GGP ? GGP.list().filter(p => p.age !== 'pine') : []; }
 function pineWhoHtml() {
   const teens = pineWho(), others = pineOthers();
-  const otherLine = others.length ? `<p class="pbar-kids">Kids, middle schoolers, and adults tend their trees in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, <a href="/oak/">Oak</a>, and <a href="/sequoia/">Sequoia</a>.</p>` : '';
+  const otherLine = others.length ? `<p class="pbar-kids">Kids, middle schoolers, young adults, and adults tend their trees in <a href="/maple/">Maple</a>, <a href="/aspen/">Aspen</a>, <a href="/birch/">Birch</a>, <a href="/oak/">Oak</a>, and <a href="/sequoia/">Sequoia</a>.</p>` : '';
   if (!teens.length) return `<div class="pbar-who"><strong>Save your progress on this device</strong><span>Create your own private profile, locked with a passcode only you know. A grown-up agrees when it is made, and only your passcode opens it.</span></div>
       <div class="pbar-act"><button type="button" class="btn btn-primary btn-sm" onclick="profCreateDialog()">Create my profile</button><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.openSettings()">Settings</button></div>${otherLine}`;
   if (teens.length === 1) { const a = teens[0];

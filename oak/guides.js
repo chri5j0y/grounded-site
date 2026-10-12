@@ -1,6 +1,6 @@
 /* =====================================================================
    OAK . WHEN LIFE CHANGES
-   Guides for 50+ of life's hardest seasons, for the person going
+   Guides for more than 80 of life's hardest seasons, for the person going
    through it and for the person helping.
    Edit guide words here, not in index.html. Oak and the site-wide
    search on the Tools page both read this file.
@@ -59,7 +59,13 @@ const L = {
   mndoc: ["Minnesota Department of Corrections", "https://mn.gov/doc/"],
   m211: ["211, United Way", "https://www.211unitedway.org"],
   vcl: ["Veterans Crisis Line", "https://www.veteranscrisisline.net"],
-  mdva: ["Minnesota Department of Veterans Affairs", "https://mn.gov/mdva/"]
+  mdva: ["Minnesota Department of Veterans Affairs", "https://mn.gov/mdva/"],
+  // Grow With Grounded tools named in Learn more (GWG BLD 793)
+  willow: ["Willow by Grow With Grounded, for hospice", "https://growwithgrounded.com/willow/"],
+  sequoia: ["Sequoia by Grow With Grounded, for 60 and up", "https://growwithgrounded.com/sequoia/"],
+  farewell: ["Planning a Farewell by Grow With Grounded", "https://growwithgrounded.com/planning-a-farewell.html"],
+  obit: ["Obituary Helper by Grow With Grounded", "https://growwithgrounded.com/obituary-helper.html"],
+  eulogy: ["Eulogy Helper by Grow With Grounded", "https://growwithgrounded.com/eulogy-helper.html"]
 };
 
 const LC_TOPICS = [
@@ -369,7 +375,7 @@ const LC_TOPICS = [
   faith: "Blessings, prayers, anointing, reading sacred words, or singing familiar songs can be powerful at the end of life. Invite your chaplain or faith leader in.",
   practices: ["roots|Prayer", "branches|Family", "fruit|Provide Care", "fruit|Capture the Moment"],
   reach: ["Ask hospice for chaplain or social work support.", "After the death, see the guide on the first days after a death."],
-  more: [L.convo, L.dougy], kids: "dying" },
+  more: [L.convo, L.dougy, L.willow], kids: "dying" },
 
 { id: "ambiguous-loss", ring: "loss", title: "Ambiguous Loss", keys: "ambiguous loss estranged missing dementia addiction not the same person grief without death", parts: ["roots", "branches", "bark"],
   quick: ["Some losses have no clear ending: dementia, estrangement, addiction, a missing person.", "Grieving someone still living is real grief.", "Hold two truths: they are here, and they are gone in ways that matter.", "Find meaning without waiting for closure."],
@@ -471,7 +477,7 @@ const LC_TOPICS = [
   faith: "Every tradition has something to say about death. Rituals, prayers, confession, blessing, and simply being accompanied can bring deep peace.",
   practices: ["roots|Prayer", "fruit|Make Peace", "trunk|Write Your Story", "fruit|Capture the Moment"],
   reach: ["Ask your care team for hospice or palliative care, and for a chaplain.", "Unbearable distress: ask your team for help now; it can be eased."],
-  more: [L.convo, L.caringinfo], kids: "dying" },
+  more: [L.convo, L.caringinfo, L.willow], kids: "dying" },
 
 { id: "eol-plan", ring: "health", title: "Making an End-of-Life Plan", keys: "advance directive living will health care proxy power of attorney plan wishes end of life", parts: ["trunk", "branches"],
   quick: ["Planning ahead is a gift to the people you love.", "Choose a health care agent who will honor your wishes.", "Put your wishes in writing with an advance directive for your state.", "Talk about it. The conversation matters as much as the paperwork."],
@@ -505,7 +511,7 @@ const LC_TOPICS = [
   faith: "Many traditions have prayers, blessings, or rituals for the dying. A chaplain can help, from all faith traditions and everything in-between.",
   practices: ["roots|Prayer", "fruit|Provide Care", "bark|Music"],
   reach: ["Call the hospice nurse any time you are unsure or worried, day or night.", "Ask for the hospice chaplain or social worker."],
-  more: [L.convo, L.dougy], kids: "dying" },
+  more: [L.convo, L.dougy, L.willow], kids: "dying" },
 
 { id: "after-death", ring: "health", title: "The First Days After a Death", keys: "after death what to do funeral arrangements first days logistics", parts: ["branches", "leaves"],
   quick: ["You don't have to do everything right away.", "If hospice was involved, call them first. Otherwise, call 911 or the doctor.", "Choose a funeral home and ask what they handle for you.", "Let people help with food, calls, and childcare."],
@@ -522,7 +528,7 @@ const LC_TOPICS = [
   faith: "Rituals after death, like washing, prayers, wakes, and funerals, help families begin to grieve. Ask your faith leader or chaplain to walk with you.",
   practices: ["branches|Family", "branches|Faith", "leaves|Sleep"],
   reach: ["Grief support through your hospice or funeral home."],
-  more: [L.wyg, L.dougy], kids: "family-death" },
+  more: [L.wyg, L.dougy, L.farewell, L.obit, L.eulogy], kids: "family-death" },
 
 { id: "addiction", ring: "health", title: "Addiction and Recovery", keys: "addiction alcohol drugs drinking sober recovery relapse substance use", parts: ["leaves", "branches", "roots"], sober: [],
   quick: ["Healing is real. Drinking and using often begin as a way to numb pain, and that pain can heal.", "Recovery is possible, and it often takes more than one try.", "Connection is the opposite of addiction. Others can walk this with you.", "For families: you can't control someone else's recovery, but you can take care of yourself."],
@@ -675,7 +681,7 @@ const LC_TOPICS = [
   faith: "Many traditions call us to honor our parents, which can include honest limits and asking for help.",
   practices: ["branches|Family", "trunk|Plan the Future", "fruit|Provide Care"],
   reach: ["Safety concerns, or caregiver burnout: see the caregiving guide."],
-  more: [L.caregiver, L.convo] },
+  more: [L.caregiver, L.convo, L.sequoia] },
 
 { id: "empty-nest", ring: "family", title: "Empty Nest and Big Life Transitions", keys: "empty nest kids leave home transition identity midlife change college graduation leaving home launching dorm senior year moving out", parts: ["trunk", "fruit"],
   quick: ["Transitions include loss, even good ones.", "Let yourself grieve the season that ended.", "Rediscover interests and relationships.", "A new season can be full of meaning."],
@@ -761,7 +767,7 @@ const LC_TOPICS = [
   faith: "Many traditions honor elders as keepers of wisdom. Retirement can be a season of blessing others.",
   practices: ["roots|Teach", "fruit|Volunteer", "trunk|Keep Learning"],
   reach: ["Loneliness or depression after retirement."],
-  more: [L.gg] },
+  more: [L.gg, L.sequoia] },
 
 { id: "career-change", ring: "work", title: "A Career Change", keys: "career change new job starting over calling vocation", parts: ["trunk", "fruit"],
   quick: ["Changing paths is brave, and often scary.", "Start small: talk to people, try a project, take a class.", "Your past experience still counts.", "Expect a season of being new again."],

@@ -1205,7 +1205,7 @@ function renderLC(mode) {
   el.innerHTML = `<div class="lc-head">
       <p class="eyebrow">When Life Changes</p>
       <h2 class="section-title" style="margin-top:4px">Guides for this season of life</h2>
-      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes a long life brings, written for later life. Each guide has two views: one for when you are going through it, and one for when you are helping someone else.</p>
+      <p class="lead"><b>How to show up.</b> Quick references and full guides for the changes a long life brings, written for later life. Each guide has two views, one for when you are going through it and one for when you are helping someone else, and two short videos.</p>
     </div>
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: retirement, grief, a fall, memory..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" id="${mode}-lc-chips" role="group" aria-label="Filter by topic">
@@ -1214,7 +1214,7 @@ function renderLC(mode) {
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
-    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1.</p>
+    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1. For hospice, <a class="text-link" href="/willow/">Willow</a> walks with the person and the people who love them.</p>
     ${window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}`;
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
@@ -1381,7 +1381,7 @@ function lcDetail(mode, t) {
     ${view}
     ${t.faith ? `<h3>Faith and the holy</h3><p>${lcEsc(t.faith)}</p>` : ''}
     <h3>Using Sequoia</h3><p>Parts of the tree this often touches: <b>${lcEsc(lcPartsText(t))}</b>. Practices that can help (tap one to see how):</p>${lcPracHtml(t)}<p>A check-in in a few weeks can show how ${self ? 'you are' : 'they are'} doing.</p>
-    ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p>` : ''}
+    ${t.kids ? `<h3>If children are involved</h3><p>Maple has a guide for talking with kids about this. <a class="text-link" href="${SAP + t.kids}" target="_blank" rel="noopener">Open the Maple guide</a></p><p>For middle and high schoolers, <a class="text-link" href="/aspen/#life" target="_blank" rel="noopener">Aspen</a> and <a class="text-link" href="/pine/#life" target="_blank" rel="noopener">Pine</a> have guides of their own.</p>` : ''}
     <h3>When to reach out for more help</h3><div class="lc-reach">${lcList(t.reach)}</div>
     ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}"${/^\/sequoia\/#/.test(u) ? '' : ' target="_blank" rel="noopener"'}>${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
     ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}

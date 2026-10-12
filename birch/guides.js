@@ -4494,6 +4494,14 @@ const LC_TOPICS = [
    [
     "American Foundation for Suicide Prevention",
     "https://afsp.org"
+   ],
+   [
+    "Eulogy Helper by Grow With Grounded",
+    "https://growwithgrounded.com/eulogy-helper.html"
+   ],
+   [
+    "Planning a Farewell by Grow With Grounded",
+    "https://growwithgrounded.com/planning-a-farewell.html"
    ]
   ]
  },
@@ -5728,6 +5736,10 @@ const LC_TOPICS = [
    [
     "Disability Hub MN",
     "https://disabilityhubmn.org/"
+   ],
+   [
+    "Willow by Grow With Grounded, for hospice: the person and the people who love them",
+    "https://growwithgrounded.com/willow/"
    ]
   ],
   "life": [

@@ -499,7 +499,7 @@ function rememberedHtml(t) {
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }
 function aboutShort() {
-  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings for all faith traditions and everything in-between, and what to do at the bedside.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
+  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
   <div data-read="Read this aloud">
@@ -514,6 +514,8 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <p class="lead">They answered. They answered and a helper tapped. Or a helper answering from what they see, when their person can no longer say. That last kind is kept apart, and never speaks for the person's own tree.</p>
   <h3 class="section-title">Faith comes first</h3>
   <p class="lead">Willow asks about faith on the second screen, every time, because a chaplain always asks. Every answer is welcome, including none. Each person answers for themselves.</p>
+  <h3 class="section-title">What's inside</h3>
+  <p class="lead">Gentle check-ins on the six parts, What Matters to Me, Cuttings for stories and letters, and help at the Bedside. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and in every safety step.</p>
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
@@ -928,7 +930,7 @@ VIEWS.guides = () => {
   const st = S.guide;
   if (st.open) { const g = G.guides.find(x => x.id === st.open); if (g) return guideHtml(g); st.open = null; }
   let h = `<div class="lc-head"><p class="eyebrow">When Life Changes</p><h2 class="section-title" style="margin-top:4px">Words for the hardest conversations</h2>
-    <p class="lead"><b>How to show up.</b> What's happening, what to say, what not to say, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
+    <p class="lead"><b>How to show up.</b> What's happening, what to say, words to set aside, and what helps. For families, and for the chaplains and doulas who sit with them.</p>
     <p class="w-small">${icon('play', 16)} Every guide has two short videos, narrated aloud: For You, and For the Helper. Open any guide below to watch them.</p>
     <p class="w-tool">${esc(G.tool)}</p></div>
     <input class="lc-search" type="search" placeholder="Search: miracle, hell, burden, not eating, kids..." aria-label="Search the guides" value="${esc(st.find || '')}" oninput="W.gFind(this)" enterkeyhint="search">
