@@ -13270,7 +13270,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Heal what you used to numb"
       ]
      ],
-     "say": "Then fill the open hours, because that's where cravings like to show up. Plan your evenings for the next two weeks. Find your people: a friend, a peer group, a mentor, or a sober community. And over time, look underneath. Drinking or using often quieted painful feelings. A therapist can help you heal those roots, at your own pace."
+     "say": "Then fill the open hours, because that's where cravings like to show up. Plan your evenings for the next two weeks. Find your people: a friend, a peer group, a mentor, or a sober community. And over time, look underneath. Drinking or using often quieted painful feelings. A therapist can help you heal what's underneath, at your own pace."
     },
     {
      "k": "card",

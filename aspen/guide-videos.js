@@ -14090,9 +14090,7 @@ window.GG_LEARN_GUIDES.aspen = {
    "title": "A Parent in Treatment",
    "sideName": "For You",
    "mins": 3,
-   "sources": [
-    "sevencs"
-   ],
+   "sources": [],
    "scenes": [
     {
      "k": "title",
@@ -14188,10 +14186,7 @@ window.GG_LEARN_GUIDES.aspen = {
    "title": "A Parent in Treatment",
    "sideName": "For the Grown-up",
    "mins": 4,
-   "sources": [
-    "samhsarec",
-    "sevencs"
-   ],
+   "sources": [],
    "scenes": [
     {
      "k": "title",
@@ -15045,9 +15040,9 @@ window.GG_LEARN_GUIDES.aspen = {
     },
     {
      "k": "card",
-     "title": "Your roots matter.",
+     "title": "Your leaves matter.",
      "body": "Sleep, water, food, and moving every day.",
-     "say": "Your roots matter too. Sleep, water, real food, moving every day, and some unplugged time make big feelings easier to carry. Research finds that moving your body can lift a low mood."
+     "say": "Your body matters too. On your tree, that's your leaves. Sleep, water, real food, moving every day, and some unplugged time make big feelings easier to carry. Research finds that moving your body can lift a low mood."
     },
     {
      "k": "card",

@@ -13417,7 +13417,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "Pride took the empty seat for a while.",
       "He learned to heal small pieces at a time."
      ],
-     "lesson": "Healing the roots keeps the tree steady.",
+     "lesson": "Tend the old hurts, a little at a time.",
      "note": "Names and details changed",
      "say": "Chris, one of Grounded's founders, has been sober since April 1, 2008. He says the drinking stopped, but for years he had yet to heal the reasons he drank. Without noticing, he let pride and hard work cover the same old pain. Then he learned something hopeful. You don't have to heal everything at once. You can be honest about the pain, and tend small pieces of it at a time."
     },
@@ -13454,19 +13454,19 @@ window.GG_LEARN_GUIDES.sequoia = {
      "h": "Tend the whole tree",
      "items": [
       [
-       "Mind",
-       "A few quiet breaths each day"
+       "Bark",
+       "Quiet breaths, and writing it out"
       ],
       [
-       "Body",
+       "Leaves",
        "A daily walk, rest, good food"
       ],
       [
-       "Spirit",
-       "Write out what you feel"
+       "Branches",
+       "Your sober people, close"
       ]
      ],
-     "say": "Keep tending the whole tree. For the mind, a few minutes of quiet breathing each day. For the body, a daily walk, good rest, and whole food. For the spirit, a place for your feelings to go. Many people write it out, putting words to what they feel."
+     "say": "Keep tending the whole tree. Your bark, where hard feelings heal: a few minutes of quiet breathing each day, and a place for your feelings to go. Many people write it out, putting words to what they feel. Your leaves, the body: a daily walk, good rest, and whole food. And your branches: your sober people, kept close."
     },
     {
      "k": "big",

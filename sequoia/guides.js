@@ -5633,7 +5633,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "quick": [
    "Years of sobriety are a real achievement, and growth keeps going for a lifetime. Long-term sober is a season of deepening.",
-   "Drinking or using often numbed painful feelings and old hurts. Healing those roots, a little at a time, is the work that keeps a life steady.",
+   "Drinking or using often numbed painful feelings and old hurts. Healing those old hurts, a little at a time, is the work that keeps a life steady.",
    "Later life brings its own tests: retirement, losses, surgeries, pain medicines, and quieter days. Naming them early keeps you strong.",
    "Watch for swapped habits. Food, shopping, work, screens, even religion or pride can quietly take a drink's old place.",
    "Your story is a gift. Mentoring, sponsoring, and showing up for others keep sobriety bright for you and for them."

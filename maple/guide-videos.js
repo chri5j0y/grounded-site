@@ -17929,7 +17929,7 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "big",
      "h": "Healing is real.",
      "sub": "For the parent, and for the family.",
-     "say": "Healing is real. Drinking and using are often how people numbed painful feelings and old hurts. Healing those roots, and growing a healthy life in body, mind, spirit, and relationships, is the path. Families heal too, at their own pace."
+     "say": "Healing is real. Drinking and using are often how people numbed painful feelings and old hurts. Healing those hurts, and growing a healthy life in body, mind, spirit, and relationships, is the path. Families heal too, at their own pace."
     },
     {
      "k": "points",

@@ -17553,7 +17553,7 @@ var V = [
    "title": "A Family Growing Sober Together",
    "sideName": "For the Group",
    "mins": 3,
-   "blurb": "For the whole family when someone is growing sober: honest talk, healthy roots, and good time together.",
+   "blurb": "For the whole family when someone is growing sober: honest talk, healthy habits, and good time together.",
    "sources": [
     "sevencs"
    ],
@@ -17629,7 +17629,7 @@ var V = [
        "No secrets to guard"
       ],
       [
-       "Healthy roots",
+       "Healthy bodies",
        "Sleep, water, food, outside"
       ],
       [
@@ -17641,7 +17641,7 @@ var V = [
        "Kids have them too"
       ]
      ],
-     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy roots, like good sleep, water, real food, and time outside. A Family Sober Night each week, with a meal, a walk, or a game. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
+     "say": "Here's what helps our family grow. Talking honestly, so no one has to keep a secret. Healthy bodies, like good sleep, water, real food, and time outside. A Family Sober Night each week, with a meal, a walk, or a game. And helpers for everyone, because kids can have groups and grown-ups to talk to, too."
     },
     {
      "k": "words",
@@ -17696,7 +17696,7 @@ var V = [
     },
     {
      "k": "points",
-     "h": "Tend the roots at home",
+     "h": "Tend the body at home",
      "items": [
       [
        "Sleep",
@@ -17715,18 +17715,18 @@ var V = [
        "Easy to keep steady"
       ]
      ],
-     "say": "Start with the body, for everyone. Sleep, with a steady bedtime. Water and real food, with regular meals together. Movement, like a walk outside every day. And a sober home that is easy for everyone to keep steady. Healthy roots make the hard days lighter."
+     "say": "Start with the body, for everyone. Sleep, with a steady bedtime. Water and real food, with regular meals together. Movement, like a walk outside every day. And a sober home that is easy for everyone to keep steady. Healthy habits make the hard days lighter."
     },
     {
      "k": "big",
-     "h": "One slow breath. One root to tend.",
+     "h": "One slow breath. One habit to tend.",
      "sub": "Sleep, water, a walk, or a meal together.",
-     "say": "Let's take a moment. You have been holding a lot. Breathe in slowly through your nose, and let it out even slower. Now pick one root you'll tend this week, for yourself or for the family. Say it out loud, and say when.",
+     "say": "Let's take a moment. You have been holding a lot. Breathe in slowly through your nose, and let it out even slower. Now pick one healthy habit you'll tend this week, for yourself or for the family. Say it out loud, and say when.",
      "beats": [
       "Let's take a moment.",
       "You have been holding a lot.",
       "Breathe in slowly through your nose, and let it out even slower.",
-      "Now pick one root you'll tend this week, for yourself or for the family.",
+      "Now pick one healthy habit you'll tend this week, for yourself or for the family.",
       {
        "t": "Say it out loud, and say when.",
        "w": 12

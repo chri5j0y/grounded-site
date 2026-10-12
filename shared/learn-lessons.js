@@ -11349,14 +11349,14 @@ window.GG_LEARN = {
        "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
        "lowkey": "sober",
        "certTitle": "Growing a Healthy Tree",
-       "certLine": "For finishing every lesson in Growing a Healthy Tree, tending roots, trunk, branches, and fruit.",
+       "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
        "lessons": [
         {
          "id": "ok-ls-tree",
          "n": 1,
          "title": "The Healthy Tree",
-         "mins": 5,
-         "blurb": "Roots, trunk, branches, and fruit, and Chris's three kinds of tools: mind, body, and spirit.",
+         "mins": 6,
+         "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
          "sources": [
           "samhsarec"
          ],
@@ -11374,7 +11374,7 @@ window.GG_LEARN = {
            "hero": "oak",
            "eyebrow": "Growing a Healthy Tree, Lesson 1",
            "h": "The Healthy Tree",
-           "sub": "Roots, trunk, branches, and fruit.",
+           "sub": "Six parts, tended a little each day.",
            "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
           },
           {
@@ -11401,56 +11401,66 @@ window.GG_LEARN = {
            "items": [
             [
              "Roots",
-             "Sleep, food, water, movement, time outdoors"
+             "What you are anchored in"
             ],
             [
              "Trunk",
-             "Your mind and your feelings"
+             "Meaning"
+            ],
+            [
+             "Bark",
+             "Your mind"
             ],
             [
              "Branches",
              "Your people"
             ],
             [
+             "Leaves",
+             "Your body"
+            ],
+            [
              "Fruit",
-             "Purpose and joy"
+             "Hope"
             ]
            ],
            "cue": {
             "at": [
              1,
-             2,
-             3,
-             4
+             4,
+             5,
+             7,
+             8,
+             10
             ]
            },
-           "say": "Grounded pictures a Sober life as a tree. Roots are sleep, food, water, movement, and time outdoors. The trunk is your mind and your feelings. Branches are your people. And fruit is purpose and joy. A Sober life grows strongest when the whole tree is tended."
+           "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
           },
           {
            "k": "flow",
            "h": "Mind, body, and spirit",
            "steps": [
             [
-             "Mind",
+             "Mind, in Bark",
              "Breath and being present"
             ],
             [
-             "Body",
+             "Body, in Leaves",
              "A daily walk, a weekly long run"
             ],
             [
-             "Spirit",
+             "Spirit, in Bark and Roots",
              "Write it out"
             ]
            ],
            "cue": {
             "at": [
              1,
-             2,
-             3
+             3,
+             5
             ]
            },
-           "say": "Chris keeps three kinds of tools close. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. For his body, he walks every day and goes for a long run once a week. And for spirit, which for him means feelings, he writes. He says he can literally write it out."
+           "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
           },
           {
            "k": "big",
@@ -11460,24 +11470,32 @@ window.GG_LEARN = {
             "Let's try a quick check-in, right where you are.",
             "Take one slow breath.",
             {
-             "t": "Roots. How did you sleep, eat, and move today? Name it in one word.",
-             "w": 6
+             "t": "Roots. What steadies you today? One word.",
+             "w": 5
             },
             {
-             "t": "Trunk. How are your mind and your feelings? One word.",
-             "w": 6
+             "t": "Trunk. What gives today meaning? One word.",
+             "w": 5
+            },
+            {
+             "t": "Bark. How is your mind, and how are your feelings? One word.",
+             "w": 5
             },
             {
              "t": "Branches. Picture one person who is on your side today.",
-             "w": 6
+             "w": 5
+            },
+            {
+             "t": "Leaves. How did you sleep, eat, and move? One word.",
+             "w": 5
             },
             {
              "t": "Fruit. What is one thing you are looking forward to?",
-             "w": 6
+             "w": 5
             },
             "Whatever you found is welcome. That is your tree today."
            ],
-           "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. How did you sleep, eat, and move today? Name it in one word. Trunk. How are your mind and your feelings? One word. Branches. Picture one person who is on your side today. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+           "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
           },
           {
            "k": "big",
@@ -11493,20 +11511,20 @@ window.GG_LEARN = {
           },
           {
            "k": "quiz",
-           "q": "In this picture, what is the trunk of your tree?",
+           "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
            "opts": [
-            "Your job title",
-            "Your mind and your feelings",
-            "Your bank account"
+            "Trunk",
+            "Leaves",
+            "Fruit"
            ],
            "right": 1,
-           "why": "The trunk is your mind and your feelings. Roots, branches, and fruit grow with it.",
-           "say": "Quick question. In this picture, what is the trunk of your tree?"
+           "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+           "say": "Quick question. Which part of your tree is your body?"
           },
           {
            "k": "big",
            "h": "Painful emotions can heal.",
-           "sub": "One root, one branch, one day.",
+           "sub": "One part, one small step, one day.",
            "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
           }
          ]
@@ -12430,8 +12448,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Slow down among trees.",
-           "sub": "Roots grow strong outdoors.",
-           "say": "Slow down among trees this week, even for five minutes. Your roots grow strong outdoors."
+           "sub": "Your whole tree grows strong outdoors.",
+           "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
           }
          ]
         },
@@ -13212,7 +13230,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Let the good sink in.",
            "sub": "Your tree is growing.",
-           "say": "You have finished Growing a Healthy Tree. Roots, trunk, branches, and fruit, a little each day. Let the good sink in. Your tree is growing."
+           "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
           }
          ]
         }
@@ -24196,14 +24214,14 @@ window.GG_LEARN = {
    "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending roots, trunk, branches, and fruit.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
    "lessons": [
     {
      "id": "sq-ls-tree",
      "n": 1,
      "title": "The Healthy Tree",
-     "mins": 5,
-     "blurb": "Roots, trunk, branches, and fruit, and Chris's three kinds of tools: mind, body, and spirit.",
+     "mins": 6,
+     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
      "sources": [
       "samhsarec"
      ],
@@ -24221,7 +24239,7 @@ window.GG_LEARN = {
        "hero": "sequoia",
        "eyebrow": "Growing a Healthy Tree, Lesson 1",
        "h": "The Healthy Tree",
-       "sub": "Roots, trunk, branches, and fruit.",
+       "sub": "Six parts, tended a little each day.",
        "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
       },
       {
@@ -24248,56 +24266,66 @@ window.GG_LEARN = {
        "items": [
         [
          "Roots",
-         "Sleep, food, water, movement, time outdoors"
+         "What you are anchored in"
         ],
         [
          "Trunk",
-         "Your mind and your feelings"
+         "Meaning"
+        ],
+        [
+         "Bark",
+         "Your mind"
         ],
         [
          "Branches",
          "Your people"
         ],
         [
+         "Leaves",
+         "Your body"
+        ],
+        [
          "Fruit",
-         "Purpose and joy"
+         "Hope"
         ]
        ],
        "cue": {
         "at": [
          1,
-         2,
-         3,
-         4
+         4,
+         5,
+         7,
+         8,
+         10
         ]
        },
-       "say": "Grounded pictures a Sober life as a tree. Roots are sleep, food, water, movement, and time outdoors. The trunk is your mind and your feelings. Branches are your people. And fruit is purpose and joy. A Sober life grows strongest when the whole tree is tended."
+       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
       },
       {
        "k": "flow",
        "h": "Mind, body, and spirit",
        "steps": [
         [
-         "Mind",
+         "Mind, in Bark",
          "Breath and being present"
         ],
         [
-         "Body",
+         "Body, in Leaves",
          "A daily walk, a weekly long run"
         ],
         [
-         "Spirit",
+         "Spirit, in Bark and Roots",
          "Write it out"
         ]
        ],
        "cue": {
         "at": [
          1,
-         2,
-         3
+         3,
+         5
         ]
        },
-       "say": "Chris keeps three kinds of tools close. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. For his body, he walks every day and goes for a long run once a week. And for spirit, which for him means feelings, he writes. He says he can literally write it out."
+       "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
       },
       {
        "k": "big",
@@ -24307,24 +24335,32 @@ window.GG_LEARN = {
         "Let's try a quick check-in, right where you are.",
         "Take one slow breath.",
         {
-         "t": "Roots. How did you sleep, eat, and move today? Name it in one word.",
-         "w": 6
+         "t": "Roots. What steadies you today? One word.",
+         "w": 5
         },
         {
-         "t": "Trunk. How are your mind and your feelings? One word.",
-         "w": 6
+         "t": "Trunk. What gives today meaning? One word.",
+         "w": 5
+        },
+        {
+         "t": "Bark. How is your mind, and how are your feelings? One word.",
+         "w": 5
         },
         {
          "t": "Branches. Picture one person who is on your side today.",
-         "w": 6
+         "w": 5
+        },
+        {
+         "t": "Leaves. How did you sleep, eat, and move? One word.",
+         "w": 5
         },
         {
          "t": "Fruit. What is one thing you are looking forward to?",
-         "w": 6
+         "w": 5
         },
         "Whatever you found is welcome. That is your tree today."
        ],
-       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. How did you sleep, eat, and move today? Name it in one word. Trunk. How are your mind and your feelings? One word. Branches. Picture one person who is on your side today. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
       },
       {
        "k": "big",
@@ -24340,20 +24376,20 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "In this picture, what is the trunk of your tree?",
+       "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
        "opts": [
-        "Your job title",
-        "Your mind and your feelings",
-        "Your bank account"
+        "Trunk",
+        "Leaves",
+        "Fruit"
        ],
        "right": 1,
-       "why": "The trunk is your mind and your feelings. Roots, branches, and fruit grow with it.",
-       "say": "Quick question. In this picture, what is the trunk of your tree?"
+       "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+       "say": "Quick question. Which part of your tree is your body?"
       },
       {
        "k": "big",
        "h": "Painful emotions can heal.",
-       "sub": "One root, one branch, one day.",
+       "sub": "One part, one small step, one day.",
        "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
       }
      ]
@@ -25277,8 +25313,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Slow down among trees.",
-       "sub": "Roots grow strong outdoors.",
-       "say": "Slow down among trees this week, even for five minutes. Your roots grow strong outdoors."
+       "sub": "Your whole tree grows strong outdoors.",
+       "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
       }
      ]
     },
@@ -26059,7 +26095,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Let the good sink in.",
        "sub": "Your tree is growing.",
-       "say": "You have finished Growing a Healthy Tree. Roots, trunk, branches, and fruit, a little each day. Let the good sink in. Your tree is growing."
+       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
       }
      ]
     }
@@ -30748,7 +30784,7 @@ window.GG_LEARN = {
    "who": "For teens growing strong and Sober, and for anyone who loves someone who drinks, vapes, or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending roots, trunk, branches, and fruit.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
    "lessons": [
     {
      "id": "pn-ls-feelings",
@@ -35715,14 +35751,14 @@ window.GG_LEARN = {
    "who": "For anyone Living Sober: thinking about a change, in the first days, many years in, or loving someone who drinks or uses.",
    "lowkey": "sober",
    "certTitle": "Growing a Healthy Tree",
-   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending roots, trunk, branches, and fruit.",
+   "certLine": "For finishing every lesson in Growing a Healthy Tree, tending all six parts of your tree.",
    "lessons": [
     {
      "id": "br-ls-tree",
      "n": 1,
      "title": "The Healthy Tree",
-     "mins": 5,
-     "blurb": "Roots, trunk, branches, and fruit, and Chris's three kinds of tools: mind, body, and spirit.",
+     "mins": 6,
+     "blurb": "The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit.",
      "sources": [
       "samhsarec"
      ],
@@ -35740,7 +35776,7 @@ window.GG_LEARN = {
        "hero": "birch",
        "eyebrow": "Growing a Healthy Tree, Lesson 1",
        "h": "The Healthy Tree",
-       "sub": "Roots, trunk, branches, and fruit.",
+       "sub": "Six parts, tended a little each day.",
        "say": "This series is for you if you are Living Sober, at any stage. Thinking about a change, in your first days, or many years in. Wherever you are, you belong here, and we're glad you came."
       },
       {
@@ -35767,56 +35803,66 @@ window.GG_LEARN = {
        "items": [
         [
          "Roots",
-         "Sleep, food, water, movement, time outdoors"
+         "What you are anchored in"
         ],
         [
          "Trunk",
-         "Your mind and your feelings"
+         "Meaning"
+        ],
+        [
+         "Bark",
+         "Your mind"
         ],
         [
          "Branches",
          "Your people"
         ],
         [
+         "Leaves",
+         "Your body"
+        ],
+        [
          "Fruit",
-         "Purpose and joy"
+         "Hope"
         ]
        ],
        "cue": {
         "at": [
          1,
-         2,
-         3,
-         4
+         4,
+         5,
+         7,
+         8,
+         10
         ]
        },
-       "say": "Grounded pictures a Sober life as a tree. Roots are sleep, food, water, movement, and time outdoors. The trunk is your mind and your feelings. Branches are your people. And fruit is purpose and joy. A Sober life grows strongest when the whole tree is tended."
+       "say": "Grounded pictures your life as a tree with six parts. Roots are what you are anchored in. God, the sacred, or whatever you hold above everything. The part that holds when the storm gets loud. The trunk is meaning, the larger story you live inside. Bark is your mind. Calming down, processing hard emotions, and healing over well. Branches are your people. Leaves are your body. Sleep, movement, food, breath, and medical care. And fruit is hope, the evidence that a future is still growing. A Sober life grows strongest when the whole tree is tended."
       },
       {
        "k": "flow",
        "h": "Mind, body, and spirit",
        "steps": [
         [
-         "Mind",
+         "Mind, in Bark",
          "Breath and being present"
         ],
         [
-         "Body",
+         "Body, in Leaves",
          "A daily walk, a weekly long run"
         ],
         [
-         "Spirit",
+         "Spirit, in Bark and Roots",
          "Write it out"
         ]
        ],
        "cue": {
         "at": [
          1,
-         2,
-         3
+         3,
+         5
         ]
        },
-       "say": "Chris keeps three kinds of tools close. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. For his body, he walks every day and goes for a long run once a week. And for spirit, which for him means feelings, he writes. He says he can literally write it out."
+       "say": "Chris keeps three kinds of tools close, and each one tends a part of the tree. For his mind, he meditates on his breath through the day, and gives his full attention to whatever he is doing. That is Bark. For his body, he walks every day and goes for a long run once a week. That is Leaves. And for spirit, which for him means his feelings, he writes. He says he can literally write it out. For many people, spirit also reaches down into Roots, to whatever they hold above everything."
       },
       {
        "k": "big",
@@ -35826,24 +35872,32 @@ window.GG_LEARN = {
         "Let's try a quick check-in, right where you are.",
         "Take one slow breath.",
         {
-         "t": "Roots. How did you sleep, eat, and move today? Name it in one word.",
-         "w": 6
+         "t": "Roots. What steadies you today? One word.",
+         "w": 5
         },
         {
-         "t": "Trunk. How are your mind and your feelings? One word.",
-         "w": 6
+         "t": "Trunk. What gives today meaning? One word.",
+         "w": 5
+        },
+        {
+         "t": "Bark. How is your mind, and how are your feelings? One word.",
+         "w": 5
         },
         {
          "t": "Branches. Picture one person who is on your side today.",
-         "w": 6
+         "w": 5
+        },
+        {
+         "t": "Leaves. How did you sleep, eat, and move? One word.",
+         "w": 5
         },
         {
          "t": "Fruit. What is one thing you are looking forward to?",
-         "w": 6
+         "w": 5
         },
         "Whatever you found is welcome. That is your tree today."
        ],
-       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. How did you sleep, eat, and move today? Name it in one word. Trunk. How are your mind and your feelings? One word. Branches. Picture one person who is on your side today. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
+       "say": "Let's try a quick check-in, right where you are. Take one slow breath. Roots. What steadies you today? One word. Trunk. What gives today meaning? One word. Bark. How is your mind, and how are your feelings? One word. Branches. Picture one person who is on your side today. Leaves. How did you sleep, eat, and move? One word. Fruit. What is one thing you are looking forward to? Whatever you found is welcome. That is your tree today."
       },
       {
        "k": "big",
@@ -35859,20 +35913,20 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "In this picture, what is the trunk of your tree?",
+       "q": "Which part of your tree is your body: sleep, movement, food, and breath?",
        "opts": [
-        "Your job title",
-        "Your mind and your feelings",
-        "Your bank account"
+        "Trunk",
+        "Leaves",
+        "Fruit"
        ],
        "right": 1,
-       "why": "The trunk is your mind and your feelings. Roots, branches, and fruit grow with it.",
-       "say": "Quick question. In this picture, what is the trunk of your tree?"
+       "why": "Leaves are your body. Bark is your mind, and Roots are what you are anchored in.",
+       "say": "Quick question. Which part of your tree is your body?"
       },
       {
        "k": "big",
        "h": "Painful emotions can heal.",
-       "sub": "One root, one branch, one day.",
+       "sub": "One part, one small step, one day.",
        "say": "Here is a line to keep. Painful emotions can heal. Tend your tree a little each day, and let it grow."
       }
      ]
@@ -36796,8 +36850,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Slow down among trees.",
-       "sub": "Roots grow strong outdoors.",
-       "say": "Slow down among trees this week, even for five minutes. Your roots grow strong outdoors."
+       "sub": "Your whole tree grows strong outdoors.",
+       "say": "Slow down among trees this week, even for five minutes. Your whole tree grows strong outdoors."
       }
      ]
     },
@@ -37578,7 +37632,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Let the good sink in.",
        "sub": "Your tree is growing.",
-       "say": "You have finished Growing a Healthy Tree. Roots, trunk, branches, and fruit, a little each day. Let the good sink in. Your tree is growing."
+       "say": "You have finished Growing a Healthy Tree. Roots, trunk, bark, branches, leaves, and fruit, a little each day. Let the good sink in. Your tree is growing."
       }
      ]
     }

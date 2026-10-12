@@ -6029,7 +6029,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "helps": [
     "Alateen, where teens affected by someone else's drinking talk with other teens who get it. Many groups welcome teens affected by drug use too.",
     "Writing it out: what you feel, what you wish, what you're afraid of.",
-    "Your own roots: sleep, real meals, moving your body, time outside.",
+    "Your own leaves, your body: sleep, real meals, moving your body, time outside.",
     "Your own life: school, practice, work, friends, plans. You're allowed to have a good life no matter what is happening at home.",
     "If your parent is sober now, going at your own pace. Trust can come back in small pieces.",
     "Knowing your family history as you make your own choices. Waiting until adulthood, and living sober if you choose, are both strong ways to write your own story."

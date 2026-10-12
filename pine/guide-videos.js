@@ -13262,7 +13262,7 @@ window.GG_LEARN_GUIDES.pine = {
    "side": "you",
    "title": "Getting Sober as a Teen",
    "sideName": "For You",
-   "mins": 4,
+   "mins": 5,
    "blurb": "For you, if you are getting sober as a teen: your body is healing, and every day counts.",
    "sources": [
     "samhsarec"
@@ -13328,9 +13328,9 @@ window.GG_LEARN_GUIDES.pine = {
     },
     {
      "k": "big",
-     "h": "Heal the roots.",
-     "sub": "Mind, body, spirit, and people.",
-     "say": "So getting sober is more than stopping. It's growing. Your roots: sleep, water, real food, and moving your body. Your trunk: learning to feel a hard feeling and let it move through you. Your branches: people who are glad you're sober. And your fruit: things you love that make you feel alive."
+     "h": "Grow the whole tree.",
+     "sub": "Body, feelings, people, purpose, hope.",
+     "say": "So getting sober is more than stopping. It's growing the whole tree. Your leaves: sleep, water, real food, and moving your body. Your bark: learning to feel a hard feeling and let it move through you. Your branches: people who are glad you're sober. Your roots and trunk: what holds you steady, and what you care about. And your fruit: things to look forward to."
     },
     {
      "k": "big",
@@ -13797,7 +13797,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "card",
      "title": "Your story is yours.",
      "body": "Your family history is part of it. You write what comes next.",
-     "say": "You might wonder if you'll end up the same way. Your family's story is part of your story, and you get to write the next chapter. Waiting until adulthood, growing healthy roots, and choosing a sober life if you want it, are strong ways to write it."
+     "say": "You might wonder if you'll end up the same way. Your family's story is part of your story, and you get to write the next chapter. Waiting until adulthood, growing a strong, healthy tree, and choosing a sober life if you want it, are strong ways to write it."
     },
     {
      "k": "card",

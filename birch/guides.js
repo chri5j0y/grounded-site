@@ -5894,7 +5894,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "A plan for cravings: notice it, name it, breathe slowly, and let it rise and fall like a wave. Move, drink water, eat something, or call someone while you wait.",
     "Your people. One or two friends who support your choice, a peer group, a mentor, or a sober community. Many people find AA, NA, SMART Recovery, Refuge Recovery, or a faith community helpful. Choose what fits you.",
     "Healthy ways to change how you feel: a run, a long walk outdoors, a hot shower, music, writing it out, time with a friend, a workout, or slow breathing.",
-    "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal those roots at your own pace.",
+    "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal what's underneath at your own pace.",
     "Purpose and fun. Try something new: a class, a team, volunteering, a trail, a craft. Many people find serving others steadies them.",
     "Marking the wins: a week, a month, ninety days, your first sober holiday. Celebrate with sparkling water, a good meal, a hike, or people you love."
    ],
@@ -6238,7 +6238,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Making one change to your plan from what you learned: a new answer, a new evening routine, a call before certain places, or more support on certain days.",
     "Checking in with a doctor if you drank or used for more than a few days. Stopping alcohol or sedatives again can bring withdrawal, and a doctor can help you stop safely.",
     "Letting your people back in. A peer group, a sponsor, a SMART Recovery meeting, a therapist, or treatment are all ways to get more support. Use what fits you.",
-    "Tending what you were trying to quiet. Slips often follow painful feelings. Healing those roots, with support, makes the path steadier.",
+    "Tending what you were trying to quiet. Slips often follow painful feelings. Healing that pain, with support, makes the path steadier.",
     "Counting what you choose. Some people restart their day count, and some count their total sober days. Either way, the growth is yours."
    ],
    "tell": [
@@ -6572,7 +6572,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "quick": [
    "After drinking or using stops, the pain it used to quiet is still there, and something else can step in to quiet it: food, spending, screens, betting, work, workouts, even religion.",
    "Anything we do to change how we feel can become a way to avoid what hurts. Noticing it is a sign of growth, and it's common.",
-   "The goal is healing the roots: being honest about the pain underneath, and working on it a little at a time.",
+   "The goal is healing what's underneath: being honest about the pain underneath, and working on it a little at a time.",
    "Build a wide toolbox of healthy ways to change how you feel: movement, time outdoors, breathing, writing, music, rest, and people."
   ],
   "feel": "Maybe you're sober and proud of it, and you've noticed something else growing in its place. Late-night eating. Packages arriving every day. Hours of scrolling, gaming, or betting. Working or training past the point of joy. Or staying so busy, or so perfect, that there's no room to feel. You might feel discouraged: didn't I already do the hard part? Here's the hopeful truth. Noticing this means you're growing. The habit is pointing at a feeling that still needs care, and you can heal it, one small piece at a time.",

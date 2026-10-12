@@ -9612,7 +9612,7 @@ var TOPICS = [
    "family",
    "group"
   ],
-  "short": "When someone in the family is growing sober: honest talk, healthy roots, and good sober time for all.",
+  "short": "When someone in the family is growing sober: honest talk, healthy habits, and good sober time for all.",
   "keys": "sober sobriety growing sober living sober drunk beer wine aa na slip quit drinking stopped drinking stopped using drinking drugs alcohol pills recovery family recovery treatment rehab home from treatment early sobriety first year sober healthy home al-anon alateen nar-anon whole family heals",
   "parts": [
    "branches",
@@ -9625,7 +9625,7 @@ var TOPICS = [
   "quick": [
    "Growing sober is a season for the whole family. Everyone grows, and every small step counts.",
    "It is safe to talk about drinking and drugs in our home. Honest talk is how a family heals.",
-   "Drinking or using often covered painful feelings. Healing those roots, together, is the path.",
+   "Drinking or using often covered painful feelings. Healing that pain, together, is the path.",
    "Good sober time together, with real food, water, movement, rest, and laughter, grows the whole tree."
   ],
   "feel": "Someone in the family has chosen to grow sober. Maybe they are home from treatment, or a few weeks in, or a year along. There can be relief and hope, and also tiredness, old hurt, and a quiet worry about what comes next. The person growing sober may feel raw, proud, restless, and tender all in one day, because the feelings drinking or using once covered are rising to the surface. Children may feel glad, unsure, or watchful. Other grown-ups may want to trust and still feel braced. All of this makes sense. Growing sober asks a lot of a family, and it also opens the door to honesty, closeness, and a healthier home than many families have known before.",
@@ -9638,7 +9638,7 @@ var TOPICS = [
    ],
    "helps": [
     "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
-    "Tending the roots together: sleep, water, whole food, movement, and time outdoors.",
+    "Tending our bodies together: sleep, water, whole food, movement, and time outdoors.",
     "A Family Sober Night each week, with a shared meal, a walk, music, or a game.",
     "Family groups like Al-Anon, Alateen, or Nar-Anon, where others understand.",
     "Marking milestones: a day, a week, a season, a promise kept.",
