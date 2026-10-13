@@ -1062,7 +1062,7 @@ function rTrad(k, from) {
 }
 VIEWS.readings = () => {
   const st = S.read;
-  if (st.open) { const x = RD.readings.find(y => y.id === st.open); if (x) return readingHtml(x); st.open = null; }
+  if (st.open) { const x = RD.readings.find(y => y.id === st.open); if (x) return readingHtml(x); const lid = st.open; st.open = null; if (window.GGReadings) setTimeout(() => openLib({ id: lid }), 0); }
   const mine = myTrads(), hasMine = mine.length > 1;
   if (st.trad === 'mine' && !hasMine) st.trad = 'every';
   const filt = readFilt(st.trad, st.q, mine);
@@ -1071,10 +1071,11 @@ VIEWS.readings = () => {
   const tradOpts = [['every', 'Every reading'], ['all', 'For every tradition and in-between']].concat(F.intake.groups.flatMap(g => g[2].filter(id => RD.readings.some(x => x.trad.includes(id))).map(id => [id, faithName(id)])));
   return `<div class="lc-head"><p class="eyebrow">Readings</p><h2 class="section-title" style="margin-top:4px">Words to read aloud</h2>
     <p class="lead">Psalms, prayers, poems, and blessings for all faith traditions and everything in-between. Read slowly. Read it twice. Hearing is often the last sense to go.</p></div>
+    ${window.GGReadings ? `<div class="w-card w-libcard no-print"><p class="w-eyebrow">The Grounded Readings Library</p><p>Many more prayers, blessings, poems, hymns, songs, and stories, from every tradition and the churches and schools within each one, many with Listen.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.lib()">Open the Library</button></div></div>` : ''}
     <div class="w-readfilter">${hasMine ? `<button class="lc-chip" style="--rc:var(--gold)" aria-pressed="${st.trad === 'mine'}" onclick="W.S.read.trad='mine';W.render()">${isSelf() ? 'For me' : 'For ' + esc(nameOf(target()))}</button>` : ''}
       <label class="w-l w-inline" for="w-rtrad">Tradition</label><select id="w-rtrad" onchange="W.S.read.trad=this.value;W.render()">${tradOpts.map(o => `<option value="${o[0]}"${st.trad === o[0] ? ' selected' : ''}>${esc(o[1])}</option>`).join('')}</select></div>
     <input class="lc-search" type="search" placeholder="Search: shepherd, peace, river, home..." aria-label="Search the readings" value="${esc(st.q)}" onchange="W.S.read.q=this.value;W.render()">
-    ${st.trad === 'every' && !st.q ? readGroupsHtml(tradOpts.slice(1)) : `${st.q || st.trad === 'mine' ? '' : `<button type="button" class="lc-back w-allg no-print" id="w-rallg" onclick="W.rTrad('every',2)">All Groups</button><h3 class="section-title">${esc((tradOpts.find(o => o[0] === st.trad) || [0, ''])[1])}</h3>`}<div class="w-readlist">${list.map(x => `<button type="button" class="w-reading" onclick="W.reading('${x.id}')"><b>${esc(x.title)}</b><span>${esc(x.by)}</span><i>${esc(RIGHTS[x.rights] || '')}</i></button>`).join('') || '<p class="w-small">No readings match. Try another word or tradition.</p>'}</div>`}
+    ${st.trad === 'every' && !st.q ? readGroupsHtml(tradOpts.slice(1)) : `${st.q || st.trad === 'mine' ? '' : `<button type="button" class="lc-back w-allg no-print" id="w-rallg" onclick="W.rTrad('every',2)">All Groups</button><h3 class="section-title">${esc((tradOpts.find(o => o[0] === st.trad) || [0, ''])[1])}</h3>`}<div class="w-readlist">${list.map(x => `<button type="button" class="w-reading" onclick="W.reading('${x.id}')"><b>${esc(x.title)}</b><span>${esc(x.by)}</span><i>${esc(RIGHTS[x.rights] || '')}</i></button>`).join('') || '<p class="w-small">No readings match. Try another word or tradition.</p>'}</div>${st.q && window.GGReadings ? `<div class="btn-row no-print"><button type="button" class="btn btn-secondary btn-sm" onclick="W.lib(W.S.read.q)">Search the Grounded Readings Library</button></div>` : ''}`}
     <h3 class="section-title">Songs families often ask for</h3><p>${RD.songs.map(esc).join(', ')}. Play a recording the family loves, or sing it. Off key counts.</p>
     <h3 class="section-title">Beloved writing to find in print</h3><p class="lead">Still under copyright, so Willow names them and you can find them in the book or online.</p>
     <ul class="w-linked">${RD.linked.map(l => `<li><b>${esc(l[0])}</b>, ${esc(l[1])}. In <i>${esc(l[2])}</i>. <span class="w-small">${esc(l[3])}</span></li>`).join('')}</ul>
@@ -1112,6 +1113,14 @@ function readingHtml(x) {
     ${vid}<div class="w-readtext" data-read="Read this aloud"${listen ? ` data-ggl-text="w:${esc(x.id)}"` : ''}>${x.tr ? `<p class="w-tr">${esc(x.tr)}</p>` : ''}${body}</div>
     ${bp}${note ? `<p class="w-small w-notice">${esc(note)}</p>` : ''}${src}
   </article>`;
+}
+// The Grounded Readings Library (GWG BLD 798, shared/gg-readings.js) opens in a window over Willow, starting with this
+// person's tradition when Willow knows it. Willow's own readings and their ids stay here, as before.
+function openLib(o) {
+  if (!window.GGReadings) return;
+  o = typeof o === 'string' ? { q: o } : (o || {});
+  if (!o.q && !o.id && !o.trad) { const t = myTrads().find(x => x !== 'all' && x !== 'christian' && GGReadings.labels.trad[x]); if (t) o.trad = t; }
+  GGReadings.open(o);
 }
 function openReading(id) { const fromList = S.tab === 'readings' && !S.read.open; S.read.open = id; S.tab = 'readings'; render(); scrollTop(true); pushHash(fromList ? { wList: 1 } : null); }
 function closeReading() { if (history.state && history.state.wList && S.read.open) { history.back(); return; } S.read.open = null; render(); scrollTop(true); pushHash(); }
@@ -1386,7 +1395,7 @@ Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
   checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
-  guide: openGuide, closeGuide, closeReading, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
+  guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
   sharePick, shareMake, visitOpen, visitAdd, visitDrop, INV,
   _theyify: theyify

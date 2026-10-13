@@ -11,9 +11,12 @@
    Use:
      GGReadings.mount(el, {mode: 'page'})   the full library in a page (readings.html), with #r=, #q=, #t=, #d=, #y=, #o=
      GGReadings.open({trad, occasion, type, q, id})   the library in a window over any page (Willow)
-     GGReadings.pick({occasion, trad, type, q, title, button}) a Promise of the chosen reading, or null when closed:
+     GGReadings.pick({occasion, trad, type, q, title, button, offline}) a Promise of the chosen reading, or null when closed
+       (offline: true also keeps every group file on this device in the background, for the Field Guide's offline copy):
        {id, title, by, tr, year, text, lines, translit, note, source, sourceLine, rights, trad, type, occasion, voice}
-     GGReadings.chunksOf(reading)  the spoken chunks: the title, then a stanza or paragraph each (long ones by sentence)
+     GGReadings.asPiece(reading)   that reading in the Service Builder's My Pieces shape
+     GGReadings.chunksOf(reading)  the spoken chunks: the title, then a stanza or paragraph each (a line of verse with no
+       closing mark is spoken with a comma; a chunk over 300 characters splits by sentence, then after ; : or ,)
      GGReadings.get(id), GGReadings.index(), GGReadings.search(opts)  Promises, for tools that list readings themselves
    ===================================================================== */
 (function () {
@@ -46,7 +49,8 @@
     var out = [], ti = norm(r && r.title);
     if (ti) out.push({ t: ti, s: -1 });
     stanzas(r).forEach(function (st, si) {
-      var t = norm(st);
+      // A line of verse that ends with no mark gets a comma when spoken, so the voice rests where the line breaks.
+      var ls = st.split('\n').map(norm).filter(Boolean), t = ls.map(function (l, i) { return i < ls.length - 1 && !/[.,;:!?\u2026"'\u201d\u2019)\]]$/.test(l) ? l + ',' : l; }).join(' ');
       if (t.length <= MAX) { out.push({ t: t, s: si }); return; }
       sentences(t).forEach(function (x) { soften(x).forEach(function (y) { out.push({ t: y, s: si }); }); });
     });
@@ -117,7 +121,9 @@
   var IDX = null, BYID = {};
   function index() {
     if (IDX) return Promise.resolve(IDX);
-    return script(BASE + 'index.js' + (VQ ? '?v=' + VQ : '')).then(function () {
+    // The index has no ?v=: it changes with every build of the data, so the browser (and the Field Guide's offline copy,
+    // network first for files without a ?v=) checks it each visit. Group files carry their own content tag from the index.
+    return script(BASE + 'index.js').then(function () {
       var raw = window.GGReadingsIndex || { items: [], groups: {} };
       IDX = { v: raw.v, groups: raw.groups || {}, items: (raw.items || []).map(function (a) {
         var x = { id: a[0], title: a[1], by: a[2], g: a[3], trad: a[4] || [], denom: a[5] || [], type: a[6], occasion: a[7] || [], first: a[8] || '', rights: a[9], voice: a[10], tr: a[11] || '' };
@@ -139,6 +145,11 @@
     });
   }
   function get(id) { return index().then(function () { var x = BYID[id]; if (!x) return null; return group(x.g).then(function (m) { return m[id] || null; }); }); }
+  // Keep every group file on this device (the Field Guide's offline copy saves what it fetches), without reading them in.
+  function warm() {
+    if (!window.fetch) return Promise.resolve();
+    return index().then(function (ix) { return Promise.all(Object.keys(ix.groups).map(function (g) { var gv = ix.groups[g].v; return fetch(BASE + g + '.js' + (gv ? '?v=' + gv : '')).catch(function () {}); })); });
+  }
   function loadAll() { return index().then(function (ix) { return Promise.all(Object.keys(ix.groups).map(function (g) { return group(g).catch(function () {}); })); }); }
 
   /* ---------------- search ---------------- */
@@ -182,6 +193,16 @@
   }
   function linesOf(r) { var out = []; stanzas(r).forEach(function (st, i) { if (i) out.push(''); st.split('\n').forEach(function (l) { out.push(l.trim()); }); }); return out; }
   function plain(r) { return [r.title, bylineOf(r), '', r.translit || '', stanzas(r).join('\n\n'), '', sourceText(r)].filter(function (x, i) { return i !== 3 || x; }).join('\n').replace(/\n{3,}/g, '\n\n'); }
+  // A reading in the shape of a Service Builder piece (field-guide/ceremonies.js My Pieces): kind, title, by, ref, text,
+  // source, faith (faith, plain, or either).
+  var PLAIN = ['sbnr', 'humanist', 'agnostic', 'atheist', 'stoic', 'nature'];
+  function asPiece(r) {
+    var t = r.trad || [], kind = { scripture: 'scripture', poem: 'poem', prayer: 'prayer', litany: 'prayer', chant: 'prayer', blessing: 'blessing' }[r.type] || 'reading';
+    var faith = t.indexOf('all') >= 0 ? 'either' : t.length && t.every(function (x) { return PLAIN.indexOf(x) >= 0; }) ? 'plain' : 'faith';
+    var o = { kind: kind, title: r.title, by: r.byline || bylineOf(r), text: r.text || stanzas(r).join('\n\n'), source: r.sourceLine || sourceText(r), faith: faith, lib: r.id };
+    if (kind === 'scripture') o.ref = r.title;
+    return o;
+  }
   function result(r) {
     return { id: r.id, title: r.title, by: r.by, tr: r.tr || '', year: r.year, text: stanzas(r).join('\n\n'), lines: linesOf(r), translit: r.translit || '', note: r.note || '',
       source: r.source || {}, sourceLine: sourceText(r), byline: bylineOf(r), rights: r.rights, trad: (r.trad || []).slice(), denom: (r.denom || []).slice(), type: r.type,
@@ -551,12 +572,13 @@
     opts = opts || {};
     return new Promise(function (ok) {
       var chosen = false;
+      if (opts.offline) setTimeout(function () { warm().catch(function () {}); }, 1500);
       open({ title: opts.title || 'Choose a Reading', q: opts.q, trad: opts.trad, denom: opts.denom, type: opts.type, occasion: opts.occasion, id: opts.id, button: opts.button,
         onPick: function (r) { chosen = true; ok(r); }, onClose: function (v) { if (!chosen && !v) ok(null); } });
     });
   }
 
-  window.GGReadings = { mount: mount, open: open, pick: pick, get: function (id) { return get(id).then(function (r) { return r ? result(r) : null; }); }, index: index, search: search, loadAll: loadAll,
+  window.GGReadings = { mount: mount, open: open, pick: pick, get: function (id) { return get(id).then(function (r) { return r ? result(r) : null; }); }, index: index, search: search, loadAll: loadAll, warm: warm, asPiece: asPiece,
     chunksOf: chunksOf, chunkInfo: chunkInfo, clipName: clipName, clipUrl: clipUrl, rec: REC, trim: TRIM, rest: REST, labels: { trad: TRAD, type: TYPE, occasion: OCC, denom: DENOM, rights: RIGHTS, groups: GROUPS },
     listen: { play: function (r) { return (r && r.text ? Promise.resolve(r) : get(r && r.id || r)).then(function (x) { if (x) lplay(x, null); }); }, pause: lpause, resume: lresume, stop: lstop, get state() { return P.state; } },
     base: BASE };
