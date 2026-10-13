@@ -35,7 +35,8 @@
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
     { name: 'Together', items: [
-      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' }
+      { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
+      { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. See a sample, then open yours with your code', href: HOME + '/heartwood/', icon: ic.marriage, bg: '#E3EAF2' }
     ] },
     { name: 'For Families', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
@@ -62,6 +63,7 @@
     if (p.indexOf('/willow') === 0) return 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
+    if (p.indexOf('/heartwood') === 0) return 'heartwood';
     if (p.indexOf('/library') === 0) return 'library';
     if (p.indexOf('/planning-a-farewell') === 0) return 'farewell';
     if (p.indexOf('/obituary-helper') === 0) return 'obituary';
@@ -393,7 +395,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b797a';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b797b';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
