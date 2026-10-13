@@ -205,7 +205,7 @@
         '.c-leaf{position:absolute;width:0.44in;height:0.44in;z-index:1;}',
         '.c-tl{top:0.02in;left:0.02in;transform:rotate(-90deg);}.c-tr{top:0.02in;right:0.02in;}',
         '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}',
-        '.c-cert{font-size:34pt;}.c-in .c-cert+.c-name{font-size:38pt;}',
+        '.c-cert{font-size:34pt;}.c-in .c-cert+.c-name{font-size:38pt;margin-top:0.14in;}',
         '.c-line{font-size:12pt;line-height:1.4;color:#4A3B30;max-width:8.2in;margin-top:0.1in;}',
         '.c-list{list-style:none;margin:0.1in 0 0;padding:0;font-size:12pt;line-height:1.35;column-gap:0.35in;text-align:left;max-width:9.2in;}',
         '.c-list li{break-inside:avoid;padding-left:0.18in;position:relative;margin-bottom:2pt;}',

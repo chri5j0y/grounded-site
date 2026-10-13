@@ -549,6 +549,7 @@ const euTone = p => relSoft(p) || (p.eu && p.eu.tone === 'plain') ? 'plain' : 'w
 function euVariants(p, kind){
   const P = cfg().eulogyProse, tone = euTone(p), fw = plainOf(p) ? 'plain' : 'faith';
   const ok = x => x && x.t && (!x.faith || x.faith === 'either' || x.faith === fw);
+  if (relSoft(p)){ const R = arr(obj0(REL().eulogyPlain)[kind]).filter(ok); if (R.length) return R; } // GWG BLD 797: simple and honest
   let L = arr(P[kind]).filter(x => ok(x) && (x.tone || 'warm') === tone); if (!L.length) L = arr(P[kind]).filter(ok); if (!L.length) L = DEF.eulogyProse[kind].filter(ok);
   return L.length ? L : DEF.eulogyProse[kind];
 }
@@ -566,9 +567,9 @@ function euProse(p){
     they: pr.they, them: pr.them, their: pr.their, They: up(pr.they), Their: up(pr.their)};
   const O = euVariants(p, 'openings'), Cl = euVariants(p, 'closings'), e = p.eu;
   const open = proseFill(O[(+e.oi || 0) % O.length].t, v, miss);
-  const leads = (P.storyLeads && arr(P.storyLeads[tone]).length ? P.storyLeads[tone] : DEF.eulogyProse.storyLeads[tone]);
+  const RP = obj0(REL().eulogyPlain), leads = soft && arr(RP.storyLeads).length ? RP.storyLeads : (P.storyLeads && arr(P.storyLeads[tone]).length ? P.storyLeads[tone] : DEF.eulogyProse.storyLeads[tone]);
   const stories = ['s1', 's2', 's3'].filter(k => !soft || clean(a[k])).map((k, i) => { const body = clean(a[k]) ? sent(a[k]) : miss(k), lead = proseFill(leads[i] || '', v, miss); return (lead ? lead + ' ' : '') + body; });
-  const g = (P.gave && arr(P.gave[tone]).length ? P.gave[tone] : DEF.eulogyProse.gave[tone]).filter(t => !soft || ['taught', 'carry'].every(k => !String(t).includes('{' + k + '}') || v[k])).map(t => proseFill(t, v, miss)).filter(Boolean).join(' ');
+  const g = (soft && arr(RP.gave).length ? RP.gave : P.gave && arr(P.gave[tone]).length ? P.gave[tone] : DEF.eulogyProse.gave[tone]).filter(t => !soft || ['taught', 'carry'].some(k => String(t).includes('{' + k + '}') && v[k])).map(t => proseFill(t, v, miss)).filter(Boolean).join(' ');
   const close = proseFill(Cl[(+e.ci || 0) % Cl.length].t, v, miss);
   return [open, ...stories, g, close].filter(Boolean).join('\n\n');
 }
@@ -600,9 +601,8 @@ function obDraft(p, shape){
   const sentence = t => { const used = toks(t); if (!used.length) return tidy(t); if (used.every(k => !ans[k])) return ''; if (used.every(k => ans[k])) return tidy(t);
     const parts = t.replace(/[.!?]\s*$/, '').split(/,\s+/).filter(c => toks(c).every(k => ans[k])); if (!parts.length) return '';
     let out = tidy(parts.join(', ')).replace(/^and\s+/i, ''); return out.charAt(0).toUpperCase() + out.slice(1) + '.'; };
-  const soft = relSoft(p), plainT = t => soft ? String(t).replace(/\{Their\} family remembers \{them\} with love, along with those who went before: \{preceded\}\./, '{First} was preceded in death by {preceded}.') : t;
-  const item = t0 => { const t = plainT(t0); return t.split(/(?<=[.!?])\s+(?=[{A-Z])/).map(sentence).filter(Boolean).join(' '); };
-  const pr2 = cfg().obituaryProse[shape.id], P2 = pr2 && arr(pr2.paras).length ? pr2.paras : null;
+  const item = t => t.split(/(?<=[.!?])\s+(?=[{A-Z])/).map(sentence).filter(Boolean).join(' ');
+  const pr2 = (relSoft(p) && obj0(REL().obituaryPlain)[shape.id]) || cfg().obituaryProse[shape.id], P2 = pr2 && arr(pr2.paras).length ? pr2.paras : null;
   const paras = P2 ? P2.map(g => arr(Array.isArray(g) ? g : [g]).map(item).filter(Boolean).join(' ')) : shape.words > 120 ? shape.outline.map(item) : [shape.outline.map(item).filter(Boolean).join(' ')];
   return paras.filter(Boolean).join('\n\n');
 }
@@ -653,6 +653,18 @@ DEF.relationship = {
   eulogyNote: 'Plain and simple, as the family asked. Spots left blank stay out of the draft.',
   missWho: 'what feels true to say about them, in one sentence',
   obituary: {remembered: 'Only if the family wants it. Simple and honest is enough.', loved: 'Only what feels true to the family. A list is fine.'},
+  // Simple, honest drafts: every line comes from the family's answers, with no warmth added.
+  eulogyPlain: {
+    openings: [{id: 'r1', faith: 'either', t: 'Thank you for coming. {Me}. We are here to remember {Name}. {Name} was {who}.'},
+      {id: 'r2', faith: 'faith', t: "Welcome. {Me}. We gather today for {Full}, and we place this day in God's keeping. {Name} was {who}."},
+      {id: 'r3', faith: 'plain', t: 'Welcome, everyone. {Me}. Today we remember {Full}, and we say goodbye together. {Name} was {who}.'}],
+    storyLeads: ['One memory to share.', 'Here is another.', 'And one more.'],
+    gave: ['{Name} taught us {taught}.', 'What we carry forward is {carry}.'],
+    closings: [{id: 'r1', faith: 'either', t: '{close} Goodbye, {Name}.'}, {id: 'r2', faith: 'faith', t: '{close} Go in peace, {Name}.'}, {id: 'r3', faith: 'plain', t: '{close} Goodbye, {Name}. We will remember.'}]},
+  obituaryPlain: {
+    notice: {paras: [['{Name}, {age}, of {city}, died {death}.', '{First} was born {born}.'], ['{First} is survived by {survived}.'], ['A service will be held {service}.', 'Memorials are preferred to {memorials}.']]},
+    newspaper: {paras: [['{Name}, {age}, of {city}, died {death}.', '{First} was born {born}.', '{early}'], ['{work}', '{married}'], ['{First} loved {loved}.', '{remembered}'], ['{First} is survived by {survived}, and was preceded in death by {preceded}.'], ['A service will be held {service}.', 'Memorials are preferred to {memorials}.', 'The family thanks {thanks}.']]},
+    online: {paras: [['{Name}, {age}, of {city}, died {death}.'], ['{First} was born {born}.', '{early}'], ['{work}'], ['{married}'], ['{First} loved {loved}.', '{remembered}'], ['{faith}'], ['{First} is survived by {survived}, and was preceded in death by {preceded}.'], ['A service will be held {service}.', 'Memorials are preferred to {memorials}.', 'The family thanks {thanks}.']]}},
   thanks: "Thank you for letting me walk with you as we planned [Person]'s farewell. We will honor what is true, and you do not have to carry it alone.",
   writing: 'The family asked for simple, honest words. Keep every line plain, and add no praise or warmth the family did not give.'
 };

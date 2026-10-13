@@ -2281,7 +2281,7 @@ function fgCerts(){
   // The Walkthroughs, first in the tab: each lesson's tool, then everything else finished at that level.
   const walks = [];
   safe(() => walkTracks().forEach(t => { if (!walkDone(t)) return; const lv = walkLevel(t), more = out.filter(c => c.level === lv).reduce((a, c) => a.concat(c.items), []);
-    walks.push({id: 'walk:' + t.id, level: lv, title: t.title, walk: true, items: t.lessons.map(l => l.tool).filter(Boolean).concat(more), tree: 'house', group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id))}); }));
+    walks.push({id: 'walk:' + t.id, level: lv, title: t.title, walk: true, items: t.lessons.map(l => l.tool).filter(Boolean).concat(more).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i), tree: 'house', group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id))}); }));
   return walks.concat(out);
 }
 // The name on every certificate, entered once (the Certificates tab can change it).
