@@ -60,7 +60,7 @@
     { title: 'Child Blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
     { title: 'House Blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
     { title: 'Milestones', sub: 'Graduations, retirements, recovery, and more', href: '/milestones.html', keys: 'milestone graduation retirement recovery anniversary' },
-    { title: 'End-of-Life Support', sub: 'Presence at the bedside, planning, and vigil, from $125 an hour', href: '/end-of-life-support.html', keys: 'end of life dying vigil doula bedside hospice planning family support legacy' },
+    { title: 'End-of-Life Support', sub: 'Presence at the bedside, planning, and vigil, from $125 an hour', href: '/end-of-life-support.html', keys: 'end of life dying vigil bedside hospice planning family support legacy' },
     { title: 'Grief and Caregiver Support', sub: 'One-on-one support after a loss or while caregiving, $125 a session', href: '/grief-caregiver-support.html', keys: 'grief griefwork bereavement loss caregiver caregiving burnout widow widower' },
     { title: 'Growth', sub: 'Grow deeper. Rest well. Spiritual guidance, meditation, renewal, and retreats', href: '/services.html#growth', keys: 'growth renewal grow deeper rest retreat retreats workshop workshops seminar seminars faith spiritual practice' },
     { title: 'Spiritual Guidance', sub: 'One-on-one guidance for your inner life, $125 a session', href: '/spiritual-guidance.html', keys: 'spiritual guidance direction director faith doubt questions discernment religious hurt prayer meaning' },
