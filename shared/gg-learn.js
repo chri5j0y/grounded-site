@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b796';
+  var V = 'b797a';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -168,7 +168,8 @@
     if ($('#ggl-css')) return;
     var s = document.createElement('style'); s.id = 'ggl-css';
     s.textContent = [
-      '.ggl{--ggl-acc:var(--gold,#8B5E1A);--ggl-line:var(--line,#DDD0B8);--ggl-card:var(--card,#FFFCF6);--ggl-ink:var(--ink,#2C1810);--ggl-soft:var(--ink-soft,#6B5A4D);--ggl-deep:var(--bg-deep,#F2ECE0);--ggl-scale:var(--scale,1);}',
+      // a player placed outside a .ggl wrapper (Heartwood) gets the same tokens, so its Play button keeps its color (GWG BLD 797).
+      '.ggl,.ggl-player:not(.ggl .ggl-player){--ggl-acc:var(--gold,#8B5E1A);--ggl-line:var(--line,#DDD0B8);--ggl-card:var(--card,#FFFCF6);--ggl-ink:var(--ink,#2C1810);--ggl-soft:var(--ink-soft,#6B5A4D);--ggl-deep:var(--bg-deep,#F2ECE0);--ggl-scale:var(--scale,1);}',
       '.ln-list{display:grid;gap:8px;margin-top:10px;}',
       '.ln-item{display:flex;align-items:center;gap:12px;width:100%;text-align:left;padding:10px 12px;border:1px solid var(--ggl-line);border-radius:12px;background:var(--ggl-card);color:var(--ggl-ink);font:inherit;cursor:pointer;min-height:56px;}',
       '.ln-item:hover{border-color:var(--ggl-acc);}.ln-item>svg{width:22px;height:22px;color:var(--ggl-acc);flex:none;}',
@@ -301,7 +302,7 @@
      and its sentence (clipName), so a wording change asks for a new clip, and the closing lines and quiz replies are
      shared by every video in that voice. REC.round names the recording round that plays; empty plays device voices.
      A missing clip falls back to the device voice for that sentence. Page videos keep their own clips (audio: 'pv').
-     The Voice Setup video keeps device voices. Sealed videos play locked clips instead (cfg.sealed, BLD 781, below).
+     Sealed videos play locked clips instead (cfg.sealed, BLD 781, below).
      VOICES: each app's voice, with the tracks and the guide side (helper: For the Grown-up, For the Helper, For the
      Leader) that take the other voice. A lesson can name its own (voice: 'brian' or 'jenny'). */
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
@@ -612,11 +613,10 @@
       + '<div class="ln-vs"></div></div>';
     var st = $('.ln-stage', host), cv = $('.ln-canvas', host), bar = $('.ggl-endbar', host);
     try { if (window.GGRead && GGRead.settings) $('.ln-vs', host).appendChild(GGRead.settings()); } catch (e) {}
-    // A lesson with recorded voices keeps only the Speed choice: the device voice menu, Get a Better Voice, and Voice Check step aside.
+    // A lesson with recorded voices keeps only the Speed choice: the device voice menu steps aside.
     var rec = l.audio ? '' : recVoice(cfg);
     // Locked clips (BLD 781) when the lesson has no public recording and the caller gave its library's audio key.
     var SK = l.audio || rec || !sealedOk(cfg.sealed) ? null : cfg.sealed, recd = !!(l.audio || rec || SK);
-    if (recd) Array.prototype.forEach.call(host.querySelectorAll('.ln-vs .gg-vhelp-btn, .ln-vs .gg-vhelp'), function (x) { x.style.display = 'none'; });
     if (recd) { var vsel = host.querySelector('.ln-vs .gg-vsel'); if (vsel && vsel.closest('label')) vsel.closest('label').style.display = 'none'; }
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
@@ -869,8 +869,7 @@
         if (P.playing) setPlay(false);
         else {
           var go = function () { setPlay(true); if (P.i < N - 1 && P.B && (P.b > 0 || P.ph === 'wait')) { stopTimers(); run(P.tok); } else show(P.i >= N - 1 ? 0 : P.i); };
-          // Recorded voices (audio) need no Voice Check first.
-          if (!recd && window.GGRead && GGRead.ensure) GGRead.ensure(go); else go();
+          go();
         }
       }
       else if (g === 'read') readToggle($('.ln-read', host).hidden);
@@ -906,31 +905,7 @@
     return ctl;
   }
 
-  /* ---------------- Get Set Up: a good voice (first in every Learn tab and the Field Guide) ---------------- */
-  var SETUP = { id: 'gg-setup-voice', n: 1, title: 'Get Set Up: A Good Voice', mins: 4, blurb: 'Make Read Aloud sound warm and clear on this device.', scenes: [
-    { k: 'title', hero: 'grove', eyebrow: 'Get Set Up', h: 'A Good Voice', sub: 'A few minutes now, and Read Aloud sounds better.', say: 'Our videos play warm recorded voices. Read Aloud buttons use your device\u2019s own voice, so let us make sure it sounds good. It takes a few minutes, and you only do it once.' },
-    { k: 'big', h: 'Read Aloud uses your device\u2019s own voice.', sub: 'The voice lives on your phone or computer.', say: 'Our videos play recorded voices, and when a recording is missing, your device\u2019s own voice reads that sentence. Every Read Aloud button uses your device\u2019s own voice too. Some devices start with a basic voice that sounds robotic. Many computers and Android phones have natural voices waiting to be downloaded.' },
-    { k: 'levels', levels: [['Premium', 'Sounds like a person', '#5F7D48'], ['Enhanced', 'Clear and warm', '#8B5E1A'], ['Basic', 'Robotic', '#B8612F']], say: 'Look for a voice marked Premium. Enhanced is good too, and on Windows, Natural. A basic voice works, but it can make a lesson hard to enjoy.' },
-    { k: 'points', h: 'On an iPhone or iPad', items: [['Pick the clearest voice', 'In the Voice menu, under the video'], ['Try Slower', 'If the voice feels rushed'], ['Most natural of all', 'A computer, in Microsoft Edge']], say: 'On an iPhone or iPad, web pages use Apple\u2019s built-in voices for now, and they are already on your device. Open the Voice menu under the video, and pick the voice that sounds clearest to you. If it feels rushed, choose Slower. And for the most natural voices of all, watch on a computer in Microsoft Edge.' },
-    { k: 'flow', h: 'On a Mac', steps: [['Best: Microsoft Edge', 'Its natural voices sound the most like a person'], ['Or System Settings', 'Accessibility, then Read & Speak'], ['Manage Voices', 'Download Premium or Enhanced']], say: 'On a Mac, the most natural voices are in Microsoft Edge. Or, open System Settings, then Accessibility. Open Read and Speak, then Manage Voices, and download a voice marked Premium or Enhanced.' },
-    { k: 'points', h: 'On Windows', items: [['Open it in Microsoft Edge', 'Its natural voices sound the most like a person'], ['Pick a natural voice yourself', 'They read through the internet, so you choose them'], ['Or add a Windows voice', 'Settings, Time and language, Speech']], say: 'On Windows, open this page in Microsoft Edge. Its natural voices sound the most like a person. They read the words through the internet, so you pick one yourself in the Voice menu. Or, add a voice in Windows settings, under Time and language, then Speech.' },
-    { k: 'flow', h: 'On Android', steps: [['Settings', 'Search Text-to-speech'], ['Google engine', 'Speech Services by Google'], ['Install voice data', 'English, then download']], say: 'On Android, open Settings and search for Text to speech. Choose Speech Services by Google. Then tap Install voice data, choose English, and download a voice you like.' },
-    { k: 'points', h: 'Then, once', items: [['Fully close your browser', 'Swipe it away, or quit it'], ['Open the page again', 'New voices load when the browser starts'], ['Pick your voice', 'In the Voice menu, under the video']], say: 'Then, one more step that matters. Fully close your browser. Open the page again. And pick your new voice in the Voice menu, under the video.' },
-    { k: 'big', h: 'Pause here and set it up.', sub: 'Then come back and tap Voice Check.', cue: { p: { 0: 2 } }, say: 'If you would like, pause this video now and set up your voice. Then come back and tap Voice Check to hear how it sounds.' },
-    { k: 'quiz', q: 'On an iPhone or iPad, what helps most?', opts: ['Downloading a Siri voice', 'Picking the clearest voice in the Voice menu', 'Turning the sound off'], right: 1, why: 'Web pages on an iPhone or iPad can use only Apple\u2019s built-in voices for now, so pick the one that sounds clearest to you. For the most natural voices, watch on a computer in Microsoft Edge.', say: 'Quick question. On an iPhone or iPad, what helps most?' }
-  ] };
-  var SETUP_TRACK = { id: 'gg-setup', title: 'Get Set Up', who: 'Watch this first, once on each device', kind: 'setup', lessons: [SETUP] };
-  // The voice card at the top of every Learn tab: what voice is in use, and how it sounds.
   function voiceCard() { return ''; } // the Before You Watch card is retired (recorded voices everywhere), Chris, October 10, 2026
-  function voiceCardOld() {
-    var I = window.GGRead && GGRead.voiceInfo ? GGRead.voiceInfo() : null;
-    var col = I ? ({ great: '#5F7D48', okay: '#C07A26', basic: '#B8612F', none: '#B8612F' })[I.grade] : '#C07A26';
-    var said = !I ? 'Open Voice Setup to get a good voice on this device.' : GGRead.saidText ? GGRead.saidText(I) : '';
-    return '<div class="ggl-card ggl-voice" style="border-left:6px solid ' + col + '"><h3>Before You Watch: Set Up a Good Voice</h3>'
-      + '<p class="ggl-muted" style="margin:6px 0 0">Read Aloud uses your device\u2019s own voice, and it fills in when a recorded clip is missing. A Premium, Enhanced, or Natural voice sounds the most like a person.</p>'
-      + '<p style="margin:10px 0 0"><span style="display:inline-block;width:12px;height:12px;border-radius:50%;background:' + col + ';margin-right:8px;vertical-align:-1px"></span><b>' + (I && I.name ? 'Your voice: ' + esc(I.name) + '.' : 'Your voice') + '</b> ' + esc(said) + '</p>'
-      + '<div class="ggl-row"><button class="ggl-btn' + (I && I.grade === 'great' ? '' : ' pri') + '" data-l="vcheck" data-act="ln-vcheck">Voice Check</button><a class="ggl-btn quiet" href="' + url('/voice-setup.html') + '" target="_blank" rel="noopener">Voice Setup Guide</a></div></div>';
-  }
 
   /* ---------------- the Learn tab in a tree app ---------------- */
   /* Watched marks live inside the unlocked profile's vault (GWG BLD 756), never open in browser storage.
@@ -1115,7 +1090,7 @@
   }
   // Escape steps back one level: a video to the Learn list (or back to the guide it came from), the list to closed.
   function appKey(e) {
-    if (e.key !== 'Escape' || !APP || document.querySelector('.gg-vc')) return; // the Voice Check (read.js) keeps its own keys
+    if (e.key !== 'Escape' || !APP) return;
     e.preventDefault();
     var qi = e.target && e.target.id === 'ggl-q' ? e.target : null;
     if (qi && qi.value) { qi.value = ''; APP.q = ''; if (APP.paint) APP.paint(); return; }
@@ -1328,7 +1303,6 @@
     else if (a === 'page') showPage(v);
     else if (a === 'pprint') { var pp = pageOf(APP.app, v); if (pp) printPage(APP.app, pp); }
     else if (a === 'cert') { var t = tracksFor(APP.app).filter(function (x) { return x.id === v; })[0]; if (t) cert(APP.app, t); }
-    else if (a === 'vcheck') { if (window.GGRead && GGRead.check) GGRead.check(function () { if (APP) list(); }); }
     else if (a === 'flyer') { var app = APP.app; needPrint().then(function () { if (window.GGPrint) GGPrint.flyer(app); }); }
   }
 
@@ -1344,5 +1318,5 @@
   window.addEventListener('hashchange', fromLink);
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', fromLink); else setTimeout(fromLink, 0);
 
-  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, setup: SETUP, setupTrack: SETUP_TRACK, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, sealedName: sealedName, scene: scene, player: player, open: open, page: page, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
+  window.GGLearn = { music: MUSIC, musicState: function () { return { playing: !!BG.el && !BG.el.paused, src: BG.src, vol: Math.round((BG.gain ? BG.gain.gain.value : (BG.el ? BG.el.volume : 0)) * 100) / 100 }; }, guideTracks: guideTracks, watched: watched, marks: function (app) { return load(app); }, needLife: needLife, voiceCard: voiceCard, beatsOf: beatsOf, rec: REC, recVoice: recVoice, clipName: clipName, sealedName: sealedName, scene: scene, player: player, open: open, page: page, close: close, ending: ending, certable: certable, trackDone: trackDone, css: css, apps: APPS, version: V };
 })();
