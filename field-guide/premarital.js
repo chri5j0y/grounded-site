@@ -222,7 +222,9 @@ function faithBlock(c){
     }
   }
   if (P.ask) h += `<p class="muted" style="font-size:15px">${esc(P.ask)}</p>`;
-  return h + `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="about">Change Faith Backgrounds</button></div></div>`;
+  // GWG BLD 798: wedding readings for both traditions in the Grounded Readings Library (shared/gg-readings.js), to read together.
+  const libT = window.GGReadings ? [a, b].filter(named).find(id => GGReadings.labels.trad[id] && id !== 'christian') : null;
+  return h + `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="about">Change Faith Backgrounds</button>${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-pm="lib" data-v="${esc(libT || '')}">Wedding Readings in the Library</button>` : ''}</div></div>`;
 }
 
 // ---------- views ----------
@@ -296,6 +298,12 @@ function sessCard(c, s, extra){
   return `<div class="card pm-sc"><div class="spread"><div style="min-width:0"><div class="eyebrow">${sLabel(s)}</div><h3>${esc(s.title)}</h3>${extra || ''}<small class="muted">${d} of ${n} parts checked${lg ? ', ' + esc(hrs(lg)) + ' logged' : ''}${st.notes ? ', notes kept' : ''}</small></div>
       <button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="${skey(s)}">Open ${sLabel(s)}</button></div></div>`;
 }
+// GWG BLD 797: Start Their File at the start of premarital sessions (the Intake Session in clients.js, linked to this couple).
+function stfBlk(c){
+  if (!window.GGCli || !GGCli.stfCard) return '';
+  const a = c.p1 || {}, b = c.p2 || {};
+  return GGCli.stfCard({kind: 'pm', ref: c.id, cli: c.cli, title: 'Premarital Sessions', who: names(c), ct: {name: String(a.full || a.name || '').trim(), partner: String(b.full || b.name || '').trim()}, svc: 'tgm'});
+}
 function vSessions(c){
   let body;
   if (isUpg(c)){
@@ -309,7 +317,7 @@ function vSessions(c){
       <details class="card pm-det"><summary><h3>Essentials Sessions</h3></summary>
         ${E.sessions.map(s => { const lg = minsFor(c, s); return `<div class="pm-row"><div class="m"><b>${esc(sLabel(s))}: ${esc(s.title)}</b><br><small class="muted">${lg ? esc(hrs(lg)) + ' logged' : 'Not logged'}</small></div><button type="button" class="btn btn-line btn-sm" data-pm="session" data-v="${skey(s)}">Open</button></div>`; }).join('')}</details>`;
   } else body = pmc(c).sessions.map(s => sessCard(c, s)).join('') + upgradeBlock(c);
-  return `${head(c, 'Sessions')}${vBefore(c)}
+  return `${head(c, 'Sessions')}${stfBlk(c)}${vBefore(c)}
   ${body}
   ${tipsBlock(false)}${referBlock()}`;
 }
@@ -896,6 +904,7 @@ function act(k, v){
   if (!c) return;
   switch (k){
     case 'go': goView(v); return;
+    case 'lib': if (window.GGReadings) GGReadings.open({occasion: 'wedding', trad: v || '', title: 'Wedding Readings'}); return;
     case 'status': c.status = v; keep(c); rerender(true); return;
     case 'session': S.n = String(v); goView('session'); return;
     case 'upgrade': if (!isEss(c) || !confirm('Move ' + names(c) + ' to the full program? Their logged hours stay, and three more sessions bring them to ' + STMT() + ' hours.')) return; upgrade(c); goView('sessions'); toast('Upgraded to the full program.'); return;

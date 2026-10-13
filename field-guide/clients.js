@@ -122,7 +122,19 @@ const DEF = {
       {h: 'Save It to Your Cloud Folder', p: 'Save the file to the cloud folder you already use: iCloud Drive, Google Drive, or OneDrive. Your phone or computer asks where to save it.'},
       {h: 'Once a Month, a USB Drive Too', p: 'Optional, and a good second copy to keep in a drawer.'},
       {h: 'Keep Your Passcode Safe', p: 'The backup opens only with your passcode. Keep it somewhere safe and private.'}],
-    whySafe: 'The file is locked with your passcode before it ever leaves this device. The cloud only holds scrambled data. Without your passcode, no one at Apple, Google, or Microsoft can read it.'}
+    whySafe: 'The file is locked with your passcode before it ever leaves this device. The cloud only holds scrambled data. Without your passcode, no one at Apple, Google, or Microsoft can read it.'},
+  // GWG BLD 797: Start Their File, offered at the start of every paid service, done now or after the visit.
+  startFile: {title: 'Start Their File',
+    lead: 'Every paid service begins with their file: the privacy notice and their yes, who they are, the service and price, the agreement, and the deposit. It links to this session.',
+    say: "Before we begin, I'd love to set up your file with you. It takes a few minutes, and it keeps everything we agree on clear.",
+    now: 'Start Their File Now', later: 'After the Visit', link: 'Link This File',
+    laterNote: 'A reminder waits on Home until their file is done.',
+    started: 'Their file is started.', cont: 'Continue Their File',
+    homeTitle: 'Start Their File', homeLead: 'After the visit: the intake, the privacy notice, and the agreement for each session below.',
+    back: 'Back to the Session',
+    copyTitle: 'Their Copy', copyLead: 'The intake, the privacy notice with their yes, and the agreement in one copy: one for them, and one for your records.',
+    copyIntro: 'Here is what we set up together: your information, how I keep what you share and your yes, and our service agreement.',
+    copyWords: 'Hi [Name], here is a copy of what we set up together: your information, how I keep what you share and your yes, and our service agreement. Keep it for your records. Any questions, just ask.\n\n[Chris]'}
 };
 
 // The library's key over the built-in words, piece by piece.
@@ -143,7 +155,8 @@ function cfg(){
     privacyNotice: A(L && L.privacyNotice, DEF.privacyNotice), neverKeep: (L && L.neverKeep) || DEF.neverKeep, writingAssistant: o(DEF.writingAssistant, L && L.writingAssistant),
     agreement: o(DEF.agreement, L && L.agreement), invoice: o(DEF.invoice, L && L.invoice), sendWords: o(DEF.sendWords, L && L.sendWords),
     backup: Object.assign(o(DEF.backup, L && L.backup), {steps: A(L && L.backup && L.backup.steps, DEF.backup.steps)}),
-    irsRate: +(L && L.irsRate) > 0 ? +L.irsRate : DEF.irsRate
+    irsRate: +(L && L.irsRate) > 0 ? +L.irsRate : DEF.irsRate,
+    startFile: o(DEF.startFile, L && L.startFile)
   };
   CFsrc = L;
   return CF;
@@ -153,9 +166,9 @@ const CNT = 6;
 
 // ---------- the store ----------
 function store(){
-  const d = D(); if (!d) return {files: [], rem: [], seq: 1000};
+  const d = D(); if (!d) return {files: [], rem: [], after: [], seq: 1000};
   const c = d.cli = d.cli || {};
-  c.files = arr(c.files); c.rem = arr(c.rem); c.seq = +c.seq || 1000; c.usb = c.usb || {on: false, last: null};
+  c.files = arr(c.files); c.rem = arr(c.rem); c.after = arr(c.after); c.seq = +c.seq || 1000; c.usb = c.usb || {on: false, last: null};
   return c;
 }
 const files = () => store().files;
@@ -451,8 +464,8 @@ V[6] = f => {
     ${pm || pmL.length ? (pmL.length ? pmL.map(x => `<button type="button" class="btn btn-line" data-cla="pm-open" data-clv="${esc(x.id)}">Open The Grounded Marriage</button>`).join('') : `<button type="button" class="btn btn-gold" data-cla="pm-new"${fk('pm-new')}>Start The Grounded Marriage</button>`) : ''}
     ${wd || wdL.length ? (wdL.length ? wdL.map(p => `<button type="button" class="btn btn-line" data-cla="wd-open" data-clv="${esc(p.id)}">Open the Wedding Plan</button>`).join('') : `<button type="button" class="btn btn-gold" data-cla="wd-new"${fk('wd-new')}>Start the Wedding Plan</button>`) : ''}
     ${!fw && !pm && !wd && !fwL.length && !pmL.length && !wdL.length && !(window.GGRun && saved(f) && GGRun.fileStart(f)) ? '<p class="muted" style="margin:0">Sessions start from the Sessions tab or the client file.</p>' : ''}</div>${window.GGRun && saved(f) ? GGRun.fileStart(f) : '' /* GWG BLD 771 hook */}`, "Opens the linked tool with this client's details filled in.") +
-  note(f, 'next') +
-  `<div class="row" style="margin-top:6px"><button type="button" class="btn btn-gold" data-cla="finish"${fk('finish')}>Finish the Intake: Open the Client File</button></div>`;
+  copyBlk(f) + note(f, 'next') +
+  `<div class="row" style="margin-top:6px">${backBtn()}<button type="button" class="btn btn-gold" data-cla="finish"${fk('finish')}>Finish the Intake: Open the Client File</button></div>`;
 };
 
 // ---------- Family View (its own window, or here to tilt the laptop) ----------
@@ -526,7 +539,7 @@ function vIntake(){
   if (!f){ S.draft = f = newFile(); S.step = 1; }
   const n = S.step, st = STEP(n), mode = S.mode;
   const body = mode === 'family' ? `<div class="fw-famwrap">${famBody(f, true)}</div>` : mode === 'phone' ? vPhone(f) : V[n](f);
-  return `<div class="fw-head"><div style="min-width:0"><div class="eyebrow">Intake Session${saved(f) ? '' : ' · Saves Once They Say Yes'}</div><h1 id="cl-title">${esc(fTitle(f))}</h1></div>
+  return `${backBtn()}<div class="fw-head"><div style="min-width:0"><div class="eyebrow">Intake Session${saved(f) ? '' : ' · Saves Once They Say Yes'}</div><h1 id="cl-title">${esc(fTitle(f))}</h1></div>
     <div class="fw-modes" role="group" aria-label="View">${[['chris', me() + "'s View"], ['family', 'Family View Here'], ['phone', 'Phone Mode']].map(([k, l]) => `<button type="button" class="chip" data-cla="mode" data-clv="${k}" aria-pressed="${mode === k}"${fk('md|' + k)}>${esc(l)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-cla="famwin">Open Family View Window</button></div></div>
   <div class="fw-lay"><nav class="fw-rail" aria-label="Steps"><ol>${cfg().steps.map((s, i) => `<li><button type="button" data-cla="step" data-clv="${i + 1}"${n === i + 1 ? ' aria-current="step"' : ''}${fk('rs|' + (i + 1))}><span class="n">${i + 1}</span><span>${esc(s.title)}</span></button></li>`).join('')}</ol><div class="fw-cbt">${cbt(f)}</div></nav>
   <div id="cl-main" style="min-width:0"><div class="fw-kick">Step ${n} of ${CNT}${mode === 'family' ? ' &middot; Family View' : mode === 'phone' ? ' &middot; Phone Mode' : ''}</div><h2 style="margin:2px 0 6px">${esc(st.title)}</h2>
@@ -588,7 +601,7 @@ function vFile(f){
   const allFw = window.GGFw && GGFw.plans ? GGFw.plans().filter(p => !p.cli && !arr(f.links.fw).includes(p.id)) : [], allPm = arr((D() || {}).pm && D().pm.couples).filter(x => !x.cli && !arr(f.links.pm).includes(x.id));
   const allWd = window.GGWed && GGWed.plans ? GGWed.plans().filter(p => !p.cli && !arr(f.links.wd).includes(p.id)) : [], wdN = p => [p.c && p.c.p1 && (p.c.p1.called || p.c.p1.full), p.c && p.c.p2 && (p.c.p2.called || p.c.p2.full)].filter(Boolean).join(' and ') || 'A plan';
   const inv = S.inv && f.invoices.find(v => v.no === S.inv);
-  return `<button type="button" class="linkbtn" data-cla="file" data-clv="">&larr; All Client Files</button>
+  return `<button type="button" class="linkbtn" data-cla="file" data-clv="">&larr; All Client Files</button>${S.ret && arr((f.links || {})[S.ret.kind]).includes(S.ret.ref) ? '<div class="row" style="margin-top:8px">' + backBtn() + '</div>' : ''}
   <div class="fw-head"><div style="min-width:0"><div class="eyebrow">Client File</div><h1>${esc(fTitle(f))}</h1><p class="muted" style="margin:2px 0 0">${esc(picked(f, 'svc').join(', '))}</p></div><span class="pill${st.ok ? ' sage' : ' gold'}">${esc(st.t)}</span></div>
   ${lockNote('Everything in this file is encrypted on this device and in your locked backup.')}
   ${f.stage === 'intake' || !isSigned(f) ? `<div class="cl-banner" role="note">The intake is open at Step ${f.step || 1}. <button type="button" class="linkbtn" data-cla="intake-open" data-clv="${esc(f.id)}">Continue the Intake</button></div>` : ''}
@@ -599,6 +612,7 @@ function vFile(f){
   ${blk(null, 'Signed Agreement', '', s ? kv([['Signed', nice(s.date)], ['How', HOW[s.way] + (s.sig ? ', finger signature' : s.way === 'here' ? ', typed name' : '')], [s.way === 'send' ? 'Accepted by' : 'Signed by', s.name], ['Earlier versions', f.signed.length > 1 ? String(f.signed.length - 1) : '']]) +
     (changedSince(f) ? '<p class="fw-sub">The services changed after this was signed. Continue the Intake to sign the new wording.</p>' : '') +
     `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-cla="ag-view" data-clv="${esc(f.id)}">View the Signed Copy</button><button type="button" class="btn btn-line btn-sm" data-cla="ag-print" data-clv="${esc(f.id)}">Print</button><button type="button" class="btn btn-line btn-sm" data-cla="ag-copy" data-clv="${esc(f.id)}">Copy for Them</button></div>${S.agView === f.id ? '<div style="margin-top:12px">' + signedHTML(s) + '</div>' : ''}` : '<p class="muted" style="margin:0">Not signed yet.</p>')}
+  ${copyBlk(f) /* GWG BLD 797: Their Copy */}
   ${blk(null, 'Payments', '', `<div class="cl-sums"><div><span>Agreed</span><b>${money(c.total)}</b></div><div><span>Received</span><b>${money(c.received)}</b></div><div><span>Balance${c.cer && f.svc.date && c.balanceDue ? ', due ' + esc(dueText(f)) : ''}</span><b>${money(c.balanceDue)}</b></div></div>
     ${f.pays.length ? `<div class="cl-tw"><table class="cl-tbl"><thead><tr><th>Date</th><th>What</th><th>Method</th><th class="r">Amount</th><th></th></tr></thead><tbody>${f.pays.map((p, i) => `<tr><td>${esc(nice(p.date))}</td><td>${esc([p.what, p.ref].filter(Boolean).join(', '))}</td><td>${esc(p.method || '')}</td><td class="r">${money(p.amt)}</td><td class="r"><button type="button" class="linkbtn" data-cla="pay-del" data-clv="${i}" aria-label="Remove this payment">Remove</button></td></tr>`).join('')}</tbody></table></div>` : ''}
     ${S.payOpen ? `<div class="fw-inline" style="margin-top:12px"><div class="fw-g2">${fld('amt', 'Amount', P.amt != null ? P.amt : (c.balanceDue || ''), 'number', '', 'data-clpay')}${fld('date', 'Date', P.date || today(), 'date', '', 'data-clpay')}${fld('what', 'What it is for', P.what || (c.cer && c.balanceDue ? 'Balance' : 'Payment'), 'text', '', 'data-clpay')}${fld('ref', 'Check number or a short note', P.ref || '', 'text', '', 'data-clpay')}</div>
@@ -611,6 +625,7 @@ function vFile(f){
     ${wdL.map(p => `<li><span><b>Wedding Plan</b><small>${esc(wdN(p))}${p.day && p.day.date ? ', wedding ' + esc(nice(p.day.date)) : ''}</small></span><button type="button" class="btn btn-line btn-sm" data-cla="wd-open" data-clv="${esc(p.id)}">Open the Wedding Plan</button></li>`).join('')}
     ${pmL.map(x => `<li><span><b>The Grounded Marriage</b><small>${esc([x.p1 && x.p1.name, x.p2 && x.p2.name].filter(Boolean).join(' and '))}${x.wedding ? ', wedding ' + esc(nice(x.wedding)) : ''}</small></span><button type="button" class="btn btn-line btn-sm" data-cla="pm-open" data-clv="${esc(x.id)}">Open The Grounded Marriage</button></li>`).join('')}
     ${window.GGRun ? GGRun.fileRows(f) : '' /* GWG BLD 771 hook: session plans (runner.js) */}
+    ${arr((f.links || {}).cer).map(id => target('cer', id)).filter(Boolean).map(x => `<li><span><b>Service Builder</b><small>${esc(x.who && x.who.name || [x.p1 && x.p1.name, x.p2 && x.p2.name].filter(Boolean).join(' and ') || 'A service')}${x.date ? ', ' + esc(nice(x.date)) : ''}</small></span><button type="button" class="btn btn-line btn-sm" data-cla="stf-cer" data-clv="${esc(x.id)}">Open the Service</button></li>`).join('') /* GWG BLD 797 */}
     ${ss.map(x => `<li><span><b>${esc(x.title || 'Session')}</b><small>${esc(nice(x.date))}${x.minutes ? ', ' + x.minutes + ' minutes' : ''}</small></span><button type="button" class="btn btn-line btn-sm" data-act="view-session" data-v="${esc(x.id)}">Open the Session</button></li>`).join('')}</ul>
     ${!fwL.length && !pmL.length && !wdL.length && !ss.length && !(window.GGRun && GGRun.fileRows(f)) ? '<p class="muted" style="margin:0 0 8px">Nothing linked yet.</p>' : ''}
     <div class="row" style="margin-top:8px"><button type="button" class="btn btn-line btn-sm" data-cla="fw-new">Start a Farewell Plan</button><button type="button" class="btn btn-line btn-sm" data-cla="wd-new">Start a Wedding Plan</button><button type="button" class="btn btn-line btn-sm" data-cla="pm-new">Start The Grounded Marriage</button>${f.pid ? `<button type="button" class="btn btn-line btn-sm" data-act="open-client" data-v="${esc(f.pid)}">Start a Session</button>` : ''}</div>
@@ -691,6 +706,7 @@ function ensurePerson(f){
   if (!p){ p = {id: uid(), u: Date.now(), name: nm, service: svcName, status: 'active', followups: [], created: today(), cli: f.id}; d.clients.push(p); f.pid = p.id; if (d.deleted && d.deleted.clients) delete d.deleted.clients[p.id]; }
   else { if (!p.service && svcName) p.service = svcName; p.cli = f.id; p.u = Date.now(); }
   if (grace(f) !== 'standard') p.grace = true;
+  arr((f.links || {}).rk).forEach(id => { const t = target('rk', id); if (t && !t.pid){ t.pid = p.id; t.u = Date.now(); } }); // GWG BLD 797
   touch(f);
 }
 function startFw(f){
@@ -715,6 +731,117 @@ function startPm(f){
   f.links.pm = arr(f.links.pm).concat(id); touch(f); GGPm.open(id); if (C.go) C.go('premarital');
 }
 
+// ---------- Start Their File (GWG BLD 797) ----------
+// Every paid service offers Start Their File at its start: now (the Intake Session, linked to the session once their yes
+// is recorded) or After the Visit (a reminder on Home until the file is done). kind: fw (Farewell), wd (Wedding),
+// pm (Premarital), rk (a session kit in the runner), cer (the Service Builder); ref: that plan's id.
+const STFC = {};
+const stfKey = o => o.kind + '|' + o.ref;
+const KIND_T = {fw: 'Farewell Planning Session', wd: 'Wedding Planning Session', pm: 'Premarital Sessions', rk: 'Session', cer: 'Service Builder'};
+function target(kind, ref){
+  const d = D() || {};
+  if (kind === 'fw') return window.GGFw && GGFw.plans ? GGFw.plans().find(x => x.id === ref) || null : null;
+  if (kind === 'wd') return window.GGWed && GGWed.plans ? GGWed.plans().find(x => x.id === ref) || null : null;
+  if (kind === 'pm') return arr(d.pm && d.pm.couples).find(x => x.id === ref) || null;
+  if (kind === 'rk') return arr(d.rk && d.rk.plans).find(x => x.id === ref) || null;
+  if (kind === 'cer') return arr(d.cer && d.cer.services).find(x => x.id === ref) || null;
+  return null;
+}
+function linkTo(f, kind, ref){
+  if (!f || !kind || !ref) return;
+  f.links = f.links || {}; f.links[kind] = arr(f.links[kind]); if (!f.links[kind].includes(ref)) f.links[kind].push(ref);
+  const t = target(kind, ref); if (t){ t.cli = f.id; t.u = Date.now(); if (kind === 'rk' && !t.pid && f.pid) t.pid = f.pid; }
+}
+function stfFile(o){
+  const t = target(o.kind, o.ref), id = (t && t.cli) || o.cli;
+  return (id && fileOf(id)) || files().find(f => arr((f.links || {})[o.kind]).includes(o.ref)) || null;
+}
+const fileDone = f => !!f && f.stage === 'active';
+const afterOf = o => store().after.find(r => r.kind === o.kind && r.ref === o.ref && !r.done) || null;
+// The reminders still waiting: a reminder clears itself once a file linked to its session is finished.
+function afterList(){
+  return store().after.filter(r => { if (r.done) return false; const f = stfFile(r); if (fileDone(f)){ r.done = true; r.u = Date.now(); return false; } return !!target(r.kind, r.ref) || r.kind === 'none'; });
+}
+function stfCard(o){
+  if (!isStaff() || !D() || !o || !o.kind || !o.ref) return '';
+  o.title = o.title || KIND_T[o.kind] || 'Session'; STFC[stfKey(o)] = o;
+  const F = cfg().startFile, f = stfFile(o), v = esc(stfKey(o)), r = afterOf(o);
+  if (fileDone(f)) return '';
+  if (f) return `<div class="cl-stf" role="note"><div class="cl-stf-m"><b>${esc(F.started)}</b> <span class="muted">${esc(fTitle(f))}: Intake, Step ${f.step || 1} of ${CNT}.</span></div><button type="button" class="btn btn-gold btn-sm" data-cla="stf-now" data-clv="${v}">${esc(F.cont)}</button></div>`;
+  if (r && o.who && r.who !== clean2(o.who)) r.who = clean2(o.who);
+  if (r) return `<div class="cl-stf" role="note"><div class="cl-stf-m"><b>${esc(F.title)}: ${esc(F.later)}</b> <span class="muted">${esc(F.laterNote)}</span></div><button type="button" class="btn btn-gold btn-sm" data-cla="stf-now" data-clv="${v}">${esc(F.now)}</button></div>`;
+  const L = files().slice().sort((a, b) => (b.u || 0) - (a.u || 0)).slice(0, 40);
+  return `<div class="cl-stf cl-stf-big"><div class="cl-stf-m"><h3>${esc(F.title)}</h3><p class="muted">${esc(F.lead)}</p>${F.say ? `<div class="fw-say" style="margin:8px 0 0"><b>Say</b><q>${esc(fill(F.say, null))}</q></div>` : ''}</div>
+    <div class="row cl-stf-b"><button type="button" class="btn btn-gold" data-cla="stf-now" data-clv="${v}">${esc(F.now)}</button><button type="button" class="btn btn-line" data-cla="stf-later" data-clv="${v}">${esc(F.later)}</button></div>
+    ${L.length ? `<details class="cl-stf-l"><summary>Their File Is Already Here</summary><div class="fw-add"><select id="cl-stf-pick" aria-label="Choose their client file">${L.map(x => `<option value="${esc(x.id)}">${esc(fTitle(x))}${x.svc && x.svc.forWhom ? ', for ' + esc(x.svc.forWhom) : ''}</option>`).join('')}</select><button type="button" class="btn btn-line btn-sm" data-cla="stf-link" data-clv="${v}">${esc(F.link)}</button></div></details>` : ''}</div>`;
+}
+// A new file filled from the session: names, contact, the service, for whom, and when.
+function stfPrefill(f, o){
+  const ct = o.ct || {}, nm = clean2(ct.name).split(/\s+/);
+  f.c.first = clean2(ct.first) || (nm.length > 1 ? nm.slice(0, -1).join(' ') : nm[0] || '');
+  f.c.last = clean2(ct.last) || (nm.length > 1 ? nm[nm.length - 1] : '');
+  f.c.rel = clean2(ct.rel); f.c.phone = clean2(ct.phone); f.c.email = clean2(ct.email); f.c.partner = clean2(ct.partner);
+  if (o.svc && items(f, 'services').some(x => x.id === o.svc)) f.sel.svc = [o.svc];
+  f.svc.forWhom = clean2(o.forWhom); f.svc.date = /^\d{4}-\d\d-\d\d$/.test(o.date || '') ? o.date : ''; f.svc.place = clean2(o.place);
+}
+const clean2 = t => String(t || '').trim().replace(/\s+/g, ' ');
+function stfStart(o){
+  if (!o) return;
+  let f = stfFile(o);
+  S.ret = {kind: o.kind, ref: o.ref, title: o.title || KIND_T[o.kind] || 'Session'};
+  if (f){ S.intakeId = f.id; S.draft = null; S.step = Math.min(CNT, Math.max(1, +f.step || 1)); }
+  else { f = newFile(); stfPrefill(f, o); f.pend = {kind: o.kind, ref: o.ref}; S.draft = f; S.intakeId = null; S.step = 1; }
+  S.sec = 'intake'; S.mode = 'chris'; S.sig = []; S.dep = {};
+  if (C.go) C.go('cli');
+}
+function stfLater(o){
+  if (!o || afterOf(o)) return;
+  store().after.push({id: 'af' + uid(), u: Date.now(), made: today(), done: false, kind: o.kind, ref: o.ref, title: o.title || KIND_T[o.kind] || 'Session', who: clean2(o.who),
+    ct: Object.assign({}, o.ct || {}), svc: o.svc || '', forWhom: clean2(o.forWhom), date: o.date || '', place: clean2(o.place)});
+  C.save && C.save(); toast(cfg().startFile.laterNote);
+}
+// Back to the session the file was started from.
+function stfBack(r){
+  if (!r) return; const id = r.ref;
+  if (r.kind === 'fw' && window.GGFw && GGFw.open) return GGFw.open(id);
+  if (r.kind === 'wd' && window.GGWed && GGWed.open) return GGWed.open(id);
+  if (r.kind === 'pm' && window.GGPm && GGPm.open){ GGPm.open(id); if (C.go) C.go('premarital'); return; }
+  if (r.kind === 'rk' && window.GGRun && GGRun.openPlan) return GGRun.openPlan(id);
+  if (r.kind === 'cer' && window.GGCer && GGCer.openSvc){ GGCer.openSvc(id); if (C.go) C.go('ceremonies'); }
+}
+const backBtn = () => S.ret && target(S.ret.kind, S.ret.ref) ? `<button type="button" class="btn btn-line btn-sm" data-cla="stf-back">&larr; ${esc(cfg().startFile.back)}: ${esc(S.ret.title)}</button>` : '';
+// Their Copy: the intake, the privacy notice with their yes, and the agreement, to send or print, for them and for Chris.
+function copyParts(f){
+  const s = lastSigned(f), w = (f.privacy || {}).wa || {}, c = calc(f);
+  const who = [['Name', fTitle(f)], ['Their part', f.c.rel], ['Phone', f.c.phone], ['Email', f.c.email], ['Address', [f.c.addr, f.c.city].filter(Boolean).join(', ')], ['Best way to reach', [picked(f, 'reach').join(', '), picked(f, 'times').join(', ')].filter(Boolean).join(', ')]];
+  const svc = [['Services', picked(f, 'svc').join(', ')], ['For', f.svc.forWhom], ['When and where', [f.svc.date ? nice(f.svc.date) : '', tm(f.svc.time), f.svc.place].filter(Boolean).join(', ')], ['Faith', picked(f, 'faith').join(', ')]];
+  const yes = [['Their yes', f.privacy.how ? label(f, 'yesHow', f.privacy.how) + ', ' + nice(f.privacy.date) : ''], ['Writing help', w.ans ? (w.ans === 'yes' ? 'Yes' : 'No, thank you') + (w.how ? ', ' + (WA_HOW.find(x => x[0] === w.how) || ['', w.how])[1].toLowerCase() : '') + ', ' + nice(w.date) : '']];
+  const paid = f.pays.map(p => [nice(p.date), [money(p.amt), p.what, p.method].filter(Boolean).join(', ')]);
+  return {s, who, svc, yes, paid, c};
+}
+function copyHTML(f, forMe){
+  const F = cfg().startFile, P = copyParts(f), rows = L => `<table class="cl-tbl"><tbody>${L.filter(r => r[1]).map(r => `<tr><td>${esc(r[0])}</td><td>${esc(r[1])}</td></tr>`).join('')}</tbody></table>`;
+  return `<div class="cl-paper"><div class="cl-ph"><div><h3>${esc(forMe ? 'Client File Copy' : F.copyTitle)}: ${esc(fTitle(f))}</h3><div class="cl-site">Grow With Grounded LLC · growwithgrounded.com</div></div><div class="cl-meta">${esc(nice(today()))}</div></div>
+    ${forMe ? '' : `<p>${esc(F.copyIntro)}</p>`}
+    <h4>Who You Are</h4>${rows(P.who)}<h4>The Service</h4>${rows(P.svc)}
+    <h4>How I Keep What You Share</h4>${noticeItems().map(n => `<p><b>${esc(n.h)}.</b> ${esc(n.p)}</p>`).join('')}<p><b>What Stays with You.</b> ${esc(cfg().neverKeep)}</p>${rows(P.yes)}
+    ${P.paid.length ? `<h4>Received</h4>${rows(P.paid)}` : ''}</div>
+    <div style="height:12px"></div>${P.s ? signedHTML(P.s) : agreementHTML(f)}`;
+}
+function copyTxt(f, forMe){
+  const F = cfg().startFile, P = copyParts(f), rows = L => L.filter(r => r[1]).map(r => r[0] + ': ' + r[1]).join('\n');
+  return [(forMe ? 'CLIENT FILE COPY' : String(F.copyTitle).toUpperCase()) + ': ' + fTitle(f), 'Grow With Grounded LLC · growwithgrounded.com', '', forMe ? '' : F.copyIntro, '', 'WHO YOU ARE', rows(P.who), '', 'THE SERVICE', rows(P.svc), '',
+    'HOW I KEEP WHAT YOU SHARE', noticeItems().map(n => n.h + '. ' + n.p).join('\n'), 'What Stays with You. ' + cfg().neverKeep, rows(P.yes), '', P.paid.length ? 'RECEIVED\n' + rows(P.paid) + '\n' : '',
+    P.s ? P.s.text + '\n\n' + (P.s.way === 'send' ? 'Accepted by ' : 'Signed by ') + P.s.name + ', ' + nice(P.s.date) + '.' : agreementText(f)].join('\n').replace(/\n{3,}/g, '\n\n').trim();
+}
+function copyBlk(f){
+  if (!saved(f)) return '';
+  const F = cfg().startFile, sent = f.copySent;
+  return blk(f, F.copyTitle, 'copy', `<p class="fw-sub" style="margin-top:0">${esc(F.copyLead)}</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-cla="cp-print" data-clv="${esc(f.id)}">Print or Save Their Copy</button><button type="button" class="btn btn-line btn-sm" data-cla="cp-email" data-clv="${esc(f.id)}">Email It</button><button type="button" class="btn btn-line btn-sm" data-cla="cp-text" data-clv="${esc(f.id)}">Text It</button><button type="button" class="btn btn-line btn-sm" data-cla="cp-copy" data-clv="${esc(f.id)}">Copy</button><button type="button" class="btn btn-line btn-sm" data-cla="cp-mine" data-clv="${esc(f.id)}">Save My Copy</button></div>
+    ${sent ? `<p class="cl-ok" role="status">Their copy: ${esc(sent.how)}, ${esc(nice(sent.date))}.</p>` : ''}`);
+}
+
 // ---------- actions ----------
 function setPath(o, path, v){
   const ks = path.split('.'); let x = o;
@@ -724,6 +851,7 @@ function setPath(o, path, v){
 function commit(f){
   if (saved(f)) return;
   const d = D(); files().push(f); S.intakeId = f.id; S.draft = null; if (d && d.deleted && d.deleted.cli) delete d.deleted.cli[f.id];
+  if (f.pend){ linkTo(f, f.pend.kind, f.pend.ref); delete f.pend; } // GWG BLD 797: Start Their File links the session once their yes is saved
   f.u = Date.now(); C.save && C.save(); toast('Their yes is recorded. The file is saved, encrypted on this device.');
 }
 function goStep(n){
@@ -747,7 +875,7 @@ function startIntake(fromFirst){
     if (n) f.notes.first = n;
     S.fc = {q: {}, notes: '', name: '', think: false, date: ''}; S.timer = {on: false, start: 0, el: 0};
   }
-  S.draft = f; S.intakeId = null; S.step = 1; S.mode = 'chris'; S.sig = []; S.dep = {}; S.sec = 'intake'; rerender(false);
+  S.draft = f; S.intakeId = null; S.step = 1; S.mode = 'chris'; S.sig = []; S.dep = {}; S.sec = 'intake'; S.ret = null; rerender(false);
 }
 function act(a, v, el){
   const d = D(); if (!d) return;
@@ -760,7 +888,7 @@ function act(a, v, el){
       store().rem.push({id: 'rm' + uid(), u: Date.now(), name: n, date: S.fc.date || addDays(today(), 4), done: false}); C.save(); S.fc = {q: {}, notes: '', name: '', think: false, date: ''}; S.timer = {on: false, start: 0, el: 0}; toast('Reminder added. It shows on Home.'); rerender(true); return; }
     case 'rem-done': { const r = store().rem.find(x => x.id === v); if (r){ r.done = true; r.u = Date.now(); C.save(); } if (document.getElementById('cl-root')) rerender(true); else if (C.render) C.render(); return; }
     case 'new-intake': startIntake(false); return;
-    case 'intake-open': S.intakeId = v; S.draft = null; S.sec = 'intake'; S.mode = 'chris'; S.sig = []; S.dep = {}; { const f = fileOf(v); S.step = Math.min(CNT, Math.max(1, (f && +f.step) || 1)); } if (C.go && !document.getElementById('cl-root')) C.go('cli'); else rerender(false); return;
+    case 'intake-open': if (!S.ret || !arr(((fileOf(v) || {}).links || {})[S.ret.kind]).includes(S.ret.ref)) S.ret = null; S.intakeId = v; S.draft = null; S.sec = 'intake'; S.mode = 'chris'; S.sig = []; S.dep = {}; { const f = fileOf(v); S.step = Math.min(CNT, Math.max(1, (f && +f.step) || 1)); } if (C.go && !document.getElementById('cl-root')) C.go('cli'); else rerender(false); return;
     case 'file': S.fileId = v || null; S.inv = null; S.payOpen = false; S.pay = {}; S.agView = null; S.sec = 'files'; if (C.go && !document.getElementById('cl-root')) C.go('cli'); else rerender(false); return;
     case 'irs': { const i = document.getElementById('cl-irs'), r = i ? +i.value : 0; if (!isFounder()) return; if (!(r > 0 && r < 10)){ toast('Enter the rate a mile, for example 0.76.'); return; } store().irs = {rate: r, u: Date.now()}; C.save(); toast('Travel rate updated.'); rerender(true); return; }
     case 'cloud': store().cloud = store().cloud === v ? '' : v; C.save(); rerender(true); return;
@@ -770,6 +898,21 @@ function act(a, v, el){
       if (k === 'fw' && window.GGFw){ const p = GGFw.plans().find(x => x.id === id); if (p){ p.cli = f.id; p.u = Date.now(); } }
       if (k === 'pm'){ const x = arr(d.pm && d.pm.couples).find(y => y.id === id); if (x){ x.cli = f.id; x.u = Date.now(); } }
       touch(f); rerender(true); toast('Linked.'); return; }
+    // GWG BLD 797: Start Their File, the Home reminders, the way back, and Their Copy.
+    case 'stf-now': { const r = store().after.find(x => x.id === v && !x.done); stfStart(r || STFC[v]); return; }
+    case 'stf-later': stfLater(STFC[v]); if (C.render) C.render(); return;
+    case 'stf-link': { const o = STFC[v], sel = document.getElementById('cl-stf-pick'), f = sel && fileOf(sel.value); if (!o || !f) return; linkTo(f, o.kind, o.ref); f.u = Date.now(); C.save && C.save(); toast('Linked to ' + fTitle(f) + '.'); if (C.render) C.render(); return; }
+    case 'stf-back': { const r = S.ret; S.ret = null; stfBack(r); return; }
+    case 'stf-open': { const r = store().after.find(x => x.id === v); if (r) stfBack(r); return; }
+    case 'stf-clear': { const r = store().after.find(x => x.id === v); if (!r || !confirm('Clear this reminder? Their file can still be started from the session any time.')) return; r.done = true; r.u = Date.now(); C.save && C.save(); if (C.render) C.render(); return; }
+    case 'cp-print': case 'cp-mine': case 'cp-email': case 'cp-text': case 'cp-copy': { const f = fileOf(v); if (!f) return; const F = cfg().startFile;
+      if (a === 'cp-print') sheet(copyHTML(f, false), F.copyTitle + ': ' + fTitle(f), 'their-copy');
+      else if (a === 'cp-mine') sheet(copyHTML(f, true), 'Client File Copy: ' + fTitle(f), 'client-file-copy');
+      else { const body = fill(F.copyWords, f) + '\n\n' + copyTxt(f, false);
+        if (a === 'cp-copy') copyText(body, 'Their copy is copied.'); else if (a === 'cp-email') openLink(mailURL(f.c.email, F.copyTitle + ' from Grow With Grounded', body)); else openLink(smsURL(f.c.phone, body)); }
+      if (a !== 'cp-mine'){ f.copySent = {how: {'cp-print': 'printed or saved', 'cp-email': 'emailed', 'cp-text': 'texted', 'cp-copy': 'copied'}[a], date: today()}; touch(f); if (document.getElementById('cl-root')) rerender(true); }
+      return; }
+    case 'stf-cer': stfBack({kind: 'cer', ref: v}); return;
     case 'fw-open': if (window.GGFw && GGFw.open) GGFw.open(v); return;
     case 'wd-open': if (window.GGWed && GGWed.open) GGWed.open(v); return;
     case 'pm-open': if (window.GGPm && GGPm.open){ GGPm.open(v); if (C.go) C.go('premarital'); } return;
@@ -860,7 +1003,7 @@ function act(a, v, el){
     case 'wa': case 'wa-how': { const w = Object.assign({}, f.privacy.wa || {}); if (a === 'wa'){ w.ans = v; if (!w.how) w.how = 'aloud'; } else { w.how = v; if (!w.ans) w.ans = 'yes'; } w.date = w.date || f.privacy.date || today(); w.at = Date.now();
       f.privacy = Object.assign({}, f.privacy, {wa: w}); touch(f); rerender(true); return; }
     case 'finish': if (!saved(f)){ toast("Record their yes to the privacy notice in Step 1 first."); goStep(1); return; }
-      ensurePerson(f); f.stage = 'active'; touch(f); S.fileId = f.id; S.sec = 'files'; S.inv = null; rerender(false); return;
+      ensurePerson(f); f.stage = 'active'; store().after.forEach(r => { if (!r.done && arr((f.links || {})[r.kind]).includes(r.ref)){ r.done = true; r.u = Date.now(); } }); touch(f); S.fileId = f.id; S.sec = 'files'; S.inv = null; rerender(false); return;
   }
 }
 function sheet(html, title, file){
@@ -969,6 +1112,10 @@ const CSS = `
 .cl-steps{margin:0;padding-left:22px;}.cl-steps li{margin:0 0 10px;}.cl-steps h4{margin:0 0 2px;}.cl-steps p{margin:0;}
 .cl-scramble{font-family:ui-monospace,Menlo,monospace;font-size:14px;overflow-wrap:anywhere;background:var(--bg-deep);border-radius:10px;padding:10px 12px;color:var(--ink-soft);}
 .cl-home{margin-top:14px;}.cl-home h3{margin:0;}
+.cl-stf{display:flex;justify-content:space-between;gap:12px;align-items:center;flex-wrap:wrap;background:var(--card);border:1.5px solid var(--gold);border-radius:14px;padding:12px 16px;margin:0 0 14px;min-width:0;}
+.cl-stf-m{min-width:0;flex:1 1 260px;}.cl-stf-m h3{margin:0 0 4px;}.cl-stf-m p{margin:0;}.cl-stf-big{display:block;}.cl-stf-b{margin-top:12px;}
+.cl-stf-l{margin-top:10px;}.cl-stf-l summary{cursor:pointer;font-weight:600;min-height:32px;}.cl-stf-l select{flex:1 1 220px;min-width:0;max-width:100%;}
+.cl-after{margin-top:14px;border-left:4px solid var(--gold);}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'cl-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
@@ -988,6 +1135,16 @@ const API = window.GGCli = {
       <button type="button" class="btn btn-gold" data-act="export">${esc(B.cardTitle)}</button></div>
       ${rem.length ? `<div class="card fw-home" style="margin-top:14px"><h3>Gentle Check-ins</h3>${rem.map(r => `<div class="fw-list-r"><div class="m"><b>${esc(r.name)}</b> <span class="muted">from a first conversation</span><br><small class="muted">${esc(nice(r.date))}</small></div><button type="button" class="btn btn-line btn-sm" data-cla="rem-done" data-clv="${esc(r.id)}">Done</button></div>`).join('')}</div>` : ''}`;
   },
+  // GWG BLD 797: Start Their File at the start of every paid service (o: {kind, ref, title, who, ct, svc, forWhom, date, place}),
+  // and the Start Their File reminders on the Staff and Founder Home until each file is done.
+  stfCard,
+  afterCard(){
+    if (!isStaff() || !D()) return '';
+    const L = afterList(); if (!L.length) return '';
+    const F = cfg().startFile;
+    return `<div class="card fw-home cl-after"><h3>${esc(F.homeTitle)}</h3><p class="muted" style="margin:2px 0 6px">${esc(F.homeLead)}</p>${L.map(r => `<div class="fw-list-r"><div class="m"><b>${esc(r.who || r.title)}</b>${r.who ? ` <span class="muted">${esc(r.title)}</span>` : ''}<br><small class="muted">After the visit on ${esc(nice(r.made))}</small></div>
+      <div class="row"><button type="button" class="btn btn-gold btn-sm" data-cla="stf-now" data-clv="${esc(r.id)}">Start Their File</button><button type="button" class="btn btn-line btn-sm" data-cla="stf-open" data-clv="${esc(r.id)}">Open the Session</button><button type="button" class="linkbtn" data-cla="stf-clear" data-clv="${esc(r.id)}">Clear</button></div></div>`).join('')}</div>`;
+  },
   // A small card on a People record that belongs to a client file.
   personCard(p){
     if (!isStaff() || !D() || !p) return '';
@@ -1006,6 +1163,7 @@ const API = window.GGCli = {
     arr(i.files).forEach(x => { const k = o.files.findIndex(y => y.id === x.id); if (k < 0){ o.files.push(x); added++; } else if ((x.u || 0) > (o.files[k].u || 0)){ o.files[k] = x; updated++; } });
     o.files = o.files.filter(x => !(out.deleted.cli[x.id] && out.deleted.cli[x.id] >= (x.u || 0)));
     arr(i.rem).forEach(x => { const k = o.rem.findIndex(y => y.id === x.id); if (k < 0) o.rem.push(x); else if ((x.u || 0) > (o.rem[k].u || 0)) o.rem[k] = x; });
+    o.after = arr(o.after); arr(i.after).forEach(x => { const k = o.after.findIndex(y => y.id === x.id); if (k < 0) o.after.push(x); else if ((x.u || 0) > (o.after[k].u || 0)) o.after[k] = x; }); // GWG BLD 797
     o.seq = Math.max(+o.seq || 1000, +i.seq || 1000);
     if (i.irs && (!o.irs || (i.irs.u || 0) > (o.irs.u || 0))) o.irs = i.irs;
     if (i.usb && (!o.usb || (i.usb.u || 0) > (o.usb.u || 0))) o.usb = i.usb;
@@ -1017,7 +1175,7 @@ const API = window.GGCli = {
   // Open the tab at a section (Home's Back Up link, the People card).
   open(sec, id){ S.sec = sec || 'files'; if (sec === 'files') S.fileId = id || null; if (C.go) C.go('cli'); },
   // For tests and the lead.
-  state: S, cfg, files, calc, libRates, agreementText, invoiceText, fill, DEF, irs,
+  state: S, cfg, files, calc, libRates, agreementText, invoiceText, fill, DEF, irs, linkTo, afterList, copyHTML, copyTxt,
   famWin: null, last: null, lastCopy: null, lastLink: null, noOpen: false
 };
 document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-cla="home-bk"]'); if (!t || !D()) return; e.stopPropagation(); API.open('backup'); }, true);

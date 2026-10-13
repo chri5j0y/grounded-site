@@ -58,6 +58,7 @@ function norm(k){
   if (NK.has(k)) return NK.get(k);
   const steps = arr(k.steps).filter(s => s && s.id).map(s => Object.assign({}, s, {
     say: arr(Array.isArray(s.say) ? s.say : s.say ? [s.say] : []), do: arr(s.do), phone: arr(s.phone),
+    saySoft: arr(Array.isArray(s.saySoft) ? s.saySoft : s.saySoft ? [s.saySoft] : []), phoneSoft: arr(s.phoneSoft),
     fields: arr(s.fields).filter(f => f && f.id).map(f => Object.assign({}, f, {type: f.type || 'text',
       options: arr(f.type === 'scale' ? f.words : f.options).map(normOpt).filter(Boolean),
       cols: arr(f.cols).filter(c => c && c.id).map(c => Object.assign({}, c, {options: arr(c.options).map(normOpt).filter(Boolean)}))}))}));
@@ -244,9 +245,11 @@ function fieldCtl(p, f){
   }
 }
 function fieldHTML(p, f){
-  const ask = f.ask ? `<p class="rk-ask"><b>Ask</b> ${esc(fill(f.ask, p))}</p>` : '';
+  const a0 = softOr(p, f.ask, f.askSoft), h0 = softOr(p, f.hint, f.hintSoft), l0 = softOr(p, f.label, f.labelSoft);
+  const ask = a0 ? `<p class="rk-ask"><b>Ask</b> ${esc(fill(a0, p))}</p>` : '';
+  const rs = f.rel && relSoft(p) ? sayBox(p, [(kit(p) || {}).relSay || REL_SAY]) : '';
   const cr = p.carried && p.carried[f.id] ? `<p class="fw-note2" style="margin:0 0 10px">Carried from ${esc(p.carried[f.id])}. Check it together. <button type="button" class="linkbtn" data-rka="carry-ok" data-rkv="${esc(f.id)}">Looks Right</button></p>` : '';
-  return blk(p, fill(f.label || f.id, p), 'f:' + f.id, cr + ask + fieldCtl(p, f), f.hint ? fill(f.hint, p) : '');
+  return blk(p, fill(l0 || f.id, p), 'f:' + f.id, cr + ask + fieldCtl(p, f) + rs, h0 ? fill(h0, p) : '');
 }
 
 // ---------- tools ----------
@@ -311,10 +314,30 @@ function prepBlk(p){
   return `<details class="fw-custom"><summary>Before You Begin</summary>${P.length ? `<ul class="rk-do">${P.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}${B.length ? `<div class="fw-lbl">What to Bring</div><ul class="rk-do">${B.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</details>`;
 }
 function wordsBlk(p){ const g = G(curG(p)) || {}, W = arr(g.words); return W.length ? `<details class="fw-custom"><summary>Words That Help</summary><ul class="rk-do">${W.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>` : ''; }
+// ---------- the relationship question (GWG BLD 797) ----------
+// A kit field marked rel: true (Close, Complicated, Distant, Hard, or the family's own words) is the first question about the
+// person in funeral and end-of-life planning kits. Close keeps every word as written. Any other answer turns on each step's
+// saySoft, subSoft, and phoneSoft and each field's askSoft, hintSoft, and labelSoft, shows the kit's relSay, and asks writing
+// help for plain, honest words. The field stays in Chris's View only: never family: true, never in an output's sections.
+const REL_SAY = 'Many families carry mixed feelings. We can honor what is true.';
+const REL_WRITE = 'The family asked for simple, honest words. Keep every line plain, and add no praise or warmth the family did not give.';
+function relField(p){ for (const {k} of kitsOf(p)) for (const s of k.steps) for (const f of s.fields) if (f.rel) return f; return null; }
+function relSoft(p){ const f = p && relField(p); if (!f) return false; const v = arr(p.v[f.id])[0] || ''; return !!v && v !== 'close'; }
+const softOr = (p, x, y) => y != null && y !== '' && !(Array.isArray(y) && !y.length) && relSoft(p) ? y : x;
+// GWG BLD 797: Start Their File at the start of every paid session kit (the Intake Session in clients.js, linked to this plan).
+const NO_FILE = ['debrief', 'crisis'];
+const SVC_OF = [[/^(eol|vigil|bedside|infant|life-visit)/, 'eol'], [/^grief/, 'grief'], [/^counsel/, 'guidance'], [/^celebration/, 'celebration'], [/blessing$|^milestone/, 'blessing'], [/^elopement/, 'elopement'], [/^vow/, 'vows'], [/^meditation/, 'meditation'], [/^(speaking|teams)/, 'speaking']];
+function stfBlk(p){
+  const k = kitOf(p.g0) || {};
+  if (!window.GGCli || !GGCli.stfCard || NO_FILE.includes(p.g0) || k.noFile) return '';
+  const sv = SVC_OF.find(x => x[0].test(p.g0)), nm = nameOf(p), pv = pVal(p);
+  return GGCli.stfCard({kind: 'rk', ref: p.id, cli: p.cli, title: fill(k.plan && k.plan.title || k.title || pTitle(p), p), who: whoLine(p) || nm, ct: {name: nm, phone: (p.ct || {}).ph || '', email: (p.ct || {}).em || ''}, svc: sv ? sv[1] : '', forWhom: pv && pv !== nm ? pv : ''});
+}
 function vStep(p, i){
   const s = steps(p)[i]; if (!s) return '';
-  return (crisisOn(p, s) ? crisisBar(p) : '') + (i === 0 ? sinceBlk(p) + prepBlk(p) : '') +
-    sayBox(p, s.say) + (s.sub ? `<p class="fw-sub">${esc(fill(s.sub, p))}</p>` : '') +
+  const sub = softOr(p, s.sub, s.subSoft);
+  return (crisisOn(p, s) ? crisisBar(p) : '') + (i === 0 ? stfBlk(p) + sinceBlk(p) + prepBlk(p) : '') +
+    sayBox(p, softOr(p, s.say, s.saySoft)) + (sub ? `<p class="fw-sub">${esc(fill(sub, p))}</p>` : '') +
     (s.do.length ? `<ul class="rk-do" aria-label="Remember">${s.do.map(x => `<li>${esc(fill(x, p))}</li>`).join('')}</ul>` : '') +
     (i === 0 ? toolsHTML(p, kit(p).tools, 'kit') : '') + toolsHTML(p, s.tools, String(i)) +
     s.fields.map(f => fieldHTML(p, f)).join('') + custom(p, s.id) + note(p, s.id) + wordsBlk(p);
@@ -439,7 +462,7 @@ function whText(p){
   const W = (kit(p) || {}).writing || {}, M = whMap(p), P = arr(W.pieces);
   const hidePh = t => scrub(hide(t, M));
   const det = arr(W.fields).map(id => fieldDef(p, id)).filter(Boolean).map(f => [fill(f.label || f.id, p), valText(p, f)]).filter(r => r[1]).map(r => r[0] + ': ' + r[1]);
-  const head = T(p, W.header || 'Write the pieces below in a warm, plain voice.').replace(/\[(Name|Person)\]/g, '[$1]').replace(/\[Chris\]/g, me());
+  const head = (T(p, W.header || 'Write the pieces below in a warm, plain voice.') + (relSoft(p) ? '\n' + ((kit(p) || {}).relWrite || REL_WRITE) : '')).replace(/\[(Name|Person)\]/g, '[$1]').replace(/\[Chris\]/g, me());
   return [hidePh(head), '', 'Names are placeholders like [Name] and [Person]. Keep them exactly as written. Contact details are left out.', '', 'DETAILS', hidePh(det.join('\n')),
     '', 'Write each piece under its own heading line, exactly like this:', P.map(x => MARK(x.title)).join('\n')].join('\n').trim();
 }
@@ -531,7 +554,7 @@ function vFinish(p){
 const fsec = (h, x, k) => `<div class="fw-fsec"${k ? ` data-rkanc="${esc(k)}"` : ''}><h3>${esc(h)}</h3>${x}</div>`;
 const fChips = (p, f) => `<div class="fw-fchips">${opts(p, f).map(o => `<span class="fw-fchip${isOn(p, f, o.id) ? ' on' : ''}">${isOn(p, f, o.id) ? '&#10003; ' : ''}${esc(fill(o.t, p))}</span>`).join('')}</div>`;
 function famField(p, f){
-  const lab = fill(f.label || f.id, p), v = valText(p, f), soft = t => `<p class="fw-big fw-soft">${esc(t)}</p>`;
+  const lab = fill(softOr(p, f.label, f.labelSoft) || f.id, p), v = valText(p, f), soft = t => `<p class="fw-big fw-soft">${esc(t)}</p>`;
   let x;
   if (f.type === 'chips' || f.type === 'scale') x = fChips(p, f);
   else if (f.type === 'check') x = `<ul class="fw-flist">${opts(p, f).map(o => `<li><span>${isOn(p, f, o.id) ? '&#10003; ' : ''}${esc(fill(o.t, p))}</span><span>${isOn(p, f, o.id) ? 'Done' : ''}</span></li>`).join('')}</ul>`;
@@ -626,8 +649,8 @@ function vPhone(p){
     return `<div class="fw-phone">${hd}<ol>${L.map(x => `<li><h3>${esc(x[0])}</h3><p>${esc(x[1])}</p></li>`).join('')}</ol>${crisisOn(p) ? `<div class="fw-crisis">${esc(crisisText(p))}</div>` : ''}</div>`;
   }
   const s = steps(p)[n]; if (!s) return '';
-  const lines = (s.phone.length ? s.phone : s.say).map(t => fill(t, p)).filter(Boolean);
-  const asks = s.fields.filter(f => f.ask).map(f => [fill(f.label || f.id, p), fill(f.ask, p), (f.type === 'chips' || f.type === 'scale') && f.family ? opts(p, f).map(o => fill(o.t, p)).join(', ') : '']);
+  const ph = softOr(p, s.phone, s.phoneSoft), sy = softOr(p, s.say, s.saySoft), lines = (ph.length ? ph : sy).map(t => fill(t, p)).filter(Boolean);
+  const asks = s.fields.filter(f => f.ask).map(f => [fill(softOr(p, f.label, f.labelSoft) || f.id, p), fill(softOr(p, f.ask, f.askSoft), p), (f.type === 'chips' || f.type === 'scale') && f.family ? opts(p, f).map(o => fill(o.t, p)).join(', ') : '']);
   return `<div class="fw-phone">${hd}<ol>${lines.map(t => `<li><p>${esc(t)}</p></li>`).join('')}${asks.map(a => `<li><h3>${esc(a[0])}</h3><p>${esc(a[1])}</p>${a[2] ? `<p class="fw-sub" style="font-family:inherit;font-weight:400">Choices to read aloud: ${esc(a[2])}</p>` : ''}</li>`).join('')}</ol>
     <p class="fw-sub">Tap their answers in ${esc(me())}'s View as they talk.</p>${crisisOn(p, s) ? `<div class="fw-crisis">${esc(crisisText(p))}</div>` : ''}</div>`;
 }
@@ -979,7 +1002,7 @@ const API = window.GGRun = {
     return {added, updated};
   },
   // For tests and the lead.
-  state: S, plan, plans, touches, dueSoon, famBody, outBody, outText, bundleHTML, bundleText, whText, whMap, whPaste, verOf, apStatus, valText, fill, steps, pages, syncFu, saveSession, openPlan,
+  state: S, relSoft, plan, plans, touches, dueSoon, famBody, outBody, outText, bundleHTML, bundleText, whText, whMap, whPaste, verOf, apStatus, valText, fill, steps, pages, syncFu, saveSession, openPlan,
   famWin: null, last: null, lastCopy: null, lastLink: null, noOpen: false, lastSync: null
 };
 // The full tools a guide links to.

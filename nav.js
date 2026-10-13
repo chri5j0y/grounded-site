@@ -44,7 +44,8 @@
       { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
     ] },
     { name: 'Further Reading', items: [
-      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' }
+      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
+      { id: 'readings', title: 'The Grounded Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: ic.book, bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
       { id: 'field', title: 'Grounded Field Guide', desc: 'For trained Guides: a Guide for every tree and For Guides training, for chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.fieldguide, bg: '#EDE7DA', locked: true }
@@ -68,6 +69,7 @@
     if (p.indexOf('/planning-a-farewell') === 0) return 'farewell';
     if (p.indexOf('/obituary-helper') === 0) return 'obituary';
     if (p.indexOf('/eulogy-helper') === 0) return 'eulogy';
+    if (p.indexOf('/readings') === 0) return 'readings';
     return '';
   }
 
@@ -395,7 +397,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b797b';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b798';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

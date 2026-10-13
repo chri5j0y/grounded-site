@@ -19,6 +19,7 @@
 <meta property="og:image:height" content="630">
 <link rel="icon" type="image/svg+xml" href="../shared/marks/fieldguide-tab.svg">
 <link rel="apple-touch-icon" href="apple-touch-icon.png?v=b792c">
+<link rel="manifest" href="manifest.json">
 <link rel="stylesheet" href="/fonts/fonts.css?v=b788">
 <style>
 :root{
@@ -645,27 +646,29 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b787"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
-<script src="../read.js?v=b797b"></script>
+<script src="../read.js?v=b798"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b797c"></script>
-<script src="../shared/gg-print.js?v=b793"></script>
+<script src="../shared/gg-learn.js?v=b798"></script>
+<script src="../shared/gg-print.js?v=b798"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
 <script src="share.js?v=b788"></script>
 <script src="../shared/gg-listen.js?v=b786"></script>
-<script src="ceremonies.js?v=b786"></script>
+<script src="../shared/gg-readings.js?v=b798"></script>
+<script src="ceremonies.js?v=b798"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b788"></script>
-<script src="wedding.js?v=b788"></script>
-<script src="premarital.js?v=b791"></script>
-<script src="clients.js?v=b793b"></script>
+<script src="farewell.js?v=b798"></script>
+<script src="wedding.js?v=b798"></script>
+<script src="premarital.js?v=b798"></script>
+<script src="clients.js?v=b798"></script>
 <script src="books.js?v=b788"></script>
-<script src="runner.js?v=b788"></script>
+<script src="runner.js?v=b798"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b797c"></script>
+<script src="../shared/gg-stories.js?v=b798"></script>
 <script src="vault.js?v=b791"></script>
+<script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -1063,13 +1066,13 @@ function tabsFor(){
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  if (TIER === 'guide') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play']] : [['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play'],['certs','Certificates','award']] : [['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['certs','Certificates','award'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
   if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['certs','Certificates','award'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
   return t;
 }
@@ -1078,7 +1081,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder' || id === 'books') return 'founder'; // Books (GWG BLD 770) is Founders only
-  if (id === 'home' || id === 'learn' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1096,11 +1099,14 @@ function render(){
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
+  certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
 }
-function go(tab, extra){ if (typeof lnStop === 'function' && LN) lnStop(); V = Object.assign({tab}, extra||{}); render(); }
+function go(tab, extra){ if (window.GFGNav) GFGNav.from(V, tab, extra); if (typeof lnStop === 'function' && LN) lnStop(); V = Object.assign({tab}, extra||{}); render(); }
+// Back and Offline (GWG BLD 797, offline.js): Back returns to the previous step or screen, and a session asks before the page closes.
+if (window.GFGNav) GFGNav.init({v: () => V, go: (t, x) => go(t, x), open: () => !!DATA, toast: m => toast(m)});
 
 // ---------------- TAB CARDS (GWG BLD 732) ----------------
 // Long tabs open to a grid of cards, like Learn. Tapping a card opens that section alone, with a Back link to the cards.
@@ -1135,6 +1141,7 @@ const IC = {
  gear:'<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z"/>',
  check:'<path d="M5 12.5l4.2 4.2L19 7"/>',
  play:'<path d="M7 4.5v15l12-7.5z"/>',
+ award:'<circle cx="12" cy="9" r="5.5"/><path d="M8.6 13.4 7 21l5-2.6 5 2.6-1.6-7.6"/>',
  print:'<path d="M7 8V3.5h10V8"/><rect x="3.5" y="8" width="17" height="8.5" rx="2"/><path d="M7 13.5h10V21H7z"/>',
  copy:'<rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/>',
  plus:'<path d="M12 5v14M5 12h14"/>',
@@ -1218,6 +1225,7 @@ function vHome(){
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
   ${hpHomeCard()}
+  ${window.GGCli && GGCli.afterCard ? GGCli.afterCard() : '' /* GWG BLD 797 hook: Start Their File reminders, after the visit */}
   ${window.GGFw ? GGFw.homeCard() : ''}
   ${window.GGWed ? GGWed.homeCard() : ''}
   ${window.GGRun ? GGRun.homeCard() : ''}
@@ -1429,7 +1437,7 @@ function vLibrary(){
   if (sub === 'policies') body = LIB.policies.map(p => `<div class="card"><h3>${esc(p[0])}</h3><p style="margin-top:6px">${mark(p[1])}</p></div>`).join('');
   if (sub === 'docs') body = (V.doc ? docForm(LIB.docs.find(d => d.id === V.doc)) : LIB.docs.map(d => `<button class="gitem" data-act="doc" data-v="${d.id}"><span class="qi">${icon('print')}</span><span><b>${esc(d.title)}</b><small>${esc(d.for)}</small></span><span class="arr">&rsaquo;</span></button>`).join(''));
   if (sub === 'emails') body = LIB.emails.map(e => `<div class="card email" id="em-${e.id}"><div class="spread"><h3>${esc(e.title)}</h3><button class="btn btn-line btn-sm" data-act="copy-email" data-v="${e.id}">${icon('copy')} Copy</button></div><p class="muted" style="margin-top:4px">Subject: ${esc(e.subject)}</p><pre>${esc(e.body)}</pre></div>`).join('');
-  if (sub === 'readings') body = `<p class="muted" style="margin-bottom:12px">Grounded blessings are original to Grounded. Scripture is from the King James Version, which is in the public domain.</p>` + LIB.readings.map((r,i) => `<div class="card reading"><div class="spread"><div><h3>${esc(r.title)}</h3><span class="pill gold">${esc(r.tag)}</span> <small class="muted">${esc(r.by)}</small></div><button class="btn btn-line btn-sm" data-act="copy-reading" data-v="${i}">${icon('copy')} Copy</button></div><pre>${esc(r.text)}</pre></div>`).join('');
+  if (sub === 'readings') body = (window.GGReadings ? `<div class="card"><h3>The Grounded Readings Library</h3><p class="muted" style="margin-top:4px">Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, with Listen, Copy, and Save or Print. Once opened here, the library stays on this device for use with no signal.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="rl-open">Open the Library</button></div></div>` : '') + `<p class="muted" style="margin-bottom:12px">Grounded blessings are original to Grounded. Scripture is from the King James Version, which is in the public domain.</p>` + LIB.readings.map((r,i) => `<div class="card reading"><div class="spread"><div><h3>${esc(r.title)}</h3><span class="pill gold">${esc(r.tag)}</span> <small class="muted">${esc(r.by)}</small></div><button class="btn btn-line btn-sm" data-act="copy-reading" data-v="${i}">${icon('copy')} Copy</button></div><pre>${esc(r.text)}</pre></div>`).join('');
   if (sub === 'stories') { const t = V.stag || 'eol'; body = `<div class="sub-tabs">${LIB.storyTags.map(([k,l]) => `<button class="chip" aria-pressed="${t===k}" data-act="stag" data-v="${k}">${l}</button>`).join('')}</div>
       <div class="card">${LIB.stories.filter(s => s[2] === t).map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s[0])}</b>${s[3] ? `<br><small class="muted">${esc(s[3])}</small>` : ''}</div><div class="row"><a class="btn btn-line btn-sm" href="${esc(s[1])}" target="_blank" rel="noopener">Open</a><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(s[1])}">${icon('copy')} Link</button></div></div>`).join('')}</div>`; }
   if (sub === 'referrals') body = LIB.referrals.map(r => `<div class="card"><h3>${esc(r[0])}</h3><p style="margin-top:6px">${mark(r[1])}</p></div>`).join('') + `<div class="card"><h3>Your Referral Notes</h3><p class="muted">Names and numbers you trust, saved encrypted on this device.</p><textarea data-set="referrals" style="margin-top:8px;min-height:160px">${esc(DATA.settings.referrals||'')}</textarea></div>`;
@@ -1657,11 +1665,7 @@ function orSign(){
   go(TIER === 'guide' && done ? 'home' : 'orient');
   toast(done ? 'Signed. Orientation is complete.' : 'Signed.');
 }
-function orPrintCert(){
-  const s = orState(), D = DATA.orient; if (!s.complete) return;
-  fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
-    GGPrint.certificate({tree:'house', name: D.signed.name, title: TIER === 'guide' ? 'Grounded Field Guide Orientation' : 'Grounded Staff Orientation', body:'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.'), date: s.doneOn, renew: s.renewBy, version: OR().version, id: D.signed.id || '', kind:'training'}); });
-}
+function orPrintCert(){ if (orState().complete) certPrintId('or'); } // GWG BLD 797: the Certificates list
 function orPrintAgreement(){
   const A = OR().agreement, D = DATA.orient.signed;
   fgSheet(ph('User agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
@@ -2141,20 +2145,22 @@ function vLearn(){
   if (V.lgm && lgOpen()) return lgTint(vLGM());
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
-  const counted = tracks.filter(t => t.kind !== 'setup'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
+  const counted = tracks.filter(t => t.kind !== 'setup' && t.kind !== 'walkthrough'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
   // Learn opens to category cards (BLD 725): Lessons, Support for Guides, and each For Guides series. Each opens to its videos.
-  const lessonCards = () => tracks.map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
+  const lessonCards = () => tracks.filter(t => t.kind !== 'walkthrough').map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
     ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ln-cert" data-v="${esc(t.id)}">${icon('print')} Get Your Certificate</button></div>` : lnCertable(t) ? `<p class="muted" style="margin-top:10px;font-size:14px">Finish every lesson in this series for a Certificate of Completion.</p>` : ''}</div>`; }).join('');
   const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
   const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
+  cats.unshift(...walkCats()); // the Walkthroughs (GWG BLD 797)
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
   // Guides take Walking with Illness and Disability: Guide Training here, once it is open to them (BLD 759).
   if (lgOpen()){ const g = lgmCardInfo(); cats.push({k: 'lg', eb: 'Guide Training', title: g.title, intro: g.desc, n: g.n, accent: LG_C, act: 'lg-mhome'}); }
   ['willow', 'oak', 'sequoia', 'pine', 'birch', 'aspen', 'maple', 'grove', 'shelf', 'sober'].forEach(x => { if (wfgOn(x)){ const F = WFG(x), gs = wfgRings(x).reduce((a, R) => a.concat(R.guides), []); cats.push({k: 'ser:' + x, eb: FGSER[x].label, title: F.title, intro: F.intro || '', n: `${gs.length} sections, ${gs.filter(g => wfgDone(g.id)).length} finished`, accent: FGSER[x].accent}); } });
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
   if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
+  if (C && C.startsWith('walk:')){ const W = walkTracks().find(t => 'walk:' + t.id === C); if (W) return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${walkLearnCard(W)}</div></div>`; }
   if (C === 'sg') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${sgLearnCard()}</div></div>`;
   if (C && C.startsWith('ser:')){
     const x = C.slice(4), F = WFG(x), R = LCAT.ring ? wfgRings(x).find(r => r.key === LCAT.ring) : null;
@@ -2187,19 +2193,17 @@ function lnMount(t, l){
   const host = $('#ln-host'); if (!host) return;
   if (!window.GGLearn){ host.innerHTML = `<div class="card"><p>The lesson player didn't load. Check your connection and open this lesson again.</p></div>`; return; }
   const D = lnData();
-  LN = GGLearn.player(host, {sealed: fgSealed(lnLib(t)), mark: {name: 'Field Guide'}, lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
+  const SK = fgSealed(lnLib(t)); if (SK) SK.voice = l.voice || t.voice || (t.kind === 'walkthrough' && walkLevel(t) === 'staff' ? 'jenny' : SK.voice); // the lesson's own voice, then the track's, then Brian (BLD 797)
+  LN = GGLearn.player(host, {sealed: SK, mark: {name: 'Field Guide'}, lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
     onAt: i => { lnData().at[l.id] = i; save(); },
-    onDone: id => { const d = lnData(); if (!d.done[id]){ d.done[id] = today(); save(); } },
+    onDone: id => { const d = lnData(); if (!d.done[id]){ d.done[id] = today(); save(); certCheck(); } },
     open: id => { LN = null; go('learn', {ln: id}); },
     home: () => { LN = null; go('learn'); },
     cert: tr => lnCert(tr)});
 }
 function lnStop(){ if (LN && LN.stop) LN.stop(); LN = null; }
-function lnCert(t){
-  if (!t) return; const D = lnData(), when = t.lessons.map(l => D.done[l.id]).filter(Boolean).sort().pop() || today();
-  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
-  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:'house', name:n.trim(), title:'Learn Grow With Grounded: ' + t.title, body:'For finishing every lesson in the ' + t.title + ' series of the Grounded Field Guide.', date:when, kind:'series'}));
-}
+// Every Learn certificate prints through the Certificates list (GWG BLD 797): Walkthroughs and Learn series alike.
+function lnCert(t){ if (t) certPrintId((t.kind === 'walkthrough' ? 'walk:' : 'ln:') + t.id); }
 function lnAct(a, v){
   switch (a){
     case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
@@ -2213,22 +2217,164 @@ function lnAct(a, v){
   }
   return false;
 }
+// ---------------- CERTIFICATES (GWG BLD 797) ----------------
+/* The Certificates tab and the Walkthroughs (Chris, October 13, 2026: "we can have certification tab that hold all certs,
+   and able to print/save").
+   - Everyone with a code has the Certificates tab. It holds every certificate this person has earned on this device: the
+     Walkthrough certificates (Certified Grounded Guide, Staff, and Founder) and every Guide certificate (Orientation, each
+     Guide Training, Walking with Illness and Disability, each For Guides ring, and each Learn series).
+   - Wording (CLAUDE.md, Certified by Grow With Grounded): "Certified Grounded Guide. [Name] has completed Grounded Guide
+     training and is certified by Grow With Grounded to use the following Grounded tools:" and the list (GGPrint.certificate
+     with certified: {level, items}). The same pattern serves Staff and Founder.
+   - A Walkthrough is a Learn track with kind 'walkthrough' (walk-guide in the Guide library, walk-staff in the Staff library,
+     walk-founder in the Founder library), so each level sees its own and every one below it (lnTracks). Each lesson names
+     the tool it teaches (lesson.tool). Finishing every lesson earns the level's certificate; its list is each lesson's tool,
+     then every training, For Guides ring, and Learn series finished at that level, built fresh each time it prints.
+   - The name is entered once (DATA.certs.name) and prints on every certificate. DATA.certs.seen keeps the ones already
+     celebrated, so a short congratulations shows the moment a new certificate is earned. */
+const CERT_LV = {guide: 'Guide', staff: 'Staff', founder: 'Founder'};
+const certD = () => (DATA.certs = Object.assign({name: '', seen: null}, DATA.certs || {}));
+const certHead = lv => 'Certified Grounded ' + (CERT_LV[lv] || 'Guide');
+// The level a Learn track belongs to: its own level, or the library it came from.
+function certLibLevel(t){ const L = lnLib(t); return L && typeof FDR !== 'undefined' && L === FDR ? 'founder' : L && typeof LIB !== 'undefined' && L === LIB ? 'staff' : 'guide'; }
+const walkLevel = t => CERT_LV[t && t.level] ? t.level : certLibLevel(t);
+const walkTracks = () => lnTracks().filter(t => t && t.kind === 'walkthrough' && t.lessons.length);
+const walkDone = t => t.lessons.every(l => lnData().done[l.id]);
+const lastDone = ids => ids.map(id => lnData().done[id]).filter(Boolean).sort().pop() || today();
+// The line under each Guide Training on its certificate.
+const CERT_TREE_NOTE = {
+  maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
+  aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
+  pine: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 9 to 12 through Pine.',
+  birch: 'Lessons, practice scenarios, and a signed agreement for walking with young adults, 18 to 26, through Birch.',
+  oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
+  sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
+  willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'};
+// Every certificate earned on this device, as {id, level, title, items, group, date, renew, version, certId, tree, note, signed}.
+function fgCerts(){
+  const out = [], add = (id, level, title, items, o) => out.push(Object.assign({id, level, title, items: items.filter(Boolean), tree: 'house'}, o || {}));
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  // Orientation
+  safe(() => { if (!OR()) return; const s = orState(), S = DATA.orient.signed || {}; if (!s.complete) return;
+    const g = TIER === 'guide', t = g ? 'Grounded Field Guide Orientation' : 'Grounded Staff Orientation';
+    add('or', g ? 'guide' : 'staff', t, g ? ['The Grounded Field Guide', t] : [t], {group: 'Training', date: s.doneOn, renew: s.renewBy, version: OR().version, certId: S.id || '', signed: S.name || '',
+      note: 'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.')}); });
+  // Each Guide Training
+  [['maple', () => spmState(), () => spmData(), () => SPM(), 'Maple'], ['aspen', () => samState(), () => samData(), () => SAM(), 'Aspen'], ['pine', () => pnmState(), () => pnmData(), () => PNM(), 'Pine'],
+   ['birch', () => brmState(), () => brmData(), () => BRM(), 'Birch'], ['oak', () => stmState(), () => stmData(), () => STM(), 'Oak'], ['sequoia', () => sqmState(), () => sqmData(), () => SQM(), 'Sequoia'],
+   ['willow', () => wlmState(), () => wlmData(), () => WLM(), 'Willow']].forEach(([tree, st, dt, M, nm]) => safe(() => {
+    const s = st(), D = dt().signed; if (!s.complete || !D) return;
+    add('tr:' + tree, 'guide', nm + ' Guide Training', ['The ' + nm + ' Guide', nm + ' Guide Training'], {group: 'Training', tree, date: D.date, renew: s.renewBy, version: (M() || {}).version, signed: D.name || '', note: CERT_TREE_NOTE[tree]});
+  }));
+  safe(() => { const s = gvmState(), D = gvmData().signed; if (!s.complete || !D) return; const t = GVM().title || 'Grove Guide Training';
+    add('tr:grove', 'guide', t, ['The Grove Guide', t], {group: 'Training', tree: 'grove', date: D.date, renew: s.renewBy, version: GVM().version, signed: D.name || '',
+      note: (GVG() || {}).certLine || 'Lessons, practice scenarios, and a signed agreement for leading families and groups through The Grove.'}); });
+  safe(() => { if (!LGM()) return; const s = lgmState(), D = lgmData().signed, C = LGG().cert || LGM().cert || {}; if (!s.complete || !D) return; const t = C.title || LGM().title;
+    add('lg', 'guide', t, [t], {group: 'Training', date: D.date, renew: s.renewBy, version: LGM().version, signed: D.name || '',
+      note: C.body || C.line || 'Six lessons, practice scenarios across every age, and a signed agreement to walk with people living with illness or disability with presence and respect.'}); });
+  // Each For Guides ring
+  Object.keys(FGSER).forEach(s => safe(() => { if (!WFG(s)) return; wfgRings(s).forEach(R => { if (!R.guides.every(g => wfgDone(g.id))) return; const t = WFG(s).title + ': ' + R.name;
+    add('fg:' + s + ':' + R.key, 'guide', t, [t], {group: 'For Guides', tree: FGSER[s].tree, date: lastDone(R.guides.map(g => g.id)),
+      note: (WFG(s).certLine || 'For watching or reading every For Guides section in {ring}.').replace('{ring}', R.name)}); }); }));
+  // Each Learn series (the Walkthroughs come next)
+  safe(() => lnTracks().forEach(t => { if (t.kind === 'walkthrough' || !lnCertable(t) || !t.lessons.length || !walkDone(t)) return; const ti = 'Learn Grow With Grounded: ' + t.title;
+    add('ln:' + t.id, certLibLevel(t), ti, [ti], {group: 'Learn', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every lesson in the ' + t.title + ' series.'}); }));
+  // The Walkthroughs, first in the tab: each lesson's tool, then everything else finished at that level.
+  const walks = [];
+  safe(() => walkTracks().forEach(t => { if (!walkDone(t)) return; const lv = walkLevel(t), more = out.filter(c => c.level === lv).reduce((a, c) => a.concat(c.items), []);
+    walks.push({id: 'walk:' + t.id, level: lv, title: t.title, walk: true, items: t.lessons.map(l => l.tool).filter(Boolean).concat(more).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i), tree: 'house', group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id))}); }));
+  return walks.concat(out);
+}
+// The name on every certificate, entered once (the Certificates tab can change it).
+function certName(def){
+  const D = certD(); if (D.name) return D.name;
+  const n = prompt('Your name as it should print on your certificates:', def || DATA.settings.name || ''); if (n === null || !n.trim()) return '';
+  D.name = n.trim(); save(); return D.name;
+}
+function certPrint(c){
+  if (!c) return toast('Finish the series and this certificate is ready here.');
+  const name = certName(c.signed); if (!name) return;
+  fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
+    GGPrint.certificate({tree: (GGPrint.trees || {})[c.tree] ? c.tree : 'house', name, title: c.walk ? certHead(c.level) : c.title, body: c.note || '', date: c.date, renew: c.renew, version: c.version, id: c.certId || '',
+      kind: c.walk ? 'series' : 'training', certified: {level: c.level, items: c.items}}); });
+}
+const certPrintId = id => certPrint(fgCerts().find(c => c.id === id));
+// The congratulations, shown once for each new certificate (render and the Learn player call certCheck).
+function certCheck(){
+  if (!DATA) return;
+  try {
+    const D = certD(), have = fgCerts(), key = c => c.id + '|' + (c.date || '');
+    if (!D.seen){ D.seen = {}; have.forEach(c => { D.seen[key(c)] = today(); }); save(); return; }
+    const fresh = have.filter(c => !D.seen[key(c)]); if (!fresh.length) return;
+    fresh.forEach(c => { D.seen[key(c)] = today(); }); save(); certCheer(fresh);
+  } catch (e) {}
+}
+function certCheer(list){
+  const old = document.querySelector('.cert-cheer'); if (old) old.remove();
+  const w = list.find(c => c.walk) || list[0];
+  const d = document.createElement('div'); d.className = 'cert-cheer'; d.setAttribute('role', 'status'); d.setAttribute('aria-live', 'polite');
+  d.innerHTML = `<div class="cc-ic">${icon('award')}</div><div class="cc-txt"><b>Congratulations!</b><p>${w.walk ? 'You are now a ' + esc(certHead(w.level)) + '.' : 'You finished ' + esc(w.title) + '.'} Your certificate is ready in the Certificates tab, to print or save.</p>
+    <div class="row"><button class="btn btn-gold btn-sm" data-act="cert-open">${icon('award')} Open Certificates</button><button class="btn btn-line btn-sm" data-act="cert-later">Later</button></div></div>`;
+  document.body.appendChild(d);
+}
+function certCss(){
+  if (document.getElementById('cert-css')) return; const s = document.createElement('style'); s.id = 'cert-css';
+  s.textContent = `.cert-cheer{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);z-index:125;width:min(520px,calc(100vw - 32px));display:flex;gap:14px;align-items:flex-start;background:var(--card);color:var(--ink);border:1.5px solid var(--gold);border-radius:16px;padding:16px 18px;box-shadow:var(--shadow),0 12px 34px rgba(0,0,0,.25);}
+  .cert-cheer .cc-ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--card);}.cert-cheer .cc-ic svg{width:26px;height:26px;}
+  .cert-cheer b{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;}.cert-cheer p{margin:4px 0 10px;}.cert-cheer .row{margin:0;}
+  .cert-card h3{overflow-wrap:anywhere;}.cert-tools{margin:10px 0 0;padding-left:20px;columns:2 220px;column-gap:24px;}.cert-tools li{break-inside:avoid;margin-bottom:4px;overflow-wrap:anywhere;}
+  .cert-name{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}.cert-name input{flex:1 1 220px;min-width:0;}`;
+  document.head.appendChild(s);
+}
+// One Walkthrough in Learn: its lessons, progress, and certificate.
+function walkLearnCard(t){
+  const D = lnData(), n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length, h = certHead(walkLevel(t));
+  return `<div class="card ln-track"><div class="spread"><div><div class="eyebrow">Walkthrough</div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
+    <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>${l.tool ? esc(l.tool) + '. ' : ''}About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
+    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc('walk:' + t.id)}">${icon('award')} Your ${esc(h)} Certificate</button><button class="btn btn-line btn-sm" data-tab="certs">Open Certificates</button></div>`
+      : `<p class="muted" style="margin-top:10px;font-size:14px">Finish every video in this series to become a ${esc(h)}. Your certificate lists every tool you learn.</p>`}</div>`;
+}
+// The Learn category cards for the Walkthroughs this person sees (first in Learn).
+const walkCats = () => walkTracks().map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length;
+  return {k: 'walk:' + t.id, eb: 'Walkthrough', title: t.title, intro: t.who || ('Every part of the ' + CERT_LV[walkLevel(t)] + ' level, one video at a time, toward your ' + certHead(walkLevel(t)) + ' certificate.'), n: `${n} of ${t.lessons.length} videos finished`, accent: 'var(--gold)'}; });
+// ----- the Certificates tab -----
+function vCerts(){
+  certCss();
+  const D = certD(), all = fgCerts(), walks = all.filter(c => c.walk), rest = all.filter(c => !c.walk), going = walkTracks().filter(t => !walkDone(t));
+  const card = c => `<div class="card cert-card" style="border-left:4px solid ${c.walk ? 'var(--gold)' : 'var(--sage)'}"><div class="eyebrow">${esc(certHead(c.level))}</div><h3>${esc(c.title)}</h3>
+    <p class="muted">${c.date ? 'Completed ' + nice(c.date) : ''}${c.renew ? '. Renew by ' + nice(c.renew) : ''}</p>
+    ${c.walk ? `<p style="margin-top:8px">Certified to use ${c.items.length} Grounded ${c.items.length === 1 ? 'tool' : 'tools and trainings'}:</p><ul class="cert-tools">${c.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
+    <div class="row" style="margin-top:12px"><button class="btn ${c.walk ? 'btn-gold' : 'btn-line'} btn-sm" data-act="cert-print" data-v="${esc(c.id)}">${icon('print')} Save or Print</button></div></div>`;
+  const groups = ['Training', 'For Guides', 'Learn'].map(g => [g, rest.filter(c => c.group === g)]).filter(x => x[1].length);
+  const gName = {Training: 'Trainings', 'For Guides': 'For Guides', Learn: 'Learn Series'};
+  return `<div class="page-head"><div class="eyebrow">Certificates</div><h1>Your Certificates</h1><p class="muted">Every certificate you earn on this device gathers here, each one ready to print or save as a PDF.</p></div>
+  <div class="card"><h3>The Name on Your Certificates</h3><p class="muted">Enter it once, and it prints on every certificate.</p>
+   <div class="cert-name" style="margin-top:10px"><input type="text" id="cert-name" aria-label="Name on your certificates" value="${esc(D.name || '')}" placeholder="${esc(DATA.settings.name || 'Your name')}"><button class="btn btn-line btn-sm" data-act="cert-name">Save Name</button></div></div>
+  ${walks.map(card).join('')}
+  ${going.map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length; return `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">On Your Way</div><h3>${esc(t.title)}</h3><p class="muted">${n} of ${t.lessons.length} videos finished. Finish the series to become a ${esc(certHead(walkLevel(t)))}.</p>
+    <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-walk" data-v="${esc(t.id)}">${icon('play')} ${n ? 'Continue' : 'Start'} the ${esc(t.title)}</button></div></div>`; }).join('')}
+  ${groups.map(([g, list]) => `<h2 style="margin-top:22px">${esc(gName[g])}</h2>${list.map(card).join('')}`).join('')}
+  ${all.length ? '' : `<div class="card"><p>Your certificates gather here as you finish each series. ${going.length ? 'Start with the ' + esc(going[0].title) + ' in Learn.' : 'Every training and For Guides ring you finish adds one.'}</p></div>`}`;
+}
+function certAct(a, v){
+  switch (a){
+    case 'cert-print': certPrint(fgCerts().find(c => c.id === v)); return true;
+    case 'cert-name': { const n = ($('#cert-name') || {}).value || ''; certD().name = n.trim(); save(); toast(n.trim() ? 'Saved. This name prints on every certificate.' : 'Name cleared.'); return true; }
+    case 'cert-open': { const d = document.querySelector('.cert-cheer'); if (d) d.remove(); go('certs'); return true; }
+    case 'cert-later': { const d = document.querySelector('.cert-cheer'); if (d) d.remove(); return true; }
+    case 'cert-walk': { LCAT.cat = 'walk:' + v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
+  }
+  return false;
+}
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b793'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b798'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
+// GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
-  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree, name: signed.name, title: guide + ' Training', body: ({
-    maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
-    aspen: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 6 to 8 through Aspen.',
-    pine: 'Lessons, practice scenarios, and a signed agreement for walking with students in grades 9 to 12 through Pine.',
-    birch: 'Lessons, practice scenarios, and a signed agreement for walking with young adults, 18 to 26, through Birch.',
-    oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
-    sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
-    willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'})[tree],
-    date: signed.date, renew: st.renewBy, version: M && M.version, kind: 'training'}));
+  certPrintId('tr:' + tree);
 }
-function fgGuidePrints(prefix){ return `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Posters</h3><p class="muted">Print your Certificate of Completion, and posters that let people know a trained guide serves here. Each has a small QR code to the tree's page.</p>
+function fgGuidePrints(prefix){ return `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Posters</h3><p class="muted">Print your certificate (it is in the Certificates tab too), and posters that let people know a trained guide serves here. Each has a small QR code to the tree's page.</p>
   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="${prefix}-cert">${icon('print')} Certificate</button><button class="btn btn-line btn-sm" data-act="${prefix}-poster">${icon('print')} Tree Poster</button><button class="btn btn-line btn-sm" data-act="${prefix}-parts">${icon('print')} Six Parts Poster</button></div></div>`; }
 
 // ---------------- OAK GUIDE ----------------
@@ -3782,12 +3928,8 @@ function gvmPrint(){
   fgSheet(ph(GVM().title + ' agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'grove-guide-agreement'});
 }
-// The Certificate of Completion (shared/gg-print.js) with The Grove's leaves, and the line from groveGuide.certLine.
-function gvCert(){
-  const st = gvmState(), D = gvmData().signed, G = GVG();
-  if (!st.complete || !D) return;
-  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree: 'grove', name: D.name, title: GVM().title || 'Grove Guide Training', body: G.certLine || 'Lessons, practice scenarios, and a signed agreement for leading families and groups through The Grove.', date: D.date, renew: st.renewBy, version: GVM().version, kind: 'training'}));
-}
+// The certificate (shared/gg-print.js) with The Grove's leaves, and the line from groveGuide.certLine.
+function gvCert(){ if (gvmState().complete && gvmData().signed) certPrintId('tr:grove'); } // GWG BLD 797: the Certificates list
 
 // ----- views -----
 function vGV(){
@@ -7913,13 +8055,9 @@ function lgmPrint(){
   fgSheet(ph(LGM().title + ' agreement') + `<h1>${esc(A.title)}</h1><p>${esc(A.intro)}</p><ul>${A.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>
     <div class="pr-sign"><div>${D ? esc(D.name) + ', signed in the Field Guide' : 'Name'}</div><div>${D ? nice(D.date) : 'Date'}</div></div>` + pf(), A.title, {file:'illness-and-disability-guide-agreement'});
 }
-// The Certificate of Completion (shared/gg-print.js, with the Grow With Grounded mark). Its title and line come from
+// The certificate (shared/gg-print.js, with the Grow With Grounded mark). Its title and line come from
 // lifeGuide.cert (or module.cert) when the library has one.
-function lgCert(){
-  const st = lgmState(), D = lgmData().signed, C = LGG().cert || LGM().cert || {};
-  if (!st.complete || !D) return;
-  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree: 'house', name: D.name, title: C.title || LGM().title, body: C.body || C.line || 'Six lessons, practice scenarios across every age, and a signed agreement to walk with people living with illness or disability with presence and respect.', date: D.date, renew: st.renewBy, version: LGM().version, kind: 'training'}));
-}
+function lgCert(){ if (lgmState().complete && lgmData().signed) certPrintId('lg'); } // GWG BLD 797: the Certificates list
 // ----- Founder: open or close this training to Guides (through Update a Library) -----
 // What Guides See (GWG BLD 793): the series a library update opens, shown read only, so every part of a Guide's Field Guide is listed in one place.
 function fgSeriesRows(){
@@ -8550,11 +8688,7 @@ function wfgMount(){
 }
 function wfgCert(ring, s){
   if (!s && String(ring).includes('|')) [s, ring] = String(ring).split('|');
-  s = s || fgSerRing(ring); const R = wfgRings(s).find(r => r.key === ring); if (!R || !R.guides.every(g => wfgDone(g.id))) return;
-  const D = lnData(), when = R.guides.map(g => D.done[g.id]).filter(Boolean).sort().pop() || today();
-  const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
-  fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:(GGPrint.trees || {})[FGSER[s].tree] ? FGSER[s].tree : 'house', name:n.trim(), title:WFG(s).title + ': ' + R.name,
-    body:(WFG(s).certLine || 'For watching or reading every For Guides section in {ring}: listening beneath the words, words that help, stories from the bedside, and bringing in the team.').replace('{ring}', R.name), date:when, kind:'series'}));
+  s = s || fgSerRing(ring); certPrintId('fg:' + s + ':' + ring); // GWG BLD 797: the Certificates list
 }
 function wfgAct(a, v){
   switch (a){
@@ -10337,6 +10471,7 @@ function vSettings(){
    <div class="row" style="margin-top:12px"><button class="btn btn-gold" data-act="export">Back Up Everything</button><label class="btn btn-line" style="cursor:pointer">Load a Backup<input type="file" id="imp" accept=".json,application/json" hidden></label></div></div>
   <div class="card"><h3>Change Passcode</h3><label class="f" for="cp0">Current passcode</label><input type="password" id="cp0" autocomplete="current-password"><label class="f" for="cp1">New passcode</label><input type="password" id="cp1" autocomplete="new-password"><label class="f" for="cp2">New passcode again</label><input type="password" id="cp2" autocomplete="new-password">
    <button class="btn btn-line" style="margin-top:12px" data-act="change-pass">Change Passcode</button><p class="muted" style="margin-top:8px;font-size:14px">Older backup files keep the passcode they were made with.</p></div>
+  ${window.GFGNav ? GFGNav.installCard() : ''}
   <div class="card"><h3>Reset This Device</h3><p class="muted">Erases everything stored here. Download a backup first.</p><button class="btn btn-danger" style="margin-top:10px" data-act="reset">Reset This Device</button></div>`;
 }
 
@@ -10582,6 +10717,7 @@ function mergeData(cur, inc){
   out.founder.speak = Object.assign({}, fo.speak || {}, out.founder.speak || {});
   out.founder.stories = storiesMerge(out.founder.stories, fo.stories); // Story Lab (BLD 724)
   out.learn = learnMerge(out.learn, inc.learn);
+  if (inc.certs){ const ic = inc.certs, oc = out.certs || {}; out.certs = {name: oc.name || ic.name || '', seen: (oc.seen || ic.seen) ? Object.assign({}, ic.seen || {}, oc.seen || {}) : null}; } // GWG BLD 797
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;
   return {data:out, stats};
 }
@@ -10618,6 +10754,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('acc-') && await accAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
+  if (a && a.startsWith('cert-') && certAct(a, v)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
   if (a && a.startsWith('hp-') && hpAct(a, v)) return;
   switch(a){
@@ -10655,6 +10792,7 @@ document.addEventListener('click', async e => {
     case 'stag': V.stag = v; render(); break;
     case 'copy': copy(v); break;
     case 'copy-email': { const m = LIB.emails.find(x => x.id === v); copy('Subject: ' + m.subject + '\n\n' + m.body); break; }
+    case 'rl-open': if (window.GGReadings){ GGReadings.open({}); setTimeout(() => GGReadings.warm().catch(() => {}), 1500); } break;
     case 'copy-reading': { const r = LIB.readings[+v]; copy(r.title + '\n\n' + r.text); break; }
     case 'print-doc': printDoc(LIB.docs.find(d => d.id === v), true); break;
     case 'print-doc-blank': printDoc(LIB.docs.find(d => d.id === v), false); break;

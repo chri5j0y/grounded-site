@@ -649,9 +649,19 @@ function picker(s, e){
     <label class="f" for="cer-pq">Search</label><input type="text" id="cer-pq" data-cerq="1" value="${esc(S.pq)}" placeholder="A word, a title, or a verse" autocomplete="off">
     <label class="f">Kind</label>${chips('pk', KINDS, S.pk)}
     <label class="sc-cb" style="display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;color:var(--ink-soft)"><input type="checkbox" data-cer-pall="1"${S.pall ? ' checked' : ''}> Show every reading, not only those that fit this service</label>
+    ${window.GGReadings ? `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-cer="rd-lib" data-v="${e.k}">From the Grounded Readings Library</button></div>` : ''}
     <div class="cer-pick-list" id="cer-pick-list">${pickList(s, e)}</div></div>`;
 }
 
+// GWG BLD 797: Start Their File at the start of a service built here (the Intake Session in clients.js, linked to this service).
+// Services made from the Farewell or Wedding Planning Session carry the plan's own file.
+function stfBlk(s){
+  if (!window.GGCli || !GGCli.stfCard || S.draft === s || s.fwp || s.wdp) return '';
+  const fam = famOf(s.type), id = String(s.type || '');
+  const svc = fam === 'wedding' ? (/elope/.test(id) ? 'elopement' : /renew|vow/.test(id) ? 'vows' : 'wedding') : fam === 'blessing' ? 'blessing' : /celebr/.test(id) ? 'celebration' : /grave|committ/.test(id) ? 'graveside' : 'funeral';
+  return GGCli.stfCard({kind: 'cer', ref: s.id, cli: s.cli, title: 'Service Builder', who: title(s), svc,
+    ct: fam === 'wedding' ? {name: (s.p1 || {}).name || '', partner: (s.p2 || {}).name || ''} : {}, forWhom: fam === 'wedding' ? '' : (s.who || {}).name || '', date: s.date || '', place: s.place || ''});
+}
 function vCheck(s){
   const fam = famOf(s.type), groups = groupsFor(fam), gids = groups.map(g => g.id);
   const byG = {}; s.parts.forEach(e => { const g = gids.includes(partOf(e).group) ? partOf(e).group : '_more'; (byG[g] = byG[g] || []).push(e); });
@@ -665,7 +675,7 @@ function vCheck(s){
         ${doOf(e, s).map(d => `<p class="cer-do"><b>For You</b>${esc(d)}</p>`).join('')}
         ${p.readings ? readingBlock(s, e) : pieceKindOf(e) ? pieceBlock(s, e) : (e.rd || []).length ? readingBlock(s, e) : ''}
         <label class="f" for="cer-n-${e.k}">The family's words</label><textarea id="cer-n-${e.k}" data-cern="${e.k}" placeholder="Type their exact words here.">${esc(e.note || '')}</textarea></div>` : ''}</div>`; };
-  return `${headOf(s, 'The Checklist')}${timeBar(s)}
+  return `${headOf(s, 'The Checklist')}${stfBlk(s)}${timeBar(s)}
   ${G.filter(g => byG[g.id]).map(g => `<div class="card cer-grp"><h2>${esc(g.name)}</h2>${byG[g.id].map(row).join('')}</div>`).join('')}
   <div class="card"><h3>Add Your Own Part</h3><div class="cer-g2"><div><label class="f" for="cer-cn">Name of the Part</label><input type="text" id="cer-cn" placeholder="Lighting of a Candle" autocomplete="off"></div>
     <div><label class="f" for="cer-cg">Where It Goes</label><select id="cer-cg">${groups.map(g => `<option value="${esc(g.id)}">${esc(g.name)}</option>`).join('')}</select></div></div>
@@ -1088,6 +1098,13 @@ function act(k, v, el){
     case 'rd-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), r = RD(id); if (!e || !r) return; e.rd = e.rd || [];
       if (e.rd.some(x => x.id === id)){ toast('Already added.'); return; }
       e.rd.push({id, ver: r.versions ? (r.versions[s.bible] && !gone(s.bible) ? s.bible : 'kjv') : null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); return; }
+    // GWG BLD 798: a reading from the Grounded Readings Library (shared/gg-readings.js) joins this service as one of its
+    // own pieces (My Pieces, kept for this service only), with its source line, then shows and prints like any reading.
+    case 'rd-lib': { const e = entry(v); if (!e || !window.GGReadings) return; const fam = famOf(s.type);
+      GGReadings.pick({occasion: fam === 'wedding' ? 'wedding' : fam === 'blessing' ? 'blessing' : 'funeral', button: 'Add to the Service', offline: true}).then(r => {
+        if (!r) return; const o = savePiece(Object.assign(blankPiece(GGReadings.asPiece(r).kind), GGReadings.asPiece(r), {only: s.id})); if (!o) return;
+        e.rd = e.rd || []; e.rd.push({id: o.id, ver: null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); });
+      return; }
     case 'pc-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), k = S.pkind || pieceKindOf(e), x = PC(k, id); if (!e || !x) return;
       e.piece = {kind: k, id}; if (k === 'ritual' && x.minutes && (e.mins == null || e.mins === '')) e.mins = +x.minutes; e.touched = true; keep(s); S.pick = null; rerender(true); toast(k === 'music' ? 'Song chosen.' : 'Ritual chosen.'); return; }
     case 'pc-x': { const e = entry(v); if (!e) return; delete e.piece; keep(s); rerender(true); return; }
@@ -1255,6 +1272,8 @@ const API = window.GGCer = {
     setTimeout(headTop, 0);
     return `<div id="cer-root">${inner()}</div>`;
   },
+  // GWG BLD 797: open a saved service at its checklist (Start Their File's way back).
+  openSvc(id){ if (!list().some(x => x.id === id)) return false; S.id = id; S.draft = null; S.pick = null; S.view = 'check'; if (window.GGFw && GGFw.state) GGFw.state.on = false; if (window.GGWed && GGWed.state) GGWed.state.on = false; return true; },
   guideButton(g, lib){ if (lib) CTX.lib = lib; const t = guideType(g); return t ? `<button type="button" class="btn btn-line" data-tab="ceremonies" data-cer="from-guide" data-v="${esc(t)}">Open the Service Builder</button>` : ''; },
   // Backups: services combine like saved decks; the newest copy of each wins and deleted ones stay deleted.
   merge(out, inc){
