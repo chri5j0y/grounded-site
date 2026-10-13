@@ -157,7 +157,16 @@
   }
   // One reused audio element (Safari lets an element that played on a tap go on playing new clips).
   function clipEl() { if (!clip) { clip = new Audio(); clip.preload = 'auto'; } return clip; }
-  function dropClip() { if (!cc) return; clearTimeout(cc.timer); var a = clipEl(); a.onended = a.onerror = a.onplaying = null; cc = null; }
+  function dropClip() { if (!cc) return; clearTimeout(cc.timer); clearInterval(cc.watch); var a = clipEl(); a.onended = a.onerror = a.onplaying = null; cc = null; }
+  /* Even rests (BLD 797, Chris, October 13, 2026, matching the videos): each voice's recordings carry silence before and
+     after the words (Brian about 0.14 and 0.36 seconds, Jenny 0.21 and 0.87); most of it is skipped, then a 0.45 second
+     rest, and the next chunk downloads while one plays. */
+  var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }, REST = 450, pre = null;
+  function ahead(k) {
+    var it = q[k]; if (!it || !runVoice || !window.Audio) return;
+    var u = clipUrl(runVoice, it.t); if (miss[u]) return;
+    try { if (!pre) { pre = new Audio(); pre.preload = 'auto'; } if (pre.src !== u) { pre.src = u; pre.load(); } } catch (e) {}
+  }
   function playClip(item, t) {
     var a = clipEl(), url = clipUrl(runVoice, item.t), c = { url: url, item: item, t: t, started: false, timer: 0 };
     function fail() {
@@ -168,10 +177,22 @@
     c.fail = fail;
     c.arm = function () { clearTimeout(c.timer); c.timer = setTimeout(function () { if (!c.started && state === 'playing') fail(); }, 8000); };
     cc = c;
-    a.onplaying = function () { if (cc === c) { c.started = true; clearTimeout(c.timer); } };
-    a.onended = function () { if (cc !== c) return; dropClip(); advance(t); };
+    var cut = TRIM[runVoice] || [0, 0];
+    function done() {
+      if (cc !== c) return; dropClip(); try { a.pause(); } catch (e) {}
+      if (t !== tok || state !== 'playing') return;
+      i++; setTimeout(function () { if (t === tok && state === 'playing') next(); }, REST / speed());
+    }
+    a.onplaying = function () {
+      if (cc !== c) return; c.started = true; clearTimeout(c.timer); clearInterval(c.watch);
+      if (!isFinite(a.duration) || a.duration < cut[0] + cut[1] + 0.4) return;
+      var end = a.duration - cut[1];
+      c.watch = setInterval(function () { if (cc !== c) return clearInterval(c.watch); if (!a.paused && a.currentTime >= end) done(); }, 25);
+    };
+    a.onended = done;
     a.onerror = fail;
-    a.src = url;
+    a.src = cut[0] ? url + '#t=' + cut[0] : url; // start just before the first word
+    ahead(i + 1);
     try { a.defaultPlaybackRate = speed(); a.playbackRate = speed(); } catch (e) {}
     c.arm();
     try { var p = a.play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') fail(); }); } catch (e) { fail(); }
