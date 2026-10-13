@@ -8,6 +8,9 @@
    (cyrb53 of voice and text, copied here byte for byte) at https://audio.growwithgrounded.com/v1/<voice>/<name>.mp3.
    A missing or slow clip is skipped quietly. Even rests as in read.js (BLD 797): TRIM per voice, a 0.45 second rest,
    and the next clip downloads while one plays. The recording plan runs this same chunksOf in node, so the clips match.
+   Reader (GWG BLD 799): every reading offers a Reader choice, Brian or Jenny. A reading's voice field is its default
+   (Brian); a choice made with the Reader toggle is kept on this device under gg_voice_reader, the same key Willow's and
+   the Service Builder's Listen (shared/gg-listen.js) use, so it holds everywhere. Every chunk is recorded in both voices.
    Use:
      GGReadings.mount(el, {mode: 'page'})   the full library in a page (readings.html), with #r=, #q=, #t=, #d=, #y=, #o=
      GGReadings.open({trad, occasion, type, q, id})   the library in a window over any page (Willow)
@@ -217,6 +220,12 @@
   var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
   function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
   var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }, REST = 450;
+  // The Reader (GWG BLD 799): one shared key for every reading player on the site.
+  var READER_KEY = 'gg_voice_reader';
+  var MEM = null; // this visit's choice, for a device where storage is blocked
+  function chosen() { var v = null; try { v = localStorage.getItem(READER_KEY); } catch (e) {} return v === 'brian' || v === 'jenny' ? v : MEM; }
+  function voiceFor(r) { return chosen() || (r && r.voice === 'jenny' ? 'jenny' : 'brian'); }
+  function readerName(v) { return v === 'jenny' ? 'Jenny' : 'Brian'; }
   var P = { state: 'idle', id: null, q: [], i: 0, voice: '', tok: 0, el: null, pre: null, cc: null, miss: {}, played: 0, root: null, onend: null };
   function audioEl() { if (!P.el) { P.el = new Audio(); P.el.preload = 'auto'; } return P.el; }
   function lmark() {
@@ -228,6 +237,8 @@
       var mine = bar.getAttribute('data-id') === P.id && P.state !== 'idle', b = bar.querySelector('.ggr-lplay'), s = bar.querySelector('.ggr-lstop');
       b.innerHTML = !mine ? IC.spk + '<span>Listen</span>' : P.state === 'playing' ? IC.pause + '<span>Pause</span>' : IC.play + '<span>Resume</span>';
       b.setAttribute('aria-pressed', mine ? 'true' : 'false'); s.hidden = !mine;
+      var rb = bar.querySelector('.ggr-reader');
+      if (rb) { var v = chosen() || bar.getAttribute('data-v') || 'brian', o = v === 'jenny' ? 'brian' : 'jenny'; rb.textContent = 'Reader: ' + readerName(v); rb.setAttribute('aria-label', 'Reader: ' + readerName(v) + '. Switch to ' + readerName(o)); }
     });
     lmark();
   }
@@ -267,8 +278,25 @@
   }
   function lplay(r, root, onend) {
     lstop(); if (!window.Audio) return;
-    P.id = r.id; P.voice = r.voice === 'jenny' ? 'jenny' : 'brian'; P.q = chunkInfo(r); P.i = 0; P.played = 0; P.root = root; P.onend = onend || null;
+    P.id = r.id; P.voice = voiceFor(r); P.q = chunkInfo(r); P.i = 0; P.played = 0; P.root = root; P.onend = onend || null;
     audioEl(); P.state = 'playing'; lpaint(); lnext();
+  }
+  // Switching the reader keeps the place: the chunk that is playing starts over in the other voice.
+  function setReader(v, quiet) {
+    if (v !== 'brian' && v !== 'jenny') return;
+    MEM = v;
+    if (!quiet) try { localStorage.setItem(READER_KEY, v); } catch (e) {}
+    if (P.state !== 'idle' && P.voice !== v) {
+      P.voice = v; P.tok++;
+      if (P.cc) { dropClip(); try { audioEl().pause(); } catch (e) {} }
+      if (P.state === 'playing') lnext();
+    }
+    lpaint();
+    if (!quiet) try { window.dispatchEvent(new CustomEvent('gg-reader', { detail: { voice: v, from: 'readings' } })); } catch (e) {}
+  }
+  if (!NODE) {
+    window.addEventListener('gg-reader', function (e) { if (e.detail && e.detail.from !== 'readings') setReader(e.detail.voice, true); });
+    window.addEventListener('storage', function (e) { if (e.key === READER_KEY && (e.newValue === 'brian' || e.newValue === 'jenny')) setReader(e.newValue, true); });
   }
   function lpause() { if (P.state !== 'playing') return; P.state = 'paused'; if (P.cc) { clearTimeout(P.cc.timer); try { audioEl().pause(); } catch (e) {} } lpaint(); }
   function lresume() {
@@ -326,6 +354,7 @@
     '.ggr-listen{display:inline-flex;flex-wrap:wrap;gap:10px;align-items:center;}' +
     '.ggr-listen select{font:inherit;font-size:15px;color:var(--ggr-ink);background:var(--ggr-card);border:1px solid var(--ggr-line);border-radius:10px;padding:8px 10px;min-height:44px;}' +
     '.ggr-lstop{padding:11px 14px;}' +
+    '.ggr-btn.ggr-reader{font-family:"Barlow",system-ui,sans-serif;font-weight:500;font-size:15px;letter-spacing:0;text-transform:none;color:var(--ggr-soft);padding:9px 16px;}' +
     '.ggr-text{font-family:"Cormorant Garamond",Georgia,serif;font-size:23px;line-height:1.55;color:var(--ggr-ink);background:var(--ggr-card);border:1px solid var(--ggr-line);border-radius:16px;padding:22px 24px;overflow-wrap:break-word;}' +
     '.ggr-text p{margin:0 0 16px;padding:2px 6px;border-radius:6px;transition:background .3s ease;}.ggr-text p:last-child{margin-bottom:0;}' +
     '.ggr-text .ggr-tl{font-style:italic;color:var(--ggr-soft);}' +
@@ -481,8 +510,9 @@
           '<button type="button" class="ggr-back" data-act="back">Back to the readings</button>' +
           '<h2>' + esc(r.title) + '</h2><p class="ggr-by">' + esc(bylineOf(r)) + '</p><p class="ggr-tags">' + esc(tags) + ' · ' + esc(RIGHTS[r.rights] || '') + '</p>' +
           '<div class="ggr-acts">' + (pick ? '<button type="button" class="ggr-btn ggr-pri" data-act="use">' + esc(opts.button || 'Use This Reading') + '</button>' : '') +
-          '<span class="ggr-listen" data-id="' + esc(r.id) + '"><button type="button" class="ggr-btn ggr-lplay"></button><button type="button" class="ggr-btn ggr-lstop" aria-label="Stop listening" hidden>' + IC.stop + '</button>' +
-          '<select class="ggr-speed" aria-label="Listening speed">' + SPEEDS.map(function (x) { return '<option value="' + x[0] + '"' + (Math.abs(parseFloat(x[0]) - speed()) < .01 ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></span>' +
+          '<span class="ggr-listen" data-id="' + esc(r.id) + '" data-v="' + (r.voice === 'jenny' ? 'jenny' : 'brian') + '"><button type="button" class="ggr-btn ggr-lplay"></button><button type="button" class="ggr-btn ggr-lstop" aria-label="Stop listening" hidden>' + IC.stop + '</button>' +
+          '<select class="ggr-speed" aria-label="Listening speed">' + SPEEDS.map(function (x) { return '<option value="' + x[0] + '"' + (Math.abs(parseFloat(x[0]) - speed()) < .01 ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select>' +
+          '<button type="button" class="ggr-btn ggr-reader"></button></span>' +
           '<button type="button" class="ggr-btn" data-act="copy">Copy</button><button type="button" class="ggr-btn" data-act="print">Save or Print</button></div>' +
           '<p class="ggr-say" role="status" aria-live="polite"></p>' +
           '<div class="ggr-text' + (prose ? ' ggr-prose' : '') + '">' + (r.translit ? '<p class="ggr-tl" lang="und">' + esc(r.translit) + '</p>' : '') +
@@ -509,6 +539,7 @@
         return;
       }
       if (t.classList.contains('ggr-lstop')) { lstop(); return; }
+      if (t.classList.contains('ggr-reader')) { var cur = voiceFor(root._r); setReader(cur === 'jenny' ? 'brian' : 'jenny'); return; }
       if (act === 'back') {
         lstop();
         if (usesHash && history.state && history.state.ggr) { history.back(); return; }
@@ -582,6 +613,7 @@
 
   window.GGReadings = { mount: mount, open: open, pick: pick, get: function (id) { return get(id).then(function (r) { return r ? result(r) : null; }); }, index: index, search: search, loadAll: loadAll, warm: warm, asPiece: asPiece,
     chunksOf: chunksOf, chunkInfo: chunkInfo, clipName: clipName, clipUrl: clipUrl, rec: REC, trim: TRIM, rest: REST, labels: { trad: TRAD, type: TYPE, occasion: OCC, denom: DENOM, rights: RIGHTS, groups: GROUPS },
+    reader: { get: function () { return chosen() || 'brian'; }, set: function (v) { setReader(v); }, key: READER_KEY, voiceFor: voiceFor },
     listen: { play: function (r) { return (r && r.text ? Promise.resolve(r) : get(r && r.id || r)).then(function (x) { if (x) lplay(x, null); }); }, pause: lpause, resume: lresume, stop: lstop, get state() { return P.state; } },
     base: BASE };
 })();

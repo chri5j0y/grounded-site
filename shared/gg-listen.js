@@ -10,7 +10,10 @@
    GGLearn.sealedName(the Staff library audio object, 'brian', line), at <base><round>/<folder>/<name>.bin, a 12-byte
    IV then the AES-GCM ciphertext, unlocked into a Blob URL (BLD 781). Naming comes from shared/gg-learn.js, which
    both pages load. A missing clip is skipped quietly and the reading goes on.
-   Use: GGListen.html({id, lines, sealed: audioObj or null, follow: true}) returns the control's markup.
+   Reader (GWG BLD 799): every reading offers a Reader choice, Brian or Jenny, Brian by default. The choice is kept on
+   this device under one shared key, gg_voice_reader, which the Readings Library (shared/gg-readings.js) reads too, so a
+   choice made in one place holds everywhere. A page tells the other players at once with a 'gg-reader' window event.
+   Use: GGListen.html({id, lines, sealed: audioObj or null, voice: 'brian'}) returns the control's markup.
    ===================================================================== */
 (function () {
   'use strict';
@@ -18,6 +21,12 @@
   var SPEEDS = [[1, 'Normal'], [0.85, 'Slower'], [1.15, 'Faster']];
   var sp = 0;
   try { sp = Math.max(0, SPEEDS.map(function (s) { return String(s[0]); }).indexOf(localStorage.getItem('gg_listen_speed') || '1')); } catch (e) { sp = 0; }
+  // The Reader: one key for every player on the site (GWG BLD 799).
+  var READER_KEY = 'gg_voice_reader';
+  var MEM = null; // this visit's choice, for a device where storage is blocked
+  function chosen() { var v = null; try { v = localStorage.getItem(READER_KEY); } catch (e) {} return v === 'brian' || v === 'jenny' ? v : MEM; }
+  function readerFor(spec) { return chosen() || (spec && spec.voice === 'jenny' ? 'jenny' : 'brian'); }
+  function readerName(v) { return v === 'jenny' ? 'Jenny' : 'Brian'; }
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var norm = function (t) { return String(t == null ? '' : t).replace(/\s+/g, ' ').trim(); };
   // Text to lines, keeping single '' entries as stanza breaks.
@@ -29,7 +38,7 @@
   }
   function clipText(spec) { return spec.lines.filter(function (x) { return !!x; }); }
   var L = function () { return window.GGLearn || null; };
-  function publicUrl(t) { var G = L(); return G && G.clipName ? (G.rec && G.rec.base || 'https://audio.growwithgrounded.com/') + 'v1/' + G.clipName('brian', t) + '.mp3' : ''; }
+  function publicUrl(v, t) { var G = L(); return G && G.clipName ? (G.rec && G.rec.base || 'https://audio.growwithgrounded.com/') + 'v1/' + G.clipName(v, t) + '.mp3' : ''; }
   var AK = {};
   function aesKey(k) {
     if (!AK[k.key]) AK[k.key] = Promise.resolve().then(function () {
@@ -39,19 +48,19 @@
     });
     return AK[k.key];
   }
-  function sealedUrl(k, t) {
+  function sealedUrl(k, v, t) {
     var G = L();
     if (!G || !G.sealedName || !window.crypto || !crypto.subtle) return Promise.reject(new Error('none'));
-    return G.sealedName(k, 'brian', t).then(function (n) { return fetch((G.rec && G.rec.base || 'https://audio.growwithgrounded.com/') + k.round + '/' + k.folder + '/' + n + '.bin'); })
+    return G.sealedName(k, v, t).then(function (n) { return fetch((G.rec && G.rec.base || 'https://audio.growwithgrounded.com/') + k.round + '/' + k.folder + '/' + n + '.bin'); })
       .then(function (r) { if (!r.ok) throw new Error('clip ' + r.status); return r.arrayBuffer(); })
       .then(function (buf) { if (buf.byteLength < 29) throw new Error('clip'); return aesKey(k).then(function (ak) { return crypto.subtle.decrypt({ name: 'AES-GCM', iv: buf.slice(0, 12) }, ak, buf.slice(12)); }); })
       .then(function (mp3) { return URL.createObjectURL(new Blob([mp3], { type: 'audio/mpeg' })); });
   }
   function urlFor(spec, i) {
-    var t = spec.lines[i];
-    if (!spec.sealed) return Promise.resolve(publicUrl(t));
-    if (!P.blobs[i]) P.blobs[i] = sealedUrl(spec.sealed, t);
-    return P.blobs[i];
+    var t = spec.lines[i], v = readerFor(spec);
+    if (!spec.sealed) return Promise.resolve(publicUrl(v, t));
+    if (!P.blobs[v + i]) P.blobs[v + i] = sealedUrl(spec.sealed, v, t);
+    return P.blobs[v + i];
   }
   function okSealed(k) { return !!(k && typeof k.key === 'string' && /^[a-z0-9]+$/i.test(String(k.round || '')) && /^[a-z0-9]+$/i.test(String(k.folder || ''))); }
   // A moment of silence played on the tap, so Safari lets the one element play clips unlocked after it.
@@ -71,14 +80,19 @@
     pause: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 5h3.5v14H7zM13.5 5H17v14h-3.5z" fill="currentColor"/></svg>',
     stop: '<svg viewBox="0 0 24 24" aria-hidden="true"><rect x="6.5" y="6.5" width="11" height="11" rx="1.5" fill="currentColor"/></svg>'
   };
+  // The Reader toggle: one quiet button that names the reader and switches to the other one.
+  function readerBtn(id) {
+    var v = readerFor(SPEC[id]), o = v === 'jenny' ? 'brian' : 'jenny';
+    return '<button type="button" class="ggl-b ggl-s ggl-r" data-ggl-act="reader" data-ggl-id="' + esc(id) + '" aria-label="Reader: ' + readerName(v) + '. Switch to ' + readerName(o) + '">Reader: ' + readerName(v) + '</button>';
+  }
   function inner(id) {
     var st = P.id === id ? P.state : 'idle', sb = SPEEDS[sp];
-    if (st === 'idle') return '<button type="button" class="ggl-b" data-ggl-act="play" data-ggl-id="' + esc(id) + '">' + ICON.play + 'Listen</button>' + (P.quiet[id] ? '<span class="ggl-note">The recording is on its way.</span>' : '');
+    if (st === 'idle') return '<button type="button" class="ggl-b" data-ggl-act="play" data-ggl-id="' + esc(id) + '">' + ICON.play + 'Listen</button>' + readerBtn(id) + (P.quiet[id] ? '<span class="ggl-note">The recording is on its way.</span>' : '');
     return (st === 'playing' ? '<button type="button" class="ggl-b" data-ggl-act="pause" data-ggl-id="' + esc(id) + '">' + ICON.pause + 'Pause</button>' : '<button type="button" class="ggl-b" data-ggl-act="resume" data-ggl-id="' + esc(id) + '">' + ICON.play + 'Resume</button>')
       + '<button type="button" class="ggl-b" data-ggl-act="stop" data-ggl-id="' + esc(id) + '">' + ICON.stop + 'Stop</button>'
-      + '<button type="button" class="ggl-b ggl-s" data-ggl-act="speed" data-ggl-id="' + esc(id) + '" aria-label="Speed: ' + sb[1] + '">Speed: ' + sb[1] + '</button>';
+      + '<button type="button" class="ggl-b ggl-s" data-ggl-act="speed" data-ggl-id="' + esc(id) + '" aria-label="Speed: ' + sb[1] + '">Speed: ' + sb[1] + '</button>' + readerBtn(id);
   }
-  function stamp(id) { return (P.id === id ? P.state : 'idle') + '|' + sp + '|' + (P.quiet[id] ? 1 : 0); }
+  function stamp(id) { return (P.id === id ? P.state : 'idle') + '|' + sp + '|' + (P.quiet[id] ? 1 : 0) + '|' + readerFor(SPEC[id]); }
   function sel(id) { return '[data-ggl="' + (window.CSS && CSS.escape ? CSS.escape(id) : id) + '"]'; }
   function paint(id) {
     if (!id) return;
@@ -88,7 +102,7 @@
       if (n.getAttribute('data-ggl-st') === mk) return;
       var f = document.activeElement && n.contains(document.activeElement) ? document.activeElement.getAttribute('data-ggl-act') : null;
       n.innerHTML = inner(id); n.setAttribute('data-ggl-st', mk);
-      if (f) { var b = n.querySelector('[data-ggl-act]'); var m = { play: 'pause', pause: 'resume', resume: 'pause', stop: 'play' }; b = n.querySelector('[data-ggl-act="' + f + '"]') || n.querySelector('[data-ggl-act="' + (m[f] || '') + '"]') || b; try { b.focus({ preventScroll: true }); } catch (e) {} }
+      if (f) { var b = n.querySelector('[data-ggl-act]'); var m = { play: 'pause', pause: 'resume', resume: 'pause', stop: 'play', reader: 'reader' }; b = n.querySelector('[data-ggl-act="' + f + '"]') || n.querySelector('[data-ggl-act="' + (m[f] || '') + '"]') || b; try { b.focus({ preventScroll: true }); } catch (e) {} }
     });
     Array.prototype.forEach.call(document.querySelectorAll('[data-ggl-text]'), function (box) {
       var on = P.id && box.getAttribute('data-ggl-text') === P.id && P.state !== 'idle';
@@ -151,6 +165,7 @@
     step();
   }
   function act(what, id) {
+    if (what === 'reader') return setReader(readerFor(SPEC[id]) === 'jenny' ? 'brian' : 'jenny');
     if (what === 'play') return play(id);
     if (P.id !== id) return;
     if (what === 'stop') return stop();
@@ -162,6 +177,25 @@
     }
     if (what === 'speed') { sp = (sp + 1) % SPEEDS.length; try { localStorage.setItem('gg_listen_speed', String(SPEEDS[sp][0])); } catch (e) {} if (P.el) P.el.playbackRate = SPEEDS[sp][0]; paint(id); }
   }
+  // Switching the reader keeps the place: the line that is playing starts over in the other voice.
+  function swapVoice() {
+    if (!P.id || P.state === 'idle') return;
+    P.token++; clearTimer(); revoke();
+    if (P.el) { P.el.onended = P.el.onerror = null; try { P.el.pause(); } catch (e) {} }
+    P.mid = false;
+    if (P.state === 'playing') step();
+  }
+  function setReader(v, quiet) {
+    if (v !== 'brian' && v !== 'jenny') return;
+    MEM = v;
+    if (!quiet) try { localStorage.setItem(READER_KEY, v); } catch (e) {}
+    swapVoice();
+    Object.keys(SPEC).forEach(function (id) { delete P.quiet[id]; paint(id); });
+    if (!quiet) try { window.dispatchEvent(new CustomEvent('gg-reader', { detail: { voice: v, from: 'listen' } })); } catch (e) {}
+  }
+  // Another player on this page (the Readings Library) or another tab changed the reader.
+  window.addEventListener('gg-reader', function (e) { if (e.detail && e.detail.from !== 'listen') setReader(e.detail.voice, true); });
+  window.addEventListener('storage', function (e) { if (e.key === READER_KEY && (e.newValue === 'brian' || e.newValue === 'jenny')) setReader(e.newValue, true); });
   document.addEventListener('click', function (e) {
     var b = e.target && e.target.closest && e.target.closest('[data-ggl-act]'); if (!b) return;
     e.preventDefault(); e.stopPropagation(); act(b.getAttribute('data-ggl-act'), b.getAttribute('data-ggl-id'));
@@ -177,7 +211,7 @@
   }
   if (document.body) watch(); else document.addEventListener('DOMContentLoaded', watch);
 
-  // spec: {id, lines: array or text, sealed: the library audio object or null, voice: 'brian'}. Returns '' when
+  // spec: {id, lines: array or text, sealed: the library audio object or null, voice: the default reader, 'brian'}. Returns '' when
   // there is nothing to play (no lines, or a sealed reading whose library has no audio key yet).
   function html(spec) {
     if (!spec || !spec.id) return '';
@@ -185,14 +219,15 @@
     if (!lines.some(Boolean)) return '';
     if (spec.sealed != null && !okSealed(spec.sealed)) return '';
     css();
-    SPEC[spec.id] = { id: spec.id, lines: lines, sealed: spec.sealed || null };
+    SPEC[spec.id] = { id: spec.id, lines: lines, sealed: spec.sealed || null, voice: spec.voice === 'jenny' ? 'jenny' : 'brian' };
     return '<div class="ggl" data-ggl="' + esc(spec.id) + '" data-ggl-st="' + stamp(spec.id) + '" role="group" aria-label="Listen to this reading">' + inner(spec.id) + '</div>';
   }
-  // For tests and tools: the clip names a reading will ask for, in order.
+  // For tests and tools: the clip names a reading will ask for, in order, in the chosen reader's voice (or spec.reader).
   function names(spec) {
-    var lines = linesOf(spec.lines).filter(Boolean), G = L();
-    if (spec.sealed) return Promise.all(lines.map(function (t) { return G.sealedName(spec.sealed, 'brian', t); }));
-    return Promise.resolve(lines.map(function (t) { return G.clipName('brian', t); }));
+    var lines = linesOf(spec.lines).filter(Boolean), G = L(), v = spec.reader || readerFor(spec);
+    if (spec.sealed) return Promise.all(lines.map(function (t) { return G.sealedName(spec.sealed, v, t); }));
+    return Promise.resolve(lines.map(function (t) { return G.clipName(v, t); }));
   }
-  window.GGListen = { html: html, linesOf: linesOf, names: names, stop: stop, state: function () { return { id: P.id, i: P.i, state: P.state, played: P.played, speed: SPEEDS[sp][0], src: P.el ? P.el.src : '' }; }, act: act, version: 'b786' };
+  window.GGListen = { html: html, linesOf: linesOf, names: names, stop: stop, state: function () { return { id: P.id, i: P.i, state: P.state, played: P.played, speed: SPEEDS[sp][0], reader: readerFor(SPEC[P.id]), src: P.el ? P.el.src : '' }; }, act: act,
+    reader: { get: function () { return chosen() || 'brian'; }, set: function (v) { setReader(v); }, key: READER_KEY }, version: 'b799' };
 })();
