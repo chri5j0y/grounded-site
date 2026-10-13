@@ -646,29 +646,29 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b787"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
-<script src="../read.js?v=b797d"></script>
+<script src="../read.js?v=b798"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b797c"></script>
-<script src="../shared/gg-print.js?v=b793"></script>
+<script src="../shared/gg-learn.js?v=b798"></script>
+<script src="../shared/gg-print.js?v=b798"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
 <script src="share.js?v=b788"></script>
 <script src="../shared/gg-listen.js?v=b786"></script>
 <script src="../shared/gg-readings.js?v=b798"></script>
-<script src="ceremonies.js?v=b786"></script>
+<script src="ceremonies.js?v=b798"></script>
 <script src="sessions.js?v=b758"></script>
-<script src="farewell.js?v=b788"></script>
-<script src="wedding.js?v=b788"></script>
-<script src="premarital.js?v=b791"></script>
-<script src="clients.js?v=b793b"></script>
+<script src="farewell.js?v=b798"></script>
+<script src="wedding.js?v=b798"></script>
+<script src="premarital.js?v=b798"></script>
+<script src="clients.js?v=b798"></script>
 <script src="books.js?v=b788"></script>
-<script src="runner.js?v=b788"></script>
+<script src="runner.js?v=b798"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b797c"></script>
+<script src="../shared/gg-stories.js?v=b798"></script>
 <script src="vault.js?v=b791"></script>
-<script src="offline.js?v=b797"></script>
+<script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
@@ -2367,7 +2367,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b793'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b798'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
