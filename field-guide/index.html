@@ -648,8 +648,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b798"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b798"></script>
-<script src="../shared/gg-print.js?v=b798"></script>
+<script src="../shared/gg-learn.js?v=b800"></script>
+<script src="../shared/gg-print.js?v=b800"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
@@ -666,7 +666,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b798"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b798"></script>
+<script src="../shared/gg-stories.js?v=b800"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -2217,30 +2217,42 @@ function lnAct(a, v){
   }
   return false;
 }
-// ---------------- CERTIFICATES (GWG BLD 797) ----------------
+// ---------------- CERTIFICATES (GWG BLD 797, BLD 800) ----------------
 /* The Certificates tab and the Walkthroughs (Chris, October 13, 2026: "we can have certification tab that hold all certs,
    and able to print/save").
-   - Everyone with a code has the Certificates tab. It holds every certificate this person has earned on this device: the
-     Walkthrough certificates (Certified Grounded Guide, Staff, and Founder) and every Guide certificate (Orientation, each
-     Guide Training, Walking with Illness and Disability, each For Guides ring, and each Learn series).
-   - Wording (CLAUDE.md, Certified by Grow With Grounded): "Certified Grounded Guide. [Name] has completed Grounded Guide
-     training and is certified by Grow With Grounded to use the following Grounded tools:" and the list (GGPrint.certificate
-     with certified: {level, items}). The same pattern serves Staff and Founder.
+   - Everyone with a code has the Certificates tab. It holds every certificate this person has earned on this device.
+   - One Certified credential per level (GWG BLD 800, Chris, October 13, 2026: "1"), each earned only when its steps are done:
+       Certified Grounded Guide: Field Guide Orientation with the signed agreement, the Guide Walkthrough, and at least one
+         Guide Training passed (any tree, The Grove, or Walking with Illness and Disability). Its tools: The Grounded Field
+         Guide, then one for each Guide Training passed, so the list grows as more are passed. It renews with the earliest
+         of its trainings (Orientation included).
+       Certified Grounded Staff: Certified Grounded Guide, Staff Orientation, and the Staff Walkthrough.
+       Certified Grounded Founder: Certified Grounded Staff and the Founder Walkthrough.
+       Staff and Founder tools come from the Walkthrough lessons: the big tools with real art are tiles (Founder leads with
+       The Grounded Field Guide), and the rest are named in one Also line (Chris, October 13, 2026: "1").
+     Wording (CLAUDE.md, Certified by Grow With Grounded): "Certified Grounded Guide. [Name] has completed Grounded Guide
+     training and is certified by Grow With Grounded to use the following Grounded tools:" and the tools, printed as art
+     tiles (GGPrint.certificate with certified: {level, tiles, more}). Until a credential is earned, its card shows On Your
+     Way with each step, done or next.
+   - Everything else prints as a Certificate of Completion: each Walkthrough on its own, each Orientation, each Guide
+     Training, each For Guides ring, and each Learn series.
    - A Walkthrough is a Learn track with kind 'walkthrough' (walk-guide in the Guide library, walk-staff in the Staff library,
-     walk-founder in the Founder library), so each level sees its own and every one below it (lnTracks). Each lesson names
-     the tool it teaches (lesson.tool). Finishing every lesson earns the level's certificate; its list is each lesson's tool,
-     then every training, For Guides ring, and Learn series finished at that level, built fresh each time it prints.
+     walk-founder in the Founder library), so each level sees its own and every one below it (lnTracks).
    - The name is entered once (DATA.certs.name) and prints on every certificate. DATA.certs.seen keeps the ones already
-     celebrated, so a short congratulations shows the moment a new certificate is earned. */
+     celebrated, so a short congratulations shows the moment a new certificate is earned. DATA.certs.ids keeps each
+     credential's certificate number, made once. */
 const CERT_LV = {guide: 'Guide', staff: 'Staff', founder: 'Founder'};
-const certD = () => (DATA.certs = Object.assign({name: '', seen: null}, DATA.certs || {}));
+const certD = () => (DATA.certs = Object.assign({name: '', seen: null, ids: {}}, DATA.certs || {}));
 const certHead = lv => 'Certified Grounded ' + (CERT_LV[lv] || 'Guide');
 // The level a Learn track belongs to: its own level, or the library it came from.
 function certLibLevel(t){ const L = lnLib(t); return L && typeof FDR !== 'undefined' && L === FDR ? 'founder' : L && typeof LIB !== 'undefined' && L === LIB ? 'staff' : 'guide'; }
 const walkLevel = t => CERT_LV[t && t.level] ? t.level : certLibLevel(t);
 const walkTracks = () => lnTracks().filter(t => t && t.kind === 'walkthrough' && t.lessons.length);
 const walkDone = t => t.lessons.every(l => lnData().done[l.id]);
-const lastDone = ids => ids.map(id => lnData().done[id]).filter(Boolean).sort().pop() || today();
+const walkOf = lv => walkTracks().find(t => walkLevel(t) === lv) || null;
+const lastDone = ids => ids.map(id => lnData().done[id]).filter(x => typeof x === 'string' && /^\d{4}-\d\d-\d\d/.test(x)).sort().pop() || today(); // dates only, so the certificate always prints one (BLD 800)
+// The levels this person can earn: a Guide earns Guide; Staff earns Guide and Staff; a Founder earns all three.
+const certLevels = () => TIER === 'founder' ? ['guide', 'staff', 'founder'] : TIER === 'staff' ? ['guide', 'staff'] : ['guide'];
 // The line under each Guide Training on its certificate.
 const CERT_TREE_NOTE = {
   maple: 'Lessons, practice scenarios, and a signed agreement for walking with kids in grades K to 5 through Maple.',
@@ -2250,40 +2262,97 @@ const CERT_TREE_NOTE = {
   oak: 'Lessons, practice scenarios, and a signed agreement for walking with adults, patients, and staff through Oak.',
   sequoia: 'Lessons, practice scenarios, and a signed agreement for walking with older adults and their families through Sequoia.',
   willow: 'Lessons, practice scenarios, and a signed agreement for walking with hospice patients and families through Willow.'};
-// Every certificate earned on this device, as {id, level, title, items, group, date, renew, version, certId, tree, note, signed}.
+// The Field Guide Orientation part (the lessons, the scenarios, and the signed agreement), at any level.
+function orGuidePart(){
+  const O = OR(); if (!O) return null; const D = DATA.orient || {}, t = today();
+  const fresh = x => !!(x && x.v === O.version && x.date && addYear(x.date) >= t);
+  if (!(orLessonsDone() && fresh(D.pass) && fresh(D.signed))) return null;
+  const ds = [D.pass.date, D.signed.date].sort(); return {date: ds[1], renew: addYear(ds[0])};
+}
+// The art tile for a tool on a Certified certificate (shared/marks, or the house tree when a tool has no mark of its own).
+function certArt(x){
+  const s = String(x || '').toLowerCase(), tr = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove'].filter(k => new RegExp('\\b' + k + '\\b').test(s));
+  return tr.length === 1 ? tr[0] : /field guide/.test(s) ? 'fieldguide' : /farewell/.test(s) ? 'farewell-small' : /wedding/.test(s) ? 'marriage-small' : /premarital|heartwood/.test(s) ? 'heartwood'
+    : /eulogy/.test(s) ? 'eulogy-small' : /obituary/.test(s) ? 'obituary-small' : /librar|books|shelf/.test(s) ? 'library' : 'house';
+}
+// Every certificate earned on this device. Certified credentials: {id, cred: true, level, title, tiles, more, date, renew,
+// certId}. Certificates of Completion: {id, level, title, group, date, renew, version, certId, tree, note, signed}.
 function fgCerts(){
-  const out = [], add = (id, level, title, items, o) => out.push(Object.assign({id, level, title, items: items.filter(Boolean), tree: 'house'}, o || {}));
+  const out = [], add = (id, level, title, o) => out.push(Object.assign({id, level, title, tree: 'house'}, o || {}));
   const safe = f => { try { return f(); } catch (e) { return null; } };
   // Orientation
   safe(() => { if (!OR()) return; const s = orState(), S = DATA.orient.signed || {}; if (!s.complete) return;
     const g = TIER === 'guide', t = g ? 'Grounded Field Guide Orientation' : 'Grounded Staff Orientation';
-    add('or', g ? 'guide' : 'staff', t, g ? ['The Grounded Field Guide', t] : [t], {group: 'Training', date: s.doneOn, renew: s.renewBy, version: OR().version, certId: S.id || '', signed: S.name || '',
+    add('or', g ? 'guide' : 'staff', t, {group: 'Training', date: s.doneOn, renew: s.renewBy, version: OR().version, certId: S.id || '', signed: S.name || '',
       note: 'Lessons, scenarios, and a signed agreement to serve with presence and honesty' + (orStaffSec() ? ', including the Staff section.' : '.')}); });
-  // Each Guide Training
+  // Each Guide Training (tool: the tile its Certified Grounded Guide certificate shows)
   [['maple', () => spmState(), () => spmData(), () => SPM(), 'Maple'], ['aspen', () => samState(), () => samData(), () => SAM(), 'Aspen'], ['pine', () => pnmState(), () => pnmData(), () => PNM(), 'Pine'],
    ['birch', () => brmState(), () => brmData(), () => BRM(), 'Birch'], ['oak', () => stmState(), () => stmData(), () => STM(), 'Oak'], ['sequoia', () => sqmState(), () => sqmData(), () => SQM(), 'Sequoia'],
    ['willow', () => wlmState(), () => wlmData(), () => WLM(), 'Willow']].forEach(([tree, st, dt, M, nm]) => safe(() => {
     const s = st(), D = dt().signed; if (!s.complete || !D) return;
-    add('tr:' + tree, 'guide', nm + ' Guide Training', ['The ' + nm + ' Guide', nm + ' Guide Training'], {group: 'Training', tree, date: D.date, renew: s.renewBy, version: (M() || {}).version, signed: D.name || '', note: CERT_TREE_NOTE[tree]});
+    add('tr:' + tree, 'guide', nm + ' Guide Training', {group: 'Training', tree, tool: 'The ' + nm + ' Guide', art: tree, date: D.date, renew: s.renewBy, version: (M() || {}).version, signed: D.name || '', note: CERT_TREE_NOTE[tree]});
   }));
   safe(() => { const s = gvmState(), D = gvmData().signed; if (!s.complete || !D) return; const t = GVM().title || 'Grove Guide Training';
-    add('tr:grove', 'guide', t, ['The Grove Guide', t], {group: 'Training', tree: 'grove', date: D.date, renew: s.renewBy, version: GVM().version, signed: D.name || '',
+    add('tr:grove', 'guide', t, {group: 'Training', tree: 'grove', tool: 'The Grove Guide', art: 'grove', date: D.date, renew: s.renewBy, version: GVM().version, signed: D.name || '',
       note: (GVG() || {}).certLine || 'Lessons, practice scenarios, and a signed agreement for leading families and groups through The Grove.'}); });
   safe(() => { if (!LGM()) return; const s = lgmState(), D = lgmData().signed, C = LGG().cert || LGM().cert || {}; if (!s.complete || !D) return; const t = C.title || LGM().title;
-    add('lg', 'guide', t, [t], {group: 'Training', date: D.date, renew: s.renewBy, version: LGM().version, signed: D.name || '',
+    add('lg', 'guide', t, {group: 'Training', tool: String(t).replace(/:\s*Guide Training$/i, '') || 'Walking with Illness and Disability', art: 'house', date: D.date, renew: s.renewBy, version: LGM().version, signed: D.name || '',
       note: C.body || C.line || 'Six lessons, practice scenarios across every age, and a signed agreement to walk with people living with illness or disability with presence and respect.'}); });
   // Each For Guides ring
   Object.keys(FGSER).forEach(s => safe(() => { if (!WFG(s)) return; wfgRings(s).forEach(R => { if (!R.guides.every(g => wfgDone(g.id))) return; const t = WFG(s).title + ': ' + R.name;
-    add('fg:' + s + ':' + R.key, 'guide', t, [t], {group: 'For Guides', tree: FGSER[s].tree, date: lastDone(R.guides.map(g => g.id)),
+    add('fg:' + s + ':' + R.key, 'guide', t, {group: 'For Guides', tree: FGSER[s].tree, date: lastDone(R.guides.map(g => g.id)),
       note: (WFG(s).certLine || 'For watching or reading every For Guides section in {ring}.').replace('{ring}', R.name)}); }); }));
-  // Each Learn series (the Walkthroughs come next)
+  // Each Learn series
   safe(() => lnTracks().forEach(t => { if (t.kind === 'walkthrough' || !lnCertable(t) || !t.lessons.length || !walkDone(t)) return; const ti = 'Learn Grow With Grounded: ' + t.title;
-    add('ln:' + t.id, certLibLevel(t), ti, [ti], {group: 'Learn', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every lesson in the ' + t.title + ' series.'}); }));
-  // The Walkthroughs, first in the tab: each lesson's tool, then everything else finished at that level.
-  const walks = [];
-  safe(() => walkTracks().forEach(t => { if (!walkDone(t)) return; const lv = walkLevel(t), more = out.filter(c => c.level === lv).reduce((a, c) => a.concat(c.items), []);
-    walks.push({id: 'walk:' + t.id, level: lv, title: t.title, walk: true, items: t.lessons.map(l => l.tool).filter(Boolean).concat(more).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i), tree: 'house', group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id))}); }));
-  return walks.concat(out);
+    add('ln:' + t.id, certLibLevel(t), ti, {group: 'Learn', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every lesson in the ' + t.title + ' series.'}); }));
+  // Each Walkthrough on its own, a Certificate of Completion
+  safe(() => walkTracks().forEach(t => { if (!walkDone(t)) return; const lv = walkLevel(t);
+    add('walk:' + t.id, lv, t.title, {group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every video in the ' + t.title + ', a tour of every part of the ' + CERT_LV[lv] + ' level.'}); }));
+  // The Certified credentials, first in the tab
+  const creds = certLevels().map(lv => certCred(lv, out)).filter(c => c && c.earned).map(c => c.cert);
+  return creds.concat(out);
+}
+// One level's Certified credential: {earned, steps: [{done, label, next, act, v}], cert}. list: the Certificates of
+// Completion from fgCerts (Orientation, the trainings, and the Walkthroughs).
+function certCred(lv, list){
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  const W = walkOf(lv), wDone = !!(W && walkDone(W)), wN = W ? W.lessons.filter(l => lnData().done[l.id]).length : 0, wDate = W && wDone ? lastDone(W.lessons.map(l => l.id)) : '';
+  const walkStep = {done: wDone, label: (W ? W.title : CERT_LV[lv] + ' Walkthrough'), next: W ? 'Next: finish the ' + W.title + ' (' + wN + ' of ' + W.lessons.length + ' videos)' : 'Next: the ' + CERT_LV[lv] + ' Walkthrough, coming to Learn soon', act: W ? 'cert-walk' : '', v: W ? W.id : ''};
+  const min = a => a.filter(Boolean).sort()[0] || '', max = a => a.filter(Boolean).sort().pop() || '';
+  let steps, earned, tiles = [], more = [], also = [], date = '', renew = '';
+  if (lv === 'guide'){
+    const O = safe(orGuidePart), tr = list.filter(c => c.tool);
+    steps = [{done: !!O, label: 'Field Guide Orientation and Agreement', next: 'Next: finish Field Guide Orientation and sign the agreement', act: 'cert-orient'}, walkStep,
+      {done: tr.length > 0, label: tr.length ? 'Guide Training: ' + tr.map(c => c.tool.replace(/^The /, '')).join(', ') : 'One Guide Training', next: 'Next: pass one Guide Training (each tree tab, The Grove, or Walking with Illness and Disability holds one)'}];
+    earned = steps.every(s => s.done);
+    if (earned){
+      tiles = [{label: 'The Grounded Field Guide', art: 'fieldguide'}].concat(tr.map(c => ({label: c.tool, art: c.art || certArt(c.tool)})));
+      more = ['Field Guide Orientation and Agreement', W.title];
+      date = max([O.date, wDate, min(tr.map(c => c.date))]); renew = min([O.renew].concat(tr.map(c => c.renew)));
+    }
+  } else {
+    const below = certCred(lv === 'founder' ? 'staff' : 'guide', list), bH = certHead(lv === 'founder' ? 'staff' : 'guide');
+    steps = [{done: !!(below && below.earned), label: bH, next: 'Next: become a ' + bH + ' (the steps are in its card above)'}];
+    let S = null;
+    if (lv === 'staff'){ S = safe(() => { const s = orState(); return OR() && orStaffSec() && s.complete ? {date: s.doneOn, renew: s.renewBy} : null; });
+      steps.push({done: !!S, label: 'Staff Orientation and Agreement', next: 'Next: finish Staff Orientation and sign the agreement', act: 'cert-orient'}); }
+    steps.push(walkStep);
+    earned = steps.every(s => s.done);
+    if (earned){
+      const b = below.cert;
+      // The big tools with real art are tiles; everything else is named in one small line (Chris, "1"). Founder leads with
+      // The Grounded Field Guide tile. The house tree never stands in for a Staff or Founder tool.
+      const tools = W.lessons.map(l => l.tool).filter(x => x && !/certificates tab/i.test(x)).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i);
+      tiles = (lv === 'founder' ? [{label: 'The Grounded Field Guide', art: 'fieldguide'}] : []).concat(tools.filter(x => certArt(x) !== 'house').map(x => ({label: x, art: certArt(x)})));
+      also = tools.filter(x => certArt(x) === 'house');
+      more = [bH].concat(S ? ['Staff Orientation and Agreement'] : [], [W.title]);
+      date = max([b.date, S && S.date, wDate]); renew = min([b.renew, S && S.renew]);
+    }
+  }
+  if (!earned) return {earned: false, steps};
+  const D = certD(); D.ids = D.ids || {};
+  if (!D.ids[lv]) D.ids[lv] = 'GG' + lv[0].toUpperCase() + '-' + Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(36).padStart(2, '0')).join('').toUpperCase().slice(0, 6);
+  return {earned: true, steps, cert: {id: 'cred:' + lv, cred: true, level: lv, title: certHead(lv), tiles, also, more, date, renew, certId: D.ids[lv], group: 'Certified'}};
 }
 // The name on every certificate, entered once (the Certificates tab can change it).
 function certName(def){
@@ -2292,11 +2361,12 @@ function certName(def){
   D.name = n.trim(); save(); return D.name;
 }
 function certPrint(c){
-  if (!c) return toast('Finish the series and this certificate is ready here.');
+  if (!c) return toast('Finish each step and this certificate is ready here.');
   const name = certName(c.signed); if (!name) return;
+  if (c.cred) save(); // keeps the credential's certificate number
   fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
-    GGPrint.certificate({tree: (GGPrint.trees || {})[c.tree] ? c.tree : 'house', name, title: c.walk ? certHead(c.level) : c.title, body: c.note || '', date: c.date, renew: c.renew, version: c.version, id: c.certId || '',
-      kind: c.walk ? 'series' : 'training', certified: {level: c.level, items: c.items}}); });
+    GGPrint.certificate(c.cred ? {tree: 'house', name, date: c.date, renew: c.renew, id: c.certId || '', certified: {level: c.level, tiles: c.tiles, also: c.also || [], more: c.more}}
+      : {tree: (GGPrint.trees || {})[c.tree] ? c.tree : 'house', name, title: c.title, body: c.note || '', date: c.date, renew: c.renew, version: c.version, id: c.certId || '', kind: 'training'}); });
 }
 const certPrintId = id => certPrint(fgCerts().find(c => c.id === id));
 // The congratulations, shown once for each new certificate (render and the Learn player call certCheck).
@@ -2311,9 +2381,9 @@ function certCheck(){
 }
 function certCheer(list){
   const old = document.querySelector('.cert-cheer'); if (old) old.remove();
-  const w = list.find(c => c.walk) || list[0];
+  const w = list.find(c => c.cred) || list[0];
   const d = document.createElement('div'); d.className = 'cert-cheer'; d.setAttribute('role', 'status'); d.setAttribute('aria-live', 'polite');
-  d.innerHTML = `<div class="cc-ic">${icon('award')}</div><div class="cc-txt"><b>Congratulations!</b><p>${w.walk ? 'You are now a ' + esc(certHead(w.level)) + '.' : 'You finished ' + esc(w.title) + '.'} Your certificate is ready in the Certificates tab, to print or save.</p>
+  d.innerHTML = `<div class="cc-ic">${icon('award')}</div><div class="cc-txt"><b>Congratulations!</b><p>${w.cred ? 'You are now a ' + esc(w.title) + '.' : 'You finished ' + esc(w.title) + '.'} Your certificate is ready in the Certificates tab, to print or save.</p>
     <div class="row"><button class="btn btn-gold btn-sm" data-act="cert-open">${icon('award')} Open Certificates</button><button class="btn btn-line btn-sm" data-act="cert-later">Later</button></div></div>`;
   document.body.appendChild(d);
 }
@@ -2323,16 +2393,20 @@ function certCss(){
   .cert-cheer .cc-ic{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;background:var(--gold);color:var(--card);}.cert-cheer .cc-ic svg{width:26px;height:26px;}
   .cert-cheer b{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;}.cert-cheer p{margin:4px 0 10px;}.cert-cheer .row{margin:0;}
   .cert-card h3{overflow-wrap:anywhere;}.cert-tools{margin:10px 0 0;padding-left:20px;columns:2 220px;column-gap:24px;}.cert-tools li{break-inside:avoid;margin-bottom:4px;overflow-wrap:anywhere;}
+  .cert-tiles{display:flex;flex-wrap:wrap;gap:12px 14px;margin-top:10px;}.cert-tiles span{display:flex;flex-direction:column;align-items:center;gap:4px;width:96px;text-align:center;font-size:13px;font-weight:600;line-height:1.2;overflow-wrap:anywhere;}
+  .cert-tiles img{width:48px;height:48px;border-radius:11px;box-shadow:0 0 0 1px rgba(139,94,26,.3);}
+  .cert-steps{list-style:none;margin:10px 0 0;padding:0;}.cert-steps li{display:flex;gap:10px;align-items:flex-start;margin-bottom:8px;overflow-wrap:anywhere;}
+  .cert-steps li svg{flex:none;width:20px;height:20px;margin-top:1px;}.cert-steps li.ok svg{color:var(--sage);}.cert-steps li.nx svg{color:var(--gold);}
   .cert-name{display:flex;gap:10px;flex-wrap:wrap;align-items:flex-end;}.cert-name input{flex:1 1 220px;min-width:0;}`;
   document.head.appendChild(s);
 }
-// One Walkthrough in Learn: its lessons, progress, and certificate.
+// One Walkthrough in Learn: its lessons, progress, and Certificate of Completion.
 function walkLearnCard(t){
   const D = lnData(), n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length, h = certHead(walkLevel(t));
   return `<div class="card ln-track"><div class="spread"><div><div class="eyebrow">Walkthrough</div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>${l.tool ? esc(l.tool) + '. ' : ''}About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
-    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc('walk:' + t.id)}">${icon('award')} Your ${esc(h)} Certificate</button><button class="btn btn-line btn-sm" data-tab="certs">Open Certificates</button></div>`
-      : `<p class="muted" style="margin-top:10px;font-size:14px">Finish every video in this series to become a ${esc(h)}. Your certificate lists every tool you learn.</p>`}</div>`;
+    ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc('walk:' + t.id)}">${icon('award')} Your Certificate of Completion</button><button class="btn btn-line btn-sm" data-tab="certs">Open Certificates</button></div>`
+      : `<p class="muted" style="margin-top:10px;font-size:14px">Finish every video in this series for your Certificate of Completion, one of the steps to ${esc(h)}.</p>`}</div>`;
 }
 // The Learn category cards for the Walkthroughs this person sees (first in Learn).
 const walkCats = () => walkTracks().map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length;
@@ -2340,21 +2414,36 @@ const walkCats = () => walkTracks().map(t => { const n = t.lessons.filter(l => l
 // ----- the Certificates tab -----
 function vCerts(){
   certCss();
-  const D = certD(), all = fgCerts(), walks = all.filter(c => c.walk), rest = all.filter(c => !c.walk), going = walkTracks().filter(t => !walkDone(t));
-  const card = c => `<div class="card cert-card" style="border-left:4px solid ${c.walk ? 'var(--gold)' : 'var(--sage)'}"><div class="eyebrow">${esc(certHead(c.level))}</div><h3>${esc(c.title)}</h3>
-    <p class="muted">${c.date ? 'Completed ' + nice(c.date) : ''}${c.renew ? '. Renew by ' + nice(c.renew) : ''}</p>
-    ${c.walk ? `<p style="margin-top:8px">Certified to use ${c.items.length} Grounded ${c.items.length === 1 ? 'tool' : 'tools and trainings'}:</p><ul class="cert-tools">${c.items.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
-    <div class="row" style="margin-top:12px"><button class="btn ${c.walk ? 'btn-gold' : 'btn-line'} btn-sm" data-act="cert-print" data-v="${esc(c.id)}">${icon('print')} Save or Print</button></div></div>`;
-  const groups = ['Training', 'For Guides', 'Learn'].map(g => [g, rest.filter(c => c.group === g)]).filter(x => x[1].length);
-  const gName = {Training: 'Trainings', 'For Guides': 'For Guides', Learn: 'Learn Series'};
+  const D = certD(), all = fgCerts(), rest = all.filter(c => !c.cred);
+  const dates = c => [c.date ? 'Completed ' + nice(c.date) : '', c.renew ? 'Renew by ' + nice(c.renew) : ''].filter(Boolean).join('. ');
+  const tileImg = a => a === 'house' ? '../favicon.svg' : a === 'heartwood' ? '../heartwood/mark.svg' : '../shared/marks/' + a + '.svg';
+  // Each level's Certified card first: the credential when earned, or On Your Way with every step.
+  const credCard = lv => { const C = certCred(lv, rest), h = certHead(lv);
+    if (C.earned){ const c = C.cert; return `<div class="card cert-card" style="border-left:4px solid var(--gold)"><div class="eyebrow">Certified</div><h3>${esc(h)}</h3>
+      <p class="muted">${esc(dates(c))}${c.certId ? '. Certificate ' + esc(c.certId) : ''}</p>
+      <p style="margin-top:8px">Certified to use these Grounded tools:</p>
+      <div class="cert-tiles">${c.tiles.map(t => `<span><img src="${esc(tileImg(t.art))}" alt="">${esc(t.label)}</span>`).join('')}</div>
+      ${(c.also || []).length ? `<p style="margin-top:10px;font-size:14px">Also: ${c.also.map(esc).join(', ')}</p>` : ''}
+      <p class="muted" style="margin-top:6px;font-size:14px">${c.more.map(esc).join(' &middot; ')}</p>
+      <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc(c.id)}">${icon('print')} Save or Print</button></div></div>`; }
+    const nx = C.steps.filter(s => !s.done), go1 = nx.find(s => s.act);
+    return `<div class="card cert-card" style="border-left:4px solid var(--gold)"><div class="eyebrow">On Your Way</div><h3>${esc(h)}</h3>
+      <p class="muted">${C.steps.length - nx.length} of ${C.steps.length} steps done. Each step you finish brings you closer.</p>
+      <ul class="cert-steps">${C.steps.map(s => s.done ? `<li class="ok">${icon('check')}<span>${esc(s.label)}</span></li>` : `<li class="nx">${icon('award')}<span>${esc(s.next)}</span></li>`).join('')}</ul>
+      ${go1 ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="${go1.act}" data-v="${esc(go1.v || '')}">${icon(go1.act === 'cert-walk' ? 'play' : 'cap')} ${go1.act === 'cert-walk' ? 'Continue the Walkthrough' : 'Open Orientation'}</button></div>` : ''}</div>`; };
+  const card = c => `<div class="card cert-card" style="border-left:4px solid var(--sage)"><div class="eyebrow">Certificate of Completion</div><h3>${esc(c.title)}</h3>
+    <p class="muted">${esc(dates(c))}</p>
+    <div class="row" style="margin-top:12px"><button class="btn btn-line btn-sm" data-act="cert-print" data-v="${esc(c.id)}">${icon('print')} Save or Print</button></div></div>`;
+  const groups = ['Walkthrough', 'Training', 'For Guides', 'Learn'].map(g => [g, rest.filter(c => c.group === g)]).filter(x => x[1].length);
+  const gName = {Walkthrough: 'Walkthroughs', Training: 'Trainings', 'For Guides': 'For Guides', Learn: 'Learn Series'};
   return `<div class="page-head"><div class="eyebrow">Certificates</div><h1>Your Certificates</h1><p class="muted">Every certificate you earn on this device gathers here, each one ready to print or save as a PDF.</p></div>
   <div class="card"><h3>The Name on Your Certificates</h3><p class="muted">Enter it once, and it prints on every certificate.</p>
    <div class="cert-name" style="margin-top:10px"><input type="text" id="cert-name" aria-label="Name on your certificates" value="${esc(D.name || '')}" placeholder="${esc(DATA.settings.name || 'Your name')}"><button class="btn btn-line btn-sm" data-act="cert-name">Save Name</button></div></div>
-  ${walks.map(card).join('')}
-  ${going.map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length; return `<div class="card" style="border-left:4px solid var(--gold)"><div class="eyebrow">On Your Way</div><h3>${esc(t.title)}</h3><p class="muted">${n} of ${t.lessons.length} videos finished. Finish the series to become a ${esc(certHead(walkLevel(t)))}.</p>
-    <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-walk" data-v="${esc(t.id)}">${icon('play')} ${n ? 'Continue' : 'Start'} the ${esc(t.title)}</button></div></div>`; }).join('')}
-  ${groups.map(([g, list]) => `<h2 style="margin-top:22px">${esc(gName[g])}</h2>${list.map(card).join('')}`).join('')}
-  ${all.length ? '' : `<div class="card"><p>Your certificates gather here as you finish each series. ${going.length ? 'Start with the ' + esc(going[0].title) + ' in Learn.' : 'Every training and For Guides ring you finish adds one.'}</p></div>`}`;
+  <h2 style="margin-top:22px">Certified</h2>
+  ${certLevels().map(credCard).join('')}
+  ${groups.length ? '<h2 style="margin-top:22px">Certificates of Completion</h2>' : ''}
+  ${groups.map(([g, list]) => `<h3 style="margin-top:16px">${esc(gName[g])}</h3>${list.map(card).join('')}`).join('')}
+  ${rest.length ? '' : `<div class="card"><p>Your Certificates of Completion gather here as you finish each Walkthrough, training, For Guides ring, and Learn series.</p></div>`}`;
 }
 function certAct(a, v){
   switch (a){
@@ -2363,11 +2452,12 @@ function certAct(a, v){
     case 'cert-open': { const d = document.querySelector('.cert-cheer'); if (d) d.remove(); go('certs'); return true; }
     case 'cert-later': { const d = document.querySelector('.cert-cheer'); if (d) d.remove(); return true; }
     case 'cert-walk': { LCAT.cat = 'walk:' + v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
+    case 'cert-orient': go('orient'); return true;
   }
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b798'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b800'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){

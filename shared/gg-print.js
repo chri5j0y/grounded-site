@@ -2,14 +2,18 @@
    GROW WITH GROUNDED PRINTS (shared/gg-print.js)
    Certificates, guide posters, and flyers, made on this device (Learn build, October 2026).
    Each one opens as a print-ready page with a Print or Save as PDF button. Nothing is sent anywhere.
-   - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
+   - GGPrint.certificate(o)     a certificate, landscape Letter, on one page.
                                 o: {tree, name, title, body, date, renew, version, id, kind, certified}
-                                certified (GWG BLD 797): {level: 'guide' | 'staff' | 'founder', items: [names]} prints the
-                                Certified Grounded Guide (Staff, Founder) wording in place of Certificate of Completion:
-                                "[Name] has completed Grounded Guide training and is certified by Grow With Grounded to use
-                                the following Grounded tools:" and the list of items (the tools and training they finished).
-                                tree is maple, aspen, pine, birch, oak, sequoia, willow, grove, or house (Grow With Grounded).
-                                A tree's certificate carries its own leaf in each corner (shared/leaves/<tree>.svg).
+                                Without certified: the Certificate of Completion. tree is maple, aspen, pine, birch, oak,
+                                sequoia, willow, grove, or house (Grow With Grounded); a tree's certificate carries its own
+                                leaf in each corner (shared/leaves/<tree>.svg).
+                                certified (GWG BLD 797, BLD 800): {level: 'guide' | 'staff' | 'founder', tiles: [{label, art}],
+                                also: [names], more: [names]} prints the Certified credential: "Certified Grounded Guide (Staff, Founder).
+                                [Name] has completed Grounded Guide training and is certified by Grow With Grounded to use the
+                                following Grounded tools:", a row of art tiles (art: a shared/marks name, 'heartwood', or
+                                'house'), the also line (the other tools, by name), the more line (Orientation and Walkthrough), the dates, the gold seal, and the two
+                                signature lines with the names in the italic serif ("Leave Lines Blank to Sign by Hand" on the
+                                print page leaves them blank). certified.items (plain names) still works.
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
                                 kind 'parts': the six parts teaching poster, in that tree's voice.
@@ -112,7 +116,7 @@
     var sizes = o.sizes || [o.size], cur = sizes[0];
     var html = '<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>' + esc(o.title) + '</title>'
       + '<link rel="stylesheet" href="' + A('/fonts/fonts.css') + '"><style id="pg">@page{size:' + cur.page + ';margin:0;}</style><style>' + BASE + '\n' + o.css + '</style></head><body>'
-      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + (o.acts || []).map(function (a) { return '<button type="button" id="' + a[0] + '">' + esc(a[1]) + '</button>'; }).join('') + '<button class="pri" id="go">' + esc(o.printLabel || 'Print or Save as PDF') + '</button></div>'
+      + '<div class="bar"><b>' + esc(o.title) + '</b>' + (sizes.length > 1 ? sizes.map(function (s, i) { return '<button data-size="' + i + '" aria-pressed="' + (i === 0) + '">' + esc(s.label) + '</button>'; }).join('') : '') + (o.acts || []).map(function (a) { return '<button type="button" id="' + a[0] + '">' + esc(a[1]) + '</button>'; }).join('') + (o.bar || '') + '<button class="pri" id="go">' + esc(o.printLabel || 'Print or Save as PDF') + '</button></div>'
       + '<div class="tip" id="tip" role="status">' + (o.tipFull ? esc(o.tipFull) : 'To keep a copy, choose Save as PDF in the print window. ' + esc(o.tip || '')) + '</div>'
       + '<div class="fit" id="fit"><div class="sheet ' + (cur.cls || '') + '" id="sheet" style="width:' + cur.w + 'in;height:' + cur.h + 'in">' + o.body + '</div></div>'
       + '<script>(function(){var S=' + JSON.stringify(sizes) + ',sh=document.getElementById("sheet"),fit=document.getElementById("fit");'
@@ -144,48 +148,123 @@
   var TABLOID = { label: '11 by 17', page: '11in 17in', w: 11, h: 17, cls: 'k2' };
 
   /* ---------------- certificate ---------------- */
-  // The Certified Grounded wording (GWG BLD 797): the level's title, the line, and the tools and training, in columns.
+  // A date as "October 13, 2026": from 2026-10-13 (with or without a time after it), a Date, or a date already written out
+  // (GWG BLD 800: the Completed and Renew by dates always print).
+  function longDate(d) {
+    if (!d) return '';
+    if (d instanceof Date) return isNaN(d) ? '' : d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' });
+    return nice(String(d)) || String(d);
+  }
+  // The Certified credential (GWG BLD 800, design patches/bld800/mock/certified-mock.html): parchment, a double gold border,
+  // the house tree faint behind, the level's title, the name, the certified line, a row of art tiles (one for each tool,
+  // wrapping to two rows when many), the Orientation and Walkthrough line, the dates, the gold Certified seal, the QR code,
+  // and the two signature lines with Kayti's and Chris's names in the italic serif (the print page can leave them blank).
   var CERT_LV = { guide: 'Guide', staff: 'Staff', founder: 'Founder' };
+  function tileArt(a) {
+    a = String(a || 'house');
+    if (a === 'house') return A('/favicon.svg');
+    if (a === 'heartwood') return A('/heartwood/mark.svg');
+    return /^[a-z-]+$/.test(a) ? A('/shared/marks/' + a + '.svg') : A('/favicon.svg');
+  }
+  function guessArt(x) {
+    var s = String(x || '').toLowerCase(), tr = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove'].filter(function (k) { return new RegExp('\\b' + k + '\\b').test(s); });
+    return tr.length === 1 ? tr[0] : /field guide/.test(s) ? 'fieldguide' : 'house';
+  }
   function certifiedParts(o) {
     var c = o.certified; if (!c) return null;
-    var lv = CERT_LV[c.level] || 'Guide', seen = {}, items = (c.items || []).map(function (x) { return String(x || '').trim(); }).filter(function (x) { var k = x.toLowerCase(); if (!x || seen[k]) return false; seen[k] = 1; return true; });
-    var cols = items.length > 14 ? 3 : items.length > 5 ? 2 : 1;
-    return { head: 'Certified Grounded ' + lv, line: 'has completed Grounded ' + lv + ' training and is certified by Grow With Grounded to use the following Grounded tools:', items: items, cols: cols };
+    var lv = CERT_LV[c.level] || 'Guide', seen = {};
+    var tiles = (c.tiles || (c.items || []).map(function (x) { return { label: x, art: guessArt(x) }; })).map(function (t) { return { label: String(t.label || '').trim(), art: t.art || guessArt(t.label) }; })
+      .filter(function (t) { var k = t.label.toLowerCase(); if (!t.label || seen[k]) return false; seen[k] = 1; return true; });
+    return { head: 'Certified Grounded ' + lv, line: 'has completed Grounded ' + lv + ' training and is certified by Grow With Grounded to use the following Grounded tools:', tiles: tiles, also: (c.also || []).filter(Boolean), more: (c.more || []).filter(Boolean) };
   }
-  // Shrinks the list (then the name and title) until the whole certificate fits on its one page.
-  var CERT_FIT = '(function(){var cin=document.querySelector(".c-in"),ls=document.querySelector(".c-list");if(!cin||!ls)return;'
-    + 'function over(){return cin.scrollHeight>cin.clientHeight+1;}'
-    + 'function fit(){var f=12;ls.style.fontSize=f+"pt";while(over()&&f>7){f-=0.5;ls.style.fontSize=f+"pt";}'
-    + 'var nb=document.querySelector(".c-body");if(over()&&nb)nb.style.display="none";'
-    + 'var t=document.querySelector(".c-title"),n=document.querySelector(".c-name"),k=1;while(over()&&k>0.6){k-=0.05;t.style.fontSize=(34*k)+"pt";n.style.fontSize=(38*k)+"pt";}}'
-    + 'fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();';
+  // The seal: CERTIFIED along the top, GROW WITH GROUNDED along the bottom, the house tree in the middle.
+  function seal() {
+    return '<svg class="k-seal" viewBox="0 0 140 140" aria-hidden="true"><defs><radialGradient id="kg" cx="40%" cy="35%"><stop offset="0" stop-color="#F2D58A"/><stop offset=".6" stop-color="#D4A84E"/><stop offset="1" stop-color="#A97A26"/></radialGradient>'
+      + '<path id="ka" d="M32 70 a38 38 0 1 1 76 0" fill="none"/><path id="kb" d="M26 74 a44 44 0 0 0 88 0" fill="none"/></defs>'
+      + '<path d="M70 4 l8 9 12-4 4 12 12 2-1 12 10 7-6 11 6 11-10 7 1 12-12 2-4 12-12-4-8 9-8-9-12 4-4-12-12-2 1-12-10-7 6-11-6-11 10-7-1-12 12-2 4-12 12 4z" fill="url(#kg)" stroke="#8B5E1A" stroke-width="1.2"/>'
+      + '<circle cx="70" cy="70" r="44" fill="none" stroke="#fff6dc" stroke-width="1.4" opacity=".9"/><circle cx="70" cy="70" r="38" fill="none" stroke="#8B5E1A" stroke-width=".8" opacity=".7"/>'
+      + '<text font-family="Barlow Condensed,Arial Narrow,sans-serif" font-size="10" letter-spacing="1.6" fill="#5a3a0c" font-weight="700"><textPath href="#ka" startOffset="50%" text-anchor="middle">CERTIFIED</textPath></text>'
+      + '<text font-family="Barlow Condensed,Arial Narrow,sans-serif" font-size="9" letter-spacing="1.6" fill="#5a3a0c" font-weight="700"><textPath href="#kb" startOffset="50%" text-anchor="middle">GROW WITH GROUNDED</textPath></text>'
+      + '<image href="' + A('/favicon.svg') + '" x="48" y="46" width="44" height="44"/></svg>';
+  }
+  // Shrinks the title, name, and tiles together until everything sits above the signature lines and the seal.
+  var CRED_FIT = '(function(){var b=document.querySelector(".k-body"),sh=document.getElementById("sheet");if(!b)return;'
+    + 'var sl=document.querySelector(".k-seal");'
+    + 'function low(){var k=b.lastElementChild,r=k&&k.getBoundingClientRect(),q=sl&&sl.getBoundingClientRect();return !!(r&&q&&r.bottom>q.top-4&&r.right>q.left&&r.left<q.right);}'
+    + 'function over(){return b.scrollHeight>b.clientHeight+1||low();}'
+    + 'function fit(){var z=1;b.style.setProperty("--z",1);while(over()&&z>0.6){z-=0.04;b.style.setProperty("--z",z.toFixed(2));}}'
+    + 'fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);'
+    + 'var cb=document.getElementById("k-blank");if(cb)cb.onchange=function(){sh.classList.toggle("k-blank",cb.checked);};})();';
+  function credential(o, cp, win) {
+    var u = SITE + '/', n = cp.tiles.length, per = n > 6 ? Math.ceil(n / 2) : Math.max(1, n);
+    var meta = [o.date ? ['Completed', longDate(o.date)] : null, o.renew ? ['Renew by', longDate(o.renew)] : null, o.id ? ['Certificate', o.id] : null].filter(function (m) { return m && m[1]; });
+    var body = '<div class="k-f1"></div><div class="k-f2"></div><div class="k-f3"></div><img class="k-wm" src="' + A('/favicon.svg') + '" alt="">'
+      + '<div class="k-body"><div class="k-eb cond">Grow With Grounded</div>'
+      + '<div class="k-h serif">' + esc(cp.head) + '</div><div class="k-rule"></div>'
+      + '<div class="k-name serif" data-fitname>' + esc(o.name) + '</div>'
+      + '<div class="k-line">' + esc(cp.line) + '</div>'
+      + '<div class="k-tiles' + (n > 6 ? ' k-two' : '') + '" style="grid-template-columns:repeat(' + per + ',auto)">' + cp.tiles.map(function (t) { return '<div class="k-tile"><img src="' + tileArt(t.art) + '" alt="">' + esc(t.label) + '</div>'; }).join('') + '</div>'
+      + (cp.also.length ? '<div class="k-also">Also: ' + cp.also.map(esc).join(', ') + '</div>' : '')
+      + (cp.more.length ? '<div class="k-more">' + cp.more.map(esc).join(' &middot; ') + '</div>' : '')
+      + (meta.length ? '<div class="k-meta">' + meta.map(function (m) { return '<span>' + esc(m[0]) + ' <b>' + esc(m[1]) + '</b></span>'; }).join('') + '</div>' : '')
+      + '</div>' + seal()
+      + '<div class="k-foot"><div class="k-sig"><div class="k-s serif"><span>Kayti Joy</span></div><small>Kayti Joy, Co-Founder</small></div>'
+      + '<div class="k-sig k-sig2"><div class="k-s serif"><span>Chris Joy</span></div><small>Chris Joy, Co-Founder</small></div>'
+      + '<div class="k-qr">' + qr(u, 'Scan to visit Grow With Grounded') + '<div><b>Scan to visit</b><br>' + esc(short(u)) + '</div></div></div>';
+    var css = [
+      '.sheet{background:radial-gradient(ellipse at center,#fffcf4 0%,#fbf4e4 70%,#f3e7cd 100%);}',
+      '.k-f1{position:absolute;inset:.32in;border:2px solid #8B5E1A;}.k-f2{position:absolute;inset:.42in;border:1px solid #C9A25A;}.k-f3{position:absolute;inset:.47in;border:5px double #D9B46A;opacity:.8;}',
+      '.k-wm{position:absolute;left:50%;top:50%;width:5.2in;transform:translate(-50%,-50%);opacity:.07;}',
+      '.k-body{--z:1;position:absolute;inset:.7in 1in 1.75in;text-align:center;display:flex;flex-direction:column;align-items:center;justify-content:center;}',
+      '.k-eb{letter-spacing:.32em;text-transform:uppercase;font-size:13px;color:#8B5E1A;margin-top:4px;}',
+      '.k-h{font-weight:600;font-size:calc(54px * var(--z));line-height:1.1;margin:2px 0 0;color:#6b4512;letter-spacing:.01em;}',
+      '.k-rule{flex:none;width:3.2in;height:10px;margin:4px auto 0;background:radial-gradient(circle,#C9A25A 2px,transparent 3px) center/14px 10px repeat-x;}',
+      '.k-name{font-style:italic;font-size:calc(50px * var(--z));line-height:1.15;margin:calc(14px * var(--z)) 0 0;padding:0 .4in 2px;border-bottom:1.5px solid #8B5E1A;max-width:8.4in;white-space:nowrap;overflow:hidden;}',
+      '.k-line{font-size:15px;max-width:6.6in;margin:12px auto 0;line-height:1.45;color:#4a3427;}',
+      '.k-tiles{display:grid;gap:calc(12px * var(--z)) calc(26px * var(--z));justify-content:center;margin:calc(20px * var(--z)) 0 8px;}',
+      '.k-two{column-gap:calc(18px * var(--z));}',
+      '.k-tile{display:flex;flex-direction:column;align-items:center;gap:6px;width:calc(1.15in * var(--z));font-size:calc(13.5px * var(--z));font-weight:600;line-height:1.2;color:#4a3427;}',
+      '.k-tile img{width:calc(64px * var(--z));height:calc(64px * var(--z));border-radius:calc(14px * var(--z));box-shadow:0 1px 0 rgba(0,0,0,.08),0 0 0 1px #e2cfa5;}',
+      '.k-two .k-tile img{width:calc(54px * var(--z));height:calc(54px * var(--z));border-radius:calc(12px * var(--z));}',
+      '.k-more{font-size:13px;color:#5b4636;margin-top:4px;max-width:8.6in;}',
+      '.k-also{font-size:calc(13px * var(--z));line-height:1.4;color:#4a3427;margin-top:2px;max-width:8.2in;}',
+      '.k-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:12.5px;color:#6B5A4D;margin-top:10px;}.k-meta b{color:#2C1810;font-weight:600;}',
+      '.k-foot{position:absolute;left:1in;right:1in;bottom:.78in;display:flex;align-items:flex-end;justify-content:space-between;}',
+      '.k-sig{width:2.3in;text-align:left;}.k-sig2{margin-right:auto;margin-left:.4in;}',
+      '.k-s{font-style:italic;font-size:26px;color:#2C1810;line-height:1;height:30px;border-bottom:1px solid #2C1810;padding-bottom:2px;display:flex;align-items:flex-end;}',
+      '.k-blank .k-s span{visibility:hidden;}',
+      '.k-sig small{display:block;font-size:12px;color:#5b4636;margin-top:4px;}',
+      '.k-seal{position:absolute;right:3.2in;bottom:.6in;width:1.55in;height:1.55in;filter:drop-shadow(0 2px 3px rgba(80,50,10,.3));}',
+      '.k-qr{display:flex;gap:8px;align-items:center;font-size:11px;color:#5b4636;text-align:left;}.k-qr svg{width:.62in;height:.62in;}.k-qr b{color:#2C1810;}',
+      '.k-pick{display:flex;align-items:center;gap:8px;min-height:44px;font-size:15px;cursor:pointer;}.k-pick input{width:20px;height:20px;accent-color:#D9A847;margin:0;}'
+    ].join('\n');
+    return page({ win: win, title: cp.head, size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.',
+      bar: '<label class="k-pick"><input type="checkbox" id="k-blank"> Leave Lines Blank to Sign by Hand</label>', js: CRED_FIT });
+  }
+  // Certificate of Completion.
   function certificate(o) {
     var win = pre(), cp = certifiedParts(o);
     return needQR().then(function () {
+      if (cp) return credential(o, cp, win);
       var t = T[o.tree] || T.house, house = !T[o.tree] || o.tree === 'house', u = SITE + t.path;
       var mark = house ? '<img class="c-logo-big" src="' + A('/favicon.svg') + '" alt="">' : '<img class="c-mark" src="' + A('/shared/marks/' + o.tree + '.svg') + '" alt="">';
-      var meta = [o.date ? 'Completed ' + nice(o.date) : '', o.renew ? 'Renew by ' + nice(o.renew) : '', o.version ? 'Version ' + o.version : '', o.id ? 'Certificate ' + o.id : ''].filter(Boolean);
+      var meta = [o.date && longDate(o.date) ? 'Completed ' + longDate(o.date) : '', o.renew && longDate(o.renew) ? 'Renew by ' + longDate(o.renew) : '', o.version ? 'Version ' + o.version : '', o.id ? 'Certificate ' + o.id : ''].filter(Boolean);
       // The tree's own leaf in each corner (GWG BLD 758), turned to point along the frame.
       var LEAVES = { maple: 1, aspen: 1, pine: 1, birch: 1, oak: 1, sequoia: 1, willow: 1, grove: 1 };
       var corners = !house && LEAVES[o.tree] ? ['tl', 'tr', 'bl', 'br'].map(function (k) { return '<img class="c-leaf c-' + k + '" src="' + A('/shared/leaves/' + o.tree + '.svg') + '" alt="">'; }).join('') : '';
       var body = '<div class="c-frame" style="--c:' + t.color + '">' + corners + '<div class="c-in">'
         + (house ? '' : '<div class="c-house"><img src="' + A('/favicon.svg') + '" alt=""><span class="cond">GROW WITH GROUNDED</span></div>')
         + '<div style="flex:.5"></div>' + mark
-        + (cp ? '<div class="c-title serif c-cert">' + esc(cp.head) + '</div>'
-          + '<div class="c-name serif" data-fitname>' + esc(o.name) + '</div>'
-          + '<div class="c-line">' + esc(cp.line) + '</div>'
-          + '<ul class="c-list" style="column-count:' + cp.cols + '">' + cp.items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'
-          + (o.body ? '<div class="c-body c-note">' + esc(o.body) + '</div>' : '')
-        : '<div class="c-title serif">Certificate of Completion</div>'
+        + '<div class="c-title serif">Certificate of Completion</div>'
         + '<div class="c-small">This recognizes that</div>'
         + '<div class="c-name serif" data-fitname>' + esc(o.name) + '</div>'
         + '<div class="c-small">has completed</div>'
         + '<div class="c-what serif">' + esc(o.title) + '</div>'
-        + (o.body ? '<div class="c-body">' + esc(o.body) + '</div>' : ''))
+        + (o.body ? '<div class="c-body">' + esc(o.body) + '</div>' : '')
         + (meta.length ? '<div class="c-meta">' + meta.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</div>' : '')
         + '<div class="c-foot"><div class="c-signs"><div><i></i><span>Kayti Joy, Co-Founder</span></div><div><i></i><span>Chris Joy, Co-Founder</span></div></div>'
         + '<div class="c-qr">' + qr(u, t.scan || ('Scan to learn about ' + t.name)) + '<div><b>' + esc(t.scan || ('Scan to learn about ' + t.name)) + '</b><span>' + esc(short(u)) + '</span></div></div></div>'
-        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : 'Grow With Grounded ' + esc(t.name) + '&trade;') + (cp ? '' : '. A record of completed Grow With Grounded training, separate from any license or professional credential.') + '</div>'
+        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : 'Grow With Grounded ' + esc(t.name) + '&trade;') + '. A record of completed Grow With Grounded training, separate from any license or professional credential.' + '</div>'
         + '</div></div>';
       var css = [
         '.c-frame{position:absolute;inset:0.32in;border:3pt double var(--c);}',
@@ -204,15 +283,9 @@
         '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}',
         '.c-leaf{position:absolute;width:0.44in;height:0.44in;z-index:1;}',
         '.c-tl{top:0.02in;left:0.02in;transform:rotate(-90deg);}.c-tr{top:0.02in;right:0.02in;}',
-        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}',
-        '.c-cert{font-size:34pt;}.c-in .c-cert+.c-name{font-size:38pt;margin-top:0.14in;}',
-        '.c-line{font-size:12pt;line-height:1.4;color:#4A3B30;max-width:8.2in;margin-top:0.1in;}',
-        '.c-list{list-style:none;margin:0.1in 0 0;padding:0;font-size:12pt;line-height:1.35;column-gap:0.35in;text-align:left;max-width:9.2in;}',
-        '.c-list li{break-inside:avoid;padding-left:0.18in;position:relative;margin-bottom:2pt;}',
-        '.c-list li:before{content:"";position:absolute;left:0.02in;top:0.5em;width:0.07in;height:0.07in;border-radius:50%;background:var(--c);}',
-        '.c-note{font-size:10.5pt;}'
+        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}'
       ].join('\n');
-      return page({ win: win, title: cp ? cp.head : 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.', js: cp ? CERT_FIT : '' });
+      return page({ win: win, title: 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.' });
     });
   }
 
