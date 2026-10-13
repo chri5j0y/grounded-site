@@ -522,7 +522,14 @@ function gmCard(p){
   return `<div class="wd-helper"><div class="spread"><div style="min-width:0;flex:1 1 240px"><b>The Grounded Marriage</b><p class="wd-sub" style="margin:2px 0 0">${x ? 'Linked: ' + esc([x.p1 && x.p1.name, x.p2 && x.p2.name].filter(Boolean).join(' and ')) + '.' : '12 hours of premarital sessions for the two of you, and the reduced license fee with the Educator\'s Statement.'}</p></div>
     ${x ? `<button type="button" class="btn btn-line btn-sm" data-wda="gm-open">Open The Grounded Marriage</button>` : `<button type="button" class="btn btn-line btn-sm" data-wda="gm-new">Start The Grounded Marriage</button>`}</div></div>`;
 }
-V[1] = p => sayBox(p, STEP(1).say) + (arr(p.mt).length ? sinceCard(p) : '') +
+// GWG BLD 797: Start Their File at the start of the session (the Intake Session in clients.js, linked to this plan).
+function stfBlk(p){
+  if (!window.GGCli || !GGCli.stfCard) return '';
+  const a = pc(p, 'p1'), b = pc(p, 'p2');
+  return GGCli.stfCard({kind: 'wd', ref: p.id, cli: p.cli, title: 'Wedding Planning Session', who: pTitle(p), ct: {name: clean(a.full) || firstOf(a), phone: a.ph || '', email: a.em || '', partner: clean(b.full) || firstOf(b)},
+    svc: p.type === 'renewal' ? 'vows' : p.type === 'elopement' ? 'elopement' : 'wedding', date: p.day.date || '', place: p.day.place || ''});
+}
+V[1] = p => sayBox(p, STEP(1).say) + stfBlk(p) + (arr(p.mt).length ? sinceCard(p) : '') +
   blk(p, list('who').title || 'Who Is Here', 'who', chips(p, 'who') + addOwn('who', 'A parent, a friend, the planner...'), list('who').sub) +
   blk(p, 'The Couple', 'couple', coupleFlds(p, 'p1', 'Partner 1') + coupleFlds(p, 'p2', 'Partner 2'), 'For the ceremony, the copies, the vows questions, and the follow-ups.') +
   (arr(p.mt).length ? '' : `<div class="row" style="margin:0 0 14px"><button type="button" class="btn btn-gold btn-sm" data-wda="meet-start"${fk('ms')}>Start Today's Meeting</button></div>`) +

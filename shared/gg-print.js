@@ -3,7 +3,11 @@
    Certificates, guide posters, and flyers, made on this device (Learn build, October 2026).
    Each one opens as a print-ready page with a Print or Save as PDF button. Nothing is sent anywhere.
    - GGPrint.certificate(o)     Certificate of Completion, landscape Letter.
-                                o: {tree, name, title, body, date, renew, version, id, kind}
+                                o: {tree, name, title, body, date, renew, version, id, kind, certified}
+                                certified (GWG BLD 797): {level: 'guide' | 'staff' | 'founder', items: [names]} prints the
+                                Certified Grounded Guide (Staff, Founder) wording in place of Certificate of Completion:
+                                "[Name] has completed Grounded Guide training and is certified by Grow With Grounded to use
+                                the following Grounded tools:" and the list of items (the tools and training they finished).
                                 tree is maple, aspen, pine, birch, oak, sequoia, willow, grove, or house (Grow With Grounded).
                                 A tree's certificate carries its own leaf in each corner (shared/leaves/<tree>.svg).
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
@@ -17,7 +21,8 @@
    - GGPrint.reflectionCard(o)  a Reflection Card for Grounded Stories Supporters (GWG BLD 787), see below.
    Every print carries a small QR code with only a page address on it, never a person's name, except the Take-Home
    Sheet's Bring It Home code, which carries the family's own visit card (only what the sheet already shows).
-   Wording rule: Certificate of Completion, never "certified." Grow With Grounded is not an accrediting body.
+   Wording rule (Chris, October 13, 2026, Certified by Grow With Grounded): a Grounded training certificate may say
+   "certified", tied to Grounded tools, with no disclaimer line. Other prints keep Certificate of Completion.
    ===================================================================== */
 (function () {
   'use strict';
@@ -139,8 +144,23 @@
   var TABLOID = { label: '11 by 17', page: '11in 17in', w: 11, h: 17, cls: 'k2' };
 
   /* ---------------- certificate ---------------- */
+  // The Certified Grounded wording (GWG BLD 797): the level's title, the line, and the tools and training, in columns.
+  var CERT_LV = { guide: 'Guide', staff: 'Staff', founder: 'Founder' };
+  function certifiedParts(o) {
+    var c = o.certified; if (!c) return null;
+    var lv = CERT_LV[c.level] || 'Guide', seen = {}, items = (c.items || []).map(function (x) { return String(x || '').trim(); }).filter(function (x) { var k = x.toLowerCase(); if (!x || seen[k]) return false; seen[k] = 1; return true; });
+    var cols = items.length > 14 ? 3 : items.length > 5 ? 2 : 1;
+    return { head: 'Certified Grounded ' + lv, line: 'has completed Grounded ' + lv + ' training and is certified by Grow With Grounded to use the following Grounded tools:', items: items, cols: cols };
+  }
+  // Shrinks the list (then the name and title) until the whole certificate fits on its one page.
+  var CERT_FIT = '(function(){var cin=document.querySelector(".c-in"),ls=document.querySelector(".c-list");if(!cin||!ls)return;'
+    + 'function over(){return cin.scrollHeight>cin.clientHeight+1;}'
+    + 'function fit(){var f=12;ls.style.fontSize=f+"pt";while(over()&&f>7){f-=0.5;ls.style.fontSize=f+"pt";}'
+    + 'var nb=document.querySelector(".c-body");if(over()&&nb)nb.style.display="none";'
+    + 'var t=document.querySelector(".c-title"),n=document.querySelector(".c-name"),k=1;while(over()&&k>0.6){k-=0.05;t.style.fontSize=(34*k)+"pt";n.style.fontSize=(38*k)+"pt";}}'
+    + 'fit();if(document.fonts&&document.fonts.ready)document.fonts.ready.then(fit);})();';
   function certificate(o) {
-    var win = pre();
+    var win = pre(), cp = certifiedParts(o);
     return needQR().then(function () {
       var t = T[o.tree] || T.house, house = !T[o.tree] || o.tree === 'house', u = SITE + t.path;
       var mark = house ? '<img class="c-logo-big" src="' + A('/favicon.svg') + '" alt="">' : '<img class="c-mark" src="' + A('/shared/marks/' + o.tree + '.svg') + '" alt="">';
@@ -151,16 +171,21 @@
       var body = '<div class="c-frame" style="--c:' + t.color + '">' + corners + '<div class="c-in">'
         + (house ? '' : '<div class="c-house"><img src="' + A('/favicon.svg') + '" alt=""><span class="cond">GROW WITH GROUNDED</span></div>')
         + '<div style="flex:.5"></div>' + mark
-        + '<div class="c-title serif">Certificate of Completion</div>'
+        + (cp ? '<div class="c-title serif c-cert">' + esc(cp.head) + '</div>'
+          + '<div class="c-name serif" data-fitname>' + esc(o.name) + '</div>'
+          + '<div class="c-line">' + esc(cp.line) + '</div>'
+          + '<ul class="c-list" style="column-count:' + cp.cols + '">' + cp.items.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>'
+          + (o.body ? '<div class="c-body c-note">' + esc(o.body) + '</div>' : '')
+        : '<div class="c-title serif">Certificate of Completion</div>'
         + '<div class="c-small">This recognizes that</div>'
         + '<div class="c-name serif" data-fitname>' + esc(o.name) + '</div>'
         + '<div class="c-small">has completed</div>'
         + '<div class="c-what serif">' + esc(o.title) + '</div>'
-        + (o.body ? '<div class="c-body">' + esc(o.body) + '</div>' : '')
+        + (o.body ? '<div class="c-body">' + esc(o.body) + '</div>' : ''))
         + (meta.length ? '<div class="c-meta">' + meta.map(function (m) { return '<span>' + esc(m) + '</span>'; }).join('') + '</div>' : '')
         + '<div class="c-foot"><div class="c-signs"><div><i></i><span>Kayti Joy, Co-Founder</span></div><div><i></i><span>Chris Joy, Co-Founder</span></div></div>'
         + '<div class="c-qr">' + qr(u, t.scan || ('Scan to learn about ' + t.name)) + '<div><b>' + esc(t.scan || ('Scan to learn about ' + t.name)) + '</b><span>' + esc(short(u)) + '</span></div></div></div>'
-        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : 'Grow With Grounded ' + esc(t.name) + '&trade;') + '. A record of completed Grow With Grounded training, separate from any license or professional credential.</div>'
+        + '<div class="c-tm">' + (house ? 'Grow With Grounded&trade;' : 'Grow With Grounded ' + esc(t.name) + '&trade;') + (cp ? '' : '. A record of completed Grow With Grounded training, separate from any license or professional credential.') + '</div>'
         + '</div></div>';
       var css = [
         '.c-frame{position:absolute;inset:0.32in;border:3pt double var(--c);}',
@@ -179,9 +204,15 @@
         '.c-tm{font-size:7.5pt;color:#7A6A5D;margin-top:0.1in;}',
         '.c-leaf{position:absolute;width:0.44in;height:0.44in;z-index:1;}',
         '.c-tl{top:0.02in;left:0.02in;transform:rotate(-90deg);}.c-tr{top:0.02in;right:0.02in;}',
-        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}'
+        '.c-bl{bottom:0.02in;left:0.02in;transform:rotate(180deg);}.c-br{bottom:0.02in;right:0.02in;transform:rotate(90deg);}',
+        '.c-cert{font-size:34pt;}.c-in .c-cert+.c-name{font-size:38pt;}',
+        '.c-line{font-size:12pt;line-height:1.4;color:#4A3B30;max-width:8.2in;margin-top:0.1in;}',
+        '.c-list{list-style:none;margin:0.1in 0 0;padding:0;font-size:12pt;line-height:1.35;column-gap:0.35in;text-align:left;max-width:9.2in;}',
+        '.c-list li{break-inside:avoid;padding-left:0.18in;position:relative;margin-bottom:2pt;}',
+        '.c-list li:before{content:"";position:absolute;left:0.02in;top:0.5em;width:0.07in;height:0.07in;border-radius:50%;background:var(--c);}',
+        '.c-note{font-size:10.5pt;}'
       ].join('\n');
-      return page({ win: win, title: 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.' });
+      return page({ win: win, title: cp ? cp.head : 'Certificate of Completion', size: { label: 'Letter', page: '11in 8.5in', w: 11, h: 8.5 }, body: body, css: css, tip: 'Print in landscape on card stock to frame it.', js: cp ? CERT_FIT : '' });
     });
   }
 

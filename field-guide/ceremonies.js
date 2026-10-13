@@ -652,6 +652,15 @@ function picker(s, e){
     <div class="cer-pick-list" id="cer-pick-list">${pickList(s, e)}</div></div>`;
 }
 
+// GWG BLD 797: Start Their File at the start of a service built here (the Intake Session in clients.js, linked to this service).
+// Services made from the Farewell or Wedding Planning Session carry the plan's own file.
+function stfBlk(s){
+  if (!window.GGCli || !GGCli.stfCard || S.draft === s || s.fwp || s.wdp) return '';
+  const fam = famOf(s.type), id = String(s.type || '');
+  const svc = fam === 'wedding' ? (/elope/.test(id) ? 'elopement' : /renew|vow/.test(id) ? 'vows' : 'wedding') : fam === 'blessing' ? 'blessing' : /celebr/.test(id) ? 'celebration' : /grave|committ/.test(id) ? 'graveside' : 'funeral';
+  return GGCli.stfCard({kind: 'cer', ref: s.id, cli: s.cli, title: 'Service Builder', who: title(s), svc,
+    ct: fam === 'wedding' ? {name: (s.p1 || {}).name || '', partner: (s.p2 || {}).name || ''} : {}, forWhom: fam === 'wedding' ? '' : (s.who || {}).name || '', date: s.date || '', place: s.place || ''});
+}
 function vCheck(s){
   const fam = famOf(s.type), groups = groupsFor(fam), gids = groups.map(g => g.id);
   const byG = {}; s.parts.forEach(e => { const g = gids.includes(partOf(e).group) ? partOf(e).group : '_more'; (byG[g] = byG[g] || []).push(e); });
@@ -665,7 +674,7 @@ function vCheck(s){
         ${doOf(e, s).map(d => `<p class="cer-do"><b>For You</b>${esc(d)}</p>`).join('')}
         ${p.readings ? readingBlock(s, e) : pieceKindOf(e) ? pieceBlock(s, e) : (e.rd || []).length ? readingBlock(s, e) : ''}
         <label class="f" for="cer-n-${e.k}">The family's words</label><textarea id="cer-n-${e.k}" data-cern="${e.k}" placeholder="Type their exact words here.">${esc(e.note || '')}</textarea></div>` : ''}</div>`; };
-  return `${headOf(s, 'The Checklist')}${timeBar(s)}
+  return `${headOf(s, 'The Checklist')}${stfBlk(s)}${timeBar(s)}
   ${G.filter(g => byG[g.id]).map(g => `<div class="card cer-grp"><h2>${esc(g.name)}</h2>${byG[g.id].map(row).join('')}</div>`).join('')}
   <div class="card"><h3>Add Your Own Part</h3><div class="cer-g2"><div><label class="f" for="cer-cn">Name of the Part</label><input type="text" id="cer-cn" placeholder="Lighting of a Candle" autocomplete="off"></div>
     <div><label class="f" for="cer-cg">Where It Goes</label><select id="cer-cg">${groups.map(g => `<option value="${esc(g.id)}">${esc(g.name)}</option>`).join('')}</select></div></div>
@@ -1255,6 +1264,8 @@ const API = window.GGCer = {
     setTimeout(headTop, 0);
     return `<div id="cer-root">${inner()}</div>`;
   },
+  // GWG BLD 797: open a saved service at its checklist (Start Their File's way back).
+  openSvc(id){ if (!list().some(x => x.id === id)) return false; S.id = id; S.draft = null; S.pick = null; S.view = 'check'; if (window.GGFw && GGFw.state) GGFw.state.on = false; if (window.GGWed && GGWed.state) GGWed.state.on = false; return true; },
   guideButton(g, lib){ if (lib) CTX.lib = lib; const t = guideType(g); return t ? `<button type="button" class="btn btn-line" data-tab="ceremonies" data-cer="from-guide" data-v="${esc(t)}">Open the Service Builder</button>` : ''; },
   // Backups: services combine like saved decks; the newest copy of each wins and deleted ones stay deleted.
   merge(out, inc){

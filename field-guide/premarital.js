@@ -296,6 +296,12 @@ function sessCard(c, s, extra){
   return `<div class="card pm-sc"><div class="spread"><div style="min-width:0"><div class="eyebrow">${sLabel(s)}</div><h3>${esc(s.title)}</h3>${extra || ''}<small class="muted">${d} of ${n} parts checked${lg ? ', ' + esc(hrs(lg)) + ' logged' : ''}${st.notes ? ', notes kept' : ''}</small></div>
       <button type="button" class="btn btn-gold btn-sm" data-pm="session" data-v="${skey(s)}">Open ${sLabel(s)}</button></div></div>`;
 }
+// GWG BLD 797: Start Their File at the start of premarital sessions (the Intake Session in clients.js, linked to this couple).
+function stfBlk(c){
+  if (!window.GGCli || !GGCli.stfCard) return '';
+  const a = c.p1 || {}, b = c.p2 || {};
+  return GGCli.stfCard({kind: 'pm', ref: c.id, cli: c.cli, title: 'Premarital Sessions', who: names(c), ct: {name: String(a.full || a.name || '').trim(), partner: String(b.full || b.name || '').trim()}, svc: 'tgm'});
+}
 function vSessions(c){
   let body;
   if (isUpg(c)){
@@ -309,7 +315,7 @@ function vSessions(c){
       <details class="card pm-det"><summary><h3>Essentials Sessions</h3></summary>
         ${E.sessions.map(s => { const lg = minsFor(c, s); return `<div class="pm-row"><div class="m"><b>${esc(sLabel(s))}: ${esc(s.title)}</b><br><small class="muted">${lg ? esc(hrs(lg)) + ' logged' : 'Not logged'}</small></div><button type="button" class="btn btn-line btn-sm" data-pm="session" data-v="${skey(s)}">Open</button></div>`; }).join('')}</details>`;
   } else body = pmc(c).sessions.map(s => sessCard(c, s)).join('') + upgradeBlock(c);
-  return `${head(c, 'Sessions')}${vBefore(c)}
+  return `${head(c, 'Sessions')}${stfBlk(c)}${vBefore(c)}
   ${body}
   ${tipsBlock(false)}${referBlock()}`;
 }
