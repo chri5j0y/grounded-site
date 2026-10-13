@@ -535,6 +535,7 @@ function render() {
   if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: GV_DONE, moment: !!key && key !== LAST_SCENE });
   LAST_SCENE = key;
   if (S.tab === 'library' && S.lib.q) libFind();
+  lcReadBar();
 }
 window.render = render;
 
@@ -1091,9 +1092,22 @@ function lcPrint(id) {
   GGApp.sheet({ title: t.title, file: 'grove-' + t0.id + '.pdf', print: now,
     blocks: () => ggPdfFromHTML(`<h1>${esc(t.title)}</h1>` + inner + help, { eyebrow: 'The Grove by Grow With Grounded', foot: 'The Grove(TM) by Grow With Grounded. growwithgrounded.com/grove' }) });
 }
+// Read Aloud for a guide, in the Grounded voice (Jenny, BLD 796), with pause, stop, voice, and speed (read.js), like the
+// other trees. It takes the place of the guide's own Read Aloud button, which stays as the way in until read.js loads.
+let LC_READ = '';
+function lcReadBar() {
+  const R = window.GGRead, a = $('#gv-lc-article'), key = a ? S.lc.open + '|' + S.lc.persp : '';
+  if (R && LC_READ && key !== LC_READ && R.state !== 'idle') R.stop();
+  LC_READ = key;
+  if (!a || !R || !R.control || a.querySelector('.gg-rbar')) return;
+  const h = a.querySelector('h2'); if (!h) return;
+  h.parentNode.insertBefore(R.control({ root: a, label: 'Read this guide aloud', recorded: 'grove' }), h.nextSibling);
+  const old = a.querySelector('[data-act="lc-read"]'); if (old) old.hidden = true;
+}
+window.addEventListener('ggread-ready', lcReadBar);
 function lcReadAloud() {
   const a = $('#gv-lc-article'); if (!a) return;
-  if (window.GGRead && GGRead.read) { GGRead.read(a); return; }
+  if (window.GGRead && GGRead.read) { GGRead.read(a, { recorded: 'grove' }); return; }   // the Grounded voice, Jenny (BLD 796)
   if (!window.speechSynthesis) { toast('Read Aloud is not available in this browser.'); return; }
   speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(a.textContent.replace(/\s+/g, ' ')); u.rate = .92; speechSynthesis.speak(u);
 }

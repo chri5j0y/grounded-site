@@ -3424,20 +3424,20 @@ setTimeout(lcFromHash, 0);
     var gs = window.goToStep; if (gs) window.goToStep = function () { var r = gs.apply(this, arguments); if (R.isOn(KEY)) setTimeout(readStep, 450); else R.stop(); return r; };
     var tg = window.toggleGuide; if (tg) window.toggleGuide = function (btn) {
       var r = tg.apply(this, arguments); var g = btn.nextElementSibling;
-      if (g && g.classList.contains('open') && !g.querySelector('.gg-rbar')) g.insertBefore(R.control({ root: g, label: 'Read this guide aloud' }), g.firstChild);
+      if (g && g.classList.contains('open') && !g.querySelector('.gg-rbar')) g.insertBefore(R.control({ root: g, label: 'Read this guide aloud', recorded: 'oak' }), g.firstChild);
       if (g && !g.classList.contains('open')) R.stop();
       return r;
     };
     var rl = window.renderLC; if (rl) window.renderLC = function (mode) {
       var r = rl.apply(this, arguments); var art = document.getElementById(mode + '-lc-article');
-      if (art && !art.querySelector('.gg-rbar')) { var h = art.querySelector('h2'); h.parentNode.insertBefore(R.control({ root: art, label: 'Read this guide aloud' }), h.nextSibling); }
+      if (art && !art.querySelector('.gg-rbar')) { var h = art.querySelector('h2'); h.parentNode.insertBefore(R.control({ root: art, label: 'Read this guide aloud', recorded: 'oak' }), h.nextSibling); }
       return r;
     };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
     /* Practices: each "View Practices" list gets its own Read aloud button when it opens. */
     var tr = window.toggleRestore; if (tr) window.toggleRestore = function (id) {
       var r = tr.apply(this, arguments), box = document.getElementById(id + '-restore');
-      if (box && box.classList.contains('open') && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: box, label: 'Read these practices aloud' }), box.firstChild);
+      if (box && box.classList.contains('open') && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: box, label: 'Read these practices aloud', recorded: 'oak' }), box.firstChild);
       if (box && !box.classList.contains('open')) R.stop();
       return r;
     };
@@ -3445,7 +3445,7 @@ setTimeout(lcFromHash, 0);
 })();
 </script>
 <script src="/shared/gg-learn.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b793';document.head.appendChild(s)"></script>
-<script src="/read.js?v=b784" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b784';document.head.appendChild(s)"></script>
+<script src="/read.js?v=b796" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b796';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b793';document.head.appendChild(s)"></script>
 <!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b793" defer></script><!-- /PAGE VIDEO -->
 </body>

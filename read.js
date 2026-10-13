@@ -2,9 +2,16 @@
    Picks the most natural voice on each device (quality first, with a gentle preference for a
    male or female voice), lets people choose a voice and a speed, shows how to get a better voice,
    and plays a recorded audio file when one exists.
+   Recorded Read Aloud (BLD 796): Read Aloud on a When Life Changes guide or a practice plays the Grounded voice,
+   recorded Azure neural clips (Jenny for Maple, Aspen, Pine, and The Grove; Brian for Birch, Oak, Sequoia, and Willow,
+   the BLD 778 video map), one clip per spoken chunk, named exactly like GGLearn.clipName (cyrb53 of voice and text)
+   at https://audio.growwithgrounded.com/v1/<voice>/<name>.mp3. A chunk whose clip is missing, fails, or is slow is
+   skipped quietly, and reading goes on (as in gg-listen.js). Its bar shows play, pause, stop, and speed only. A page asks for it with control({recorded: tree}) or read(root, {recorded: tree});
+   only the guide's and practice's own words ask for a clip; what a person types stays on the device.
    Privacy: voices that run on the device come first. A voice that needs the internet sends the words
    it reads to that company, so it is never picked automatically; it shows as "uses internet" in the
-   menu, and only a person can choose it. Nothing else leaves the device. */
+   menu, and only a person can choose it. The Grounded voice plays audio files from Grow With Grounded's own
+   audio address, named from the guide's own words. Everything else stays on the device. */
 (function () {
   var synth = window.speechSynthesis;
   var NOVELTY = /albert|bad news|bahh|bells|boing|bubbles|cellos|deranged|good news|hysterical|jester|organ|superstar|trinoids|whisper|wobble|zarvox|junior|grandma|grandpa|kathy|shelley|sandy|flo\b|rocko|eddy|reed|ralph|fred/i;
@@ -15,6 +22,21 @@
   var SPEEDS = [['0.8', 'Slower'], ['1', 'Normal'], ['1.2', 'Faster']], SPEED_KEY = 'gg_voice_speed';
   function speed() { var v = 1; try { v = parseFloat(localStorage.getItem(SPEED_KEY)) || 1; } catch (e) {} return Math.min(1.5, Math.max(0.6, v)); }
   var chosen = null, list = [];
+  /* ---------------- the Grounded voice (BLD 796) ---------------- */
+  var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
+  var TREE_VOICE = { maple: 'jenny', aspen: 'jenny', pine: 'jenny', grove: 'jenny', birch: 'brian', oak: 'brian', sequoia: 'brian', willow: 'brian' };
+  function pageTree() { var m = /^\/(maple|aspen|pine|birch|oak|sequoia|willow|grove)(\/|$)/.exec(location.pathname || ''); return m ? m[1] : ''; }
+  // The recorded voice for a tree name (or true for this page's tree); '' when there is none.
+  function treeVoice(t) { return TREE_VOICE[t === true || !t ? pageTree() : t] || ''; }
+  // cyrb53 (a public domain 53-bit string hash, by bryc), the same as GGLearn.clipName in shared/gg-learn.js, byte for byte.
+  function clipName(voice, text) {
+    var h1 = 0xdeadbeef, h2 = 0x41c6ce57, s = voice + '\n' + String(text).replace(/\s+/g, ' ').trim();
+    for (var i = 0, c; i < s.length; i++) { c = s.charCodeAt(i); h1 = Math.imul(h1 ^ c, 2654435761); h2 = Math.imul(h2 ^ c, 1597334677); }
+    h1 = Math.imul(h1 ^ (h1 >>> 16), 2246822507); h1 ^= Math.imul(h2 ^ (h2 >>> 13), 3266489909);
+    h2 = Math.imul(h2 ^ (h2 >>> 16), 2246822507); h2 ^= Math.imul(h1 ^ (h1 >>> 13), 3266489909);
+    return voice + '/' + (4294967296 * (2097151 & h2) + (h1 >>> 0)).toString(36);
+  }
+  function clipUrl(voice, text) { return REC.base + REC.round + '/' + clipName(voice, text) + '.mp3'; }
   /* iPhone and iPad report a Premium voice as plain "Ava"; the quality is only in its voiceURI
      (com.apple.voice.premium.en-US.Ava). So both are checked. */
   function tag(v) { return (v.name || '') + ' ' + (v.voiceURI || ''); }
@@ -59,6 +81,7 @@
   // "Ava (Premium)". A Mac already puts the quality in the name, so it isn't doubled.
   function label(v) { var n = nice(v.name), q = tier(v); if (q && q !== 'Natural' && n.toLowerCase().indexOf(q.toLowerCase()) < 0) n += ' (' + q + ')'; return n + (online(v) ? ' (uses internet)' : ''); }
   // Every English voice on the device, best first (novelty voices left out).
+  // Every English voice on the device, best first (novelty voices left out).
   function fillMenu(sel) {
     var cur = chosen ? chosen.name : '';
     sel.innerHTML = list.map(function (v) { return '<option value="' + v.name.replace(/"/g, '&quot;') + '"' + (v.name === cur ? ' selected' : '') + '>' + label(v) + '</option>'; }).join('') || '<option>Device voice</option>';
@@ -67,7 +90,7 @@
 
   var css = '.gg-rbar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;margin:14px 0 18px;font-family:inherit;}.gg-rbar[hidden]{display:none !important;}' +
     '.gg-rbtn{display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(139,94,26,.5);background:transparent;color:inherit;border-radius:999px;padding:8px 16px;font:inherit;font-size:15px;font-weight:600;cursor:pointer;line-height:1.2;}' +
-    '.gg-rbtn:hover{background:rgba(201,138,62,.14);}' +
+    '.gg-rbtn[hidden],.gg-vm[hidden]{display:none !important;}.gg-rbtn:hover{background:rgba(201,138,62,.14);}' +
     '.gg-rbtn[aria-pressed="true"]{background:rgba(201,138,62,.2);border-color:rgba(201,138,62,.85);}' +
     '.gg-rbtn svg{width:18px;height:18px;flex:none;}' +
     '.gg-rstop{padding:8px 12px;}' +
@@ -89,19 +112,34 @@
   };
   var SEL = 'h1,h2,h3,h4,p,li,blockquote,figcaption,dt,dd,.card-sub,.step-domain,.domain-prompt,.restore-item';
   var SKIP = 'nav,footer,form,button,select,textarea,.no-print,[aria-hidden="true"],.gg-rbar,.gn-panel,script,style,.sr-only,.slider-hint,.restore-content';
+  /* A long block reads one sentence at a time. A sentence ends at . ! or ? (and any closing quote) followed by a space
+     and a capital, a number, or an opening quote, so web addresses (988lifeline.org) and times (4:30 a.m.) stay whole.
+     Recorded clips are named from these exact chunks (BLD 796), so a change here asks for new clips. */
+  function sentences(t) {
+    var out = [], re = /[.!?]+["\u201d\u2019)]*\s+(?=["\u201c\u2018(]?[A-Z0-9])/g, last = 0, m;
+    while ((m = re.exec(t))) { out.push(t.slice(last, m.index + m[0].length).trim()); last = m.index + m[0].length; }
+    out.push(t.slice(last).trim());
+    return out.filter(function (x) { return !!x; });
+  }
   function blocksOf(root) {
     var out = [];
     root.querySelectorAll(SEL).forEach(function (el) {
       var sk = el.closest(SKIP);
       if (!el.offsetParent || (sk && sk !== root && root.contains(sk)) || el.querySelector(SEL)) return;
-      var t = (el.innerText || '').replace(/\s+/g, ' ').trim();
+      var t = el.innerText || '';
+      // A label styled in capitals is read in its own words, the way it is written.
+      try { if (getComputedStyle(el).textTransform === 'uppercase') t = el.textContent || t; } catch (e) {}
+      t = t.replace(/\s+/g, ' ').trim();
       if (t.length < 2) return;
-      if (t.length > 260) (t.match(/[^.!?]+[.!?]+["”’)]*\s*|[^.!?]+$/g) || [t]).forEach(function (x) { x = x.trim(); if (x) out.push({ el: el, t: x }); });
+      if (t.length > 260) sentences(t).forEach(function (x) { out.push({ el: el, t: x }); });
       else out.push({ el: el, t: t });
     });
     return out;
   }
   var q = [], i = 0, state = 'idle', cur = null, listeners = [], audio = null;
+  /* runVoice: the recorded voice for this reading ('' reads with the device voice). tok: every chunk start, stop, or
+     change takes a new number, so a late callback from an earlier chunk does nothing. cc: the clip now playing. */
+  var runVoice = '', tok = 0, cc = null, clip = null, miss = {}, story = false;
   function emit() { listeners.forEach(function (f) { try { f(state); } catch (e) {} }); }
   function mark(el) {
     if (cur) cur.classList.remove('gg-reading');
@@ -110,22 +148,82 @@
     var r = el.getBoundingClientRect();
     if (r.top < 90 || r.bottom > innerHeight - 60) el.scrollIntoView({ behavior: 'smooth', block: 'center' });
   }
-  function next() {
-    if (state !== 'playing') return;
-    if (i >= q.length) { stop(); return; }
-    var item = q[i]; mark(item.el);
+  function advance(t) { if (t !== tok || state !== 'playing') return; i++; next(); }
+  function speakItem(item, t) {
+    if (!synth) { advance(t); return; }
     var u = new SpeechSynthesisUtterance(item.t);
     if (!chosen) refresh();
     try { if (chosen) { u.voice = chosen; u.lang = chosen.lang; } } catch (e) { chosen = null; }
     u.rate = P.rate * speed(); u.pitch = P.pitch;
-    u.onend = function () { if (state === 'playing') { i++; next(); } };
-    u.onerror = function () { if (state === 'playing') { i++; next(); } };
-    synth.speak(u);
+    u.onend = function () { advance(t); };
+    u.onerror = function () { advance(t); };
+    held = u; synth.speak(u);
   }
-  function read(root) { if (!synth) return; stop(); q = blocksOf(root); i = 0; if (!q.length) return; state = 'playing'; emit(); next(); }
-  function pause() { if (state !== 'playing') return; state = 'paused'; if (audio) audio.pause(); else synth.cancel(); emit(); }
-  function resume() { if (state !== 'paused') return; state = 'playing'; emit(); if (audio) audio.play(); else next(); }
-  function stop() { state = 'idle'; if (synth) synth.cancel(); if (audio) { audio.pause(); audio.currentTime = 0; } mark(null); emit(); }
+  // One reused audio element (Safari lets an element that played on a tap go on playing new clips).
+  function clipEl() { if (!clip) { clip = new Audio(); clip.preload = 'auto'; } return clip; }
+  function dropClip() { if (!cc) return; clearTimeout(cc.timer); var a = clipEl(); a.onended = a.onerror = a.onplaying = null; cc = null; }
+  function playClip(item, t) {
+    var a = clipEl(), url = clipUrl(runVoice, item.t), c = { url: url, item: item, t: t, started: false, timer: 0 };
+    function fail() {
+      if (cc !== c || t !== tok || state !== 'playing') return;
+      miss[url] = 1; dropClip(); try { a.pause(); } catch (e) {}
+      advance(t);   // skipped quietly, and reading goes on (as in gg-listen.js)
+    }
+    c.fail = fail;
+    c.arm = function () { clearTimeout(c.timer); c.timer = setTimeout(function () { if (!c.started && state === 'playing') fail(); }, 8000); };
+    cc = c;
+    a.onplaying = function () { if (cc === c) { c.started = true; clearTimeout(c.timer); } };
+    a.onended = function () { if (cc !== c) return; dropClip(); advance(t); };
+    a.onerror = fail;
+    a.src = url;
+    try { a.defaultPlaybackRate = speed(); a.playbackRate = speed(); } catch (e) {}
+    c.arm();
+    try { var p = a.play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') fail(); }); } catch (e) { fail(); }
+  }
+  // Stop what is sounding now (a voice or speed change, then next() starts the chunk again).
+  function halt() { tok++; if (synth) synth.cancel(); if (cc) { dropClip(); try { clipEl().pause(); } catch (e) {} } }
+  function next() {
+    if (state !== 'playing') return;
+    dropClip();
+    if (i >= q.length) { stop(); return; }
+    var item = q[i], t = ++tok; mark(item.el);
+    if (!runVoice) speakItem(item, t);
+    else if (miss[clipUrl(runVoice, item.t)]) setTimeout(function () { advance(t); }, 0);   // a clip still on its way
+    else playClip(item, t);
+  }
+  /* read(root, {recorded: tree name or true}): with a tree that has a Grounded voice, each chunk plays its recorded
+     clip, and a missing one is skipped; every other caller reads with the device voice, as before. */
+  function read(root, o) {
+    var tr = o && o.recorded ? (o.recorded === true ? pageTree() : o.recorded) : '', rv = treeVoice(tr || '-');
+    stop();
+    runVoice = rv;
+    if (!synth && !runVoice) return;
+    q = blocksOf(root); i = 0; if (!q.length) return;
+    if (runVoice) clipEl();
+    state = 'playing'; emit(); next();
+  }
+  function pause() {
+    if (state !== 'playing') return; state = 'paused';
+    if (cc) { clearTimeout(cc.timer); try { clipEl().pause(); } catch (e) {} }
+    else if (story && audio) audio.pause();
+    else if (synth) synth.cancel();
+    emit();
+  }
+  function resume() {
+    if (state !== 'paused') return; state = 'playing'; emit();
+    if (cc) { var c = cc; if (!c.started) c.arm(); try { var p = clipEl().play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') c.fail(); }); } catch (e) { c.fail(); } }
+    else if (story && audio) audio.play();
+    else next();
+  }
+  function stop() {
+    state = 'idle'; tok++;
+    if (synth) synth.cancel();
+    if (cc) { dropClip(); try { clipEl().pause(); } catch (e) {} }
+    if (audio) { audio.pause(); audio.currentTime = 0; }
+    story = false; mark(null); emit();
+  }
+  // The chunks Read Aloud speaks for a region, in order (the inventory and tests read this; the reader uses the same).
+  function chunks(root) { return blocksOf(root).map(function (x) { return x.t; }); }
   /* ---------------- Voice Setup ----------------
      Steps to get a better voice on each device and browser. Menus change, so each set also says what to
      search for. Checked October 2026. The Voice Check, the voice menu's help, and the Voice Setup page
@@ -259,6 +357,16 @@
   }
   // Run the Voice Check first if this device hasn't had one, then go on.
   function ensure(go) { if (!synth || checked()) { if (go) go(); return; } check(go); }
+  /* Speed only, for a bar that reads in the Grounded voice (BLD 796; device voice menus retired, Chris, October 10, 2026). */
+  function speedMenu() {
+    var g = document.createElement('span'); g.className = 'gg-vm gg-vset';
+    g.innerHTML = '<label class="gg-vm"><span>Speed</span><select class="gg-vspeed" aria-label="Reading speed">' + SPEEDS.map(function (x) { return '<option value="' + x[0] + '"' + (Math.abs(parseFloat(x[0]) - speed()) < .01 ? ' selected' : '') + '>' + x[1] + '</option>'; }).join('') + '</select></label>';
+    var sp = g.querySelector('.gg-vspeed');
+    sp.addEventListener('change', function () { try { localStorage.setItem(SPEED_KEY, sp.value); } catch (e) {} document.querySelectorAll('.gg-vspeed').forEach(function (o) { o.value = sp.value; }); speedNow(); });
+    return g;
+  }
+  // A recorded clip changes speed where it is; the device voice starts the chunk again at the new speed.
+  function speedNow() { if (cc) { try { clipEl().defaultPlaybackRate = speed(); clipEl().playbackRate = speed(); } catch (e) {} } else if (state === 'playing') { halt(); next(); } }
   function voiceMenu() {
     var g = document.createElement('span'); g.className = 'gg-vm gg-vset'; g.style.flexWrap = 'wrap';
     g.innerHTML = '<label class="gg-vm"><span>Voice</span><select class="gg-vsel" aria-label="Choose a reading voice"></select></label>' +
@@ -266,8 +374,8 @@
       '<button type="button" class="gg-vhelp-btn" aria-expanded="false">Get a Better Voice</button><button type="button" class="gg-vhelp-btn gg-vcheck-btn">Voice Check</button>';
     var sel = g.querySelector('.gg-vsel'), sp = g.querySelector('.gg-vspeed'), hb = g.querySelector('.gg-vhelp-btn');
     fillMenu(sel);
-    sel.addEventListener('change', function () { var v = list.find(function (x) { return x.name === sel.value; }); if (v) { chosen = v; try { localStorage.setItem(P.key, v.name); } catch (e) {} document.querySelectorAll('.gg-vsel').forEach(function (o) { if (o !== sel) fillMenu(o); }); if (state === 'playing') { synth.cancel(); next(); } } });
-    sp.addEventListener('change', function () { try { localStorage.setItem(SPEED_KEY, sp.value); } catch (e) {} document.querySelectorAll('.gg-vspeed').forEach(function (o) { o.value = sp.value; }); if (state === 'playing') { synth.cancel(); next(); } });
+    sel.addEventListener('change', function () { var v = list.find(function (x) { return x.name === sel.value; }); if (v) { chosen = v; try { localStorage.setItem(P.key, v.name); } catch (e) {} document.querySelectorAll('.gg-vsel').forEach(function (o) { if (o !== sel) fillMenu(o); }); if (state === 'playing') { halt(); next(); } } });
+    sp.addEventListener('change', function () { try { localStorage.setItem(SPEED_KEY, sp.value); } catch (e) {} document.querySelectorAll('.gg-vspeed').forEach(function (o) { o.value = sp.value; }); speedNow(); });
     g.querySelector('.gg-vcheck-btn').addEventListener('click', function () { check(); });
     hb.addEventListener('click', function () {
       var bar = g.closest('.gg-rbar') || g.parentNode, h = bar.querySelector('.gg-vhelp');
@@ -302,11 +410,13 @@
     } catch (e) { return null; }
   }
   /* A play, pause, and stop control that reads a region. audioSrc plays a recording instead when it exists. */
+  /* opts.recorded (a tree name, or true for this page's tree): a guide or practice, read in the Grounded voice. */
   function control(opts) {
+    var rv = opts.recorded ? treeVoice(opts.recorded) : '', rtree = rv ? (opts.recorded === true ? pageTree() : opts.recorded) : '';
     var bar = document.createElement('div'); bar.className = 'gg-rbar no-print';
     var b = document.createElement('button'); b.type = 'button'; b.className = 'gg-rbtn';
     var s = document.createElement('button'); s.type = 'button'; s.className = 'gg-rbtn gg-rstop'; s.innerHTML = I.stop; s.setAttribute('aria-label', 'Stop reading'); s.hidden = true;
-    var menu = voiceMenu();
+    var menu = rv ? speedMenu() : voiceMenu();
     var mine = false, recorded = false;
     function paint() {
       var active = mine && state !== 'idle';
@@ -319,11 +429,14 @@
     b.addEventListener('click', function () {
       if (mine && state === 'playing') return pause();
       if (mine && state === 'paused') return resume();
-      if (recorded) { mine = true; stop(); mine = true; audio.play(); state = 'playing'; emit(); return; }
-      ensure(function () { mine = true; read(typeof opts.root === 'function' ? opts.root() : opts.root); });
+      if (recorded) { mine = true; stop(); mine = true; story = true; audio.play(); state = 'playing'; emit(); return; }
+      // read() stops whatever was reading first (which clears mine), so this bar takes the reading after it starts.
+      var go = function () { read(typeof opts.root === 'function' ? opts.root() : opts.root, rv ? { recorded: rtree } : null); mine = state !== 'idle'; paint(); };
+      // The Grounded voice starts right on the tap (Safari's rule for audio); the Voice Check is for device voices.
+      if (rv) go(); else ensure(go);
     });
     s.addEventListener('click', stop);
-    bar.appendChild(b); bar.appendChild(s); if (synth) bar.appendChild(menu);
+    bar.appendChild(b); bar.appendChild(s); if (synth || rv) bar.appendChild(menu);
     if (opts.audioSrc && window.fetch) {
       fetch(opts.audioSrc, { method: 'HEAD' }).then(function (r) {
         if (!r.ok) return;
@@ -333,7 +446,8 @@
     }
     // Chris, October 10, 2026: the device read-aloud bar and its voice menu are retired (the videos carry recorded voices);
     // the bar shows only once a real recording is found (story pages).
-    bar.hidden = true;
+    // BLD 796: a guide's or practice's bar shows again, with the Grounded voice.
+    bar.hidden = !rv;
     paint();
     return bar;
   }
@@ -355,7 +469,7 @@
     return bar;
   }
   function isOn(key) { try { return localStorage.getItem(key || 'gg_read_on') === '1'; } catch (e) { return false; } }
-  window.GGRead = { saidText: saidText, setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, check: check, ensure: ensure, checked: checked, voiceInfo: voiceInfo, platform: platform, steps: STEPS, stepsHtml: stepsHtml, helpHtml: helpHtml, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
+  window.GGRead = { chunks: chunks, clipName: clipName, clipUrl: clipUrl, treeVoice: treeVoice, pageTree: pageTree, rec: REC, saidText: saidText, setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, check: check, ensure: ensure, checked: checked, voiceInfo: voiceInfo, platform: platform, steps: STEPS, stepsHtml: stepsHtml, helpHtml: helpHtml, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
 
   /* Practice steps: any "Show me how" or "Learn more" box gets its own Read aloud button when it opens. */
   document.addEventListener('toggle', function (e) {
@@ -363,9 +477,9 @@
     if (!d || !d.matches || !d.open || !d.matches('details.howto, details.learn, details.gg-readable')) return;
     var body = d.querySelector(':scope > div') || d;
     if (body.querySelector(':scope > .gg-rbar')) return;
-    body.insertBefore(control({ root: body, label: 'Read these steps aloud' }), body.firstChild);
+    body.insertBefore(control({ root: body, label: 'Read these steps aloud', recorded: treeVoice(true) ? true : '' }), body.firstChild);
   }, true);
-  window.addEventListener('pagehide', function () { if (synth) synth.cancel(); });
+  window.addEventListener('pagehide', function () { if (synth) synth.cancel(); if (clip) try { clip.pause(); } catch (e) {} });
   window.dispatchEvent(new Event('ggread-ready'));
 
   /* Stories: a Read aloud control under the byline of every story page. */
