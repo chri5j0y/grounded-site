@@ -60,7 +60,7 @@
 (function () {
   'use strict';
   if (window.GGLearn) return;
-  var V = 'b797b';
+  var V = 'b797c';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var url = function (p) { return ROOT + p; };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
@@ -621,7 +621,7 @@
     musicSwitch(host, cfg, P);
     function fit() { if (!st.isConnected) return; var w = st.clientWidth; cv.style.transform = 'scale(' + (w / 960) + ')'; st.classList.toggle('ggl-small', w < 560); if (bar.classList.contains('on')) place(); }
     function place() { var over = st.clientWidth >= 560; bar.classList.toggle('over', over); if (over) st.appendChild(bar); else st.after(bar); }
-    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
+    function stopTimers() { P.tok++; clearInterval(P.hl); clearInterval(P.tick); clearTimeout(P.nx); clearTimeout(P.cw); clearInterval(P.tl); if (P.audio) { try { P.audio.onended = P.audio.onerror = P.audio.onloadedmetadata = P.audio.onplaying = P.audio.onratechange = P.audio.onseeked = null; P.audio.pause(); } catch (e) {} P.audio = null; } var r = st && st.querySelector('.ln-wait'); if (r) r.remove(); }
     function setPlay(p) { P.playing = p; var b = $('[data-g="play"]', host); if (b) b.textContent = p ? 'Pause' : 'Play'; if (!p) { stopTimers(); hush(); bgStop(); } else if (!P.last) bgPlay(cfg); }
     function finish() { if (!answered && hasQuiz) return; if (cfg.onDone) cfg.onDone(l.id); }
     function endScene() {
@@ -706,7 +706,8 @@
       requestAnimationFrame(function () { requestAnimationFrame(function () { w.classList.add('run'); }); });
       P.nx = setTimeout(function () { if (t !== P.tok) return; ringOff(); go(); }, sec * 1000);
     }
-    var GAP = 650;
+    // The rest between sentences (Chris, October 13, 2026, after listening to samples): 0.45 seconds, and 0.65 in Sequoia and Willow.
+    var GAP = cfg.app === 'sequoia' || cfg.app === 'willow' ? 650 : 450;
     // Speak the scene's sentences from P.b on, one at a time, then hold and move on.
     function run(t) {
       var sc = P.sc, B = P.B, last = P.last, sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1;
@@ -746,27 +747,53 @@
       }
       // A recorded clip for this sentence, when a lesson has them: a page video's own folder (audio: 'pv', BLD 777),
       // or the recording round in this lesson's voice (BLD 778).
+      function clipSrc(si, bi) {
+        if (l.audio) return url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + si + '-' + bi + '.mp3');
+        var bb = si === P.i ? B[bi] : (beatsOf(l.scenes[si] || {})[bi]);
+        return rec && bb ? clipUrl(rec, bb.t) : '';
+      }
+      // While one sentence plays, the next one downloads, so the rest between sentences stays even.
+      function ahead(i) {
+        var u = B[i + 1] ? clipSrc(P.i, i + 1) : P.i + 1 < N - 1 ? clipSrc(P.i + 1, 0) : '';
+        if (!u || !window.Audio) return;
+        try { var a = P.pre || (P.pre = new Audio()); a.preload = 'auto'; if (a.src !== u) { a.src = u; a.load(); } } catch (e) {}
+      }
       function clip(i, fin) {
         if (SK) { sealedPlay(B[i].t, t, fin); sealedAhead(i); return true; }
-        var src = l.audio ? url('/audio/learn/' + (typeof l.audio === 'string' ? l.audio + '/' : '') + l.id + '-' + P.i + '-' + i + '.mp3') : rec ? clipUrl(rec, B[i].t) : '';
-        return play(src, B[i].t, t, fin);
+        var src = clipSrc(P.i, i);
+        ahead(i);
+        return play(src, B[i].t, t, fin, l.audio ? '' : rec);
       }
       if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
       step();
     }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
     // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
-    function play(src, text, t, fin) {
+    // Silence each voice's recordings carry before and after the words (measured October 13, 2026: Brian about 0.14 and 0.36
+    // seconds, Jenny about 0.21 and 0.87). The player skips most of it, so the rest between sentences is the rest we choose.
+    // Page video clips (audio: 'pv') were trimmed in the files themselves, so they play whole.
+    var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] };
+    function play(src, text, t, fin, who) {
+      var cut = TRIM[who] || [0, 0], LEAD = cut[0], TAIL = cut[1];
       if (!src || !window.Audio) return false;
       var a = P.el || (P.el = new Audio()), sp = window.GGRead && GGRead.speed ? GGRead.speed() : 1, ok = false;
       var est = Math.max(1400, text.split(/\s+/).length * 60000 / (165 * sp));
       function guard(ms) { clearTimeout(P.cw); P.cw = setTimeout(function () { if (t === P.tok) fin(); }, ms); }
-      function voice() { if (ok || t !== P.tok) return; ok = true; a.onended = a.onerror = a.onloadedmetadata = null; speak(text, fin); guard(est * 2.4 + 2500); }
+      function voice() { if (ok || t !== P.tok) return; ok = true; clearInterval(P.tl); a.onended = a.onerror = a.onloadedmetadata = a.onplaying = a.onratechange = a.onseeked = null; speak(text, fin); guard(est * 2.4 + 2500); }
       P.audio = a;
-      a.onended = function () { clearTimeout(P.cw); fin(); };
+      // Each recording carries about 0.2 seconds of silence before the voice and 0.9 after; skip most of both.
+      var once = false, done1 = function () { if (once) return; once = true; clearTimeout(P.cw); clearInterval(P.tl); fin(); };
+      a.onplaying = function () {
+        clearInterval(P.tl);
+        if (!TAIL || !isFinite(a.duration) || a.duration < LEAD + TAIL + 0.4) return;
+        var end = a.duration - TAIL;
+        // watch the play position itself, so the finish lands just after the last word on every device
+        P.tl = setInterval(function () { if (t !== P.tok) return clearInterval(P.tl); if (!a.paused && a.currentTime >= end) { clearInterval(P.tl); try { a.pause(); } catch (e) {} done1(); } }, 25);
+      };
+      a.onended = done1;
       a.onerror = voice;
-      a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) guard(a.duration * 1000 / sp + 3000); };
-      a.src = src;
+      a.onloadedmetadata = function () { if (isFinite(a.duration) && a.duration > 0) { guard(a.duration * 1000 / sp + 3000); } };
+      a.src = LEAD ? src + '#t=' + LEAD : src; // start just before the first word
       // Clips follow the listener's Slower, Normal, or Faster choice, like the device voice (BLD 777).
       try { a.defaultPlaybackRate = sp; a.playbackRate = sp; } catch (e) {}
       guard(est * 2.4 + 6000);
@@ -776,7 +803,7 @@
     // A quiz's "That's it." and its why, sentence by sentence in the lesson's recorded voice.
     function recSay(text, t, fin) {
       var L = beatsOf({ say: text }), k = 0;
-      (function next() { if (t !== P.tok) return; if (k >= L.length) return fin(); var x = L[k++].t, f = function () { setTimeout(next, GAP); }; if (SK) sealedPlay(x, t, f); else play(clipUrl(rec, x), x, t, f); })();
+      (function next() { if (t !== P.tok) return; if (k >= L.length) return fin(); var x = L[k++].t, f = function () { setTimeout(next, GAP); }; if (SK) sealedPlay(x, t, f); else play(clipUrl(rec, x), x, t, f, rec); })();
     }
     // Locked clips (BLD 781): each sentence is fetched and unlocked once per player, kept as a Blob URL until the player stops.
     P.clips = {};
@@ -801,7 +828,7 @@
         if (gone || t !== P.tok) return;
         if (!u) return voice();
         gone = true; clearTimeout(P.cw);
-        if (!play(u, text, t, fin)) { gone = false; voice(); }
+        if (!play(u, text, t, fin, SK.voice)) { gone = false; voice(); }
       });
       return true;
     }
@@ -809,7 +836,7 @@
     // The first tap plays a moment of silence on the one audio element, so it may play the clips that follow.
     function unlock() {
       if (!SK || P.unl || !window.Audio) return; P.unl = true;
-      try { var a = P.el || (P.el = new Audio()); a.onended = a.onerror = a.onloadedmetadata = null; a.src = silent(); var pr = a.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
+      try { var a = P.el || (P.el = new Audio()); a.onended = a.onerror = a.onloadedmetadata = a.onplaying = a.onratechange = a.onseeked = null; a.src = silent(); var pr = a.play(); if (pr && pr.catch) pr.catch(function () {}); } catch (e) {}
     }
     function answer(v) {
       var sc = l.scenes[P.i], ok = +v === sc.right, fb = $('.ggl-fb', host);
