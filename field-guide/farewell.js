@@ -1919,7 +1919,7 @@ const API = window.GGFw = {
     plans().push(n); const d = D(); if (d && d.deleted && d.deleted.fwp) delete d.deleted.fwp[n.id]; touch(n); return n.id; },
   open(id){ openPlan(id, 1); },
   // For tests and the lead.
-  state: S, cfg, plan, plans, touches, dueSoon, famText, famBody, outHTML, sesGuides, loadText, readStart, readWriting, fill, DEF,
+  state: S, cfg, plan, plans, touches, dueSoon, famText, famBody, outHTML, sesGuides, loadText, readStart, readWriting, fill, DEF, whText, relSoft,
   euProse, obDraft, whMap, whText, whPaste, whParse, bundleHTML, bundleText, fdHTML, fdText, fdqHTML, fdqText, verOf, apStatus, waOf,
   famWin: null, last: null, lastCopy: null, lastLink: null, lastFile: null, noOpen: false
 };
