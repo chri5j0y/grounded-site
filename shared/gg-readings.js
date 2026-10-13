@@ -92,7 +92,8 @@
   var DENOM = { reform: 'Reform', conservative: 'Conservative', orthodox: 'Orthodox', reconstructionist: 'Reconstructionist', hasidic: 'Hasidic', sephardic: 'Sephardic',
     sunni: 'Sunni', shia: 'Shia', sufi: 'Sufi', theravada: 'Theravada', mahayana: 'Mahayana', zen: 'Zen', pureland: 'Pure Land', tibetan: 'Tibetan',
     vaishnava: 'Vaishnava', shaiva: 'Shaiva', shakta: 'Shakta', vedanta: 'Vedanta', bhakti: 'Bhakti', coptic: 'Coptic', armenian: 'Armenian', ethiopian: 'Ethiopian',
-    syriac: 'Syriac', scottish: 'Scottish Gaelic', irish: 'Irish', welsh: 'Welsh', manx: 'Manx', breton: 'Breton', cornish: 'Cornish', bcp1662: 'Prayer Book 1662', bcp1928: 'Prayer Book 1928' };
+    syriac: 'Syriac', scottish: 'Scottish Gaelic', irish: 'Irish', welsh: 'Welsh', manx: 'Manx', breton: 'Breton', cornish: 'Cornish', bcp1662: 'Prayer Book 1662', bcp1928: 'Prayer Book 1928',
+    churchofscotland: 'Church of Scotland', freechurchofscotland: 'Free Church of Scotland', brahmo: 'Brahmo Samaj', rosary: 'The Rosary', requiem: 'Requiem and Funeral' };
   var TYPE = { prayer: 'Prayer', scripture: 'Scripture', blessing: 'Blessing', poem: 'Poem', hymn: 'Hymn', song: 'Song', story: 'Story', reflection: 'Reflection', litany: 'Litany', chant: 'Chant' };
   var TYPES = ['prayer', 'scripture', 'blessing', 'poem', 'hymn', 'song', 'story', 'reflection', 'litany', 'chant'];
   var OCC = { funeral: 'Funerals', dying: 'The Last Days', grief: 'Grief', comfort: 'Comfort', wedding: 'Weddings', birth: 'Birth and New Life', blessing: 'Blessings',
