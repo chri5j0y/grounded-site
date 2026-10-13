@@ -2192,7 +2192,7 @@ function lnMount(t, l){
   const host = $('#ln-host'); if (!host) return;
   if (!window.GGLearn){ host.innerHTML = `<div class="card"><p>The lesson player didn't load. Check your connection and open this lesson again.</p></div>`; return; }
   const D = lnData();
-  const SK = fgSealed(lnLib(t)); if (SK && t.kind === 'walkthrough') SK.voice = t.voice || (walkLevel(t) === 'staff' ? 'jenny' : 'brian'); // one voice per Walkthrough (BLD 797)
+  const SK = fgSealed(lnLib(t)); if (SK) SK.voice = l.voice || t.voice || (t.kind === 'walkthrough' && walkLevel(t) === 'staff' ? 'jenny' : SK.voice); // the lesson's own voice, then the track's, then Brian (BLD 797)
   LN = GGLearn.player(host, {sealed: SK, mark: {name: 'Field Guide'}, lesson: l, track: t, tracks: lnTracks(), done: D.done, at: D.at[l.id] || 0, accent: '#8B5E1A',
     onAt: i => { lnData().at[l.id] = i; save(); },
     onDone: id => { const d = lnData(); if (!d.done[id]){ d.done[id] = today(); save(); certCheck(); } },
