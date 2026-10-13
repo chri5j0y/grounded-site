@@ -8,10 +8,10 @@
                                 sequoia, willow, grove, or house (Grow With Grounded); a tree's certificate carries its own
                                 leaf in each corner (shared/leaves/<tree>.svg).
                                 certified (GWG BLD 797, BLD 800): {level: 'guide' | 'staff' | 'founder', tiles: [{label, art}],
-                                more: [names]} prints the Certified credential: "Certified Grounded Guide (Staff, Founder).
+                                also: [names], more: [names]} prints the Certified credential: "Certified Grounded Guide (Staff, Founder).
                                 [Name] has completed Grounded Guide training and is certified by Grow With Grounded to use the
                                 following Grounded tools:", a row of art tiles (art: a shared/marks name, 'heartwood', or
-                                'house'), the more line (Orientation and Walkthrough), the dates, the gold seal, and the two
+                                'house'), the also line (the other tools, by name), the more line (Orientation and Walkthrough), the dates, the gold seal, and the two
                                 signature lines with the names in the italic serif ("Leave Lines Blank to Sign by Hand" on the
                                 print page leaves them blank). certified.items (plain names) still works.
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
@@ -175,7 +175,7 @@
     var lv = CERT_LV[c.level] || 'Guide', seen = {};
     var tiles = (c.tiles || (c.items || []).map(function (x) { return { label: x, art: guessArt(x) }; })).map(function (t) { return { label: String(t.label || '').trim(), art: t.art || guessArt(t.label) }; })
       .filter(function (t) { var k = t.label.toLowerCase(); if (!t.label || seen[k]) return false; seen[k] = 1; return true; });
-    return { head: 'Certified Grounded ' + lv, line: 'has completed Grounded ' + lv + ' training and is certified by Grow With Grounded to use the following Grounded tools:', tiles: tiles, more: (c.more || []).filter(Boolean) };
+    return { head: 'Certified Grounded ' + lv, line: 'has completed Grounded ' + lv + ' training and is certified by Grow With Grounded to use the following Grounded tools:', tiles: tiles, also: (c.also || []).filter(Boolean), more: (c.more || []).filter(Boolean) };
   }
   // The seal: CERTIFIED along the top, GROW WITH GROUNDED along the bottom, the house tree in the middle.
   function seal() {
@@ -204,6 +204,7 @@
       + '<div class="k-name serif" data-fitname>' + esc(o.name) + '</div>'
       + '<div class="k-line">' + esc(cp.line) + '</div>'
       + '<div class="k-tiles' + (n > 6 ? ' k-two' : '') + '" style="grid-template-columns:repeat(' + per + ',auto)">' + cp.tiles.map(function (t) { return '<div class="k-tile"><img src="' + tileArt(t.art) + '" alt="">' + esc(t.label) + '</div>'; }).join('') + '</div>'
+      + (cp.also.length ? '<div class="k-also">Also: ' + cp.also.map(esc).join(', ') + '</div>' : '')
       + (cp.more.length ? '<div class="k-more">' + cp.more.map(esc).join(' &middot; ') + '</div>' : '')
       + (meta.length ? '<div class="k-meta">' + meta.map(function (m) { return '<span>' + esc(m[0]) + ' <b>' + esc(m[1]) + '</b></span>'; }).join('') + '</div>' : '')
       + '</div>' + seal()
@@ -226,6 +227,7 @@
       '.k-tile img{width:calc(64px * var(--z));height:calc(64px * var(--z));border-radius:calc(14px * var(--z));box-shadow:0 1px 0 rgba(0,0,0,.08),0 0 0 1px #e2cfa5;}',
       '.k-two .k-tile img{width:calc(54px * var(--z));height:calc(54px * var(--z));border-radius:calc(12px * var(--z));}',
       '.k-more{font-size:13px;color:#5b4636;margin-top:4px;max-width:8.6in;}',
+      '.k-also{font-size:calc(13px * var(--z));line-height:1.4;color:#4a3427;margin-top:2px;max-width:8.2in;}',
       '.k-meta{display:flex;gap:26px;justify-content:center;flex-wrap:wrap;font-size:12.5px;color:#6B5A4D;margin-top:10px;}.k-meta b{color:#2C1810;font-weight:600;}',
       '.k-foot{position:absolute;left:1in;right:1in;bottom:.78in;display:flex;align-items:flex-end;justify-content:space-between;}',
       '.k-sig{width:2.3in;text-align:left;}.k-sig2{margin-right:auto;margin-left:.4in;}',

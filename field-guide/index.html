@@ -648,8 +648,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b798"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b798"></script>
-<script src="../shared/gg-print.js?v=b798"></script>
+<script src="../shared/gg-learn.js?v=b800"></script>
+<script src="../shared/gg-print.js?v=b800"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
@@ -666,7 +666,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b798"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b798"></script>
+<script src="../shared/gg-stories.js?v=b800"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -2226,10 +2226,10 @@ function lnAct(a, v){
          Guide Training passed (any tree, The Grove, or Walking with Illness and Disability). Its tools: The Grounded Field
          Guide, then one for each Guide Training passed, so the list grows as more are passed. It renews with the earliest
          of its trainings (Orientation included).
-       Certified Grounded Staff: Certified Grounded Guide, Staff Orientation, and the Staff Walkthrough. Its tools: each
-         Staff Walkthrough lesson's tool.
-       Certified Grounded Founder: Certified Grounded Staff and the Founder Walkthrough. Its tools: each Founder
-         Walkthrough lesson's tool.
+       Certified Grounded Staff: Certified Grounded Guide, Staff Orientation, and the Staff Walkthrough.
+       Certified Grounded Founder: Certified Grounded Staff and the Founder Walkthrough.
+       Staff and Founder tools come from the Walkthrough lessons: the big tools with real art are tiles (Founder leads with
+       The Grounded Field Guide), and the rest are named in one Also line (Chris, October 13, 2026: "1").
      Wording (CLAUDE.md, Certified by Grow With Grounded): "Certified Grounded Guide. [Name] has completed Grounded Guide
      training and is certified by Grow With Grounded to use the following Grounded tools:" and the tools, printed as art
      tiles (GGPrint.certificate with certified: {level, tiles, more}). Until a credential is earned, its card shows On Your
@@ -2319,7 +2319,7 @@ function certCred(lv, list){
   const W = walkOf(lv), wDone = !!(W && walkDone(W)), wN = W ? W.lessons.filter(l => lnData().done[l.id]).length : 0, wDate = W && wDone ? lastDone(W.lessons.map(l => l.id)) : '';
   const walkStep = {done: wDone, label: (W ? W.title : CERT_LV[lv] + ' Walkthrough'), next: W ? 'Next: finish the ' + W.title + ' (' + wN + ' of ' + W.lessons.length + ' videos)' : 'Next: the ' + CERT_LV[lv] + ' Walkthrough, coming to Learn soon', act: W ? 'cert-walk' : '', v: W ? W.id : ''};
   const min = a => a.filter(Boolean).sort()[0] || '', max = a => a.filter(Boolean).sort().pop() || '';
-  let steps, earned, tiles = [], more = [], date = '', renew = '';
+  let steps, earned, tiles = [], more = [], also = [], date = '', renew = '';
   if (lv === 'guide'){
     const O = safe(orGuidePart), tr = list.filter(c => c.tool);
     steps = [{done: !!O, label: 'Field Guide Orientation and Agreement', next: 'Next: finish Field Guide Orientation and sign the agreement', act: 'cert-orient'}, walkStep,
@@ -2340,7 +2340,11 @@ function certCred(lv, list){
     earned = steps.every(s => s.done);
     if (earned){
       const b = below.cert;
-      tiles = W.lessons.map(l => l.tool).filter(x => x && !/certificates tab/i.test(x)).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i).map(x => ({label: x, art: certArt(x)}));
+      // The big tools with real art are tiles; everything else is named in one small line (Chris, "1"). Founder leads with
+      // The Grounded Field Guide tile. The house tree never stands in for a Staff or Founder tool.
+      const tools = W.lessons.map(l => l.tool).filter(x => x && !/certificates tab/i.test(x)).filter((x, i, a) => a.findIndex(y => y.toLowerCase() === x.toLowerCase()) === i);
+      tiles = (lv === 'founder' ? [{label: 'The Grounded Field Guide', art: 'fieldguide'}] : []).concat(tools.filter(x => certArt(x) !== 'house').map(x => ({label: x, art: certArt(x)})));
+      also = tools.filter(x => certArt(x) === 'house');
       more = [bH].concat(S ? ['Staff Orientation and Agreement'] : [], [W.title]);
       date = max([b.date, S && S.date, wDate]); renew = min([b.renew, S && S.renew]);
     }
@@ -2348,7 +2352,7 @@ function certCred(lv, list){
   if (!earned) return {earned: false, steps};
   const D = certD(); D.ids = D.ids || {};
   if (!D.ids[lv]) D.ids[lv] = 'GG' + lv[0].toUpperCase() + '-' + Array.from(crypto.getRandomValues(new Uint8Array(4)), b => b.toString(36).padStart(2, '0')).join('').toUpperCase().slice(0, 6);
-  return {earned: true, steps, cert: {id: 'cred:' + lv, cred: true, level: lv, title: certHead(lv), tiles, more, date, renew, certId: D.ids[lv], group: 'Certified'}};
+  return {earned: true, steps, cert: {id: 'cred:' + lv, cred: true, level: lv, title: certHead(lv), tiles, also, more, date, renew, certId: D.ids[lv], group: 'Certified'}};
 }
 // The name on every certificate, entered once (the Certificates tab can change it).
 function certName(def){
@@ -2361,7 +2365,7 @@ function certPrint(c){
   const name = certName(c.signed); if (!name) return;
   if (c.cred) save(); // keeps the credential's certificate number
   fgPrint().then(() => { if (!window.GGPrint) return toast('The certificate maker did not load. Check your connection and try again.');
-    GGPrint.certificate(c.cred ? {tree: 'house', name, date: c.date, renew: c.renew, id: c.certId || '', certified: {level: c.level, tiles: c.tiles, more: c.more}}
+    GGPrint.certificate(c.cred ? {tree: 'house', name, date: c.date, renew: c.renew, id: c.certId || '', certified: {level: c.level, tiles: c.tiles, also: c.also || [], more: c.more}}
       : {tree: (GGPrint.trees || {})[c.tree] ? c.tree : 'house', name, title: c.title, body: c.note || '', date: c.date, renew: c.renew, version: c.version, id: c.certId || '', kind: 'training'}); });
 }
 const certPrintId = id => certPrint(fgCerts().find(c => c.id === id));
@@ -2417,9 +2421,10 @@ function vCerts(){
   const credCard = lv => { const C = certCred(lv, rest), h = certHead(lv);
     if (C.earned){ const c = C.cert; return `<div class="card cert-card" style="border-left:4px solid var(--gold)"><div class="eyebrow">Certified</div><h3>${esc(h)}</h3>
       <p class="muted">${esc(dates(c))}${c.certId ? '. Certificate ' + esc(c.certId) : ''}</p>
-      <p style="margin-top:8px">Certified to use ${c.tiles.length} Grounded ${c.tiles.length === 1 ? 'tool' : 'tools'}:</p>
+      <p style="margin-top:8px">Certified to use these Grounded tools:</p>
       <div class="cert-tiles">${c.tiles.map(t => `<span><img src="${esc(tileImg(t.art))}" alt="">${esc(t.label)}</span>`).join('')}</div>
-      <p class="muted" style="margin-top:10px;font-size:14px">${c.more.map(esc).join(' &middot; ')}</p>
+      ${(c.also || []).length ? `<p style="margin-top:10px;font-size:14px">Also: ${c.also.map(esc).join(', ')}</p>` : ''}
+      <p class="muted" style="margin-top:6px;font-size:14px">${c.more.map(esc).join(' &middot; ')}</p>
       <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc(c.id)}">${icon('print')} Save or Print</button></div></div>`; }
     const nx = C.steps.filter(s => !s.done), go1 = nx.find(s => s.act);
     return `<div class="card cert-card" style="border-left:4px solid var(--gold)"><div class="eyebrow">On Your Way</div><h3>${esc(h)}</h3>
@@ -2452,7 +2457,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b798'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b800'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
