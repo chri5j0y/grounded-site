@@ -655,6 +655,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="qr.js?v=b782"></script>
 <script src="share.js?v=b788"></script>
 <script src="../shared/gg-listen.js?v=b786"></script>
+<script src="../shared/gg-readings.js?v=b798"></script>
 <script src="ceremonies.js?v=b786"></script>
 <script src="sessions.js?v=b758"></script>
 <script src="farewell.js?v=b788"></script>
@@ -1436,7 +1437,7 @@ function vLibrary(){
   if (sub === 'policies') body = LIB.policies.map(p => `<div class="card"><h3>${esc(p[0])}</h3><p style="margin-top:6px">${mark(p[1])}</p></div>`).join('');
   if (sub === 'docs') body = (V.doc ? docForm(LIB.docs.find(d => d.id === V.doc)) : LIB.docs.map(d => `<button class="gitem" data-act="doc" data-v="${d.id}"><span class="qi">${icon('print')}</span><span><b>${esc(d.title)}</b><small>${esc(d.for)}</small></span><span class="arr">&rsaquo;</span></button>`).join(''));
   if (sub === 'emails') body = LIB.emails.map(e => `<div class="card email" id="em-${e.id}"><div class="spread"><h3>${esc(e.title)}</h3><button class="btn btn-line btn-sm" data-act="copy-email" data-v="${e.id}">${icon('copy')} Copy</button></div><p class="muted" style="margin-top:4px">Subject: ${esc(e.subject)}</p><pre>${esc(e.body)}</pre></div>`).join('');
-  if (sub === 'readings') body = `<p class="muted" style="margin-bottom:12px">Grounded blessings are original to Grounded. Scripture is from the King James Version, which is in the public domain.</p>` + LIB.readings.map((r,i) => `<div class="card reading"><div class="spread"><div><h3>${esc(r.title)}</h3><span class="pill gold">${esc(r.tag)}</span> <small class="muted">${esc(r.by)}</small></div><button class="btn btn-line btn-sm" data-act="copy-reading" data-v="${i}">${icon('copy')} Copy</button></div><pre>${esc(r.text)}</pre></div>`).join('');
+  if (sub === 'readings') body = (window.GGReadings ? `<div class="card"><h3>The Grounded Readings Library</h3><p class="muted" style="margin-top:4px">Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, with Listen, Copy, and Save or Print. Once opened here, the library stays on this device for use with no signal.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="rl-open">Open the Library</button></div></div>` : '') + `<p class="muted" style="margin-bottom:12px">Grounded blessings are original to Grounded. Scripture is from the King James Version, which is in the public domain.</p>` + LIB.readings.map((r,i) => `<div class="card reading"><div class="spread"><div><h3>${esc(r.title)}</h3><span class="pill gold">${esc(r.tag)}</span> <small class="muted">${esc(r.by)}</small></div><button class="btn btn-line btn-sm" data-act="copy-reading" data-v="${i}">${icon('copy')} Copy</button></div><pre>${esc(r.text)}</pre></div>`).join('');
   if (sub === 'stories') { const t = V.stag || 'eol'; body = `<div class="sub-tabs">${LIB.storyTags.map(([k,l]) => `<button class="chip" aria-pressed="${t===k}" data-act="stag" data-v="${k}">${l}</button>`).join('')}</div>
       <div class="card">${LIB.stories.filter(s => s[2] === t).map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s[0])}</b>${s[3] ? `<br><small class="muted">${esc(s[3])}</small>` : ''}</div><div class="row"><a class="btn btn-line btn-sm" href="${esc(s[1])}" target="_blank" rel="noopener">Open</a><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(s[1])}">${icon('copy')} Link</button></div></div>`).join('')}</div>`; }
   if (sub === 'referrals') body = LIB.referrals.map(r => `<div class="card"><h3>${esc(r[0])}</h3><p style="margin-top:6px">${mark(r[1])}</p></div>`).join('') + `<div class="card"><h3>Your Referral Notes</h3><p class="muted">Names and numbers you trust, saved encrypted on this device.</p><textarea data-set="referrals" style="margin-top:8px;min-height:160px">${esc(DATA.settings.referrals||'')}</textarea></div>`;
@@ -10791,6 +10792,7 @@ document.addEventListener('click', async e => {
     case 'stag': V.stag = v; render(); break;
     case 'copy': copy(v); break;
     case 'copy-email': { const m = LIB.emails.find(x => x.id === v); copy('Subject: ' + m.subject + '\n\n' + m.body); break; }
+    case 'rl-open': if (window.GGReadings){ GGReadings.open({}); setTimeout(() => GGReadings.warm().catch(() => {}), 1500); } break;
     case 'copy-reading': { const r = LIB.readings[+v]; copy(r.title + '\n\n' + r.text); break; }
     case 'print-doc': printDoc(LIB.docs.find(d => d.id === v), true); break;
     case 'print-doc-blank': printDoc(LIB.docs.find(d => d.id === v), false); break;

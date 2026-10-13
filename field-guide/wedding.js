@@ -686,7 +686,7 @@ function piecesPanel(p){
       <div class="wd-fld" style="max-width:340px"><label class="f" for="wd-lbby">Who leads</label><input id="wd-lbby" type="text" list="wd-lbleaders" data-wdlby="1" value="${esc(L.by)}" placeholder="${esc(me())}" autocomplete="off"><datalist id="wd-lbleaders">${lead.map(l => `<option value="${esc(l)}">`).join('')}</datalist></div></div>
     <div class="wd-lbl-list" id="wd-lb-list">${lbRows(p)}</div>
     ${lbOwnForm(p)}
-    <div class="row" style="margin-top:6px"><button type="button" class="btn btn-line btn-sm" data-wda="lb-mypieces">Open My Pieces</button></div>`;
+    <div class="row" style="margin-top:6px">${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-wda="lb-lib">From the Grounded Readings Library</button>` : ''}<button type="button" class="btn btn-line btn-sm" data-wda="lb-mypieces">Open My Pieces</button></div>`;
 }
 // Music by moment: what plays when, from the pieces in the ceremony.
 function musicByMoment(p){ const M = inSvc(p).filter(x => x.kind === 'music'); return M.map(x => ({x, when: x.part})); }
@@ -1670,6 +1670,16 @@ function act(a, v, el){
       const id = c.savePiece(m, p.svc, !!g('wd-lo-keep')); if (!id) return;
       const r = c.addPiece(p.svc, {kind: k, id, moment: S.lb.place === 'best' ? null : S.lb.place, by: S.lb.by});
       S.lb.own = false; touch(p); rerender(true); toast(r ? 'Added to ' + r.part + '.' : 'Saved.'); return; }
+    // GWG BLD 798: a reading from the Grounded Readings Library (shared/gg-readings.js) joins the service as one of its
+    // own pieces, at the moment chosen in Add it at, led by Who leads, with its source line.
+    case 'lb-lib': { if (!window.GGReadings) return;
+      GGReadings.pick({occasion: 'wedding', q: S.lb.q || '', button: 'Add to the Service', offline: true}).then(r => {
+        if (!r || !ensureSvc(p)) return; const c = CER(); if (!c) return;
+        const m = Object.assign(GGReadings.asPiece(r), {moments: S.lb.place !== 'best' ? [S.lb.place] : []});
+        const id = c.savePiece(m, p.svc, false); if (!id) return;
+        const x = c.addPiece(p.svc, {kind: 'reading', id, moment: S.lb.place === 'best' ? null : S.lb.place, by: S.lb.by});
+        touch(p); rerender(true); toast(x ? 'Added to ' + x.part + '.' : 'Saved.'); });
+      return; }
     case 'lb-mypieces': { const c = cerBind(); if (!c) return; c.openMine(p.id); S.on = false; if (C.go) C.go('ceremonies'); return; }
     case 'svc-new': { const c = cerBind(); if (!c) return; const o = svcSync(p); o.type = v; o.wdp = p.id; p.svc = c.make(o); if (!arr(p.sel.wtype).length && items(p, 'wtype').some(x => x.id === v)) p.sel.wtype = [v]; touch(p); rerender(true); toast('The order is ready. Change anything that does not fit.'); return; }
     case 'svc-sync': { const c = cerBind(); if (!c || !hasSvc(p)) return; c.sync(p.svc, svcSync(p)); touch(p); rerender(true); toast('Matched to the couple\'s choices.'); return; }
