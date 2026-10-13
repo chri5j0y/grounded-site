@@ -1640,7 +1640,7 @@ function setMode(m){ me().draft.mode = m; save(); renderCheckin(); }
 function toggleRead(){ readOn = !readOn; if (!readOn) hush(); renderCheckin(); }
 /* The shared voice picker, speed, and "Get a better voice" help from read.js, shown while read aloud is on. */
 function voiceSlots(){ if (!readOn || !window.GGRead) return; document.querySelectorAll('#view-checkin .voice-slot').forEach(el => { if (!el.firstChild) el.appendChild(GGRead.settings()); }); }
-window.addEventListener('ggread-ready', () => { if (window.GGRead) GGRead.setProfile({ pref: 'male', rate: 0.92, key: 'gg_voice_aspen' }); voiceSlots(); });
+window.addEventListener('ggread-ready', () => { if (window.GGRead) GGRead.setProfile({ pref: 'male', rate: 0.92, key: 'gg_voice_aspen' }); voiceSlots(); asReadBar(); });
 function sayQ(i){ const d = me() && me().draft; if (!d) return; const q = qsFor(d.grade, PARTS[d.page].key, d.sens, wordingOf(me()))[i]; if (q) say(q[0]); }
 function toStep(step, page){ const d = me().draft; d.step = step; if (page != null) d.page = page; else if (step==='parts' && d.page==null) d.page = 0; save(); renderCheckin(); toTop(true); }
 function answer(i, a){
@@ -2272,6 +2272,13 @@ function renderGuide(opts){
     ${window.GGShelf ? GGShelf.html('aspen', t.id) : ''}
     ${window.GGSources ? GGSources.line((t.sources || []).concat((GGSources.C['aspen:' + t.id]) || [])) : (t.sources ? `<h3>Sources</h3><ul class="src">${t.sources.map(s=>`<li><a href="${s[1]}" target="_blank" rel="noopener">${esc(s[0])}</a></li>`).join('')}</ul>` : '')}
     </div>`;
+  asReadBar();
+}
+
+// Read Aloud for a guide, in the Grounded voice (Jenny, BLD 796), with pause, stop, voice, and speed (read.js).
+function asReadBar(){
+  const v = $('view-guide'), h = v && v.querySelector('h2'); if (!h || !window.GGRead || !GGRead.control || v.querySelector('.gg-rbar')) return;
+  h.parentNode.insertBefore(GGRead.control({ root: v, label: 'Read this guide aloud', recorded: 'aspen' }), h.nextSibling);
 }
 
 // Save or Print This Guide (BLD 788): the share sheet with a real PDF (shared/gg-pdf.js), Print as the backup, as in Maple.

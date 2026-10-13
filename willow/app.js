@@ -248,10 +248,11 @@ function go(v, force) {
   if (v !== 'checkin') S.ck = v === 'results' ? S.ck : null;
   S.tab = v; render(); scrollTop(force !== false); pushHash();
 }
-// Read aloud: a button on anything marked data-read (read.js, shared)
+// Read aloud: a button on anything marked data-read (read.js, shared). data-read-rec marks a guide or a practice,
+// read in the Grounded voice (Brian, BLD 796); nothing a person writes carries it.
 function addRead(el) {
   const R = window.GGRead; if (!R || !R.control || el.querySelector('.gg-rbar')) return;
-  try { el.insertBefore(R.control({ root: el, label: el.dataset.read || 'Read Aloud' }), el.firstChild); } catch (e) {}
+  try { el.insertBefore(R.control({ root: el, label: el.dataset.read || 'Read Aloud', recorded: el.hasAttribute('data-read-rec') ? 'willow' : '' }), el.firstChild); } catch (e) {}
 }
 
 /* ---------- who's here ---------- */
@@ -352,7 +353,7 @@ const timeOf = it => it.length === 5 ? it[3] : '';
 function practiceCard(r, role) {
   const o = offer(r, role), it = o.it, d = (r.days || {})[today()] || {}, done = (d.done || []).includes(o.part + ':' + it[0]);
   const p = PART[o.part];
-  return `<div class="w-card w-practice" style="--pc:${p.color}" data-read="Read this practice aloud">
+  return `<div class="w-card w-practice" style="--pc:${p.color}" data-read="Read this practice aloud" data-read-rec>
     <p class="w-eyebrow">One gentle thing for today${role === 'person' ? ' &middot; ' + p.part : ''}</p>
     <h3>${esc(it[1])}</h3>
     <p>${esc(it[2])}</p>
@@ -903,8 +904,8 @@ VIEWS.bedside = () => {
   } else if (person && r.matters && r.matters.never && sees('matters')) {
     h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.matters.never)}</p></div>`;
   }
-  h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud">${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
-  h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud">${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
+  h += `<h3 class="section-title">What helps</h3><div class="w-grid" data-read="Read these aloud" data-read-rec>${P.bedside.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
+  h += `<h3 class="section-title">Care for the one keeping watch</h3><p class="lead">You can't pour from an empty cup, and this cup has been pouring a long time.</p><div class="w-grid" data-read="Read these aloud" data-read-rec>${P.selfcare.map(x => `<div class="w-card w-tip"><h4>${esc(x[1])}</h4><p>${esc(x[2])}</p>${evTag(x[3])}${window.GGSources ? GGSources.practice(x[1], 'willow') : ''}</div>`).join('')}</div>`;
   h += `<h3 class="section-title">Faith at the bedside</h3><div class="w-card" data-read="Read these aloud">${F.rules.map(x => `<p><b>${esc(x[0])}</b> ${esc(x[1])}</p>`).join('')}</div>`;
   h += `<h3 class="section-title">Look up a tradition</h3><p class="lead">For a family with more than one faith, a visitor from another tradition, or just to understand. ${esc(F.end)}</p>
     <label class="w-l" for="w-flook">Tradition</label><select id="w-flook" onchange="W.S.faithLook=this.value;W.render()"><option value="">Choose one</option>${F.intake.groups.map(g => `<optgroup label="${esc(g[1])}">${g[2].filter(id => F.cards[id]).map(id => `<option value="${id}"${S.faithLook === id ? ' selected' : ''}>${esc(F.cards[id].name)}</option>`).join('')}</optgroup>`).join('')}</select>
@@ -1004,7 +1005,7 @@ function guideHtml(g) {
     <div class="btn-row no-print" style="justify-content:space-between;align-items:center;margin:0 0 12px"><button class="lc-back" onclick="W.closeGuide()">Back to all guides</button><button class="btn btn-secondary" onclick="W.printGuide('${g.id}')">Save or Print This Guide</button></div>
     <span class="lc-tag">${esc(ring ? ring[1] : '')}</span><h2>${esc(g.title)}</h2>
     ${guideVids(g.id)}
-    <div data-read="Read this guide aloud">${body}</div>
+    <div data-read="Read this guide aloud" data-read-rec>${body}</div>
     ${pro ? `<details class="w-det"><summary>${esc(G.labels.pro)}</summary><div><p>${esc(pro[1])}</p></div></details>` : ''}
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
     ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}

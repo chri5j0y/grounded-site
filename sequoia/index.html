@@ -1228,7 +1228,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
     var gs = window.goToStep; if (gs) window.goToStep = function () { var r = gs.apply(this, arguments); if (R.isOn(KEY)) setTimeout(readStep, 450); else R.stop(); return r; };
     var tg = window.toggleGuide; if (tg) window.toggleGuide = function (btn) {
       var r = tg.apply(this, arguments); var g = btn.nextElementSibling;
-      if (g && g.classList.contains('open') && !g.querySelector('.gg-rbar')) g.insertBefore(R.control({ root: g, label: 'Read this guide aloud' }), g.firstChild);
+      if (g && g.classList.contains('open') && !g.querySelector('.gg-rbar')) g.insertBefore(R.control({ root: g, label: 'Read this guide aloud', recorded: 'sequoia' }), g.firstChild);
       if (g && !g.classList.contains('open')) R.stop();
       return r;
     };
@@ -1238,7 +1238,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
       document.querySelectorAll('#client-legacy .sq-prompt.has').forEach(function (a) { if (!a.querySelector('.gg-rbar')) a.insertBefore(R.control({ root: a, label: 'Read this aloud' }), a.querySelector('.btn-row')); });
       return r;
     };
-    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); var art = document.querySelector('#client-life .lc-article'), q = art && art.querySelector('.lc-quick'); if (q && !art.querySelector('.gg-rbar')) art.insertBefore(R.control({ root: art, label: 'Read this guide aloud' }), q); return r; };
+    var lc = window.renderLC; if (lc) window.renderLC = function () { var r = lc.apply(this, arguments); var h = document.querySelector('#client-life .lc-head'); if (h && !h.querySelector('.gg-rbar')) h.appendChild(R.control({ root: document.getElementById('client-life'), label: 'Read this page aloud' })); var art = document.querySelector('#client-life .lc-article'), q = art && art.querySelector('.lc-quick'); if (q && !art.querySelector('.gg-rbar')) art.insertBefore(R.control({ root: art, label: 'Read this guide aloud', recorded: 'sequoia' }), q); return r; };
     var cr = window.calculateResults; if (cr) window.calculateResults = function () { var r = cr.apply(this, arguments); var box = document.querySelector('#client-results-content .results-summary'); if (box && !box.querySelector('.gg-rbar')) box.insertBefore(R.control({ root: document.getElementById('client-results-content'), label: 'Read my results aloud' }), box.firstChild); return r; };
     var sv = window.showView; if (sv) window.showView = function () { R.stop(); return sv.apply(this, arguments); };
   });
