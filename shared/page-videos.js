@@ -59,7 +59,7 @@ window.PAGE_VIDEOS = {
   // On a tap, read.js and the shared player (shared/gg-learn.js) load, then the video plays in the player's own
   // overlay styles (ggl ggl-app), with GGLearn.player doing all the playing, the closing scene, and Sources.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b796', LEARN = '/shared/gg-learn.js?v=b793';
+  var READ = '/read.js?v=b797a', LEARN = '/shared/gg-learn.js?v=b797a';
   var PLAY = '<svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -104,7 +104,7 @@ window.PAGE_VIDEOS = {
     if (o.from && o.from.focus) try { o.from.focus(); } catch (e) {}
   }
   function onKey(e) {
-    if (!OPEN || document.querySelector('.gg-vc')) return; // the Voice Check (read.js) sits on top and keeps its own keys
+    if (!OPEN) return;
     if (e.key === 'Escape') { e.preventDefault(); close(); return; }
     if (e.key === 'Tab') { // keep focus inside the dialog
       var f = Array.prototype.filter.call(OPEN.root.querySelectorAll('button,a[href],select,input,[tabindex]:not([tabindex="-1"])'), function (x) { return !x.disabled && x.offsetParent !== null; });

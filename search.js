@@ -70,7 +70,6 @@
     { title: 'About', sub: 'Who we are and how we work', href: '/about.html', keys: 'about who chris kayti joy founders our story' },
     { title: 'Grounded Stories', sub: 'Real stories from the edge of life, narrated or to read', href: '/stories.html', keys: 'stories story grounded stories chaplain hospice bedside narrated watch read member members code substack early preview' },
     { title: 'Contact', sub: 'Reach out, we reply within two days', href: '/contact.html', keys: 'contact email call reach out question' },
-    { title: 'Voice Setup', sub: 'Set up a good voice for Read Aloud', href: '/voice-setup.html', keys: 'voice voices read aloud premium enhanced natural siri robotic sound audio video setup speech' },
     { title: 'The Grounded Library', sub: 'The books behind Grounded, twenty years of study', href: '/library/', keys: 'library books reading bookshelf shelf reading list resources authors' },
     { title: 'Privacy', sub: 'Your answers stay on your device', href: '/privacy.html', keys: 'privacy data private' },
     { title: 'Terms', sub: 'Terms of use', href: '/terms.html', keys: 'terms legal' }

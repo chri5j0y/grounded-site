@@ -1827,7 +1827,7 @@ function sayQ(i) {
   if (S.inSafety) { const q = safetyFor(S.grade)[i]; if (q) say(q[0]); return; }
   const q = qsFor(S.grade, PARTS[S.step].key)[i]; if (q) say(q[0]);
 }
-/* The shared voice picker, speed, and "Get a better voice" help (read.js), shown while read aloud is on. */
+/* The shared voice picker and speed (read.js), shown while read aloud is on. */
 function voiceSlots() {
   document.querySelectorAll('.voice-slot').forEach(el => {
     if (!S.readAloud) { el.innerHTML = ''; return; }
@@ -3392,9 +3392,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b793';document.head.appendChild(s)"></script>
-<script src="/read.js?v=b796" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b796';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b797a" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b797a';document.head.appendChild(s)"></script>
+<script src="/read.js?v=b797a" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b797a';document.head.appendChild(s)"></script>
 <script src="/nav.js?v=b793" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b793';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b793" defer></script><!-- /PAGE VIDEO -->
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b797a" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

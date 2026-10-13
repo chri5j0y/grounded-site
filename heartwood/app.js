@@ -1293,7 +1293,6 @@
     if (CTL) { CTL.stop(); CTL = null; }
     var L = learnData(), D = lload(), el = $('gm-learn');
     el.innerHTML = '<div class="ff-card"><h2>' + esc(L.title) + '</h2>' + (L.intro ? '<p class="ff-sub">' + esc(L.intro) + '</p>' : '') + '</div>' +
-      (window.GGLearn && GGLearn.voiceCard ? '<div class="btv-voice">' + GGLearn.voiceCard() + '</div>' : '') +
       L.tracks.map(function (t) {
         return '<div class="ff-card"><h3>' + esc(t.title) + '</h3>' + (t.who ? '<p class="ff-sub">' + esc(t.who) + '</p>' : '') + '<div class="btv-lessons">' + t.lessons.map(function (l, li) {
           return '<button type="button" class="btv-lesson' + (D.done[l.id] ? ' done' : '') + '" data-lesson="' + esc(l.id) + '"><span class="btv-ln">' + (D.done[l.id] ? '&#10003;' : esc(String(ATV ? li + 1 : (l.n || '')))) + '</span><span><b>' + esc(l.title) + '</b>' + (l.blurb ? '<small>' + esc(l.blurb) + '</small>' : '') + (l.mins ? '<small>' + esc(l.mins) + ' min</small>' : '') + '</span></button>';
@@ -1321,7 +1320,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b796', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b793', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b797a', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b797a', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }
@@ -1338,7 +1337,6 @@
     $('gm-learn').addEventListener('click', function (e) {
       var b = e.target.closest('[data-lesson]'); if (b) return learnPlay(b.getAttribute('data-lesson'));
       if (e.target.closest('[data-lback]')) return learnList();
-      var v = e.target.closest('[data-l="vcheck"]'); if (v && window.GGRead && GGRead.check) GGRead.check(function () { learnList(); });
     });
   }
 

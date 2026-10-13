@@ -645,9 +645,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b787"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
-<script src="../read.js?v=b796"></script>
+<script src="../read.js?v=b797a"></script>
 <script src="../shared/gg-sources.js?v=b789"></script>
-<script src="../shared/gg-learn.js?v=b793"></script>
+<script src="../shared/gg-learn.js?v=b797a"></script>
 <script src="../shared/gg-print.js?v=b793"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -2108,7 +2108,7 @@ function storiesMerge(a, b){ const o = Object.assign({}, a || {}); Object.entrie
    - A lesson is {id, n, title, mins, scenes:[...]} and each scene is {k, say, ...}. Kinds: title, parts, big,
      points, trees, levels, flow, screen, tabs, card, quiz. Scenes are drawn on a 960 by 540 canvas that
      scales to the screen. Narration uses the shared read-aloud engine (read.js): the device's best voice,
-     the voice picker, speed, and Get a better voice.
+     the voice picker and speed.
    - Progress (DATA.learn.done, DATA.learn.at) is saved with this device's records and travels in backups. */
 // The player, scenes, and closing scene live in shared/gg-learn.js (one player for the Field Guide and every tree app).
 // Locked clips (GWG BLD 781): a sealed video plays Brian's recorded clips, unlocked with the audio key inside the library
@@ -2163,7 +2163,6 @@ function vLearn(){
      <div class="lc-cats">${wfgRings(x).map(R => { const n = R.guides.filter(g => wfgDone(g.id)).length; return `<button class="card lc-cat" style="border-left-color:${FGSER[x].accent}" data-act="lc-ring" data-v="${esc(R.key)}"><h3>${esc(R.name)}</h3><p class="lc-n">${n} of ${R.guides.length} finished</p></button>`; }).join('')}</div></div>`;
   }
   return `<div class="ggl"><div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1><p class="muted">${esc(intro)}</p></div>
-  ${window.GGLearn && GGLearn.voiceCard ? GGLearn.voiceCard() : ''}
   ${fgStoriesCard()}
   <div class="lc-cats">${cats.map(c => `<button class="card lc-cat" style="border-left-color:${c.accent}" data-act="${c.act || 'lc-cat'}" data-v="${esc(c.k)}"><div class="eyebrow" style="color:${c.accent}">${esc(c.eb)}</div><h3>${esc(c.title)}</h3>${c.intro ? `<p class="muted">${esc(c.intro)}</p>` : ''}<p class="lc-n">${esc(c.n)}</p></button>`).join('')}</div>
   <p class="muted" style="font-size:14px">Learn is optional and never blocks anything. Required trainings live in ${TIER === 'guide' ? 'Orientation and each Guide' : 'Training and each Guide'}.</p></div>`;
@@ -2211,7 +2210,6 @@ function lnAct(a, v){
     case 'ln-readmode': lnStop(); V.lnread = v || null; render(); return true;
     case 'ln-readdone': { const d = lnData(); if (!d.done[v]){ d.done[v] = today(); save(); } render(); toast('Marked as read.'); return true; }
     case 'ln-cert': lnCert(lnTracks().find(t => t.id === v)); return true;
-    case 'ln-vcheck': if (window.GGRead && GGRead.check) GGRead.check(() => { if (!V.ln) go('learn'); }); return true;
   }
   return false;
 }
