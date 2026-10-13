@@ -126,7 +126,7 @@
     return script(BASE + 'index.js').then(function () {
       var raw = window.GGReadingsIndex || { items: [], groups: {} };
       IDX = { v: raw.v, groups: raw.groups || {}, items: (raw.items || []).map(function (a) {
-        var x = { id: a[0], title: a[1], by: a[2], g: a[3], trad: a[4] || [], denom: a[5] || [], type: a[6], occasion: a[7] || [], first: a[8] || '', rights: a[9], voice: a[10], tr: a[11] || '' };
+        var x = { id: a[0], title: a[1], by: a[2], g: a[3], trad: a[4] || [], denom: a[5] || [], type: a[6], occasion: a[7] || [], first: a[8] || '', rights: a[9], voice: a[10], tr: a[11] || '', note: a[12] || '' };
         BYID[x.id] = x; return x;
       }) };
       return IDX;
@@ -156,7 +156,7 @@
   function tradHit(x, t) { if (!t) return true; if (x.trad.indexOf(t) >= 0) return true; return t !== 'all' && CHRISTIAN.indexOf(t) >= 0 && x.trad.indexOf('christian') >= 0; }
   function words(q) { return norm(q).toLowerCase().replace(/[^\w\s'À-ɏ]/g, ' ').split(/\s+/).filter(function (w) { return w.length > 1; }); }
   function hay(x) {
-    if (!x._h) x._h = (x.title + ' ' + x.by + ' ' + x.tr + ' ' + x.first + ' ' + x.trad.map(tradName).join(' ') + ' ' + x.denom.map(denomName).join(' ') + ' ' + (TYPE[x.type] || '') + ' ' + x.occasion.map(function (o) { return OCC[o] || o; }).join(' ')).toLowerCase();
+    if (!x._h) x._h = (x.title + ' ' + x.by + ' ' + x.tr + ' ' + x.first + ' ' + x.note + ' ' + x.trad.map(tradName).join(' ') + ' ' + x.denom.map(denomName).join(' ') + ' ' + (TYPE[x.type] || '') + ' ' + x.occasion.map(function (o) { return OCC[o] || o; }).join(' ')).toLowerCase();
     var full = DATA[x.g] && DATA[x.g][x.id];
     return full ? x._h + ' ' + (full._t || (full._t = (full.text + ' ' + (full.note || '')).toLowerCase())) : x._h;
   }
@@ -410,12 +410,13 @@
       var p = root.closest('.ggr-panel'); if (p) { p.scrollTop = 0; return; }
       var y = root.getBoundingClientRect().top + window.pageYOffset - 90; if (window.pageYOffset > y) window.scrollTo(0, Math.max(0, y));
     }
+    var ready = opts.onReady;
     function draw() {
       root.setAttribute('aria-busy', 'true');
       index().then(function (ix) {
         root.removeAttribute('aria-busy');
-        if (st.open) return drawReading(st.open);
-        drawList(ix);
+        if (st.open) drawReading(st.open); else drawList(ix);
+        if (ready) { var f = ready; ready = null; setTimeout(f, 0); }
       }).catch(function () { root.innerHTML = '<p class="ggr-empty">The library is loading slowly. Check the connection, then try again.</p><button type="button" class="ggr-btn" data-act="retry">Try Again</button>'; });
     }
     function present(ix, key) { var m = {}; ix.items.forEach(function (x) { (x[key] || []).forEach(function (k) { m[k] = (m[k] || 0) + 1; }); }); return m; }
@@ -562,8 +563,8 @@
     dlg.addEventListener('click', function (e) { if (e.target === dlg) close(null); });
     dlg.querySelector('.ggr-x').addEventListener('click', function () { close(null); });
     ctl = mount(dlg.querySelector('.ggr-host'), { q: opts.q, trad: opts.trad, denom: opts.denom, type: opts.type, occasion: opts.occasion, id: opts.id, button: opts.button,
-      onPick: opts.onPick ? function (r) { var f = opts.onPick; close(r); f(r); } : null });
-    setTimeout(function () { var q = dlg.querySelector('.ggr-q') || dlg.querySelector('.ggr-x'); if (q) try { q.focus({ preventScroll: true }); } catch (e) {} }, 60);
+      onPick: opts.onPick ? function (r) { var f = opts.onPick; close(r); f(r); } : null,
+      onReady: function () { if (done) return; var q = dlg.querySelector('.ggr-q') || dlg.querySelector('.ggr-back') || dlg.querySelector('.ggr-x'); if (q) try { q.focus({ preventScroll: true }); } catch (e) {} } });
     openDlg = { el: dlg, close: close, ctl: ctl };
     return openDlg;
   }
