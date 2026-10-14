@@ -1327,16 +1327,15 @@ function myParts(p){ const out = []; let cur = {h: '', n: 0, lines: [], grave: f
   return out.filter(x => x.h || x.lines.some(l => clean(l))); }
 const myHeads = p => myParts(p).filter(x => x.n && !x.grave).map(x => x.h);
 const myGrave = p => myParts(p).some(x => x.grave);
-const MSCSS = `<style>.ms h1{margin-bottom:1mm;}.ms .ms-part{margin:0 0 4mm;}.ms h2{font-size:18pt;margin:9mm 0 3mm;padding-bottom:1mm;border-bottom:.6pt solid #DDD0B8;break-after:avoid;page-break-after:avoid;}.ms .ms-s{font-size:16pt;line-height:1.45;margin:0 0 1.4mm;}.ms .ms-end{margin-bottom:5.5mm;}.ms .ms-a{font-size:16pt;line-height:1.45;font-style:italic;margin:0 0 4mm 9mm;}.ms .ms-c,.ms .ms-n{font-size:11pt;line-height:1.4;font-style:italic;color:#6B6155;margin:0 0 2mm;}.ms .ms-n b{font-style:normal;}.mso{text-align:center;}.mso p{margin:0 0 2mm;}.mso h2{margin:7mm 0 3mm;}</style>`;
-// One sentence a line, so the eye keeps its place while reading aloud; a wider gap ends each paragraph.
-const SENT = /(?<!\b(?:St|Mr|Mrs|Ms|Dr|Jr|Sr|Rev|Fr|Mt|vs)\.)(?<=[.!?]["'\u201d\u2019)]*)\s+(?=["'\u201c\u2018(\[]?[A-Z0-9])/;
-function sayP(t){ const ss = String(t || '').replace(/\s+/g, ' ').trim().split(SENT).map(x => x.trim()).filter(Boolean);
-  return ss.map((x, i) => i === ss.length - 1 ? `<p class="ms-s ms-end" data-pdf-k="say">${H(x)}</p>` : `<p class="ms-s" data-pdf-k="sayl">${H(x)}</p>`).join(''); }
+const MSCSS = `<style>.ms h1{margin-bottom:1mm;}.ms .ms-part{margin:0 0 2mm;}.ms h2{font-size:15pt;margin:6mm 0 2mm;padding-bottom:.6mm;border-bottom:.6pt solid #DDD0B8;break-after:avoid;page-break-after:avoid;}.ms .ms-s{font-size:14pt;line-height:1.45;margin:0 0 3.2mm;}.ms .ms-pz{color:#A8823A;font-size:11pt;font-weight:700;letter-spacing:.5pt;}.ms .ms-a{font-size:14pt;line-height:1.45;font-style:italic;margin:0 0 3mm 9mm;}.ms .ms-c,.ms .ms-n{font-size:10pt;line-height:1.35;font-style:italic;color:#6B6155;margin:0 0 1.4mm;}.ms .ms-n b{font-style:normal;}.mso{text-align:center;}.mso p{margin:0 0 2mm;}.mso h2{margin:7mm 0 3mm;}</style>`;
+// Natural paragraphs read like speaking. A "//" the officiant types marks an intended pause: small and gold in print, kept as // in the PDF.
+const pz = t => H(t).replace(/\s*\/\/\s*/g, ' <span class="ms-pz">//</span> ').trim();
+function sayP(t){ const x = String(t || '').replace(/\s+/g, ' ').trim(); return x ? `<p class="ms-s" data-pdf-k="say">${pz(x)}</p>` : ''; }
 const sayParas = t => String(t || '').split(/\n{2,}/).filter(x => clean(x)).map(sayP).join('');
 function myLine(l){ const t = l.trim(); if (!t) return '';
   if (/^coaching notes:?$/i.test(t)) return '<p class="ms-n" data-pdf-k="cue"><b>Coaching notes</b></p>';
   if (/^[\u2022*]\s*/.test(t)) return `<p class="ms-n" data-pdf-k="cue">${H(t)}</p>`;
-  if (/^all\s*:/i.test(t)) return `<p class="ms-a" data-pdf-k="ans">${H(t)}</p>`;
+  if (/^all\s*:/i.test(t)) return `<p class="ms-a" data-pdf-k="ans">${pz(t)}</p>`;
   if (/^\(.*\)$/.test(t)) return `<p class="ms-c" data-pdf-k="cue">${H(t)}</p>`;
   return sayP(t); }
 function myPart(p, x){ const ed = eulogyText(p), pull = ed && x.n && /eulogy|remembering|life story/i.test(x.h) && !x.lines.some(l => wordsIn(l) > 80);
@@ -1348,7 +1347,7 @@ const coverLine = (p, l) => /\[ask the family[^\]]*\]/i.test(l) && /\b(1[89]|20)
 function myOrderHTML(p){ const cover = clean(p.progText) ? String(p.progText).split('\n').map(l => l.trim() ? `<p>${H(coverLine(p, l.trim()))}</p>` : '<p>&nbsp;</p>').join('') : `<h1>${H(p.person.full || called(p))}</h1><p>${H(lifeLine(p))}</p>`;
   return MSCSS + `<div class="mso">${cover}<h2>Order of Service</h2>${myHeads(p).map(h => `<p><b>${H(h)}</b></p>`).join('')}${myGrave(p) ? '<p><i>Committal to follow</i></p>' : ''}</div>`; }
 function vMyScript(p){ if (!p.script) return ''; const on = myOn(p);
-  return blk(p, 'My Service Script', 'myscript', `<p class="fw-sub" style="margin-top:0">${on ? 'Pasted from Writing Help. The Officiant Script, the Order of Service, the Graveside Committal, the Family Copy, and Send Everything all use these words.' : "Set aside for now: the Builder's own service is in use."} Each numbered line, like "3. Welcome", starts a part. Lines in (parentheses) print as cues, and lines starting with a bullet print as coaching notes. The eulogy part prints the current eulogy draft.</p>
+  return blk(p, 'My Service Script', 'myscript', `<p class="fw-sub" style="margin-top:0">${on ? 'Pasted from Writing Help. The Officiant Script, the Order of Service, the Graveside Committal, the Family Copy, and Send Everything all use these words.' : "Set aside for now: the Builder's own service is in use."} Each numbered line, like "3. Welcome", starts a part. Lines in (parentheses) print as cues, lines starting with a bullet print as coaching notes, and // marks a pause. The eulogy part prints the current eulogy draft.</p>
     <textarea rows="18" class="fw-bigta" data-fwi="script.t" aria-label="My Service Script">${esc(p.script.t)}</textarea>
     <label class="f" for="fw-progtext" style="margin-top:10px">Program Text (the cover of the Order of Service)</label><textarea id="fw-progtext" rows="6" class="fw-bigta" data-fwi="progText" aria-label="Program Text">${esc(p.progText || '')}</textarea>
     <p class="fw-sub" style="margin-top:2px">A dates line marked [ask the family] takes the birth and death dates from Their Story.</p>

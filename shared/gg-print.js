@@ -559,7 +559,7 @@
   function needPdf() {
     return new Promise(function (ok) {
       if (window.ggTakeHomePdf) return ok();
-      var s = document.createElement('script'); s.src = A('/shared/gg-pdf.js?v=b802'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
+      var s = document.createElement('script'); s.src = A('/shared/gg-pdf.js?v=b803'); s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s);
     });
   }
   function loadImg(u) { return new Promise(function (ok) { var i = new Image(); i.onload = function () { ok(i); }; i.onerror = function () { ok(null); }; i.src = u; }); }
