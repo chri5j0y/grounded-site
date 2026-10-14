@@ -1022,7 +1022,7 @@ function famText(p){
   if (attireLines(p).length) out.push('', String(cfg().attire.title || 'What to Wear').toUpperCase(), ...attireLines(p));
   if (p.reh.date || p.reh.place) out.push('', 'REHEARSAL', [nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '));
   const nx = p.next.filter(x => !x.done); if (nx.length) out.push('', 'NEXT STEPS', ...nx.map(x => '* ' + x.t));
-  const ob = obitText(p); if (ob) out.push('', 'THE OBITUARY: ' + ob.name.toUpperCase(), ob.text);
+  const ob = inPk(p, 'obit') ? obitText(p) : null; if (ob) out.push('', 'THE OBITUARY: ' + ob.name.toUpperCase(), ob.text);
   out.push('', 'With you,', me());
   return out.filter((x, i, a) => !(x === '' && a[i - 1] === '')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
@@ -1180,7 +1180,7 @@ function outHTML(p, k){
   }
   if (k === 'family'){
     const sec = (h, x) => x ? `<div class="fw-ps"><h3>${H(h)}</h3>${x}</div>` : '', ln = a => a.filter(Boolean).map(x => `<p>${x}</p>`).join('');
-    const fw = picked(p, 'faithway').concat(picked(p, 'tradition')), nx = p.next.filter(x => !x.done), ob = obitText(p);
+    const fw = picked(p, 'faithway').concat(picked(p, 'tradition')), nx = p.next.filter(x => !x.done), ob = inPk(p, 'obit') ? obitText(p) : null;
     return [`<h1>${H(pName(p))}'s Farewell</h1><p><i>${H(fill(cfg().familyCopyLead, p))}</i></p><div class="fw-2c">` +
       sec('Remembering', ln([H((p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : '')), H(lifeLine(p))])) +
       sec('The Service Will Be', fw.length ? ln([H(fw.join(', '))]) : '') +
@@ -1195,7 +1195,7 @@ function outHTML(p, k){
   if (k === 'helpers'){
     const by = {}; p.tasks.forEach(t => { const w = t.who || 'Not yet assigned'; (by[w] = by[w] || []).push((t.done ? '[x] ' : '[ ] ') + t.t + (t.d ? ': ' + t.d : '')); });
     gSel(p).forEach(g => { const w = p.tags['g-' + g.id]; if (w) (by[w] = by[w] || []).push('[ ] ' + g.t + (gLine(p, g) ? ': ' + gLine(p, g) : '')); });
-    const ob = obitText(p);
+    const ob = inPk(p, 'obit') ? obitText(p) : null;
     [['eulogy', 'The eulogy'], ['obit', ob ? '' : 'The obituary'], ['honors', 'Honors: ' + picked(p, 'honors').join(', ')], ['clergy', 'Other clergy']].forEach(([key, t]) => { const w = p.tags[key]; if (w && t) (by[w] = by[w] || []).push('[ ] ' + t); });
     if (ob){ const w = obWho(p); (by[w] = by[w] || []).push('[ ] The obituary to the funeral home: the ' + ob.name + ', about ' + wordsIn(ob.text) + ' words (the full text is in the Family Copy)'); }
     return [`<h1>Helpers' Checklist</h1><p>${H(headLine(p))}</p>` + `<div class="fw-2c">${Object.keys(by).map(w => `<div class="fw-ps"><h3>${H(w)}</h3><ul>${by[w].map(x => `<li>${H(x)}</li>`).join('')}</ul></div>`).join('')}</div>`, "Helpers' Checklist", 'helpers-checklist'];
@@ -1283,7 +1283,7 @@ function contactRows(p){
 }
 // The packet as sections: [id, heading, html, text]
 function fdSecs(p){
-  const P = cfg().fdPacket, H2 = id => (arr(P.sections).find(x => x.id === id) || {}).h, out = [], T = timedOrder(p), g = mainG(p), ob = obitText(p);
+  const P = cfg().fdPacket, H2 = id => (arr(P.sections).find(x => x.id === id) || {}).h, out = [], T = timedOrder(p), g = mainG(p), ob = inPk(p, 'obit') ? obitText(p) : null;
   const add = (id, html, text) => { if (H2(id) && (html || text)) out.push([id, H2(id), html, text]); };
   if (myOn(p)) add('order', `<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>`, myHeads(p).map((h, i) => (i + 1) + '. ' + h).join('\n'));
   else add('order', T.length ? `<table class="fw-pt"><tr><th>#</th><th>Time</th><th>Part</th><th>Who</th><th>Min</th></tr>${T.map((r, i) => `<tr><td>${i + 1}</td><td>${H(r.at)}</td><td><b>${H(r.name)}</b>${holds(r).length ? '<br><i>' + H(holds(r).join('; ')) + '</i>' : ''}</td><td>${H(r.by || me())}</td><td>${r.mins}</td></tr>`).join('')}</table><p>About ${svcTotal(p)} minutes.</p>` : '',
@@ -1355,10 +1355,16 @@ function vMyScript(p){ if (!p.script) return ''; const on = myOn(p);
 function scriptHTML(p){ const o = order(p), ed = eulogyText(p); if (!o.length) return '';
   return `<div class="ht-page fw-pg"><h1>Order of Service and Officiant Script</h1><p>${H(headLine(p))}</p>${g0(p)}<p>About ${svcTotal(p)} minutes.</p>` +
     timedOrder(p).map((r, i) => `<div class="fw-sp"><h2>${i + 1}. ${H(r.name)} <small>(${r.at ? H(r.at) + ', ' : ''}${r.mins} min${r.by ? ', ' + H(r.by) : ''})</small></h2>${holds(r).length ? `<p><b>${H(holds(r).join('; '))}</b></p>` : ''}${paras(r.words)}${arr(r.rd).map(x => `<p><b>${H(x.head)}</b></p>${paras(x.text)}${x.source ? `<p style="font-size:8.5pt;font-style:italic">${H(x.source)}</p>` : ''}`).join('')}${ed && /eulogy|life story|the life/i.test(r.name) ? `<p><b>The Eulogy</b></p>${paras(ed)}` : ''}${r.dos.length ? `<p style="font-size:9pt"><i>For the officiant: ${H(r.dos.join(' '))}</i></p>` : ''}</div>`).join('') + `</div>`; }
+// What Goes in The Packet (GWG BLD 804): each piece is in unless switched off for this plan; the Obituary switch also
+// covers the Family Copy and the Funeral Director Packet (useful when the funeral home writes the obituary).
+const inPk = (p, k) => !(p.pk && p.pk[k] === false);
+const hasOther = p => gSel(p).some(g => g.script && g.script !== 'committal' && !g.main);
+function pkChips(p){ const L = [['script', 'Officiant Script'], ['rehearsal', 'Rehearsal Plan'], ['committal', 'Graveside Committal'], ['family', 'Family Copy'], ['helpers', "Helpers' Checklist"]].concat(hasOther(p) ? [['other', 'Other Gatherings']] : []).concat(obitText(p) ? [['obit', 'The Obituary']] : []);
+  return `<div class="fw-lbl" style="margin-top:10px">What Goes in The Packet</div><div class="fw-chips">${L.map(([k, t]) => `<button type="button" class="chip fw-sm" data-fwa="pk" data-fwv="${k}" aria-pressed="${inPk(p, k)}"${fk('pk|' + k)}>${esc(t)}</button>`).join('')}</div>`; }
 function bundleHTML(p){
   const ap = lastAppr(p);
   return PCSS + `<style>.fw-pg + .fw-pg{break-before:page;page-break-before:always;}.fw-sp{break-inside:avoid;margin:0 0 3mm;}.fw-sp h2 small{font-weight:400;}.fw-qs li{margin:0 0 3mm;}.fw-wl{border-bottom:.5pt solid #9C8B76;height:6mm;}</style>` +
-    (myOn(p) ? `<div class="ht-page fw-pg">${myScriptHTML(p)}</div>` : scriptHTML(p)) + pageOf(p, 'rehearsal') + pageOf(p, 'committal') + pageOf(p, 'family') + pageOf(p, 'helpers') + (gSel(p).some(g => g.script && g.script !== 'committal' && !g.main) ? pageOf(p, 'other') : '') +
+    (inPk(p, 'script') ? (myOn(p) ? `<div class="ht-page fw-pg">${myScriptHTML(p)}</div>` : scriptHTML(p)) : '') + (inPk(p, 'rehearsal') ? pageOf(p, 'rehearsal') : '') + (inPk(p, 'committal') ? pageOf(p, 'committal') : '') + (inPk(p, 'family') ? pageOf(p, 'family') : '') + (inPk(p, 'helpers') ? pageOf(p, 'helpers') : '') + (inPk(p, 'other') && hasOther(p) ? pageOf(p, 'other') : '') +
     (ap ? `<p style="margin-top:4mm"><i>${H(apLine(p, ap))}</i></p>` : '');
 }
 function bundleText(p){ const o = order(p);
@@ -1503,7 +1509,7 @@ function vWriting(p){
 // What You'll Get, the new cards.
 function vSend(p){ const B = cfg().bundle, P = cfg().fdPacket, Q = cfg().fdQuestions, f = p.fd || {}, M = musicIn(p), A = p.fdq || {};
   const whoT = whoList(p).concat(['Musician']).filter((x, i, a) => a.indexOf(x) === i);
-  return `<div class="fw-ocard fw-big1" data-fwanc="bundle"><h4>${esc(B.title)}</h4><p>${esc(W(B.lead, p))}</p><div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print the Packet</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="copy">Copy</button></div>
+  return `<div class="fw-ocard fw-big1" data-fwanc="bundle"><h4>${esc(B.title)}</h4><p>${esc(W(B.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print the Packet</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="copy">Copy</button></div>
     <p class="fw-sub">${p.bundleSent ? 'Sent ' + esc(nice(p.bundleSent.date)) + '. ' : ''}Save it as a PDF first, then attach it to the email or text. ${esc(apStatus(p).t)}</p></div>` +
   blk(p, P.title, 'fdpacket', `<p class="fw-sub" style="margin-top:0">${esc(W(P.lead, p))}</p>
     <div class="fw-g2">${fld('fd.home', 'Funeral home', f.home)}${fld('fd.director', 'Funeral director', f.director)}${fld('fd.ph', 'Phone', f.ph, 'tel')}${fld('fd.em', 'Email', f.em, 'email')}</div>
@@ -1524,7 +1530,7 @@ function finNext(p){ const F = cfg().finish, L = arr(F.next).map(t => ({t: W(t, 
   return L; }
 function vFinish(p){ const F = cfg().finish, st = apStatus(p);
   return sayBox(p, F.say) + `<div class="fw-fin" data-fwanc="fin-thanks"><p class="fw-read">${esc(W(thanksT(p), p))}</p><p>With you,<br>${esc(me())}</p></div>` +
-    blk(p, 'The Packet', 'fin-packet', `<p class="fw-sub" style="margin-top:0">${esc(W(cfg().bundle.lead, p))}</p><div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button></div>`) +
+    blk(p, 'The Packet', 'fin-packet', `<p class="fw-sub" style="margin-top:0">${esc(W(cfg().bundle.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button></div>`) +
     blk(p, cfg().approval.title, 'fin-approval', `<p class="${st.ok ? 'fw-ok' : 'fw-sub'}" style="margin-top:0">${esc(st.t)}</p>${st.ok ? '' : '<div class="row"><button type="button" class="btn btn-line btn-sm" data-fwa="step" data-fwv="7">Go to Family Approval</button></div>'}`) +
     blk(p, 'Next Steps', 'fin-next', `<ul class="fw-flist">${finNext(p).map(x => `<li><span>${esc(x.t)}</span><span>${x.go ? `<button type="button" class="linkbtn" data-fwa="step" data-fwv="${x.go}">Step ${x.go}</button>` : ''}</span></li>`).join('')}</ul>`); }
 function famFinish(p){ const F = cfg().finish;
@@ -1903,6 +1909,7 @@ function act(a, v, el){
     case 'svc-on': CER().set(p.svc, v, 'on', true); touch(p); rerender(true); return;
     case 'cer-print': if (hasSvc(p)){ cerBind(); CER().print(p.svc, v); } return;
     case 'my-print': if (myOn(p) || p.script){ if (v === 'order') sheet(myOrderHTML(p), 'Order of Service', 'order-of-service'); else sheet(myScriptHTML(p), 'Officiant Script', 'officiant-script'); } return;
+    case 'pk': p.pk = p.pk || {}; p.pk[v] = !inPk(p, v); touch(p); rerender(false); return;
     case 'my-on': case 'my-off': if (p.script){ p.script.on = a === 'my-on'; touch(p); rerender(true); toast(a === 'my-on' ? 'My Service Script is in use.' : "The Builder's own service is in use."); } return;
     case 'my-del': if (p.script && confirm("Remove My Service Script? The Builder's own service comes back.")){ p.script = null; touch(p); rerender(true); } return;
     case 'out': printOut(v); return;
