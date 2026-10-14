@@ -951,7 +951,7 @@ V[6] = p => sayBox(p, STEP(6).say) +
 V[7] = p => sayBox(p, STEP(7).say) +
   `<div class="fw-fam fw-inline"><h2>${esc(pName(p))}'s Farewell</h2><p class="fw-fsub">The plan so far</p>${summary(p)}</div>` +
   blk(p, 'Next Steps', 'next', p.next.map((k, i) => `<div class="fw-task${k.done ? ' done' : ''}"><label class="fw-ck"><input type="checkbox" data-fwc="next.${i}.done"${k.done ? ' checked' : ''}><span>${esc(k.t)}</span></label><button type="button" class="linkbtn" data-fwa="next-del" data-fwv="${i}">Remove</button></div>`).join('') + addOwn('next', 'Add a next step')) +
-  blk(p, "The Family's Copy", 'copy', `<p class="fw-sub" style="margin-top:0">${esc(fill(cfg().familyCopyLead, p))}</p><div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="out" data-fwv="family">Print the Family Copy</button><button type="button" class="btn btn-line btn-sm" data-fwa="fam-copy">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(p.contact.em, pName(p) + "'s Farewell: the plan", famText(p)))}">Email</a></div>`) +
+  blk(p, "The Family's Copy", 'copy', `<p class="fw-sub" style="margin-top:0">${esc(fill(cfg().familyCopyLead, p))}</p><div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="out" data-fwv="family">Print the Family Copy</button><button type="button" class="chip fw-sm" data-fwa="fam-days" aria-pressed="${!!p.daysAhead}">Support for the Days Ahead</button><button type="button" class="btn btn-line btn-sm" data-fwa="fam-copy">Copy</button><a class="btn btn-line btn-sm" href="${esc(mailHref(p.contact.em, pName(p) + "'s Farewell: the plan", famText(p)))}">Email</a></div>`) +
   vApprove(p) + custom(p, 'review') + note(p, 'review');
 
 V[8] = p => sayBox(p, STEP(8).say) + vSend(p) +
@@ -1019,11 +1019,11 @@ function famText(p){
   else if (o.length) out.push('', 'ORDER OF SERVICE (about ' + svcTotal(p) + ' minutes)', ...o.map((r, i) => (i + 1) + '. ' + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')));
   if (p.speakers.length) out.push('', 'FAMILY SPEAKERS', ...p.speakers.map(s => s.name + ', about ' + (+s.min || 0) + ' minutes'));
   if (picked(p, 'honors').length) out.push('', 'HONORS', picked(p, 'honors').join(', '));
-  if (attireLines(p).length) out.push('', String(cfg().attire.title || 'What to Wear').toUpperCase(), ...attireLines(p));
   if (p.reh.date || p.reh.place) out.push('', 'REHEARSAL', [nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '));
   const nx = p.next.filter(x => !x.done); if (nx.length) out.push('', 'NEXT STEPS', ...nx.map(x => '* ' + x.t));
   const ob = inPk(p, 'obit') ? obitText(p) : null; if (ob) out.push('', 'THE OBITUARY: ' + ob.name.toUpperCase(), ob.text);
-  out.push('', 'With you,', me());
+  if (p.daysAhead) out.push('', 'SUPPORT FOR THE DAYS AHEAD', W(DAYS, p));
+  const mm = store().me; out.push('', 'With you,', me(), ...[mm.ph ? 'Cell: ' + mm.ph : '', mm.em ? 'Email: ' + mm.em : ''].filter(Boolean), 'Grow With Grounded, growwithgrounded.com');
   return out.filter((x, i, a) => !(x === '' && a[i - 1] === '')).join('\n').replace(/\n{3,}/g, '\n\n').trim();
 }
 
@@ -1149,10 +1149,15 @@ function vPhone(p){
 // ---------- printouts (the Field Guide's own print path: fgSheet) ----------
 const H = s => esc(s);
 const paras = t => String(t || '').split(/\n{2,}/).map(x => x.trim()).filter(Boolean).map(x => `<p>${esc(x).replace(/\n/g, '<br>')}</p>`).join('');
-function sheet(html, title, file){
-  const body = (C.ph ? C.ph('Farewell Planning Session') : '') + html + (C.pf ? C.pf() : '');
+// Pages the family keeps (GWG BLD 805) carry Grow With Grounded only: the tree and name at the top with "In Loving
+// Memory" and their name, and a footer with the website and how to reach the officiant.
+function sheet(html, title, file, fam){
+  let head = C.ph ? C.ph('Farewell Planning Session') : '';
+  if (fam) head = head.replace(/<div class="r">[\s\S]*?<\/div><\/div>\s*$/, `<div class="r">In Loving Memory<br>${H(fam)}</div></div>`);
+  const foot = fam ? `<div class="pr-foot">Grow With Grounded&trade; &middot; growwithgrounded.com &middot; &copy; ${new Date().getFullYear()} Grow With Grounded LLC</div>` : (C.pf ? C.pf() : '');
+  const body = head + html + foot;
   API.last = {title, html: body};
-  if (C.sheet) C.sheet(body, title, {file});
+  if (C.sheet) C.sheet(body, title, fam ? {file, foot: 'Grow With Grounded. growwithgrounded.com'} : {file});
 }
 const blkT = (p, b) => fill(b.t != null ? b.t : (plainOf(p) ? b.plain : b.faith) || (plainOf(p) ? '' : b.plain) || '', p);
 const headLine = p => [p.person.full || called(p), lifeLine(p)].filter(Boolean).join(', ');
@@ -1187,10 +1192,10 @@ function outHTML(p, k){
       sec('Gatherings', ln(gSel(p).map(g => '<b>' + H(g.t) + '</b>' + (gLine(p, g) ? ': ' + H(gLine(p, g)) : '')))) +
       (myOn(p) ? sec('Order of Service', `<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>`) : sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${holds(r).length ? ' <i>(' + H(holds(r).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '')) +
       sec('Family Speakers', ln(p.speakers.map(x => H(x.name) + ', about ' + (+x.min || 0) + ' minutes'))) +
-      sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) + sec(cfg().attire.title || 'What to Wear', ln(attireLines(p).map(H))) +
+      sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) +
       sec('Rehearsal', (p.reh.date || p.reh.place) ? ln([H([nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '))]) : '') +
       sec('Next Steps', nx.length ? `<ul>${nx.map(x => `<li>${H(x.t)}</li>`).join('')}</ul>` : '') +
-      `</div>` + (ob ? `<div class="fw-ps" style="margin-top:3mm"><h3>The Obituary: ${H(ob.name)}</h3><p style="font-size:9pt;font-style:italic">${H(obWho(p))} sends this to the funeral home. Read it aloud together first and check every name and date.</p>${paras(ob.text)}</div>` : '') + `<p>With you,<br>${H(me())}</p>`, 'Family Copy', 'family-copy'];
+      `</div>` + (ob ? `<div class="fw-ps" style="margin-top:3mm"><h3>The Obituary: ${H(ob.name)}</h3><p style="font-size:9pt;font-style:italic">${H(obWho(p))} sends this to the funeral home. Read it aloud together first and check every name and date.</p>${paras(ob.text)}</div>` : '') + `${famClose(p)}`, 'Family Copy', 'family-copy'];
   }
   if (k === 'helpers'){
     const by = {}; p.tasks.forEach(t => { const w = t.who || 'Not yet assigned'; (by[w] = by[w] || []).push((t.done ? '[x] ' : '[ ] ') + t.t + (t.d ? ': ' + t.d : '')); });
@@ -1209,7 +1214,15 @@ function outHTML(p, k){
 }
 const PCSS = `<style>.fw-pt{border-collapse:collapse;width:100%;font-size:9pt;}.fw-pt td,.fw-pt th{border-bottom:.5pt solid #DDD0B8;padding:.6mm 1.5mm;text-align:left;vertical-align:top;}
 .fw-2c{columns:2;column-gap:7mm;}.fw-ps{break-inside:avoid;margin:0 0 2.5mm;}.fw-ps h3{margin:0 0 .8mm !important;}.fw-ps p,.fw-ps li{margin:0 0 .6mm !important;}.fw-ps ol,.fw-ps ul{margin:0;padding-left:5mm;}</style>`;
-function printOut(k){ const p = plan(); if (!p) return; const r = outHTML(p, k); if (r) sheet(PCSS + r[0], r[1], r[2]); }
+// The Family Copy's close (GWG BLD 805): how to reach the officiant (from Your Contact for Send-Back), the Grow With
+// Grounded name, and, when switched on for this family, Support for the Days Ahead.
+const DAYS = 'Grief moves at its own pace, and every way through it is welcome. When you would like company along the way, [Chris] offers spiritual guidance and emotional support in the months ahead. Grief guides and practices are also waiting at growwithgrounded.com/grief-caregiver-support.html. On a hard night, call or text 988, any hour.';
+function famClose(p){ const m = store().me;
+  return (p.daysAhead ? `<div class="fw-ps fw-days"><h3>Support for the Days Ahead</h3><p>${H(W(DAYS, p))}</p></div>` : '') +
+    `<div class="fw-me"><p>With you,</p><p class="fw-me-n">${H(me())}</p>${m.ph ? `<p>Cell: ${H(m.ph)}</p>` : ''}${m.em ? `<p>Email: ${H(m.em)}</p>` : ''}</div>`; }
+const famName = p => (p.person.full || '').trim() || pName(p);
+const FAMCSS = `<style>.fw-me{margin-top:6mm;padding-top:3mm;border-top:.8pt solid #C9A45C;}.fw-me p{margin:0 0 1mm;}.fw-me-n{font-size:13pt;font-weight:700;}.fw-me-b{color:#8B5E1A;font-size:9.5pt;letter-spacing:.4pt;margin-top:2mm !important;}.fw-days{margin-top:4mm;padding:3mm 4mm;border-left:2.5pt solid #C9A45C;background:#FBF6EC;}</style>`;
+function printOut(k){ const p = plan(); if (!p) return; const r = outHTML(p, k); if (r) sheet(PCSS + (k === 'family' ? FAMCSS : '') + r[0], r[1], r[2], k === 'family' ? famName(p) : ''); }
 
 // ---------- Start a Session: each gathering becomes one of your sessions (DATA.ses.list, sessions.js shape) ----------
 const DEBRIEF = 'Take five minutes for the After-Session Debrief.';
@@ -1849,7 +1862,7 @@ function act(a, v, el){
       if (!/\bapprove|\byes\b|\bagree\b|looks (good|right)/i.test(reply) && !confirm('Their reply does not say "I approve". Record it as their approval anyway?')) return;
       if (p.apSent.ver !== verOf(p) && !confirm('The plan changed after it was sent. Their approval is saved with the version they were sent. Continue?')) return;
       recordAppr(p, {way: 'reply', name: clean(r2.name) || clean(p.contact.name) || 'The family', date: r2.date || today(), reply, ver: p.apSent.ver, text: p.apSent.text}); p.apr = {}; touch(p); rerender(true); toast('Their approval is recorded with the version they read.'); return; }
-    case 'bundle-print': sheet(bundleHTML(p), cfg().bundle.title || 'Send Everything', 'farewell-packet'); return;
+    case 'bundle-print': sheet(FAMCSS + bundleHTML(p), cfg().bundle.title || 'Send Everything', 'farewell-packet', famName(p)); return;
     case 'bundle-send': { const B = cfg().bundle, words = W(B.sendWords, p); p.bundleSent = {date: today(), at: Date.now(), how: v};
       if (v === 'copy') copyText(words + '\n\n' + bundleText(p), 'The packet words are copied.'); else if (v === 'text') openLink(smsHref(p.contact.ph, words)); else openLink(mailHref(p.contact.em, W(B.subject, p), words + '\n\n' + bundleText(p))); touch(p); rerender(true); return; }
     case 'fd-print': sheet(PCSS + '<style>.fw-ps{margin:0 0 3mm;}</style>' + fdHTML(p), cfg().fdPacket.title, 'funeral-director-packet'); return;
@@ -1908,7 +1921,8 @@ function act(a, v, el){
     case 'svc-off': CER().set(p.svc, v, 'on', false); touch(p); rerender(true); return;
     case 'svc-on': CER().set(p.svc, v, 'on', true); touch(p); rerender(true); return;
     case 'cer-print': if (hasSvc(p)){ cerBind(); CER().print(p.svc, v); } return;
-    case 'my-print': if (myOn(p) || p.script){ if (v === 'order') sheet(myOrderHTML(p), 'Order of Service', 'order-of-service'); else sheet(myScriptHTML(p), 'Officiant Script', 'officiant-script'); } return;
+    case 'my-print': if (myOn(p) || p.script){ if (v === 'order') sheet(myOrderHTML(p), 'Order of Service', 'order-of-service', famName(p)); else sheet(myScriptHTML(p), 'Officiant Script', 'officiant-script'); } return;
+    case 'fam-days': p.daysAhead = !p.daysAhead; touch(p); rerender(false); return;
     case 'pk': p.pk = p.pk || {}; p.pk[v] = !inPk(p, v); touch(p); rerender(false); return;
     case 'my-on': case 'my-off': if (p.script){ p.script.on = a === 'my-on'; touch(p); rerender(true); toast(a === 'my-on' ? 'My Service Script is in use.' : "The Builder's own service is in use."); } return;
     case 'my-del': if (p.script && confirm("Remove My Service Script? The Builder's own service comes back.")){ p.script = null; touch(p); rerender(true); } return;
