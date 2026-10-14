@@ -51,8 +51,8 @@
     var PW = 612, PH = 792, M = 60, TW = PW - 2 * M;
     var INK = [0.173, 0.094, 0.063], SOFT = [0.35, 0.3, 0.27], GOLD = [0.545, 0.369, 0.102], RULE = [0.81, 0.765, 0.678];
     var ST = { eyebrow: [9, 'F2', GOLD, 6], h1: [21, 'F2', GOLD, 8], sub: [11, 'F1', SOFT, 14], h2: [13, 'F2', INK, 4], p: [11, 'F1', INK, 8], li: [11, 'F1', INK, 3], b: [11, 'F2', INK, 6], i: [10, 'F3', SOFT, 8],
-      // Read-aloud scripts (GWG BLD 801): a sentence a line, roomy; cues small and soft; a fifth value sets the line height.
-      part: [17, 'F2', GOLD, 6], sayl: [15, 'F1', INK, 2, 1.45], say: [15, 'F1', INK, 12, 1.45], ans: [15, 'F3', INK, 10, 1.45], cue: [10, 'F3', SOFT, 6], foot: [8, 'F1', [0.45, 0.42, 0.4], 0] };
+      // Read-aloud scripts (GWG BLD 802): natural paragraphs, roomy lines; cues small and soft; a fifth value sets the line height.
+      part: [14, 'F2', GOLD, 3], sayl: [13, 'F1', INK, 2, 1.4], say: [13, 'F1', INK, 8, 1.4], ans: [13, 'F3', INK, 7, 1.4], cue: [9.5, 'F3', SOFT, 3], foot: [8, 'F1', [0.45, 0.42, 0.4], 0] };
     var pages = [], ops = [], y = PH - M, foot = '';
     function newPage() { if (ops.length) pages.push(ops); ops = []; y = PH - M; }
     function room(h) { if (y - h < M + 20) newPage(); }
@@ -161,7 +161,7 @@
       var s = ST[bk.k] || ST.p, t = text(bk.t), col = rgb(bk.c, s[2]);
       if (!t.trim()) return;
       var size = s[0], lh = size * (s[4] || 1.38), ind = bk.k === 'li' ? 16 : bk.k === 'ans' ? 22 : 0, bold = s[1] === 'F2', head = bk.k === 'h2' || bk.k === 'part';
-      if (head) y -= bk.k === 'part' ? 14 : 8;
+      if (head) y -= bk.k === 'part' ? 10 : 8;
       var words = t.split(/\s+/).filter(Boolean), lines = [], cur = '';
       words.forEach(function (w) { var tr = cur ? cur + ' ' + w : w; if (width(tr, size, bold) <= TW - ind || !cur) cur = tr; else { lines.push(cur); cur = w; } });
       if (cur) lines.push(cur);
