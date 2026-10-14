@@ -1327,22 +1327,31 @@ function myParts(p){ const out = []; let cur = {h: '', n: 0, lines: [], grave: f
   return out.filter(x => x.h || x.lines.some(l => clean(l))); }
 const myHeads = p => myParts(p).filter(x => x.n && !x.grave).map(x => x.h);
 const myGrave = p => myParts(p).some(x => x.grave);
-const MSCSS = `<style>.ms p{font-size:14pt;line-height:1.6;margin:0 0 3mm;}.ms h2{margin:6mm 0 2mm;break-after:avoid;}.ms .ms-c,.ms .ms-n{font-size:10.5pt;line-height:1.4;font-style:italic;color:#5B5348;}.ms .ms-n b{font-style:normal;}.ms .ms-a{font-style:italic;margin-left:8mm;}.ms .ms-eu p{font-size:15pt;line-height:1.8;}.mso{text-align:center;}.mso p{margin:0 0 2mm;}.mso h2{margin:7mm 0 3mm;}</style>`;
+const MSCSS = `<style>.ms h1{margin-bottom:1mm;}.ms .ms-part{margin:0 0 4mm;}.ms h2{font-size:18pt;margin:9mm 0 3mm;padding-bottom:1mm;border-bottom:.6pt solid #DDD0B8;break-after:avoid;page-break-after:avoid;}.ms .ms-s{font-size:16pt;line-height:1.45;margin:0 0 1.4mm;}.ms .ms-end{margin-bottom:5.5mm;}.ms .ms-a{font-size:16pt;line-height:1.45;font-style:italic;margin:0 0 4mm 9mm;}.ms .ms-c,.ms .ms-n{font-size:11pt;line-height:1.4;font-style:italic;color:#6B6155;margin:0 0 2mm;}.ms .ms-n b{font-style:normal;}.mso{text-align:center;}.mso p{margin:0 0 2mm;}.mso h2{margin:7mm 0 3mm;}</style>`;
+// One sentence a line, so the eye keeps its place while reading aloud; a wider gap ends each paragraph.
+const SENT = /(?<!\b(?:St|Mr|Mrs|Ms|Dr|Jr|Sr|Rev|Fr|Mt|vs)\.)(?<=[.!?]["'\u201d\u2019)]*)\s+(?=["'\u201c\u2018(\[]?[A-Z0-9])/;
+function sayP(t){ const ss = String(t || '').replace(/\s+/g, ' ').trim().split(SENT).map(x => x.trim()).filter(Boolean);
+  return ss.map((x, i) => i === ss.length - 1 ? `<p class="ms-s ms-end" data-pdf-k="say">${H(x)}</p>` : `<p class="ms-s" data-pdf-k="sayl">${H(x)}</p>`).join(''); }
+const sayParas = t => String(t || '').split(/\n{2,}/).filter(x => clean(x)).map(sayP).join('');
 function myLine(l){ const t = l.trim(); if (!t) return '';
-  if (/^coaching notes:?$/i.test(t)) return '<p class="ms-n"><b>Coaching notes</b></p>';
-  if (/^[\u2022*]\s*/.test(t)) return `<p class="ms-n">${H(t)}</p>`;
-  if (/^all\s*:/i.test(t)) return `<p class="ms-a">${H(t)}</p>`;
-  if (/^\(.*\)$/.test(t)) return `<p class="ms-c">${H(t)}</p>`;
-  return `<p>${H(t)}</p>`; }
+  if (/^coaching notes:?$/i.test(t)) return '<p class="ms-n" data-pdf-k="cue"><b>Coaching notes</b></p>';
+  if (/^[\u2022*]\s*/.test(t)) return `<p class="ms-n" data-pdf-k="cue">${H(t)}</p>`;
+  if (/^all\s*:/i.test(t)) return `<p class="ms-a" data-pdf-k="ans">${H(t)}</p>`;
+  if (/^\(.*\)$/.test(t)) return `<p class="ms-c" data-pdf-k="cue">${H(t)}</p>`;
+  return sayP(t); }
 function myPart(p, x){ const ed = eulogyText(p), pull = ed && x.n && /eulogy|remembering|life story/i.test(x.h) && !x.lines.some(l => wordsIn(l) > 80);
-  return `<div class="fw-sp">${x.h ? `<h2>${x.n ? x.n + '. ' : ''}${H(x.h)}</h2>` : ''}${x.lines.map(myLine).join('')}${pull ? `<div class="ms-eu">${paras(ed)}</div>` : ''}</div>`; }
+  return `<div class="ms-part">${x.h ? `<h2 data-pdf-k="part">${x.n ? x.n + '. ' : ''}${H(x.h)}</h2>` : ''}${x.lines.map(myLine).join('')}${pull ? sayParas(ed) : ''}</div>`; }
 function myScriptHTML(p, grave){ const P = myParts(p).filter(x => grave ? x.grave : true);
   return MSCSS + `<div class="ms"><h1>${grave ? 'Graveside Committal' : 'Officiant Script'}</h1><p>${H(headLine(p))}</p>${grave ? '' : g0(p)}${P.map(x => myPart(p, x)).join('')}</div>`; }
-function myOrderHTML(p){ const cover = clean(p.progText) ? String(p.progText).split('\n').map(l => l.trim() ? `<p>${H(l.trim())}</p>` : '<p>&nbsp;</p>').join('') : `<h1>${H(p.person.full || called(p))}</h1><p>${H(lifeLine(p))}</p>`;
+// A dates line still waiting on the family ("[ask the family: birth month and day], 1942 to ...") takes the dates from the plan.
+const coverLine = (p, l) => /\[ask the family[^\]]*\]/i.test(l) && /\b(1[89]|20)\d\d\b/.test(l) && lifeLine(p) ? lifeLine(p) : l;
+function myOrderHTML(p){ const cover = clean(p.progText) ? String(p.progText).split('\n').map(l => l.trim() ? `<p>${H(coverLine(p, l.trim()))}</p>` : '<p>&nbsp;</p>').join('') : `<h1>${H(p.person.full || called(p))}</h1><p>${H(lifeLine(p))}</p>`;
   return MSCSS + `<div class="mso">${cover}<h2>Order of Service</h2>${myHeads(p).map(h => `<p><b>${H(h)}</b></p>`).join('')}${myGrave(p) ? '<p><i>Committal to follow</i></p>' : ''}</div>`; }
 function vMyScript(p){ if (!p.script) return ''; const on = myOn(p);
   return blk(p, 'My Service Script', 'myscript', `<p class="fw-sub" style="margin-top:0">${on ? 'Pasted from Writing Help. The Officiant Script, the Order of Service, the Graveside Committal, the Family Copy, and Send Everything all use these words.' : "Set aside for now: the Builder's own service is in use."} Each numbered line, like "3. Welcome", starts a part. Lines in (parentheses) print as cues, and lines starting with a bullet print as coaching notes. The eulogy part prints the current eulogy draft.</p>
     <textarea rows="18" class="fw-bigta" data-fwi="script.t" aria-label="My Service Script">${esc(p.script.t)}</textarea>
+    <label class="f" for="fw-progtext" style="margin-top:10px">Program Text (the cover of the Order of Service)</label><textarea id="fw-progtext" rows="6" class="fw-bigta" data-fwi="progText" aria-label="Program Text">${esc(p.progText || '')}</textarea>
+    <p class="fw-sub" style="margin-top:2px">A dates line marked [ask the family] takes the birth and death dates from Their Story.</p>
     <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="my-print" data-fwv="script">Print in Large Type</button><button type="button" class="btn btn-line btn-sm" data-fwa="my-print" data-fwv="order">Order of Service</button><button type="button" class="btn btn-line btn-sm" data-fwa="${on ? 'my-off' : 'my-on'}">${on ? "Use the Builder's Script" : 'Use My Script'}</button><button type="button" class="linkbtn" data-fwa="my-del">Remove</button></div>`); }
 function scriptHTML(p){ const o = order(p), ed = eulogyText(p); if (!o.length) return '';
   return `<div class="ht-page fw-pg"><h1>Order of Service and Officiant Script</h1><p>${H(headLine(p))}</p>${g0(p)}<p>About ${svcTotal(p)} minutes.</p>` +
@@ -1750,7 +1759,7 @@ function findPiece(p, key){ const i = key.indexOf('|'), k = key.slice(0, i), id 
 function lbRedraw(p){ const l = document.getElementById('fw-lb-list'); if (l) l.innerHTML = lbRows(p); pushFam(); }
 function helperPrint(p, k){
   if (k === 'eulogy'){ const d = String(p.eDraft || '').trim(); if (!d) return toast('Build the draft first.');
-    return sheet(`<style>.fw-eu p{font-size:16pt;line-height:2;margin:0 0 5mm;}</style><h1>Eulogy for ${H(clean(euA(p).name) || pName(p))}</h1><p><i>${H(readTime(d))}</i></p><div class="fw-eu">${paras(d)}</div>`, 'Eulogy', 'eulogy'); }
+    return sheet(MSCSS + `<div class="ms"><h1>Eulogy for ${H(clean(euA(p).name) || pName(p))}</h1><p><i>${H(readTime(d))}</i></p>${sayParas(d)}</div>`, 'Eulogy', 'eulogy'); }
   const o = obS(p), sh = OB.shapes.filter(x => String(o.d[x.id] || '').trim()); if (!sh.length) return toast('Make the drafts first.');
   sheet(sh.map(x => `<h2>${H(x.name)}</h2>${paras(o.d[x.id])}`).join(''), 'Obituary Drafts', 'obituary-drafts');
 }
