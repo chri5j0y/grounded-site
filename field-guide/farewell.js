@@ -956,8 +956,8 @@ V[7] = p => sayBox(p, STEP(7).say) +
 
 V[8] = p => sayBox(p, STEP(8).say) + vSend(p) +
   `<div class="fw-cards">${cfg().outputs.map(o => `<div class="fw-ocard"><h4>${esc(o.title)}</h4><p>${esc(fill(o.lead, p))}</p><div class="row">${o.id === 'order'
-    ? (hasSvc(p) ? `<button type="button" class="btn btn-gold btn-sm" data-fwa="cer-print" data-fwv="script">Officiant Script</button><button type="button" class="btn btn-line btn-sm" data-fwa="cer-print" data-fwv="order">Order of Service</button>` : `<button type="button" class="btn btn-line btn-sm" data-fwa="step" data-fwv="5">Set Up the Order of Service</button>`)
-    : `<button type="button" class="btn btn-gold btn-sm" data-fwa="out" data-fwv="${esc(o.id)}">Print or Save as PDF</button>${o.id === 'family' ? '<button type="button" class="btn btn-line btn-sm" data-fwa="fam-copy">Copy</button>' : ''}`}</div></div>`).join('')}</div>` +
+    ? (myOn(p) ? `<button type="button" class="btn btn-gold btn-sm" data-fwa="my-print" data-fwv="script">Officiant Script</button><button type="button" class="btn btn-line btn-sm" data-fwa="my-print" data-fwv="order">Order of Service</button><p class="fw-sub" style="flex-basis:100%;margin:4px 0 0">From My Service Script, below.</p>` : hasSvc(p) ? `<button type="button" class="btn btn-gold btn-sm" data-fwa="cer-print" data-fwv="script">Officiant Script</button><button type="button" class="btn btn-line btn-sm" data-fwa="cer-print" data-fwv="order">Order of Service</button>` : `<button type="button" class="btn btn-line btn-sm" data-fwa="step" data-fwv="5">Set Up the Order of Service</button>`)
+    : `<button type="button" class="btn btn-gold btn-sm" data-fwa="out" data-fwv="${esc(o.id)}">Print or Save as PDF</button>${o.id === 'family' ? '<button type="button" class="btn btn-line btn-sm" data-fwa="fam-copy">Copy</button>' : ''}`}</div></div>`).join('')}</div>` + vMyScript(p) +
   blk(p, 'Live in Start a Session', 'sessions', `<p class="fw-sub" style="margin-top:0">Each gathering becomes one of your sessions in Start a Session, to run live on a tablet or phone: the words to say, the next cue, who is speaking, and a quiet timer.</p>
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-fwa="make-ses">${arr(p.ses).length ? 'Update the Sessions' : 'Create Sessions'}</button></div>
     ${sesList(p)}`) + vWriting(p) +
@@ -1015,7 +1015,8 @@ function famText(p){
   if (relShown(p)) out.push('', String(REL().printLabel).toUpperCase(), relLabel(p));
   const fw = picked(p, 'faithway').concat(picked(p, 'tradition')); if (fw.length) out.push('', 'THE SERVICE WILL BE', fw.join(', '));
   if (gSel(p).length) out.push('', 'GATHERINGS', ...gSel(p).map(g => g.t + (gLine(p, g) ? ': ' + gLine(p, g) : '')));
-  if (o.length) out.push('', 'ORDER OF SERVICE (about ' + svcTotal(p) + ' minutes)', ...o.map((r, i) => (i + 1) + '. ' + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')));
+  if (myOn(p)) out.push('', 'ORDER OF SERVICE', ...myHeads(p).map((h, i) => (i + 1) + '. ' + h));
+  else if (o.length) out.push('', 'ORDER OF SERVICE (about ' + svcTotal(p) + ' minutes)', ...o.map((r, i) => (i + 1) + '. ' + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')));
   if (p.speakers.length) out.push('', 'FAMILY SPEAKERS', ...p.speakers.map(s => s.name + ', about ' + (+s.min || 0) + ' minutes'));
   if (picked(p, 'honors').length) out.push('', 'HONORS', picked(p, 'honors').join(', '));
   if (attireLines(p).length) out.push('', String(cfg().attire.title || 'What to Wear').toUpperCase(), ...attireLines(p));
@@ -1164,6 +1165,7 @@ function committalBlocks(p){
 function outHTML(p, k){
   const o = order(p), gs = gFor(p, 'graveside') || gFor(p, 'burial');
   const meta = (g) => g ? `<p><b>${H([nice(g.date), tm(g.time)].filter(Boolean).join(', '))}</b>${g.place ? ' · ' + H(g.place) : ''}</p>` : '';
+  if (k === 'committal' && myOn(p) && myGrave(p)) return [myScriptHTML(p, true), 'Graveside Committal Script', 'graveside-committal'];
   if (k === 'committal'){ const {B, src} = committalBlocks(p);
     return [`<h1>Graveside Committal</h1><p>${H(headLine(p))}</p>${meta(gs)}` + B.map(b => `<h2>${H(b.h)}</h2>${paras(b.cue ? b.t : blkT(p, b))}`).join('') + (src ? `<p style="font-style:italic;font-size:9pt;margin-top:4mm">${H(src)}</p>` : ''), 'Graveside Committal Script', 'graveside-committal'];
   }
@@ -1183,7 +1185,7 @@ function outHTML(p, k){
       sec('Remembering', ln([H((p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : '')), H(lifeLine(p))])) +
       sec('The Service Will Be', fw.length ? ln([H(fw.join(', '))]) : '') +
       sec('Gatherings', ln(gSel(p).map(g => '<b>' + H(g.t) + '</b>' + (gLine(p, g) ? ': ' + H(gLine(p, g)) : '')))) +
-      sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${holds(r).length ? ' <i>(' + H(holds(r).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '') +
+      (myOn(p) ? sec('Order of Service', `<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>`) : sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${holds(r).length ? ' <i>(' + H(holds(r).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '')) +
       sec('Family Speakers', ln(p.speakers.map(x => H(x.name) + ', about ' + (+x.min || 0) + ' minutes'))) +
       sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) + sec(cfg().attire.title || 'What to Wear', ln(attireLines(p).map(H))) +
       sec('Rehearsal', (p.reh.date || p.reh.place) ? ln([H([nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '))]) : '') +
@@ -1283,7 +1285,8 @@ function contactRows(p){
 function fdSecs(p){
   const P = cfg().fdPacket, H2 = id => (arr(P.sections).find(x => x.id === id) || {}).h, out = [], T = timedOrder(p), g = mainG(p), ob = obitText(p);
   const add = (id, html, text) => { if (H2(id) && (html || text)) out.push([id, H2(id), html, text]); };
-  add('order', T.length ? `<table class="fw-pt"><tr><th>#</th><th>Time</th><th>Part</th><th>Who</th><th>Min</th></tr>${T.map((r, i) => `<tr><td>${i + 1}</td><td>${H(r.at)}</td><td><b>${H(r.name)}</b>${holds(r).length ? '<br><i>' + H(holds(r).join('; ')) + '</i>' : ''}</td><td>${H(r.by || me())}</td><td>${r.mins}</td></tr>`).join('')}</table><p>About ${svcTotal(p)} minutes.</p>` : '',
+  if (myOn(p)) add('order', `<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>`, myHeads(p).map((h, i) => (i + 1) + '. ' + h).join('\n'));
+  else add('order', T.length ? `<table class="fw-pt"><tr><th>#</th><th>Time</th><th>Part</th><th>Who</th><th>Min</th></tr>${T.map((r, i) => `<tr><td>${i + 1}</td><td>${H(r.at)}</td><td><b>${H(r.name)}</b>${holds(r).length ? '<br><i>' + H(holds(r).join('; ')) + '</i>' : ''}</td><td>${H(r.by || me())}</td><td>${r.mins}</td></tr>`).join('')}</table><p>About ${svcTotal(p)} minutes.</p>` : '',
     T.map((r, i) => (i + 1) + '. ' + (r.at ? r.at + ' ' : '') + r.name + (r.by ? ', ' + r.by : '') + ' (' + r.mins + ' min)' + (holds(r).length ? ': ' + holds(r).join('; ') : '')).join('\n'));
   const M = musicIn(p);
   add('music', M.length ? `<table class="fw-pt"><tr><th>Song</th><th>When</th><th>Who plays or sings</th><th>File from</th></tr>${M.map(x => `<tr><td><b>${H(x.title)}</b>${x.by ? ', ' + H(x.by) : ''}</td><td>${H(x.part)}${(T.find(r => r.k === x.k) || {}).at ? ', ' + H(T.find(r => r.k === x.k).at) : ''}</td><td>${H(x.lead || '')}</td><td>${H(musWho(p, x.id) || 'To confirm')}</td></tr>`).join('')}</table>` : '',
@@ -1310,17 +1313,48 @@ function fdqHTML(p){ const Q = fdq(p), A = p.fdq || {};
 function fdqText(p){ const Q = fdq(p), A = p.fdq || {}; return arr(Q.items).map((q, i) => (i + 1) + '. ' + W(q.q, p) + (clean(A[q.id]) ? '\n   ' + A[q.id] : '')).join('\n'); }
 // Send Everything: the six pages in one printable document.
 function pageOf(p, k){ const r = outHTML(p, k); return r ? `<div class="ht-page fw-pg">${r[0]}</div>` : ''; }
+// My Service Script (GWG BLD 801): a Service Script pasted from Writing Help becomes the officiant script, the
+// order of service, and the graveside committal. Numbered lines ("3. Welcome") start a part; a line starting
+// with "Graveside" starts the committal; (parentheses) print as cues; "All:" lines are the room's answers;
+// lines starting with a bullet print as coaching notes. A part named for the eulogy prints the current draft.
+const myOn = p => !!(p.script && p.script.on && clean(p.script.t));
+const MYH = /^\s*(\d{1,2})\.\s+(\S.*?)\s*$/, MYG = /^\s*graveside\b/i;
+function myParts(p){ const out = []; let cur = {h: '', n: 0, lines: [], grave: false}; out.push(cur);
+  String((p.script || {}).t || '').replace(/\r\n?/g, '\n').split('\n').forEach(l => { const m = MYH.exec(l);
+    if (m) { cur = {h: m[2], n: +m[1], lines: [], grave: false}; out.push(cur); }
+    else if (MYG.test(l) && wordsIn(l) <= 5){ cur = {h: l.trim(), n: 0, lines: [], grave: true}; out.push(cur); }
+    else cur.lines.push(l); });
+  return out.filter(x => x.h || x.lines.some(l => clean(l))); }
+const myHeads = p => myParts(p).filter(x => x.n && !x.grave).map(x => x.h);
+const myGrave = p => myParts(p).some(x => x.grave);
+const MSCSS = `<style>.ms p{font-size:14pt;line-height:1.6;margin:0 0 3mm;}.ms h2{margin:6mm 0 2mm;break-after:avoid;}.ms .ms-c,.ms .ms-n{font-size:10.5pt;line-height:1.4;font-style:italic;color:#5B5348;}.ms .ms-n b{font-style:normal;}.ms .ms-a{font-style:italic;margin-left:8mm;}.ms .ms-eu p{font-size:15pt;line-height:1.8;}.mso{text-align:center;}.mso p{margin:0 0 2mm;}.mso h2{margin:7mm 0 3mm;}</style>`;
+function myLine(l){ const t = l.trim(); if (!t) return '';
+  if (/^coaching notes:?$/i.test(t)) return '<p class="ms-n"><b>Coaching notes</b></p>';
+  if (/^[\u2022*]\s*/.test(t)) return `<p class="ms-n">${H(t)}</p>`;
+  if (/^all\s*:/i.test(t)) return `<p class="ms-a">${H(t)}</p>`;
+  if (/^\(.*\)$/.test(t)) return `<p class="ms-c">${H(t)}</p>`;
+  return `<p>${H(t)}</p>`; }
+function myPart(p, x){ const ed = eulogyText(p), pull = ed && x.n && /eulogy|remembering|life story/i.test(x.h) && !x.lines.some(l => wordsIn(l) > 80);
+  return `<div class="fw-sp">${x.h ? `<h2>${x.n ? x.n + '. ' : ''}${H(x.h)}</h2>` : ''}${x.lines.map(myLine).join('')}${pull ? `<div class="ms-eu">${paras(ed)}</div>` : ''}</div>`; }
+function myScriptHTML(p, grave){ const P = myParts(p).filter(x => grave ? x.grave : true);
+  return MSCSS + `<div class="ms"><h1>${grave ? 'Graveside Committal' : 'Officiant Script'}</h1><p>${H(headLine(p))}</p>${grave ? '' : g0(p)}${P.map(x => myPart(p, x)).join('')}</div>`; }
+function myOrderHTML(p){ const cover = clean(p.progText) ? String(p.progText).split('\n').map(l => l.trim() ? `<p>${H(l.trim())}</p>` : '<p>&nbsp;</p>').join('') : `<h1>${H(p.person.full || called(p))}</h1><p>${H(lifeLine(p))}</p>`;
+  return MSCSS + `<div class="mso">${cover}<h2>Order of Service</h2>${myHeads(p).map(h => `<p><b>${H(h)}</b></p>`).join('')}${myGrave(p) ? '<p><i>Committal to follow</i></p>' : ''}</div>`; }
+function vMyScript(p){ if (!p.script) return ''; const on = myOn(p);
+  return blk(p, 'My Service Script', 'myscript', `<p class="fw-sub" style="margin-top:0">${on ? 'Pasted from Writing Help. The Officiant Script, the Order of Service, the Graveside Committal, the Family Copy, and Send Everything all use these words.' : "Set aside for now: the Builder's own service is in use."} Each numbered line, like "3. Welcome", starts a part. Lines in (parentheses) print as cues, and lines starting with a bullet print as coaching notes. The eulogy part prints the current eulogy draft.</p>
+    <textarea rows="18" class="fw-bigta" data-fwi="script.t" aria-label="My Service Script">${esc(p.script.t)}</textarea>
+    <div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="my-print" data-fwv="script">Print in Large Type</button><button type="button" class="btn btn-line btn-sm" data-fwa="my-print" data-fwv="order">Order of Service</button><button type="button" class="btn btn-line btn-sm" data-fwa="${on ? 'my-off' : 'my-on'}">${on ? "Use the Builder's Script" : 'Use My Script'}</button><button type="button" class="linkbtn" data-fwa="my-del">Remove</button></div>`); }
 function scriptHTML(p){ const o = order(p), ed = eulogyText(p); if (!o.length) return '';
   return `<div class="ht-page fw-pg"><h1>Order of Service and Officiant Script</h1><p>${H(headLine(p))}</p>${g0(p)}<p>About ${svcTotal(p)} minutes.</p>` +
     timedOrder(p).map((r, i) => `<div class="fw-sp"><h2>${i + 1}. ${H(r.name)} <small>(${r.at ? H(r.at) + ', ' : ''}${r.mins} min${r.by ? ', ' + H(r.by) : ''})</small></h2>${holds(r).length ? `<p><b>${H(holds(r).join('; '))}</b></p>` : ''}${paras(r.words)}${arr(r.rd).map(x => `<p><b>${H(x.head)}</b></p>${paras(x.text)}${x.source ? `<p style="font-size:8.5pt;font-style:italic">${H(x.source)}</p>` : ''}`).join('')}${ed && /eulogy|life story|the life/i.test(r.name) ? `<p><b>The Eulogy</b></p>${paras(ed)}` : ''}${r.dos.length ? `<p style="font-size:9pt"><i>For the officiant: ${H(r.dos.join(' '))}</i></p>` : ''}</div>`).join('') + `</div>`; }
 function bundleHTML(p){
   const ap = lastAppr(p);
   return PCSS + `<style>.fw-pg + .fw-pg{break-before:page;page-break-before:always;}.fw-sp{break-inside:avoid;margin:0 0 3mm;}.fw-sp h2 small{font-weight:400;}.fw-qs li{margin:0 0 3mm;}.fw-wl{border-bottom:.5pt solid #9C8B76;height:6mm;}</style>` +
-    scriptHTML(p) + pageOf(p, 'rehearsal') + pageOf(p, 'committal') + pageOf(p, 'family') + pageOf(p, 'helpers') + (gSel(p).some(g => g.script && g.script !== 'committal' && !g.main) ? pageOf(p, 'other') : '') +
+    (myOn(p) ? `<div class="ht-page fw-pg">${myScriptHTML(p)}</div>` : scriptHTML(p)) + pageOf(p, 'rehearsal') + pageOf(p, 'committal') + pageOf(p, 'family') + pageOf(p, 'helpers') + (gSel(p).some(g => g.script && g.script !== 'committal' && !g.main) ? pageOf(p, 'other') : '') +
     (ap ? `<p style="margin-top:4mm"><i>${H(apLine(p, ap))}</i></p>` : '');
 }
 function bundleText(p){ const o = order(p);
-  return [famText(p), o.length ? 'ORDER OF SERVICE\n' + timedOrder(p).map((r, i) => (i + 1) + '. ' + (r.at ? r.at + ' ' : '') + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')).join('\n') : '', eulogyText(p) ? 'THE EULOGY\n' + eulogyText(p) : ''].filter(Boolean).join('\n\n'); }
+  return [famText(p), myOn(p) ? 'MY SERVICE SCRIPT\n' + p.script.t : o.length ? 'ORDER OF SERVICE\n' + timedOrder(p).map((r, i) => (i + 1) + '. ' + (r.at ? r.at + ' ' : '') + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')).join('\n') : '', eulogyText(p) ? 'THE EULOGY\n' + eulogyText(p) : ''].filter(Boolean).join('\n\n'); }
 // The version the family approves: a short fingerprint of everything in the bundle's words.
 function verOf(p){ const t = bundleText(p) + '|' + JSON.stringify(obitDrafts(p)); let h = 5381; for (let i = 0; i < t.length; i++) h = ((h << 5) + h + t.charCodeAt(i)) >>> 0; return h.toString(36).toUpperCase(); }
 const lastAppr = p => arr(p.appr)[arr(p.appr).length - 1] || null;
@@ -1414,7 +1448,9 @@ function whText(p){
 }
 // Paste Finished Pieces: split on the markers, put the names back, and drop each piece in its place.
 const MRE = /^\s*(?:[=#*>_-]+\s*)?(EULOGY|DEATH NOTICE|NEWSPAPER OBITUARY|ONLINE OBITUARY|PROGRAM TEXT|OTHER)(?:\s*:\s*([^=*#]+?))?\s*(?:[=*#_-]+)?\s*$/i;
-function whParse(text){ const out = []; let cur = null; String(text || '').replace(/\r\n?/g, '\n').split('\n').forEach(l => { const m = MRE.exec(l);
+// A phone copy can join every line into one: put each === MARKER === back on its own line first (GWG BLD 801).
+const MINL = /[ \t]*(={2,}[ \t]*(?:EULOGY|DEATH NOTICE|NEWSPAPER OBITUARY|ONLINE OBITUARY|PROGRAM TEXT|OTHER)(?:[ \t]*:[ \t]*[^=\n]+?)?[ \t]*={2,})[ \t]*/gi;
+function whParse(text){ const out = []; let cur = null; String(text || '').replace(/\r\n?/g, '\n').replace(MINL, '\n$1\n').split('\n').forEach(l => { const m = MRE.exec(l);
   if (m){ const key = Object.keys(MARK).find(k => MARK[k] === m[1].toUpperCase()); cur = {id: key, title: clean(m[2] || ''), t: ''}; out.push(cur); } else if (cur) cur.t += l + '\n'; });
   out.forEach(x => { x.t = x.t.replace(/^\s+|\s+$/g, ''); }); return out.filter(x => x.t); }
 function restore(t, M){ let s2 = String(t || ''); const byPh = {}, at = {}; M.forEach(m => { if (at[m.ph] == null || m.i < at[m.ph]){ at[m.ph] = m.i; byPh[m.ph] = m.real; } });
@@ -1423,11 +1459,12 @@ function restore(t, M){ let s2 = String(t || ''); const byPh = {}, at = {}; M.fo
 function whPaste(p, text){
   const parts = whParse(text), M = whMap(p);
   if (!parts.length){ toast('No section markers found. Paste the whole reply, with lines like === EULOGY ===.'); return null; }
-  const prev = {eDraft: p.eDraft, ob: JSON.parse(JSON.stringify(obS(p).d)), progText: p.progText || '', wn: arr(p.writings).length}, put = [];
+  const prev = {eDraft: p.eDraft, ob: JSON.parse(JSON.stringify(obS(p).d)), progText: p.progText || '', wn: arr(p.writings).length, script: p.script ? Object.assign({}, p.script) : null}, put = [];
   parts.forEach(x => { const t = restore(x.t, M);
     if (x.id === 'eulogy'){ p.eDraft = t; euA(p); p.eu.edited = true; put.push('Eulogy'); }
     else if (['notice', 'newspaper', 'online'].includes(x.id)){ const o = obS(p); o.d[x.id] = t; o.e[x.id] = 1; put.push(OB.shapes.find(s3 => s3.id === x.id).name); }
     else if (x.id === 'program'){ p.progText = t; put.push('Program Text'); }
+    else if (x.id === 'other' && /script/i.test(x.title)){ p.script = {t, on: true, at: Date.now()}; put.push('My Service Script'); }
     else { p.writings.push({id: uid(), kind: 'writing', name: x.title || 'Other Piece', from: 'Writing Help', body: t, sections: [], at: Date.now()}); put.push(x.title || 'Other Piece'); } });
   const left = [...new Set((parts.map(x => restore(x.t, M)).join('\n').match(/\[[A-Z][A-Za-z ]{1,30}(?: \d+)?\]/g) || []))].filter(x => !/^\[ask the family/i.test(x));
   whS(p).last = {at: Date.now(), put, left, prev}; return {put, left};
@@ -1786,7 +1823,7 @@ function act(a, v, el){
     case 'wh-copy': case 'wh-file': { const wa = waOf(p); if (!(wa && wa.ans === 'yes') && !confirm(cfg().writingHelp.reminder + ' Copy anyway?')) return; const t = whText(p); whS(p).copied = Date.now(); touch(p);
       if (a === 'wh-copy') copyText(t, 'Copied for writing help: names are placeholders, contact details left out.'); else saveFile('writing-help-' + today() + '.txt', t); return; }
     case 'wh-paste': { const t = document.getElementById('fw-whpaste'), r = whPaste(p, t ? t.value : ''); if (!r) return; touch(p); rerender(true); toast('In place: ' + r.put.join(', ') + '.'); return; }
-    case 'wh-undo': { const L = whS(p).last; if (!L || !L.prev || !confirm('Undo the last paste and bring back what was there before?')) return; p.eDraft = L.prev.eDraft; obS(p).d = L.prev.ob; p.progText = L.prev.progText; p.writings = arr(p.writings).slice(0, L.prev.wn); whS(p).last = null; touch(p); rerender(true); toast('The last paste is undone.'); return; }
+    case 'wh-undo': { const L = whS(p).last; if (!L || !L.prev || !confirm('Undo the last paste and bring back what was there before?')) return; p.eDraft = L.prev.eDraft; obS(p).d = L.prev.ob; p.progText = L.prev.progText; p.writings = arr(p.writings).slice(0, L.prev.wn); if ('script' in L.prev) p.script = L.prev.script; whS(p).last = null; touch(p); rerender(true); toast('The last paste is undone.'); return; }
     case 'appr-show': S.appr = !S.appr; S.apName = S.apName || ''; rerender(true); if (S.appr && (!famWin || famWin.closed) && S.mode !== 'family') toast('The approve box shows in the Family View. Open the Family View Window, or use Family View Here.'); return;
     case 'fam-approve': { const box = el && el.closest('.fw-apbox'), inp = box && box.querySelector('input'), nm = clean(inp ? inp.value : S.apName);
       recordAppr(p, {way: 'view', name: nm || clean(p.contact.name) || 'The family', typed: !!nm}); S.apName = ''; S.appr = false; touch(p); rerender(true); toast('Approved and saved with this version.'); return; }
@@ -1857,6 +1894,9 @@ function act(a, v, el){
     case 'svc-off': CER().set(p.svc, v, 'on', false); touch(p); rerender(true); return;
     case 'svc-on': CER().set(p.svc, v, 'on', true); touch(p); rerender(true); return;
     case 'cer-print': if (hasSvc(p)){ cerBind(); CER().print(p.svc, v); } return;
+    case 'my-print': if (myOn(p) || p.script){ if (v === 'order') sheet(myOrderHTML(p), 'Order of Service', 'order-of-service'); else sheet(myScriptHTML(p), 'Officiant Script', 'officiant-script'); } return;
+    case 'my-on': case 'my-off': if (p.script){ p.script.on = a === 'my-on'; touch(p); rerender(true); toast(a === 'my-on' ? 'My Service Script is in use.' : "The Builder's own service is in use."); } return;
+    case 'my-del': if (p.script && confirm("Remove My Service Script? The Builder's own service comes back.")){ p.script = null; touch(p); rerender(true); } return;
     case 'out': printOut(v); return;
     case 'fam-copy': copyText(famText(p), 'The family copy is copied.'); return;
     case 'make-ses': makeSessions(); return;
