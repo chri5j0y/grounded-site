@@ -1066,13 +1066,13 @@ function tabsFor(){
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  if (TIER === 'guide') return OR() && !orState().complete ? [['orient','Orientation','cap'],['learn','Learn','play'],['certs','Certificates','award']] : [['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['certs','Certificates','award'], ...(FSAFE() ? [['safety','Safety','shield']] : []), ...(OR() ? [['orient','Orientation','cap']] : [])];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['home','Home','home'], ...kids, ...grown, ...hp, ['path','Your Path','award'], ...(FSAFE() ? [['safety','Safety','shield']] : [])];
   if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['learn','Learn','play'], ['certs','Certificates','award'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['path','Your Path','award'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
   return t;
 }
@@ -1081,7 +1081,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder' || id === 'books') return 'founder'; // Books (GWG BLD 770) is Founders only
-  if (id === 'home' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1097,10 +1097,11 @@ const notice = () => ((LIB || FDR || FLD || {}).brand || {}).notice || '';
 function render(){
   const tabs = tabsFor();
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
-  if (V.tab !== 'settings' && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
-  $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
-  $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
+  const pathSub = PATH_SUB.includes(V.tab) && tabs.some(x => x[0] === 'path');
+  if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
+  $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id || (id === 'path' && pathSub)}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
+  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
 }
@@ -2383,7 +2384,7 @@ function certCheer(list){
   const old = document.querySelector('.cert-cheer'); if (old) old.remove();
   const w = list.find(c => c.cred) || list[0];
   const d = document.createElement('div'); d.className = 'cert-cheer'; d.setAttribute('role', 'status'); d.setAttribute('aria-live', 'polite');
-  d.innerHTML = `<div class="cc-ic">${icon('award')}</div><div class="cc-txt"><b>Congratulations!</b><p>${w.cred ? 'You are now a ' + esc(w.title) + '.' : 'You finished ' + esc(w.title) + '.'} Your certificate is ready in the Certificates tab, to print or save.</p>
+  d.innerHTML = `<div class="cc-ic">${icon('award')}</div><div class="cc-txt"><b>Congratulations!</b><p>${w.cred ? 'You are now a ' + esc(w.title) + '.' : 'You finished ' + esc(w.title) + '.'} Your certificate is ready in Your Path, to print or save.</p>
     <div class="row"><button class="btn btn-gold btn-sm" data-act="cert-open">${icon('award')} Open Certificates</button><button class="btn btn-line btn-sm" data-act="cert-later">Later</button></div></div>`;
   document.body.appendChild(d);
 }
@@ -2411,6 +2412,72 @@ function walkLearnCard(t){
 // The Learn category cards for the Walkthroughs this person sees (first in Learn).
 const walkCats = () => walkTracks().map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length;
   return {k: 'walk:' + t.id, eb: 'Walkthrough', title: t.title, intro: t.who || ('Every part of the ' + CERT_LV[walkLevel(t)] + ' level, one video at a time, toward your ' + certHead(walkLevel(t)) + ' certificate.'), n: `${n} of ${t.lessons.length} videos finished`, accent: 'var(--gold)'}; });
+// ----- Your Path (GWG BLD 807): one tab for Begin, Train, Certified, and Keep Growing -----
+// Orientation, Learn, and Certificates stay as pages under it (PATH_SUB); the tab bar lights Your Path on each.
+const PATH_SUB = ['orient', 'learn', 'certs'];
+function pathTrainings(){
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  const open = G => G && (TIER !== 'guide' || fgOpen(G.open));
+  const L = [['maple', SPG, SPM, spmState, {spm: 1}], ['aspen', SAG, SAM, samState, {sam: 1}], ['pine', PNG, PNM, pnmState, {pnm: 1}], ['birch', BRG, BRM, brmState, {brm: 1}],
+    ['oak', STG, STM, stmState, {stm: 1}], ['sequoia', SQG, SQM, sqmState, {sqm: 1}], ['willow', WLG, WLM, wlmState, {wlm: 1}], ['grove', GVG, GVM, gvmState, {gvm: 1}]];
+  const out = [];
+  L.forEach(([tree, G, M, st, x]) => safe(() => { if (!open(G()) || !M()) return; const m = st(), T = tree === 'grove' ? (M().title || 'The Grove Guide Training') : tree[0].toUpperCase() + tree.slice(1) + ' Guide Training';
+    out.push({id: tree, title: T, done: m.done || 0, total: m.total || 0, complete: !!m.complete, renew: m.renewBy, go: () => go(tree, x)}); }));
+  safe(() => { if (!LGM()) return; const m = lgmState(); out.push({id: 'lg', title: LGM().title || 'Walking with Illness and Disability', done: m.done || 0, total: m.total || 0, complete: !!m.complete, renew: m.renewBy, go: () => { V = {tab: lgmTab(), lgm: 1}; render(); }}); });
+  return out;
+}
+function vPath(){
+  certCss(); pathCss();
+  const safe = f => { try { return f(); } catch (e) { return null; } };
+  const lvs = certLevels(), top = lvs[lvs.length - 1], all = fgCerts(), rest = all.filter(c => !c.cred);
+  const pill = (t, k) => `<span class="pa-pill pa-${k}">${esc(t)}</span>`;
+  // 1. Begin: Orientation and the agreement, and each level's Walkthrough
+  const O = OR() ? orState() : null, B = [];
+  if (O) B.push({t: TIER === 'guide' ? 'Field Guide Orientation and Agreement' : 'Orientation and Agreement' + (orStaffSec() ? ', with the Staff section' : ''), done: !!O.complete, prog: O.done + ' of ' + O.total, act: 'path-orient'});
+  lvs.forEach(lv => { const W = walkOf(lv); if (!W) return; const n = W.lessons.filter(l => lnData().done[l.id]).length;
+    B.push({t: W.title, sub: 'a video tour of your tools', done: walkDone(W), prog: n + ' of ' + W.lessons.length + ' videos', act: 'cert-walk', v: W.id}); });
+  const bDone = B.length > 0 && B.every(x => x.done);
+  // 2. Train: each Guide Training
+  const T = pathTrainings(), tDone = T.some(x => x.complete), locked = !!(O && !O.complete && TIER === 'guide');
+  // 3. Certified: each level's credential
+  const C = lvs.map(lv => ({lv, c: certCred(lv, rest)})), cTop = C[C.length - 1].c;
+  const stepNow = !bDone ? 1 : !tDone ? 2 : !cTop.earned ? 3 : 4;
+  const head = stepNow === 1 ? 'Step 1 of 3: begin with ' + (B.find(x => !x.done) || {}).t + '.' : stepNow === 2 ? 'Step 2 of 3: pass one Guide Training to become Certified.' : stepNow === 3 ? 'Step 3 of 3: ' + ((cTop.steps.find(x => !x.done) || {}).next || 'one more step').replace(/^Next: /, '') + '.' : 'You are a ' + certHead(top) + '. Keep growing at your own pace.';
+  const bar = [1, 2, 3].map(i => `<i class="${i < stepNow ? 'done' : i === stepNow ? 'now' : ''}"></i>`).join('');
+  const row = (x, i) => `<li class="pa-row${x.done ? ' ok' : ''}"><span class="pa-t"><b>${esc(x.t)}</b>${x.sub ? ` <small class="muted">${esc(x.sub)}</small>` : ''}</span>${x.done ? pill('Done', 'ok') : `<button class="btn btn-line btn-sm" data-act="${x.act}" data-v="${esc(x.v || '')}">${esc(x.prog && !/^0 of/.test(x.prog) ? x.prog : 'Start')}</button>`}</li>`;
+  const trow = x => `<li class="pa-row${x.complete ? ' ok' : ''}"><span class="pa-t"><b>${esc(x.title)}</b>${x.complete && x.renew ? ` <small class="muted">renew by ${esc(nice(x.renew))}</small>` : ''}</span>${x.complete ? pill('Passed', 'ok') : locked ? pill('After Begin', 'soft') : `<button class="btn btn-line btn-sm" data-act="path-train" data-v="${esc(x.id)}">${x.done ? esc(x.done + ' of ' + x.total) : 'Start'}</button>`}</li>`;
+  const ccard = ({lv, c}) => c.earned ? `<div class="pa-cert ok"><div class="pa-seal">${icon('award')}</div><div class="pa-t"><b>${esc(certHead(lv))}</b><br><small class="muted">${esc([c.cert.date ? 'Completed ' + nice(c.cert.date) : '', c.cert.renew ? 'Renew by ' + nice(c.cert.renew) : ''].filter(Boolean).join('. '))}</small></div><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc(c.cert.id)}">${icon('print')} Save or Print</button></div>`
+    : `<div class="pa-cert"><div class="pa-seal">${icon('award')}</div><div class="pa-t"><b>${esc(certHead(lv))}</b><br><small class="muted">${esc(c.steps.filter(x => x.done).length + ' of ' + c.steps.length + ' steps done. ' + ((c.steps.find(x => !x.done) || {}).next || ''))}</small></div></div>`;
+  // Keep Growing: Learn series, For Guides rings, Certificates of Completion
+  const LS = safe(() => lnTracks().filter(t => t.kind !== 'walkthrough' && t.lessons.length && lnCertable(t))) || [], lsDone = LS.filter(t => walkDone(t)).length;
+  let rings = 0, rDone = 0; safe(() => Object.keys(FGSER).forEach(sr => { if (!WFG(sr)) return; wfgRings(sr).forEach(R => { rings++; if (R.guides.every(g => wfgDone(g.id))) rDone++; }); }));
+  const step = (n, title, lead, body, state) => `<section class="card pa-step pa-${state}"><div class="pa-num">${state === 'done' ? icon('check') : n}</div><div class="pa-body"><h2>${esc(title)}</h2><p class="muted">${esc(lead)}</p>${body}</div></section>`;
+  const st = n => n < stepNow ? 'done' : n === stepNow ? 'now' : 'next';
+  return `<div class="page-head"><div class="eyebrow">Grounded Field Guide &middot; ${esc(CERT_LV[top])}</div><h1>Your Path</h1><p class="muted">Three steps to ${esc(certHead(top))}, then room to keep growing.</p></div>
+  <div class="card pa-prog"><b>${esc(head)}</b><div class="pa-bar">${bar}</div></div>
+  ${step(1, 'Begin', 'Learn how the Field Guide works, sign the agreement, and take the video tour of your tools.', `<ul class="pa-list">${B.map(row).join('')}</ul>`, st(1))}
+  ${step(2, 'Train', 'Each Guide Training has short lessons, a check, and an agreement. Pass one to become Certified; each one you pass adds that tool to your certificate.', T.length ? `<ul class="pa-list">${T.map(trow).join('')}</ul>` : '<p class="muted">Your Guide Trainings appear here as each tree opens to you.</p>', st(2))}
+  ${step(3, 'Certified', 'Your certificate lists every training you pass and renews each year with them.', C.map(ccard).join(''), st(3))}
+  <h2 style="margin-top:24px">Keep Growing</h2><p class="muted">At your own pace. Each one you finish earns a Certificate of Completion.</p>
+  <div class="pa-cards">
+    <button class="card pa-card" data-tab="learn"><h3>Learn Series</h3><p class="muted">Short video lessons on presence, listening, grief, and more.</p>${LS.length ? pill(lsDone + ' of ' + LS.length + ' finished', lsDone ? 'ok' : 'soft') : ''}</button>
+    <button class="card pa-card" data-tab="learn"><h3>For Guides Rings</h3><p class="muted">Deeper guides for each tree, a ring at a time.</p>${rings ? pill(rDone + ' of ' + rings + ' rings', rDone ? 'ok' : 'soft') : ''}</button>
+    <button class="card pa-card" data-tab="certs"><h3>All Your Certificates</h3><p class="muted">Every certificate you earn, ready to print, and the name that prints on them.</p>${pill(rest.length + ' earned', rest.length ? 'ok' : 'soft')}</button>
+  </div>`;
+}
+function pathCss(){
+  if (document.getElementById('path-css')) return; const s = document.createElement('style'); s.id = 'path-css';
+  s.textContent = `.pa-prog .pa-bar{display:grid;grid-template-columns:repeat(3,1fr);gap:6px;margin-top:10px}.pa-bar i{height:10px;border-radius:6px;background:var(--line)}.pa-bar i.done{background:var(--gold)}.pa-bar i.now{background:linear-gradient(90deg,var(--gold) 45%,var(--line) 45%)}
+  .pa-step{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;margin-top:14px}.pa-step.pa-now{border:2px solid var(--gold)}
+  .pa-num{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:24px;border:2px solid var(--gold);color:var(--gold)}.pa-done .pa-num{background:var(--gold);color:var(--card)}.pa-num svg{width:22px;height:22px}
+  .pa-list{list-style:none;margin:10px 0 0;padding:0;display:grid;gap:8px}.pa-row{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;padding:9px 12px;border:1px solid var(--line);border-radius:10px}.pa-t{min-width:0;overflow-wrap:anywhere}
+  .pa-pill{font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;white-space:nowrap}.pa-ok{background:rgba(94,107,115,.14);color:var(--sage)}.pa-soft{background:rgba(200,155,69,.16);color:var(--gold)}
+  .pa-cert{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin-top:10px;padding:12px;border:1px dashed var(--gold-soft);border-radius:12px}.pa-cert.ok{border-style:solid}.pa-seal{flex:none;width:44px;height:44px;border-radius:50%;display:grid;place-items:center;border:2px solid var(--gold);color:var(--gold)}.pa-cert.ok .pa-seal{background:var(--gold);color:var(--card)}.pa-seal svg{width:24px;height:24px}.pa-cert .pa-t{flex:1 1 200px}
+  .pa-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;margin-top:10px}.pa-card{text-align:left;cursor:pointer;font:inherit;color:inherit;margin:0;display:block;width:100%}.pa-card h3{margin-bottom:4px}
+  .path-back{display:inline-flex;align-items:center;gap:6px;margin:0 0 10px}.path-back svg{width:18px;height:18px}
+  @media (max-width:560px){.pa-step{grid-template-columns:1fr}}`;
+  document.head.appendChild(s);
+}
 // ----- the Certificates tab -----
 function vCerts(){
   certCss();
@@ -2453,6 +2520,8 @@ function certAct(a, v){
     case 'cert-later': { const d = document.querySelector('.cert-cheer'); if (d) d.remove(); return true; }
     case 'cert-walk': { LCAT.cat = 'walk:' + v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
     case 'cert-orient': go('orient'); return true;
+    case 'path-orient': go('orient'); return true;
+    case 'path-train': { const t = pathTrainings().find(x => x.id === v); if (t) t.go(); return true; }
   }
   return false;
 }
@@ -2464,7 +2533,7 @@ function fgGuideCert(tree, st, signed, M, guide){
   if (!st.complete || !signed) return;
   certPrintId('tr:' + tree);
 }
-function fgGuidePrints(prefix){ return `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Posters</h3><p class="muted">Print your certificate (it is in the Certificates tab too), and posters that let people know a trained guide serves here. Each has a small QR code to the tree's page.</p>
+function fgGuidePrints(prefix){ return `<div class="card" style="margin-top:16px;border-left:4px solid var(--sage)"><h3>Your Certificate and Posters</h3><p class="muted">Print your certificate (it is in Your Path too), and posters that let people know a trained guide serves here. Each has a small QR code to the tree's page.</p>
   <div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="${prefix}-cert">${icon('print')} Certificate</button><button class="btn btn-line btn-sm" data-act="${prefix}-poster">${icon('print')} Tree Poster</button><button class="btn btn-line btn-sm" data-act="${prefix}-parts">${icon('print')} Six Parts Poster</button></div></div>`; }
 
 // ---------------- OAK GUIDE ----------------
@@ -10844,7 +10913,7 @@ document.addEventListener('click', async e => {
   if (a && a.startsWith('acc-') && await accAct(a, v)) return;
   if (a && (a.startsWith('ln-') || a.startsWith('lc-')) && lnAct(a, v, t)) return;
   if (a && a.startsWith('wfg-') && wfgAct(a, v, t)) return;
-  if (a && a.startsWith('cert-') && certAct(a, v)) return;
+  if (a && (a.startsWith('cert-') || a.startsWith('path-')) && certAct(a, v)) return;
   if (a && a.startsWith('sg-') && sgAct(a, v, t)) return;
   if (a && a.startsWith('hp-') && hpAct(a, v)) return;
   switch(a){
