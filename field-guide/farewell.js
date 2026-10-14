@@ -166,7 +166,9 @@ const DEF = {
     header: 'You are helping a hospice chaplain write words for a funeral.\nWrite in his warm, plain, first-person voice: short sentences, easy to read aloud.\nKeep every [placeholder] in square brackets exactly as written. Never replace one with a name.\nNever invent facts. Where something is missing, write [ask the family].\nUse no em dashes or en dashes.',
     pieces: [{id: 'eulogy', t: 'Eulogy', ask: 'A eulogy of about five minutes, to read aloud: an opening with [Person]\'s name and who they were, the stories, what they gave us, and a gentle close.'},
       {id: 'notice', t: 'Death Notice', ask: 'A short death notice of about 80 words.'}, {id: 'newspaper', t: 'Newspaper Obituary', ask: 'A newspaper obituary of about 200 words in a few short paragraphs.'},
-      {id: 'online', t: 'Online Obituary', ask: 'An online obituary of about 500 words with room for the whole story.'}, {id: 'program', t: 'Program Text', ask: 'A few warm lines for the back of the program.'}, {id: 'other', t: 'Other Pieces', ask: 'Any other piece asked for below.'}],
+      {id: 'online', t: 'Online Obituary', ask: 'An online obituary of about 500 words with room for the whole story.'}, {id: 'program', t: 'Program Text', ask: 'A few warm lines for the back of the program.'},
+      {id: 'script', t: 'Service Script', ask: 'The whole service in order, as the officiant will say it. Number each part on its own line, like "3. Welcome and Purpose". Put the graveside words under a line that says "Graveside Committal". Put directions to the officiant in (parentheses), the room\'s answers on lines starting "All:", and coaching notes on lines starting with a bullet, under a line "Coaching notes". Mark a deliberate pause with //. For the eulogy part, write "(The eulogy prints here, from the Eulogy Helper.)".'},
+      {id: 'other', t: 'Other Pieces', ask: 'Any other piece asked for below.'}],
     labels: {person: 'Person', personFull: 'Person Full Name', family: 'Family Name', spouse: 'Spouse', child: 'Child', grandchild: 'Grandchild', sibling: 'Sibling', parent: 'Parent', friend: 'Friend', pastor: 'Pastor', clergy: 'Clergy', speaker: 'Speaker', funeralHome: 'Funeral Home', director: 'Funeral Director', church: 'Church', cemetery: 'Cemetery', place: 'Place', city: 'City', other: 'Name'},
     pasteHelp: 'Paste everything the writing assistant gave back. The names come back in, and each piece goes to its place.'}
 };
@@ -712,6 +714,7 @@ V[2] = p => {
   const S2 = list('story');
   return sayBox(p, relSoft(p) ? REL().storySay : STEP(2).say) +
   blk(p, S2.title || 'Their Story', 'story', `<div class="fw-prompts">${items(p, 'story').map(it => `<div class="fw-pcard"><button type="button" class="chip" data-fwa="chip" data-fwv="${esc('story|' + it.id)}" aria-pressed="${isOn(p, 'story', it.id)}"${fk('c|story|' + it.id)}>${esc(fill(it.t, p))}</button>${it.q ? `<small>${esc(fill(it.q, p))}</small>` : ''}<textarea rows="2" data-fwi="story.${esc(it.id)}" aria-label="Note for ${esc(it.t)}" placeholder="A few words">${esc(p.story[it.id] || '')}</textarea></div>`).join('')}</div>` + addOwn('story', 'Another prompt: their cooking, their hands, their laugh...'), relSoft(p) ? REL().storySub : STEP(2).sub) +
+  blk(p, 'Family', 'family', famFields(p), 'Born where, marriages, and family, in a few words. These fill the Obituary Helper and Writing Help, even when the funeral home writes the obituary.') +
   blk(p, list('eulogy').title || 'Who Is Writing the Eulogy?', 'eulogy', chips(p, 'eulogy', true) + who(p, 'eulogy') +
     helperCard(p, 'eulogy', mine) +
     (fam ? `<details class="fw-custom" style="margin-top:12px"${mine ? '' : ' open'}><summary>Send the Eulogy Helper to Write at Home</summary>${shareCard(p, 'eulogy')}</details>` : '')) +
@@ -735,6 +738,9 @@ function helperCard(p, k, lead){
 const EUSECS = p => EU.secs.map(x => secT(p, x)).concat(['The Draft', 'Polish It']);
 const OBSECS = () => OB.secs.map(x => x.title).concat(['The Drafts', 'Polish It']);
 function secNav(cur, L, act){ return `<div class="fw-chips fw-secnav" role="group" aria-label="Sections">${L.map((t, i) => `<button type="button" class="chip" data-fwa="${act}" data-fwv="${i}" aria-pressed="${cur === i}"${fk(act + '|' + i)}><span class="fw-n">${i + 1}</span> ${esc(t)}</button>`).join('')}</div>`; }
+// The Family block in Their Story (GWG BLD 806): the same answers as the Obituary Helper's Born, Marriage, and Family.
+const FAMQ = ['born', 'married', 'survived', 'preceded'];
+function famFields(p){ const o = obS(p), Q = OB.secs.flatMap(g => g.qs); return FAMQ.map(id => Q.find(q => q.id === id)).filter(Boolean).map(q => qField(p, 'ob.a', obQ(p, q), o.a[q.id])).join(''); }
 function qField(p, base, q, val){
   const id = 'fw-' + base.replace(/\./g, '-') + '-' + q.id, lab = fillQ(p, q.l), path = base + '.' + q.id;
   return `<section class="fw-blk fw-q" data-fwanc="${esc(base.split('.')[0] + '-' + q.id)}"><label class="f" for="${id}" style="margin-top:0">${esc(lab)}</label>${q.h ? `<p class="fw-sub" style="margin:2px 0 6px">${esc(fillQ(p, q.h))}</p>` : ''}
@@ -827,7 +833,7 @@ V[3] = p => sayBox(p, STEP(3).say) +
 V[4] = p => sayBox(p, STEP(4).say) +
   blk(p, 'Gatherings', 'gatherings', chips(p, 'gatherings') + addOwn('gatherings', 'Another gathering'), STEP(4).sub) +
   gSel(p).map(g => { const d = p.gd[g.id] || {};
-    return `<div class="fw-gath" data-fwanc="g-${esc(g.id)}"><div class="fw-blk-h"><h4>${esc(g.t)}</h4>${star(p, 'g-' + g.id, g.t + ' details')}</div><div class="fw-g3">${fld('gd.' + g.id + '.date', 'Date', d.date, 'date')}${fld('gd.' + g.id + '.time', 'Time', d.time, 'time')}${fld('gd.' + g.id + '.place', 'Place', d.place)}</div>${who(p, 'g-' + g.id)}</div>`; }).join('') +
+    return `<div class="fw-gath" data-fwanc="g-${esc(g.id)}"><div class="fw-blk-h"><h4>${esc(g.t)}</h4>${star(p, 'g-' + g.id, g.t + ' details')}</div><div class="fw-g3">${fld('gd.' + g.id + '.date', 'Date', d.date, 'date')}${fld('gd.' + g.id + '.time', 'Time', d.time, 'time')}${fld('gd.' + g.id + '.place', 'Place', d.place)}</div>${restRow(p, g, d)}${who(p, 'g-' + g.id)}</div>`; }).join('') +
   attireBlk(p) +
   custom(p, 'gatherings') + note(p, 'gatherings');
 // What to Wear (GWG BLD 769): how the guests dress, and what Chris wears.
@@ -937,6 +943,7 @@ function piecesPanel(p){
 V[5] = p => sayBox(p, STEP(5).say) +
   blk(p, 'Order of Service', 'order', svcBlock(p), STEP(5).sub) +
   blk(p, 'Readings, Music, and Rituals', 'pieces', piecesPanel(p), 'Browse together, preview the words, and add any piece to the service in one tap. It goes to the right moment in the order.') +
+  blk(p, 'Music Before and After', 'musends', `<div class="fw-g2">${fld('musArr', 'Music as People Arrive', p.musArr, 'text', 'On Eagle\'s Wings')}${fld('musLeave', 'Music as People Leave', p.musLeave, 'text', 'Amazing Grace, Johnny Cash')}</div>`, 'Outside the service time. It prints on the Order of Service, the Family Copy, the Officiant Script, and the Funeral Director Packet.') +
   blk(p, list('honors').title || 'Honors', 'honors', chips(p, 'honors') + addOwn('honors', 'Another honor') + who(p, 'honors')) +
   custom(p, 'service') + note(p, 'service');
 
@@ -1015,7 +1022,7 @@ function famText(p){
   if (relShown(p)) out.push('', String(REL().printLabel).toUpperCase(), relLabel(p));
   const fw = picked(p, 'faithway').concat(picked(p, 'tradition')); if (fw.length) out.push('', 'THE SERVICE WILL BE', fw.join(', '));
   if (gSel(p).length) out.push('', 'GATHERINGS', ...gSel(p).map(g => g.t + (gLine(p, g) ? ': ' + gLine(p, g) : '')));
-  if (myOn(p)) out.push('', 'ORDER OF SERVICE', ...myHeads(p).map((h, i) => (i + 1) + '. ' + h));
+  if (myOn(p)) out.push('', 'ORDER OF SERVICE', ...(clean(p.musArr) ? ['As people arrive: ' + clean(p.musArr)] : []), ...myHeads(p).map((h, i) => (i + 1) + '. ' + h), ...(clean(p.musLeave) ? ['As people leave: ' + clean(p.musLeave)] : []));
   else if (o.length) out.push('', 'ORDER OF SERVICE (about ' + svcTotal(p) + ' minutes)', ...o.map((r, i) => (i + 1) + '. ' + r.name + (r.by ? ', ' + r.by : '') + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')));
   if (p.speakers.length) out.push('', 'FAMILY SPEAKERS', ...p.speakers.map(s => s.name + ', about ' + (+s.min || 0) + ' minutes'));
   if (picked(p, 'honors').length) out.push('', 'HONORS', picked(p, 'honors').join(', '));
@@ -1162,9 +1169,21 @@ function sheet(html, title, file, fam){
 const blkT = (p, b) => fill(b.t != null ? b.t : (plainOf(p) ? b.plain : b.faith) || (plainOf(p) ? '' : b.plain) || '', p);
 const headLine = p => [p.person.full || called(p), lifeLine(p)].filter(Boolean).join(', ');
 function gFor(p, id){ const g = gSel(p).find(x => x.id === id); return g ? Object.assign({}, g, p.gd[g.id] || {}) : null; }
+// The graveside (GWG BLD 806): what is laid to rest (a casket or an urn) sets the committal words, and a procession
+// from the service adds its cue. Music as people arrive and as people leave sits outside the timed service.
+const isGrave = g => g && (g.script === 'committal' || g.id === 'graveside' || g.id === 'burial');
+function restRow(p, g, d){ if (!isGrave(g)) return '';
+  return `<div class="fw-g3" style="margin-top:6px"><label class="f"><span>Laid to Rest</span><select data-fwi="gd.${esc(g.id)}.rest" aria-label="What is laid to rest">${[['', 'Choose'], ['casket', 'A casket'], ['urn', 'An urn (cremated)']].map(([v, t]) => `<option value="${v}"${(d.rest || '') === v ? ' selected' : ''}>${t}</option>`).join('')}</select></label>
+    <div class="fw-chips" style="align-self:end"><button type="button" class="chip fw-sm" data-fwa="proc" data-fwv="${esc(g.id)}" aria-pressed="${!!d.proc}">Procession from the Service</button></div></div>`; }
+const graveOf = p => gFor(p, 'graveside') || gFor(p, 'burial') || gSel(p).map(g => Object.assign({}, g, p.gd[g.id] || {})).find(isGrave) || null;
+const musEnds = p => [clean(p.musArr) ? 'As people arrive: ' + clean(p.musArr) : '', clean(p.musLeave) ? 'As people leave: ' + clean(p.musLeave) : ''].filter(Boolean);
 function committalBlocks(p){
-  const sc = cfg().scripts, faith = !plainOf(p), B = arr(faith ? sc.committalFaith : sc.committalPlain).slice();
+  const sc = cfg().scripts, faith = !plainOf(p), gv = graveOf(p) || {}, urn = gv.rest === 'urn';
+  const urnT = t => String(t).replace(/commit this body to the ground/g, 'commit these ashes to their resting place').replace(/\b(lay|laid|commit|committed) this body\b/g, '$1 these ashes').replace(/\bthis body\b/g, 'these ashes').replace('We return [Full] to the earth with love.', 'We lay the ashes of [Full] to rest with love.');
+  const B = arr(faith ? sc.committalFaith : sc.committalPlain).map(b => urn && b.t ? Object.assign({}, b, {t: urnT(b.t)}) : b);
+  if (gv.proc) B.unshift({h: 'Procession', t: 'The funeral director leads the procession from the service. The family follows [Person] to the graveside, and everyone gathers close before the words begin.', cue: true});
   const hon = picked(p, 'honors'); if (hon.length && B.length) B.splice(B.length - 1, 0, {h: 'Honors', t: hon.join(', ') + '. The honor guard leads; the officiant steps back and waits.', cue: true});
+  B.forEach(b => { if (b.cue) b.t = fill(b.t, p); });
   return {B, src: faith ? (sc.sources || {}).committalFaith : (sc.sources || {}).committalPlain};
 }
 function outHTML(p, k){
@@ -1190,7 +1209,7 @@ function outHTML(p, k){
       sec('Remembering', ln([H((p.person.full || called(p)) + (called(p) && p.person.full ? ' ("' + called(p) + '")' : '')), H(lifeLine(p))])) +
       sec('The Service Will Be', fw.length ? ln([H(fw.join(', '))]) : '') +
       sec('Gatherings', ln(gSel(p).map(g => '<b>' + H(g.t) + '</b>' + (gLine(p, g) ? ': ' + H(gLine(p, g)) : '')))) +
-      (myOn(p) ? sec('Order of Service', `<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>`) : sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${holds(r).length ? ' <i>(' + H(holds(r).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '')) +
+      (myOn(p) ? sec('Order of Service', `${musEnds(p)[0] && clean(p.musArr) ? `<p><i>${H(musEnds(p)[0])}</i></p>` : ''}<ol>${myHeads(p).map(h => `<li>${H(h)}</li>`).join('')}</ol>${clean(p.musLeave) ? `<p><i>${H('As people leave: ' + clean(p.musLeave))}</i></p>` : ''}`) : sec('Order of Service, About ' + svcTotal(p) + ' Minutes', o.length ? `<ol>${o.map(r => `<li>${H(r.name)}${r.by ? ', ' + H(r.by) : ''}${holds(r).length ? ' <i>(' + H(holds(r).join('; ')) + ')</i>' : ''}</li>`).join('')}</ol>` : '')) +
       sec('Family Speakers', ln(p.speakers.map(x => H(x.name) + ', about ' + (+x.min || 0) + ' minutes'))) +
       sec('Honors', ln([H(picked(p, 'honors').join(', '))])) + sec('Customs to Honor', ln([H(picked(p, 'customs').join(', '))])) +
       sec('Rehearsal', (p.reh.date || p.reh.place) ? ln([H([nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', '))]) : '') +
@@ -1228,6 +1247,13 @@ function printOut(k){ const p = plan(); if (!p) return; const r = outHTML(p, k);
 const DEBRIEF = 'Take five minutes for the After-Session Debrief.';
 const sesId = (p, k) => 'fw-' + p.id + '-' + k;
 const splitSay = t => String(t || '').split(/\n{2,}/).map(x => x.trim()).filter(Boolean);
+// A part of My Service Script as a live step: spoken paragraphs to say, cues and coaching notes to do, about 130 words a minute.
+function myStep(p, x){ const say = [], dos = [], ed = eulogyText(p); let para = [];
+  const flush = () => { if (para.length){ say.push(para.join(' ').replace(/\s*\/\/\s*/g, ' // ')); para = []; } };
+  x.lines.forEach(l => { const t = l.trim(); if (!t){ flush(); return; } if (/^coaching notes:?$/i.test(t)) return; if (/^[•*]/.test(t) || /^\(.*\)$/.test(t)){ flush(); dos.push(t.replace(/^[•*]\s*/, '').replace(/^\((.*)\)$/, '$1')); return; } flush(); say.push(t); });
+  flush();
+  if (ed && /eulogy|remembering|life story/i.test(x.h) && !x.lines.some(l => wordsIn(l) > 80)) splitSay(ed).forEach(t => say.push(t));
+  return {t: x.h, m: Math.max(1, Math.round(say.reduce((a, t) => a + wordsIn(t), 0) / 130)), say, do: dos}; }
 function sesGuides(p){
   const out = [], P = pName(p), sc = cfg().scripts, cueOf = (L, i) => L[i + 1] ? 'Next cue: ' + L[i + 1].t + (L[i + 1].by ? ', ' + L[i + 1].by : '') + '.' : 'Next cue: the end. Thank everyone and close.';
   const mk = (key, t, g, steps, purpose, prep) => { const mins = steps.reduce((a, s) => a + (+s.m || 0), 0);
@@ -1236,7 +1262,12 @@ function sesGuides(p){
       after: [DEBRIEF], debrief: true}); };
   const when = g => [nice(g.date), tm(g.time), g.place].filter(Boolean).join(', ');
   gSel(p).forEach(g0 => { const g = Object.assign({}, g0, p.gd[g0.id] || {});
-    if (g.main && hasSvc(p)){
+    if (g.main && myOn(p)){
+      const steps = myParts(p).filter(x => x.n && !x.grave).map(x => myStep(p, x));
+      if (clean(p.musArr)) steps.unshift({t: 'As People Arrive', m: 0, say: [], do: ['Music: ' + clean(p.musArr)]});
+      if (clean(p.musLeave)) steps.push({t: 'As People Leave', m: 0, say: [], do: ['Music: ' + clean(p.musLeave)]});
+      mk(g.id, g.t, g, steps, [g.t + ' for ' + (p.person.full || P), when(g)].filter(Boolean).join('. ') + '.', ['Print the Officiant Script as a backup.', 'Check in with the funeral director and the musicians.']);
+    } else if (g.main && hasSvc(p)){
       const W = CER().words(p.svc), ed = eulogyText(p);
       const steps = W.map(r => { let say = splitSay(r.words); r.rd.forEach(x => { say = say.concat([x.head], splitSay(x.text)); });
         if (ed && /eulogy|life story|the life/i.test(r.name)) say = say.concat(splitSay(ed));
@@ -1244,6 +1275,8 @@ function sesGuides(p){
       const cw = (cfg().scripts.closingWords || {})[plainOf(p) ? 'plain' : 'faith'];
       if (steps.length && !steps[steps.length - 1].say.length && cw) steps[steps.length - 1].say = splitSay(fill(cw, p));
       mk(g.id, g.t, g, steps, [g.t + ' for ' + (p.person.full || P), when(g)].filter(Boolean).join('. ') + '.', ['Print the Officiant Script as a backup.', 'Check in with the funeral director and the musicians.']);
+    } else if (g.script === 'committal' && myOn(p) && myGrave(p)){
+      mk(g.id, g.t, g, myParts(p).filter(x => x.grave).map(x => myStep(p, x)), [g.t, when(g)].filter(Boolean).join('. ') + '.', []);
     } else if (g.script === 'committal'){
       const {B} = committalBlocks(p);
       mk(g.id, g.t, g, B.map(b => ({t: b.h, m: 2, by: b.cue ? 'Honor guard' : '', say: b.cue ? [] : splitSay(blkT(p, b)), do: b.cue ? [b.t] : []})), [g.t, when(g)].filter(Boolean).join('. ') + '.', []);
@@ -1252,7 +1285,7 @@ function sesGuides(p){
       mk(g.id, g.t, g, arr(x.blocks).map(b => ({t: b.h, m: +b.min || 0, by: b.who === 'Chris' ? me() : b.who || '', say: splitSay(blkT(p, b))})), [fill(x.lead || g.t, p), when(g)].filter(Boolean).join(' ') , []);
     }
   });
-  if (p.reh.date || hasSvc(p)){
+  if ((p.reh.date || hasSvc(p)) && inPk(p, 'rehearsal')){
     const o = order(p), R = arr(sc.rehearsal).map(b => ({t: b.h, m: +b.min || 0, say: splitSay(blkT(p, b))}));
     if (o.length) R.splice(Math.min(3, R.length), 0, {t: 'Walk the Order', m: 10, say: o.map((r, i) => (i + 1) + '. ' + r.name + (r.by ? ', ' + r.by : '') + ' (' + r.mins + ' min)')});
     mk('rehearsal', 'Rehearsal', null, R, ['Rehearsal', [nice(p.reh.date), tm(p.reh.time), p.reh.place].filter(Boolean).join(', ')].filter(Boolean).join('. ') + '.', []);
@@ -1302,8 +1335,10 @@ function fdSecs(p){
   else add('order', T.length ? `<table class="fw-pt"><tr><th>#</th><th>Time</th><th>Part</th><th>Who</th><th>Min</th></tr>${T.map((r, i) => `<tr><td>${i + 1}</td><td>${H(r.at)}</td><td><b>${H(r.name)}</b>${holds(r).length ? '<br><i>' + H(holds(r).join('; ')) + '</i>' : ''}</td><td>${H(r.by || me())}</td><td>${r.mins}</td></tr>`).join('')}</table><p>About ${svcTotal(p)} minutes.</p>` : '',
     T.map((r, i) => (i + 1) + '. ' + (r.at ? r.at + ' ' : '') + r.name + (r.by ? ', ' + r.by : '') + ' (' + r.mins + ' min)' + (holds(r).length ? ': ' + holds(r).join('; ') : '')).join('\n'));
   const M = musicIn(p);
+  const mb = musEnds(p);
   add('music', M.length ? `<table class="fw-pt"><tr><th>Song</th><th>When</th><th>Who plays or sings</th><th>File from</th></tr>${M.map(x => `<tr><td><b>${H(x.title)}</b>${x.by ? ', ' + H(x.by) : ''}</td><td>${H(x.part)}${(T.find(r => r.k === x.k) || {}).at ? ', ' + H(T.find(r => r.k === x.k).at) : ''}</td><td>${H(x.lead || '')}</td><td>${H(musWho(p, x.id) || 'To confirm')}</td></tr>`).join('')}</table>` : '',
     M.map(x => x.title + (x.by ? ', ' + x.by : '') + ': ' + x.part + ((T.find(r => r.k === x.k) || {}).at ? ' at ' + T.find(r => r.k === x.k).at : '') + (x.lead ? ', ' + x.lead : '') + '. File from: ' + (musWho(p, x.id) || 'to confirm') + '.').join('\n'));
+  if (mb.length){ const i = out.findIndex(x => x[0] === 'music'), bh = mb.map(x => `<p><b>${H(x)}</b></p>`).join(''); if (i >= 0){ out[i][2] = bh + out[i][2]; out[i][3] = mb.join('\n') + '\n' + out[i][3]; } else add('music', bh, mb.join('\n')); }
   const rd = inSvc(p).filter(x => x.kind === 'reading'), sp = arr(p.speakers), tk = id => (p.tasks.find(t => t.id === id) || {}).d || '';
   const rl = rd.map(x => x.title + ': ' + (x.lead || 'reader to confirm')).concat(sp.map(x => x.name + ', speaking about ' + (+x.min || 0) + ' minutes'), arr(p.clergy).filter(c => clean(c.name)).map(c => c.name + (c.role ? ', ' + c.role : '')), tk('readers') ? ['Readers: ' + tk('readers')] : []);
   add('readers', rl.length ? '<ul>' + rl.map(x => `<li>${H(x)}</li>`).join('') + '</ul>' : '', rl.join('\n'));
@@ -1354,11 +1389,12 @@ function myLine(l){ const t = l.trim(); if (!t) return '';
 function myPart(p, x){ const ed = eulogyText(p), pull = ed && x.n && /eulogy|remembering|life story/i.test(x.h) && !x.lines.some(l => wordsIn(l) > 80);
   return `<div class="ms-part">${x.h ? `<h2 data-pdf-k="part">${x.n ? x.n + '. ' : ''}${H(x.h)}</h2>` : ''}${x.lines.map(myLine).join('')}${pull ? sayParas(ed) : ''}</div>`; }
 function myScriptHTML(p, grave){ const P = myParts(p).filter(x => grave ? x.grave : true);
-  return MSCSS + `<div class="ms"><h1>${grave ? 'Graveside Committal' : 'Officiant Script'}</h1><p>${H(headLine(p))}</p>${grave ? '' : g0(p)}${P.map(x => myPart(p, x)).join('')}</div>`; }
+  const cue = t => `<p class="ms-c" data-pdf-k="cue">(${H(t)})</p>`;
+  return MSCSS + `<div class="ms"><h1>${grave ? 'Graveside Committal' : 'Officiant Script'}</h1><p>${H(headLine(p))}</p>${grave ? '' : g0(p) + (clean(p.musArr) ? cue('As people arrive: ' + clean(p.musArr)) : '')}${P.map(x => myPart(p, x)).join('')}${!grave && clean(p.musLeave) ? cue('As people leave: ' + clean(p.musLeave)) : ''}</div>`; }
 // A dates line still waiting on the family ("[ask the family: birth month and day], 1942 to ...") takes the dates from the plan.
 const coverLine = (p, l) => /\[ask the family[^\]]*\]/i.test(l) && /\b(1[89]|20)\d\d\b/.test(l) && lifeLine(p) ? lifeLine(p) : l;
 function myOrderHTML(p){ const cover = clean(p.progText) ? String(p.progText).split('\n').map(l => l.trim() ? `<p>${H(coverLine(p, l.trim()))}</p>` : '<p>&nbsp;</p>').join('') : `<h1>${H(p.person.full || called(p))}</h1><p>${H(lifeLine(p))}</p>`;
-  return MSCSS + `<div class="mso">${cover}<h2>Order of Service</h2>${myHeads(p).map(h => `<p><b>${H(h)}</b></p>`).join('')}${myGrave(p) ? '<p><i>Committal to follow</i></p>' : ''}</div>`; }
+  return MSCSS + `<div class="mso">${cover}<h2>Order of Service</h2>${clean(p.musArr) ? `<p><i>Gathering Music: ${H(clean(p.musArr))}</i></p>` : ''}${myHeads(p).map(h => `<p><b>${H(h)}</b></p>`).join('')}${clean(p.musLeave) ? `<p><i>Recessional: ${H(clean(p.musLeave))}</i></p>` : ''}${myGrave(p) ? '<p><i>Committal to follow</i></p>' : ''}</div>`; }
 function vMyScript(p){ if (!p.script) return ''; const on = myOn(p);
   return blk(p, 'My Service Script', 'myscript', `<p class="fw-sub" style="margin-top:0">${on ? 'Pasted from Writing Help. The Officiant Script, the Order of Service, the Graveside Committal, the Family Copy, and Send Everything all use these words.' : "Set aside for now: the Builder's own service is in use."} Each numbered line, like "3. Welcome", starts a part. Lines in (parentheses) print as cues, lines starting with a bullet print as coaching notes, and // marks a pause. The eulogy part prints the current eulogy draft.</p>
     <textarea rows="18" class="fw-bigta" data-fwi="script.t" aria-label="My Service Script">${esc(p.script.t)}</textarea>
@@ -1459,18 +1495,21 @@ function whDetails(p){
   const sn = items(p, 'story').filter(it => clean(st[it.id])).map(it => '- ' + fill(it.t, p) + ': ' + st[it.id]); if (sn.length) out.push('Story notes:\n' + sn.join('\n'));
   const ea = []; EU.secs.forEach(g => g.qs.forEach(q => { if (clean(a[q.id])) ea.push('- ' + fillQ(p, q.l) + ': ' + a[q.id]); })); if (ea.length) out.push('Eulogy answers:\n' + ea.join('\n'));
   if (clean(p.eDraft)) out.push('The eulogy draft so far:\n' + p.eDraft);
+  if (p.script && clean(p.script.t)) out.push('The service script so far:\n' + p.script.t);
   const oa = []; OB.secs.forEach(g => g.qs.forEach(q => { if (clean(o[q.id])) oa.push('- ' + fillQ(p, q.l) + ': ' + o[q.id]); })); if (oa.length) out.push('Obituary answers:\n' + oa.join('\n'));
   const ord = order(p); if (ord.length) out.push('The service: ' + ord.map(r => r.name + (holds(r).length ? ' (' + holds(r).join('; ') + ')' : '')).join(', ') + '.');
   const at = attireLines(p); if (at.length) out.push('Attire: ' + at.join(' '));
   if (clean(whS(p).other)) out.push('Other pieces asked for: ' + whS(p).other);
   return out.join('\n\n');
 }
+// The pieces Writing Help can ask for: the library's list, with the Service Script added when the library predates it (GWG BLD 806).
+function whPieces(){ const P = arr(cfg().writingHelp.pieces).slice(); if (!P.some(x => x.id === 'script')){ const sp = DEF.writingHelp.pieces.find(x => x.id === 'script'), i = P.findIndex(x => x.id === 'other'); if (sp) P.splice(i < 0 ? P.length : i, 0, sp); } return P; }
 function whText(p){
-  const H0 = cfg().writingHelp, w = whS(p), M = whMap(p), want = arr(H0.pieces).filter(x => w.want[x.id]);
+  const H0 = cfg().writingHelp, w = whS(p), M = whMap(p), want = whPieces().filter(x => w.want[x.id]);
   const phs = [...new Set(M.map(m => m.ph))];
   const body = hide(scrub(whDetails(p), w.priv), M);
-  return ['WRITING HELP REQUEST', String(H0.header || '').trim() + (relSoft(p) && REL().writing ? '\n' + REL().writing : ''), '', 'WHAT TO WRITE', ...(want.length ? want : [arr(H0.pieces)[0]]).map(x => '- ' + x.t + ': ' + hide(W(x.ask, p), M)),
-    '', 'PLACEHOLDERS (keep each one exactly as written)', phs.join(', ') || '[Person]', '', 'RETURN EACH PIECE UNDER ITS OWN MARKER LINE, EXACTLY LIKE THIS:', ...(want.length ? want : [arr(H0.pieces)[0]]).map(x => '=== ' + (MARK[x.id] || 'OTHER') + (x.id === 'other' ? ': (the title)' : '') + ' ==='),
+  return ['WRITING HELP REQUEST', String(H0.header || '').trim() + (relSoft(p) && REL().writing ? '\n' + REL().writing : ''), '', 'WHAT TO WRITE', ...(want.length ? want : [whPieces()[0]]).map(x => '- ' + x.t + ': ' + hide(W(x.ask, p), M)),
+    '', 'PLACEHOLDERS (keep each one exactly as written)', phs.join(', ') || '[Person]', '', 'RETURN EACH PIECE UNDER ITS OWN MARKER LINE, EXACTLY LIKE THIS:', ...(want.length ? want : [whPieces()[0]]).map(x => '=== ' + (MARK[x.id] || 'OTHER') + (x.id === 'other' ? ': (the title)' : x.id === 'script' ? ': Service Script' : '') + ' ==='),
     '', 'THE DETAILS', body].join('\n');
 }
 // Paste Finished Pieces: split on the markers, put the names back, and drop each piece in its place.
@@ -1506,7 +1545,7 @@ function vWriting(p){
   const kindSel = `<select id="fw-whkind" aria-label="Kind of name">${WH_KIND.map(k => `<option value="${k}"${(S.whKind || 'other') === k ? ' selected' : ''}>${esc(L[k] || DEF.writingHelp.labels[k])}</option>`).join('')}</select>`;
   return blk(p, 'Writing Help', 'writing', (wa && wa.ans === 'yes' ? '' : `<p class="fw-warn" role="note">${esc(H0.reminder)} <button type="button" class="linkbtn" data-fwa="step" data-fwv="1">Go to Welcome</button></p>`) +
     `<p class="fw-sub" style="margin-top:0">Copy for Writing Help makes a text with names turned into placeholders and contact details left out. Paste it into a chat with your writing assistant, then paste what comes back below. The names come back in on this device only.</p>
-    <div class="fw-lbl">What to Write</div><div class="fw-chips">${arr(H0.pieces).map(x => `<button type="button" class="chip fw-sm" data-fwa="wh-want" data-fwv="${esc(x.id)}" aria-pressed="${!!w.want[x.id]}"${fk('ww|' + x.id)}>${esc(x.t)}</button>`).join('')}</div>
+    <div class="fw-lbl">What to Write</div><div class="fw-chips">${whPieces().map(x => `<button type="button" class="chip fw-sm" data-fwa="wh-want" data-fwv="${esc(x.id)}" aria-pressed="${!!w.want[x.id]}"${fk('ww|' + x.id)}>${esc(x.t)}</button>`).join('')}</div>
     ${w.want.other ? fld('wh.other', 'Other pieces to ask for', w.other, 'text', 'A short prayer for the meal, a thank-you note') : ''}
     <details class="fw-custom" style="margin-top:12px" data-fwanc="wh-map" data-fwkeep="whMap"${S.whMap ? ' open' : ''}><summary>Names and Placeholders (${M.length})</summary><p class="fw-sub">Kept only in this plan, on this device.</p>
       <ul class="fw-flist">${M.map(m => `<li><span>${esc(m.real)}</span><span>${esc(m.ph)}${arr(w.own).some(o => o.real === m.real) ? ` <button type="button" class="linkbtn" data-fwa="wh-del" data-fwv="${esc(m.real)}">Remove</button>` : ''}</span></li>`).join('')}</ul>
@@ -1922,6 +1961,7 @@ function act(a, v, el){
     case 'svc-on': CER().set(p.svc, v, 'on', true); touch(p); rerender(true); return;
     case 'cer-print': if (hasSvc(p)){ cerBind(); CER().print(p.svc, v); } return;
     case 'my-print': if (myOn(p) || p.script){ if (v === 'order') sheet(myOrderHTML(p), 'Order of Service', 'order-of-service', famName(p)); else sheet(myScriptHTML(p), 'Officiant Script', 'officiant-script'); } return;
+    case 'proc': { const d = p.gd[v] = p.gd[v] || {}; d.proc = !d.proc; touch(p); rerender(false); return; }
     case 'fam-days': p.daysAhead = !p.daysAhead; touch(p); rerender(false); return;
     case 'pk': p.pk = p.pk || {}; p.pk[v] = !inPk(p, v); touch(p); rerender(false); return;
     case 'my-on': case 'my-off': if (p.script){ p.script.on = a === 'my-on'; touch(p); rerender(true); toast(a === 'my-on' ? 'My Service Script is in use.' : "The Builder's own service is in use."); } return;
