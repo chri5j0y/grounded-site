@@ -1596,9 +1596,10 @@ async function saveDoc(p){
   if (!['script', 'rehearsal', 'committal', 'family', 'helpers'].concat(hasOther(p) ? ['other'] : []).some(k => inPk(p, k))){ toast('Choose at least one piece for The Packet first.'); return; }
   if (!(await needDocx())){ toast('The doc is getting ready. Try again in a moment.'); return; }
   const head = (C.ph ? C.ph('Farewell Planning Session') : '').replace(/<div class="r">[\s\S]*?<\/div><\/div>\s*$/, `<div class="r">In Loving Memory<br>${H(famName(p))}</div></div>`);
-  const name = clean(p.person.full || called(p)).replace(/[\\/:*?"<>|]+/g, '').trim(), file = (name ? name + ' ' : '') + 'Farewell Packet.docx';
+  // File names carry only the sheet and the date, never a person's name (the Field Guide's rule for every saved file).
+  const file = 'farewell-packet-' + new Date().toISOString().slice(0, 10) + '.docx';
   try {
-    const blob = GGDocx.make(head + bundleHTML(p), {title: (name ? name + ': ' : '') + 'Farewell Packet'});
+    const blob = GGDocx.make(head + bundleHTML(p), {title: 'Farewell Packet'});
     API.lastDoc = {name: file, blob};
     if (API.noOpen) return;
     if (window.GGApp && GGApp.share) await GGApp.share(blob, file, 'Farewell Packet');
