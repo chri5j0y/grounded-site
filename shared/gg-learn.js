@@ -272,7 +272,7 @@
       '.ln-link{margin:0 0 8px;}.ln-link:empty{display:none;}.ln-link a{display:inline-flex;align-items:center;min-height:44px;font-weight:600;color:var(--ggl-acc);}.ln-link .gg-src a,.ln-link .gg-src-line a{display:inline;min-height:0;font-weight:inherit;}',
       ':root[data-theme="dark"] .ggl-app .ln-link a{color:var(--ggl-lite);}@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggl-app .ln-link a{color:var(--ggl-lite);}}',
       '.ln-mu{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;font-size:14px;margin:8px 0 0;}.ln-mu-k{font-weight:600;}.ln-mu select{font:inherit;font-size:14px;padding:4px 6px;border-radius:8px;background:transparent;color:inherit;border:1px solid currentColor;}.ln-mu select option{color:#2C1810;background:#FFFCF6;}.ln-mu-b{font:inherit;font-size:14px;padding:5px 10px;border-radius:999px;border:1px solid currentColor;background:transparent;color:inherit;cursor:pointer;}.ggl-sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;}',
-      '.ln-crisis{margin:8px 0 0;padding:8px 12px;border-radius:12px;border-left:5px solid #B8612F;background:rgba(184,97,47,.10);font-size:15px;line-height:1.4;}.ln-crisis b{margin-right:6px;}',
+      '.ln-crisis{margin:8px 2px 0;padding:0;font-size:13px;line-height:1.5;opacity:.75;}.ln-crisis b{font-weight:600;margin-right:6px;}',
       '.ggl-sup{margin-top:22px;}.ggl-sup>p{margin:4px 0 0;}.ggl-sup .ggl-card{border-left:6px solid var(--ggl-bar,var(--ggl-acc));}',
       // Written pages (GWG BLD 787)
       '.ggl-pg-eb{margin:14px 0 0;}.ggl-page{margin-top:2px;}.ggl-pg{font-size:calc(17px * var(--ggl-scale,1));line-height:1.65;margin-top:12px;}.ggl-pg h2{font-family:\'Cormorant Garamond\',serif;font-weight:600;font-size:26px;line-height:1.15;margin:22px 0 6px;}',
@@ -466,8 +466,9 @@
      websites; each carries its credit for the Sources line. With no tracks at all the Music settings stay
      hidden. Beside Voice and Speed, listeners choose Volume (Off, Soft, Medium), Mood (Automatic or one mood),
      and Another Track; all kept on this device. Volume runs through Web Audio where it can, because phones
-     ignore an audio element's volume setting. A lesson with crisis: [lines] shows them in a bar under the video
-     from the first scene to the last (Oak Safety, BLD 721). */
+     ignore an audio element's volume setting. A lesson with crisis: [lines] shows them in one quiet line of type under the video
+     from the first scene to the last (Oak Safety, BLD 721). Since BLD 808 the voice never speaks crisis lines or helplines,
+     except in videos about suicide or self-harm (Chris, October 15, 2026): this line carries the numbers instead. */
   // Seven licensed tracks per mood (Pixabay Content License, chosen by Chris, GWG BLD 721). Each video always gets the same one.
   var MUSIC = {
     learning: [
@@ -606,7 +607,7 @@
     var N = (l.scenes || []).length + 1; // the closing scene is the last one
     host.innerHTML = '<div class="ggl-player"><div class="ln-stage"><div class="ln-canvas"></div>' + wmark(cfg) + '<div class="ggl-endbar" role="group" aria-label="What next"></div></div>'
       + '<div class="ln-prog" aria-hidden="true">' + new Array(N + 1).join('<span></span>') + '</div>'
-      + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Help right now:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
+      + (Array.isArray(l.crisis) && l.crisis.length ? '<p class="ln-crisis" role="note"><b>Support any time:</b>' + l.crisis.map(esc).join(' &middot; ') + '</p>' : '')
       + '<p class="ln-cap" aria-live="polite"></p><p class="ln-link"></p><div class="ggl-quiz"></div>'
       + '<div class="ln-ctl"><button class="ggl-btn pri" data-g="play">Play</button><button class="ggl-btn" data-g="back" aria-label="Back one scene">Back</button><button class="ggl-btn" data-g="next" aria-label="Next scene">Next</button><button class="ggl-btn quiet" data-g="restart">Start Over</button><button class="ggl-btn quiet" data-g="read" aria-expanded="false">Read Instead</button><span class="ggl-cn"></span></div>'
       + '<section class="ln-read" hidden tabindex="-1" aria-label="Read Instead"></section>'
@@ -978,7 +979,7 @@
     if (n < 40) setTimeout(function () { hook(n + 1); }, 250);
   })(0);
   function script(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = src; s.onload = function () { ok(); }; s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
-  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b782', oak: '/oak/guide-videos.js?v=b793', aspen: '/aspen/guide-videos.js?v=b789', maple: '/maple/guide-videos.js?v=b789', sequoia: '/sequoia/guide-videos.js?v=b789', pine: '/pine/guide-videos.js?v=b789', birch: '/birch/guide-videos.js?v=b795', grove: '/grove/guide-videos.js?v=b795' };
+  var GUIDE_SRC = { willow: '/willow/guide-videos.js?v=b808', oak: '/oak/guide-videos.js?v=b808', aspen: '/aspen/guide-videos.js?v=b808', maple: '/maple/guide-videos.js?v=b808', sequoia: '/sequoia/guide-videos.js?v=b808', pine: '/pine/guide-videos.js?v=b808', birch: '/birch/guide-videos.js?v=b808', grove: '/grove/guide-videos.js?v=b808' };
   function needGuides(app) { return GUIDE_SRC[app] ? script(url(GUIDE_SRC[app]), function () { return !!(window.GG_LEARN_GUIDES && window.GG_LEARN_GUIDES[app]); }) : Promise.resolve(); }
   // One track per ring: kind 'guide'. Each lesson knows its guide, its side, and its pair.
   function guideTracks(app) {
@@ -992,7 +993,7 @@
     }).filter(function (t) { return t.lessons.length; });
   }
   // Health and Ability videos (GWG BLD 756): one support track per app, loaded when the Support group opens.
-  var LIFE_SRC = '/shared/learn-life.js?v=b793', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
+  var LIFE_SRC = '/shared/learn-life.js?v=b808', LIFE_APPS = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'grove'], LIFE_ID = /^(mp|as|pn|br|ok|sq|gr)-ha-/;
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {

@@ -14707,7 +14707,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Help is here, day or night.",
-"say": "First, where to get help right now. The National Domestic Violence Hotline is confidential, 24 hours a day."
+"say": "First, where to get help right now."
 },
 {
 "k": "big",
@@ -14809,7 +14809,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"say": "The National Domestic Violence Hotline is confidential, 24 hours a day. Share the number with them privately."
+"say": "Share the number with them privately."
 },
 {
 "k": "big",
@@ -20228,7 +20228,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "Safety first",
-     "say": "Let's start with you. If you ever feel afraid of your partner, or there's any violence, call the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three, and make a safety plan. If your partner uses opioids, keep naloxone, also called Narcan, at home."
+     "say": "Let's start with you. If you ever feel afraid of your partner, or there's any violence, make a safety plan. If your partner uses opioids, keep naloxone, also called Narcan, at home."
     },
     {
      "k": "big",
@@ -20364,7 +20364,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Ask about safety.",
      "body": "Gently, and privately.",
-     "say": "Ask about safety, gently and privately. Are you safe at home? If they're afraid, share the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three. And know that leaving can be the most dangerous time, so a safety plan matters."
+     "say": "Ask about safety, gently and privately. Are you safe at home? And know that leaving can be the most dangerous time, so a safety plan matters."
     },
     {
      "k": "words",

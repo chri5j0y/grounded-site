@@ -5626,7 +5626,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If family hurts or threatens you",
-      "say": "If someone in your family is hurting or threatening you, your safety comes first. So can the National Domestic Violence Hotline."
+      "say": "If someone in your family is hurting or threatening you, your safety comes first."
      },
      {
       "k": "words",

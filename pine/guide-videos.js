@@ -9220,6 +9220,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-ai-companions-helper",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
     "guide": "ai-companions",
     "side": "helper",
     "title": "AI Chatbots and Companions",
@@ -9290,7 +9291,7 @@ window.GG_LEARN_GUIDES.pine = {
         "People are there, any time"
        ]
       ],
-      "say": "A few things worth talking about. How it works. It predicts words, so it can sound caring without knowing anyone. It can be confidently wrong, and it tends to agree, even when agreeing isn't good for them. Privacy, and what never to share. And real help. Nine eight eight and the Crisis Text Line are staffed by people, any time."
+      "say": "A few things worth talking about. How it works. It predicts words, so it can sound caring without knowing anyone. It can be confidently wrong, and it tends to agree, even when agreeing isn't good for them. Privacy, and what never to share. And real help."
      },
      {
       "k": "points",

@@ -3195,7 +3195,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A calm grown-up is the strongest help.",
-       "say": "You do not need to be an expert. A calm grown-up who listens, and then reaches for help, is one of the strongest helps a child can have. Nine eight eight is there any time."
+       "say": "You do not need to be an expert. A calm grown-up who listens, and then reaches for help, is one of the strongest helps a child can have."
       },
       {
        "k": "quiz",
@@ -8450,7 +8450,7 @@ window.GG_LEARN = {
          "This week, for a closer look"
         ]
        ],
-       "say": "Know who to call. You can call it yourself, as the worried grown-up. Or text the word home to seven four one, seven four one. And when signs worry you, call the school counselor and your child’s doctor this week, and tell them what you have seen. Teachers and counselors, follow your school’s own steps too."
+       "say": "Know who to call. You can call it yourself, as the worried grown-up. And when signs worry you, call the school counselor and your child’s doctor this week, and tell them what you have seen. Teachers and counselors, follow your school’s own steps too."
       },
       {
        "k": "points",
@@ -10046,11 +10046,6 @@ window.GG_LEARN = {
         ]
        ],
        "say": "If the first grown-up does not help, tell another one. Keep telling until someone does. If saying it out loud is too hard, write it down and hand it to them. And the Need help now button at the top of your tree in Aspen has people you can call or text, all day and night."
-      },
-      {
-       "k": "big",
-       "h": "Help right now",
-       "say": "You can also text HOME to seven four one seven four one."
       },
       {
        "k": "big",
@@ -27556,10 +27551,6 @@ window.GG_LEARN = {
        "title": "Help lines",
        "rows": [
         [
-         "Crisis Text Line",
-         ""
-        ],
-        [
          "In danger right now?",
          "Call for help"
         ]
@@ -28156,7 +28147,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Someone hurting you? That stays with you.",
        "sub": "Pine shows you help from outside your home.",
-       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. Nine one one in danger. And a trusted adult at school."
+       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. And a trusted adult at school."
       },
       {
        "k": "big",
@@ -28879,10 +28870,6 @@ window.GG_LEARN = {
        "title": "Need to talk now?",
        "rows": [
         [
-         "Crisis Text Line",
-         ""
-        ],
-        [
          "Minnesota county crisis team",
          "**CRISIS (274747)"
         ],
@@ -28891,7 +28878,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "Or text HOME to seven four one seven four one. In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "quiz",
@@ -32347,11 +32334,11 @@ window.GG_LEARN = {
        ],
        "cue": {
         "at": [
-         3,
-         3
+         2,
+         2
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "big",
@@ -32930,10 +32917,6 @@ window.GG_LEARN = {
        "app_name": "Birch",
        "title": "Help lines",
        "rows": [
-        [
-         "Crisis Text Line",
-         ""
-        ],
         [
          "Veterans and service members",
          ""
@@ -34217,27 +34200,6 @@ window.GG_LEARN = {
        "say": "Slow Exhale is ready for your growth plan, and it works best when you practice on calm days too. If low mood or worry has lasted two weeks or more, talk with a doctor, a counselor, or someone you trust. Many schools, workplaces, and health plans offer counseling."
       },
       {
-       "k": "screen",
-       "app": "birch",
-       "app_name": "Birch",
-       "title": "Need to talk now?",
-       "rows": [
-        [
-         "Crisis Text Line",
-         ""
-        ],
-        [
-         "Veterans and service members",
-         ""
-        ],
-        [
-         "In danger right now?",
-         "Call for help"
-        ]
-       ],
-       "say": "Or text HOME to seven four one seven four one."
-      },
-      {
        "k": "quiz",
        "q": "What does Birch ask about money in Bark?",
        "opts": [
@@ -35298,10 +35260,6 @@ window.GG_LEARN = {
         [
          "Fear of one person",
          "Or changes around them"
-        ],
-        [
-         "National DV Hotline",
-         ""
         ]
        ],
        "say": "Watch, too, for signs that someone is hurting them. Most people hurt by a partner were first hurt before age twenty five. Control often comes first. Checking their phone, controlling money, deciding who they can see. Notice fear of one person, or sudden changes around someone."
@@ -37982,7 +37940,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Betting to catch up? Reach out.",
        "sub": "Call 1-800-MY-RESET, any time.",
-       "say": "If betting or gambling is part of the money stress, you are not alone, and help works. The National Problem Gambling Helpline is one eight hundred, M Y, R E S E T, any time."
+       "say": "If betting or gambling is part of the money stress, you are not alone, and help works."
       },
       {
        "k": "big",
@@ -38407,16 +38365,9 @@ window.GG_LEARN = {
       {
        "k": "points",
        "h": "If someone is hurting you",
-       "items": [
-        [
-         "National DV Hotline",
-         ""
-        ]
-       ],
+       "items": [],
        "cue": {
-        "at": [
-         1
-        ]
+        "at": []
        },
        "say": "If someone is hurting you, at home, in a relationship, at work, or online, here is where to reach out. If someone is threatening to share an image of you, StopNCII dot org can help."
       },
@@ -38435,11 +38386,11 @@ window.GG_LEARN = {
        ],
        "cue": {
         "at": [
-         3,
-         3
+         2,
+         2
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "big",

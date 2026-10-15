@@ -9407,7 +9407,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
      },
      {
       "k": "big",
@@ -9515,7 +9515,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly. Nine eight eight also helps the people left behind."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
      },
      {
       "k": "big",
@@ -11028,10 +11028,10 @@ window.GG_LEARN_GUIDES.grove = {
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. Nine eight eight for a mental health crisis or thoughts of suicide, by call, text, or chat. Nine one one for danger right now. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
+      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
-        4
+        2
        ]
       }
      },
@@ -11128,10 +11128,10 @@ window.GG_LEARN_GUIDES.grove = {
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. Nine eight eight for a mental health crisis or thoughts of suicide, by call, text, or chat. Nine one one for danger right now. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
+      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
-        4
+        2
        ]
       }
      },
@@ -18420,7 +18420,7 @@ var V = [
     {
      "k": "card",
      "title": "Safety comes first",
-     "say": "Rebuilding trust happens in a safe home. The National Domestic Violence Hotline answers any time."
+     "say": "Rebuilding trust happens in a safe home."
     },
     {
      "k": "big",
