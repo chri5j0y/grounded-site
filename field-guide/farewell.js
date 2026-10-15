@@ -1561,7 +1561,7 @@ function vWriting(p){
 // What You'll Get, the new cards.
 function vSend(p){ const B = cfg().bundle, P = cfg().fdPacket, Q = cfg().fdQuestions, f = p.fd || {}, M = musicIn(p), A = p.fdq || {};
   const whoT = whoList(p).concat(['Musician']).filter((x, i, a) => a.indexOf(x) === i);
-  return `<div class="fw-ocard fw-big1" data-fwanc="bundle"><h4>${esc(B.title)}</h4><p>${esc(W(B.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print the Packet</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="copy">Copy</button></div>
+  return `<div class="fw-ocard fw-big1" data-fwanc="bundle"><h4>${esc(B.title)}</h4><p>${esc(W(B.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print the Packet</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-doc">Save as Doc</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="copy">Copy</button></div>
     <p class="fw-sub">${p.bundleSent ? 'Sent ' + esc(nice(p.bundleSent.date)) + '. ' : ''}Save it as a PDF first, then attach it to the email or text. ${esc(apStatus(p).t)}</p></div>` +
   blk(p, P.title, 'fdpacket', `<p class="fw-sub" style="margin-top:0">${esc(W(P.lead, p))}</p>
     <div class="fw-g2">${fld('fd.home', 'Funeral home', f.home)}${fld('fd.director', 'Funeral director', f.director)}${fld('fd.ph', 'Phone', f.ph, 'tel')}${fld('fd.em', 'Email', f.em, 'email')}</div>
@@ -1582,12 +1582,30 @@ function finNext(p){ const F = cfg().finish, L = arr(F.next).map(t => ({t: W(t, 
   return L; }
 function vFinish(p){ const F = cfg().finish, st = apStatus(p);
   return sayBox(p, F.say) + `<div class="fw-fin" data-fwanc="fin-thanks"><p class="fw-read">${esc(W(thanksT(p), p))}</p><p>With you,<br>${esc(me())}</p></div>` +
-    blk(p, 'The Packet', 'fin-packet', `<p class="fw-sub" style="margin-top:0">${esc(W(cfg().bundle.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button></div>`) +
+    blk(p, 'The Packet', 'fin-packet', `<p class="fw-sub" style="margin-top:0">${esc(W(cfg().bundle.lead, p))}</p>${pkChips(p)}<div class="row" style="margin-top:8px"><button type="button" class="btn btn-gold btn-sm" data-fwa="bundle-print">Save or Print</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-doc">Save as Doc</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="email">Email It</button><button type="button" class="btn btn-line btn-sm" data-fwa="bundle-send" data-fwv="text">Text It</button></div>`) +
     blk(p, cfg().approval.title, 'fin-approval', `<p class="${st.ok ? 'fw-ok' : 'fw-sub'}" style="margin-top:0">${esc(st.t)}</p>${st.ok ? '' : '<div class="row"><button type="button" class="btn btn-line btn-sm" data-fwa="step" data-fwv="7">Go to Family Approval</button></div>'}`) +
     blk(p, 'Next Steps', 'fin-next', `<ul class="fw-flist">${finNext(p).map(x => `<li><span>${esc(x.t)}</span><span>${x.go ? `<button type="button" class="linkbtn" data-fwa="step" data-fwv="${x.go}">Step ${x.go}</button>` : ''}</span></li>`).join('')}</ul>`); }
 function famFinish(p){ const F = cfg().finish;
   return `<div class="fw-fam"><p class="fw-fsub">For ${esc(pName(p))}</p><h2>${esc(F.familyLine || 'Thank you.')}</h2>` + fsec('Thank You', `<p class="fw-read">${esc(W(thanksT(p), p))}</p><p>With you,<br>${esc(me())}</p>`, 'fin-thanks') +
     fsec('Next Steps', `<ul class="fw-flist">${arr(F.next).map(t => `<li><span>${esc(W(t, p))}</span><span></span></li>`).join('')}</ul>`, 'fin-next') + (S.appr ? apBox(p) : fsec(cfg().approval.title, `<p class="fw-big">${esc(apStatus(p).t)}</p>`, 'fin-approval')) + '</div>'; }
+// Save as Doc (GWG BLD 810): the pieces chosen for The Packet as one Word file (shared/gg-docx.js, made on the device),
+// to open in Word, Pages, or Google Docs (drop it into Drive) and edit there. Changes made in that file stay in that file.
+const DOCX = '../shared/gg-docx.js?v=b810';
+function needDocx(){ return new Promise(ok => { if (window.GGDocx) return ok(true); const s = document.createElement('script'); s.src = DOCX; s.onload = () => ok(!!window.GGDocx); s.onerror = () => ok(false); document.head.appendChild(s); }); }
+async function saveDoc(p){
+  if (!['script', 'rehearsal', 'committal', 'family', 'helpers'].concat(hasOther(p) ? ['other'] : []).some(k => inPk(p, k))){ toast('Choose at least one piece for The Packet first.'); return; }
+  if (!(await needDocx())){ toast('The doc is getting ready. Try again in a moment.'); return; }
+  const head = (C.ph ? C.ph('Farewell Planning Session') : '').replace(/<div class="r">[\s\S]*?<\/div><\/div>\s*$/, `<div class="r">In Loving Memory<br>${H(famName(p))}</div></div>`);
+  const name = clean(p.person.full || called(p)).replace(/[\\/:*?"<>|]+/g, '').trim(), file = (name ? name + ' ' : '') + 'Farewell Packet.docx';
+  try {
+    const blob = GGDocx.make(head + bundleHTML(p), {title: (name ? name + ': ' : '') + 'Farewell Packet'});
+    API.lastDoc = {name: file, blob};
+    if (API.noOpen) return;
+    if (window.GGApp && GGApp.share) await GGApp.share(blob, file, 'Farewell Packet');
+    else { const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = file; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 4000); }
+    toast('Saved as ' + file + '. Open it in Word or Google Docs to edit.');
+  } catch (e) { toast('The doc is getting ready. Try again in a moment.'); }
+}
 function saveFile(name, text, type){ try { const b = new Blob([text], {type: type || 'text/plain'}); if (window.GGApp && GGApp.download) GGApp.download(b, name); else { const a = document.createElement('a'); a.href = URL.createObjectURL(b); a.download = name; document.body.appendChild(a); a.click(); setTimeout(() => { URL.revokeObjectURL(a.href); a.remove(); }, 800); } API.lastFile = {name, text}; } catch (e) { toast('The file could not be saved.'); } }
 function openLink(u){ API.lastLink = u; if (API.noOpen) return; try { window.location.href = u; } catch (e) {} }
 
@@ -1902,6 +1920,7 @@ function act(a, v, el){
       if (p.apSent.ver !== verOf(p) && !confirm('The plan changed after it was sent. Their approval is saved with the version they were sent. Continue?')) return;
       recordAppr(p, {way: 'reply', name: clean(r2.name) || clean(p.contact.name) || 'The family', date: r2.date || today(), reply, ver: p.apSent.ver, text: p.apSent.text}); p.apr = {}; touch(p); rerender(true); toast('Their approval is recorded with the version they read.'); return; }
     case 'bundle-print': sheet(FAMCSS + bundleHTML(p), cfg().bundle.title || 'Send Everything', 'farewell-packet', famName(p)); return;
+    case 'bundle-doc': saveDoc(p); return;
     case 'bundle-send': { const B = cfg().bundle, words = W(B.sendWords, p); p.bundleSent = {date: today(), at: Date.now(), how: v};
       if (v === 'copy') copyText(words + '\n\n' + bundleText(p), 'The packet words are copied.'); else if (v === 'text') openLink(smsHref(p.contact.ph, words)); else openLink(mailHref(p.contact.em, W(B.subject, p), words + '\n\n' + bundleText(p))); touch(p); rerender(true); return; }
     case 'fd-print': sheet(PCSS + '<style>.fw-ps{margin:0 0 3mm;}</style>' + fdHTML(p), cfg().fdPacket.title, 'funeral-director-packet'); return;
