@@ -207,7 +207,7 @@
   document.addEventListener('click', function (e) {
     var t = e.target.closest && e.target.closest('[data-ggn-act],[data-ggn-door],[data-ggn-play],[data-ggn-voice],[data-ggn-app]'); if (!t) return;
     var a = t.getAttribute('data-ggn-act');
-    if (a === 'breathe') { var id = sighId(); if (id) play(id, [id], t); }
+    if (a === 'breathe') { var id = sighId(); if (id) play(id, [id].concat(doorList('slow').map(function (l) { return l.id; }).filter(function (x) { return x !== id; })), t); }
     else if (a === 'every') { var ev = document.getElementById('every'); if (ev) ev.scrollIntoView({ behavior: 'smooth', block: 'start' }); }
     else if (a === 'kids') { S.kids = !S.kids; try { history.replaceState(history.state, '', S.kids ? '#kids' : location.pathname); } catch (x) {} render(); }
     else if (a === 'apps') apps();
