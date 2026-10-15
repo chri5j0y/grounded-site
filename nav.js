@@ -450,10 +450,10 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
 
-/* ===== Get Grounded Now (GWG BLD 809): a calm green button in every page's menu bar ===== */
-/* It opens /get-grounded-now.html, the calm page with Breathe With Me, the four doors, Rest in Prayer, and every
-   practice. In Maple and Aspen it opens the kids' versions (#kids). Shown beside the light and dark toggle, so it
-   stays visible on phones while the menu is folded. */
+/* ===== Get Grounded Now (GWG BLD 809, quieter in BLD 812): a small header button beside the light and dark toggle ===== */
+/* It opens /get-grounded-now.html, short calming practices for a hard moment. In Maple and Aspen it opens the kids'
+   versions (#kids). A quiet outlined button with a leaf: "Get Grounded" beside the leaf on wider screens, the leaf
+   alone (the same round size as the light and dark toggle) on phones, so it always fits the header. */
 (function () {
   if (document.querySelector('.gg-now')) return;
   function mount() {
@@ -463,33 +463,43 @@
     var a = document.createElement('a');
     a.className = 'gg-now'; a.href = '/get-grounded-now.html' + (kids ? '#kids' : '');
     if (here) a.setAttribute('aria-current', 'page');
-    a.innerHTML = '<span class="gg-now-dot" aria-hidden="true"></span><span class="gg-now-l">Get Grounded Now</span><span class="gg-now-s" aria-hidden="true">Ground Now</span>';
-    a.setAttribute('aria-label', 'Get Grounded Now: calming practices for right now');
+    a.title = 'Get Grounded Now: short calming practices for right now';
+    a.setAttribute('aria-label', 'Get Grounded Now: short calming practices for right now');
+    a.innerHTML = '<svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14"/><path d="M5 19c3-4 6-7 10-9"/></svg><span class="gg-now-l" aria-hidden="true">Get Grounded</span>';
+    // In the menu it reads in full.
+    var full = function () { var l = a.querySelector('.gg-now-l'); if (l) l.textContent = a.classList.contains('gg-now-mi') ? 'Get Grounded Now' : 'Get Grounded'; };
     var st = document.createElement('style');
-    st.textContent = '.gg-now{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;margin-right:10px;border-radius:999px;background:#5F7D48;color:#FFFFFF !important;text-decoration:none !important;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}'
-      + '.gg-now:hover{background:#4E6A3B;}.gg-now:focus-visible{outline:3px solid #D9A847;outline-offset:2px;}'
-      + '.gg-now-dot{width:8px;height:8px;border-radius:50%;background:#FFFFFF;opacity:.9;}'
-      + '.gg-now-s{display:none;}'
-      + '@media (max-width:640px){.gg-now{padding:0 11px;margin-right:6px;font-size:13px;}.gg-now-l{display:none;}.gg-now-s{display:inline;}}'
-      + '@media (max-width:360px){.gg-now-dot{display:none;}}';
+    st.textContent = '.gg-now{flex:none;display:inline-flex;align-items:center;justify-content:center;gap:7px;height:42px;min-width:42px;padding:0 14px;margin:0 2px;border-radius:999px;border:1px solid rgba(95,125,72,.6);background:transparent;color:#5F7D48 !important;text-decoration:none !important;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;transition:background .2s ease;}'
+      + '.gg-now:hover{background:rgba(95,125,72,.12);}.gg-now:focus-visible{outline:3px solid #D9A847;outline-offset:2px;}.gg-now svg{display:block;flex:none;}'
+      + '[data-theme="dark"] .gg-now{color:#9DB883 !important;border-color:rgba(157,184,131,.55);}'
+      + '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gg-now{color:#9DB883 !important;border-color:rgba(157,184,131,.55);}}'
+      + '@media (max-width:900px){.gg-now{padding:0;width:42px;}.gg-now-l{display:none;}}'
+      + '@media (max-width:440px){.gg-now{width:36px;height:36px;min-width:36px;}.topbar-inner{gap:8px !important;}}'
+      + '@media (min-width:961px) and (max-width:1240px){.site-menu a{padding:10px 7px;letter-spacing:.5px;font-size:14px;}.ggs-btn{padding:8px 10px;}.ggs-btn span{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);}}'
+      + '.gg-now.gg-now-ic{padding:0;width:42px;}.gg-now.gg-now-ic .gg-now-l{display:none;}'
+      + '.site-menu .gg-now.gg-now-mi{width:auto;height:auto;min-width:0;padding:inherit;margin:0;border:0;border-radius:0;justify-content:flex-start;font:inherit;letter-spacing:inherit;text-transform:inherit;}'
+      + '.site-menu .gg-now.gg-now-mi .gg-now-l{display:inline !important;}';
     document.head.appendChild(st);
-    st.textContent += '.gg-now-bar{display:flex;justify-content:center;padding:6px max(16px,env(safe-area-inset-left,0px)) 6px max(16px,env(safe-area-inset-right,0px));background:#5F7D48;}'
-      + '.gg-now-bar .gg-now{margin:0;min-height:30px;background:transparent;padding:0 10px;font-size:14px;}.gg-now-bar .gg-now:hover{background:#4E6A3B;}'
-      + '.gg-now-bar .gg-now-l{display:inline !important;}.gg-now-bar .gg-now-s{display:none !important;}.gg-now-bar .gg-now-dot{display:inline-block !important;}';
     var theme = document.querySelector('.gg-theme'), size = document.querySelector('.size-btn'), menuBtn = document.querySelector('.menu-btn');
-    var anchor = theme || size || menuBtn, head = document.querySelector('header.topbar') || document.querySelector('header');
-    var bar = document.createElement('div'); bar.className = 'gg-now-bar'; bar.hidden = true;
-    if (head) head.appendChild(bar);
-    // In the menu bar where it fits; where the bar is full (phones, and the apps' longer bars), a slim green strip
-    // just under it, so the page never scrolls sideways.
+    var anchor = theme || size || menuBtn, menu = document.getElementById('site-menu');
+    // Steps down to what fits: the leaf and "Get Grounded", then the leaf alone, then (the tree apps on phones, where
+    // the header is full) the first link in the menu. The page never scrolls sideways.
+    function wide() { return document.documentElement.scrollWidth > document.documentElement.clientWidth + 1; }
     function place() {
-      if (!anchor || !anchor.parentNode) { if (head) { bar.appendChild(a); bar.hidden = false; } return; }
-      if (a.parentNode !== anchor.parentNode) { anchor.parentNode.insertBefore(a, anchor); bar.hidden = true; }
-      var row = anchor.parentNode, over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 || row.scrollWidth > row.clientWidth + 1;
-      if (over && head) { bar.appendChild(a); bar.hidden = false; }
+      if (a.parentNode) a.parentNode.removeChild(a);
+      a.classList.remove('gg-now-ic', 'gg-now-mi');
+      if (!anchor || !anchor.parentNode) { if (menu) { a.classList.add('gg-now-mi'); menu.insertBefore(a, menu.firstChild); } return; }
+      if (a.parentNode !== anchor.parentNode || a.nextSibling !== anchor) anchor.parentNode.insertBefore(a, anchor);
+      if (!wide()) return;
+      a.classList.add('gg-now-ic'); if (!wide()) return;
+      // Into the menu only where the menu is folded behind its button (phones); on wider screens the leaf stays.
+      if (menu && menuBtn && menuBtn.offsetParent) { a.classList.remove('gg-now-ic'); a.classList.add('gg-now-mi'); menu.insertBefore(a, menu.firstChild); }
     }
-    place();
-    var t = 0; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(place, 150); });
+    place(); full();
+    // Again once the fonts and the rest of the header have settled.
+    var again = function () { place(); full(); };
+    window.addEventListener('load', again); if (document.fonts && document.fonts.ready) document.fonts.ready.then(again);
+    var t = 0; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(function () { place(); full(); }, 150); });
   }
   // After the light and dark toggle mounts (same file, earlier), so it can sit just before it.
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(mount, 0); }); else setTimeout(mount, 0);

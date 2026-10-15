@@ -7,7 +7,7 @@
    See Every Practice lists every video: each practice in a Right Now (about 2 minutes) and an Afterward
    (about 5 minutes) version, the prayers by tradition, the kids' versions, and the Support for Right Now
    videos already in the apps. For Kids (the #kids address, used by Maple and Aspen) shows the kids' versions.
-   Videos play in shared/gg-learn.js with recorded Brian or Jenny clips (the viewer's choice).
+   Videos play in shared/gg-learn.js with recorded Brian or Jenny clips (the viewer's choice, shown as Male Voice and Female Voice).
    Crisis lines are never spoken (BLD 808); this page carries one quiet line of type at the bottom.
    Data: shared/ggn-videos.js (window.GG_NOW), generated from patches/bld809 in grounded-workshop.
    ===================================================================== */
@@ -53,6 +53,7 @@
       '.ggn-orb{width:168px;height:168px;max-width:100%;border-radius:50%;border:2px solid var(--sage);background:radial-gradient(circle at 50% 45%,var(--card),var(--ggn-calm) 72%);color:var(--sage);font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:17px;letter-spacing:.08em;text-transform:uppercase;cursor:pointer;animation:ggn-breathe 11s ease-in-out infinite;}',
       '@keyframes ggn-breathe{0%,100%{transform:scale(.94);}36%{transform:scale(1.06);}}',
       '@media (prefers-reduced-motion:reduce){.ggn-orb{animation:none;}}',
+      '.ggn-what{color:var(--ink-soft);font-size:17px;line-height:1.5;margin:0 auto;text-align:center;max-width:46ch;text-wrap:pretty;}',
       '.ggn-orbnote{color:var(--ink-soft);font-size:16px;margin:0;text-align:center;}',
       '.ggn-doors{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;}',
       '@media (max-width:520px){.ggn-doors{grid-template-columns:minmax(0,1fr);}}',
@@ -117,12 +118,13 @@
       + '<div class="ggn-calm" role="region" aria-labelledby="ggn-h">'
       + '<p class="ggn-eb">Get Grounded Now</p>'
       + '<h1 class="ggn-hello" id="ggn-h">' + (kids ? 'You\'re safe here. Let\'s breathe together.' : 'You\'re here. Let\'s take this one breath at a time.') + '</h1>'
+      + '<p class="ggn-what">' + (kids ? 'Calm-down practices for you and a grown-up. Tap the circle to breathe with us, or pick how you feel. Each one is a short video, about 2 minutes.' : 'Short calming practices for a hard moment: a racing heart, spinning thoughts, a hot temper, or feeling far away. Tap the circle to breathe with us, or choose what fits right now. Each one is a short video, about 2 minutes.') + '</p>'
       + '<div class="ggn-orbwrap"><button type="button" class="ggn-orb" data-ggn-act="breathe">Breathe<br>With Me</button><p class="ggn-orbnote">About one minute, with a calm voice.</p></div>'
       + '<div class="ggn-doors">' + DOORS.map(function (d) { return '<button type="button" class="ggn-door" data-ggn-door="' + d.id + '"><b>' + esc(kids ? d.kh : d.h) + '</b><span>' + esc(kids ? d.ksub : d.sub) + '</span></button>'; }).join('')
       + '<button type="button" class="ggn-door wide" data-ggn-door="prayer"><b>Rest in Prayer</b><span>' + (kids ? 'A quiet prayer or a kind blessing' : 'Prayers and stillness from many faith traditions') + '</span></button></div>'
       + '<div class="ggn-row"><button type="button" class="ggn-pill" data-ggn-act="every">See Every Practice</button>'
       + '<button type="button" class="ggn-pill" data-ggn-act="kids" aria-pressed="' + kids + '">For Kids</button>'
-      + '<span class="ggn-seg" role="group" aria-label="Voice"><button type="button" data-ggn-voice="brian" aria-pressed="' + (v === 'brian') + '">Brian</button><button type="button" data-ggn-voice="jenny" aria-pressed="' + (v === 'jenny') + '">Jenny</button></span></div>'
+      + '<span class="ggn-seg" role="group" aria-label="Voice"><button type="button" data-ggn-voice="brian" aria-pressed="' + (v === 'brian') + '">Male Voice</button><button type="button" data-ggn-voice="jenny" aria-pressed="' + (v === 'jenny') + '">Female Voice</button></span></div>'
       + '<p class="ggn-quiet">' + esc(QUIET) + '</p>'
       + '</div>' + allHtml() + '</div>';
   }
