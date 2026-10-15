@@ -657,6 +657,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-meltdown-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "meltdown",
 "side": "helper",
 "title": "In the Middle of a Meltdown",
@@ -821,7 +822,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Kids borrow our calm.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "If meltdowns happen most days, last a long time, or are getting worse, or seem tied to something that happened, or to trouble with sleep, hearing, or learning, talk with your pediatrician or school counselor. If someone gets hurt, or your child talks about hurting themselves or not wanting to be alive, call or text 988, or call 911 in an emergency. And be kind to yourself. Kids borrow our calm, so keep refilling yours. The full guide has more, whenever you want it."
+"say": "If meltdowns happen most days, last a long time, or are getting worse, or seem tied to something that happened, or to trouble with sleep, hearing, or learning, talk with your pediatrician or school counselor. And be kind to yourself. Kids borrow our calm, so keep refilling yours. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -940,6 +941,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-sadness-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "helper",
 "title": "Sadness That Lingers",
@@ -1015,7 +1017,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Ask directly.",
 "body": "Asking does not plant the idea. It opens a door.",
-"say": "If your child seems very low, ask directly, in words they understand. Sometimes when kids feel really sad, they wish they weren't alive. Do you ever feel that way? Asking does not plant the idea. It opens a door. If they talk about being better off gone, wanting to die, or hurting themselves, call their doctor or 988 right away. For danger right now, call 911. Maple's guide When a Child Talks About Wanting to Die has the next steps."
+"say": "If your child seems very low, ask directly, in words they understand. Sometimes when kids feel really sad, they wish they weren't alive. Do you ever feel that way? Asking does not plant the idea. It opens a door. If they talk about being better off gone, wanting to die, or hurting themselves, call their doctor right away. Maple's guide When a Child Talks About Wanting to Die has the next steps."
 },
 {
 "k": "flow",
@@ -1703,6 +1705,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-family-death-helper",
+"crisis": ["988: call or text, any time"],
 "guide": "family-death",
 "side": "helper",
 "title": "A Family Member Died",
@@ -1856,7 +1859,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Look after yourself too.",
 "body": "It's okay to cry in front of them. You can lean on your own people.",
-"say": "You may be grieving too. It's okay to be sad in front of your child. It shows them grief is safe. Tell your child's teacher, so school can be a soft place to land. If grief stays intense for many months, or school and friendships fall apart, talk with their pediatrician or school counselor. If your child ever talks about wanting to die, stay with them and call or text 988."
+"say": "You may be grieving too. It's okay to be sad in front of your child. It shows them grief is safe. Tell your child's teacher, so school can be a soft place to land. If grief stays intense for many months, or school and friendships fall apart, talk with their pediatrician or school counselor. If your child ever talks about wanting to die, stay with them."
 },
 {
 "k": "big",
@@ -3833,13 +3836,12 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "Support for the whole family.",
 "body": "NAMI family programs. A compassionate faith community. A steady school day.",
-"say": "NAMI offers family programs and a helpline for families like yours. A faith community that meets mental illness with compassion can be a strong support for the whole family. Tell your child's teacher what they need to know. Kids in stressed homes often need school to feel predictable."
+"say": "A faith community that meets mental illness with compassion can be a strong support for the whole family. Tell your child's teacher what they need to know. Kids in stressed homes often need school to feel predictable."
 },
 {
 "k": "card",
 "title": "If anyone is in crisis",
-"body": "Call or text 988. Danger right now: 911.",
-"say": "If anyone in your family is in crisis, call or text 988, any time. If there is danger right now, call 911. Keep your child close to a safe grown-up while you get help."
+"say": "Keep your child close to a safe grown-up while you get help."
 },
 {
 "k": "big",
@@ -4094,8 +4096,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Help for the whole family",
-"body": "SAMHSA National Helpline: 1-800-662-4357, 24 hours. Danger right now: 911.",
-"say": "You don't carry this alone. The SAMHSA National Helpline can point your family toward treatment and support, any time, at 1 800 662 4357. As kids get older, groups like Alateen can help. Every path to healing is welcome: doctors, treatment, therapy, peer groups, and community. If anyone is in danger, call 911. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
+"say": "You don't carry this alone. As kids get older, groups like Alateen can help. Every path to healing is welcome: doctors, treatment, therapy, peer groups, and community. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
 },
 {
 "k": "big",
@@ -4219,6 +4220,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-dementia-helper",
+"crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
 "guide": "dementia",
 "side": "helper",
 "title": "A Grandparent with Dementia",
@@ -4373,8 +4375,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Your grief counts too.",
-"body": "Alzheimer's Association 24/7 Helpline: 1-800-272-3900.",
-"say": "Your parent may be here, and not fully here. That is a real loss, and your grief counts too. The Alzheimer's Association has family resources and a helpline open day and night, at 1 800 272 3900. As the illness changes, keep preparing your child for what's new."
+"say": "Your parent may be here, and not fully here. That is a real loss, and your grief counts too. As the illness changes, keep preparing your child for what's new."
 },
 {
 "k": "big",
@@ -4902,8 +4903,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "When to call",
-"body": "Their doctor first. 911 for fainting, chest pain, or confusion.",
-"say": "Call their doctor for weight loss, missed growth, dizziness, fainting, throwing up after meals, or a child who eats only a few foods. The ANAD Eating Disorders Helpline is there on weekdays, at 1-888-375-7767. Call 911 for fainting, chest pain, or confusion. And look after yourself too. This is hard to watch, and you matter."
+"body": "Their doctor first. Fainting, chest pain, or confusion: call for help.",
+"say": "Call their doctor for weight loss, missed growth, dizziness, fainting, throwing up after meals, or a child who eats only a few foods. Call for emergency help for fainting, chest pain, or confusion. And look after yourself too. This is hard to watch, and you matter."
 },
 {
 "k": "big",
@@ -6331,6 +6332,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-deployed-helper",
+"crisis": ["Military OneSource: 800-342-9647"],
 "guide": "deployed",
 "side": "helper",
 "title": "A Parent Deployed or Away for Work",
@@ -6477,8 +6479,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "You have people with you in this.",
-"body": "A teacher. The school counselor. Military OneSource.",
-"say": "Let your child's teacher know, so school can watch for stress around news events. Military families can reach Military OneSource for support. Some families pray for the away parent each night, and it can give children a way to feel close. And look after yourself too. Your steadiness is a gift to your child."
+"body": "A teacher. The school counselor.",
+"say": "Let your child's teacher know, so school can watch for stress around news events. Some families pray for the away parent each night, and it can give children a way to feel close. And look after yourself too. Your steadiness is a gift to your child."
 },
 {
 "k": "big",
@@ -7084,6 +7086,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-money-helper",
+"crisis": ["211: local help"],
 "guide": "money",
 "side": "helper",
 "title": "Money Worries or a Job Loss",
@@ -7209,8 +7212,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Help is close by.",
-"body": "Dial 211. Ask the school counselor.",
-"say": "Others can help you carry this. Dialing 211 connects families with local help for food, rent, and utilities. The school counselor often knows quiet ways to help, like field trip costs. Many faith communities quietly help families in hard seasons too. Talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
+"body": "Ask the school counselor.",
+"say": "Others can help you carry this. The school counselor often knows quiet ways to help, like field trip costs. Many faith communities quietly help families in hard seasons too. Talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
 },
 {
 "k": "big",
@@ -7327,6 +7330,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-home-loss-helper",
+"crisis": ["211: local help"],
 "guide": "home-loss",
 "side": "helper",
 "title": "Losing a Home",
@@ -7447,8 +7451,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Help is close by.",
-"body": "Call 211. Ask for the school liaison.",
-"say": "Others can walk with you. Call 211 for local housing help. Faith communities often offer practical help and belonging when a family is between homes. And talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
+"body": "Ask for the school liaison.",
+"say": "Others can walk with you. Faith communities often offer practical help and belonging when a family is between homes. And talk with the school counselor or your child's pediatrician if worry or sadness lasts for weeks."
 },
 {
 "k": "big",
@@ -7551,7 +7555,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "If anyone hurts you, tell.",
 "body": "Keep telling until someone helps.",
-"say": "If anyone at home hurts you, or you feel afraid, tell a safe grown-up, like a teacher or your school counselor. If the first grown-up doesn't help, tell another. Keep telling until someone helps. It is never your fault. If someone is in danger right now, call 911, or ask a grown-up to."
+"say": "If anyone at home hurts you, or you feel afraid, tell a safe grown-up, like a teacher or your school counselor. If the first grown-up doesn't help, tell another. Keep telling until someone helps. It is never your fault."
 },
 {
 "k": "big",
@@ -7688,8 +7692,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Safety comes first.",
-"body": "Domestic Violence Hotline 1-800-799-7233. In danger, 911.",
-"say": "If anyone in your home is being hurt, or is afraid, safety comes first. The National Domestic Violence Hotline is 1-800-799-7233. If anyone is in danger right now, call 911. If your child tells you someone hurt them, stay calm, believe them, and get help the same day."
+"say": "If anyone in your home is being hurt, or is afraid, safety comes first. If your child tells you someone hurt them, stay calm, believe them, and get help the same day."
 },
 {
 "k": "card",
@@ -8067,6 +8070,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-bullied-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "bullied",
 "side": "helper",
 "title": "Being Bullied",
@@ -8189,7 +8193,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "When to get more help",
 "body": "Threats, physical harm, or deep sadness: act today.",
-"say": "Reach out for more help if bullying keeps going after the school knows, or includes threats or physical harm. If your child seems very sad or scared, or talks about not wanting to live, take it seriously and talk with them today. Call or text 988 any time, and call 911 if anyone is in danger right now."
+"say": "Reach out for more help if bullying keeps going after the school knows, or includes threats or physical harm. If your child seems very sad or scared, or talks about not wanting to live, take it seriously and talk with them today."
 },
 {
 "k": "big",
@@ -10059,6 +10063,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-lying-helper",
+"crisis": ["211: local help"],
 "guide": "lying",
 "side": "helper",
 "title": "Lying and Taking Things",
@@ -10191,7 +10196,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "big",
 "h": "Make the truth safe.",
 "sub": "And tell it yourself, too.",
-"say": "Tell the truth yourself, even about small things. Kids learn honesty by watching. Talk with their doctor or school counselor if lying or stealing is frequent, getting worse, or comes with fighting, cruelty, or big changes in mood. If a child is taking food or basics, it may point to a need, and 211 can connect you with local resources. Be gentle with yourself too. Make the truth safe, and love them all the way."
+"say": "Tell the truth yourself, even about small things. Kids learn honesty by watching. Talk with their doctor or school counselor if lying or stealing is frequent, getting worse, or comes with fighting, cruelty, or big changes in mood. If a child is taking food or basics, it may point to a need. Be gentle with yourself too. Make the truth safe, and love them all the way."
 }
 ]
 }
@@ -11047,6 +11052,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-crime-helper",
+"crisis": ["911: emergency"],
 "guide": "crime",
 "side": "helper",
 "title": "Crime in the Neighborhood",
@@ -11186,7 +11192,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "When to get more help",
 "body": "Fear that lasts. A child who saw it, or was hurt.",
-"say": "Watch for fears that keep coming back at bedtime. If fear lasts for weeks, or your child saw a crime happen, talk with their pediatrician or school counselor about a child therapist. If anyone hurt your child, stay calm, believe them, and get help the same day. For danger right now, call 911."
+"say": "Watch for fears that keep coming back at bedtime. If fear lasts for weeks, or your child saw a crime happen, talk with their pediatrician or school counselor about a child therapist. If anyone hurt your child, stay calm, believe them, and get help the same day."
 },
 {
 "k": "big",
@@ -12540,6 +12546,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-prejudice-helper",
+"crisis": ["911: emergency"],
 "guide": "prejudice",
 "side": "helper",
 "title": "When a Child Faces or Sees Prejudice",
@@ -12671,7 +12678,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "When to reach out",
 "body": "It keeps happening, or your child feels unsafe.",
-"say": "Reach out to the school counselor or principal if it keeps happening, or if your child feels unsafe going to school. A child therapist can help with worry, sadness, or shame that lingers. If anyone threatens or hurts your child, call 911. And look after your own heart too. This can hurt grown-ups deeply."
+"say": "Reach out to the school counselor or principal if it keeps happening, or if your child feels unsafe going to school. A child therapist can help with worry, sadness, or shame that lingers. And look after your own heart too. This can hurt grown-ups deeply."
 },
 {
 "k": "big",
@@ -13777,6 +13784,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-hurt-disclosure-helper",
+"crisis": ["Childhelp: call or text 1-800-422-4453", "911: emergency"],
 "guide": "hurt-disclosure",
 "side": "helper",
 "title": "When a Child Tells You Someone Hurt Them",
@@ -13906,21 +13914,16 @@ window.GG_LEARN_GUIDES.maple = {
 "In your county, today"
 ],
 [
-"Or call Childhelp",
-"1-800-422-4453, call or text"
-],
-[
 "Danger right now",
-"Call 911"
+"Call for help"
 ]
 ],
-"say": "Then get help the same day. Write down what they said, in their own words, as soon as you can. Report it to child protective services in your county. You can also call or text the Childhelp hotline at 1-800-422-4453, any time. If the child is in danger right now, call 911. You don't have to be sure it happened. Reasonable concern is enough.",
+"say": "Then get help the same day. Write down what they said, in their own words, as soon as you can. Report it to child protective services in your county. You don't have to be sure it happened. Reasonable concern is enough.",
 "cue": {
 "at": [
 1,
 2,
-3,
-4
+3
 ]
 }
 },
@@ -14505,7 +14508,7 @@ window.GG_LEARN_GUIDES.maple = {
 "k": "card",
 "title": "If they tell you something",
 "body": "Stay calm. Believe them. Get help the same day.",
-"say": "Sometimes a body safety talk opens a door, and a child tells you something worrying. Stay calm, believe them, and get help the same day. The Maple guide called When a Child Tells You Someone Hurt Them walks you through it. And if you're worried about a grown-up's behavior around a child, Stop It Now helps worried adults, at 1-888-773-8368."
+"say": "Sometimes a body safety talk opens a door, and a child tells you something worrying. Stay calm, believe them, and get help the same day. The Maple guide called When a Child Tells You Someone Hurt Them walks you through it."
 },
 {
 "k": "big",
@@ -14624,6 +14627,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-online-secrets-helper",
+"crisis": ["CyberTipline: 1-800-843-5678", "911: emergency"],
 "guide": "online-secrets",
 "side": "helper",
 "title": "When Someone Online Asks for Secrets",
@@ -14747,20 +14751,20 @@ window.GG_LEARN_GUIDES.maple = {
 ],
 [
 "Report it",
-"CyberTipline: 1-800-843-5678"
+""
 ],
 [
 "Threats or meeting",
 "Call the police"
 ]
 ],
-"say": "If it happens, stay calm, and thank them for telling. Save the chat and the usernames, and report the account. Report online exploitation to the CyberTipline, at report dot cybertip dot org, or 1-800-843-5678. If someone threatens your child or asks to meet, call the police. If your child is in danger right now, call 911.",
+"say": "If it happens, stay calm, and thank them for telling. Save the chat and the usernames, and report the account. If someone threatens your child or asks to meet, call the police.",
 "cue": {
 "at": [
 0,
 1,
 2,
-3
+2
 ]
 }
 },
@@ -15203,6 +15207,7 @@ window.GG_LEARN_GUIDES.maple = {
 },
 "helper": {
 "id": "mp-g-saw-porn-helper",
+"crisis": ["Stop It Now: 1-888-773-8368", "CyberTipline: 1-800-843-5678", "911: emergency"],
 "guide": "saw-porn",
 "side": "helper",
 "title": "When a Child Sees Pornography",
@@ -15346,8 +15351,8 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "When it is more than an accident",
-"body": "Someone showed it, or asked for pictures: county child protection, or the CyberTipline, 1-800-843-5678.",
-"say": "Sometimes it's more than an accident. If an adult or older child showed it to your child, or asked for pictures of them, report it. Call county child protection, or the CyberTipline at 1-800-843-5678. Call 911 if your child is in danger. Never view, save, or forward an image of a child, even as evidence. Leave that to law enforcement."
+"body": "Someone showed it, or asked for pictures: county child protection.",
+"say": "Sometimes it's more than an accident. If an adult or older child showed it to your child, or asked for pictures of them, report it. Call county child protection. Never view, save, or forward an image of a child, even as evidence. Leave that to law enforcement."
 },
 {
 "k": "big",
@@ -17530,8 +17535,7 @@ window.GG_LEARN_GUIDES.maple = {
     {
      "k": "card",
      "title": "Help for the whole family",
-     "body": "SAMHSA National Helpline: 1-800-662-4357. Danger right now: 911.",
-     "say": "You can share this load. The SAMHSA National Helpline can point your family toward treatment and support, any time, at 1 800 662 4357. Al-Anon and Alateen have groups for families, and NACoA has help made for kids. If anyone is in danger, call 911."
+     "say": "You can share this load. Al-Anon and Alateen have groups for families, and NACoA has help made for kids."
     },
     {
      "k": "big",
@@ -17669,6 +17673,7 @@ window.GG_LEARN_GUIDES.maple = {
   },
   "helper": {
    "id": "mp-g-sober-never-your-fault-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-never-your-fault",
    "side": "helper",
    "title": "It's Never Your Fault",
@@ -17788,7 +17793,7 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "When to reach out",
      "body": "Lasting guilt, worry, or sadness: their doctor or school counselor.",
-     "say": "If guilt, worry, or sadness lasts more than a couple of weeks, talk with their doctor or school counselor. NACoA has resources made for kids, and Alateen can help as they grow. If anyone is in danger right now, call 911."
+     "say": "If guilt, worry, or sadness lasts more than a couple of weeks, talk with their doctor or school counselor. NACoA has resources made for kids, and Alateen can help as they grow."
     },
     {
      "k": "big",
@@ -17900,6 +17905,7 @@ window.GG_LEARN_GUIDES.maple = {
   },
   "helper": {
    "id": "mp-g-sober-getting-better-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-getting-better",
    "side": "helper",
    "title": "When Mom or Dad Is Getting Better",
@@ -18056,8 +18062,8 @@ window.GG_LEARN_GUIDES.maple = {
     {
      "k": "card",
      "title": "Help along the way",
-     "body": "Family programs, Al-Anon, Alateen. SAMHSA: 1-800-662-4357.",
-     "say": "Ask the treatment program about family sessions and children's groups. Al-Anon and Alateen offer groups for family members. The SAMHSA National Helpline can point you to support any time, at 1 800 662 4357."
+     "body": "Family programs, Al-Anon, Alateen.",
+     "say": "Ask the treatment program about family sessions and children's groups. Al-Anon and Alateen offer groups for family members."
     },
     {
      "k": "big",
@@ -18134,8 +18140,7 @@ window.GG_LEARN_GUIDES.maple = {
     {
      "k": "card",
      "title": "If a grown-up won't wake up",
-     "body": "Call 911. That is always the right thing.",
-     "say": "If a grown-up won't wake up, or is breathing in a strange way, call 911 right away. Tell them your address. Then stay on the phone and do what they say. Calling 911 is always the right thing, and you will never be in trouble for it."
+     "say": "If a grown-up won't wake up, or is breathing in a strange way, call for emergency help right away. Tell them your address. Then stay on the phone and do what they say."
     },
     {
      "k": "card",
@@ -18240,9 +18245,9 @@ window.GG_LEARN_GUIDES.maple = {
     },
     {
      "k": "card",
-     "title": "The 911 rule",
-     "body": "Won't wake up, or strange breathing: call 911.",
-     "say": "Teach the 911 rule. If a grown-up won't wake up, or is breathing in a strange way, call 911 right away. Tell your child, plainly, that calling for help is always right, and they will never be in trouble for it."
+     "title": "The Call-for-Help Rule",
+     "body": "Won't wake up, or strange breathing: call for help.",
+     "say": "Teach the call-for-help rule. If a grown-up won't wake up, or is breathing in a strange way, call for emergency help right away. Tell your child, plainly, that calling for help is always right, and they will never be in trouble for it."
     },
     {
      "k": "points",
@@ -18261,7 +18266,7 @@ window.GG_LEARN_GUIDES.maple = {
        "Or fingertips"
       ]
      ],
-     "say": "Grown-ups, know the signs of an opioid overdose. The person won't wake up, or can't speak. Their breathing is slow, stopped, or making gurgling sounds. Their lips or fingertips turn blue or gray. Call 911 right away.",
+     "say": "Grown-ups, know the signs of an opioid overdose. The person won't wake up, or can't speak. Their breathing is slow, stopped, or making gurgling sounds. Their lips or fingertips turn blue or gray.",
      "cue": {
       "at": [
        1,
@@ -18274,7 +18279,7 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "Naloxone saves lives.",
      "body": "Sold without a prescription. Keep it where grown-ups can find it.",
-     "say": "Naloxone, often called Narcan, reverses an opioid overdose. It is sold without a prescription. If anyone at home uses opioids, keep it where grown-ups can find it fast. Give it, call 911, and stay with the person until help arrives."
+     "say": "Naloxone, often called Narcan, reverses an opioid overdose. It is sold without a prescription. If anyone at home uses opioids, keep it where grown-ups can find it fast. Give it, and stay with the person."
     },
     {
      "k": "points",
@@ -18290,10 +18295,10 @@ window.GG_LEARN_GUIDES.maple = {
       ],
       [
        "Swallowed something",
-       "Poison Control: 1-800-222-1222"
+       ""
       ]
      ],
-     "say": "Make home safer. Lock up medicines, alcohol, and any substances. Teach kids to leave any pills, powders, or needles where they are, and tell a grown-up. If a child swallows something, call Poison Control at 1 800 222 1222, or 911 if they are very sleepy or struggling to breathe.",
+     "say": "Make home safer. Lock up medicines, alcohol, and any substances. Teach kids to leave any pills, powders, or needles where they are, and tell a grown-up. If a child swallows something, call for help, especially if they are very sleepy or struggling to breathe.",
      "cue": {
       "at": [
        1,
@@ -18306,12 +18311,12 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "big",
      "h": "Practice it like a fire drill.",
      "sub": "Out loud, the way you will teach it.",
-     "say": "Let's practice. Picture your child, and the safe place in your plan. Now say the 911 rule out loud, the way you'll teach it tonight.",
+     "say": "Let's practice. Picture your child, and the safe place in your plan. Now say the call-for-help rule out loud, the way you'll teach it tonight.",
      "beats": [
       "Let's practice.",
       "Picture your child, and the safe place in your plan.",
       {
-       "t": "Now say the 911 rule out loud, the way you'll teach it tonight.",
+       "t": "Now say the call-for-help rule out loud, the way you'll teach it tonight.",
        "w": 10
       }
      ]
@@ -18320,13 +18325,13 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "Too heavy for a child",
      "body": "Watching a grown-up. Guarding siblings. Keeping secrets.",
-     "say": "Some jobs are too heavy for a child. Watching over a grown-up who is using. Guarding younger brothers and sisters during danger. Keeping secrets about safety. If a child is being hurt or left without care, call the Childhelp hotline at 1 800 422 4453, and follow mandated reporting law if it applies to you."
+     "say": "Some jobs are too heavy for a child. Watching over a grown-up who is using. Guarding younger brothers and sisters during danger. Keeping secrets about safety. If a child is being hurt or left without care, follow mandated reporting law if it applies to you."
     },
     {
      "k": "big",
      "h": "A plan, practiced, brings calm.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "For treatment and support for the grown-up who uses, the SAMHSA National Helpline is open any time, at 1 800 662 4357. A simple plan, practiced with love, brings calm. The full guide has more, whenever you want it."
+     "say": "A simple plan, practiced with love, brings calm. The full guide has more, whenever you want it."
     }
    ],
    "crisis": [
@@ -18550,13 +18555,13 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "Look after yourself too.",
      "body": "Your grief matters. Lean on your people.",
-     "say": "You may be grieving too, and carrying anger or guilt of your own. That's normal. Lean on your people. A grief group, Al-Anon, or Nar-Anon can help family members. If anyone else in the family is struggling with drinking or drugs, the SAMHSA National Helpline is open any time, at 1 800 662 4357."
+     "say": "You may be grieving too, and carrying anger or guilt of your own. That's normal. Lean on your people. A grief group, Al-Anon, or Nar-Anon can help family members."
     },
     {
      "k": "card",
      "title": "When to reach out",
-     "body": "Lasting grief: their doctor or school counselor. Talk of wanting to die: 988.",
-     "say": "If grief stays intense for many months, or school and friendships fall apart, talk with their doctor or school counselor. Grief centers for children can help too. If your child ever talks about wanting to die, stay with them and call or text 988."
+     "body": "Lasting grief: their doctor or school counselor.",
+     "say": "If grief stays intense for many months, or school and friendships fall apart, talk with their doctor or school counselor. Grief centers for children can help too. If your child ever talks about wanting to die, stay with them."
     },
     {
      "k": "big",

@@ -55,6 +55,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Retirement: Who Am I Now?",
    "you": {
     "id": "sq-g-retirement-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "retirement",
     "side": "you",
     "title": "Retirement: Who Am I Now?",
@@ -166,8 +167,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Heavy for weeks? Reach out.",
-      "body": "Talk with your doctor. Not wanting to be here: call or text 988. Danger right now: 911.",
-      "say": "Sometimes the quiet turns into a low mood that won't lift, or a feeling that you have no place anymore. If it lasts two weeks or more, talk with your doctor. Depression is very treatable at any age. If you ever think about not wanting to be here, call or text nine eight eight, any time. Veterans, press 1 after you dial. If you're in danger right now, call nine one one."
+      "body": "Talk with your doctor.",
+      "say": "Sometimes the quiet turns into a low mood that won't lift, or a feeling that you have no place anymore. If it lasts two weeks or more, talk with your doctor. Depression is very treatable at any age. Veterans, press 1 after you dial."
      },
      {
       "k": "big",
@@ -179,6 +180,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-retirement-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "retirement",
     "side": "helper",
     "title": "Retirement: Who Am I Now?",
@@ -281,8 +283,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: encourage a doctor visit. Talk of not wanting to live: call or text 988 together. Danger right now: 911.",
-      "say": "Watch gently for a low mood that lasts two weeks or more, little interest in anything, or talk of being a burden. Encourage a visit with their doctor, and offer a ride. If they talk about not wanting to live, call or text nine eight eight together. If there is danger right now, call nine one one."
+      "body": "Two weeks or more: encourage a doctor visit.",
+      "say": "Watch gently for a low mood that lasts two weeks or more, little interest in anything, or talk of being a burden. Encourage a visit with their doctor, and offer a ride."
      },
      {
       "k": "big",
@@ -305,6 +307,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Finding Purpose Again",
    "you": {
     "id": "sq-g-purpose-again-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "purpose-again",
     "side": "you",
     "title": "Finding Purpose Again",
@@ -393,8 +396,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Feel like a burden? Say so.",
-      "body": "Tell someone you trust. Not wanting to be here: call or text 988. Danger right now: 911.",
-      "say": "Some people come to feel like a burden to the people they love. If that's you, please tell someone you trust. You matter to people, even when it's hard to see. If you ever think about not wanting to be here, call or text nine eight eight, any time. Veterans, press 1 after you dial. If you're in danger right now, call nine one one. And if a low mood lasts two weeks or more, talk with your doctor."
+      "body": "Tell someone you trust.",
+      "say": "Some people come to feel like a burden to the people they love. If that's you, please tell someone you trust. You matter to people, even when it's hard to see. Veterans, press 1 after you dial. And if a low mood lasts two weeks or more, talk with your doctor."
      },
      {
       "k": "big",
@@ -406,6 +409,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-purpose-again-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "purpose-again",
     "side": "helper",
     "title": "Finding Purpose Again",
@@ -482,8 +486,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If they say they're a burden",
-      "body": "Listen first. Ask gently. Stay with the answer. 988: call or text, any time.",
-      "say": "If they say they're a burden, take it seriously, and listen before you reassure. Feeling like a burden can weigh heavily in later life. Ask gently and directly. Are you thinking about not wanting to be here? Asking does not plant the idea. Stay with the answer. If they say yes, call or text nine eight eight together. If there is danger right now, call nine one one."
+      "body": "Listen first. Ask gently. Stay with the answer.",
+      "say": "If they say they're a burden, take it seriously, and listen before you reassure. Feeling like a burden can weigh heavily in later life. Ask gently and directly. Are you thinking about not wanting to be here? Asking does not plant the idea. Stay with the answer."
      },
      {
       "k": "big",
@@ -723,6 +727,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Working Longer, or Going Back to Work",
    "you": {
     "id": "sq-g-working-longer-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "you",
     "title": "Working Longer, or Going Back to Work",
@@ -806,13 +811,13 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "card",
       "title": "Before you say yes",
       "body": "Ask how earnings may affect your benefits and taxes.",
-      "say": "Before you say yes to a job, ask Social Security, or a trusted adviser, how earnings may affect your benefits and your taxes. In Minnesota, Minnesota Aging Pathways can help you sort out benefits and services, at 1 800 333 2433. Anywhere in the country, the Eldercare Locator, 1 800 677 1116, can point you to help nearby."
+      "say": "Before you say yes to a job, ask Social Security, or a trusted adviser, how earnings may affect your benefits and your taxes."
      },
      {
       "k": "big",
       "h": "If work ends before you are ready",
       "sub": "Talk with someone you trust.",
-      "say": "Sometimes work ends before you are ready, through a layoff, a health change, or a job that no longer fits. That loss is real. Talk about it with someone you trust. If low mood stays for two weeks or more, tell your doctor. And if you ever think about not wanting to be here, call or text 988, any time."
+      "say": "Sometimes work ends before you are ready, through a layoff, a health change, or a job that no longer fits. That loss is real. Talk about it with someone you trust. If low mood stays for two weeks or more, tell your doctor."
      },
      {
       "k": "big",
@@ -824,6 +829,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-working-longer-helper",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "working-longer",
     "side": "helper",
     "title": "Working Longer, or Going Back to Work",
@@ -891,7 +897,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "card",
       "title": "If money is the reason",
       "body": "Keep shame out of the room.",
-      "say": "If money is the reason, they may feel embarrassed. Keep shame out of the room. Money worries on a fixed income are common, and they say nothing about how well someone has lived. For benefits questions, point them to Social Security or a trusted adviser. In Minnesota, Minnesota Aging Pathways can help, and anywhere in the country, the Eldercare Locator can find help nearby."
+      "say": "If money is the reason, they may feel embarrassed. Keep shame out of the room. Money worries on a fixed income are common, and they say nothing about how well someone has lived. For benefits questions, point them to Social Security or a trusted adviser."
      },
      {
       "k": "big",
@@ -912,7 +918,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "Your worry is love. Let it rest sometimes.",
-      "say": "Watching someone you love work hard later in life can stir worry, guilt, or your own money fears. Talk with someone you trust about that, and keep your own rest. If they ever speak of not wanting to live, call or text 988 together, any time."
+      "say": "Watching someone you love work hard later in life can stir worry, guilt, or your own money fears. Talk with someone you trust about that, and keep your own rest."
      },
      {
       "k": "big",
@@ -1025,13 +1031,12 @@ window.GG_LEARN_GUIDES.sequoia = {
         "So no one person carries it all"
        ]
       ],
-      "say": "Here is what helps. Say the feeling out loud to one person you trust. Many families are relieved to hear it, and glad to answer. Ask for one specific thing at a time. And share the help around: family, friends, neighbors, a faith community, and local services. The Eldercare Locator, 1 800 677 1116, can find rides, meals, and help at home."
+      "say": "Here is what helps. Say the feeling out loud to one person you trust. Many families are relieved to hear it, and glad to answer. Ask for one specific thing at a time. And share the help around: family, friends, neighbors, a faith community, and local services."
      },
      {
       "k": "big",
       "h": "If it turns into not wanting to be here",
-      "sub": "Call or text 988, any time.",
-      "say": "Sometimes feeling like a burden turns into a darker thought: that others would be better off without you. That thought is pain talking, not the truth. If it comes, please tell someone today. Call or text 988, any time, day or night. Veterans, call 988 and press 1. If you are in danger right now, call 911."
+      "say": "Sometimes feeling like a burden turns into a darker thought: that others would be better off without you. That thought is pain talking, not the truth. If it comes, please tell someone today."
      },
      {
       "k": "big",
@@ -1086,15 +1091,11 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Thank them for telling you"
        ],
        [
-        "Call or text 988 together",
-        "Veterans: 988, then press 1"
-       ],
-       [
         "Danger right now?",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text 988 together, any time. For a veteran, call 988 and press 1. If there is danger right now, call 911. Ask the crisis line how to make the home safer for now, and let their doctor know."
+      "say": "If the answer is yes, stay with them, and thank them for telling you. Let their doctor know."
      },
      {
       "k": "words",
@@ -1154,7 +1155,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Steady love is enough.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hearing someone you love say they feel like a burden can hurt, and helping every day can wear you down. Both can sit beside love. Take real breaks, and talk with someone you trust. You can call or text 988 yourself, for advice on how to help. Your steady love is enough. The full guide has more, whenever you want it."
+      "say": "Hearing someone you love say they feel like a burden can hurt, and helping every day can wear you down. Both can sit beside love. Take real breaks, and talk with someone you trust. Your steady love is enough. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -1169,6 +1170,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Spouse or Partner",
    "you": {
     "id": "sq-g-spouse-death-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "spouse-death",
     "side": "you",
     "title": "Losing a Spouse or Partner",
@@ -1276,8 +1278,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "If you think about joining them",
-      "sub": "Call or text 988, any time.",
-      "say": "In deep grief, some people think about wanting to be with the one who died. If that turns into thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911. And if grief grows heavier after many months, a grief counselor can help."
+      "say": "In deep grief, some people think about wanting to be with the one who died. And if grief grows heavier after many months, a grief counselor can help."
      },
      {
       "k": "big",
@@ -1289,6 +1290,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-spouse-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "spouse-death",
     "side": "helper",
     "title": "Losing a Spouse or Partner",
@@ -1376,8 +1378,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "sub": "Thoughts of not wanting to live: call or text 988.",
-      "say": "Watch gently for grief that grows heavier after many months, or keeps them from daily life. You can help them find a grief group or a counselor. If they talk about wanting to join their partner, or not wanting to live, ask plainly whether they are thinking about ending their life. Call or text 988 together. If there is danger right now, call 911."
+      "say": "Watch gently for grief that grows heavier after many months, or keeps them from daily life. You can help them find a grief group or a counselor. If they talk about wanting to join their partner, or not wanting to live, ask plainly whether they are thinking about ending their life."
      },
      {
       "k": "big",
@@ -1394,6 +1395,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Outliving Your Friends",
    "you": {
     "id": "sq-g-friend-death-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "you",
     "title": "Outliving Your Friends",
@@ -1491,8 +1493,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to reach out",
-      "sub": "Call or text 988, any time.",
-      "say": "Spending long stretches alone can wear on the body and the mind. If loneliness or low mood settles in and stays, tell your doctor. It is common, and help works. If grief stays as sharp as the first weeks after many months, a grief counselor can walk with you. If you ever think about not wanting to live, call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+      "say": "Spending long stretches alone can wear on the body and the mind. If loneliness or low mood settles in and stays, tell your doctor. It is common, and help works. If grief stays as sharp as the first weeks after many months, a grief counselor can walk with you."
      },
      {
       "k": "big",
@@ -1504,6 +1505,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-friend-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "helper",
     "title": "Outliving Your Friends",
@@ -1597,8 +1599,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "sub": "Thoughts of not wanting to live: 988.",
-      "say": "Watch, gently, for sadness or loneliness that settles in for weeks, or grief that stays as sharp as the first weeks after many months. You can help them talk with their doctor. If they ever say they do not want to be here anymore, ask them plainly about it, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+      "say": "Watch, gently, for sadness or loneliness that settles in for weeks, or grief that stays as sharp as the first weeks after many months. You can help them talk with their doctor. If they ever say they do not want to be here anymore, ask them plainly about it, and stay with them."
      },
      {
       "k": "big",
@@ -1621,6 +1622,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing an Adult Child",
    "you": {
     "id": "sq-g-child-death-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "child-death",
     "side": "you",
     "title": "Losing an Adult Child",
@@ -1720,8 +1722,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to reach out",
-      "sub": "Call or text 988, any time.",
-      "say": "Some grieving parents think about wanting to be with their child. If that ever turns into thoughts of ending your life, call or text nine eight eight, any time. If you are in danger right now, call nine one one. And if grief stays as sharp as the first weeks after many months, your doctor or a grief counselor can help. Help works."
+      "say": "Some grieving parents think about wanting to be with their child. And if grief stays as sharp as the first weeks after many months, your doctor or a grief counselor can help. Help works."
      },
      {
       "k": "big",
@@ -1733,6 +1734,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-child-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "child-death",
     "side": "helper",
     "title": "Losing an Adult Child",
@@ -1820,8 +1822,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "sub": "Thoughts of not wanting to live: 988.",
-      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from eating, sleeping, or seeing people. You can help them talk with their doctor, or find a group for bereaved parents. If they say they want to be with their child, or do not want to live, ask them plainly about it, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from eating, sleeping, or seeing people. You can help them talk with their doctor, or find a group for bereaved parents. If they say they want to be with their child, or do not want to live, ask them plainly about it and stay with them."
      },
      {
       "k": "big",
@@ -1844,6 +1845,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Sibling",
    "you": {
     "id": "sq-g-sibling-death-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "sibling-death",
     "side": "you",
     "title": "Losing a Sibling",
@@ -1940,8 +1942,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to reach out",
-      "sub": "Call or text 988, any time.",
-      "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, your doctor or a grief counselor can help. Help works. If you ever think about not wanting to live, call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+      "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, your doctor or a grief counselor can help. Help works."
      },
      {
       "k": "big",
@@ -1953,6 +1954,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-sibling-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "sibling-death",
     "side": "helper",
     "title": "Losing a Sibling",
@@ -2047,8 +2049,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "sub": "Thoughts of not wanting to live: 988.",
-      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from daily life. You can help them talk with their doctor or find a grief group. If they ever say they do not want to live, ask them plainly about it, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from daily life. You can help them talk with their doctor or find a grief group. If they ever say they do not want to live, ask them plainly about it, and stay with them."
      },
      {
       "k": "big",
@@ -2065,6 +2066,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "When Grief Won't Ease",
    "you": {
     "id": "sq-g-grief-stuck-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "grief-stuck",
     "side": "you",
     "title": "When Grief Won't Ease",
@@ -2151,8 +2153,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you want to join them",
-      "body": "Call or text 988, any time. Veterans: 988, then press 1. Danger right now: 911.",
-      "say": "In long grief, some people wish they could be with the one who died. If that turns into thoughts of ending your life, call or text 988, any time. Veterans can call 988 and press 1. If you are in danger right now, call 911. You deserve that help."
+      "say": "In long grief, some people wish they could be with the one who died. You deserve that help."
      },
      {
       "k": "big",
@@ -2164,6 +2165,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-grief-stuck-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "grief-stuck",
     "side": "helper",
     "title": "When Grief Won't Ease",
@@ -2275,8 +2277,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you hear a wish to die",
-      "body": "Ask plainly. Call or text 988 together. Danger right now: 911.",
-      "say": "If you hear words like, I just want to be with her, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. If the answer is yes, or you aren't sure, call or text 988 together. Veterans can call 988 and press 1. If there is danger right now, call 911."
+      "body": "Ask plainly.",
+      "say": "If you hear words like, I just want to be with her, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head."
      },
      {
       "k": "big",
@@ -2299,6 +2301,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Holidays and Anniversaries Alone",
    "you": {
     "id": "sq-g-holidays-alone-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
     "guide": "holidays-alone",
     "side": "you",
     "title": "Holidays and Anniversaries Alone",
@@ -2370,10 +2373,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Find what is near",
-        "Eldercare Locator 1-800-677-1116"
+        ""
        ]
       ],
-      "say": "Being with people, even briefly, can change a day. Say yes to an invitation, even a small one. Ask first. Many people are waiting to be asked too: a neighbor, a widowed friend, someone from your faith community. Serving at a community meal connects you without pressure. And the Eldercare Locator, 1 800 677 1116, can help you find meals, rides, and events near you. In Minnesota, call Minnesota Aging Pathways, 1 800 333 2433."
+      "say": "Being with people, even briefly, can change a day. Say yes to an invitation, even a small one. Ask first. Many people are waiting to be asked too: a neighbor, a widowed friend, someone from your faith community. Serving at a community meal connects you without pressure."
      },
      {
       "k": "big",
@@ -2400,8 +2403,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If the day feels too heavy",
-      "body": "Call or text 988, any time. Veterans: 988, then press 1. Danger right now: 911.",
-      "say": "If the day feels too heavy, reach out to someone. If sadness lasts long after the holiday, or grows heavier each year, talk with your doctor. If you feel hopeless, or think about ending your life, call or text 988, any time. Veterans can call 988 and press 1. If you are in danger right now, call 911."
+      "say": "If the day feels too heavy, reach out to someone. If sadness lasts long after the holiday, or grows heavier each year, talk with your doctor."
      },
      {
       "k": "big",
@@ -2413,6 +2415,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-holidays-alone-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "holidays-alone",
     "side": "helper",
     "title": "Holidays and Anniversaries Alone",
@@ -2511,8 +2514,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Hopeless talk: call or text 988 together. Danger right now: 911.",
-      "say": "If they seem low long after the holiday, encourage a talk with their doctor, and offer to go along. If you hear hopeless words, or talk of not wanting to live, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911."
+      "say": "If they seem low long after the holiday, encourage a talk with their doctor, and offer to go along."
      },
      {
       "k": "big",
@@ -2535,6 +2537,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing a Pet",
    "you": {
     "id": "sq-g-pet-death-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "pet-death",
     "side": "you",
     "title": "Losing a Pet",
@@ -2635,7 +2638,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Another pet, in your own time.",
       "sub": "You decide what fits your life now.",
-      "say": "Take all the time you need to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor. If you have thoughts of ending your life, call or text 988, any time."
+      "say": "Take all the time you need to decide about another animal. Some people choose an older, calmer pet. Some foster. Some choose not to. You decide what fits your life now. If grief keeps you from daily life for weeks, talk with your doctor."
      },
      {
       "k": "big",
@@ -2647,6 +2650,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-pet-death-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "pet-death",
     "side": "helper",
     "title": "Losing a Pet",
@@ -2749,7 +2753,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Notice your own heart.",
       "sub": "Old losses may come to mind.",
-      "say": "You don't need to have loved this animal to honor the bond. If their grief brings back pets you have lost, that's okay. If their grief keeps them from daily life for weeks, encourage a talk with their doctor. If you ever hear talk of not wanting to live, call or text 988 together."
+      "say": "You don't need to have loved this animal to honor the bond. If their grief brings back pets you have lost, that's okay. If their grief keeps them from daily life for weeks, encourage a talk with their doctor."
      },
      {
       "k": "big",
@@ -2766,6 +2770,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "A New Diagnosis",
    "you": {
     "id": "sq-g-new-diagnosis-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "new-diagnosis",
     "side": "you",
     "title": "A New Diagnosis",
@@ -2868,8 +2873,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Heavy for two weeks or more? Tell your doctor.",
-      "sub": "Thoughts of not wanting to live: call or text 988.",
-      "say": "Sometimes the news brings a low mood that doesn't lift. If you feel heavy or lose interest in things for two weeks or more, tell your doctor. Low mood responds well to help, at any age. If you ever have thoughts of not wanting to live, call or text 988, any time."
+      "say": "Sometimes the news brings a low mood that doesn't lift. If you feel heavy or lose interest in things for two weeks or more, tell your doctor. Low mood responds well to help, at any age."
      },
      {
       "k": "big",
@@ -2881,6 +2885,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-new-diagnosis-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-diagnosis",
     "side": "helper",
     "title": "A New Diagnosis",
@@ -2979,8 +2984,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Watch, gently, for low mood.",
-      "sub": "Not wanting to live? Call or text 988 together.",
-      "say": "Watch, gently, for a low mood that stays two weeks or more, or for pulling away from people. You can offer to help them tell their doctor. If they ever say they don't want to live, stay with them and call or text 988 together. If there is danger right now, call 911."
+      "say": "Watch, gently, for a low mood that stays two weeks or more, or for pulling away from people. You can offer to help them tell their doctor. If they ever say they don't want to live, stay with them."
      },
      {
       "k": "big",
@@ -3003,6 +3007,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Living with Pain",
    "you": {
     "id": "sq-g-pain-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "pain",
     "side": "you",
     "title": "Living with Pain",
@@ -3097,9 +3102,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Sudden, severe pain or chest pain? Call 911.",
-      "sub": "Feel you can't go on? Call or text 988.",
-      "say": "If pain is sudden and severe, or you have chest pain or trouble breathing, call 911. And if the pain has worn you down until you feel you can't go on, call or text 988, any time, day or night."
+      "h": "Sudden, severe pain or chest pain? Call for help.",
+      "say": "If pain is sudden and severe, or you have chest pain or trouble breathing, call for emergency help."
      },
      {
       "k": "big",
@@ -3111,6 +3115,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-pain-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "pain",
     "side": "helper",
     "title": "Living with Pain",
@@ -3209,8 +3214,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to call for help",
-      "sub": "Chest pain or sudden, severe pain: 911.",
-      "say": "If their pain is sudden and severe, or they have chest pain or trouble breathing, call 911. If pain has worn them down until they say they can't go on, or don't want to live, stay with them and call or text 988 together."
+      "sub": "Chest pain or sudden, severe pain: call for help.",
+      "say": "If their pain is sudden and severe, or they have chest pain or trouble breathing, call for emergency help. If pain has worn them down until they say they can't go on, or don't want to live, stay with them."
      },
      {
       "k": "big",
@@ -3233,6 +3238,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "After a Fall",
    "you": {
     "id": "sq-g-falls-you",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "falls",
     "side": "you",
     "title": "After a Fall",
@@ -3290,9 +3296,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Can't get up, hurt, or hit your head? Call 911.",
       "sub": "Keep a phone or an alert button with you.",
-      "say": "If you can't get up, you're hurt, or you hit your head, call 911. Keep a phone, or an alert button, with you, even in the bathroom and at night."
+      "say": "Keep a phone, or an alert button, with you, even in the bathroom and at night."
      },
      {
       "k": "big",
@@ -3336,7 +3341,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Fear of falling can be eased.",
       "sub": "Ask about a class near you.",
-      "say": "Fear of falling is common after a fall. But staying home and still can weaken your legs, and make falls more likely. Fear can be eased. Group classes on fear of falling help many people feel steadier and get back to what they love. The Eldercare Locator, 1 800 677 1116, can help you find one."
+      "say": "Fear of falling is common after a fall. But staying home and still can weaken your legs, and make falls more likely. Fear can be eased. Group classes on fear of falling help many people feel steadier and get back to what they love."
      },
      {
       "k": "big",
@@ -3348,6 +3353,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-falls-helper",
+    "crisis": ["911: emergency"],
     "guide": "falls",
     "side": "helper",
     "title": "After a Fall",
@@ -3449,7 +3455,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Keep them moving.",
       "sub": "Staying still weakens steady legs.",
-      "say": "After a fall, it's tempting to do everything for them. But staying still weakens the very muscles that keep them steady. Encourage strength and balance practice, or a class on fear of falling. Keep inviting them out, with a steady arm. If they fall and can't get up, are hurt, or hit their head, call 911."
+      "say": "After a fall, it's tempting to do everything for them. But staying still weakens the very muscles that keep them steady. Encourage strength and balance practice, or a class on fear of falling. Keep inviting them out, with a steady arm."
      },
      {
       "k": "big",
@@ -3897,6 +3903,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Giving Up Driving",
    "you": {
     "id": "sq-g-driving-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116"],
     "guide": "driving",
     "side": "you",
     "title": "Giving Up Driving",
@@ -3952,14 +3959,14 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Volunteer drivers",
-        "Ask the Eldercare Locator"
+        ""
        ],
        [
         "Buses and ride services",
         "Try one while it's a choice"
        ]
       ],
-      "say": "There are other ways to get around. Family and friends, with a standing ride each week. Neighbors and your faith community, where many are glad to drive. Volunteer driver programs. Buses and ride services, and it helps to try one while it's still a choice. The Eldercare Locator, 1 800 677 1116, can help you find rides near you."
+      "say": "There are other ways to get around. Family and friends, with a standing ride each week. Neighbors and your faith community, where many are glad to drive. Volunteer driver programs. Buses and ride services, and it helps to try one while it's still a choice."
      },
      {
       "k": "big",
@@ -3986,7 +3993,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "A ride is time together.",
       "sub": "Not a debt.",
-      "say": "Asking for rides can feel like being a burden. Many drivers are glad to help, and the ride itself becomes time together. Offer what you can: gas money, a meal, good company. If this loss ever brings thoughts of not wanting to live, call or text 988, any time."
+      "say": "Asking for rides can feel like being a burden. Many drivers are glad to help, and the ride itself becomes time together. Offer what you can: gas money, a meal, good company."
      },
      {
       "k": "big",
@@ -4126,6 +4133,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Surgery, Recovery, or a Hospital Stay",
    "you": {
     "id": "sq-g-hospital-you",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "hospital",
     "side": "you",
     "title": "Surgery, Recovery, or a Hospital Stay",
@@ -4175,7 +4183,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Some confusion afterward is common.",
       "sub": "Tell your doctor about it.",
-      "say": "Here is something many people are never told. After surgery or a hospital stay, some people feel foggy or confused for a while, or mix up day and night. Family may notice it first. It is common, and it is worth telling your doctor about. If confusion comes on suddenly, call your doctor right away. In an emergency, call 911."
+      "say": "Here is something many people are never told. After surgery or a hospital stay, some people feel foggy or confused for a while, or mix up day and night. Family may notice it first. It is common, and it is worth telling your doctor about. If confusion comes on suddenly, call your doctor right away."
      },
      {
       "k": "words",
@@ -4215,7 +4223,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Letting people help is part of healing.",
       "sub": "Ask for one specific thing.",
-      "say": "Many older adults have spent a lifetime helping others, so being helped can feel strange. Letting people help is part of healing. It gives them a way to love you. Ask for one specific thing: a ride to your follow-up visit, groceries on Thursday, a hand with the laundry. If you need more help at home, the Eldercare Locator, 1 800 677 1116, can point you to services nearby."
+      "say": "Many older adults have spent a lifetime helping others, so being helped can feel strange. Letting people help is part of healing. It gives them a way to love you. Ask for one specific thing: a ride to your follow-up visit, groceries on Thursday, a hand with the laundry."
      },
      {
       "k": "big",
@@ -4242,6 +4250,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-hospital-helper",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
     "guide": "hospital",
     "side": "helper",
     "title": "Surgery, Recovery, or a Hospital Stay",
@@ -4291,7 +4300,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Notice confusion, and tell the doctor.",
       "sub": "It is common, and worth a call.",
-      "say": "Watch for confusion after they come home. Some people seem foggy, mixed up, or not themselves for a while after surgery or a hospital stay, and family often notices first. It is common, and it is worth telling their doctor about. If it comes on suddenly, call the doctor right away, and call 911 in an emergency. Stay calm and kind. A gentle reminder of the day and the plan helps more than correcting."
+      "say": "Watch for confusion after they come home. Some people seem foggy, mixed up, or not themselves for a while after surgery or a hospital stay, and family often notices first. It is common, and it is worth telling their doctor about. If it comes on suddenly, call the doctor right away. Stay calm and kind. A gentle reminder of the day and the plan helps more than correcting."
      },
      {
       "k": "words",
@@ -4332,7 +4341,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "Let others share the load.",
-      "say": "A hospital stay is hard on the people who love the patient, too. Eat, sleep when you can, and let others share the load. If they need more help at home than you can give, the Eldercare Locator, 1 800 677 1116, can point you to services nearby. In Minnesota, call Minnesota Aging Pathways at 1 800 333 2433."
+      "say": "A hospital stay is hard on the people who love the patient, too. Eat, sleep when you can, and let others share the load."
      },
      {
       "k": "big",
@@ -4349,6 +4358,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Losing Appetite or Weight",
    "you": {
     "id": "sq-g-appetite-you",
+    "crisis": ["Eldercare Locator: 1-800-677-1116"],
     "guide": "appetite",
     "side": "you",
     "title": "Losing Appetite or Weight",
@@ -4427,7 +4437,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Food tastes better with company.",
       "sub": "Even once a week.",
-      "say": "Food often tastes better with company. Eating with someone, even once a week, can lift both appetite and heart. Invite a friend to lunch. Try a community meal. Or share supper over a video call. If getting groceries or meals is hard, the Eldercare Locator, 1 800 677 1116, can help you find meals at home or community dining nearby."
+      "say": "Food often tastes better with company. Eating with someone, even once a week, can lift both appetite and heart. Invite a friend to lunch. Try a community meal. Or share supper over a video call."
      },
      {
       "k": "big",
@@ -4439,6 +4449,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-appetite-helper",
+    "crisis": ["Eldercare Locator: 1-800-677-1116"],
     "guide": "appetite",
     "side": "helper",
     "title": "Losing Appetite or Weight",
@@ -4508,7 +4519,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Community dining, meals at home"
        ]
       ],
-      "say": "Here's what helps. Share a meal, in person, or over a video call. Bring their favorite foods, in small portions. Make meals easier with groceries, easy foods, or rides to the store. And if they want it, help them find community dining or meals delivered at home. The Eldercare Locator, 1 800 677 1116, can point the way."
+      "say": "Here's what helps. Share a meal, in person, or over a video call. Bring their favorite foods, in small portions. Make meals easier with groceries, easy foods, or rides to the store. And if they want it, help them find community dining or meals delivered at home."
      },
      {
       "k": "big",
@@ -4547,6 +4558,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worried About Your Memory",
    "you": {
     "id": "sq-g-memory-worry-you",
+    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "memory-worry",
     "side": "you",
     "title": "Worried About Your Memory",
@@ -4682,12 +4694,6 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Questions? Call any hour.",
-      "sub": "Alzheimer's Association Helpline: 1-800-272-3900",
-      "say": "If you have questions, or just want to talk it through, the Alzheimer's Association Helpline is there any hour of the day or night, at 1 800 272 3900."
-     },
-     {
-      "k": "big",
       "h": "Your story is still yours.",
       "sub": "The full guide has more, whenever you want it.",
       "say": "You are so much more than your memory. Your love, your values, and your story are still yours. The full guide has more, whenever you want it."
@@ -4696,6 +4702,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-memory-worry-helper",
+    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "memory-worry",
     "side": "helper",
     "title": "Worried About Your Memory",
@@ -4799,8 +4806,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Look after yourself, too.",
-      "sub": "Helpline: 1-800-272-3900, any hour.",
-      "say": "Worry for someone you love is heavy. Talk with someone you trust, and keep doing the things that steady you. The Alzheimer's Association Helpline, 1 800 272 3900, is there for family members too, any hour of the day or night."
+      "say": "Worry for someone you love is heavy. Talk with someone you trust, and keep doing the things that steady you."
      },
      {
       "k": "big",
@@ -4817,6 +4823,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "A Dementia Diagnosis",
    "you": {
     "id": "sq-g-dementia-you",
+    "crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "dementia",
     "side": "you",
     "title": "A Dementia Diagnosis",
@@ -4920,8 +4927,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Others can help you figure it out.",
-      "body": "Alzheimer's Association Helpline: 1-800-272-3900, any time.",
-      "say": "The Alzheimer's Association Helpline is there any time, day or night, at 1 800 272 3900. You can call for yourself, not only for your family. Many communities have groups for people who are newly diagnosed, where you can talk with others who understand. And if the news ever brings thoughts of not wanting to live, call or text 988."
+      "say": "You can call for yourself, not only for your family. Many communities have groups for people who are newly diagnosed, where you can talk with others who understand."
      },
      {
       "k": "big",
@@ -4933,6 +4939,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-dementia-helper",
+    "crisis": ["Alzheimer's Association Helpline: 1-800-272-3900"],
     "guide": "dementia",
     "side": "helper",
     "title": "A Dementia Diagnosis",
@@ -5027,8 +5034,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Look after yourself, too.",
-      "sub": "Helpline: 1-800-272-3900, any time.",
-      "say": "Walking beside dementia is a long road, and it brings its own grief. Keep your own sleep, your own friends, and your own time to breathe. A caregiver group can help. The Alzheimer's Association Helpline is there for you too, any time, at 1 800 272 3900. Asking for help is part of doing this well."
+      "say": "Walking beside dementia is a long road, and it brings its own grief. Keep your own sleep, your own friends, and your own time to breathe. A caregiver group can help. Asking for help is part of doing this well."
      },
      {
       "k": "big",
@@ -5145,8 +5151,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If hope feels gone",
-      "body": "Call or text 988. Veterans: 988, then press 1. Danger right now: 911.",
-      "say": "Sometimes depression brings thoughts of not wanting to be here. Many people have had that thought, and it is safe to say so. Call or text 988, any time, and someone will listen. Veterans can call 988 and press 1. If you are in danger right now, call 911."
+      "say": "Sometimes depression brings thoughts of not wanting to be here. Many people have had that thought, and it is safe to say so."
      },
      {
       "k": "big",
@@ -5257,8 +5262,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If they speak of not wanting to live",
-      "body": "Ask plainly. Call or text 988 together. Veterans: 988, then press 1.",
-      "say": "Men seventy five and older have the highest suicide rate of any age group. Listen for words like I'm just in the way, or you'd all be better off. If you hear them, ask plainly and calmly: are you thinking about ending your life? Asking does not put the idea in their head. If the answer is yes, stay with them and call or text 988 together. For a veteran, call 988 and press 1. If there is danger right now, call 911."
+      "body": "Ask plainly.",
+      "say": "Men seventy five and older have the highest suicide rate of any age group. Listen for words like I'm just in the way, or you'd all be better off. If you hear them, ask plainly and calmly: are you thinking about ending your life? Asking does not put the idea in their head. If the answer is yes, stay with them."
      },
      {
       "k": "big",
@@ -5286,6 +5291,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worry and Anxiety",
    "you": {
     "id": "sq-g-anxiety-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Worry and Anxiety",
@@ -5336,7 +5342,7 @@ window.GG_LEARN_GUIDES.sequoia = {
        "An upset stomach",
        "Staying home more"
       ],
-      "say": "Anxiety doesn't always feel like fear. It can be trouble sleeping, a tight or restless body, an upset stomach, or a mind that keeps checking. Some people quietly start staying home more, because worry gets there first. If you ever have chest pain or trouble breathing, call your doctor or 911, to be sure."
+      "say": "Anxiety doesn't always feel like fear. It can be trouble sleeping, a tight or restless body, an upset stomach, or a mind that keeps checking. Some people quietly start staying home more, because worry gets there first. If you ever have chest pain or trouble breathing, call your doctor or call for emergency help, to be sure."
      },
      {
       "k": "big",
@@ -5408,8 +5414,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Anxiety responds well to help.",
-      "body": "Talk with your doctor. Thoughts of harming yourself: call or text 988.",
-      "say": "If worry fills most of your day, keeps you from sleep, or keeps you home, tell your doctor. Anxiety in later life responds well to help, often through talking with a counselor. Ask your doctor or pharmacist whether any of your medicines could add to it. And if worry ever turns into thoughts of harming yourself, call or text 988."
+      "body": "Talk with your doctor.",
+      "say": "If worry fills most of your day, keeps you from sleep, or keeps you home, tell your doctor. Anxiety in later life responds well to help, often through talking with a counselor. Ask your doctor or pharmacist whether any of your medicines could add to it."
      },
      {
       "k": "big",
@@ -5421,6 +5427,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-anxiety-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "anxiety",
     "side": "helper",
     "title": "Worry and Anxiety",
@@ -5512,8 +5519,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When worry fills their days",
-      "body": "Encourage a doctor visit, and offer to go along. Thoughts of self-harm: 988.",
-      "say": "If worry fills most of their days, keeps them from sleeping, or keeps them home, encourage a visit with their doctor, and offer to go along. Anxiety in later life responds well to help. If they ever talk about harming themselves, call or text 988 together. If there is danger right now, call 911."
+      "body": "Encourage a doctor visit, and offer to go along.",
+      "say": "If worry fills most of their days, keeps them from sleeping, or keeps them home, encourage a visit with their doctor, and offer to go along. Anxiety in later life responds well to help."
      },
      {
       "k": "big",
@@ -5536,6 +5543,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "When Old Memories Return",
    "you": {
     "id": "sq-g-old-memories-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "old-memories",
     "side": "you",
     "title": "When Old Memories Return",
@@ -5637,8 +5645,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If it gets to be too much",
-      "body": "Veterans: 988, then press 1, or text 838255. Anyone: call or text 988.",
-      "say": "If the memories ever bring thoughts of not wanting to live, or simply feel like too much, reach out right away. Veterans can call 988 and press 1, or text 8 3 8 2 5 5. Anyone can call or text 988, any time. If you are in danger right now, call 911."
+      "say": "If the memories ever bring thoughts of not wanting to live, or simply feel like too much, reach out right away."
      },
      {
       "k": "big",
@@ -5650,6 +5657,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-old-memories-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "old-memories",
     "side": "helper",
     "title": "When Old Memories Return",
@@ -5749,8 +5757,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Help lines to keep close",
-      "body": "Veterans: 988, then press 1, or text 838255. Anyone: call or text 988.",
-      "say": "Keep these close. The Veterans Crisis Line is 988, then press 1, or text 8 3 8 2 5 5. Anyone can call or text 988, any time. If there is danger right now, call 911."
+      "say": "Keep these close."
      },
      {
       "k": "big",
@@ -6224,6 +6231,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Moving to Assisted Living or a Nursing Home",
    "you": {
     "id": "sq-g-care-move-you",
+    "crisis": ["Ombudsman for Long-Term Care (Minnesota): 1-800-657-3591"],
     "guide": "care-move",
     "side": "you",
     "title": "Moving to Assisted Living or a Nursing Home",
@@ -6325,8 +6333,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Your rights come with you.",
-      "sub": "Ombudsman, Minnesota: 1-800-657-3591.",
-      "say": "Your rights come with you to your new home. If something isn't right, tell someone you trust and the staff. In Minnesota, the Office of Ombudsman for Long-Term Care helps residents with any concern, at 1-800-657-3591, on weekdays. And if low mood or confusion lasts past the first weeks, tell the nurse and your doctor."
+      "sub": "Ombudsman, Minnesota.",
+      "say": "Your rights come with you to your new home. If something isn't right, tell someone you trust and the staff. In Minnesota, the Office of Ombudsman for Long-Term Care helps residents with any concern, on weekdays. And if low mood or confusion lasts past the first weeks, tell the nurse and your doctor."
      },
      {
       "k": "big",
@@ -6338,6 +6346,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-care-move-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "Ombudsman for Long-Term Care (Minnesota): 1-800-657-3591"],
     "guide": "care-move",
     "side": "helper",
     "title": "Moving to Assisted Living or a Nursing Home",
@@ -6425,8 +6434,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Speak up, kindly.",
-      "sub": "Ombudsman, Minnesota: 1-800-657-3591.",
-      "say": "Your role is changing, from doing everything to visiting and advocating. If something seems wrong, speak up kindly with staff. If it isn't resolved, in Minnesota, call the Office of Ombudsman for Long-Term Care at 1-800-657-3591, on weekdays. If you believe someone is being hurt or neglected, call MAARC at 1-844-880-1574, any time."
+      "sub": "Ombudsman, Minnesota.",
+      "say": "Your role is changing, from doing everything to visiting and advocating. If something seems wrong, speak up kindly with staff. If it isn't resolved, in Minnesota, call the Office of Ombudsman for Long-Term Care, on weekdays."
      },
      {
       "k": "big",
@@ -6443,6 +6452,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Money Worries on a Fixed Income",
    "you": {
     "id": "sq-g-fixed-income-you",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "fixed-income",
     "side": "you",
     "title": "Money Worries on a Fixed Income",
@@ -6511,8 +6521,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Start with one call.",
-      "sub": "Eldercare Locator: 1-800-677-1116.",
-      "say": "Start with one call. The Eldercare Locator, at 1-800-677-1116, can point you to help near you, anywhere in the US. In Minnesota, call Minnesota Aging Pathways at 1-800-333-2433, on weekdays. You can ask a friend to sit with you while you call."
+      "say": "Start with one call. You can ask a friend to sit with you while you call."
      },
      {
       "k": "big",
@@ -6545,6 +6554,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-fixed-income-helper",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "fixed-income",
     "side": "helper",
     "title": "Money Worries on a Fixed Income",
@@ -6619,7 +6629,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "items": [
        [
         "Find programs together",
-        "Eldercare Locator, a benefits check"
+        ""
        ],
        [
         "Sit in on the call",
@@ -6634,7 +6644,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "From strangers, or people they know"
        ]
       ],
-      "say": "Help find programs together: the Eldercare Locator at 1-800-677-1116, or Minnesota Aging Pathways at 1-800-333-2433. Sit in on the call, if they want you there. Share a meal, as kindness, not charity. And watch for anyone pressuring them about money, strangers or people they know."
+      "say": "Help find programs together. Sit in on the call, if they want you there. Share a meal, as kindness, not charity. And watch for anyone pressuring them about money, strangers or people they know."
      },
      {
       "k": "big",
@@ -6672,6 +6682,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Scams and Fraud",
    "you": {
     "id": "sq-g-scams-you",
+    "crisis": ["988: call or text, any time", "AARP Fraud Watch Helpline: 877-908-3360", "Elder Fraud Hotline: 1-833-372-8311"],
     "guide": "scams",
     "side": "you",
     "title": "Scams and Fraud",
@@ -6755,26 +6766,26 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Call for help",
-        "Elder Fraud Hotline"
+        ""
        ],
        [
         "Report it",
         "reportfraud.ftc.gov"
        ]
       ],
-      "say": "If it already happened, here's what to do. Call your bank or card company right away, using the number on your card. Stop all contact, and send nothing more, even if they promise to return your money. Call the National Elder Fraud Hotline at 1-833-372-8311, on weekdays. And report it at reportfraud.ftc.gov. Reports help stop scammers."
+      "say": "If it already happened, here's what to do. Call your bank or card company right away, using the number on your card. Stop all contact, and send nothing more, even if they promise to return your money. And report it at reportfraud. ftc. gov. Reports help stop scammers."
      },
      {
       "k": "big",
       "h": "Tell one person you trust.",
       "sub": "Most people do, and it helps.",
-      "say": "Research finds that most older adults who are defrauded do tell someone, though very few tell the police. Tell one person you trust, and let them help with the calls. The AARP Fraud Watch Network Helpline, at 877-908-3360, will talk it through with anyone, member or not."
+      "say": "Research finds that most older adults who are defrauded do tell someone, though very few tell the police. Tell one person you trust, and let them help with the calls."
      },
      {
       "k": "big",
       "h": "It is normal to feel shaken.",
       "sub": "Be as kind to yourself as to a friend.",
-      "say": "It's normal to feel shaken, angry, or embarrassed for a while. If the scam was a romance or a friendship, you may be grieving too. Be as kind to yourself as you would be to a friend it happened to. If you ever have thoughts of not wanting to live, call or text 988, any time."
+      "say": "It's normal to feel shaken, angry, or embarrassed for a while. If the scam was a romance or a friendship, you may be grieving too. Be as kind to yourself as you would be to a friend it happened to."
      },
      {
       "k": "big",
@@ -6786,6 +6797,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-scams-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "Elder Fraud Hotline: 1-833-372-8311"],
     "guide": "scams",
     "side": "helper",
     "title": "Scams and Fraud",
@@ -6851,14 +6863,14 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Call for help",
-        "Elder Fraud: 1-833-372-8311"
+        ""
        ],
        [
         "Report it",
         "reportfraud.ftc.gov"
        ]
       ],
-      "say": "If it already happened, help them call the bank or card company right away. Stop all contact with the scammer, and send nothing more. Call the National Elder Fraud Hotline at 1-833-372-8311, on weekdays. And report it at reportfraud.ftc.gov. If someone they know is taking advantage of them, in Minnesota, call MAARC at 1-844-880-1574."
+      "say": "If it already happened, help them call the bank or card company right away. Stop all contact with the scammer, and send nothing more. And report it at reportfraud. ftc. gov."
      },
      {
       "k": "big",
@@ -7020,6 +7032,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-affairs-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "affairs",
     "side": "helper",
     "title": "Getting Your Affairs in Order",
@@ -7120,7 +7133,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "From anyone, about papers"
        ]
       ],
-      "say": "Here are ways to help. Sit with them while they read the National Institute on Aging's checklist. Offer rides to an attorney or legal aid, and let them meet privately. Help them make one folder for important papers, and note where it is. And watch for anyone pressuring them to sign or change papers. In Minnesota, MAARC takes those calls at 1-844-880-1574."
+      "say": "Here are ways to help. Sit with them while they read the National Institute on Aging's checklist. Offer rides to an attorney or legal aid, and let them meet privately. Help them make one folder for important papers, and note where it is. And watch for anyone pressuring them to sign or change papers."
      },
      {
       "k": "big",
@@ -7143,6 +7156,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Caring for a Spouse or Partner",
    "you": {
     "id": "sq-g-spouse-caregiving-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "spouse-caregiving",
     "side": "you",
     "title": "Caring for a Spouse or Partner",
@@ -7208,7 +7222,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Meals, chores, a bath aide"
        ]
       ],
-      "say": "There are ways to share the load. Respite, when someone else takes a turn for a few hours or a few days. Adult day programs, which offer company for them and rest for you. A caregiver support group, in person, by phone, or online. And help at home, like meals, chores, or a bath aide. The Eldercare Locator, 1 800 677 1116, can help you find them."
+      "say": "There are ways to share the load. Respite, when someone else takes a turn for a few hours or a few days. Adult day programs, which offer company for them and rest for you. A caregiver support group, in person, by phone, or online. And help at home, like meals, chores, or a bath aide."
      },
      {
       "k": "big",
@@ -7248,7 +7262,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "card",
       "title": "You matter too.",
       "body": "Keep your own doctor visits. Sleep, eat, and ask for one regular break.",
-      "say": "You matter too. Keep your own doctor visits, and tell your doctor you are a caregiver. Sleep when you can, eat simple meals, and ask one person for one regular break. If you ever feel hopeless, or think about ending your life, call or text 988, any time. If anyone is in danger right now, call 911."
+      "say": "You matter too. Keep your own doctor visits, and tell your doctor you are a caregiver. Sleep when you can, eat simple meals, and ask one person for one regular break."
      },
      {
       "k": "big",
@@ -7260,6 +7274,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-spouse-caregiving-helper",
+    "crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
     "guide": "spouse-caregiving",
     "side": "helper",
     "title": "Caring for a Spouse or Partner",
@@ -7351,8 +7366,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When it is too much",
-      "body": "Hopeless or thinking of ending their life: 988. Danger now: 911.",
-      "say": "If the caregiver seems hopeless, or talks about ending their life, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911. If memory loss is part of the picture, the Alzheimer's Association Helpline is there day and night, at 1 800 272 3900."
+      "say": "If the caregiver seems hopeless, or talks about ending their life, ask plainly."
      },
      {
       "k": "big",
@@ -7578,6 +7592,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Raising Grandchildren",
    "you": {
     "id": "sq-g-raising-grandkids-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "raising-grandkids",
     "side": "you",
     "title": "Raising Grandchildren",
@@ -7641,7 +7656,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Before custody steps"
        ]
       ],
-      "say": "There is help made for grandfamilies. Kinship navigator programs help with benefits, forms, and next steps. Your Area Agency on Aging may support grandparents 55 and older raising grandchildren. The Eldercare Locator, 1 800 677 1116, can connect you. Grandfamily support groups mean no one needs the backstory. And before any custody or guardianship step, talk with legal aid or a family law attorney."
+      "say": "There is help made for grandfamilies. Kinship navigator programs help with benefits, forms, and next steps. Your Area Agency on Aging may support grandparents 55 and older raising grandchildren. Grandfamily support groups mean no one needs the backstory. And before any custody or guardianship step, talk with legal aid or a family law attorney."
      },
      {
       "k": "big",
@@ -7681,8 +7696,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "You matter too.",
-      "body": "Your doctor visits, your rest, a few hours off. Hopeless? Call or text 988.",
-      "say": "You matter too. Keep your own doctor visits, and rest when the children rest. Ask someone for a few hours off each week. If you feel hopeless, or think about ending your life, call or text 988, any time. If anyone is in danger right now, call 911."
+      "body": "Your doctor visits, your rest, a few hours off.",
+      "say": "You matter too. Keep your own doctor visits, and rest when the children rest. Ask someone for a few hours off each week."
      },
      {
       "k": "big",
@@ -7694,6 +7709,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-raising-grandkids-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "raising-grandkids",
     "side": "helper",
     "title": "Raising Grandchildren",
@@ -7785,8 +7801,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When it is too much",
-      "body": "Hopeless or thinking of ending a life: 988. Danger now: 911.",
-      "say": "If the grandparent, or a child, seems hopeless, or talks about ending their life, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911."
+      "say": "If the grandparent, or a child, seems hopeless, or talks about ending their life, ask plainly."
      },
      {
       "k": "big",
@@ -7803,6 +7818,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Estrangement From an Adult Child",
    "you": {
     "id": "sq-g-estrangement-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "estrangement",
     "side": "you",
     "title": "Estrangement From an Adult Child",
@@ -7902,7 +7918,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Waiting is not your whole life"
        ]
       ],
-      "say": "Care for yourself too. Tell one or two people you trust. Grief needs a witness. A counselor or a support group for parents in your place can help. And fill your days with people and purposes that give you life now, so waiting doesn't become your whole life. If grief ever turns into hopelessness, or thoughts of ending your life, call or text 988, any time."
+      "say": "Care for yourself too. Tell one or two people you trust. Grief needs a witness. A counselor or a support group for parents in your place can help. And fill your days with people and purposes that give you life now, so waiting doesn't become your whole life."
      },
      {
       "k": "big",
@@ -7914,6 +7930,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-estrangement-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "estrangement",
     "side": "helper",
     "title": "Estrangement From an Adult Child",
@@ -7996,7 +8013,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "If they want one"
        ]
       ],
-      "say": "Here is what helps. Include them at your table and in your traditions. Listen without a verdict, and ask what they need from you. If they want help, help them find a counselor or support group. If grief turns into hopelessness, or talk of ending their life, call or text 988 together."
+      "say": "Here is what helps. Include them at your table and in your traditions. Listen without a verdict, and ask what they need from you. If they want help, help them find a counselor or support group."
      },
      {
       "k": "big",
@@ -8013,6 +8030,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Worry About Adult Children",
    "you": {
     "id": "sq-g-worry-adult-children-you",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "worry-adult-children",
     "side": "you",
     "title": "Worry About Adult Children",
@@ -8097,14 +8115,13 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Your security matters too.",
-      "body": "Pause before giving money you may need. Pressured or frightened: MAARC, 1-844-880-1574.",
-      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, others can help you carry that. In Minnesota, call MAARC, at 1 844 880 1574, any time."
+      "body": "Pause before giving money you may need.",
+      "say": "Your own security matters too. Before giving or lending money you may need, pause and talk with someone you trust. If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you, others can help you carry that."
      },
      {
       "k": "card",
       "title": "If they are in crisis",
-      "body": "Call or text 988, for them or with them. Danger now: 911.",
-      "say": "If your grown child is in crisis, or talks about ending their life, call or text 988, any time. You can call for them, or with them. If anyone is in danger right now, call 911. And if your own worry turns into hopelessness, 988 is there for you too."
+      "say": "You can call for them, or with them."
      },
      {
       "k": "big",
@@ -8116,6 +8133,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-worry-adult-children-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "worry-adult-children",
     "side": "helper",
     "title": "Worry About Adult Children",
@@ -8201,8 +8219,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Watch for money pressure.",
-      "body": "Pressured or frightened by anyone: in Minnesota, MAARC, 1-844-880-1574.",
-      "say": "Gently watch for money pressure. If a grown child, or anyone, is pressuring them for money, taking it without asking, or frightening them, help is there. In Minnesota, MAARC, 1 844 880 1574, any time. If anyone talks about ending their life, call or text 988. If there is danger right now, call 911."
+      "say": "Gently watch for money pressure. If a grown child, or anyone, is pressuring them for money, taking it without asking, or frightening them, help is there."
      },
      {
       "k": "big",
@@ -8219,6 +8236,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "When Your Children Start Deciding for You",
    "you": {
     "id": "sq-g-kids-deciding-you",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "kids-deciding",
     "side": "you",
     "title": "When Your Children Start Deciding for You",
@@ -8326,8 +8344,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you feel pushed or pressured",
-      "body": "About money, papers, or moving: in Minnesota, MAARC, 1-844-880-1574. Danger right now: 911.",
-      "say": "If anyone pushes you to sign papers, hand over money, or move when you don't want to, that's different from worry. In Minnesota, call MAARC any time, at 1-844-880-1574. In any state, Adult Protective Services can help. If you are in danger right now, call 911."
+      "say": "If anyone pushes you to sign papers, hand over money, or move when you don't want to, that's different from worry. In any state, Adult Protective Services can help."
      },
      {
       "k": "big",
@@ -8547,6 +8564,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-new-love-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574"],
     "guide": "new-love",
     "side": "helper",
     "title": "New Love Late in Life",
@@ -8614,7 +8632,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "They seem afraid or watched"
        ]
       ],
-      "say": "Some worries are worth raising. Money pressure, especially requests for cash, gift cards, or investments from someone they've never met. Being cut off from old friends and family. Or seeming afraid, controlled, or watched. Raise these in private, as concern, not a verdict. If you believe they're being taken advantage of, in Minnesota call MAARC, at 1-844-880-1574. In any state, call Adult Protective Services."
+      "say": "Some worries are worth raising. Money pressure, especially requests for cash, gift cards, or investments from someone they've never met. Being cut off from old friends and family. Or seeming afraid, controlled, or watched. Raise these in private, as concern, not a verdict. In any state, call Adult Protective Services."
      },
      {
       "k": "big",
@@ -8652,6 +8670,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Divorce Late in Life",
    "you": {
     "id": "sq-g-gray-divorce-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
     "guide": "gray-divorce",
     "side": "you",
     "title": "Divorce Late in Life",
@@ -8731,10 +8750,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Local help",
-        "Eldercare Locator: 1-800-677-1116"
+        ""
        ]
       ],
-      "say": "Money worry is common, with fewer working years ahead to rebuild. A few good next steps. Get advice of your own from a lawyer or a financial planner you trust, before signing anything. Make a simple list of your accounts, bills, and papers. And ask the Eldercare Locator about legal help near you, at 1-800-677-1116."
+      "say": "Money worry is common, with fewer working years ahead to rebuild. A few good next steps. Get advice of your own from a lawyer or a financial planner you trust, before signing anything. Make a simple list of your accounts, bills, and papers."
      },
      {
       "k": "big",
@@ -8758,12 +8777,6 @@ window.GG_LEARN_GUIDES.sequoia = {
       ]
      },
      {
-      "k": "card",
-      "title": "If it feels too heavy",
-      "body": "Call or text 988, any time. Danger right now: 911.",
-      "say": "If the weight of this ever turns into thoughts of not wanting to be here, call or text 988, any time. If you are in danger right now, call 911."
-     },
-     {
       "k": "big",
       "h": "You are still becoming.",
       "sub": "The full guide has more, whenever you want it.",
@@ -8773,6 +8786,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-gray-divorce-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "gray-divorce",
     "side": "helper",
     "title": "Divorce Late in Life",
@@ -8865,7 +8879,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "Kind limits help everyone.",
-      "say": "Their divorce may stir your own grief, or questions about your own marriage. Set kind limits. You can say, I love you, and I'd rather not hear about Dad, or Mom. Talk with someone you trust, and watch for low mood that lasts. If they ever talk about not wanting to live, call or text 988 together."
+      "say": "Their divorce may stir your own grief, or questions about your own marriage. Set kind limits. You can say, I love you, and I'd rather not hear about Dad, or Mom. Talk with someone you trust, and watch for low mood that lasts."
      },
      {
       "k": "big",
@@ -8948,11 +8962,11 @@ window.GG_LEARN_GUIDES.sequoia = {
       "steps": [
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ],
        [
         "In Minnesota",
-        "MAARC: 1-844-880-1574, any time"
+        ""
        ],
        [
         "Any state",
@@ -8963,7 +8977,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "A doctor, friend, or faith leader"
        ]
       ],
-      "say": "Here's how to get help. If you are in danger right now, call 911. In Minnesota, call MAARC, the adult abuse reporting line, any time, at 1-844-880-1574. In any state, Adult Protective Services can help. And tell one safe person, like your doctor, a friend, or a faith leader."
+      "say": "Here's how to get help. In any state, Adult Protective Services can help. And tell one safe person, like your doctor, a friend, or a faith leader."
      },
      {
       "k": "big",
@@ -8983,14 +8997,12 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If money is being taken",
-      "body": "National Elder Fraud Hotline: 1-833-372-8311, weekdays.",
-      "say": "If someone is taking your money, pushing you to sign papers, or a caller has scammed you, call the National Elder Fraud Hotline, at 1-833-372-8311, on weekdays. You can talk with your bank, too."
+      "say": "You can talk with your bank, too."
      },
      {
       "k": "card",
       "title": "If you feel hopeless",
-      "body": "Call or text 988, any time.",
-      "say": "Living with abuse can wear down hope. If you ever think about not wanting to be here, call or text 988, any time. Someone will listen."
+      "say": "Living with abuse can wear down hope. Someone will listen."
      },
      {
       "k": "big",
@@ -9099,11 +9111,11 @@ window.GG_LEARN_GUIDES.sequoia = {
       "items": [
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ],
        [
         "In Minnesota",
-        "MAARC: 1-844-880-1574, any time"
+        ""
        ],
        [
         "Any state",
@@ -9111,10 +9123,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Money taken",
-        "Elder Fraud Hotline: 1-833-372-8311"
+        ""
        ]
       ],
-      "say": "Here's how to report. If there is danger right now, call 911. In Minnesota, call MAARC any time, at 1-844-880-1574. Your name is kept confidential. In any state, call Adult Protective Services. If money is being taken, call the National Elder Fraud Hotline, at 1-833-372-8311. Share what you saw. Trained people look into the rest."
+      "say": "Here's how to report. Your name is kept confidential. In any state, call Adult Protective Services. Share what you saw. Trained people look into the rest."
      },
      {
       "k": "big",
@@ -9126,7 +9138,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Look after yourself, too.",
       "sub": "This is heavy to carry.",
-      "say": "Suspecting abuse is frightening, especially within a family. Talk with someone you trust. If it all becomes too much, for them or for you, call or text 988, any time."
+      "say": "Suspecting abuse is frightening, especially within a family. Talk with someone you trust."
      },
      {
       "k": "big",
@@ -9148,6 +9160,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Loneliness and Living Alone",
    "you": {
     "id": "sq-g-loneliness-you",
+    "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "loneliness",
     "side": "you",
     "title": "Loneliness and Living Alone",
@@ -9245,8 +9258,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Help close to home",
-      "body": "Eldercare Locator: 1-800-677-1116. Minnesota Aging Pathways: 1-800-333-2433.",
-      "say": "Help is close to home. The Eldercare Locator, 1 800 677 1116, can find senior centers, meals, rides, and visiting programs near you. In Minnesota, call Minnesota Aging Pathways, 1 800 333 2433. If loneliness has turned into sadness that won't lift, talk with your doctor. If you ever feel hopeless, call or text 988, any time."
+      "say": "Help is close to home. If loneliness has turned into sadness that won't lift, talk with your doctor."
      },
      {
       "k": "big",
@@ -9258,6 +9270,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-loneliness-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loneliness",
     "side": "helper",
     "title": "Loneliness and Living Alone",
@@ -9371,8 +9384,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Low mood that lasts: their doctor. Hopeless talk: 988 together. Danger right now: 911.",
-      "say": "If loneliness has turned into low mood that lasts, encourage a talk with their doctor, and offer to go along. If you hear hopeless words, ask plainly, and call or text 988 together. If anyone is in danger right now, call 911."
+      "body": "Low mood that lasts: their doctor.",
+      "say": "If loneliness has turned into low mood that lasts, encourage a talk with their doctor, and offer to go along."
      },
      {
       "k": "big",
@@ -9389,6 +9402,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Friendship in Later Life",
    "you": {
     "id": "sq-g-friendship-you",
+    "crisis": ["Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433"],
     "guide": "friendship",
     "side": "you",
     "title": "Friendship in Later Life",
@@ -9491,8 +9505,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "Find your people",
-      "body": "Eldercare Locator: 1-800-677-1116. Minnesota Aging Pathways: 1-800-333-2433.",
-      "say": "To find classes, groups, and volunteer teams near you, call the Eldercare Locator, 1 800 677 1116. In Minnesota, call Minnesota Aging Pathways, 1 800 333 2433. If you find yourself pulling away from friends and the things you used to enjoy, talk with your doctor. Help works."
+      "say": "If you find yourself pulling away from friends and the things you used to enjoy, talk with your doctor. Help works."
      },
      {
       "k": "big",
@@ -9613,6 +9626,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Growing Older as a Veteran",
    "you": {
     "id": "sq-g-veterans-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "veterans",
     "side": "you",
     "title": "Growing Older as a Veteran",
@@ -9709,8 +9723,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If it gets to be too much",
-      "body": "Veterans Crisis Line: 988, then press 1, or text 838255. Danger right now: 911.",
-      "say": "If memories or feelings ever get to be too much, reach out right away. Call 988 and press 1 for the Veterans Crisis Line, or text 8 3 8 2 5 5. You don't need to be enrolled in VA care. If you are in danger right now, call 911."
+      "say": "If memories or feelings ever get to be too much, reach out right away. You don't need to be enrolled in VA care."
      },
      {
       "k": "big",
@@ -9722,6 +9735,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-veterans-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "veterans",
     "side": "helper",
     "title": "Growing Older as a Veteran",
@@ -9801,13 +9815,12 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Keep the number close.",
-      "sub": "988, then press 1.",
-      "say": "Here's one thing to do right now. Take your phone, or a pen and a card for beside the phone. Write it down: Veterans Crisis Line, 988, then press 1.",
+      "say": "Here's one thing to do right now. Take your phone, or a pen and a card for beside the phone. Write down the number shown under this video.",
       "beats": [
        "Here's one thing to do right now.",
        "Take your phone, or a pen and a card for beside the phone.",
        {
-        "t": "Write it down: Veterans Crisis Line, 988, then press 1.",
+        "t": "Write down the number shown under this video.",
         "w": 10
        }
       ]
@@ -9815,8 +9828,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Veterans Crisis Line: 988, then press 1, or text 838255. Danger right now: 911.",
-      "say": "If you hear hopeless words, or talk of not wanting to live, ask plainly, and call together. The Veterans Crisis Line is 988, then press 1, or text 8 3 8 2 5 5. Families can call too. If anyone is in danger right now, call 911."
+      "say": "If you hear hopeless words, or talk of not wanting to live, ask plainly, and call together. Families can call too."
      },
      {
       "k": "big",
@@ -9839,6 +9851,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Feeling Invisible or Written Off Because of Age",
    "you": {
     "id": "sq-g-invisible-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "invisible",
     "side": "you",
     "title": "Feeling Invisible or Written Off Because of Age",
@@ -9941,8 +9954,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If it weighs on you",
-      "body": "Low mood that lasts: talk with your doctor. Hopeless: call or text 988.",
-      "say": "If feeling overlooked has turned into low mood that lasts, talk with your doctor. If you ever feel worthless, or that life isn't worth living, call or text 988, any time. If you are in danger right now, call 911."
+      "body": "Low mood that lasts: talk with your doctor.",
+      "say": "If feeling overlooked has turned into low mood that lasts, talk with your doctor."
      },
      {
       "k": "big",
@@ -9954,6 +9967,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-invisible-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "invisible",
     "side": "helper",
     "title": "Feeling Invisible or Written Off Because of Age",
@@ -10060,8 +10074,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Low mood that lasts: their doctor. Hopeless talk: 988 together. Danger: 911.",
-      "say": "If being overlooked has turned into low mood, or talk of being useless, encourage a visit with their doctor, and offer to go along. If you hear hopeless words, ask plainly, and call or text 988 together. In Minnesota, if someone is taking advantage of them, call MAARC at 1 844 880 1574. If anyone is in danger right now, call 911."
+      "body": "Low mood that lasts: their doctor.",
+      "say": "If being overlooked has turned into low mood, or talk of being useless, encourage a visit with their doctor, and offer to go along."
      },
      {
       "k": "big",
@@ -10078,6 +10092,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Faith Questions Late in Life",
    "you": {
     "id": "sq-g-faith-questions-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-questions",
     "side": "you",
     "title": "Faith Questions Late in Life",
@@ -10196,8 +10211,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When it feels heavy",
-      "body": "Guilt or fear that weighs on you: a chaplain or counselor can help. Not wanting to live: call or text 988.",
-      "say": "If guilt, fear, or a sense of being punished weighs on you, a chaplain or counselor can help you carry it. Hospitals and hospices often have chaplains for people of any faith or none. If you ever think about not wanting to live, call or text nine eight eight, any time."
+      "body": "Guilt or fear that weighs on you: a chaplain or counselor can help.",
+      "say": "If guilt, fear, or a sense of being punished weighs on you, a chaplain or counselor can help you carry it. Hospitals and hospices often have chaplains for people of any faith or none."
      },
      {
       "k": "big",
@@ -10209,6 +10224,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-faith-questions-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-questions",
     "side": "helper",
     "title": "Faith Questions Late in Life",
@@ -10298,8 +10314,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When it grows heavy",
-      "sub": "Not wanting to live: call or text 988 together.",
-      "say": "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor. If low mood lasts two weeks or more, encourage a talk with their doctor. If they say they do not want to live, ask them plainly about it, stay with them, and call or text nine eight eight together."
+      "say": "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor. If low mood lasts two weeks or more, encourage a talk with their doctor. If they say they do not want to live, ask them plainly about it, and stay with them."
      },
      {
       "k": "big",
@@ -10316,6 +10331,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Facing Death and Sharing Your Wishes",
    "you": {
     "id": "sq-g-facing-death-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "facing-death",
     "side": "you",
     "title": "Facing Death and Sharing Your Wishes",
@@ -10414,7 +10430,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Peace has many sources.",
       "sub": "Faith, family, nature, a life that mattered.",
-      "say": "Peace comes in many ways. For some, it comes through faith, its prayers and rituals, and a chaplain or faith leader nearby. For others, it comes through family, nature, music, and knowing their life has mattered. And if you ever think about ending your life, call or text nine eight eight, any time."
+      "say": "Peace comes in many ways. For some, it comes through faith, its prayers and rituals, and a chaplain or faith leader nearby. For others, it comes through family, nature, music, and knowing their life has mattered."
      },
      {
       "k": "big",
@@ -10426,6 +10442,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-facing-death-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "facing-death",
     "side": "helper",
     "title": "Facing Death and Sharing Your Wishes",
@@ -10524,7 +10541,7 @@ window.GG_LEARN_GUIDES.sequoia = {
       "k": "big",
       "h": "Care for your own heart.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Talking about a loved one's death can bring grief before the loss. That is normal. Talk with someone you trust, and take your time. If they ever say they want to end their life, stay with them and call or text nine eight eight together. The full guide has more, whenever you want it."
+      "say": "Talking about a loved one's death can bring grief before the loss. That is normal. Talk with someone you trust, and take your time. If they ever say they want to end their life, stay with them. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -10535,6 +10552,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Making Peace with Regrets",
    "you": {
     "id": "sq-g-regrets-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
     "guide": "regrets",
     "side": "you",
     "title": "Making Peace with Regrets",
@@ -10636,8 +10654,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When regret turns heavy",
-      "body": "A chaplain or counselor can help. Hopeless, or thinking of ending your life: call or text 988.",
-      "say": "If regret keeps you up at night, a chaplain or counselor can help you carry it. If low mood lasts two weeks or more, talk with your doctor. And if regret turns to hopelessness, or thoughts of ending your life, call or text nine eight eight, any time. Veterans, press 1 after you dial."
+      "body": "A chaplain or counselor can help.",
+      "say": "If regret keeps you up at night, a chaplain or counselor can help you carry it. If low mood lasts two weeks or more, talk with your doctor. Veterans, press 1 after you dial."
      },
      {
       "k": "big",
@@ -10649,6 +10667,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-regrets-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "regrets",
     "side": "helper",
     "title": "Making Peace with Regrets",
@@ -10741,8 +10760,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When regret turns to despair",
-      "sub": "Not wanting to live: call or text 988 together.",
-      "say": "Watch gently for regret that turns into hopelessness, or talk of not deserving to live. Ask them plainly whether they are thinking about ending their life. Asking does not plant the idea. If they say yes, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+      "say": "Watch gently for regret that turns into hopelessness, or talk of not deserving to live. Ask them plainly whether they are thinking about ending their life. Asking does not plant the idea. If they say yes, stay with them."
      },
      {
       "k": "big",
@@ -11808,6 +11826,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-adult-child-disability-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "adult-child-disability",
     "side": "helper",
     "title": "Who Will Help My Adult Child? Aging Parents of Adults with Disabilities",
@@ -11888,8 +11907,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "Point to the right helpers.",
-      "sub": "The Arc, the county, a lawyer. MAARC 1-844-880-1574.",
-      "say": "Point them to the right helpers, instead of giving legal or money advice yourself. Future planning help through The Arc. Their county case manager. And a lawyer who knows disability planning. If you ever believe a vulnerable adult is being hurt or neglected, in Minnesota call MAARC, and for danger right now, call 911."
+      "sub": "The Arc, the county, a lawyer.",
+      "say": "Point them to the right helpers, instead of giving legal or money advice yourself. Future planning help through The Arc. Their county case manager. And a lawyer who knows disability planning."
      },
      {
       "k": "big",
@@ -11912,6 +11931,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "After a Stroke",
    "you": {
     "id": "sq-g-stroke-you",
+    "crisis": ["911: emergency"],
     "guide": "stroke",
     "side": "you",
     "title": "After a Stroke",
@@ -12021,10 +12041,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Time",
-        "Call 911 right away"
+        "Call for help right away"
        ]
       ],
-      "say": "Learn the warning signs of a new stroke, and teach them to your family. Sudden loss of balance. A change in your eyes, or a face that droops. Weakness in an arm, or speech that slurs. Then it's time to call 911, right away, even if the signs go away."
+      "say": "Learn the warning signs of a new stroke, and teach them to your family. Sudden loss of balance. A change in your eyes, or a face that droops. Weakness in an arm, or speech that slurs."
      },
      {
       "k": "big",
@@ -12042,6 +12062,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-stroke-helper",
+    "crisis": ["911: emergency"],
     "guide": "stroke",
     "side": "helper",
     "title": "After a Stroke",
@@ -12147,10 +12168,10 @@ window.GG_LEARN_GUIDES.sequoia = {
        ],
        [
         "Time",
-        "Call 911, note the time"
+        ""
        ]
       ],
-      "say": "Learn the warning signs of a new stroke. Sudden loss of balance. A change in vision, or a drooping face. Arm weakness, or slurred speech. Then call 911 right away, and note the time the signs began. About one in three people also go through low mood after a stroke, so if sadness or flatness lasts, help them tell their doctor."
+      "say": "Learn the warning signs of a new stroke. Sudden loss of balance. A change in vision, or a drooping face. Arm weakness, or slurred speech. About one in three people also go through low mood after a stroke, so if sadness or flatness lasts, help them tell their doctor."
      },
      {
       "k": "big",
@@ -12173,6 +12194,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    "title": "Living with Heart or Lung Disease, and Oxygen",
    "you": {
     "id": "sq-g-heart-lung-you",
+    "crisis": ["911: emergency"],
     "guide": "heart-lung",
     "side": "you",
     "title": "Living with Heart or Lung Disease, and Oxygen",
@@ -12191,9 +12213,9 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Chest pain or severe breathlessness? Call 911.",
+      "h": "Chest pain or severe breathlessness? Call for help.",
       "sub": "Every time.",
-      "say": "First, the most important thing. If you have chest pain, severe breathlessness, or breathing that suddenly gets much worse, call 911. Every time. You are never a bother."
+      "say": "First, the most important thing. If you have chest pain, severe breathlessness, or breathing that suddenly gets much worse, call for emergency help. Every time. You are never a bother."
      },
      {
       "k": "words",
@@ -12303,6 +12325,7 @@ window.GG_LEARN_GUIDES.sequoia = {
    },
    "helper": {
     "id": "sq-g-heart-lung-helper",
+    "crisis": ["911: emergency"],
     "guide": "heart-lung",
     "side": "helper",
     "title": "Living with Heart or Lung Disease, and Oxygen",
@@ -12321,9 +12344,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Know when to call 911.",
       "sub": "Chest pain or severe breathlessness.",
-      "say": "Know when to call 911: chest pain, severe breathlessness, or breathing that suddenly gets much worse. For slower changes, learn their written plan from their care team, so you both know what to do and who to call."
+      "say": "Know when to call for emergency help: chest pain, severe breathlessness, or breathing that suddenly gets much worse. For slower changes, learn their written plan from their care team, so you both know what to do and who to call."
      },
      {
       "k": "words",
@@ -12544,6 +12566,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-retirement-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-retirement",
    "side": "helper",
    "title": "Drinking in Retirement and Loneliness",
@@ -12621,8 +12644,8 @@ window.GG_LEARN_GUIDES.sequoia = {
     {
      "k": "card",
      "title": "Know the danger signs.",
-     "body": "Confusion, a fall, very slow breathing: call 911.",
-     "say": "Know the danger signs. Alcohol mixed with sleep or pain medicines can slow breathing. Confusion, a fall, slurred speech, or very slow breathing after drinking means call nine one one. And if they want to stop after daily drinking, encourage a doctor's help first, because stopping suddenly can be dangerous."
+     "body": "Confusion, a fall, very slow breathing: call for help.",
+     "say": "Know the danger signs. Alcohol mixed with sleep or pain medicines can slow breathing. Confusion, a fall, slurred speech, or very slow breathing after drinking means call for emergency help. And if they want to stop after daily drinking, encourage a doctor's help first, because stopping suddenly can be dangerous."
     },
     {
      "k": "big",
@@ -12759,7 +12782,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "card",
      "title": "Change some medicines only with your doctor.",
      "body": "Daily drinking, and sleep or anxiety pills, can be dangerous to stop all at once.",
-     "say": "One safety note. Stopping daily drinking, or sleep and anxiety pills like Xanax or Valium, all at once can bring seizures. Make those changes with your doctor. And if opioids are in your home, keep naloxone, also called Narcan, where others can find it. It reverses an opioid overdose, and it is sold without a prescription. If someone is very hard to wake, or breathing slowly, call nine one one."
+     "say": "One safety note. Stopping daily drinking, or sleep and anxiety pills like Xanax or Valium, all at once can bring seizures. Make those changes with your doctor. And if opioids are in your home, keep naloxone, also called Narcan, where others can find it. It reverses an opioid overdose, and it is sold without a prescription. If someone is very hard to wake, or breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -12848,7 +12871,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "h": "If they are hard to wake",
      "steps": [
       [
-       "Call 911",
+       "Call for help",
        "Right away"
       ],
       [
@@ -12860,7 +12883,7 @@ window.GG_LEARN_GUIDES.sequoia = {
        "On their side"
       ]
      ],
-     "say": "Learn the signs of an overdose: very sleepy or hard to wake, slow or noisy breathing, blue or gray lips. Call nine one one right away. Give naloxone, also called Narcan, if you have it. It is sold without a prescription. Then stay with them, turned on their side, until help arrives."
+     "say": "Learn the signs of an overdose: very sleepy or hard to wake, slow or noisy breathing, blue or gray lips. Give naloxone, also called Narcan, if you have it. It is sold without a prescription. Then stay with them, turned on their side, until help arrives."
     },
     {
      "k": "big",
@@ -12903,6 +12926,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   "title": "When Your Adult Child Drinks or Uses",
   "you": {
    "id": "sq-g-sober-adult-child-you",
+   "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
    "guide": "sober-adult-child",
    "side": "you",
    "title": "When Your Adult Child Drinks or Uses",
@@ -12978,13 +13002,13 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "card",
      "title": "Protect your peace, money, and home.",
      "body": "Pressure for money, or fear at home: call for help.",
-     "say": "Protect your peace, your money, and your home. A locked medicine cabinet and a kind, firm no are acts of love. If a grown child pressures you for money or frightens you, that is a reason to call for help. In Minnesota, MAARC answers any time. If anyone is in danger right now, call nine one one."
+     "say": "Protect your peace, your money, and your home. A locked medicine cabinet and a kind, firm no are acts of love. If a grown child pressures you for money or frightens you, that is a reason to call for help."
     },
     {
      "k": "card",
      "title": "If opioids are in the picture, keep naloxone.",
-     "body": "Hard to wake, or breathing slowly: call 911.",
-     "say": "If opioids or pills are in your child's life, keep naloxone, also called Narcan, on hand. It reverses an opioid overdose and is sold without a prescription. If they are very hard to wake, or breathing slowly, call nine one one, give the naloxone, and stay with them."
+     "body": "Hard to wake, or breathing slowly: call for help.",
+     "say": "If opioids or pills are in your child's life, keep naloxone, also called Narcan, on hand. It reverses an opioid overdose and is sold without a prescription. If they are very hard to wake, or breathing slowly, call for emergency help, give the naloxone, and stay with them."
     },
     {
      "k": "big",
@@ -13002,6 +13026,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-adult-child-helper",
+   "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
    "guide": "sober-adult-child",
    "side": "helper",
    "title": "When Your Adult Child Drinks or Uses",
@@ -13074,7 +13099,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "card",
      "title": "Watch gently for money pressure.",
      "body": "Missing money, missing medicines, or fear at home.",
-     "say": "Watch gently for money pressure, missing medicines, or fear in their home. Older parents are sometimes pressured or frightened by a struggling child, and they may protect that child by staying quiet. If you see it, help them call for support. In Minnesota, MAARC answers any time. Danger right now, call nine one one."
+     "say": "Watch gently for money pressure, missing medicines, or fear in their home. Older parents are sometimes pressured or frightened by a struggling child, and they may protect that child by staying quiet. If you see it, help them call for support."
     },
     {
      "k": "points",
@@ -13240,6 +13265,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-grandkids-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-grandkids",
    "side": "helper",
    "title": "Raising Grandchildren Through a Parent's Drinking or Using",
@@ -13337,8 +13363,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     {
      "k": "card",
      "title": "Safety comes first.",
-     "body": "A parent arrives intoxicated, or someone is in danger: call 911.",
-     "say": "Safety comes first. If a parent arrives intoxicated and a child is in danger, or someone is very hard to wake or breathing slowly, call nine one one. For treatment and family support, SAMHSA's National Helpline answers any time."
+     "say": "Safety comes first. If a parent arrives intoxicated and a child is in danger, or someone is very hard to wake or breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -13484,6 +13509,7 @@ window.GG_LEARN_GUIDES.sequoia = {
   },
   "helper": {
    "id": "sq-g-sober-long-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-long",
    "side": "helper",
    "title": "Long-Term Sober, Still Growing",
@@ -13575,7 +13601,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "card",
      "title": "Before a surgery, support their plan.",
      "body": "Honesty with the care team keeps them safe.",
-     "say": "Before a surgery or a new prescription, support their pain plan and their honesty with the care team. Offer a ride, a held bottle, or a nightly check-in, if they want one. And if they ever seem very hard to wake, or breathe slowly, call nine one one."
+     "say": "Before a surgery or a new prescription, support their pain plan and their honesty with the care team. Offer a ride, a held bottle, or a nightly check-in, if they want one. And if they ever seem very hard to wake, or breathe slowly, call for emergency help."
     },
     {
      "k": "big",

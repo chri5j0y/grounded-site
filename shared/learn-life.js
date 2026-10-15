@@ -1665,6 +1665,7 @@
        },
        {
         "id": "pn-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -1745,8 +1746,8 @@
          {
           "k": "big",
           "h": "Pain that changes needs a call.",
-          "sub": "Your doctor, or 911 in an emergency.",
-          "say": "If pain is new, sudden, or very bad, tell a grown-up right away, or call nine one one in an emergency."
+          "sub": "Your doctor.",
+          "say": "If pain is new, sudden, or very bad, tell a grown-up right away."
          }
         ]
        },
@@ -1850,6 +1851,7 @@
        },
        {
         "id": "pn-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -1936,8 +1938,7 @@
          {
           "k": "big",
           "h": "Be as kind to yourself as you would be to a friend.",
-          "sub": "Need to talk? Call or text 988, any time.",
-          "say": "Be as kind to yourself as you would be to a friend. If the heaviness will not lift, tell a parent, a counselor, or another grown-up you trust, or call or text nine eight eight, any time."
+          "say": "Be as kind to yourself as you would be to a friend. If the heaviness will not lift, tell a parent, a counselor, or another grown-up you trust."
          }
         ]
        },
@@ -2392,6 +2393,7 @@
        },
        {
         "id": "br-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -2472,8 +2474,8 @@
          {
           "k": "big",
           "h": "Pain that changes needs a call.",
-          "sub": "Your doctor, or 911 in an emergency.",
-          "say": "If pain is new, sudden, or very different, call your doctor or clinic, or nine one one in an emergency."
+          "sub": "Your doctor.",
+          "say": "If pain is new, sudden, or very different, call your doctor or clinic."
          }
         ]
        },
@@ -2577,6 +2579,7 @@
        },
        {
         "id": "br-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -2663,8 +2666,7 @@
          {
           "k": "big",
           "h": "Be as kind to yourself as you would be to a friend.",
-          "sub": "Need to talk? Call or text 988, any time.",
-          "say": "Be as kind to yourself as you would be to a friend. If the heaviness will not lift, call or text nine eight eight, any time."
+          "say": "Be as kind to yourself as you would be to a friend."
          }
         ]
        },
@@ -3119,6 +3121,7 @@
        },
        {
         "id": "ok-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -3199,8 +3202,8 @@
          {
           "k": "big",
           "h": "Pain that changes needs a call.",
-          "sub": "Your doctor, or 911 in an emergency.",
-          "say": "If pain is new, sudden, or very different, call your doctor or clinic, or nine one one in an emergency."
+          "sub": "Your doctor.",
+          "say": "If pain is new, sudden, or very different, call your doctor or clinic."
          }
         ]
        },
@@ -3304,6 +3307,7 @@
        },
        {
         "id": "ok-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -3390,8 +3394,7 @@
          {
           "k": "big",
           "h": "Be as kind to yourself as you would be to a friend.",
-          "sub": "Need to talk? Call or text 988, any time.",
-          "say": "Be as kind to yourself as you would be to a friend. If the heaviness will not lift, call or text nine eight eight, any time."
+          "say": "Be as kind to yourself as you would be to a friend."
          }
         ]
        },
@@ -3846,6 +3849,7 @@
        },
        {
         "id": "sq-ha-pain",
+        "crisis": ["911: emergency"],
         "n": 3,
         "title": "Breathing Around Pain",
         "mins": 2,
@@ -3926,8 +3930,8 @@
          {
           "k": "big",
           "h": "Pain that changes needs a call.",
-          "sub": "Your doctor, or 911 in an emergency.",
-          "say": "If pain is new, sudden, or very different, call your doctor or clinic, or nine one one in an emergency."
+          "sub": "Your doctor.",
+          "say": "If pain is new, sudden, or very different, call your doctor or clinic."
          }
         ]
        },
@@ -4031,6 +4035,7 @@
        },
        {
         "id": "sq-ha-rest",
+        "crisis": ["988: call or text, any time"],
         "n": 5,
         "title": "Rest Without Guilt",
         "mins": 2,
@@ -4117,8 +4122,7 @@
          {
           "k": "big",
           "h": "Be as kind to yourself as you would be to a friend.",
-          "sub": "Need to talk? Call or text 988, any time.",
-          "say": "Be as kind to yourself as you would be to a friend. If the heaviness will not lift, call or text nine eight eight, any time."
+          "say": "Be as kind to yourself as you would be to a friend."
          }
         ]
        },

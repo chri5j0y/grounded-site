@@ -1066,6 +1066,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-u-guide",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 5,
      "title": "The Grown-up Guide",
      "mins": 4,
@@ -1234,10 +1235,10 @@ window.GG_LEARN = {
         ],
         [
          "Talk of wanting to die",
-         "Call or text 988. Danger: 911"
+         ""
         ]
        ],
-       "say": "The guide also says when to reach out to someone you trust, like a pastor, a teacher, a school counselor, or your child's doctor. If rainy weather lasts more than a couple of weeks. If joy, sleep, eating, or schoolwork change a lot. Or if a child says someone is hurting them. If a child ever talks about wanting to die, take it seriously. Call their doctor, or call or text nine eight eight, any time. If someone is in danger, call nine one one."
+       "say": "The guide also says when to reach out to someone you trust, like a pastor, a teacher, a school counselor, or your child's doctor. If rainy weather lasts more than a couple of weeks. If joy, sleep, eating, or schoolwork change a lot. Or if a child says someone is hurting them. If a child ever talks about wanting to die, take it seriously. Call their doctor."
       },
       {
        "k": "card",
@@ -2239,6 +2240,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-6-fruit",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 6,
      "title": "Fruit: Looking Forward",
      "mins": 4,
@@ -2377,8 +2379,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Hard to see good things ahead? Tell a grown-up.",
-       "sub": "Grown-ups: doctor or 988. In danger, 911.",
-       "say": "Sometimes fruit has a rainy day. If it ever feels like nothing good is coming, or you do not want tomorrow to come, tell a safe grown-up right away. A parent, a grandparent, a teacher, or a school counselor. You are not in trouble. If you tell Maple, your grown-up sees it, so they can help. Grown-ups, take those words seriously and keep talking. If a child ever talks about wanting to die, call their doctor, or call or text nine eight eight. If someone is in danger right now, call nine one one."
+       "sub": "Grown-ups: doctor.",
+       "say": "Sometimes fruit has a rainy day. If it ever feels like nothing good is coming, or you do not want tomorrow to come, tell a safe grown-up right away. A parent, a grandparent, a teacher, or a school counselor. You are not in trouble. If you tell Maple, your grown-up sees it, so they can help. Grown-ups, take those words seriously and keep talking. If a child ever talks about wanting to die, call their doctor."
       },
       {
        "k": "big",
@@ -2411,6 +2413,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "mp-p-talk",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Talking with Little Ones",
      "mins": 5,
@@ -2584,10 +2587,10 @@ window.GG_LEARN = {
         ],
         [
          "Help is right there",
-         "Call or text 988. In danger, call 911."
+         ""
         ]
        ],
-       "say": "Sometimes a child shares something heavy. Stay calm, find a quiet moment, and listen more than you talk. Thank them for telling you. Promise to help, rather than promising to keep a secret. Every Maple check-in ends with a short safety step, and if an answer needs a closer look, the For grown-ups box tells you what to do next. If a child talks about wanting to die or to hurt themselves, call their doctor, or call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+       "say": "Sometimes a child shares something heavy. Stay calm, find a quiet moment, and listen more than you talk. Thank them for telling you. Promise to help, rather than promising to keep a secret. Every Maple check-in ends with a short safety step, and if an answer needs a closer look, the For grown-ups box tells you what to do next. If a child talks about wanting to die or to hurt themselves, call their doctor."
       },
       {
        "k": "big",
@@ -2610,6 +2613,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-feelings",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "Big Feelings, Calm Grown-ups",
      "mins": 6,
@@ -2780,14 +2784,14 @@ window.GG_LEARN = {
         ],
         [
          "Talk of hurting themselves",
-         "Call or text 988, any time"
+         ""
         ],
         [
          "Danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "Reach out for more help if meltdowns happen most days, last a long time, or keep getting worse. Your pediatrician or school counselor is a good first call. If a child talks about hurting themselves or not wanting to be alive, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+       "say": "Reach out for more help if meltdowns happen most days, last a long time, or keep getting worse. Your pediatrician or school counselor is a good first call."
       },
       {
        "k": "big",
@@ -2811,6 +2815,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-faith",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 3,
      "title": "Wonder, Faith, and Big Questions",
      "mins": 6,
@@ -2975,10 +2980,10 @@ window.GG_LEARN = {
         ],
         [
          "Talk of wanting to die",
-         "Call or text 988. In danger, call 911."
+         ""
         ]
        ],
-       "say": "That one thing is a gift you can share with your child this week. For teachers, Roots leaves room for every child to answer from their own family's tradition, so check with your school about how it fits your classroom. If roots stay rainy for more than a couple of weeks, reach out to a pastor, a school counselor, or your child's doctor. And if a child ever talks about wanting to die, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+       "say": "That one thing is a gift you can share with your child this week. For teachers, Roots leaves room for every child to answer from their own family's tradition, so check with your school about how it fits your classroom. If roots stay rainy for more than a couple of weeks, reach out to a pastor, a school counselor, or your child's doctor."
       },
       {
        "k": "big",
@@ -3001,6 +3006,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-worry",
+     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
@@ -3099,7 +3105,7 @@ window.GG_LEARN = {
         "See my tree"
        ],
        "tap": 0,
-       "say": "Every Maple check-in ends with a short safety step. Every grade answers one question. Is anyone hurting you, or making you feel scared? Grades three to five also answer one gentle question about wishing they were not alive. A yes or a not sure shows your child a calm card with nine eight eight and nine one one, and shows you what to do next."
+       "say": "Every Maple check-in ends with a short safety step. Every grade answers one question. Is anyone hurting you, or making you feel scared? Grades three to five also answer one gentle question about wishing they were not alive. A yes or a not sure shows your child a calm card, and shows you what to do next."
       },
       {
        "k": "big",
@@ -3140,19 +3146,15 @@ window.GG_LEARN = {
          "Your face tells them it was safe to tell"
         ],
         [
-         "Call or text 988",
-         "Or call their doctor today"
-        ],
-        [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ],
         [
          "Keep it with helpers",
          "Never promise to keep it a secret"
         ]
        ],
-       "say": "If your child talks about wanting to die or to hurt themselves, take it seriously, every time, even from a very young child. Stay close, and stay calm. Call their doctor right away, or call or text nine eight eight, the Suicide and Crisis Lifeline, any time. If your child is in danger right now, call nine one one. And never promise to keep it a secret. Tell them, kindly, that you will bring in people whose job is to help kids."
+       "say": "If your child talks about wanting to die or to hurt themselves, take it seriously, every time, even from a very young child. Stay close, and stay calm. Call their doctor right away. And never promise to keep it a secret. Tell them, kindly, that you will bring in people whose job is to help kids."
       },
       {
        "k": "points",
@@ -3168,10 +3170,10 @@ window.GG_LEARN = {
         ],
         [
          "Report it the same day",
-         "Child protection or the Childhelp hotline"
+         "Child protection"
         ]
        ],
-       "say": "If your child says someone is hurting them, believe them, and thank them for telling. Listen without asking for details. Trained people will ask the questions. Then report it the same day, to your county child protection agency, or the police. The Childhelp hotline can help you figure out who to call."
+       "say": "If your child says someone is hurting them, believe them, and thank them for telling. Listen without asking for details. Trained people will ask the questions. Then report it the same day, to your county child protection agency, or the police."
       },
       {
        "k": "tabs",
@@ -3193,8 +3195,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "A calm grown-up is the strongest help.",
-       "sub": "988, any time. 911 if a child is in danger.",
-       "say": "You do not need to be an expert. A calm grown-up who listens, and then reaches for help, is one of the strongest helps a child can have. Nine eight eight is there any time. And nine one one is there if a child is in danger right now."
+       "say": "You do not need to be an expert. A calm grown-up who listens, and then reaches for help, is one of the strongest helps a child can have. Nine eight eight is there any time."
       },
       {
        "k": "quiz",
@@ -3205,7 +3206,7 @@ window.GG_LEARN = {
         "Wait to see if it passes"
        ],
        "right": 1,
-       "why": "Take it seriously every time. Stay close, and call their doctor or 988 today.",
+       "why": "Take it seriously every time. Stay close, and call their doctor today.",
        "say": "Quick question. Your child says they wish they were not alive. What comes first?"
       }
      ]
@@ -3447,6 +3448,7 @@ window.GG_LEARN = {
     },
     {
      "id": "mp-p-you",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -3601,10 +3603,10 @@ window.GG_LEARN = {
         ],
         [
          "Need to talk now?",
-         "Call or text 988, any time"
+         ""
         ]
        ],
-       "say": "Grounded has support for you too. Oak is a check-in for grown-ups, with the same six parts, from root to fruit. When Life Changes has guides for the hard seasons. If your own rain lasts for weeks, talk with your doctor or a counselor. And if you need to talk right now, call or text nine eight eight, any time. If anyone is in danger, call nine one one."
+       "say": "Grounded has support for you too. Oak is a check-in for grown-ups, with the same six parts, from root to fruit. When Life Changes has guides for the hard seasons. If your own rain lasts for weeks, talk with your doctor or a counselor."
       },
       {
        "k": "big",
@@ -5416,6 +5418,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "as-u-checkin",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -5576,10 +5579,10 @@ window.GG_LEARN = {
         ],
         [
          "Help is right there",
-         "988, 741741, and 911"
+         ""
         ]
        ],
-       "say": "At the end come two safety questions. They ask whether anyone is hurting you, and whether you have had thoughts of hurting yourself. Your grown-up always sees these answers, so they can help. If you need help, a calm card opens with people you can reach any time. Call or text nine eight eight. Text HOME to seven four one seven four one. And if you are in danger right now, call nine one one."
+       "say": "At the end come two safety questions. They ask whether anyone is hurting you, and whether you have had thoughts of hurting yourself. Your grown-up always sees these answers, so they can help. If you need help, a calm card opens with people you can reach any time."
       },
       {
        "k": "big",
@@ -6093,6 +6096,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-changes",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 4,
      "title": "When Life Changes",
      "mins": 4,
@@ -6263,19 +6267,11 @@ window.GG_LEARN = {
          "Today, in person if you can"
         ],
         [
-         "Call or text 988",
-         "Any time, day or night"
-        ],
-        [
-         "Text HOME to 741741",
-         "Crisis Text Line"
-        ],
-        [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "Some moments can't wait for a guide. Tell a safe grown-up, today. Call or text nine eight eight, any time, day or night, or text HOME to seven four one seven four one. If someone is in danger right now, call nine one one. And the See the calm card button, at the bottom of When Life Changes, shows all of these in one place."
+       "say": "Some moments can't wait for a guide. Tell a safe grown-up, today. And the See the calm card button, at the bottom of When Life Changes, shows all of these in one place."
       },
       {
        "k": "big",
@@ -6298,6 +6294,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-grown",
+     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
      "n": 5,
      "title": "The Grown-ups Tab",
      "mins": 7,
@@ -6472,19 +6469,15 @@ window.GG_LEARN = {
          "Stay calm, and listen first"
         ],
         [
-         "Call or text 988",
-         "Any time, day or night"
-        ],
-        [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ],
         [
          "Someone hurting them?",
-         "Childhelp, 1-800-422-4453"
+         ""
         ]
        ],
-       "say": "Aspen points the way, and you are the follow-up. If a student talks about wanting to die or hurting themselves, stay with them, and call or text nine eight eight, any time. If they are in danger right now, call nine one one. If someone is hurting them, Childhelp can help you figure out who to call, at one eight hundred, four two two, four four five three. Teachers follow their school's reporting and crisis steps. And See the calm card shows you what the student sees, with people they can call or text on their own."
+       "say": "Aspen points the way, and you are the follow-up. If a student talks about wanting to die or hurting themselves, stay with them. Teachers follow their school's reporting and crisis steps. And See the calm card shows you what the student sees, with people they can call or text on their own."
       },
       {
        "k": "points",
@@ -6549,6 +6542,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-u-private",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 6,
      "title": "Private, Saved, and Shared",
      "mins": 6,
@@ -6738,19 +6732,11 @@ window.GG_LEARN = {
          "The button next to your name"
         ],
         [
-         "Call or text 988",
-         "Any time, day or night"
-        ],
-        [
-         "Text HOME to 741741",
-         "Crisis Text Line"
-        ],
-        [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If you ever need help right away, tap Need help now, next to your name, to see the calm card. Call or text nine eight eight any time, or text HOME to seven four one seven four one. If you are in danger right now, call nine one one. And if a friend tells you they want to hurt themselves or die, always tell a grown-up, even if your friend asks you not to. You are not in trouble. You are being a good friend."
+       "say": "If you ever need help right away, tap Need help now, next to your name, to see the calm card. And if a friend tells you they want to hurt themselves or die, always tell a grown-up, even if your friend asks you not to. You are not in trouble. You are being a good friend."
       },
       {
        "k": "big",
@@ -7120,6 +7106,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-6-bark",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 3,
      "title": "Bark: Naming Feelings, Asking for Help",
      "mins": 5,
@@ -7275,8 +7262,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Heavy for a while? Tell a safe grown-up.",
-       "sub": "Need to talk now? Call or text 988. In danger? Call 911.",
-       "say": "If worry or sadness stays heavy for a couple of weeks, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. If a friend ever says they want to hurt themselves or die, always tell a grown-up, even if your friend asked you not to. You are not in trouble for telling. And if you need to talk right now, call or text nine eight eight. If someone is in danger, call nine one one."
+       "say": "If worry or sadness stays heavy for a couple of weeks, tell a grown-up you trust. A parent, a grandparent, a teacher, or your school counselor. If a friend ever says they want to hurt themselves or die, always tell a grown-up, even if your friend asked you not to. You are not in trouble for telling."
       },
       {
        "k": "quiz",
@@ -7615,6 +7601,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-6-fruit",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 6,
      "title": "Fruit: Hope for What's Ahead",
      "mins": 5,
@@ -7753,12 +7740,9 @@ window.GG_LEARN = {
        "k": "words",
        "h": "Feeling like giving up?",
        "items": [
-        "Tell a safe grown-up today.",
-        "Call or text 988.",
-        "Text HOME to 741741.",
-        "In danger right now? Call 911."
+        "Tell a safe grown-up today."
        ],
-       "say": "If you ever feel like giving up, or it is hard to see anything good ahead, you deserve help with that. Tell a safe grown-up today, like a parent, a grandparent, a teacher, or a school counselor. If you answer that way in a check-in, Aspen shows a calm card with people to call or text, and your grown-up sees that answer so they can help. You can call or text nine eight eight, any time, or text HOME to seven four one seven four one. If you are in danger right now, call nine one one."
+       "say": "If you ever feel like giving up, or it is hard to see anything good ahead, you deserve help with that. Tell a safe grown-up today, like a parent, a grandparent, a teacher, or a school counselor. If you answer that way in a check-in, Aspen shows a calm card with people to call or text, and your grown-up sees that answer so they can help."
       },
       {
        "k": "big",
@@ -7791,6 +7775,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "as-p-talk",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Talking So They'll Talk",
      "mins": 6,
@@ -7954,10 +7939,10 @@ window.GG_LEARN = {
         ],
         [
          "Help is close",
-         "Call or text 988. In danger, 911."
+         ""
         ]
        ],
-       "say": "When they bring you something hard, how you respond decides whether they come back. Stay calm. Thank them for telling you. Share something real of your own. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+       "say": "When they bring you something hard, how you respond decides whether they come back. Stay calm. Thank them for telling you. Share something real of your own. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them."
       },
       {
        "k": "big",
@@ -7981,6 +7966,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-phones",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "Phones, Friends, and Group Chats",
      "mins": 5,
@@ -8135,10 +8121,10 @@ window.GG_LEARN = {
         ],
         [
          "Help is close",
-         "Call or text 988. In danger, 911."
+         ""
         ]
        ],
-       "say": "Aspen also keeps you in the loop on what matters most. If your student answers that they are being bullied, or feel lonely or left out, you always see that answer, with a Worth a check-in marker and what to do next. If anyone ever threatens them with a picture, they are not in trouble, and the guide on online pressure and pictures walks you through the steps. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+       "say": "Aspen also keeps you in the loop on what matters most. If your student answers that they are being bullied, or feel lonely or left out, you always see that answer, with a Worth a check-in marker and what to do next. If anyone ever threatens them with a picture, they are not in trouble, and the guide on online pressure and pictures walks you through the steps. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them."
       },
       {
        "k": "big",
@@ -8161,6 +8147,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-faith",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 3,
      "title": "Big Questions and Faith",
      "mins": 6,
@@ -8306,10 +8293,10 @@ window.GG_LEARN = {
         ],
         [
          "If it ever gets heavy",
-         "Call or text 988. In danger, 911."
+         ""
         ]
        ],
-       "say": "For more, open the When Life Changes guide called Big questions about faith. Point your student to trusted mentors in your tradition, like a pastor, imam, rabbi, elder, or mentor you trust. And if a hard season ever points to someone hurting them, or thoughts of not wanting to be alive, stay with them and call or text nine eight eight, or call nine one one in an emergency."
+       "say": "For more, open the When Life Changes guide called Big questions about faith. Point your student to trusted mentors in your tradition, like a pastor, imam, rabbi, elder, or mentor you trust. And if a hard season ever points to someone hurting them, or thoughts of not wanting to be alive, stay with them."
       },
       {
        "k": "big",
@@ -8333,6 +8320,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-worry",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
@@ -8444,10 +8432,10 @@ window.GG_LEARN = {
         ],
         [
          "Get help together, today",
-         "Call or text 988 side by side"
+         ""
         ]
        ],
-       "say": "If they say yes, or not sure, stay calm and stay with them. Thank them for telling you. They are not in trouble. Promise help, not secrecy. You can say, I love you too much to keep this quiet. Then get help together, today. Call or text nine eight eight side by side."
+       "say": "If they say yes, or not sure, stay calm and stay with them. Thank them for telling you. They are not in trouble. Promise help, not secrecy. You can say, I love you too much to keep this quiet. Then get help together, today."
       },
       {
        "k": "points",
@@ -8455,22 +8443,14 @@ window.GG_LEARN = {
        "items": [
         [
          "In danger right now?",
-         "Call 911"
-        ],
-        [
-         "Call or text 988",
-         "The Suicide and Crisis Lifeline, any time"
-        ],
-        [
-         "Text HOME to 741741",
-         "Crisis Text Line"
+         "Call for help"
         ],
         [
          "School counselor and doctor",
          "This week, for a closer look"
         ]
        ],
-       "say": "Know who to call. If they are in danger right now, call nine one one. For a crisis, or when you are not sure, call or text nine eight eight, the Suicide and Crisis Lifeline, any time, day or night. You can call it yourself, as the worried grown-up. Or text the word home to seven four one, seven four one. And when signs worry you, call the school counselor and your child’s doctor this week, and tell them what you have seen. Teachers and counselors, follow your school’s own steps too."
+       "say": "Know who to call. You can call it yourself, as the worried grown-up. Or text the word home to seven four one, seven four one. And when signs worry you, call the school counselor and your child’s doctor this week, and tell them what you have seen. Teachers and counselors, follow your school’s own steps too."
       },
       {
        "k": "points",
@@ -8688,6 +8668,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-p-you",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 5,
@@ -8818,13 +8799,9 @@ window.GG_LEARN = {
         [
          "Oak, for grown-ups",
          "Your own tree, check-ins, and practices"
-        ],
-        [
-         "Call or text 988",
-         "For you too, any time"
         ]
        ],
-       "say": "You deserve support too. Talk with a friend, a counselor, or your doctor, especially if worry or sadness stays with you for weeks. Grow With Grounded has a tree for grown-ups, called Oak, with your own check-ins and practices. And if you are ever in crisis yourself, call or text nine eight eight, any time. In danger right now, call nine one one."
+       "say": "You deserve support too. Talk with a friend, a counselor, or your doctor, especially if worry or sadness stays with you for weeks. Grow With Grounded has a tree for grown-ups, called Oak, with your own check-ins and practices."
       },
       {
        "k": "big",
@@ -9136,6 +9113,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-r-anxious",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
      "n": 2,
      "title": "When You Feel Anxious",
      "mins": 3,
@@ -9238,8 +9216,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Worry gets lighter when you share it.",
-       "sub": "Tell a parent, teacher, or school counselor. Need to talk now? Call or text 988, or text HOME to 741741.",
-       "say": "Worry gets lighter when you share it. If it keeps showing up, tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor. And if you need to talk to someone right now, call or text nine eight eight, or text HOME to seven four one seven four one."
+       "sub": "Tell a parent, teacher, or school counselor.",
+       "say": "Worry gets lighter when you share it. If it keeps showing up, tell a grown-up you trust, like a parent, grandparent, teacher, or school counselor."
       }
      ]
     },
@@ -9350,6 +9328,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-r-mad",
+     "crisis": ["911: emergency"],
      "n": 4,
      "title": "When You’re Really Mad",
      "mins": 3,
@@ -9462,8 +9441,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your anger matters. So do you.",
-       "sub": "Tell a parent, teacher, or school counselor what happened. Anyone in danger? Call 911.",
-       "say": "When you have cooled down, tell a grown-up you trust what happened, like a parent, grandparent, teacher, or school counselor. Talking it through helps. If someone is hurting you, or anyone is in danger, tell a grown-up right away, or call nine one one. Your anger matters. So do you."
+       "sub": "Tell a parent, teacher, or school counselor what happened.",
+       "say": "When you have cooled down, tell a grown-up you trust what happened, like a parent, grandparent, teacher, or school counselor. Talking it through helps. If someone is hurting you, tell a grown-up right away. Your anger matters. So do you."
       }
      ]
     },
@@ -9580,6 +9559,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-r-sad",
+     "crisis": ["988: call or text, any time"],
      "n": 6,
      "title": "When You Feel Sad",
      "mins": 3,
@@ -9656,8 +9636,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Tell a grown-up you trust.",
-       "sub": "Sad for weeks? Tell them. Not wanting to be alive: call or text 988.",
-       "say": "Sadness is easier to carry with someone. Tell a grown-up you trust, like a parent, a grandparent, a teacher, or your school counselor. If the sadness sticks around for a couple of weeks, tell them that too. And if it ever gets so heavy that you do not want to be alive, tell a grown-up today, and call or text nine eight eight, any time."
+       "say": "Sadness is easier to carry with someone. Tell a grown-up you trust, like a parent, a grandparent, a teacher, or your school counselor. If the sadness sticks around for a couple of weeks, tell them that too. And if it ever gets so heavy that you do not want to be alive, tell a grown-up today."
       },
       {
        "k": "big",
@@ -9771,6 +9750,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-r-online",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 8,
      "title": "When Something Online Upsets You",
      "mins": 3,
@@ -9847,8 +9827,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Help is here",
-       "sub": "Need help now? in Aspen. Not wanting to be alive: 988. Danger now: 911.",
-       "say": "The Need help now button at the top of your tree in Aspen has people you can reach, including help getting pictures taken down. If it ever feels so heavy you do not want to be alive, call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+       "sub": "Need help now? in Aspen.",
+       "say": "The Need help now button at the top of your tree in Aspen has people you can reach, including help getting pictures taken down."
       },
       {
        "k": "big",
@@ -9860,6 +9840,7 @@ window.GG_LEARN = {
     },
     {
      "id": "as-r-racing",
+     "crisis": ["911: emergency"],
      "n": 9,
      "title": "When Your Heart Is Racing",
      "mins": 3,
@@ -9937,8 +9918,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If it keeps happening, tell a grown-up.",
-       "sub": "Chest pain, or can't catch your breath? Get a grown-up and call 911.",
-       "say": "If your heart races a lot, or out of nowhere, tell a parent or another grown-up you trust, so they can help you check it out. And if you have chest pain, or you cannot catch your breath, get a grown-up right away, and call nine one one."
+       "sub": "Chest pain, or can't catch your breath? Get a grown-up and call for help.",
+       "say": "If your heart races a lot, or out of nowhere, tell a parent or another grown-up you trust, so they can help you check it out. And if you have chest pain, or you cannot catch your breath, get a grown-up right away, and call for emergency help."
       },
       {
        "k": "big",
@@ -10069,8 +10050,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Help right now",
-       "sub": "988: call or text, any time. Text HOME to 741741. Danger right now: 911.",
-       "say": "If you or a friend ever have thoughts of not wanting to be alive, call or text nine eight eight, any time. You can also text HOME to seven four one seven four one. And if anyone is in danger right now, call nine one one."
+       "say": "You can also text HOME to seven four one seven four one."
       },
       {
        "k": "big",
@@ -10178,7 +10158,7 @@ window.GG_LEARN = {
     lessonsTitle: 'Learn Step by Step',
     tracks: [
       { id: 'oak-start', title: 'Start Here', who: 'For adults tending their own tree', lessons: [
-        { id: 'ok-welcome', n: 1, title: 'Welcome to Oak', mins: 4, blurb: 'What Oak is, who it is for, what stays private, and where to begin.', scenes: [
+        { id: 'ok-welcome', crisis: ['988: call or text, any time'], n: 1, title: 'Welcome to Oak', mins: 4, blurb: 'What Oak is, who it is for, what stays private, and where to begin.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Start Here, Lesson 1', h: 'Welcome to Oak', sub: 'Shelter for others. Strength for you.', say: 'Welcome to Oak. Shelter for others, and strength for you. This short lesson shows you what Oak is, who it is for, and where to begin.' },
           { k: 'big', h: 'An oak grows strong by growing slowly.', sub: 'Deep roots, a wide crown, and shelter for many.', say: 'An oak grows slowly, and that is where its strength comes from. Deep roots, a thick trunk, and a wide crown that shelters many. The adult years ask a lot of you. Oak is built to help you stay strong while you carry it.' },
           { k: 'trees', h: 'Oak grows between Birch and Sequoia.', say: 'Grow With Grounded has a tree for every age. Pine is for high school, and Birch is for young adults. Sequoia is for older adults, sixty and up. Oak is built for adults, twenty six to sixty, right in the full middle of life.' },
@@ -10186,7 +10166,7 @@ window.GG_LEARN = {
           { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
           { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend.' },
           { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', 'Guides for more than 80 of life\'s hardest seasons'], ['A tree that grows', 'From Acorn to Heritage Oak'], ['Health and Ability', 'Oak fits your body and your life']], cue: { at: [1, 3, 4, 5, 6] }, say: 'Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life\'s hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life.' },
-          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you. And if you ever need to talk right now, call or text nine eight eight, any time.' },
+          { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
           { k: 'big', h: 'One part, one small step.', sub: 'One breath, and one way to tend a part today.', beats: ['Let us try a small practice now.', 'Sit however is comfortable.', 'Take one slow breath, in and out.', 'Think of one part of your life that has been carrying a lot lately.', { t: 'Now name one small thing that would tend it today.', w: 10 }], say: 'Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today.' },
           { k: 'big', h: 'Small and steady is how an oak grows.', sub: 'One practice a day is enough to start.', say: 'Nice. That is the whole idea of Oak. Strong trees are not built in a day. Small and steady is how an oak grows, and one practice a day is enough to start.' },
@@ -10195,13 +10175,13 @@ window.GG_LEARN = {
       ] },
       { id: 'oak-using', title: 'Using Oak', who: 'Every part of the app, step by step', certTitle: 'Oak: Using Oak', lessons: [
 
-        { id: 'ok-u-checkin', n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
+        { id: 'ok-u-checkin', crisis: ['988: call or text, any time', '911: emergency'], n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
           { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode.' },
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
-          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Kept apart from every score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '988 and 911, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? A yes, or not sure, puts nine eight eight and nine one one first, so help is right there for you. The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
+          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Kept apart from every score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
           { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'Go with your first thought'], ['Take a break anytime', 'Oak keeps your place']], cue: { w: { 5: 8 } }, say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place. Think now of one quiet moment this week when you could take your check-in.' },
           { k: 'quiz', q: 'What does Not sure mean in a check-in?', opts: ['You did it wrong', 'An honest answer that is always okay', 'Your score goes down'], right: 1, why: 'Not sure is an honest answer, and it never counts against you.', say: 'Quick question. What does Not sure mean in a check-in?' }
         ] },
@@ -10286,7 +10266,7 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'What does Sophia’s story show about purpose?', opts: ['When a role ends, purpose is gone', 'Your gifts can find a new shape', 'Only paid work counts'], right: 1, why: 'Roles change, and your gifts come with you.', say: 'Quick question. What does Sophia’s story show about purpose?' }
         ] },
 
-        { id: 'ok-6-bark', n: 3, title: 'Bark: Mind and Feelings', mins: 6, blurb: 'Bending without breaking.', scenes: [
+        { id: 'ok-6-bark', crisis: ['988: call or text, any time'], n: 3, title: 'Bark: Mind and Feelings', mins: 6, blurb: 'Bending without breaking.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 3', h: 'Bark', sub: 'Mind and feelings.', say: 'This lesson is about Bark, your mind and your feelings.' },
           { k: 'big', h: 'Bark protects the tree, and it flexes as the tree grows.', say: 'Bark protects a tree from storms and sun, and it has to flex as the tree grows. Your mind and feelings work the same way. Healthy bark bends and holds.' },
           { k: 'points', h: 'Healthy bark can look like', items: [['Thoughts that settle', 'Worry comes, and it also goes'], ['Feelings you can name', 'Sad, scared, angry, tired, glad'], ['Bouncing back', 'Hard days stay in their place'], ['Asking for help', 'Before it gets too heavy']], say: 'Healthy bark can look like thoughts that settle, so worry comes and also goes. Feelings you can name. Bouncing back, so a hard day does not take over the whole week. And asking for help before it gets too heavy.' },
@@ -10294,7 +10274,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'How Bark can look', items: [['Strong', 'You feel your feelings and find your way back', '#5F7D48'], ['Steady', 'Mostly steady, with some heavy stretches', '#8B5E1A'], ['Growing Edge', 'Worry, sadness, or stress is wearing you down', '#B8612F']], say: 'Strong bark might mean you feel your feelings, and find your way back. Steady might mean mostly steady, with some heavy stretches. And a Growing Edge might mean worry, sadness, or stress is wearing you down. That deserves tending, and sometimes more support.' },
           { k: 'story', title: 'Emotional Resilience', lines: ['I sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver.', 'I placed my hand lightly on the patient’s, breathed slowly, and reminded myself: this moment is sacred, and so is my capacity to stay rooted.', 'Resilience is not the absence of sorrow. It is bending without breaking, letting the waves move through us instead of pulling us under.'], lesson: 'Let the feeling move through you.', note: 'From a Grounded reflection by Chris Joy', say: 'I once sat beside a patient whose sudden turn left the room heavy with uncertainty. For a moment, I felt my own steadiness waver. So I placed my hand lightly on the patient’s hand, and breathed slowly. I did not push the feeling away. I made room for it. Resilience, I realized, is not the absence of sorrow. It is bending without breaking. Letting the waves move through us, instead of pulling us under.' },
           { k: 'points', h: 'Practice: Shake Off the Raindrops', items: [['Name it', 'This is grief. This is fear.'], ['Ground it', 'Feet on the floor, breath moving'], ['Shake it off', 'Shake your hands like raindrops'], ['Find one bright moment', 'A smile, a kindness, a bit of light']], cue: { w: { 1: 8, 3: 10, 5: 10, 7: 12 }, at: [0, 2, 4, 6] }, say: 'Let us practice four steps from that day. Name it. Say softly inside, this is grief, or this is fear. Ground it. Feel your feet on the floor, and your breath moving in and out. Shake it off. Shake your hands gently, as if you are letting go of heavy raindrops. Then find one bright moment from today. A smile, a kindness, a bit of light.' },
-          { k: 'big', h: 'Heavy for weeks? You deserve more support.', sub: 'Talk with your doctor or a counselor. Need to talk now? Call or text 988.', say: 'If your feelings stay heavy for weeks, you deserve more support. Talk with your doctor or a counselor. Getting help is a strong thing to do. And if you need to talk right now, call or text nine eight eight.' },
+          { k: 'big', h: 'Heavy for weeks? You deserve more support.', sub: 'Talk with your doctor or a counselor.', say: 'If your feelings stay heavy for weeks, you deserve more support. Talk with your doctor or a counselor. Getting help is a strong thing to do.' },
           { k: 'quiz', q: 'What is emotional resilience?', opts: ['Never feeling sad', 'Bending without breaking', 'Keeping your feelings hidden'], right: 1, why: 'Resilience lets feelings move through you without pulling you under.', say: 'Quick question. What is emotional resilience?' }
         ] },
 
@@ -10323,7 +10303,7 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'Oak tends Leaves in three ways. What are they?', opts: ['Move, Rest, Nourish', 'Run, Lift, Diet', 'Sleep, Work, Play'], right: 0, why: 'Move, Rest, and Nourish keep your leaves green.', say: 'Quick question. Oak tends Leaves in three ways. What are they?' }
         ] },
 
-        { id: 'ok-6-fruit', n: 6, title: 'Fruit: Hope', mins: 6, blurb: 'What grows when the whole tree is tended.', scenes: [
+        { id: 'ok-6-fruit', crisis: ['988: call or text, any time', '911: emergency'], n: 6, title: 'Fruit: Hope', mins: 6, blurb: 'What grows when the whole tree is tended.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'The Six Parts, Lesson 6', h: 'Fruit', sub: 'Hope.', say: 'This last lesson is about Fruit, your hope.' },
           { k: 'big', h: 'Fruit takes time. It grows from everything else.', say: 'Fruit takes time. It grows from everything else. Roots, trunk, bark, branches, and leaves all feed it. Hope works the same way.' },
           { k: 'points', h: 'Hope can look like', items: [['Something to look forward to', 'Big or small'], ['Noticing good', 'Even on hard days'], ['A future you can picture', 'And a next step toward it'], ['Believing things can change', 'For you, and for others']], say: 'Hope can look like something to look forward to, big or small. Noticing the good, even on hard days. A future you can picture, and a next step toward it. And believing that things can change.' },
@@ -10331,7 +10311,7 @@ window.GG_LEARN = {
           { k: 'points', h: 'How Fruit can look', items: [['Strong', 'You look ahead with hope, even when it is hard', '#5F7D48'], ['Steady', 'Hope is there, though some days it fades', '#8B5E1A'], ['Growing Edge', 'It is hard to see anything good ahead', '#B8612F']], say: 'Strong fruit might mean you look ahead with hope, even when it is hard. Steady might mean hope is there, though some days it fades. And a Growing Edge might mean it is hard to see anything good ahead right now.' },
           { k: 'story', title: 'A Day of Contrasts', lines: ['At the end of a muddy dirt road, a woman who had lived on her farm for nearly eighty years set out orange juice and a plate of cookies.', 'She pointed out the window. Can you see that right there? A little woodpecker on the tree.', 'That’s the reason I’m here, she said. That’s all I need to be happy. I’m simple. It doesn’t take much.'], lesson: 'Hope often starts with noticing what is already good.', note: 'From a Grounded reflection by Chris Joy', say: 'One visit took me to the end of a muddy dirt road, to a woman who had lived on her farm for almost eighty years and raised nine children there. Over orange juice and cookies, she asked, can you see that right there? I spotted a little woodpecker, on the tree outside. That is the reason I am here, she said. That is all I need to be happy. I am simple. It does not take much. I left with my heart full.' },
           { k: 'points', h: 'Practice: One Woodpecker', items: [['Look around', 'Find one small good thing, right now'], ['Say it', 'Out loud, or write it down'], ['Look ahead', 'Name one small thing to look forward to']], cue: { w: { 1: 15, 2: 10, 3: 12 }, at: [1, 2, 3] }, say: 'Let us practice. This one is called One Woodpecker. Look around and find one small good thing, right now. Say it out loud, or write it down. Then name one small thing to look forward to, today or this week.' },
-          { k: 'big', h: 'Losing hope? Let someone help you hold it.', sub: 'Call or text 988, any time. In danger right now? Call 911.', say: 'If it is hard to see anything good ahead, let someone help you hold that. Call or text nine eight eight, any time. If you are in danger right now, call nine one one.' },
+          { k: 'big', h: 'Losing hope? Let someone help you hold it.', say: 'If it is hard to see anything good ahead, let someone help you hold that.' },
           { k: 'big', h: 'Tend the whole tree, and fruit will come.', sub: 'One Woodpecker is in the Practice Library.', say: 'Tend the whole tree, a little at a time, and fruit will come. One Woodpecker is in the Practice Library. That is all six parts. Well done.' },
           { k: 'quiz', q: 'Where does hope often start?', opts: ['With a big change', 'With noticing one small good thing', 'With having no problems'], right: 1, why: 'Hope often starts with noticing what is already good.', say: 'Last question. Where does hope often start?' }
         ] }
@@ -10369,13 +10349,13 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'What is a better swap for "At least..."?', opts: ['Look on the bright side', 'This is really hard', 'It could be worse'], right: 1, why: 'Naming that it is hard helps people feel understood.', say: 'Quick question. What is a better swap for at least?' }
         ] },
 
-        { id: 'ok-s-struggle', n: 4, title: 'When Someone Is Struggling', mins: 5, blurb: 'Noticing, asking directly, and getting help together.', scenes: [
+        { id: 'ok-s-struggle', crisis: ['988: call or text, any time', '911: emergency'], n: 4, title: 'When Someone Is Struggling', mins: 5, blurb: 'Noticing, asking directly, and getting help together.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 4', h: 'When Someone Is Struggling', sub: 'Notice. Ask. Stay. Connect.', say: 'Sometimes someone we love is struggling more than they say. This lesson is about noticing, asking, and getting help together.' },
           { k: 'points', h: 'Signs to notice', items: [['Pulling away', 'From people and things they love'], ['Big changes', 'Sleep, eating, drinking, mood'], ['Hopeless talk', 'What’s the point? You’d be better off without me.'], ['Giving things away', 'Or saying goodbye in odd ways']], say: 'Here are signs to notice. Pulling away from people and things they love. Big changes in sleep, eating, drinking, or mood. Hopeless talk, like, what is the point, or, you would be better off without me. And giving things away, or saying goodbye in unusual ways.' },
           { k: 'flow', h: 'Four steps', steps: [['Notice', 'Trust what you see'], ['Ask', 'Directly and kindly'], ['Stay', 'Listen without judging'], ['Connect', 'To help, together']], say: 'If you notice signs like these, follow four steps. Notice, and trust what you see. Ask, directly and kindly. Stay, and listen without judging. And connect them to help, together.' },
           { k: 'big', h: 'It is okay to ask: Are you thinking about suicide?', sub: 'Asking directly does not put the idea in someone’s head. It opens the door.', say: 'If you are worried, it is okay to ask directly. Are you thinking about suicide? Research shows that asking does not put the idea in someone’s head. It opens the door, and often brings relief.' },
-          { k: 'words', h: 'Words you can use', items: ['I’ve noticed you seem down. I care about you.', 'Are you thinking about suicide?', 'Thank you for telling me. Let’s call 988 together.'], cue: { w: { 5: 10 } }, say: 'Here are words you can use. I have noticed you seem down, and I care about you. Are you thinking about suicide? And if they say yes, thank you for telling me. Let us call nine eight eight together. Try saying them softly now, so they come easier when you need them.' },
-          { k: 'points', h: 'Getting help together', items: [['988', 'Call or text, any time, together'], ['Stay with them', 'And help keep them safe'], ['911', 'If they are in danger right now']], say: 'Call or text nine eight eight, any time, and you can do it together. Stay with them, and help them stay safe. If they are in danger right now, call nine one one. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
+          { k: 'words', h: 'Words you can use', items: ['I’ve noticed you seem down. I care about you.', 'Are you thinking about suicide?', 'Thank you for telling me.'], cue: { w: { "4": 10 } }, say: 'Here are words you can use. I have noticed you seem down, and I care about you. Are you thinking about suicide? And if they say yes, thank you for telling me. Try saying them softly now, so they come easier when you need them.' },
+          { k: 'points', h: 'Getting help together', items: [['Stay with them', 'And help keep them safe']], say: 'Stay with them, and help them stay safe. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
           { k: 'big', h: 'Caring enough to ask can save a life.', sub: 'And you deserve support too.', say: 'Caring enough to ask can save a life. And you deserve support too. After a hard conversation like this, talk with someone you trust.' },
           { k: 'quiz', q: 'Does asking someone directly about suicide put the idea in their head?', opts: ['Yes, so avoid the word', 'No. Asking opens the door to help.', 'Only if they are young'], right: 1, why: 'Asking directly opens the door, and often brings relief.', say: 'Quick question. Does asking someone directly about suicide put the idea in their head?' }
         ] },
@@ -10392,6 +10372,7 @@ window.GG_LEARN = {
 
         {
          "id": "ok-s-healthy-change",
+         "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
          "n": 6,
          "title": "Supporting Someone Toward a Healthy Change",
          "mins": 4,
@@ -10508,21 +10489,8 @@ window.GG_LEARN = {
           {
            "k": "points",
            "h": "Help any time",
-           "items": [
-            [
-             "SAMHSA National Helpline",
-             "1-800-662-4357, any time"
-            ],
-            [
-             "988",
-             "Call or text, any time"
-            ],
-            [
-             "911",
-             "Danger right now"
-            ]
-           ],
-           "say": "For drinking or drug use, the SAMHSA National Helpline is open any time, at one, eight hundred, six six two, four three five seven. If someone is in crisis, call or text nine eight eight. If someone is in danger right now, call nine one one. When Life Changes in Oak has a guide for addiction and recovery, too."
+           "items": [],
+           "say": "When Life Changes in Oak has a guide for addiction and recovery, too."
           },
           {
            "k": "big",
@@ -10544,13 +10512,13 @@ window.GG_LEARN = {
           }
          ]
         },
-        { id: 'ok-s-gates', n: 7, title: 'Caring for Yourself While You Care', mins: 6, blurb: 'Boundaries with gates, and refilling your own cup.', scenes: [
+        { id: 'ok-s-gates', crisis: ['988: call or text, any time'], n: 7, title: 'Caring for Yourself While You Care', mins: 6, blurb: 'Boundaries with gates, and refilling your own cup.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 7', h: 'Caring for Yourself While You Care', sub: 'Shelter for others. Strength for you.', say: 'This last lesson is about you. To be a shelter for others, you need strength of your own.' },
           { k: 'story', title: 'My Boundaries Have Gates', lines: ['He had endured a brutally hard life with almost no one in his corner. You promise you’ll come back? he asked. I never make promises in this work. I said yes anyway.', 'I picture my boundary as a white picket fence around my own home, with a gate in it.', 'Sometimes I choose to open that gate and let someone in. They stay with me longer. And that is not a bad thing. It just asks more of me.'], lesson: 'Boundaries can have gates. You choose when to open them.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/my-boundaries-have-gates', label: 'Read the Full Story: My Boundaries Have Gates' }, say: 'Let me tell you about a man who had lived a brutally hard life, with almost no one in his corner. He asked me, you promise you will come back? I never make promises in this work, and I said yes anyway. I picture my boundaries as a white picket fence around my own home, with a gate in it. Sometimes I choose to open that gate and let someone in. They stay with me longer, almost like friends. That is not a bad thing. It just asks more of me.' },
           { k: 'big', h: 'Good boundaries have gates.', sub: 'You choose who comes in, and you tend your own yard.', say: 'Boundaries are not walls. They have gates. You get to choose who comes in, and when. And you still have to tend your own yard.' },
           { k: 'points', h: 'Signs you need to refill', items: [['Running on empty', 'Tired, even after rest'], ['Short fuse', 'Small things set you off'], ['Numb', 'Hard to feel much at all'], ['Only me', 'Thinking no one else can do this']], say: 'Watch for signs that you need to refill. Running on empty, tired even after rest. A short fuse. Feeling numb. Or thinking, no one else can do this. Caregivers call this compassion fatigue, and it is common. It is a signal, not a failure.' },
           { k: 'points', h: 'Practice: Gate Check', items: [['Who is inside my gate right now?', 'Name them'], ['What does my own yard need?', 'Rest, help, a friend, a walk'], ['One gate to close gently', 'Or one person to invite in to help']], cue: { w: { 1: 12, 2: 12, 3: 12 }, at: [1, 2, 3] }, say: 'Let us do a gate check. Who is inside my gate right now? Name them. What does my own yard need? Rest, help, a friend, or a walk. And is there one gate to close gently for a while? Or one person to invite in, to help you carry this?' },
-          { k: 'points', h: 'Refill, a little every day', items: [['Let others help', 'Give them something specific'], ['Pay down grief', 'Notice, name, express, unpack'], ['Keep your own tree', 'Your practices count too'], ['988', 'For you, any time']], say: 'Refill a little every day. Let others help, and give them something specific to do. Pay down your own grief as you go. Keep tending your own tree. Your practices count too. And if you are struggling, call or text nine eight eight. That line is for you too.' },
+          { k: 'points', h: 'Refill, a little every day', items: [['Let others help', 'Give them something specific'], ['Pay down grief', 'Notice, name, express, unpack'], ['Keep your own tree', 'Your practices count too']], say: 'Refill a little every day. Let others help, and give them something specific to do. Pay down your own grief as you go. Keep tending your own tree. Your practices count too. That line is for you too.' },
           { k: 'big', h: 'You can only give shelter if you have strength.', sub: 'Thank you for being a shelter for someone.', say: 'You can only give shelter if you have strength. Tend your own tree. And thank you, for being a shelter for someone. Gate Check is in the Practice Library.' },
           { k: 'quiz', q: 'What does My Boundaries Have Gates teach?', opts: ['Never let anyone in', 'You choose when to open the gate, and you still tend your own yard', 'Always say yes'], right: 1, why: 'Good boundaries have gates, and your own yard needs tending too.', say: 'Last question. What does My Boundaries Have Gates teach?' }
         ] }
@@ -10565,6 +10533,7 @@ window.GG_LEARN = {
        "lessons": [
         {
          "id": "ok-sh-grief-love",
+         "crisis": ["988: call or text, any time"],
          "n": 1,
          "title": "Grief Is Love We Carry",
          "mins": 4,
@@ -10672,8 +10641,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Heavy for a long time? More support is a strong step.",
-           "sub": "A grief group, a grief counselor, or your doctor. Need to talk now? Call or text 988.",
-           "say": "If grief stays very heavy for a long time, more support is a strong and hopeful step. A grief group, a grief counselor, or your doctor can walk with you. When Life Changes in Oak has guides for many kinds of loss. And if you need to talk with someone right now, call or text nine eight eight, any time."
+           "sub": "A grief group, a grief counselor, or your doctor.",
+           "say": "If grief stays very heavy for a long time, more support is a strong and hopeful step. A grief group, a grief counselor, or your doctor can walk with you. When Life Changes in Oak has guides for many kinds of loss."
           },
           {
            "k": "quiz",
@@ -10937,12 +10906,6 @@ window.GG_LEARN = {
            "h": "Healing is a team effort.",
            "sub": "A therapist trained in trauma can walk with you.",
            "say": "Healing is a team effort. A therapist trained in trauma can walk with you, and many approaches today work with the body as well as with words. Asking for that help is a strong, hopeful step. When Life Changes in Oak has a guide for after something traumatic, too."
-          },
-          {
-           "k": "big",
-           "h": "Help is here any time.",
-           "sub": "Call or text 988. Danger right now? Call 911.",
-           "say": "If memories feel overwhelming, or you have thoughts of harming yourself, call or text nine eight eight, any time, day or night. And if you are in danger right now, call nine one one."
           },
           {
            "k": "quiz",
@@ -11526,8 +11489,7 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Help is here any time.",
-           "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
-           "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+           "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous."
           },
           {
            "k": "quiz",
@@ -11681,7 +11643,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Hard mornings in the first days",
            "sub": "Shaking, sweating, or sick? See a doctor today.",
-           "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+           "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today. If it feels severe, or you see confusion or a seizure, call for emergency help."
           },
           {
            "k": "quiz",
@@ -11849,8 +11811,7 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Strong cravings deserve real support.",
-           "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
-           "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+           "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor can tell you about them."
           },
           {
            "k": "quiz",
@@ -11997,8 +11958,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Panic and hard breathing deserve care.",
-           "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
-           "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+           "sub": "Chest pain? Call for help.",
+           "say": "If your chest hurts, or you struggle to catch your breath, call for emergency help. If panic keeps coming back, a doctor or a therapist can help a lot."
           },
           {
            "k": "quiz",
@@ -12602,7 +12563,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Keep it safe, and get support for the deep ones.",
            "sub": "A therapist can walk with you.",
-           "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+           "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them."
           },
           {
            "k": "quiz",
@@ -13085,7 +13046,7 @@ window.GG_LEARN = {
            "k": "big",
            "h": "Ask your doctor about lasting sleep trouble.",
            "sub": "Some sleep medicines carry risks. Ask what fits you.",
-           "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+           "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you."
           },
           {
            "k": "quiz",
@@ -13283,13 +13244,13 @@ window.GG_LEARN = {
           { k: 'big', h: 'Worry rises, and it also settles.', sub: 'If anxiety keeps you from living your life, you deserve more support. Talk with your doctor or a counselor.', say: 'Worry rises, and it also settles. Come back to the box anytime. And if anxiety keeps getting in the way of your life, you deserve more support. Talk with your doctor or a counselor.' }
         ] },
 
-        { id: 'ok-r-panic', n: 4, title: 'When Panic Hits', mins: 3, blurb: 'What is happening in your body, and how to ride it out.', scenes: [
+        { id: 'ok-r-panic', crisis: ['988: call or text, any time', '911: emergency'], n: 4, title: 'When Panic Hits', mins: 3, blurb: 'What is happening in your body, and how to ride it out.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When Panic Hits', sub: 'It feels huge. It passes.', say: 'If your heart is racing, your chest is tight, and you feel like something terrible is happening, this is for you. Stay with me.' },
           { k: 'big', h: 'Panic is your body’s alarm, ringing loud.', sub: 'It usually peaks within minutes, and then it eases.', say: 'Panic is your body’s alarm system, ringing loud. It feels huge. It usually peaks within a few minutes, and then it eases. You can ride it out.' },
           { k: 'words', h: 'Say it to yourself', items: ['This is panic.', 'It will pass.', 'I am safe right now.'], cue: { p: { 1: 1, 2: 1, 3: 1.5 } }, say: 'Say this to yourself, slowly. This is panic. It will pass. I am safe right now.' },
           { k: 'points', h: 'Feel the ground', items: [['Feet flat on the floor', 'Press down a little'], ['Hands on something solid', 'A table, your knees, the chair'], ['Eyes on one spot', 'Let them rest there']], cue: { w: { 4: 8 }, at: [1, 2, 3] }, say: 'Now feel the ground. Press your feet flat on the floor. Put your hands on something solid. Let your eyes rest on one spot. Stay here for a few breaths.' },
           { k: 'breathe', h: 'Longer out than in', hold: 34, say: 'Now follow the circle. In for four. And out for six. A long breath out tells your body the danger has passed.' },
-          { k: 'big', h: 'If this is new, or you have chest pain, call 911 to be safe.', sub: 'Need to talk? Call or text 988, any time.', say: 'If this is the first time this has happened, or you have chest pain, call 911 to be safe. And if you need to talk to someone right now, call or text nine eight eight, any time.' }
+          { k: 'big', h: 'If this is new, or you have chest pain, call for help to be safe.', say: 'If this is the first time this has happened, or you have chest pain, call for emergency help to be safe.' }
         ] },
 
         { id: 'ok-r-sleep', n: 5, title: 'When You Can’t Sleep', mins: 4, blurb: 'Set the worries down and let your body rest.', scenes: [
@@ -13301,20 +13262,19 @@ window.GG_LEARN = {
           { k: 'big', h: 'Rest counts, even before sleep comes.', say: 'Rest counts, even before sleep comes. Good night.' }
         ] },
 
-        { id: 'ok-r-anger', n: 6, title: 'When Anger Runs Hot', mins: 3, blurb: 'Stop, breathe, and choose what you do next.', scenes: [
+        { id: 'ok-r-anger', crisis: ['National DV Hotline: 1-800-799-7233', '911: emergency'], n: 6, title: 'When Anger Runs Hot', mins: 3, blurb: 'Stop, breathe, and choose what you do next.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'When Anger Runs Hot', sub: 'Make room before you respond.', say: 'Anger is a real feeling, and often an important one. It tells you something matters. This is about making room, so you get to choose what happens next.' },
           { k: 'flow', h: 'Stop', steps: [['Step back', 'Leave the room, if you can'], ['Take a breath', 'Long and slow'], ['Observe', 'Name it, find it in your body'], ['Proceed', 'With one choice']], cue: { w: { 2: 4, 4: 6, 7: 8 }, at: [1, 3, 5, 8] }, say: 'Remember the word stop. Step back. Leave the room if you can. Take a breath, long and slow. Breathe out longer than you breathed in. Observe. Name it to yourself: this is anger. Notice where it sits in your body. Then proceed, with one choice you will be glad you made.' },
           { k: 'words', h: 'Words that buy time', items: ['I need a minute. I’ll come back.', 'I want to talk about this when I’m calmer.', 'Let me think about that.'], say: 'Some words can buy you time. I need a minute. I will come back. I want to talk about this when I am calmer. Or, let me think about that.' },
-          { k: 'points', h: 'Let the energy out', items: [['Move', 'A brisk walk, stairs, or push against a wall'], ['Roar it out', 'Lion’s Breath, a few times'], ['Write it', 'Everything you want to say, just for you']], say: 'Anger is energy, so let it out safely. Move your body, with a brisk walk or a few flights of stairs. Try a few lion’s breaths. Or write everything you want to say, just for you, and keep it.' },
-          { k: 'big', h: 'If anyone is in danger, call 911.', sub: 'Feeling unsafe at home? The Domestic Violence Hotline is 1-800-799-7233.', say: 'If anyone is in danger, call nine one one. And if you do not feel safe at home, the National Domestic Violence Hotline is there any time, at one eight hundred, seven nine nine, seven two three three.' }
+          { k: 'points', h: 'Let the energy out', items: [['Move', 'A brisk walk, stairs, or push against a wall'], ['Roar it out', 'Lion’s Breath, a few times'], ['Write it', 'Everything you want to say, just for you']], say: 'Anger is energy, so let it out safely. Move your body, with a brisk walk or a few flights of stairs. Try a few lion’s breaths. Or write everything you want to say, just for you, and keep it.' }
         ] },
 
-        { id: 'ok-r-grief', n: 7, title: 'A Wave of Grief', mins: 3, blurb: 'When grief rises out of nowhere.', scenes: [
+        { id: 'ok-r-grief', crisis: ['988: call or text, any time'], n: 7, title: 'A Wave of Grief', mins: 3, blurb: 'When grief rises out of nowhere.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'A Wave of Grief', sub: 'Let it come, and let it go.', say: 'Grief often comes in waves. A song, a smell, a date on the calendar, and suddenly it is here. If that is happening now, stay with me.' },
           { k: 'story', title: 'Grief Debt', lines: ['One week I caught myself walking around numb. Not sad, not angry. Just numb.', 'A few losses had stacked up quietly, and I kept telling myself I would feel them later.', 'Grief we put off piles up, like laundry we swear we will fold.'], lesson: 'Paying grief down a little at a time keeps it from piling up.', note: 'From a Grounded story by Chris Joy', link: { href: 'https://chri5j0y.substack.com/p/grief-debt', label: 'Read the Full Story: Grief Debt' }, say: 'One week I caught myself walking around numb. A few losses had stacked up quietly, while I told myself I would feel them later. Grief we put off piles up, like laundry we swear we will fold. A wave like this one is a chance to pay a little of it down.' },
           { k: 'flow', h: 'Pay it down', steps: [['Notice it', 'Something is here'], ['Name it', 'Who or what you miss'], ['Express it', 'Cry, say it, write it'], ['Unpack it', 'Walk, stretch, breathe']], cue: { w: { 1: 5, 3: 10, 5: 15, 7: 8 }, at: [0, 2, 4, 6] }, say: 'Notice it. Something is here. Name it. Who, or what, do you miss right now? Express it. Let the tears come, say their name out loud, or write a line to them. Then unpack it with your body. Stretch, walk, or take a slow breath.' },
           { k: 'big', h: 'Grief is love with nowhere to go.', sub: 'The wave will pass. The love stays.', say: 'Grief is love with nowhere to go. The wave will pass. The love stays.' },
-          { k: 'big', h: 'Let someone help you carry it.', sub: 'When Life Changes has guides for many kinds of loss. Need to talk now? Call or text 988.', say: 'Let someone help you carry it. When Life Changes in Oak has guides for many kinds of loss. And if you need to talk with someone right now, call or text nine eight eight.' }
+          { k: 'big', h: 'Let someone help you carry it.', sub: 'When Life Changes has guides for many kinds of loss.', say: 'Let someone help you carry it. When Life Changes in Oak has guides for many kinds of loss.' }
         ] },
 
         { id: 'ok-r-talk', n: 8, title: 'Before a Hard Conversation', mins: 3, blurb: 'Steady yourself, and walk in ready to listen.', scenes: [
@@ -13326,12 +13286,12 @@ window.GG_LEARN = {
           { k: 'big', h: 'You can listen and still say what matters to you.', say: 'You can listen deeply, and still say what matters to you. Go gently. You are ready.' }
         ] },
 
-        { id: 'ok-r-news', n: 9, title: 'After Bad News', mins: 3, blurb: 'The first few minutes after the call or the appointment.', scenes: [
+        { id: 'ok-r-news', crisis: ['988: call or text, any time'], n: 9, title: 'After Bad News', mins: 3, blurb: 'The first few minutes after the call or the appointment.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'After Bad News', sub: 'Decisions can wait.', say: 'If you have just gotten hard news, I am sorry. Sit down if you can. Take a breath. You do not have to decide anything right this minute.' },
           { k: 'big', h: 'Shock is your mind catching up.', sub: 'Numb, shaky, foggy, or strangely calm are all common.', say: 'Shock is your mind catching up with what it just heard. Feeling numb, shaky, foggy, or strangely calm are all common. Whatever you feel is welcome here.' },
           { k: 'breathe', h: 'Breathe first', hold: 24, say: 'Breathe with the circle for a moment. In for four. And out for six.' },
           { k: 'points', h: 'Three small steps', items: [['Reach one person', 'A call or a text: I just got hard news.'], ['Write down your questions', 'For the next conversation'], ['Eat or drink something', 'Your body is carrying this too']], cue: { w: { 3: 10 }, at: [1, 4, 5] }, say: 'Then, three small steps. Reach one person. A call or a text is enough. I just got hard news. Write down the questions you want to ask next time, while they are fresh. And drink some water, or eat something small. Your body is carrying this too.' },
-          { k: 'big', h: 'One step at a time is enough.', sub: 'When Life Changes has guides for hard diagnoses, losses, and more.', say: 'One step at a time is enough. When you are ready, When Life Changes in Oak has guides for hard diagnoses, losses, and more. And if you need to talk right now, call or text nine eight eight.' }
+          { k: 'big', h: 'One step at a time is enough.', sub: 'When Life Changes has guides for hard diagnoses, losses, and more.', say: 'One step at a time is enough. When you are ready, When Life Changes in Oak has guides for hard diagnoses, losses, and more.' }
         ] },
 
         { id: 'ok-r-still', n: 10, title: 'A Moment of Stillness', mins: 4, blurb: 'A breath prayer, or a quiet minute in plain words.', scenes: [
@@ -13342,12 +13302,12 @@ window.GG_LEARN = {
           { k: 'big', h: 'Carry your words with you today.', sub: 'In line, at a red light, before a hard conversation.', say: 'Carry your words with you today. In line, at a red light, or before a hard conversation. They go wherever you go.' }
         ] },
 
-        { id: 'ok-r-alone', n: 11, title: 'Feeling Alone Tonight', mins: 3, blurb: 'One small step toward someone, and help any time.', scenes: [
+        { id: 'ok-r-alone', crisis: ['988: call or text, any time', '911: emergency'], n: 11, title: 'Feeling Alone Tonight', mins: 3, blurb: 'One small step toward someone, and help any time.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Support for Right Now', h: 'Feeling Alone Tonight', sub: 'Many people feel this too.', say: 'If you feel alone tonight, I am glad you are here. Loneliness is one of the most common feelings there is. It is not a sign that something is wrong with you.' },
           { k: 'big', h: 'Loneliness is a signal, like hunger.', sub: 'It tells you that connection matters to you.', say: 'Loneliness is a signal, like hunger. It tells you that connection matters to you. And small steps toward people count.' },
           { k: 'points', h: 'One small reach', items: [['Text one person', 'Thinking of you. How are you?'], ['Hear a voice', 'A call, a voice message, or a radio show'], ['Go where people are', 'A coffee shop, a walk, a service']], cue: { w: { 3: 15 }, at: [1, 4, 5] }, say: 'Try one small reach. Text one person. It can be as simple as, thinking of you, how are you? Take a moment now, if you like. Or hear a voice, with a call or a voice message. Tomorrow, go where people are, even just a coffee shop or a walk.' },
           { k: 'points', h: 'Be kind to yourself tonight', items: [['Something warm', 'Tea, a shower, a blanket'], ['Something gentle', 'Music, a book, a gentle stretch'], ['Something for the morning', 'One small plan to look forward to']], say: 'And be kind to yourself tonight. Something warm, like tea or a blanket. Something gentle, like music you love. And one small plan for the morning, something to look forward to.' },
-          { k: 'big', h: 'Call or text 988 any time.', sub: 'If you are thinking about ending your life, reach out now. In danger right now? Call 911.', say: 'If you want to talk to someone right now, call or text nine eight eight, any time, day or night. If you are thinking about ending your life, please reach out now. You matter. And if you are in danger right now, call nine one one.' }
+          { k: 'big', sub: 'If you are thinking about ending your life, reach out now.', say: 'If you are thinking about ending your life, please reach out now. You matter.' }
         ] }
       ] },
       {
@@ -13358,6 +13318,7 @@ window.GG_LEARN = {
        "lessons": [
         {
          "id": "ok-st-grief-minutes",
+         "crisis": ["988: call or text, any time"],
          "n": 1,
          "title": "Five Minutes with Your Grief",
          "mins": 3,
@@ -13451,8 +13412,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Your grief deserves a place to land.",
-           "sub": "Heavy for a long time? Reach out. Need to talk now? Call or text 988.",
-           "say": "Your grief deserves a place to land, and five minutes is enough to start. If it stays very heavy for a long time, reach out to someone you trust. And if you need to talk right now, call or text nine eight eight."
+           "sub": "Heavy for a long time? Reach out.",
+           "say": "Your grief deserves a place to land, and five minutes is enough to start. If it stays very heavy for a long time, reach out to someone you trust."
           }
          ]
         },
@@ -13641,21 +13602,8 @@ window.GG_LEARN = {
           {
            "k": "points",
            "h": "Help any time",
-           "items": [
-            [
-             "SAMHSA National Helpline",
-             "1-800-662-4357, any time"
-            ],
-            [
-             "988",
-             "Call or text, any time"
-            ],
-            [
-             "911",
-             "Danger right now"
-            ]
-           ],
-           "say": "Help is here any time. The SAMHSA National Helpline is open every day and night, at one, eight hundred, six six two, four three five seven. If you are in crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+           "items": [],
+           "say": "Help is here any time."
           },
           {
            "k": "big",
@@ -13667,6 +13615,7 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-st-rain",
+         "crisis": ["988: call or text, any time"],
          "n": 4,
          "title": "RAIN for Hard Feelings",
          "mins": 3,
@@ -13772,8 +13721,8 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Use it anywhere, as often as you need.",
-           "sub": "Big or lasting feelings? Reach out. Need to talk now? Call or text 988.",
-           "say": "Use RAIN anywhere, as often as you need. For big or lasting feelings, reach out to someone you trust. And if you need to talk with someone right now, call or text nine eight eight."
+           "sub": "Big or lasting feelings? Reach out.",
+           "say": "Use RAIN anywhere, as often as you need. For big or lasting feelings, reach out to someone you trust."
           }
          ]
         },
@@ -13984,6 +13933,7 @@ window.GG_LEARN = {
         },
         {
          "id": "ok-st-walk-through",
+         "crisis": ["988: call or text, any time"],
          "n": 7,
          "title": "Walk It Through",
          "mins": 3,
@@ -14070,8 +14020,7 @@ window.GG_LEARN = {
           {
            "k": "big",
            "h": "Walk it through, and walk toward hope.",
-           "sub": "Overwhelmed? Call or text 988, any time.",
-           "say": "Walk it through, and walk toward hope. And if a memory ever feels overwhelming, call or text nine eight eight, any time."
+           "say": "Walk it through, and walk toward hope."
           }
          ]
         }
@@ -14134,20 +14083,20 @@ window.GG_LEARN = {
           { k: 'big', h: 'You are keeping watch with love.', say: 'You are keeping watch with love. That is a holy thing to do, whatever your faith. Take all the time you need.' }
         ] },
 
-        { id: 'wl-s-after', n: 6, title: 'The First Hour After', mins: 2, blurb: 'Take your time. What to do now, and what can wait.', scenes: [
+        { id: 'wl-s-after', crisis: ['911: emergency'], n: 6, title: 'The First Hour After', mins: 2, blurb: 'Take your time. What to do now, and what can wait.', scenes: [
           { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'The First Hour After', sub: 'Take your time.', cue: { p: { 1: 3 } }, say: 'If the person you love has just died, I am so sorry. Take a breath. Take your time. Nothing has to happen right away.' },
-          { k: 'points', h: 'What to do first', items: [['Call the hospice', 'Not 911. They will guide you.'], ['Take your time', 'Sit with them as long as you need'], ['Say goodbye', 'Hold their hand, speak to them'], ['Invite others in', 'Children too, if they want to come']], say: 'Call your hospice, not 911. The hospice will guide you, and a nurse will come to help with the next steps, including the funeral home. Then take your time. Sit with them. Hold their hand. Say goodbye. Invite others in, children too, if they want to come.' },
+          { k: 'points', h: 'What to do first', items: [['Call the hospice', 'They will guide you.'], ['Take your time', 'Sit with them as long as you need'], ['Say goodbye', 'Hold their hand, speak to them'], ['Invite others in', 'Children too, if they want to come']], say: 'Call your hospice. The hospice will guide you, and a nurse will come to help with the next steps, including the funeral home. Then take your time. Sit with them. Hold their hand. Say goodbye. Invite others in, children too, if they want to come.' },
           { k: 'points', h: 'Your tradition matters now', items: [['Prayers or readings', 'From their faith, or their favorite words'], ['Rituals', 'Washing, anointing, chanting, keeping watch'], ['Their faith card', 'In Willow, on the Bedside tab'], ['Their clergy', 'Call them, if they would want that']], say: 'If they had a faith or tradition, this is the time for it. Prayers or readings. Rituals like washing, anointing, chanting, or keeping watch with the body. Their faith card in Willow can help. And you can call their clergy, if they would want that.' },
           { k: 'big', h: 'Whatever you feel is okay.', sub: 'Tears, numbness, relief, all of it.', cue: { w: { 5: 8 } }, say: 'Whatever you feel right now is okay. Tears. Numbness. Even relief, after a long road. All of it belongs. Take one slow breath now, and let whatever you feel be here.' },
           { k: 'big', h: 'Your hospice keeps walking with you.', sub: 'Most offer grief support for about a year after a death.', say: 'Your hospice keeps walking with you. Most offer grief support for about thirteen months after a death. Ask for it by name. Take all the time you need.' }
         ] },
 
-        { id: 'wl-s-tonight', n: 7, title: 'Caring for Yourself Tonight', mins: 2, blurb: 'Small things that help a tired heart and body.', scenes: [
+        { id: 'wl-s-tonight', crisis: ['988: call or text, any time'], n: 7, title: 'Caring for Yourself Tonight', mins: 2, blurb: 'Small things that help a tired heart and body.', scenes: [
           { k: 'title', hero: 'willow', eyebrow: 'Support for Right Now', h: 'Caring for Yourself Tonight', sub: 'Small things count.', say: 'Caring for someone near the end of life is some of the hardest work there is. Tonight, here are a few small things for you.' },
           { k: 'points', h: 'Tonight, try one', items: [['Drink a glass of water', 'Right now, if you can'], ['Eat something warm', 'Even something small'], ['Step outside', 'Five minutes of air'], ['Text one person', 'Let someone know how you are']], cue: { w: { 5: 8 } }, say: 'Tonight, try just one of these. Drink a glass of water. Eat something warm, even something small. Step outside for five minutes of air. Or text one person and let them know how you are really doing. Choose your one now, and picture yourself doing it tonight.' },
           { k: 'words', h: 'Let people help', items: ['Can you bring dinner Thursday?', 'Can you sit with him for two hours?', 'Can you pick up the kids?'], sub: 'Specific asks are easier to say yes to.', say: 'When people say, let me know if you need anything, give them something specific. Can you bring dinner Thursday. Can you sit with him for two hours. Specific asks are easier to say yes to.' },
           { k: 'big', h: 'Rest is part of loving them well.', say: 'Rest is not leaving them. Rest is part of loving them well, for as long as this takes.' },
-          { k: 'points', h: 'Your own tree', items: [['Helpers have a tree too', 'In Willow, with your own check-ins'], ['Your hospice line', 'For them, day or night'], ['988', 'Call or text, if you are struggling']], say: 'Willow gives helpers a tree of their own, because you are carrying this too. Your hospice line is there for your person, day or night. And if you are struggling yourself, you can call or text 988 anytime.' }
+          { k: 'points', h: 'Your own tree', items: [['Helpers have a tree too', 'In Willow, with your own check-ins'], ['Your hospice line', 'For them, day or night']], say: 'Willow gives helpers a tree of their own, because you are carrying this too. Your hospice line is there for your person, day or night.' }
         ] },
 
         { id: 'wl-s-blessing', n: 8, title: 'A Blessing for the Room', mins: 2, blurb: 'A quiet moment of prayer or stillness, for any faith tradition.', scenes: [
@@ -14171,18 +14120,18 @@ window.GG_LEARN = {
 
       /* ---------- W4 (GWG BLD 717): Support for Right Now, four more groups. Generated from patches/w4/source in grounded-workshop ---------- */
       {"id": "willow-sp-process", "kind": "support", "title": "Processing", "who": "Making sense of what you feel", "lessons": [
-        {"id": "wl-s-news", "n": 12, "title": "When the News Is New", "mins": 4, "blurb": "For the first days after hard news: one thing at a time.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the News Is New", "sub": "One thing at a time.", "say": "When you have just heard the word hospice, or been told that time is short, this is for you. You don't have to take it all in today."}, {"k": "big", "h": "Shock is how a mind takes in hard news.", "sub": "Numb, racing, or both.", "say": "Right after hard news, many people feel numb. Others feel their mind racing, making lists in the middle of the night. Some feel both in the same hour. This is common. Shock is how a mind takes in more than it can hold at once."}, {"k": "points", "h": "The first days can feel like", "items": [["Numb or far away", "Like watching from outside"], ["A racing mind", "Questions and what-ifs, over and over"], ["Forgetting things", "Keys, names, what the nurse just said"], ["Tears, or none at all", "Both are normal"]], "say": "The first days can feel strange. Numb, or far away, like you are watching from outside. A racing mind, with the same questions over and over. Forgetting things, even what the nurse just said. Tears, or no tears at all. Every one of these is normal."}, {"k": "breathe", "h": "Let your body catch up", "sub": "In for four. Out for six.", "hold": 24, "say": "Before anything else, let your body catch up with the news. Breathe in for four. And out for six. Again, slowly, at your own pace."}, {"k": "big", "h": "Name the one thing in front of you.", "sub": "Just one.", "say": "A racing mind tries to hold everything at once. Let's set most of it down. Ask yourself, what is the one thing in front of me right now? Name it, out loud or in your head.", "beats": ["A racing mind tries to hold everything at once.", "Let's set most of it down.", "Ask yourself, what is the one thing in front of me right now?", {"t": "Name it, out loud or in your head.", "w": 10}]}, {"k": "points", "h": "Much of it can wait", "items": [["Big decisions", "Ask your team what truly needs doing now"], ["Telling everyone", "Start with a few people"], ["Reading everything", "Your hospice team can answer"], ["Getting it right", "Do this your own way"]], "say": "Much of it can wait a few days. Most big decisions can wait, so ask your hospice team what truly cannot. Telling everyone can wait. Start with a few people, and let them help spread the word. Reading everything online can wait. Your hospice team can answer your questions. And getting it right can wait forever. Do this your own way."}, {"k": "words", "h": "Write the questions down", "items": ["What should we watch for?", "Who do I call, and when?", "What can wait?"], "sub": "Bring them to your hospice team.", "say": "Your mind may keep circling the same questions. Write them down, and let the page hold them. Good first questions are, what should we watch for, who do I call, and when, and what can wait. Write one now, on paper or in your phone.", "beats": ["Your mind may keep circling the same questions.", "Write them down, and let the page hold them.", "Good first questions are, what should we watch for, who do I call, and when, and what can wait.", {"t": "Write one now, on paper or in your phone.", "w": 12}]}, {"k": "flow", "h": "Today, just three things", "steps": [["Eat something", "Even a little"], ["Tell one person", "Someone who can help carry it"], ["Save the hospice number", "Day or night"]], "say": "For today, just three things. Eat something, even a little. Tell one person, someone who can help you carry this. And save your hospice number where you can find it fast. They are there day or night."}, {"k": "big", "h": "One thing, then the next.", "sub": "Understanding can come slowly.", "say": "If the fear gets to be too much, call your hospice, day or night. If you are struggling yourself, call or text 988. If anyone is in danger right now, call 911. You don't have to understand all of this today. One thing, then the next. Come back to this whenever you need it."}]},
-        {"id": "wl-s-anger", "n": 13, "title": "Anger Has a Place", "mins": 4, "blurb": "Anger often comes from love. Safe ways to let it move.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Anger Has a Place", "sub": "It often comes from love.", "say": "If you are angry, and you aren't sure where to put it, this is for you. Anger belongs here too."}, {"k": "points", "h": "Anger can land anywhere", "items": [["The illness", "For taking so much"], ["The doctors", "For what they said, or didn't"], ["The family", "For what they do, or don't do"], ["The person, or yourself", "For choices made, or not doing more"]], "say": "Anger can land anywhere. On the illness, for taking so much. On the doctors, for what they said, or didn't say. On the family, for what they do, or don't do. On the person you love, for the choices they made. On yourself. Some people feel angry at God, and that belongs too."}, {"k": "big", "h": "Anger is often love with nowhere to go.", "sub": "It is common, and it makes sense.", "say": "Underneath, anger is often love with nowhere to go. You want to protect them, to fix this, to keep them, and you can't. That energy has to go somewhere. Feeling angry doesn't make you a bad person. It makes you a person who loves."}, {"k": "big", "h": "Where do you feel it?", "sub": "Jaw, chest, hands, stomach.", "say": "Let's notice it together. Where do you feel your anger in your body? Your jaw, your chest, your hands, your stomach. Put a hand there, and just notice.", "beats": ["Let's notice it together.", "Where do you feel your anger in your body?", "Your jaw, your chest, your hands, your stomach.", {"t": "Put a hand there, and just notice.", "w": 10}]}, {"k": "points", "h": "Safe ways to let it move", "items": [["Move your body", "Walk fast, climb stairs, squeeze a towel"], ["Write it out", "Then tear it up, or keep it"], ["Let your voice out", "Into a pillow, or alone in the car"], ["Talk to someone safe", "A friend, a chaplain, a counselor"]], "say": "Anger needs a way to move. Move your body. Walk fast, climb the stairs, shake out your hands. Squeeze something and let it go, a towel, a pillow, your own fists. Write it all out, then tear it up, or keep it. Let your voice out, into a pillow, or alone in the car. Or talk to someone safe, a friend, a chaplain, a counselor."}, {"k": "breathe", "h": "Let it settle", "sub": "A long breath out, like a sigh.", "hold": 20, "say": "Now let your body settle a little. Breathe in through your nose. And let a long breath out through your mouth, like a sigh. Again, as many times as you need."}, {"k": "words", "h": "Name it, then the love under it", "items": ["I am angry that...", "Because I love..."], "sub": "Out loud, quietly, or on paper.", "say": "Try finishing two sentences. I am angry that. And then, because I love. Say them quietly, or write them down.", "beats": ["Try finishing two sentences.", "I am angry that.", "And then, because I love.", {"t": "Say them quietly, or write them down.", "w": 14}]}, {"k": "card", "title": "If anger gets too big", "body": "Step away before words or hands can hurt. Call your hospice, day or night. For your own crisis, call or text 988. If anyone is in danger right now, call 911.", "say": "If anger ever feels too big, step away before words or hands can hurt someone. Call your hospice, day or night. They hear this often. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911."}, {"k": "big", "h": "Your anger has a place. So do you.", "say": "Your anger has a place here. It can move through you without taking over. When it passes, be gentle with yourself. Come back to this whenever you need it."}]},
-        {"id": "wl-s-guilt", "n": 14, "title": "The Guilt That Visits", "mins": 4, "blurb": "When guilt keeps visiting, and what it may be missing.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "The Guilt That Visits", "sub": "It often comes from love.", "say": "Guilt has a way of visiting when you are tired and grieving. If it has been visiting you, this is for you."}, {"k": "words", "h": "Thoughts that often visit", "items": ["I should have noticed sooner.", "I moved them to a facility.", "I lost my patience today.", "Part of me wishes it were over."], "say": "Many caregivers hear thoughts like these. I should have noticed sooner. I moved them to a facility. I lost my patience today. Part of me wishes it were over. If any of these are yours, you are in good company."}, {"k": "story", "title": "A Betrayal of the Mind", "lines": ["A woman in memory care told anyone who would listen that her children had stolen everything and dumped her there.", "Her family had tried home health, day programs, and live-in help first. They visited almost every day.", "My team and I helped them see her accusations as the illness, and gave them permission to set boundaries with their own guilt."], "lesson": "An illness can rewrite love as a crime story. The love is still true.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a family whose mother lived in memory care. She told anyone who would listen that her children had stolen everything and dumped her there. But she had been found outside, lost, more than once. They had tried every other option first, home health, day programs, live-in help. They visited almost every day. My team and I helped them see that her accusations were the illness, not their failure. We gave them permission to set boundaries with their own guilt. And they found some peace, knowing they were humans doing an impossible thing."}, {"k": "big", "h": "Guilt and shame are different.", "sub": "Guilt: I did something. Shame: I am something.", "say": "It helps to know the difference. Guilt says, I did something I regret. Shame says, I am bad. Guilt can point you toward making something right. Shame only weighs you down, and it is rarely telling the truth."}, {"k": "points", "h": "Look again at what you did", "items": [["The move to a facility", "Often a choice to keep them safe"], ["Losing your patience", "A tired body, with love still whole"], ["Wishing it were over", "Often wishing their suffering would end"], ["I should have...", "You know now what you couldn't then"]], "say": "Look again at what guilt is pointing to. A move to a facility is often a choice to keep someone safe. Losing your patience usually means a tired body, not a lack of love. Wishing it were over is very common, and it often means wishing their suffering would end. And I should have, usually means you know now what you couldn't know then."}, {"k": "words", "h": "Say what you were trying to do.", "items": ["I was trying to keep them safe.", "I was so tired.", "I wanted the suffering to stop."], "sub": "Your own words are best.", "say": "Let's try something. Pick the guilt that visits you most. Now say what you were really trying to do, in your own words. Take your time.", "beats": ["Let's try something.", "Pick the guilt that visits you most.", "Now say what you were really trying to do, in your own words.", {"t": "Take your time.", "w": 14}]}, {"k": "words", "h": "If something needs repair", "items": ["I'm sorry I snapped.", "I was tired, and I love you.", "I forgive myself, too."], "say": "If something needs repair, keep it simple. I'm sorry I snapped. I was tired, and I love you. And then, the harder one, I forgive myself, too."}, {"k": "card", "title": "When guilt feels heavy", "body": "Tell your hospice team, day or night. Chaplains and social workers hear this often. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911.", "say": "If guilt feels too heavy to carry, tell your hospice team, day or night. Chaplains and social workers hear this often. If wishing it were over ever turns into thoughts of ending your own life, call or text 988. If anyone is in danger right now, call 911."}, {"k": "big", "h": "Guilt can visit, and then move on.", "say": "Guilt may visit again. When it does, notice it, name what you were really trying to do, and let it go on its way. You are doing a hard thing, with love."}]},
-        {"id": "wl-s-relief", "n": 15, "title": "Relief and Grief Together", "mins": 4, "blurb": "Relief and grief can sit side by side. Both are true.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Relief and Grief Together", "sub": "Both can be true.", "say": "Some people feel relief and grief at the same time, and wonder if that is allowed. If that is you, this is for you."}, {"k": "big", "h": "Relief is a common part of grief.", "sub": "It doesn't cancel your love.", "say": "After a long road, many people feel relief. Relief that the suffering is ending, or has ended. Relief that the nights of worry are done. Relief often sits right next to grief, and it doesn't cancel your love."}, {"k": "points", "h": "Relief can sound like", "items": [["They aren't hurting anymore", "Their suffering is over"], ["I can sleep again", "The long watch is done"], ["A hard relationship eased", "Old tension can finally rest"], ["I can breathe", "Even while I cry"]], "say": "Relief can sound like, they aren't hurting anymore. Or, I can sleep again. Sometimes it comes when a hard relationship finally eases, and old tension can rest. Sometimes it is simply, I can breathe, even while I cry."}, {"k": "story", "title": "He Came to Collect", "lines": ["I visit Evelyn in memory care. Her son had stolen from her in the past.", "When he came back wanting money, she said no, and her family took steps to protect her.", "A couple of weeks later she told me, \"I am sad. He is my boy. But I feel safer. Like I can breathe.\""], "lesson": "Sadness and safety can sit side by side.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/he-came-to-collect", "label": "Read the Full Story: He Came to Collect"}, "say": "I visit a woman named Evelyn in memory care. Her son had stolen from her in the past, and when he came back wanting money, she said no. With help, her family took steps to protect her, and he left. A couple of weeks later, she told me, I am sad. He is my boy. But I feel safer. Like I can breathe."}, {"k": "big", "h": "Hold both.", "sub": "One hand for each.", "say": "Let's make room for both. Put one hand on your chest, for the grief. Put the other on your stomach, for the relief. Let both hands rest there, and breathe.", "beats": ["Let's make room for both.", "Put one hand on your chest, for the grief.", "Put the other on your stomach, for the relief.", {"t": "Let both hands rest there, and breathe.", "w": 12}]}, {"k": "words", "h": "Words for both", "items": ["I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard."], "sub": "And, not but.", "say": "Notice the little word and. I miss them, and I'm relieved. I'm sad, and I can breathe. I loved them, and it was hard. Say the one that fits, or make your own.", "beats": ["Notice the little word and.", "I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard.", {"t": "Say the one that fits, or make your own.", "w": 10}]}, {"k": "points", "h": "When others see it differently", "items": [["Your reasons are your own", "Relief can stay private"], ["Find one safe listener", "A friend, a chaplain, a grief group"], ["Expect it to shift", "Relief and grief can trade places"]], "say": "Not everyone will understand. You don't owe anyone an explanation. Your relief can stay private if you want it to. Find one safe listener, a friend, a chaplain, a grief group. And expect it to shift. Some days relief is louder, and some days grief is."}, {"k": "big", "h": "Relief and grief can both be love.", "sub": "Let them sit side by side.", "say": "If you ever worry that a vulnerable adult in Minnesota is being harmed, you can call MAARC at 1 844 880 1574. For now, let relief and grief sit side by side, as long as they need. Both can be love. Come back to this whenever you need it."}]},
-        {"id": "wl-s-waves", "n": 16, "title": "Grief That Comes in Waves", "mins": 4, "blurb": "How to ride a wave of grief, wherever it finds you.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Grief That Comes in Waves", "sub": "You can ride it.", "say": "Grief often comes in waves. If one has been knocking you over, before a death or after, this is for you."}, {"k": "big", "h": "Waves rise, crest, and pass.", "sub": "Even the big ones.", "say": "A wave of grief can come out of nowhere. A song, a smell, an empty chair. It rises, it crests, and it passes. Fighting it often makes it bigger. Riding it lets it move through you."}, {"k": "points", "h": "Waves often come with", "items": [["Firsts", "Holidays, birthdays, the first spring"], ["Small things", "Their mug, their handwriting"], ["Quiet moments", "Bedtime, the drive home"], ["Good news", "Wanting to tell them"]], "say": "Waves often come with firsts, like holidays, birthdays, the first spring. With small things, like their mug or their handwriting. With quiet moments, at bedtime or on the drive home. Even with good news, when you reach for the phone to tell them."}, {"k": "flow", "h": "Riding a wave", "steps": [["Feel it come", "Here is a wave"], ["Let it crest", "Cry if you need to"], ["Breathe long", "Out longer than in"], ["Watch it go", "Waves pass"]], "say": "Here is how to ride one. Feel it come, and say to yourself, here is a wave. Let it crest. Cry if you need to. Breathe long, with your breath out longer than your breath in. Then watch it go. Waves pass."}, {"k": "breathe", "h": "Ride this one", "sub": "In for four. Out for six.", "hold": 30, "say": "If a wave is here right now, let's ride it together. Let it rise. Breathe in for four. And out for six. Let the tears come if they want to. Keep breathing as it passes."}, {"k": "points", "h": "If a wave hits in public", "items": [["Find a quiet spot", "A restroom, your car, a hallway"], ["Press your feet down", "Feel the floor hold you"], ["Have a line ready", "I'm having a grief moment. I'll be okay."], ["Tears are okay", "Most people understand"]], "say": "If a wave hits in public, find a quiet spot if you can, a restroom, your car, a hallway. Press your feet into the floor and feel it hold you. Have a line ready, like, I'm having a grief moment. I'll be okay. And know that tears are okay. Most people understand."}, {"k": "big", "h": "At the bedside, you can let it show.", "sub": "I'm sad because I love you.", "say": "If a wave hits at the bedside, you can let it show. You can say, I'm sad because I love you. Or step out for a minute, and come back. Try those words now, quietly, so they are ready.", "beats": ["If a wave hits at the bedside, you can let it show.", "You can say, I'm sad because I love you.", "Or step out for a minute, and come back.", {"t": "Try those words now, quietly, so they are ready.", "w": 10}]}, {"k": "words", "h": "A line to keep ready", "items": ["This is a wave. It will pass.", "I can feel this and still be okay."], "say": "Some people keep one line ready for when a wave hits. This is a wave. It will pass. Or, I can feel this and still be okay. Choose one, and say it slowly, three times.", "beats": ["Some people keep one line ready for when a wave hits.", "This is a wave.", "It will pass.", "Or, I can feel this and still be okay.", {"t": "Choose one, and say it slowly, three times.", "w": 12}]}, {"k": "big", "h": "Waves come, and waves go.", "sub": "You are still here.", "say": "If grief ever feels like more than you can carry, your hospice has people to talk with, before a death and after. And you can call or text 988 anytime. Waves come, and waves go. You are still here. Come back to this whenever you need it."}]}
+        {"id": "wl-s-news", "crisis": ["988: call or text, any time", "911: emergency"], "n": 12, "title": "When the News Is New", "mins": 4, "blurb": "For the first days after hard news: one thing at a time.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the News Is New", "sub": "One thing at a time.", "say": "When you have just heard the word hospice, or been told that time is short, this is for you. You don't have to take it all in today."}, {"k": "big", "h": "Shock is how a mind takes in hard news.", "sub": "Numb, racing, or both.", "say": "Right after hard news, many people feel numb. Others feel their mind racing, making lists in the middle of the night. Some feel both in the same hour. This is common. Shock is how a mind takes in more than it can hold at once."}, {"k": "points", "h": "The first days can feel like", "items": [["Numb or far away", "Like watching from outside"], ["A racing mind", "Questions and what-ifs, over and over"], ["Forgetting things", "Keys, names, what the nurse just said"], ["Tears, or none at all", "Both are normal"]], "say": "The first days can feel strange. Numb, or far away, like you are watching from outside. A racing mind, with the same questions over and over. Forgetting things, even what the nurse just said. Tears, or no tears at all. Every one of these is normal."}, {"k": "breathe", "h": "Let your body catch up", "sub": "In for four. Out for six.", "hold": 24, "say": "Before anything else, let your body catch up with the news. Breathe in for four. And out for six. Again, slowly, at your own pace."}, {"k": "big", "h": "Name the one thing in front of you.", "sub": "Just one.", "say": "A racing mind tries to hold everything at once. Let's set most of it down. Ask yourself, what is the one thing in front of me right now? Name it, out loud or in your head.", "beats": ["A racing mind tries to hold everything at once.", "Let's set most of it down.", "Ask yourself, what is the one thing in front of me right now?", {"t": "Name it, out loud or in your head.", "w": 10}]}, {"k": "points", "h": "Much of it can wait", "items": [["Big decisions", "Ask your team what truly needs doing now"], ["Telling everyone", "Start with a few people"], ["Reading everything", "Your hospice team can answer"], ["Getting it right", "Do this your own way"]], "say": "Much of it can wait a few days. Most big decisions can wait, so ask your hospice team what truly cannot. Telling everyone can wait. Start with a few people, and let them help spread the word. Reading everything online can wait. Your hospice team can answer your questions. And getting it right can wait forever. Do this your own way."}, {"k": "words", "h": "Write the questions down", "items": ["What should we watch for?", "Who do I call, and when?", "What can wait?"], "sub": "Bring them to your hospice team.", "say": "Your mind may keep circling the same questions. Write them down, and let the page hold them. Good first questions are, what should we watch for, who do I call, and when, and what can wait. Write one now, on paper or in your phone.", "beats": ["Your mind may keep circling the same questions.", "Write them down, and let the page hold them.", "Good first questions are, what should we watch for, who do I call, and when, and what can wait.", {"t": "Write one now, on paper or in your phone.", "w": 12}]}, {"k": "flow", "h": "Today, just three things", "steps": [["Eat something", "Even a little"], ["Tell one person", "Someone who can help carry it"], ["Save the hospice number", "Day or night"]], "say": "For today, just three things. Eat something, even a little. Tell one person, someone who can help you carry this. And save your hospice number where you can find it fast. They are there day or night."}, {"k": "big", "h": "One thing, then the next.", "sub": "Understanding can come slowly.", "say": "If the fear gets to be too much, call your hospice, day or night. You don't have to understand all of this today. One thing, then the next. Come back to this whenever you need it."}]},
+        {"id": "wl-s-anger", "crisis": ["988: call or text, any time", "911: emergency"], "n": 13, "title": "Anger Has a Place", "mins": 4, "blurb": "Anger often comes from love. Safe ways to let it move.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Anger Has a Place", "sub": "It often comes from love.", "say": "If you are angry, and you aren't sure where to put it, this is for you. Anger belongs here too."}, {"k": "points", "h": "Anger can land anywhere", "items": [["The illness", "For taking so much"], ["The doctors", "For what they said, or didn't"], ["The family", "For what they do, or don't do"], ["The person, or yourself", "For choices made, or not doing more"]], "say": "Anger can land anywhere. On the illness, for taking so much. On the doctors, for what they said, or didn't say. On the family, for what they do, or don't do. On the person you love, for the choices they made. On yourself. Some people feel angry at God, and that belongs too."}, {"k": "big", "h": "Anger is often love with nowhere to go.", "sub": "It is common, and it makes sense.", "say": "Underneath, anger is often love with nowhere to go. You want to protect them, to fix this, to keep them, and you can't. That energy has to go somewhere. Feeling angry doesn't make you a bad person. It makes you a person who loves."}, {"k": "big", "h": "Where do you feel it?", "sub": "Jaw, chest, hands, stomach.", "say": "Let's notice it together. Where do you feel your anger in your body? Your jaw, your chest, your hands, your stomach. Put a hand there, and just notice.", "beats": ["Let's notice it together.", "Where do you feel your anger in your body?", "Your jaw, your chest, your hands, your stomach.", {"t": "Put a hand there, and just notice.", "w": 10}]}, {"k": "points", "h": "Safe ways to let it move", "items": [["Move your body", "Walk fast, climb stairs, squeeze a towel"], ["Write it out", "Then tear it up, or keep it"], ["Let your voice out", "Into a pillow, or alone in the car"], ["Talk to someone safe", "A friend, a chaplain, a counselor"]], "say": "Anger needs a way to move. Move your body. Walk fast, climb the stairs, shake out your hands. Squeeze something and let it go, a towel, a pillow, your own fists. Write it all out, then tear it up, or keep it. Let your voice out, into a pillow, or alone in the car. Or talk to someone safe, a friend, a chaplain, a counselor."}, {"k": "breathe", "h": "Let it settle", "sub": "A long breath out, like a sigh.", "hold": 20, "say": "Now let your body settle a little. Breathe in through your nose. And let a long breath out through your mouth, like a sigh. Again, as many times as you need."}, {"k": "words", "h": "Name it, then the love under it", "items": ["I am angry that...", "Because I love..."], "sub": "Out loud, quietly, or on paper.", "say": "Try finishing two sentences. I am angry that. And then, because I love. Say them quietly, or write them down.", "beats": ["Try finishing two sentences.", "I am angry that.", "And then, because I love.", {"t": "Say them quietly, or write them down.", "w": 14}]}, {"k": "card", "title": "If anger gets too big", "body": "Step away before words or hands can hurt. Call your hospice, day or night.", "say": "If anger ever feels too big, step away before words or hands can hurt someone. Call your hospice, day or night. They hear this often."}, {"k": "big", "h": "Your anger has a place. So do you.", "say": "Your anger has a place here. It can move through you without taking over. When it passes, be gentle with yourself. Come back to this whenever you need it."}]},
+        {"id": "wl-s-guilt", "crisis": ["988: call or text, any time", "911: emergency"], "n": 14, "title": "The Guilt That Visits", "mins": 4, "blurb": "When guilt keeps visiting, and what it may be missing.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "The Guilt That Visits", "sub": "It often comes from love.", "say": "Guilt has a way of visiting when you are tired and grieving. If it has been visiting you, this is for you."}, {"k": "words", "h": "Thoughts that often visit", "items": ["I should have noticed sooner.", "I moved them to a facility.", "I lost my patience today.", "Part of me wishes it were over."], "say": "Many caregivers hear thoughts like these. I should have noticed sooner. I moved them to a facility. I lost my patience today. Part of me wishes it were over. If any of these are yours, you are in good company."}, {"k": "story", "title": "A Betrayal of the Mind", "lines": ["A woman in memory care told anyone who would listen that her children had stolen everything and dumped her there.", "Her family had tried home health, day programs, and live-in help first. They visited almost every day.", "My team and I helped them see her accusations as the illness, and gave them permission to set boundaries with their own guilt."], "lesson": "An illness can rewrite love as a crime story. The love is still true.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a family whose mother lived in memory care. She told anyone who would listen that her children had stolen everything and dumped her there. But she had been found outside, lost, more than once. They had tried every other option first, home health, day programs, live-in help. They visited almost every day. My team and I helped them see that her accusations were the illness, not their failure. We gave them permission to set boundaries with their own guilt. And they found some peace, knowing they were humans doing an impossible thing."}, {"k": "big", "h": "Guilt and shame are different.", "sub": "Guilt: I did something. Shame: I am something.", "say": "It helps to know the difference. Guilt says, I did something I regret. Shame says, I am bad. Guilt can point you toward making something right. Shame only weighs you down, and it is rarely telling the truth."}, {"k": "points", "h": "Look again at what you did", "items": [["The move to a facility", "Often a choice to keep them safe"], ["Losing your patience", "A tired body, with love still whole"], ["Wishing it were over", "Often wishing their suffering would end"], ["I should have...", "You know now what you couldn't then"]], "say": "Look again at what guilt is pointing to. A move to a facility is often a choice to keep someone safe. Losing your patience usually means a tired body, not a lack of love. Wishing it were over is very common, and it often means wishing their suffering would end. And I should have, usually means you know now what you couldn't know then."}, {"k": "words", "h": "Say what you were trying to do.", "items": ["I was trying to keep them safe.", "I was so tired.", "I wanted the suffering to stop."], "sub": "Your own words are best.", "say": "Let's try something. Pick the guilt that visits you most. Now say what you were really trying to do, in your own words. Take your time.", "beats": ["Let's try something.", "Pick the guilt that visits you most.", "Now say what you were really trying to do, in your own words.", {"t": "Take your time.", "w": 14}]}, {"k": "words", "h": "If something needs repair", "items": ["I'm sorry I snapped.", "I was tired, and I love you.", "I forgive myself, too."], "say": "If something needs repair, keep it simple. I'm sorry I snapped. I was tired, and I love you. And then, the harder one, I forgive myself, too."}, {"k": "card", "title": "When guilt feels heavy", "body": "Tell your hospice team, day or night. Chaplains and social workers hear this often.", "say": "If guilt feels too heavy to carry, tell your hospice team, day or night. Chaplains and social workers hear this often."}, {"k": "big", "h": "Guilt can visit, and then move on.", "say": "Guilt may visit again. When it does, notice it, name what you were really trying to do, and let it go on its way. You are doing a hard thing, with love."}]},
+        {"id": "wl-s-relief", "crisis": ["MAARC (Minnesota): 1-844-880-1574"], "n": 15, "title": "Relief and Grief Together", "mins": 4, "blurb": "Relief and grief can sit side by side. Both are true.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Relief and Grief Together", "sub": "Both can be true.", "say": "Some people feel relief and grief at the same time, and wonder if that is allowed. If that is you, this is for you."}, {"k": "big", "h": "Relief is a common part of grief.", "sub": "It doesn't cancel your love.", "say": "After a long road, many people feel relief. Relief that the suffering is ending, or has ended. Relief that the nights of worry are done. Relief often sits right next to grief, and it doesn't cancel your love."}, {"k": "points", "h": "Relief can sound like", "items": [["They aren't hurting anymore", "Their suffering is over"], ["I can sleep again", "The long watch is done"], ["A hard relationship eased", "Old tension can finally rest"], ["I can breathe", "Even while I cry"]], "say": "Relief can sound like, they aren't hurting anymore. Or, I can sleep again. Sometimes it comes when a hard relationship finally eases, and old tension can rest. Sometimes it is simply, I can breathe, even while I cry."}, {"k": "story", "title": "He Came to Collect", "lines": ["I visit Evelyn in memory care. Her son had stolen from her in the past.", "When he came back wanting money, she said no, and her family took steps to protect her.", "A couple of weeks later she told me, \"I am sad. He is my boy. But I feel safer. Like I can breathe.\""], "lesson": "Sadness and safety can sit side by side.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/he-came-to-collect", "label": "Read the Full Story: He Came to Collect"}, "say": "I visit a woman named Evelyn in memory care. Her son had stolen from her in the past, and when he came back wanting money, she said no. With help, her family took steps to protect her, and he left. A couple of weeks later, she told me, I am sad. He is my boy. But I feel safer. Like I can breathe."}, {"k": "big", "h": "Hold both.", "sub": "One hand for each.", "say": "Let's make room for both. Put one hand on your chest, for the grief. Put the other on your stomach, for the relief. Let both hands rest there, and breathe.", "beats": ["Let's make room for both.", "Put one hand on your chest, for the grief.", "Put the other on your stomach, for the relief.", {"t": "Let both hands rest there, and breathe.", "w": 12}]}, {"k": "words", "h": "Words for both", "items": ["I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard."], "sub": "And, not but.", "say": "Notice the little word and. I miss them, and I'm relieved. I'm sad, and I can breathe. I loved them, and it was hard. Say the one that fits, or make your own.", "beats": ["Notice the little word and.", "I miss them, and I'm relieved.", "I'm sad, and I can breathe.", "I loved them, and it was hard.", {"t": "Say the one that fits, or make your own.", "w": 10}]}, {"k": "points", "h": "When others see it differently", "items": [["Your reasons are your own", "Relief can stay private"], ["Find one safe listener", "A friend, a chaplain, a grief group"], ["Expect it to shift", "Relief and grief can trade places"]], "say": "Not everyone will understand. You don't owe anyone an explanation. Your relief can stay private if you want it to. Find one safe listener, a friend, a chaplain, a grief group. And expect it to shift. Some days relief is louder, and some days grief is."}, {"k": "big", "h": "Relief and grief can both be love.", "sub": "Let them sit side by side.", "say": "For now, let relief and grief sit side by side, as long as they need. Both can be love. Come back to this whenever you need it."}]},
+        {"id": "wl-s-waves", "crisis": ["988: call or text, any time"], "n": 16, "title": "Grief That Comes in Waves", "mins": 4, "blurb": "How to ride a wave of grief, wherever it finds you.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Grief That Comes in Waves", "sub": "You can ride it.", "say": "Grief often comes in waves. If one has been knocking you over, before a death or after, this is for you."}, {"k": "big", "h": "Waves rise, crest, and pass.", "sub": "Even the big ones.", "say": "A wave of grief can come out of nowhere. A song, a smell, an empty chair. It rises, it crests, and it passes. Fighting it often makes it bigger. Riding it lets it move through you."}, {"k": "points", "h": "Waves often come with", "items": [["Firsts", "Holidays, birthdays, the first spring"], ["Small things", "Their mug, their handwriting"], ["Quiet moments", "Bedtime, the drive home"], ["Good news", "Wanting to tell them"]], "say": "Waves often come with firsts, like holidays, birthdays, the first spring. With small things, like their mug or their handwriting. With quiet moments, at bedtime or on the drive home. Even with good news, when you reach for the phone to tell them."}, {"k": "flow", "h": "Riding a wave", "steps": [["Feel it come", "Here is a wave"], ["Let it crest", "Cry if you need to"], ["Breathe long", "Out longer than in"], ["Watch it go", "Waves pass"]], "say": "Here is how to ride one. Feel it come, and say to yourself, here is a wave. Let it crest. Cry if you need to. Breathe long, with your breath out longer than your breath in. Then watch it go. Waves pass."}, {"k": "breathe", "h": "Ride this one", "sub": "In for four. Out for six.", "hold": 30, "say": "If a wave is here right now, let's ride it together. Let it rise. Breathe in for four. And out for six. Let the tears come if they want to. Keep breathing as it passes."}, {"k": "points", "h": "If a wave hits in public", "items": [["Find a quiet spot", "A restroom, your car, a hallway"], ["Press your feet down", "Feel the floor hold you"], ["Have a line ready", "I'm having a grief moment. I'll be okay."], ["Tears are okay", "Most people understand"]], "say": "If a wave hits in public, find a quiet spot if you can, a restroom, your car, a hallway. Press your feet into the floor and feel it hold you. Have a line ready, like, I'm having a grief moment. I'll be okay. And know that tears are okay. Most people understand."}, {"k": "big", "h": "At the bedside, you can let it show.", "sub": "I'm sad because I love you.", "say": "If a wave hits at the bedside, you can let it show. You can say, I'm sad because I love you. Or step out for a minute, and come back. Try those words now, quietly, so they are ready.", "beats": ["If a wave hits at the bedside, you can let it show.", "You can say, I'm sad because I love you.", "Or step out for a minute, and come back.", {"t": "Try those words now, quietly, so they are ready.", "w": 10}]}, {"k": "words", "h": "A line to keep ready", "items": ["This is a wave. It will pass.", "I can feel this and still be okay."], "say": "Some people keep one line ready for when a wave hits. This is a wave. It will pass. Or, I can feel this and still be okay. Choose one, and say it slowly, three times.", "beats": ["Some people keep one line ready for when a wave hits.", "This is a wave.", "It will pass.", "Or, I can feel this and still be okay.", {"t": "Choose one, and say it slowly, three times.", "w": 12}]}, {"k": "big", "h": "Waves come, and waves go.", "sub": "You are still here.", "say": "If grief ever feels like more than you can carry, your hospice has people to talk with, before a death and after. Waves come, and waves go. You are still here. Come back to this whenever you need it."}]}
       ] },
       {"id": "willow-sp-calm", "kind": "support", "title": "Calming", "who": "When things heat up or panic rises", "lessons": [
-        {"id": "wl-s-panic", "n": 17, "title": "When Panic Rises", "mins": 4, "blurb": "Steady your body when panic or a racing heart hits.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Panic Rises", "sub": "One breath, one step at a time.", "say": "When your heart is racing, your chest feels tight, or panic comes out of nowhere, this is for you. It helps whether you are keeping watch or you are the one in the bed. Stay with me for a few minutes."}, {"k": "big", "h": "Panic is a wave. Waves pass.", "sub": "Your body is working hard to protect you.", "say": "First, know this. Panic is a wave of alarm moving through the body. It feels huge, and it passes. It is common in hard seasons like this one, and it comes from a body working hard to protect you."}, {"k": "big", "h": "Feet on the floor.", "sub": "Let something hold you up.", "say": "Put both feet flat on the floor. Press down a little, and feel the floor press back. If you are lying down, feel the bed holding your whole weight. Let it hold you.", "beats": ["Put both feet flat on the floor.", "Press down a little, and feel the floor press back.", "If you are lying down, feel the bed holding your whole weight.", {"t": "Let it hold you.", "w": 8}]}, {"k": "words", "h": "Name it.", "items": ["This is panic.", "It feels big, and it will pass.", "I can breathe slowly."], "say": "Now give it a name, out loud or in your head. This is panic. It feels big, and it will pass. I can breathe slowly. Say those words once more, at your own pace.", "beats": ["Now give it a name, out loud or in your head.", "This is panic.", "It feels big, and it will pass.", "I can breathe slowly.", {"t": "Say those words once more, at your own pace.", "w": 10}]}, {"k": "big", "h": "A hand on your chest.", "sub": "Feel the warmth of your own hand.", "say": "Rest one hand flat on your chest. Notice it rise and fall. You can rest the other hand on your belly. Feel the warmth of your own hand, right there.", "beats": ["Rest one hand flat on your chest.", "Notice it rise and fall.", "You can rest the other hand on your belly.", {"t": "Feel the warmth of your own hand, right there.", "w": 10}]}, {"k": "breathe", "h": "A long, slow breath out", "sub": "Out like cooling a spoonful of soup.", "hold": 36, "say": "Now let your breath out grow longer than your breath in. Breathe in through your nose. Then let it out slowly through your lips, like cooling a spoonful of soup. Keep going on your own, hand on your chest, feet on the floor."}, {"k": "points", "h": "If the panic is theirs", "items": [["Sit close, at eye level", "Calm and unhurried"], ["Breathe slowly where they can see", "They may follow your rhythm"], ["Keep words few", "I'm here. Breathe with me."], ["Call the hospice nurse", "Day or night, for any distress"]], "say": "If the panic belongs to the person in the bed, sit close, at their eye level. Breathe slowly where they can see you, so they can follow your rhythm if they want to. Keep your words few. I'm here. Breathe with me. And call the hospice nurse. They have ways to ease breathlessness and fear."}, {"k": "card", "title": "Help is one call away", "body": "If they are struggling to breathe or in distress, call your hospice nurse, day or night. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "If the person in the bed is struggling to breathe or in distress, call your hospice nurse, day or night. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You rode the wave.", "sub": "Come back to this anytime.", "say": "You rode the wave. Feet on the floor, a name for it, a hand on your chest, a long breath out. Come back to this as often as you need. That is enough for right now."}]},
-        {"id": "wl-s-arguing", "n": 18, "title": "When the Family Is Arguing", "mins": 4, "blurb": "Steps and words to cool a heated room at the bedside.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the Family Is Arguing", "sub": "Bring the room back to what matters.", "say": "When voices are rising around the bed, or every family talk turns into a fight, this is for you. Here are a few steps, and some words to say, to cool the room."}, {"k": "big", "h": "Strong feelings often come from love.", "sub": "Fear and grief can come out as anger.", "say": "First, this is common. When someone you all love is dying, fear and grief often come out sideways, as anger. A family arguing at the bedside is usually a family that loves the same person very much."}, {"k": "words", "h": "Take it out of the room.", "items": ["Let's step out and talk.", "Can we take this to the kitchen?", "Let's keep this room peaceful for Dad."], "say": "When voices rise, take the talk out of the room. The bedside is a place for gentle voices. You might say, let's step out and talk. Or, can we take this to the kitchen? Pick one, and say it out loud now, so it is ready when you need it.", "beats": ["When voices rise, take the talk out of the room.", "The bedside is a place for gentle voices.", "You might say, let's step out and talk.", "Or, can we take this to the kitchen?", {"t": "Pick one, and say it out loud now, so it is ready when you need it.", "w": 8}]}, {"k": "breathe", "h": "One breath before you answer", "sub": "A calmer voice lowers the whole room.", "hold": 14, "say": "Before you answer anyone, take one slow breath. In. And a long breath out. A calmer voice helps the whole room come down."}, {"k": "points", "h": "One voice at a time", "items": [["One person talks", "Everyone listens to the end"], ["Say it back", "What I hear you saying is..."], ["Start with I", "I'm scared, not you never help"], ["Take a break", "Ten minutes, then come back"]], "say": "Then try one voice at a time. One person talks, and everyone else listens to the end. Say back what you heard, starting with, what I hear you saying is. Start with I. I'm scared is easier to hear than you never help. And if it is still too hot, take a ten minute break, and come back."}, {"k": "words", "h": "Go back to what they want.", "items": ["What would Mom want right now?", "What has she told us matters most?", "Let's read What Matters together."], "say": "When you are stuck, turn back to the person in the bed. Ask, what would Mom want right now? What has she told us matters most? If their wishes are written in What Matters in Willow, read them together. Think of one thing you know matters to them.", "beats": ["When you are stuck, turn back to the person in the bed.", "Ask, what would Mom want right now?", "What has she told us matters most?", "If their wishes are written in What Matters in Willow, read them together.", {"t": "Think of one thing you know matters to them.", "w": 10}]}, {"k": "points", "h": "Ask your hospice to help", "items": [["The social worker", "Can help lead a family meeting"], ["The chaplain", "Can help hold hard talks"], ["One shared plan", "Written down, so all can see it"]], "say": "You don't have to referee this alone. Your hospice social worker or chaplain can help lead a family meeting. You can ask, could you help us talk this through as a family? A calm guide in the room helps everyone be heard. Then write down what you agree on, so everyone can see it."}, {"k": "card", "title": "If things get too heated", "body": "Your hospice team is there day or night, for them and for hard family moments. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "Your hospice team is there day or night, for the person in the bed and for hard family moments. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You can disagree and still love each other.", "sub": "The person in the bed is where you all meet.", "say": "You can disagree and still love each other. Come back to the person in the bed. That is where you all meet."}]},
-        {"id": "wl-s-restless", "n": 19, "title": "When They're Restless", "mins": 4, "blurb": "Calm presence when the person you love is restless or confused.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They're Restless", "sub": "Your calm can reach them.", "say": "When the person you love is restless, picking at the sheets, trying to get up, or confused about where they are, this is for you. Here is how to bring calm into the room."}, {"k": "big", "h": "Call the hospice nurse first.", "sub": "Day or night. The nurse can often ease it.", "say": "First, call your hospice nurse, right away, day or night. Restlessness near the end is common, and it can have causes the nurse can look into and ease. You are not bothering anyone. This is exactly what the line is for."}, {"k": "breathe", "h": "Steady yourself", "sub": "Your calm is something they can feel.", "hold": 16, "say": "While you wait, steady yourself. Your calm is something they can feel. Breathe in. And let a long, slow breath out."}, {"k": "points", "h": "Make the room calm", "items": [["Soft light", "A lamp, soft and low"], ["Quiet", "TV off, fewer voices at once"], ["Familiar music", "Low, the songs they know"], ["A gentle hand", "Only if it seems welcome"]], "say": "Then make the room calm. Soft light, a lamp instead of the overhead light. Quiet, with the TV off and fewer voices at once. Familiar music, played low. And a gentle hand on their arm or shoulder, only if it seems welcome. If they pull away, that is okay. Your presence nearby still helps."}, {"k": "words", "h": "A low, slow voice", "items": ["It's me. I'm right here.", "You're at home, in your own bed.", "You're safe. I'm staying with you."], "say": "Come close, where they can see you, and speak low and slow. Tell them who is here, and where they are. It's me, I'm right here. You're at home, in your own bed. You're safe, I'm staying with you. Try those words now, softly, the way you would say them to them.", "beats": ["Come close, where they can see you, and speak low and slow.", "Tell them who is here, and where they are.", "It's me, I'm right here.", "You're at home, in your own bed.", "You're safe, I'm staying with you.", {"t": "Try those words now, softly, the way you would say them to them.", "w": 10}]}, {"k": "points", "h": "If they try to get up", "items": [["Move slowly", "Calm hands, slow and gentle"], ["Go with their feeling", "You want to go home. Tell me."], ["Stay beside them", "Sit close, hold a hand if welcome"], ["Ask the nurse", "How to keep them safe from falls"]], "say": "If they try to get up, move slowly, with calm hands. Go with their feeling instead of arguing with it. If they say they need to go home, you might say, you want to go home. Tell me about home. Stay beside them. And ask the nurse how to keep them safe from falls."}, {"k": "card", "title": "Who to call", "body": "Your hospice nurse, day or night, for restlessness, new confusion, or any change. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "Call your hospice nurse, day or night, for restlessness, new confusion, or any change that worries you. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "Your steady presence is a comfort.", "sub": "Even when they cannot say so.", "say": "You don't have to fix this alone. Call the nurse, soften the room, slow your voice, and stay close. Your steady presence is a comfort, even when they cannot say so."}]},
-        {"id": "wl-s-snap", "n": 20, "title": "When You're About to Snap", "mins": 4, "blurb": "A pause, a safe step away, and a way back.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When You're About to Snap", "sub": "Find the pause.", "say": "If you are at the end of your rope, worn out, and one moment away from saying something you will regret, this is for you. Let's find the pause together."}, {"k": "big", "h": "This happens to loving caregivers.", "sub": "It is a sign you are carrying too much.", "say": "First, you are a good person having a hard moment. Many caregivers hit this wall. Feeling close to snapping comes from exhaustion and love stretched thin. It is a signal that you need something too."}, {"k": "big", "h": "Pause before words.", "sub": "One breath between the feeling and the words.", "say": "Let's practice the pause, so it is there when you need it. Close your lips. Let your shoulders drop. Take one long breath out before any word.", "beats": ["Let's practice the pause, so it is there when you need it.", "Close your lips.", "Let your shoulders drop.", {"t": "Take one long breath out before any word.", "w": 8}]}, {"k": "flow", "h": "Safe first, then step away", "steps": [["Make sure they are safe", "Settled in bed or a chair"], ["Step away", "Another room, a few minutes"], ["Cool down", "Let your body settle"], ["Come back", "When your voice is calm again"]], "say": "If the pause isn't enough, step away, safely. First make sure they are safe, settled in bed or in a chair. Then step into another room for a few minutes. Let your body cool down. Come back when your voice is calm again. Stepping away safely is a loving choice."}, {"k": "points", "h": "Cool your body", "items": [["Cold water", "On your wrists and face"], ["Unclench", "Jaw, hands, shoulders"], ["Move", "Walk, shake out your arms"], ["Breathe out long", "Longer out than in"]], "say": "While you are away, cool your body. Run cold water over your wrists, or splash your face. Unclench your jaw, your hands, your shoulders. Walk a little, or shake out your arms. And let each breath out run longer than the breath in."}, {"k": "breathe", "h": "Let it settle", "sub": "In. And a long breath out.", "hold": 20, "say": "Let's do a few together. Breathe in. And a long, slow breath out. Again, at your own pace."}, {"k": "words", "h": "Repair is possible.", "items": ["I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you."], "sub": "Guilt about a moment can lead to repair.", "say": "If the words already came out, repair is possible. Feeling bad about what you did can lead you back to make it right. It does not make you a bad person. Come back and say it simply. I'm sorry I raised my voice. I was worn out, and that wasn't fair to you. I love you. Say one of these quietly to yourself now, so it is ready.", "beats": ["If the words already came out, repair is possible.", "Feeling bad about what you did can lead you back to make it right.", "It does not make you a bad person.", "Come back and say it simply.", "I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you.", {"t": "Say one of these quietly to yourself now, so it is ready.", "w": 8}]}, {"k": "points", "h": "Ask for a break", "items": [["Name one person", "Who could sit with them for two hours?"], ["Ask your hospice", "About respite and volunteers"], ["Say it plainly", "I need a break. Can you help?"]], "say": "Then ask for a break. Name one person who could sit with them for two hours. Ask your hospice about respite and volunteers. And say it plainly. I need a break. Can you help? Rest helps you keep going."}, {"k": "card", "title": "If it feels like too much", "body": "Call your hospice, day or night. If you are in crisis yourself, call or text 988. If anyone is in danger right now, call 911.", "say": "If it feels like too much, call your hospice, day or night. They can help. If you are in crisis yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "You are allowed to be human.", "sub": "Pause. Step away. Come back.", "say": "You are carrying something heavy, and you are allowed to be human. Pause, step away, come back. That is how love keeps going."}]},
-        {"id": "wl-s-night", "n": 21, "title": "When Fear Comes at Night", "mins": 4, "blurb": "For the middle of the night, when fear gets loud.", "sources": ["kerr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Fear Comes at Night", "sub": "You are held, even in the dark.", "say": "It's the middle of the night, and fear has you wide awake. Whether you are keeping watch or you are the one in the bed, this is for you."}, {"k": "big", "h": "Fear is louder at night.", "sub": "Many worries look smaller by daylight.", "say": "Fear often grows louder at night. The house is quiet, you are tired, and every worry feels bigger in the dark. That is common. Many things that feel huge at three in the morning look smaller by daylight."}, {"k": "big", "h": "Turn on a soft light.", "sub": "A lamp, a night light, something gentle.", "say": "Start with light. Turn on a lamp or a night light, something soft. Look around and notice the room as it is right now. Find one familiar thing, and rest your eyes on it.", "beats": ["Start with light.", "Turn on a lamp or a night light, something soft.", "Look around and notice the room as it is right now.", {"t": "Find one familiar thing, and rest your eyes on it.", "w": 8}]}, {"k": "breathe", "h": "Breathe with the quiet", "sub": "Slow in. Slower out.", "hold": 24, "say": "Now breathe with the quiet. Slowly in. And slower still on the way out. Let the night be still around you for a few breaths."}, {"k": "big", "h": "A hand, a voice.", "sub": "I'm here. We're together tonight.", "say": "Now a hand. Rest a hand on your own heart, or on theirs. If you are with them, let them hear your voice. Say softly, I'm here. We're together tonight.", "beats": ["Now a hand.", "Rest a hand on your own heart, or on theirs.", "If you are with them, let them hear your voice.", "Say softly, I'm here.", {"t": "We're together tonight.", "w": 10}]}, {"k": "words", "h": "This can wait until morning.", "items": ["Phone calls and decisions", "Paperwork and plans", "Big talks with family", "Figuring out what comes next"], "sub": "Write it on a scrap of paper by the bed.", "say": "Let's set a few things down for the night. Phone calls and decisions can wait until morning. So can paperwork, plans, and big talks with family. If a worry keeps circling, write it on a scrap of paper by the bed. Name one worry now, and tell it, you can wait until morning.", "beats": ["Let's set a few things down for the night.", "Phone calls and decisions can wait until morning.", "So can paperwork, plans, and big talks with family.", "If a worry keeps circling, write it on a scrap of paper by the bed.", {"t": "Name one worry now, and tell it, you can wait until morning.", "w": 12}]}, {"k": "big", "h": "Dreams of loved ones", "sub": "Many people find these dreams comforting.", "say": "Some people near the end see or dream of loved ones who have died, often at night. Many find these dreams and visions comforting. If the person you love tells you about one, you can simply listen, and ask, who did you see? If anything they see seems to frighten them, call the hospice nurse."}, {"k": "points", "h": "Through the night", "items": [["Your hospice line", "Answered day or night"], ["988", "Call or text, for your own crisis"], ["911", "For danger right now"]], "say": "You are held tonight. Your hospice line is answered through the night, for any change or worry about them, and for a frightened caregiver too. If you are in crisis yourself, call or text 988. And call 911 for danger right now."}, {"k": "big", "h": "Morning will come.", "sub": "This is enough for tonight.", "say": "Morning will come. For now, a soft light, a slow breath, a hand. Rest if you can. This is enough for tonight."}]}
+        {"id": "wl-s-panic", "crisis": ["988: call or text, any time", "911: emergency"], "n": 17, "title": "When Panic Rises", "mins": 4, "blurb": "Steady your body when panic or a racing heart hits.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Panic Rises", "sub": "One breath, one step at a time.", "say": "When your heart is racing, your chest feels tight, or panic comes out of nowhere, this is for you. It helps whether you are keeping watch or you are the one in the bed. Stay with me for a few minutes."}, {"k": "big", "h": "Panic is a wave. Waves pass.", "sub": "Your body is working hard to protect you.", "say": "First, know this. Panic is a wave of alarm moving through the body. It feels huge, and it passes. It is common in hard seasons like this one, and it comes from a body working hard to protect you."}, {"k": "big", "h": "Feet on the floor.", "sub": "Let something hold you up.", "say": "Put both feet flat on the floor. Press down a little, and feel the floor press back. If you are lying down, feel the bed holding your whole weight. Let it hold you.", "beats": ["Put both feet flat on the floor.", "Press down a little, and feel the floor press back.", "If you are lying down, feel the bed holding your whole weight.", {"t": "Let it hold you.", "w": 8}]}, {"k": "words", "h": "Name it.", "items": ["This is panic.", "It feels big, and it will pass.", "I can breathe slowly."], "say": "Now give it a name, out loud or in your head. This is panic. It feels big, and it will pass. I can breathe slowly. Say those words once more, at your own pace.", "beats": ["Now give it a name, out loud or in your head.", "This is panic.", "It feels big, and it will pass.", "I can breathe slowly.", {"t": "Say those words once more, at your own pace.", "w": 10}]}, {"k": "big", "h": "A hand on your chest.", "sub": "Feel the warmth of your own hand.", "say": "Rest one hand flat on your chest. Notice it rise and fall. You can rest the other hand on your belly. Feel the warmth of your own hand, right there.", "beats": ["Rest one hand flat on your chest.", "Notice it rise and fall.", "You can rest the other hand on your belly.", {"t": "Feel the warmth of your own hand, right there.", "w": 10}]}, {"k": "breathe", "h": "A long, slow breath out", "sub": "Out like cooling a spoonful of soup.", "hold": 36, "say": "Now let your breath out grow longer than your breath in. Breathe in through your nose. Then let it out slowly through your lips, like cooling a spoonful of soup. Keep going on your own, hand on your chest, feet on the floor."}, {"k": "points", "h": "If the panic is theirs", "items": [["Sit close, at eye level", "Calm and unhurried"], ["Breathe slowly where they can see", "They may follow your rhythm"], ["Keep words few", "I'm here. Breathe with me."], ["Call the hospice nurse", "Day or night, for any distress"]], "say": "If the panic belongs to the person in the bed, sit close, at their eye level. Breathe slowly where they can see you, so they can follow your rhythm if they want to. Keep your words few. I'm here. Breathe with me. And call the hospice nurse. They have ways to ease breathlessness and fear."}, {"k": "card", "title": "Help is one call away", "body": "If they are struggling to breathe or in distress, call your hospice nurse, day or night. If anyone is in danger right now, call for emergency help.", "say": "If the person in the bed is struggling to breathe or in distress, call your hospice nurse, day or night."}, {"k": "big", "h": "You rode the wave.", "sub": "Come back to this anytime.", "say": "You rode the wave. Feet on the floor, a name for it, a hand on your chest, a long breath out. Come back to this as often as you need. That is enough for right now."}]},
+        {"id": "wl-s-arguing", "crisis": ["988: call or text, any time", "911: emergency"], "n": 18, "title": "When the Family Is Arguing", "mins": 4, "blurb": "Steps and words to cool a heated room at the bedside.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When the Family Is Arguing", "sub": "Bring the room back to what matters.", "say": "When voices are rising around the bed, or every family talk turns into a fight, this is for you. Here are a few steps, and some words to say, to cool the room."}, {"k": "big", "h": "Strong feelings often come from love.", "sub": "Fear and grief can come out as anger.", "say": "First, this is common. When someone you all love is dying, fear and grief often come out sideways, as anger. A family arguing at the bedside is usually a family that loves the same person very much."}, {"k": "words", "h": "Take it out of the room.", "items": ["Let's step out and talk.", "Can we take this to the kitchen?", "Let's keep this room peaceful for Dad."], "say": "When voices rise, take the talk out of the room. The bedside is a place for gentle voices. You might say, let's step out and talk. Or, can we take this to the kitchen? Pick one, and say it out loud now, so it is ready when you need it.", "beats": ["When voices rise, take the talk out of the room.", "The bedside is a place for gentle voices.", "You might say, let's step out and talk.", "Or, can we take this to the kitchen?", {"t": "Pick one, and say it out loud now, so it is ready when you need it.", "w": 8}]}, {"k": "breathe", "h": "One breath before you answer", "sub": "A calmer voice lowers the whole room.", "hold": 14, "say": "Before you answer anyone, take one slow breath. In. And a long breath out. A calmer voice helps the whole room come down."}, {"k": "points", "h": "One voice at a time", "items": [["One person talks", "Everyone listens to the end"], ["Say it back", "What I hear you saying is..."], ["Start with I", "I'm scared, not you never help"], ["Take a break", "Ten minutes, then come back"]], "say": "Then try one voice at a time. One person talks, and everyone else listens to the end. Say back what you heard, starting with, what I hear you saying is. Start with I. I'm scared is easier to hear than you never help. And if it is still too hot, take a ten minute break, and come back."}, {"k": "words", "h": "Go back to what they want.", "items": ["What would Mom want right now?", "What has she told us matters most?", "Let's read What Matters together."], "say": "When you are stuck, turn back to the person in the bed. Ask, what would Mom want right now? What has she told us matters most? If their wishes are written in What Matters in Willow, read them together. Think of one thing you know matters to them.", "beats": ["When you are stuck, turn back to the person in the bed.", "Ask, what would Mom want right now?", "What has she told us matters most?", "If their wishes are written in What Matters in Willow, read them together.", {"t": "Think of one thing you know matters to them.", "w": 10}]}, {"k": "points", "h": "Ask your hospice to help", "items": [["The social worker", "Can help lead a family meeting"], ["The chaplain", "Can help hold hard talks"], ["One shared plan", "Written down, so all can see it"]], "say": "You don't have to referee this alone. Your hospice social worker or chaplain can help lead a family meeting. You can ask, could you help us talk this through as a family? A calm guide in the room helps everyone be heard. Then write down what you agree on, so everyone can see it."}, {"k": "card", "title": "If things get too heated", "body": "Your hospice team is there day or night, for them and for hard family moments.", "say": "Your hospice team is there day or night, for the person in the bed and for hard family moments."}, {"k": "big", "h": "You can disagree and still love each other.", "sub": "The person in the bed is where you all meet.", "say": "You can disagree and still love each other. Come back to the person in the bed. That is where you all meet."}]},
+        {"id": "wl-s-restless", "crisis": ["988: call or text, any time", "911: emergency"], "n": 19, "title": "When They're Restless", "mins": 4, "blurb": "Calm presence when the person you love is restless or confused.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They're Restless", "sub": "Your calm can reach them.", "say": "When the person you love is restless, picking at the sheets, trying to get up, or confused about where they are, this is for you. Here is how to bring calm into the room."}, {"k": "big", "h": "Call the hospice nurse first.", "sub": "Day or night. The nurse can often ease it.", "say": "First, call your hospice nurse, right away, day or night. Restlessness near the end is common, and it can have causes the nurse can look into and ease. You are not bothering anyone. This is exactly what the line is for."}, {"k": "breathe", "h": "Steady yourself", "sub": "Your calm is something they can feel.", "hold": 16, "say": "While you wait, steady yourself. Your calm is something they can feel. Breathe in. And let a long, slow breath out."}, {"k": "points", "h": "Make the room calm", "items": [["Soft light", "A lamp, soft and low"], ["Quiet", "TV off, fewer voices at once"], ["Familiar music", "Low, the songs they know"], ["A gentle hand", "Only if it seems welcome"]], "say": "Then make the room calm. Soft light, a lamp instead of the overhead light. Quiet, with the TV off and fewer voices at once. Familiar music, played low. And a gentle hand on their arm or shoulder, only if it seems welcome. If they pull away, that is okay. Your presence nearby still helps."}, {"k": "words", "h": "A low, slow voice", "items": ["It's me. I'm right here.", "You're at home, in your own bed.", "You're safe. I'm staying with you."], "say": "Come close, where they can see you, and speak low and slow. Tell them who is here, and where they are. It's me, I'm right here. You're at home, in your own bed. You're safe, I'm staying with you. Try those words now, softly, the way you would say them to them.", "beats": ["Come close, where they can see you, and speak low and slow.", "Tell them who is here, and where they are.", "It's me, I'm right here.", "You're at home, in your own bed.", "You're safe, I'm staying with you.", {"t": "Try those words now, softly, the way you would say them to them.", "w": 10}]}, {"k": "points", "h": "If they try to get up", "items": [["Move slowly", "Calm hands, slow and gentle"], ["Go with their feeling", "You want to go home. Tell me."], ["Stay beside them", "Sit close, hold a hand if welcome"], ["Ask the nurse", "How to keep them safe from falls"]], "say": "If they try to get up, move slowly, with calm hands. Go with their feeling instead of arguing with it. If they say they need to go home, you might say, you want to go home. Tell me about home. Stay beside them. And ask the nurse how to keep them safe from falls."}, {"k": "card", "title": "Who to call", "body": "Your hospice nurse, day or night, for restlessness, new confusion, or any change. If anyone is in danger right now, call for emergency help.", "say": "Call your hospice nurse, day or night, for restlessness, new confusion, or any change that worries you."}, {"k": "big", "h": "Your steady presence is a comfort.", "sub": "Even when they cannot say so.", "say": "You don't have to fix this alone. Call the nurse, soften the room, slow your voice, and stay close. Your steady presence is a comfort, even when they cannot say so."}]},
+        {"id": "wl-s-snap", "crisis": ["988: call or text, any time", "911: emergency"], "n": 20, "title": "When You're About to Snap", "mins": 4, "blurb": "A pause, a safe step away, and a way back.", "sources": ["tangney"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When You're About to Snap", "sub": "Find the pause.", "say": "If you are at the end of your rope, worn out, and one moment away from saying something you will regret, this is for you. Let's find the pause together."}, {"k": "big", "h": "This happens to loving caregivers.", "sub": "It is a sign you are carrying too much.", "say": "First, you are a good person having a hard moment. Many caregivers hit this wall. Feeling close to snapping comes from exhaustion and love stretched thin. It is a signal that you need something too."}, {"k": "big", "h": "Pause before words.", "sub": "One breath between the feeling and the words.", "say": "Let's practice the pause, so it is there when you need it. Close your lips. Let your shoulders drop. Take one long breath out before any word.", "beats": ["Let's practice the pause, so it is there when you need it.", "Close your lips.", "Let your shoulders drop.", {"t": "Take one long breath out before any word.", "w": 8}]}, {"k": "flow", "h": "Safe first, then step away", "steps": [["Make sure they are safe", "Settled in bed or a chair"], ["Step away", "Another room, a few minutes"], ["Cool down", "Let your body settle"], ["Come back", "When your voice is calm again"]], "say": "If the pause isn't enough, step away, safely. First make sure they are safe, settled in bed or in a chair. Then step into another room for a few minutes. Let your body cool down. Come back when your voice is calm again. Stepping away safely is a loving choice."}, {"k": "points", "h": "Cool your body", "items": [["Cold water", "On your wrists and face"], ["Unclench", "Jaw, hands, shoulders"], ["Move", "Walk, shake out your arms"], ["Breathe out long", "Longer out than in"]], "say": "While you are away, cool your body. Run cold water over your wrists, or splash your face. Unclench your jaw, your hands, your shoulders. Walk a little, or shake out your arms. And let each breath out run longer than the breath in."}, {"k": "breathe", "h": "Let it settle", "sub": "In. And a long breath out.", "hold": 20, "say": "Let's do a few together. Breathe in. And a long, slow breath out. Again, at your own pace."}, {"k": "words", "h": "Repair is possible.", "items": ["I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you."], "sub": "Guilt about a moment can lead to repair.", "say": "If the words already came out, repair is possible. Feeling bad about what you did can lead you back to make it right. It does not make you a bad person. Come back and say it simply. I'm sorry I raised my voice. I was worn out, and that wasn't fair to you. I love you. Say one of these quietly to yourself now, so it is ready.", "beats": ["If the words already came out, repair is possible.", "Feeling bad about what you did can lead you back to make it right.", "It does not make you a bad person.", "Come back and say it simply.", "I'm sorry I raised my voice.", "I was worn out, and that wasn't fair to you.", "I love you.", {"t": "Say one of these quietly to yourself now, so it is ready.", "w": 8}]}, {"k": "points", "h": "Ask for a break", "items": [["Name one person", "Who could sit with them for two hours?"], ["Ask your hospice", "About respite and volunteers"], ["Say it plainly", "I need a break. Can you help?"]], "say": "Then ask for a break. Name one person who could sit with them for two hours. Ask your hospice about respite and volunteers. And say it plainly. I need a break. Can you help? Rest helps you keep going."}, {"k": "card", "title": "If it feels like too much", "body": "Call your hospice, day or night.", "say": "If it feels like too much, call your hospice, day or night. They can help."}, {"k": "big", "h": "You are allowed to be human.", "sub": "Pause. Step away. Come back.", "say": "You are carrying something heavy, and you are allowed to be human. Pause, step away, come back. That is how love keeps going."}]},
+        {"id": "wl-s-night", "crisis": ["988: call or text, any time", "911: emergency"], "n": 21, "title": "When Fear Comes at Night", "mins": 4, "blurb": "For the middle of the night, when fear gets loud.", "sources": ["kerr"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Fear Comes at Night", "sub": "You are held, even in the dark.", "say": "It's the middle of the night, and fear has you wide awake. Whether you are keeping watch or you are the one in the bed, this is for you."}, {"k": "big", "h": "Fear is louder at night.", "sub": "Many worries look smaller by daylight.", "say": "Fear often grows louder at night. The house is quiet, you are tired, and every worry feels bigger in the dark. That is common. Many things that feel huge at three in the morning look smaller by daylight."}, {"k": "big", "h": "Turn on a soft light.", "sub": "A lamp, a night light, something gentle.", "say": "Start with light. Turn on a lamp or a night light, something soft. Look around and notice the room as it is right now. Find one familiar thing, and rest your eyes on it.", "beats": ["Start with light.", "Turn on a lamp or a night light, something soft.", "Look around and notice the room as it is right now.", {"t": "Find one familiar thing, and rest your eyes on it.", "w": 8}]}, {"k": "breathe", "h": "Breathe with the quiet", "sub": "Slow in. Slower out.", "hold": 24, "say": "Now breathe with the quiet. Slowly in. And slower still on the way out. Let the night be still around you for a few breaths."}, {"k": "big", "h": "A hand, a voice.", "sub": "I'm here. We're together tonight.", "say": "Now a hand. Rest a hand on your own heart, or on theirs. If you are with them, let them hear your voice. Say softly, I'm here. We're together tonight.", "beats": ["Now a hand.", "Rest a hand on your own heart, or on theirs.", "If you are with them, let them hear your voice.", "Say softly, I'm here.", {"t": "We're together tonight.", "w": 10}]}, {"k": "words", "h": "This can wait until morning.", "items": ["Phone calls and decisions", "Paperwork and plans", "Big talks with family", "Figuring out what comes next"], "sub": "Write it on a scrap of paper by the bed.", "say": "Let's set a few things down for the night. Phone calls and decisions can wait until morning. So can paperwork, plans, and big talks with family. If a worry keeps circling, write it on a scrap of paper by the bed. Name one worry now, and tell it, you can wait until morning.", "beats": ["Let's set a few things down for the night.", "Phone calls and decisions can wait until morning.", "So can paperwork, plans, and big talks with family.", "If a worry keeps circling, write it on a scrap of paper by the bed.", {"t": "Name one worry now, and tell it, you can wait until morning.", "w": 12}]}, {"k": "big", "h": "Dreams of loved ones", "sub": "Many people find these dreams comforting.", "say": "Some people near the end see or dream of loved ones who have died, often at night. Many find these dreams and visions comforting. If the person you love tells you about one, you can simply listen, and ask, who did you see? If anything they see seems to frighten them, call the hospice nurse."}, {"k": "points", "h": "Through the night", "items": [["Your hospice line", "Answered day or night"]], "say": "You are held tonight. Your hospice line is answered through the night, for any change or worry about them, and for a frightened caregiver too."}, {"k": "big", "h": "Morning will come.", "sub": "This is enough for tonight.", "say": "Morning will come. For now, a soft light, a slow breath, a hand. Rest if you can. This is enough for tonight."}]}
       ] },
       {"id": "willow-sp-meditate", "kind": "support", "title": "Meditation", "who": "Guided quiet, for the chair beside the bed or the bed itself", "lessons": [
         {"id": "wl-s-resting", "n": 22, "title": "Resting Breath", "mins": 4, "blurb": "A slow, gentle rest for the person in the bed, and anyone beside them.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Resting Breath", "sub": "Only rest.", "say": "This one is for resting. If you are lying in bed, it was made for you. And if you are sitting nearby, you are welcome to rest along with it."}, {"k": "big", "h": "There is nothing you need to do.", "sub": "You can simply rest.", "say": "There is nothing you need to do right now. Nothing to finish. Nothing to say. You can simply rest, and let these words keep you company."}, {"k": "big", "h": "Let the bed hold you.", "say": "Let the bed hold you. Feel the pillow under your head. Feel the blanket resting on you. Let your weight sink in, a little at a time.", "beats": ["Let the bed hold you.", "Feel the pillow under your head.", "Feel the blanket resting on you.", {"t": "Let your weight sink in, a little at a time.", "w": 12}]}, {"k": "breathe", "h": "Let your breath come on its own", "sub": "No counting. No effort.", "hold": 36, "say": "Now notice your breath. You don't need to change it. Let it come in on its own. And let it go out on its own. Each breath out can be a little softer."}, {"k": "big", "h": "Let your hands be heavy.", "say": "Let your hands rest right where they are. Let your shoulders soften into the bed. Let your face soften, around your eyes and around your mouth. Nothing to hold up now.", "beats": ["Let your hands rest right where they are.", "Let your shoulders soften into the bed.", "Let your face soften, around your eyes and around your mouth.", {"t": "Nothing to hold up now.", "w": 12}]}, {"k": "words", "h": "Words to rest in", "items": ["It is okay to rest.", "You are held.", "You are so loved."], "say": "Here are a few words to rest in. It is okay to rest. You are held. You are so loved. Let those words settle over you like a blanket.", "beats": ["Here are a few words to rest in.", "It is okay to rest.", "You are held.", "You are so loved.", {"t": "Let those words settle over you like a blanket.", "w": 12}]}, {"k": "breathe", "h": "Rest with the breath", "sub": "Softly in. Softly out.", "hold": 40, "say": "Rest here with your breath for a while. Softly in. Softly out. If your mind drifts, let it drift. If you fall asleep, that is fine too."}, {"k": "big", "h": "Rest as long as you like.", "sub": "You are held.", "say": "Rest as long as you like. You are held, by this bed, and by the people who love you. And if you are sitting nearby and anything about their comfort worries you, call your hospice nurse, day or night."}]},
@@ -14194,7 +14143,7 @@ window.GG_LEARN = {
       {"id": "willow-sp-talk", "kind": "support", "title": "Talking Things Through", "who": "Words for the talks that matter most", "lessons": [
         {"id": "wl-s-children", "n": 27, "title": "Talking with Children About Dying", "mins": 4, "blurb": "Honest, simple words for the children in your family.", "sources": ["dougy"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Talking with Children About Dying", "sub": "The truth, told gently.", "say": "When there are children in your family, and someone they love is dying, this is for you. Children do best with the truth, told gently."}, {"k": "big", "h": "Children notice more than we think.", "sub": "Simple truth helps them feel safe.", "say": "Children notice more than we think. They feel the hush in the house and see the tired faces. When no one explains, they often fill the gaps with something scarier, or decide it is somehow their fault. Simple, honest words help them feel safe."}, {"k": "words", "h": "Use the real words.", "items": ["Grandpa is very sick.", "His body can't get better.", "He is dying.", "When he dies, his body will stop working."], "sub": "Say dying and died.", "say": "Use the real words, even though they are hard to say. Grandpa is very sick. His body can't get better. He is dying. Words like sleeping, or lost, or gone away can confuse a child, or even make them afraid to fall asleep. Dying and died are clear, and clear is kind."}, {"k": "words", "h": "Practice your first sentence.", "items": ["I need to tell you something sad.", "Grandma is dying."], "say": "Let's practice. Think of the child you need to talk with. Say their name, and then one true, simple sentence, out loud or in your head.", "beats": ["Let's practice.", "Think of the child you need to talk with.", {"t": "Say their name, and then one true, simple sentence, out loud or in your head.", "w": 12}]}, {"k": "points", "h": "Short answers, and let them ask", "items": [["Answer what they ask", "Then pause and listen"], ["Ask what they think", "What have you noticed?"], ["I don't know is okay", "Honest is better than perfect"], ["They may ask again", "Repeating helps them understand"]], "say": "Keep your answers short, and let them ask. Answer what they ask, then pause and listen. Ask what they think, what have you noticed. It's okay to say, I don't know. And expect the same question again, and again. Repeating is how children make sense of big news."}, {"k": "points", "h": "Let them be part of it", "items": [["Visit, if they want to", "Tell them first what they will see"], ["Give them a way to help", "A drawing, a song, holding a hand"], ["A card counts too", "If they would rather not visit"]], "say": "Let them be part of it, if they want to be. Before a visit, tell them what they will see, the bed, the quiet breathing, any equipment in the room. Give them a way to help, a drawing for the wall, a song, a hand to hold. If they would rather not visit, a card or a message counts too. Let them choose."}, {"k": "points", "h": "Their grief comes in bursts", "items": [["Sad, then playing", "That is how children grieve"], ["Play helps them work it out", "Even playing hospital or funeral"], ["Questions at odd times", "Bedtime, the car, the bath"], ["Tell their school", "So teachers can watch and help"]], "say": "Children's grief often comes in bursts. They may cry, then run off to play a minute later. That is normal. Play is how they work things out, even playing hospital or funeral. Big questions come at odd times, at bedtime, in the car. And tell their school, so teachers can watch for hard days and help."}, {"k": "big", "h": "Your honesty and your arms are enough.", "sub": "It is okay to cry together.", "say": "Simple words are enough. It's okay to cry in front of them. It shows them that sadness is what love feels like right now. Your honesty and your arms around them are enough. And your hospice team can help you find words for children. Just ask."}]},
         {"id": "wl-s-matters", "n": 28, "title": "Saying What Matters", "mins": 4, "blurb": "Four things worth saying, and how to say the ones that are true.", "sources": ["byock4"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Saying What Matters", "sub": "While there is still time.", "say": "When there are things you want to say before it's too late, this is for you. We'll go a little deeper than the words themselves."}, {"k": "words", "h": "The Four Things", "items": ["Please forgive me.", "I forgive you.", "Thank you.", "I love you."], "sub": "Then, when it feels right: goodbye.", "say": "Many people near the end of life, and the people who love them, find four things they want to say. Please forgive me. I forgive you. Thank you. I love you. And then, when it feels right, goodbye. Let's look at what each one carries."}, {"k": "points", "h": "What each one carries", "items": [["Please forgive me", "Owning your part, simply"], ["I forgive you", "Setting down what you carried"], ["Thank you", "Naming one real thing"], ["I love you", "Plain, and out loud"]], "say": "Please forgive me is about owning your part. It can be one sentence. I'm sorry for the years I stayed away. I forgive you sets down something you have carried, sometimes for a long time. Thank you is strongest when it names one real thing. And I love you needs nothing added."}, {"k": "big", "h": "Say the ones that are true.", "sub": "Every family is different.", "say": "You don't have to say all four. Say the ones that are true for you. If forgiveness isn't ready yet, that is honest, and it's okay. A true thank-you means more than a forced I forgive you."}, {"k": "story", "title": "The Wisdom They Share", "lines": ["Marcus had spent twenty-eight years in prison. In his final days, no one came to visit.", "He told me, Real strength is owning what you did. Asking forgiveness.", "Then: Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."], "lesson": "The words are worth saying while there is still time.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a man named Marcus in his final days. He had spent twenty-eight years in prison, and no one came to visit. He told me he used to think being tough was the only way to survive. Lying there, he saw how wrong he was. Real strength is owning what you did, he said. Asking forgiveness. Then he looked straight at me. Tell the people you love that you love them while you still can. Don't wait until the end of the road like I did."}, {"k": "words", "h": "Choose one to say.", "items": ["I'm sorry for...", "I forgive you for...", "Thank you for...", "I love you because..."], "say": "Now choose one of the four that is true for you. Finish the sentence, in your head or out loud. Take your time.", "beats": ["Now choose one of the four that is true for you.", "Finish the sentence, in your head or out loud.", {"t": "Take your time.", "w": 14}]}, {"k": "points", "h": "If speaking is hard", "items": [["Write it", "A letter, a card, a note"], ["Read it to them", "Or let them read it"], ["Say it in pieces", "One thing today, one tomorrow"], ["Ask for support", "A chaplain or social worker can sit with you"]], "say": "If the words won't come out loud, write them. A letter, a card, a few lines on a napkin. You can read it to them, or let them read it. You can say it in pieces, one thing today and another tomorrow. And your hospice chaplain or social worker can sit with you while you say it."}, {"k": "big", "h": "Goodbye comes when it feels right.", "sub": "A word, or a hand held a little longer.", "say": "Goodbye can come last, when it feels right. For some families it is a word. For others it is a hand held a little longer. Both count."}, {"k": "big", "h": "Say one true thing today.", "say": "There may never be a perfect moment. A true one is enough. Say one of them today, while you still can."}]},
-        {"id": "wl-s-dying", "n": 29, "title": "When They Want to Talk About Dying", "mins": 4, "blurb": "How to follow their lead when they bring it up.", "sources": ["convo"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They Want to Talk About Dying", "sub": "Follow their lead.", "say": "When the person you love starts talking about dying, and everything in you wants to change the subject, this is for you."}, {"k": "big", "h": "Changing the subject is a common reflex.", "sub": "It comes from love.", "say": "When they say, I don't think I'm getting better, it's common to jump in. Don't talk like that. You're going to be fine. That reflex comes from love. And it can close a door they just found the courage to open."}, {"k": "big", "h": "Talking about it is often a relief.", "sub": "You only have to stay.", "say": "Many people near the end already know. Carrying it alone, while everyone around them pretends, can be lonely. Talking about it is often a relief to them. You don't have to fix anything. You only have to stay in the conversation."}, {"k": "words", "h": "Words that keep the door open", "items": ["Tell me more.", "What are you thinking about?", "What has that been like?", "What worries you most?"], "say": "A few words can keep the door open. Tell me more. What are you thinking about. What has that been like for you. What worries you most. Then let them talk, and let the pauses be long."}, {"k": "big", "h": "Practice staying.", "say": "Let's practice. Picture them saying, I think I'm dying. Notice the urge to rush in with comfort. Take one slow breath instead. Then say it softly, tell me more.", "beats": ["Let's practice.", "Picture them saying, I think I'm dying.", "Notice the urge to rush in with comfort.", "Take one slow breath instead.", {"t": "Then say it softly, tell me more.", "w": 10}]}, {"k": "story", "title": "A Quiet Doorway", "lines": ["A retired engineer had banned the word hospice. For weeks we talked bridges and puzzles.", "One quiet evening he asked, They brought me here to die, didn't they? I answered honestly, but gently.", "He talked about his wife and his children. His family said it gave them back their father."], "lesson": "When they open the door, walk through it gently.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a retired engineer who had banned the word hospice. No talk of dying. So for weeks we talked bridges and puzzles, and trust came in layers. One quiet evening he looked straight at me and said, They brought me here to die, didn't they? There was no panic in his voice. I answered honestly, but gently. Over the next days he talked about the wife he had lost, and the children he hoped would remember his steady hands. His family later told me those conversations gave them back their father."}, {"k": "points", "h": "What can come next", "items": [["Listen more than you talk", "Silence is okay"], ["Ask what matters most now", "People, places, wishes"], ["It's okay to cry", "You can be sad together"], ["Bring in your hospice team", "They help with these talks"]], "say": "Listen more than you talk. Silence is okay. When it fits, ask what matters most to them now, the people they want near, the wishes they want kept. It's okay to cry. You can be sad together. And your hospice nurse, social worker, and chaplain are good company for these talks."}, {"k": "card", "title": "If they say they want to die", "body": "Being ready is common near the end. It is not the same as a plan to end their life. If they talk about ending their life, tell your hospice team. For your own crisis, call or text 988. For danger right now, call 911.", "say": "Sometimes they say, I just want to die. Being ready, or tired of waiting, is common near the end, and it is not the same as a plan to end their life. You can still say, tell me more. If they talk about ending their life, tell your hospice team, day or night. If you are struggling yourself, call or text 988. And if anyone is in danger right now, call 911."}, {"k": "big", "h": "Just stay close. Your presence speaks.", "say": "You don't need answers. Your willingness to stay in the conversation is the gift. Let them lead, and stay close."}]},
+        {"id": "wl-s-dying", "crisis": ["988: call or text, any time", "911: emergency"], "n": 29, "title": "When They Want to Talk About Dying", "mins": 4, "blurb": "How to follow their lead when they bring it up.", "sources": ["convo"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When They Want to Talk About Dying", "sub": "Follow their lead.", "say": "When the person you love starts talking about dying, and everything in you wants to change the subject, this is for you."}, {"k": "big", "h": "Changing the subject is a common reflex.", "sub": "It comes from love.", "say": "When they say, I don't think I'm getting better, it's common to jump in. Don't talk like that. You're going to be fine. That reflex comes from love. And it can close a door they just found the courage to open."}, {"k": "big", "h": "Talking about it is often a relief.", "sub": "You only have to stay.", "say": "Many people near the end already know. Carrying it alone, while everyone around them pretends, can be lonely. Talking about it is often a relief to them. You don't have to fix anything. You only have to stay in the conversation."}, {"k": "words", "h": "Words that keep the door open", "items": ["Tell me more.", "What are you thinking about?", "What has that been like?", "What worries you most?"], "say": "A few words can keep the door open. Tell me more. What are you thinking about. What has that been like for you. What worries you most. Then let them talk, and let the pauses be long."}, {"k": "big", "h": "Practice staying.", "say": "Let's practice. Picture them saying, I think I'm dying. Notice the urge to rush in with comfort. Take one slow breath instead. Then say it softly, tell me more.", "beats": ["Let's practice.", "Picture them saying, I think I'm dying.", "Notice the urge to rush in with comfort.", "Take one slow breath instead.", {"t": "Then say it softly, tell me more.", "w": 10}]}, {"k": "story", "title": "A Quiet Doorway", "lines": ["A retired engineer had banned the word hospice. For weeks we talked bridges and puzzles.", "One quiet evening he asked, They brought me here to die, didn't they? I answered honestly, but gently.", "He talked about his wife and his children. His family said it gave them back their father."], "lesson": "When they open the door, walk through it gently.", "note": "Names and details changed", "hold": 2, "say": "I once sat with a retired engineer who had banned the word hospice. No talk of dying. So for weeks we talked bridges and puzzles, and trust came in layers. One quiet evening he looked straight at me and said, They brought me here to die, didn't they? There was no panic in his voice. I answered honestly, but gently. Over the next days he talked about the wife he had lost, and the children he hoped would remember his steady hands. His family later told me those conversations gave them back their father."}, {"k": "points", "h": "What can come next", "items": [["Listen more than you talk", "Silence is okay"], ["Ask what matters most now", "People, places, wishes"], ["It's okay to cry", "You can be sad together"], ["Bring in your hospice team", "They help with these talks"]], "say": "Listen more than you talk. Silence is okay. When it fits, ask what matters most to them now, the people they want near, the wishes they want kept. It's okay to cry. You can be sad together. And your hospice nurse, social worker, and chaplain are good company for these talks."}, {"k": "card", "title": "If they say they want to die", "body": "Being ready is common near the end. It is not the same as a plan to end their life. If they talk about ending their life, tell your hospice team.", "say": "Sometimes they say, I just want to die. Being ready, or tired of waiting, is common near the end, and it is not the same as a plan to end their life. You can still say, tell me more. If they talk about ending their life, tell your hospice team, day or night."}, {"k": "big", "h": "Just stay close. Your presence speaks.", "say": "You don't need answers. Your willingness to stay in the conversation is the gift. Let them lead, and stay close."}]},
         {"id": "wl-s-ask", "n": 30, "title": "Asking for What You Need", "mins": 4, "blurb": "Asking your hospice team, your people, and the one you love.", "sources": [], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "Asking for What You Need", "sub": "The ask is a gift.", "say": "If you have been carrying most of this on your own, this is for you. Asking is a strength, and it opens doors."}, {"k": "big", "h": "The ask is the gift.", "sub": "It shows people how to help.", "say": "Many caregivers wait until they are worn through before they ask. But the ask is a gift. It shows the people around you how to love you both. Your hospice team wants to know what you need."}, {"k": "points", "h": "Ask your hospice team", "items": [["An extra nurse visit", "When something changes or worries you"], ["A hospice aide", "Help with bathing and personal needs"], ["The chaplain or social worker", "Any faith or none; paperwork, family stress"], ["Respite or a volunteer", "So you can rest or step out"]], "say": "Your hospice team is more than the nurse. You can ask for an extra nurse visit when something changes. A hospice aide, to help with bathing. The chaplain, for anyone, of any faith or none. The social worker, for paperwork, money worries, and family stress. And ask about respite or a volunteer, so you can rest or step away for a while."}, {"k": "story", "title": "If She Is Still Here", "lines": ["On my day off, Jenny texted: It's mom. She's taken a turn. Can you come?", "I offered tomorrow. She wrote back: If she is still here.", "I came right away. Carol died peacefully a few hours after I left."], "lesson": "A plain ask lets people know it matters now.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/if-she-is-still-here", "label": "Read the Full Story: If She Is Still Here"}, "say": "On a day off, I got a text from Jenny, a daughter whose family I had been visiting for about a year. It's mom. She's taken a turn and not doing well. Can you come? I wrote back that I could come by tomorrow. She answered, Okay. If she is still here. My heart dropped. I wrote, I can come now if that's okay. I was out the door within minutes, and I stayed close to two hours. Carol died peacefully in her sleep a few hours after I left. I almost said tomorrow. I am so glad I did not."}, {"k": "big", "h": "Plain words help people say yes.", "sub": "You can simply say it.", "say": "Jenny's ask was plain. Can you come. Plain words like that let people know it matters now. You don't need to explain, or apologize, or wait until you are sure."}, {"k": "words", "h": "Ask family and friends, specifically", "items": ["Can you call the pharmacy for me?", "Can you sit with Mom Saturday morning?", "Can you be the one who updates everyone?", "Can you come now?"], "say": "With family and friends, specific asks work best. Can you call the pharmacy for me. Can you sit with Mom on Saturday morning, so I can sleep. Can you be the one who updates everyone. And sometimes, simply, can you come now."}, {"k": "words", "h": "Name one ask.", "items": ["Can you...?"], "say": "Let's practice. Think of one thing that would help this week. Think of one person who could do it. Now say the ask to yourself, in one plain sentence.", "beats": ["Let's practice.", "Think of one thing that would help this week.", "Think of one person who could do it.", {"t": "Now say the ask to yourself, in one plain sentence.", "w": 12}]}, {"k": "words", "h": "Ask the one you love, too", "items": ["What would make today better?", "Who would you like to see?", "Would you like company, or quiet?", "What would you like to hear?"], "say": "And ask the person in the bed. Their wishes still lead. What would make today better. Who would you like to see. Would you like company, or quiet. What would you like to hear, music, a story, the news from home."}, {"k": "big", "h": "Send one ask today.", "sub": "Your hospice is there day or night.", "say": "Asking lets other people love you both. Send one ask today. And for anything about their comfort that worries you, call your hospice, day or night."}]},
         {"id": "wl-s-far", "n": 31, "title": "When Family Is Far Away", "mins": 4, "blurb": "Ways to be there, and to say goodbye, from far away.", "sources": ["blundon"], "scenes": [{"k": "title", "hero": "willow", "eyebrow": "Support for Right Now", "h": "When Family Is Far Away", "sub": "Love can travel.", "say": "Whether you are the one far away, or the one at the bedside holding the phone, this is for you."}, {"k": "big", "h": "Being far away is common.", "sub": "It does not measure your love.", "say": "Families are spread out. Work, money, health, travel, or a heart that just can't face it can keep someone away. If that is you, many people feel it too. Being far away does not measure your love."}, {"k": "points", "h": "Ways to be there from far away", "items": [["A phone to their ear", "Or a video call, held close"], ["A recorded message", "Played whenever it helps"], ["A letter, read aloud", "By someone at the bedside"], ["A photo", "Set where they can see it"]], "say": "Here are ways to be there. Ask someone at the bedside to hold the phone to their ear, or set up a video call. Hearing may be one of the last senses to go, so your voice can still reach them. Record a message that can be played again. Write a letter for someone to read aloud. Send a photo to set where they can see it."}, {"k": "points", "h": "For the ones at the bedside", "items": [["Offer the phone", "Would you like to talk to them?"], ["Read their words aloud", "Slowly, in your own voice"], ["Name them in the room", "Your son is thinking of you"], ["Leave room for their choice", "Everyone comes in their own way"]], "say": "If you are the one at the bedside, you are the bridge. Offer the phone. Read their letters aloud, slowly, in your own voice. Name them in the room. Your son is thinking of you. Your sister sends her love. And leave room for their choice. Everyone comes in their own way."}, {"k": "story", "title": "Please Help My Dad Die", "lines": ["A man was struggling to let go. His son would not come. He said he just couldn't do this.", "I told him, Your son loves you deeply, even if he can't be here right now.", "The next day he died peacefully, with his daughter at his side."], "lesson": "Love can reach them, even from far away.", "note": "From a Grounded story by Chris Joy", "hold": 2, "link": {"href": "https://chri5j0y.substack.com/p/please-help-my-dad-die", "label": "Read the Full Story: Please Help My Dad Die"}, "say": "I was once called to the bedside of a man named Bob, who was struggling to let go. His son would not come. He said he just couldn't do this. Bob was in a deep sleep and could no longer respond. I placed a hand on his shoulder and told him his children would be alright, and that his son loved him deeply, even if he couldn't be here right now. The next day, Bob died peacefully, with his daughter at his side."}, {"k": "words", "h": "Say it from where you are.", "items": ["I love you.", "I'm with you from here.", "Thank you for...", "I'll carry you with me."], "say": "If you are far away, try it now. Picture their face. Say what you want them to know, out loud or in your heart.", "beats": ["If you are far away, try it now.", "Picture their face.", {"t": "Say what you want them to know, out loud or in your heart.", "w": 14}]}, {"k": "big", "h": "You can say goodbye from far away.", "sub": "It is a real goodbye.", "say": "Here is permission, if you need it. You can say goodbye from far away. A goodbye said on the phone, in a letter, or in your heart is a real goodbye."}, {"k": "big", "h": "Love travels farther than we think.", "say": "Love travels farther than we think. Send your words today, in whatever way you can. And if you need help setting up a call, ask your hospice team."}]}
       ] },
@@ -14303,6 +14252,7 @@ window.GG_LEARN = {
   "lessons": [
    {
     "id": "wl-welcome",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 1,
     "title": "Welcome to Willow",
     "mins": 4,
@@ -14396,18 +14346,16 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Call your hospice first, day or night.",
-      "sub": "In danger, call 911. Call or text 988, any time.",
       "beats": [
        "Your hospice has a line you can call day or night.",
        "Add it in Willow Settings, and it sits at the top of Today.",
        "For anything worrying at home, call your hospice first.",
-       "In danger, call nine one one, and nine eight eight is there to call or text, any time.",
        {
         "t": "If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge.",
         "w": 10
        }
       ],
-      "say": "Your hospice has a line you can call day or night. Add it in Willow Settings, and it sits at the top of Today. For anything worrying at home, call your hospice first. In danger, call nine one one, and nine eight eight is there to call or text, any time. If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge."
+      "say": "Your hospice has a line you can call day or night. Add it in Willow Settings, and it sits at the top of Today. For anything worrying at home, call your hospice first. If you can, find your hospice's number now, often on the admission papers or a sheet on the fridge."
      },
      {
       "k": "big",
@@ -14463,6 +14411,7 @@ window.GG_LEARN = {
   "lessons": [
    {
     "id": "wl-u-today",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 1,
     "title": "Today",
     "mins": 6,
@@ -14514,7 +14463,7 @@ window.GG_LEARN = {
        "Save the number"
       ],
       "tap": 0,
-      "say": "First, the hospice line. Until a number is saved, Today says, worried? Call your hospice first, day or night. Tap Add your hospice's 24/7 number, type the name and number, and tap Save the number. From then on it sits at the top of Today, one tap away. Call it first, before nine one one, for anything hospice can help with."
+      "say": "First, the hospice line. Until a number is saved, Today says, worried? Call your hospice first, day or night. Tap Add your hospice's 24/7 number, type the name and number, and tap Save the number. From then on it sits at the top of Today, one tap away. Call it first for anything hospice can help with."
      },
      {
       "k": "screen",
@@ -14576,7 +14525,7 @@ window.GG_LEARN = {
         "Three questions for each part"
        ]
       ],
-      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. If an answer shows someone may need help, Willow shows the hospice line first, then nine eight eight to call or text, and nine one one for danger."
+      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. If an answer shows someone may need help, Willow shows the hospice line first."
      },
      {
       "k": "points",
@@ -15391,6 +15340,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-u-changes",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 5,
     "title": "When Life Changes",
     "mins": 5,
@@ -15585,7 +15535,7 @@ window.GG_LEARN = {
       "k": "big",
       "h": "When you're worried, call your hospice nurse.",
       "sub": "They're there day and night.",
-      "say": "Every guide ends the same way. When you're worried, call your hospice nurse. They're there day and night. These guides offer spiritual and emotional support, and the hospice team is your first call for anything medical. In danger now, call nine one one. Thinking about ending your life, call or text nine eight eight."
+      "say": "Every guide ends the same way. When you're worried, call your hospice nurse. They're there day and night. These guides offer spiritual and emotional support, and the hospice team is your first call for anything medical."
      },
      {
       "k": "quiz",
@@ -16475,6 +16425,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-6-bark",
+    "crisis": ["911: emergency"],
     "n": 3,
     "title": "Bark: Peace Inside",
     "mins": 6,
@@ -16666,8 +16617,8 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Fear or restlessness that stays? Call your hospice.",
-      "sub": "Their 24/7 line first, day or night. In danger now? Call 911.",
-      "say": "Long Out-Breath is one of the practices Willow offers in Today, one gentle thing at a time. If fear or restlessness stays, call your hospice's 24/7 line, day or night. That is what it is there for. And if anyone is in danger right now, call nine one one."
+      "sub": "Their 24/7 line first, day or night.",
+      "say": "Long Out-Breath is one of the practices Willow offers in Today, one gentle thing at a time. If fear or restlessness stays, call your hospice's 24/7 line, day or night. That is what it is there for."
      },
      {
       "k": "quiz",
@@ -17093,6 +17044,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-6-fruit",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 6,
     "title": "Fruit: Hope and Readiness",
     "mins": 8,
@@ -17225,8 +17177,8 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Help is always right there.",
-      "sub": "Hospice 24/7 line first. 988, call or text. 911 in danger.",
-      "say": "If someone wishes it would come sooner, their hospice team should know, so they can help with whatever is making it hard. If someone has thought about ending their own life, tell someone right now. Call your hospice's twenty four hour line, or call or text nine eight eight. If anyone is in danger now, call nine one one."
+      "sub": "Hospice 24/7 line first.",
+      "say": "If someone wishes it would come sooner, their hospice team should know, so they can help with whatever is making it hard. If someone has thought about ending their own life, tell someone right now. Call your hospice's twenty four hour line."
      },
      {
       "k": "points",
@@ -17799,6 +17751,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-y-help",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 3,
     "title": "Letting Others Help",
     "mins": 6,
@@ -17913,8 +17866,8 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "If the weight gets heavy, tell someone today.",
-      "sub": "Your hospice team first. 988, call or text, any time.",
-      "say": "If feeling like a burden gets heavy, tell your hospice team. When Life Changes has a guide for this, called I'm a burden. And if you ever think about ending your life, please tell someone right now. You can call or text nine eight eight, any time. If you are in danger, call nine one one."
+      "sub": "Your hospice team first.",
+      "say": "If feeling like a burden gets heavy, tell your hospice team. When Life Changes has a guide for this, called I'm a burden. And if you ever think about ending your life, please tell someone right now."
      },
      {
       "k": "story",
@@ -18504,6 +18457,7 @@ window.GG_LEARN = {
   "lessons": [
    {
     "id": "wl-h-present",
+    "crisis": ["911: emergency"],
     "n": 1,
     "title": "You Don't Have to Know What to Say",
     "mins": 7,
@@ -18620,7 +18574,7 @@ window.GG_LEARN = {
       "k": "big",
       "h": "When they say something hard, you can stay with it.",
       "sub": "Tell me more. I am here.",
-      "say": "Sometimes they will say something hard. I'm scared. I'm ready. Why is this happening? You do not have to fix it. You can say, tell me more. Or simply, I'm here. If they ever talk about ending their own life, call your hospice right away, day or night. If anyone is in danger right now, call nine one one."
+      "say": "Sometimes they will say something hard. I'm scared. I'm ready. Why is this happening? You do not have to fix it. You can say, tell me more. Or simply, I'm here. If they ever talk about ending their own life, call your hospice right away, day or night."
      },
      {
       "k": "big",
@@ -18963,6 +18917,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-h-weeks",
+    "crisis": ["911: emergency"],
     "n": 3,
     "title": "What the Last Weeks Can Look Like",
     "mins": 7,
@@ -19132,13 +19087,9 @@ window.GG_LEARN = {
        [
         "Day or night",
         "The 24/7 line is at the top of Today"
-       ],
-       [
-        "Before 911",
-        "For anything hospice can help with"
        ]
       ],
-      "say": "Most of all, call your hospice anytime something worries you. Restlessness, grimacing, or anything that looks like distress. Their twenty four hour line sits at the top of Today in Willow. Call it first, before nine one one, for anything hospice can help with. You never have to guess alone."
+      "say": "Most of all, call your hospice anytime something worries you. Restlessness, grimacing, or anything that looks like distress. Their twenty four hour line sits at the top of Today in Willow. Call it first for anything hospice can help with. You never have to guess alone."
      },
      {
       "k": "big",
@@ -19376,6 +19327,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-h-ready",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 5,
     "title": "When They're Ready and You're Not",
     "mins": 7,
@@ -19411,8 +19363,8 @@ window.GG_LEARN = {
      {
       "k": "big",
       "h": "Being ready is different from wanting to end your life.",
-      "sub": "Unsure? Call your hospice. 988 and 911 too.",
-      "say": "Here is something important. Being at peace with dying is different from wanting to end your life. Many people near the end feel ready, and that can be a deep peace. If they ever talk about ending their own life, or you are unsure which you are hearing, call your hospice right away, day or night. You can also call or text nine eight eight. In danger now, call nine one one."
+      "sub": "Unsure? Call your hospice.",
+      "say": "Here is something important. Being at peace with dying is different from wanting to end your life. Many people near the end feel ready, and that can be a deep peace. If they ever talk about ending their own life, or you are unsure which you are hearing, call your hospice right away, day or night."
      },
      {
       "k": "points",
@@ -19555,6 +19507,7 @@ window.GG_LEARN = {
    },
    {
     "id": "wl-h-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "n": 6,
     "title": "Caring for Yourself on the Way",
     "mins": 7,
@@ -19767,13 +19720,9 @@ window.GG_LEARN = {
        [
         "Grief support",
         "Now, and for about a year after"
-       ],
-       [
-        "988",
-        "Call or text if you are struggling"
        ]
       ],
-      "say": "Help is there. Ask your hospice about respite care, a short break for you. Hospice volunteers can sit while you rest. Grief support is there now, and for about a year after a death. Ask for it by name. And if you are struggling, call or text nine eight eight, any time. In danger now, call nine one one."
+      "say": "Help is there. Ask your hospice about respite care, a short break for you. Hospice volunteers can sit while you rest. Grief support is there now, and for about a year after a death. Ask for it by name."
      },
      {
       "k": "big",
@@ -20121,13 +20070,9 @@ window.GG_LEARN = {
        [
         "Tend your own body",
         "Real food, water, sleep, fresh air"
-       ],
-       [
-        "988 and 911",
-        "Call or text 988 any time"
        ]
       ],
-      "say": "This season can be heavy for you too. Your hospice team is there for you day and night, so call their twenty four seven line first, any hour. Tend your own body with real food, water, sleep, and a little fresh air. And if the weight ever feels like too much, call or text nine eight eight, any time. If anyone is in danger right now, call nine one one."
+      "say": "This season can be heavy for you too. Your hospice team is there for you day and night, so call their twenty four seven line first, any hour. Tend your own body with real food, water, sleep, and a little fresh air."
      },
      {
       "k": "big",
@@ -20314,6 +20259,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-u-checkin",
+     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "911: emergency"],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 6,
@@ -20485,27 +20431,11 @@ window.GG_LEARN = {
        "title": "Help lines",
        "rows": [
         [
-         "988 Suicide and Crisis Lifeline",
-         "Call or text 988"
-        ],
-        [
-         "Veterans Crisis Line",
-         "988, then press 1"
-        ],
-        [
          "In immediate danger?",
-         "Call 911"
-        ],
-        [
-         "MAARC, Minnesota",
-         "1-844-880-1574"
-        ],
-        [
-         "Eldercare Locator",
-         "1-800-677-1116"
+         "Call for help"
         ]
        ],
-       "say": "If your answers show you are carrying a lot, a card opens with help lines. Call or text nine eight eight, any time. Veterans, call nine eight eight and press one. In danger right now, call nine one one. The card also lists lines for when someone is hurting you or taking your money, and for finding help near you. Tap Close and keep going whenever you are ready. And Need to talk to someone now is on those last pages, any time."
+       "say": "If your answers show you are carrying a lot, a card opens with help lines. The card also lists lines for when someone is hurting you or taking your money, and for finding help near you. Tap Close and keep going whenever you are ready. And Need to talk to someone now is on those last pages, any time."
       },
       {
        "k": "flow",
@@ -20548,6 +20478,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-tree",
+     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "Your Tree and Your Levels",
      "mins": 5,
@@ -20657,7 +20588,7 @@ window.GG_LEARN = {
          "Lines for safety and money"
         ]
        ],
-       "say": "Sometimes a box called Worth tending appears. It comes up when your answers say you have felt alone, or you are losing hope, or you have not always felt safe at home. It shows the right help lines, like nine eight eight, and it is there because you matter."
+       "say": "Sometimes a box called Worth tending appears. It comes up when your answers say you have felt alone, or you are losing hope, or you have not always felt safe at home. It shows the right help, and it is there because you matter."
       },
       {
        "k": "big",
@@ -21015,6 +20946,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-u-legacy",
+     "crisis": ["988: call or text, any time"],
      "n": 4,
      "title": "Your Legacy Book",
      "mins": 5,
@@ -21161,7 +21093,7 @@ window.GG_LEARN = {
          "What you wrote stays"
         ]
        ],
-       "say": "When you tap one of these, a short note comes first, with nine eight eight close by. Veterans can call nine eight eight and press one. Then choose Open This Chapter, or Maybe Later. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
+       "say": "When you tap one of these, a short note comes first. Then choose Open This Chapter, or Maybe Later. You can stop at any point, and you might ask someone you trust to sit with you. Close This Chapter whenever you like. What you wrote stays in your book."
       },
       {
        "k": "points",
@@ -21793,6 +21725,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-trunk",
+     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "Trunk: Purpose",
      "mins": 5,
@@ -21918,8 +21851,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "You matter, even on days it is hard to see.",
-       "sub": "Not wanting to be here? Call or text 988.",
-       "say": "You matter, even on days it is hard to see. If feeling like a burden ever turns into not wanting to be here, please tell someone. Call or text nine eight eight, any time, day or night."
+       "say": "You matter, even on days it is hard to see. If feeling like a burden ever turns into not wanting to be here, please tell someone."
       },
       {
        "k": "big",
@@ -21984,6 +21916,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-bark",
+     "crisis": ["988: call or text, any time"],
      "n": 3,
      "title": "Bark: Mind and Feelings",
      "mins": 5,
@@ -22136,8 +22069,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Heavy for two weeks or more? Tell your doctor.",
-       "sub": "Need to talk now? Call or text 988, any time.",
-       "say": "If low mood or worry stays with you for two weeks or more, bring it up with your doctor. It is common, and help works. And if you need to talk right now, call or text nine eight eight, any time. Veterans can call nine eight eight and press one. Name It is ready for your growth plan, for any moment a feeling runs strong."
+       "say": "If low mood or worry stays with you for two weeks or more, bring it up with your doctor. It is common, and help works. Name It is ready for your growth plan, for any moment a feeling runs strong."
       },
       {
        "k": "quiz",
@@ -22155,6 +22087,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-branches",
+     "crisis": ["MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "Elder Fraud Hotline: 1-833-372-8311", "911: emergency"],
      "n": 4,
      "title": "Branches: Relationships",
      "mins": 6,
@@ -22268,22 +22201,22 @@ window.GG_LEARN = {
        "items": [
         [
          "Hurt, neglected, or used?",
-         "In Minnesota: MAARC, 1-844-880-1574"
+         ""
         ],
         [
          "Lost money to a scam?",
-         "Elder Fraud Hotline: 1-833-372-8311"
+         ""
         ],
         [
          "Anywhere in the country",
-         "Eldercare Locator: 1-800-677-1116"
+         ""
         ],
         [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "Sometimes the hard part of Branches is a person close to you. If someone is hurting you, neglecting you, or taking advantage of you or your money, it is not your fault, and you can tell someone. Scams fool smart people every day. In Minnesota, call the adult abuse reporting line at one, eight four four, eight eight zero, one five seven four, any time. If you have lost money to a scam, or to someone you know, call the National Elder Fraud Hotline at one, eight three three, three seven two, eight three one one. Anywhere in the country, the Eldercare Locator can point you to help, at one, eight hundred, six seven seven, one one one six. And if you are in danger right now, call nine one one."
+       "say": "Sometimes the hard part of Branches is a person close to you. If someone is hurting you, neglecting you, or taking advantage of you or your money, it is not your fault, and you can tell someone. Scams fool smart people every day."
       },
       {
        "k": "big",
@@ -22537,6 +22470,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-6-fruit",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -22627,8 +22561,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Losing hope? Let someone help you hold it.",
-       "sub": "Call or text 988, any time. In danger? Call 911.",
-       "say": "If it is hard to see anything good ahead, or you have thought about not wanting to be here, you do not have to hold that alone. Many people have felt that, and help is real. Call or text nine eight eight, any time. Veterans can call nine eight eight and press one. If you are in danger right now, call nine one one."
+       "say": "If it is hard to see anything good ahead, or you have thought about not wanting to be here, you do not have to hold that alone. Many people have felt that, and help is real."
       },
       {
        "k": "big",
@@ -22702,6 +22635,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-p-talk",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Talking with Your Parent or Partner About How They Are Really Doing",
      "mins": 6,
@@ -22821,8 +22755,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door. Call or text 988 together.",
-       "say": "Sometimes you will hear something that worries you. What's the point. I'm just in the way. It is okay to ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. If the answer is yes, call or text 988 together, and if they are in danger right now, call 911. Lesson four walks through this, step by step."
+       "sub": "Asking opens the door.",
+       "say": "Sometimes you will hear something that worries you. What's the point. I'm just in the way. It is okay to ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -22888,6 +22822,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-dignity",
+     "crisis": ["Eldercare Locator: 1-800-677-1116"],
      "n": 2,
      "title": "Help That Honors Independence",
      "mins": 6,
@@ -22987,7 +22922,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "When safety and choice pull apart, name it.",
        "sub": "Find a way that feels safe to both of you.",
-       "say": "Sometimes safety and choice pull against each other. A fall, a scam, a stove left on. When that happens, name it out loud, together. I want you to keep doing this. I'm also worried. Can we find a way that feels safe to both of us? For bigger decisions, bring in their doctor, or an aging services helper. The Eldercare Locator, 1 800 677 1116, can point you to help nearby."
+       "say": "Sometimes safety and choice pull against each other. A fall, a scam, a stove left on. When that happens, name it out loud, together. I want you to keep doing this. I'm also worried. Can we find a way that feels safe to both of us? For bigger decisions, bring in their doctor, or an aging services helper."
       },
       {
        "k": "points",
@@ -23247,6 +23182,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-worry",
+     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "Elder Fraud Hotline: 1-833-372-8311", "911: emergency"],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 7,
@@ -23321,7 +23257,7 @@ window.GG_LEARN = {
          "One change at a time"
         ]
        ],
-       "say": "Second, falls. More than one in four adults sixty five and older fall each year, and one fall makes another more likely. Yet fewer than half tell their doctor. After any fall, even without injury, encourage them to tell their doctor and ask for a fall risk check. Then make the home safer, one change at a time. If they fall and cannot get up, or hit their head, call 911."
+       "say": "Second, falls. More than one in four adults sixty five and older fall each year, and one fall makes another more likely. Yet fewer than half tell their doctor. After any fall, even without injury, encourage them to tell their doctor and ask for a fall risk check. Then make the home safer, one change at a time."
       },
       {
        "k": "points",
@@ -23367,22 +23303,22 @@ window.GG_LEARN = {
        "items": [
         [
          "Danger right now",
-         "Call 911"
+         "Call for help"
         ],
         [
          "Money lost to a scam",
-         "Elder Fraud Hotline 1-833-372-8311"
+         ""
         ],
         [
          "Being hurt, in Minnesota",
-         "MAARC 1-844-880-1574, any time"
+         ""
         ],
         [
          "Help anywhere in the US",
-         "Eldercare Locator 1-800-677-1116"
+         ""
         ]
        ],
-       "say": "Here is who to call. If anyone is in danger right now, call 911. If they have lost money to a scam, or to someone they know, the National Elder Fraud Hotline is 1 833 372 8311, on weekdays. If an adult in Minnesota is being hurt, neglected, or taken advantage of, call MAARC, the Minnesota Adult Abuse Reporting Center, at 1 844 880 1574, any time. Anywhere in the US, the Eldercare Locator, 1 800 677 1116, connects you to Adult Protective Services and help nearby. In Minnesota, Minnesota Aging Pathways is 1 800 333 2433."
+       "say": "Here is who to call."
       },
       {
        "k": "big",
@@ -23399,35 +23335,29 @@ window.GG_LEARN = {
          "Thank them for telling you"
         ],
         [
-         "Call or text 988 together",
-         "Veterans: 988, then press 1"
-        ],
-        [
          "Danger right now?",
-         "Call 911"
+         "Call for help"
         ],
         [
          "Let their doctor know",
          "And keep checking in"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text 988 together, any time. For a veteran, call 988 and press 1. If they are in danger right now, call 911. Ask the crisis line how to make home safer for now. Then let their doctor know, and keep checking in."
+       "say": "If the answer is yes, stay with them, and thank them for telling you. Then let their doctor know, and keep checking in."
       },
       {
        "k": "big",
        "h": "Try it now: save the numbers",
-       "sub": "988. Eldercare Locator 1-800-677-1116.",
        "beats": [
         "Let's do one thing right now, so the numbers are ready when you need them.",
         "Take out your phone, or a pen and paper.",
-        "Save 988 for a crisis, and the Eldercare Locator, 1 800 677 1116, for help nearby.",
-        "If they live in Minnesota, add MAARC, 1 844 880 1574.",
+        "Save the numbers shown under this video.",
         {
          "t": "Take a moment now, and save them.",
          "w": 12
         }
        ],
-       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone, or a pen and paper. Save 988 for a crisis, and the Eldercare Locator, 1 800 677 1116, for help nearby. If they live in Minnesota, add MAARC, 1 844 880 1574. Take a moment now, and save them."
+       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone, or a pen and paper. Save the numbers shown under this video. Take a moment now, and save them."
       },
       {
        "k": "big",
@@ -23444,13 +23374,14 @@ window.GG_LEARN = {
         "Change the subject to something cheerful"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door. If the answer is yes, call or text 988 together.",
+       "why": "Asking plainly opens the door.",
        "say": "Quick question. They seem withdrawn, and they say they're just in the way. What do you do?"
       }
      ]
     },
     {
      "id": "sq-p-legacy",
+     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
      "n": 5,
      "title": "Helping Someone Tell Their Story",
      "mins": 6,
@@ -23562,8 +23493,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Old memories can stir grief.",
-       "sub": "Stop any time. Call or text 988 if it gets heavy.",
-       "say": "Looking back can bring joy, and sometimes grief, regret, or old pain. That is normal. If a memory gets heavy, slow down, and let them stop. For veterans, war memories can come back stronger later in life. If it is more than either of you wants to carry, call someone you trust, or call or text 988. Veterans can call 988 and press 1."
+       "sub": "Stop any time.",
+       "say": "Looking back can bring joy, and sometimes grief, regret, or old pain. That is normal. If a memory gets heavy, slow down, and let them stop. For veterans, war memories can come back stronger later in life. If it is more than either of you wants to carry, call someone you trust."
       },
       {
        "k": "points",
@@ -23634,6 +23565,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-p-you",
+     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Eldercare Locator: 1-800-677-1116", "Minnesota Aging Pathways: 1-800-333-2433", "911: emergency"],
      "n": 6,
      "title": "Caring for Yourself Too",
      "mins": 6,
@@ -23702,7 +23634,7 @@ window.GG_LEARN = {
          "A real break, with help in place"
         ]
        ],
-       "say": "Share the load. Name one task someone else could take, like rides, meals, or one evening a week. When people offer, say yes, and have a list ready. And ask about respite, a real break with someone else on duty. The Eldercare Locator, 1 800 677 1116, can point you to help nearby. In Minnesota, so can Minnesota Aging Pathways, 1 800 333 2433. Sequoia has a practice for the first step, called Ask for Help."
+       "say": "Share the load. Name one task someone else could take, like rides, meals, or one evening a week. When people offer, say yes, and have a list ready. And ask about respite, a real break with someone else on duty. Sequoia has a practice for the first step, called Ask for Help."
       },
       {
        "k": "points",
@@ -23771,8 +23703,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Hard to go on? Reach out now.",
-       "sub": "Call or text 988, any time. In danger? Call 911.",
-       "say": "Sometimes helpers reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. Call or text 988, any time. Veterans, call 988 and press 1. If you are in danger, call 911. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
+       "say": "Sometimes helpers reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
       },
       {
        "k": "big",
@@ -23806,6 +23737,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-sh-purpose",
+     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Purpose at Every Age",
      "mins": 4,
@@ -23927,8 +23859,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your gifts are still needed.",
-       "sub": "Feeling like a burden? Call or text 988, any time.",
-       "say": "Your gifts are still needed. If you ever feel you have no place, or feel like a burden, tell someone you trust. Call or text nine eight eight, any time."
+       "say": "Your gifts are still needed. If you ever feel you have no place, or feel like a burden, tell someone you trust."
       },
       {
        "k": "big",
@@ -24102,6 +24033,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-sh-wiser",
+     "crisis": ["988: call or text, any time"],
      "n": 3,
      "title": "Growing Older, Growing Wiser",
      "mins": 4,
@@ -24203,8 +24135,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Heavy memories deserve company.",
-       "sub": "Call or text 988, any time.",
-       "say": "Looking inward can stir old grief. If a memory feels too heavy to carry alone, talk with someone you trust, or call or text nine eight eight, any time."
+       "say": "Looking inward can stir old grief. If a memory feels too heavy to carry alone, talk with someone you trust."
       },
       {
        "k": "big",
@@ -24391,8 +24322,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Help is here any time.",
-       "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
-       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous."
       },
       {
        "k": "quiz",
@@ -24546,7 +24476,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Hard mornings in the first days",
        "sub": "Shaking, sweating, or sick? See a doctor today.",
-       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today. If it feels severe, or you see confusion or a seizure, call for emergency help."
       },
       {
        "k": "quiz",
@@ -24714,8 +24644,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Strong cravings deserve real support.",
-       "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
-       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor can tell you about them."
       },
       {
        "k": "quiz",
@@ -24862,8 +24791,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Panic and hard breathing deserve care.",
-       "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
-       "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+       "sub": "Chest pain? Call for help.",
+       "say": "If your chest hurts, or you struggle to catch your breath, call for emergency help. If panic keeps coming back, a doctor or a therapist can help a lot."
       },
       {
        "k": "quiz",
@@ -25467,7 +25396,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Keep it safe, and get support for the deep ones.",
        "sub": "A therapist can walk with you.",
-       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them."
       },
       {
        "k": "quiz",
@@ -25950,7 +25879,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Ask your doctor about lasting sleep trouble.",
        "sub": "Some sleep medicines carry risks. Ask what fits you.",
-       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you."
       },
       {
        "k": "quiz",
@@ -26129,6 +26058,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "sq-r-ground",
+     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Ground Yourself Right Now",
      "mins": 3,
@@ -26197,18 +26127,18 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "You are here. That is enough for right now.",
-       "sub": "Need to talk? Call or text 988, any time.",
        "cue": {
         "p": {
          "0": 1.5
         }
        },
-       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it. And if you would like to talk with someone, call or text nine eight eight, any time."
+       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it."
       }
      ]
     },
     {
      "id": "sq-r-lonely",
+     "crisis": ["988: call or text, any time", "Eldercare Locator: 1-800-677-1116"],
      "n": 2,
      "title": "When the Days Feel Lonely",
      "mins": 3,
@@ -26306,12 +26236,6 @@ window.GG_LEARN = {
         ]
        },
        "say": "Reaching out can take many shapes. A short call. Five minutes counts. A card or a letter. A message, like a text or a photo. Or tomorrow, go where people are, like a community meal, a class, or a walk."
-      },
-      {
-       "k": "big",
-       "h": "Help near you: Eldercare Locator, 1-800-677-1116",
-       "sub": "To talk right now, call or text 988.",
-       "say": "If you would like help finding a meal program, a ride, or a group near you, the Eldercare Locator can help, at one eight hundred, six seven seven, one one one six. And if the loneliness feels heavy, or you are thinking about not wanting to go on, call or text nine eight eight, any time."
       },
       {
        "k": "big",
@@ -26440,6 +26364,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-r-worry",
+     "crisis": ["988: call or text, any time"],
      "n": 4,
      "title": "When Worry Won’t Let Go",
      "mins": 3,
@@ -26529,7 +26454,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "If worry fills your days, tell your doctor.",
        "sub": "Worry in later life responds well to help.",
-       "say": "If worry is with you most of the day, or keeps you from sleeping, tell your doctor. Worry in later life responds well to help. And if it ever feels like too much, call or text nine eight eight, any time."
+       "say": "If worry is with you most of the day, or keeps you from sleeping, tell your doctor. Worry in later life responds well to help."
       },
       {
        "k": "big",
@@ -26541,6 +26466,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-r-grief",
+     "crisis": ["988: call or text, any time"],
      "n": 5,
      "title": "When Grief Comes in Waves",
      "mins": 3,
@@ -26614,7 +26540,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Most grief softens with time.",
        "sub": "Still sharp after many months? Ask for help.",
-       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and daily life is very hard, talk with your doctor or a grief counselor. Help works. And if you need to talk with someone right now, call or text nine eight eight."
+       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and daily life is very hard, talk with your doctor or a grief counselor. Help works."
       },
       {
        "k": "big",
@@ -26626,6 +26552,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-r-body",
+     "crisis": ["988: call or text, any time"],
      "n": 6,
      "title": "When Your Body Won’t Do What It Used to",
      "mins": 3,
@@ -26714,8 +26641,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeling like a burden is worth saying out loud.",
-       "sub": "Tell someone you trust. Or call or text 988, any time.",
-       "say": "Some days, a changing body can leave you feeling like a burden. Many older adults feel that at times, and talking it over helps. Tell someone you trust. Or call or text nine eight eight, any time, day or night."
+       "sub": "Tell someone you trust.",
+       "say": "Some days, a changing body can leave you feeling like a burden. Many older adults feel that at times, and talking it over helps. Tell someone you trust."
       },
       {
        "k": "big",
@@ -26831,6 +26758,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-r-pain",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 8,
      "title": "When Pain Is Loud Today",
      "mins": 4,
@@ -26889,19 +26817,19 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Tell your doctor when pain changes.",
-       "sub": "Sudden, severe pain, or chest pain? Call 911.",
-       "say": "Tell your doctor or nurse when pain is new, worse, or different, or when it keeps you from what matters to you. You deserve that conversation, and pain can often be eased. If pain is sudden and severe, or comes with chest pain or trouble breathing, call nine one one."
+       "sub": "Sudden, severe pain, or chest pain? Call for help.",
+       "say": "Tell your doctor or nurse when pain is new, worse, or different, or when it keeps you from what matters to you. You deserve that conversation, and pain can often be eased. If pain is sudden and severe, or comes with chest pain or trouble breathing, call for emergency help."
       },
       {
        "k": "big",
        "h": "You got through this moment. That counts.",
-       "sub": "Pain wearing you down? Call or text 988, any time.",
-       "say": "You got through this moment, and that counts. If the pain has you feeling you cannot go on, call or text nine eight eight, any time. Be gentle with yourself today."
+       "say": "You got through this moment, and that counts. Be gentle with yourself today."
       }
      ]
     },
     {
      "id": "sq-r-scam",
+     "crisis": ["MAARC (Minnesota): 1-844-880-1574", "Elder Fraud Hotline: 1-833-372-8311", "911: emergency"],
      "n": 9,
      "title": "When a Call or Message Feels Off",
      "mins": 3,
@@ -26998,19 +26926,15 @@ window.GG_LEARN = {
          "Call the number on your card"
         ],
         [
-         "Elder Fraud Hotline",
-         "1-833-372-8311, weekdays"
-        ],
-        [
          "Someone close pressuring you?",
-         "In Minnesota, MAARC: 1-844-880-1574"
+         ""
         ],
         [
          "In danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If you already sent money or shared details, there is no shame in it. It happens to many careful people. Call your bank on the number from your card. Then call the National Elder Fraud Hotline, at one eight three three, three seven two, eight three one one. If the pressure is coming from someone close to you, in Minnesota call MAARC, at one eight four four, eight eight zero, one five seven four. And if you are in danger, call nine one one."
+       "say": "If you already sent money or shared details, there is no shame in it. It happens to many careful people. Call your bank on the number from your card."
       },
       {
        "k": "big",
@@ -27022,6 +26946,7 @@ window.GG_LEARN = {
     },
     {
      "id": "sq-r-tell",
+     "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "MAARC (Minnesota): 1-844-880-1574", "Eldercare Locator: 1-800-677-1116", "Elder Fraud Hotline: 1-833-372-8311", "911: emergency"],
      "n": 10,
      "title": "When You Need to Tell Someone",
      "mins": 4,
@@ -27085,41 +27010,33 @@ window.GG_LEARN = {
        "items": [
         [
          "In danger right now",
-         "Call 911"
-        ],
-        [
-         "In Minnesota, MAARC",
-         "1-844-880-1574, any time"
+         "Call for help"
         ],
         [
          "Anywhere in the US",
-         "Eldercare Locator, 1-800-677-1116"
+         ""
         ],
         [
          "Money taken?",
-         "Elder Fraud Hotline, 1-833-372-8311"
+         ""
         ]
        ],
-       "say": "If someone is hurting you, neglecting you, or taking your money, here is where to call. If you are in danger right now, call nine one one. In Minnesota, call MAARC, any time, at one eight four four, eight eight zero, one five seven four. Anywhere in the country, the Eldercare Locator can connect you with help near you, at one eight hundred, six seven seven, one one one six. And if money has been taken, the National Elder Fraud Hotline is at one eight three three, three seven two, eight three one one."
+       "say": "If someone is hurting you, neglecting you, or taking your money, here is where to call."
       },
       {
        "k": "points",
        "h": "If you don’t want to go on",
        "items": [
         [
-         "Call or text 988",
-         "Any time, day or night"
-        ],
-        [
          "Veterans",
-         "Call 988, then press 1"
+         ""
         ],
         [
          "In danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "And if you have been thinking about not wanting to be here, or about ending your life, please reach out now. Many older adults have had these thoughts, and talking with someone can help. Call or text nine eight eight, any time, day or night. Veterans, call nine eight eight, then press one. If you are in danger right now, call nine one one."
+       "say": "And if you have been thinking about not wanting to be here, or about ending your life, please reach out now. Many older adults have had these thoughts, and talking with someone can help."
       },
       {
        "k": "big",
@@ -27467,6 +27384,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-u-checkin",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -27638,23 +27556,15 @@ window.GG_LEARN = {
        "title": "Help lines",
        "rows": [
         [
-         "988 Suicide and Crisis Lifeline",
-         "Call or text 988"
-        ],
-        [
          "Crisis Text Line",
-         "Text HOME to 741741"
-        ],
-        [
-         "Someone hurting you? Childhelp",
-         "1-800-422-4453"
+         ""
         ],
         [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If you need support, a calm card opens. Call or text nine eight eight, any time. Text HOME to seven four one seven four one. In danger right now, call nine one one. And if someone is hurting you, that answer never goes to your family. Pine shows you help from outside your home, like Childhelp, and a trusted adult at school."
+       "say": "If you need support, a calm card opens. And if someone is hurting you, that answer never goes to your family. Pine shows you help from outside your home, like a trusted adult at school."
       },
       {
        "k": "big",
@@ -28161,6 +28071,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-u-private",
+     "crisis": ["Childhelp: call or text 1-800-422-4453", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
      "n": 5,
      "title": "Private, Saved, and Shared",
      "mins": 5,
@@ -28245,7 +28156,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Someone hurting you? That stays with you.",
        "sub": "Pine shows you help from outside your home.",
-       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. Childhelp, call or text one eight hundred, four two two, four four five three. Love Is Respect, if it is someone you are close to or going out with. Nine one one in danger. And a trusted adult at school."
+       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. Nine one one in danger. And a trusted adult at school."
       },
       {
        "k": "big",
@@ -28316,6 +28227,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-u-settings",
+     "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
      "n": 6,
      "title": "Make Pine Yours",
      "mins": 4,
@@ -28371,7 +28283,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Optional answers stay with you.",
        "sub": "Private, apart from every score, and yours alone.",
-       "say": "If you turn them on, those answers never count toward a score, and they are never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help, like Love Is Respect for a relationship that feels controlling."
+       "say": "If you turn them on, those answers never count toward a score, and they are never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help."
       },
       {
        "k": "points",
@@ -28830,6 +28742,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-6-bark",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 3,
      "title": "Bark: Stress, Mistakes, and Big Feelings",
      "mins": 6,
@@ -28966,12 +28879,8 @@ window.GG_LEARN = {
        "title": "Need to talk now?",
        "rows": [
         [
-         "988 Suicide and Crisis Lifeline",
-         "Call or text 988"
-        ],
-        [
          "Crisis Text Line",
-         "Text HOME to 741741"
+         ""
         ],
         [
          "Minnesota county crisis team",
@@ -28979,10 +28888,10 @@ window.GG_LEARN = {
         ],
         [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "And if you need to talk right now, call or text nine eight eight, any time. Or text HOME to seven four one seven four one. In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team. If you are in danger, call nine one one."
+       "say": "Or text HOME to seven four one seven four one. In Minnesota, you can call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "quiz",
@@ -29000,6 +28909,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-6-branches",
+     "crisis": ["Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
      "n": 4,
      "title": "Branches: Friends, Family, and Adults in Your Corner",
      "mins": 6,
@@ -29071,13 +28981,9 @@ window.GG_LEARN = {
         [
          "Checking your phone is a sign",
          "So is deciding who you can see"
-        ],
-        [
-         "Love Is Respect",
-         "Call 1-866-331-9474, or text LOVEIS to 22522"
         ]
        ],
-       "say": "Good relationships, with friends or someone you are going out with, are built on respect. That looks like trust, and room to have your own friends and your own time. Someone checking your phone, or telling you who you can see, is a sign worth noticing. Love Is Respect can help you think it through, any time. Call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two."
+       "say": "Good relationships, with friends or someone you are going out with, are built on respect. That looks like trust, and room to have your own friends and your own time. Someone checking your phone, or telling you who you can see, is a sign worth noticing."
       },
       {
        "k": "points",
@@ -29145,8 +29051,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If someone is hurting you, help is outside your home too.",
-       "sub": "Childhelp, call or text 1-800-422-4453. In danger, call 911.",
-       "say": "Name Your Trusted Adult is ready for your growth plan. And if anyone is hurting you, at home, at school, online, or in a relationship, you can call or text Childhelp, any time, at one eight hundred, four two two, four four five three. In Minnesota, Day One answers at one eight six six, two two three, one one one one. If you are in danger, call nine one one."
+       "say": "Name Your Trusted Adult is ready for your growth plan."
       },
       {
        "k": "quiz",
@@ -29157,7 +29062,7 @@ window.GG_LEARN = {
         "They listen when you disagree"
        ],
        "right": 1,
-       "why": "Checking your phone or deciding who you see are signs of control. Love Is Respect can help you think it through.",
+       "why": "Checking your phone or deciding who you see are signs of control.",
        "say": "Quick question. What is a sign worth noticing in a relationship?"
       }
      ]
@@ -29342,6 +29247,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-6-fruit",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 6,
      "title": "Fruit: What You Look Forward To",
      "mins": 6,
@@ -29489,7 +29395,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Stand tall through every season.",
        "sub": "Tiny Next Step is ready for your growth plan.",
-       "say": "Tiny Next Step is ready for your growth plan. Do one tiny step every day for a week, and watch what grows. And if hope ever runs out, call or text nine eight eight, or text HOME to seven four one seven four one, any time. If you are in danger, call nine one one. You can stand tall through every season, and you never have to do it alone."
+       "say": "Tiny Next Step is ready for your growth plan. Do one tiny step every day for a week, and watch what grows. You can stand tall through every season, and you never have to do it alone."
       },
       {
        "k": "quiz",
@@ -29516,6 +29422,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-p-talk",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Talking with Your Teen About How They Are Really Doing",
      "mins": 7,
@@ -29643,8 +29550,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door. Call or text 988 together.",
-       "say": "Sometimes you will hear something that worries you. What's the point. Nobody would even notice if I was gone. Take it seriously, and ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. If the answer is yes, call or text 988 together, and if they are in danger right now, call 911. Lesson four walks through this, step by step."
+       "sub": "Asking opens the door.",
+       "say": "Sometimes you will hear something that worries you. What's the point. Nobody would even notice if I was gone. Take it seriously, and ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -29687,6 +29594,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-privacy",
+     "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
      "n": 2,
      "title": "Privacy That Builds Trust",
      "mins": 6,
@@ -29759,7 +29667,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Some answers go straight to outside help.",
        "sub": "So every teen can reach help, whatever is happening.",
-       "say": "One kind of answer works differently. When a teen says someone is hurting them, at home, at school, online, or in a relationship, Pine shows them help outside the family right away. Childhelp, Love Is Respect, Day One in Minnesota, 911, and a trusted adult at school. It does not send the family alert. That way every teen can reach help, whatever is happening in their life."
+       "say": "One kind of answer works differently. When a teen says someone is hurting them, at home, at school, online, or in a relationship, Pine shows them help outside the family right away. A trusted adult at school. It does not send the family alert. That way every teen can reach help, whatever is happening in their life."
       },
       {
        "k": "points",
@@ -29817,10 +29725,10 @@ window.GG_LEARN = {
         ],
         [
          "If you are worried, ask plainly",
-         "Then call or text 988 together"
+         ""
         ]
        ],
-       "say": "When the alert comes, check in soon, in person if you can, today. Don't ask what they answered, and don't ask to see the app. Ask how they are doing. Listen, stay calm, and thank them for anything they share. If you are worried, ask plainly whether they are thinking about ending their life. If the answer is yes, or they are unsure, call or text 988 together. If they are in danger right now, call 911."
+       "say": "When the alert comes, check in soon, in person if you can, today. Don't ask what they answered, and don't ask to see the app. Ask how they are doing. Listen, stay calm, and thank them for anything they share. If you are worried, ask plainly whether they are thinking about ending their life."
       },
       {
        "k": "big",
@@ -29843,7 +29751,7 @@ window.GG_LEARN = {
         "Wait for them to bring it up"
        ],
        "right": 1,
-       "why": "The alert never shows answers. Check in soon and listen calmly. If you are worried, ask plainly, and call or text 988 together.",
+       "why": "The alert never shows answers. Check in soon and listen calmly. If you are worried, ask plainly.",
        "say": "Quick question. A quiet alert comes. What is the best first step?"
       }
      ]
@@ -30024,6 +29932,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-worry",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 7,
@@ -30111,7 +30020,7 @@ window.GG_LEARN = {
          "Any time, from anywhere"
         ]
        ],
-       "say": "Here is good news. Most high schoolers stay clear of vaping, drinking, and drugs, and in recent years that share reached a record high. Talk about pressure, not just rules. Pine's practice Easy Ways Out helps teens plan what to say. And promise a no-questions ride home, any time. If you are worried about use, talk with their doctor. The SAMHSA National Helpline, 1 800 662 4357, can point you to help any time, in English and Spanish."
+       "say": "Here is good news. Most high schoolers stay clear of vaping, drinking, and drugs, and in recent years that share reached a record high. Talk about pressure, not just rules. Pine's practice Easy Ways Out helps teens plan what to say. And promise a no-questions ride home, any time. If you are worried about use, talk with their doctor."
       },
       {
        "k": "points",
@@ -30138,22 +30047,22 @@ window.GG_LEARN = {
        "items": [
         [
          "Danger right now",
-         "Call 911"
+         "Call for help"
         ],
         [
          "Someone hurting them",
-         "Childhelp 1-800-422-4453"
+         ""
         ],
         [
          "Dating abuse",
-         "Love Is Respect 1-866-331-9474"
+         ""
         ],
         [
          "In Minnesota",
-         "Day One 1-866-223-1111"
+         ""
         ]
        ],
-       "say": "Here is who to call. If anyone is in danger right now, call 911. If someone is hurting your teen, Childhelp is there any time, by call or text, at 1 800 422 4453. For a controlling or hurtful relationship, Love Is Respect, at 1 866 331 9474. In Minnesota, Day One helps anyone hurt by someone close to them, at 1 866 223 1111. Pine shows your teen these same lines."
+       "say": "Here is who to call. Pine shows your teen these same lines."
       },
       {
        "k": "big",
@@ -30170,35 +30079,29 @@ window.GG_LEARN = {
          "Thank them for telling you"
         ],
         [
-         "Call or text 988 together",
-         "Or text HOME to 741741"
-        ],
-        [
          "In Minnesota",
          "**CRISIS (274747) from a cell"
         ],
         [
          "Danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text 988 together, any time, or text HOME to 7 4 1 7 4 1. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. If they are in danger right now, call 911. Lock up guns and medicines, or keep them somewhere else for now. Then let their doctor know, and keep checking in."
+       "say": "If the answer is yes, stay with them, and thank them for telling you. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. Lock up guns and medicines, or keep them somewhere else for now. Then let their doctor know, and keep checking in."
       },
       {
        "k": "big",
        "h": "Try it now: save the numbers",
-       "sub": "988. Childhelp 1-800-422-4453.",
        "beats": [
         "Let's do one thing right now, so the numbers are ready when you need them.",
         "Take out your phone.",
-        "Save 988 for a crisis, and Childhelp, 1 800 422 4453, for when someone is hurting a young person.",
-        "If you live in Minnesota, add Day One, 1 866 223 1111.",
+        "Save the numbers shown under this video.",
         {
          "t": "Take a moment now, and save them.",
          "w": 12
         }
        ],
-       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone. Save 988 for a crisis, and Childhelp, 1 800 422 4453, for when someone is hurting a young person. If you live in Minnesota, add Day One, 1 866 223 1111. Take a moment now, and save them."
+       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone. Save the numbers shown under this video. Take a moment now, and save them."
       },
       {
        "k": "big",
@@ -30215,7 +30118,7 @@ window.GG_LEARN = {
         "Tell them how much they have to live for"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door. If the answer is yes, or they are unsure, call or text 988 together.",
+       "why": "Asking plainly opens the door.",
        "say": "Quick question. Your teen has been withdrawn for weeks and says, what's the point. What do you do?"
       }
      ]
@@ -30381,6 +30284,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-p-you",
+     "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
      "n": 6,
      "title": "Taking Care of Yourself Too",
      "mins": 6,
@@ -30446,7 +30350,7 @@ window.GG_LEARN = {
          "A counselor or your doctor"
         ]
        ],
-       "say": "Share the load. Lean on another adult who loves your teen, like a partner, a relative, or a trusted friend. Talk with other parents. You are rarely the only one facing this. And ask for help early. A school counselor, your own doctor, or a counselor of your own can help you think things through. The NAMI HelpLine, 1 800 950 6264, offers information and support on weekdays."
+       "say": "Share the load. Lean on another adult who loves your teen, like a partner, a relative, or a trusted friend. Talk with other parents. You are rarely the only one facing this. And ask for help early. A school counselor, your own doctor, or a counselor of your own can help you think things through."
       },
       {
        "k": "points",
@@ -30496,8 +30400,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Hard to go on? Reach out now.",
-       "sub": "Call or text 988, any time. In danger? Call 911.",
-       "say": "Sometimes parents reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. Call or text 988, any time. If you are in danger, call 911. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
+       "say": "Sometimes parents reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. And if your temper ever frightens you, thank yourself for noticing, and bring in more help today."
       },
       {
        "k": "big",
@@ -30528,6 +30431,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-sh-brain",
+     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Your Brain Grows Toward What You Practice",
      "mins": 4,
@@ -30634,8 +30538,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Your brain is still growing.",
-       "sub": "Hard feelings sticking around? Talk to an adult you trust, or call or text 988.",
-       "say": "Your brain is still growing, and you get to help shape it. If hard feelings stick around for a while, talk with an adult you trust. And you can call or text nine eight eight, any time."
+       "sub": "Hard feelings sticking around? Talk to an adult you trust.",
+       "say": "Your brain is still growing, and you get to help shape it. If hard feelings stick around for a while, talk with an adult you trust."
       },
       {
        "k": "quiz",
@@ -30653,6 +30557,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-sh-move",
+     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "Move for Your Mood",
      "mins": 4,
@@ -30778,8 +30683,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeling low for a couple of weeks?",
-       "sub": "Talk to an adult you trust, or call or text 988.",
-       "say": "Moving helps a lot, and it works best alongside people. If you have felt low or stressed for a couple of weeks, talk with a parent, a school counselor, or a doctor. And any time you need someone right now, call or text nine eight eight."
+       "sub": "Talk to an adult you trust.",
+       "say": "Moving helps a lot, and it works best alongside people. If you have felt low or stressed for a couple of weeks, talk with a parent, a school counselor, or a doctor."
       },
       {
        "k": "big",
@@ -30936,8 +30841,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Help is here.",
-       "sub": "Call or text 988. Danger now? Call 911.",
-       "say": "If you are using something to get through the day, or you are worried about someone, talk with a parent, a school counselor, or a doctor. Call or text nine eight eight any time. If someone will not wake up, or is breathing very slowly, call nine one one right away. Naloxone, also called Narcan, can reverse an opioid overdose, and you can buy it at a pharmacy without a prescription."
+       "say": "If you are using something to get through the day, or you are worried about someone, talk with a parent, a school counselor, or a doctor. If someone will not wake up, or is breathing very slowly, call for emergency help right away. Naloxone, also called Narcan, can reverse an opioid overdose, and you can buy it at a pharmacy without a prescription."
       },
       {
        "k": "quiz",
@@ -31079,7 +30983,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Quitting vaping takes support.",
        "sub": "Text, call, or ask a doctor.",
-       "say": "If you vape and want to quit, nicotine urges can be strong, and support makes it much easier. Talk with a parent, a school nurse, or your doctor. Call or text nine eight eight in a crisis, and nine one one if anyone is in danger."
+       "say": "If you vape and want to quit, nicotine urges can be strong, and support makes it much easier. Talk with a parent, a school nurse, or your doctor."
       },
       {
        "k": "quiz",
@@ -31194,8 +31098,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Panic deserves care.",
-       "sub": "Talk to an adult you trust. In crisis? Call or text 988.",
-       "say": "If panic keeps coming back, talk with a parent, a school counselor, or a doctor. If your chest hurts or you struggle to breathe, call nine one one. And any time you need someone right now, call or text nine eight eight."
+       "sub": "Talk to an adult you trust.",
+       "say": "If panic keeps coming back, talk with a parent, a school counselor, or a doctor. If your chest hurts or you struggle to breathe, call for emergency help."
       },
       {
        "k": "quiz",
@@ -31426,7 +31330,6 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Call 911 right now if someone",
        "items": [
         [
          "Will not wake up",
@@ -31448,13 +31351,7 @@ window.GG_LEARN = {
          2
         ]
        },
-       "say": "Call nine one one right now if someone will not wake up, or won't respond to your voice. If they are breathing very slowly, or making gurgling or snoring sounds. If their lips or fingertips turn blue, or their pupils are tiny. Naloxone, also called Narcan, reverses an opioid overdose. Use it if you have it, then stay with them until help comes."
-      },
-      {
-       "k": "big",
-       "h": "Help any time",
-       "sub": "Call or text 988. SAMHSA 1-800-662-4357.",
-       "say": "You can call or text nine eight eight any time, about anything. The SAMHSA National Helpline, at one, eight hundred, six six two, four three five seven, helps families find support too. Poison Control is one, eight hundred, two two two, one two two two."
+       "say": "Call for emergency help right now if someone will not wake up, or won't respond to your voice. If they are breathing very slowly, or making gurgling or snoring sounds. If their lips or fingertips turn blue, or their pupils are tiny. Naloxone, also called Narcan, reverses an opioid overdose. Use it if you have it, then stay with them until help comes."
       },
       {
        "k": "quiz",
@@ -31462,10 +31359,10 @@ window.GG_LEARN = {
        "opts": [
         "Let them sleep it off",
         "Wait and see",
-        "Call 911 right away"
+        "Call for help right away"
        ],
        "right": 2,
-       "why": "Someone who will not wake up needs help right now. Call 911, use naloxone if you have it, and stay with them.",
+       "why": "Someone who will not wake up needs help right now. Call for emergency help, use naloxone if you have it, and stay with them.",
        "say": "Quick question. What should you do if someone will not wake up?"
       },
       {
@@ -31486,6 +31383,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-r-ground",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
      "n": 1,
      "title": "Ground Yourself Right Now",
      "mins": 3,
@@ -31554,13 +31452,12 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "You are here. That is enough for right now.",
-       "sub": "Need to talk? Call or text 988, any time.",
        "cue": {
         "p": {
          "0": 1.5
         }
        },
-       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it. And if you want to talk with someone, call or text nine eight eight, or text HOME to seven four one, seven four one, any time."
+       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it."
       }
      ]
     },
@@ -31649,6 +31546,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-panic",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 3,
      "title": "When Panic Hits",
      "mins": 3,
@@ -31724,13 +31622,12 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Panic keeps coming back? Tell someone.",
        "sub": "A school counselor or your doctor can help.",
-       "say": "If panic keeps coming back, tell a parent, a school counselor, or your doctor. Panic responds well to help. And if this is the first time, or you have chest pain or trouble breathing, tell an adult and get checked. In an emergency, call nine one one."
+       "say": "If panic keeps coming back, tell a parent, a school counselor, or your doctor. Panic responds well to help. And if this is the first time, or you have chest pain or trouble breathing, tell an adult and get checked."
       },
       {
        "k": "big",
        "h": "The wave is passing. You rode it out.",
-       "sub": "Need to talk? Call or text 988, any time.",
-       "say": "The wave is passing. You rode it out. And if you need to talk with someone, call or text nine eight eight, any time."
+       "say": "The wave is passing. You rode it out."
       }
      ]
     },
@@ -31849,6 +31746,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-lonely",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Teen Line: 800-852-8336, or text TEEN to 839863"],
      "n": 5,
      "title": "When You Feel Left Out or Alone",
      "mins": 3,
@@ -31928,8 +31826,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeling alone and hopeless? Reach out now.",
-       "sub": "Call or text 988. Text HOME to 741741.",
-       "say": "If the loneliness feels really heavy, or it's mixed with feeling hopeless, please reach out now. Call or text nine eight eight, or text HOME to seven four one, seven four one, any time. In the evenings, Teen Line lets you talk with another teen. Call eight hundred, eight five two, eight three three six, or text TEEN to eight three nine, eight six three."
+       "say": "If the loneliness feels really heavy, or it's mixed with feeling hopeless, please reach out now. In the evenings, Teen Line lets you talk with another teen."
       },
       {
        "k": "big",
@@ -31941,6 +31838,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-angry",
+     "crisis": ["Childhelp: call or text 1-800-422-4453", "911: emergency"],
      "n": 6,
      "title": "When Anger Takes Over",
      "mins": 3,
@@ -32043,8 +31941,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Anger often? Afraid of what you might do?",
-       "sub": "Talk with a counselor. In danger? Call 911.",
-       "say": "If anger keeps taking over, or you're afraid of what you might do, talk with a school counselor or another adult you trust. That's a strong move. If anyone is in danger, call nine one one. And if someone at home is hurting you, Childhelp is there any time, by call or text, at one eight hundred, four two two, four four five three."
+       "sub": "Talk with a counselor.",
+       "say": "If anger keeps taking over, or you're afraid of what you might do, talk with a school counselor or another adult you trust. That's a strong move."
       },
       {
        "k": "big",
@@ -32055,6 +31953,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-scroll",
+     "crisis": ["988: call or text, any time"],
      "n": 7,
      "title": "When Scrolling Makes You Feel Worse",
      "mins": 3,
@@ -32150,7 +32049,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Threatened or scared by something online?",
        "sub": "You're not in trouble. Tell a trusted adult.",
-       "say": "If something online is threatening or scaring you, you're not in trouble. Tell a trusted adult. If someone is threatening to share a picture of you, go to take it down dot n c m e c dot org, and tell an adult you trust right away. And if you feel unsafe or hopeless, call or text nine eight eight."
+       "say": "If something online is threatening or scaring you, you're not in trouble. Tell a trusted adult. If someone is threatening to share a picture of you, go to take it down dot n c m e c dot org, and tell an adult you trust right away."
       },
       {
        "k": "big",
@@ -32162,6 +32061,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-heart",
+     "crisis": ["988: call or text, any time", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
      "n": 8,
      "title": "When Your Heart Is Broken",
      "mins": 3,
@@ -32242,8 +32142,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Was it controlling or scary?",
-       "sub": "Love Is Respect: 1-866-331-9474.",
-       "say": "If the relationship was controlling, scary, or hurtful, it wasn't your fault. Love Is Respect is there any time, at one eight six six, three three one, nine four seven four. And if the sadness stays heavy for two weeks or more, or you feel hopeless, talk with someone you trust, or call or text nine eight eight."
+       "say": "If the relationship was controlling, scary, or hurtful, it wasn't your fault. And if the sadness stays heavy for two weeks or more, or you feel hopeless, talk with someone you trust."
       },
       {
        "k": "big",
@@ -32255,6 +32154,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-grief",
+     "crisis": ["988: call or text, any time"],
      "n": 9,
      "title": "When Someone You Love Has Died",
      "mins": 3,
@@ -32333,8 +32233,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Still really heavy after many months?",
-       "sub": "Talk with a counselor. Need someone now? 988.",
-       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and everyday life feels very hard, talk with a counselor or your doctor. And if you need to talk with someone right now, call or text nine eight eight."
+       "sub": "Talk with a counselor.",
+       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and everyday life feels very hard, talk with a counselor or your doctor."
       },
       {
        "k": "big",
@@ -32346,6 +32246,7 @@ window.GG_LEARN = {
     },
     {
      "id": "pn-r-tell",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
      "n": 10,
      "title": "When You Need to Tell Someone",
      "mins": 4,
@@ -32415,62 +32316,42 @@ window.GG_LEARN = {
        "h": "If someone is hurting you",
        "items": [
         [
-         "Childhelp",
-         "Call or text 1-800-422-4453"
-        ],
-        [
          "Someone you're going out with",
-         "Love Is Respect 1-866-331-9474"
-        ],
-        [
-         "In Minnesota, Day One",
-         "1-866-223-1111"
+         ""
         ],
         [
          "In danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
        "cue": {
         "at": [
-         1,
-         2,
-         3,
-         4
+         0,
+         0
         ]
        },
-       "say": "If someone is hurting you, at home, at school, online, or in a relationship, here is where to reach out. Childhelp, any time, by call or text, at one eight hundred, four two two, four four five three. If it's someone you're close to or going out with, Love Is Respect, at one eight six six, three three one, nine four seven four. In Minnesota, Day One, at one eight six six, two two three, one one one one. If you are in danger right now, call nine one one."
+       "say": "If someone is hurting you, at home, at school, online, or in a relationship, here is where to reach out."
       },
       {
        "k": "points",
        "h": "If you don't want to go on",
        "items": [
         [
-         "Call or text 988",
-         "Or chat at 988lifeline.org"
-        ],
-        [
-         "Text HOME to 741741",
-         "In Minnesota, text MN to 741741"
-        ],
-        [
          "In Minnesota",
          "**CRISIS (274747) from a cell"
         ],
         [
          "In danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
        "cue": {
         "at": [
-         2,
          3,
-         4,
-         5
+         3
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. Call or text nine eight eight, any time, or chat at nine eight eight lifeline dot org. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team. If you are in danger right now, call nine one one."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Lots of people your age have had these thoughts, and talking with someone helps. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "big",
@@ -32490,6 +32371,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "pn-st-why",
+     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Find Your Why for Today",
      "mins": 3,
@@ -32587,13 +32469,14 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Hard day? Your why can be tiny.",
-       "sub": "Showing up counts. Feeling hopeless? Talk to an adult you trust, or call or text 988.",
-       "say": "On a really hard day, your why can be tiny: a text to a friend, a walk with your dog, finishing one page. Showing up counts. And if things feel hopeless, talk with an adult you trust, or call or text nine eight eight. You matter, and people want to help."
+       "sub": "Showing up counts. Feeling hopeless? Talk to an adult you trust.",
+       "say": "On a really hard day, your why can be tiny: a text to a friend, a walk with your dog, finishing one page. Showing up counts. And if things feel hopeless, talk with an adult you trust. You matter, and people want to help."
       }
      ]
     },
     {
      "id": "pn-st-rain",
+     "crisis": ["988: call or text, any time"],
      "n": 2,
      "title": "RAIN for Teens",
      "mins": 3,
@@ -32700,8 +32583,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeling too big to hold?",
-       "sub": "Talk to an adult you trust, or call or text 988.",
-       "say": "RAIN is for everyday hard feelings. If a feeling is too big to hold on your own, reach out. Talk with an adult you trust, or call or text nine eight eight, any time."
+       "sub": "Talk to an adult you trust.",
+       "say": "RAIN is for everyday hard feelings. If a feeling is too big to hold on your own, reach out. Talk with an adult you trust."
       }
      ]
     }
@@ -32876,6 +32759,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "br-u-checkin",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "RAINN: 1-800-656-4673", "911: emergency"],
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
@@ -33047,23 +32931,19 @@ window.GG_LEARN = {
        "title": "Help lines",
        "rows": [
         [
-         "988 Suicide and Crisis Lifeline",
-         "Call or text 988"
-        ],
-        [
          "Crisis Text Line",
-         "Text HOME to 741741"
+         ""
         ],
         [
          "Veterans and service members",
-         "Dial 988, then press 1"
+         ""
         ],
         [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If you need support, a calm card opens. Call or text nine eight eight, any time, or chat online. Text HOME to seven four one seven four one. Veterans and service members can dial nine eight eight, then press one. In danger right now, call nine one one. And if someone is hurting you, Birch shows lines made for that, like Love Is Respect, Day One, and RAINN."
+       "say": "If you need support, a calm card opens."
       },
       {
        "k": "big",
@@ -33596,6 +33476,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-u-private",
+     "crisis": ["Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "RAINN: 1-800-656-4673", "911: emergency"],
      "n": 5,
      "title": "Private, Saved, and Shared",
      "mins": 5,
@@ -33664,8 +33545,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Someone hurting you? Help is close.",
-       "sub": "Love Is Respect, Day One, RAINN, and 911.",
-       "say": "If you say someone close to you is hurting you, Birch keeps that answer with you and shows you help made for it. Love Is Respect, call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two. In Minnesota, Day One, one eight six six, two two three, one one one one. RAINN, for sexual assault. And nine one one if you are in danger."
+       "say": "If you say someone close to you is hurting you, Birch keeps that answer with you and shows you help made for it."
       },
       {
        "k": "big",
@@ -34201,6 +34081,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-bark",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "911: emergency"],
      "n": 3,
      "title": "Bark: Stress, Setbacks, and Adult Life",
      "mins": 6,
@@ -34342,23 +34223,19 @@ window.GG_LEARN = {
        "title": "Need to talk now?",
        "rows": [
         [
-         "988 Suicide and Crisis Lifeline",
-         "Call, text, or chat 988"
-        ],
-        [
          "Crisis Text Line",
-         "Text HOME to 741741"
+         ""
         ],
         [
          "Veterans and service members",
-         "Dial 988, then press 1"
+         ""
         ],
         [
          "In danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "And if you need to talk right now, call, text, or chat nine eight eight, any time. Or text HOME to seven four one seven four one. Veterans and service members can dial nine eight eight, then press one. If you are in danger, call nine one one."
+       "say": "Or text HOME to seven four one seven four one."
       },
       {
        "k": "quiz",
@@ -34376,6 +34253,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-branches",
+     "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
      "n": 4,
      "title": "Branches: The People in Your Corner",
      "mins": 5,
@@ -34434,7 +34312,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "You deserve to feel safe and respected.",
        "sub": "With anyone you date, live with, or love.",
-       "say": "If you are dating, living with someone, or married, you deserve to feel safe, respected, and able to be yourself. Research finds that most people who are hurt by a partner were first hurt before age twenty five. If someone close to you is controlling, threatening, or hurting you, it is never your fault. Love Is Respect is made for exactly your ages. Call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two. If you are in danger, call nine one one."
+       "say": "If you are dating, living with someone, or married, you deserve to feel safe, respected, and able to be yourself. Research finds that most people who are hurt by a partner were first hurt before age twenty five. If someone close to you is controlling, threatening, or hurting you, it is never your fault."
       },
       {
        "k": "points",
@@ -34521,6 +34399,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-leaves",
+     "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
      "n": 5,
      "title": "Leaves: Move, Rest, and Nourish",
      "mins": 5,
@@ -34588,7 +34467,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "When something helps you cope, notice what it is.",
        "sub": "Birch asks only about coping.",
-       "say": "Birch also asks whether you have used alcohol, cannabis, or other substances to get through hard feelings. In a national study, cannabis use among people nineteen to thirty reached record highs, while drinking went down. Birch asks about coping, never amounts, and never tells anyone. If it has been happening a lot, the SAMHSA National Helpline can help you find support. Call one eight hundred, six six two, four three five seven, any time."
+       "say": "Birch also asks whether you have used alcohol, cannabis, or other substances to get through hard feelings. In a national study, cannabis use among people nineteen to thirty reached record highs, while drinking went down. Birch asks about coping, never amounts, and never tells anyone."
       },
       {
        "k": "points",
@@ -34674,6 +34553,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-6-fruit",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
      "n": 6,
      "title": "Fruit: What You Look Forward To",
      "mins": 5,
@@ -34800,8 +34680,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If hope runs out, reach out.",
-       "sub": "Call or text 988, any time.",
-       "say": "Your Own Timeline is ready for your growth plan. And if hope ever runs out, please reach out. Thoughts of not wanting to live are more common between eighteen and twenty five than at any other age, and they can get better with help. Call or text nine eight eight, any time. Veterans and service members, dial nine eight eight, then press one. Text HOME to seven four one seven four one. If you are in danger, call nine one one. And tell someone you trust."
+       "say": "Your Own Timeline is ready for your growth plan. And if hope ever runs out, please reach out. Thoughts of not wanting to live are more common between eighteen and twenty five than at any other age, and they can get better with help. And tell someone you trust."
       },
       {
        "k": "big",
@@ -34834,6 +34713,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "br-h-talk",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Talking with a Young Adult About How They Are Really Doing",
      "mins": 7,
@@ -34960,8 +34840,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door. Call or text 988 together.",
-       "say": "One more thing matters a great deal. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. So if you hear something like, what's the point, or, everyone would be better off without me, take it seriously. Ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. If the answer is yes, call or text nine eight eight together. If they are in danger right now, call nine one one. Lesson four walks through this, step by step."
+       "sub": "Asking opens the door.",
+       "say": "One more thing matters a great deal. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. So if you hear something like, what's the point, or, everyone would be better off without me, take it seriously. Ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -35008,6 +34888,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-trust",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "Respect, Privacy, and Being Invited In",
      "mins": 6,
@@ -35145,8 +35026,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "When safety is at stake, act.",
-       "sub": "Danger right now? Call 911. Worried? Call or text 988.",
-       "say": "There is one place where respect means stepping closer. If you believe they are in danger right now, call nine one one. If you are worried they are thinking about ending their life, ask them plainly, and call or text nine eight eight together, or call it yourself for guidance on what to do. Privacy never means you have to stand back from a crisis. Lesson four walks through this."
+       "say": "There is one place where respect means stepping closer. If you are worried they are thinking about ending their life, ask them plainly. Privacy never means you have to stand back from a crisis. Lesson four walks through this."
       },
       {
        "k": "big",
@@ -35163,7 +35043,7 @@ window.GG_LEARN = {
         "You should ask them to share their passcode"
        ],
        "right": 1,
-       "why": "Safety answers stay private so they can answer honestly. If you are worried, ask them plainly, and call or text 988 together.",
+       "why": "Safety answers stay private so they can answer honestly. If you are worried, ask them plainly.",
        "say": "Quick question. You're a helper in their Birch, and you notice you can't see their safety answers. What does that mean?"
       }
      ]
@@ -35342,6 +35222,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-worry",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
      "n": 4,
      "title": "When to Worry, and What to Do",
      "mins": 7,
@@ -35402,13 +35283,9 @@ window.GG_LEARN = {
         [
          "Using to get through feelings",
          "Alcohol, cannabis, or other drugs"
-        ],
-        [
-         "SAMHSA Helpline",
-         "1-800-662-4357, any time"
         ]
        ],
-       "say": "Some young adults hurt themselves to cope with feelings that seem too big. If you notice marks they keep hidden, stay calm and ask gently, without anger or shock. Self-harm is a sign of real pain, and it deserves support every time. Notice, too, if they are using alcohol, cannabis, or other drugs to get through hard feelings. Drinking is down at this age, while cannabis use is at record highs. The SAMHSA National Helpline, one eight hundred, six six two, four three five seven, can point you both to help, any time, in English and Spanish."
+       "say": "Some young adults hurt themselves to cope with feelings that seem too big. If you notice marks they keep hidden, stay calm and ask gently, without anger or shock. Self-harm is a sign of real pain, and it deserves support every time. Notice, too, if they are using alcohol, cannabis, or other drugs to get through hard feelings. Drinking is down at this age, while cannabis use is at record highs."
       },
       {
        "k": "points",
@@ -35423,15 +35300,11 @@ window.GG_LEARN = {
          "Or changes around them"
         ],
         [
-         "Love Is Respect",
-         "1-866-331-9474, or text LOVEIS to 22522"
-        ],
-        [
          "National DV Hotline",
-         "1-800-799-7233"
+         ""
         ]
        ],
-       "say": "Watch, too, for signs that someone is hurting them. Most people hurt by a partner were first hurt before age twenty five. Control often comes first. Checking their phone, controlling money, deciding who they can see. Notice fear of one person, or sudden changes around someone. Love Is Respect serves people up to age twenty six. Call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two. The National Domestic Violence Hotline is one eight hundred, seven nine nine, seven two three three. In Minnesota, Day One is one eight six six, two two three, one one one one."
+       "say": "Watch, too, for signs that someone is hurting them. Most people hurt by a partner were first hurt before age twenty five. Control often comes first. Checking their phone, controlling money, deciding who they can see. Notice fear of one person, or sudden changes around someone."
       },
       {
        "k": "big",
@@ -35448,35 +35321,29 @@ window.GG_LEARN = {
          "Thank them for telling you"
         ],
         [
-         "Call or text 988 together",
-         "Or text HOME to 741741"
-        ],
-        [
          "Veterans and service members",
-         "Dial 988, then press 1"
+         ""
         ],
         [
          "Danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. Call or text nine eight eight together, any time, or text HOME to seven four one, seven four one. Veterans and service members can dial nine eight eight, then press one. In Minnesota, star star CRISIS from a cell phone reaches the county crisis team. If they are in danger right now, call nine one one. And if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them for now."
+       "say": "If the answer is yes, stay with them, and thank them for telling you. In Minnesota, star star CRISIS from a cell phone reaches the county crisis team. And if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them for now."
       },
       {
        "k": "big",
        "h": "Try it now: save the numbers",
-       "sub": "988. Love Is Respect 1-866-331-9474.",
        "beats": [
         "Let's do one thing right now, so the numbers are ready when you need them.",
         "Take out your phone.",
-        "Save 988 for a crisis, and Love Is Respect, one eight six six, three three one, nine four seven four, for a controlling or hurtful relationship.",
-        "If you live in Minnesota, add Day One, one eight six six, two two three, one one one one.",
+        "Save the numbers shown under this video.",
         {
          "t": "Take a moment now, and save them.",
          "w": 12
         }
        ],
-       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone. Save 988 for a crisis, and Love Is Respect, one eight six six, three three one, nine four seven four, for a controlling or hurtful relationship. If you live in Minnesota, add Day One, one eight six six, two two three, one one one one. Take a moment now, and save them."
+       "say": "Let's do one thing right now, so the numbers are ready when you need them. Take out your phone. Save the numbers shown under this video. Take a moment now, and save them."
       },
       {
        "k": "big",
@@ -35493,7 +35360,7 @@ window.GG_LEARN = {
         "Tell them how much they have to live for"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door. If the answer is yes, or they are unsure, call or text 988 together.",
+       "why": "Asking plainly opens the door.",
        "say": "Quick question. They've been withdrawn for weeks and say, what's the point. What do you do?"
       }
      ]
@@ -35635,6 +35502,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-h-you",
+     "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
      "n": 6,
      "title": "Taking Care of Yourself Too",
      "mins": 6,
@@ -35700,7 +35568,7 @@ window.GG_LEARN = {
          "A counselor or your doctor"
         ]
        ],
-       "say": "Share the load. Lean on another person who loves them, like a partner, a relative, or a trusted friend. Talk with others walking a similar road. You are rarely the only one. And ask for help early. Your own doctor, or a counselor of your own, can help you think things through. The NAMI HelpLine, one eight hundred, nine five zero, six two six four, offers information and support on weekdays."
+       "say": "Share the load. Lean on another person who loves them, like a partner, a relative, or a trusted friend. Talk with others walking a similar road. You are rarely the only one. And ask for help early. Your own doctor, or a counselor of your own, can help you think things through."
       },
       {
        "k": "points",
@@ -35750,8 +35618,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Hard to go on? Reach out now.",
-       "sub": "Call or text 988, any time. In danger? Call 911.",
-       "say": "Sometimes the people who walk with others reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. Call or text nine eight eight, any time. If you are in danger, call nine one one. And if your own anger ever frightens you, thank yourself for noticing, and bring in more help today."
+       "say": "Sometimes the people who walk with others reach the end of what they can carry. If you ever have thoughts of not wanting to go on yourself, please reach out now. And if your own anger ever frightens you, thank yourself for noticing, and bring in more help today."
       },
       {
        "k": "big",
@@ -35938,8 +35805,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Help is here any time.",
-       "sub": "SAMHSA 1-800-662-4357. Call or text 988. Danger now? Call 911.",
-       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous. The SAMHSA National Helpline can point you to help nearby, any hour, at one, eight hundred, six six two, four three five seven. In a crisis, call or text nine eight eight. And if anyone is in danger right now, call nine one one."
+       "say": "If you want to stop drinking or using, talk with a doctor first. Stopping alcohol, or sedatives like Xanax or Valium, all at once can be dangerous."
       },
       {
        "k": "quiz",
@@ -36093,7 +35959,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Hard mornings in the first days",
        "sub": "Shaking, sweating, or sick? See a doctor today.",
-       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today, or call the SAMHSA National Helpline at one, eight hundred, six six two, four three five seven. If it feels severe, or you see confusion or a seizure, call nine one one."
+       "say": "In the first days after you stop drinking, mornings can bring shaking, sweating, or feeling sick. That can be withdrawal, and it can be dangerous. See a doctor today. If it feels severe, or you see confusion or a seizure, call for emergency help."
       },
       {
        "k": "quiz",
@@ -36261,8 +36127,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Strong cravings deserve real support.",
-       "sub": "SAMHSA 1-800-662-4357. Call or text 988.",
-       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor or the SAMHSA National Helpline can tell you about them. Call one, eight hundred, six six two, four three five seven, any time. In a crisis, call or text nine eight eight."
+       "say": "If cravings are strong every day, a doctor can help. There are medicines that ease cravings for alcohol and for opioids, and a doctor can tell you about them."
       },
       {
        "k": "quiz",
@@ -36409,8 +36274,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Panic and hard breathing deserve care.",
-       "sub": "Chest pain? Call 911. In crisis? Call or text 988.",
-       "say": "If your chest hurts, or you struggle to catch your breath, call nine one one. If panic keeps coming back, a doctor or a therapist can help a lot. In a crisis, call or text nine eight eight."
+       "sub": "Chest pain? Call for help.",
+       "say": "If your chest hurts, or you struggle to catch your breath, call for emergency help. If panic keeps coming back, a doctor or a therapist can help a lot."
       },
       {
        "k": "quiz",
@@ -37014,7 +36879,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Keep it safe, and get support for the deep ones.",
        "sub": "A therapist can walk with you.",
-       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them. In a crisis, call or text nine eight eight."
+       "say": "Keep your writing somewhere private. Some people tear the page up afterward, and that works too. If old hurts come up strongly, a therapist can help you work through them."
       },
       {
        "k": "quiz",
@@ -37497,7 +37362,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Ask your doctor about lasting sleep trouble.",
        "sub": "Some sleep medicines carry risks. Ask what fits you.",
-       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you. In a crisis, call or text nine eight eight."
+       "say": "If sleep stays hard for more than a few weeks, talk with your doctor. Some sleep medicines carry their own risks for someone Living Sober, so ask about options that fit you."
       },
       {
        "k": "quiz",
@@ -37676,6 +37541,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "br-r-ground",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
      "n": 1,
      "title": "Ground Yourself Right Now",
      "mins": 3,
@@ -37744,18 +37610,18 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "You are here. That is enough for right now.",
-       "sub": "Need to talk? Call or text 988, any time.",
        "cue": {
         "p": {
          "0": 1.5
         }
        },
-       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it. And if you want to talk with someone, call or text nine eight eight, or text HOME to seven four one, seven four one, any time."
+       "say": "You are here, in this moment. That is enough for right now. Come back to this whenever you need it."
       }
      ]
     },
     {
      "id": "br-r-panic",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "When Panic Hits",
      "mins": 3,
@@ -37831,13 +37697,12 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Panic keeps coming back? You deserve support.",
        "sub": "A doctor or counselor can help.",
-       "say": "If panic keeps coming back, talk with a doctor or a counselor. Panic responds well to help, and you do not have to just live with it. And if this is the first time, or you have chest pain or trouble breathing, get checked to be safe. In an emergency, call nine one one."
+       "say": "If panic keeps coming back, talk with a doctor or a counselor. Panic responds well to help, and you do not have to just live with it. And if this is the first time, or you have chest pain or trouble breathing, get checked to be safe."
       },
       {
        "k": "big",
        "h": "The wave is passing. You rode it out.",
-       "sub": "Need to talk? Call or text 988, any time.",
-       "say": "The wave is passing. You rode it out. And if you need to talk with someone, call or text nine eight eight, any time."
+       "say": "The wave is passing. You rode it out."
       }
      ]
     },
@@ -37955,6 +37820,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-lonely",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
      "n": 4,
      "title": "When You Feel Alone in a New Place",
      "mins": 3,
@@ -38034,8 +37900,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Feeling alone and hopeless? Reach out now.",
-       "sub": "Call or text 988. Text HOME to 741741.",
-       "say": "If the loneliness feels really heavy, or it's mixed with feeling hopeless, please reach out now. Call or text nine eight eight, or text HOME to seven four one, seven four one, any time. Someone will listen."
+       "say": "If the loneliness feels really heavy, or it's mixed with feeling hopeless, please reach out now. Someone will listen."
       },
       {
        "k": "big",
@@ -38047,6 +37912,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-money",
+     "crisis": ["988: call or text, any time", "1-800-MY-RESET: 1-800-697-3738", "211: local help"],
      "n": 5,
      "title": "When Money Stress Is Loud",
      "mins": 3,
@@ -38100,10 +37966,6 @@ window.GG_LEARN = {
          "Many will set up a plan"
         ],
         [
-         "In Minnesota, dial 211",
-         "Help with housing, food, and bills"
-        ],
-        [
          "Someone you trust",
          "Talking it through helps"
         ]
@@ -38111,7 +37973,6 @@ window.GG_LEARN = {
        "cue": {
         "at": [
          1,
-         2,
          3
         ]
        },
@@ -38121,7 +37982,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Betting to catch up? Reach out.",
        "sub": "Call 1-800-MY-RESET, any time.",
-       "say": "If betting or gambling is part of the money stress, you are not alone, and help works. The National Problem Gambling Helpline is one eight hundred, M Y, R E S E T, any time. And if money worry ever leaves you feeling hopeless, call or text nine eight eight."
+       "say": "If betting or gambling is part of the money stress, you are not alone, and help works. The National Problem Gambling Helpline is one eight hundred, M Y, R E S E T, any time."
       },
       {
        "k": "big",
@@ -38133,6 +37994,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-decide",
+     "crisis": ["988: call or text, any time"],
      "n": 6,
      "title": "When a Big Decision Feels Too Big",
      "mins": 3,
@@ -38203,12 +38065,13 @@ window.GG_LEARN = {
        "k": "big",
        "h": "One step at a time is enough.",
        "sub": "One step, then the next.",
-       "say": "One step at a time is enough today. Take the next step, and let it show you the one after that. And if the weight of it starts to feel hopeless, call or text nine eight eight, any time."
+       "say": "One step at a time is enough today. Take the next step, and let it show you the one after that."
       }
      ]
     },
     {
      "id": "br-r-scroll",
+     "crisis": ["988: call or text, any time"],
      "n": 7,
      "title": "When Scrolling Makes You Feel Worse",
      "mins": 3,
@@ -38280,7 +38143,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Threatened over an image?",
        "sub": "It's not your fault. StopNCII.org can help.",
-       "say": "If someone is threatening to share an intimate image of you, it's not your fault, and you don't have to pay or reply. Go to stop N C I I dot org, which helps block the image from being shared on many sites. If the image was taken before you were eighteen, use take it down dot n c m e c dot org. Tell someone you trust. And if you feel unsafe or hopeless, call or text nine eight eight."
+       "say": "If someone is threatening to share an intimate image of you, it's not your fault, and you don't have to pay or reply. Go to stop N C I I dot org, which helps block the image from being shared on many sites. If the image was taken before you were eighteen, use take it down dot n c m e c dot org. Tell someone you trust."
       },
       {
        "k": "big",
@@ -38292,6 +38155,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-heart",
+     "crisis": ["988: call or text, any time", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
      "n": 8,
      "title": "When Your Heart Is Broken",
      "mins": 3,
@@ -38371,8 +38235,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Was it controlling or scary?",
-       "sub": "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522.",
-       "say": "If the relationship was controlling, scary, or hurtful, it wasn't your fault. Love Is Respect is there any time. Call one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two. And if the sadness stays heavy for two weeks or more, or you feel hopeless, talk with someone you trust, or call or text nine eight eight."
+       "say": "If the relationship was controlling, scary, or hurtful, it wasn't your fault. And if the sadness stays heavy for two weeks or more, or you feel hopeless, talk with someone you trust."
       },
       {
        "k": "big",
@@ -38384,6 +38247,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-grief",
+     "crisis": ["988: call or text, any time"],
      "n": 9,
      "title": "When Someone You Love Has Died",
      "mins": 4,
@@ -38462,8 +38326,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Still really heavy after many months?",
-       "sub": "Talk with a counselor. Need someone now? 988.",
-       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and everyday life feels very hard, talk with a counselor or your doctor. And if you need to talk with someone right now, call or text nine eight eight."
+       "sub": "Talk with a counselor.",
+       "say": "Most grief softens with time, even as the love stays. If it stays as sharp as the first weeks after many months, and everyday life feels very hard, talk with a counselor or your doctor."
       },
       {
        "k": "big",
@@ -38475,6 +38339,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-r-tell",
+     "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "Veterans: 988, then press 1", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "National DV Hotline: 1-800-799-7233", "RAINN: 1-800-656-4673", "911: emergency"],
      "n": 10,
      "title": "When You Need to Tell Someone",
      "mins": 4,
@@ -38544,62 +38409,37 @@ window.GG_LEARN = {
        "h": "If someone is hurting you",
        "items": [
         [
-         "Love Is Respect",
-         "1-866-331-9474, or text LOVEIS to 22522"
-        ],
-        [
          "National DV Hotline",
-         "1-800-799-7233"
-        ],
-        [
-         "Sexual assault: RAINN",
-         "1-800-656-4673"
-        ],
-        [
-         "In Minnesota, Day One",
-         "1-866-223-1111"
+         ""
         ]
        ],
        "cue": {
         "at": [
-         1,
-         2,
-         3,
-         4
+         1
         ]
        },
-       "say": "If someone is hurting you, at home, in a relationship, at work, or online, here is where to reach out. Love Is Respect, at one eight six six, three three one, nine four seven four, or text LOVEIS to two two five two two. The National Domestic Violence Hotline, at one eight hundred, seven nine nine, seven two three three. After a sexual assault, RAINN, at one eight hundred, six five six, four six seven three. In Minnesota, Day One, at one eight six six, two two three, one one one one. If someone is threatening to share an image of you, StopNCII dot org can help. If you are in danger right now, call nine one one."
+       "say": "If someone is hurting you, at home, in a relationship, at work, or online, here is where to reach out. If someone is threatening to share an image of you, StopNCII dot org can help."
       },
       {
        "k": "points",
        "h": "If you don't want to go on",
        "items": [
         [
-         "Call or text 988",
-         "Or chat at 988lifeline.org"
-        ],
-        [
-         "Text HOME to 741741",
-         "In Minnesota, text MN to 741741"
-        ],
-        [
          "Veterans and service members",
-         "Dial 988, then press 1"
+         ""
         ],
         [
          "In danger right now",
-         "Call 911"
+         "Call for help"
         ]
        ],
        "cue": {
         "at": [
-         2,
          3,
-         4,
-         6
+         3
         ]
        },
-       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. Call or text nine eight eight, any time, or chat at nine eight eight lifeline dot org. You can also text HOME to seven four one, seven four one. Veterans and service members, dial nine eight eight, then press one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team. If you are in danger right now, call nine one one."
+       "say": "And if you've been thinking about not wanting to be alive, or about ending your life, please reach out now. Many people your age have had these thoughts, and talking with someone helps. You can also text HOME to seven four one, seven four one. In Minnesota, call star star CRISIS from a cell phone to reach your county crisis team."
       },
       {
        "k": "big",
@@ -38702,8 +38542,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Heavy memories deserve real support.",
-       "sub": "Call or text 988 any time. In danger now? Call 911.",
-       "say": "If memories keep coming back hard, or your body stays on alert for days, you deserve real support. A therapist trained in trauma can help a lot. Call or text nine eight eight, any time. If you are in danger right now, call nine one one."
+       "say": "If memories keep coming back hard, or your body stays on alert for days, you deserve real support. A therapist trained in trauma can help a lot."
       },
       {
        "k": "big",
@@ -38883,6 +38722,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-st-walk-out",
+     "crisis": ["988: call or text, any time"],
      "n": 4,
      "title": "Walk It Out After a Hard Day",
      "mins": 2,
@@ -38962,8 +38802,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Heavy for days? Reach out.",
-       "sub": "Talk with someone you trust, or call or text 988.",
-       "say": "If the weight stays heavy for days, reach out. Talk with someone you trust, or call or text nine eight eight, any time."
+       "sub": "Talk with someone you trust.",
+       "say": "If the weight stays heavy for days, reach out. Talk with someone you trust, any time."
       },
       {
        "k": "big",
@@ -38975,6 +38815,7 @@ window.GG_LEARN = {
     },
     {
      "id": "br-st-mood-walk",
+     "crisis": ["988: call or text, any time"],
      "n": 5,
      "title": "A Ten Minute Mood Walk",
      "mins": 2,
@@ -39055,8 +38896,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Low for two weeks or more? Reach out.",
-       "sub": "A doctor, someone you trust, or 988, any time.",
-       "say": "If your mood stays low for two weeks or more, talk with a doctor or someone you trust. You can call or text nine eight eight, any time."
+       "sub": "A doctor or someone you trust, any time.",
+       "say": "If your mood stays low for two weeks or more, talk with a doctor or someone you trust."
       },
       {
        "k": "big",
@@ -39092,6 +38933,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-welcome",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Welcome to The Grove",
      "mins": 5,
@@ -39234,7 +39076,7 @@ window.GG_LEARN = {
          "Tell someone you trust"
         ]
        ],
-       "say": "A few things keep every grove kind and safe. Anyone can pass on any question. The check-ins and the plan are locked with a grove passcode, on this device only. And if anyone is not safe, tell a grown-up or a leader you trust. Anyone can call or text nine eight eight. If someone is in danger right now, call nine one one."
+       "say": "A few things keep every grove kind and safe. Anyone can pass on any question. The check-ins and the plan are locked with a grove passcode, on this device only. And if anyone is not safe, tell a grown-up or a leader you trust."
       },
       {
        "k": "big",
@@ -39946,6 +39788,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-checkin",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 4,
      "title": "The Group Check-in",
      "mins": 5,
@@ -40103,10 +39946,10 @@ window.GG_LEARN = {
         ],
         [
          "Help lines on every screen",
-         "988 and 911"
+         ""
         ]
        ],
-       "say": "The check-in is always about we, never about one person. It never asks about harm or danger in front of the group. Those questions belong in each person’s own tree app, where they stay private. And the help lines are on every check-in screen. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one."
+       "say": "The check-in is always about we, never about one person. It never asks about harm or danger in front of the group. Those questions belong in each person’s own tree app, where they stay private. And the help lines are on every check-in screen."
       },
       {
        "k": "big",
@@ -40955,6 +40798,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-wall",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 9,
      "title": "The Wall",
      "mins": 5,
@@ -41126,14 +40970,14 @@ window.GG_LEARN = {
         ],
         [
          "Not safe right now?",
-         "Call or text 988, or call 911"
+         ""
         ],
         [
          "The wall is for cheering",
          "Big things need a real talk"
         ]
        ],
-       "say": "The wall is for cheering. For something big, scary, or hard, tell a safe grown-up in person. If anyone in your family is not safe, a grown-up can call or text nine eight eight, or call nine one one."
+       "say": "The wall is for cheering. For something big, scary, or hard, tell a safe grown-up in person."
       },
       {
        "k": "points",
@@ -41375,6 +41219,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-private",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 11,
      "title": "Your Tree Is Yours, the Grove Is Ours",
      "mins": 6,
@@ -41514,13 +41359,9 @@ window.GG_LEARN = {
         [
          "A nudge, not the answers",
          "Find a quiet moment and listen"
-        ],
-        [
-         "988 and 911",
-         "If anyone is in danger"
         ]
        ],
-       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. And if anyone is in danger, call or text nine eight eight, or call nine one one. That help is always on the grove page too, in a card called If Someone Needs Help Now."
+       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. That help is always on the grove page too, in a card called If Someone Needs Help Now."
       },
       {
        "k": "big",
@@ -41585,6 +41426,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-u-lock",
+     "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
      "n": 12,
      "title": "Keeping Your Grove Private",
      "mins": 4,
@@ -41736,8 +41578,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If someone may be in danger, get help right away.",
-       "sub": "Call or text 988. In danger now? Call 911.",
-       "say": "Privacy has one limit, and every group should know it. If someone may be in danger, get help right away. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In Minnesota, if a vulnerable adult may be harmed, neglected, or taken advantage of, call MAARC at one eight four four, eight eight zero, one five seven four."
+       "say": "Privacy has one limit, and every group should know it. If someone may be in danger, get help right away."
       },
       {
        "k": "quiz",
@@ -41764,6 +41605,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-l-kids",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 1,
      "title": "Kids in the Circle",
      "mins": 4,
@@ -41914,7 +41756,7 @@ window.GG_LEARN = {
          "A grown-up gets help right away"
         ]
        ],
-       "say": "Sometimes a child shares something big in the circle. Thank them, and say you would like to talk more later, just the two of you. Never ask a child to tell more in front of the group. If a child may not be safe, a grown-up gets help right away. In a school, follow your school’s plan. Anyone can call or text nine eight eight. If someone is in danger right now, call nine one one."
+       "say": "Sometimes a child shares something big in the circle. Thank them, and say you would like to talk more later, just the two of you. Never ask a child to tell more in front of the group. If a child may not be safe, a grown-up gets help right away. In a school, follow your school’s plan."
       },
       {
        "k": "points",
@@ -41957,6 +41799,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-class",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 2,
      "title": "Leading a Class Grove",
      "mins": 5,
@@ -42129,10 +41972,10 @@ window.GG_LEARN = {
         ],
         [
          "Danger right now?",
-         "Call 911"
+         "Call for help"
         ]
        ],
-       "say": "If a student shares something big, thank them, and talk privately later. Follow your school’s own plan, and bring in the school counselor or nurse. If someone is in danger right now, call nine one one, and use your school’s emergency plan. Anyone can call or text nine eight eight."
+       "say": "If a student shares something big, thank them, and talk privately later. Follow your school’s own plan, and bring in the school counselor or nurse. If someone is in danger right now, use your school’s emergency plan."
       },
       {
        "k": "points",
@@ -42169,6 +42012,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-faith",
+     "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
      "n": 3,
      "title": "Leading a Faith Community or Small Group Grove",
      "mins": 6,
@@ -42339,14 +42183,14 @@ window.GG_LEARN = {
         ],
         [
          "Danger right now?",
-         "Call 911"
+         "Call for help"
         ],
         [
          "A vulnerable adult at risk?",
-         "MAARC 1-844-880-1574"
+         ""
         ]
        ],
-       "say": "When someone is struggling, listen, and then talk with them privately, never in front of the group. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In Minnesota, if a vulnerable adult may be harmed, neglected, or taken advantage of, call MAARC at one eight four four, eight eight zero, one five seven four."
+       "say": "When someone is struggling, listen, and then talk with them privately, never in front of the group."
       },
       {
        "k": "big",
@@ -42370,6 +42214,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-team",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 4,
      "title": "Leading a Team Grove",
      "mins": 4,
@@ -42530,10 +42375,6 @@ window.GG_LEARN = {
        "h": "Help for the helpers",
        "items": [
         [
-         "988",
-         "Call or text, any time"
-        ],
-        [
          "Your workplace’s own support",
          "Like an employee assistance program"
         ],
@@ -42542,7 +42383,7 @@ window.GG_LEARN = {
          "For anyone who wants one"
         ]
        ],
-       "say": "Helpers need help too. Anyone on the team can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. Point people to your workplace’s own support, like an employee assistance program. And anyone who wants their own check-in can start a tree app of their own."
+       "say": "Helpers need help too. Point people to your workplace’s own support, like an employee assistance program. And anyone who wants their own check-in can start a tree app of their own."
       },
       {
        "k": "big",
@@ -42566,6 +42407,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-l-life",
+     "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
      "n": 5,
      "title": "When Life Changes Together",
      "mins": 5,
@@ -42761,19 +42603,11 @@ window.GG_LEARN = {
        "h": "Help is close in every guide",
        "items": [
         [
-         "988 and 911",
-         "Any time"
-        ],
-        [
          "The hospice line first",
          "In hospice topics"
-        ],
-        [
-         "MAARC 1-844-880-1574",
-         "For a vulnerable adult"
         ]
        ],
-       "say": "Every guide keeps help close. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one. In hospice topics, your hospice’s own twenty four seven line comes first. And in Minnesota, if a vulnerable adult may be at risk, call MAARC at one eight four four, eight eight zero, one five seven four."
+       "say": "Every guide keeps help close. In hospice topics, your hospice’s own twenty four seven line comes first."
       },
       {
        "k": "big",
@@ -43260,6 +43094,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-bark",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 3,
      "title": "Bark: Mind and Feelings",
      "mins": 5,
@@ -43390,8 +43225,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "If anyone is not safe, tell a safe grown-up.",
-       "sub": "Grown-ups: call or text 988. In danger now? Call 911.",
-       "say": "If anyone in your family is not safe, or a feeling stays heavy for a long time, tell a safe grown-up. That is a brave and strong thing to do. Grown-ups, you can talk with a doctor or a counselor, and you can call or text nine eight eight any time. If someone is in danger right now, call nine one one."
+       "say": "If anyone in your family is not safe, or a feeling stays heavy for a long time, tell a safe grown-up. That is a brave and strong thing to do. Grown-ups, you can talk with a doctor or a counselor."
       },
       {
        "k": "quiz",
@@ -43409,6 +43243,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-branches",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 4,
      "title": "Branches: Relationships",
      "mins": 5,
@@ -43563,8 +43398,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Everyone deserves to feel safe at home.",
-       "sub": "If someone is not safe, tell a safe grown-up. Call or text 988. In danger right now? Call 911.",
-       "say": "Branches grow best where everyone is safe. If anyone in your family is not safe, or is being hurt, tell a safe grown-up, like a teacher, a relative, or a school counselor. You can call or text nine eight eight, any time. And if someone is in danger right now, call nine one one."
+       "sub": "If someone is not safe, tell a safe grown-up.",
+       "say": "Branches grow best where everyone is safe. If anyone in your family is not safe, or is being hurt, tell a safe grown-up, like a teacher, a relative, or a school counselor."
       },
       {
        "k": "big",
@@ -43754,6 +43589,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-6-fruit",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 6,
      "title": "Fruit: Hope",
      "mins": 5,
@@ -43902,8 +43738,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "When hope feels far, let someone help you hold it.",
-       "sub": "Tell a safe grown-up. Call or text 988, any time. In danger right now? Call 911.",
-       "say": "Some days, it is hard to see anything good ahead. If that is you, you do not have to hold it alone. Tell a safe grown-up. Call or text nine eight eight, any time. And if someone is in danger right now, call nine one one."
+       "sub": "Tell a safe grown-up.",
+       "say": "Some days, it is hard to see anything good ahead. If that is you, you do not have to hold it alone. Tell a safe grown-up."
       },
       {
        "k": "big",
@@ -45125,6 +44961,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-hardday",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 7,
      "title": "Hard Day Huddle",
      "mins": 3,
@@ -45256,8 +45093,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Too heavy to carry? Tell someone you trust.",
-       "sub": "Call or text 988 any time. In danger now? Call 911.",
-       "say": "If a hard day feels too heavy to carry, tell someone you trust, like a grown-up or a leader. You never have to hold it by yourself. Anyone can call or text nine eight eight, any time, day or night. If someone is in danger right now, call nine one one."
+       "say": "If a hard day feels too heavy to carry, tell someone you trust, like a grown-up or a leader. You never have to hold it by yourself."
       },
       {
        "k": "big",
@@ -45269,6 +45105,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-repair",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 8,
      "title": "Making Up After a Fight",
      "mins": 3,
@@ -45373,8 +45210,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Everyone deserves to feel safe at home.",
-       "sub": "Not safe? Tell a safe grown-up. In danger right now? Call 911.",
-       "say": "Everyone deserves to feel safe at home. Arguing happens, but being hurt, or being scared at home, is different. If anyone in your home is ever not safe, tell a safe grown-up, like a teacher, a relative, or a school counselor. Keep telling until someone helps. If someone is in danger right now, call nine one one. And grown-ups, if you need to talk with someone, call or text nine eight eight."
+       "sub": "Not safe? Tell a safe grown-up.",
+       "say": "Everyone deserves to feel safe at home. Arguing happens, but being hurt, or being scared at home, is different. If anyone in your home is ever not safe, tell a safe grown-up, like a teacher, a relative, or a school counselor. Keep telling until someone helps."
       },
       {
        "k": "big",
@@ -45385,6 +45222,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-meeting",
+     "crisis": ["988: call or text, any time", "911: emergency"],
      "n": 9,
      "title": "Family Meeting",
      "mins": 3,
@@ -45497,7 +45335,7 @@ window.GG_LEARN = {
          "Tell a safe grown-up"
         ]
        ],
-       "say": "Some things are too big for a family meeting. If feelings get big, take a break, and come back to it. Some topics are for grown-ups to talk about privately. And if anyone in your family is not safe, tell a safe grown-up right away. Grown-ups can call or text nine eight eight. If someone is in danger right now, call nine one one."
+       "say": "Some things are too big for a family meeting. If feelings get big, take a break, and come back to it. Some topics are for grown-ups to talk about privately. And if anyone in your family is not safe, tell a safe grown-up right away."
       },
       {
        "k": "points",
@@ -45727,6 +45565,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-memorybox",
+     "crisis": ["988: call or text, any time"],
      "n": 12,
      "title": "Building a Memory Box Together",
      "mins": 4,
@@ -45867,8 +45706,8 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Remembering together keeps love close.",
-       "sub": "Grief feeling heavy for a long time? Reach out for support, or call or text 988.",
-       "say": "Remembering together keeps love close. And if grief feels heavy for a long time, for anyone in your family, reach out for support, or call or text nine eight eight."
+       "sub": "Grief feeling heavy for a long time? Reach out for support.",
+       "say": "Remembering together keeps love close. And if grief feels heavy for a long time, for anyone in your family, reach out for support."
       }
      ]
     },
@@ -47555,6 +47394,7 @@ window.GG_LEARN = {
     },
     {
      "id": "gr-r-joys",
+     "crisis": ["911: emergency"],
      "n": 5,
      "title": "Sharing Joys and Concerns",
      "mins": 4,
@@ -47665,7 +47505,7 @@ window.GG_LEARN = {
          "Follow up privately, right away"
         ]
        ],
-       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help. If someone is in danger right now, call nine one one."
+       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help."
       },
       {
        "k": "points",
@@ -47799,7 +47639,7 @@ window.GG_LEARN = {
          "Follow up privately, right away"
         ]
        ],
-       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help. If someone is in danger right now, call nine one one."
+       "say": "A few tips for the leader. Go first, and keep it short and warm, so others know how. Thank each person, every time. And when a concern is about someone’s safety, follow up privately, right away, and get the right help."
       },
       {
        "k": "points",
@@ -47966,6 +47806,7 @@ window.GG_LEARN = {
    "lessons": [
     {
      "id": "gr-r-huddle",
+     "crisis": ["988: call or text, any time"],
      "n": 1,
      "title": "Team Huddle",
      "mins": 3,
@@ -48119,7 +47960,7 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "In a Team grove, you will find these in Together. Speak Up Round and Name the Load are under Bark. Appreciation Round is under Branches. And Pause After a Death is under Roots. Anchor your huddle to the start of a shift in Our Team Plan. And helpers need help too. Anyone can call or text nine eight eight, any time."
+       "say": "In a Team grove, you will find these in Together. Speak Up Round and Name the Load are under Bark. Appreciation Round is under Branches. And Pause After a Death is under Roots. Anchor your huddle to the start of a shift in Our Team Plan. And helpers need help too."
       },
       {
        "k": "big",
@@ -48389,8 +48230,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Helpers need help too.",
-       "sub": "Call or text 988 any time. In danger now? Call 911.",
-       "say": "Helpers need help too. If a hard shift stays heavy for days, talk with someone you trust, your team lead, or your employee assistance program. Anyone can call or text nine eight eight, any time. If someone is in danger right now, call nine one one."
+       "say": "Helpers need help too. If a hard shift stays heavy for days, talk with someone you trust, your team lead, or your employee assistance program."
       },
       {
        "k": "points",

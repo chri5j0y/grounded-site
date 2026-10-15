@@ -54,6 +54,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Starting High School",
    "you": {
     "id": "pn-g-start-hs-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "you",
     "title": "Starting High School",
@@ -161,8 +162,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Heavy for weeks? Reach out.",
-      "body": "Talk with a counselor or an adult you trust. Not wanting to be alive: call or text 988. Danger right now: 911.",
-      "say": "If you've felt lost, lonely, or low for two weeks or more, tell your school counselor or an adult you trust. You don't need a big reason. If someone is hurting or bullying you, tell an adult at school. And if you ever think about not wanting to be alive, call or text nine eight eight, any time. In danger right now, call nine one one."
+      "body": "Talk with a counselor or an adult you trust.",
+      "say": "If you've felt lost, lonely, or low for two weeks or more, tell your school counselor or an adult you trust. You don't need a big reason. If someone is hurting or bullying you, tell an adult at school."
      },
      {
       "k": "big",
@@ -174,6 +175,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-start-hs-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "start-hs",
     "side": "helper",
     "title": "Starting High School",
@@ -268,8 +270,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: talk with them, and the school counselor. Talk of not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for a low mood, pulling away from everyone, or trouble sleeping that lasts two weeks or more. Talk with them, and with the school counselor. If they use Pine, you won't see their answers. If they might not be safe, you'll get a quiet alert asking you to check in. If they talk about not wanting to live, call or text nine eight eight together. Danger right now, call nine one one."
+      "body": "Two weeks or more: talk with them, and the school counselor.",
+      "say": "Watch gently for a low mood, pulling away from everyone, or trouble sleeping that lasts two weeks or more. Talk with them, and with the school counselor. If they use Pine, you won't see their answers. If they might not be safe, you'll get a quiet alert asking you to check in."
      },
      {
       "k": "big",
@@ -286,6 +288,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Grades, Pressure, and Perfectionism",
    "you": {
     "id": "pn-g-grades-pressure-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grades-pressure",
     "side": "you",
     "title": "Grades, Pressure, and Perfectionism",
@@ -412,8 +415,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Heavy for weeks? Tell someone.",
-      "body": "A counselor or adult you trust. Feeling like there is no point: call or text 988. Danger right now: 911.",
-      "say": "If the pressure keeps you from sleeping, eating, or enjoying anything for two weeks or more, tell your school counselor or an adult you trust. If you ever feel like you'll never be enough, or there's no point, call or text nine eight eight, any time. In danger right now, call nine one one."
+      "body": "A counselor or adult you trust.",
+      "say": "If the pressure keeps you from sleeping, eating, or enjoying anything for two weeks or more, tell your school counselor or an adult you trust."
      },
      {
       "k": "big",
@@ -425,6 +428,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-grades-pressure-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grades-pressure",
     "side": "helper",
     "title": "Grades, Pressure, and Perfectionism",
@@ -519,8 +523,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: talk with them and the school counselor. Talk of no point in living: call or text 988 together. Danger: 911.",
-      "say": "Watch for trouble sleeping or eating, pulling away, or talk of never being good enough, lasting two weeks or more. Talk with them, and with the school counselor or their doctor. If they say there's no point, or talk about not wanting to live, call or text nine eight eight together. Danger right now, call nine one one."
+      "body": "Two weeks or more: talk with them and the school counselor.",
+      "say": "Watch for trouble sleeping or eating, pulling away, or talk of never being good enough, lasting two weeks or more. Talk with them, and with the school counselor or their doctor."
      },
      {
       "k": "big",
@@ -537,6 +541,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "ADHD and Learning Differences",
    "you": {
     "id": "pn-g-adhd-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "you",
     "title": "ADHD and Learning Differences",
@@ -648,12 +653,13 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Your brain, your strengths.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "If you've felt worn out or hopeless for a while, tell an adult you trust, or call or text nine eight eight, any time. Your brain is yours, strengths and all. The full guide has more, whenever you want it."
+      "say": "If you've felt worn out or hopeless for a while, tell an adult you trust. Your brain is yours, strengths and all. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
     "id": "pn-g-adhd-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "helper",
     "title": "ADHD and Learning Differences",
@@ -759,8 +765,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Medicine and mood",
-      "body": "Medicine questions: their doctor or pharmacist. Never share or sell it. Hopeless or worn out: call or text 988.",
-      "say": "If they take medicine for ADHD, talk about keeping it safe, and never sharing or selling it. Questions about medicine go to their doctor or pharmacist. And watch for a low mood that lasts. If they seem hopeless, or talk about not wanting to live, call or text nine eight eight together."
+      "body": "Medicine questions: their doctor or pharmacist. Never share or sell it.",
+      "say": "If they take medicine for ADHD, talk about keeping it safe, and never sharing or selling it. Questions about medicine go to their doctor or pharmacist. And watch for a low mood that lasts."
      },
      {
       "k": "big",
@@ -896,6 +902,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-sports-cut-helper",
+    "crisis": ["Childhelp: call or text 1-800-422-4453"],
     "guide": "sports-cut",
     "side": "helper",
     "title": "Sports: Getting Cut, Injury, and Burnout",
@@ -989,7 +996,7 @@ window.GG_LEARN_GUIDES.pine = {
        "You'll make it next year.",
        "After all we spent on this?"
       ],
-      "say": "Some words land hard. A replay of every mistake in the car. You'll make it next year, before they've had a chance to be sad. And any talk of the time and money spent, when they're thinking about stopping. If anyone in their sport ever hurts or threatens them, help them reach an adult outside the team, or Childhelp."
+      "say": "Some words land hard. A replay of every mistake in the car. You'll make it next year, before they've had a chance to be sad. And any talk of the time and money spent, when they're thinking about stopping. If anyone in their sport ever hurts or threatens them, help them reach an adult outside the team."
      },
      {
       "k": "big",
@@ -1006,6 +1013,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Choosing a Path After High School",
    "you": {
     "id": "pn-g-path-after-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "path-after",
     "side": "you",
     "title": "Choosing a Path After High School",
@@ -1129,8 +1137,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Feeling stuck or hopeless?",
-      "body": "Talk with your counselor or an adult you trust. Feeling there is no point: call or text 988.",
-      "say": "If thinking about the future leaves you feeling stuck or hopeless for weeks, talk with your counselor or an adult you trust. If you ever feel like there's no point, call or text nine eight eight, any time."
+      "body": "Talk with your counselor or an adult you trust.",
+      "say": "If thinking about the future leaves you feeling stuck or hopeless for weeks, talk with your counselor or an adult you trust."
      },
      {
       "k": "big",
@@ -1261,6 +1269,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Graduation, College, and Leaving Home",
    "you": {
     "id": "pn-g-graduation-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "graduation",
     "side": "you",
     "title": "Graduation, College, and Leaving Home",
@@ -1302,15 +1311,11 @@ window.GG_LEARN_GUIDES.pine = {
         "Counseling, a clinic, an RA"
        ],
        [
-        "Save 988",
-        "It works anywhere"
-       ],
-       [
         "A plan with home",
         "How often to talk"
        ]
       ],
-      "say": "Get ready in more ways than one. Learn a few life skills: laundry, a simple meal, a budget. Find out where help lives in your next place, like a counseling center, a clinic, or a resident advisor. Save nine eight eight in your phone. It works anywhere in the country. And make a plan with home about how often you'll talk."
+      "say": "Get ready in more ways than one. Learn a few life skills: laundry, a simple meal, a budget. Find out where help lives in your next place, like a counseling center, a clinic, or a resident advisor. It works anywhere in the country. And make a plan with home about how often you'll talk."
      },
      {
       "k": "big",
@@ -1347,7 +1352,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Homesick means I have people worth missing.",
        "Asking for help is part of being on my own."
       ],
-      "say": "Here are words to keep. I can be excited and sad at the same time. Homesick means I have people worth missing. And asking for help is part of being on my own. If you ever feel hopeless, call or text nine eight eight, any time. In danger, call nine one one."
+      "say": "Here are words to keep. I can be excited and sad at the same time. Homesick means I have people worth missing. And asking for help is part of being on my own."
      },
      {
       "k": "big",
@@ -1359,6 +1364,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-graduation-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "graduation",
     "side": "helper",
     "title": "Graduation, College, and Leaving Home",
@@ -1393,7 +1399,7 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Mental health",
-        "Where help is, and 988"
+        "Where help is"
        ],
        [
         "Alcohol and consent",
@@ -1404,7 +1410,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Decided together"
        ]
       ],
-      "say": "Before they go, cover a few things. Life skills: money, laundry, cooking, making their own appointments. Mental health: what low feels like for them, where counseling is, and that nine eight eight works anywhere. Alcohol, parties, and consent, talked about honestly, adult to adult. And a rhythm for staying in touch, decided together."
+      "say": "Before they go, cover a few things. Life skills: money, laundry, cooking, making their own appointments. Mental health: what low feels like for them, and where counseling is. Alcohol, parties, and consent, talked about honestly, adult to adult. And a rhythm for staying in touch, decided together."
      },
      {
       "k": "big",
@@ -1420,7 +1426,7 @@ window.GG_LEARN_GUIDES.pine = {
        "What are you most nervous about?",
        "If it gets hard, call me."
       ],
-      "say": "Here are words that help. I'm proud of you, and I'm going to miss you. Both are true. What are you most excited about, and most nervous about? And, if it gets hard out there, call me, or call nine eight eight. You don't need to tough it out alone."
+      "say": "Here are words that help. I'm proud of you, and I'm going to miss you. Both are true. What are you most excited about, and most nervous about? You don't need to tough it out alone."
      },
      {
       "k": "big",
@@ -1458,7 +1464,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Low for weeks: counseling"
        ]
       ],
-      "say": "After they leave, let them lead the rhythm of calls and texts. Expect a wobble in the first months. Listen first, and let them try their own solutions before you offer yours. If they sound low for weeks, encourage the counseling center. If they talk about not wanting to live, call or text nine eight eight together."
+      "say": "After they leave, let them lead the rhythm of calls and texts. Expect a wobble in the first months. Listen first, and let them try their own solutions before you offer yours. If they sound low for weeks, encourage the counseling center."
      },
      {
       "k": "big",
@@ -1481,6 +1487,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Friendship Changes and Losing a Friend Group",
    "you": {
     "id": "pn-g-friend-changes-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-changes",
     "side": "you",
     "title": "Friendship Changes and Losing a Friend Group",
@@ -1582,8 +1589,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Heavy for weeks? Reach out.",
-      "body": "Talk with a parent, counselor, or doctor. Not wanting to be here: call, text, or chat 988. Danger right now: 911.",
-      "say": "If the sadness stays heavy for two weeks or more, or you're pulling away from everyone, talk with a parent, your school counselor, or your doctor. If you ever feel like no one would care if you were gone, that feeling is lying to you. Call, text, or chat nine eight eight, any time. If you're in danger right now, call nine one one."
+      "body": "Talk with a parent, counselor, or doctor.",
+      "say": "If the sadness stays heavy for two weeks or more, or you're pulling away from everyone, talk with a parent, your school counselor, or your doctor. If you ever feel like no one would care if you were gone, that feeling is lying to you."
      },
      {
       "k": "big",
@@ -1699,6 +1706,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Feeling Lonely or Left Out",
    "you": {
     "id": "pn-g-left-out-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "left-out",
     "side": "you",
     "title": "Feeling Lonely or Left Out",
@@ -1801,8 +1809,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "Two weeks or more: talk with a counselor or doctor. Feeling like a burden or not wanting to be here: call, text, or chat 988.",
-      "say": "If the loneliness has lasted two weeks or more, or you feel down or numb most days, talk with a parent, your school counselor, or your doctor. If you ever feel like a burden, or think about not wanting to be here, call, text, or chat nine eight eight, any time. If you're in danger right now, call nine one one."
+      "body": "Two weeks or more: talk with a counselor or doctor.",
+      "say": "If the loneliness has lasted two weeks or more, or you feel down or numb most days, talk with a parent, your school counselor, or your doctor."
      },
      {
       "k": "big",
@@ -1814,6 +1822,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-left-out-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "left-out",
     "side": "helper",
     "title": "Feeling Lonely or Left Out",
@@ -1900,8 +1909,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If Pine asks you to check in",
-      "body": "You won't see their answers. Check in warmly, and listen. Hopelessness or not wanting to be here: 988, together.",
-      "say": "If Pine sends you a quiet alert to check in, you won't see their answers, and that's on purpose. Simply check in warmly. Hey, how are you really doing? Then listen. Loneliness together with hopelessness, or talk of being a burden, needs help right away. Call, text, or chat nine eight eight together. If there's danger right now, call nine one one."
+      "body": "You won't see their answers. Check in warmly, and listen.",
+      "say": "If Pine sends you a quiet alert to check in, you won't see their answers, and that's on purpose. Simply check in warmly. Hey, how are you really doing? Then listen. Loneliness together with hopelessness, or talk of being a burden, needs help right away."
      },
      {
       "k": "big",
@@ -1918,6 +1927,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Bullying, in Person and Online",
    "you": {
     "id": "pn-g-bullying-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "bullying",
     "side": "you",
     "title": "Bullying, in Person and Online",
@@ -1983,10 +1993,10 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Threats of violence",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "Then, with a calmer body, here's what to do. Save the proof, screenshots with names, dates, and times, and who saw it happen. Don't answer back online. Block the account, then report it to the app. Tell an adult who can act, like a counselor, a coach, a teacher, or a parent. If the first one doesn't help, tell another. And if anyone threatens violence, call nine one one."
+      "say": "Then, with a calmer body, here's what to do. Save the proof, screenshots with names, dates, and times, and who saw it happen. Don't answer back online. Block the account, then report it to the app. Tell an adult who can act, like a counselor, a coach, a teacher, or a parent. If the first one doesn't help, tell another."
      },
      {
       "k": "card",
@@ -2007,8 +2017,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Your check-in, and help now",
-      "body": "Say someone is hurting you, and Pine shows outside help, not a family alert. Hopeless: call, text, or chat 988.",
-      "say": "One more thing. If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family. And if bullying ever leaves you feeling hopeless, or thinking about not wanting to be here, call, text, or chat nine eight eight, any time."
+      "body": "Say someone is hurting you, and Pine shows outside help, not a family alert.",
+      "say": "One more thing. If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family."
      },
      {
       "k": "big",
@@ -2020,6 +2030,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-bullying-helper",
+    "crisis": ["988: call or text, any time", "CyberTipline: 1-800-843-5678"],
     "guide": "bullying",
     "side": "helper",
     "title": "Bullying, in Person and Online",
@@ -2107,8 +2118,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to call for more help",
-      "body": "Threats, stalking, or shared sexual images: police, Take It Down, CyberTipline. Hopeless: 988, together.",
-      "say": "Some things need more help. Threats of violence, stalking, or sharing sexual images call for the police. For a sexual image of anyone under eighteen, use Take It Down and the CyberTipline, both in the full guide. Bullying is linked with sadness and suicide risk, so watch their mood. If they seem hopeless, ask directly, and call, text, or chat nine eight eight together."
+      "body": "Threats, stalking, or shared sexual images: police, Take It Down.",
+      "say": "Some things need more help. Threats of violence, stalking, or sharing sexual images call for the police. For a sexual image of anyone under eighteen, use Take It Down, in the full guide. Bullying is linked with sadness and suicide risk, so watch their mood. If they seem hopeless, ask directly."
      },
      {
       "k": "big",
@@ -2125,6 +2136,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "First Relationships and What Healthy Looks Like",
    "you": {
     "id": "pn-g-first-relationship-you",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "first-relationship",
     "side": "you",
     "title": "First Relationships and What Healthy Looks Like",
@@ -2228,8 +2240,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Something feel off?",
-      "body": "Love Is Respect: call, text, or chat, any time. An adult pursuing you: tell a trusted adult. Danger: 911.",
-      "say": "If something feels off, you can talk it through with Love Is Respect, by call, text, or chat, any time. The details are in the full guide. If an adult, or someone much older, is pursuing you romantically or asking for pictures, that is never okay. Tell a trusted adult right away. If you're in danger, call nine one one."
+      "body": "An adult pursuing you: tell a trusted adult.",
+      "say": "The details are in the full guide. If an adult, or someone much older, is pursuing you romantically or asking for pictures, that is never okay. Tell a trusted adult right away."
      },
      {
       "k": "big",
@@ -2354,6 +2366,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Breakups",
    "you": {
     "id": "pn-g-breakup-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "breakup",
     "side": "you",
     "title": "Breakups",
@@ -2452,14 +2465,14 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If an ex threatens or pressures",
-      "body": "Harassing or threatening: tell a trusted adult, and see the full guide. If they'll hurt themselves: tell an adult, call 988. You don't have to stay.",
-      "say": "Sometimes a breakup doesn't stay clean. If an ex harasses you, threatens you, or shares pictures, tell a trusted adult. The full guide has people who can help. If an ex says they'll hurt themselves unless you come back, take it seriously. Tell an adult and call nine eight eight for them. But it is not your job to stay."
+      "body": "Harassing or threatening: tell a trusted adult, and see the full guide. If they'll hurt themselves: tell an adult. You don't have to stay.",
+      "say": "Sometimes a breakup doesn't stay clean. If an ex harasses you, threatens you, or shares pictures, tell a trusted adult. The full guide has people who can help. If an ex says they'll hurt themselves unless you come back, take it seriously. Tell an adult. But it is not your job to stay."
      },
      {
       "k": "card",
       "title": "If it stays heavy",
-      "body": "Two weeks or more: talk with a parent, counselor, or doctor. Not wanting to be here: call, text, or chat 988.",
-      "say": "Research finds a breakup can sometimes be heavy enough to start a real depression. So if the low mood lasts two weeks or more, or you stop caring about things you used to love, talk with a parent, your school counselor, or your doctor. If you ever think about not wanting to be here, call, text, or chat nine eight eight, any time. Danger right now, call nine one one."
+      "body": "Two weeks or more: talk with a parent, counselor, or doctor.",
+      "say": "Research finds a breakup can sometimes be heavy enough to start a real depression. So if the low mood lasts two weeks or more, or you stop caring about things you used to love, talk with a parent, your school counselor, or your doctor."
      },
      {
       "k": "big",
@@ -2471,6 +2484,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-breakup-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "breakup",
     "side": "helper",
     "title": "Breakups",
@@ -2556,8 +2570,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for more than heartbreak",
-      "body": "Two weeks of low mood or pulling away: counselor or doctor. Control or threats: dating abuse guide. Hopeless: 988, together.",
-      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or changes in sleep or eating. Bring in a counselor or doctor. If the ex is threatening, harassing, or sharing pictures, see the dating abuse guide. And if your teen talks about not wanting to be here, ask directly, stay with them, and call, text, or chat nine eight eight together."
+      "body": "Two weeks of low mood or pulling away: counselor or doctor. Control or threats: dating abuse guide.",
+      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or changes in sleep or eating. Bring in a counselor or doctor. If the ex is threatening, harassing, or sharing pictures, see the dating abuse guide. And if your teen talks about not wanting to be here, ask directly and stay with them."
      },
      {
       "k": "big",
@@ -2655,7 +2669,7 @@ window.GG_LEARN_GUIDES.pine = {
       "steps": [
        [
         "Tell someone",
-        "An adult, or Love Is Respect"
+        "An adult"
        ],
        [
         "Save what you can",
@@ -2667,16 +2681,16 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "Here's how to get safer. Tell someone, a trusted adult, or Love Is Respect by call, text, or chat, any time. Save what you safely can, like screenshots of threats, somewhere your partner can't see. Make a safety plan before a big step, especially before a breakup. Love Is Respect can help you make one. And if you're in danger right now, call nine one one."
+      "say": "Here's how to get safer. Tell a trusted adult. Save what you safely can, like screenshots of threats, somewhere your partner can't see. Make a safety plan before a big step, especially before a breakup."
      },
      {
       "k": "card",
       "title": "Your check-in keeps you in charge",
       "body": "Say someone is hurting you, and Pine shows outside help. No family alert.",
-      "say": "If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away, like Love Is Respect, Day One, and nine one one. It doesn't send an alert to your family. You stay in charge of who you tell. And if it ever gets so heavy you think about not wanting to be here, call, text, or chat nine eight eight."
+      "say": "If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family. You stay in charge of who you tell."
      },
      {
       "k": "big",
@@ -2777,7 +2791,7 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Call for guidance",
-        "Love Is Respect or Day One"
+        ""
        ],
        [
         "Make a safety plan",
@@ -2788,13 +2802,13 @@ window.GG_LEARN_GUIDES.pine = {
         "Schedules, routes, lockers"
        ]
       ],
-      "say": "Plan for safety together. Stay connected, because your bond is protection. Call Love Is Respect or Day One for guidance. They talk with parents and caring adults too. Make a safety plan, especially before any breakup. And bring in the school counselor about class schedules, routes, or lockers. If there's violence, threats, or stalking, involve the police, with your teen as much as you safely can."
+      "say": "Plan for safety together. Stay connected, because your bond is protection. They talk with parents and caring adults too. Make a safety plan, especially before any breakup. And bring in the school counselor about class schedules, routes, or lockers. If there's violence, threats, or stalking, involve the police, with your teen as much as you safely can."
      },
      {
       "k": "card",
       "title": "Privacy, and urgent help",
-      "body": "Pine shows a teen outside help, never a family alert, for being hurt. Danger: 911. Hopeless: 988, together.",
-      "say": "One thing to know. If your teen tells their Pine check-in that someone is hurting them, Pine shows them outside help, not a family alert. That keeps them safe to answer honestly. So your warmth matters even more. If there's danger right now, call nine one one. If they seem hopeless, call, text, or chat nine eight eight together."
+      "body": "Pine shows a teen outside help, never a family alert, for being hurt.",
+      "say": "One thing to know. If your teen tells their Pine check-in that someone is hurting them, Pine shows them outside help, not a family alert. That keeps them safe to answer honestly. So your warmth matters even more."
      },
      {
       "k": "big",
@@ -2816,6 +2830,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Parents' Divorce or Separation",
    "you": {
     "id": "pn-g-divorce-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "divorce",
     "side": "you",
     "title": "Parents' Divorce or Separation",
@@ -2910,8 +2925,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Heavy, or unsafe? Reach out.",
-      "body": "Two weeks or more: tell a counselor. Not wanting to live: call or text 988. Someone hurting you: Childhelp 1-800-422-4453. Danger: 911.",
-      "say": "If you feel low for two weeks or more, tell a counselor, a doctor, or another adult you trust. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If fighting at home turns physical, or anyone is hurting you, call or text Childhelp, and if you're in danger, call nine one one."
+      "body": "Two weeks or more: tell a counselor.",
+      "say": "If you feel low for two weeks or more, tell a counselor, a doctor, or another adult you trust."
      },
      {
       "k": "big",
@@ -2923,6 +2938,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-divorce-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "divorce",
     "side": "helper",
     "title": "Parents' Divorce or Separation",
@@ -3008,8 +3024,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: a counselor or doctor. Talk of not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for a low mood, slipping grades, or pulling away that lasts two weeks or more. Help them see a counselor or doctor. In Minnesota, at sixteen they can ask for counseling themselves. If they talk about not wanting to live, call or text nine eight eight together. If there is danger, call nine one one."
+      "body": "Two weeks or more: a counselor or doctor.",
+      "say": "Watch gently for a low mood, slipping grades, or pulling away that lasts two weeks or more. Help them see a counselor or doctor. In Minnesota, at sixteen they can ask for counseling themselves."
      },
      {
       "k": "big",
@@ -3032,6 +3048,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A New Stepfamily",
    "you": {
     "id": "pn-g-stepfamily-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "stepfamily",
     "side": "you",
     "title": "A New Stepfamily",
@@ -3125,8 +3142,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Unsafe at home? Reach out.",
-      "body": "Anyone hurting you: Childhelp, call or text 1-800-422-4453. Danger: 911. Not wanting to live: call or text 988.",
-      "say": "If anyone in your home hurts you, touches you in a way that isn't okay, or makes you feel unsafe, call or text Childhelp, and tell an adult outside your home, like a counselor or coach. If you're in danger, call nine one one. If you ever think about not wanting to be alive, call or text nine eight eight."
+      "say": "If anyone in your home hurts you, touches you in a way that isn't okay, or makes you feel unsafe, tell an adult outside your home, like a counselor or coach."
      },
      {
       "k": "big",
@@ -3138,6 +3154,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-stepfamily-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "stepfamily",
     "side": "helper",
     "title": "A New Stepfamily",
@@ -3223,8 +3240,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch, and keep them safe.",
-      "body": "Low for two weeks or more: a counselor. Not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for a teen who is low, withdrawn, or angry most days for two weeks or more, and help them talk with a counselor. Every teen needs to feel safe with every adult in the home. If they talk about not wanting to live, call or text nine eight eight together. If there is danger, call nine one one."
+      "body": "Low for two weeks or more: a counselor.",
+      "say": "Watch gently for a teen who is low, withdrawn, or angry most days for two weeks or more, and help them talk with a counselor. Every teen needs to feel safe with every adult in the home."
      },
      {
       "k": "big",
@@ -3247,6 +3264,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Moving or Changing Schools",
    "you": {
     "id": "pn-g-moving-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving",
     "side": "you",
     "title": "Moving or Changing Schools",
@@ -3335,8 +3353,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Still heavy? Reach out.",
-      "body": "A low that lasts: tell a counselor. Not wanting to live: call or text 988. Danger right now: 911.",
-      "say": "If loneliness or a low mood doesn't lift after a couple of months, or it's keeping you from sleep or school, tell a counselor or another adult you trust. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
+      "body": "A low that lasts: tell a counselor.",
+      "say": "If loneliness or a low mood doesn't lift after a couple of months, or it's keeping you from sleep or school, tell a counselor or another adult you trust."
      },
      {
       "k": "big",
@@ -3348,6 +3366,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-moving-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving",
     "side": "helper",
     "title": "Moving or Changing Schools",
@@ -3439,8 +3458,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Months without lifting: a counselor or doctor. Not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for loneliness or a low mood that hasn't lifted after a couple of months, or that keeps them from school or sleep. Help them see a counselor or doctor. If they talk about not wanting to live, call or text nine eight eight together. If there is danger, call nine one one."
+      "body": "Months without lifting: a counselor or doctor.",
+      "say": "Watch gently for loneliness or a low mood that hasn't lifted after a couple of months, or that keeps them from school or sleep. Help them see a counselor or doctor."
      },
      {
       "k": "big",
@@ -3457,6 +3476,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Parent Deployed, and Military Family Life",
    "you": {
     "id": "pn-g-deployed-you",
+    "crisis": ["988: call or text, any time", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "deployed",
     "side": "you",
     "title": "A Parent Deployed, and Military Family Life",
@@ -3550,8 +3570,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Need to talk? Reach out.",
-      "body": "Military OneSource: 800-342-9647, any time. Not wanting to live: call or text 988. Danger: 911.",
-      "say": "Military OneSource is there for military families, teens included, any time. If worry or a low mood lasts two weeks or more, tell a counselor or another adult you trust. If you ever think about not wanting to be alive, call or text nine eight eight. If you're in danger, call nine one one."
+      "say": "If worry or a low mood lasts two weeks or more, tell a counselor or another adult you trust."
      },
      {
       "k": "big",
@@ -3563,6 +3582,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-deployed-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "deployed",
     "side": "helper",
     "title": "A Parent Deployed, and Military Family Life",
@@ -3667,8 +3687,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Reach out early.",
-      "body": "Military OneSource: 800-342-9647, any time. Not wanting to live: call or text 988; service members, press 1. Danger: 911.",
-      "say": "Military OneSource is there for the whole family, any time. If your teen is low for two weeks or more, help them talk with a counselor. If anyone talks about not wanting to live, call or text nine eight eight together. Service members and veterans can press 1 after dialing. If there is danger, call nine one one."
+      "say": "If your teen is low for two weeks or more, help them talk with a counselor. Service members and veterans can press 1 after dialing."
      },
      {
       "k": "big",
@@ -3685,6 +3704,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Family Member's Drinking or Drug Use",
    "you": {
     "id": "pn-g-family-substance-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "family-substance",
     "side": "you",
     "title": "A Family Member's Drinking or Drug Use",
@@ -3759,13 +3779,9 @@ window.GG_LEARN_GUIDES.pine = {
        [
         "A place to go",
         "A relative's, a friend's"
-       ],
-       [
-        "911 for danger",
-        "Someone can't wake up"
        ]
       ],
-      "say": "Make a simple safety plan. Pick one safe adult you can be honest with. Never get in a car with someone who has been drinking or using, and know who you'll call instead. Know a place you can go if home gets scary. And if someone can't wake up, or there's danger, call nine one one right away."
+      "say": "Make a simple safety plan. Pick one safe adult you can be honest with. Never get in a car with someone who has been drinking or using, and know who you'll call instead. Know a place you can go if home gets scary. And if someone can't wake up, or there's danger, call for emergency help right away."
      },
      {
       "k": "big",
@@ -3776,8 +3792,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Unsafe? Reach out.",
-      "body": "Someone hurting you: Childhelp, call or text 1-800-422-4453. Danger: 911. Not wanting to live: call or text 988.",
-      "say": "If anyone is hurting you, or you're being left without food or safety, call or text Childhelp, any time. In Pine, that help comes straight to you, not to a family alert. If you're in danger, call nine one one. If you ever think about not wanting to be alive, call or text nine eight eight."
+      "say": "In Pine, that help comes straight to you, not to a family alert."
      },
      {
       "k": "big",
@@ -3789,6 +3804,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-family-substance-helper",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "family-substance",
     "side": "helper",
     "title": "A Family Member's Drinking or Drug Use",
@@ -3844,7 +3860,7 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "A safety plan",
-        "Rides, places to go, 911"
+        ""
        ],
        [
         "Teen support",
@@ -3855,13 +3871,13 @@ window.GG_LEARN_GUIDES.pine = {
         "Sleep, school, friends"
        ]
       ],
-      "say": "Here's what helps most. Make sure your teen has safe adults, with names and numbers in their phone. Make a safety plan together, rides, a place to go, and calling nine one one if someone can't wake up. Help them find a teen support group or a counselor. And protect normal teen life, sleep, school, sports, and friends."
+      "say": "Here's what helps most. Make sure your teen has safe adults, with names and numbers in their phone. Make a safety plan together, rides, a place to go, and calling for help if someone can't wake up. Help them find a teen support group or a counselor. And protect normal teen life, sleep, school, sports, and friends."
      },
      {
       "k": "big",
       "h": "If you are the one using",
       "sub": "Getting help is a gift to your teen.",
-      "say": "If you're the parent who drinks or uses, getting help is one of the strongest things you can do for your teen. In a calm, sober moment, tell them honestly that it's not their fault. The SAMHSA National Helpline can point you to treatment, any time."
+      "say": "If you're the parent who drinks or uses, getting help is one of the strongest things you can do for your teen. In a calm, sober moment, tell them honestly that it's not their fault."
      },
      {
       "k": "big",
@@ -3881,8 +3897,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Danger and safety",
-      "body": "Can't wake up or danger: 911. Teen being hurt: Childhelp 1-800-422-4453. Not wanting to live: 988.",
-      "say": "If someone can't wake up, or there is danger, call nine one one. If a teen is being hurt or left without what they need, Childhelp can help, by call or text. If your teen talks about not wanting to live, call or text nine eight eight together. If they use Pine, their answers stay private. You may get a quiet alert to check in, never their answers."
+      "body": "Can't wake up or danger: call for help.",
+      "say": "If someone can't wake up, or there is danger, call for emergency help. If they use Pine, their answers stay private. You may get a quiet alert to check in, never their answers."
      },
      {
       "k": "big",
@@ -3899,6 +3915,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Parent in Jail or Prison",
    "you": {
     "id": "pn-g-parent-jail-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "parent-jail",
     "side": "you",
     "title": "A Parent in Jail or Prison",
@@ -3988,8 +4005,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Heavy for weeks? Reach out.",
-      "body": "Talk with a counselor. Not wanting to live: call or text 988. Someone hurting you: Childhelp 1-800-422-4453. Danger: 911.",
-      "say": "If you feel low, angry, or alone most days for two weeks or more, talk with a counselor or another adult you trust. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If anyone is hurting you, call or text Childhelp. If you're in danger, call nine one one."
+      "body": "Talk with a counselor.",
+      "say": "If you feel low, angry, or alone most days for two weeks or more, talk with a counselor or another adult you trust."
      },
      {
       "k": "big",
@@ -4001,6 +4018,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-parent-jail-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "parent-jail",
     "side": "helper",
     "title": "A Parent in Jail or Prison",
@@ -4091,8 +4109,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch, and reach out.",
-      "body": "Low for two weeks or more: a counselor. Not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for a teen who is low, angry, or withdrawn most days for two weeks or more, and help them talk with a counselor. If they talk about not wanting to live, call or text nine eight eight together. If there is danger, call nine one one. And get support for yourself too. This is a heavy load."
+      "body": "Low for two weeks or more: a counselor.",
+      "say": "Watch gently for a teen who is low, angry, or withdrawn most days for two weeks or more, and help them talk with a counselor. And get support for yourself too. This is a heavy load."
      },
      {
       "k": "big",
@@ -4109,6 +4127,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "In the Middle of a Blowup",
    "you": {
     "id": "pn-g-blowup-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "Day One (Minnesota): 1-866-223-1111", "911: emergency"],
     "guide": "blowup",
     "side": "you",
     "title": "In the Middle of a Blowup",
@@ -4205,8 +4224,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If someone is hurting you",
-      "body": "Childhelp: 1-800-422-4453, call or text. Danger right now: 911.",
-      "say": "If anyone at home hurts you, threatens you, or makes you feel unsafe, that's more than a fight. Get to a safe place. If there's danger right now, call 911. You can call or text Childhelp any time at 1 800 422 4453, or in Minnesota, call Day One. Pine's check-in shows you outside help for this, and it never sends an alert to your family. And if you ever think about hurting yourself, call or text 988."
+      "say": "If anyone at home hurts you, threatens you, or makes you feel unsafe, that's more than a fight. Get to a safe place. Pine's check-in shows you outside help for this, and it never sends an alert to your family."
      },
      {
       "k": "big",
@@ -4218,6 +4236,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-blowup-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "blowup",
     "side": "helper",
     "title": "In the Middle of a Blowup",
@@ -4309,8 +4328,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to get more help",
-      "body": "Danger or a weapon: 911. Talk of self-harm: 988. Minnesota: **CRISIS.",
-      "say": "Get help early if blowups keep happening, come with drinking or drugs, driving angry, or talk of hurting someone or themselves. Their doctor or school counselor is a good first call. If they talk about not wanting to be alive, call or text 988 together. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. With a weapon or danger right now, get to safety and call 911."
+      "say": "Get help early if blowups keep happening, come with drinking or drugs, driving angry, or talk of hurting someone or themselves. Their doctor or school counselor is a good first call. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. With a weapon or danger right now, get to safety."
      },
      {
       "k": "big",
@@ -4327,6 +4345,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Lying, Sneaking Out, and Stealing",
    "you": {
     "id": "pn-g-lying-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "CyberTipline: 1-800-843-5678", "911: emergency"],
     "guide": "lying",
     "side": "you",
     "title": "Lying, Sneaking Out, and Stealing",
@@ -4419,8 +4438,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If someone is pressuring or threatening you",
-      "body": "You're not in trouble. Childhelp: 1-800-422-4453. Danger: 911.",
-      "say": "If someone is pushing you to steal or lie, threatening you, or demanding money or pictures online, that's on them, not you. You are not in trouble. Call or text Childhelp at 1 800 422 4453. If it's happening online, the CyberTipline can help. If you're in danger right now, call 911. And if you're feeling hopeless, call or text 988."
+      "body": "You're not in trouble.",
+      "say": "If someone is pushing you to steal or lie, threatening you, or demanding money or pictures online, that's on them, not you. You are not in trouble."
      },
      {
       "k": "big",
@@ -4432,6 +4451,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-lying-helper",
+    "crisis": ["988: call or text, any time", "CyberTipline: 1-800-843-5678"],
     "guide": "lying",
     "side": "helper",
     "title": "Lying, Sneaking Out, and Stealing",
@@ -4515,8 +4535,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to bring in help",
-      "body": "Their doctor or school counselor. Threats online: CyberTipline.",
-      "say": "If the lying or stealing keeps growing, bring in their doctor or school counselor. For shoplifting with legal trouble, a lawyer can explain next steps. If someone is threatening your teen online or demanding money, the CyberTipline can help, and your teen needs to hear that they're not in trouble. If they talk about not wanting to be alive, call or text 988 together."
+      "body": "Their doctor or school counselor.",
+      "say": "If the lying or stealing keeps growing, bring in their doctor or school counselor. For shoplifting with legal trouble, a lawyer can explain next steps. If someone is threatening your teen online or demanding money, your teen needs to hear that they're not in trouble."
      },
      {
       "k": "big",
@@ -4533,6 +4553,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Parent or Sibling Dies",
    "you": {
     "id": "pn-g-parent-death-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "parent-death",
     "side": "you",
     "title": "When a Parent or Sibling Dies",
@@ -4642,8 +4663,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If you want to be with them",
-      "body": "Call or text 988, any time. Danger right now: 911.",
-      "say": "In deep grief, some people think about wanting to be with the person who died. If that turns into thoughts of not wanting to be alive, call or text 988, any time, or text HOME to 741741. If you're in danger right now, call 911. You matter, and this can get lighter with help."
+      "say": "In deep grief, some people think about wanting to be with the person who died. You matter, and this can get lighter with help."
      },
      {
       "k": "big",
@@ -4655,6 +4675,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-parent-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "parent-death",
     "side": "helper",
     "title": "When a Parent or Sibling Dies",
@@ -4749,8 +4770,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When grief gets stuck",
-      "body": "A counselor helps. Talk of not wanting to live: call or text 988.",
-      "say": "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a grief counselor. If they talk about not wanting to be alive, ask them plainly, stay with them, and call or text 988 together. If there's danger right now, call 911."
+      "body": "A counselor helps.",
+      "say": "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a grief counselor. If they talk about not wanting to be alive, ask them plainly, and stay with them."
      },
      {
       "k": "big",
@@ -4767,6 +4788,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Friend or Classmate Dies",
    "you": {
     "id": "pn-g-friend-death-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "you",
     "title": "When a Friend or Classmate Dies",
@@ -4866,8 +4888,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If a friend scares you, don't keep it secret.",
-      "body": "Tell a trusted adult today. Call or text 988.",
-      "say": "If a friend says something that scares you, like wanting to join the person who died, or not wanting to be alive, don't keep it a secret. Tell a trusted adult, today. You can call or text 988 to talk through how to help them. And if those thoughts come to you, reach out to 988 for yourself, too. If anyone is in danger right now, call 911."
+      "body": "Tell a trusted adult today.",
+      "say": "If a friend says something that scares you, like wanting to join the person who died, or not wanting to be alive, don't keep it a secret. Tell a trusted adult, today."
      },
      {
       "k": "big",
@@ -4879,6 +4901,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-friend-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "friend-death",
     "side": "helper",
     "title": "When a Friend or Classmate Dies",
@@ -4962,8 +4985,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If the answer is yes",
-      "body": "Stay with them. Call or text 988 together. Danger: 911.",
-      "say": "If the answer is yes, thank them for telling you. Stay with them, and call or text 988 together. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. If there's danger right now, call 911. Your teen's check-in in Pine stays private, and a quiet Please check in alert is all you'll ever see. Asking out loud is always okay."
+      "body": "Stay with them.",
+      "say": "If the answer is yes, thank them for telling you. Stay with them. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. Your teen's check-in in Pine stays private, and a quiet Please check in alert is all you'll ever see. Asking out loud is always okay."
      },
      {
       "k": "big",
@@ -4980,6 +5003,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When a Grandparent Dies",
    "you": {
     "id": "pn-g-grandparent-death-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "grandparent-death",
     "side": "you",
     "title": "When a Grandparent Dies",
@@ -5062,8 +5086,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If grief stays heavy",
-      "body": "A counselor or a teen grief group can help. Call or text 988 any time.",
-      "say": "If grief stays heavy for months, or gets in the way of school, sleep, or friends, talk with your school counselor or a grief counselor. If hospice cared for your grandparent, many offer grief support for teens. And if grief ever brings thoughts of not wanting to be alive, call or text 988, any time."
+      "body": "A counselor or a teen grief group can help.",
+      "say": "If grief stays heavy for months, or gets in the way of school, sleep, or friends, talk with your school counselor or a grief counselor. If hospice cared for your grandparent, many offer grief support for teens."
      },
      {
       "k": "big",
@@ -5075,6 +5099,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-grandparent-death-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "grandparent-death",
     "side": "helper",
     "title": "When a Grandparent Dies",
@@ -5154,7 +5179,7 @@ window.GG_LEARN_GUIDES.pine = {
         "Especially if they were close"
        ]
       ],
-      "say": "In the months ahead, keep the stories going. Look through photos together, and ask relatives to share memories. Mark the birthday and the anniversary in a way your teen helps choose. And watch gently for grief that gets stuck, especially if they were very close: pulling away for weeks, grades sliding, or talk of not wanting to be alive. A counselor can help, and 988 is there any time."
+      "say": "In the months ahead, keep the stories going. Look through photos together, and ask relatives to share memories. Mark the birthday and the anniversary in a way your teen helps choose. And watch gently for grief that gets stuck, especially if they were very close: pulling away for weeks, grades sliding, or talk of not wanting to be alive. A counselor can help."
      },
      {
       "k": "big",
@@ -5171,6 +5196,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Car Crashes and New Drivers",
    "you": {
     "id": "pn-g-car-crash-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "car-crash",
     "side": "you",
     "title": "Car Crashes and New Drivers",
@@ -5199,8 +5225,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Get checked, even if you feel fine.",
-      "body": "Worse headache, vomiting, confusion, hard to wake: 911.",
-      "say": "Get checked by a doctor, even if you feel fine. Some injuries, like concussions, show up hours or days later. Go to the emergency room or call 911 for a headache that gets worse, vomiting, confusion, being very sleepy or hard to wake, or slurred speech."
+      "body": "Worse headache, vomiting, confusion, hard to wake: call for help.",
+      "say": "Get checked by a doctor, even if you feel fine. Some injuries, like concussions, show up hours or days later. Go to the emergency room or call for emergency help for a headache that gets worse, vomiting, confusion, being very sleepy or hard to wake, or slurred speech."
      },
      {
       "k": "words",
@@ -5275,8 +5301,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If someone was hurt or died",
-      "body": "Lean on people. Thoughts of not wanting to live: call or text 988.",
-      "say": "If a friend was badly hurt or died, you might feel guilt for being okay, or a heaviness that won't lift. Lean on people, and talk with a counselor. If fear or replaying it lasts more than a few weeks, a counselor can help with that too. And if guilt or grief ever brings thoughts of not wanting to be alive, call or text 988, any time."
+      "body": "Lean on people.",
+      "say": "If a friend was badly hurt or died, you might feel guilt for being okay, or a heaviness that won't lift. Lean on people, and talk with a counselor. If fear or replaying it lasts more than a few weeks, a counselor can help with that too."
      },
      {
       "k": "big",
@@ -5288,6 +5314,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-car-crash-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "car-crash",
     "side": "helper",
     "title": "Car Crashes and New Drivers",
@@ -5316,8 +5343,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Get them checked.",
-      "body": "Worse headache, vomiting, confusion, hard to wake: 911.",
-      "say": "Get them checked by a doctor, even if they feel fine. Concussion signs can be easy to miss in the first hours and days. Call 911 or go to the emergency room for a headache that gets worse, vomiting, confusion, being very sleepy or hard to wake, or slurred speech. Then follow the doctor's plan for school, screens, sports, and driving."
+      "body": "Worse headache, vomiting, confusion, hard to wake: call for help.",
+      "say": "Get them checked by a doctor, even if they feel fine. Concussion signs can be easy to miss in the first hours and days. Call for emergency help or go to the emergency room for a headache that gets worse, vomiting, confusion, being very sleepy or hard to wake, or slurred speech. Then follow the doctor's plan for school, screens, sports, and driving."
      },
      {
       "k": "big",
@@ -5367,8 +5394,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for stress that lasts",
-      "body": "A counselor helps. Talk of not wanting to live: call or text 988.",
-      "say": "Watch for stress that lasts more than a few weeks: nightmares, avoiding cars completely, jumpiness, or pulling away. A counselor can help. If someone was hurt or killed, watch for guilt, reckless behavior, or talk of not wanting to be alive. Call or text 988 together if you're worried. If there are charges or legal questions, a lawyer can explain next steps."
+      "body": "A counselor helps.",
+      "say": "Watch for stress that lasts more than a few weeks: nightmares, avoiding cars completely, jumpiness, or pulling away. A counselor can help. If someone was hurt or killed, watch for guilt, reckless behavior, or talk of not wanting to be alive. If there are charges or legal questions, a lawyer can explain next steps."
      },
      {
       "k": "big",
@@ -5385,6 +5412,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "When Someone You Love Is Seriously Ill",
    "you": {
     "id": "pn-g-loved-one-ill-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "loved-one-ill",
     "side": "you",
     "title": "When Someone You Love Is Seriously Ill",
@@ -5478,8 +5506,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it gets too heavy, reach out.",
-      "body": "Call or text 988, or text HOME to 741741. Danger right now: 911.",
-      "say": "Sometimes the weight gets to be too much. If you feel down for weeks, or you start thinking you can't go on, please tell someone. You can call or text nine eight eight, any time, or text HOME to seven four one seven four one. If you're in danger right now, call nine one one."
+      "say": "Sometimes the weight gets to be too much. If you feel down for weeks, or you start thinking you can't go on, please tell someone."
      },
      {
       "k": "big",
@@ -5491,6 +5518,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-loved-one-ill-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loved-one-ill",
     "side": "helper",
     "title": "When Someone You Love Is Seriously Ill",
@@ -5595,8 +5623,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: a counselor or doctor. Losing hope: call or text 988 together. Danger: 911.",
-      "say": "Watch gently for sadness that lasts two weeks or more, pulling away from everything, or talk of not wanting to be here. Help them talk with a school counselor or their doctor. If they talk about not wanting to live, call or text nine eight eight together. If there is danger right now, call nine one one. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you will see a quiet alert to check in."
+      "body": "Two weeks or more: a counselor or doctor.",
+      "say": "Watch gently for sadness that lasts two weeks or more, pulling away from everything, or talk of not wanting to be here. Help them talk with a school counselor or their doctor. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you will see a quiet alert to check in."
      },
      {
       "k": "big",
@@ -5613,6 +5641,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Sleep and the Teen Body Clock",
    "you": {
     "id": "pn-g-sleep-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "sleep",
     "side": "you",
     "title": "Sleep and the Teen Body Clock",
@@ -5728,8 +5757,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to get help",
-      "body": "Weeks of poor sleep, loud snoring, or deep sleepiness: talk with your doctor. Feeling hopeless: call or text 988.",
-      "say": "If you can't sleep most nights for weeks, if you snore loudly or gasp in your sleep, or if you're deeply sleepy even after enough hours, talk with your doctor. And if worry or sadness is keeping you awake and it won't let up, tell someone you trust. If you ever feel like you can't go on, call or text nine eight eight, any time."
+      "body": "Weeks of poor sleep, loud snoring, or deep sleepiness: talk with your doctor.",
+      "say": "If you can't sleep most nights for weeks, if you snore loudly or gasp in your sleep, or if you're deeply sleepy even after enough hours, talk with your doctor. And if worry or sadness is keeping you awake and it won't let up, tell someone you trust."
      },
      {
       "k": "big",
@@ -5861,6 +5890,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Body Image and Comparison",
    "you": {
     "id": "pn-g-body-image-you",
+    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767"],
     "guide": "body-image",
     "side": "you",
     "title": "Body Image and Comparison",
@@ -5964,8 +5994,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When it turns into rules",
-      "body": "Food, weight, or exercise rules you can't break: tell someone. ANAD: 1-888-375-7767, weekdays.",
-      "say": "Sometimes worry about your body turns into rules about food, weight, or exercise that you feel you can't break. If that's happening, please tell someone you trust, and look at the guide on eating disorders. You can also call the ANAD helpline at one eight eight eight, three seven five, seven seven six seven, on weekdays. If you ever feel like you can't go on, call or text nine eight eight."
+      "body": "Food, weight, or exercise rules you can't break: tell someone.",
+      "say": "Sometimes worry about your body turns into rules about food, weight, or exercise that you feel you can't break. If that's happening, please tell someone you trust, and look at the guide on eating disorders."
      },
      {
       "k": "big",
@@ -6082,6 +6112,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Eating Disorders",
    "you": {
     "id": "pn-g-eating-you",
+    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "you",
     "title": "Eating Disorders",
@@ -6170,8 +6201,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Help is here.",
-      "body": "ANAD: 1-888-375-7767, weekdays. Fainting or chest pain: 911. Feeling hopeless: 988.",
-      "say": "You can call the ANAD helpline at one eight eight eight, three seven five, seven seven six seven, on weekdays, for yourself or a friend. If someone faints, has chest pain, or seems confused, call nine one one. And if you ever feel like you can't go on, call or text nine eight eight, any time."
+      "body": "Fainting or chest pain: call for help.",
+      "say": "If someone faints, has chest pain, or seems confused, call for emergency help."
      },
      {
       "k": "big",
@@ -6183,6 +6214,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-eating-helper",
+    "crisis": ["ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "helper",
     "title": "Eating Disorders",
@@ -6288,8 +6320,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Emergency signs",
-      "body": "Fainting, chest pain, confusion, a racing or very slow heartbeat: call 911. ANAD: 1-888-375-7767.",
-      "say": "Call nine one one for fainting, chest pain, confusion, or a racing or very slow heartbeat. For guidance and support, the ANAD helpline is one eight eight eight, three seven five, seven seven six seven, on weekdays. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
+      "body": "Fainting, chest pain, confusion, a racing or very slow heartbeat: call for help.",
+      "say": "Call for emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
      },
      {
       "k": "big",
@@ -6306,6 +6338,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Concussion and Sports Injuries",
    "you": {
     "id": "pn-g-concussion-you",
+    "crisis": ["911: emergency"],
     "guide": "concussion",
     "side": "you",
     "title": "Concussion and Sports Injuries",
@@ -6357,8 +6390,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Danger signs: get help now.",
-      "body": "Worsening headache, repeated vomiting, very sleepy, one pupil larger, slurred speech: 911.",
-      "say": "Some signs mean you need emergency help right away. A headache that gets worse. Throwing up again and again. Being very sleepy or hard to wake. One pupil bigger than the other. Slurred speech, weakness, numbness, or growing confusion. If you notice any of these, in yourself or a teammate, call nine one one or go to the emergency room."
+      "body": "Worsening headache, repeated vomiting, very sleepy, one pupil larger, slurred speech: call for help.",
+      "say": "Some signs mean you need emergency help right away. A headache that gets worse. Throwing up again and again. Being very sleepy or hard to wake. One pupil bigger than the other. Slurred speech, weakness, numbness, or growing confusion. If you notice any of these, in yourself or a teammate, go to the emergency room."
      },
      {
       "k": "flow",
@@ -6421,6 +6454,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-concussion-helper",
+    "crisis": ["911: emergency"],
     "guide": "concussion",
     "side": "helper",
     "title": "Concussion and Sports Injuries",
@@ -6456,7 +6490,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Danger signs: emergency care now.",
       "body": "Worsening headache, repeated vomiting, hard to wake, one pupil larger, slurred speech, weakness, seizure.",
-      "say": "Know the danger signs, and act right away. A headache that gets worse. Repeated vomiting. Unusual sleepiness, or being hard to wake. One pupil larger than the other. Slurred speech, weakness or numbness, a seizure, or growing confusion. Call nine one one or go to the emergency room."
+      "say": "Know the danger signs, and act right away. A headache that gets worse. Repeated vomiting. Unusual sleepiness, or being hard to wake. One pupil larger than the other. Slurred speech, weakness or numbness, a seizure, or growing confusion. Go to the emergency room."
      },
      {
       "k": "flow",
@@ -6531,6 +6565,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Living with a Chronic Illness or Disability",
    "you": {
     "id": "pn-g-chronic-illness-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "chronic-illness",
     "side": "you",
     "title": "Living with a Chronic Illness or Disability",
@@ -6633,8 +6668,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it gets heavy, say so.",
-      "body": "Low for two weeks: tell a parent, doctor, or counselor. At 16 in Minnesota, you can ask for counseling. 988 any time.",
-      "say": "Living with a condition can wear you down. If you feel low or worried for two weeks or more, tell a parent, your doctor, or a school counselor. In Minnesota, once you're sixteen, you can ask for outpatient counseling on your own. And if you ever feel like you can't go on, call or text nine eight eight, any time."
+      "body": "Low for two weeks: tell a parent, doctor, or counselor. At 16 in Minnesota, you can ask for counseling.",
+      "say": "Living with a condition can wear you down. If you feel low or worried for two weeks or more, tell a parent, your doctor, or a school counselor. In Minnesota, once you're sixteen, you can ask for outpatient counseling on your own."
      },
      {
       "k": "big",
@@ -6646,6 +6681,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-chronic-illness-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "chronic-illness",
     "side": "helper",
     "title": "Living with a Chronic Illness or Disability",
@@ -6747,8 +6783,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: their doctor or a counselor. At 16 in Minnesota, they can ask for counseling. 988 any time.",
-      "say": "Watch gently for low mood or worry that lasts two weeks or more. Help them talk with their doctor or a counselor. In Minnesota, at sixteen, they can ask for outpatient counseling on their own, and that's a good thing. If they talk about not wanting to live, call or text nine eight eight together. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
+      "body": "Two weeks or more: their doctor or a counselor. At 16 in Minnesota, they can ask for counseling.",
+      "say": "Watch gently for low mood or worry that lasts two weeks or more. Help them talk with their doctor or a counselor. In Minnesota, at sixteen, they can ask for outpatient counseling on their own, and that's a good thing. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
      },
      {
       "k": "big",
@@ -6765,6 +6801,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Vaping, Drinking, and Drugs",
    "you": {
     "id": "pn-g-substances-you",
+    "crisis": ["911: emergency"],
     "guide": "substances",
     "side": "you",
     "title": "Vaping, Drinking, and Drugs",
@@ -6882,8 +6919,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If a friend can't wake up",
-      "body": "Call 911 right away. Stay with them.",
-      "say": "If a friend can't wake up, is breathing slowly or strangely, or seems very confused, call 911 right away and stay with them. Getting help fast matters most. Worrying about a friend who uses a lot? You can tell a trusted adult without saying who."
+      "body": "Stay with them.",
+      "say": "If a friend can't wake up, is breathing slowly or strangely, or seems very confused, call for emergency help right away and stay with them. Getting help fast matters most. Worrying about a friend who uses a lot? You can tell a trusted adult without saying who."
      },
      {
       "k": "big",
@@ -6895,6 +6932,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-substances-helper",
+    "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "helper",
     "title": "Vaping, Drinking, and Drugs",
@@ -6932,10 +6970,9 @@ window.GG_LEARN_GUIDES.pine = {
       "h": "Words that help",
       "items": [
        "If you ever want out, text me the code word.",
-       "No questions that night. We'll talk tomorrow.",
-       "If a friend is in trouble, call 911 first."
+       "No questions that night. We'll talk tomorrow."
       ],
-      "say": "Here are words that help. If you ever want out of a situation, text me the code word, and I'll come get you. No questions that night. We'll talk tomorrow. And, if a friend is ever in trouble, call 911 first. We'll sort out the rest later."
+      "say": "Here are words that help. If you ever want out of a situation, text me the code word, and I'll come get you. No questions that night. We'll talk tomorrow. We'll sort out the rest later."
      },
      {
       "k": "big",
@@ -6986,8 +7023,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If use has started",
-      "body": "Stay calm. Their doctor, a counselor, or SAMHSA: 1-800-662-4357.",
-      "say": "If you learn your teen is using, stay calm. Ask what it's doing for them: stress, sleep, friends, or a hard feeling. That tells you what help fits. Talk with their doctor or a counselor, or call the SAMHSA National Helpline at 1-800-662-4357, any time. If someone can't wake up or is struggling to breathe, call 911."
+      "body": "Stay calm. Their doctor or a counselor.",
+      "say": "If you learn your teen is using, stay calm. Ask what it's doing for them: stress, sleep, friends, or a hard feeling. That tells you what help fits. Talk with their doctor or a counselor. If someone can't wake up or is struggling to breathe, call for emergency help."
      },
      {
       "k": "big",
@@ -7010,6 +7047,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "pn-g-anxiety-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -7127,8 +7165,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it gets to be too much",
-      "body": "Call or text 988. Text HOME to 741741. Danger right now: 911.",
-      "say": "If it ever gets to be too much, you can reach someone any time. Call or text 988, or text HOME to 741741. For chest pain or trouble breathing when you're not sure why, get medical help to be safe."
+      "say": "If it ever gets to be too much, you can reach someone any time. For chest pain or trouble breathing when you're not sure why, get medical help to be safe."
      },
      {
       "k": "big",
@@ -7298,6 +7335,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Depression and Feeling Numb",
    "you": {
     "id": "pn-g-depression-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "depression",
     "side": "you",
     "title": "Depression and Feeling Numb",
@@ -7415,8 +7453,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If hope feels gone",
-      "body": "Call or text 988. Text HOME to 741741. Danger right now: 911.",
-      "say": "Sometimes depression brings thoughts of not wanting to be alive. If that's happening, you have people with you, and it's safe to say so. Call or text 988, any time, or text HOME to 741741. Tell an adult you trust today. If you're in danger right now, call 911."
+      "say": "Sometimes depression brings thoughts of not wanting to be alive. If that's happening, you have people with you, and it's safe to say so. Tell an adult you trust today."
      },
      {
       "k": "big",
@@ -7428,6 +7465,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-depression-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "depression",
     "side": "helper",
     "title": "Depression and Feeling Numb",
@@ -7499,7 +7537,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Ask about suicide plainly.",
       "sub": "Are you thinking about killing yourself?",
-      "say": "If you're worried, ask plainly. Are you thinking about killing yourself? In a study in high schools, asking students about suicide did not raise their distress or put the idea in their heads. If the answer is yes, stay with them, and call or text 988 together."
+      "say": "If you're worried, ask plainly. Are you thinking about killing yourself? In a study in high schools, asking students about suicide did not raise their distress or put the idea in their heads. If the answer is yes, stay with them."
      },
      {
       "k": "big",
@@ -8116,6 +8154,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
    "you": {
     "id": "pn-g-counseling-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "counseling",
     "side": "you",
     "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
@@ -8177,7 +8216,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "At 16 in Minnesota",
       "body": "You can agree to outpatient counseling and therapy on your own.",
-      "say": "Here's something many teens don't know. In Minnesota, if you're 16 or older, you can agree to outpatient mental health care, like counseling and therapy, on your own, without a parent's permission. If you're under 16, a parent or guardian usually needs to agree, and your school counselor can help you figure out how to ask. At any age, you can call or text 988."
+      "say": "Here's something many teens don't know. In Minnesota, if you're 16 or older, you can agree to outpatient mental health care, like counseling and therapy, on your own, without a parent's permission. If you're under 16, a parent or guardian usually needs to agree, and your school counselor can help you figure out how to ask."
      },
      {
       "k": "big",
@@ -8246,6 +8285,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-counseling-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "counseling",
     "side": "helper",
     "title": "Getting Counseling, and Your Rights at 16 in Minnesota",
@@ -8343,8 +8383,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it is urgent",
-      "body": "Call or text 988. In Minnesota: **CRISIS from a cell. Danger: 911.",
-      "say": "If things feel urgent while you wait for an appointment, don't wait. Call or text 988 together, any time. In Minnesota, call star star CRISIS from a cell phone for a county crisis team. In danger right now, call 911."
+      "say": "If things feel urgent while you wait for an appointment, don't wait. In Minnesota, call star star CRISIS from a cell phone for a county crisis team."
      },
      {
       "k": "big",
@@ -8451,21 +8490,16 @@ window.GG_LEARN_GUIDES.pine = {
         "Helps remove pictures taken under 18"
        ],
        [
-        "CyberTipline",
-        "Reports the account"
-       ],
-       [
         "A trusted adult",
         "Helps you do both"
        ]
       ],
-      "say": "Real help exists. A tool called Take It Down helps get nude or sexual pictures taken when you were under eighteen removed from many sites, and the picture itself never leaves your phone. The CyberTipline takes reports about these accounts. A trusted adult can help you do both. The links are in the full guide."
+      "say": "Real help exists. A tool called Take It Down helps get nude or sexual pictures taken when you were under eighteen removed from many sites, and the picture itself never leaves your phone. A trusted adult can help you do both. The links are in the full guide."
      },
      {
       "k": "card",
       "title": "If it feels like too much",
-      "body": "Call, text, or chat 988, any time. Text HOME to 741741. Danger right now: 911.",
-      "say": "Some teens have felt so trapped by these threats that they didn't want to be alive. If that's where your mind is going, please reach out right now. Call or text nine eight eight, any time, or text HOME to 741741. If you're in danger, call nine one one. This feeling can pass, and this problem can be fixed."
+      "say": "Some teens have felt so trapped by these threats that they didn't want to be alive. If that's where your mind is going, please reach out right now. This feeling can pass, and this problem can be fixed."
      },
      {
       "k": "big",
@@ -8552,14 +8586,14 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Report",
-        "CyberTipline, 1-800-843-5678"
+        ""
        ],
        [
         "Remove",
         "Take It Down, together"
        ]
       ],
-      "say": "If it happens, act together. Stay calm, and thank them for telling you. Stop replying, and never pay. Save the messages, the username, and any payment details before anything is deleted. Report it to the CyberTipline. Then use Take It Down together to help get pictures removed."
+      "say": "If it happens, act together. Stay calm, and thank them for telling you. Stop replying, and never pay. Save the messages, the username, and any payment details before anything is deleted. Then use Take It Down together to help get pictures removed."
      },
      {
       "k": "points",
@@ -8587,8 +8621,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Stay close in the days after.",
-      "body": "Check in at night. Talk of not wanting to live: call or text 988 together. Danger right now: 911.",
-      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them and call or text nine eight eight together. If there's danger right now, call nine one one. In Pine, a teen's check-in stays private, and a safety answer can send you a quiet alert to check in."
+      "body": "Check in at night.",
+      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them. In Pine, a teen's check-in stays private, and a safety answer can send you a quiet alert to check in."
      },
      {
       "k": "big",
@@ -8610,6 +8644,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Pornography",
    "you": {
     "id": "pn-g-porn-you",
+    "crisis": ["CyberTipline: 1-800-843-5678"],
     "guide": "porn",
     "side": "you",
     "title": "Pornography",
@@ -8702,7 +8737,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When to bring in help",
-      "body": "Hard to stop, pressure from anyone, or pictures shared: talk with an adult you trust. CyberTipline: 1-800-843-5678.",
+      "body": "Hard to stop, pressure from anyone, or pictures shared: talk with an adult you trust.",
       "say": "Bring in help if it starts to feel hard to stop, if it's crowding out sleep, school, or friends, or if anyone pressures you to watch, send, or share pictures. A counselor or an adult you trust can help, and that's a strength, not a failure. If someone sends you sexual images or asks for yours, it can be reported, and you are not in trouble."
      },
      {
@@ -8715,6 +8750,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-porn-helper",
+    "crisis": ["CyberTipline: 1-800-843-5678"],
     "guide": "porn",
     "side": "helper",
     "title": "Pornography",
@@ -8815,8 +8851,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for more than curiosity",
-      "body": "Sleep, grades, or friends slipping, or anyone pressuring them: bring in a counselor. Images involved: CyberTipline, 1-800-843-5678.",
-      "say": "Watch for signs it's become more than curiosity. Sleep or grades slipping, secrecy that keeps growing, or pulling away from friends. A counselor can help. And if anyone is sending your teen sexual images, asking for theirs, or pressuring them, report it to the CyberTipline, and make sure your teen knows they're not in trouble."
+      "body": "Sleep, grades, or friends slipping, or anyone pressuring them: bring in a counselor.",
+      "say": "Watch for signs it's become more than curiosity. Sleep or grades slipping, secrecy that keeps growing, or pulling away from friends. A counselor can help. And if anyone is sending your teen sexual images, asking for theirs, or pressuring them, report it, and make sure your teen knows they're not in trouble."
      },
      {
       "k": "big",
@@ -8833,6 +8869,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Social Media, Comparison, and Phone Balance",
    "you": {
     "id": "pn-g-social-media-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "you",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -8922,8 +8959,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it is more than scrolling",
-      "body": "Bullying, threats, or a low that lasts two weeks: tell an adult you trust. Not wanting to be alive: 988.",
-      "say": "Sometimes it's more than scrolling. If someone is bullying or threatening you online, save it, block, and tell an adult you trust. If a low mood has lasted two weeks or more, talk with a parent, counselor, or doctor. And if you ever don't want to be alive, call or text nine eight eight, any time."
+      "body": "Bullying, threats, or a low that lasts two weeks: tell an adult you trust.",
+      "say": "Sometimes it's more than scrolling. If someone is bullying or threatening you online, save it, block, and tell an adult you trust. If a low mood has lasted two weeks or more, talk with a parent, counselor, or doctor."
      },
      {
       "k": "big",
@@ -8935,6 +8972,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-social-media-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "social-media",
     "side": "helper",
     "title": "Social Media, Comparison, and Phone Balance",
@@ -9052,7 +9090,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch the pattern, not the minutes.",
       "body": "Sleep loss, pulling away, mood dropping after time online: talk calmly, and bring in help if it lasts.",
-      "say": "Watch the pattern more than the minutes. Sleep loss, pulling away from people in person, or mood dropping after time online. Talk about it calmly. If a low mood lasts two weeks or more, bring in a school counselor or their doctor. If they talk about not wanting to be alive, call or text nine eight eight together."
+      "say": "Watch the pattern more than the minutes. Sleep loss, pulling away from people in person, or mood dropping after time online. Talk about it calmly. If a low mood lasts two weeks or more, bring in a school counselor or their doctor."
      },
      {
       "k": "big",
@@ -9069,6 +9107,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "AI Chatbots and Companions",
    "you": {
     "id": "pn-g-ai-companions-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "ai-companions",
     "side": "you",
     "title": "AI Chatbots and Companions",
@@ -9153,8 +9192,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Serious things need a person.",
-      "body": "Thoughts of not wanting to be alive: call or text 988, or text HOME to 741741. Real people, any time.",
-      "say": "For anything serious, your safety, your health, or a big decision, bring in a real person. If you ever think about not wanting to be alive, call or text nine eight eight, or text HOME to 741741. Those are real people, there any time. If you're in danger right now, call nine one one."
+      "say": "For anything serious, your safety, your health, or a big decision, bring in a real person. Those are real people, there any time."
      },
      {
       "k": "big",
@@ -9307,6 +9345,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Gambling and Sports Betting",
    "you": {
     "id": "pn-g-gambling-you",
+    "crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673"],
     "guide": "gambling",
     "side": "you",
     "title": "Gambling and Sports Betting",
@@ -9404,8 +9443,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Help is ready in Minnesota.",
-      "body": "Call 1-800-333-4673, or text HOPE to 53342, any time. For teens and families.",
-      "say": "Help is ready. In Minnesota, the problem gambling helpline is there any time, by call or text, for teens and families. The number is on the screen and in the full guide. You don't have to be in deep to call. If losses ever leave you feeling hopeless, or not wanting to be alive, call or text nine eight eight."
+      "say": "Help is ready. The number is on the screen and in the full guide. You don't have to be in deep to call."
      },
      {
       "k": "big",
@@ -9417,6 +9455,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-gambling-helper",
+    "crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
     "guide": "gambling",
     "side": "helper",
     "title": "Gambling and Sports Betting",
@@ -9474,15 +9513,15 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Save the helpline now.",
+      "h": "Save the number shown under this video.",
       "sub": "Before you need it.",
-      "say": "Let's get ready now. Pick up your phone. Start a new contact called Gambling Help. Save this number in it: 1-800-333-4673.",
+      "say": "Let's get ready now. Pick up your phone. Start a new contact called Gambling Help. Save the number shown under this video in it.",
       "beats": [
        "Let's get ready now.",
        "Pick up your phone.",
        "Start a new contact called Gambling Help.",
        {
-        "t": "Save this number in it: 1-800-333-4673.",
+        "t": "Save the number shown under this video in it.",
         "w": 14
        }
       ]
@@ -9509,8 +9548,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Ask about mood, too.",
-      "body": "Gambling trouble can come with depression. Not wanting to be alive: call or text 988 together. Danger: 911.",
-      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask about how they're doing, not only about the money. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one."
+      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask about how they're doing, not only about the money."
      },
      {
       "k": "flow",
@@ -9522,14 +9560,14 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Call or text",
-        "Minnesota helpline, any time"
+        ""
        ],
        [
         "Make a plan",
         "Money, apps, and support"
        ]
       ],
-      "say": "If you see signs, get help together. Listen first, then look at the numbers. Call or text the Minnesota problem gambling helpline together. It's there for families too. Then make a plan for money, apps, and ongoing support. If you bet yourself, think about what your teen sees at home."
+      "say": "If you see signs, get help together. Listen first, then look at the numbers. It's there for families too. Then make a plan for money, apps, and ongoing support. If you bet yourself, think about what your teen sees at home."
      },
      {
       "k": "big",
@@ -9608,7 +9646,7 @@ window.GG_LEARN_GUIDES.pine = {
       "items": [
        [
         "Talk it through",
-        "RAINN or Day One, any time"
+        ""
        ],
        [
         "Tell one person",
@@ -9623,19 +9661,19 @@ window.GG_LEARN_GUIDES.pine = {
         "If and when you choose"
        ]
       ],
-      "say": "You get to choose your next step. You can talk it through, confidentially, with trained people at RAINN, or Day One in Minnesota, any time. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose."
+      "say": "You get to choose your next step. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose."
      },
      {
       "k": "card",
       "title": "If someone at home is hurting you",
-      "body": "Call or text Childhelp, 1-800-422-4453. Tell a trusted adult outside your home. Danger right now: 911.",
-      "say": "If the person hurting you is in your home, or is an adult in your life, call or text Childhelp, any time, and tell a trusted adult outside your home, like a school counselor, coach, or teacher. If you say in a Pine check-in that someone is hurting you, Pine shows you outside help, and that answer never goes to your family alert. If you're in danger right now, call nine one one."
+      "body": "Tell a trusted adult outside your home.",
+      "say": "If the person hurting you is in your home, or is an adult in your life, tell a trusted adult outside your home, like a school counselor, coach, or teacher. If you say in a Pine check-in that someone is hurting you, Pine shows you outside help, and that answer never goes to your family alert."
      },
      {
       "k": "big",
       "h": "Healing is real.",
       "sub": "At your own pace.",
-      "say": "Healing is real, and it's not a straight line. Simple routines help: meals, sleep, and time with safe people. A counselor who understands trauma can help a lot. If it ever feels too heavy to keep going, call or text nine eight eight, any time."
+      "say": "Healing is real, and it's not a straight line. Simple routines help: meals, sleep, and time with safe people. A counselor who understands trauma can help a lot."
      },
      {
       "k": "big",
@@ -9739,11 +9777,11 @@ window.GG_LEARN_GUIDES.pine = {
       "steps": [
        [
         "Safe right now",
-        "Hurt or in danger: 911"
+        ""
        ],
        [
         "Call an advocate",
-        "RAINN or Day One"
+        ""
        ],
        [
         "Recent?",
@@ -9751,16 +9789,16 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "At home?",
-        "Childhelp or county child protection"
+        "County child protection"
        ]
       ],
-      "say": "Then take the next steps together. Make sure they're safe right now, and call nine one one if they're hurt or in danger. Call RAINN, or Day One in Minnesota, together. An advocate can explain options, including a medical exam if it was recent. If the person hurting them is a family member or caregiver, call Childhelp or your county child protection agency. If you work with youth, follow your organization's reporting steps."
+      "say": "Then take the next steps together. Make sure they're safe right now. An advocate can explain options, including a medical exam if it was recent. If the person hurting them is a family member or caregiver, call your county child protection agency. If you work with youth, follow your organization's reporting steps."
      },
      {
       "k": "card",
       "title": "Stay close in the weeks after.",
-      "body": "Let them keep as many choices as they safely can. Not wanting to be alive: call or text 988 together.",
-      "say": "Stay close in the weeks after. Let them keep as many choices as they safely can: who knows, what happens next, and when to talk. Watch for sleep trouble, pulling away, or talk of not wanting to be alive, and call or text nine eight eight together if it comes. And find support for yourself, so you can stay steady."
+      "body": "Let them keep as many choices as they safely can.",
+      "say": "Stay close in the weeks after. Let them keep as many choices as they safely can: who knows, what happens next, and when to talk. Watch for sleep trouble, pulling away, or talk of not wanting to be alive. And find support for yourself, so you can stay steady."
      },
      {
       "k": "big",
@@ -9784,6 +9822,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "School Threats, Lockdowns, and Scary News",
    "you": {
     "id": "pn-g-school-threats-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "school-threats",
     "side": "you",
     "title": "School Threats, Lockdowns, and Scary News",
@@ -9823,14 +9862,14 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ],
        [
         "In Minnesota",
         "The See It, Say It, Send It app"
        ]
       ],
-      "say": "If you see or hear a threat, in person or online, tell a trusted adult right away. A counselor, a teacher, a parent, a coach. Screenshot it if you can, and don't pass it around. If there's danger right now, call nine one one. In Minnesota, you can also send a tip without your name through an app called See It, Say It, Send It. Studies of school attacks that were stopped found that someone noticing and telling often made the difference."
+      "say": "If you see or hear a threat, in person or online, tell a trusted adult right away. A counselor, a teacher, a parent, a coach. Screenshot it if you can, and don't pass it around. In Minnesota, you can also send a tip without your name through an app called See It, Say It, Send It. Studies of school attacks that were stopped found that someone noticing and telling often made the difference."
      },
      {
       "k": "big",
@@ -9885,8 +9924,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it stays heavy",
-      "body": "Weeks of fear or bad sleep: a counselor. Overwhelmed: call, text, or chat 988. Danger right now: 911.",
-      "say": "If fear, bad sleep, or not wanting to go to school hangs on for more than a few weeks, talk with your school counselor or a doctor. If it ever feels like too much, or you think about not wanting to be here, call, text, or chat nine eight eight, any time. If there's danger right now, call nine one one."
+      "body": "Weeks of fear or bad sleep: a counselor.",
+      "say": "If fear, bad sleep, or not wanting to go to school hangs on for more than a few weeks, talk with your school counselor or a doctor."
      },
      {
       "k": "big",
@@ -9898,6 +9937,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-school-threats-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "school-threats",
     "side": "helper",
     "title": "School Threats, Lockdowns, and Scary News",
@@ -9975,10 +10015,10 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "If they tell you about a threat, thank them. It took courage. Take it seriously, even if it sounds like a joke. Report it the same day, to the school, the police, or in Minnesota the See It, Say It, Send It app. And if there is danger right now, call nine one one. Studies of school attacks that were stopped find that a report like this is often what stopped them."
+      "say": "If they tell you about a threat, thank them. It took courage. Take it seriously, even if it sounds like a joke. Report it the same day, to the school, the police, or in Minnesota the See It, Say It, Send It app. Studies of school attacks that were stopped find that a report like this is often what stopped them."
      },
      {
       "k": "points",
@@ -10006,8 +10046,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When it gets heavy",
-      "body": "Overwhelmed or hopeless: call, text, or chat 988. Minnesota: **CRISIS (274747). Danger right now: 911.",
-      "say": "If your teen seems overwhelmed or hopeless, or talks about not wanting to be here, stay with them and call, text, or chat nine eight eight together. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. If there's danger right now, call nine one one."
+      "say": "If your teen seems overwhelmed or hopeless, or talks about not wanting to be here, stay with them. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team."
      },
      {
       "k": "big",
@@ -10024,6 +10063,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A First Job, and Balancing Work with School",
    "you": {
     "id": "pn-g-first-job-you",
+    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "you",
     "title": "A First Job, and Balancing Work with School",
@@ -10108,8 +10148,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If something feels wrong",
-      "body": "Unsafe tasks, missing pay, or someone crossing a line: tell a trusted adult. Danger right now: 911.",
-      "say": "Some things are never part of the job. Being asked to use equipment without training. Missing pay. A boss or coworker who touches you, pressures you, or makes sexual comments. None of that is your fault. Young workers get hurt on the job more often than older workers, so ask for training, and speak up. Tell a parent or trusted adult. The full guide lists who else can help. If there's danger right now, call nine one one."
+      "body": "Unsafe tasks, missing pay, or someone crossing a line: tell a trusted adult.",
+      "say": "Some things are never part of the job. Being asked to use equipment without training. Missing pay. A boss or coworker who touches you, pressures you, or makes sexual comments. None of that is your fault. Young workers get hurt on the job more often than older workers, so ask for training, and speak up. Tell a parent or trusted adult. The full guide lists who else can help."
      },
      {
       "k": "big",
@@ -10121,6 +10161,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-first-job-helper",
+    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "helper",
     "title": "A First Job, and Balancing Work with School",
@@ -10203,8 +10244,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Safety and respect at work",
-      "body": "Hurt, harassed, unpaid, or asked to do unsafe work: help them report it. Danger right now: 911.",
-      "say": "Young workers get hurt on the job more often than older workers, often because they're new and untrained. Ask what training they got. If they're hurt, harassed, unpaid, or asked to do something unsafe, help them report it, and contact Minnesota's labor department. If someone at work touches or pressures them, believe them, and get help. If there's danger right now, call nine one one."
+      "body": "Hurt, harassed, unpaid, or asked to do unsafe work: help them report it.",
+      "say": "Young workers get hurt on the job more often than older workers, often because they're new and untrained. Ask what training they got. If they're hurt, harassed, unpaid, or asked to do something unsafe, help them report it, and contact Minnesota's labor department. If someone at work touches or pressures them, believe them, and get help."
      },
      {
       "k": "big",
@@ -10221,6 +10262,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Money: Paychecks, Saving, and Debt",
    "you": {
     "id": "pn-g-money-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "you",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10303,7 +10345,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Money stress is real.",
       "sub": "Talk with someone you trust.",
-      "say": "Some teens carry real money stress: a family bill, a debt, a parent out of work. If that's you, others can help you carry it. Talk with a parent, a school counselor, or another adult you trust. If it ever starts to feel hopeless, call, text, or chat nine eight eight, any time."
+      "say": "Some teens carry real money stress: a family bill, a debt, a parent out of work. If that's you, others can help you carry it. Talk with a parent, a school counselor, or another adult you trust."
      },
      {
       "k": "big",
@@ -10315,6 +10357,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-money-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "money",
     "side": "helper",
     "title": "Money: Paychecks, Saving, and Debt",
@@ -10398,7 +10441,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "If they're scammed or in debt",
       "body": "Stay calm. Stop paying, save the messages, and report it at reportfraud.ftc.gov.",
-      "say": "If they're scammed, stay calm. Help them stop paying, save the messages, and report it to the Federal Trade Commission. If someone is threatening them with a picture, they are not in trouble, and the full guide lists exactly who to call. If they're betting to win money back, Minnesota has a problem gambling helpline, any time. And if money stress turns hopeless, call, text, or chat nine eight eight together."
+      "say": "If they're scammed, stay calm. Help them stop paying, save the messages, and report it to the Federal Trade Commission. If someone is threatening them with a picture, they are not in trouble, and the full guide lists exactly who to call."
      },
      {
       "k": "big",
@@ -10415,6 +10458,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Faith Questions and Doubt",
    "you": {
     "id": "pn-g-faith-doubt-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "you",
     "title": "Faith Questions and Doubt",
@@ -10533,8 +10577,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When it feels heavy",
-      "body": "Low for two weeks or more: talk with a counselor. Not wanting to be here: call, text, or chat 988.",
-      "say": "Sometimes questions sit on top of something heavier, like grief, or a low mood that won't lift. If that lasts two weeks or more, talk with your school counselor. If you ever think about not wanting to be here, call, text, or chat nine eight eight, any time."
+      "body": "Low for two weeks or more: talk with a counselor.",
+      "say": "Sometimes questions sit on top of something heavier, like grief, or a low mood that won't lift. If that lasts two weeks or more, talk with your school counselor."
      },
      {
       "k": "big",
@@ -10546,6 +10590,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-doubt-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-doubt",
     "side": "helper",
     "title": "Faith Questions and Doubt",
@@ -10638,8 +10683,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it grows heavy",
-      "body": "Low mood for two weeks or more: school counselor or doctor. Not wanting to live: call, text, or chat 988.",
-      "say": "If questions come with low mood, numbness, or pulling away for two weeks or more, talk with the school counselor or a doctor. If they say they don't want to be here, stay with them and call, text, or chat nine eight eight together."
+      "body": "Low mood for two weeks or more: school counselor or doctor.",
+      "say": "If questions come with low mood, numbness, or pulling away for two weeks or more, talk with the school counselor or a doctor. If they say they don't want to be here, stay with them."
      },
      {
       "k": "big",
@@ -10656,6 +10701,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Hurt by a Faith Community",
    "you": {
     "id": "pn-g-faith-hurt-you",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "faith-hurt",
     "side": "you",
     "title": "Hurt by a Faith Community",
@@ -10683,8 +10729,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If someone is hurting you",
-      "body": "Tell a trusted adult outside the group. Childhelp: 1-800-422-4453, call or text. Danger right now: 911.",
-      "say": "One thing first. If a leader, or anyone there, touches you, threatens you, or asks you to keep a secret, that is never okay. Tell a trusted adult outside that group, like a parent, a school counselor, a coach, or a teacher. You can also call or text Childhelp at one eight hundred, four two two, four four five three. If there's danger right now, call nine one one."
+      "body": "Tell a trusted adult outside the group.",
+      "say": "One thing first. If a leader, or anyone there, touches you, threatens you, or asks you to keep a secret, that is never okay. Tell a trusted adult outside that group, like a parent, a school counselor, a coach, or a teacher."
      },
      {
       "k": "big",
@@ -10744,7 +10790,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Many paths to healing",
       "sub": "Back, somewhere new, or a break.",
-      "say": "Healing looks different for different people. Some go back, once things are made right. Some find a new community. Some take a long break and find meaning in other places. Each of these can be okay. If fear, shame, or low mood hang on for two weeks or more, talk with your school counselor. And if you ever think about not wanting to be here, call, text, or chat nine eight eight."
+      "say": "Healing looks different for different people. Some go back, once things are made right. Some find a new community. Some take a long break and find meaning in other places. Each of these can be okay. If fear, shame, or low mood hang on for two weeks or more, talk with your school counselor."
      },
      {
       "k": "big",
@@ -10756,6 +10802,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-hurt-helper",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "faith-hurt",
     "side": "helper",
     "title": "Hurt by a Faith Community",
@@ -10824,14 +10871,14 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "Report it",
-        "County child protection, or 911"
+        "County child protection"
        ],
        [
         "Call for guidance",
-        "Childhelp, call or text"
+        ""
        ]
       ],
-      "say": "If someone touched them, threatened them, or asked them to keep a secret, act. Keep them away from that person. In Minnesota, report it to your county or Tribal child protection agency, and call nine one one if there's danger. Childhelp can talk you through it, by call or text. Tell your teen what you're doing, and why."
+      "say": "If someone touched them, threatened them, or asked them to keep a secret, act. Keep them away from that person. In Minnesota, report it to your county or Tribal child protection agency. Tell your teen what you're doing, and why."
      },
      {
       "k": "points",
@@ -10860,7 +10907,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Look after yourself too.",
       "sub": "Especially if it's your community.",
-      "say": "This may hurt you too, especially if it's your community, your friends, your place of worship. Find someone of your own to talk with. If your teen ever talks about not wanting to be here, stay with them and call, text, or chat nine eight eight together."
+      "say": "This may hurt you too, especially if it's your community, your friends, your place of worship. Find someone of your own to talk with. If your teen ever talks about not wanting to be here, stay with them."
      },
      {
       "k": "big",
@@ -10877,6 +10924,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Finding Purpose, and Serving Others",
    "you": {
     "id": "pn-g-purpose-service-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "you",
     "title": "Finding Purpose, and Serving Others",
@@ -10978,8 +11026,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When nothing feels like it matters",
-      "body": "Two weeks or more: talk with a counselor. No point in living: call, text, or chat 988.",
-      "say": "Sometimes the feeling that nothing matters is more than a question about purpose. If it lasts two weeks or more, or you've lost interest in things you used to enjoy, talk with your school counselor. If it ever turns into feeling there's no point in living, call, text, or chat nine eight eight, any time."
+      "body": "Two weeks or more: talk with a counselor.",
+      "say": "Sometimes the feeling that nothing matters is more than a question about purpose. If it lasts two weeks or more, or you've lost interest in things you used to enjoy, talk with your school counselor."
      },
      {
       "k": "big",
@@ -10991,6 +11039,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-purpose-service-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "purpose-service",
     "side": "helper",
     "title": "Finding Purpose, and Serving Others",
@@ -11073,8 +11122,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "When nothing seems to matter",
-      "body": "Two weeks or more: a counselor or doctor. No point in living: call, text, or chat 988 together.",
-      "say": "Watch for a low that lasts. If they say nothing matters for two weeks or more, or lose interest in what they used to enjoy, talk with the school counselor or a doctor. If they say there's no point in living, stay with them and call, text, or chat nine eight eight together."
+      "body": "Two weeks or more: a counselor or doctor.",
+      "say": "Watch for a low that lasts. If they say nothing matters for two weeks or more, or lose interest in what they used to enjoy, talk with the school counselor or a doctor. If they say there's no point in living, stay with them."
      },
      {
       "k": "big",
@@ -11405,6 +11454,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-pain-fatigue-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "pain-fatigue",
     "side": "helper",
     "title": "Chronic Pain and Fatigue",
@@ -11491,8 +11541,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch for a low that lasts.",
-      "body": "Two weeks or more: their doctor or a counselor. 988 any time.",
-      "say": "Pain, worry, and low mood can feed each other. If your teen seems down or anxious for two weeks or more, help them talk with their doctor or a counselor. If they ever talk about not wanting to live, call or text nine eight eight together. Pine keeps your teen's answers private, and if a check-in shows they're losing hope, you'll see a quiet alert to check in."
+      "body": "Two weeks or more: their doctor or a counselor.",
+      "say": "Pain, worry, and low mood can feed each other. If your teen seems down or anxious for two weeks or more, help them talk with their doctor or a counselor. Pine keeps your teen's answers private, and if a check-in shows they're losing hope, you'll see a quiet alert to check in."
      },
      {
       "k": "big",
@@ -11717,6 +11767,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Deaf or Hard of Hearing",
    "you": {
     "id": "pn-g-deaf-hoh-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "deaf-hoh",
     "side": "you",
     "title": "Deaf or Hard of Hearing",
@@ -11795,7 +11846,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Find your people.",
       "body": "Deaf friends, mentors, a club, a camp, or an online group.",
-      "say": "Many Deaf and hard of hearing teens feel most at home with people who share their language. A Deaf club, a camp, a mentor, or an online group can be a place where talking is easy. And if you ever feel like you can't go on, text nine eight eight, or reach them in sign language by videophone."
+      "say": "Many Deaf and hard of hearing teens feel most at home with people who share their language. A Deaf club, a camp, a mentor, or an online group can be a place where talking is easy."
      },
      {
       "k": "big",
@@ -11807,6 +11858,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-deaf-hoh-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "deaf-hoh",
     "side": "helper",
     "title": "Deaf or Hard of Hearing",
@@ -11882,8 +11934,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Know the access to help.",
-      "body": "Text 988, or 988 in ASL by videophone.",
-      "say": "Make sure their school plan covers captions, interpreters, a remote mic, notes, and seating. In Minnesota, the state's Deaf and Hard of Hearing Services can point you to help. And make sure your teen knows they can text nine eight eight, or reach a counselor who signs by videophone, any time."
+      "say": "Make sure their school plan covers captions, interpreters, a remote mic, notes, and seating. In Minnesota, the state's Deaf and Hard of Hearing Services can point you to help."
      },
      {
       "k": "big",
@@ -11900,6 +11951,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Blind or Low Vision",
    "you": {
     "id": "pn-g-blind-low-vision-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "blind-low-vision",
     "side": "you",
     "title": "Blind or Low Vision",
@@ -11976,7 +12028,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Find people who get it.",
       "body": "Blind friends and mentors know the tricks.",
-      "say": "Blind friends and mentors can share tricks no one else knows, and remind you that a full, independent life is normal. Look for a camp, a program, or an online group. And if things ever feel heavy for weeks, tell someone you trust. Call or text nine eight eight any time you need it."
+      "say": "Blind friends and mentors can share tricks no one else knows, and remind you that a full, independent life is normal. Look for a camp, a program, or an online group. And if things ever feel heavy for weeks, tell someone you trust."
      },
      {
       "k": "big",
@@ -12080,6 +12132,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Autistic in High School",
    "you": {
     "id": "pn-g-autistic-hs-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "autistic-hs",
     "side": "you",
     "title": "Autistic in High School",
@@ -12156,7 +12209,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Find your people.",
       "body": "Friends who share what you love, in person or online.",
-      "say": "Friendship often starts with a shared interest. A club, a team, a game, or an online group can be a place where people get you. And what you love matters. It might even become your life's work. If you ever feel low or worn out for weeks, tell someone you trust. Texting nine eight eight works too, any time."
+      "say": "Friendship often starts with a shared interest. A club, a team, a game, or an online group can be a place where people get you. And what you love matters. It might even become your life's work. If you ever feel low or worn out for weeks, tell someone you trust."
      },
      {
       "k": "big",
@@ -12261,6 +12314,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "A Serious Illness or Long Treatment as a Teen",
    "you": {
     "id": "pn-g-serious-illness-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "serious-illness",
     "side": "you",
     "title": "A Serious Illness or Long Treatment as a Teen",
@@ -12338,7 +12392,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Small is enough.",
       "body": "On treatment weeks, rest and getting through the day count.",
-      "say": "On treatment weeks, small is enough. Rest counts. Getting through the day counts. One good moment counts. And if the hard feelings stay heavy for weeks, tell your parent or someone on your care team. If you ever feel like you can't go on, call or text nine eight eight, any time."
+      "say": "On treatment weeks, small is enough. Rest counts. Getting through the day counts. One good moment counts. And if the hard feelings stay heavy for weeks, tell your parent or someone on your care team."
      },
      {
       "k": "big",
@@ -12443,6 +12497,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Living with a Mental Health Condition Long-Term",
    "you": {
     "id": "pn-g-mh-longterm-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "mh-longterm",
     "side": "you",
     "title": "Living with a Mental Health Condition Long-Term",
@@ -12487,7 +12542,7 @@ window.GG_LEARN_GUIDES.pine = {
        ],
        [
         "When to call",
-        "Your counselor, 988, 911"
+        "Your counselor"
        ]
       ],
       "say": "Here's something that gives you more say. With your counselor or doctor, write down your early warning signs. Small changes in sleep, mood, or thoughts that come before a harder stretch. Then write what helps, and who you'll tell. And when to get help fast. Keep it in your phone."
@@ -12530,8 +12585,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "Call or text 988, any time. Danger right now: 911.",
-      "say": "If your warning signs are showing, tell your parent and your counselor today. If you ever have thoughts of ending your life, call or text nine eight eight, any time, or text HOME to seven four one seven four one. If you're in danger right now, call nine one one. Reaching out is part of the plan, and it's strong."
+      "say": "If your warning signs are showing, tell your parent and your counselor today. Reaching out is part of the plan, and it's strong."
      },
      {
       "k": "big",
@@ -12543,6 +12597,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-mh-longterm-helper",
+    "crisis": ["988: call or text, any time", "NAMI HelpLine: 1-800-950-6264", "911: emergency"],
     "guide": "mh-longterm",
     "side": "helper",
     "title": "Living with a Mental Health Condition Long-Term",
@@ -12624,8 +12679,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Know the lines.",
-      "body": "988 any time. 911 for danger. NAMI HelpLine for information.",
-      "say": "Know the lines. If your teen talks about ending their life, stay with them, and call or text nine eight eight together. For danger right now, call nine one one. The NAMI HelpLine offers information and support for families, and it's not a crisis line. In Minnesota, at sixteen, a teen can ask for counseling on their own. Pine keeps their answers private, and a quiet alert tells you when to check in."
+      "say": "Know the lines. If your teen talks about ending their life, stay with them. In Minnesota, at sixteen, a teen can ask for counseling on their own. Pine keeps their answers private, and a quiet alert tells you when to check in."
      },
      {
       "k": "big",
@@ -12642,6 +12696,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Helping Care for a Parent or Sibling",
    "you": {
     "id": "pn-g-young-carer-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "young-carer",
     "side": "you",
     "title": "Helping Care for a Parent or Sibling",
@@ -12714,7 +12769,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Too much is too much.",
       "body": "If school, sleep, or friends are slipping, tell an adult.",
-      "say": "If helping is taking over your school, your sleep, or your friendships, tell an adult you trust. That's not letting your family down. It's how the grown-ups can find more help, so you're not carrying it alone. And if you ever feel like you can't go on, call or text nine eight eight."
+      "say": "If helping is taking over your school, your sleep, or your friendships, tell an adult you trust. That's not letting your family down. It's how the grown-ups can find more help, so you're not carrying it alone."
      },
      {
       "k": "words",
@@ -12830,6 +12885,7 @@ window.GG_LEARN_GUIDES.pine = {
    "title": "Faith Questions When Your Body Hurts",
    "you": {
     "id": "pn-g-faith-body-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-body",
     "side": "you",
     "title": "Faith Questions When Your Body Hurts",
@@ -12907,7 +12963,7 @@ window.GG_LEARN_GUIDES.pine = {
        "My questions are welcome.",
        "I can belong, just as I am."
       ],
-      "say": "Here are words to keep. My body is not a punishment. My questions are welcome. I can belong, just as I am. And if the questions ever sit on top of feeling hopeless, tell someone you trust, or call or text nine eight eight, any time."
+      "say": "Here are words to keep. My body is not a punishment. My questions are welcome. I can belong, just as I am. And if the questions ever sit on top of feeling hopeless, tell someone you trust."
      },
      {
       "k": "big",
@@ -12919,6 +12975,7 @@ window.GG_LEARN_GUIDES.pine = {
    },
    "helper": {
     "id": "pn-g-faith-body-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "faith-body",
     "side": "helper",
     "title": "Faith Questions When Your Body Hurts",
@@ -12997,8 +13054,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Watch what sits underneath.",
-      "body": "Hopelessness or low mood: their doctor, a counselor, 988.",
-      "say": "Sometimes faith questions sit on top of something heavier, like hopelessness or low mood. If that lasts, help them talk with their doctor or a counselor. If they talk about not wanting to live, call or text nine eight eight together. In Pine, their faith answers stay private to them, and a quiet alert tells you when to check in."
+      "body": "Hopelessness or low mood: their doctor, a counselor.",
+      "say": "Sometimes faith questions sit on top of something heavier, like hopelessness or low mood. If that lasts, help them talk with their doctor or a counselor. In Pine, their faith answers stay private to them, and a quiet alert tells you when to check in."
      },
      {
       "k": "big",
@@ -13023,6 +13080,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Thinking About Cutting Back",
   "you": {
    "id": "pn-g-sober-cutting-back-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cutting-back",
    "side": "you",
    "title": "Thinking About Cutting Back",
@@ -13132,7 +13190,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "card",
      "title": "Safety first",
      "body": "Daily drinking or pills? Talk with a doctor before you stop.",
-     "say": "One safety note. If you've been drinking every day, or taking pills like Xanax every day, talk with a doctor before you stop. Stopping suddenly can be dangerous, and a doctor can help. A school counselor or the SAMHSA National Helpline can point you to help too. If someone can't wake up, call nine one one."
+     "say": "One safety note. If you've been drinking every day, or taking pills like Xanax every day, talk with a doctor before you stop. Stopping suddenly can be dangerous, and a doctor can help. A school counselor can point you to help too. If someone can't wake up, call for emergency help."
     },
     {
      "k": "big",
@@ -13144,6 +13202,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-cutting-back-helper",
+   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cutting-back",
    "side": "helper",
    "title": "Thinking About Cutting Back",
@@ -13240,8 +13299,7 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Lines to know",
-     "body": "SAMHSA 1-800-662-4357. Danger: 911.",
-     "say": "The SAMHSA National Helpline, at 1-800-662-4357, offers information and treatment options for families, any time. If someone can't wake up or is struggling to breathe, call nine one one. If your teen talks about not wanting to live, call or text nine eight eight together."
+     "say": "If someone can't wake up or is struggling to breathe, call for emergency help."
     },
     {
      "k": "big",
@@ -13258,6 +13316,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Getting Sober as a Teen",
   "you": {
    "id": "pn-g-sober-teen-you",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-teen",
    "side": "you",
    "title": "Getting Sober as a Teen",
@@ -13351,8 +13410,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Your people and your plan",
-     "body": "One grown-up who knows. A text for hard moments. Danger: 911.",
-     "say": "Pick one grown-up who knows the whole story and is on your side. Have a friend you can text when it gets hard. A therapist, a teen program, or a group like Alateen, NA, AA, or SMART Recovery can help too, whatever fits you. If someone can't wake up, call nine one one. And if you ever think about not wanting to be alive, call or text nine eight eight."
+     "body": "One grown-up who knows. A text for hard moments.",
+     "say": "Pick one grown-up who knows the whole story and is on your side. Have a friend you can text when it gets hard. A therapist, a teen program, or a group like Alateen, NA, AA, or SMART Recovery can help too, whatever fits you. If someone can't wake up, call for emergency help."
     },
     {
      "k": "big",
@@ -13364,6 +13423,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-teen-helper",
+   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-teen",
    "side": "helper",
    "title": "Getting Sober as a Teen",
@@ -13460,8 +13520,7 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Lines to know",
-     "body": "SAMHSA 1-800-662-4357. Danger: 911. 988 any time.",
-     "say": "The SAMHSA National Helpline, at 1-800-662-4357, can point you to teen treatment and family support, any time. If someone can't wake up or is struggling to breathe, call nine one one. If your teen talks about not wanting to live, call or text nine eight eight together."
+     "say": "If someone can't wake up or is struggling to breathe, call for emergency help."
     },
     {
      "k": "big",
@@ -13478,6 +13537,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Party Pressure and Saying No Your Way",
   "you": {
    "id": "pn-g-sober-party-you",
+   "crisis": ["911: emergency"],
    "guide": "sober-party",
    "side": "you",
    "title": "Party Pressure and Saying No Your Way",
@@ -13571,8 +13631,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "If someone needs help",
-     "body": "Can't wake up or breathing strangely: call 911 and stay.",
-     "say": "If someone can't wake up, is breathing slowly or strangely, or seems very confused, call nine one one right away and stay with them. Getting help fast matters most. And never ride with someone who has been drinking or using. Text your code word instead."
+     "body": "Can't wake up or breathing strangely: call for help and stay.",
+     "say": "If someone can't wake up, is breathing slowly or strangely, or seems very confused, call for emergency help right away and stay with them. Getting help fast matters most. And never ride with someone who has been drinking or using. Text your code word instead."
     },
     {
      "k": "card",
@@ -13590,6 +13650,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-party-helper",
+   "crisis": ["Poison Control: 1-800-222-1222", "911: emergency"],
    "guide": "sober-party",
    "side": "helper",
    "title": "Party Pressure and Saying No Your Way",
@@ -13625,10 +13686,9 @@ window.GG_LEARN_GUIDES.pine = {
      "h": "Words that help",
      "items": [
       "Text me the code word. I will come.",
-      "No questions that night.",
-      "If a friend is in trouble, call 911 first."
+      "No questions that night."
      ],
-     "say": "Words that help. If you ever want out, text me the code word, and I'll come. No questions that night. We'll talk tomorrow. And, if a friend is ever in trouble, call nine one one first. We'll sort out the rest later."
+     "say": "Words that help. If you ever want out, text me the code word, and I'll come. No questions that night. We'll talk tomorrow. We'll sort out the rest later."
     },
     {
      "k": "big",
@@ -13685,8 +13745,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "If someone needs help",
-     "body": "Can't wake up or breathing strangely: 911.",
-     "say": "Teach them this, plainly. If someone can't wake up, is breathing slowly or strangely, or seems very confused, call nine one one right away and stay with them. Poison Help, at 1-800-222-1222, answers questions any time."
+     "body": "Can't wake up or breathing strangely: call for help.",
+     "say": "Teach them this, plainly. If someone can't wake up, is breathing slowly or strangely, or seems very confused, call for emergency help right away and stay with them."
     },
     {
      "k": "big",
@@ -13703,6 +13763,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "A Parent's Drinking or Using",
   "you": {
    "id": "pn-g-sober-parent-you",
+   "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
    "guide": "sober-parent",
    "side": "you",
    "title": "A Parent's Drinking or Using",
@@ -13802,8 +13863,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Safety",
-     "body": "Can't wake up or danger: 911. Being hurt: Childhelp 1-800-422-4453. 988 any time.",
-     "say": "Keep your safety plan simple. Never ride with someone who has been drinking or using. If someone can't wake up, or there's danger, call nine one one. If anyone is hurting you, call or text Childhelp, any time. And if you ever think about not wanting to be alive, call or text nine eight eight."
+     "body": "Can't wake up or danger: call for help.",
+     "say": "Keep your safety plan simple. Never ride with someone who has been drinking or using. If someone can't wake up, or there's danger, call for emergency help."
     },
     {
      "k": "big",
@@ -13815,6 +13876,7 @@ window.GG_LEARN_GUIDES.pine = {
   },
   "helper": {
    "id": "pn-g-sober-parent-helper",
+   "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent",
    "side": "helper",
    "title": "A Parent's Drinking or Using",
@@ -13887,7 +13949,7 @@ window.GG_LEARN_GUIDES.pine = {
       ],
       [
        "A safety plan",
-       "Rides, a place to go, 911"
+       "Rides, a place to go"
       ],
       [
        "Their own support",
@@ -13898,7 +13960,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Sleep, school, friends"
       ]
      ],
-     "say": "What helps most. Safe adults, with names and numbers in their phone. A safety plan, rides, a place to go, and nine one one if someone can't wake up. Their own support, like Alateen, a school group, or a therapist. And normal teen life, sleep, school, sports, and friends.",
+     "say": "What helps most. Safe adults, with names and numbers in their phone. A safety plan, rides, a place to go, and calling for help if someone can't wake up. Their own support, like Alateen, a school group, or a therapist. And normal teen life, sleep, school, sports, and friends.",
      "cue": {
       "at": [
        1,
@@ -13911,8 +13973,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Support for you",
-     "body": "Al-Anon, Nar-Anon, SAMHSA 1-800-662-4357.",
-     "say": "You need support too. Al-Anon and Nar-Anon are there for family members. The SAMHSA National Helpline can point you to treatment and family support, any time. If a teen is being hurt or left without what they need, Childhelp can help. And if your teen talks about not wanting to live, call or text nine eight eight together."
+     "body": "Al-Anon, Nar-Anon.",
+     "say": "You need support too. Al-Anon and Nar-Anon are there for family members."
     },
     {
      "k": "big",
@@ -13929,6 +13991,7 @@ window.GG_LEARN_GUIDES.pine = {
   "title": "Quitting Vaping",
   "you": {
    "id": "pn-g-sober-vaping-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "sober-vaping",
    "side": "you",
    "title": "Quitting Vaping",
@@ -14062,7 +14125,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "card",
      "title": "A slip is a moment.",
      "body": "Start again right away. Your doctor can help too.",
-     "say": "If you slip, it's a moment, and you can start again right away. Ask what led to it, and add a swap for next time. Your doctor can help with a quit plan, and with medicine if it fits you. And if you ever feel like you don't want to be alive, call or text nine eight eight."
+     "say": "If you slip, it's a moment, and you can start again right away. Ask what led to it, and add a swap for next time. Your doctor can help with a quit plan, and with medicine if it fits you."
     },
     {
      "k": "big",
@@ -14277,7 +14340,7 @@ window.GG_LEARN_GUIDES.pine = {
      "h": "Three steps",
      "steps": [
       [
-       "Call 911",
+       "Call for help",
        "Right away"
       ],
       [
@@ -14289,26 +14352,26 @@ window.GG_LEARN_GUIDES.pine = {
        "Until help arrives"
       ]
      ],
-     "say": "Then do three things. Call nine one one, right away. Give naloxone, also called Narcan, if you have it: one spray in the nose. It's safe, and it does no harm if it isn't an opioid. Then stay with them until help arrives. In Minnesota, the law protects a person who calls for help and stays.",
+     "say": "Then do three things. Give naloxone, also called Narcan, if you have it: one spray in the nose. It's safe, and it does no harm if it isn't an opioid. Then stay with them until help arrives. In Minnesota, the law protects a person who calls for help and stays.",
      "cue": {
       "at": [
        1,
-       2,
-       4
+       1,
+       3
       ]
      }
     },
     {
      "k": "big",
-     "h": "911. Naloxone. Stay.",
+     "h": "Call. Naloxone. Stay.",
      "sub": "Say the steps out loud.",
-     "say": "Let's lock it in. Picture a friend who won't wake up. Take one steady breath. Now say the three steps out loud: nine one one, naloxone, stay.",
+     "say": "Let's lock it in. Picture a friend who won't wake up. Take one steady breath. Now say the three steps out loud: call for help, naloxone, stay.",
      "beats": [
       "Let's lock it in.",
       "Picture a friend who won't wake up.",
       "Take one steady breath.",
       {
-       "t": "Now say the three steps out loud: nine one one, naloxone, stay.",
+       "t": "Now say the three steps out loud: call for help, naloxone, stay.",
        "w": 10
       }
      ]
@@ -14316,8 +14379,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "If pills are part of your life",
-     "body": "Talk with a doctor. SAMHSA: 1-800-662-4357.",
-     "say": "If pills are already part of your life, you deserve help, and it's safe to ask. Talk with a doctor or a trusted adult. Stopping opioids or sedatives goes best with a doctor's help. In Minnesota, you can ask for that care on your own. And if you ever think about not wanting to be alive, call or text nine eight eight."
+     "body": "Talk with a doctor.",
+     "say": "If pills are already part of your life, you deserve help, and it's safe to ask. Talk with a doctor or a trusted adult. Stopping opioids or sedatives goes best with a doctor's help. In Minnesota, you can ask for that care on your own."
     },
     {
      "k": "big",
@@ -14408,7 +14471,7 @@ window.GG_LEARN_GUIDES.pine = {
      "h": "Teach the three steps",
      "steps": [
       [
-       "Call 911",
+       "Call for help",
        "Right away"
       ],
       [
@@ -14420,7 +14483,7 @@ window.GG_LEARN_GUIDES.pine = {
        "Until help arrives"
       ]
      ],
-     "say": "Teach the whole family three steps. If someone won't wake up or is breathing slowly, call nine one one. Give naloxone, one spray in the nose. It's safe, even if it turns out not to be an opioid. Then stay until help arrives.",
+     "say": "Teach the whole family three steps. If someone won't wake up or is breathing slowly, call for emergency help. Give naloxone, one spray in the nose. It's safe, even if it turns out not to be an opioid. Then stay until help arrives.",
      "cue": {
       "at": [
        1,
@@ -14431,31 +14494,29 @@ window.GG_LEARN_GUIDES.pine = {
     },
     {
      "k": "card",
-     "title": "Make 911 the easy call.",
      "body": "No trouble with you, ever, for calling.",
-     "say": "Fear of getting in trouble is the main reason people wait to call. So promise, out loud, that calling nine one one for a friend will never get your teen in trouble with you. In Minnesota, a Good Samaritan law protects a person who calls for help with an overdose and stays."
+     "say": "Fear of getting in trouble is the main reason people wait to call. So promise, out loud, that calling for help for a friend will never get your teen in trouble with you. In Minnesota, a Good Samaritan law protects a person who calls for help with an overdose and stays."
     },
     {
      "k": "words",
      "h": "Words that help",
      "items": [
       "If it isn't from a pharmacy, it could be fake.",
-      "Call 911 first. Always.",
       "Let's learn naloxone together."
      ],
-     "say": "Words that help. If it isn't from a pharmacy with your name on it, it could be fake. If anyone ever won't wake up, call nine one one first, always. And, let's learn how to use naloxone together."
+     "say": "Words that help. If it isn't from a pharmacy with your name on it, it could be fake. If anyone ever won't wake up, call for emergency help first, always. And, let's learn how to use naloxone together."
     },
     {
      "k": "card",
      "title": "If your teen uses pills",
-     "body": "Their doctor today. SAMHSA: 1-800-662-4357.",
-     "say": "If you learn your teen is using pills, stay calm, and ask what they're doing for them: stress, sleep, pain, or a hard feeling. Talk with their doctor right away, and keep naloxone close. The SAMHSA National Helpline can point you to teen treatment, any time."
+     "body": "Their doctor today.",
+     "say": "If you learn your teen is using pills, stay calm, and ask what they're doing for them: stress, sleep, pain, or a hard feeling. Talk with their doctor right away, and keep naloxone close."
     },
     {
      "k": "big",
      "h": "Calm, prepared, and close.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Calm talks, naloxone at home, and a promise about nine one one. That's how families stay ready. The full guide has more, whenever you want it."
+     "say": "Calm talks, naloxone at home, and a promise about calling for help. That's how families stay ready. The full guide has more, whenever you want it."
     }
    ],
    "crisis": [
@@ -14494,8 +14555,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "If it's happening now",
-     "body": "Call 911. Give naloxone if you have it. Stay.",
-     "say": "First, if it's happening right now, stop this video. Call nine one one. Give naloxone, also called Narcan, if you have it. And stay with them. In Minnesota, the law protects a person who calls for help and stays."
+     "body": "Call for help. Give naloxone if you have it. Stay.",
+     "say": "First, if it's happening right now, stop this video. Give naloxone, also called Narcan, if you have it. And stay with them. In Minnesota, the law protects a person who calls for help and stays."
     },
     {
      "k": "words",
@@ -14567,7 +14628,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "card",
      "title": "If your friend died",
      "body": "Grieve together. Remember them. Ask for help.",
-     "say": "If your friend died, grief can come in waves for a long time. Be with others who loved them, and find ways to remember them. If the pictures keep replaying, or sleep won't come back, a school counselor or therapist can help. If you ever think about not wanting to be alive, call or text nine eight eight, any time."
+     "say": "If your friend died, grief can come in waves for a long time. Be with others who loved them, and find ways to remember them. If the pictures keep replaying, or sleep won't come back, a school counselor or therapist can help."
     },
     {
      "k": "big",
@@ -14680,8 +14741,7 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Lines to know",
-     "body": "988 any time. **CRISIS in Minnesota. 911 for danger.",
-     "say": "If your teen talks about not wanting to live, or the grief feels like too much, call or text nine eight eight together. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. For danger right now, call nine one one."
+     "say": "In Minnesota, star star CRISIS from a cell phone reaches a county crisis team."
     },
     {
      "k": "big",
