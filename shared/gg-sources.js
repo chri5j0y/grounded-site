@@ -31,6 +31,20 @@
 
   // id: [label, link, kind]. kind 'a' = a method or tradition (Adapted from, on a practice); otherwise research or a book.
   var SRC = {
+/* BLD809 sources start */
+    // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.
+    artigas: ["Lucina Artigas and Ignacio Jarero, the Butterfly Hug", "https://connect.springerpub.com/content/book/978-0-8261-2245-2/part/part1/chapter/ch01", "a"],
+    balban23: ["Balban et al., Brief structured respiration practices enhance mood and reduce physiological arousal, Cell Reports Medicine (2023)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC9873947/"],
+    ensari15: ["Ensari, Greenlee, Motl, and Petruzzello, acute exercise and state anxiety: a meta-analysis (Depression and Anxiety, 2015)", "https://doi.org/10.1002/da.22370"],
+    goessl17: ["Goessl, Curtiss, and Hofmann, The effect of heart rate variability biofeedback training on stress and anxiety: a meta-analysis, Psychological Medicine (2017)", "https://www.cambridge.org/core/journals/psychological-medicine/article/effect-of-heart-rate-variability-biofeedback-training-on-stress-and-anxiety-a-metaanalysis/A839E9C968E54774DF5C8FB186764EF0"],
+    jacobson38: ["Edmund Jacobson, Progressive Muscle Relaxation (Progressive Relaxation, 1938)", "", "a"],
+    kyriakoulis21: ["Kyriakoulis, Kyrios, Nardi, Freire, and Schier, the diving response and panic symptoms (Frontiers in Psychiatry, 2021)", "https://www.frontiersin.org/articles/10.3389/fpsyt.2021.784884/full"],
+    lehrer14: ["Paul M. Lehrer and Richard Gevirtz, Heart rate variability biofeedback: how and why does it work?, Frontiers in Psychology (2014)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC4104929/"],
+    ma17: ["Ma et al., The Effect of Diaphragmatic Breathing on Attention, Negative Affect and Stress in Healthy Adults, Frontiers in Psychology (2017)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC5455070/"],
+    toussaint21: ["Toussaint and colleagues, progressive muscle relaxation, deep breathing, and guided imagery (2021)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC8272667/"],
+    weil478: ["Andrew Weil, MD, the 4-7-8 breath", "https://www.drweil.com/", "a"],
+    zaccaro18: ["Zaccaro et al., How Breath-Control Can Change Your Life: slow breathing review, Frontiers in Human Neuroscience (2018)", "https://pmc.ncbi.nlm.nih.gov/articles/PMC6137615/"],
+/* BLD809 sources end */
 /* BLD787 shelf start */
     // From Chris's Shelf (GWG BLD 787): books on Chris's shelf, linked to their Library card, and the writers' new sources.
     byock97: ["Ira Byock, Dying Well (1997)", SHELF + "DY-001"],
