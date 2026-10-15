@@ -449,3 +449,48 @@
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', build); else build();
 })();
+
+/* ===== Get Grounded Now (GWG BLD 809): a calm green button in every page's menu bar ===== */
+/* It opens /get-grounded-now.html, the calm page with Breathe With Me, the four doors, Rest in Prayer, and every
+   practice. In Maple and Aspen it opens the kids' versions (#kids). Shown beside the light and dark toggle, so it
+   stays visible on phones while the menu is folded. */
+(function () {
+  if (document.querySelector('.gg-now')) return;
+  function mount() {
+    if (document.querySelector('.gg-now')) return;
+    var here = /\/get-grounded-now(\.html)?$/.test(location.pathname);
+    var kids = /^\/(maple|aspen)\//.test(location.pathname);
+    var a = document.createElement('a');
+    a.className = 'gg-now'; a.href = '/get-grounded-now.html' + (kids ? '#kids' : '');
+    if (here) a.setAttribute('aria-current', 'page');
+    a.innerHTML = '<span class="gg-now-dot" aria-hidden="true"></span><span class="gg-now-l">Get Grounded Now</span><span class="gg-now-s" aria-hidden="true">Ground Now</span>';
+    a.setAttribute('aria-label', 'Get Grounded Now: calming practices for right now');
+    var st = document.createElement('style');
+    st.textContent = '.gg-now{flex:none;display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;margin-right:10px;border-radius:999px;background:#5F7D48;color:#FFFFFF !important;text-decoration:none !important;font-family:"Barlow Condensed",sans-serif;font-weight:700;font-size:14px;letter-spacing:.06em;text-transform:uppercase;white-space:nowrap;}'
+      + '.gg-now:hover{background:#4E6A3B;}.gg-now:focus-visible{outline:3px solid #D9A847;outline-offset:2px;}'
+      + '.gg-now-dot{width:8px;height:8px;border-radius:50%;background:#FFFFFF;opacity:.9;}'
+      + '.gg-now-s{display:none;}'
+      + '@media (max-width:640px){.gg-now{padding:0 11px;margin-right:6px;font-size:13px;}.gg-now-l{display:none;}.gg-now-s{display:inline;}}'
+      + '@media (max-width:360px){.gg-now-dot{display:none;}}';
+    document.head.appendChild(st);
+    st.textContent += '.gg-now-bar{display:flex;justify-content:center;padding:6px max(16px,env(safe-area-inset-left,0px)) 6px max(16px,env(safe-area-inset-right,0px));background:#5F7D48;}'
+      + '.gg-now-bar .gg-now{margin:0;min-height:30px;background:transparent;padding:0 10px;font-size:14px;}.gg-now-bar .gg-now:hover{background:#4E6A3B;}'
+      + '.gg-now-bar .gg-now-l{display:inline !important;}.gg-now-bar .gg-now-s{display:none !important;}.gg-now-bar .gg-now-dot{display:inline-block !important;}';
+    var theme = document.querySelector('.gg-theme'), size = document.querySelector('.size-btn'), menuBtn = document.querySelector('.menu-btn');
+    var anchor = theme || size || menuBtn, head = document.querySelector('header.topbar') || document.querySelector('header');
+    var bar = document.createElement('div'); bar.className = 'gg-now-bar'; bar.hidden = true;
+    if (head) head.appendChild(bar);
+    // In the menu bar where it fits; where the bar is full (phones, and the apps' longer bars), a slim green strip
+    // just under it, so the page never scrolls sideways.
+    function place() {
+      if (!anchor || !anchor.parentNode) { if (head) { bar.appendChild(a); bar.hidden = false; } return; }
+      if (a.parentNode !== anchor.parentNode) { anchor.parentNode.insertBefore(a, anchor); bar.hidden = true; }
+      var row = anchor.parentNode, over = document.documentElement.scrollWidth > document.documentElement.clientWidth + 1 || row.scrollWidth > row.clientWidth + 1;
+      if (over && head) { bar.appendChild(a); bar.hidden = false; }
+    }
+    place();
+    var t = 0; window.addEventListener('resize', function () { clearTimeout(t); t = setTimeout(place, 150); });
+  }
+  // After the light and dark toggle mounts (same file, earlier), so it can sit just before it.
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(mount, 0); }); else setTimeout(mount, 0);
+})();
