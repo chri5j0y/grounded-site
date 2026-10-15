@@ -3164,6 +3164,7 @@ window.GG_LEARN_GUIDES.willow = {
 "title": "The First Hour After Death",
 "you": {
 "id": "wl-g-firsthour-you",
+"crisis": ["911: emergency"],
 "guide": "firsthour",
 "side": "you",
 "title": "The First Hour After Death",
@@ -3197,7 +3198,7 @@ window.GG_LEARN_GUIDES.willow = {
 "items": [
 [
 "Call the hospice",
-"Not 911"
+""
 ],
 [
 "Sit with them",
@@ -3212,7 +3213,7 @@ window.GG_LEARN_GUIDES.willow = {
 "There is time for it"
 ]
 ],
-"say": "Here is what to do. Call your hospice, not 911. Sit with them. Hold their hand, and say goodbye. Let the kids come in, if they want to. And do whatever matters to your family in this hour. There is time for it."
+"say": "Here is what to do. Call your hospice. Sit with them. Hold their hand, and say goodbye. Let the kids come in, if they want to. And do whatever matters to your family in this hour. There is time for it."
 },
 {
 "k": "big",
@@ -3244,6 +3245,7 @@ window.GG_LEARN_GUIDES.willow = {
 },
 "helper": {
 "id": "wl-g-firsthour-helper",
+"crisis": ["911: emergency"],
 "guide": "firsthour",
 "side": "helper",
 "title": "The First Hour After Death",
@@ -3279,7 +3281,7 @@ window.GG_LEARN_GUIDES.willow = {
 "items": [
 [
 "Make the call",
-"To the hospice, not 911"
+"To the hospice"
 ],
 [
 "Ask what matters to them",
@@ -3294,7 +3296,7 @@ window.GG_LEARN_GUIDES.willow = {
 "Fewer phones, softer voices"
 ]
 ],
-"say": "Here is how you can help. Make the call, to the hospice, not 911. Ask what matters to the family in this hour. Welcome the kids, if they want to come in. And keep the room calm, with fewer phones and softer voices."
+"say": "Here is how you can help. Make the call, to the hospice. Ask what matters to the family in this hour. Welcome the kids, if they want to come in. And keep the room calm, with fewer phones and softer voices."
 },
 {
 "k": "big",

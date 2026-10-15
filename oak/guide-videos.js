@@ -53,6 +53,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Anxiety That Won't Settle",
 "you": {
 "id": "ok-g-anxiety-you",
+"crisis": ["988: call or text, any time"],
 "guide": "anxiety",
 "side": "you",
 "title": "Anxiety That Won't Settle",
@@ -158,8 +159,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Weeks of it? Reach out.",
-"body": "A doctor or counselor can help. Thoughts of harming yourself: call or text 988.",
-"say": "If panic attacks come, or anxiety keeps you from work, sleep, or the people you love for more than a few weeks, talk with your doctor or a counselor. Anxiety is very treatable. And if you have any thoughts of harming yourself, call or text nine eight eight."
+"body": "A doctor or counselor can help.",
+"say": "If panic attacks come, or anxiety keeps you from work, sleep, or the people you love for more than a few weeks, talk with your doctor or a counselor. Anxiety is very treatable."
 },
 {
 "k": "big",
@@ -171,6 +172,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-anxiety-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "anxiety",
 "side": "helper",
 "title": "Anxiety That Won't Settle",
@@ -258,8 +260,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When it lasts for weeks",
-"body": "Encourage a doctor or counselor. Thoughts of self-harm: call or text 988. Danger right now: 911.",
-"say": "If it has lasted for weeks, or panic is getting in the way of work, sleep, or relationships, encourage them to see a doctor or a counselor, and offer to help make the call. If they ever talk about harming themselves, call or text nine eight eight together. If there is danger right now, call nine one one."
+"body": "Encourage a doctor or counselor.",
+"say": "If it has lasted for weeks, or panic is getting in the way of work, sleep, or relationships, encourage them to see a doctor or a counselor, and offer to help make the call."
 },
 {
 "k": "big",
@@ -282,6 +284,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Sadness That Lingers",
 "you": {
 "id": "ok-g-sadness-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "you",
 "title": "Sadness That Lingers",
@@ -379,8 +382,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Two weeks or more? Tell someone.",
-"body": "Book a visit with your doctor or a counselor. If hope feels gone: call or text 988 today.",
-"say": "If the sadness has lasted more than two weeks, or it is getting in the way of daily life, book a visit with your doctor or a counselor. That is a strong thing to do. If hope feels gone, or you have thoughts of death or suicide, call or text nine eight eight today. If you are in danger right now, call nine one one."
+"body": "Book a visit with your doctor or a counselor.",
+"say": "If the sadness has lasted more than two weeks, or it is getting in the way of daily life, book a visit with your doctor or a counselor. That is a strong thing to do."
 },
 {
 "k": "big",
@@ -392,6 +395,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-sadness-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "sadness",
 "side": "helper",
 "title": "Sadness That Lingers",
@@ -426,7 +430,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Asking directly is safe and caring.",
 "body": "\"Are you having any thoughts of ending your life?\"",
-"say": "If you are worried, ask directly. Are you having any thoughts of ending your life? Asking directly is safe and caring. If the answer is yes, stay with them, and call or text nine eight eight together. If there is danger right now, call nine one one."
+"say": "If you are worried, ask directly. Are you having any thoughts of ending your life? Asking directly is safe and caring. If the answer is yes, stay with them."
 },
 {
 "k": "words",
@@ -505,6 +509,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Loneliness",
 "you": {
 "id": "ok-g-loneliness-you",
+"crisis": ["988: call or text, any time"],
 "guide": "loneliness",
 "side": "you",
 "title": "Loneliness",
@@ -613,8 +618,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When it turns heavy",
-"body": "Talk with your doctor or a counselor. Thoughts of suicide: call or text 988.",
-"say": "If loneliness has turned into lasting sadness or hopelessness, talk with your doctor or a counselor. And if you have any thoughts of suicide, call or text nine eight eight. Someone is there, day and night."
+"body": "Talk with your doctor or a counselor.",
+"say": "If loneliness has turned into lasting sadness or hopelessness, talk with your doctor or a counselor. Someone is there, day and night."
 },
 {
 "k": "big",
@@ -626,6 +631,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-loneliness-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "loneliness",
 "side": "helper",
 "title": "Loneliness",
@@ -727,8 +733,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When it turns heavy",
-"body": "Encourage a doctor or counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "If loneliness has turned into lasting sadness or hopelessness, encourage them to see a doctor or a counselor. If they talk about not wanting to be alive, call or text nine eight eight together. If there is danger right now, call nine one one."
+"body": "Encourage a doctor or counselor.",
+"say": "If loneliness has turned into lasting sadness or hopelessness, encourage them to see a doctor or a counselor."
 },
 {
 "k": "big",
@@ -751,6 +757,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Burnout",
 "you": {
 "id": "ok-g-burnout-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "burnout",
 "side": "you",
 "title": "Burnout",
@@ -868,8 +875,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it's more than tired",
-"body": "Exhaustion that rest doesn't touch, or signs of depression: talk with your doctor or a counselor. Thoughts of escaping your life or not being here: call or text 988. Danger right now: 911.",
-"say": "If the exhaustion doesn't improve with rest, or you notice signs of depression, talk with your doctor or a counselor. If you have thoughts of escaping your life or not being here, call or text 988. If anyone is in danger right now, call 911."
+"body": "Exhaustion that rest doesn't touch, or signs of depression: talk with your doctor or a counselor.",
+"say": "If the exhaustion doesn't improve with rest, or you notice signs of depression, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -881,6 +888,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-burnout-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "burnout",
 "side": "helper",
 "title": "Burnout",
@@ -967,8 +975,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Stay steady, and watch",
-"body": "Exhaustion that doesn't lift with rest, or signs of depression: encourage a doctor or counselor. Talk of escaping their life or not being here: call or text 988 together.",
-"say": "You don't have to fix their job or their whole life. Stay steady, and check in more than once. If the exhaustion doesn't lift with rest, or you see signs of depression, encourage them to talk with a doctor or a counselor. If they talk about escaping their life or not being here, call or text 988 together. If anyone is in danger right now, call 911."
+"body": "Exhaustion that doesn't lift with rest, or signs of depression: encourage a doctor or counselor.",
+"say": "You don't have to fix their job or their whole life. Stay steady, and check in more than once. If the exhaustion doesn't lift with rest, or you see signs of depression, encourage them to talk with a doctor or a counselor."
 },
 {
 "k": "big",
@@ -991,6 +999,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Anger That Runs Hot",
 "you": {
 "id": "ok-g-anger-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "anger",
 "side": "you",
 "title": "Anger That Runs Hot",
@@ -1118,12 +1127,13 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Information, not instructions.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "If your anger leads to threats or violence, or the people you live with are frightened, reach out to a counselor or your doctor now. If anyone is in danger, call 911. If you have thoughts of ending your life, call or text 988. Your anger is information, not instructions. The full guide has more, whenever you want it."
+"say": "If your anger leads to threats or violence, or the people you live with are frightened, reach out to a counselor or your doctor now. Your anger is information, not instructions. The full guide has more, whenever you want it."
 }
 ]
 },
 "helper": {
 "id": "ok-g-anger-helper",
+"crisis": ["911: emergency"],
 "guide": "anger",
 "side": "helper",
 "title": "Anger That Runs Hot",
@@ -1142,8 +1152,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Your safety comes first.",
-"sub": "Danger right now: 911.",
-"say": "Before anything else, your safety comes first. If their anger ever turns threatening, or you or the children feel afraid, step away and get help. If anyone is in danger right now, call 911. Oak's guide When Home Isn't Safe has more."
+"say": "Before anything else, your safety comes first. If their anger ever turns threatening, or you or the children feel afraid, step away and get help. Oak's guide When Home Isn't Safe has more."
 },
 {
 "k": "big",
@@ -1238,6 +1247,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Shame and Guilt",
 "you": {
 "id": "ok-g-shame-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "shame",
 "side": "you",
 "title": "Shame and Guilt",
@@ -1320,8 +1330,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it's too heavy to carry",
-"body": "Shame tied to trauma or abuse: a counselor can help. Thoughts that you would be better off dead: call or text 988. Danger right now: 911.",
-"say": "If your shame is tied to trauma or abuse, a counselor can help you carry it. If you have thoughts that you'd be better off dead, call or text 988. If anyone is in danger right now, call 911."
+"body": "Shame tied to trauma or abuse: a counselor can help.",
+"say": "If your shame is tied to trauma or abuse, a counselor can help you carry it."
 },
 {
 "k": "big",
@@ -1333,6 +1343,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-shame-helper",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "shame",
 "side": "helper",
 "title": "Shame and Guilt",
@@ -1426,8 +1437,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Keep it close",
-"body": "Keep what you hear confidential unless someone is in danger. Thoughts of being better off dead: 988. Danger right now: 911. Harm to a vulnerable adult in Minnesota: MAARC 1-844-880-1574.",
-"say": "Keep what you hear confidential, unless someone is in danger. If they say they'd be better off dead, call or text 988 together. If anyone is in danger right now, call 911. If what they share involves harm to a vulnerable adult in Minnesota, call MAARC."
+"body": "Keep what you hear confidential unless someone is in danger.",
+"say": "Keep what you hear confidential, unless someone is in danger."
 },
 {
 "k": "big",
@@ -1450,6 +1461,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Feeling Lost or Without Purpose",
 "you": {
 "id": "ok-g-lost-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "lost",
 "side": "you",
 "title": "Feeling Lost or Without Purpose",
@@ -1563,8 +1575,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Heavy for weeks? Reach out.",
-"body": "Talk with your doctor or a counselor. Thoughts of ending your life: call or text 988. Danger right now: 911.",
-"say": "Sometimes emptiness slides into hopelessness or depression. If it stays heavy for weeks, talk with your doctor or a counselor. That is a strong step. If you have thoughts of ending your life, call or text nine eight eight. If you are in danger right now, call nine one one."
+"body": "Talk with your doctor or a counselor.",
+"say": "Sometimes emptiness slides into hopelessness or depression. If it stays heavy for weeks, talk with your doctor or a counselor. That is a strong step."
 },
 {
 "k": "big",
@@ -1576,6 +1588,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-lost-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "lost",
 "side": "helper",
 "title": "Feeling Lost or Without Purpose",
@@ -1666,8 +1679,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Watch for hopelessness.",
-"body": "Encourage a doctor or counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "Stay alert to one thing. If emptiness turns into hopelessness, or they lose interest in almost everything, gently encourage them to talk with their doctor or a counselor. Offer to help make the call. If they talk about ending their life, call or text nine eight eight together. If they are in danger right now, call nine one one."
+"body": "Encourage a doctor or counselor.",
+"say": "Stay alert to one thing. If emptiness turns into hopelessness, or they lose interest in almost everything, gently encourage them to talk with their doctor or a counselor. Offer to help make the call."
 },
 {
 "k": "big",
@@ -1690,6 +1703,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "After Something Traumatic",
 "you": {
 "id": "ok-g-trauma-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "trauma",
 "side": "you",
 "title": "After Something Traumatic",
@@ -1797,8 +1811,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Still strong after a month? Reach out.",
-"body": "A trauma-informed counselor or your doctor. Thoughts of hurting yourself: call or text 988. Danger right now: 911.",
-"say": "If nightmares, flashbacks, or avoidance last longer than a month, or get in the way of daily life, talk with your doctor or a trauma-informed counselor. Trauma-focused therapy works for many people. If you have thoughts of hurting yourself, call or text nine eight eight. If you are in danger right now, call nine one one."
+"body": "A trauma-informed counselor or your doctor.",
+"say": "If nightmares, flashbacks, or avoidance last longer than a month, or get in the way of daily life, talk with your doctor or a trauma-informed counselor. Trauma-focused therapy works for many people."
 },
 {
 "k": "big",
@@ -1810,6 +1824,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-trauma-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "trauma",
 "side": "helper",
 "title": "After Something Traumatic",
@@ -1900,8 +1915,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it doesn't ease, help them find support.",
-"body": "A trauma-informed counselor or their doctor. Thoughts of self-harm: call or text 988. Danger right now: 911.",
-"say": "If nightmares, flashbacks, or avoidance last longer than a month, gently mention professional help. A trauma-informed counselor, or their doctor. Offer to help find one, and let them choose. If they talk about hurting themselves, call or text nine eight eight together. If anyone is in danger right now, call nine one one."
+"body": "A trauma-informed counselor or their doctor.",
+"say": "If nightmares, flashbacks, or avoidance last longer than a month, gently mention professional help. A trauma-informed counselor, or their doctor. Offer to help find one, and let them choose."
 },
 {
 "k": "big",
@@ -1924,6 +1939,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "ADHD as an Adult, or a Late Diagnosis",
 "you": {
 "id": "ok-g-adhd-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "adhd",
 "side": "you",
 "title": "ADHD as an Adult, or a Late Diagnosis",
@@ -2032,8 +2048,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Take care of your mood too.",
-"body": "Anxiety and depression often come along. Talk with your doctor. Thoughts of suicide: call or text 988.",
-"say": "Anxiety and depression often come along with ADHD. If focus, mood, or daily life feel out of control, see your doctor. Getting help for those is a strong step too. If you have thoughts of suicide, call or text nine eight eight. If you are in danger right now, call nine one one."
+"body": "Anxiety and depression often come along. Talk with your doctor.",
+"say": "Anxiety and depression often come along with ADHD. If focus, mood, or daily life feel out of control, see your doctor. Getting help for those is a strong step too."
 },
 {
 "k": "big",
@@ -2045,6 +2061,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-adhd-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "adhd",
 "side": "helper",
 "title": "ADHD as an Adult, or a Late Diagnosis",
@@ -2122,8 +2139,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Watch their mood.",
-"body": "Anxiety and depression often come along. Thoughts of suicide: call or text 988.",
-"say": "Anxiety and depression often come along with ADHD. If they seem very low for weeks, encourage them to see their doctor. If they talk about ending their life, call or text nine eight eight together. If anyone is in danger right now, call nine one one."
+"body": "Anxiety and depression often come along.",
+"say": "Anxiety and depression often come along with ADHD. If they seem very low for weeks, encourage them to see their doctor."
 },
 {
 "k": "big",
@@ -2146,6 +2163,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Spouse or Partner Died",
 "you": {
 "id": "ok-g-spouse-death-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spouse-death",
 "side": "you",
 "title": "Your Spouse or Partner Died",
@@ -2249,8 +2267,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If you think about joining them",
-"sub": "Call or text 988, any time.",
-"say": "In deep grief, some people think about wanting to be with the one who died. If that turns into thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911. And if your grief stays intense, or grows heavier after many months, a grief counselor can walk with you."
+"say": "In deep grief, some people think about wanting to be with the one who died. And if your grief stays intense, or grows heavier after many months, a grief counselor can walk with you."
 },
 {
 "k": "big",
@@ -2262,6 +2279,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-spouse-death-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spouse-death",
 "side": "helper",
 "title": "Your Spouse or Partner Died",
@@ -2345,8 +2363,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to help them reach out",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "Watch, gently, for grief that stays intense or gets worse after many months, or keeps them from daily life. You can help them find a grief group or a counselor. If they ever talk about wanting to join their partner, or not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"say": "Watch, gently, for grief that stays intense or gets worse after many months, or keeps them from daily life. You can help them find a grief group or a counselor."
 },
 {
 "k": "big",
@@ -2369,6 +2386,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Parent Died",
 "you": {
 "id": "ok-g-parent-death-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "parent-death",
 "side": "you",
 "title": "Your Parent Died",
@@ -2477,8 +2495,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to reach out",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "If your grief doesn't ease, or family conflict starts to feel unmanageable, a counselor can help you sort it out. If you ever have thoughts of not wanting to live, call or text 988, any time. If you are in danger right now, call 911."
+"say": "If your grief doesn't ease, or family conflict starts to feel unmanageable, a counselor can help you sort it out."
 },
 {
 "k": "big",
@@ -2490,6 +2507,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-parent-death-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "parent-death",
 "side": "helper",
 "title": "Your Parent Died",
@@ -2577,8 +2595,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to help them reach out",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "If their grief doesn't ease, or family conflict feels unmanageable, you can help them find a counselor. If they ever talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"say": "If their grief doesn't ease, or family conflict feels unmanageable, you can help them find a counselor."
 },
 {
 "k": "big",
@@ -2595,6 +2612,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Child Died",
 "you": {
 "id": "ok-g-child-death-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "child-death",
 "side": "you",
 "title": "Your Child Died",
@@ -2694,8 +2712,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If you don't want to live",
-"sub": "Call or text 988, any time.",
-"say": "Some parents feel they can't go on without their child. If you have thoughts of not wanting to live, call or text 988, any time, day or night. If you are in danger right now, call 911. A grief counselor can walk with you, too."
+"say": "Some parents feel they can't go on without their child. A grief counselor can walk with you, too."
 },
 {
 "k": "big",
@@ -2707,6 +2724,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-child-death-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "child-death",
 "side": "helper",
 "title": "Your Child Died",
@@ -2793,8 +2811,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If they say they can't go on",
-"sub": "Call or text 988 together.",
-"say": "If a parent talks about not wanting to live without their child, take it seriously and stay with them. Call or text 988 together. If there is danger right now, call 911."
+"say": "If a parent talks about not wanting to live without their child, take it seriously and stay with them."
 },
 {
 "k": "big",
@@ -2817,6 +2834,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Pregnancy or Infant Loss",
 "you": {
 "id": "ok-g-pregnancy-loss-you",
+"crisis": ["988: call or text, any time", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "pregnancy-loss",
 "side": "you",
 "title": "Pregnancy or Infant Loss",
@@ -2937,12 +2955,6 @@ window.GG_LEARN_GUIDES.oak = {
 "say": "People often go quiet because they don't know what to say. You can help them. Try this. We lost the baby. We'd love your support, and it helps when people acknowledge it. You can also ask for privacy. Both are okay."
 },
 {
-"k": "card",
-"title": "If the sadness stays heavy",
-"body": "Postpartum Support International: 1-800-944-4773. Any thoughts of harming yourself: call or text 988. Danger right now: 911.",
-"say": "If deep sadness lingers, or the days stay heavy for weeks, Postpartum Support International has a helpline at 1-800-944-4773. If you have any thoughts of harming yourself, call or text 988, any hour. If you are in danger right now, call 911."
-},
-{
 "k": "big",
 "h": "Your grief is as big as your love.",
 "sub": "The full guide has more, whenever you want it.",
@@ -2952,6 +2964,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-pregnancy-loss-helper",
+"crisis": ["988: call or text, any time", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "pregnancy-loss",
 "side": "helper",
 "title": "Pregnancy or Infant Loss",
@@ -3039,8 +3052,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you're worried about them",
-"body": "Deep sadness that lingers: their doctor. Any thoughts of harming themselves: call or text 988. Danger right now: 911.",
-"say": "Watch gently over the weeks. If deep sadness lingers, encourage them to talk with their doctor. Postpartum Support International has a helpline too. If they mention any thoughts of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"body": "Deep sadness that lingers: their doctor.",
+"say": "Watch gently over the weeks. If deep sadness lingers, encourage them to talk with their doctor."
 },
 {
 "k": "big",
@@ -3527,6 +3540,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Ambiguous Loss",
 "you": {
 "id": "ok-g-ambiguous-loss-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "ambiguous-loss",
 "side": "you",
 "title": "Ambiguous Loss",
@@ -3632,8 +3646,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it gets heavy",
-"body": "Grief with depression or burnout: a counselor or your doctor. Thoughts of ending your life: call or text 988. Danger right now: 911.",
-"say": "If grief is mixing with depression or burnout, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911."
+"body": "Grief with depression or burnout: a counselor or your doctor.",
+"say": "If grief is mixing with depression or burnout, talk with a counselor or your doctor."
 },
 {
 "k": "big",
@@ -3645,6 +3659,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-ambiguous-loss-helper",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "ambiguous-loss",
 "side": "helper",
 "title": "Ambiguous Loss",
@@ -3745,12 +3760,6 @@ window.GG_LEARN_GUIDES.oak = {
 "say": "Stay steady by remembering a few things. You can't fix this, and you don't need to. Company is the gift. This kind of grief can last years, so patience is a kindness. And notice what it stirs in you. Your own losses may wake up. Talk with someone you trust, too."
 },
 {
-"k": "card",
-"title": "If you are worried",
-"body": "Talk of not wanting to live: call or text 988. Danger right now: 911. Harm to a vulnerable adult in Minnesota: MAARC, 1-844-880-1574.",
-"say": "If you notice deep depression, or hear talk of not wanting to live, call or text 988, together if you can. If anyone is in danger right now, call 911. And if you think a vulnerable adult in Minnesota is being harmed or taken advantage of, you can call MAARC at 1 844 880 1574."
-},
-{
 "k": "big",
 "h": "Be patient. Stay close.",
 "sub": "The full guide has more, whenever you want it.",
@@ -3765,6 +3774,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Holidays and Anniversaries After a Loss",
 "you": {
 "id": "ok-g-grief-days-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "grief-days",
 "side": "you",
 "title": "Holidays and Anniversaries After a Loss",
@@ -3879,8 +3889,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it gets heavier",
-"body": "Grief that grows heavier each year: a grief counselor or your doctor. Thoughts of ending your life: call or text 988. Danger right now: 911.",
-"say": "If grief seems to get heavier each year instead of softer, talk with a grief counselor or your doctor. You deserve that support. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911."
+"body": "Grief that grows heavier each year: a grief counselor or your doctor.",
+"say": "If grief seems to get heavier each year instead of softer, talk with a grief counselor or your doctor. You deserve that support."
 },
 {
 "k": "big",
@@ -3892,6 +3902,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-grief-days-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "grief-days",
 "side": "helper",
 "title": "Holidays and Anniversaries After a Loss",
@@ -3992,8 +4003,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you are worried",
-"body": "Grief that grows heavier each year: a grief counselor or their doctor. Talk of not wanting to live: call or text 988. Danger right now: 911.",
-"say": "If their grief seems to grow heavier each year, gently encourage a grief counselor or their doctor. If you hear talk of not wanting to live, call or text 988 together. If anyone is in danger right now, call 911."
+"body": "Grief that grows heavier each year: a grief counselor or their doctor.",
+"say": "If their grief seems to grow heavier each year, gently encourage a grief counselor or their doctor."
 },
 {
 "k": "big",
@@ -4010,6 +4021,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Your Pet Died",
 "you": {
 "id": "ok-g-pet-death-you",
+"crisis": ["988: call or text, any time"],
 "guide": "pet-death",
 "side": "you",
 "title": "Your Pet Died",
@@ -4112,7 +4124,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Be gentle with the empty routines.",
 "sub": "Walk the old route, or a new one.",
-"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. Take all the time you need to decide about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988."
+"say": "Be gentle with the empty routines. The quiet morning, the time you used to walk. Some people keep the walk, and some find a new one. Either is fine. Take all the time you need to decide about another pet. If grief keeps you from daily life for weeks, talk with a counselor or your doctor."
 },
 {
 "k": "big",
@@ -4124,6 +4136,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-pet-death-helper",
+"crisis": ["988: call or text, any time"],
 "guide": "pet-death",
 "side": "helper",
 "title": "Your Pet Died",
@@ -4228,7 +4241,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Old pets may come to mind"
 ]
 ],
-"say": "A few reminders keep you steady. You don't need to fully understand their bond to honor it. Kindness is enough. Let them talk and tell stories. And notice your own losses. Old pets may come to mind, and that is okay. If their grief keeps them from daily life for weeks, encourage a counselor. If you hear talk of not wanting to live, call or text 988 together."
+"say": "A few reminders keep you steady. You don't need to fully understand their bond to honor it. Kindness is enough. Let them talk and tell stories. And notice your own losses. Old pets may come to mind, and that is okay. If their grief keeps them from daily life for weeks, encourage a counselor."
 },
 {
 "k": "big",
@@ -4245,6 +4258,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Hard Diagnosis",
 "you": {
 "id": "ok-g-diagnosis-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "diagnosis",
 "side": "you",
 "title": "A Hard Diagnosis",
@@ -4351,8 +4365,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it feels too heavy",
-"sub": "Tell your doctor, or call or text 988.",
-"say": "If the fear turns into deep depression or hopelessness, tell your doctor, and ask your care team about counseling, social work, or a chaplain. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"sub": "Tell your doctor.",
+"say": "If the fear turns into deep depression or hopelessness, tell your doctor, and ask your care team about counseling, social work, or a chaplain."
 },
 {
 "k": "big",
@@ -4364,6 +4378,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-diagnosis-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "diagnosis",
 "side": "helper",
 "title": "A Hard Diagnosis",
@@ -4447,8 +4462,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to help them reach out",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "Watch, gently, for deep depression or hopelessness that doesn't lift. Encourage them to tell their doctor, or to ask their care team for counseling or a chaplain. If they ever talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"say": "Watch, gently, for deep depression or hopelessness that doesn't lift. Encourage them to tell their doctor, or to ask their care team for counseling or a chaplain."
 },
 {
 "k": "big",
@@ -4471,6 +4485,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Chronic Illness or Pain",
 "you": {
 "id": "ok-g-chronic-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "chronic",
 "side": "you",
 "title": "Chronic Illness or Pain",
@@ -4578,8 +4593,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When it gets too heavy",
-"sub": "Thoughts of suicide: call or text 988.",
-"say": "Pain and depression often travel together, and both deserve attention. If your pain comes with depression or hopelessness, tell your doctor. If you have any thoughts of suicide, call or text 988, any time. If you are in danger right now, call 911."
+"say": "Pain and depression often travel together, and both deserve attention. If your pain comes with depression or hopelessness, tell your doctor."
 },
 {
 "k": "big",
@@ -4591,6 +4605,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-chronic-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "chronic",
 "side": "helper",
 "title": "Chronic Illness or Pain",
@@ -4674,8 +4689,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to help them reach out",
-"sub": "Thoughts of suicide: call or text 988.",
-"say": "Watch, gently, for pain that comes with depression or hopelessness. Encourage them to tell their doctor, or to find a counselor who works with pain. If they ever talk about suicide, help them call or text 988. If there is danger right now, call 911."
+"say": "Watch, gently, for pain that comes with depression or hopelessness. Encourage them to tell their doctor, or to find a counselor who works with pain."
 },
 {
 "k": "big",
@@ -4698,6 +4712,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Facing Your Own Death",
 "you": {
 "id": "ok-g-own-death-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "own-death",
 "side": "you",
 "title": "Facing Your Own Death",
@@ -4814,7 +4829,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "When distress is too much",
 "sub": "Ask your care team for help now.",
-"say": "If fear, pain, or distress becomes unbearable, ask your care team for help now. It can be eased. If you are on hospice, call their line, day or night. If you have thoughts of ending your life, call or text 988. If you are in danger right now, call 911."
+"say": "If fear, pain, or distress becomes unbearable, ask your care team for help now. It can be eased. If you are on hospice, call their line, day or night."
 },
 {
 "k": "big",
@@ -4826,6 +4841,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-own-death-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "own-death",
 "side": "helper",
 "title": "Facing Your Own Death",
@@ -4905,7 +4921,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "When to call the team",
 "sub": "Unbearable distress can be eased.",
-"say": "If fear, pain, or distress becomes unbearable, help them ask their care team for help now. It can be eased. If they are on hospice, call the hospice line, day or night. If they talk about ending their life, call or text 988 together. If there is danger right now, call 911."
+"say": "If fear, pain, or distress becomes unbearable, help them ask their care team for help now. It can be eased. If they are on hospice, call the hospice line, day or night."
 },
 {
 "k": "big",
@@ -5420,6 +5436,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "The First Days After a Death",
 "you": {
 "id": "ok-g-after-death-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "after-death",
 "side": "you",
 "title": "The First Days After a Death",
@@ -5447,18 +5464,18 @@ window.GG_LEARN_GUIDES.oak = {
 "items": [
 [
 "Hospice involved?",
-"Call the hospice first, not 911"
+"Call the hospice first"
 ],
 [
 "No hospice?",
-"Call 911 or the doctor"
+"Call the doctor"
 ],
 [
 "Then a funeral home",
 "Ask what they handle for you"
 ]
 ],
-"say": "If hospice was involved, call the hospice first, not 911. They will guide you, and a nurse will come to help with the next steps, including the funeral home. If there was no hospice, call 911 or the person's doctor. Then choose a funeral home and ask them to walk you through what they handle for you. They do this every day."
+"say": "If hospice was involved, call the hospice first. They will guide you, and a nurse will come to help with the next steps, including the funeral home. If there was no hospice, call the person's doctor. Then choose a funeral home and ask them to walk you through what they handle for you. They do this every day."
 },
 {
 "k": "big",
@@ -5539,8 +5556,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "After the funeral, the crash can come.",
-"body": "Grief support through your hospice or funeral home. Thoughts of not wanting to live: call or text 988.",
-"say": "Many people crash after the funeral, when the house gets quiet. That's normal too. Ask your hospice or funeral home about grief support. And if grief ever brings thoughts of not wanting to live, call or text 988. Danger right now: 911."
+"body": "Grief support through your hospice or funeral home.",
+"say": "Many people crash after the funeral, when the house gets quiet. That's normal too. Ask your hospice or funeral home about grief support."
 },
 {
 "k": "big",
@@ -5552,6 +5569,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-after-death-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "after-death",
 "side": "helper",
 "title": "The First Days After a Death",
@@ -5650,8 +5668,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Keep showing up after the funeral.",
-"body": "Talk of not wanting to live: call or text 988. Danger right now: 911.",
-"say": "Keep showing up after the funeral, when the casseroles stop and the house gets quiet. That's often when grief lands hardest. If they talk about not wanting to live, call or text 988 together. Danger right now: 911."
+"say": "Keep showing up after the funeral, when the casseroles stop and the house gets quiet. That's often when grief lands hardest."
 },
 {
 "k": "card",
@@ -5674,6 +5691,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Addiction and Recovery",
 "you": {
 "id": "ok-g-addiction-you",
+"crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "addiction",
 "side": "you",
 "title": "Addiction and Recovery",
@@ -5731,10 +5749,6 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "First steps",
 "items": [
 [
-"Call the SAMHSA Helpline",
-"1-800-662-4357, confidential"
-],
-[
 "Talk with your doctor",
 "Honestly, about what is going on"
 ],
@@ -5747,7 +5761,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Someone safe and steady"
 ]
 ],
-"say": "Here are some first steps. Call the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
+"say": "Here are some first steps. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
 },
 {
 "k": "big",
@@ -5791,13 +5805,12 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "A slip is not the end of recovery.",
 "body": "Return to use is part of many recoveries. Reach out the same day.",
-"say": "If you slip, or return to use, you are not starting from nothing. A return to use is part of many recoveries. What you learned is still yours. Reach out the same day, to your sponsor, your group, your doctor, or the helpline, and take the next step. You can tell yourself, a slip is not the end of my recovery."
+"say": "If you slip, or return to use, you are not starting from nothing. A return to use is part of many recoveries. What you learned is still yours. Reach out the same day, to your sponsor, your group, or your doctor, and take the next step. You can tell yourself, a slip is not the end of my recovery."
 },
 {
 "k": "card",
-"title": "Overdose is a 911 call.",
-"body": "Thoughts of suicide: call or text 988. SAMHSA Helpline: 1-800-662-4357.",
-"say": "If someone may be overdosing, call nine one one right away. Many states have laws that protect people who call for help. If you have thoughts of suicide, call or text nine eight eight. And the SAMHSA National Helpline is there any time you need it."
+"title": "Overdose means calling for help.",
+"say": "Many states have laws that protect people who call for help."
 },
 {
 "k": "big",
@@ -5809,6 +5822,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-addiction-helper",
+"crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
 "guide": "addiction",
 "side": "helper",
 "title": "Addiction and Recovery",
@@ -5939,12 +5953,6 @@ window.GG_LEARN_GUIDES.oak = {
 "say": "Your wellbeing matters. A support group for families, like Al-Anon, can help you feel less alone. A counselor of your own can help with the weight you carry. And keep rest and friends in your week, a life beyond the worry."
 },
 {
-"k": "card",
-"title": "Overdose is a 911 call.",
-"body": "Thoughts of suicide: call or text 988. SAMHSA Helpline: 1-800-662-4357, for families too.",
-"say": "If someone may be overdosing, call nine one one right away. If they talk about suicide, call or text nine eight eight together. The SAMHSA National Helpline is there for families too, at one eight hundred, six six two, four three five seven."
-},
-{
 "k": "big",
 "h": "Families need recovery too.",
 "sub": "The full guide has more, whenever you want it.",
@@ -5959,6 +5967,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Caring for Someone Who Is Ill",
 "you": {
 "id": "ok-g-caregiving-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "caregiving",
 "side": "you",
 "title": "Caring for Someone Who Is Ill",
@@ -6074,8 +6083,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When you are running on empty",
-"sub": "Thoughts of ending your life: call or text 988.",
-"say": "If you feel worn down for weeks, or your own health is slipping, tell your doctor. If you ever feel close to losing control with the person you care for, step away and call for help. If you have thoughts of ending your life, call or text 988, any time. If anyone is in danger right now, call 911."
+"say": "If you feel worn down for weeks, or your own health is slipping, tell your doctor. If you ever feel close to losing control with the person you care for, step away and call for help."
 },
 {
 "k": "big",
@@ -6087,6 +6095,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-caregiving-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "caregiving",
 "side": "helper",
 "title": "Caring for Someone Who Is Ill",
@@ -6164,8 +6173,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Watch for empty",
-"sub": "Thoughts of ending their life: call or text 988.",
-"say": "Watch, gently, for signs a caregiver is running on empty: health slipping, deep tiredness that doesn't lift, losing their temper in ways that scare them. Help them talk with their doctor or a caregiver support group. If they speak of ending their life, help them call or text 988. If anyone is in danger right now, call 911."
+"say": "Watch, gently, for signs a caregiver is running on empty: health slipping, deep tiredness that doesn't lift, losing their temper in ways that scare them. Help them talk with their doctor or a caregiver support group."
 },
 {
 "k": "big",
@@ -6188,6 +6196,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Caring for Someone with Dementia",
 "you": {
 "id": "ok-g-dementia-care-you",
+"crisis": ["988: call or text, any time", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
 "guide": "dementia-care",
 "side": "you",
 "title": "Caring for Someone with Dementia",
@@ -6264,10 +6273,6 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Get support early",
 "items": [
 [
-"Alzheimer's Association, 24/7",
-"1-800-272-3900"
-],
-[
 "Adult day programs, respite",
 "So you can rest"
 ],
@@ -6276,13 +6281,12 @@ window.GG_LEARN_GUIDES.oak = {
 "While they can still take part"
 ]
 ],
-"say": "Get support early, not only in a crisis. The Alzheimer's Association helpline is open every hour of every day: 1-800-272-3900. Look into adult day programs and respite, so you can rest. And make legal and financial plans while your person can still take part. A caregiver support group can help you carry all of it."
+"say": "Get support early, not only in a crisis. Look into adult day programs and respite, so you can rest. And make legal and financial plans while your person can still take part. A caregiver support group can help you carry all of it."
 },
 {
 "k": "big",
 "h": "When it gets to be too much",
-"sub": "Call the helpline, any hour: 1-800-272-3900.",
-"say": "If you feel at the end of your rope, call the helpline, any hour. If wandering, driving, or safety at home worries you, talk with their doctor soon. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911."
+"say": "If wandering, driving, or safety at home worries you, talk with their doctor soon."
 },
 {
 "k": "big",
@@ -6294,6 +6298,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-dementia-care-helper",
+"crisis": ["MAARC (Minnesota): 1-844-880-1574", "Alzheimer's Association Helpline: 1-800-272-3900", "911: emergency"],
 "guide": "dementia-care",
 "side": "helper",
 "title": "Caring for Someone with Dementia",
@@ -6396,13 +6401,9 @@ window.GG_LEARN_GUIDES.oak = {
 [
 "Give them a break",
 "Stay so they can leave"
-],
-[
-"Know the helpline",
-"1-800-272-3900, any hour"
 ]
 ],
-"say": "Help the caregiver, too. Visit regularly, the same day each week if you can. Stay with your friend so the caregiver can leave the house. And know the Alzheimer's Association helpline, open any hour: 1-800-272-3900. If you ever worry someone is being harmed or neglected, in Minnesota call MAARC at 1-844-880-1574. If anyone is in danger right now, call 911."
+"say": "Help the caregiver, too. Visit regularly, the same day each week if you can. Stay with your friend so the caregiver can leave the house."
 },
 {
 "k": "big",
@@ -6425,6 +6426,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Living with a New Disability",
 "you": {
 "id": "ok-g-disability-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "disability",
 "side": "you",
 "title": "Living with a New Disability",
@@ -6517,8 +6519,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If the sadness won't lift",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "If sadness or hopelessness doesn't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time. If you are in danger right now, call 911."
+"say": "If sadness or hopelessness doesn't lift, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -6530,6 +6531,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-disability-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "disability",
 "side": "helper",
 "title": "Living with a New Disability",
@@ -6615,8 +6617,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "When to help them reach out",
-"sub": "Thoughts of not wanting to live: call or text 988.",
-"say": "Watch, gently, for sadness or hopelessness that doesn't lift. You can help them talk with their doctor or a counselor. If they speak of not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"say": "Watch, gently, for sadness or hopelessness that doesn't lift. You can help them talk with their doctor or a counselor."
 },
 {
 "k": "big",
@@ -6639,6 +6640,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Eating Disorders",
 "you": {
 "id": "ok-g-eating-you",
+"crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
 "guide": "eating",
 "side": "you",
 "title": "Eating Disorders",
@@ -6717,8 +6719,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Tell one person you trust.",
-"body": "ANAD Helpline: 1-888-375-7767, for support and treatment options.",
-"say": "Tell one person you trust. Secrecy gives the illness room to grow, and telling someone takes some of that room back. You can also call the ANAD Helpline, at one eight eight eight, three seven five, seven seven six seven, for support and treatment options."
+"say": "Tell one person you trust. Secrecy gives the illness room to grow, and telling someone takes some of that room back."
 },
 {
 "k": "words",
@@ -6743,9 +6744,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Fainting or chest pain? Call 911.",
-"body": "Also a racing or uneven heartbeat, or confusion. Thoughts of suicide: call or text 988.",
-"say": "Some signs need help right away. Call nine one one for fainting, chest pain, a racing or uneven heartbeat, or confusion. If you have thoughts of suicide, call or text nine eight eight. You deserve help the moment you need it."
+"title": "Fainting or chest pain? Call for help.",
+"body": "Also a racing or uneven heartbeat, or confusion.",
+"say": "Some signs need help right away. Call for emergency help for fainting, chest pain, a racing or uneven heartbeat, or confusion. You deserve help the moment you need it."
 },
 {
 "k": "big",
@@ -6757,6 +6758,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-eating-helper",
+"crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
 "guide": "eating",
 "side": "helper",
 "title": "Eating Disorders",
@@ -6848,15 +6850,15 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Fainting or chest pain? Call 911.",
-"body": "Also a racing or uneven heartbeat, or confusion. Thoughts of suicide: call or text 988.",
-"say": "Some signs need help right away. Call nine one one for fainting, chest pain, a racing or uneven heartbeat, or confusion. If they talk about suicide, call or text nine eight eight together."
+"title": "Fainting or chest pain? Call for help.",
+"body": "Also a racing or uneven heartbeat, or confusion.",
+"say": "Some signs need help right away. Call for emergency help for fainting, chest pain, a racing or uneven heartbeat, or confusion."
 },
 {
 "k": "big",
 "h": "This is exhausting. Get support too.",
-"sub": "Caregiver groups, like ANAD's, can help.",
-"say": "Loving someone with an eating disorder is exhausting. Caregiver support groups, like the ones ANAD offers, can help you feel less alone. Rest, eat well yourself, and talk with someone you trust."
+"sub": "Caregiver groups can help.",
+"say": "Loving someone with an eating disorder is exhausting. Caregiver support groups can help you feel less alone. Rest, eat well yourself, and talk with someone you trust."
 },
 {
 "k": "big",
@@ -6873,6 +6875,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "After a Car Accident or Sudden Injury",
 "you": {
 "id": "ok-g-accident-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "accident",
 "side": "you",
 "title": "After a Car Accident or Sudden Injury",
@@ -6979,8 +6982,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Still strong after a month? Reach out.",
-"body": "Talk with your doctor about trauma therapy. Thoughts of suicide: call or text 988. Danger now: 911.",
-"say": "If fear, nightmares, or flashbacks last more than a month, talk with your doctor and ask about trauma-focused therapy. It helps many people. If you have thoughts of suicide, call or text nine eight eight. If you are in danger right now, call nine one one."
+"body": "Talk with your doctor about trauma therapy.",
+"say": "If fear, nightmares, or flashbacks last more than a month, talk with your doctor and ask about trauma-focused therapy. It helps many people."
 },
 {
 "k": "big",
@@ -6992,6 +6995,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-accident-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "accident",
 "side": "helper",
 "title": "After a Car Accident or Sudden Injury",
@@ -7088,8 +7092,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Watch for warning signs.",
-"body": "Head injury signs that get worse: the ER. Thoughts of suicide: call or text 988. Danger now: 911.",
-"say": "Watch for head injury signs that get worse, like a headache that grows, repeated vomiting, or confusion. That means the emergency room. If they talk about suicide, call or text nine eight eight together. If anyone is in danger right now, call nine one one."
+"body": "Head injury signs that get worse: the ER. Danger now: call for help.",
+"say": "Watch for head injury signs that get worse, like a headache that grows, repeated vomiting, or confusion. That means the emergency room."
 },
 {
 "k": "big",
@@ -7112,6 +7116,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Pornography That's Hard to Stop",
 "you": {
 "id": "ok-g-porn-you",
+"crisis": ["988: call or text, any time", "Stop It Now: 1-888-773-8368", "911: emergency"],
 "guide": "porn",
 "side": "you",
 "title": "Pornography That's Hard to Stop",
@@ -7238,8 +7243,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it goes further",
-"body": "Drawn to images of anyone under 18: get confidential help from Stop It Now before anyone is harmed. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "Two more things. If you are ever drawn to sexual images of anyone under eighteen, stop, and get confidential help from Stop It Now before anyone is harmed. And if the shame gets so heavy you have thoughts of suicide, call or text 988. If you're in danger right now, call 911."
+"say": "Two more things. If you are ever drawn to sexual images of anyone under eighteen, stop, and get confidential help before anyone is harmed."
 },
 {
 "k": "big",
@@ -7251,6 +7255,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-porn-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "porn",
 "side": "helper",
 "title": "Pornography That's Hard to Stop",
@@ -7330,8 +7335,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Keep safety close",
-"body": "Anything involving minors: get help now. Report abuse material at report.cybertip.org. Thoughts of suicide: 988. Danger right now: 911.",
-"say": "Keep safety close. If anything involves minors, that is illegal and deeply harmful: stop, and get help now. Abuse material can be reported at report dot cybertip dot org. If they talk about suicide, call or text 988 together. If anyone is in danger right now, call 911."
+"body": "Anything involving minors: get help now. Report abuse material at report.cybertip.org.",
+"say": "Keep safety close. If anything involves minors, that is illegal and deeply harmful: stop, and get help now. Abuse material can be reported at report dot cybertip dot org."
 },
 {
 "k": "big",
@@ -7354,6 +7359,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Gambling That's Out of Control",
 "you": {
 "id": "ok-g-gambling-you",
+"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
 "guide": "gambling",
 "side": "you",
 "title": "Gambling That's Out of Control",
@@ -7420,8 +7426,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Help in Minnesota",
-"body": "Minnesota Problem Gambling Helpline: 1-800-333-4673, or text HOPE to 53342. Outside Minnesota: 1-800-GAMBLER.",
-"say": "In Minnesota, call the Problem Gambling Helpline at 1-800-333-4673, or text HOPE to 53342. Treatment is often at no cost for gamblers and their families. Outside Minnesota, call 1-800-GAMBLER."
+"say": "Treatment is often at no cost for gamblers and their families. Outside Minnesota, call 1-800-GAMBLER."
 },
 {
 "k": "words",
@@ -7450,8 +7455,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it feels hopeless",
-"body": "Gambling problems raise the risk of suicide. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "Gambling debt can make things feel hopeless, and gambling problems raise the risk of suicide. If you have thoughts of ending your life, call or text 988. If you're in danger right now, call 911. No amount of money is worth your life."
+"say": "Gambling debt can make things feel hopeless, and gambling problems raise the risk of suicide. No amount of money is worth your life."
 },
 {
 "k": "big",
@@ -7463,6 +7467,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-gambling-helper",
+"crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "911: emergency"],
 "guide": "gambling",
 "side": "helper",
 "title": "Gambling That's Out of Control",
@@ -7491,7 +7496,7 @@ window.GG_LEARN_GUIDES.oak = {
 "I love you, and I'm worried about the gambling.",
 "There is help in Minnesota. I'll sit with you while you call."
 ],
-"say": "Lead with love and with the plain truth. You could say, I love you, and I'm worried about the gambling. Then offer something concrete. There is help in Minnesota. I'll sit with you while you call. The helpline is 1-800-333-4673."
+"say": "Lead with love and with the plain truth. You could say, I love you, and I'm worried about the gambling. Then offer something concrete. There is help in Minnesota. I'll sit with you while you call."
 },
 {
 "k": "words",
@@ -7535,10 +7540,6 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "What helps",
 "steps": [
 [
-"The helpline",
-"Call or text together"
-],
-[
 "Treatment",
 "A gambling counselor"
 ],
@@ -7551,13 +7552,12 @@ window.GG_LEARN_GUIDES.oak = {
 "With a financial counselor"
 ]
 ],
-"say": "What helps? Calling or texting the helpline, together if they want. Counseling with a gambling treatment provider. Gamblers Anonymous or another support group. And financial counseling, to face the debt with a plan."
+"say": "What helps? Counseling with a gambling treatment provider. Gamblers Anonymous or another support group. And financial counseling, to face the debt with a plan."
 },
 {
 "k": "card",
 "title": "Watch for hopelessness",
-"body": "Gambling problems raise the risk of suicide. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "Gambling problems raise the risk of suicide, especially when the debt comes to light. If they sound hopeless, ask them directly whether they're thinking about suicide. If they are, call or text 988 together. If they're in danger right now, call 911."
+"say": "Gambling problems raise the risk of suicide, especially when the debt comes to light. If they sound hopeless, ask them directly whether they're thinking about suicide."
 },
 {
 "k": "big",
@@ -7580,6 +7580,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Divorce or a Breakup",
 "you": {
 "id": "ok-g-divorce-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "divorce",
 "side": "you",
 "title": "Divorce or a Breakup",
@@ -7683,8 +7684,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets very dark",
-"sub": "Call or text 988. Danger right now: 911.",
-"say": "If the sadness turns very deep, or you have thoughts of ending your life, call or text 988, any time. If home isn't safe for you or your kids, Oak's guide When Home Isn't Safe can help you take the next step. If you are in danger right now, call 911."
+"say": "If home isn't safe for you or your kids, Oak's guide When Home Isn't Safe can help you take the next step."
 },
 {
 "k": "big",
@@ -7696,6 +7696,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-divorce-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "divorce",
 "side": "helper",
 "title": "Divorce or a Breakup",
@@ -7786,8 +7787,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Deep depression or thoughts of suicide: 988. Not safe at home: When Home Isn't Safe. Danger now: 911.",
-"say": "Watch, gently, for sadness that gets very deep or doesn't lift. You can help them find a counselor or a support group. If they talk about not wanting to live, help them call or text 988. If home isn't safe, Oak's guide When Home Isn't Safe has next steps. If there is danger right now, call 911."
+"body": "Not safe at home: When Home Isn't Safe.",
+"say": "Watch, gently, for sadness that gets very deep or doesn't lift. You can help them find a counselor or a support group. If home isn't safe, Oak's guide When Home Isn't Safe has next steps."
 },
 {
 "k": "big",
@@ -7810,6 +7811,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Your Marriage Is Struggling",
 "you": {
 "id": "ok-g-marriage-strain-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "marriage-strain",
 "side": "you",
 "title": "When Your Marriage Is Struggling",
@@ -7925,8 +7927,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Safety comes first.",
-"sub": "Abuse, threats, or fear: When Home Isn't Safe. Danger now: 911.",
-"say": "A hard season is different from harm. If there is abuse, threats, or you feel afraid, safety comes first. Oak's guide When Home Isn't Safe can help you take the next step. If you are in danger right now, call 911. If you have thoughts of ending your life, call or text 988."
+"sub": "Abuse, threats, or fear: When Home Isn't Safe.",
+"say": "A hard season is different from harm. If there is abuse, threats, or you feel afraid, safety comes first. Oak's guide When Home Isn't Safe can help you take the next step."
 },
 {
 "k": "big",
@@ -7938,6 +7940,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-marriage-strain-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "marriage-strain",
 "side": "helper",
 "title": "When Your Marriage Is Struggling",
@@ -8022,8 +8025,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you are worried about safety",
-"body": "Abuse, threats, or fear: When Home Isn't Safe. Danger now: 911.",
-"say": "A hard season is different from harm. If they describe abuse, threats, or being afraid at home, believe them, and stay close. Oak's guide When Home Isn't Safe has the next steps. If there is danger right now, call 911. If they talk about not wanting to live, help them call or text 988."
+"body": "Abuse, threats, or fear: When Home Isn't Safe.",
+"say": "A hard season is different from harm. If they describe abuse, threats, or being afraid at home, believe them, and stay close. Oak's guide When Home Isn't Safe has the next steps."
 },
 {
 "k": "big",
@@ -8046,6 +8049,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Betrayal",
 "you": {
 "id": "ok-g-betrayal-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "betrayal",
 "side": "you",
 "title": "Betrayal",
@@ -8155,8 +8159,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets very dark",
-"sub": "Call or text 988. Danger right now: 911.",
-"say": "Betrayal can bring very dark thoughts. If you have thoughts of harming yourself or someone else, call or text 988, any time. If what you've found comes with threats, control, or fear at home, Oak's guide When Home Isn't Safe can help. If anyone is in danger right now, call 911."
+"say": "Betrayal can bring very dark thoughts. If what you've found comes with threats, control, or fear at home, Oak's guide When Home Isn't Safe can help."
 },
 {
 "k": "big",
@@ -8168,6 +8171,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-betrayal-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "betrayal",
 "side": "helper",
 "title": "Betrayal",
@@ -8253,8 +8257,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Thoughts of harm: call or text 988. Threats or fear at home: When Home Isn't Safe. Danger now: 911.",
-"say": "Watch, gently, for sadness that won't lift, or for rage that worries you. Help them find a counselor who works with betrayal. If they talk about harming themselves or someone else, help them call or text 988. If there are threats or fear at home, Oak's guide When Home Isn't Safe has next steps. If there is danger right now, call 911."
+"body": "Threats or fear at home: When Home Isn't Safe.",
+"say": "Watch, gently, for sadness that won't lift, or for rage that worries you. Help them find a counselor who works with betrayal. If there are threats or fear at home, Oak's guide When Home Isn't Safe has next steps."
 },
 {
 "k": "big",
@@ -8277,6 +8281,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Infertility",
 "you": {
 "id": "ok-g-infertility-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "infertility",
 "side": "you",
 "title": "Infertility",
@@ -8364,8 +8369,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If the heaviness stays",
-"body": "A counselor who knows fertility can help. Thoughts of harming yourself: call or text 988. Danger right now: 911.",
-"say": "Lean on what steadies you. A support group, or a counselor who focuses on fertility, can carry some of this with you. If the sadness stays heavy for weeks, or strain builds between you and your partner, talk with your doctor or a counselor. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
+"body": "A counselor who knows fertility can help.",
+"say": "Lean on what steadies you. A support group, or a counselor who focuses on fertility, can carry some of this with you. If the sadness stays heavy for weeks, or strain builds between you and your partner, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -8377,6 +8382,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-infertility-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "infertility",
 "side": "helper",
 "title": "Infertility",
@@ -8466,7 +8472,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady yourself, too.",
 "sub": "Your heart counts too.",
-"say": "Walking beside someone's longing can stir your own: a child you hoped for, or worry about saying the wrong thing. Talk with someone you trust. If your friend ever speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"say": "Walking beside someone's longing can stir your own: a child you hoped for, or worry about saying the wrong thing. Talk with someone you trust."
 },
 {
 "k": "big",
@@ -8483,6 +8489,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Estrangement",
 "you": {
 "id": "ok-g-estrangement-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "estrangement",
 "side": "you",
 "title": "Estrangement",
@@ -8567,8 +8574,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If the weight gets heavy",
-"body": "A counselor can help. Thoughts of harming yourself: call or text 988. Danger right now: 911.",
-"say": "Support from others who live with estrangement can help, and so can a counselor. If grief turns into a heaviness that won't lift, talk with your doctor or a counselor. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, including from family, call 911."
+"body": "A counselor can help.",
+"say": "Support from others who live with estrangement can help, and so can a counselor. If grief turns into a heaviness that won't lift, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -8580,6 +8587,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-estrangement-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "estrangement",
 "side": "helper",
 "title": "Estrangement",
@@ -8667,7 +8675,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady yourself, too.",
 "sub": "Your own family story counts.",
-"say": "This may stir your own family story. Notice it, and talk with someone you trust. If your friend ever speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"say": "This may stir your own family story. Notice it, and talk with someone you trust."
 },
 {
 "k": "big",
@@ -8684,6 +8692,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Aging Parents",
 "you": {
 "id": "ok-g-aging-parents-you",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "aging-parents",
 "side": "you",
 "title": "Aging Parents",
@@ -8765,8 +8774,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Your own breaks count",
-"body": "Safety worries: their doctor. Harm to a vulnerable adult in Minnesota: MAARC 1-844-880-1574. 988 and 911.",
-"say": "Your own breaks are part of the plan, not a reward for finishing it. If you're worried about your parent's safety at home, talk with their doctor. If you're running on empty, the caregiving guide has more. If you believe your parent is being harmed or taken advantage of, in Minnesota call MAARC at 1-844-880-1574. If you have thoughts of harming yourself, call or text 988. If anyone is in danger right now, call 911."
+"body": "Safety worries: their doctor.",
+"say": "Your own breaks are part of the plan, not a reward for finishing it. If you're worried about your parent's safety at home, talk with their doctor. If you're running on empty, the caregiving guide has more."
 },
 {
 "k": "big",
@@ -8778,6 +8787,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-aging-parents-helper",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "aging-parents",
 "side": "helper",
 "title": "Aging Parents",
@@ -8867,7 +8877,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady yourself, too.",
 "sub": "Your own parents count too.",
-"say": "This may stir thoughts about your own parents, or your own aging. That's natural. Talk with someone you trust. If you worry an older adult is being harmed or taken advantage of, in Minnesota call MAARC at 1-844-880-1574. If your friend speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"say": "This may stir thoughts about your own parents, or your own aging. That's natural. Talk with someone you trust."
 },
 {
 "k": "big",
@@ -8884,6 +8894,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Empty Nest and Big Life Transitions",
 "you": {
 "id": "ok-g-empty-nest-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "you",
 "title": "Empty Nest and Big Life Transitions",
@@ -8984,8 +8995,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If the sadness stays",
-"body": "Sadness that lasts or deepens: talk with your doctor or a counselor. Thoughts of ending your life: call or text 988. Danger right now: 911.",
-"say": "Sometimes a transition turns into lasting sadness. If the low days stretch into weeks, talk with your doctor or a counselor. That is a strong step, and it helps. If you have thoughts of ending your life, call or text 988. If anyone is in danger right now, call 911."
+"body": "Sadness that lasts or deepens: talk with your doctor or a counselor.",
+"say": "Sometimes a transition turns into lasting sadness. If the low days stretch into weeks, talk with your doctor or a counselor. That is a strong step, and it helps."
 },
 {
 "k": "big",
@@ -8997,6 +9008,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-empty-nest-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "empty-nest",
 "side": "helper",
 "title": "Empty Nest and Big Life Transitions",
@@ -9095,8 +9107,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you are worried",
-"body": "Lasting sadness: their doctor or a counselor. Talk of not wanting to live: call or text 988. Danger right now: 911.",
-"say": "If the sadness lasts for weeks, or they seem to lose interest in everything, gently encourage them to talk with their doctor or a counselor. If you hear talk of not wanting to live, call or text 988, together if you can. If anyone is in danger right now, call 911."
+"body": "Lasting sadness: their doctor or a counselor.",
+"say": "If the sadness lasts for weeks, or they seem to lose interest in everything, gently encourage them to talk with their doctor or a counselor."
 },
 {
 "k": "big",
@@ -9113,6 +9125,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Parenting a Struggling Child",
 "you": {
 "id": "ok-g-struggling-child-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "struggling-child",
 "side": "you",
 "title": "Parenting a Struggling Child",
@@ -9183,8 +9196,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you are worried about safety, ask.",
-"body": "Talk of suicide: call or text 988 now. Safety threats or danger right now: 911.",
-"say": "If you're worried about their safety, ask them directly, in plain words. Are you thinking about ending your life? If your child talks about suicide, call or text 988 now, together if you can. If there are safety threats, or anyone is in danger right now, call 911."
+"say": "If you're worried about their safety, ask them directly, in plain words. Are you thinking about ending your life?"
 },
 {
 "k": "card",
@@ -9245,6 +9257,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-struggling-child-helper",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "struggling-child",
 "side": "helper",
 "title": "Parenting a Struggling Child",
@@ -9347,12 +9360,6 @@ window.GG_LEARN_GUIDES.oak = {
 "say": "Stay steady by remembering a few things. You can't fix this, and you don't need to. Steady company is the gift. This may be a long road, so pace yourself. And notice what it stirs in you, about your own kids or your own growing up. Talk with someone you trust, too."
 },
 {
-"k": "card",
-"title": "If you are worried",
-"body": "A child who talks about suicide: call or text 988 now. Danger right now: 911. Harm to a vulnerable adult in Minnesota: MAARC, 1-844-880-1574.",
-"say": "If you hear that their child is talking about suicide, encourage them to call or text 988 now. If anyone is in danger right now, call 911. And if a grown child is harming or taking from a vulnerable adult in Minnesota, you can call MAARC at 1 844 880 1574."
-},
-{
 "k": "big",
 "h": "Steady company is the gift.",
 "sub": "The full guide has more, whenever you want it.",
@@ -9367,6 +9374,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Becoming a Parent",
 "you": {
 "id": "ok-g-newparent-you",
+"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "Postpartum Support International: 1-800-944-4773", "911: emergency"],
 "guide": "newparent",
 "side": "you",
 "title": "Becoming a Parent",
@@ -9477,19 +9485,18 @@ window.GG_LEARN_GUIDES.oak = {
 "About you, not only the baby"
 ]
 ],
-"say": "Other new parents who get it can be a lifeline. Share night duties when you can. If you have a partner, talk honestly about how each of you is doing. And at appointments, talk with your doctor about how you are feeling, not only about the baby."
+"say": "Other new parents who get it can help. Share night duties when you can. If you have a partner, talk honestly about how each of you is doing. And at appointments, talk with your doctor about how you are feeling, not only about the baby."
 },
 {
 "k": "card",
 "title": "If it lasts more than two weeks",
-"body": "Sadness, anxiety, or scary thoughts: talk with your doctor. National Maternal Mental Health Hotline: 1-833-852-6262, any time.",
-"say": "If sadness, anxiety, or scary thoughts last more than two weeks, talk with your doctor. It's common, and it's treatable. You can call the National Maternal Mental Health Hotline any time, at 1 833 852 6262. Postpartum Support International is there for parents too."
+"body": "Sadness, anxiety, or scary thoughts: talk with your doctor.",
+"say": "If sadness, anxiety, or scary thoughts last more than two weeks, talk with your doctor. It's common, and it's treatable."
 },
 {
 "k": "card",
 "title": "Right away",
-"body": "Thoughts of harming yourself or your baby: call or text 988, or call 911 now.",
-"say": "If you have thoughts of harming yourself or your baby, reach out right away. Call or text 988, or call 911 now. Reaching out is how you keep you both safe."
+"say": "If you have thoughts of harming yourself or your baby, reach out right away. Reaching out is how you keep you both safe."
 },
 {
 "k": "big",
@@ -9501,6 +9508,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-newparent-helper",
+"crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
 "guide": "newparent",
 "side": "helper",
 "title": "Becoming a Parent",
@@ -9586,8 +9594,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If they seem low",
-"body": "Encourage their doctor. National Maternal Mental Health Hotline: 1-833-852-6262. Thoughts of harming themselves or the baby: 988, or 911 now.",
-"say": "If they seem low, anxious, or unlike themselves for more than two weeks, encourage them to talk to their doctor. The National Maternal Mental Health Hotline is open any time, at 1 833 852 6262. If they have thoughts of harming themselves or the baby, call or text 988 together, or call 911 now."
+"body": "Encourage their doctor.",
+"say": "If they seem low, anxious, or unlike themselves for more than two weeks, encourage them to talk to their doctor."
 },
 {
 "k": "points",
@@ -9623,6 +9631,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Someone You Love Is Incarcerated",
 "you": {
 "id": "ok-g-incarceration-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "incarceration",
 "side": "you",
 "title": "When Someone You Love Is Incarcerated",
@@ -9730,8 +9739,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it gets heavy",
-"body": "Stress affecting your health or your kids: a counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "If the stress is affecting your health or your children, reach out to a counselor. If you have thoughts of suicide, call or text 988. If anyone is in danger right now, call 911."
+"body": "Stress affecting your health or your kids: a counselor.",
+"say": "If the stress is affecting your health or your children, reach out to a counselor."
 },
 {
 "k": "big",
@@ -9743,6 +9752,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-incarceration-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "incarceration",
 "side": "helper",
 "title": "When Someone You Love Is Incarcerated",
@@ -9841,8 +9851,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If you are worried",
-"body": "Stress hurting their health or kids: a counselor. Thoughts of suicide: call or text 988. Danger right now: 911.",
-"say": "If the stress seems to be hurting their health or their children, encourage them to see a counselor. If you hear talk of suicide, call or text 988, together if you can. If anyone is in danger right now, call 911."
+"body": "Stress hurting their health or kids: a counselor.",
+"say": "If the stress seems to be hurting their health or their children, encourage them to see a counselor."
 },
 {
 "k": "big",
@@ -9859,6 +9869,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Losing Your Job",
 "you": {
 "id": "ok-g-job-loss-you",
+"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "job-loss",
 "side": "you",
 "title": "Losing Your Job",
@@ -9966,8 +9977,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets heavy",
-"sub": "Local help: 211. Thoughts of suicide: 988.",
-"say": "If money gets tight, dial 211 for local help with food, housing, and bills. If sadness settles in and won't lift, talk with your doctor or a counselor. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"say": "If sadness settles in and won't lift, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -9979,6 +9989,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-job-loss-helper",
+"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "job-loss",
 "side": "helper",
 "title": "Losing Your Job",
@@ -10075,8 +10086,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Local help: 211. Lasting low mood: a doctor or counselor. Thoughts of suicide: 988.",
-"say": "Watch, gently, for sadness that settles in and doesn't lift, more drinking, or pulling away for weeks. You can help them talk with their doctor or a counselor. For help with food, housing, and bills, they can dial 211. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Lasting low mood: a doctor or counselor.",
+"say": "Watch, gently, for sadness that settles in and doesn't lift, more drinking, or pulling away for weeks. You can help them talk with their doctor or a counselor."
 },
 {
 "k": "big",
@@ -10099,6 +10110,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Money Trouble",
 "you": {
 "id": "ok-g-money-crisis-you",
+"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "money-crisis",
 "side": "you",
 "title": "Money Trouble",
@@ -10143,10 +10155,6 @@ window.GG_LEARN_GUIDES.oak = {
 "What you owe, and when"
 ],
 [
-"Dial 211",
-"Food, housing, utilities"
-],
-[
 "A credit counselor",
 "A nonprofit one, through the NFCC"
 ],
@@ -10155,13 +10163,12 @@ window.GG_LEARN_GUIDES.oak = {
 "Just one, this week"
 ]
 ],
-"say": "Then take it one step at a time. List what you owe and what's due. Dial 211 for local help with food, housing, and utilities. Contact a nonprofit credit counselor. The NFCC can help you find one. And pick one next step for this week. Just one.",
+"say": "Then take it one step at a time. List what you owe and what's due. Contact a nonprofit credit counselor. The NFCC can help you find one. And pick one next step for this week. Just one.",
 "cue": {
 "at": [
 1,
 2,
-3,
-5
+4
 ]
 }
 },
@@ -10211,8 +10218,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets very dark",
-"sub": "Call or text 988. Danger right now: 911.",
-"say": "Money pressure can feel crushing. If it turns into thoughts of ending your life, call or text 988, any time. You deserve help with the weight, and people are ready to help carry it. If you are in danger right now, call 911."
+"say": "Money pressure can feel crushing. You deserve help with the weight, and people are ready to help carry it."
 },
 {
 "k": "big",
@@ -10224,6 +10230,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-money-crisis-helper",
+"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "money-crisis",
 "side": "helper",
 "title": "Money Trouble",
@@ -10284,7 +10291,7 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "Resources",
-"211 and the NFCC"
+"The NFCC"
 ],
 [
 "Company",
@@ -10295,7 +10302,7 @@ window.GG_LEARN_GUIDES.oak = {
 "So life holds some joy"
 ]
 ],
-"say": "What helps is often practical. Groceries, a ride, or a meal you bring over. Resources: you can sit with them while they dial 211, or look up a nonprofit credit counselor through the NFCC. Company, like a walk or a meal at home. And low-cost fun, so their life holds some joy too."
+"say": "What helps is often practical. Groceries, a ride, or a meal you bring over. Resources: you can look up a nonprofit credit counselor through the NFCC. Company, like a walk or a meal at home. And low-cost fun, so their life holds some joy too."
 },
 {
 "k": "card",
@@ -10320,8 +10327,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Local help: 211. Thoughts of suicide: 988. Danger right now: 911.",
-"say": "Watch, gently, for signs the weight is getting too heavy: weeks of poor sleep, more drinking, or talk of being a burden. Help them talk with their doctor or a counselor. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"say": "Watch, gently, for signs the weight is getting too heavy: weeks of poor sleep, more drinking, or talk of being a burden. Help them talk with their doctor or a counselor."
 },
 {
 "k": "big",
@@ -10344,6 +10350,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Retirement",
 "you": {
 "id": "ok-g-retirement-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "you",
 "title": "Retirement",
@@ -10445,8 +10452,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets heavy",
-"sub": "Your doctor or a counselor. 988. Danger now: 911.",
-"say": "Give yourself time to adjust. If loneliness settles in, or a low mood doesn't lift for weeks, talk with your doctor or a counselor. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"sub": "Your doctor or a counselor.",
+"say": "Give yourself time to adjust. If loneliness settles in, or a low mood doesn't lift for weeks, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -10458,6 +10465,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-retirement-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "retirement",
 "side": "helper",
 "title": "Retirement",
@@ -10548,8 +10556,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Loneliness or a low mood that lingers: their doctor or a counselor. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Watch, gently, for loneliness or a low mood that lingers for weeks. You can help them talk with their doctor or a counselor. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Loneliness or a low mood that lingers: their doctor or a counselor.",
+"say": "Watch, gently, for loneliness or a low mood that lingers for weeks. You can help them talk with their doctor or a counselor."
 },
 {
 "k": "big",
@@ -10572,6 +10580,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Career Change",
 "you": {
 "id": "ok-g-career-change-you",
+"crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
 "guide": "career-change",
 "side": "you",
 "title": "A Career Change",
@@ -10644,7 +10653,7 @@ window.GG_LEARN_GUIDES.oak = {
 "For money, while you change"
 ]
 ],
-"say": "Start small. Talk to three people who do the work you want. Try a project, a small taste before the big leap. Take a class. And make a financial bridge plan for the in-between months. If money is tight, call or text 211, or a nonprofit credit counselor, for help sorting it out."
+"say": "Start small. Talk to three people who do the work you want. Try a project, a small taste before the big leap. Take a class. And make a financial bridge plan for the in-between months. If money is tight, call a nonprofit credit counselor for help sorting it out."
 },
 {
 "k": "card",
@@ -10673,8 +10682,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Expect a season of being new again.",
-"sub": "A counselor can help. 988. Danger now: 911.",
-"say": "Expect a season of being new again. It's humbling, and it passes. If anxiety or a low mood takes hold during the change, talk with your doctor or a counselor. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"sub": "A counselor can help.",
+"say": "Expect a season of being new again. It's humbling, and it passes. If anxiety or a low mood takes hold during the change, talk with your doctor or a counselor."
 },
 {
 "k": "big",
@@ -10686,6 +10695,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-career-change-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "career-change",
 "side": "helper",
 "title": "A Career Change",
@@ -10776,8 +10786,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When the change wasn't chosen",
-"body": "Grief first. Anxiety or a low mood: a counselor. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Sometimes the change wasn't chosen, after a layoff, an injury, or an illness. Then grief comes first, and the plan can wait. Watch, gently, for anxiety or a low mood that won't lift, and help them find a counselor. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Grief first. Anxiety or a low mood: a counselor.",
+"say": "Sometimes the change wasn't chosen, after a layoff, an injury, or an illness. Then grief comes first, and the plan can wait. Watch, gently, for anxiety or a low mood that won't lift, and help them find a counselor."
 },
 {
 "k": "big",
@@ -10800,6 +10810,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Moving to a New Place",
 "you": {
 "id": "ok-g-moving-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "you",
 "title": "Moving to a New Place",
@@ -10901,8 +10912,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If the lonely doesn't lift",
-"sub": "A doctor or counselor. Thoughts of suicide: 988.",
-"say": "If loneliness or low mood doesn't lift after several months, talk with a doctor or a counselor in your new town. That's a strong next step. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"sub": "A doctor or counselor.",
+"say": "If loneliness or low mood doesn't lift after several months, talk with a doctor or a counselor in your new town. That's a strong next step."
 },
 {
 "k": "big",
@@ -10914,6 +10925,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-moving-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "moving",
 "side": "helper",
 "title": "Moving to a New Place",
@@ -10997,8 +11009,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Low mood after several months: a doctor or counselor. Thoughts of suicide: 988.",
-"say": "Watch, gently, for loneliness or low mood that doesn't lift after several months. Help them find a doctor or a counselor in their new town. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Low mood after several months: a doctor or counselor.",
+"say": "Watch, gently, for loneliness or low mood that doesn't lift after several months. Help them find a doctor or a counselor in their new town."
 },
 {
 "k": "big",
@@ -11123,12 +11135,6 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "Veterans Crisis Line",
-"sub": "Call 988 and press 1, or text 838255. Danger now: 911.",
-"say": "If you have thoughts of ending your life, call the Veterans Crisis Line any time. Call 988 and press 1, or text 838255. If you are in danger right now, call 911."
-},
-{
-"k": "big",
 "h": "Your service mattered. So does what comes next.",
 "sub": "The full guide has more, whenever you want it.",
 "say": "Your service mattered, and so does what comes next. The full guide has more, whenever you want it."
@@ -11228,8 +11234,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Nightmares, anger, or drinking that keep growing: the VA or a counselor. Crisis: 988, press 1. Danger now: 911.",
-"say": "Watch, gently, for nightmares, anger, or drinking that keep growing. You can help them talk with the VA or a counselor. If they talk about not wanting to live, help them call 988 and press 1 for the Veterans Crisis Line, or text 838255. If there is danger right now, call 911."
+"body": "Nightmares, anger, or drinking that keep growing: the VA or a counselor.",
+"say": "Watch, gently, for nightmares, anger, or drinking that keep growing. You can help them talk with the VA or a counselor."
 },
 {
 "k": "big",
@@ -11257,6 +11263,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "A Crisis of Faith",
 "you": {
 "id": "ok-g-faith-crisis-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "faith-crisis",
 "side": "you",
 "title": "A Crisis of Faith",
@@ -11349,8 +11356,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets very dark",
-"sub": "Call or text 988. Danger right now: 911.",
-"say": "Sometimes doubt gets tangled with depression or old trauma. If the heaviness won't lift, talk with a counselor or your doctor. If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"say": "Sometimes doubt gets tangled with depression or old trauma. If the heaviness won't lift, talk with a counselor or your doctor."
 },
 {
 "k": "big",
@@ -11362,6 +11368,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-faith-crisis-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "faith-crisis",
 "side": "helper",
 "title": "A Crisis of Faith",
@@ -11456,8 +11463,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Heaviness that won't lift: a counselor or doctor. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Watch, gently, for doubt tangled with depression or trauma: sadness that won't lift, or pulling away from everyone. You can help them find a counselor or talk with their doctor. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Heaviness that won't lift: a counselor or doctor.",
+"say": "Watch, gently, for doubt tangled with depression or trauma: sadness that won't lift, or pulling away from everyone. You can help them find a counselor or talk with their doctor."
 },
 {
 "k": "big",
@@ -11480,6 +11487,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Changing or Leaving a Faith",
 "you": {
 "id": "ok-g-leaving-faith-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "leaving-faith",
 "side": "you",
 "title": "Changing or Leaving a Faith",
@@ -11570,7 +11578,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "If religion hurt you",
 "body": "A counselor can help. Abuse by a religious leader: report it to authorities.",
-"say": "If religion was a source of harm for you, counseling can help, and Oak's guide When Faith Communities Have Hurt You is there too. Abuse by a religious leader should be reported to authorities. If the change leaves you isolated or very low, reach out to a counselor or your doctor. For thoughts of ending your life, call or text 988. For danger right now, call 911."
+"say": "If religion was a source of harm for you, counseling can help, and Oak's guide When Faith Communities Have Hurt You is there too. Abuse by a religious leader should be reported to authorities. If the change leaves you isolated or very low, reach out to a counselor or your doctor."
 },
 {
 "k": "big",
@@ -11582,6 +11590,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-leaving-faith-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "leaving-faith",
 "side": "helper",
 "title": "Changing or Leaving a Faith",
@@ -11676,8 +11685,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Isolation or deep sadness: a counselor. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Changing faith can mean losing a whole community at once. Watch, gently, for isolation or sadness that deepens. Help them find new community, spiritual or not, or a counselor, especially if religion was a source of harm. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Isolation or deep sadness: a counselor.",
+"say": "Changing faith can mean losing a whole community at once. Watch, gently, for isolation or sadness that deepens. Help them find new community, spiritual or not, or a counselor, especially if religion was a source of harm."
 },
 {
 "k": "big",
@@ -11700,6 +11709,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When the Sacred Feels Far Away",
 "you": {
 "id": "ok-g-spiritual-dryness-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spiritual-dryness",
 "side": "you",
 "title": "When the Sacred Feels Far Away",
@@ -11798,8 +11808,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When it might be more",
-"body": "Dryness with deep sadness: talk to a doctor too. Thoughts of suicide: 988.",
-"say": "Sometimes spiritual dryness comes with depression. If you've lost interest in most things, if sleep or appetite have changed, or the heaviness won't lift, talk to a doctor or counselor too. If you have thoughts of ending your life, call or text 988, any time. For danger right now, call 911."
+"body": "Dryness with deep sadness: talk to a doctor too.",
+"say": "Sometimes spiritual dryness comes with depression. If you've lost interest in most things, if sleep or appetite have changed, or the heaviness won't lift, talk to a doctor or counselor too."
 },
 {
 "k": "big",
@@ -11811,6 +11821,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-spiritual-dryness-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "spiritual-dryness",
 "side": "helper",
 "title": "When the Sacred Feels Far Away",
@@ -11901,8 +11912,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Dryness with depression: a doctor too. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Sometimes dryness travels with depression. Watch, gently, for lost interest in most things, changes in sleep or appetite, or heaviness that won't lift. Encourage them to talk to a doctor too. If they talk about not wanting to live, help them call or text 988. If there is danger right now, call 911."
+"body": "Dryness with depression: a doctor too.",
+"say": "Sometimes dryness travels with depression. Watch, gently, for lost interest in most things, changes in sleep or appetite, or heaviness that won't lift. Encourage them to talk to a doctor too."
 },
 {
 "k": "big",
@@ -12053,8 +12064,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "If it gets very dark",
-"sub": "Call or text 988. Veterans, press 1. Danger right now: 911.",
-"say": "If the weight turns into thoughts of ending your life, call or text 988, any time. Veterans, call 988 and press 1, or text 838255. If you are in danger right now, call 911. These lines stay on the screen the whole time."
+"say": "These lines stay on the screen the whole time."
 },
 {
 "k": "big",
@@ -12175,8 +12185,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Thoughts of suicide: 988. Veterans: 988, press 1, or text 838255. Danger now: 911.",
-"say": "Watch, gently, for a weight that keeps growing: drinking more, pulling away from everyone, or talk of being better off gone. If they talk about ending their life, help them call or text 988. Veterans can call 988 and press 1, or text 838255. If there is danger right now, call 911."
+"say": "Watch, gently, for a weight that keeps growing: drinking more, pulling away from everyone, or talk of being better off gone."
 },
 {
 "k": "big",
@@ -12204,6 +12213,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Forgiving Someone, or Yourself",
 "you": {
 "id": "ok-g-forgiveness-you",
+"crisis": ["911: emergency"],
 "guide": "forgiveness",
 "side": "you",
 "title": "Forgiving Someone, or Yourself",
@@ -12261,8 +12271,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Safety comes first.",
-"body": "If the harm is still happening, safety comes before forgiveness. Danger right now: 911.",
-"say": "If the harm is still happening, safety comes first, before any talk of forgiveness. Forgiving someone never means staying where you are being hurt. Oak's guide When Home Isn't Safe can help you take the next step. If you are in danger right now, call 911."
+"body": "If the harm is still happening, safety comes before forgiveness.",
+"say": "If the harm is still happening, safety comes first, before any talk of forgiveness. Forgiving someone never means staying where you are being hurt. Oak's guide When Home Isn't Safe can help you take the next step."
 },
 {
 "k": "words",
@@ -12346,6 +12356,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-forgiveness-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "forgiveness",
 "side": "helper",
 "title": "Forgiving Someone, or Yourself",
@@ -12442,8 +12453,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Safety comes first.",
-"body": "Ongoing harm: When Home Isn't Safe. Danger now: 911. Thoughts of suicide: 988.",
-"say": "If the harm is still happening, safety comes first, and forgiveness can wait. Oak's guide When Home Isn't Safe has next steps, and 911 is for danger right now. If self-blame turns into thoughts of ending their life, help them call or text 988."
+"body": "Ongoing harm: When Home Isn't Safe.",
+"say": "If the harm is still happening, safety comes first, and forgiveness can wait. Oak's guide When Home Isn't Safe has next steps."
 },
 {
 "k": "big",
@@ -12480,6 +12491,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Faith Communities Have Hurt You",
 "you": {
 "id": "ok-g-church-hurt-you",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "church-hurt",
 "side": "you",
 "title": "When Faith Communities Have Hurt You",
@@ -12618,8 +12630,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Abuse by a religious leader",
-"body": "Report it to authorities. Danger right now: 911.",
-"say": "If a religious leader abused you or someone else, you deserve to be believed, and it should be reported to the authorities, not only to the church. If a vulnerable adult in Minnesota is being harmed, call MAARC at 1-844-880-1574. If you are in danger right now, call 911. If the pain turns into thoughts of ending your life, call or text 988."
+"body": "Report it to authorities.",
+"say": "If a religious leader abused you or someone else, you deserve to be believed, and it should be reported to the authorities, not only to the church."
 },
 {
 "k": "big",
@@ -12631,6 +12643,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-church-hurt-helper",
+"crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
 "guide": "church-hurt",
 "side": "helper",
 "title": "When Faith Communities Have Hurt You",
@@ -12733,8 +12746,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If there was abuse",
-"body": "Believe them. Help them report it to authorities. Danger now: 911.",
-"say": "If a religious leader abused them, believe them, and help them report it to the authorities. If a vulnerable adult in Minnesota is being harmed, call MAARC at 1-844-880-1574. If there is danger right now, call 911. If they talk about not wanting to live, help them call or text 988."
+"body": "Believe them. Help them report it to authorities.",
+"say": "If a religious leader abused them, believe them, and help them report it to the authorities."
 },
 {
 "k": "big",
@@ -12757,6 +12770,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Political Division in Families",
 "you": {
 "id": "ok-g-political-division-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "political-division",
 "side": "you",
 "title": "Political Division in Families",
@@ -12852,8 +12866,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it turns hurtful",
-"body": "Threats or abuse are a safety matter. Danger right now: 911. Thoughts of harming yourself: call or text 988.",
-"say": "Disagreement is one thing. Threats, abuse, or cruelty are another, and you can step away from them. A counselor can help you sort out what is safe. If you are in danger right now, call 911. If you have any thoughts of harming yourself, call or text 988."
+"say": "Disagreement is one thing. Threats, abuse, or cruelty are another, and you can step away from them. A counselor can help you sort out what is safe."
 },
 {
 "k": "big",
@@ -12865,6 +12878,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-political-division-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "political-division",
 "side": "helper",
 "title": "Political Division in Families",
@@ -12944,8 +12958,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it turns threatening",
-"body": "Step in for safety. Danger right now: 911.",
-"say": "If a disagreement turns threatening or abusive, it is no longer a debate. It's a safety matter. Help the person step away, and encourage a counselor. If anyone is in danger right now, call 911. If your friend speaks of harming themselves, call or text 988 together."
+"body": "Step in for safety.",
+"say": "If a disagreement turns threatening or abusive, it is no longer a debate. It's a safety matter. Help the person step away, and encourage a counselor."
 },
 {
 "k": "big",
@@ -12968,6 +12982,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Living with Immigration Fear",
 "you": {
 "id": "ok-g-immigration-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "immigration",
 "side": "you",
 "title": "Living with Immigration Fear",
@@ -13065,7 +13080,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "We're with you",
 "body": "\"I'm worried about my family's safety. Can you be one of our emergency contacts?\"",
-"say": "Stay connected. Community groups and accompaniment programs can walk with you. And you can ask someone you trust: I'm worried about my family's safety. Can you be one of our emergency contacts? If the fear begins to take over your days, a counselor can help. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
+"say": "Stay connected. Community groups and accompaniment programs can walk with you. And you can ask someone you trust: I'm worried about my family's safety. Can you be one of our emergency contacts? If the fear begins to take over your days, a counselor can help."
 },
 {
 "k": "big",
@@ -13077,6 +13092,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-immigration-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "immigration",
 "side": "helper",
 "title": "Living with Immigration Fear",
@@ -13164,7 +13180,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Steady yourself, too.",
 "sub": "Your feelings count too.",
-"say": "Walking beside this fear can stir your own: worry, anger, or helplessness. Talk with someone you trust, without sharing your friend's details. If your friend ever speaks of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"say": "Walking beside this fear can stir your own: worry, anger, or helplessness. Talk with someone you trust, without sharing your friend's details."
 },
 {
 "k": "big",
@@ -13267,13 +13283,7 @@ window.GG_LEARN_GUIDES.oak = {
 "That keeps you from daily life"
 ]
 ],
-"say": "For many people, these reactions ease over the following weeks. Reach for more help if nightmares, panic, or numbness last for weeks, or if fear keeps you from daily life. A counselor can help. The Disaster Distress Helpline is there any time, by call or text, at 1-800-985-5990. Oak's guide After Something Traumatic has more."
-},
-{
-"k": "big",
-"h": "If it gets very dark",
-"sub": "Call or text 988. Danger right now: 911.",
-"say": "If you have thoughts of ending your life, call or text 988, any time. If you are in danger right now, call 911."
+"say": "For many people, these reactions ease over the following weeks. Reach for more help if nightmares, panic, or numbness last for weeks, or if fear keeps you from daily life. A counselor can help. Oak's guide After Something Traumatic has more."
 },
 {
 "k": "big",
@@ -13381,8 +13391,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Weeks of nightmares, panic, or numbness: a counselor. Helpline: 1-800-985-5990.",
-"say": "Watch gently for nightmares, panic, or numbness that last for weeks, and help them find a counselor. The Disaster Distress Helpline takes calls and texts any time at 1-800-985-5990. If they talk about not wanting to live, help them call or text 988. If anyone is in danger right now, call 911."
+"body": "Weeks of nightmares, panic, or numbness: a counselor.",
+"say": "Watch gently for nightmares, panic, or numbness that last for weeks, and help them find a counselor."
 },
 {
 "k": "big",
@@ -13428,8 +13438,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Safety first, then basic needs.",
-"body": "Danger now: 911. The American Red Cross and local agencies can help.",
-"say": "First things first. If you are in danger right now, call 911. Then come basic needs: a safe place to sleep, water, food, medicine, and a way to stay in touch. The American Red Cross and local agencies can help with those. Others can help you figure it out."
+"body": "The American Red Cross and local agencies can help.",
+"say": "First things first. Then come basic needs: a safe place to sleep, water, food, medicine, and a way to stay in touch. The American Red Cross and local agencies can help with those. Others can help you figure it out."
 },
 {
 "k": "big",
@@ -13491,8 +13501,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Feelings may come back.",
-"body": "Anniversaries and storms can stir it up. Helpline: 1-800-985-5990.",
-"say": "Months later, an anniversary or a storm warning may bring the feelings back. That is common. The Disaster Distress Helpline is there any time, by call or text, at 1-800-985-5990. If you have thoughts of ending your life, call or text 988. If you are in danger right now, call 911."
+"body": "Anniversaries and storms can stir it up.",
+"say": "Months later, an anniversary or a storm warning may bring the feelings back. That is common."
 },
 {
 "k": "big",
@@ -13600,8 +13610,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Helpline: 1-800-985-5990, call or text. Thoughts of suicide: 988. Danger now: 911.",
-"say": "Watch gently for exhaustion or sadness that doesn't lift, or fear that grows with every storm. The Disaster Distress Helpline takes calls and texts any time at 1-800-985-5990. A counselor can help, too. If they talk about not wanting to live, help them call or text 988. If anyone is in danger right now, call 911."
+"say": "Watch gently for exhaustion or sadness that doesn't lift, or fear that grows with every storm. A counselor can help, too."
 },
 {
 "k": "big",
@@ -13629,6 +13638,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Overwhelmed by the News",
 "you": {
 "id": "ok-g-news-overwhelm-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "news-overwhelm",
 "side": "you",
 "title": "Overwhelmed by the News",
@@ -13723,8 +13733,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it starts to take over",
-"body": "Anxiety that gets in the way of daily life: talk with a counselor or your doctor. Thoughts of harming yourself: call or text 988.",
-"say": "If anxiety starts getting in the way of sleep, work, or daily life, talk with your doctor or a counselor. That's a wise step. If you have any thoughts of harming yourself, call or text 988. If you are in danger right now, call 911."
+"body": "Anxiety that gets in the way of daily life: talk with a counselor or your doctor.",
+"say": "If anxiety starts getting in the way of sleep, work, or daily life, talk with your doctor or a counselor. That's a wise step."
 },
 {
 "k": "big",
@@ -13736,6 +13746,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-news-overwhelm-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "news-overwhelm",
 "side": "helper",
 "title": "Overwhelmed by the News",
@@ -13812,8 +13823,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "If it starts to take over",
-"body": "Encourage a counselor or doctor. Thoughts of harming themselves: call or text 988 together.",
-"say": "If anxiety starts getting in the way of their sleep, work, or daily life, gently encourage them to talk with a doctor or a counselor. If they ever speak of harming themselves, call or text 988 together. If anyone is in danger right now, call 911."
+"body": "Encourage a counselor or doctor.",
+"say": "If anxiety starts getting in the way of their sleep, work, or daily life, gently encourage them to talk with a doctor or a counselor."
 },
 {
 "k": "big",
@@ -13836,6 +13847,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Facing Prejudice",
 "you": {
 "id": "ok-g-prejudice-you",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "prejudice",
 "side": "you",
 "title": "Facing Prejudice",
@@ -13917,8 +13929,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to reach for more help",
-"body": "Harassment, threats, or workplace discrimination: legal help. Danger now: 911.",
-"say": "Harassment, threats, or workplace discrimination may need legal help. A counselor who understands identity-based stress can help too. If you are in danger right now, call 911. If the weight ever turns into thoughts of ending your life, call or text 988, any time."
+"body": "Harassment, threats, or workplace discrimination: legal help.",
+"say": "Harassment, threats, or workplace discrimination may need legal help. A counselor who understands identity-based stress can help too."
 },
 {
 "k": "big",
@@ -13930,6 +13942,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 "helper": {
 "id": "ok-g-prejudice-helper",
+"crisis": ["988: call or text, any time", "911: emergency"],
 "guide": "prejudice",
 "side": "helper",
 "title": "Facing Prejudice",
@@ -14022,8 +14035,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "When to help them reach out",
-"body": "Harassment, threats, or workplace discrimination: legal help. Danger now: 911.",
-"say": "If there is harassment, threats, or workplace discrimination, help them find legal help, if they want it. A counselor who understands identity-based stress can help too. If anyone is in danger right now, call 911. If they talk about not wanting to live, help them call or text 988."
+"body": "Harassment, threats, or workplace discrimination: legal help.",
+"say": "If there is harassment, threats, or workplace discrimination, help them find legal help, if they want it. A counselor who understands identity-based stress can help too."
 },
 {
 "k": "big",
@@ -14491,9 +14504,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Unsafe? Leave and call 911.",
-"body": "A weapon, a threat, or you feel unsafe: leave, then call 911. Talk of not wanting to be alive: call or text 988.",
-"say": "First, your safety. If there is a weapon, a threat, or you feel unsafe, leave and call 911. Leaving is allowed. If the person talks about hurting themselves or not wanting to be alive, stay with them if it's safe, and call or text 988."
+"title": "Unsafe? Leave.",
+"body": "A weapon, a threat, or you feel unsafe: leave.",
+"say": "First, your safety. If there is a weapon, a threat, or you feel unsafe, leave. Leaving is allowed. If the person talks about hurting themselves or not wanting to be alive, stay with them if it's safe."
 },
 {
 "k": "big",
@@ -14563,8 +14576,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Choose safety over winning. Keep everyone safe.",
-"sub": "Unsafe: leave and call 911. Thoughts of suicide: 988.",
-"say": "Choose safety over winning. Keep everyone safe, you included. If you feel unsafe, leave and call 911. For thoughts of suicide, call or text 988."
+"say": "Choose safety over winning. Keep everyone safe, you included. If you feel unsafe, leave."
 }
 ],
 "crisis": [
@@ -14594,9 +14606,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Unsafe? Leave and call 911.",
-"body": "Call for help early rather than late. Talk of not wanting to be alive: call or text 988.",
-"say": "Safety comes first, for everyone, you included. If there is a weapon, a threat, or you feel unsafe, leave and call 911. Call for help early rather than late. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Stay with them if it's safe, and call or text 988."
+"title": "Unsafe? Leave.",
+"body": "Call for help early rather than late.",
+"say": "Safety comes first, for everyone, you included. If there is a weapon, a threat, or you feel unsafe, leave. Call for help early rather than late. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Stay with them if it's safe."
 },
 {
 "k": "big",
@@ -14661,8 +14673,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Your calm is the strongest thing in the room.",
-"sub": "Unsafe: leave and call 911. Thoughts of suicide: 988.",
-"say": "Your calm is the strongest thing in the room. If anyone is unsafe, leave and call 911. For thoughts of suicide, call or text 988."
+"say": "Your calm is the strongest thing in the room. If anyone is unsafe, leave."
 }
 ],
 "crisis": [
@@ -14696,8 +14707,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Help is here, day or night.",
-"body": "National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788. In danger now: 911.",
-"say": "First, where to get help right now. If you are in danger now, call 911. The National Domestic Violence Hotline is confidential, 24 hours a day. Call 1-800-799-7233, or text START to 88788."
+"say": "First, where to get help right now."
 },
 {
 "k": "big",
@@ -14740,7 +14750,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Leaving can be the most dangerous time.",
 "sub": "Plan with an advocate.",
-"say": "You get to decide what happens next, and when. Leaving can be the most dangerous time, so plan with an advocate. The hotline can help you make a safety plan that fits your life."
+"say": "You get to decide what happens next, and when. Leaving can be the most dangerous time, so plan with an advocate."
 },
 {
 "k": "points",
@@ -14770,8 +14780,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "You deserve to be safe.",
-"sub": "Hotline: 1-800-799-7233. Danger now: 911.",
-"say": "This is not your fault, and you deserve to be safe. Help is here, any time. Call the hotline at 1-800-799-7233, or text START to 88788. If you are in danger now, call 911."
+"say": "This is not your fault, and you deserve to be safe. Help is here, any time."
 }
 ],
 "crisis": [
@@ -14800,9 +14809,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Danger right now? Call 911.",
-"body": "Share the hotline privately: 1-800-799-7233, or text START to 88788.",
-"say": "First, if anyone is in danger right now, call 911. The National Domestic Violence Hotline is confidential, 24 hours a day. Call 1-800-799-7233, or text START to 88788. Share the number with them privately."
+"say": "Share the number with them privately."
 },
 {
 "k": "big",
@@ -14839,10 +14846,6 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "What helps",
 "items": [
 [
-"Share the hotline",
-"Privately"
-],
-[
 "Offer a safe place",
 "Or practical help"
 ],
@@ -14855,7 +14858,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Their safety comes first"
 ]
 ],
-"say": "Share the hotline number privately. Offer a safe place, or practical help. Stay in touch without judgment, even when they go back. And leave the abuser to the advocates and the police, rather than confronting them yourself."
+"say": "Offer a safe place, or practical help. Stay in touch without judgment, even when they go back. And leave the abuser to the advocates and the police, rather than confronting them yourself."
 },
 {
 "k": "big",
@@ -14866,8 +14869,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "I'm here, whatever you decide.",
-"sub": "Hotline: 1-800-799-7233. Danger now: 911.",
-"say": "You can't make them safe by yourself. You can be the steady person who believes them and stays. I'm here, whatever you decide. The hotline is 1-800-799-7233. If anyone is in danger now, call 911."
+"say": "You can't make them safe by yourself. You can be the steady person who believes them and stays. I'm here, whatever you decide."
 }
 ],
 "crisis": [
@@ -14902,8 +14904,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Support, any time.",
-"body": "RAINN: 1-800-656-4673. A child being harmed now: 911 or child protective services.",
-"say": "First, where to find support right now. RAINN offers confidential support at 1-800-656-4673. If a child is being harmed now, call 911 or child protective services. If you have thoughts of hurting yourself, call or text 988."
+"body": "A child being harmed now: child protective services.",
+"say": "First, where to find support right now. If a child is being harmed now, call child protective services."
 },
 {
 "k": "big",
@@ -14967,8 +14969,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "Healing is possible.",
-"sub": "RAINN: 1-800-656-4673.",
-"say": "Go gently. Healing is possible, at your own pace. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
+"say": "Go gently. Healing is possible, at your own pace."
 }
 ],
 "crisis": [
@@ -14999,8 +15000,8 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Support, any time.",
-"body": "RAINN: 1-800-656-4673. A child being harmed now: 911 or child protective services.",
-"say": "First, where to find support. RAINN offers confidential support at 1-800-656-4673. If a child is being harmed now, call 911 or child protective services."
+"body": "A child being harmed now: child protective services.",
+"say": "First, where to find support. If a child is being harmed now, call child protective services."
 },
 {
 "k": "big",
@@ -15049,7 +15050,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Help them find trauma-informed support.",
 "sub": "Offer, and let them choose.",
-"say": "If they want it, help them find a trauma-informed counselor. Offer, and let them choose. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Call or text 988 together."
+"say": "If they want it, help them find a trauma-informed counselor. Offer, and let them choose. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head."
 },
 {
 "k": "big",
@@ -15060,8 +15061,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "I believe you.",
-"sub": "RAINN: 1-800-656-4673.",
-"say": "Simple words are enough. I believe you is a strong place to start. RAINN is there at 1-800-656-4673. If a child is being harmed now, call 911."
+"say": "Simple words are enough. I believe you is a strong place to start."
 }
 ],
 "crisis": [
@@ -15095,8 +15095,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Help, any time, day or night.",
-"body": "RAINN: 1-800-656-4673. Central Minnesota: 320-251-4357. In danger: 911.",
-"say": "First, where to get help right now. If you're in danger, call 911. Any time you need to talk, call RAINN at 1-800-656-4673, or in Central Minnesota, 320-251-4357. It's confidential. If you have thoughts of suicide, call or text 988."
+"say": "First, where to get help right now. It's confidential."
 },
 {
 "k": "big",
@@ -15152,8 +15151,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "big",
 "h": "I get to choose what happens next.",
-"sub": "RAINN: 1-800-656-4673, any time.",
-"say": "Healing takes time. Say it to yourself. This was not my fault. I get to choose what happens next. RAINN is there any time, at 1-800-656-4673. If you're in danger, call 911."
+"say": "Healing takes time. Say it to yourself. This was not my fault. I get to choose what happens next."
 }
 ],
 "crisis": [
@@ -15184,9 +15182,7 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "In danger? Call 911.",
-"body": "RAINN: 1-800-656-4673. Central Minnesota: 320-251-4357. Offer to call together.",
-"say": "First, where to get help right now. If they're in danger, call 911. RAINN is there any time, at 1-800-656-4673, or in Central Minnesota, 320-251-4357. Offer to call a hotline with them."
+"say": "First, where to get help right now."
 },
 {
 "k": "big",
@@ -15236,9 +15232,6 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Practical help",
 "items": [
 [
-"Call a hotline together"
-],
-[
 "Go with them",
 "To a hospital or advocate, if they want"
 ],
@@ -15247,19 +15240,18 @@ window.GG_LEARN_GUIDES.oak = {
 "Their story is theirs"
 ]
 ],
-"say": "Offer to call a hotline with them. Go with them to a hospital or an advocate, if they want. And respect their choices and their privacy."
+"say": "Go with them to a hospital or an advocate, if they want. And respect their choices and their privacy."
 },
 {
 "k": "big",
 "h": "Worried? Ask plainly.",
 "sub": "\"Are you thinking about suicide?\"",
-"say": "If you're worried, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. If they say yes, stay with them, and call or text 988 together."
+"say": "If you're worried, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. If they say yes, stay with them."
 },
 {
 "k": "big",
 "h": "I believe you.",
-"sub": "RAINN: 1-800-656-4673, any time.",
-"say": "Hearing this can be very hard. Get support for yourself too, without sharing their story. Simple words are enough. I believe you is the place to start. RAINN is there any time, at 1-800-656-4673."
+"say": "Hearing this can be very hard. Get support for yourself too, without sharing their story. Simple words are enough. I believe you is the place to start."
 }
 ],
 "crisis": [
@@ -15502,6 +15494,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Fatigue, Flares, and Pacing Your Energy",
   "you": {
    "id": "ok-g-pacing-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "pacing",
    "side": "you",
    "title": "Fatigue, Flares, and Pacing Your Energy",
@@ -15621,8 +15614,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "Tell your doctor about fatigue as clearly as you tell them about pain, especially if it's new or getting worse. A workshop led by people living with a long-term condition can teach pacing too. If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "Tell your doctor about fatigue as clearly as you tell them about pain, especially if it's new or getting worse. A workshop led by people living with a long-term condition can teach pacing too. If sadness or hopelessness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -15634,6 +15626,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-pacing-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "pacing",
    "side": "helper",
    "title": "Fatigue, Flares, and Pacing Your Energy",
@@ -15760,7 +15753,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Pace yourself, too.",
      "sub": "Your rest matters.",
-     "say": "Living beside someone's fatigue can be tiring and lonely for you too. Keep your own people close, and your own rest. If they ever speak of not wanting to live, help them call or text 988."
+     "say": "Living beside someone's fatigue can be tiring and lonely for you too. Keep your own people close, and your own rest."
     },
     {
      "k": "big",
@@ -15777,6 +15770,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Working with a Disability or Illness, or Stepping Away",
   "you": {
    "id": "ok-g-work-ability-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "work-ability",
    "side": "you",
    "title": "Working with a Disability or Illness, or Stepping Away",
@@ -15884,8 +15878,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you believe you're being treated unfairly at work because of a disability, there are people whose job it is to help, and the full guide lists them. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you believe you're being treated unfairly at work because of a disability, there are people whose job it is to help, and the full guide lists them."
     },
     {
      "k": "big",
@@ -15897,6 +15890,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-work-ability-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "work-ability",
    "side": "helper",
    "title": "Working with a Disability or Illness, or Stepping Away",
@@ -16022,7 +16016,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Find support for yourself too.",
      "sub": "Changes touch the whole household.",
-     "say": "A change in someone's work can shift money, routines, and roles for everyone. Find support for yourself too. If they speak of not wanting to live, help them call or text 988."
+     "say": "A change in someone's work can shift money, routines, and roles for everyone. Find support for yourself too."
     },
     {
      "k": "big",
@@ -16039,6 +16033,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Parenting with a Disability or Chronic Illness",
   "you": {
    "id": "ok-g-parenting-ability-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "parenting-ability",
    "side": "you",
    "title": "Parenting with a Disability or Chronic Illness",
@@ -16157,8 +16152,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "Asking for help is part of good parenting. If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "Asking for help is part of good parenting. If sadness or hopelessness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -16170,6 +16164,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-parenting-ability-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "parenting-ability",
    "side": "helper",
    "title": "Parenting with a Disability or Chronic Illness",
@@ -16267,7 +16262,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Keep the offers you can keep.",
      "sub": "Care for your own energy too.",
-     "say": "Helping a family can be a long, steady commitment. Make offers you can keep, and care for your own energy too. If the parent ever speaks of not wanting to live, help them call or text 988."
+     "say": "Helping a family can be a long, steady commitment. Make offers you can keep, and care for your own energy too."
     },
     {
      "k": "big",
@@ -16284,6 +16279,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Raising a Child with a Disability or Serious Illness",
   "you": {
    "id": "ok-g-child-ability-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "child-ability",
    "side": "you",
    "title": "Raising a Child with a Disability or Serious Illness",
@@ -16392,8 +16388,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "If exhaustion, sadness, or hopelessness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "If exhaustion, sadness, or hopelessness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -16405,6 +16400,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-child-ability-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "child-ability",
    "side": "helper",
    "title": "Raising a Child with a Disability or Serious Illness",
@@ -16503,7 +16499,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Make it last.",
      "sub": "Steady beats big.",
-     "say": "Supporting a family is a long road. Steady, small help beats one big gesture. Keep your help sustainable, and let yourself enjoy their child too. If a parent ever speaks of not wanting to live, help them call or text 988."
+     "say": "Supporting a family is a long road. Steady, small help beats one big gesture. Keep your help sustainable, and let yourself enjoy their child too."
     },
     {
      "k": "big",
@@ -16520,6 +16516,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Hearing Loss or Deafness as an Adult",
   "you": {
    "id": "ok-g-hearing-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "hearing",
    "side": "you",
    "title": "Hearing Loss or Deafness as an Adult",
@@ -16650,8 +16647,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Text 988, or ASL by videophone.",
-     "say": "Sudden hearing loss needs quick attention from a doctor. If sadness or loneliness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time. Deaf and hard of hearing callers can reach a counselor who signs, through the ASL Now button on the 988 website."
+     "say": "Sudden hearing loss needs quick attention from a doctor. If sadness or loneliness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -16663,6 +16659,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-hearing-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "hearing",
    "side": "helper",
    "title": "Hearing Loss or Deafness as an Adult",
@@ -16772,7 +16769,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "You'll forget sometimes.",
      "sub": "Keep at it kindly.",
-     "say": "Changing how you talk takes practice, and you'll forget sometimes. Keep at it kindly. If the strain runs high for you both, find support together. And if they ever speak of not wanting to live, help them reach 988, by text or by videophone in sign language."
+     "say": "Changing how you talk takes practice, and you'll forget sometimes. Keep at it kindly. If the strain runs high for you both, find support together."
     },
     {
      "k": "big",
@@ -16789,6 +16786,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Vision Loss as an Adult",
   "you": {
    "id": "ok-g-vision-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "vision",
    "side": "you",
    "title": "Vision Loss as an Adult",
@@ -16901,8 +16899,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "Sudden changes in vision, flashes, or a curtain over your sight need medical help right away. If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "Sudden changes in vision, flashes, or a curtain over your sight need medical help right away. If sadness or hopelessness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -16914,6 +16911,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-vision-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "vision",
    "side": "helper",
    "title": "Vision Loss as an Adult",
@@ -17020,7 +17018,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "You'll make mistakes.",
      "sub": "Ask, listen, keep showing up.",
-     "say": "Learning to help well takes practice, and you'll make mistakes. Ask, listen, and keep showing up. If they ever speak of not wanting to live, help them call or text 988."
+     "say": "Learning to help well takes practice, and you'll make mistakes. Ask, listen, and keep showing up."
     },
     {
      "k": "big",
@@ -17037,6 +17035,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Autistic, or Diagnosed as an Adult",
   "you": {
    "id": "ok-g-autistic-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "autistic",
    "side": "you",
    "title": "Autistic, or Diagnosed as an Adult",
@@ -17133,8 +17132,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "Anxiety, low mood, and exhaustion often come along with being autistic in a world built for other brains. If they won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "Anxiety, low mood, and exhaustion often come along with being autistic in a world built for other brains. If they won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -17146,6 +17144,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-autistic-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "autistic",
    "side": "helper",
    "title": "Autistic, or Diagnosed as an Adult",
@@ -17244,7 +17243,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Learn alongside them.",
      "sub": "Support for you counts too.",
-     "say": "A diagnosis can reshape a relationship in good ways. Learn alongside them, and find support for yourself if you need it. If they ever speak of not wanting to live, help them call or text 988."
+     "say": "A diagnosis can reshape a relationship in good ways. Learn alongside them, and find support for yourself if you need it."
     },
     {
      "k": "big",
@@ -17261,6 +17260,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Living with a Serious Mental Illness",
   "you": {
    "id": "ok-g-serious-mi-you",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "serious-mi",
    "side": "you",
    "title": "Living with a Serious Mental Illness",
@@ -17358,8 +17358,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of suicide or a crisis: call or text 988.",
-     "say": "If warning signs return, or side effects are hard to live with, call your treatment team soon, and don't stop a medicine on your own. If you have thoughts of suicide, or you're in a crisis, call or text 988, any time. If you're in danger right now, call 911."
+     "say": "If warning signs return, or side effects are hard to live with, call your treatment team soon, and don't stop a medicine on your own."
     },
     {
      "k": "big",
@@ -17371,6 +17370,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-serious-mi-helper",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "serious-mi",
    "side": "helper",
    "title": "Living with a Serious Mental Illness",
@@ -17471,7 +17471,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Support for you, too.",
      "sub": "Families need their own people.",
-     "say": "Families need support too. Classes for family members, taught by people who've been there, can help you understand and cope. Rest, your own friends, and time away are part of staying steady. If they ever speak of suicide, or you see a crisis, call or text 988 together. If there's danger right now, call 911."
+     "say": "Families need support too. Classes for family members, taught by people who've been there, can help you understand and cope. Rest, your own friends, and time away are part of staying steady."
     },
     {
      "k": "big",
@@ -17488,6 +17488,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "After a Brain Injury or Stroke",
   "you": {
    "id": "ok-g-brain-injury-you",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "brain-injury",
    "side": "you",
    "title": "After a Brain Injury or Stroke",
@@ -17579,8 +17580,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "New stroke signs: call 911.",
-     "say": "Sadness and worry are common after a brain injury or stroke, and they can be treated, so tell your doctor. If you have thoughts of not wanting to live, call or text 988, any time. And for new signs of a stroke, like sudden face drooping, arm weakness, or trouble speaking, call 911 right away."
+     "sub": "New stroke signs: call for help.",
+     "say": "Sadness and worry are common after a brain injury or stroke, and they can be treated, so tell your doctor. And for new signs of a stroke, like sudden face drooping, arm weakness, or trouble speaking, call for emergency help right away."
     },
     {
      "k": "big",
@@ -17592,6 +17593,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-brain-injury-helper",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "brain-injury",
    "side": "helper",
    "title": "After a Brain Injury or Stroke",
@@ -17697,8 +17699,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "Know when to call.",
-     "sub": "New stroke signs: call 911.",
-     "say": "Watch, gently, for sadness or anger that won't lift, and help them talk with their doctor. If they speak of not wanting to live, help them call or text 988. For new signs of a stroke, call 911 right away."
+     "sub": "New stroke signs: call for help.",
+     "say": "Watch, gently, for sadness or anger that won't lift, and help them talk with their doctor. For new signs of a stroke, call for emergency help right away."
     },
     {
      "k": "big",
@@ -17715,6 +17717,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Faith and Disability: When Worship Is Hard to Reach",
   "you": {
    "id": "ok-g-faith-access-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "faith-access",
    "side": "you",
    "title": "Faith and Disability: When Worship Is Hard to Reach",
@@ -17809,8 +17812,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "big",
      "h": "When to reach out",
-     "sub": "Thoughts of not wanting to live: call or text 988.",
-     "say": "If spiritual struggle feels heavy, a chaplain, spiritual director, or faith leader you trust can sit with it. If sadness or hopelessness won't lift, talk with your doctor or a counselor. If you have thoughts of not wanting to live, call or text 988, any time."
+     "say": "If spiritual struggle feels heavy, a chaplain, spiritual director, or faith leader you trust can sit with it. If sadness or hopelessness won't lift, talk with your doctor or a counselor."
     },
     {
      "k": "big",
@@ -17822,6 +17824,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-faith-access-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "faith-access",
    "side": "helper",
    "title": "Faith and Disability: When Worship Is Hard to Reach",
@@ -17923,7 +17926,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Start with one change.",
      "sub": "And keep listening.",
-     "say": "Making a community more welcoming takes time and many small changes. Start with one, and keep listening to the people who need it most. They are the experts. If someone ever speaks of not wanting to live, help them call or text 988."
+     "say": "Making a community more welcoming takes time and many small changes. Start with one, and keep listening to the people who need it most. They are the experts."
     },
     {
      "k": "big",
@@ -17948,6 +17951,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Thinking About a Change",
   "you": {
    "id": "ok-g-sober-change-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-change",
    "side": "you",
    "title": "Thinking About a Change",
@@ -18066,19 +18070,14 @@ window.GG_LEARN_GUIDES.oak = {
       [
        "Peer groups",
        "AA, NA, SMART, Refuge Recovery"
-      ],
-      [
-       "SAMHSA Helpline",
-       "1-800-662-4357, any hour"
       ]
      ],
-     "say": "Every kind of help is welcome here. Your doctor, for an honest talk and a safe plan. A therapist or a treatment program, for what sits underneath. Peer groups, like AA, NA, SMART Recovery, or Refuge Recovery, where people walk this together. And the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven, any hour, to hear your options.",
+     "say": "Every kind of help is welcome here. Your doctor, for an honest talk and a safe plan. A therapist or a treatment program, for what sits underneath. Peer groups, like AA, NA, SMART Recovery, or Refuge Recovery, where people walk this together.",
      "cue": {
       "at": [
        1,
        2,
-       3,
-       4
+       3
       ]
      }
     },
@@ -18105,6 +18104,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-change-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-change",
    "side": "helper",
    "title": "Thinking About a Change",
@@ -18195,8 +18195,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "The safety basics",
-     "body": "Daily drinking or sedatives: a doctor first. Someone won't wake up: 911.",
-     "say": "Know the safety basics. If they drink every day, or take sedatives daily, stopping suddenly can be dangerous, so encourage a doctor's help first. If someone won't wake up, or is breathing very slowly, call nine one one right away. If opioids are part of the picture, keep naloxone, also called Narcan, close by. You can buy it without a prescription."
+     "body": "Daily drinking or sedatives: a doctor first. Someone won't wake up: call for help.",
+     "say": "Know the safety basics. If they drink every day, or take sedatives daily, stopping suddenly can be dangerous, so encourage a doctor's help first. If someone won't wake up, or is breathing very slowly, call for emergency help right away. If opioids are part of the picture, keep naloxone, also called Narcan, close by. You can buy it without a prescription."
     },
     {
      "k": "points",
@@ -18209,18 +18209,13 @@ window.GG_LEARN_GUIDES.oak = {
       [
        "Rest and your people",
        "A life beyond the worry"
-      ],
-      [
-       "SAMHSA Helpline",
-       "For families too"
       ]
      ],
-     "say": "Keep tending your own tree. Groups like Al-Anon and Nar-Anon are there for families and friends. Rest, and keep your own people close. And the SAMHSA National Helpline is there for families too.",
+     "say": "Keep tending your own tree. Groups like Al-Anon and Nar-Anon are there for families and friends. Rest, and keep your own people close.",
      "cue": {
       "at": [
        1,
-       2,
-       3
+       2
       ]
      }
     },
@@ -18239,6 +18234,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "The First 30 Days, Safely",
   "you": {
    "id": "ok-g-sober-first-30-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-first-30",
    "side": "you",
    "title": "The First 30 Days, Safely",
@@ -18262,13 +18258,13 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Safety first.",
      "sub": "Then one day at a time.",
-     "say": "Let's start with safety, because it matters most right now. If you drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Talk with a doctor today, or call the SAMHSA National Helpline. Medical detox is there to help you through it safely."
+     "say": "Let's start with safety, because it matters most right now. If you drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Talk with a doctor today. Medical detox is there to help you through it safely."
     },
     {
      "k": "card",
      "title": "Know the warning signs.",
-     "body": "Confusion, seeing things, a seizure, a racing heart: call 911.",
-     "say": "Know the warning signs. Confusion. Seeing or hearing things that aren't there. A seizure. A racing heart, or a high fever. Any of these is a nine one one call. And if you used opioids, your body's tolerance drops fast. After even a short break, an old amount can be deadly. Keep naloxone, also called Narcan, close by."
+     "body": "Confusion, seeing things, a seizure, a racing heart: call for help.",
+     "say": "Know the warning signs. Confusion. Seeing or hearing things that aren't there. A seizure. A racing heart, or a high fever. And if you used opioids, your body's tolerance drops fast. After even a short break, an old amount can be deadly. Keep naloxone, also called Narcan, close by."
     },
     {
      "k": "points",
@@ -18373,6 +18369,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-first-30-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-first-30",
    "side": "helper",
    "title": "The First 30 Days, Safely",
@@ -18395,13 +18392,13 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "big",
      "h": "Safety first.",
      "sub": "A doctor, and the warning signs.",
-     "say": "Start with safety. If they drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Encourage a doctor's help, today. Watch for confusion, seeing things, a seizure, a racing heart, or a high fever. Any of these is a nine one one call."
+     "say": "Start with safety. If they drank every day, or took sedatives like Xanax or Valium, stopping suddenly can be dangerous. Encourage a doctor's help, today. Watch for confusion, seeing things, a seizure, a racing heart, or a high fever."
     },
     {
      "k": "card",
      "title": "Opioids: tolerance drops fast.",
-     "body": "Keep naloxone close. Someone won't wake up: 911.",
-     "say": "If opioids are part of the picture, know this. After even a short break, the body's tolerance drops, and an old amount can be deadly. Keep naloxone, also called Narcan, in the house. You can buy it without a prescription. If someone won't wake up, or is breathing very slowly, call nine one one, and give the naloxone."
+     "body": "Keep naloxone close. Someone won't wake up: call for help.",
+     "say": "If opioids are part of the picture, know this. After even a short break, the body's tolerance drops, and an old amount can be deadly. Keep naloxone, also called Narcan, in the house. You can buy it without a prescription. If someone won't wake up, or is breathing very slowly, call for emergency help, and give the naloxone."
     },
     {
      "k": "words",
@@ -18478,18 +18475,13 @@ window.GG_LEARN_GUIDES.oak = {
       [
        "Rest",
        "Your own sleep matters"
-      ],
-      [
-       "SAMHSA Helpline",
-       "For families too"
       ]
      ],
-     "say": "The first month can be intense for the whole family. Groups like Al-Anon and Nar-Anon are there for you. Your own sleep and rest matter. And the SAMHSA National Helpline is there for families too.",
+     "say": "The first month can be intense for the whole family. Groups like Al-Anon and Nar-Anon are there for you. Your own sleep and rest matter.",
      "cue": {
       "at": [
        1,
-       2,
-       3
+       2
       ]
      }
     },
@@ -18751,6 +18743,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Cravings and Triggers",
   "you": {
    "id": "ok-g-sober-cravings-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-cravings",
    "side": "you",
    "title": "Cravings and Triggers",
@@ -18876,7 +18869,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Plan ahead for pain.",
      "body": "Tell your doctor and dentist you're sober.",
-     "say": "That's a good reminder. Tell your doctor and your dentist that you're sober, and ask about pain plans that fit you. If cravings keep growing, reach out today, to your doctor, your group, or the SAMHSA National Helpline. For some people, medication for addiction treatment eases cravings. Your doctor can talk it through with you."
+     "say": "That's a good reminder. Tell your doctor and your dentist that you're sober, and ask about pain plans that fit you. If cravings keep growing, reach out today, to your doctor or your group. For some people, medication for addiction treatment eases cravings. Your doctor can talk it through with you."
     },
     {
      "k": "big",
@@ -18888,6 +18881,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-cravings-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-cravings",
    "side": "helper",
    "title": "Cravings and Triggers",
@@ -18997,13 +18991,13 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Plan for the known triggers.",
      "body": "Holidays, payday, medical visits.",
-     "say": "Some triggers can be seen coming: holidays, payday, a family gathering, a surgery, or a dentist visit. Help them plan ahead, including a pain plan with their doctor. If opioids were part of their past, keep naloxone, also called Narcan, in the house. If someone won't wake up, call nine one one."
+     "say": "Some triggers can be seen coming: holidays, payday, a family gathering, a surgery, or a dentist visit. Help them plan ahead, including a pain plan with their doctor. If opioids were part of their past, keep naloxone, also called Narcan, in the house. If someone won't wake up, call for emergency help."
     },
     {
      "k": "card",
      "title": "Calm for them, care for you.",
      "body": "Your own support keeps you steady.",
-     "say": "Hearing about cravings can scare you. That's natural. Keep your own support, like Al-Anon or Nar-Anon, so you can stay calm for them. And the SAMHSA National Helpline is there for families too."
+     "say": "Hearing about cravings can scare you. That's natural. Keep your own support, like Al-Anon or Nar-Anon, so you can stay calm for them."
     },
     {
      "k": "big",
@@ -19020,6 +19014,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "After a Slip",
   "you": {
    "id": "ok-g-sober-slip-you",
+   "crisis": ["911: emergency"],
    "guide": "sober-slip",
    "side": "you",
    "title": "After a Slip",
@@ -19056,7 +19051,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Safety first",
      "body": "Opioids: naloxone close. Days of heavy drinking: a doctor.",
-     "say": "Safety comes first. If you used opioids after a break, your tolerance is lower, and an old amount can stop your breathing. Keep naloxone, also called Narcan, close, and stay with someone. If you drank heavily for several days, talk with a doctor before stopping again. If someone won't wake up, call nine one one."
+     "say": "Safety comes first. If you used opioids after a break, your tolerance is lower, and an old amount can stop your breathing. Keep naloxone, also called Narcan, close, and stay with someone. If you drank heavily for several days, talk with a doctor before stopping again. If someone won't wake up, call for emergency help."
     },
     {
      "k": "flow",
@@ -19151,6 +19146,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-slip-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-slip",
    "side": "helper",
    "title": "After a Slip",
@@ -19178,8 +19174,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "Safety first",
-     "body": "Opioids: naloxone. Days of heavy drinking: a doctor. Won't wake up: 911.",
-     "say": "Check safety first. If opioids were involved, their tolerance is lower, and an old amount can stop their breathing. Keep naloxone, also called Narcan, close, and stay with them. If they drank heavily for days, encourage a doctor before they stop again. If someone won't wake up, call nine one one, and give naloxone."
+     "body": "Opioids: naloxone. Days of heavy drinking: a doctor. Won't wake up: call for help.",
+     "say": "Check safety first. If opioids were involved, their tolerance is lower, and an old amount can stop their breathing. Keep naloxone, also called Narcan, close, and stay with them. If they drank heavily for days, encourage a doctor before they stop again. If someone won't wake up, call for emergency help, and give naloxone."
     },
     {
      "k": "words",
@@ -19271,7 +19267,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "If slips keep coming",
      "body": "More support may help. Every path is welcome.",
-     "say": "If slips keep coming, that's information, and a reason to add support. More help may fit now: a doctor, a treatment program, medication for addiction treatment, a therapist, or a different group. Look at the options together, and call the SAMHSA National Helpline, at one eight hundred, six six two, four three five seven."
+     "say": "If slips keep coming, that's information, and a reason to add support. More help may fit now: a doctor, a treatment program, medication for addiction treatment, a therapist, or a different group. Look at the options together."
     },
     {
      "k": "big",
@@ -19407,6 +19403,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-healing-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "sober-healing",
    "side": "helper",
    "title": "Healing What You Drank Over",
@@ -19499,7 +19496,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Your own healing, too.",
      "body": "Their healing may stir yours.",
-     "say": "Watching someone heal old hurts can stir your own. Notice what comes up for you. Keep your own support close, like Al-Anon, Nar-Anon, or a therapist of your own. If they ever speak of suicide, call or text nine eight eight together."
+     "say": "Watching someone heal old hurts can stir your own. Notice what comes up for you. Keep your own support close, like Al-Anon, Nar-Anon, or a therapist of your own."
     },
     {
      "k": "big",
@@ -19646,6 +19643,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-repair-helper",
+   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-repair",
    "side": "helper",
    "title": "Repairing Relationships",
@@ -19736,7 +19734,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Your healing counts too.",
      "body": "Your own support, your own pace.",
-     "say": "Healing the relationship includes healing you. Al-Anon, Nar-Anon, or a therapist of your own can help with what you carry. Family therapy can help you both be heard. And if anyone is ever unsafe at home, call the National Domestic Violence Hotline, or nine one one for danger now."
+     "say": "Healing the relationship includes healing you. Al-Anon, Nar-Anon, or a therapist of your own can help with what you carry. Family therapy can help you both be heard."
     },
     {
      "k": "big",
@@ -19753,6 +19751,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Sober at Work and with Friends",
   "you": {
    "id": "ok-g-sober-work-friends-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-work-friends",
    "side": "you",
    "title": "Sober at Work and with Friends",
@@ -19857,7 +19856,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Support at work",
      "body": "Confidential help, if you want it.",
-     "say": "At work, you choose who knows. If you'd like confidential support, many employers have an employee assistance program. And if cravings spike around work or social events, reach out to your person, your group, or the SAMHSA National Helpline."
+     "say": "At work, you choose who knows. If you'd like confidential support, many employers have an employee assistance program. And if cravings spike around work or social events, reach out to your person or your group."
     },
     {
      "k": "big",
@@ -20207,6 +20206,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "When Your Partner Drinks or Uses",
   "you": {
    "id": "ok-g-sober-partner-you",
+   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-partner",
    "side": "you",
    "title": "When Your Partner Drinks or Uses",
@@ -20228,8 +20228,7 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "Safety first",
-     "body": "Afraid at home? 1-800-799-7233. Danger now: 911.",
-     "say": "Let's start with you. If you ever feel afraid of your partner, or there's any violence, call the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three, and make a safety plan. If there's danger right now, call nine one one. If your partner uses opioids, keep naloxone, also called Narcan, at home."
+     "say": "Let's start with you. If you ever feel afraid of your partner, or there's any violence, make a safety plan. If your partner uses opioids, keep naloxone, also called Narcan, at home."
     },
     {
      "k": "big",
@@ -20338,6 +20337,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-partner-helper",
+   "crisis": ["National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-partner",
    "side": "helper",
    "title": "When Your Partner Drinks or Uses",
@@ -20364,7 +20364,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Ask about safety.",
      "body": "Gently, and privately.",
-     "say": "Ask about safety, gently and privately. Are you safe at home? If they're afraid, share the National Domestic Violence Hotline, one eight hundred, seven nine nine, seventy two thirty three. If there's danger right now, call nine one one. And know that leaving can be the most dangerous time, so a safety plan matters."
+     "say": "Ask about safety, gently and privately. Are you safe at home? And know that leaving can be the most dangerous time, so a safety plan matters."
     },
     {
      "k": "words",
@@ -20432,8 +20432,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "If opioids are involved",
-     "body": "Naloxone at home. Won't wake up: 911.",
-     "say": "If their partner uses opioids, encourage them to keep naloxone, also called Narcan, at home. It's sold without a prescription, and it reverses an opioid overdose. If someone won't wake up, or is breathing very slowly, call nine one one and give the naloxone."
+     "body": "Naloxone at home. Won't wake up: call for help.",
+     "say": "If their partner uses opioids, encourage them to keep naloxone, also called Narcan, at home. It's sold without a prescription, and it reverses an opioid overdose. If someone won't wake up, or is breathing very slowly, call for emergency help and give the naloxone."
     },
     {
      "k": "big",
@@ -20450,6 +20450,7 @@ window.GG_LEARN_GUIDES.oak = {
   "title": "Grieving an Overdose",
   "you": {
    "id": "ok-g-sober-overdose-grief-you",
+   "crisis": ["988: call or text, any time"],
    "guide": "sober-overdose-grief",
    "side": "you",
    "title": "Grieving an Overdose",
@@ -20561,12 +20562,12 @@ window.GG_LEARN_GUIDES.oak = {
        "Meals, walks, their name"
       ]
      ],
-     "say": "You don't have to carry this alone. GRASP, which stands for Grief Recovery After a Substance Passing, offers groups led by people who've lost someone this way. A grief group or therapist, for the heavy months. And your own people, for meals, walks, and saying their name. If grief ever feels unbearable, call or text nine eight eight.",
+     "say": "You don't have to carry this alone. GRASP, which stands for Grief Recovery After a Substance Passing, offers groups led by people who've lost someone this way. A grief group or therapist, for the heavy months. And your own people, for meals, walks, and saying their name.",
      "cue": {
       "at": [
        1,
        3,
-       4
+       3
       ]
      }
     },
@@ -20580,6 +20581,7 @@ window.GG_LEARN_GUIDES.oak = {
   },
   "helper": {
    "id": "ok-g-sober-overdose-grief-helper",
+   "crisis": ["988: call or text, any time"],
    "guide": "sober-overdose-grief",
    "side": "helper",
    "title": "Grieving an Overdose",
@@ -20669,8 +20671,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "Watch for safety.",
-     "body": "Suicide thoughts: 988. Opioids nearby: naloxone.",
-     "say": "Keep safety in view. Grief this heavy can bring thoughts of not wanting to live. If you're worried, ask directly, and call or text nine eight eight together. If others in their circle use opioids, encourage naloxone at home. And point them toward GRASP, or a grief group, where people understand."
+     "body": "Opioids nearby: naloxone.",
+     "say": "Keep safety in view. Grief this heavy can bring thoughts of not wanting to live. If you're worried, ask directly. If others in their circle use opioids, encourage naloxone at home. And point them toward GRASP, or a grief group, where people understand."
     },
     {
      "k": "card",

@@ -54,6 +54,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "College: The First Year",
    "you": {
     "id": "br-g-first-year-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "you",
     "title": "College: The First Year",
@@ -177,7 +178,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Homesick means I have people to miss.",
        "Asking for help is doing this well."
       ],
-      "say": "Here are words to keep. Everyone here is figuring it out, including the ones who look sure. Homesick means I have people worth missing. And asking for help is part of doing this well. If you ever feel hopeless, call or text nine eight eight, any time. In danger, call nine one one."
+      "say": "Here are words to keep. Everyone here is figuring it out, including the ones who look sure. Homesick means I have people worth missing. And asking for help is part of doing this well."
      },
      {
       "k": "big",
@@ -189,6 +190,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-year-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-year",
     "side": "helper",
     "title": "College: The First Year",
@@ -283,8 +285,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When to worry more",
-      "body": "Low for weeks, not eating or sleeping, missing class: the counseling center. Talk of not wanting to live: call or text 988.",
-      "say": "Know when to worry more. If they sound low for more than a few weeks, stop eating or sleeping, or stop going to class, encourage the counseling center or a doctor. If they talk about not wanting to live, call or text nine eight eight together. If someone is in danger, call nine one one."
+      "body": "Low for weeks, not eating or sleeping, missing class: the counseling center.",
+      "say": "Know when to worry more. If they sound low for more than a few weeks, stop eating or sleeping, or stop going to class, encourage the counseling center or a doctor."
      },
      {
       "k": "big",
@@ -301,6 +303,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
    "you": {
     "id": "br-g-not-college-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "not-college",
     "side": "you",
     "title": "Not College, or Not Yet: Work, Trades, and Apprenticeships",
@@ -402,7 +405,7 @@ window.GG_LEARN_GUIDES.birch = {
        "I need a next step, not a whole plan.",
        "Skilled work is real work."
       ],
-      "say": "Here are words to keep. My road doesn't have to look like anyone else's. I don't need a whole plan, I need a next step. And skilled work is real work, and it matters. If you ever feel hopeless, call or text nine eight eight, any time."
+      "say": "Here are words to keep. My road doesn't have to look like anyone else's. I don't need a whole plan, I need a next step. And skilled work is real work, and it matters."
      },
      {
       "k": "big",
@@ -512,6 +515,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
    "you": {
     "id": "br-g-changing-plans-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "changing-plans",
     "side": "you",
     "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
@@ -614,7 +618,7 @@ window.GG_LEARN_GUIDES.birch = {
        "This road taught me something real.",
        "A decision isn't a verdict on me."
       ],
-      "say": "Here are words to keep. Changing my mind is how I find my way. This road taught me something real. And a decision isn't a verdict on me. If you ever feel hopeless, call or text nine eight eight, any time."
+      "say": "Here are words to keep. Changing my mind is how I find my way. This road taught me something real. And a decision isn't a verdict on me."
      },
      {
       "k": "big",
@@ -626,6 +630,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-changing-plans-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "changing-plans",
     "side": "helper",
     "title": "Changing Plans: Stopping Out, Switching Majors, Starting Over",
@@ -709,10 +714,10 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Danger",
-        "Call or text 988 together"
+        ""
        ]
       ],
-      "say": "Then offer practical help. Encourage them to check details before withdrawing, with an advisor, financial aid, and the registrar. Help them keep a routine, and invite them to ordinary things that have nothing to do with the decision. If health or low mood is part of this, encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together."
+      "say": "Then offer practical help. Encourage them to check details before withdrawing, with an advisor, financial aid, and the registrar. Help them keep a routine, and invite them to ordinary things that have nothing to do with the decision. If health or low mood is part of this, encourage a doctor or counselor."
      },
      {
       "k": "big",
@@ -729,6 +734,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pressure, Grades, and Burnout",
    "you": {
     "id": "br-g-pressure-burnout-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "pressure-burnout",
     "side": "you",
     "title": "Pressure, Grades, and Burnout",
@@ -845,7 +851,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Done is a skill too.",
        "Rest is part of the work."
       ],
-      "say": "Here are words to keep. I'm more than my GPA or my job title. Done is a skill too. And rest is part of the work. If exhaustion or low mood lasts two weeks or more, talk with a doctor or counselor. If you ever feel hopeless, call or text nine eight eight, any time."
+      "say": "Here are words to keep. I'm more than my GPA or my job title. Done is a skill too. And rest is part of the work. If exhaustion or low mood lasts two weeks or more, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -857,6 +863,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-pressure-burnout-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "pressure-burnout",
     "side": "helper",
     "title": "Pressure, Grades, and Burnout",
@@ -957,7 +964,7 @@ window.GG_LEARN_GUIDES.birch = {
         "A doctor or counselor"
        ]
       ],
-      "say": "Then help in practical ways. Name what you value in them that has nothing to do with results. Protect rest when they're with you. If they're working to pay for school, talk honestly about the load, and whether any practical help is possible. And if exhaustion or low mood lasts two weeks or more, encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together."
+      "say": "Then help in practical ways. Name what you value in them that has nothing to do with results. Protect rest when they're with you. If they're working to pay for school, talk honestly about the load, and whether any practical help is possible. And if exhaustion or low mood lasts two weeks or more, encourage a doctor or counselor."
      },
      {
       "k": "big",
@@ -974,6 +981,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "ADHD and Learning Differences on Your Own",
    "you": {
     "id": "br-g-adhd-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "you",
     "title": "ADHD and Learning Differences on Your Own",
@@ -1080,7 +1088,7 @@ window.GG_LEARN_GUIDES.birch = {
        "Asking for what I need is a skill.",
        "I can build systems that work for me."
       ],
-      "say": "Here are words to keep. My brain works differently, not worse. Asking for what I need is a skill. And I can build systems that work for me. If you've felt low or hopeless for a while, talk with a doctor or counselor, or call or text nine eight eight, any time."
+      "say": "Here are words to keep. My brain works differently, not worse. Asking for what I need is a skill. And I can build systems that work for me. If you've felt low or hopeless for a while, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -1092,6 +1100,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-adhd-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "adhd",
     "side": "helper",
     "title": "ADHD and Learning Differences on Your Own",
@@ -1197,7 +1206,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Name their strengths, often.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Name their strengths out loud, often. And if they seem low or hopeless for a while, encourage a doctor or counselor, or call or text nine eight eight together. The full guide has more, whenever you want it."
+      "say": "Name their strengths out loud, often. And if they seem low or hopeless for a while, encourage a doctor or counselor. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -1208,6 +1217,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "After Graduation: The \"What Now?\" Season",
    "you": {
     "id": "br-g-what-now-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "you",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -1313,7 +1323,7 @@ window.GG_LEARN_GUIDES.birch = {
        "My timeline is my own.",
        "I finished something hard."
       ],
-      "say": "Here are words to keep. Searching is part of finding. My timeline is my own. And I finished something hard, and that counts. If you feel low for weeks, talk with a doctor or counselor. If you ever feel hopeless, call or text nine eight eight, any time."
+      "say": "Here are words to keep. Searching is part of finding. My timeline is my own. And I finished something hard, and that counts. If you feel low for weeks, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -1325,6 +1335,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-what-now-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "what-now",
     "side": "helper",
     "title": "After Graduation: The \"What Now?\" Season",
@@ -1416,7 +1427,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Two weeks low: a doctor"
        ]
       ],
-      "say": "If they're living with you, talk together about expectations, like rent, chores, and timelines, adult to adult. Offer to help keep an eye on practical dates, like insurance and loans, if they want that. And if they seem low or withdrawn for two weeks or more, encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together."
+      "say": "If they're living with you, talk together about expectations, like rent, chores, and timelines, adult to adult. Offer to help keep an eye on practical dates, like insurance and loans, if they want that. And if they seem low or withdrawn for two weeks or more, encourage a doctor or counselor."
      },
      {
       "k": "big",
@@ -1433,6 +1444,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "A First Full-Time Job",
    "you": {
     "id": "br-g-first-job-you",
+    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "you",
     "title": "A First Full-Time Job",
@@ -1527,8 +1539,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If something feels wrong",
-      "body": "Missing pay, unsafe tasks, or harassment: you can speak up. The full guide lists who helps. Danger right now: 911.",
-      "say": "Some things are never part of the job. Pay that's wrong or missing. Being asked to do something unsafe. A boss or coworker who harasses you or crosses a line. You have the right to speak up, and it's not your fault. The full guide lists who can help. If there's danger right now, call nine one one."
+      "body": "Missing pay, unsafe tasks, or harassment: you can speak up. The full guide lists who helps.",
+      "say": "Some things are never part of the job. Pay that's wrong or missing. Being asked to do something unsafe. A boss or coworker who harasses you or crosses a line. You have the right to speak up, and it's not your fault. The full guide lists who can help."
      },
      {
       "k": "big",
@@ -1540,6 +1552,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-job-helper",
+    "crisis": ["911: emergency"],
     "guide": "first-job",
     "side": "helper",
     "title": "A First Full-Time Job",
@@ -1616,8 +1629,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If something feels wrong",
-      "body": "Missing pay, unsafe work, or harassment: help them find where to report it. Danger right now: 911.",
-      "say": "If they tell you about missing pay, unsafe work, or harassment, believe them. Help them find the right place to report it. The full guide lists those places. If there's danger right now, call nine one one. And if you're their helper in Birch, you see only what they choose to share."
+      "body": "Missing pay, unsafe work, or harassment: help them find where to report it.",
+      "say": "If they tell you about missing pay, unsafe work, or harassment, believe them. Help them find the right place to report it. The full guide lists those places. And if you're their helper in Birch, you see only what they choose to share."
      },
      {
       "k": "big",
@@ -1634,6 +1647,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Losing a Job, or Not Finding One",
    "you": {
     "id": "br-g-job-loss-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "job-loss",
     "side": "you",
     "title": "Losing a Job, or Not Finding One",
@@ -1724,8 +1738,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it starts to feel hopeless",
-      "body": "Call, text, or chat 988, any time. Danger right now: 911.",
-      "say": "A long search can wear down anyone. If the low mood won't lift, tell someone. If it ever turns into hopelessness, or thoughts of not wanting to be alive, call, text, or chat nine eight eight, any time. If there's danger right now, call nine one one."
+      "say": "A long search can wear down anyone. If the low mood won't lift, tell someone."
      },
      {
       "k": "big",
@@ -1737,6 +1750,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-job-loss-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "job-loss",
     "side": "helper",
     "title": "Losing a Job, or Not Finding One",
@@ -1826,8 +1840,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Notice how they are doing",
-      "body": "Sleeping all day, pulling away, or talk of being a burden: ask directly. 988, any time. Danger: 911.",
-      "say": "Notice how they're doing, not only what they're doing. Sleeping all day, pulling away, or talk of being a burden are signs to ask directly how they are. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one."
+      "body": "Sleeping all day, pulling away, or talk of being a burden: ask directly.",
+      "say": "Notice how they're doing, not only what they're doing. Sleeping all day, pulling away, or talk of being a burden are signs to ask directly how they are."
      },
      {
       "k": "big",
@@ -2045,6 +2059,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Money Basics: Paychecks, Budgets, and Credit",
    "you": {
     "id": "br-g-money-basics-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "you",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2133,7 +2148,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Watch for scams",
       "body": "A check to deposit and send some back, or a code sent to your phone: stop, and call your bank.",
-      "say": "Scams aim at young adults too. A job that sends you a check and asks you to send some back. Someone asking for a code sent to your phone, or your bank login. Stop, don't pay, and call your bank. The full guide lists where to report it. If money stress ever turns hopeless, call, text, or chat nine eight eight."
+      "say": "Scams aim at young adults too. A job that sends you a check and asks you to send some back. Someone asking for a code sent to your phone, or your bank login. Stop, don't pay, and call your bank. The full guide lists where to report it."
      },
      {
       "k": "big",
@@ -2145,6 +2160,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-money-basics-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "money-basics",
     "side": "helper",
     "title": "Money Basics: Paychecks, Budgets, and Credit",
@@ -2222,7 +2238,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "If they're scammed",
       "body": "Stop paying, save the messages, call the bank, and report it at reportfraud.ftc.gov.",
-      "say": "If they're scammed, stay calm. Help them stop paying, save the messages, call their bank, and report it. If money stress turns hopeless, call or text nine eight eight together. And if you're their helper in Birch, you see only what they choose to share."
+      "say": "If they're scammed, stay calm. Help them stop paying, save the messages, call their bank, and report it. And if you're their helper in Birch, you see only what they choose to share."
      },
      {
       "k": "big",
@@ -2239,6 +2255,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Student Loans and Other Debt",
    "you": {
     "id": "br-g-debt-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "debt",
     "side": "you",
     "title": "Student Loans and Other Debt",
@@ -2327,7 +2344,7 @@ window.GG_LEARN_GUIDES.birch = {
        "I can't make my full payment. What are my options?",
        "Would you sit with me while I make the list?"
       ],
-      "say": "Here are words that help. With your servicer: I can't make my full payment this month. What are my options? And with someone you trust: would you sit with me while I make the list? If the worry ever turns into hopelessness, call, text, or chat nine eight eight, any time."
+      "say": "Here are words that help. With your servicer: I can't make my full payment this month. What are my options? And with someone you trust: would you sit with me while I make the list?"
      },
      {
       "k": "big",
@@ -2339,6 +2356,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-debt-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "debt",
     "side": "helper",
     "title": "Student Loans and Other Debt",
@@ -2426,8 +2444,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Watch for hopelessness",
-      "body": "If money stress turns hopeless, ask directly. 988, any time. Danger right now: 911.",
-      "say": "Money stress can turn into hopelessness. If you notice it, ask directly how they're doing. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one. If you're their helper in Birch, you see only what they choose to share."
+      "say": "Money stress can turn into hopelessness. If you notice it, ask directly how they're doing. If you're their helper in Birch, you see only what they choose to share."
      },
      {
       "k": "big",
@@ -2444,6 +2461,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Gambling and Sports Betting",
    "you": {
     "id": "br-g-gambling-you",
+    "crisis": ["988: call or text, any time", "Minnesota gambling help: 1-800-333-4673", "1-800-MY-RESET: 1-800-697-3738"],
     "guide": "gambling",
     "side": "you",
     "title": "Gambling and Sports Betting",
@@ -2538,8 +2556,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Help is private, and it works.",
-      "body": "Minnesota: 1-800-333-4673, or text HOPE to 53342. National: 1-800-MY-RESET. Any time.",
-      "say": "Help is private, and it works. The Minnesota problem gambling helpline is there any time, by call or text, and there's a national line too. The numbers are on the screen and in the full guide. You don't have to be in deep to call. If losses ever leave you feeling hopeless, call, text, or chat nine eight eight."
+      "say": "Help is private, and it works. The numbers are on the screen and in the full guide. You don't have to be in deep to call."
      },
      {
       "k": "big",
@@ -2551,6 +2568,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-gambling-helper",
+    "crisis": ["988: call or text, any time", "1-800-MY-RESET: 1-800-697-3738", "911: emergency"],
     "guide": "gambling",
     "side": "helper",
     "title": "Gambling and Sports Betting",
@@ -2610,14 +2628,14 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Save the helpline now.",
+      "h": "Save the number shown under this video.",
       "sub": "Before you need it.",
-      "say": "Let's get ready now, before you need it. Pick up your phone, and start a new contact called Betting Help. Save this number in it: 1-800-MY-RESET, that is 1-800-697-3738.",
+      "say": "Let's get ready now, before you need it. Pick up your phone, and start a new contact called Betting Help. Save the number shown under this video in it.",
       "beats": [
        "Let's get ready now, before you need it.",
        "Pick up your phone, and start a new contact called Betting Help.",
        {
-        "t": "Save this number in it: 1-800-MY-RESET, that is 1-800-697-3738.",
+        "t": "Save the number shown under this video in it.",
         "w": 14
        }
       ]
@@ -2644,8 +2662,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Ask about mood, too.",
-      "body": "Gambling trouble can come with depression. Not wanting to be alive: 988 together. Danger: 911.",
-      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask how they're doing, not only about the money. If they talk about not wanting to be alive, call or text nine eight eight together. If there's danger right now, call nine one one. And get support for yourself. The helplines are there for partners and families too."
+      "body": "Gambling trouble can come with depression.",
+      "say": "Gambling trouble can come with depression, and with thoughts of suicide. So ask how they're doing, not only about the money. And get support for yourself. The helplines are there for partners and families too."
      },
      {
       "k": "big",
@@ -2662,6 +2680,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving Out for the First Time",
    "you": {
     "id": "br-g-moving-out-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "you",
     "title": "Moving Out for the First Time",
@@ -2751,8 +2770,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "A low that lasts: a doctor or counselor. Not wanting to live: call or text 988. Danger right now: 911.",
-      "say": "If homesickness or a low mood hasn't lifted after a couple of months, or it's keeping you from sleep, work, or school, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
+      "body": "A low that lasts: a doctor or counselor.",
+      "say": "If homesickness or a low mood hasn't lifted after a couple of months, or it's keeping you from sleep, work, or school, talk with a doctor or a counselor."
      },
      {
       "k": "big",
@@ -2764,6 +2783,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-moving-out-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-out",
     "side": "helper",
     "title": "Moving Out for the First Time",
@@ -2854,8 +2874,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Watch gently",
-      "body": "A low that lasts: a doctor or counselor. Not wanting to live: 988, call or text, together. Danger: 911.",
-      "say": "Watch gently for a low mood or loneliness that hasn't lifted after a couple of months. Encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together. If there's danger, call nine one one. If they use Birch and turn you on as a helper, you'll see only what they choose to share."
+      "body": "A low that lasts: a doctor or counselor.",
+      "say": "Watch gently for a low mood or loneliness that hasn't lifted after a couple of months. Encourage a doctor or counselor. If they use Birch and turn you on as a helper, you'll see only what they choose to share."
      },
      {
       "k": "big",
@@ -2872,6 +2892,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Roommates",
    "you": {
     "id": "br-g-roommates-you",
+    "crisis": ["Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "roommates",
     "side": "you",
     "title": "Roommates",
@@ -2975,8 +2996,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Unsafe is different.",
-      "body": "Afraid to go home: in Minnesota, Day One, 1-866-223-1111. Someone you date: 1-866-331-9474. Danger: 911.",
-      "say": "If a roommate threatens you, hurts you, or makes you afraid to go home, that's not a disagreement. Your safety comes first. In Minnesota, Day One answers any time, at one eight six six, two two three, one one one one. If it's someone you're dating, Love Is Respect is at one eight six six, three three one, nine four seven four. If you're in danger right now, call nine one one."
+      "say": "If a roommate threatens you, hurts you, or makes you afraid to go home, that's not a disagreement. Your safety comes first."
      },
      {
       "k": "big",
@@ -2988,6 +3008,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-roommates-helper",
+    "crisis": ["Day One (Minnesota): 1-866-223-1111", "911: emergency"],
     "guide": "roommates",
     "side": "helper",
     "title": "Roommates",
@@ -3066,8 +3087,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Listen for fear.",
-      "body": "Afraid to go home: help them stay elsewhere. Minnesota, Day One: 1-866-223-1111. Danger: 911.",
-      "say": "Listen for the difference between annoyance and fear. If they sound afraid to go home, or the roommate threatens or hurts them, take it seriously. Help them make a plan to stay somewhere else. In Minnesota, Day One answers any time, at one eight six six, two two three, one one one one. If there's danger right now, call nine one one."
+      "body": "Afraid to go home: help them stay elsewhere.",
+      "say": "Listen for the difference between annoyance and fear. If they sound afraid to go home, or the roommate threatens or hurts them, take it seriously. Help them make a plan to stay somewhere else."
      },
      {
       "k": "big",
@@ -3084,6 +3105,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "A First Apartment: Leases, Bills, and Repairs",
    "you": {
     "id": "br-g-first-apartment-you",
+    "crisis": ["211: local help"],
     "guide": "first-apartment",
     "side": "you",
     "title": "A First Apartment: Leases, Bills, and Repairs",
@@ -3185,8 +3207,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When you need help",
-      "body": "Lease or deposit questions: a tenant hotline or legal aid. Short on rent in Minnesota: dial 211.",
-      "say": "Every state has rules for renters and landlords. If you have a problem you can't solve with your landlord, a tenant hotline or legal aid can explain your options. In Minnesota, HOME Line and the Attorney General's tenant handbook are good places to start. And if you're short on rent or utilities in Minnesota, dial two one one."
+      "body": "Lease or deposit questions: legal aid.",
+      "say": "Every state has rules for renters and landlords. If you have a problem you can't solve with your landlord, legal aid can explain your options. In Minnesota, HOME Line and the Attorney General's tenant handbook are good places to start. And if you're short on rent or utilities in Minnesota, dial two one one."
      },
      {
       "k": "big",
@@ -3198,6 +3220,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-apartment-helper",
+    "crisis": ["211: local help"],
     "guide": "first-apartment",
     "side": "helper",
     "title": "A First Apartment: Leases, Bills, and Repairs",
@@ -3269,7 +3292,7 @@ window.GG_LEARN_GUIDES.birch = {
        "I'll just sign it for you.",
        "Just stop paying rent."
       ],
-      "say": "Some words make it harder. You should have read the lease, after something goes wrong. I'll just sign it for you. Or, just stop paying rent until they fix it, which has rules and real risks. A tenant hotline or legal aid can explain the options."
+      "say": "Some words make it harder. You should have read the lease, after something goes wrong. I'll just sign it for you. Or, just stop paying rent until they fix it, which has rules and real risks. Legal aid can explain the options."
      },
      {
       "k": "big",
@@ -3288,8 +3311,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Point to the right helper",
-      "body": "Disputes: a tenant hotline or legal aid. In Minnesota: HOME Line, and 211 for rent help.",
-      "say": "If there's a real dispute about a deposit, repairs, or the lease, point them to the right helper, like a tenant hotline or legal aid. In Minnesota, HOME Line answers renters' questions, and two one one can connect them with help paying rent or utilities. If you co-sign for them, talk clearly first about what it means for both of you."
+      "body": "Disputes: legal aid.",
+      "say": "If there's a real dispute about a deposit, repairs, or the lease, point them to the right helper, like legal aid. In Minnesota, HOME Line answers renters' questions, and two one one can connect them with help paying rent or utilities. If you co-sign for them, talk clearly first about what it means for both of you."
      },
      {
       "k": "big",
@@ -3306,6 +3329,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving Back Home",
    "you": {
     "id": "br-g-moving-back-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-back",
     "side": "you",
     "title": "Moving Back Home",
@@ -3393,8 +3417,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it is more than a season",
-      "body": "A low that lasts: a doctor or counselor. Not wanting to live: call or text 988. Danger: 911.",
-      "say": "If a low mood, anxiety, or substance use came home with you, or it hasn't lifted, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If someone at home is hurting you, or you're in danger, call nine one one."
+      "body": "A low that lasts: a doctor or counselor.",
+      "say": "If a low mood, anxiety, or substance use came home with you, or it hasn't lifted, talk with a doctor or a counselor."
      },
      {
       "k": "big",
@@ -3406,6 +3430,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-moving-back-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "moving-back",
     "side": "helper",
     "title": "Moving Back Home",
@@ -3497,8 +3522,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "After a hard stretch",
-      "body": "Mood or substances: a doctor or counselor. Not wanting to live: call or text 988 together. Danger: 911.",
-      "say": "If they came home after a hard stretch with mood, substances, or safety, help them connect with a doctor or counselor, and keep the help lines close. If they talk about not wanting to live, call or text nine eight eight together. If there's danger, call nine one one."
+      "body": "Mood or substances: a doctor or counselor.",
+      "say": "If they came home after a hard stretch with mood, substances, or safety, help them connect with a doctor or counselor, and keep the help lines close."
      },
      {
       "k": "big",
@@ -3515,6 +3540,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Moving to a New City",
    "you": {
     "id": "br-g-new-city-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "you",
     "title": "Moving to a New City",
@@ -3598,8 +3624,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If the lonely stays",
-      "body": "A low that lasts months: a doctor or counselor. Not wanting to live: call or text 988. Danger: 911.",
-      "say": "If loneliness or a low mood hasn't lifted after a few months, or it's keeping you from sleep or work, talk with a doctor or a counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. If you're in danger right now, call nine one one."
+      "body": "A low that lasts months: a doctor or counselor.",
+      "say": "If loneliness or a low mood hasn't lifted after a few months, or it's keeping you from sleep or work, talk with a doctor or a counselor."
      },
      {
       "k": "big",
@@ -3611,6 +3637,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-new-city-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "new-city",
     "side": "helper",
     "title": "Moving to a New City",
@@ -3711,8 +3738,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When lonely becomes low",
-      "body": "A low that lasts months: encourage a doctor or counselor. Not wanting to live: 988, together. Danger: 911.",
-      "say": "Notice if loneliness seems to be turning into a low that lasts for months. Encourage a doctor or counselor. If they talk about not wanting to live, call or text nine eight eight together. If there's danger, call nine one one."
+      "body": "A low that lasts months: encourage a doctor or counselor.",
+      "say": "Notice if loneliness seems to be turning into a low that lasts for months. Encourage a doctor or counselor."
      },
      {
       "k": "big",
@@ -3729,6 +3756,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "When Housing Falls Through",
    "you": {
     "id": "br-g-housing-you",
+    "crisis": ["988: call or text, any time", "National Runaway Safeline: 1-800-786-2929", "211: local help", "911: emergency"],
     "guide": "housing",
     "side": "you",
     "title": "When Housing Falls Through",
@@ -3783,10 +3811,6 @@ window.GG_LEARN_GUIDES.birch = {
         "Somewhere safe to sleep"
        ],
        [
-        "Call or text 211",
-        "Shelter, rent help, food"
-       ],
-       [
         "Tell one person",
         "You trust them, no plan needed"
        ],
@@ -3805,13 +3829,12 @@ window.GG_LEARN_GUIDES.birch = {
        "Legal aid, for an eviction notice",
        "A short stay with a clear plan"
       ],
-      "say": "There are other doors to knock on. If you're a student, your school's student services or financial aid office may have emergency funds or housing help. If you got an eviction notice, contact legal aid or a tenant hotline today. And a short stay with a friend or relative goes best with a clear end date and a plan."
+      "say": "There are other doors to knock on. If you're a student, your school's student services or financial aid office may have emergency funds or housing help. If you got an eviction notice, contact legal aid today. And a short stay with a friend or relative goes best with a clear end date and a plan."
      },
      {
       "k": "card",
       "title": "Help any time",
-      "body": "Up to age 24: 1-800-786-2929. Shelter and services: 211. Not wanting to live: 988. Danger: 911.",
-      "say": "If you're twenty four or younger, the National Runaway Safeline helps with a housing crisis any time, at one eight hundred, seven eight six, two nine two nine. Two one one connects you with local help. If you feel hopeless or think about not wanting to be alive, call or text nine eight eight. If you're in danger, call nine one one."
+      "say": "Two one one connects you with local help."
      },
      {
       "k": "big",
@@ -3823,6 +3846,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-housing-helper",
+    "crisis": ["Day One (Minnesota): 1-866-223-1111", "National Runaway Safeline: 1-800-786-2929", "211: local help", "911: emergency"],
     "guide": "housing",
     "side": "helper",
     "title": "When Housing Falls Through",
@@ -3867,10 +3891,10 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Offer what you can truly give.",
       "sub": "Then give it well.",
-      "say": "Think about what you could really offer this week. A couch for a few nights, a ride, a meal, a call to 211 together, help with a form, or a place to store their things. Pick one you can truly give, and say it out loud as an offer: I can do this, if it helps.",
+      "say": "Think about what you could really offer this week. A couch for a few nights, a ride, a meal, help with a form, or a place to store their things. Pick one you can truly give, and say it out loud as an offer: I can do this, if it helps.",
       "beats": [
        "Think about what you could really offer this week.",
-       "A couch for a few nights, a ride, a meal, a call to 211 together, help with a form, or a place to store their things.",
+       "A couch for a few nights, a ride, a meal, help with a form, or a place to store their things.",
        {
         "t": "Pick one you can truly give, and say it out loud as an offer: I can do this, if it helps.",
         "w": 12
@@ -3883,7 +3907,7 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        [
         "Sit with them",
-        "While they call 211"
+        ""
        ],
        [
         "Eviction notice?",
@@ -3903,8 +3927,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If they are not safe",
-      "body": "In Minnesota, Day One: 1-866-223-1111. Up to age 24: 1-800-786-2929. Danger: 911.",
-      "say": "If they left a home where someone hurt or controlled them, take their safety seriously. In Minnesota, Day One answers any time, at one eight six six, two two three, one one one one. If they're twenty four or younger, the National Runaway Safeline can help, at one eight hundred, seven eight six, two nine two nine. If there's danger, call nine one one."
+      "say": "If they left a home where someone hurt or controlled them, take their safety seriously."
      },
      {
       "k": "big",
@@ -3921,6 +3944,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Making Friends After School",
    "you": {
     "id": "br-g-friends-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "you",
     "title": "Making Friends After School",
@@ -4010,8 +4034,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "Weeks of low mood: a doctor or counselor. Not wanting to be alive: call or text 988.",
-      "say": "Sometimes a lonely stretch gets heavier than a social season. If low mood lasts two weeks or more, or you feel like there's no point, talk with a doctor or counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time."
+      "body": "Weeks of low mood: a doctor or counselor.",
+      "say": "Sometimes a lonely stretch gets heavier than a social season. If low mood lasts two weeks or more, or you feel like there's no point, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -4023,6 +4047,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-friends-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "friends",
     "side": "helper",
     "title": "Making Friends After School",
@@ -4114,8 +4139,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When it is more than a season",
-      "body": "Hopeless, a burden, pulling away from everyone: a doctor or counselor. Not wanting to be alive: 988, together.",
-      "say": "Watch gently for signs it's more than a social season. Hopelessness, talk of being a burden, or pulling away from everyone. Encourage a doctor or counselor. If they talk about not wanting to be alive, call or text nine eight eight together."
+      "body": "Hopeless, a burden, pulling away from everyone: a doctor or counselor.",
+      "say": "Watch gently for signs it's more than a social season. Hopelessness, talk of being a burden, or pulling away from everyone. Encourage a doctor or counselor."
      },
      {
       "k": "big",
@@ -4132,6 +4157,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Loneliness",
    "you": {
     "id": "br-g-loneliness-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "loneliness",
     "side": "you",
     "title": "Loneliness",
@@ -4222,8 +4248,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "Weeks of low mood: a doctor or counselor. Hopeless or a burden: call or text 988, any time.",
-      "say": "Sometimes loneliness turns into something heavier. If low mood lasts two weeks or more, talk with a doctor or counselor. If you feel hopeless, like a burden, or think about not wanting to be alive, call or text nine eight eight, any time."
+      "body": "Weeks of low mood: a doctor or counselor.",
+      "say": "Sometimes loneliness turns into something heavier. If low mood lasts two weeks or more, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -4235,6 +4261,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-loneliness-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "loneliness",
     "side": "helper",
     "title": "Loneliness",
@@ -4345,8 +4372,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When it is heavier than lonely",
-      "body": "Hopeless, a burden, not wanting to be alive: call or text 988 together. Danger: 911.",
-      "say": "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now. Ask directly, stay with them, and call or text nine eight eight together. If there's danger right now, call nine one one."
+      "say": "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now. Ask directly and stay with them."
      },
      {
       "k": "big",
@@ -4363,6 +4389,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Dating and Finding Someone",
    "you": {
     "id": "br-g-dating-you",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating",
     "side": "you",
     "title": "Dating and Finding Someone",
@@ -4480,8 +4507,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If something feels off",
-      "body": "Love Is Respect, for ages 13 to 26: call 1-866-331-9474 or text LOVEIS to 22522. Danger: 911.",
-      "say": "If something in a relationship feels off, you can talk it through with Love Is Respect. They help people your age, by call, text, or chat, any time. And if you're ever in danger, call nine one one."
+      "say": "They help people your age, by call, text, or chat, any time."
      },
      {
       "k": "big",
@@ -4493,6 +4519,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-dating-helper",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating",
     "side": "helper",
     "title": "Dating and Finding Someone",
@@ -4574,14 +4601,14 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Share the line",
-        "Love Is Respect"
+        ""
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "If you see signs of control or fear, stay close, because your bond is protection. Believe them, with no blame. Share Love Is Respect, which helps people thirteen to twenty six, and the people who care about them, any time. And if there's danger right now, call nine one one."
+      "say": "If you see signs of control or fear, stay close, because your bond is protection. Believe them, with no blame."
      },
      {
       "k": "big",
@@ -4598,6 +4625,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Breakups",
    "you": {
     "id": "br-g-breakup-you",
+    "crisis": ["988: call or text, any time", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "breakup",
     "side": "you",
     "title": "Breakups",
@@ -4692,14 +4720,14 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If an ex threatens or pressures",
-      "body": "Harassing or threatening: Love Is Respect. Threats to hurt themselves: call 988 for them. You don't have to stay.",
-      "say": "Sometimes a breakup doesn't stay clean. If an ex harasses or threatens you, Love Is Respect can help you plan, any time. If an ex says they'll hurt themselves unless you come back, take it seriously, and call or text nine eight eight for them. But it is not your job to stay."
+      "body": "Harassing or threatening: you don't have to stay.",
+      "say": "Sometimes a breakup doesn't stay clean. If an ex says they'll hurt themselves unless you come back, take it seriously. But it is not your job to stay."
      },
      {
       "k": "card",
       "title": "If it stays heavy",
-      "body": "Two weeks or more: a doctor or counselor. Not wanting to be alive: call or text 988.",
-      "say": "If the low mood lasts two weeks or more, or you stop caring about things you used to love, talk with a doctor or counselor. If you ever think about not wanting to be alive, call or text nine eight eight, any time. Danger right now, call nine one one."
+      "body": "Two weeks or more: a doctor or counselor.",
+      "say": "If the low mood lasts two weeks or more, or you stop caring about things you used to love, talk with a doctor or counselor."
      },
      {
       "k": "big",
@@ -4711,6 +4739,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-breakup-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "breakup",
     "side": "helper",
     "title": "Breakups",
@@ -4796,8 +4825,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Watch for more than heartbreak",
-      "body": "Two weeks of low mood, pulling away, heavier use: a doctor or counselor. Hopeless: 988, together.",
-      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or heavier drinking or use. Encourage a doctor or counselor. If the ex is threatening or controlling, see the guide on controlling or abusive relationships. And if they talk about not wanting to be alive, ask directly, stay with them, and call or text nine eight eight together."
+      "body": "Two weeks of low mood, pulling away, heavier use: a doctor or counselor.",
+      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or heavier drinking or use. Encourage a doctor or counselor. If the ex is threatening or controlling, see the guide on controlling or abusive relationships. And if they talk about not wanting to be alive, ask directly and stay with them."
      },
      {
       "k": "big",
@@ -4889,7 +4918,7 @@ window.GG_LEARN_GUIDES.birch = {
       "steps": [
        [
         "Reach out",
-        "Love Is Respect, any time"
+        ""
        ],
        [
         "Use a safe device",
@@ -4901,16 +4930,16 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "Here's how to get safer. Reach out to Love Is Respect, by call, text, or chat, any time. If someone might be watching your phone, use a device they can't see, like a friend's phone. Make a safety plan with an advocate before a big step, because leaving can be a risky time. And if you're in danger right now, call nine one one."
+      "say": "Here's how to get safer. If someone might be watching your phone, use a device they can't see, like a friend's phone. Make a safety plan with an advocate before a big step, because leaving can be a risky time."
      },
      {
       "k": "card",
       "title": "Your check-in keeps you in charge",
       "body": "Say someone is hurting you, and Birch shows outside help. No alert to anyone. Helpers never see it.",
-      "say": "If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, Day One, and nine one one. Birch sends no alert to anyone, and a helper never sees your safety answers. You stay in charge of who you tell. And if it ever gets so heavy you think about not wanting to be alive, call or text nine eight eight."
+      "say": "If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away. Birch sends no alert to anyone, and a helper never sees your safety answers. You stay in charge of who you tell."
      },
      {
       "k": "big",
@@ -4998,11 +5027,10 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Save the number now.",
       "sub": "For you, and for them.",
-      "say": "Let's do one thing right now. Open the contacts on your own phone. Add Love Is Respect, one eight six six, three three one, nine four seven four. They talk with friends and family too.",
+      "say": "Let's do one thing right now. Open the contacts on your own phone. They talk with friends and family too.",
       "beats": [
        "Let's do one thing right now.",
        "Open the contacts on your own phone.",
-       "Add Love Is Respect, one eight six six, three three one, nine four seven four.",
        {
         "t": "They talk with friends and family too.",
         "w": 12
@@ -5019,7 +5047,7 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Call for guidance",
-        "Love Is Respect or Day One"
+        ""
        ],
        [
         "Offer practical help",
@@ -5027,16 +5055,16 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Danger right now",
-        "Call 911"
+        "Call for help"
        ]
       ],
-      "say": "Plan for safety together. Stay connected, because your bond is protection. Call Love Is Respect, the Hotline, or Day One for guidance. Offer practical help, like a safe place to stay, a ride, or a phone they can use. And if there's danger right now, call nine one one."
+      "say": "Plan for safety together. Stay connected, because your bond is protection. Offer practical help, like a safe place to stay, a ride, or a phone they can use."
      },
      {
       "k": "card",
       "title": "Privacy, and urgent help",
-      "body": "Birch shows outside help, never an alert. Safety answers stay just for you. Hopeless: 988, together.",
-      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Safety answers stay just for you. That keeps them safe to answer honestly, so your warmth matters even more. If they seem hopeless, call or text nine eight eight together."
+      "body": "Birch shows outside help, never an alert. Safety answers stay just for you.",
+      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Safety answers stay just for you. That keeps them safe to answer honestly, so your warmth matters even more."
      },
      {
       "k": "big",
@@ -5058,6 +5086,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Engaged or Newly Married",
    "you": {
     "id": "br-g-engaged-you",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "you",
     "title": "Engaged or Newly Married",
@@ -5152,8 +5181,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it turns into fear",
-      "body": "Fear, threats, or control are not normal adjustment. Love Is Respect: 1-866-331-9474. Danger: 911.",
-      "say": "One more thing. If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment. Love Is Respect helps people your age, by call, text, or chat, any time. And if you're ever in danger, call nine one one."
+      "body": "Fear, threats, or control are not normal adjustment.",
+      "say": "One more thing. If disagreements ever turn into fear, threats, or control, that isn't a normal adjustment."
      },
      {
       "k": "big",
@@ -5165,6 +5194,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-engaged-helper",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "engaged",
     "side": "helper",
     "title": "Engaged or Newly Married",
@@ -5256,8 +5286,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When it is more than adjustment",
-      "body": "Fear, threats, control, or being cut off from people: stay close, share Love Is Respect. Danger: 911.",
-      "say": "If you see signs of fear, threats, control, or someone being cut off from friends and family, that's more than adjustment. Stay close, and share Love Is Respect, which helps people your loved one's age, any time. If there's danger right now, call nine one one."
+      "body": "Fear, threats, control, or being cut off from people: stay close.",
+      "say": "If you see signs of fear, threats, control, or someone being cut off from friends and family, that's more than adjustment."
      },
      {
       "k": "big",
@@ -5391,6 +5421,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-parents-adult-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "parents-adult",
     "side": "helper",
     "title": "You and Your Parents, as Adults",
@@ -5482,8 +5513,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "What a helper sees in Birch",
-      "body": "Only what they choose to share. Never safety answers. Worried? Ask, and share 988.",
-      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share, and never their safety answers. No alert goes to anyone. So if you're worried about their mood or safety, ask them directly and kindly. Call, text, or chat nine eight eight together if they're struggling."
+      "body": "Only what they choose to share. Never safety answers. Worried? Ask.",
+      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share, and never their safety answers. No alert goes to anyone. So if you're worried about their mood or safety, ask them directly and kindly."
      },
      {
       "k": "big",
@@ -5500,6 +5531,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Hard Family Ties and Estrangement",
    "you": {
     "id": "br-g-estrangement-you",
+    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "National DV Hotline: 1-800-799-7233", "National Runaway Safeline: 1-800-786-2929", "211: local help", "911: emergency"],
     "guide": "estrangement",
     "side": "you",
     "title": "Hard Family Ties and Estrangement",
@@ -5574,7 +5606,7 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        [
         "Housing",
-        "Minnesota 211, or 1-800-RUNAWAY"
+        ""
        ],
        [
         "School aid",
@@ -5589,13 +5621,12 @@ window.GG_LEARN_GUIDES.birch = {
         "Chosen family counts"
        ]
       ],
-      "say": "Sometimes the hardest part is practical. If you need a place to stay, call 211 in Minnesota, or the National Runaway Safeline, for people up to twenty-four. If you're in school and cut off from parents, ask your financial aid office about unusual circumstances. Plan holidays ahead, so you know who you'll be with. And build chosen family: friends, mentors, coworkers, people who show up."
+      "say": "Sometimes the hardest part is practical. If you're in school and cut off from parents, ask your financial aid office about unusual circumstances. Plan holidays ahead, so you know who you'll be with. And build chosen family: friends, mentors, coworkers, people who show up."
      },
      {
       "k": "card",
       "title": "If family hurts or threatens you",
-      "body": "Danger: 911. Day One: 1-866-223-1111. National hotline: 1-800-799-7233.",
-      "say": "If someone in your family is hurting or threatening you, your safety comes first. In danger, call nine one one. In Minnesota, Day One can help you plan for safety, any time. So can the National Domestic Violence Hotline. And if you ever feel hopeless, call, text, or chat nine eight eight."
+      "say": "If someone in your family is hurting or threatening you, your safety comes first."
      },
      {
       "k": "words",
@@ -5617,6 +5648,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-estrangement-helper",
+    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "National DV Hotline: 1-800-799-7233", "911: emergency"],
     "guide": "estrangement",
     "side": "helper",
     "title": "Hard Family Ties and Estrangement",
@@ -5698,8 +5730,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If there was harm",
-      "body": "Believe them. Day One: 1-866-223-1111. Hotline: 1-800-799-7233. Danger: 911.",
-      "say": "If they tell you about abuse, believe them. Point them to Day One in Minnesota, or the National Domestic Violence Hotline, for safety planning. In danger, call nine one one. And if they seem hopeless, call, text, or chat nine eight eight together."
+      "body": "Believe them.",
+      "say": "If they tell you about abuse, believe them."
      },
      {
       "k": "card",
@@ -5722,6 +5754,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "An Unplanned Pregnancy",
    "you": {
     "id": "br-g-unplanned-pregnancy-you",
+    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "unplanned-pregnancy",
     "side": "you",
     "title": "An Unplanned Pregnancy",
@@ -5804,14 +5837,12 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your choices are yours.",
-      "body": "In any direction. Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
-      "say": "One thing is true for everyone. No one gets to pressure, threaten, or force you about a pregnancy, in any direction. Not a partner, not family, not anyone. If that's happening, Love Is Respect and Day One are there by phone or text, any time. If you're in danger, call nine one one."
+      "say": "One thing is true for everyone. No one gets to pressure, threaten, or force you about a pregnancy, in any direction. Not a partner, not family, not anyone."
      },
      {
       "k": "card",
       "title": "Support for your mind, too",
-      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Hopeless: 988.",
-      "say": "If you're pregnant and feel overwhelmed, anxious, or low, the National Maternal Mental Health Hotline is there any time, by call or text, in English and Spanish. If it ever gets so heavy you think about not wanting to be alive, call, text, or chat nine eight eight. Your Birch answers stay on this device, and a helper sees only what you choose to share."
+      "say": "Your Birch answers stay on this device, and a helper sees only what you choose to share."
      },
      {
       "k": "words",
@@ -5833,6 +5864,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-unplanned-pregnancy-helper",
+    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "unplanned-pregnancy",
     "side": "helper",
     "title": "An Unplanned Pregnancy",
@@ -5916,8 +5948,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If you see pressure or harm",
-      "body": "Love Is Respect: 1-866-331-9474. Day One: 1-866-223-1111. Danger: 911.",
-      "say": "No one should be pressured, threatened, or forced about a pregnancy, in any direction. If you see that happening, help them reach Love Is Respect or Day One, any time. In danger, call nine one one. If they seem overwhelmed or low, the National Maternal Mental Health Hotline takes calls and texts, any time. And if they talk about not wanting to be alive, call, text, or chat nine eight eight together."
+      "say": "No one should be pressured, threatened, or forced about a pregnancy, in any direction."
      },
      {
       "k": "card",
@@ -5940,6 +5971,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Becoming a Parent Young",
    "you": {
     "id": "br-g-young-parent-you",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "211: local help", "911: emergency"],
     "guide": "young-parent",
     "side": "you",
     "title": "Becoming a Parent Young",
@@ -6006,7 +6038,7 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Basics",
-        "In Minnesota, dial 211"
+        ""
        ]
       ],
       "say": "Asking for help is part of good parenting. Sleep when someone else can watch the baby. Ask for one specific thing, like a meal, a load of laundry, or two hours of babysitting. Find other young parents who get it. And for food, diapers, housing, or child care help in Minnesota, dial two one one."
@@ -6035,8 +6067,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Watch your own mood",
-      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Moms and dads.",
-      "say": "Depression and anxiety after a baby are common, and they're treatable. About one in eight moms have symptoms, more among the youngest, and about one in ten dads struggle too. If sadness, worry, or scary thoughts last more than two weeks, call your doctor or the National Maternal Mental Health Hotline, any time. Thoughts of harming yourself or your baby, call or text nine eight eight, or call nine one one now."
+      "say": "Depression and anxiety after a baby are common, and they're treatable. About one in eight moms have symptoms, more among the youngest, and about one in ten dads struggle too. If sadness, worry, or scary thoughts last more than two weeks, call your doctor."
      },
      {
       "k": "words",
@@ -6058,6 +6089,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-young-parent-helper",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "young-parent",
     "side": "helper",
     "title": "Becoming a Parent Young",
@@ -6144,8 +6176,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Watch for depression, in moms and dads",
-      "body": "Two weeks or more: their doctor, or 1-833-852-6262. Harm: 988 or 911.",
-      "say": "Depression and anxiety after a baby are common. About one in eight moms report symptoms, more among the youngest, and about one in ten dads struggle too. If sadness or worry lasts more than two weeks, encourage a call to their doctor or the National Maternal Mental Health Hotline. If you see thoughts of harming themselves or the baby, call or text nine eight eight, or call nine one one now."
+      "body": "Two weeks or more: their doctor.",
+      "say": "Depression and anxiety after a baby are common. About one in eight moms report symptoms, more among the youngest, and about one in ten dads struggle too. If sadness or worry lasts more than two weeks, encourage a call to their doctor."
      },
      {
       "k": "card",
@@ -6168,6 +6200,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "After the Baby: Depression and Anxiety for Moms and Dads",
    "you": {
     "id": "br-g-after-baby-you",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "after-baby",
     "side": "you",
     "title": "After the Baby: Depression and Anxiety for Moms and Dads",
@@ -6248,19 +6281,14 @@ window.GG_LEARN_GUIDES.birch = {
        [
         "Your doctor",
         "Or your baby's doctor"
-       ],
-       [
-        "The hotline",
-        "Call or text, any time"
        ]
       ],
-      "say": "Now take those sentences somewhere. Tell one person, like your partner, a friend, or a parent. Read them to your own doctor, or your baby's doctor. Or call or text the National Maternal Mental Health Hotline, any time, for moms, dads, and partners. The number is one, eight three three, eight five two, six two six two."
+      "say": "Now take those sentences somewhere. Tell one person, like your partner, a friend, or a parent. Read them to your own doctor, or your baby's doctor."
      },
      {
       "k": "card",
       "title": "If it becomes an emergency",
-      "body": "Thoughts of harm: 988 or 911. Seeing or hearing things, or days without sleep: 911.",
-      "say": "If you have thoughts of harming yourself or your baby, call or text nine eight eight, or call nine one one now. And if you see or hear things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency. Call nine one one. Your Birch answers stay on this device, so reaching out is up to you, and it's worth it."
+      "say": "And if you see or hear things others don't, feel confused, or go days without sleep even when you could sleep, that's an emergency. Your Birch answers stay on this device, so reaching out is up to you, and it's worth it."
      },
      {
       "k": "words",
@@ -6282,6 +6310,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-after-baby-helper",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "after-baby",
     "side": "helper",
     "title": "After the Baby: Depression and Anxiety for Moms and Dads",
@@ -6353,14 +6382,11 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Save this number now.",
-      "sub": "1-833-852-6262, call or text, any time",
-      "say": "Let's do one thing right now. Open the contacts on your phone. Make a new contact called Maternal Mental Health Hotline. Type in the number on the screen, one, eight three three, eight five two, six two six two, and save it.",
+      "say": "Let's do one thing right now. Open the contacts on your phone.",
       "beats": [
        "Let's do one thing right now.",
-       "Open the contacts on your phone.",
-       "Make a new contact called Maternal Mental Health Hotline.",
        {
-        "t": "Type in the number on the screen, one, eight three three, eight five two, six two six two, and save it.",
+        "t": "Open the contacts on your phone.",
         "w": 14
        }
       ]
@@ -6375,7 +6401,7 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Help make the call",
-        "Doctor or hotline"
+        "Doctor"
        ],
        [
         "Protect their sleep",
@@ -6386,19 +6412,19 @@ window.GG_LEARN_GUIDES.birch = {
         "Meals, dishes, errands"
        ]
       ],
-      "say": "Here's what helps. Name what you see, gently. You haven't seemed like yourself for a few weeks. Help make the call, to their doctor or the hotline, and offer to drive and hold the baby in the waiting room. Protect their sleep by taking a feeding or a morning. And carry the basics, like meals, dishes, and errands."
+      "say": "Here's what helps. Name what you see, gently. You haven't seemed like yourself for a few weeks. Help make the call to their doctor, and offer to drive and hold the baby in the waiting room. Protect their sleep by taking a feeding or a morning. And carry the basics, like meals, dishes, and errands."
      },
      {
       "k": "card",
       "title": "Emergency signs",
-      "body": "Seeing or hearing things, confusion, days without sleep, thoughts of harm: 911 or 988.",
-      "say": "Know the emergency signs. Seeing or hearing things others don't. Confusion. Days without sleep. Or thoughts of harming themselves or the baby. Call nine one one, or call or text nine eight eight. In Birch, a helper sees only what they choose to share, and never safety answers, so asking kindly and directly matters."
+      "body": "Seeing or hearing things, confusion, days without sleep, thoughts of harm: call for help.",
+      "say": "Know the emergency signs. Seeing or hearing things others don't. Confusion. Days without sleep. Or thoughts of harming themselves or the baby. In Birch, a helper sees only what they choose to share, and never safety answers, so asking kindly and directly matters."
      },
      {
       "k": "big",
       "h": "Notice. Name it. Help make the call.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "And watch your own mood too. The hotline is there for partners and family as well. The full guide has more, whenever you want it."
+      "say": "And watch your own mood too. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -6409,6 +6435,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pregnancy or Infant Loss",
    "you": {
     "id": "br-g-pregnancy-loss-you",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262"],
     "guide": "pregnancy-loss",
     "side": "you",
     "title": "Pregnancy or Infant Loss",
@@ -6501,12 +6528,6 @@ window.GG_LEARN_GUIDES.birch = {
       "say": "Here's what can help. Follow up with your doctor or clinic, for your body and your heart, and call right away for heavy bleeding, fever, or severe pain. Tell people what you need, whether that's company or privacy. Mark the due date or anniversary in a way that fits you, like a candle, a walk, or saying your baby's name. And find others who understand. Support groups for pregnancy and infant loss meet in person and online."
      },
      {
-      "k": "card",
-      "title": "If grief gets too heavy",
-      "body": "Maternal Mental Health Hotline: call or text 1-833-852-6262. Thoughts of not living: 988.",
-      "say": "If sadness, anxiety, or numbness stays heavy for weeks, the National Maternal Mental Health Hotline is there any time, by call or text, for moms, dads, and partners. And if you ever think about not wanting to be alive, call, text, or chat nine eight eight."
-     },
-     {
       "k": "words",
       "h": "Words to keep",
       "items": [
@@ -6526,6 +6547,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-pregnancy-loss-helper",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262"],
     "guide": "pregnancy-loss",
     "side": "helper",
     "title": "Pregnancy or Infant Loss",
@@ -6597,7 +6619,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Grief that turns heavy"
        ]
       ],
-      "say": "Here's what helps. Ask both partners how they're doing. Dads and partners grieve too, and often get overlooked. Carry the practical things, like meals, errands, a covered shift, or school paperwork. Remember the dates that will hurt. And watch the long run. If grief turns into lasting depression or anxiety, share the National Maternal Mental Health Hotline. If they talk about not wanting to be alive, call, text, or chat nine eight eight together."
+      "say": "Here's what helps. Ask both partners how they're doing. Dads and partners grieve too, and often get overlooked. Carry the practical things, like meals, errands, a covered shift, or school paperwork. Remember the dates that will hurt. And watch the long run."
      },
      {
       "k": "big",
@@ -6635,6 +6657,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Anxiety and Panic",
    "you": {
     "id": "br-g-anxiety-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "anxiety",
     "side": "you",
     "title": "Anxiety and Panic",
@@ -6752,8 +6775,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets to be too much",
-      "body": "Call or text 988. Text HOME to 741741. Danger right now: 911.",
-      "say": "If it ever gets to be too much, you can reach someone any time. Call or text 988, or text HOME to 741741. For chest pain or trouble breathing when you're not sure why, get medical help to be safe."
+      "say": "If it ever gets to be too much, you can reach someone any time. For chest pain or trouble breathing when you're not sure why, get medical help to be safe."
      },
      {
       "k": "big",
@@ -6911,6 +6933,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Depression and Feeling Stuck",
    "you": {
     "id": "br-g-depression-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741"],
     "guide": "depression",
     "side": "you",
     "title": "Depression and Feeling Stuck",
@@ -7003,8 +7026,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Tell one person",
-      "body": "A doctor, a counselor, someone you trust. Thoughts of not wanting to be alive: call or text 988.",
-      "say": "Tell one person how you're really doing: a doctor, a counselor, a friend, someone in your family. A text works. And if you've had thoughts of not wanting to be alive, call or text 988, or text HOME to 741741, any time. Real people answer."
+      "body": "A doctor, a counselor, someone you trust.",
+      "say": "Tell one person how you're really doing: a doctor, a counselor, a friend, someone in your family. A text works. Real people answer."
      },
      {
       "k": "big",
@@ -7016,6 +7039,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-depression-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "depression",
     "side": "helper",
     "title": "Depression and Feeling Stuck",
@@ -7080,7 +7104,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Ask plainly about suicide.",
       "sub": "Asking is safe. It opens the door.",
-      "say": "If you're worried, ask plainly. Are you having thoughts of ending your life? Asking is safe, and it doesn't put the idea in their head. Thoughts of suicide are more common at eighteen to twenty five than at any other adult age. If the answer is yes, stay with them, and call or text 988 together."
+      "say": "If you're worried, ask plainly. Are you having thoughts of ending your life? Asking is safe, and it doesn't put the idea in their head. Thoughts of suicide are more common at eighteen to twenty five than at any other adult age. If the answer is yes, stay with them."
      },
      {
       "k": "big",
@@ -7154,6 +7178,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "First Signs of a Serious Mental Illness",
    "you": {
     "id": "br-g-first-signs-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-signs",
     "side": "you",
     "title": "First Signs of a Serious Mental Illness",
@@ -7280,8 +7305,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it feels like too much",
-      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
-      "say": "If it ever feels like too much, or you have thoughts of not wanting to be alive, call or text 988, any time. In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
+      "say": "In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
      },
      {
       "k": "big",
@@ -7293,6 +7317,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-first-signs-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "first-signs",
     "side": "helper",
     "title": "First Signs of a Serious Mental Illness",
@@ -7395,8 +7420,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If anyone is in danger",
-      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
-      "say": "If they talk about harming themselves or someone else, or seem in danger, call or text 988. In Minnesota, call star star crisis from a cell phone for a mobile crisis team. If there's danger right now, call 911."
+      "say": "In Minnesota, call star star crisis from a cell phone for a mobile crisis team."
      },
      {
       "k": "big",
@@ -7419,6 +7443,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Drinking, Cannabis, and Other Drugs",
    "you": {
     "id": "br-g-substances-you",
+    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "you",
     "title": "Drinking, Cannabis, and Other Drugs",
@@ -7526,14 +7551,13 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If someone will not wake up",
-      "body": "Call 911. Give naloxone if you have it. Stay with them.",
-      "say": "If someone can't wake up, or is breathing slowly or strangely, call 911 right away. Give naloxone if you have it, and stay with them. Minnesota, like many states, protects people who call for help in many situations."
+      "body": "Call for help. Give naloxone if you have it. Stay with them.",
+      "say": "If someone can't wake up, or is breathing slowly or strangely, call for emergency help right away. Give naloxone if you have it, and stay with them. Minnesota, like many states, protects people who call for help in many situations."
      },
      {
       "k": "card",
       "title": "Help is private, any time",
-      "body": "SAMHSA National Helpline: 1-800-662-4357. Thoughts of not wanting to live: call or text 988.",
-      "say": "If you want to cut back or stop, help works, and it's private. Call the SAMHSA National Helpline any time, or talk honestly with a doctor. If using is how you're getting through thoughts of not wanting to be alive, call or text 988."
+      "say": "If you want to cut back or stop, help works, and it's private. Talk honestly with a doctor."
      },
      {
       "k": "big",
@@ -7545,6 +7569,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-substances-helper",
+    "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "helper",
     "title": "Drinking, Cannabis, and Other Drugs",
@@ -7610,18 +7635,16 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "big",
       "h": "Know what to do in an overdose.",
-      "sub": "Call 911. Naloxone. Stay.",
-      "say": "Know what to do in an emergency. If someone can't wake up, or is breathing slowly or strangely, call 911. Give naloxone if you have it, and stay with them. Naloxone is sold over the counter. If anyone around you uses opioids, or pills from anywhere but a pharmacy, keep some where you live."
+      "sub": "Call. Naloxone. Stay.",
+      "say": "Know what to do in an emergency. If someone can't wake up, or is breathing slowly or strangely, call for emergency help. Give naloxone if you have it, and stay with them. Naloxone is sold over the counter. If anyone around you uses opioids, or pills from anywhere but a pharmacy, keep some where you live."
      },
      {
       "k": "big",
-      "h": "Save the helpline in your phone.",
-      "sub": "1-800-662-4357, any time.",
-      "say": "Let's make help one tap away. Open your contacts and start a new one. Name it SAMHSA Helpline, and enter one eight hundred, six six two, four three five seven. Save it now, so it's there when either of you is ready.",
+      "h": "Save the number shown under this video in your phone.",
+      "say": "Let's make help one tap away. Open your contacts and start a new one. Save it now, so it's there when either of you is ready.",
       "beats": [
        "Let's make help one tap away.",
        "Open your contacts and start a new one.",
-       "Name it SAMHSA Helpline, and enter one eight hundred, six six two, four three five seven.",
        {
         "t": "Save it now, so it's there when either of you is ready.",
         "w": 14
@@ -7668,6 +7691,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Eating Disorders",
    "you": {
     "id": "br-g-eating-you",
+    "crisis": ["988: call or text, any time", "ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "you",
     "title": "Eating Disorders",
@@ -7753,15 +7777,11 @@ window.GG_LEARN_GUIDES.birch = {
         "Some dangers do not show"
        ],
        [
-        "Call ANAD",
-        "1-888-375-7767, weekdays"
-       ],
-       [
         "Tell one person",
         "You choose who"
        ]
       ],
-      "say": "Here are first steps. See a doctor and tell them plainly what's been happening. Some dangers don't show on the outside. Call the ANAD helpline on a weekday to talk it through and learn about treatment. And tell one person you trust. You choose who."
+      "say": "Here are first steps. See a doctor and tell them plainly what's been happening. Some dangers don't show on the outside. And tell one person you trust. You choose who."
      },
      {
       "k": "big",
@@ -7772,8 +7792,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Get help right away",
-      "body": "Fainting, chest pain, confusion, or a racing heart: call 911. Feeling you cannot go on: call or text 988.",
-      "say": "Get help right away for fainting, chest pain, confusion, or a racing or very slow heartbeat. Call 911. And if you feel like you can't go on, call or text 988, any time."
+      "body": "Fainting, chest pain, confusion, or a racing heart: call for help.",
+      "say": "Get help right away for fainting, chest pain, confusion, or a racing or very slow heartbeat."
      },
      {
       "k": "big",
@@ -7785,6 +7805,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-eating-helper",
+    "crisis": ["ANAD Helpline: 1-888-375-7767", "911: emergency"],
     "guide": "eating",
     "side": "helper",
     "title": "Eating Disorders",
@@ -7908,13 +7929,13 @@ window.GG_LEARN_GUIDES.birch = {
         "Ask how you can help"
        ]
       ],
-      "say": "Help them reach a team. Encourage a doctor visit, and offer to go along. Help look for specialists in eating disorders, if they'd like. And if they agree, ask how you can help in their plan. Many teams welcome a support person. Fainting, chest pain, confusion, or a racing heart means 911."
+      "say": "Help them reach a team. Encourage a doctor visit, and offer to go along. Help look for specialists in eating disorders, if they'd like. And if they agree, ask how you can help in their plan. Many teams welcome a support person. Fainting, chest pain, confusion, or a racing heart means calling for emergency help."
      },
      {
       "k": "big",
       "h": "Support for you, too.",
       "sub": "Loved ones need it.",
-      "say": "Loving someone with an eating disorder is exhausting and scary. ANAD has support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see, and no alert goes to anyone."
+      "say": "Loving someone with an eating disorder is exhausting and scary. There are support groups for loved ones, too. Keep your own meals, rest, and people. If they use Birch, they choose what you see, and no alert goes to anyone."
      },
      {
       "k": "big",
@@ -7931,6 +7952,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Your Own Health: Insurance, Doctors, and Turning 26",
    "you": {
     "id": "br-g-health-26-you",
+    "crisis": ["911: emergency"],
     "guide": "health-26",
     "side": "you",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -7999,11 +8021,11 @@ window.GG_LEARN_GUIDES.birch = {
         "Cannot wait, not an emergency"
        ],
        [
-        "ER or 911",
+        "ER",
         "Emergencies"
        ]
       ],
-      "say": "Know where to go before you need it. Your clinic, for most things. Urgent care, for things that can't wait but aren't emergencies. And the emergency room, or 911, for emergencies. Many plans also have a nurse line you can call any time."
+      "say": "Know where to go before you need it. Your clinic, for most things. Urgent care, for things that can't wait but aren't emergencies. And the emergency room for emergencies. Many plans also have a nurse line you can call any time."
      },
      {
       "k": "big",
@@ -8061,6 +8083,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-health-26-helper",
+    "crisis": ["211: local help"],
     "guide": "health-26",
     "side": "helper",
     "title": "Your Own Health: Insurance, Doctors, and Turning 26",
@@ -8084,7 +8107,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "At 18, it is their information.",
       "sub": "They decide who sees it.",
-      "say": "At eighteen, a young adult decides who sees their health information. Doctors talk with them, not with you, unless they say so. That can feel strange. It's also how they become confident running their own health. If money is tight, point them to Minnesota 211 for local help, and remind them that many clinics offer payment plans."
+      "say": "At eighteen, a young adult decides who sees their health information. Doctors talk with them, not with you, unless they say so. That can feel strange. It's also how they become confident running their own health. If money is tight, remind them that many clinics offer payment plans."
      },
      {
       "k": "big",
@@ -9029,7 +9052,7 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        [
         "Talk it through",
-        "RAINN or Day One, any time"
+        ""
        ],
        [
         "Tell one person",
@@ -9044,27 +9067,27 @@ window.GG_LEARN_GUIDES.birch = {
         "If and when you choose"
        ]
       ],
-      "say": "You get to choose your next step. You can talk it through, confidentially, with trained people at RAINN, or Day One in Minnesota, any time. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, or you think you were drugged, a hospital can check on you, and an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose.",
+      "say": "You get to choose your next step. You can tell one person you trust, and if they don't respond well, tell another. If it happened in the last few days, or you think you were drugged, a hospital can check on you, and an advocate can explain the choice of a medical exam and go with you. Reporting can come later, if and when you choose.",
       "cue": {
        "at": [
         1,
+        1,
         2,
-        3,
-        4
+        3
        ]
       }
      },
      {
       "k": "card",
       "title": "If it was someone close",
-      "body": "Love Is Respect: 1-866-331-9474. School or work: an advocate can explain options.",
-      "say": "If it was someone you're dating or with, Love Is Respect can help you plan for safety, any time. If it involved your school or your job, an advocate can explain your options there too, including changes to classes, housing, or shifts. If you're in danger right now, call nine one one."
+      "body": "School or work: an advocate can explain options.",
+      "say": "If it involved your school or your job, an advocate can explain your options there too, including changes to classes, housing, or shifts."
      },
      {
       "k": "big",
       "h": "Healing is real.",
       "sub": "At your own pace.",
-      "say": "Healing is real, and it's not a straight line. Simple routines help: meals, sleep, and time with safe people. A counselor who understands trauma can help a lot. If it ever feels too heavy to keep going, call or text nine eight eight, any time."
+      "say": "Healing is real, and it's not a straight line. Simple routines help: meals, sleep, and time with safe people. A counselor who understands trauma can help a lot."
      },
      {
       "k": "big",
@@ -9176,11 +9199,11 @@ window.GG_LEARN_GUIDES.birch = {
       "steps": [
        [
         "Safe right now",
-        "Hurt or in danger: 911"
+        ""
        ],
        [
         "Call an advocate",
-        "RAINN or Day One"
+        ""
        ],
        [
         "Recent?",
@@ -9191,21 +9214,21 @@ window.GG_LEARN_GUIDES.birch = {
         "Who knows, and what is next"
        ]
       ],
-      "say": "Then offer next steps, at their pace. Make sure they're safe right now, and call nine one one if they're hurt or in danger. Offer to call RAINN, or Day One in Minnesota, together. If it was recent, an advocate can explain the choice of a medical exam, and you can offer to go along. And let them make the choices: who knows, what happens next, and when to talk.",
+      "say": "Then offer next steps, at their pace. Make sure they're safe right now. If it was recent, an advocate can explain the choice of a medical exam, and you can offer to go along. And let them make the choices: who knows, what happens next, and when to talk.",
       "cue": {
        "at": [
         1,
         2,
-        3,
-        4
+        2,
+        3
        ]
       }
      },
      {
       "k": "card",
       "title": "Stay close in the weeks after.",
-      "body": "Watch for sleep trouble and pulling away. Not wanting to be alive: call or text 988 together.",
-      "say": "Stay close in the weeks after. They're an adult, and having choices back is part of healing. Watch for sleep trouble, pulling away, heavier drinking, or talk of not wanting to be alive, and call or text nine eight eight together if it comes. And find support for yourself, without sharing their story, so you can stay steady."
+      "body": "Watch for sleep trouble and pulling away.",
+      "say": "Stay close in the weeks after. They're an adult, and having choices back is part of healing. Watch for sleep trouble, pulling away, heavier drinking, or talk of not wanting to be alive. And find support for yourself, without sharing their story, so you can stay steady."
      },
      {
       "k": "big",
@@ -9339,14 +9362,12 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it's someone you know",
-      "body": "An ex, a partner, or someone who knows where you live: Love Is Respect, 1-866-331-9474. Danger: 911.",
-      "say": "If it's an ex, a partner, or someone who knows where you live, this is about your safety too. Love Is Respect can help you make a plan, any time. In Minnesota, Day One can help as well. If you're threatened with harm, or someone is following you, call nine one one."
+      "say": "If it's an ex, a partner, or someone who knows where you live, this is about your safety too."
      },
      {
       "k": "card",
       "title": "If it feels like too much",
-      "body": "Call, text, or chat 988, any time. Text HOME to 741741.",
-      "say": "Some people have felt so trapped by these threats that they didn't want to be alive. If that's where your mind is going, please reach out right now. Call or text nine eight eight, any time, or text HOME to seven four one, seven four one. This feeling can pass, and this problem has real answers."
+      "say": "Some people have felt so trapped by these threats that they didn't want to be alive. If that's where your mind is going, please reach out right now. This feeling can pass, and this problem has real answers."
      },
      {
       "k": "big",
@@ -9478,14 +9499,12 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it is an ex or a partner",
-      "body": "Love Is Respect: 1-866-331-9474. National Domestic Violence Hotline: 1-800-799-7233.",
-      "say": "If it's an ex, a partner, or someone who knows where they live, help them think about safety, too. Love Is Respect, the National Domestic Violence Hotline, or Day One in Minnesota can help plan. If there are threats of harm, call nine one one."
+      "say": "If it's an ex, a partner, or someone who knows where they live, help them think about safety, too."
      },
      {
       "k": "card",
       "title": "Stay close in the days after.",
-      "body": "Check in at night. Not wanting to be alive: call or text 988 together.",
-      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them and call or text nine eight eight together. If there's danger right now, call nine one one."
+      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them."
      },
      {
       "k": "big",
@@ -9508,6 +9527,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Pornography That's Hard to Stop",
    "you": {
     "id": "br-g-porn-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "porn",
     "side": "you",
     "title": "Pornography That's Hard to Stop",
@@ -9627,7 +9647,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "A slip is not a verdict.",
       "sub": "Notice what led to it. Start again today.",
-      "say": "If you slip, treat it as information, not a verdict on who you are. Notice what led to it, and start again the same day. If the shame ever gets so heavy you don't want to be alive, call or text nine eight eight, any time."
+      "say": "If you slip, treat it as information, not a verdict on who you are. Notice what led to it, and start again the same day."
      },
      {
       "k": "big",
@@ -9766,6 +9786,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Joining the Military, and Military Life",
    "you": {
     "id": "br-g-military-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647"],
     "guide": "military",
     "side": "you",
     "title": "Joining the Military, and Military Life",
@@ -9860,8 +9881,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Help any time",
-      "body": "Military OneSource: 800-342-9647. Crisis: call 988, then press 1, or text 838255.",
-      "say": "If a stretch gets heavy, with mood, money, drinking, or a relationship, speak up early. Asking for help is a strength the military trains. Military OneSource is at eight hundred, three four two, nine six four seven. And if you ever think about not wanting to be here, call nine eight eight, then press one. Real people, any time."
+      "say": "If a stretch gets heavy, with mood, money, drinking, or a relationship, speak up early. Asking for help is a strength the military trains. Real people, any time."
      },
      {
       "k": "big",
@@ -9879,6 +9899,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-military-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647"],
     "guide": "military",
     "side": "helper",
     "title": "Joining the Military, and Military Life",
@@ -9953,8 +9974,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If they seem low",
-      "body": "Military OneSource, for families too: 800-342-9647. Crisis: 988, then press 1.",
-      "say": "If they seem low, keep in touch and ask directly how they're doing. Military OneSource helps families too, any time, at eight hundred, three four two, nine six four seven. If they ever talk about not wanting to be here, stay with them and help them call nine eight eight, then press one."
+      "say": "If they seem low, keep in touch and ask directly how they're doing. If they ever talk about not wanting to be here, stay with them."
      },
      {
       "k": "big",
@@ -9977,6 +9997,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Coming Home From Service",
    "you": {
     "id": "br-g-coming-home-you",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "911: emergency"],
     "guide": "coming-home",
     "side": "you",
     "title": "Coming Home From Service",
@@ -10049,8 +10070,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets heavy",
-      "body": "Call 988, then press 1, or text 838255. Danger right now: 911.",
-      "say": "Watch for sleep that won't settle, anger that flares, or drinking that keeps growing. Those are signs to talk with the VA or a counselor early. And if you ever think about not wanting to be here, call nine eight eight, then press one, or text eight three eight two five five. Real people, any time."
+      "say": "Watch for sleep that won't settle, anger that flares, or drinking that keeps growing. Those are signs to talk with the VA or a counselor early. Real people, any time."
      },
      {
       "k": "big",
@@ -10068,6 +10088,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-coming-home-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1"],
     "guide": "coming-home",
     "side": "helper",
     "title": "Coming Home From Service",
@@ -10153,8 +10174,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Veterans and Military Crisis Line: 988, then press 1. Families can call too.",
-      "say": "If they ever talk about not wanting to be here, stay with them and help them call nine eight eight, then press one. Families can call that line too, if you're worried and don't know what to do."
+      "say": "If they ever talk about not wanting to be here, stay with them. Families can call that line too, if you're worried and don't know what to do."
      },
      {
       "k": "big",
@@ -10171,6 +10191,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
    "you": {
     "id": "br-g-grief-young-you",
+    "crisis": ["988: call or text, any time", "Crisis Text Line: text HOME to 741741", "911: emergency"],
     "guide": "grief-young",
     "side": "you",
     "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
@@ -10254,8 +10275,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it gets too heavy",
-      "body": "Call, text, or chat 988. Text HOME to 741741. Danger right now: 911.",
-      "say": "Grief can be so heavy that some people start thinking about not wanting to be here, or about joining the person who died. If that happens, you deserve help right away. Call, text, or chat nine eight eight, any time."
+      "say": "Grief can be so heavy that some people start thinking about not wanting to be here, or about joining the person who died. If that happens, you deserve help right away."
      },
      {
       "k": "big",
@@ -10267,6 +10287,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-grief-young-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "grief-young",
     "side": "helper",
     "title": "Grief When You're Young: A Parent, a Friend, or a Peer Dies",
@@ -10352,8 +10373,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Ask directly. Call, text, or chat 988 together. Danger right now: 911.",
-      "say": "If you're worried, ask directly and kindly whether they're thinking about suicide. Research finds that asking does not put the idea in someone's head. If they say yes, stay with them, and call, text, or chat nine eight eight together."
+      "body": "Ask directly.",
+      "say": "If you're worried, ask directly and kindly whether they're thinking about suicide. Research finds that asking does not put the idea in someone's head. If they say yes, stay with them."
      },
      {
       "k": "big",
@@ -10588,6 +10609,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Hurt by a Faith Community",
    "you": {
     "id": "br-g-faith-hurt-you",
+    "crisis": ["988: call or text, any time", "Day One (Minnesota): 1-866-223-1111", "RAINN: 1-800-656-4673", "911: emergency"],
     "guide": "faith-hurt",
     "side": "you",
     "title": "Hurt by a Faith Community",
@@ -10615,8 +10637,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If someone hurt you",
-      "body": "RAINN: 1-800-656-4673. In Minnesota, Day One: 1-866-223-1111. Danger right now: 911.",
-      "say": "One thing first. If a leader, or anyone there, touched you, threatened you, or pressured you sexually, that is never okay, and you can report it. RAINN can help any time, at one eight hundred, six five six, four six seven three. In Minnesota, Day One is there too. If there's danger right now, call nine one one."
+      "say": "One thing first. If a leader, or anyone there, touched you, threatened you, or pressured you sexually, that is never okay, and you can report it."
      },
      {
       "k": "big",
@@ -10666,7 +10687,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Many paths to healing",
       "sub": "Back, somewhere new, or stepping away.",
-      "say": "Healing looks different for different people. Some go back, once things are made right. Some find a new community. Some step away and find meaning in other places. Each can be a healthy choice. If shame or low mood hang on, talk with a counselor, and if you ever think about not wanting to be here, call, text, or chat nine eight eight."
+      "say": "Healing looks different for different people. Some go back, once things are made right. Some find a new community. Some step away and find meaning in other places. Each can be a healthy choice. If shame or low mood hang on, talk with a counselor."
      },
      {
       "k": "big",
@@ -10678,6 +10699,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-faith-hurt-helper",
+    "crisis": ["Day One (Minnesota): 1-866-223-1111", "RAINN: 1-800-656-4673", "911: emergency"],
     "guide": "faith-hurt",
     "side": "helper",
     "title": "Hurt by a Faith Community",
@@ -10750,10 +10772,10 @@ window.GG_LEARN_GUIDES.birch = {
        ],
        [
         "Help them reach support",
-        "RAINN, Day One, or police"
+        ""
        ]
       ],
-      "say": "If someone hurt them sexually or physically, believe them, and listen all the way through. They're an adult, so support their choices about reporting. Help them reach RAINN, or Day One in Minnesota, or the police if they choose. If there's danger right now, call nine one one."
+      "say": "If someone hurt them sexually or physically, believe them, and listen all the way through. They're an adult, so support their choices about reporting. Help them reach the police if they choose."
      },
      {
       "k": "points",
@@ -10789,6 +10811,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Finding Purpose and Calling",
    "you": {
     "id": "br-g-purpose-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "you",
     "title": "Finding Purpose and Calling",
@@ -10882,7 +10905,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "If lost turns into hopeless",
       "sub": "Talk with someone.",
-      "say": "Feeling lost is common. If it turns into hopelessness, or low mood most days for two weeks or more, talk with a counselor or a doctor. And if you ever think about not wanting to be here, call, text, or chat nine eight eight, any time."
+      "say": "Feeling lost is common. If it turns into hopelessness, or low mood most days for two weeks or more, talk with a counselor or a doctor."
      },
      {
       "k": "big",
@@ -10894,6 +10917,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-purpose-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "purpose",
     "side": "helper",
     "title": "Finding Purpose and Calling",
@@ -10989,7 +11013,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Watch for hopeless.",
       "sub": "Lost is common. Hopeless needs help.",
-      "say": "Feeling lost is common at this age. If it turns into hopelessness, or they stop doing much at all, encourage them to talk with a counselor or doctor. If they ever talk about not wanting to be here, stay with them and call, text, or chat nine eight eight together."
+      "say": "Feeling lost is common at this age. If it turns into hopelessness, or they stop doing much at all, encourage them to talk with a counselor or doctor. If they ever talk about not wanting to be here, stay with them."
      },
      {
       "k": "big",
@@ -11662,6 +11686,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Living Well with a Serious Mental Illness",
    "you": {
     "id": "br-g-living-well-mi-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "living-well-mi",
     "side": "you",
     "title": "Living Well with a Serious Mental Illness",
@@ -11761,8 +11786,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If it feels like too much",
-      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
-      "say": "If it ever feels like too much, or you have thoughts of not wanting to be alive, call or text 988, any time. In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
+      "say": "In Minnesota, you can call star star crisis from a cell phone, and a crisis team can talk with you or come to you."
      },
      {
       "k": "big",
@@ -11774,6 +11798,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-living-well-mi-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "living-well-mi",
     "side": "helper",
     "title": "Living Well with a Serious Mental Illness",
@@ -11858,8 +11883,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If anyone is in danger",
-      "body": "Call or text 988. In Minnesota, **CRISIS (274747) from a cell phone. Danger right now: 911.",
-      "say": "If they talk about harming themselves or someone else, or seem in danger, call or text 988. In Minnesota, call star star crisis from a cell phone for a mobile crisis team. If there's danger right now, call 911."
+      "say": "In Minnesota, call star star crisis from a cell phone for a mobile crisis team."
      },
      {
       "k": "big",
@@ -12113,6 +12137,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Deaf or Hard of Hearing",
    "you": {
     "id": "br-g-deaf-hoh-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "deaf-hoh",
     "side": "you",
     "title": "Deaf or Hard of Hearing",
@@ -12195,12 +12220,6 @@ window.GG_LEARN_GUIDES.birch = {
       "h": "Often the barrier is the room.",
       "sub": "Rooms can change.",
       "say": "Often the barrier isn't you. It's the loud restaurant, the dark room, the video with no captions, or the meeting where everyone talks at once. Those can change. Choose places that work, and ask for what you need."
-     },
-     {
-      "k": "card",
-      "title": "Help, your way",
-      "body": "988 in ASL by videophone, or text 988. Danger right now: 911.",
-      "say": "If you're ever in crisis, 988 has counselors who sign. Use ASL Now on the 988 website to reach them by videophone, or text 988, any time. For danger right now, call or text 911 where it's available."
      },
      {
       "k": "big",
@@ -12547,6 +12566,7 @@ window.GG_LEARN_GUIDES.birch = {
    "title": "Dating and Marriage with a Disability or Illness",
    "you": {
     "id": "br-g-dating-disability-you",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
     "guide": "dating-disability",
     "side": "you",
     "title": "Dating and Marriage with a Disability or Illness",
@@ -12606,7 +12626,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Control or threats"
        ]
       ],
-      "say": "Then watch how they respond. Curiosity and respect are good signs. Pity, pressure, or jokes at your expense are good reasons to move on. And love that controls, isolates, or threatens you isn't love. Love Is Respect can talk it through with you, by call, text, or chat, any time.",
+      "say": "Then watch how they respond. Curiosity and respect are good signs. Pity, pressure, or jokes at your expense are good reasons to move on. And love that controls, isolates, or threatens you isn't love.",
       "cue": {
        "at": [
         1,
@@ -12637,6 +12657,7 @@ window.GG_LEARN_GUIDES.birch = {
    },
    "helper": {
     "id": "br-g-dating-disability-helper",
+    "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522", "911: emergency"],
     "guide": "dating-disability",
     "side": "helper",
     "title": "Dating and Marriage with a Disability or Illness",
@@ -12718,8 +12739,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If you see control or threats",
-      "body": "Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522.",
-      "say": "If you see signs of control, isolation, or threats, say what you notice, gently and without blame. Love Is Respect helps people thirteen to twenty six, and the people who care about them, by call, text, or chat, any time. If there's danger right now, call nine one one."
+      "say": "If you see signs of control, isolation, or threats, say what you notice, gently and without blame."
      },
      {
       "k": "big",
@@ -13151,6 +13171,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Your First Year Sober",
   "you": {
    "id": "br-g-sober-first-year-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357"],
    "guide": "sober-first-year",
    "side": "you",
    "title": "Your First Year Sober",
@@ -13269,8 +13290,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Every kind of help is welcome",
-     "body": "A doctor. Therapy. Treatment. Medication. Peer groups. SAMHSA: 1-800-662-4357.",
-     "say": "Every kind of help is welcome. A doctor, therapy, treatment, medication, and peer groups like AA, NA, SMART Recovery, or Refuge Recovery. Use what helps you. The SAMHSA National Helpline can help you find support, any time, at one eight hundred, six six two, help."
+     "body": "A doctor. Therapy. Treatment. Medication. Peer groups.",
+     "say": "Every kind of help is welcome. A doctor, therapy, treatment, medication, and peer groups like AA, NA, SMART Recovery, or Refuge Recovery. Use what helps you."
     },
     {
      "k": "big",
@@ -13282,6 +13303,7 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-first-year-helper",
+   "crisis": ["988: call or text, any time", "911: emergency"],
    "guide": "sober-first-year",
    "side": "helper",
    "title": "Your First Year Sober",
@@ -13384,8 +13406,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "If anyone is in danger",
-     "body": "Someone won't wake up or is breathing slowly: 911. Thoughts of self-harm: 988.",
-     "say": "Two safety lines to know. If someone can't wake up, or is breathing slowly or strangely, call nine one one. And if they ever talk about harming themselves, call or text nine eight eight together."
+     "body": "Someone won't wake up or is breathing slowly: call for help.",
+     "say": "Two safety lines to know. If someone can't wake up, or is breathing slowly or strangely, call for emergency help."
     },
     {
      "k": "big",
@@ -13408,6 +13430,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Sober in College and Nightlife",
   "you": {
    "id": "br-g-sober-college-nightlife-you",
+   "crisis": ["911: emergency"],
    "guide": "sober-college-nightlife",
    "side": "you",
    "title": "Sober in College and Nightlife",
@@ -13512,8 +13535,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Someone won't wake up?",
-     "body": "Call 911, stay with them, and give naloxone if you have it.",
-     "say": "One safety step for any night out. If someone can't wake up, or is breathing slowly or strangely, call nine one one, stay with them, and give naloxone if you have it. Calling is always the right thing."
+     "body": "Call for help, stay with them, and give naloxone if you have it.",
+     "say": "One safety step for any night out. If someone can't wake up, or is breathing slowly or strangely, call for emergency help, stay with them, and give naloxone if you have it. Calling is always the right thing."
     },
     {
      "k": "big",
@@ -13525,6 +13548,7 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-college-nightlife-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-college-nightlife",
    "side": "helper",
    "title": "Sober in College and Nightlife",
@@ -13628,8 +13652,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Someone won't wake up?",
-     "body": "Call 911 and stay with them.",
-     "say": "If anyone at any party can't wake up, or is breathing slowly or strangely, call nine one one and stay with them. Give naloxone if you have it."
+     "body": "Stay with them.",
+     "say": "If anyone at any party can't wake up, or is breathing slowly or strangely, call for emergency help and stay with them. Give naloxone if you have it."
     },
     {
      "k": "big",
@@ -13646,6 +13670,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Sober Friends and Dating",
   "you": {
    "id": "br-g-sober-friends-dating-you",
+   "crisis": ["Love Is Respect: 1-866-331-9474, or text LOVEIS to 22522"],
    "guide": "sober-friends-dating",
    "side": "you",
    "title": "Sober Friends and Dating",
@@ -13747,8 +13772,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Pushed to drink or use?",
-     "body": "That shows you something important. Love Is Respect: 1-866-331-9474.",
-     "say": "If someone you're dating pushes you to drink or use, or tries to control you, that shows you something important. Love Is Respect is there any time, at one eight six six, three three one, nine four seven four."
+     "body": "That shows you something important.",
+     "say": "If someone you're dating pushes you to drink or use, or tries to control you, that shows you something important."
     },
     {
      "k": "big",
@@ -13875,6 +13900,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "After a Slip",
   "you": {
    "id": "br-g-sober-after-slip-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-after-slip",
    "side": "you",
    "title": "After a Slip",
@@ -13904,8 +13930,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Safety first",
-     "body": "Opioids after a break: tolerance drops. Keep naloxone close. Someone won't wake up: 911.",
-     "say": "Safety first. If you used opioids, or pills from anywhere but a pharmacy, your tolerance dropped during your break, so an old amount can be deadly. Keep naloxone close, and stay with someone. If anyone can't wake up, call nine one one. And if you drank or used for more than a few days, talk with a doctor about stopping safely."
+     "body": "Opioids after a break: tolerance drops. Keep naloxone close. Someone won't wake up: call for help.",
+     "say": "Safety first. If you used opioids, or pills from anywhere but a pharmacy, your tolerance dropped during your break, so an old amount can be deadly. Keep naloxone close, and stay with someone. If anyone can't wake up, call for emergency help. And if you drank or used for more than a few days, talk with a doctor about stopping safely."
     },
     {
      "k": "big",
@@ -13976,12 +14002,13 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "big",
      "h": "Every return counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Let your people back in: a friend, a peer group, a sponsor, a therapist, a doctor, or the SAMHSA National Helpline at one eight hundred, six six two, help. Every return counts. The full guide has more, whenever you want it."
+     "say": "Let your people back in: a friend, a peer group, a sponsor, a therapist, or a doctor. Every return counts. The full guide has more, whenever you want it."
     }
    ]
   },
   "helper": {
    "id": "br-g-sober-after-slip-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-after-slip",
    "side": "helper",
    "title": "After a Slip",
@@ -14004,8 +14031,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Safety first",
-     "body": "Keep naloxone close. Someone won't wake up or is breathing slowly: 911.",
-     "say": "Safety comes first. If opioids or pills from anywhere but a pharmacy might be involved, keep naloxone nearby and learn how to use it. It's sold without a prescription. After a break, tolerance drops, so an old amount can be deadly. If anyone can't wake up, or is breathing slowly or strangely, call nine one one."
+     "body": "Keep naloxone close. Someone won't wake up or is breathing slowly: call for help.",
+     "say": "Safety comes first. If opioids or pills from anywhere but a pharmacy might be involved, keep naloxone nearby and learn how to use it. It's sold without a prescription. After a break, tolerance drops, so an old amount can be deadly. If anyone can't wake up, or is breathing slowly or strangely, call for emergency help."
     },
     {
      "k": "big",
@@ -14100,6 +14127,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "Life After Treatment",
   "you": {
    "id": "br-g-sober-after-treatment-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-after-treatment",
    "side": "you",
    "title": "Life After Treatment",
@@ -14155,7 +14183,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "card",
      "title": "Opioids before treatment?",
      "body": "Your tolerance is lower now. Keep naloxone at home.",
-     "say": "One safety step. If you used opioids before treatment, your tolerance is lower now, so an old amount can be deadly. Keep naloxone at home, and tell someone where it is. If anyone can't wake up, call nine one one."
+     "say": "One safety step. If you used opioids before treatment, your tolerance is lower now, so an old amount can be deadly. Keep naloxone at home, and tell someone where it is. If anyone can't wake up, call for emergency help."
     },
     {
      "k": "flow",
@@ -14208,7 +14236,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "big",
      "h": "One day at a time.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "You did real work, and you get to keep growing it. If you need help finding outpatient care, sober housing, or support, call the SAMHSA National Helpline, any time, at one eight hundred, six six two, help. One day at a time. The full guide has more, whenever you want it."
+     "say": "You did real work, and you get to keep growing it. One day at a time. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -14329,6 +14357,7 @@ window.GG_LEARN_GUIDES.birch = {
   "title": "A Parent's Drinking or Using, Now That You're Grown",
   "you": {
    "id": "br-g-sober-parent-grown-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent-grown",
    "side": "you",
    "title": "A Parent's Drinking or Using, Now That You're Grown",
@@ -14436,8 +14465,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Support made for you",
-     "body": "Al-Anon. Nar-Anon. A therapist. SAMHSA: 1-800-662-4357.",
-     "say": "There's support made just for you. Al-Anon and Nar-Anon meetings, and a therapist who understands families and drinking. If your parent ever can't wake up, or is breathing slowly, call nine one one."
+     "body": "Al-Anon. Nar-Anon. A therapist.",
+     "say": "There's support made just for you. Al-Anon and Nar-Anon meetings, and a therapist who understands families and drinking. If your parent ever can't wake up, or is breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -14449,6 +14478,7 @@ window.GG_LEARN_GUIDES.birch = {
   },
   "helper": {
    "id": "br-g-sober-parent-grown-helper",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-parent-grown",
    "side": "helper",
    "title": "A Parent's Drinking or Using, Now That You're Grown",
@@ -14530,10 +14560,10 @@ window.GG_LEARN_GUIDES.birch = {
       ],
       [
        "Safety",
-       "Someone won't wake up: 911"
+       "Someone won't wake up: call for help"
       ]
      ],
-     "say": "Here are ways to help. Plan holidays they enjoy, like a sober gathering at a friend's table, or a short visit with a clear end. Encourage support made for them, like Al-Anon, Nar-Anon, or a therapist. And know the safety step. If their parent ever can't wake up, or is breathing slowly, call nine one one.",
+     "say": "Here are ways to help. Plan holidays they enjoy, like a sober gathering at a friend's table, or a short visit with a clear end. Encourage support made for them, like Al-Anon, Nar-Anon, or a therapist. And know the safety step. If their parent ever can't wake up, or is breathing slowly, call for emergency help.",
      "cue": {
       "at": [
        1,
@@ -14546,7 +14576,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "card",
      "title": "If they worry about their own drinking",
      "body": "Listen calmly. Offer to help find support.",
-     "say": "Some young adults who grew up with a parent's drinking start to wonder about their own. If they bring it up, listen calmly, without alarm. Thank them for being honest, and offer to help them find support, like a doctor, a therapist, or the SAMHSA National Helpline."
+     "say": "Some young adults who grew up with a parent's drinking start to wonder about their own. If they bring it up, listen calmly, without alarm. Thank them for being honest, and offer to help them find support, like a doctor or a therapist."
     },
     {
      "k": "big",
@@ -14683,8 +14713,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Support for the specific habit",
-     "body": "A therapist, a doctor, a peer group, or a helpline for eating, betting, or debt.",
-     "say": "And get support for the specific habit. A therapist, a doctor, a peer group, or a helpline for eating, betting, or debt. The full guide lists them."
+     "body": "A therapist, a doctor, or a peer group.",
+     "say": "And get support for the specific habit. A therapist, a doctor, or a peer group. The full guide lists them."
     },
     {
      "k": "big",
@@ -14790,8 +14820,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Help with the specific habit",
-     "body": "A therapist, a doctor, or a helpline. A budget, side by side.",
-     "say": "If they'd like help, encourage support for the specific habit: a therapist, a doctor, or a helpline for eating, betting, or debt. If money is part of it, offer to sit beside them while they make a budget."
+     "body": "A therapist or a doctor. A budget, side by side.",
+     "say": "If they'd like help, encourage support for the specific habit: a therapist or a doctor. If money is part of it, offer to sit beside them while they make a budget."
     },
     {
      "k": "big",

@@ -151,6 +151,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-new-baby-helper",
+    "crisis": ["988: call or text, any time", "Maternal Mental Health Hotline: 1-833-852-6262", "911: emergency"],
     "guide": "new-baby",
     "side": "helper",
     "title": "A New Baby",
@@ -228,12 +229,6 @@ window.GG_LEARN_GUIDES.grove = {
       "title": "Watch the parents too.",
       "body": "About 1 in 8 mothers have symptoms of depression after a birth. Partners can struggle too.",
       "say": "Watch the grown-ups as well as the kids. About one in eight mothers have symptoms of depression after giving birth, and partners can struggle quietly too. Sadness, worry, or scary thoughts that last more than two weeks are a reason to talk with a doctor. It is common, and it is treatable."
-     },
-     {
-      "k": "card",
-      "title": "Help is close.",
-      "body": "Maternal Mental Health Hotline: 1-833-852-6262. Harm or danger: 988 or 911.",
-      "say": "The National Maternal Mental Health Hotline answers any time, for parents, partners, and families. If anyone has thoughts of harming themselves or the baby, call or text nine eight eight, or call nine one one now."
      },
      {
       "k": "big",
@@ -372,6 +367,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-moving-helper",
+    "crisis": ["988: call or text, any time", "211: local help"],
     "guide": "moving",
     "side": "helper",
     "title": "Moving to a New Home",
@@ -466,8 +462,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If the move came from a hard loss",
-      "body": "Housing worries: call or text 211. Low for weeks: talk with a doctor.",
-      "say": "Some moves come from a hard place, like a lost home, a separation, or money trouble. Name that loss too. For housing or money worries, call or text two one one for local help. If sadness or loneliness lasts weeks in anyone, child or grown-up, talk with a doctor or a school counselor. If someone talks about not wanting to live, call or text nine eight eight."
+      "body": "Low for weeks: talk with a doctor.",
+      "say": "Some moves come from a hard place, like a lost home, a separation, or money trouble. Name that loss too. For housing or money worries, call or text two one one for local help. If sadness or loneliness lasts weeks in anyone, child or grown-up, talk with a doctor or a school counselor."
      },
      {
       "k": "big",
@@ -582,6 +578,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-blended-helper",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "911: emergency"],
     "guide": "blended",
     "side": "helper",
     "title": "Becoming a Blended Family",
@@ -663,8 +660,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it stays hard",
-      "body": "A stepfamily-aware therapist. Unsafe: 911, Childhelp 1-800-422-4453.",
-      "say": "If conflict keeps rising, or a child stays very unhappy for weeks, a family therapist who knows stepfamilies can help a lot. If anyone in the home is unsafe, call nine one one in danger, and for a child, Childhelp is there any time. If anyone talks about not wanting to live, call or text nine eight eight."
+      "body": "A stepfamily-aware therapist.",
+      "say": "If conflict keeps rising, or a child stays very unhappy for weeks, a family therapist who knows stepfamilies can help a lot."
      },
      {
       "k": "big",
@@ -779,6 +776,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-grandparent-moves-in-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "grandparent-moves-in",
     "side": "helper",
     "title": "A Grandparent Moves In",
@@ -867,12 +865,6 @@ window.GG_LEARN_GUIDES.grove = {
        ]
       ],
       "say": "The helper needs help too. Ask siblings or relatives to take a weekend a month. Look into respite or an adult day program. Bring in the grandparent's doctor about health, falls, and memory. And find someone to talk with who isn't in the middle of it."
-     },
-     {
-      "k": "card",
-      "title": "If an older adult is at risk",
-      "body": "MAARC: 1-844-880-1574, any time. Danger: 911.",
-      "say": "If you ever worry that an older adult is being neglected, exploited, or harmed, call the Minnesota Adult Abuse Reporting Center, one eight four four, eight eight zero, one five seven four, any time. Danger right now, call nine one one. And if anyone in the home talks about not wanting to live, call or text nine eight eight."
      },
      {
       "k": "big",
@@ -988,6 +980,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-two-homes-helper",
+    "crisis": ["988: call or text, any time", "Childhelp: call or text 1-800-422-4453", "National DV Hotline: 1-800-799-7233", "911: emergency"],
     "guide": "two-homes",
     "side": "helper",
     "title": "Two Homes After a Separation",
@@ -1086,8 +1079,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety first.",
-      "body": "Danger: 911. Domestic Violence Hotline: 1-800-799-7233. Childhelp: 1-800-422-4453.",
-      "say": "If either home is unsafe, put safety first. In danger, call nine one one. The National Domestic Violence Hotline answers any time for adults, and Childhelp answers for children. If a child stays very sad or withdrawn for weeks, talk with their doctor or school counselor. Thoughts of not wanting to live, call or text nine eight eight."
+      "say": "If either home is unsafe, put safety first. If a child stays very sad or withdrawn for weeks, talk with their doctor or school counselor."
      },
      {
       "k": "big",
@@ -1203,6 +1195,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-parent-away-helper",
+    "crisis": ["988: call or text, any time", "Veterans: 988, then press 1", "Military OneSource: 800-342-9647", "911: emergency"],
     "guide": "parent-away",
     "side": "helper",
     "title": "A Parent Away for Service or Work",
@@ -1301,8 +1294,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Plan for homecoming. Reach out early.",
-      "body": "Military OneSource: 800-342-9647. Losing hope: 988, then press 1 for service members.",
-      "say": "Talk about homecoming before it happens, and expect weeks or months of adjusting as roles shift back. Military OneSource is there for the whole family, any time. If anyone talks about not wanting to live, call or text nine eight eight. Service members and veterans can press one. Danger right now, nine one one."
+      "say": "Talk about homecoming before it happens, and expect weeks or months of adjusting as roles shift back. Service members and veterans can press one."
      },
      {
       "k": "big",
@@ -1673,6 +1665,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-teen-away-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "teen-away",
     "side": "helper",
     "title": "A Teen Pulling Away",
@@ -1760,10 +1753,10 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "Hopeless words",
-        "Call or text 988"
+        ""
        ]
       ],
-      "say": "Sometimes pulling away is more than growing up. Watch for deep sadness or worry that lasts two weeks or more. Big changes in sleep, eating, or grades. Dropping friends and family both. Or hopeless words. Talk with their doctor or school counselor early. If they talk about suicide, call or text nine eight eight, together."
+      "say": "Sometimes pulling away is more than growing up. Watch for deep sadness or worry that lasts two weeks or more. Big changes in sleep, eating, or grades. Dropping friends and family both. Or hopeless words. Talk with their doctor or school counselor early."
      },
      {
       "k": "words",
@@ -2638,6 +2631,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-parent-out-of-work-helper",
+    "crisis": ["988: call or text, any time", "211: local help"],
     "guide": "parent-out-of-work",
     "side": "helper",
     "title": "A Parent Out of Work",
@@ -2735,14 +2729,14 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Use the help.",
-      "body": "Benefits, workforce centers, 211.",
+      "body": "Benefits, workforce centers.",
       "say": "Apply for unemployment benefits right away. Use job help, like CareerOneStop and your local workforce center. Reach out to former coworkers and friends. And call or text two one one for local help with food, rent, and bills."
      },
      {
       "k": "card",
       "title": "Watch your own heart.",
-      "body": "Hopeless feelings: talk to someone, call 988.",
-      "say": "Watch for deep sadness, hopelessness, or sleeping much more or less. Talk with your doctor, and lean on people you trust. If you ever have thoughts of not wanting to be alive, call or text nine eight eight, any time."
+      "body": "Hopeless feelings: talk to someone.",
+      "say": "Watch for deep sadness, hopelessness, or sleeping much more or less. Talk with your doctor, and lean on people you trust."
      },
      {
       "k": "big",
@@ -2843,7 +2837,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Tell a grown-up right away.",
       "body": "If anyone talks about hurting themselves.",
-      "say": "If anyone ever talks about hurting themselves, or about not wanting to be alive, tell a grown-up right away. That is a brave and loving thing to do. Grown-ups can call nine eight eight, any time, for help."
+      "say": "If anyone ever talks about hurting themselves, or about not wanting to be alive, tell a grown-up right away. That is a brave and loving thing to do."
      },
      {
       "k": "words",
@@ -2869,6 +2863,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-struggling-inside-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "struggling-inside",
     "side": "helper",
     "title": "When Someone at Home Is Struggling Inside",
@@ -2928,8 +2923,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Ask directly about suicide.",
-      "body": "Asking is safe and caring. Call or text 988.",
-      "say": "If you are worried, ask directly. Are you having thoughts of hurting yourself, or of not wanting to be alive? Asking is safe, and it shows you care. If the answer is yes, call or text nine eight eight together. If there is danger right now, call nine one one."
+      "body": "Asking is safe and caring.",
+      "say": "If you are worried, ask directly. Are you having thoughts of hurting yourself, or of not wanting to be alive? Asking is safe, and it shows you care."
      },
      {
       "k": "points",
@@ -3340,6 +3335,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-diagnosis-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "diagnosis",
     "side": "helper",
     "title": "A Serious Diagnosis in the Family",
@@ -3421,8 +3417,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Reach for help early.",
-      "body": "Ask for a child life specialist. Low for weeks: talk with a doctor. 988 and 911.",
-      "say": "Ask the medical team whether a social worker or child life specialist can help you talk with your children. Accept specific help from friends. If sadness or worry lasts weeks, in anyone, talk with a doctor or school counselor. If someone talks about not wanting to live, call or text nine eight eight. Danger right now, nine one one."
+      "body": "Ask for a child life specialist. Low for weeks: talk with a doctor.",
+      "say": "Ask the medical team whether a social worker or child life specialist can help you talk with your children. Accept specific help from friends. If sadness or worry lasts weeks, in anyone, talk with a doctor or school counselor."
      },
      {
       "k": "big",
@@ -3556,6 +3552,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hospital-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "hospital",
     "side": "helper",
     "title": "Someone We Love in the Hospital",
@@ -3635,8 +3632,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Keep the helpers going.",
-      "body": "Eat, sleep, take turns. 988 and 911 if needed.",
-      "say": "Hospital weeks wear helpers down fast. Eat, sleep, and step outside when you can. If sadness or worry lasts weeks in anyone, talk with a doctor. If someone talks about not wanting to live, call or text nine eight eight. Danger, nine one one."
+      "body": "Eat, sleep, take turns.",
+      "say": "Hospital weeks wear helpers down fast. Eat, sleep, and step outside when you can. If sadness or worry lasts weeks in anyone, talk with a doctor."
      },
      {
       "k": "big",
@@ -3754,6 +3751,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hospice-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "hospice",
     "side": "helper",
     "title": "A Family Member in Hospice",
@@ -3776,8 +3774,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Call the hospice line first.",
-      "sub": "Day or night, before 911.",
-      "say": "Here is the most practical thing. Your hospice has a phone line answered any time, day or night. Call it first, before nine one one, for pain, breathing, a fall, a change, or a question. That's what it's for, and no worry is too small."
+      "sub": "Day or night.",
+      "say": "Here is the most practical thing. Your hospice has a phone line answered any time, day or night. Call it first for pain, breathing, a fall, a change, or a question. That's what it's for, and no worry is too small."
      },
      {
       "k": "big",
@@ -3849,8 +3847,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If anyone is at risk",
-      "body": "MAARC: 1-844-880-1574. Losing hope: 988. Emergency: 911.",
-      "say": "If you ever worry an ill or vulnerable adult is being neglected, exploited, or harmed, call the Minnesota Adult Abuse Reporting Center, any time. If anyone in the family talks about not wanting to live, call or text nine eight eight. For an emergency hospice can't help with, call nine one one."
+      "say": "If you ever worry an ill or vulnerable adult is being neglected, exploited, or harmed, call the Minnesota Adult Abuse Reporting Center, any time."
      },
      {
       "k": "big",
@@ -3966,6 +3963,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-disability-together-helper",
+    "crisis": ["988: call or text, any time", "MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "disability-together",
     "side": "helper",
     "title": "Living with a Disability or Chronic Illness Together",
@@ -4048,8 +4046,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Keep the helpers going.",
-      "body": "Respite, siblings, and help early. MAARC: 1-844-880-1574.",
-      "say": "Long seasons need long-haul habits. Find respite so caregivers can rest. Protect time with brothers and sisters. If a vulnerable adult may be neglected or harmed, call the Minnesota Adult Abuse Reporting Center. If anyone talks about not wanting to live, call or text nine eight eight. Danger, nine one one."
+      "say": "Long seasons need long-haul habits. Find respite so caregivers can rest. Protect time with brothers and sisters. If a vulnerable adult may be neglected or harmed, call the Minnesota Adult Abuse Reporting Center."
      },
      {
       "k": "big",
@@ -4166,6 +4163,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-money-tight-helper",
+    "crisis": ["988: call or text, any time", "211: local help", "911: emergency"],
     "guide": "money-tight",
     "side": "helper",
     "title": "When Money Is Tight",
@@ -4247,8 +4245,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Help is close.",
-      "body": "211, call or text. No way out: 988. Danger: 911.",
-      "say": "Call or text two one one for local help with food, rent, heat, and bills. Ask the school about meal programs. If money stress turns into hopelessness, or anyone talks about not wanting to live, call or text nine eight eight. If it turns into danger at home, call nine one one."
+      "say": "Call or text two one one for local help with food, rent, heat, and bills. Ask the school about meal programs."
      },
      {
       "k": "big",
@@ -4379,6 +4376,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-recovery-helper",
+    "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "recovery",
     "side": "helper",
     "title": "Recovery in the Family",
@@ -4461,8 +4459,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "A plan for hard days",
-      "body": "SAMHSA: 1-800-662-4357. Crisis: 988. Overdose or danger: 911.",
-      "say": "Make a plan for hard days before you need it. The SAMHSA National Helpline answers any time for treatment and support. In a mental health crisis, or if anyone talks about not wanting to live, call or text nine eight eight. For an overdose or danger, call nine one one. A slip is a reason to reach for help, not the end of recovery."
+      "body": "Overdose or danger: call for help.",
+      "say": "Make a plan for hard days before you need it. For an overdose or danger, call for emergency help. A slip is a reason to reach for help, not the end of recovery."
      },
      {
       "k": "big",
@@ -4589,6 +4587,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-family-death-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "family-death",
     "side": "helper",
     "title": "When Someone in Our Family Dies",
@@ -4699,8 +4698,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When grief gets stuck",
-      "body": "A grief counselor helps. Thoughts of not wanting to live: 988.",
-      "say": "Watch gently for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor or a children's grief group. If anyone talks about not wanting to be alive, call or text 988 together. Danger right now, call 911."
+      "body": "A grief counselor helps.",
+      "say": "Watch gently for grief that seems stuck: weeks of pulling away, school falling apart, not sleeping or eating, or talk of wanting to be with the person who died. Bring in a grief counselor or a children's grief group."
      },
      {
       "k": "big",
@@ -4845,6 +4844,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-first-holidays-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "first-holidays",
     "side": "helper",
     "title": "The First Holidays After a Loss",
@@ -4954,8 +4954,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If grief gets heavier",
-      "body": "A grief group or grief counselor. 988 any time.",
-      "say": "Grief often comes back at each holiday. That is normal. If it seems stuck, or heavier each time, bring in a grief group or a grief counselor. If anyone talks about not wanting to be alive, call or text 988, any time."
+      "body": "A grief group or grief counselor.",
+      "say": "Grief often comes back at each holiday. That is normal. If it seems stuck, or heavier each time, bring in a grief group or a grief counselor."
      },
      {
       "k": "big",
@@ -5301,6 +5301,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-dates-helper",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "hard-dates",
     "side": "helper",
     "title": "Remembering Together on Hard Dates",
@@ -5402,8 +5403,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If a date brings grief that stays",
-      "body": "A grief group or grief counselor. 988 any time.",
-      "say": "For some people, a hard date brings grief that stays heavy for weeks. Help them find a grief group or a grief counselor. If anyone talks about not wanting to be alive, call or text 988, any time. Danger right now, call 911."
+      "body": "A grief group or grief counselor.",
+      "say": "For some people, a hard date brings grief that stays heavy for weeks. Help them find a grief group or a grief counselor."
      },
      {
       "k": "big",
@@ -5539,6 +5540,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-scary-news-helper",
+    "crisis": ["Disaster Distress Helpline: call or text 1-800-985-5990"],
     "guide": "scary-news",
     "side": "helper",
     "title": "After Scary News",
@@ -5628,8 +5630,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If it lingers",
-      "body": "A school counselor or doctor. 1-800-985-5990.",
-      "say": "Check in again a few days later. If fear, bad sleep, or not wanting to go to school or work lasts more than a few weeks, talk with a school counselor or a doctor. The Disaster Distress Helpline, 1-800-985-5990, is there by call or text."
+      "body": "A school counselor or doctor.",
+      "say": "Check in again a few days later. If fear, bad sleep, or not wanting to go to school or work lasts more than a few weeks, talk with a school counselor or a doctor."
      },
      {
       "k": "big",
@@ -5748,6 +5750,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-disaster-helper",
+    "crisis": ["Disaster Distress Helpline: call or text 1-800-985-5990", "211: local help"],
     "guide": "disaster",
     "side": "helper",
     "title": "After a Disaster or Emergency Nearby",
@@ -5811,14 +5814,14 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "Save the helpline.",
+      "h": "Save the number shown under this video.",
       "sub": "Before you need it.",
-      "say": "Help is easier to reach when the number is already in your phone. Open your contacts. Save the Disaster Distress Helpline: 1-800-985-5990. It takes calls and texts.",
+      "say": "Help is easier to reach when the number is already in your phone. Open your contacts. Save the number shown under this video.",
       "beats": [
        "Help is easier to reach when the number is already in your phone.",
        "Open your contacts.",
        {
-        "t": "Save the Disaster Distress Helpline: 1-800-985-5990. It takes calls and texts.",
+        "t": "Save the number shown under this video.",
         "w": 12
        }
       ]
@@ -5867,8 +5870,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Connect people to help",
-      "body": "Red Cross. 211. Local relief.",
-      "say": "Connect people to practical help: the Red Cross, 211 for local help with shelter and food, and FEMA's disaster assistance when it's offered. In a classroom, follow your school's plan and tell the school counselor about students who lost homes or seem shaken."
+      "body": "Red Cross. Local relief.",
+      "say": "Connect people to practical help: the Red Cross and FEMA's disaster assistance when it's offered. In a classroom, follow your school's plan and tell the school counselor about students who lost homes or seem shaken."
      },
      {
       "k": "card",
@@ -5999,6 +6002,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-classmate-death-helper",
+    "crisis": ["911: emergency"],
     "guide": "classmate-death",
     "side": "helper",
     "title": "A Classmate or Teacher Dies",
@@ -6022,7 +6026,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Your school's crisis plan comes first.",
       "sub": "The crisis team and the family lead.",
-      "say": "Start with your school's crisis plan. The crisis team, working with the family, decides what is shared and when. Use the words they give you. If there is any danger right now, call 911 and follow the plan."
+      "say": "Start with your school's crisis plan. The crisis team, working with the family, decides what is shared and when. Use the words they give you. If there is any danger right now, follow the plan."
      },
      {
       "k": "big",
@@ -6260,9 +6264,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "big",
-      "h": "911 and the school plan first.",
+      "h": "The school plan first.",
       "sub": "Everything else waits.",
-      "say": "In any emergency, call 911 for danger right now, and follow your school's crisis plan. Everything in this video is for after: the hours and days when students come back to class."
+      "say": "Follow your school's crisis plan. Everything in this video is for after: the hours and days when students come back to class."
      },
      {
       "k": "big",
@@ -6473,6 +6477,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-classmate-ill-helper",
+    "crisis": ["911: emergency"],
     "guide": "classmate-ill",
     "side": "helper",
     "title": "A Classmate Is Seriously Ill",
@@ -6583,7 +6588,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "If the illness grows very serious",
       "sub": "Your school's plan and counselors guide you.",
-      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. Others can help you figure that out. Danger right now, call 911."
+      "say": "If the illness becomes very serious, your school's crisis plan and the school counselors will guide what comes next. Others can help you figure that out."
      },
      {
       "k": "big",
@@ -7204,6 +7209,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-left-out-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "left-out",
     "side": "helper",
     "title": "Friendship Trouble and Being Left Out",
@@ -7304,10 +7310,10 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "Thoughts of suicide",
-        "The counselor at once, 988"
+        "The counselor at once"
        ]
       ],
-      "say": "Sometimes it's more than ordinary friendship trouble. A student who seems lonely for weeks needs the school counselor. Exclusion that is on purpose and repeated follows your school's bullying plan. And any talk of not wanting to be alive goes to the school counselor at once, with 988 if no one is reachable.",
+      "say": "Sometimes it's more than ordinary friendship trouble. A student who seems lonely for weeks needs the school counselor. Exclusion that is on purpose and repeated follows your school's bullying plan. And any talk of not wanting to be alive goes to the school counselor at once.",
       "cue": {
        "at": [
         1,
@@ -7481,6 +7487,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-unkindness-helper",
+    "crisis": ["911: emergency"],
     "guide": "unkindness",
     "side": "helper",
     "title": "Unkindness and Bullying in Our Class",
@@ -7597,7 +7604,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it is more",
       "body": "Threats, harm, or harm at home: safety first.",
-      "say": "Threats, physical harm, or any weapon follow your school's safety plan, and nine one one for danger right now. Any talk of not wanting to be alive goes to the school counselor at once. And if a student shares harm at home, report as the law and your school require."
+      "say": "Threats, physical harm, or any weapon follow your school's safety plan. Any talk of not wanting to be alive goes to the school counselor at once. And if a student shares harm at home, report as the law and your school require."
      },
      {
       "k": "big",
@@ -7970,6 +7977,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-family-changing-helper",
+    "crisis": ["Military OneSource: 800-342-9647"],
     "guide": "family-changing",
     "side": "helper",
     "title": "A Classmate's Family Is Changing",
@@ -8066,14 +8074,14 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "Military families",
-        "Military OneSource"
+        ""
        ],
        [
         "Harm at home",
         "Report as required"
        ]
       ],
-      "say": "Bring in the team. The school counselor first, for support and guidance on what to share. For military families, Military OneSource and your school's liaison. And if a student shares harm at home, report as the law and your school require.",
+      "say": "Bring in the team. The school counselor first, for support and guidance on what to share. For military families, your school's liaison. And if a student shares harm at home, report as the law and your school require.",
       "cue": {
        "at": [
         1,
@@ -8219,6 +8227,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-online-drama-helper",
+    "crisis": ["911: emergency"],
     "guide": "online-drama",
     "side": "helper",
     "title": "Group Chats and Online Drama",
@@ -8330,7 +8339,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it is more",
       "body": "Threats, pictures, or adults asking for secrets.",
-      "say": "Threats, pictures of a student, or an adult asking a student for secrets or images go to the school's safety plan and the authorities right away. Any talk of not wanting to be alive goes to the counselor at once. And danger right now, nine one one."
+      "say": "Threats, pictures of a student, or an adult asking a student for secrets or images go to the school's safety plan and the authorities right away. Any talk of not wanting to be alive goes to the counselor at once."
      },
      {
       "k": "big",
@@ -8852,6 +8861,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-leader-leaving-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "leader-leaving",
     "side": "helper",
     "title": "Our Pastor or Leader Is Leaving",
@@ -8954,8 +8964,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If the leaving is painful",
-      "body": "Harm or misconduct goes to the authorities. A vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to your faith body, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. If a child is at risk or anyone is in danger, call nine one one. Then give people a safe place to grieve and to be angry."
+      "body": "Harm or misconduct goes to the authorities.",
+      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to your faith body, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Then give people a safe place to grieve and to be angry."
      },
      {
       "k": "card",
@@ -9062,8 +9072,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If the leaving is painful",
-      "body": "Harm or misconduct goes to the authorities. A vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to whoever oversees the group, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. If a child is at risk or anyone is in danger, call nine one one. Then give people a safe place to grieve and to be angry."
+      "body": "Harm or misconduct goes to the authorities.",
+      "say": "Sometimes a leader leaves under a cloud. If the leaving involves harm or misconduct, it goes to the authorities and to whoever oversees the group, not to a hallway conversation. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Then give people a safe place to grieve and to be angry."
      },
      {
       "k": "card",
@@ -9086,6 +9096,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "After a Loss in Our Congregation",
    "you": {
     "id": "gr-g-congregation-loss-you",
+    "crisis": ["988: call or text, any time", "911: emergency"],
     "guide": "congregation-loss",
     "side": "you",
     "title": "After a Loss in Our Congregation",
@@ -9179,8 +9190,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If the grief gets heavy",
-      "body": "Talk to a leader. Not wanting to live: call or text 988.",
-      "say": "If this grief gets too heavy, tell one of our leaders, or a friend here. If you or anyone you know is thinking about not wanting to be alive, call or text nine eight eight, any time. If there is danger right now, call nine one one."
+      "body": "Talk to a leader.",
+      "say": "If this grief gets too heavy, tell one of our leaders, or a friend here."
      },
      {
       "k": "big",
@@ -9273,8 +9284,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "If the grief gets heavy",
-      "body": "Talk to a leader. Not wanting to live: call or text 988.",
-      "say": "If this grief gets too heavy, tell one of our leaders, or a friend here. If you or anyone you know is thinking about not wanting to be alive, call or text nine eight eight, any time. If there is danger right now, call nine one one."
+      "body": "Talk to a leader.",
+      "say": "If this grief gets too heavy, tell one of our leaders, or a friend here."
      },
      {
       "k": "big",
@@ -9286,6 +9297,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-congregation-loss-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "congregation-loss",
     "side": "helper",
     "title": "After a Loss in Our Congregation",
@@ -9394,8 +9406,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "After a suicide or overdose",
-      "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "body": "No speculation. No shame.",
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
      },
      {
       "k": "big",
@@ -9502,8 +9514,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "After a suicide or overdose",
-      "body": "No speculation. No shame. 988 helps those left behind.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, ask them directly and kindly, and call or text nine eight eight together. Nine eight eight also helps the people left behind."
+      "body": "No speculation. No shame.",
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
      },
      {
       "k": "big",
@@ -9520,6 +9532,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Conflict in Our Group",
    "you": {
     "id": "gr-g-group-conflict-you",
+    "crisis": ["911: emergency"],
     "guide": "group-conflict",
     "side": "you",
     "title": "Conflict in Our Group",
@@ -9614,8 +9627,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Threats or harm: tell a leader, or call 911.",
-      "say": "Disagreement is normal. Threats, harassment, or harm are not. If anyone is being hurt or feels unsafe, tell a leader, and if there is danger right now, call nine one one."
+      "body": "Threats or harm: tell a leader.",
+      "say": "Disagreement is normal. Threats, harassment, or harm are not. If anyone is being hurt or feels unsafe, tell a leader."
      },
      {
       "k": "big",
@@ -9708,8 +9721,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Threats or harm: tell a leader, or call 911.",
-      "say": "Disagreement is normal. Threats, harassment, or harm are not. If anyone is being hurt or feels unsafe, tell a leader, and if there is danger right now, call nine one one."
+      "body": "Threats or harm: tell a leader.",
+      "say": "Disagreement is normal. Threats, harassment, or harm are not. If anyone is being hurt or feels unsafe, tell a leader."
      },
      {
       "k": "big",
@@ -9721,6 +9734,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-group-conflict-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "group-conflict",
     "side": "helper",
     "title": "Conflict in Our Group",
@@ -9829,8 +9843,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it is more than conflict",
-      "body": "Threats, harassment, or abuse: safety first. 911. MAARC 1-844-880-1574.",
-      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center. If there is danger right now, call nine one one."
+      "body": "Threats, harassment, or abuse: safety first.",
+      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center."
      },
      {
       "k": "big",
@@ -9937,8 +9951,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it is more than conflict",
-      "body": "Threats, harassment, or abuse: safety first. 911. MAARC 1-844-880-1574.",
-      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center. If there is danger right now, call nine one one."
+      "body": "Threats, harassment, or abuse: safety first.",
+      "say": "Sometimes it's more than a disagreement. Threats, harassment, or abuse call for safety first, and the authorities. If a vulnerable adult is being exploited or mistreated, call the Minnesota Adult Abuse Reporting Center."
      },
      {
       "k": "big",
@@ -10554,6 +10568,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-group-ends-helper",
+    "crisis": ["NAMI HelpLine: 1-800-950-6264"],
     "guide": "group-ends",
     "side": "helper",
     "title": "When a Group Ends",
@@ -10625,7 +10640,7 @@ window.GG_LEARN_GUIDES.grove = {
         "For those who want it"
        ]
       ],
-      "say": "Think about who will need more. Members who leaned on the group hardest deserve a private conversation before the end. Help them find a next place, another group, a mentor, a guide. Have ongoing help ready, like hospice grief groups or the NAMI HelpLine. And offer a simple way to stay in touch, for those who want it."
+      "say": "Think about who will need more. Members who leaned on the group hardest deserve a private conversation before the end. Help them find a next place, another group, a mentor, a guide. Have ongoing help ready, like hospice grief groups. And offer a simple way to stay in touch, for those who want it."
      },
      {
       "k": "big",
@@ -10727,7 +10742,7 @@ window.GG_LEARN_GUIDES.grove = {
         "For those who want it"
        ]
       ],
-      "say": "Think about who will need more. Members who leaned on the group hardest deserve a private conversation before the end. Help them find a next place, another group, a mentor, a guide. Have ongoing help ready, like hospice grief groups or the NAMI HelpLine. And offer a simple way to stay in touch, for those who want it."
+      "say": "Think about who will need more. Members who leaned on the group hardest deserve a private conversation before the end. Help them find a next place, another group, a mentor, a guide. Have ongoing help ready, like hospice grief groups. And offer a simple way to stay in touch, for those who want it."
      },
      {
       "k": "big",
@@ -10796,8 +10811,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Mental health crisis: call or text 988. Danger right now: 911.",
-      "say": "First, safety. If anyone is in danger right now, call nine one one. If someone is in a mental health crisis, or thinking about suicide, call or text nine eight eight, any time. You can call for them, or call together."
+      "say": "First, safety. You can call for them, or call together."
      },
      {
       "k": "words",
@@ -10875,7 +10889,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. The full guide has more, whenever you want it."
      }
     ],
     "plainScenes": [
@@ -10890,8 +10904,7 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Mental health crisis: call or text 988. Danger right now: 911.",
-      "say": "First, safety. If anyone is in danger right now, call nine one one. If someone is in a mental health crisis, or thinking about suicide, call or text nine eight eight, any time. You can call for them, or call together."
+      "say": "First, safety. You can call for them, or call together."
      },
      {
       "k": "words",
@@ -10969,7 +10982,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Here, we walk together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Hard seasons come to all of us. In this community, we walk together. If you're worried about someone, or about yourself, call or text nine eight eight. The full guide has more, whenever you want it."
+      "say": "Hard seasons come to all of us. In this community, we walk together. The full guide has more, whenever you want it."
      }
     ],
     "crisis": [
@@ -11011,29 +11024,14 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Know who to call",
       "items": [
        [
-        "988",
-        "Mental health crisis, suicide"
-       ],
-       [
-        "911",
-        "Danger right now"
-       ],
-       [
-        "MAARC 1-844-880-1574",
-        "A vulnerable adult at risk"
-       ],
-       [
         "Child protection",
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. Nine eight eight for a mental health crisis or thoughts of suicide, by call, text, or chat. Nine one one for danger right now. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, or nine one one, when a child is at risk.",
+      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
-        1,
-        2,
-        3,
-        4
+        2
        ]
       }
      },
@@ -11041,7 +11039,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Ask directly.",
       "body": "Asking does not put the idea in someone's head.",
-      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, remove anything dangerous if you safely can, and call or text nine eight eight together."
+      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, and remove anything dangerous if you safely can."
      },
      {
       "k": "big",
@@ -11096,8 +11094,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Abuse or neglect",
-      "body": "Follow your policy and the law. MAARC 1-844-880-1574. Child protection. 911.",
-      "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a vulnerable adult at risk to the Minnesota Adult Abuse Reporting Center, and a child at risk to child protection or nine one one. Never promise to keep harm a secret."
+      "body": "Follow your policy and the law. Child protection.",
+      "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a child at risk to child protection. Never promise to keep harm a secret."
      },
      {
       "k": "big",
@@ -11126,29 +11124,14 @@ window.GG_LEARN_GUIDES.grove = {
       "h": "Know who to call",
       "items": [
        [
-        "988",
-        "Mental health crisis, suicide"
-       ],
-       [
-        "911",
-        "Danger right now"
-       ],
-       [
-        "MAARC 1-844-880-1574",
-        "A vulnerable adult at risk"
-       ],
-       [
         "Child protection",
         "A child at risk"
        ]
       ],
-      "say": "Know who to call. Nine eight eight for a mental health crisis or thoughts of suicide, by call, text, or chat. Nine one one for danger right now. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, or nine one one, when a child is at risk.",
+      "say": "Know who to call. The Minnesota Adult Abuse Reporting Center when a vulnerable adult is being abused, neglected, or exploited. And your county's child protection line, when a child is at risk.",
       "cue": {
        "at": [
-        1,
-        2,
-        3,
-        4
+        2
        ]
       }
      },
@@ -11156,7 +11139,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Ask directly.",
       "body": "Asking does not put the idea in someone's head.",
-      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, remove anything dangerous if you safely can, and call or text nine eight eight together."
+      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, and remove anything dangerous if you safely can."
      },
      {
       "k": "big",
@@ -11211,8 +11194,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Abuse or neglect",
-      "body": "Follow your policy and the law. MAARC 1-844-880-1574. Child protection. 911.",
-      "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a vulnerable adult at risk to the Minnesota Adult Abuse Reporting Center, and a child at risk to child protection or nine one one. Never promise to keep harm a secret."
+      "body": "Follow your policy and the law. Child protection.",
+      "say": "If the crisis involves abuse or neglect, follow your community's safety policy and the law. Report a child at risk to child protection. Never promise to keep harm a secret."
      },
      {
       "k": "big",
@@ -11450,6 +11433,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-one-voice-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "one-voice",
     "side": "helper",
     "title": "One Voice Fills the Room",
@@ -11536,7 +11520,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Listen for what is underneath",
       "body": "Eagerness, loneliness, grief, or worry.",
-      "say": "Often the one who talks most is eager, lonely, knowledgeable, or carrying something heavy. Listen for that. If grief or a crisis is underneath, offer private support, apart from the group, and any talk of not wanting to be alive gets 988 together, the same day."
+      "say": "Often the one who talks most is eager, lonely, knowledgeable, or carrying something heavy. Listen for that. If grief or a crisis is underneath, offer private support, apart from the group."
      },
      {
       "k": "words",
@@ -11811,6 +11795,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-conversations-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "hard-conversations",
     "side": "helper",
     "title": "Hard Conversations in Our Group",
@@ -11918,7 +11903,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After",
       "body": "Follow up privately within a day or two.",
-      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with 988 and the reporting the law requires."
+      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with the reporting the law requires."
      },
      {
       "k": "big",
@@ -12024,7 +12009,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After",
       "body": "Follow up privately within a day or two.",
-      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with 988 and the reporting the law requires."
+      "say": "Follow up privately within a day or two with anyone who seemed to carry a lot. If the conversation revealed harm, or anyone spoke of not wanting to be alive, act the same day, with the reporting the law requires."
      },
      {
       "k": "big",
@@ -12041,6 +12026,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "When Trust Is Broken",
    "you": {
     "id": "gr-g-trust-broken-you",
+    "crisis": ["911: emergency"],
     "guide": "trust-broken",
     "side": "you",
     "title": "When Trust Is Broken",
@@ -12136,8 +12122,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Harm: tell a leader, or call 911.",
-      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law. If there is danger right now, call nine one one."
+      "body": "Harm: tell a leader.",
+      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law."
      },
      {
       "k": "big",
@@ -12234,8 +12220,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Safety comes first.",
-      "body": "Harm: tell a leader, or call 911.",
-      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law. If there is danger right now, call nine one one."
+      "body": "Harm: tell a leader.",
+      "say": "If anyone has been harmed, or feels unsafe, tell a leader you trust. Harm and exploitation go to the people who can protect, and the law."
      },
      {
       "k": "big",
@@ -13703,6 +13689,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Hurt Inside Our Faith Community",
    "you": {
     "id": "gr-g-hurt-inside-you",
+    "crisis": ["911: emergency"],
     "guide": "hurt-inside",
     "side": "you",
     "title": "Hurt Inside Our Faith Community",
@@ -13775,7 +13762,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If you were hurt here",
       "body": "You can tell a trusted person. You will be heard.",
-      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, call nine one one, and it will be reported to the authorities."
+      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, it will be reported to the authorities."
      },
      {
       "k": "words",
@@ -13857,7 +13844,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If you were hurt here",
       "body": "You can tell a trusted person. You will be heard.",
-      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, call nine one one, and it will be reported to the authorities."
+      "say": "If you were hurt here, you can tell a trusted person, a leader you trust, or someone outside our community. You will be heard. If anyone is in danger, or a child or vulnerable adult has been harmed, it will be reported to the authorities."
      },
      {
       "k": "words",
@@ -13879,6 +13866,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hurt-inside-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "hurt-inside",
     "side": "helper",
     "title": "Hurt Inside Our Faith Community",
@@ -13981,8 +13969,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Make the call.",
-      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+      "body": "Child: child protection.",
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
      },
      {
       "k": "card",
@@ -14089,8 +14077,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Make the call.",
-      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
+      "body": "Child: child protection.",
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people, and it is part of loving them well."
      },
      {
       "k": "card",
@@ -14487,6 +14475,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "When a Leader Falls Short",
    "you": {
     "id": "gr-g-leader-falls-short-you",
+    "crisis": ["911: emergency"],
     "guide": "leader-falls-short",
     "side": "you",
     "title": "When a Leader Falls Short",
@@ -14563,7 +14552,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If you were hurt",
       "body": "Tell a trusted person. You will be believed.",
-      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed. If a child or a vulnerable adult has been harmed, or anyone is in danger, call nine one one, and it will be reported to the authorities."
+      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed."
      },
      {
       "k": "words",
@@ -14651,7 +14640,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If you were hurt",
       "body": "Tell a trusted person. You will be believed.",
-      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed. If a child or a vulnerable adult has been harmed, or anyone is in danger, call nine one one, and it will be reported to the authorities."
+      "say": "If you were hurt, you can tell a trusted person, inside our community or outside it. You will be listened to and believed."
      },
      {
       "k": "words",
@@ -14673,6 +14662,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-leader-falls-short-helper",
+    "crisis": ["MAARC (Minnesota): 1-844-880-1574", "911: emergency"],
     "guide": "leader-falls-short",
     "side": "helper",
     "title": "When a Leader Falls Short",
@@ -14780,8 +14770,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Make the call.",
-      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+      "body": "Child: child protection.",
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
      },
      {
       "k": "card",
@@ -14893,8 +14883,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Make the call.",
-      "body": "Child: 911 or child protection. Vulnerable adult: MAARC 1-844-880-1574.",
-      "say": "If a child has been harmed, call nine one one or your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
+      "body": "Child: child protection.",
+      "say": "If a child has been harmed, call your county's child protection line. If a vulnerable adult may be at risk, call the Minnesota Adult Abuse Reporting Center. Many leaders are mandated reporters by law. Reporting protects people."
      },
      {
       "k": "card",
@@ -15293,6 +15283,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "After a Hard Death",
    "you": {
     "id": "gr-g-hard-death-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "hard-death",
     "side": "you",
     "title": "After a Hard Death",
@@ -15414,12 +15405,13 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "We carry it together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "No one on this team carries a hard death alone. If it stays heavy, reach out, and if you ever think about not wanting to be alive, call or text nine eight eight. We carry it together. The full guide has more, whenever you want it."
+      "say": "No one on this team carries a hard death alone. If it stays heavy, reach out. We carry it together. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
     "id": "gr-g-hard-death-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "hard-death",
     "side": "helper",
     "title": "After a Hard Death",
@@ -15512,8 +15504,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Say where help is, more than once.",
-      "body": "EAP, chaplain, peers. 988 any time.",
-      "say": "Share the supports plainly, and more than once. The employee assistance program, the chaplain or spiritual support team, and peer support. Watch for anyone still struggling weeks later, with sleep, mood, or pulling away. If anyone speaks of not wanting to be alive, ask directly, and call or text nine eight eight together."
+      "body": "EAP, chaplain, peers.",
+      "say": "Share the supports plainly, and more than once. The employee assistance program, the chaplain or spiritual support team, and peer support. Watch for anyone still struggling weeks later, with sleep, mood, or pulling away. If anyone speaks of not wanting to be alive, ask directly."
      },
      {
       "k": "big",
@@ -15530,6 +15522,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "Change, Layoffs, or Reorganization",
    "you": {
     "id": "gr-g-team-change-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "team-change",
     "side": "you",
     "title": "Change, Layoffs, or Reorganization",
@@ -15651,12 +15644,13 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Find our footing, together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "If this gets heavy, reach out, to a teammate or the employee assistance program, and call or text nine eight eight if you ever think about not wanting to be alive. We'll find our footing together. The full guide has more, whenever you want it."
+      "say": "If this gets heavy, reach out, to a teammate or the employee assistance program. We'll find our footing together. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
     "id": "gr-g-team-change-helper",
+    "crisis": ["988: call or text, any time", "211: local help"],
     "guide": "team-change",
     "side": "helper",
     "title": "Change, Layoffs, or Reorganization",
@@ -15765,8 +15759,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Name the supports.",
-      "body": "EAP for leavers and stayers. 211. 988 any time.",
-      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. Two one one for local help with food, housing, and bills. If anyone speaks of not wanting to be alive, ask directly, and call or text nine eight eight together."
+      "body": "EAP for leavers and stayers.",
+      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. Two one one for local help with food, housing, and bills. If anyone speaks of not wanting to be alive, ask directly."
      },
      {
       "k": "big",
@@ -15783,6 +15777,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "A Coworker Dies",
    "you": {
     "id": "gr-g-coworker-death-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "coworker-death",
     "side": "you",
     "title": "A Coworker Dies",
@@ -15866,8 +15861,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "Look after each other.",
-      "body": "Cover for each other. Use the EAP. 988 any time.",
-      "say": "Let's look after each other. Cover for anyone who needs to step away. Use the employee assistance program, and check on the people who were closest, today and in the weeks ahead. If you, or anyone, thinks about not wanting to be alive, call or text nine eight eight, any time."
+      "body": "Cover for each other. Use the EAP.",
+      "say": "Let's look after each other. Cover for anyone who needs to step away. Use the employee assistance program, and check on the people who were closest, today and in the weeks ahead."
      },
      {
       "k": "words",
@@ -15889,6 +15884,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-death-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "coworker-death",
     "side": "helper",
     "title": "A Coworker Dies",
@@ -15967,7 +15963,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If it was a suicide",
       "body": "Follow the family. No speculation. Watch for risk.",
-      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea. Then call or text nine eight eight together."
+      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea."
      },
      {
       "k": "big",
@@ -16008,6 +16004,7 @@ window.GG_LEARN_GUIDES.grove = {
    "title": "A Season of Burnout",
    "you": {
     "id": "gr-g-burnout-you",
+    "crisis": ["988: call or text, any time"],
     "guide": "burnout",
     "side": "you",
     "title": "A Season of Burnout",
@@ -16116,12 +16113,13 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "big",
       "h": "Lighter, together.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "If exhaustion or low mood lasts two weeks or more, talk with your doctor or the employee assistance program. If you ever think about not wanting to be alive, call or text nine eight eight. We'll get lighter, together. The full guide has more, whenever you want it."
+      "say": "If exhaustion or low mood lasts two weeks or more, talk with your doctor or the employee assistance program. We'll get lighter, together. The full guide has more, whenever you want it."
      }
     ]
    },
    "helper": {
     "id": "gr-g-burnout-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "burnout",
     "side": "helper",
     "title": "A Season of Burnout",
@@ -16205,8 +16203,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "card",
       "title": "When it is more than tired",
-      "body": "Two weeks or more: a doctor or EAP. 988 any time.",
-      "say": "Watch for anyone sliding from burnout into depression, low mood, hopelessness, or pulling away for two weeks or more. Point them to their doctor and the employee assistance program. If anyone speaks of not wanting to be alive, ask directly, and call or text nine eight eight together."
+      "body": "Two weeks or more: a doctor or EAP.",
+      "say": "Watch for anyone sliding from burnout into depression, low mood, hopelessness, or pulling away for two weeks or more. Point them to their doctor and the employee assistance program. If anyone speaks of not wanting to be alive, ask directly."
      },
      {
       "k": "big",
@@ -16334,6 +16332,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-conflict-helper",
+    "crisis": ["911: emergency"],
     "guide": "coworker-conflict",
     "side": "helper",
     "title": "Conflict Between Coworkers",
@@ -16425,7 +16424,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it crosses a line",
       "body": "Harassment, discrimination, threats: HR now.",
-      "say": "Some conflict crosses a line. Harassment, discrimination, threats, or a pattern that keeps hurting someone. Bring in human resources right away, and follow your organization's policies. If anyone is in danger, call nine one one. Safety comes before repair."
+      "say": "Some conflict crosses a line. Harassment, discrimination, threats, or a pattern that keeps hurting someone. Bring in human resources right away, and follow your organization's policies. Safety comes before repair."
      },
      {
       "k": "big",
@@ -16956,6 +16955,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-workplace-injury-helper",
+    "crisis": ["911: emergency"],
     "guide": "workplace-injury",
     "side": "helper",
     "title": "A Workplace Injury or Accident",
@@ -16981,7 +16981,7 @@ window.GG_LEARN_GUIDES.grove = {
       "steps": [
        [
         "Safety",
-        "911, medical help, the area"
+        "Medical help, the area"
        ],
        [
         "Report",
@@ -16996,7 +16996,7 @@ window.GG_LEARN_GUIDES.grove = {
         "Witnesses and helpers"
        ]
       ],
-      "say": "In the first hours, work in this order. Safety, with medical help, nine one one for serious injury, and a safe area. Report, following your workplace's steps. Gather the team briefly with the facts and next steps. And check on everyone, especially the people who saw it or helped.",
+      "say": "In the first hours, work in this order. Safety, with medical help for serious injury, and a safe area. Report, following your workplace's steps. Gather the team briefly with the facts and next steps. And check on everyone, especially the people who saw it or helped.",
       "cue": {
        "at": [
         1,
@@ -17196,6 +17196,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-coworker-loss-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "coworker-loss",
     "side": "helper",
     "title": "Supporting a Coworker Through Loss",
@@ -17299,7 +17300,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When grief stays heavy",
       "body": "Months of struggle: EAP or a doctor.",
-      "say": "If months pass and your team member is still struggling to function, sleep, or find any hope, gently point them to the employee assistance program, a grief support group, or their doctor. If they speak of not wanting to be alive, ask directly, and call or text nine eight eight together."
+      "say": "If months pass and your team member is still struggling to function, sleep, or find any hope, gently point them to the employee assistance program, a grief support group, or their doctor. If they speak of not wanting to be alive, ask directly."
      },
      {
       "k": "big",
@@ -17426,6 +17427,7 @@ window.GG_LEARN_GUIDES.grove = {
    },
    "helper": {
     "id": "gr-g-hard-things-helper",
+    "crisis": ["988: call or text, any time"],
     "guide": "hard-things",
     "side": "helper",
     "title": "When the Work Asks Hard Things",
@@ -17510,7 +17512,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it goes deeper",
       "body": "Lasting guilt, shame, numbness: more support.",
-      "say": "Sometimes moral distress goes deeper, into lasting guilt, shame, numbness, or despair. Watch for it. Point people to peer support, the employee assistance program, and a professional who understands this work. If anyone speaks of not wanting to be alive, ask directly, and call or text nine eight eight together."
+      "say": "Sometimes moral distress goes deeper, into lasting guilt, shame, numbness, or despair. Watch for it. Point people to peer support, the employee assistance program, and a professional who understands this work. If anyone speaks of not wanting to be alive, ask directly."
      },
      {
       "k": "big",
@@ -17663,6 +17665,7 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-family-helper",
+   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-family",
    "side": "helper",
    "title": "A Family Growing Sober Together",
@@ -17759,8 +17762,8 @@ var V = [
     {
      "k": "card",
      "title": "Safety first",
-     "body": "Doctor before stopping alcohol or sedatives. Overdose or danger: 911. Crisis: 988.",
-     "say": "Keep safety simple and close. Stopping alcohol or sedative pills suddenly can be dangerous, so a doctor is the first call. For an overdose, or anyone who won't wake up, call nine one one. In a crisis, call or text nine eight eight. And the SAMHSA National Helpline answers any time, for treatment and information. A slip is a reason to reach for help, and keep going."
+     "body": "Doctor before stopping alcohol or sedatives. Overdose or danger: call for help.",
+     "say": "Keep safety simple and close. Stopping alcohol or sedative pills suddenly can be dangerous, so a doctor is the first call. For an overdose, or anyone who won't wake up, call for emergency help. A slip is a reason to reach for help, and keep going."
     },
     {
      "k": "big",
@@ -17777,6 +17780,7 @@ var V = [
   "title": "Talking with Kids About a Parent's Recovery",
   "you": {
    "id": "gr-g-sober-kids-talk-you",
+   "crisis": ["911: emergency"],
    "guide": "sober-kids-talk",
    "side": "you",
    "title": "Talking with Kids About a Parent's Recovery",
@@ -17866,8 +17870,8 @@ var V = [
     {
      "k": "card",
      "title": "If a grown-up won't wake up",
-     "body": "Call 911, and find another grown-up right away.",
-     "say": "Here is one safety rule for every kid, in every family. If a grown-up won't wake up, or is very hard to wake, call nine one one, and find another grown-up right away. That is a brave and helpful thing to do."
+     "body": "Find another grown-up right away.",
+     "say": "Here is one safety rule for every kid, in every family. If a grown-up won't wake up, or is very hard to wake, call for emergency help, and find another grown-up right away. That is a brave and helpful thing to do."
     },
     {
      "k": "words",
@@ -17889,6 +17893,7 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-kids-talk-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-kids-talk",
    "side": "helper",
    "title": "Talking with Kids About a Parent's Recovery",
@@ -17986,8 +17991,8 @@ var V = [
     {
      "k": "card",
      "title": "Keep the door open",
-     "body": "Many small talks. Alateen. 911 if someone won't wake up.",
-     "say": "One talk opens the door. Many small talks keep it open. Give each child a place of their own, like Alateen or the school counselor. And teach every child one safety rule: if a grown-up won't wake up, call nine one one and find another grown-up."
+     "body": "Many small talks. Alateen. Call for help if someone won't wake up.",
+     "say": "One talk opens the door. Many small talks keep it open. Give each child a place of their own, like Alateen or the school counselor. And teach every child one safety rule: if a grown-up won't wake up, call for help and find another grown-up."
     },
     {
      "k": "big",
@@ -18318,6 +18323,7 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-trust-helper",
+   "crisis": ["988: call or text, any time", "National DV Hotline: 1-800-799-7233", "911: emergency"],
    "guide": "sober-trust",
    "side": "helper",
    "title": "Rebuilding Trust at Home",
@@ -18414,8 +18420,7 @@ var V = [
     {
      "k": "card",
      "title": "Safety comes first",
-     "body": "Anyone hurt or threatened: 911. Crisis: 988.",
-     "say": "Rebuilding trust happens in a safe home. If anyone at home is being hurt or threatened, call nine one one. The National Domestic Violence Hotline answers any time. For a crisis, call or text nine eight eight."
+     "say": "Rebuilding trust happens in a safe home."
     },
     {
      "k": "big",
@@ -18432,6 +18437,7 @@ var V = [
   "title": "When a Teammate Is Getting Sober",
   "you": {
    "id": "gr-g-sober-teammate-you",
+   "crisis": ["911: emergency"],
    "guide": "sober-teammate",
    "side": "you",
    "title": "When a Teammate Is Getting Sober",
@@ -18531,8 +18537,8 @@ var V = [
     {
      "k": "card",
      "title": "Help is close by.",
-     "body": "EAP, human resources, and 911 for danger.",
-     "say": "Help is close by, for anyone on the team. The employee assistance program offers confidential support. Human resources knows the policies. And if anyone at work ever won't wake up, or is breathing slowly, call nine one one."
+     "body": "EAP and human resources.",
+     "say": "Help is close by, for anyone on the team. The employee assistance program offers confidential support. Human resources knows the policies. And if anyone at work ever won't wake up, or is breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -18544,6 +18550,7 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-teammate-helper",
+   "crisis": ["911: emergency"],
    "guide": "sober-teammate",
    "side": "helper",
    "title": "When a Teammate Is Getting Sober",
@@ -18662,8 +18669,8 @@ var V = [
     {
      "k": "card",
      "title": "If you notice a struggle",
-     "body": "Talk about the work, offer the EAP, and 911 for danger.",
-     "say": "If you notice a teammate struggling, talk privately about what you see at work, offer the employee assistance program, and follow policy. A slip is a reason to reach for help. If anyone won't wake up or is breathing slowly, call nine one one."
+     "body": "Talk about the work and offer the EAP.",
+     "say": "If you notice a teammate struggling, talk privately about what you see at work, offer the employee assistance program, and follow policy. A slip is a reason to reach for help. If anyone won't wake up or is breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -18680,6 +18687,7 @@ var V = [
   "title": "Welcoming Someone Growing Sober",
   "you": {
    "id": "gr-g-sober-welcome-you",
+   "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-welcome",
    "side": "you",
    "title": "Welcoming Someone Growing Sober",
@@ -18782,8 +18790,7 @@ var V = [
     {
      "k": "card",
      "title": "Help is close by.",
-     "body": "SAMHSA 1-800-662-4357. Danger: 911.",
-     "say": "Help is close by. The SAMHSA National Helpline answers any time, for treatment and information. And if anyone ever won't wake up, or is breathing slowly, call nine one one."
+     "say": "Help is close by. And if anyone ever won't wake up, or is breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -18795,6 +18802,7 @@ var V = [
   },
   "helper": {
    "id": "gr-g-sober-welcome-helper",
+   "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
    "guide": "sober-welcome",
    "side": "helper",
    "title": "Welcoming Someone Growing Sober",
@@ -18895,7 +18903,7 @@ var V = [
      "k": "card",
      "title": "Open your doors",
      "body": "Recovery meetings, family groups, and help numbers.",
-     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: the SAMHSA National Helpline, nine eight eight for a crisis, and nine one one if anyone won't wake up."
+     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
     },
     {
      "k": "big",
@@ -18995,7 +19003,7 @@ var V = [
      "k": "card",
      "title": "Open your doors",
      "body": "Recovery meetings, family groups, and help numbers.",
-     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: the SAMHSA National Helpline, nine eight eight for a crisis, and nine one one if anyone won't wake up."
+     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
     },
     {
      "k": "big",
