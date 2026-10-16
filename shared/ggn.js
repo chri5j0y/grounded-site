@@ -44,6 +44,7 @@
     var s = document.createElement('style'); s.id = 'ggn-css';
     s.textContent = [
       '.ggn-root{--ggn-calm:#EEF2E8;padding-block:28px 56px;}',
+      '.ggn-band+.ggn-root{padding-top:0;}.ggn-band+.ggn-root .ggn-calm{margin-top:-44px;position:relative;box-shadow:0 10px 30px rgba(40,30,10,.12);}',
       '@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .ggn-root{--ggn-calm:#232A20;}}:root[data-theme="dark"] .ggn-root{--ggn-calm:#232A20;}',
       '.ggn-wrap{max-width:860px;margin:0 auto;padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));display:grid;gap:22px;}',
       '.ggn-calm{background:var(--ggn-calm);border:1px solid var(--line);border-radius:28px;padding:28px 20px 22px;display:grid;gap:18px;}',
