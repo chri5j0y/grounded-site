@@ -107,7 +107,8 @@
     stop: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg>'
   };
   var SEL = 'h1,h2,h3,h4,p,li,blockquote,figcaption,dt,dd,.card-sub,.step-domain,.domain-prompt,.restore-item';
-  var SKIP = 'nav,footer,form,button,select,textarea,.no-print,[aria-hidden="true"],.gg-rbar,.gn-panel,script,style,.sr-only,.slider-hint,.restore-content';
+  // Sources and credits are never read aloud (narration never names the source), nor anything marked .no-read (BLD 813).
+  var SKIP = '.gg-src,.no-read,nav,footer,form,button,select,textarea,.no-print,[aria-hidden="true"],.gg-rbar,.gn-panel,script,style,.sr-only,.slider-hint,.restore-content';
   /* A long block reads one sentence at a time. A sentence ends at . ! or ? (and any closing quote) followed by a space
      and a capital, a number, or an opening quote, so web addresses (988lifeline.org) and times (4:30 a.m.) stay whole.
      Recorded clips are named from these exact chunks (BLD 796), so a change here asks for new clips. */
@@ -136,6 +137,19 @@
   /* runVoice: the recorded voice for this reading ('' reads with the device voice). tok: every chunk start, stop, or
      change takes a new number, so a late callback from an earlier chunk does nothing. cc: the clip now playing. */
   var runVoice = '', tok = 0, cc = null, clip = null, miss = {}, story = false;
+  /* Locked reading (BLD 813): the Field Guide's written guides come from its sealed libraries, so their clips are locked
+     like the sealed videos' (GGLearn.sealedClip, shared/gg-learn.js: the library's audio key names and unlocks each
+     clip). runLocked holds that audio key while such a reading runs; LC keeps each sentence's unlocked clip. */
+  var runLocked = null, LC = {};
+  function srcFor(text) {
+    if (!runLocked) return Promise.resolve(clipUrl(runVoice, text));
+    if (!LC[text]) LC[text] = window.GGLearn.sealedClip(runLocked, runVoice, text).catch(function () { return ''; });
+    return LC[text];
+  }
+  var QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522/i;
+  function quiet(t) { return QUIET.test(String(t || '')); }
+  function missKey(text) { return runLocked ? 'L|' + text : clipUrl(runVoice, text); }
+  function freeLocked() { var C = LC; LC = {}; Object.keys(C).forEach(function (k) { C[k].then(function (u) { if (u) try { URL.revokeObjectURL(u); } catch (e) {} }); }); }
   function emit() { listeners.forEach(function (f) { try { f(state); } catch (e) {} }); }
   function mark(el) {
     if (cur) cur.classList.remove('gg-reading');
@@ -164,11 +178,12 @@
   var TRIM = { brian: [0.10, 0.28], jenny: [0.15, 0.78] }, REST = 450, pre = null;
   function ahead(k) {
     var it = q[k]; if (!it || !runVoice || !window.Audio) return;
+    if (runLocked) { if (!miss[missKey(it.t)]) srcFor(it.t); return; }   // unlocks the next clip while this one plays
     var u = clipUrl(runVoice, it.t); if (miss[u]) return;
     try { if (!pre) { pre = new Audio(); pre.preload = 'auto'; } if (pre.src !== u) { pre.src = u; pre.load(); } } catch (e) {}
   }
   function playClip(item, t) {
-    var a = clipEl(), url = clipUrl(runVoice, item.t), c = { url: url, item: item, t: t, started: false, timer: 0 };
+    var a = clipEl(), url = missKey(item.t), c = { url: url, item: item, t: t, started: false, timer: 0 };
     function fail() {
       if (cc !== c || t !== tok || state !== 'playing') return;
       miss[url] = 1; dropClip(); try { a.pause(); } catch (e) {}
@@ -189,13 +204,19 @@
       var end = a.duration - cut[1];
       c.watch = setInterval(function () { if (cc !== c) return clearInterval(c.watch); if (!a.paused && a.currentTime >= end) done(); }, 25);
     };
-    a.onended = done;
-    a.onerror = fail;
-    a.src = cut[0] ? url + '#t=' + cut[0] : url; // start just before the first word
-    ahead(i + 1);
-    try { a.defaultPlaybackRate = speed(); a.playbackRate = speed(); } catch (e) {}
+    function start(src) {
+      if (cc !== c || t !== tok) return;
+      if (!src) return fail();
+      a.onended = done;
+      a.onerror = fail;
+      a.src = cut[0] ? src + '#t=' + cut[0] : src; // start just before the first word
+      ahead(i + 1);
+      try { a.defaultPlaybackRate = speed(); a.playbackRate = speed(); } catch (e) {}
+      c.arm();
+      try { var p = a.play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') fail(); }); } catch (e) { fail(); }
+    }
     c.arm();
-    try { var p = a.play(); if (p && p.catch) p.catch(function (e) { if (!e || e.name !== 'AbortError') fail(); }); } catch (e) { fail(); }
+    if (runLocked) srcFor(item.t).then(start); else start(clipUrl(runVoice, item.t));
   }
   // Stop what is sounding now (a voice or speed change, then next() starts the chunk again).
   function halt() { tok++; if (synth) synth.cancel(); if (cc) { dropClip(); try { clipEl().pause(); } catch (e) {} } }
@@ -205,18 +226,28 @@
     if (i >= q.length) { stop(); return; }
     var item = q[i], t = ++tok; mark(item.el);
     if (!runVoice) speakItem(item, t);
-    else if (miss[clipUrl(runVoice, item.t)]) setTimeout(function () { advance(t); }, 0);   // a clip still on its way
+    else if (miss[missKey(item.t)]) setTimeout(function () { advance(t); }, 0);   // a clip still on its way
     else playClip(item, t);
   }
   /* read(root, {recorded: tree name or true}): with a tree that has a Grounded voice, each chunk plays its recorded
      clip, and a missing one is skipped; every other caller reads with the device voice, as before. */
+  /* read(root, {locked: {key: a sealed library's audio object, voice}}) (BLD 813): each chunk plays its locked clip. */
   function read(root, o) {
     var tr = o && o.recorded ? (o.recorded === true ? pageTree() : o.recorded) : '', rv = treeVoice(tr || '-');
+    var lk = o && o.locked && window.GGLearn && GGLearn.sealedOk && GGLearn.sealedClip && GGLearn.sealedOk(o.locked) ? o.locked : null;
     stop();
-    runVoice = rv;
+    if (!lk || runLocked !== lk.key) freeLocked();
+    runVoice = lk ? lk.voice : rv; runLocked = lk ? lk.key : null;
     if (!synth && !runVoice) return;
-    q = blocksOf(root); i = 0; if (!q.length) return;
+    q = blocksOf(root); i = 0;
+    // Crisis lines and helplines are never spoken (Chris, firm, October 15, 2026): the Grounded voice leaves out any chunk
+    // that names one, and the words stay on the page. o.skip(text) leaves out more.
+    if (runVoice) q = q.filter(function (x) { return !quiet(x.t); });
+    if (o && typeof o.skip === 'function') q = q.filter(function (x) { return !o.skip(x.t); });
+    if (!q.length) return;
     if (runVoice) clipEl();
+    // A locked clip arrives after the tap (it is fetched and unlocked first), so a moment of silence plays on the tap itself.
+    if (lk && GGLearn.silent) { try { var a0 = clipEl(); a0.src = GGLearn.silent(); var p0 = a0.play(); if (p0 && p0.catch) p0.catch(function () {}); } catch (e) {} }
     state = 'playing'; emit(); next();
   }
   function pause() {
@@ -291,7 +322,8 @@
   /* A play, pause, and stop control that reads a region. audioSrc plays a recording instead when it exists. */
   /* opts.recorded (a tree name, or true for this page's tree): a guide or practice, read in the Grounded voice. */
   function control(opts) {
-    var rv = opts.recorded ? treeVoice(opts.recorded) : '', rtree = rv ? (opts.recorded === true ? pageTree() : opts.recorded) : '';
+    var lk = opts.locked && (opts.locked.voice === 'brian' || opts.locked.voice === 'jenny') ? opts.locked : null;
+    var rv = lk ? lk.voice : opts.recorded ? treeVoice(opts.recorded) : '', rtree = rv && !lk ? (opts.recorded === true ? pageTree() : opts.recorded) : '';
     var bar = document.createElement('div'); bar.className = 'gg-rbar no-print';
     var b = document.createElement('button'); b.type = 'button'; b.className = 'gg-rbtn';
     var s = document.createElement('button'); s.type = 'button'; s.className = 'gg-rbtn gg-rstop'; s.innerHTML = I.stop; s.setAttribute('aria-label', 'Stop reading'); s.hidden = true;
@@ -310,7 +342,7 @@
       if (mine && state === 'paused') return resume();
       if (recorded) { mine = true; stop(); mine = true; story = true; audio.play(); state = 'playing'; emit(); return; }
       // read() stops whatever was reading first (which clears mine), so this bar takes the reading after it starts.
-      var go = function () { read(typeof opts.root === 'function' ? opts.root() : opts.root, rv ? { recorded: rtree } : null); mine = state !== 'idle'; paint(); };
+      var go = function () { read(typeof opts.root === 'function' ? opts.root() : opts.root, lk ? { locked: lk, skip: opts.skip } : rv ? { recorded: rtree } : null); mine = state !== 'idle'; paint(); };
       // The Grounded voice starts right on the tap (Safari's rule for audio).
       if (rv) go(); else ensure(go);
     });
@@ -348,7 +380,7 @@
     return bar;
   }
   function isOn(key) { try { return localStorage.getItem(key || 'gg_read_on') === '1'; } catch (e) { return false; } }
-  window.GGRead = { chunks: chunks, clipName: clipName, clipUrl: clipUrl, treeVoice: treeVoice, pageTree: pageTree, rec: REC, setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, ensure: ensure, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
+  window.GGRead = { chunks: chunks, quiet: quiet, clipName: clipName, clipUrl: clipUrl, treeVoice: treeVoice, pageTree: pageTree, rec: REC, setProfile: function (o) { for (var k in o) P[k] = o[k]; refresh(); }, read: read, stop: stop, pause: pause, resume: resume, control: control, toggle: toggle, settings: settings, say: say, speed: speed, isOn: isOn, available: !!synth, ensure: ensure, label: label, refresh: refresh, voices: function () { return list.slice(); }, get state() { return state; } };
 
   /* Practice steps: any "Show me how" or "Learn more" box gets its own Read aloud button when it opens. */
   document.addEventListener('toggle', function (e) {

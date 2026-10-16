@@ -646,9 +646,9 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
-<script src="../read.js?v=b798"></script>
+<script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b809"></script>
-<script src="../shared/gg-learn.js?v=b809"></script>
+<script src="../shared/gg-learn.js?v=b813"></script>
 <script src="../shared/gg-print.js?v=b803"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -666,7 +666,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b798"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b809"></script>
+<script src="../shared/gg-stories.js?v=b813"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1283,7 +1283,7 @@ function vGuide(g, pv){
   const emails = (g.emails||[]).map(e => LIB.emails.find(x => x.id === e)).filter(Boolean);
   const lst = (h, a, say) => a && a.length ? `<div class="card"><h3>${h}</h3>${say ? `<div class="blk say" style="margin-top:8px"><ul>${a.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : `<ul class="checklist" style="margin-top:8px">${a.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul>`}</div>` : '';
   const deb = g.debrief && g.id !== 'debrief';
-  return `${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
+  return `<div class="fg-rd-wrap">${fgListen('sessions', 's')}${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
   <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>${g.who ? `<p style="margin-top:8px"><b>Who It Is For:</b> ${mark(g.who)}</p>` : ''}
     ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGRun ? GGRun.guideBar(g) : ''}${window.GGGv ? GGGv.guideBar(g) : ''}${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
@@ -1296,7 +1296,7 @@ function vGuide(g, pv){
     ${deb ? `<button class="btn btn-line btn-sm" data-act="guide" data-v="debrief">${icon('self')} After-Session Debrief</button>` : ''}
     ${docs.map(d => `<button class="btn btn-line btn-sm" data-act="doc" data-v="${d.id}">${icon('print')} ${esc(d.title)}</button>`).join('')}
     ${emails.map(e => `<button class="btn btn-line btn-sm" data-act="email" data-v="${e.id}">${icon('copy')} Email: ${esc(e.title)}</button>`).join('')}
-    ${(g.links||[]).map(toolLink).join('')}</div></div>` : ''}`;
+    ${(g.links||[]).map(toolLink).join('')}</div></div>` : ''}</div>`;
 }
 
 // ---------------- SESSION RUNNER ----------------
@@ -1589,8 +1589,38 @@ function vOrient(){
   ${step('or-go-sign', null, 8, s.signed, O.agreement.title, aSub, !s.pass)}
   ${S ? `<h3 style="margin:22px 0 10px">Staff Section</h3>${step('or-staff', null, 9, s.staff, S.title, s.staff ? `Read ${nice(D.staff.date)}` : `About ${S.minutes} minutes. For Staff and Founders only.`, false)}` : ''}`;
 }
-function lessonBody(L){
-  return `<div class="lesson"><h1>${esc(L.title)}</h1><p class="lead">${esc(L.lead)}</p>
+/* Read Aloud for the Field Guide's written guides (GWG BLD 813, Chris, October 16, 2026: "1and3", then "Just record
+   enough to use my credits don't go over budget", "Let's stay consistent in what is recorded"). The words live in the
+   sealed libraries, so each sentence's clip is locked with that library's audio key, in the Male Voice (Brian, like the
+   Field Guide's videos), and played by read.js (GGRead.control with {locked}). A whole section is recorded or it shows
+   no button: FG_READ lists the recorded sections, so a guide never changes voice partway through. fgListen(sec, lib)
+   marks the top of a guide's words ('g' the Guide library, 's' the Staff library); fgListenMount fills each mark with
+   the Read Aloud bar, reading the element the mark sits in. */
+// Recorded in BLD 813 (about $23 of Azure credit): Orientation, the Guide Training modules, Support Guides, the
+// Hospital Guide, Staff session guides, and For Guides for Willow, Skills for Every Guide, Living Sober, and Oak.
+// The other For Guides series join as each is recorded (patches/bld813: inventory, then record that series).
+const FG_READ = {'orient': 1, 'orient-staff': 1, 'modules': 1, 'support': 1, 'hospital': 1, 'sessions': 1, 'fg-willow': 1, 'fg-shelf': 1, 'fg-sober': 1, 'fg-oak': 1};
+const fgReadOn = sec => !!(FG_READ[sec] || window.FG_READ_ALL);
+// Crisis lines and helplines are never spoken (Chris, firm, October 15, 2026): Read Aloud leaves out any sentence that
+// names one, and the words stay on the page. The recording plan leaves the same sentences out (patches/bld813).
+const FG_QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522/i;
+window.fgQuiet = t => FG_QUIET.test(String(t || '')) || !!(window.GGRead && GGRead.quiet && GGRead.quiet(t));
+function fgListen(sec, lib){
+  const L = lib === 's' ? LIB : FLD;
+  if (!fgReadOn(sec) || !L || !L.audio || typeof L.audio.key !== 'string') return '';
+  return `<div class="fg-listen no-print" data-fgrd="${lib === 's' ? 's' : 'g'}" data-fgsec="${esc(sec)}"></div>`;
+}
+function fgListenMount(){
+  if (!window.GGRead || !GGRead.control) return;
+  document.querySelectorAll('[data-fgrd]:not([data-on])').forEach(ph => {
+    const L = ph.getAttribute('data-fgrd') === 's' ? LIB : FLD; if (!L || !L.audio) return;
+    ph.setAttribute('data-on', '1');
+    ph.appendChild(GGRead.control({root: () => ph.parentNode, locked: {key: L.audio, voice: 'brian'}, skip: window.fgQuiet}));
+  });
+}
+if (window.MutationObserver) new MutationObserver(() => { if (document.querySelector('[data-fgrd]:not([data-on])')) fgListenMount(); }).observe(document.documentElement, {childList: true, subtree: true});
+function lessonBody(L, sec = 'modules', lib = 'g'){
+  return `<div class="lesson">${fgListen(sec, lib)}<h1>${esc(L.title)}</h1><p class="lead">${esc(L.lead)}</p>
     ${L.parts.map(pt => `<h2>${esc(pt.h)}</h2>${pt.p.map(t => `<p>${esc(t)}</p>`).join('')}`).join('')}
     <div class="card" style="margin-top:24px;border-left:4px solid var(--gold)"><h3>Keep in mind</h3><ul class="checklist" style="margin-top:8px">${L.remember.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
     ${window.GGSources && (L.sources || L.video) ? GGSources.lesson('', {id: L.id, sources: L.sources || [], scenes: (L.video && L.video.scenes) || []}) : ''}</div>`;
@@ -1599,7 +1629,7 @@ function orLesson(i){
   const L = OR().lessons[i], n = OR().lessons.length, read = !!DATA.orient.lessons[L.id];
   return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Lesson ${i + 1} of ${n} &middot; About ${L.minutes} minutes</div></div>
-  ${lessonBody(L)}
+  ${lessonBody(L, 'orient')}
   <div class="row" style="margin-top:18px">${read ? `<span class="pill sage">${icon('check')} Read</span>` : `<button class="btn btn-gold" data-act="or-read" data-v="${i}">Mark as Read</button>`}
    ${i > 0 ? `<button class="btn btn-line" data-act="or-lesson" data-v="${i - 1}">Previous Lesson</button>` : ''}
    ${read && i < n - 1 ? `<button class="btn btn-line" data-act="or-lesson" data-v="${i + 1}">Next Lesson</button>` : ''}
@@ -1609,7 +1639,7 @@ function vStaffSection(){
   const S = orStaffSec(), s = orState();
   return `<button class="linkbtn" data-act="or-home">Back to Orientation</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Staff section &middot; About ${S.minutes} minutes</div></div>
-  ${lessonBody(S)}
+  ${lessonBody(S, 'orient-staff', 's')}
   <div class="row" style="margin-top:18px">${s.staff ? `<span class="pill sage">${icon('check')} Read ${nice(DATA.orient.staff.date)}</span>` : `<button class="btn btn-gold" data-act="or-staff-read">Mark as Read</button>`}</div>`;
 }
 function orShuffle(a){ a = a.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(Math.random() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
@@ -5345,21 +5375,41 @@ function spToggle(t){
 
 // ----- the child's screen: questions and picture answers only. Everything else stays hidden. -----
 let KID = null;
-// Session 23: student screens read with the shared engine (read.js), so they use the best voice on this device
-// and the speed chosen in any Grounded tool. Falls back to the plain device voice.
-function spSay(text){ if (window.GGRead && GGRead.available){ GGRead.say(text, { rate: 0.88, pitch: 1.05 }); return; } if (!('speechSynthesis' in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = 0.88; u.pitch = 1.05; speechSynthesis.speak(u); } catch(e){} }
+// Student screens (Maple, Aspen, and Pine Guide visits) read in the recorded Female Voice (Jenny, the voice of the kids'
+// apps, GWG BLD 813): the check-in questions from audio.growwithgrounded.com/v1/jenny (public text, public clips), and
+// the Guide library's own lines (locked: true) as locked clips with the library's audio key. One audio element, started
+// on the tap, so Safari lets it play. The device voice (read.js, Session 23) steps in only when a clip is missing,
+// fails, or takes longer than 6 seconds.
+const SP_V = {el: null, n: 0};
+function spDevice(text){ if (window.GGRead && GGRead.available){ GGRead.say(text, { rate: 0.88, pitch: 1.05 }); return; } if (!('speechSynthesis' in window)) return; try { speechSynthesis.cancel(); const u = new SpeechSynthesisUtterance(text); u.rate = 0.88; u.pitch = 1.05; speechSynthesis.speak(u); } catch(e){} }
+function spHush(){ SP_V.n++; if (SP_V.el){ try { SP_V.el.pause(); SP_V.el.removeAttribute('src'); } catch(e){} } try { if (window.GGRead) GGRead.stop(); if ('speechSynthesis' in window) speechSynthesis.cancel(); } catch(e){} }
+function spSay(text, locked){
+  spHush(); if (!text) return;
+  const L = window.GGLearn, n = SP_V.n, key = FLD && FLD.audio;
+  const can = L && L.clipName && window.Audio && (!locked || (L.sealedClip && L.sealedOk && L.sealedOk({key, voice: 'jenny'})));
+  if (!can) return spDevice(text);
+  const el = SP_V.el || (SP_V.el = new Audio()); let done = false;
+  const fall = () => { if (done || n !== SP_V.n) return; done = true; try { el.pause(); } catch(e){} spDevice(text); };
+  const timer = setTimeout(fall, 6000);
+  el.onended = () => { done = true; clearTimeout(timer); }; el.onerror = () => { clearTimeout(timer); fall(); };
+  el.onplaying = () => { if (el.src && !/^data:/.test(el.src)) clearTimeout(timer); };
+  const go = url => { if (n !== SP_V.n || done) return; el.src = url; const pr = el.play(); if (pr && pr.catch) pr.catch(() => { clearTimeout(timer); fall(); }); };
+  if (!locked) return go(L.rec.base + 'v1/' + L.clipName('jenny', text) + '.mp3');
+  try { el.src = L.silent(); const pr = el.play(); if (pr && pr.catch) pr.catch(() => {}); } catch(e){}
+  L.sealedClip(key, 'jenny', text).then(go, () => { clearTimeout(timer); fall(); });
+}
 function spKidOpen(which){
   const keys = which === 'all' ? SPG().parts.map(p => p.key) : [which], list = [];
   keys.forEach(k => spIdx(RUN).forEach(i => { const q = spQs(RUN.grade, k, RUN.wording)[i]; if (q) list.push({k, i, q}); }));
   KID = {list, n:0, done:false}; spKidDraw();
 }
-function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
+function spKidClose(){ const el = $('#sp-kid'); if (el) el.remove(); KID = null; spHush(); }
 function spKidDraw(){
   const S = SPG(); let el = $('#sp-kid');
   if (!el){ el = document.createElement('div'); el.id = 'sp-kid'; el.className = 'sp-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Maple questions'); document.body.appendChild(el); }
   if (KID.done){
     el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(S.screen.kidDone)}</div><button class="sp-kid-back" data-act="sp-kid-back">${esc(S.screen.back)}</button></div>`;
-    if (RUN.read) spSay(S.screen.kidDone); return;
+    if (RUN.read) spSay(S.screen.kidDone, true); return;
   }
   const it = KID.list[KID.n], p = spPart(it.k), cur = ((RUN.ans[it.k] || {})[it.i]);
   el.innerHTML = `<div class="sp-kid-in" style="--pc:${p.color}"><div class="sp-kid-top"><span class="sp-kid-part">${esc(p.part)}</span><span class="sp-kid-dots">${KID.list.map((_, j) => `<i class="${j < KID.n ? 'on' : j === KID.n ? 'cur' : ''}"></i>`).join('')}</span></div>
@@ -5418,7 +5468,7 @@ function spAct(a, v, t){
     case 'sp-save': spSaveRun(); return true;
     case 'sp-pause': spPause(); return true;
     case 'sp-stop': if (RUN) spStop(false); return true;
-    case 'sp-kid-stop': if (RUN && KID){ KID.stopped = true; const el = $('#sp-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SPG().stop.say)}</div><button class="sp-kid-back" data-act="sp-kid-stopped">${esc(SPG().screen.back)}</button></div>`; if (RUN.read) spSay(SPG().stop.say); } return true;
+    case 'sp-kid-stop': if (RUN && KID){ KID.stopped = true; const el = $('#sp-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SPG().stop.say)}</div><button class="sp-kid-back" data-act="sp-kid-stopped">${esc(SPG().screen.back)}</button></div>`; if (RUN.read) spSay(SPG().stop.say, true); } return true;
     case 'sp-kid-stopped': spStop(true); return true;
     case 'sp-nottoday': spNotToday(); return true;
     case 'sp-kid': spKidOpen(v); return true;
@@ -6167,7 +6217,7 @@ function saKidOpen(which){
   keys.forEach(k => { saIdx(RUN).forEach(i => { const q = saQs(RUN.grade, k, RUN.wording)[i]; if (q) list.push({k, i, q}); }); if (k === 'leaves' && which !== 'all' && RUN.sens.on) list.push({k, i:'sens', q:saSensQ(RUN.grade), sens:true}); });
   SAKID = {list, n:0, done:false}; saKidDraw();
 }
-function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
+function saKidClose(){ const el = $('#sa-kid'); if (el) el.remove(); SAKID = null; spHush(); }
 function saKidDraw(){
   const S = SAG(); let el = $('#sa-kid');
   if (!el){ el = document.createElement('div'); el.id = 'sa-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Aspen questions'); document.body.appendChild(el); }
@@ -6237,7 +6287,7 @@ function saAct(a, v, t){
     case 'sa-save': saSaveRun(); return true;
     case 'sa-pause': saPause(); return true;
     case 'sa-stop': if (RUN) saStop(false); return true;
-    case 'sa-kid-stop': if (RUN && SAKID){ const el = $('#sa-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SAG().stop.say)}</div><button class="sp-kid-back" data-act="sa-kid-stopped">${esc(SAG().screen.back)}</button></div>`; if (RUN.read) spSay(SAG().stop.say); } return true;
+    case 'sa-kid-stop': if (RUN && SAKID){ const el = $('#sa-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(SAG().stop.say)}</div><button class="sp-kid-back" data-act="sa-kid-stopped">${esc(SAG().screen.back)}</button></div>`; if (RUN.read) spSay(SAG().stop.say, true); } return true;
     case 'sa-kid-stopped': saStop(true); return true;
     case 'sa-nottoday': saNotToday(); return true;
     case 'sa-kid': saKidOpen(v); return true;
@@ -7109,7 +7159,7 @@ function pnKidOpen(which){
   keys.forEach(k => { const qs = pnQs(RUN, k); pnIdx(RUN, k).forEach(i => { if (qs[i]) list.push({k, i, t:qs[i].t}); }); if (which !== 'all') pnSensFor(k).filter(q => RUN.sens.on.includes(q.id)).forEach(q => list.push({k, i:q.id, t:q.t, sens:true})); });
   PNKID = {list, n:0, done:false}; pnKidDraw();
 }
-function pnKidClose(){ const el = $('#pn-kid'); if (el) el.remove(); PNKID = null; try { if (window.GGRead) GGRead.stop(); speechSynthesis.cancel(); } catch(e){} }
+function pnKidClose(){ const el = $('#pn-kid'); if (el) el.remove(); PNKID = null; spHush(); }
 function pnKidDraw(){
   const S = PNG(); let el = $('#pn-kid');
   if (!el){ el = document.createElement('div'); el.id = 'pn-kid'; el.className = 'sp-kid sa-kid'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-label', 'Pine questions'); document.body.appendChild(el); }
@@ -7181,7 +7231,7 @@ function pnAct(a, v, t){
     case 'pn-pause': pnPause(); return true;
     case 'pn-stop': if (RUN) pnStop(false); return true;
     case 'pn-resume': pnResume(); return true;
-    case 'pn-kid-stop': if (RUN && PNKID){ const el = $('#pn-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(PNG().stop.say)}</div><button class="sp-kid-back" data-act="pn-kid-stopped">${esc(PNG().screen.back)}</button></div>`; if (RUN.read) spSay(PNG().stop.say); } return true;
+    case 'pn-kid-stop': if (RUN && PNKID){ const el = $('#pn-kid'); if (el) el.innerHTML = `<div class="sp-kid-in"><div class="sp-kid-done">${esc(PNG().stop.say)}</div><button class="sp-kid-back" data-act="pn-kid-stopped">${esc(PNG().screen.back)}</button></div>`; if (RUN.read) spSay(PNG().stop.say, true); } return true;
     case 'pn-kid-stopped': pnStop(true); return true;
     case 'pn-nottoday': pnNotToday(); return true;
     case 'pn-kid': pnKidOpen(v); return true;
@@ -8569,12 +8619,12 @@ function sgLearnCard(){
    ${sgGroups().map(g => `<div class="wfg-ring"><h4>${esc(g.name)}</h4><div class="ln-list">${g.items.map(x => `<button class="ln-item" data-act="sg-open" data-v="${esc(x.id)}"><span class="ln-n">${esc(String(x.n || ''))}</span><span class="ln-t"><b>${esc(x.title)}</b><small>${esc(x.blurb || '')}${x.blurb ? (/[.!?]$/.test(x.blurb) ? ' ' : '. ') : ''}About ${esc(String(x.mins || 4))} minutes, and a page to read</small></span>${icon('play')}</button>`).join('')}</div></div>`).join('')}</div>`;
 }
 // The written page for one item. Hospital Guide (BLD 763) reuses it with its own library section (S) for the help line.
-function sgBody(x, S = SGD()){
+function sgBody(x, S = SGD(), sec = 'support'){
   const li = it => Array.isArray(it) ? `<li><b>${esc(it[0])}</b> ${esc(it[1] || '')}</li>` : `<li>${esc(it)}</li>`;
   const blk = b => b[0] === 'ul' ? `<ul class="wfg-ul">${(b[1] || []).map(li).join('')}</ul>` : b[0] === 'lab' ? `<p class="wfg-lab">${esc(b[1])}</p>` : `<p>${esc(b[1])}</p>`;
   const src = window.GGSources ? GGSources.lesson('', {id:x.id, sources:x.sources || [], scenes:(x.video && x.video.scenes) || []}) : '';
-  return `<div class="wfg-body sg-body"><h2 class="wfg-h1">${esc(x.title)}</h2>${(x.read || []).map(blk).join('')}
-   ${S && S.help ? `<p class="sg-help">${hpHelpLines(S.help).map(esc).join('<br>')}</p>` : ''}${src}</div>`;
+  return `<div class="wfg-body sg-body">${fgListen(sec, 'g')}<h2 class="wfg-h1">${esc(x.title)}</h2>${(x.read || []).map(blk).join('')}
+   ${S && S.help ? `<p class="sg-help no-read">${hpHelpLines(S.help).map(esc).join('<br>')}</p>` : ''}${src}</div>`;
 }
 function vSG(){
   const x = sgFind(V.sg); if (!x){ delete V.sg; return vLearn(); }
@@ -8666,7 +8716,7 @@ function vHPItem(x){
   return `<div class="ggl"><button class="linkbtn" data-act="hp-back">&larr; Back to the ${esc(HPG().title || 'Hospital Guide')}</button><div class="page-head" style="margin-top:14px"><div class="eyebrow">${esc(HPG().title || 'Hospital Guide')} &middot; ${esc(g.name)}</div><h1>${esc(x.title)}</h1>${x.blurb ? `<p class="muted" style="margin-top:6px">${esc(x.blurb)}</p>` : ''}</div>
    ${vid ? `<div id="hp-host"></div>` : ''}
    ${x.card ? `<div class="card" id="hp-quick" style="margin-top:14px"><div class="spread"><h3>Quick Card</h3><button class="btn btn-line btn-sm" data-act="hp-print" data-v="${esc(x.id)}">${icon('print')} Print Quick Card</button></div>${hpCardHTML(x)}</div>` : ''}
-   <div class="card" id="hp-page" style="margin-top:14px">${sgBody(x, HPG())}</div></div>`;
+   <div class="card" id="hp-page" style="margin-top:14px">${sgBody(x, HPG(), 'hospital')}</div></div>`;
 }
 function hpMount(){
   const host = $('#hp-host'), x = hpFind(V.hp); if (!host || !x || !window.GGLearn) return;
@@ -8776,8 +8826,8 @@ function wfgBody(g, head){
   const li = it => Array.isArray(it) ? `<li><b>${esc(it[0])}</b> ${esc(it[1] || '')}</li>` : `<li>${esc(it)}</li>`;
   const blk = b => b[0] === 'ul' ? `<ul class="wfg-ul">${(b[1] || []).map(li).join('')}</ul>` : b[0] === 'lab' ? `<p class="wfg-lab">${esc(b[1])}</p>` : `<p>${esc(b[1])}</p>`;
   const src = window.GGSources ? GGSources.lesson('', {id:g.id, sources:g.sources || [], scenes:(g.video && g.video.scenes) || []}) : '';
-  return `<div class="wfg-body">${head ? `<h2 class="wfg-h1">${esc(g.title)}</h2>` : ''}${(g.parts || []).map((p, i) => `<h3>${i + 1}. ${esc(p.h)}</h3>${(p.b || []).map(blk).join('')}`).join('')}
-   <h3>${(g.parts || []).length + 1}. Sources</h3><p class="muted" style="font-size:15px">${esc(WFG(fgSer(g.id)).srcNote || 'Research-informed. Credits for the research and the stories in this section.')}</p>${src || '<p class="muted">No outside sources.</p>'}</div>`;
+  return `<div class="wfg-body">${fgListen('fg-' + fgSer(g.id), 'g')}${head ? `<h2 class="wfg-h1">${esc(g.title)}</h2>` : ''}${(g.parts || []).map((p, i) => `<h3>${i + 1}. ${esc(p.h)}</h3>${(p.b || []).map(blk).join('')}`).join('')}
+   <h3 class="no-read">${(g.parts || []).length + 1}. Sources</h3><p class="muted no-read" style="font-size:15px">${esc(WFG(fgSer(g.id)).srcNote || 'Research-informed. Credits for the research and the stories in this section.')}</p>${src || '<p class="muted">No outside sources.</p>'}</div>`;
 }
 // Inside a Willow guide in When Life Changes.
 function wfgInGuide(gid, s = 'willow'){
