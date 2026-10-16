@@ -77,7 +77,7 @@ const SVC_PAGES = [
   ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you.', 'Marriage'],
   ['elopements', 'Elopements', 'page-marriage', 'Just the two of you, or a handful of people you love, anywhere that matters to you.', 'Marriage'],
   ['vow-renewals', 'Vow Renewals', 'page-marriage', 'For couples who would say it all again, and want the people they love to hear it.', 'Marriage'],
-  ['premarital-counseling', 'Premarital Sessions', 'page-marriage', 'The Grounded Marriage\u2122: build a strong foundation before the wedding day, with a couple who has been married 22 years.', 'Marriage'],
+  ['the-grounded-marriage', 'The Grounded Marriage', 'svc-premarital', 'A wedding is one day. A marriage is every day after. Twelve hours with Chris and Kayti, and Heartwood.', 'Marriage'],
   ['child-blessings', 'Child Blessings', 'page-celebrations', 'Welcoming a new life into a family and a circle of people who will love them.', 'Celebrations'],
   ['house-blessings', 'House Blessings', 'page-celebrations', 'A new home, or a new beginning in an old one.', 'Celebrations'],
   ['milestones', 'Milestone Celebrations', 'page-celebrations', 'Graduations, retirements, recovery anniversaries, and other thresholds worth honoring.', 'Celebrations'],
