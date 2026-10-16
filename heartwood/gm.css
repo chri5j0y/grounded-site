@@ -265,3 +265,11 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
 /* Email did not open? Copy the message (GWG BLD 775) */
 .gm-mailcopy textarea{display:block;width:100%;max-width:100%;box-sizing:border-box;margin-top:8px;font-family:'Barlow',sans-serif;font-size:15px;line-height:1.45;color:var(--ink);background:var(--card,var(--bg));border:1px solid var(--line);border-radius:10px;padding:10px 12px;resize:vertical;}
 .gm-mailcopy .ff-row{margin-top:8px;}
+/* BLD 816: the oak and dogwood painting fills the middle, so on wider screens the words sit on the open sky to the left */
+@media (min-width:901px){
+  .gm-hero{align-items:center;}
+  .gm-hero .gmh-photo{background-image:linear-gradient(90deg,rgba(22,36,58,.6) 0%,rgba(22,36,58,.42) 30%,rgba(22,36,58,0) 55%),var(--pw);background-position:center,center bottom;}
+  .gm-hero-in{text-align:left;padding-top:48px;padding-bottom:72px;}
+  .gm-hero-in>*{max-width:430px;margin-left:0;margin-right:0;}
+  .gm-lock{justify-content:flex-start;}
+}

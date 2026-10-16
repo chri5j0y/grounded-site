@@ -615,3 +615,12 @@ section.about-lead{padding-bottom:36px;}
 /* Accessibility pass (BLD 756): on the smallest phones (and at high zoom) the header keeps every button on screen; the tree still links home. */
 @media (max-width:360px){.brand .brand-name{display:none;}}
 .org-more{margin-top:14px;font-size:17px;}
+/* BLD 816: painted pictures on the Services cards, and the Get Grounded Now band */
+.cer-tile.has-pic{padding-top:0;overflow:hidden;}
+.cer-pic{display:block;align-self:stretch;margin:0 -18px;aspect-ratio:16/9;background:#2A1C10 center/cover no-repeat;}
+.cer-tile.has-pic .cer-ic{margin-top:-37px;position:relative;box-shadow:0 0 0 4px var(--card);}
+.soon-card.has-pic{overflow:hidden;padding-top:0;}
+.soon-card.has-pic .cer-pic{margin:0 -26px 18px;aspect-ratio:21/9;}
+.svc-art.pic{background:#2A1C10 center/cover no-repeat;}
+.ggn-band{height:clamp(150px,17vw,250px);background:#2A1C10 var(--img) center 64%/cover no-repeat;}
+@media (max-width:700px){.ggn-band{background-image:var(--img-n,var(--img));background-position:center 70%;}}
