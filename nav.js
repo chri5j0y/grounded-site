@@ -127,6 +127,7 @@
   }
 
   /* The Services menu (GWG BLD 772): The Grounded Marriage one tap away, then the six families of services.
+     Each family is a picture card that opens its own page (BLD 817, services-<family>.html); See all services stays at the foot.
      It opens like Tools: a panel under the button on a computer, the menu's own sub-page on a phone. */
   var SVC_FEATURED = { title: 'The Grounded Marriage', desc: 'Premarital sessions with Chris and Kayti, with Heartwood', href: HOME + '/the-grounded-marriage.html', bg: '#E3EAF2',
     icon: ic.marriage };
@@ -165,7 +166,11 @@
       '<a class="gn-tool' + (fh ? ' gn-here' : '') + '" href="' + f.href + '"' + (fh ? ' aria-current="page"' : '') + '><span class="gn-ic" style="background:' + f.bg + '">' + f.icon + '</span>' +
       '<span><b>' + f.title + (fh ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + f.desc + '</small></span></a></div>' +
       '<div class="gn-group"><div class="gn-h">Services</div>' +
-      SVC_FAMILIES.map(function (x) { return '<a class="gn-tool gn-row" href="' + HOME + '/services.html#' + x[2] + '"><span><b>' + x[0] + '</b><small>' + x[1] + '</small></span></a>'; }).join('') +
+      SVC_FAMILIES.map(function (x) {
+        var href = HOME + '/services-' + x[2] + '.html', h = onPage(href);
+        return '<a class="gn-tool' + (h ? ' gn-here' : '') + '" href="' + href + '"' + (h ? ' aria-current="page"' : '') + '><span class="gn-ic"><img class="gn-mark" src="' + HOME + '/shared/cards/fam-' + x[2] + '.webp" alt="" width="42" height="42"></span>' +
+          '<span><b>' + x[0] + (h ? ' <span class="gn-tag">You are here</span>' : '') + '</b><small>' + x[1] + '</small></span></a>';
+      }).join('') +
       '</div>';
   }
 
@@ -397,7 +402,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b798';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b817';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

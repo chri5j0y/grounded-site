@@ -66,12 +66,12 @@ const PSIZES = [
 const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
 // The Services as subjects: each family on the Services page and each service page, with its own painting.
 const SVC_FAM = [
-  {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services.html#marriage'},
-  {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services.html#celebrations'},
-  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, bedside blessings, and pregnancy and infant loss.', url: 'growwithgrounded.com/services.html#farewells'},
-  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services.html#hard-seasons'},
-  {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services.html#growth'},
-  {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services.html#for-teams'}
+  {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services-marriage'},
+  {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services-celebrations'},
+  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, bedside blessings, and pregnancy and infant loss.', url: 'growwithgrounded.com/services-farewells'},
+  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services-hard-seasons'},
+  {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services-growth'},
+  {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services-for-teams'}
 ];
 const SVC_PAGES = [
   ['weddings', 'Weddings', 'page-marriage', 'Your story, your vows, and a ceremony that sounds like the two of you.', 'Marriage'],
