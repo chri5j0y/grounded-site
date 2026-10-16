@@ -225,7 +225,7 @@
   var MEM = null; // this visit's choice, for a device where storage is blocked
   function chosen() { var v = null; try { v = localStorage.getItem(READER_KEY); } catch (e) {} return v === 'brian' || v === 'jenny' ? v : MEM; }
   function voiceFor(r) { return chosen() || (r && r.voice === 'jenny' ? 'jenny' : 'brian'); }
-  function readerName(v) { return v === 'jenny' ? 'Jenny' : 'Brian'; }
+  function readerName(v) { return v === 'jenny' ? 'Female Voice' : 'Male Voice'; }
   var P = { state: 'idle', id: null, q: [], i: 0, voice: '', tok: 0, el: null, pre: null, cc: null, miss: {}, played: 0, root: null, onend: null };
   function audioEl() { if (!P.el) { P.el = new Audio(); P.el.preload = 'auto'; } return P.el; }
   function lmark() {

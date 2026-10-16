@@ -26,7 +26,7 @@
   var MEM = null; // this visit's choice, for a device where storage is blocked
   function chosen() { var v = null; try { v = localStorage.getItem(READER_KEY); } catch (e) {} return v === 'brian' || v === 'jenny' ? v : MEM; }
   function readerFor(spec) { return chosen() || (spec && spec.voice === 'jenny' ? 'jenny' : 'brian'); }
-  function readerName(v) { return v === 'jenny' ? 'Jenny' : 'Brian'; }
+  function readerName(v) { return v === 'jenny' ? 'Female Voice' : 'Male Voice'; }
   var esc = function (t) { return String(t == null ? '' : t).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var norm = function (t) { return String(t == null ? '' : t).replace(/\s+/g, ' ').trim(); };
   // Text to lines, keeping single '' entries as stanza breaks.
