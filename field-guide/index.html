@@ -128,6 +128,18 @@ img.lock-tree{height:120px;display:inline-block;border-radius:22px;box-shadow:0 
 /* Group labels in the tab bar (Chris, October 7, 2026): For Everyone | Staff and Founders | Founders. Staff and Founders only. */
 .tab-grp{flex:0 0 auto;align-self:center;font-family:'Barlow Condensed',sans-serif;font-weight:600;font-size:11px;line-height:1.1;letter-spacing:1.2px;text-transform:uppercase;color:#D9A847;opacity:.85;padding:0 4px 0 8px;white-space:nowrap;}
 .tab-grp + .tab{padding-left:8px;}
+/* Grouped tabs (GWG BLD 822, Chris: "Your Path should be first", "condense the huge line of tabs"): a short top row of
+   groups (Your Path, Home, Trees, Guides, Staff, Founder) and, under it, the tabs inside the open group. */
+.tabs-top{justify-content:center;}
+.tabs-sub{background:rgba(0,0,0,.18);justify-content:center;flex-wrap:wrap;padding:2px 6px;}
+.tabs-sub .tab{font-size:calc(13.5px * var(--scale));padding:8px 11px 7px;color:rgba(244,235,218,.78);}
+.tabs-sub .tab svg{width:15px;height:15px;}
+@media(max-width:640px){ .tabs-top{justify-content:space-between;padding:0 2px;} .tabs-top .tab{padding:12px 6px 10px;letter-spacing:.4px;font-size:calc(14px * var(--scale));} .tabs-top .tab svg{display:none;} .tabs-sub{justify-content:flex-start;flex-wrap:nowrap;} }
+.tree-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px;margin-top:14px;}
+.tree-card{display:flex;align-items:center;gap:14px;text-align:left;cursor:pointer;padding:14px 16px;font:inherit;color:var(--ink);}
+.tree-card img{width:64px;height:64px;border-radius:16px;flex:none;}
+.tree-card b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:calc(22px * var(--scale));line-height:1.15;}
+.tree-card span{display:block;color:var(--ink-soft);font-size:calc(15px * var(--scale));line-height:1.35;}
 .aud-row{margin:-8px 0 14px;display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
 .aud-note{font-size:calc(14px * var(--scale));color:var(--ink-soft);font-style:italic;}
 .aud-h{display:flex;flex-wrap:wrap;align-items:center;gap:6px 10px;}
@@ -636,7 +648,7 @@ body.cd-noscroll{overflow:hidden;}
     <button class="bar-btn" data-menu="tools" aria-label="Tools"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.5"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.5"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.5"/></svg><span class="lbl">Tools</span></button>
     <button class="bar-btn" data-menu="me" aria-label="Menu"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M4 7h16M4 12h16M4 17h16"/></svg></button>
   </div>
-  <nav class="tabs" aria-label="Sections"><div class="tabs-in" id="tabs" role="tablist"></div></nav></header>
+  <nav class="tabs" aria-label="Sections"><div id="tabs"><div class="tabs-in tabs-top" id="tabs-top" role="tablist"></div><div class="tabs-in tabs-sub" id="tabs-sub" role="tablist" hidden></div></div></nav></header>
   <main><div class="wrap" id="view"></div></main>
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
@@ -1056,7 +1068,7 @@ function start(){
   if (dr && (st ? STG() && (dr.clientId ? CL(dr.clientId) : false) : LIB)) { setTimeout(() => { if (confirm(st ? 'You have an Oak visit in progress. Pick up where you left off?' : 'You have a session in progress. Pick up where you left off?')) { RUN = DATA.draft; DATA.draft = null; save(); if (st){ stLoad(); let n = 0; const go2 = () => { if (STC || RUN.visit === 'open') stOpenRun(); else if (STC_FAIL || ++n > 40){ DATA.draft = RUN; RUN = null; save(); toast("The Oak questions didn't load. Your visit is kept for next time."); } else setTimeout(go2, 250); }; go2(); } else openRunner(); } else { DATA.draft = null; save(); } }, 200); }
 }
 // The first real tab, past any group label ('-') at the top of the list (BLD 788).
-const firstTab = tabs => (tabs.find(t => t[0] !== '-') || ['home'])[0];
+const firstTab = tabs => TIER !== 'guide' && tabs.some(t => t[0] === 'home') ? 'home' : (tabs.find(t => t[0] !== '-') || ['home'])[0];
 function tabsFor(){
   // Tab order (GWG BLD 743): the Guiding group first, trees youngest to oldest, then a thin divider ('-') and the
   // Grow With Grounded group for Staff and Founders. Birch takes its slot after Pine (Birch Guide, BLD 744).
@@ -1066,13 +1078,13 @@ function tabsFor(){
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['home','Home','home'], ...kids, ...grown, ...hp, ['path','Your Path','award'], ...(FSAFE() ? [['safety','Safety','shield']] : [])];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
   if (!LIB) return [...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['home','Home','home'], ...kids, ...grown, ...hp, ['path','Your Path','award'], ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
   return t;
 }
@@ -1081,7 +1093,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder' || id === 'books') return 'founder'; // Books (GWG BLD 770) is Founders only
-  if (id === 'home' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'trees' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1098,12 +1110,38 @@ function render(){
   const tabs = tabsFor();
   if (V.tab === 'sessions') V.tab = 'guides'; // the Sessions tab's key stays 'guides' (BLD 743)
   const pathSub = PATH_SUB.includes(V.tab) && tabs.some(x => x[0] === 'path');
-  if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
-  $('#tabs').innerHTML = tabs.map(([id,l,ic], i) => id === '-' ? `${i ? '<span class="tab-div" aria-hidden="true"></span>' : ''}<span class="tab-grp" role="separator" aria-label="${esc(l)}">${esc(l)}</span>` : `<button class="tab ${id==='safety'?'safety':''}" role="tab" aria-selected="${V.tab===id || (id === 'path' && pathSub)}" data-tab="${id}">${icon(ic)}${l}</button>`).join('');
-  const views = {home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  const treeTabs = tabs.filter(x => TREE_IDS.includes(x[0]));
+  if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !(V.tab === 'trees' && treeTabs.length) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
+  drawTabs(tabs, pathSub);
+  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
+}
+// Grouped tabs (GWG BLD 822). tabsFor() stays the one flat list of what each person may open; the bar shows it in
+// six groups, and the open group's own tabs in a second row. Both rows sit inside #tabs, so the tab handlers still work.
+const TREE_IDS = ['maple','aspen','pine','birch','oak','sequoia','willow','grove'];
+const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
+const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
+const GRP_LAST = {};
+function drawTabs(tabs, pathSub){
+  const real = tabs.filter(x => x[0] !== '-'), cur = pathSub ? 'path' : grpOf(V.tab);
+  if (cur && V.tab !== 'trees') GRP_LAST[cur] = V.tab;
+  const btn = (id, l, ic, sel, extra) => `<button class="tab${extra || ''}" role="tab" aria-selected="${sel}" data-tab="${id}">${icon(ic)}${esc(l)}</button>`;
+  $('#tabs-top').innerHTML = TAB_GRPS.map(([g, l, ic]) => {
+    const mem = real.filter(x => grpOf(x[0]) === g); if (!mem.length) return '';
+    const to = g === 'trees' ? (mem.length > 1 ? 'trees' : mem[0][0]) : (mem.some(x => x[0] === GRP_LAST[g]) ? GRP_LAST[g] : mem[0][0]);
+    return btn(to, l, ic, cur === g, '');
+  }).join('');
+  const mem = real.filter(x => grpOf(x[0]) === cur), sub = $('#tabs-sub');
+  sub.hidden = !cur || mem.length < 2;
+  sub.innerHTML = sub.hidden ? '' : mem.map(([id, l, ic]) => btn(id, l, ic, V.tab === id, id === 'safety' ? ' safety' : '')).join('');
+}
+// Trees (GWG BLD 822): the trees open to this person, as picture cards.
+const TREE_LINE = {maple: 'For grades K to 5', aspen: 'For grades 6 to 8', pine: 'For grades 9 to 12', birch: 'For ages 18 to 26', oak: 'For ages 26 to 60', sequoia: 'For 60 and up', willow: 'For hospice, and the people who love them', grove: 'For families, faith communities, and groups'};
+function vTrees(){
+  const t = tabsFor().filter(x => TREE_IDS.includes(x[0]));
+  return `<h2>Trees</h2><p class="sub">Choose a tree to guide a visit, see its guides, and open its For Guides training.</p><div class="tree-grid">${t.map(([id, l]) => `<button class="card tree-card" data-tab="${id}"><img src="../shared/marks/${id}.svg" alt="" width="64" height="64"><span><b>${esc(l)}</b><span>${esc(TREE_LINE[id] || '')}</span></span></button>`).join('')}</div>`;
 }
 function go(tab, extra){ if (window.GFGNav) GFGNav.from(V, tab, extra); if (typeof lnStop === 'function' && LN) lnStop(); V = Object.assign({tab}, extra||{}); render(); }
 // Back and Offline (GWG BLD 797, offline.js): Back returns to the previous step or screen, and a session asks before the page closes.
