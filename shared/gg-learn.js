@@ -478,7 +478,8 @@
     var tr = cfg.track, tdone = trackDone(tr, done), cert = !!cfg.cert && tdone && certable(tr);
     // A caller's own closing card (Grounded Stories, BLD 784): cfg.ending {eyebrow, h, sub, say, ok, buttons: [[id, label, class, href]]}.
     if (cfg.ending) { var ce = { ok: true, custom: true, count: '', next: null, cert: false }; for (var ck in cfg.ending) ce[ck] = cfg.ending[ck]; return ce; }
-    if (tr && tr.kind === 'guide') { var pr = cfg.pair || null; return { ok: true, guide: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: 'The full guide has more' + (pr ? ', and there is a video ' + pr.sideName.replace(/^For/, 'for') + ' too.' : '.'), count: '', say: 'Take all the time you need. The full guide is here whenever you want it.', next: null, pair: pr, cert: false }; }
+    // A guide video's own last line already points to the full guide, so the closing only says the gentle line (Chris, October 17, 2026: it repeated). GWG BLD 828
+    if (tr && tr.kind === 'guide') { var pr = cfg.pair || null; return { ok: true, guide: true, eyebrow: 'Here Whenever You Need It', h: 'Take all the time you need.', sub: pr ? 'There is a video ' + pr.sideName.replace(/^For/, 'for') + ' too.' : '', count: '', say: 'Take all the time you need.', next: null, pair: pr, cert: false }; }
     if (tr && tr.kind === 'forguides') {
       // For Guides (W1): Open the Full Section, Watch Again, Next Video, Back to the Series. Next is the next guide in order.
       var L = tr.lessons || [], at = -1; L.forEach(function (x, j) { if (x.id === cfg.lesson.id) at = j; });
