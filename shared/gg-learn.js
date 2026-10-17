@@ -80,7 +80,7 @@
     'page-celebrations': { x: 100, s: 'r', w: 380 }, 'page-farewells': { x: 100, s: 'r', w: 440 }, 'page-growth': { x: 0, s: 'l', w: 520 },
     'page-hard-seasons': { x: 0, s: 'l', w: 520 }, 'page-marriage': { x: 100, s: 'r', w: 420 }, 'page-teams': { x: 50, s: 't', w: 640 }
   };
-  var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 ? h : 'home'; };
+  var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 || /^(svc|page)-[a-z0-9-]+$/.test(h || '') ? h : 'home'; }; // BLD 823: any page or service painting
   var HERO = function (h) { h = heroId(h); return h === 'marriage' ? url('/heartwood/hero-wide.webp') : url('/shared/heroes/' + h + '-wide.webp'); };
   var COL = { maple: '#C4501E', aspen: '#1F6F74', pine: '#3A6B35', birch: '#7F6610', oak: '#3D5A73', sequoia: '#7A2E1C', willow: '#5D5A6E', grove: '#223829', field: '#2E2118', site: '#8B5E1A' };
   var APPS = {
