@@ -467,7 +467,7 @@
     side += '<div class="th-card th-watch" data-qr="watch"><div class="th-qr" data-url="' + esc(n.watch.url) + '">' + thQR(n.watch.url, 'QR code: ' + n.watch.title) + '</div><div><h3 class="serif">' + esc(n.watch.title) + '</h3><p>' + esc(n.watch.line) + '</p><span>' + esc(n.watch.short) + '</span></div></div>';
     if (n.help) side += '<div class="th-card th-help"><h3 class="serif">' + esc(n.help.h) + '</h3><ul>' + n.help.li.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
     side += '</aside>';
-    var who = '<div class="th-who"><span class="th-pics"><img src="' + A('/kayti-joy-avatar.jpg') + '" alt="Kayti Joy"><img src="' + A('/chris.jpg') + '" alt="Chris Joy"></span><div><h3 class="serif">' + esc(n.who.h) + '</h3><p>' + esc(n.who.p) + '</p><p class="th-contact">' + esc(n.who.contact) + '</p></div><img class="th-logo" src="' + A('/favicon.svg') + '" alt=""></div>';
+    var who = '<div class="th-who"><span class="th-pics"><img src="' + A('/kayti-joy-avatar.jpg') + '" alt="Kayti Joy"><img src="' + A('/chris.jpg?v=b829') + '" alt="Chris Joy"></span><div><h3 class="serif">' + esc(n.who.h) + '</h3><p>' + esc(n.who.p) + '</p><p class="th-contact">' + esc(n.who.contact) + '</p></div><img class="th-logo" src="' + A('/favicon.svg') + '" alt=""></div>';
     return '<div class="th th-' + n.kind + (n.title.length > 24 ? ' th-long' : '') + '" style="--c:' + n.color + ';--ink2:' + n.ink + '">' + hero + '<div class="th-body" data-fit>' + main + side + '</div>' + who + '<div class="th-foot">' + esc(n.foot) + '</div></div>';
   }
   var TH_CSS = [
@@ -577,7 +577,7 @@
       };
       return Promise.all([
         ggPdfImage(A('/shared/heroes/' + tr + '-wide.webp'), 1224, 300, { x: (HX[tr] == null ? 50 : HX[tr]) / 100, y: 0.58, paint: shade, q: 0.84 }),
-        ggPdfImage(A('/kayti-joy-avatar.jpg'), 176, 176, { y: 0.35 }), ggPdfImage(A('/chris.jpg'), 176, 176, { y: 0.35 })
+        ggPdfImage(A('/kayti-joy-avatar.jpg'), 176, 176, { y: 0.35 }), ggPdfImage(A('/chris.jpg?v=b829'), 176, 176, { y: 0.35 })
       ]).then(function (x) { return { hero: x[0], pics: x[1] && x[2] ? [x[1], x[2]] : null }; });
     });
     return ART[tr];
