@@ -665,7 +665,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
-<script src="share.js?v=b818"></script>
+<script src="share.js?v=b833"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b817"></script>
 <script src="ceremonies.js?v=b798"></script>
@@ -1113,7 +1113,7 @@ function render(){
   const treeTabs = tabs.filter(x => TREE_IDS.includes(x[0]));
   if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !(V.tab === 'trees' && treeTabs.length) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   drawTabs(tabs, pathSub);
-  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
@@ -1271,6 +1271,7 @@ function vHome(){
   ${window.GGGv ? GGGv.homeCard() : ''}
   ${window.GGCli ? GGCli.homeCard() : (DATA.clients.length && (days === null || days >= 7)) ? `<div class="card backup-nudge spread"><div><b>Time for a backup.</b> <span class="muted">${days === null ? "You haven't backed up yet." : `Last backup was ${days} days ago.`} Your notes live only on this device.</span></div><button class="btn btn-gold btn-sm" data-act="export">Back Up Now</button></div>` : ''}
   ${window.GGBooks ? GGBooks.homeCard() : ''}
+  ${window.GGShare && GGShare.homeCard && TIER === 'founder' ? GGShare.homeCard({founder: true, posts: FDR && FDR.posts, data: DATA, save}) : '' /* GWG BLD 833: the Post Calendar refill notice */}
   ${fgStoriesCard()}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
@@ -10963,6 +10964,7 @@ function mergeData(cur, inc){
   if (!out.founder.draft && fo.draft) out.founder.draft = fo.draft;
   out.founder.speak = Object.assign({}, fo.speak || {}, out.founder.speak || {});
   out.founder.stories = storiesMerge(out.founder.stories, fo.stories); // Story Lab (BLD 724)
+  out.posted = Object.assign({}, inc.posted || {}, out.posted || {}); // the Post Calendar's posted marks (GWG BLD 833)
   out.learn = learnMerge(out.learn, inc.learn);
   if (inc.certs){ const ic = inc.certs, oc = out.certs || {}; out.certs = {name: oc.name || ic.name || '', seen: (oc.seen || ic.seen) ? Object.assign({}, ic.seen || {}, oc.seen || {}) : null}; } // GWG BLD 797
   out.lastBackup = Math.max(out.lastBackup || 0, inc.lastBackup || 0) || null;

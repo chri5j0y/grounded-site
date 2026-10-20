@@ -150,11 +150,12 @@ let LIB = null;
 // The Share tab's choices, kept while the Field Guide is open. head, note, and with are Your Own Words.
 const S = {subject: 'gwg', msg: 'tag', own: '', platform: 'facebook', format: 'card', look: 'light', marks: true, bios: 'all', orient: 'tall', qr: false, head: '', note: '', with: 'place'};
 // Your Own Words, trimmed to the character guide, or null when both are empty.
-function ownWords(){
+function ownWords(Z){
+  Z = Z || S;
   const cut = (t, n) => Array.from(String(t || '')).slice(0, n).join('');
-  const head = cut(S.head, HEAD_MAX).replace(/\s+/g, ' ').trim();
+  const head = cut(Z.head, HEAD_MAX).replace(/\s+/g, ' ').trim();
   // The message keeps up to four of its own line breaks (a date, a time, and a place can each have a line).
-  const note = cut(S.note, NOTE_MAX).split(/\r?\n/).map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 5).join('\n');
+  const note = cut(Z.note, NOTE_MAX).split(/\r?\n/).map(l => l.replace(/\s+/g, ' ').trim()).filter(Boolean).slice(0, 5).join('\n');
   return head || note ? {head, note} : null;
 }
 
@@ -461,15 +462,15 @@ function drawQR(ctx, M, x, y, s, pnt, B){
 }
 // Draw one card or banner on a canvas of exactly W by H pixels.
 async function draw(canvas, cur, look){
-  const {sub, text, plat, W, H} = cur, pr = cur.print || null;
+  const {sub, text, plat, W, H} = cur, pr = cur.print || null, Z = cur.z || S; // cur.z: a Post Calendar card's own settings (GWG BLD 833)
   await fonts();
   const logo = isLogo(sub), P = palette(sub, look), pnt = look === 'painting', hero = pnt ? heroOf(sub) : null;
-  const showMarks = S.marks && isGWG(sub);
+  const showMarks = Z.marks && isGWG(sub);
   const imgs = await Promise.all([loadImg(markUrl(sub)), ...(showMarks ? TREES.map(t => loadImg('../shared/marks/' + t + '.svg')) : [])]);
   const photo = pnt ? await loadPhoto(hero.url) : null;
   canvas.width = W; canvas.height = H;
   const ctx = canvas.getContext('2d'), B = canvas.boxes = [];
-  const banner = S.format === 'banner', horiz = banner || W / H >= 1.3;
+  const banner = Z.format === 'banner', horiz = banner || W / H >= 1.3;
   // Print: the site line sits inside the safe area, so the ground band grows past the bleed to hold it.
   const site = pr ? siteLayout(ctx, siteOf(sub), W, H, pr) : null;
   const orgList = sub.svc === 'org' && !!pr && pr.size.id !== 'pbiz' && Array.isArray(sub.lines) && sub.lines.length > 0;
@@ -499,7 +500,7 @@ async function draw(canvas, cur, look){
   }
   // The QR code to the subject's page: a white tile beside the words (wide) or under them (tall).
   const qrUrl = 'https://' + String(siteOf(sub)).replace(/^https?:\/\//, '');
-  const qrM = S.qr && window.GGQR ? (() => { try { return window.GGQR.matrix(qrUrl); } catch (e){ return null; } })() : null;
+  const qrM = Z.qr && window.GGQR ? (() => { try { return window.GGQR.matrix(qrUrl); } catch (e){ return null; } })() : null;
   let qs = 0, qgap = 0; const R0 = Object.assign({}, R);
   // Beside the words on wide cards; under them on tall cards and where the words share a painting with its tree.
   const qrSide = horiz && !(pnt && !banner && side !== 'center');
@@ -508,7 +509,7 @@ async function draw(canvas, cur, look){
     qgap = Math.round(Math.min(W, H) * .035);
     if (qrSide) R.w -= qs + qgap; else R.h -= qs + qgap;
   }
-  const own = ownWords(), msgText = own && S.with === 'place' ? '' : String(text || '').trim();
+  const own = ownWords(Z), msgText = own && Z.with === 'place' ? '' : String(text || '').trim();
   const o ={horiz, logo, name: cardName(sub), msg: msgText, head: own ? own.head : '', note: own ? own.note : '', line: sub.line || '', marks: showMarks, minU: Math.min(W, H) * (banner ? .028 : .018)};
   // An audience flyer: its headline in the name's place, the audience above it, and its list on the print sizes (not the business card).
   if (sub.svc === 'org'){ o.name = sub.headline || o.name; o.eyebrow = sub.eyebrow || ''; if (orgList) o.list = sub.lines.slice(0, 5); }
@@ -617,7 +618,15 @@ async function draw(canvas, cur, look){
 }
 
 // ---------- view ----------
-const CSS = `
+const CSS = `.pc-wrap{margin-bottom:26px}.pc-wrap .page-head{margin-bottom:12px}.pc-nav{display:flex;flex-direction:column;gap:12px;margin-bottom:14px}
+.pc-day{display:flex;align-items:center;justify-content:space-between;gap:10px}.pc-date{text-align:center;flex:1;min-width:0}.pc-jump{gap:12px;align-items:center;flex-wrap:wrap}
+.pc-jump input{font:inherit;padding:6px 8px;border:1px solid var(--line);border-radius:8px;background:var(--card);color:var(--ink);max-width:100%}
+.pc-item{margin-bottom:14px}.pc-item.pc-done{opacity:.72}.pc-top{display:flex;gap:10px;align-items:center;flex-wrap:wrap;margin-bottom:10px;font-size:15px}
+.pc-plat{font-weight:700;padding:2px 10px;border-radius:999px;background:var(--ink);color:var(--card)}.pc-ok{font-weight:700;color:var(--sage,#5F7D48)}
+.pc-body{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:16px;align-items:start}@media(max-width:760px){.pc-body{grid-template-columns:minmax(0,1fr)}}
+.pc-pic{width:100%;height:auto;border-radius:10px;display:block;background:#2A1E15}.pc-words{min-width:0}.pc-text{white-space:pre-wrap;overflow-wrap:anywhere;margin:0;line-height:1.55}
+.pc-n{font-size:14px;margin-top:6px}.pc-link{font-weight:600;overflow-wrap:anywhere;user-select:all;-webkit-user-select:all}.pc-acts{display:flex;flex-wrap:wrap;gap:8px;margin-top:12px}.pc-tip{font-size:14px;margin-top:8px}
+
 .sc-wrap{display:grid;grid-template-columns:minmax(0,380px) minmax(0,1fr);gap:18px;align-items:start;}
 @media (max-width:900px){.sc-wrap{grid-template-columns:minmax(0,1fr);}.sc-prev{position:static;}}
 .sc-wrap .card{min-width:0;}
@@ -724,7 +733,7 @@ function guides(x, c){
   x.strokeStyle = '#1F78C8'; x.strokeRect(k, k, W - 2 * k, H - 2 * k);
   x.restore();
 }
-function rerender(){ const r = document.getElementById('sc-root'); if (!r) return; r.innerHTML = inner(); paint(); }
+function rerender(){ const r = document.getElementById('sc-root'); if (!r) return; r.innerHTML = pcHtml() + inner(); paint(); pcPaint(); }
 function toast(t){ const d = document.createElement('div'); d.className = 'toast'; d.textContent = t; document.body.appendChild(d); setTimeout(() => d.remove(), 2200); }
 async function copyText(t){
   try { await navigator.clipboard.writeText(t); }
@@ -781,9 +790,120 @@ async function save(pdf){
   download(b, fileName(c, 'png'));
 }
 
+// ---------- the Post Calendar (GWG BLD 833) ----------
+// Founders only. The Founder library's posts: {from, through, made, items: [{id, platform, date, slot, kind, text, link,
+// image: {art, head, note}}]}. Each post draws its own picture at its platform's size (the Painting look), and posts in one tap:
+// X opens a new post with the words filled in; the others copy the words and save or share the picture.
+// Posted marks live in the Field Guide's own data (DATA.posted), carried in backups.
+let PC = null;
+const PCS = {day: null, plat: 'all'};
+const PC_PLAT = [['all', 'All'], ['x', 'X'], ['facebook', 'Facebook'], ['instagram', 'Instagram'], ['linkedin', 'LinkedIn']];
+const PC_NAME = {x: 'X', facebook: 'Facebook', instagram: 'Instagram', linkedin: 'LinkedIn'};
+const PC_KIND = {practice: 'Practice', principle: 'Principle', perspective: 'Perspective', story: 'Story', service: 'Service', tool: 'Tool', season: 'Season', invite: 'Invite'};
+const pad2 = n => String(n).padStart(2, '0');
+const isoOf = t => t.getFullYear() + '-' + pad2(t.getMonth() + 1) + '-' + pad2(t.getDate());
+const pcToday = () => isoOf(new Date());
+const pcAdd = (s, n) => { const [y, m, d] = s.split('-').map(Number); return isoOf(new Date(y, m - 1, d + n)); };
+const pcGap = (a, b) => { const [y1, m1, d1] = a.split('-').map(Number), [y2, m2, d2] = b.split('-').map(Number); return Math.round((Date.UTC(y2, m2 - 1, d2) - Date.UTC(y1, m1 - 1, d1)) / 864e5); };
+const pcNice = s => { const [y, m, d] = s.split('-').map(Number); return new Date(y, m - 1, d).toLocaleDateString(undefined, {weekday: 'long', month: 'long', day: 'numeric'}); };
+function pcPosts(){ const P = PC && PC.posts; return P && Array.isArray(P.items) ? P : null; }
+function pcInfo(){
+  const P = pcPosts(); if (!P) return null;
+  const dates = P.items.map(x => x.date).filter(Boolean).sort();
+  const from = P.from || dates[0], through = P.through || dates[dates.length - 1];
+  const left = pcGap(pcToday(), through);
+  return {P, from, through, left, refill: left <= 5};
+}
+// The refill notice: five days before the last post, and after it.
+function pcRefill(i, home){
+  if (!i || !i.refill) return '';
+  const when = i.left > 1 ? 'The posts run through ' + pcNice(i.through) + ', ' + i.left + ' days from now.' : i.left === 1 ? 'The posts run through tomorrow.' : i.left === 0 ? 'Today is the last day of posts.' : 'The posts ran through ' + pcNice(i.through) + '.';
+  return `<div class="card backup-nudge spread pc-refill"><div><b>Time to refill the Post Calendar.</b> <span class="muted">${esc(when)} Ask Claude for next month's posts, a fresh round shaped by what worked, then apply the library update in Founder, Update a Library.</span></div>${home ? '<div class="row"><button class="btn btn-gold" data-tab="share">Open the Post Calendar</button></div>' : ''}</div>`;
+}
+function pcPosted(){ const d = PC && PC.data; if (!d) return {}; d.posted = d.posted || {}; return d.posted; }
+const pcLen = t => Array.from(String(t || '').replace(/https?:\/\/\S+/g, 'x'.repeat(23))).length;
+function pcSub(p){
+  const me = p.platform === 'x' || p.platform === 'linkedin';
+  const a = (p.image && p.image.art) || 'shared/heroes/home-wide.webp';
+  const url = p.link ? String(p.link).replace(/^https?:\/\//, '').replace(/\.html$/, '').replace(/\/$/, '') : 'growwithgrounded.com';
+  // The post's own words are the headline; the tree mark and the address carry the brand.
+  const head = (p.image && p.image.head) || (me ? 'Chris Joy' : 'Grow With Grounded');
+  return {id: me ? 'post-me' : 'post-gwg', name: head, svc: 'post', mark: 'favicon.svg', color: GOLD, hero: a, focus: .5, line: '', url};
+}
+function pcCur(p){
+  const plat = FB.platforms.find(x => x.id === p.platform) || FB.platforms[0];
+  const size = plat.card || [1200, 630];
+  const im = p.image || {};
+  return {sub: pcSub(p), text: '', plat, W: +size[0], H: +size[1], z: {marks: false, format: 'card', qr: false, with: 'place', head: '', note: im.note || ''}};
+}
+const pcFile = p => ['Grounded', PC_NAME[p.platform] || p.platform, p.date, p.slot || 'am'].join('-') + '.png';
+async function pcBlob(p){ const cv = await draw(document.createElement('canvas'), pcCur(p), 'painting'); return blobOf(cv, 'image/png'); }
+function pcItem(p){
+  const done = pcPosted()[p.id], x = p.platform === 'x', n = pcLen(p.text);
+  return `<article class="card pc-item${done ? ' pc-done' : ''}" id="pc-${esc(p.id)}">
+    <div class="pc-top"><span class="pc-plat pc-${esc(p.platform)}">${esc(PC_NAME[p.platform] || p.platform)}</span>${p.slot === 'pm' ? '<span class="muted">Evening</span>' : x ? '<span class="muted">Morning</span>' : ''}<span class="muted">${esc(PC_KIND[p.kind] || '')}</span>${done ? '<span class="pc-ok">Posted</span>' : ''}</div>
+    <div class="pc-body"><canvas class="pc-pic" data-pc="${esc(p.id)}" width="${pcCur(p).W}" height="${pcCur(p).H}" role="img" aria-label="${esc((p.image && p.image.head) || 'Post picture')}"></canvas>
+      <div class="pc-words"><p class="pc-text">${esc(p.text)}</p>${x ? `<p class="muted pc-n">${n} of 280 characters</p>` : ''}</div></div>
+    <div class="pc-acts">${x ? `<button type="button" class="btn btn-gold" data-sc="pc-x" data-v="${esc(p.id)}">Post on X</button>` : `<button type="button" class="btn btn-gold" data-sc="pc-copy" data-v="${esc(p.id)}">Copy Words</button>`}
+      <button type="button" class="btn btn-line" data-sc="pc-save" data-v="${esc(p.id)}">Save Picture</button>
+      ${navigator.share ? `<button type="button" class="btn btn-line" data-sc="pc-share" data-v="${esc(p.id)}">Share</button>` : ''}
+      ${x ? `<button type="button" class="btn btn-line" data-sc="pc-copy" data-v="${esc(p.id)}">Copy Words</button>` : ''}
+      <button type="button" class="btn btn-line" data-sc="pc-done" data-v="${esc(p.id)}">${done ? 'Undo Posted' : 'Mark Posted'}</button></div>
+    ${x ? '<p class="muted pc-tip">Post on X fills in the words. Add the saved picture in X before you post.</p>' : p.platform === 'instagram' ? `<p class="muted pc-tip">On Instagram, start a post with the saved picture, then paste the words.${p.link ? ' Today\'s bio link: <span class="pc-link">' + esc(p.link) + '</span>' : ''}</p>` : `<p class="muted pc-tip">On ${esc(PC_NAME[p.platform])}, start a post, paste the words, and add the saved picture.</p>`}
+  </article>`;
+}
+function pcHtml(){
+  if (!PC || !PC.founder) return '';
+  const i = pcInfo();
+  if (!i) return `<section class="pc-wrap"><div class="page-head"><div class="eyebrow">For Founders</div><h1>Post Calendar</h1><p>A month of posts for X, Facebook, Instagram, and LinkedIn arrives with the next Founder library update.</p></div></section>`;
+  const days = Array.from(new Set(i.P.items.map(x => x.date))).sort();
+  if (!PCS.day) PCS.day = days.includes(pcToday()) ? pcToday() : (days.find(d => d >= pcToday()) || days[days.length - 1]);
+  const list = i.P.items.filter(x => x.date === PCS.day && (PCS.plat === 'all' || x.platform === PCS.plat))
+    .sort((a, b) => ['x', 'facebook', 'instagram', 'linkedin'].indexOf(a.platform) - ['x', 'facebook', 'instagram', 'linkedin'].indexOf(b.platform) || (a.slot || '').localeCompare(b.slot || ''));
+  const posted = pcPosted(), dayAll = i.P.items.filter(x => x.date === PCS.day), dayDone = dayAll.filter(x => posted[x.id]).length;
+  const at = days.indexOf(PCS.day);
+  return `<section class="pc-wrap"><div class="page-head"><div class="eyebrow">For Founders</div><h1>Post Calendar</h1><p>Posts for X, Facebook, Instagram, and LinkedIn, ${esc(pcNice(i.from))} to ${esc(pcNice(i.through))}. Each one has its picture ready.</p></div>
+    ${pcRefill(i)}
+    <div class="card pc-nav"><div class="pc-day"><button type="button" class="btn btn-line" data-sc="pc-prev"${at <= 0 ? ' disabled' : ''} aria-label="Earlier day">Earlier</button>
+      <div class="pc-date"><b>${esc(pcNice(PCS.day))}</b>${PCS.day === pcToday() ? ' <span class="pc-ok">Today</span>' : ''}<br><span class="muted">${dayDone} of ${dayAll.length} posted</span></div>
+      <button type="button" class="btn btn-line" data-sc="pc-next"${at >= days.length - 1 ? ' disabled' : ''} aria-label="Later day">Later</button></div>
+      <div class="row pc-jump"><button type="button" class="linkbtn" data-sc="pc-today">Today</button><label class="sr-only" for="pc-pick">Pick a day</label><input type="date" id="pc-pick" data-sc="pc-pick" value="${esc(PCS.day)}" min="${esc(days[0])}" max="${esc(days[days.length - 1])}"></div>
+      <div class="pc-chips">${chips('pcplat', PC_PLAT, PCS.plat)}</div></div>
+    ${list.length ? list.map(pcItem).join('') : '<p class="muted" style="margin:10px 0 18px">Nothing planned here for this day. Try another platform or day.</p>'}
+  </section>`;
+}
+let PCT = 0;
+async function pcPaint(){
+  const t = ++PCT, P = pcPosts(); if (!P) return;
+  for (const cv of document.querySelectorAll('#sc-root canvas.pc-pic')){
+    if (t !== PCT) return;
+    const p = P.items.find(x => x.id === cv.dataset.pc); if (!p) continue;
+    try { const off = await draw(document.createElement('canvas'), pcCur(p), 'painting'); if (t !== PCT || !document.body.contains(cv)) return; cv.width = off.width; cv.height = off.height; cv.getContext('2d').drawImage(off, 0, 0); cv.dataset.ready = '1'; } catch (e){}
+  }
+}
+async function pcAct(k, id){
+  const P = pcPosts(); const p = P && P.items.find(x => x.id === id);
+  if (k === 'pc-x' && p){ window.open('https://x.com/intent/post?text=' + encodeURIComponent(p.text), '_blank', 'noopener'); return; }
+  if (k === 'pc-copy' && p){ copyText(p.text); return; }
+  if (k === 'pc-save' && p){ const b = await pcBlob(p); if (b) download(b, pcFile(p)); return; }
+  if (k === 'pc-share' && p){
+    const b = await pcBlob(p); const f = b ? new File([b], pcFile(p), {type: 'image/png'}) : null;
+    try { if (f && navigator.canShare && navigator.canShare({files: [f]})) await navigator.share({files: [f], text: p.text}); else await navigator.share({text: p.text}); } catch (e){}
+    return;
+  }
+  if (k === 'pc-done' && p){ const d = pcPosted(); if (d[id]) delete d[id]; else d[id] = Date.now(); if (PC.save) PC.save(); rerender(); return; }
+  const days = P ? Array.from(new Set(P.items.map(x => x.date))).sort() : [];
+  const at = days.indexOf(PCS.day);
+  if (k === 'pc-prev' && at > 0){ PCS.day = days[at - 1]; rerender(); }
+  else if (k === 'pc-next' && at < days.length - 1){ PCS.day = days[at + 1]; rerender(); }
+  else if (k === 'pc-today'){ PCS.day = null; rerender(); }
+}
+
 document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('#sc-root [data-sc]'); if (!t || t.tagName === 'SELECT' || t.tagName === 'TEXTAREA' || t.tagName === 'INPUT') return;
   const k = t.dataset.sc, v = t.dataset.v;
+  if (/^pc-/.test(k)){ pcAct(k, v); return; }
+  if (k === 'pcplat'){ PCS.plat = v; rerender(); return; }
   if (k === 'save'){ save(false); return; }
   if (k === 'save-pdf'){ save(true); return; }
   if (k === 'copy-bio'){ const b = data().bios[+v]; if (b) copyText(b.text); return; }
@@ -798,6 +918,7 @@ document.addEventListener('click', e => {
 document.addEventListener('change', e => {
   const t = e.target; if (!t.closest || !t.closest('#sc-root') || !t.dataset.sc) return;
   const k = t.dataset.sc;
+  if (k === 'pc-pick'){ if (t.value) PCS.day = t.value; rerender(); return; }
   if (k === 'subject'){ S.subject = t.value; S.msg = 'tag'; rerender(); }
   else if (k === 'msg'){ S.msg = t.value; rerender(); if (S.msg === 'own'){ const o = document.getElementById('sc-own'); if (o) o.focus(); } }
   else if (k === 'marks'){ S.marks = t.checked; paint(); }
@@ -817,7 +938,13 @@ document.addEventListener('input', e => {
 (function(){ const s = document.createElement('style'); s.id = 'sc-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
 window.GGShare = {
-  view(lib){ LIB = lib || null; setTimeout(paint, 0); return `<div id="sc-root">${inner()}</div>`; },
+  // o (GWG BLD 833): {founder, posts, data, save} for the Post Calendar.
+  view(lib, o){ LIB = lib || null; PC = o && o.founder ? o : null; setTimeout(() => { paint(); pcPaint(); }, 0); return `<div id="sc-root">${pcHtml()}${inner()}</div>`; },
+  // The Founder Home card: the refill notice near the end of the posts (GWG BLD 833).
+  homeCard(o){ PC = o && o.founder ? o : PC; return o && o.founder ? pcRefill(pcInfo(), true) : ''; },
+  posts: () => pcPosts(),
+  // For tests and previews: one post's picture as a PNG data URL.
+  postPng: async p => (await draw(document.createElement('canvas'), pcCur(p), 'painting')).toDataURL('image/png'),
   // For tests and the lead: draw any card off screen. o = {subject, msg, own, platform, format, look, marks, orient, qr, head, note, with}.
   // The canvas carries boxes: every drawn word, mark, and code, for the safe line check.
   render(o){ Object.assign(S, o || {}); return draw(document.createElement('canvas'), current(), S.look); },
