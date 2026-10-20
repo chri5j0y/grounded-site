@@ -405,6 +405,8 @@
     '.gs-ov a.ggl-btn{text-decoration:none;display:inline-flex;align-items:center;justify-content:center;}.gs-ov .ggl-in{max-width:980px;}.gs-ov .ln-ctl [data-g="read"]{display:none;}.gs-tabs{display:flex;gap:8px;margin:6px 0 14px;flex-wrap:wrap;}',
     '.gs-tabs button{font:inherit;font-size:16px;font-weight:600;border:1px solid var(--ggl-line);background:var(--ggl-card);color:var(--ggl-ink);border-radius:999px;padding:7px 18px;cursor:pointer;min-height:40px;}',
     '.gs-tabs button[aria-pressed="true"]{background:var(--ggl-acc);border-color:var(--ggl-acc);color:#fff;}',
+    '.gs-tabs .gs-sharebtn{display:inline-flex;align-items:center;gap:6px;margin-left:auto;}.gs-tabs .gs-sharebtn svg,.gs-share svg{width:16px;height:16px;flex:none;}',
+    '.gs-smsg:empty{display:none;}.gs-smsg{font-size:15px;margin:6px 0 0;overflow-wrap:anywhere;}.gs-smsg .gs-link{font-weight:600;user-select:all;-webkit-user-select:all;}',
     '.gs-ov .gs-talk-row{margin:14px 0 0;}.gs-ov .gs-talk-row a{color:var(--ggl-ink);}',
     '.gs-rd{max-width:680px;margin:6px auto 0;}.gs-rd .gs-by{color:var(--ggl-soft);font-size:16px;margin:0 0 18px;}',
     '.gs-rd p.gs-p{font-family:"Cormorant Garamond",Georgia,serif;font-weight:500;font-size:22px;line-height:1.65;margin:0 0 16px;color:var(--ggl-ink);}',
@@ -434,6 +436,7 @@
   ].join('\n');
   var PLAY = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z"/></svg>';
   var BOOK = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4H11v15H5.5A1.5 1.5 0 0 0 4 20.5zM20 5.5A1.5 1.5 0 0 0 18.5 4H13v15h5.5a1.5 1.5 0 0 1 1.5 1.5z"/></svg>';
+  var SHARE = '<svg viewBox="0 0 24 24" aria-hidden="true" focusable="false" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V4"/><path d="M8 8l4-4 4 4"/><path d="M5 12v6.5A1.5 1.5 0 0 0 6.5 20h11a1.5 1.5 0 0 0 1.5-1.5V12"/></svg>';
   var ROOT = (function () { try { var s = root.document && document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return root.location ? location.origin : ''; })();
   var READ_JS = '/read.js?v=b813', LEARN_JS = '/shared/gg-learn.js?v=b828';
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }
@@ -491,7 +494,8 @@
       + (L[1] && slug(L[1]) !== slug(s.sub) ? '<p class="story-quote">&ldquo;' + esc(L[1]) + '&rdquo;</p>' : '')
       + '<div class="card-actions"><button type="button" class="btn btn-primary" data-gs="watch" data-id="' + esc(s.id) + '" aria-label="Watch ' + esc(s.title) + '">' + PLAY + 'Watch</button>'
       + '<button type="button" class="btn btn-secondary" data-gs="read" data-id="' + esc(s.id) + '" aria-label="Read ' + esc(s.title) + '">' + BOOK + 'Read</button>'
-      + (s.substack ? '<a class="text-link gs-talk" href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a>' : '') + '</div></article>';
+      + '<button type="button" class="btn btn-secondary gs-share" data-gs="share" data-id="' + esc(s.id) + '" aria-label="Share ' + esc(s.title) + '">' + SHARE + 'Share</button>'
+      + (s.substack ? '<a class="text-link gs-talk" href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a>' : '') + '</div><p class="gs-smsg" role="status" aria-live="polite"></p></article>';
   }
   function membersBar() {
     var el = document.getElementById('gs-members'); if (!el) return;
@@ -572,6 +576,19 @@
       });
     };
     if (root.GGPrint) go(); else warmPrint().then(go);
+  }
+  // BLD 832: share a story by its own address (stories/<slug>.html, which carries the story's own preview picture).
+  function shareUrl(s) { return 'https://growwithgrounded.com/stories/' + s.slug + '.html'; }
+  function shareStory(id, msg) {
+    var s = (id && typeof id === 'object') ? id : story(id); if (!s || s.kind || !s.slug) return;
+    var url = shareUrl(s), say = function (h) { if (msg) msg.innerHTML = h; };
+    if (navigator.share) {
+      navigator.share({ title: s.title + ' | Grounded Stories', text: s.sub || 'A story by Chris Joy.', url: url }).then(function () { say(''); }, function () {});
+      return;
+    }
+    var shown = function () { say('Copy this link to share it: <span class="gs-link" tabindex="0">' + esc(url) + '</span>'); };
+    if (navigator.clipboard && navigator.clipboard.writeText) navigator.clipboard.writeText(url).then(function () { say('Link copied. Paste it anywhere to share ' + esc(s.title) + '.'); }, shown);
+    else shown();
   }
   function filter(t) {
     FILTER = t || '';
@@ -711,7 +728,7 @@
       el.innerHTML = '<div class="ggl-top"><img src="' + ROOT + '/favicon.svg" alt=""><b>Grounded Stories</b><button type="button" class="ggl-x" data-gs="close">' + (vk ? 'Back to the Story Vault' : 'Back to Stories') + '</button></div>'
         + '<div class="ggl-in"><div class="gs-ban' + (imgTag(s, 'gs-ban-pic') ? ' gs-ban-img' : '') + '">' + imgTag(s, 'gs-ban-pic') + '<div class="gs-ban-t"><div class="ggl-eb">' + (s.kind === 'letter' ? 'The Monthly Letter' : s.status === 'early' ? 'Early Preview' : 'Grounded Stories') + '</div><h2 class="gs-rh" tabindex="-1">' + esc(s.title) + '</h2></div></div>'
         + '<p class="ggl-muted">' + (s.sub ? esc(s.sub) + (/[.!?]["'\u201d\u2019)]*$/.test(s.sub) ? ' ' : '. ') : '') + 'About ' + esc(String(s.mins)) + (s.mins === 1 ? ' minute' : ' minutes') + (s.kind || full(s.id) ? '.' : ' in full.') + '</p>'
-        + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button></div>'
+        + '<div class="gs-tabs" role="group" aria-label="Watch or read"><button type="button" data-v="watch" aria-pressed="true">Watch</button><button type="button" data-v="read" aria-pressed="false">Read</button>' + (s.kind || vk ? '' : '<button type="button" class="gs-sharebtn" data-gs="share">' + SHARE + 'Share</button>') + '</div><p class="gs-smsg" role="status" aria-live="polite"></p>'
         + '<div class="gs-watch"></div><div class="gs-rdv" hidden></div><div class="gs-codewrap" hidden></div>'
         + (s.substack ? '<p class="gs-talk-row"><a href="' + esc(s.substack) + '" target="_blank" rel="noopener">Talk about this on Substack</a></p>' : '') + '</div>';
       document.body.appendChild(el);
@@ -725,6 +742,7 @@
         var b = e.target.closest('[data-gs],[data-v]'); if (!b) return;
         if (b.getAttribute('data-gs') === 'close') close();
         else if (b.getAttribute('data-gs') === 'ov-code') showCode(function () { play(0); });
+        else if (b.getAttribute('data-gs') === 'share') shareStory(s, $('.gs-smsg', el));
         else if (b.hasAttribute('data-v')) view(b.getAttribute('data-v'));
       });
       view(v === 'read' ? 'read' : 'watch');
@@ -748,6 +766,7 @@
       var b = e.target.closest('[data-gs]'); if (!b || (OV && OV.root.contains(b))) return;
       var g = b.getAttribute('data-gs');
       if (g === 'watch' || g === 'read') { e.preventDefault(); open(b.getAttribute('data-id'), g, b); }
+      else if (g === 'share') { e.preventDefault(); var cd = b.closest('.gs-card'); shareStory(b.getAttribute('data-id'), cd && cd.querySelector('.gs-smsg')); }
       else if (g === 'lwatch' || g === 'lread') { e.preventDefault(); openLetter(b.getAttribute('data-id'), g === 'lread' ? 'read' : 'watch', b); }
       else if (/^c(print|save|mail|text)$/.test(g)) { e.preventDefault(); cardAct(g, b.getAttribute('data-id'), b); }
       else if (g === 'forget') { forget(); render(); var m = document.getElementById('gs-members'); if (m) { var p = document.createElement('p'); p.className = 'gs-msg'; p.setAttribute('role', 'status'); p.textContent = 'This device is back to previews. Your code works again any time.'; m.appendChild(p); } }
