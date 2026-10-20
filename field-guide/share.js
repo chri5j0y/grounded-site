@@ -826,14 +826,15 @@ function pcSub(p){
   const me = p.platform === 'x' || p.platform === 'linkedin';
   const a = (p.image && p.image.art) || 'shared/heroes/home-wide.webp';
   const url = p.link ? String(p.link).replace(/^https?:\/\//, '').replace(/\.html$/, '').replace(/\/$/, '') : 'growwithgrounded.com';
-  return me ? {id: 'post-me', name: 'Chris Joy', mark: 'favicon.svg', color: GOLD, hero: a, focus: .5, line: '', url}
-            : {id: 'post-gwg', name: 'Grow With Grounded', mark: 'favicon.svg', color: GOLD, hero: a, focus: .5, line: '', url};
+  // The post's own words are the headline; the tree mark and the address carry the brand.
+  const head = (p.image && p.image.head) || (me ? 'Chris Joy' : 'Grow With Grounded');
+  return {id: me ? 'post-me' : 'post-gwg', name: head, svc: 'post', mark: 'favicon.svg', color: GOLD, hero: a, focus: .5, line: '', url};
 }
 function pcCur(p){
   const plat = FB.platforms.find(x => x.id === p.platform) || FB.platforms[0];
   const size = plat.card || [1200, 630];
   const im = p.image || {};
-  return {sub: pcSub(p), text: '', plat, W: +size[0], H: +size[1], z: {marks: false, format: 'card', qr: false, with: 'place', head: im.head || '', note: im.note || ''}};
+  return {sub: pcSub(p), text: '', plat, W: +size[0], H: +size[1], z: {marks: false, format: 'card', qr: false, with: 'place', head: '', note: im.note || ''}};
 }
 const pcFile = p => ['Grounded', PC_NAME[p.platform] || p.platform, p.date, p.slot || 'am'].join('-') + '.png';
 async function pcBlob(p){ const cv = await draw(document.createElement('canvas'), pcCur(p), 'painting'); return blobOf(cv, 'image/png'); }
@@ -942,6 +943,8 @@ window.GGShare = {
   // The Founder Home card: the refill notice near the end of the posts (GWG BLD 833).
   homeCard(o){ PC = o && o.founder ? o : PC; return o && o.founder ? pcRefill(pcInfo(), true) : ''; },
   posts: () => pcPosts(),
+  // For tests and previews: one post's picture as a PNG data URL.
+  postPng: async p => (await draw(document.createElement('canvas'), pcCur(p), 'painting')).toDataURL('image/png'),
   // For tests and the lead: draw any card off screen. o = {subject, msg, own, platform, format, look, marks, orient, qr, head, note, with}.
   // The canvas carries boxes: every drawn word, mark, and code, for the safe line check.
   render(o){ Object.assign(S, o || {}); return draw(document.createElement('canvas'), current(), S.look); },
