@@ -450,7 +450,7 @@ a.chip-btn{text-decoration:none;display:inline-block;}
       <details class="faq"><summary>Is end-of-life support instead of hospice?</summary><p>No. It&#x27;s non-medical support that works alongside hospice and medical care, never in place of it.</p></details>
       <details class="faq"><summary>Is spiritual guidance the same as therapy?</summary><p>No. It&#x27;s spiritual support, not licensed therapy or mental health treatment. If you need clinical support, we&#x27;ll help you find it, and we&#x27;re glad to work alongside it.</p></details>
       <details class="faq"><summary>How quickly will you respond?</summary><p>We reply to every message within two days, usually sooner. If a death has happened or is close, check the urgent box, and we&#x27;ll usually reach out the same day.</p></details>
-      <details class="faq"><summary>Are you connected to a hospice or church?</summary><p>Grow With Grounded is our own independent practice. It is separate from any hospice, hospital, or church, so we can serve anyone, anywhere, in whatever way fits.</p></details>
+      <details class="faq"><summary>Are you connected to a hospice or church?</summary><p>Grow With Grounded is our own independent practice, separate from any hospice, hospital, or church. Chris serves as a hospice chaplain. Families on service with the hospice where Chris works receive all their support through that hospice, and we gladly begin once their hospice service ends.</p></details>
     </div>
   </div>
 </section>
@@ -464,7 +464,7 @@ a.chip-btn{text-decoration:none;display:inline-block;}
         <label>Your name<input type="text" name="name" autocomplete="name" required></label>
         <label>Email<input type="email" name="email" autocomplete="email" required></label>
         <label><span class="lab">Phone <span class="opt">(optional)</span></span><input type="tel" name="phone" autocomplete="tel"></label>
-        <label>What can we help with?<select name="service" id="f-service"><option value="">Choose one</option><option>Funeral or memorial</option><option>Celebration of life</option><option>Wedding or vow renewal</option><option>Blessing or milestone</option><option>End-of-Life Support</option><option>Spiritual Guidance</option><option>Grief or caregiver support</option><option>Pregnancy or infant loss</option><option>Premarital Sessions</option><option>Meditation, sound, or movement</option><option>Speaking or training</option><option>Something else</option></select></label>
+        <label>What can we help with?<select name="service" id="f-service"><option value="">Choose one</option><option>Funeral or memorial</option><option>Celebration of life</option><option>Wedding or vow renewal</option><option>Blessing or milestone</option><option>End-of-Life Support</option><option>Spiritual Guidance</option><option>Grief or caregiver support</option><option>Pregnancy or infant loss</option><option>Premarital Sessions</option><option>Meditation, sound, or movement</option><option>Speaking or training</option><option>Something else</option></select></label><p class="form-note" id="f-hospice-note" style="margin:8px 0 0;font-size:16px;line-height:1.5;color:var(--ink-soft)" hidden>Chris serves as a hospice chaplain. Families on service with the hospice where Chris works receive all their support through that hospice, and we gladly begin once their hospice service ends.</p>
         <label><span class="lab">Date, if there is one <span class="opt">(optional)</span></span><input type="text" name="date" placeholder="For example: June 14, or still deciding"></label>
         <label><span class="lab">Location <span class="opt">(optional)</span></span><input type="text" name="location" placeholder="City, or Zoom"></label>
       </div>
@@ -938,5 +938,6 @@ document.querySelectorAll('[data-plan],[data-urgent]').forEach(function(b){
   });
 });
 </script>
+<script>(function(){var s=document.getElementById('f-service'),n=document.getElementById('f-hospice-note');if(!s||!n)return;var f=function(){n.hidden=!/^(End-of-Life Support|Blessing or milestone)$/.test(s.value);};s.addEventListener('change',f);f();})();</script>
 </body>
 </html>
