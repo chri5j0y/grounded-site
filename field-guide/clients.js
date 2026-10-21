@@ -87,7 +87,7 @@ const DEF = {
       times: L2(['am', 'Mornings'], ['pm', 'Afternoons'], ['eve', 'Evenings'], ['any', 'Any Time']),
       services: L2(['funeral', 'Funeral or Memorial', 'officiant', 'farewell'], ['celebration', 'Celebration of Life', 'officiant', 'farewell'], ['graveside', 'Graveside or Committal', 'officiant', 'farewell'],
         ['wedding', 'Wedding', 'officiant', 'wedding'], ['elopement', 'Elopement', 'officiant', 'wedding'], ['vows', 'Vow Renewal', 'officiant', 'wedding'], ['tgm', 'The Grounded Marriage', 'officiant', 'premarital'],
-        ['blessing', 'Blessings and Milestones', 'officiant'], ['eol', 'End-of-Life Support', 'eol'], ['guidance', 'Spiritual Guidance', 'counsel'], ['grief', 'Grief and Caregiver Support', 'grief'],
+        ['blessing', 'Blessings and Milestones', 'officiant'], ['hard', 'Hard Season Support', 'hard'], ['guidance', 'Spiritual Guidance', 'counsel'], ['grief', 'Grief and Caregiver Support', 'grief'],
         ['meditation', 'Meditation, Sound, and Movement', 'meditation'], ['speaking', 'Speaking and Training', 'speaking']),
       faith: L2(['center', 'Faith at the Center'], ['plain', 'Plain Words'], ['blend', 'A Blend'], ['unsure', 'Not Sure Yet']),
       grace: L2(['standard', 'Standard Rate'], ['reduced', 'Reduced Rate'], ['gift', 'A Gift']),
@@ -97,7 +97,7 @@ const DEF = {
     },
     payRules: ['Ceremonies: a 50% deposit holds the date. The balance is due the day before.', 'Sessions: paid at the time of each session.', 'Packages: paid up front.',
       'Travel: included for the first 30 miles. Beyond that, travel is charged at the IRS mileage rate.',
-      'Funerals and end-of-life work never carry a cancellation fee.'],
+      'Funerals and memorials never carry a cancellation fee.'],
     included: ''
   },
   privacyNotice: [
@@ -700,7 +700,7 @@ function sigImage(){
 function ensurePerson(f){
   const d = D(); if (!d || !saved(f) || !(f.c.first || '').trim()) return;
   d.clients = arr(d.clients);
-  const svcName = (() => { const ids = arr(f.sel.svc).map(v => (items(f, 'services').find(x => x.id === v) || {}).svc); return ids.includes('eol') ? 'End-of-Life Support' : ids.includes('counsel') ? 'Spiritual Guidance' : ids.includes('grief') ? 'Grief Support' : ids.includes('speaking') ? 'Speaking and Training' : arr(f.sel.svc).some(v => linkOf(f, v) === 'farewell') ? 'Officiant: Funeral or Memorial' : ids.includes('officiant') ? 'Officiant: Wedding' : ''; })();
+  const svcName = (() => { const ids = arr(f.sel.svc).map(v => (items(f, 'services').find(x => x.id === v) || {}).svc); return ids.includes('hard') || ids.includes('eol') ? 'Hard Season Support' : ids.includes('counsel') ? 'Spiritual Guidance' : ids.includes('grief') ? 'Grief Support' : ids.includes('speaking') ? 'Speaking and Training' : arr(f.sel.svc).some(v => linkOf(f, v) === 'farewell') ? 'Officiant: Funeral or Memorial' : ids.includes('officiant') ? 'Officiant: Wedding' : ''; })();
   const nm = f.c.first.trim() + (f.c.last.trim() ? ' ' + f.c.last.trim()[0] + '.' : '');
   let p = f.pid && d.clients.find(c => c.id === f.pid);
   if (!p){ p = {id: uid(), u: Date.now(), name: nm, service: svcName, status: 'active', followups: [], created: today(), cli: f.id}; d.clients.push(p); f.pid = p.id; if (d.deleted && d.deleted.clients) delete d.deleted.clients[p.id]; }

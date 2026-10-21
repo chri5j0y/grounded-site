@@ -660,25 +660,25 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b809"></script>
-<script src="../shared/gg-learn.js?v=b828"></script>
-<script src="../shared/gg-print.js?v=b830"></script>
+<script src="../shared/gg-learn.js?v=b836"></script>
+<script src="../shared/gg-print.js?v=b836"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b782"></script>
-<script src="share.js?v=b833"></script>
+<script src="share.js?v=b836"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b817"></script>
-<script src="ceremonies.js?v=b798"></script>
-<script src="sessions.js?v=b758"></script>
+<script src="ceremonies.js?v=b836"></script>
+<script src="sessions.js?v=b836"></script>
 <script src="farewell.js?v=b811"></script>
 <script src="wedding.js?v=b798"></script>
 <script src="premarital.js?v=b798"></script>
-<script src="clients.js?v=b798"></script>
+<script src="clients.js?v=b836"></script>
 <script src="books.js?v=b788"></script>
-<script src="runner.js?v=b798"></script>
+<script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b832"></script>
+<script src="../shared/gg-stories.js?v=b836"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1186,6 +1186,7 @@ const IC = {
  plus:'<path d="M12 5v14M5 12h14"/>',
  back:'<path d="M15 5l-7 7 7 7"/>',
  start:'<path d="M12 3a9 9 0 1 0 0 18 9 9 0 0 0 0-18z"/><path d="M12 7v5l3 2"/>',
+ hard:'<path d="M3 18h18M6.5 18a5.5 5.5 0 0 1 11 0"/><path d="M12 5.5v2.5M5.2 9.2l1.8 1.8M18.8 9.2 17 11"/><path d="M8 21h8"/>',
  eol:'<path d="M12 2.8c1.8 2.3 1.8 4 0 5.6-1.8-1.6-1.8-3.3 0-5.6z"/><rect x="8.5" y="10" width="7" height="11" rx="1.2"/><path d="M6 21h12"/>',
  ceremony:'<circle cx="9" cy="13.5" r="5.2"/><circle cx="15" cy="13.5" r="5.2"/><path d="M10.4 5.2 12 3l1.6 2.2"/>',
  counsel:'<circle cx="12" cy="12" r="9"/><path d="m15.6 8.4-2.2 5-5 2.2 2.2-5z"/>',
@@ -1212,13 +1213,15 @@ const IC = {
 };
 const icon = n => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[n]||''}</svg>`;
 const logo = w => w === 't' ? `<svg viewBox="0 0 3200 3536" aria-hidden="true"><use href="#g-icon"/></svg>` : `<span class="w gwg-w">Grow With Grounded</span>`;
-const CATS = [['start','Getting Started'],['eol','End-of-Life Support'],['ceremony','Ceremonies'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training'],['self','For You'],['safety','Safety']];
-const catIcon = c => ({start:'start', eol:'eol', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
+const CATS = [['start','Getting Started'],['hard','Hard Season Support'],['ceremony','Ceremonies'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training'],['self','For You'],['safety','Safety']];
+// GWG BLD 836: Hard Season Support ('hard') took the place of End-of-Life Support. Older data that says 'eol' reads as 'hard'.
+const catOf = c => c === 'eol' ? 'hard' : c;
+const catIcon = c => ({start:'start', hard:'hard', eol:'hard', ceremony:'ceremony', counsel:'counsel', grief:'grief', speaking:'speaking', self:'self', safety:'safety'}[c]);
 // Session guides as this person sees them: their own versions in place, then their own sessions (GWG BLD 758, sessions.js).
 const GL = () => !LIB ? [] : window.GGSes ? GGSes.list() : LIB.guides;
 const G = id => !LIB ? null : window.GGSes ? GGSes.get(id) : LIB.guides.find(g => g.id === id);
 const CL = id => DATA.clients.find(c => c.id === id);
-const SERVICE_NAMES = {all:'Any Service', eol:'End-of-Life Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief and Caregiver Support', speaking:'Speaking and Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
+const SERVICE_NAMES = {all:'Any Service', hard:'Hard Season Support', officiant:'Officiant', counsel:'Spiritual Guidance', grief:'Grief and Caregiver Support', speaking:'Speaking and Training', meditation:'Meditation, Sound, and Movement', self:'For You', safety:'Safety'};
 if (window.GGSes) GGSes.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m), esc, icon,
   guideHTML: (g, pv) => vGuide(g, pv), saveAll: (g, adds) => sesSaveAll(g, adds), cats: CATS, services: SERVICE_NAMES});
 // The Farewell Planning Session (GWG BLD 766, farewell.js): Staff and Founders, in the Ceremonies tab.
@@ -1260,7 +1263,7 @@ function vHome(){
   due.sort((a,b) => a.f.date.localeCompare(b.f.date));
   const recent = DATA.sessions.filter(s => s.kind !== 'spr' && !anyMe(CL(s.clientId))).sort((a,b) => (b.date||'').localeCompare(a.date||'')).slice(0, 5);
   const days = DATA.lastBackup ? Math.floor((Date.now() - DATA.lastBackup) / 864e5) : null;
-  const quick = [['first-conversation','First Conversation','10 to 15 minutes'],['eol-first-visit','End-of-Life First Visit','60 to 90 minutes'],['vigil','Vigil Sitting','Up to 8 hours'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
+  const quick = [['first-conversation','First Conversation','10 to 15 minutes'],['hard-first','Hard Season Support: First Session','60 minutes'],['funeral-interview','Funeral Family Interview','60 to 90 minutes'],['wedding-interview','Wedding Couple Interview','60 to 90 minutes'],['counsel-first','Spiritual Guidance First Session','60 minutes'],['grief-first','Grief First Session','60 minutes'],['debrief','After-Session Debrief','5 to 10 minutes']];
   return `<div class="hello fg-hero"><div class="eyebrow" style="color:#D9A847">Grounded Field Guide&trade;</div><h1>${greet}${DATA.settings.name ? ', ' + esc(DATA.settings.name) : ''}.</h1><p>Presence first. The guide is here when you need it.</p></div>
   ${sgHomeCard()}
   ${hpHomeCard()}
@@ -1275,7 +1278,7 @@ function vHome(){
   ${fgStoriesCard()}
   ${fgPending() ? `<div class="card backup-nudge spread"><div><b>A backup is waiting to be added.</b> <span class="muted">It needs the Field Guide passcode it was made with. Nothing here changes until you add it.</span></div><div class="row"><button class="btn btn-gold btn-sm" data-act="fg-pend">Add It</button><button class="btn btn-line btn-sm" data-act="fg-pend-drop">Set Aside</button></div></div>` : ''}
   <h3 class="aud-h" style="margin-top:18px">Start a Session ${audTag('staff')}</h3>
-  <div class="quick">${quick.map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
+  <div class="quick">${quick.filter(([id]) => G(id)).map(([id,t,s]) => `<button class="qbtn" data-act="start" data-v="${id}"><span class="qi">${icon(catIcon(G(id).cat))}</span><span><b>${t}</b><small>${s}${sesPill(G(id))}</small></span></button>`).join('')}${GL().filter(g => g._mine === 'new' && g.cat !== 'self').map(g => `<button class="qbtn" data-act="start" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat) || 'start')}</span><span><b>${esc(g.title)}</b><small>${esc(g.length || '')}${sesPill(g)}</small></span></button>`).join('')}${stOpen() ? `<button class="qbtn" data-tab="oak" data-sec="people"><span class="qi">${icon('tree')}</span><span><b>Oak visit</b><small>Full, quick, or open conversation</small></span></button>` : ''}${sqOpen() ? `<button class="qbtn" data-tab="sequoia" data-sec="people"><span class="qi">${icon('sequoia')}</span><span><b>Sequoia visit</b><small>Older adults and their families</small></span></button>` : ''}${spOpen() ? `<button class="qbtn" data-tab="maple" data-sec="people"><span class="qi">${icon('maple')}</span><span><b>Maple visit</b><small>Kids, kindergarten to grade 5</small></span></button>` : ''}${saOpen() ? `<button class="qbtn" data-tab="aspen" data-sec="people"><span class="qi">${icon('aspen')}</span><span><b>Aspen visit</b><small>Middle school, grades 6 to 8</small></span></button>` : ''}${pnOpen() ? `<button class="qbtn" data-tab="pine" data-sec="people"><span class="qi">${icon('pine')}</span><span><b>Pine visit</b><small>High school, grades 9 to 12</small></span></button>` : ''}${brTab() ? `<button class="qbtn" data-tab="birch" data-sec="people"><span class="qi">${icon('birch')}</span><span><b>Birch visit</b><small>Young adults, 18 to 26</small></span></button>` : ''}${wlOpen() ? `<button class="qbtn" data-tab="willow" data-sec="people"><span class="qi">${icon('willow')}</span><span><b>Willow visit</b><small>Hospice: the person and their family</small></span></button>` : ''}${htOpen() ? `<button class="qbtn" data-tab="talks"><span class="qi">${icon('talk')}</span><span><b>When Life Changes</b><small>Every age, side by side</small></span></button>` : ''}</div>
   <div class="grid g2" style="margin-top:18px">
     <div class="card"><div class="spread"><h3>Follow-Ups This Week</h3><button class="linkbtn" data-tab="clients">All people</button></div>
       ${due.length ? due.map(x => `<div class="list-row"><div class="lr-main"><b>${esc(x.c.name)}</b> <span class="muted">${esc(x.f.text||'Follow up')}</span><br><small class="muted">${nice(x.f.date)}${x.f.date < today() ? ' <span class="pill warn">Overdue</span>' : ''}</small></div><button class="btn btn-line btn-sm" data-act="open-client" data-v="${x.c.id}">Open</button></div>`).join('') : '<p class="muted" style="margin-top:8px">Nothing due. Add follow-ups inside each person\'s record.</p>'}</div>
@@ -1295,7 +1298,7 @@ function vGuides(){
   // Guides open to one card per kind of session (GWG BLD 732). Each card opens its guides.
   const item = g => `<button class="gitem" data-act="guide" data-v="${esc(g.id)}"><span class="qi">${icon(catIcon(g.cat))}</span><span><b>${esc(g.title)}${sesPill(g)}</b><small>${esc(g.length)}</small></span><span class="arr" aria-hidden="true">&rsaquo;</span></button>`;
   const all = GL(), own = all.filter(g => g._mine).length;
-  const cards = CATS.map(([c,l]) => { const gs = all.filter(g => g.cat === c); if (!gs.length) return null;
+  const cards = CATS.map(([c,l]) => { const gs = all.filter(g => catOf(g.cat) === c); if (!gs.length) return null;
     const names = gs.slice(0, 3).map(g => g.title).join(', ') + (gs.length > 3 ? ', and ' + (gs.length - 3) + ' more' : ''), mine = gs.filter(g => g._mine).length;
     return {k: c, title: l, desc: names, n: gs.length + (gs.length === 1 ? ' guide' : ' guides') + (mine ? ', ' + mine + ' of yours' : ''), accent: c === 'safety' ? 'var(--danger)' : 'var(--gold)', gs}; }).filter(Boolean);
   { const rc = window.GGRun && GGRun.card(); if (rc) cards.push(rc); } // GWG BLD 771 hook: Session Plans
@@ -1323,7 +1326,7 @@ function vGuide(g, pv){
   const lst = (h, a, say) => a && a.length ? `<div class="card"><h3>${h}</h3>${say ? `<div class="blk say" style="margin-top:8px"><ul>${a.map(x => `<li>${mark(x)}</li>`).join('')}</ul></div>` : `<ul class="checklist" style="margin-top:8px">${a.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul>`}</div>` : '';
   const deb = g.debrief && g.id !== 'debrief';
   return `<div class="fg-rd-wrap">${fgListen('sessions', 's')}${pv ? '' : `<button class="btn btn-line btn-sm" data-act="back-guides">${icon('back')} All guides</button>`}
-  <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[g.service]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
+  <div class="page-head" style="margin-top:16px"><div class="eyebrow">${esc(SERVICE_NAMES[catOf(g.service)]||'')} &middot; ${esc(g.length)}</div><h1>${esc(g.title)}${sesPill(g)}</h1></div>
   <div class="card"><p class="purpose">${mark(g.purpose)}</p>${g.who ? `<p style="margin-top:8px"><b>Who It Is For:</b> ${mark(g.who)}</p>` : ''}
     ${pv ? '' : `<div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="start" data-v="${esc(g.id)}">${icon('play')} Start Session</button><button class="btn btn-line" data-act="print-guide" data-v="${esc(g.id)}">${icon('print')} Save or Print Guide</button>${window.GGCer ? GGCer.guideButton(g, LIB) : ''}</div>${window.GGRun ? GGRun.guideBar(g) : ''}${window.GGGv ? GGGv.guideBar(g) : ''}${window.GGSes ? GGSes.guideBar(g) : ''}`}</div>
   ${g.prep && g.prep.length ? `<div class="card"><h3>Before you begin</h3><ul class="checklist" style="margin-top:8px">${g.prep.map(x => `<li>${icon('check')}<span>${mark(x)}</span></li>`).join('')}</ul></div>` : ''}
@@ -1413,7 +1416,7 @@ function vClients(){
 function vClient(c){
   const ss = DATA.sessions.filter(s => s.clientId === c.id).sort((a,b) => (b.date||'').localeCompare(a.date||''));
   const owed = ss.filter(s => !s.paid && s.fee && !/free|no charge|gift/i.test(s.fee)).length;
-  const svcOpts = ['','End-of-Life Support','Officiant: Funeral or Memorial','Officiant: Wedding','Officiant: Blessing','Spiritual Guidance','Grief Support','Caregiver Support','Speaking and Training','Other'];
+  const svcOpts = ['','Hard Season Support','Officiant: Funeral or Memorial','Officiant: Wedding','Officiant: Blessing','Spiritual Guidance','Grief Support','Caregiver Support','Speaking and Training','Other'];
   return `<button class="btn btn-line btn-sm" data-act="back-clients">${icon('back')} All people</button>
   <div class="page-head spread" style="margin-top:16px"><div><div class="eyebrow">${esc(c.service||'Person')}</div><h1>${esc(c.name)}</h1></div>
     <div class="row">${owed ? `<span class="pill warn">${owed} unpaid</span>` : ''}${c.grace ? '<span class="pill sage">Grace spot</span>' : ''}</div></div>
@@ -1430,7 +1433,7 @@ function vClient(c){
   <div class="grid g2" style="margin-top:14px">
    <div class="card"><h3>Details</h3>
     <label class="f">Name or initials</label><input type="text" data-c="name" value="${esc(c.name)}">
-    <label class="f">Service</label><select data-c="service">${svcOpts.map(o => `<option ${o===(c.service||'')?'selected':''}>${esc(o)}</option>`).join('')}</select>
+    <label class="f">Service</label><select data-c="service">${svcOpts.concat(c.service && !svcOpts.includes(c.service) ? [c.service] : []).map(o => `<option ${o===(c.service||'')?'selected':''}>${esc(o)}</option>`).join('')}</select>
     <label class="f">Best way to reach them</label><input type="text" data-c="contact" value="${esc(c.contact||'')}">
     <label class="f">Agreed rate</label><input type="text" data-c="rate" value="${esc(c.rate||'')}" placeholder="$80 per session, reduced to $40">
     <label class="cb"><input type="checkbox" data-cb="grace" ${c.grace?'checked':''}> Grace spot or sliding scale</label>
@@ -1478,7 +1481,7 @@ function vLibrary(){
   if (sub === 'docs') body = (V.doc ? docForm(LIB.docs.find(d => d.id === V.doc)) : LIB.docs.map(d => `<button class="gitem" data-act="doc" data-v="${d.id}"><span class="qi">${icon('print')}</span><span><b>${esc(d.title)}</b><small>${esc(d.for)}</small></span><span class="arr">&rsaquo;</span></button>`).join(''));
   if (sub === 'emails') body = LIB.emails.map(e => `<div class="card email" id="em-${e.id}"><div class="spread"><h3>${esc(e.title)}</h3><button class="btn btn-line btn-sm" data-act="copy-email" data-v="${e.id}">${icon('copy')} Copy</button></div><p class="muted" style="margin-top:4px">Subject: ${esc(e.subject)}</p><pre>${esc(e.body)}</pre></div>`).join('');
   if (sub === 'readings') body = (window.GGReadings ? `<div class="card"><h3>The Grounded Readings Library</h3><p class="muted" style="margin-top:4px">Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, with Listen, Copy, and Save or Print. Once opened here, the library stays on this device for use with no signal.</p><div class="row" style="margin-top:10px"><button class="btn btn-gold btn-sm" data-act="rl-open">Open the Library</button></div></div>` : '') + `<p class="muted" style="margin-bottom:12px">Grounded blessings are original to Grounded. Scripture is from the King James Version, which is in the public domain.</p>` + LIB.readings.map((r,i) => `<div class="card reading"><div class="spread"><div><h3>${esc(r.title)}</h3><span class="pill gold">${esc(r.tag)}</span> <small class="muted">${esc(r.by)}</small></div><button class="btn btn-line btn-sm" data-act="copy-reading" data-v="${i}">${icon('copy')} Copy</button></div><pre>${esc(r.text)}</pre></div>`).join('');
-  if (sub === 'stories') { const t = V.stag || 'eol'; body = `<div class="sub-tabs">${LIB.storyTags.map(([k,l]) => `<button class="chip" aria-pressed="${t===k}" data-act="stag" data-v="${k}">${l}</button>`).join('')}</div>
+  if (sub === 'stories') { const t = V.stag || ((LIB.storyTags || [])[0] || [])[0]; body = `<div class="sub-tabs">${LIB.storyTags.map(([k,l]) => `<button class="chip" aria-pressed="${t===k}" data-act="stag" data-v="${k}">${l}</button>`).join('')}</div>
       <div class="card">${LIB.stories.filter(s => s[2] === t).map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s[0])}</b>${s[3] ? `<br><small class="muted">${esc(s[3])}</small>` : ''}</div><div class="row"><a class="btn btn-line btn-sm" href="${esc(s[1])}" target="_blank" rel="noopener">Open</a><button class="btn btn-line btn-sm" data-act="copy" data-v="${esc(s[1])}">${icon('copy')} Link</button></div></div>`).join('')}</div>`; }
   if (sub === 'referrals') body = LIB.referrals.map(r => `<div class="card"><h3>${esc(r[0])}</h3><p style="margin-top:6px">${mark(r[1])}</p></div>`).join('') + `<div class="card"><h3>Your Referral Notes</h3><p class="muted">Names and numbers you trust, saved encrypted on this device.</p><textarea data-set="referrals" style="margin-top:8px;min-height:160px">${esc(DATA.settings.referrals||'')}</textarea></div>`;
   if (sub === 'docs' && V.doc) return body;
@@ -1493,7 +1496,7 @@ function docForm(d){
 
 // ---------------- TRAINING ----------------
 function vTraining(){
-  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First Conversation'],['eol','End-of-Life Support'],['vigil','Vigil Sitting'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training']];
+  const T = LIB.training, P = DATA.training.progress, svcs = [['first','First Conversation'],['hard','Hard Season Support'],['funeral','Funerals'],['wedding','Weddings'],['counsel','Spiritual Guidance'],['grief','Grief and Caregiver Support'],['speaking','Speaking and Training']];
   // Training opens to cards (GWG BLD 732). Each card opens one part.
   const head = `<div class="page-head"><div class="eyebrow">Training &middot; Proprietary and confidential</div><h1>Learning the Grounded way</h1></div>`, orH = `  ${OR() ? orStatusCard() : ''}`;
   const wel = `  <div class="card"><p class="purpose">${esc(T.welcome)}</p></div>
@@ -2595,7 +2598,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b830'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b836'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -9294,7 +9297,7 @@ function wlImpSave(){
   const I = V.wli, d = I.card; if (!d) return;
   const role = d.role === 'helper' ? 'family' : 'person';
   let c = I.cid ? CL(I.cid) : null;
-  if (!c){ c = {id:uid(), u:Date.now(), name:wlFirst(d.n) || 'From Willow', service:'End-of-Life Support', status:'active', followups:[], created:today(), wl:{type:role, consent:null, plans:[]}}; DATA.clients.push(c); }
+  if (!c){ c = {id:uid(), u:Date.now(), name:wlFirst(d.n) || 'From Willow', service:'Grief and Caregiver Support', status:'active', followups:[], created:today(), wl:{type:role, consent:null, plans:[]}}; DATA.clients.push(c); }
   if (!c.wl) c.wl = {type:role, consent:null, plans:[]};
   const have = new Set(DATA.sessions.filter(s => s.kind === 'wl' && s.clientId === c.id && s.wid).map(s => s.wid));
   let added = 0;
@@ -9611,7 +9614,7 @@ function wlAct(a, v, t){
     case 'wl-retry': WC_FAIL = false; wlLoad(); render(); return true;
     case 'wl-open': go('willow', {wlp:v}); return true;
     case 'wl-new': { const n = ($('#wl-nn').value || '').trim(); if (!n){ $('#wl-nn').focus(); return true; }
-      const type = $('#wl-nt').value, c = {id:uid(), u:Date.now(), name:n, service:'End-of-Life Support', status:'active', followups:[], created:today(), wl:{type, forName:($('#wl-nr').value || '').trim(), consent:null, plans:[]}};
+      const type = $('#wl-nt').value, c = {id:uid(), u:Date.now(), name:n, service:'Grief and Caregiver Support', status:'active', followups:[], created:today(), wl:{type, forName:($('#wl-nr').value || '').trim(), consent:null, plans:[]}};
       DATA.clients.push(c); save(); go('willow', {wlc:c.id}); return true; }
     case 'wl-demo': wlStart('full', null, true); return true;
     case 'wl-start': wlStart(v, t.dataset.c, false); return true;
@@ -10820,7 +10823,7 @@ function printAgreement(){
 }
 function printCert(){
   const n = prompt('Name to print on the certificate:', DATA.settings.name || ''); if (n === null || !n.trim()) return;
-  const svc = prompt('Training completed (for example: End-of-Life Support):', '') || 'Grow With Grounded Training';
+  const svc = prompt('Training completed (for example: Hard Season Support):', '') || 'Grow With Grounded Training';
   fgPrint().then(() => window.GGPrint && GGPrint.certificate({tree:'house', name:n.trim(), title:svc, body:'Through the Grounded Field Guide, ready to serve with presence and honesty.', date: today(), kind:'training'}));
 }
 
