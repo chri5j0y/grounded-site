@@ -402,7 +402,7 @@
   var TH_APP = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow', grove: 'The Grove' };
   var TH_KIND = { maple: 'kids', aspen: 'kids', willow: 'gentle' };
   var TH_WHO = { h: 'Who We Are',
-    p: 'We are Chris and Kayti Joy, of Saint Cloud, Minnesota. We lead ceremonies for life\'s big days and offer The Grounded Marriage for couples. We walk with people through end-of-life support, grief and caregiver support, and spiritual guidance, and we offer speaking and training for teams. All faith traditions and everything in-between are welcome here. We would love to hear from you.',
+    p: 'We are Chris and Kayti Joy, of Saint Cloud, Minnesota. We lead ceremonies for life\'s big days and offer The Grounded Marriage for couples. We walk with people through sudden loss, recovery, big changes, and grief, and we offer spiritual guidance and speaking and training for teams. All faith traditions and everything in-between are welcome here. We would love to hear from you.',
     contact: 'growwithgrounded.com  ·  hello@growwithgrounded.com' };
   var TH_WORDS = { strong: 'Strength', steady: 'Steady', edge: 'Growing Edge' };
   function thWatchUrl(tr) { return SITE + (T[tr] ? T[tr].path : '/') + '#watch'; }

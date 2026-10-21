@@ -68,8 +68,8 @@ const ORIENTS = [['tall', 'Tall'], ['wide', 'Wide']];
 const SVC_FAM = [
   {id: 'fam-marriage', name: 'Marriage', hero: 'page-marriage', tagline: 'Your vows, your way.', line: 'Weddings, elopements, vow renewals, and The Grounded Marriage\u2122.', url: 'growwithgrounded.com/services-marriage'},
   {id: 'fam-celebrations', name: 'Celebrations', hero: 'page-celebrations', tagline: 'Days to remember.', line: 'Child blessings, house blessings, and milestone celebrations.', url: 'growwithgrounded.com/services-celebrations'},
-  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, bedside blessings, and pregnancy and infant loss.', url: 'growwithgrounded.com/services-farewells'},
-  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'End-of-life support, and grief and caregiver support.', url: 'growwithgrounded.com/services-hard-seasons'},
+  {id: 'fam-farewells', name: 'Farewells', hero: 'page-farewells', tagline: 'Honoring a life.', line: 'Funerals, memorials, celebrations of life, and pregnancy and infant loss.', url: 'growwithgrounded.com/services-farewells'},
+  {id: 'fam-hard-seasons', name: 'Hard Seasons', hero: 'page-hard-seasons', tagline: 'We\'re with you.', line: 'Hard season support, and grief and caregiver support.', url: 'growwithgrounded.com/services-hard-seasons'},
   {id: 'fam-growth', name: 'Growth', hero: 'page-growth', tagline: 'Grow deeper. Rest well.', line: 'Spiritual guidance, and meditation, sound, and movement.', url: 'growwithgrounded.com/services-growth'},
   {id: 'fam-teams', name: 'For Teams', hero: 'page-teams', tagline: 'Talks, conferences, and trainings for the people who do this work.', line: 'Speaking, training, and the Grounded Field Guide\u2122 for organizations.', url: 'growwithgrounded.com/services-for-teams'}
 ];
@@ -83,9 +83,8 @@ const SVC_PAGES = [
   ['milestones', 'Milestone Celebrations', 'page-celebrations', 'Graduations, retirements, recovery anniversaries, and other thresholds worth honoring.', 'Celebrations'],
   ['funerals-memorials', 'Funerals and Memorials', 'page-farewells', 'Honest, personal services that sound like the person you love.', 'Farewells'],
   ['celebrations-of-life', 'Celebrations of Life', 'page-farewells', 'Stories, music, laughter, and room for tears.', 'Farewells'],
-  ['bedside-blessings', 'Bedside Blessings', 'page-farewells', 'Prayers, blessings, and quiet rituals for the last days, at home, in hospice, or in the hospital.', 'Farewells'],
   ['pregnancy-infant-loss', 'Pregnancy and Infant Loss', 'page-farewells', 'Gentle support and ceremony for parents and families after miscarriage, stillbirth, or the death of a baby.', 'Farewells'],
-  ['end-of-life-support', 'End-of-Life Support', 'page-hard-seasons', 'Presence for the last chapter, for the person dying and the people who love them.', 'Hard Seasons'],
+  ['hard-season-support', 'Hard Season Support', 'page-hard-seasons', 'One-on-one support for the seasons that change everything.', 'Hard Seasons'],
   ['grief-caregiver-support', 'Grief and Caregiver Support', 'page-hard-seasons', 'For the ones carrying more than they can say.', 'Hard Seasons'],
   ['spiritual-guidance', 'Spiritual Guidance', 'page-growth', 'One-on-one guidance for your inner life, whatever shape it is in.', 'Growth'],
   ['meditation-sound-movement', 'Meditation, Sound, and Movement', 'page-growth', 'A quiet place for your body to settle and breathe again.', 'Growth'],

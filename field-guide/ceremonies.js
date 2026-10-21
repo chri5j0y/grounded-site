@@ -5,7 +5,7 @@
 // live with the family or the couple, then the editor to dial it in later, and
 // four printouts: Officiant's Script, Order of Service, Program, Family Copy.
 // Funeral types draft an obituary; wedding types keep the license checklist;
-// blessings (home, child, bedside) add a Keepsake Copy of the blessing.
+// blessings (home, child) add a Keepsake Copy of the blessing.
 // Data: the Staff library's ceremonies key (LIB.ceremonies), with a small
 // built-in fallback so the tab works before that library update is applied.
 // Saved services live in DATA.cer.services: encrypted with the rest of this
@@ -135,6 +135,8 @@ async function copyText(t){
 
 // ---------- the library (LIB.ceremonies, filled in from the fallback where a piece is missing) ----------
 let CC = null, CCsrc = null;
+// GWG BLD 836: ceremony types Grounded no longer offers. Saved services of these types still open; the pickers leave them out.
+const RETIRED = ['bedside-blessing'];
 function cer(){
   const L = (CTX.lib && CTX.lib.ceremonies) || null;
   if (CC && CCsrc === L) return CC;
@@ -143,7 +145,7 @@ function cer(){
   const pick = (k, d) => (L && L[k] && (Array.isArray(L[k]) ? L[k].length : Object.keys(L[k]).length)) ? L[k] : d;
   CC = {
     full: !!has,
-    types: B.types, groups: B.groups || [], parts: B.parts, templates: Array.isArray(B.templates) ? B.templates : [],
+    types: B.types, pick: B.types.filter(t => t && !RETIRED.includes(t.id)), groups: B.groups || [], parts: B.parts, templates: Array.isArray(B.templates) ? B.templates : [],
     setup: Object.assign({}, FB.setup, (has && L.setup) || {}),
     readings: pick('readings', FB.readings).filter(r => r && r.id),
     bible: pick('bible', FB.bible),
@@ -158,7 +160,7 @@ function cer(){
 }
 const typeOf = id => cer().types.find(t => t.id === id) || cer().types[0];
 const famOf = id => (typeOf(id) || {}).family || 'funeral';
-// Whom Setup asks about: a person (funerals, bedside), a child, a household (home), or a couple (weddings).
+// Whom Setup asks about: a person (funerals), a child, a household (home), or a couple (weddings).
 const whoOf = id => (typeOf(id) || {}).who || (famOf(id) === 'wedding' ? 'couple' : 'person');
 const optName = (list, id) => ((list || []).find(x => String(x.id) === String(id)) || {}).name || '';
 const groupsFor = fam => cer().groups.filter(g => !g.family || g.family === fam || g.family === 'both');
@@ -549,7 +551,7 @@ function vHome(){
   ${window.GGWed && GGWed.card ? GGWed.card() : ''}
   <div class="card"><div class="spread"><div style="min-width:0;flex:1 1 260px"><h2 style="margin:0 0 4px">My Pieces</h2><p class="muted" style="margin:0">Your own readings, poems, prayers, blessings, songs, and rituals. They show in every picker here and in the Farewell and Wedding Planning Sessions.${pstore().filter(m => !m.only).length ? ' ' + pstore().filter(m => !m.only).length + ' saved.' : ''}</p></div><button type="button" class="btn btn-line" data-cer="mine">Open My Pieces</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Start a Service</h2><p class="muted">Pick the kind of service. Setup takes about a minute.</p>
-    ${fams.map(([f, l]) => { const ts = C.types.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
+    ${fams.map(([f, l]) => { const ts = C.pick.filter(t => t.family === f); return ts.length ? `<h3 style="margin-top:14px">${l}</h3><div class="cer-types">${ts.map(t => `<button type="button" class="cer-type" data-cer="new" data-v="${esc(t.id)}"><b>${esc(t.name)}</b>${t.lead ? `<small>${esc(t.lead)}</small>` : ''}</button>`).join('')}</div>` : ''; }).join('')}
     ${C.full ? '' : `<p class="muted" style="margin-top:12px;font-size:15px">The full set of parts, templates, and readings arrives with the next Staff library update.</p>`}</div>
   <div class="card"><h2 style="margin-bottom:4px">Saved Services</h2>
     ${L.length ? L.map(s => `<div class="cer-row"><div class="m"><b>${esc(title(s))}</b><br><small class="muted">${esc(typeOf(s.type).name)}${s.date ? ', ' + esc(nice(s.date)) : ''}</small> <span class="pill ${s.status === 'final' ? 'sage' : 'gold'}">${esc(optName(STATUS.map(x => ({id: x[0], name: x[1]})), s.status || 'session'))}</span></div>
@@ -579,7 +581,7 @@ function vSetup(s){
        <div><label class="f" for="cer-d">Died</label><input type="text" id="cer-d" data-cerf="who.died" value="${esc(s.who.died || '')}" placeholder="October 1, 2026" autocomplete="off"></div></div>
        <label class="f">Pronouns</label>${chips('pron', [['he', 'He'], ['she', 'She'], ['they', 'They']], s.who.pron || 'they')}`;
   return `${S.draft ? backHome() + `<div class="page-head" style="margin-top:10px"><div class="eyebrow">Service Builder</div><h1>Setup</h1><p>A few answers shape the checklist. Change any of them later.</p></div>` : headOf(s, 'Setup')}
-  <div class="card"><label class="f">Ceremony</label>${chips('type', C.types.map(t => [t.id, t.name]), s.type)}
+  <div class="card"><label class="f">Ceremony</label>${chips('type', C.types.filter(t => C.pick.includes(t) || t.id === s.type).map(t => [t.id, t.name]), s.type)}
     ${person}
     <div class="cer-g3"><div><label class="f" for="cer-dt">Date</label><input type="date" id="cer-dt" data-cerf="date" value="${esc(s.date || '')}"></div>
       <div><label class="f" for="cer-tm">Time</label><input type="text" id="cer-tm" data-cerf="time" value="${esc(s.time || '')}" placeholder="11:00 a.m." autocomplete="off"></div>
@@ -1175,7 +1177,7 @@ function headTop(){ const h = document.querySelector('header.bar'), r = document
 window.addEventListener('resize', headTop);
 (function(){ const s = document.createElement('style'); s.id = 'cer-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
-// The session guides that open the Service Builder (funeral, memorial, celebration of life, graveside, wedding, vow renewal, blessings, vigil).
+// The session guides that open the Service Builder (funeral, memorial, celebration of life, graveside, wedding, vow renewal, blessings).
 function guideType(g){
   if (!g) return null;
   const x = ((g.id || '') + ' ' + (g.title || '')).toLowerCase(), has = id => cer().types.some(t => t.id === id) ? id : null;
@@ -1187,9 +1189,8 @@ function guideType(g){
   if (/graveside|committal/.test(x)) return has('graveside') || has('funeral');
   if (/infant/.test(x)) return has('infant-loss') || has('funeral');
   if (/funeral/.test(x)) return has('funeral');
-  if (/vigil sitting/.test(x)) return has('bedside-blessing');
   if (/child/.test(x) && /bless/.test(x)) return has('child-blessing') || has('house-blessing');
-  if (/bedside/.test(x) && /bless/.test(x)) return has('bedside-blessing') || has('house-blessing');
+  if (/bedside/.test(x)) return null;
   if (/house/.test(x) && /bless/.test(x)) return has('house-blessing');
   if (/bless/.test(x)) return has('house-blessing');
   return null;
@@ -1268,7 +1269,7 @@ const API = window.GGCer = {
     ctx = ctx || {};
     if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; S.draft = null; S.pick = null; }
     CTX = {lib: ctx.lib || null, data: ctx.data || null, save: typeof ctx.save === 'function' ? ctx.save : () => {}};
-    if (S.startType){ const t = S.startType; S.startType = null; if (cer().types.some(x => x.id === t)){ S.draft = newSvc(t); S.id = null; S.view = 'setup'; } }
+    if (S.startType){ const t = S.startType; S.startType = null; if (cer().pick.some(x => x.id === t)){ S.draft = newSvc(t); S.id = null; S.view = 'setup'; } }
     setTimeout(headTop, 0);
     return `<div id="cer-root">${inner()}</div>`;
   },
@@ -1295,7 +1296,7 @@ const API = window.GGCer = {
   fw: {
     bind(ctx){ if (ctx && ctx.data){ if (CTX.data && ctx.data !== CTX.data){ S.view = 'home'; S.id = null; S.draft = null; } CTX = {lib: ctx.lib || null, data: ctx.data, save: typeof ctx.save === 'function' ? ctx.save : () => {}}; } },
     get: id => list().find(x => x.id === id) || null,
-    types: () => cer().types.filter(t => t.family === 'funeral').map(t => ({id: t.id, name: t.name})),
+    types: () => cer().pick.filter(t => t.family === 'funeral').map(t => ({id: t.id, name: t.name})),
     faiths: () => (cer().setup.faiths || []).map(f => ({id: f.id, name: f.name})),
     honors: () => (cer().setup.honors || []).filter(h => !h.family || h.family === 'funeral' || h.family === 'both').map(h => ({id: h.id, name: h.name})),
     make(o){
@@ -1375,7 +1376,7 @@ const API = window.GGCer = {
   current: cur
 };
 API.wd = Object.assign({}, API.fw, {
-  types: () => cer().types.filter(t => t.family === 'wedding').map(t => ({id: t.id, name: t.name})),
+  types: () => cer().pick.filter(t => t.family === 'wedding').map(t => ({id: t.id, name: t.name})),
   make(o){
     o = o || {}; const t = cer().types.some(x => x.id === o.type && famOf(x.id) === 'wedding') ? o.type : 'wedding', s = newSvc(t);
     s.wdp = o.wdp || null; API.wd.sync(s, o, true); build(s, false); list().push(s); keep(s); return s.id;

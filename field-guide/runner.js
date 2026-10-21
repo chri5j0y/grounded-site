@@ -316,7 +316,7 @@ function prepBlk(p){
 function wordsBlk(p){ const g = G(curG(p)) || {}, W = arr(g.words); return W.length ? `<details class="fw-custom"><summary>Words That Help</summary><ul class="rk-do">${W.map(x => `<li>${esc(x)}</li>`).join('')}</ul></details>` : ''; }
 // ---------- the relationship question (GWG BLD 797) ----------
 // A kit field marked rel: true (Close, Complicated, Distant, Hard, or the family's own words) is the first question about the
-// person in funeral and end-of-life planning kits. Close keeps every word as written. Any other answer turns on each step's
+// person in funeral and farewell planning kits. Close keeps every word as written. Any other answer turns on each step's
 // saySoft, subSoft, and phoneSoft and each field's askSoft, hintSoft, and labelSoft, shows the kit's relSay, and asks writing
 // help for plain, honest words. The field stays in Chris's View only: never family: true, never in an output's sections.
 const REL_SAY = 'Many families carry mixed feelings. We can honor what is true.';
@@ -326,7 +326,8 @@ function relSoft(p){ const f = p && relField(p); if (!f) return false; const v =
 const softOr = (p, x, y) => y != null && y !== '' && !(Array.isArray(y) && !y.length) && relSoft(p) ? y : x;
 // GWG BLD 797: Start Their File at the start of every paid session kit (the Intake Session in clients.js, linked to this plan).
 const NO_FILE = ['debrief', 'crisis'];
-const SVC_OF = [[/^(eol|vigil|bedside|infant|life-visit)/, 'eol'], [/^grief/, 'grief'], [/^counsel/, 'guidance'], [/^celebration/, 'celebration'], [/blessing$|^milestone/, 'blessing'], [/^elopement/, 'elopement'], [/^vow/, 'vows'], [/^meditation/, 'meditation'], [/^(speaking|teams)/, 'speaking']];
+// GWG BLD 836: Hard Season Support kits ('hard...') start a file for 'hard'; older eol kits read as 'hard' too.
+const SVC_OF = [[/^(hard|eol)/, 'hard'], [/^(grief|infant)/, 'grief'], [/^(counsel|life-visit)/, 'guidance'], [/^celebration/, 'celebration'], [/blessing$|^milestone/, 'blessing'], [/^elopement/, 'elopement'], [/^vow/, 'vows'], [/^meditation/, 'meditation'], [/^(speaking|teams)/, 'speaking']];
 function stfBlk(p){
   const k = kitOf(p.g0) || {};
   if (!window.GGCli || !GGCli.stfCard || NO_FILE.includes(p.g0) || k.noFile) return '';

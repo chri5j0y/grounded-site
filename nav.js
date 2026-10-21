@@ -134,8 +134,8 @@
   var SVC_FAMILIES = [
     ['Marriage', 'Weddings and The Grounded Marriage', 'marriage'],
     ['Celebrations', 'Blessings and milestones', 'celebrations'],
-    ['Farewells', 'Funerals, memorials, and bedside blessings', 'farewells'],
-    ['Hard Seasons', 'End-of-life support, grief, and caregiving', 'hard-seasons'],
+    ['Farewells', 'Funerals, memorials, and celebrations of life', 'farewells'],
+    ['Hard Seasons', 'Sudden loss, recovery, big changes, and grief', 'hard-seasons'],
     ['Growth', 'Spiritual guidance, meditation, and rest', 'growth'],
     ['For Teams', 'Speaking and training', 'for-teams']
   ];
@@ -402,7 +402,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b818';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b836';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
