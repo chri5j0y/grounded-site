@@ -52,7 +52,7 @@
       { id: 'readings', title: 'The Grounded Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
-      { id: 'field', title: 'Grounded Field Guide', desc: 'For trained Guides: a Guide for every tree and For Guides training, for chaplains, pastors, teachers, and counselors. Access code required', href: HOME + '/field-guide/', icon: ic.fieldguide, bg: '#EDE7DA', locked: true }
+      { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: ic.fieldguide, bg: '#EDE7DA' }
     ] }
   ];
 
@@ -68,6 +68,7 @@
     if (p.indexOf('/willow') === 0) return 'willow';
     if (p.indexOf('/grove') === 0 || p.indexOf('/garden') === 0 || h.indexOf('garden.') === 0) return 'grove';
     if (p.indexOf('/field-guide') === 0) return 'field';
+    if (p.indexOf('/the-field-guide') === 0) return 'field'; // the Field Guide's own page (GWG BLD 838)
     if (p.indexOf('/heartwood') === 0) return 'heartwood';
     if (p.indexOf('/library') === 0) return 'library';
     if (p.indexOf('/planning-a-farewell') === 0) return 'farewell';
@@ -407,7 +408,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b837';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b838';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
