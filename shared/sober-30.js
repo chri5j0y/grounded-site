@@ -742,7 +742,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 8",
      "h": "Thoughts Are Weather",
      "sub": "Mind: thoughts come and go.",
@@ -836,7 +836,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 9",
      "h": "Play It Forward",
      "sub": "Mind: see the whole picture.",
@@ -935,7 +935,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 10",
      "h": "Name the Feeling",
      "sub": "Mind and feelings: one word.",
@@ -1034,7 +1034,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 11",
      "h": "Write It Out",
      "sub": "Spirit and feelings: on the page.",
@@ -1130,7 +1130,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 12",
      "h": "Move It Out",
      "sub": "Body: move a little every day.",
@@ -1229,7 +1229,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 13",
      "h": "Slow, Low, and Long",
      "sub": "Body: your breath goes everywhere you go.",
@@ -1331,7 +1331,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 14",
      "h": "Two Weeks of Healing",
      "sub": "Body: notice what is growing.",
@@ -1427,7 +1427,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 15",
      "h": "Outside and Unplugged",
      "sub": "Body and spirit: time outdoors.",
@@ -1524,7 +1524,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 16",
      "h": "A Quiet Minute",
      "sub": "Spirit: a quiet start and finish.",
@@ -1620,7 +1620,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 17",
      "h": "Gratitude and the Good",
      "sub": "Spirit: let the good sink in.",
@@ -1718,7 +1718,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 18",
      "h": "Healing Underneath",
      "sub": "Spirit: tend the hurt underneath.",
@@ -1815,7 +1815,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 19",
      "h": "One True Sentence",
      "sub": "Relationships: honest talk.",
@@ -1911,7 +1911,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 20",
      "h": "Mending Slowly",
      "sub": "Relationships: small steady acts.",
@@ -2009,7 +2009,7 @@
    "scenes": [
     {
      "k": "title",
-     "hero": "page-growth",
+     "hero": "living-sober",
      "eyebrow": "Early Days, Day 21",
      "h": "Sober Company",
      "sub": "Relationships: your circle.",
@@ -2949,7 +2949,7 @@
 };
   // Where the site lives, from this script's own address, so the apps (/oak/, /birch/, /sequoia/) and the page share one path.
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b837';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b839';
   var ACC = '#4E7D6A';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function need(src, test) { return new Promise(function (ok) { if (test()) return ok(); var s = document.createElement('script'); s.src = ROOT + src; s.onload = s.onerror = function () { ok(); }; document.head.appendChild(s); }); }

@@ -12,7 +12,7 @@
 (function () {
   // the live site, or this same copy when testing on this computer (the same check as the profiles loader above)
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var mk = function (k) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg" alt="" width="42" height="42">'; };
+  var mk = function (k, v) { return '<img class="gn-mark" src="' + HOME + '/shared/marks/' + k + '-small.svg' + (v ? '?v=' + v : '') + '" alt="" width="42" height="42">'; };
   var ic = {
     maple: mk('maple'), aspen: mk('aspen'), pine: mk('pine'), birch: mk('birch'), oak: mk('oak'), sequoia: mk('sequoia'), willow: mk('willow'), grove: mk('grove'), fieldguide: mk('fieldguide'), library: mk('library'), marriage: mk('marriage'), heartwood: mk('heartwood'), gm: mk('grounded-marriage'), farewell: mk('farewell'), obituary: mk('obituary'), eulogy: mk('eulogy'),
     tree: '<svg viewBox="0 0 24 24" fill="none" stroke="#8B5E1A" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8.5" r="5.5"/><path d="M12 14v7"/><path d="M8 21h8"/><path d="M12 17l-3 2M12 16.5l3 2"/></svg>',
@@ -40,7 +40,7 @@
     ] },
     // Living Sober (GWG BLD 837): declared, with its gold star mark, for anyone growing sober and the people who love them.
     { name: 'Healthy Living', items: [
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober'), bg: '#DCE8E1' }
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' }
     ] },
     { name: 'For Families', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },

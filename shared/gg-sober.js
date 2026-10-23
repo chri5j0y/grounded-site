@@ -33,7 +33,7 @@
 (function () {
   'use strict';
   if (window.GGSober) return;
-  var V = 'b837';
+  var V = 'b839';
   var TREES = ['birch', 'oak', 'sequoia'];
   var SITE = 'https://growwithgrounded.com/living-sober';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
