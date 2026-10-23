@@ -35,6 +35,7 @@
 .ls .eyebrow{color:var(--ls);}
 .ls h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(32px,4vw,46px);line-height:1.1;margin:0 0 12px;}
 .ls .ls-lead{font-size:clamp(18px,1.6vw,20px);max-width:760px;color:var(--ink-soft);margin:0 0 18px;}
+.ls .ls-frame{max-width:640px;margin:14px auto 0;font-size:16px;color:var(--ink-soft);font-style:italic;}
 .ls .ls-intro{max-width:780px;margin:0 auto;text-align:center;}
 .ls .ls-intro p{font-size:clamp(18px,1.7vw,21px);}
 .ls .ls-intro .ls-stance{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(25px,2.8vw,33px);line-height:1.25;color:var(--ink);margin:6px auto 18px;max-width:760px;}
@@ -128,7 +129,7 @@
     <div class="eyebrow">Living Sober</div>
     <h1>Living Sober</h1>
     <p class="cer-sub">A clear mind, a healthy body, and a life you're fully present for.</p>
-    <div class="card-actions cer-actions ls-hero-acts"><a class="btn btn-primary" href="#start">Start Here</a><a class="btn btn-light" href="#open">Open in Your Tree</a></div>
+    <div class="card-actions cer-actions ls-hero-acts gg-watch-acts"><!-- PAGE VIDEO (BLD 838) --><button type="button" class="btn btn-primary gg-watch gg-watch-hero" data-gg-watch="demo-living-sober" hidden>Watch: Living Sober</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="#start">Start Here</a><a class="btn btn-light" href="#open">Open in Your Tree</a></div>
   </div>
 </section>
 
@@ -138,6 +139,7 @@
     <p class="ls-stance">Grounded stands for living alcohol-free and free of harmful drugs: a clear mind, a healthy body, and a life you're fully present for.</p>
     <p>Wherever you are, you belong here. Thinking about a change, counting your first days, many years along, or loving someone who drinks or uses: we meet you right where you are, and we walk with you toward an alcohol-free life, one day at a time.</p>
     <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, thirty days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
+    <p class="ls-frame">Everything here is shaped by a simple framework Chris lives by: about 80% of your attention on today, 10% honoring how far you have come, and 10% on the life ahead.</p>
     <p class="ls-sharebar"><button type="button" class="btn btn-secondary ls-share" data-ls-share="page"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share This Page</button><span class="ls-smsg" role="status" aria-live="polite"></span></p>
   </div>
 </section>
@@ -152,20 +154,6 @@
       <div class="ls-card ls-word mantra"><div class="eyebrow">Mantra</div><blockquote id="ls-mantra-text">One day at a time.</blockquote><div class="ls-acts"><button type="button" class="btn btn-secondary ls-share" data-ls-share="mantra" disabled><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div></div>
     </div>
     <div class="ls-week" id="ls-week" hidden><div><span class="eyebrow">This Week</span><b id="ls-week-title"></b><p id="ls-week-text"></p></div><button type="button" class="btn btn-secondary ls-share" data-ls-share="weekly"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div>
-  </div>
-</section>
-
-<section class="ls-sec" id="rule">
-  <div class="wrap">
-    <div class="eyebrow">Chris's Rule of Thumb</div>
-    <h2>80, 10, 10.</h2>
-    <p class="ls-lead">Where your attention goes, your life grows. Chris keeps most of his on today.</p>
-    <div class="ls-rule">
-      <div class="ls-pct today"><b>80%</b><span>Today</span><p>This day, this meal, this conversation, this choice. Today is where Living Sober happens, and today is enough.</p></div>
-      <div class="ls-pct"><b>10%</b><span>The Past</span><p>Honor how far you've come. Learn from it, give thanks for it, and let it strengthen you.</p></div>
-      <div class="ls-pct"><b>10%</b><span>The Future</span><p>Hold a hope for the life ahead, then come back home to today.</p></div>
-    </div>
-    <p><button type="button" class="btn btn-secondary ls-share" data-ls-share="rule"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share 80, 10, 10</button></p>
   </div>
 </section>
 
@@ -306,17 +294,18 @@
   <a class="foot-brand" href="index.html" aria-label="Grow With Grounded home"><svg class="foot-tree" aria-hidden="true" focusable="false" viewBox="0 0 4664 3536" preserveAspectRatio="xMidYMid meet"><use href="/shared/marks/grounded-logo.svg?v=b788#tree"/></svg> <span class="foot-name">Grow With Grounded<span class="tm" aria-hidden="true">&trade;</span></span> </a>
   <p class="foot-tag">For every threshold, from first breath to last.</p>
   <nav class="foot-links" aria-label="Footer">
-    <a class="text-link" href="index.html">Home</a><a class="text-link" href="services.html">Services</a><a class="text-link" href="stories.html">Stories</a><a class="text-link" href="https://growwithgrounded.com/library/">Library</a><a class="text-link" href="rates.html">Rates</a><a class="text-link" href="about.html">About</a><a class="text-link" href="contact.html">Contact</a><a class="text-link" href="tools.html">Tools</a><a class="text-link" href="living-sober.html">Living Sober</a><a class="text-link" href="https://growwithgrounded.com/maple/">Maple</a><a class="text-link" href="https://growwithgrounded.com/aspen/">Aspen</a><a class="text-link" href="https://growwithgrounded.com/pine/">Pine</a><a class="text-link" href="https://growwithgrounded.com/birch/">Birch</a><a class="text-link" href="https://growwithgrounded.com/oak/">Oak</a><a class="text-link" href="https://growwithgrounded.com/sequoia/">Sequoia</a><a class="text-link" href="https://growwithgrounded.com/willow/">Willow</a><a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a><a class="text-link" href="planning-a-farewell.html">Planning a Farewell</a><a class="text-link" href="obituary-helper.html">Obituary Helper</a><a class="text-link" href="eulogy-helper.html">Eulogy Helper</a><a class="text-link" href="https://growwithgrounded.com/field-guide/">Field Guide</a><a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="privacy.html">Privacy</a><a class="text-link" href="terms.html">Terms</a><a class="text-link" href="accessibility.html">Accessibility</a>
+    <a class="text-link" href="index.html">Home</a><a class="text-link" href="services.html">Services</a><a class="text-link" href="stories.html">Stories</a><a class="text-link" href="https://growwithgrounded.com/library/">Library</a><a class="text-link" href="rates.html">Rates</a><a class="text-link" href="about.html">About</a><a class="text-link" href="contact.html">Contact</a><a class="text-link" href="tools.html">Tools</a><a class="text-link" href="living-sober.html">Living Sober</a><a class="text-link" href="https://growwithgrounded.com/maple/">Maple</a><a class="text-link" href="https://growwithgrounded.com/aspen/">Aspen</a><a class="text-link" href="https://growwithgrounded.com/pine/">Pine</a><a class="text-link" href="https://growwithgrounded.com/birch/">Birch</a><a class="text-link" href="https://growwithgrounded.com/oak/">Oak</a><a class="text-link" href="https://growwithgrounded.com/sequoia/">Sequoia</a><a class="text-link" href="https://growwithgrounded.com/willow/">Willow</a><a class="text-link" href="https://growwithgrounded.com/grove/">The Grove</a><a class="text-link" href="planning-a-farewell.html">Planning a Farewell</a><a class="text-link" href="obituary-helper.html">Obituary Helper</a><a class="text-link" href="eulogy-helper.html">Eulogy Helper</a><a class="text-link" href="/the-field-guide.html">Field Guide</a><a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe</a><a class="text-link" href="privacy.html">Privacy</a><a class="text-link" href="terms.html">Terms</a><a class="text-link" href="accessibility.html">Accessibility</a>
   </nav>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link email-link" data-user="hello" href="contact.html"><span data-fill>hello [at] growwithgrounded [dot] com</span></a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
   <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, any time.</p>
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b779n"></script>
-<script src="nav.js?v=b837" defer></script>
+<script src="nav.js?v=b838" defer></script>
 <script src="/shared/sober-words.js?v=b837" defer></script>
 <script src="/shared/sober-30.js?v=b837" defer></script>
 <script src="/shared/gg-sharecard.js?v=b837" defer></script>
 <script src="/shared/living-sober.js?v=b837" defer></script>
+<!-- PAGE VIDEO (BLD 838) --><script src="/shared/page-videos.js?v=b838" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

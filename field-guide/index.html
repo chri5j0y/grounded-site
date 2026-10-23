@@ -929,7 +929,7 @@ function lockScreen(mode, msg){
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
       <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who walk with people using Grounded's tools: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For practitioners</b><span>Chaplains and doulas: $240 a year, or $24 a month. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
-      <div><b>For organizations</b><span>Hospices, churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
+      <div><b>For organizations</b><span>Churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
       <form id="lf"><label for="l1">Founder code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Add Founder Access</button></form>
@@ -961,7 +961,7 @@ function lockScreen(mode, msg){
 function mailLink(kind){
   const to = 'hello' + '@' + 'growwithgrounded.com';
   const m = kind === 'org'
-    ? ['Field Guide for our organization', ['Organization:', 'Your name and role:', 'What kind of organization (hospice, church, school, other):', 'About how many people would use it:', 'Anything else we should know:']]
+    ? ['Field Guide for our organization', ['Organization:', 'Your name and role:', 'What kind of organization (church, school, other):', 'About how many people would use it:', 'Anything else we should know:']]
     : ['Field Guide access request', ['Your name:', 'Your role (chaplain, pastor, teacher, counselor, parent, other):', 'Where you serve:', 'How you would use the Field Guide:']];
   return 'mailto:' + to + '?subject=' + encodeURIComponent(m[0]) + '&body=' + encodeURIComponent(m[1].join('\n\n') + '\n');
 }
