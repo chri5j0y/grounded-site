@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b789'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b837'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -38,6 +38,10 @@
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
       { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
     ] },
+    // Living Sober (GWG BLD 837): declared, with its gold star mark, for anyone growing sober and the people who love them.
+    { name: 'Healthy Living', items: [
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober'), bg: '#DCE8E1' }
+    ] },
     { name: 'For Families', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
       { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
@@ -70,6 +74,7 @@
     if (p.indexOf('/obituary-helper') === 0) return 'obituary';
     if (p.indexOf('/eulogy-helper') === 0) return 'eulogy';
     if (p.indexOf('/readings') === 0) return 'readings';
+    if (p.indexOf('/living-sober') === 0) return 'sober';
     return '';
   }
 
@@ -402,7 +407,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b836';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b837';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

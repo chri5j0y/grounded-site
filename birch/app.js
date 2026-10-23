@@ -913,7 +913,7 @@ function renderLC(mode) {
     ${LC_TOPICS.length ? `<input class="lc-search no-print" type="search" placeholder="Search: roommates, a first job, debt, a breakup..." aria-label="Search the guides" value="${lcEsc(st.find || '')}" oninput="lcFind(this,'${mode}')" enterkeyhint="search">
     <div class="lc-chips no-print" role="group" aria-label="Filter by topic">
       <button class="lc-chip" style="--rc:var(--ink-soft)" data-ring="all" onclick="LCS['${mode}'].ring='all';lcRenderList('${mode}')">All Topics</button>
-      ${lcSoberChip(mode)}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcLifeChip(mode)}
+      ${lcSoberChip(mode, true)}${filled.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcSoberChip(mode, false)}${lcLifeChip(mode)}
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
@@ -935,21 +935,22 @@ function lcRenderList(mode) {
   const groups = lcGroups();
   if (st.ring !== 'all' && !groups.some(g => g.r.key === st.ring)) st.ring = 'all';
   if (st.ring === 'all') {
-    html += lcPickedHtml(mode); // Picked for You first, then one card per group
+    html += lcPickedHtml(mode) + (lcSoberChosen() ? lcSoberCard('all') : ''); // Picked for You first, the Living Sober card once chosen (BLD 837), then one card per group
     if (groups.length) html += `<div class="lc-groups" role="group" aria-label="Guide groups">${groups.map(g => lcGroupCard(mode, g.r, g.ts.length)).join('')}</div>`;
   } else {
     const g = groups.find(x => x.r.key === st.ring);
-    html += `<p class="lc-allgroups no-print"><button type="button" class="lc-back" onclick="lcAllGroups('${mode}','${g.r.key}')">All Groups</button></p>` + ringBlock(g.r, g.ts, g.r.key === 'life' ? 'Health and Ability' : '');
+    html += `<p class="lc-allgroups no-print"><button type="button" class="lc-back" onclick="lcAllGroups('${mode}','${g.r.key}')">All Groups</button></p>` + (g.r.key === 'sober' ? lcSoberCard('ring') : '') + ringBlock(g.r, g.ts, g.r.key === 'life' ? 'Health and Ability' : '');
   }
   box.innerHTML = html;
 }
 /* When Life Changes as Cards (GWG BLD 790): with no search and the All tab, each group the person can see shows as one
    card (its color, name, short line, and how many guides). A card opens that group just like its tab; All Groups
-   comes back to the cards. Living Sober's card shows only when it is chosen in Settings. */
+   comes back to the cards. Living Sober's group shows for everyone (BLD 837): first once chosen, otherwise after Birch's own groups. */
 function lcGroups() {
-  const sob = lcSober(), out = [];
-  if (sob) out.push({ r: sob, ts: LC_TOPICS.filter(lcIsSober) });
+  const sob = lcSober(), out = [], first = sob && lcSoberChosen();
+  if (first) out.push({ r: sob, ts: LC_TOPICS.filter(lcIsSober) });
   LC_RINGS.forEach(r => { const ts = LC_TOPICS.filter(t => t.ring === r.key); if (ts.length) out.push({ r, ts }); });
+  if (sob && !first) out.push({ r: sob, ts: LC_TOPICS.filter(lcIsSober) });
   const life = LC_LIFE ? GGLifeKit.lifeOnly(LC_LIFE_FIRST) : [];
   if (life.length) out.push({ r: LC_LIFE, ts: life });
   return out;
@@ -1013,11 +1014,18 @@ function lcCss() {
 /* Health and Ability (GWG BLD 756): a ring open to everyone that lists the guides tagged life in
    birch/guides.js, and Picked for You at the top when the person has made a choice. */
 const LC_LIFE = window.GGLifeKit && GGLifeKit.lifeOnly(LC_TOPICS).length ? GGLifeKit.RING : null;
-/* Living Sober (GWG BLD 789): ring 'sober' is low-key. Its chip and section show only when Living Sober is chosen in
-   Settings; its guides are always found by search and by Picked for You. */
+/* Living Sober (GWG BLD 789, declared in GWG BLD 837): ring 'sober' shows for everyone. Once the person chooses Living Sober
+   (Settings or the Living Sober card) its chip and group come first; choosing a stage stays private. The Living Sober card
+   (shared/gg-sober.js) sits on top of the group, and on top of the All view once chosen; never in a helper view. */
 const lcIsSober = t => t.ring === 'sober' || (t.life || []).includes('sober');
-function lcSober() { return window.GGLifeKit ? GGLifeKit.sober('birch') : null; }
-function lcSoberChip(mode) { const r = lcSober(); return r ? `<button class="lc-chip" style="--rc:${r.color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(r.name)}</button>` : ''; }
+function lcSober() { return window.GGLife ? GGLife.ring('birch') : null; }
+function lcSoberChosen() { return !!(window.GGLife && GGLife.sober('birch')); }
+function lcSoberChip(mode, first) { const r = lcSober(); return r && lcSoberChosen() === first ? `<button class="lc-chip" style="--rc:${r.color}" data-ring="sober" onclick="LCS['${mode}'].ring='sober';lcRenderList('${mode}')">${lcEsc(r.name)}</button>` : ''; }
+function lcSoberCard(where) { return !HELP && window.GGSober ? GGSober.cardHtml('birch', where) : ''; }
+// The ?sober= link and milestones (GWG BLD 837): open Living Sober's group in When Life Changes.
+if (window.GGSober) GGSober.init('birch', {
+  open: () => { LCS.client.ring = 'sober'; LCS.client.find = ''; LCS.client.q = ''; lcOpen('client', null); setTimeout(() => scrollToViewTop('client-life', true, true), 60); },
+  create: () => profCreateDialog(), openProfile: () => bcOpenAny(), helper: () => !!HELP });
 const LC_LIFE_FIRST = LC_TOPICS.filter(t => t.ring === 'life').concat(LC_TOPICS.filter(t => t.ring !== 'life'));
 function lcLifeChip(mode) { return LC_LIFE ? `<button class="lc-chip" style="--rc:${LC_LIFE.color}" data-ring="life" onclick="LCS['${mode}'].ring='life';lcRenderList('${mode}')">${lcEsc(LC_LIFE.name)}</button>` : ''; }
 function lcPickedHtml(mode) {
