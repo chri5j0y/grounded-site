@@ -29,6 +29,13 @@
      keeps its stage in vault.life.sober; ring 'sober' is low-key (shown
      only when chosen); picks() and order() put Living Sober rows first,
      in stage order (a row's sober: [stage ids], [] fits every stage).
+   Living Sober, declared (GWG BLD 837): in Birch, Oak, and Sequoia (DECLARED) the ring shows
+     for everyone (ringShows, declared(tree)); choosing a stage stays private. The vault's life
+     object also keeps soberDate ('YYYY-MM-DD', only while Living Sober is chosen; only the count
+     ever shows) and soberSeen ({at: soberDate, k: [milestone keys shown]}). soberDate(tree),
+     soberLines(tree) (the stage's help lines), okDate(d), and My Anchor Plan: anchor(id),
+     setAnchor(obj | null, id), kept in vault.soberAnchor. The card, milestones, the plan, and the
+     ?sober= link live in shared/gg-sober.js.
    ===================================================================== */
 (function () {
   'use strict';
@@ -37,6 +44,8 @@
   var TREES = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia'];
   var KIDS = ['maple', 'aspen'];
   var HELPER_TREES = ['birch', 'sequoia'];
+  // Living Sober is declared, open to everyone, in the adult trees (GWG BLD 837): its ring and card show whether or not it is chosen.
+  var DECLARED = ['birch', 'oak', 'sequoia'];
 
   /* ---------- the categories (conditions-plan.md, Section 2, decided October 7, 2026) ----------
      words and line per tree. A tree is offered a category only when it is in trees. */
@@ -248,13 +257,23 @@
   /* ---------- small helpers ---------- */
   function today() { var d = new Date(), p = function (n) { return String(n).padStart(2, '0'); }; return d.getFullYear() + '-' + p(d.getMonth() + 1) + '-' + p(d.getDate()); }
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
-  function blank() { return { ids: [], none: false, rather: false, gentle: false, shareHelpers: false, sober: '', set: '' }; }
+  function blank() { return { ids: [], none: false, rather: false, gentle: false, shareHelpers: false, sober: '', soberDate: '', soberSeen: null, set: '' }; }
+  // A sober date (GWG BLD 837): a real day, never after today. Only the count ever shows; the date itself stays in the vault.
+  function okDate(d) {
+    var m = /^(\d{4})-(\d\d)-(\d\d)$/.exec(String(d || '')); if (!m) return false;
+    var x = new Date(+m[1], +m[2] - 1, +m[3]);
+    return x.getFullYear() === +m[1] && x.getMonth() === +m[2] - 1 && x.getDate() === +m[3] && +m[1] >= 1900 && d <= today();
+  }
   function clean(o) {
     var r = blank(); if (!o || typeof o !== 'object') return r;
     (Array.isArray(o.ids) ? o.ids : []).forEach(function (id) { if (IDS.indexOf(id) >= 0 && r.ids.indexOf(id) < 0) r.ids.push(id); });
     r.none = !!o.none && !r.ids.length; r.rather = !!o.rather && !r.ids.length && !r.none;
     r.gentle = !!o.gentle; r.shareHelpers = !!o.shareHelpers;
     r.sober = r.ids.indexOf('sober') >= 0 && STAGE_IDS.indexOf(o.sober) >= 0 ? o.sober : '';
+    // Living Sober details (GWG BLD 837) live and leave with the choice: the sober date, and which milestones have shown.
+    r.soberDate = r.ids.indexOf('sober') >= 0 && okDate(o.soberDate) ? o.soberDate : '';
+    var sn = o.soberSeen;
+    r.soberSeen = r.soberDate && sn && typeof sn === 'object' && sn.at === r.soberDate && Array.isArray(sn.k) ? { at: r.soberDate, k: sn.k.filter(function (k) { return /^(d|m|y)\d{1,3}$/.test(k); }).slice(0, 200) } : null;
     r.set = /^\d{4}-\d\d-\d\d$/.test(String(o.set || '')) ? o.set : '';
     return r;
   }
@@ -307,6 +326,35 @@
     return Promise.resolve(P().save(id)).then(function () { fire(id); return blank(); });
   }
 
+  /* ---------- My Anchor Plan (GWG BLD 837) ----------
+     A plan for hard moments, filled out ahead of time. Kept in the locked vault beside the choice (vault.soberAnchor),
+     so it stays even if Living Sober is turned off; guests keep it for this visit only. Its own Clear erases it.
+     {people: [{name, num}], do: [idea ids], own, go, remind, set} */
+  var MEMANCHOR = null;
+  function str(x, n) { return String(x == null ? '' : x).replace(/[\u0000-\u001f]/g, ' ').trim().slice(0, n || 200); }
+  function cleanAnchor(o) {
+    if (!o || typeof o !== 'object') return null;
+    var r = { people: [], do: [], own: str(o.own, 300), go: str(o.go, 300), remind: str(o.remind, 200), set: /^\d{4}-\d\d-\d\d$/.test(String(o.set || '')) ? o.set : '' };
+    (Array.isArray(o.people) ? o.people : []).slice(0, 6).forEach(function (p) { if (!p) return; var x = { name: str(p.name, 80), num: str(p.num, 40).replace(/[^0-9+()\-. ]/g, '') }; if (x.name || x.num) r.people.push(x); });
+    (Array.isArray(o.do) ? o.do : []).forEach(function (d) { d = str(d, 40); if (/^[a-z0-9]+$/.test(d) && r.do.indexOf(d) < 0) r.do.push(d); });
+    return r.people.length || r.do.length || r.own || r.go || r.remind ? r : null;
+  }
+  function anchor(id) {
+    id = id || who();
+    if (!id) return MEMANCHOR ? cleanAnchor(MEMANCHOR) : null;
+    if (helperView(id)) return null;
+    var v = vault(id); return v ? cleanAnchor(v.soberAnchor) : null;
+  }
+  function setAnchor(obj, id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    var a = obj === null ? null : cleanAnchor(Object.assign({}, obj || {}, { set: today() }));
+    if (!id) { MEMANCHOR = a; return Promise.resolve(a); }
+    var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
+    if (a) v.soberAnchor = a; else delete v.soberAnchor;
+    return Promise.resolve(P().save(id)).then(function () { return a; });
+  }
+
   /* ---------- reading the choice ---------- */
   function cats(tree) { return CATS.filter(function (c) { return !c.special && c.trees.indexOf(tree) >= 0; }).map(function (c) { return { id: c.id, name: c.words[tree], line: c.line[tree] }; }); }
   function has() { return get().ids.length > 0; }
@@ -315,7 +363,14 @@
   /* Living Sober readers. stage(tree): Maple and Aspen are always 'love' once chosen. */
   function sober(tree) { var c = get(); return c.ids.indexOf('sober') >= 0 && (!tree || cats(tree).some(function (x) { return x.id === 'sober'; })); }
   function soberStage(tree) { if (!sober(tree)) return ''; if (tree && KIDS.indexOf(tree) >= 0) return 'love'; var st = get().sober; return tree && stagesFor(tree).indexOf(st) < 0 ? '' : st; }
-  function ringShows(tree, key) { return key !== 'sober' || sober(tree); }
+  function ringShows(tree, key) { return key !== 'sober' || sober(tree) || DECLARED.indexOf(tree) >= 0; }
+  function soberDate(tree) { return sober(tree) && KIDS.indexOf(tree) < 0 ? get().soberDate : ''; }
+  // The help lines for Living Sober in a tree, for its stage (My Anchor Plan shows them whether or not other choices are made).
+  function soberLines(tree) {
+    var map = LINEMAP[tree]; if (!map) return [];
+    var keys = soberStage(tree) === 'love' && map.soberLove ? map.soberLove : map.sober || [];
+    return keys.filter(function (k) { return LINES[k]; }).map(function (k) { return Object.assign({}, LINES[k]); });
+  }
   // How well a row fits the stage: 2 its sober list holds the stage, 1 it fits every stage ([] or none given), 0 another stage.
   function stageRank(row, st) {
     var l = row && Array.isArray(row.sober) ? row.sober : [];
@@ -396,6 +451,10 @@
     '.gglife .gl-st b{display:block;font-weight:600;}.gglife .gl-st small{display:block;color:var(--gl-soft);font-size:13px;}' +
     '.gglife .gl-st[aria-checked=true]{border-color:var(--gl-gold);background:var(--gl-gold-soft);}.gglife .gl-st:hover{border-color:var(--gl-gold);}' +
     '.gglife .gl-st:focus-visible{outline:3px solid var(--gl-gold);outline-offset:2px;}' +
+    '.gglife .gl-date{display:block;margin:12px 0 0;font-size:15px;}.gglife .gl-date small{display:block;color:var(--gl-soft);font-size:13.5px;}' +
+    '.gglife .gl-date-row{display:flex;flex-wrap:wrap;gap:8px 14px;align-items:center;margin-top:6px;}' +
+    '.gglife .gl-date input{min-height:44px;padding:8px 10px;border:1.5px solid var(--gl-line);border-radius:10px;background:var(--gl-card);color:var(--gl-ink);font:15px Barlow,system-ui,sans-serif;color-scheme:light dark;}' +
+    '.gglife .gl-date input:focus-visible{outline:3px solid var(--gl-gold);outline-offset:2px;}' +
     '.gglife .gl-specials{display:grid;grid-template-columns:repeat(auto-fill,minmax(250px,1fr));gap:8px;margin:0 0 6px;}' +
     '.gglife .gl-sw{display:flex;gap:12px;align-items:flex-start;width:100%;padding:12px 2px;border:0;border-top:1px solid var(--gl-line);background:none;color:var(--gl-ink);cursor:pointer;font:15px/1.4 Barlow,system-ui,sans-serif;text-align:left;text-transform:none;letter-spacing:0;}' +
     '.gglife .gl-sw b{display:block;font-weight:600;}.gglife .gl-sw small{display:block;color:var(--gl-soft);font-size:13.5px;}' +
@@ -446,7 +505,11 @@
           '<div class="gl-st-row">' + STAGES.filter(function (x) { return stagesFor(tree).indexOf(x.id) >= 0; }).map(function (x) {
             var on = c.sober === x.id;
             return '<button type="button" class="gl-st" role="radio" data-gl="stage" data-id="' + x.id + '" aria-checked="' + on + '"><b>' + esc(x.name) + '</b><small>' + esc(x.line) + '</small></button>';
-          }).join('') + '</div></div>';
+          }).join('') + '</div>' +
+          // The sober date (GWG BLD 837), once and optional, in the adult trees. Only the count ever shows.
+          (DECLARED.indexOf(tree) >= 0 && !kid ? '<label class="gl-date"><b>My Sober Date</b> <small>Optional. Locked on this device; only the count shows, as a star on the Living Sober card.</small>' +
+            '<span class="gl-date-row"><input type="date" data-gl="date" max="' + today() + '" min="1900-01-01" value="' + esc(c.soberDate) + '">' + (c.soberDate ? '<button type="button" class="gl-link" data-gl="nodate">Clear the Date</button>' : '') + '</span></label>' : '') +
+          '</div>';
       };
       var sw = function (key, name, line, on) {
         return '<button type="button" class="gl-sw" role="switch" data-gl="sw" data-id="' + key + '" aria-checked="' + on + '"><span class="gl-track" aria-hidden="true"></span><span><b>' + esc(name) + '</b><small>' + esc(line) + '</small></span></button>';
@@ -466,6 +529,11 @@
       var go = patch === null ? clear(pid) : set(patch, pid);
       return go.then(function () { paint(msg); }, function (e) { paint(e && e.message ? e.message : 'That did not save. Try again.'); });
     }
+    wrap.addEventListener('change', function (e) {
+      var d = e.target.closest('[data-gl="date"]'); if (!d || !wrap.contains(d)) return;
+      if (d.value && !okDate(d.value)) { paint('Choose a day up to today.'); return; }
+      save({ soberDate: d.value || '' }, d.value ? 'Saved, locked on this device.' : '').then(function () { var f = wrap.querySelector('[data-gl="date"]'); if (f) f.focus(); });
+    });
     wrap.addEventListener('click', function (e) {
       var b = e.target.closest('[data-gl]'); if (!b || !wrap.contains(b)) return;
       var k = b.getAttribute('data-gl'), id = b.getAttribute('data-id'), c = get(pid), focusSel = '[data-gl="' + k + '"]' + (id ? '[data-id="' + id + '"]' : '');
@@ -478,6 +546,7 @@
       }
       else if (k === 'sw') { var p = {}; if (id === 'gentle' && c.rather) { save({}, 'Gentler ways stay first while I\'d Rather Not Say is chosen.').then(after); return; } p[id] = !c[id]; save(p).then(after); }
       else if (k === 'clear') { if (!confirm(kid ? 'Clear these choices? They are erased from this profile.' : 'Clear your choices? They are erased from your profile.')) return; save(null, 'Cleared. Nothing is kept.').then(function () { var f = wrap.querySelector('.gl-box'); if (f) f.focus(); }); }
+      else if (k === 'nodate') { save({ soberDate: '' }).then(function () { var f = wrap.querySelector('[data-gl="date"]'); if (f) f.focus(); }); }
       else if (k === 'done') { if (opt.onDone) opt.onDone(get(pid)); }
     });
     paint();
@@ -553,10 +622,12 @@
   if (!hooked) { var tries = 0, t = setInterval(function () { hook(); if (hooked || ++tries > 40) clearInterval(t); }, 250); }
 
   window.GGLife = {
-    version: 'lf2', CATS: CATS, TREES: TREES.slice(), FITS: 'Fits You', LINES_TITLE: 'Information and Support',
+    version: 'lf3', CATS: CATS, TREES: TREES.slice(), FITS: 'Fits You', LINES_TITLE: 'Information and Support',
     cats: cats, get: get, set: set, clear: clear, has: has, chosen: chosen, gentle: gentle, fits: fits, order: order,
     lines: lines, picks: picks, addGuides: addGuides, label: label, chooser: chooser, dialog: dialog, offerCard: offerCard,
     STAGES: STAGES, stages: stagesFor, sober: sober, soberStage: soberStage, ring: ring, ringShows: ringShows, soberSteps: soberSteps,
+    DECLARED: DECLARED.slice(), declared: function (tree) { return DECLARED.indexOf(tree) >= 0; }, soberDate: soberDate, soberLines: soberLines, okDate: okDate,
+    anchor: anchor, setAnchor: setAnchor, helperView: function (id) { return helperView(id || who()); },
     use: function (id) { ctx = id || null; fire(who()); }, who: who,
     on: function (fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
   };

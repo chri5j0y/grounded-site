@@ -1048,7 +1048,7 @@
   function needLife(app) {
     if (LIFE_APPS.indexOf(app) < 0) return Promise.resolve();
     return script(url(LIFE_SRC), function () { return !!window.GG_LEARN_LIFE; }).then(function () {
-      return script(url('/shared/gg-life.js?v=b789'), function () { return !!window.GGLife; });
+      return script(url('/shared/gg-life.js?v=b837'), function () { return !!window.GGLife; });
     });
   }
   // The tracks of shared/learn-life.js (group: 'life'), with the videos that fit the person's choice first
@@ -1138,7 +1138,7 @@
     var meta = APPS[app]; if (!meta) return;
     css();
     var pg = opts && opts.page;
-    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () { return pg || hasPages(app) ? needPages() : null; }).then(function () {
+    script(url('/shared/learn-lessons.js?v=' + V), function () { return !!window.GG_LEARN; }).then(function () { return needGuides(app); }).then(function () { return need30(app); }).then(function () { return lessonId && LIFE_ID.test(lessonId) ? needLife(app) : null; }).then(function () { return pg || hasPages(app) ? needPages() : null; }).then(function () {
       var keep = APP ? APP.depth : 0;
       if (APP) close(true, true);
       needPrint(); // ready ahead of time, so a certificate or flyer opens on the first tap
@@ -1179,15 +1179,25 @@
     var L = (window.GG_LEARN || {})[app] || {}, base = (L.tracks || []).filter(function (t) { return t && Array.isArray(t.lessons) && t.lessons.length; });
     var lt = lifeTracks(app), sup = base.filter(function (t) { return t.kind === 'support'; }), rest = base.filter(function (t) { return t.kind !== 'support'; });
     if (lt.length) sup = lifeFirst() ? lt.concat(sup) : sup.concat(lt);
-    return lowkey(app, rest.concat(sup, guideTracks(app))); // Get Set Up (the device voice video) retired, Chris, October 10, 2026
+    return lowkey(app, rest.concat(sup, sober30(app), guideTracks(app))); // Get Set Up (the device voice video) retired, Chris, October 10, 2026
+  }
+  // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
+  // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
+  var DECLARED = ['birch', 'oak', 'sequoia'];
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b837'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function sober30(app) {
+    var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
+    return [Object.assign({}, S.track, { lowkey: 'sober30' })];
   }
   // Living Sober (GWG BLD 789): a track with lowkey: 'sober' is listed only when Living Sober is chosen (shared/gg-life.js),
   // and then first among its kind. Otherwise it stays unlisted: it still opens by its id or a lesson id.
+  // Declared in Birch, Oak, and Sequoia (GWG BLD 837): there its 'sober' tracks are listed for everyone, first once chosen;
+  // 'sober30' (Early Days: 30 Days) is listed once Living Sober is chosen.
   function soberOn(app) { try { return app === 'grove' ? !!(window.GROVE_SOBER_ON && GROVE_SOBER_ON()) : !!(window.GGLife && GGLife.sober && GGLife.sober(app)); } catch (e) { return false; } }
   function lowkey(app, ts) {
     if (!ts.some(function (t) { return t.lowkey; })) return ts;
-    var on = soberOn(app), lk = [], other = [];
-    ts.forEach(function (t) { if (t.lowkey === 'sober') lk.push(on ? t : Object.assign({}, t, { unlisted: true })); else other.push(t); });
+    var on = soberOn(app), open = on || DECLARED.indexOf(app) >= 0, lk = [], other = [];
+    ts.forEach(function (t) { if (t.lowkey === 'sober' || t.lowkey === 'sober30') lk.push(on || (open && t.lowkey === 'sober') ? t : Object.assign({}, t, { unlisted: true })); else other.push(t); });
     if (!on) return other.concat(lk);
     var out = other.slice();
     lk.forEach(function (t) { var i = -1; out.some(function (x, j) { if (x.kind === t.kind) { i = j; return true; } return false; }); if (i < 0) out.push(t); else out.splice(i, 0, t); });
