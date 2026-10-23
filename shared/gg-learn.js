@@ -72,13 +72,14 @@
   // painting for 'marriage', and the home painting for any other id. FRAME places each one in the 16 by 9 stage:
   // x is the side to side crop (object-position, percent), s the side the words sit on (l, r, or t for top),
   // w the widest the words go, so the words stay clear of the tree where the painting allows.
-  var HEROES = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove', 'fieldguide', 'library', 'home', 'page-about', 'page-celebrations', 'page-contact', 'page-farewells', 'page-growth', 'page-hard-seasons', 'page-marriage', 'page-services', 'page-speaking', 'page-stories', 'page-teams', 'page-tools'];
+  var HEROES = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove', 'fieldguide', 'library', 'home', 'page-about', 'page-celebrations', 'page-contact', 'page-farewells', 'page-growth', 'page-hard-seasons', 'page-marriage', 'page-services', 'page-speaking', 'page-stories', 'page-teams', 'page-tools', 'living-sober'];
   var FRAME = {
     maple: { x: 100, s: 'r', w: 440 }, aspen: { x: 100, s: 'r', w: 440 }, pine: { x: 100, s: 'r', w: 440 }, birch: { x: 10, s: 'r', w: 420 },
     oak: { x: 40, s: 'l', w: 520 }, sequoia: { x: 0, s: 'r', w: 360 }, willow: { x: 0, s: 'r', w: 410 }, grove: { x: 50, s: 't', w: 640 },
     fieldguide: { x: 50, s: 'l', w: 500 }, library: { x: 100, s: 'r', w: 440 }, home: { x: 0, s: 'l', w: 500 }, marriage: { x: 50, s: 'l', w: 440 },
     'page-celebrations': { x: 100, s: 'r', w: 380 }, 'page-farewells': { x: 100, s: 'r', w: 440 }, 'page-growth': { x: 0, s: 'l', w: 520 },
-    'page-hard-seasons': { x: 0, s: 'l', w: 520 }, 'page-marriage': { x: 100, s: 'r', w: 420 }, 'page-teams': { x: 50, s: 't', w: 640 }
+    'page-hard-seasons': { x: 0, s: 'l', w: 520 }, 'page-marriage': { x: 100, s: 'r', w: 420 }, 'page-teams': { x: 50, s: 't', w: 640 },
+    'living-sober': { x: 0, s: 'l', w: 520 } // BLD 839: Living Sober's own painting, the tree to the right of the words
   };
   var heroId = function (h) { return h === 'marriage' || HEROES.indexOf(h) >= 0 || /^(svc|page)-[a-z0-9-]+$/.test(h || '') ? h : 'home'; }; // BLD 823: any page or service painting
   var HERO = function (h) { h = heroId(h); return h === 'marriage' ? url('/heartwood/hero-wide.webp') : url('/shared/heroes/' + h + '-wide.webp'); };
@@ -1184,7 +1185,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b837'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b839'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

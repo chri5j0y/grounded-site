@@ -16,8 +16,8 @@
    GGShareCard.render(opts) resolves to the 1080 by 1350 canvas; GGShareCard.blob(opts) to a PNG Blob.
 
    Branding on every card: the Grounded logo (shared/marks/grounded-logo.svg), Grow With Grounded, a Living Sober tag,
-   growwithgrounded.com/living-sober, Living Sober green #4E7D6A with gold, the site fonts, and the Growth painting
-   (the sapling from the old stump) as the texture. Nothing personal leaves the device unless the person shares it.
+   growwithgrounded.com/living-sober, Living Sober green #4E7D6A with gold, the site fonts, and Living Sober's own
+   painting (the tree by the stream, cut 4:5 from the tall version, shared/heroes/living-sober-card.webp, BLD 839) as the texture. Nothing personal leaves the device unless the person shares it.
    ===================================================================== */
 (function () {
   'use strict';
@@ -59,7 +59,7 @@
       var svg = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="' + m[1] + '" width="640" height="707" color="' + CREAM + '">' + m[2] + '</svg>';
       return img('data:image/svg+xml;charset=utf-8,' + encodeURIComponent(svg));
     }).catch(function () { return null; });
-    var paint = img(HOME + '/shared/heroes/page-growth-narrow.webp');
+    var paint = img(HOME + '/shared/heroes/living-sober-card.webp?v=b839');
     ASSETS = Promise.all([fonts, logo, paint]).then(function (r) { return { logo: r[1], paint: r[2] }; });
     return ASSETS;
   }
@@ -152,10 +152,10 @@
       c.drawImage(p, (W - pw) * .62, (H - ph) / 2, pw, ph);
     }
     var g = c.createLinearGradient(0, 0, 0, H);
-    g.addColorStop(0, 'rgba(22,40,33,.70)'); g.addColorStop(.28, 'rgba(36,66,55,.62)'); g.addColorStop(.62, 'rgba(30,56,46,.74)'); g.addColorStop(1, 'rgba(16,30,24,.93)');
+    g.addColorStop(0, 'rgba(22,40,33,.40)'); g.addColorStop(.28, 'rgba(36,66,55,.30)'); g.addColorStop(.62, 'rgba(30,56,46,.48)'); g.addColorStop(1, 'rgba(16,30,24,.85)');
     c.fillStyle = g; c.fillRect(0, 0, W, H);
-    c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = GREEN; c.globalAlpha = .55; c.fillRect(0, 0, W, H); c.restore();
-    var vg = c.createRadialGradient(W / 2, H * .5, H * .25, W / 2, H * .5, H * .78); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.35)');
+    c.save(); c.globalCompositeOperation = 'soft-light'; c.fillStyle = GREEN; c.globalAlpha = .22; c.fillRect(0, 0, W, H); c.restore();
+    var vg = c.createRadialGradient(W / 2, H * .5, H * .25, W / 2, H * .5, H * .78); vg.addColorStop(0, 'rgba(0,0,0,0)'); vg.addColorStop(1, 'rgba(0,0,0,.28)');
     c.fillStyle = vg; c.fillRect(0, 0, W, H);
     // the gold frame
     c.lineWidth = 2.5; c.strokeStyle = 'rgba(217,168,71,.85)'; rr(c, 38, 38, W - 76, H - 76, 30); c.stroke();

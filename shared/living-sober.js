@@ -15,7 +15,7 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b837', LESSONS = '/shared/learn-lessons.js?v=b836';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b839', LESSONS = '/shared/learn-lessons.js?v=b836';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [
@@ -75,7 +75,7 @@
         var root = document.createElement('div');
         root.className = 'ggl ggl-app ls-pv'; root.setAttribute('role', 'dialog'); root.setAttribute('aria-modal', 'true'); root.setAttribute('aria-label', 'Video: ' + l.title);
         root.style.setProperty('--ggl-acc', ACC); root.style.setProperty('--ggl-bar', '#1F3229'); root.style.setProperty('--ggl-lite', '#CFE3D8');
-        root.innerHTML = '<div class="ggl-top"><img src="/shared/marks/living-sober-tab.svg?v=b837" alt=""><b>Living Sober</b><button type="button" class="ggl-x" data-ls-x="1">Back to Living Sober</button></div>'
+        root.innerHTML = '<div class="ggl-top"><img src="/shared/marks/living-sober-tab.svg?v=b839" alt=""><b>Living Sober</b><button type="button" class="ggl-x" data-ls-x="1">Back to Living Sober</button></div>'
           + '<div class="ggl-in"><div class="ggl-eb">Start Here, ' + (at + 1) + ' of ' + START.length + '</div><h1 tabindex="-1">' + esc(l.title) + '</h1><p class="ggl-muted">' + esc(l.blurb || meta.blurb) + ' About ' + esc(String(l.mins || meta.mins)) + ' minutes.</p><div class="ls-host"></div></div>';
         document.body.appendChild(root);
         OPEN = { root: root, from: keepFrom, overflow: OPEN ? OPEN.overflow : document.body.style.overflow };
