@@ -679,6 +679,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
 <script src="../shared/gg-stories.js?v=b839"></script>
+<script src="health.js?v=b840"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1077,14 +1078,16 @@ function tabsFor(){
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
+  // My Health (GWG BLD 840): every level, whenever the Guide library carries healthJourney. Personal numbers stay on this device.
+  const hj = hjOpen() ? [['health','My Health','heart']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
-  if (!LIB) return [...kids, ...grown, ...hp];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
+  if (!LIB) return [...hj, ...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
   // Field yet, and Safety (Chris, October 8, 2026: Guides use Safety too). Staff and Founders: the paid services
   // and the Grow With Grounded tabs. Founders: the Founder tab. A ['-', label] entry starts each group.
-  const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
+  const t = [['-','For Everyone'], ['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ['safety','Safety','shield'], ['-','Staff and Founders'], ['guides','Sessions','book'], ['clients','People','people'], ['library','Library','shelf'], ['present','Present','speaking'], ['ceremonies','Ceremonies','ceremony'], ['cli','Clients','file'], ['premarital','Premarital','heart'], ['share','Share','link'], ['training','Training','cap']];
   if (TIER === 'founder') t.push(['-','Founders'], ['founder','Founder','key'], ['books','Books','ledger']); // Books (GWG BLD 770, books.js): Founders only
   return t;
 }
@@ -1093,7 +1096,7 @@ function tabsFor(){
 const TREE_G = () => ({maple: SPG, aspen: SAG, pine: PNG, birch: BRG, oak: STG, sequoia: SQG, willow: WLG, grove: GVG, talks: HTG});
 function tabAud(id){
   if (id === 'founder' || id === 'books') return 'founder'; // Books (GWG BLD 770) is Founders only
-  if (id === 'home' || id === 'trees' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
+  if (id === 'home' || id === 'health' || id === 'trees' || id === 'path' || id === 'learn' || id === 'certs' || id === 'orient' || id === 'safety' || id === 'hospital' || TREE_G()[id]) return 'guides';
   return 'staff';
 }
 const AUD = {guides: ['For Guides, Staff, and Founders', 'g'], staff: ['Staff and Founders', 's'], founder: ['Founders Only', 'f']};
@@ -1113,7 +1116,7 @@ function render(){
   const treeTabs = tabs.filter(x => TREE_IDS.includes(x[0]));
   if (V.tab !== 'settings' && !pathSub && !(V.tab === 'orient' && OR()) && !(V.tab === 'trees' && treeTabs.length) && !tabs.some(x => x[0] === V.tab && x[0] !== '-')) V = {tab: firstTab(tabs)};
   drawTabs(tabs, pathSub);
-  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : ''};
+  const views = {trees: vTrees, home: TIER === 'guide' ? vFieldHome : vHome, guides:vGuides, clients:vClients, library:vLibrary, training:vTraining, safety:vSafety, settings:vSettings, founder:vFounder, orient:vOrient, oak:vST, sequoia:vSQ, maple:vSP, aspen:vSA, pine:vPN, birch:vBR, willow:vWL, grove:vGV, talks:vHT, hospital:vHP, present:vDK, learn:vLearn, certs:vCerts, path:vPath, share: () => window.GGShare ? GGShare.view(LIB, {founder: TIER === 'founder', posts: FDR && FDR.posts, data: DATA, save}) : '', ceremonies: () => window.GGWed && GGWed.on() ? GGWed.view() : window.GGFw && GGFw.on() ? GGFw.view() : window.GGCer ? GGCer.view({lib: LIB, data: DATA, save}) : '', premarital: () => TIER === 'guide' ? '' : window.GGPm ? GGPm.view({lib: LIB, data: DATA, save}) : '', cli: () => TIER !== 'guide' && window.GGCli ? GGCli.view() : '', books: () => TIER === 'founder' && window.GGBooks ? GGBooks.view() : '', health: () => hjOpen() ? GGHealth.view() : ''};
   $('#view').innerHTML = audPill(views[V.tab] ? V.tab : 'home') + (pathSub ? `<button class="linkbtn path-back" data-tab="path">${icon('award')} Back to Your Path</button>` : '') + (views[V.tab] || views.home)() + `<footer class="notice">${logo('t')}${esc(notice())}</footer>`;
   window.scrollTo(0, 0);
   certCheck(); // a new certificate shows its congratulations (GWG BLD 797)
@@ -1121,8 +1124,8 @@ function render(){
 // Grouped tabs (GWG BLD 822). tabsFor() stays the one flat list of what each person may open; the bar shows it in
 // six groups, and the open group's own tabs in a second row. Both rows sit inside #tabs, so the tab handlers still work.
 const TREE_IDS = ['maple','aspen','pine','birch','oak','sequoia','willow','grove'];
-const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
-const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
+const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['me','My Health','heart'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
+const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'health' ? 'me' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
 const GRP_LAST = {};
 function drawTabs(tabs, pathSub){
   const real = tabs.filter(x => x[0] !== '-'), cur = pathSub ? 'path' : grpOf(V.tab);
@@ -1235,6 +1238,8 @@ if (window.GGCer){ GGCer.tier = () => TIER; GGCer.saveAll = (key, item) => piece
 // Clients and Intake (GWG BLD 767, clients.js): Staff and Founders, the Clients tab, the Back Up Now card on Home.
 if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
+// My Health (GWG BLD 840, health.js): every level; content from the Guide library, a Founder's own plan from the Founder library.
+if (window.GGHealth) GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m)});
 // Books (GWG BLD 770, books.js): Founders only, the Books tab and the Set Aside for Taxes card on Home.
 if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
@@ -8709,6 +8714,7 @@ function sgAct(a, v){
    - help is one line, a list of lines, or a list of [label, text] pairs. Nothing about watching or reading is saved. */
 const HPG = () => { const S = FLD && FLD.hospitalGuide; return S && Array.isArray(S.items) && S.items.length ? S : null; };
 const hpOpen = () => !!HPG();
+const hjOpen = () => !!(window.GGHealth && GGHealth.on());
 const hpHelpLines = h => (Array.isArray(h) ? h : h ? [h] : []).map(x => Array.isArray(x) ? x[0] + ': ' + (x[1] || '') : String(x));
 const hpGroups = () => (HPG().groups || []).map(g => ({key: g[0], name: g[1], items: HPG().items.filter(x => x.group === g[0]).sort((a, b) => (a.n || 0) - (b.n || 0))})).filter(g => g.items.length);
 const hpFind = id => HPG() ? HPG().items.find(x => x.id === id) || null : null;
@@ -10905,6 +10911,8 @@ function mergeData(cur, inc){
   if (window.GGCli){ const cl = GGCli.merge(out, inc); stats.added += cl.added; stats.updated += cl.updated; }
   // Books (BLD 770): newest copy of each entry wins; deleted entries stay deleted.
   if (window.GGBooks){ const bk = GGBooks.merge(out, inc); stats.added += bk.added; stats.updated += bk.updated; }
+  // My Health (BLD 840): newest copy of each entry wins; removed entries stay removed.
+  if (window.GGHealth){ const hm = GGHealth.merge(out, inc); stats.added += hm.added; stats.updated += hm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));
   const tp = inc.training && inc.training.progress || {};
