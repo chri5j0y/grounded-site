@@ -23,7 +23,10 @@ let C = {};
 const S = {sec: 'today', form: null, setup: false, open: {}, ov: null};
 const D = () => C.data ? C.data() : null;
 const FLDH = () => { const f = C.fld && C.fld(); const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
-const MINE = () => { const f = C.fdr && C.fdr(); const m = f && f.healthMine; return m && typeof m === 'object' ? m : null; };
+const MINE = () => { const f = C.fdr && C.fdr(); const m = f && f.healthMine; if (!m || typeof m !== 'object') return null;
+  // BLD 842: the Founder library is shared by both founders, so a named plan shows only on its owner's phone.
+  const d = D(), who = d && d.health && d.health.set && d.health.set.who; return !m.who || who === m.who ? m : null; };
+const MINE_ANY = () => { const f = C.fdr && C.fdr(); const m = f && f.healthMine; return m && typeof m === 'object' ? m : null; };
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
 const save = () => { if (C.save) C.save(); };
 const toast = m => { if (C.toast) C.toast(m); };
@@ -213,8 +216,10 @@ function sesFor(d){ const s = WMAP[d.getDay()], ss = (WK().sessions || {})[s]; r
 function prepFor(kind, n){ const sp = (APP() || {}).shop || {}, w = (sp.weeks || {})[letter(n)]; return w && w[kind] ? w[kind] : null; }
 function agenda(d){
   const out = [], dow = d.getDay(), n = weekNo(d), fw = foodWeek(d), ses = n >= 1 || dow !== 0 ? sesFor(d) : null;
-  if (ses && n >= 1) out.push({key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightWk(n) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
-  if (dow >= 1 && dow <= 5) out.push({key: 'med', k: 'med', hour: 8, kick: 'After the shower', title: 'Meditation', sub: medMins(n) + ' minutes of stillness.', btn: 'Start'});
+  const track = H().set.track || 'strength', pr = practiceFor(d);
+  if (track !== 'strength' && pr) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Daily Practice', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Practice', did: true});
+  if (track !== 'practice' && ses && n >= 1) out.push({did: true, key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightWk(n) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
+  if (track !== 'practice' && dow >= 1 && dow <= 5) out.push({did: true, key: 'med', k: 'med', hour: 8, kick: 'After the shower', title: 'Meditation', sub: medMins(n) + ' minutes of stillness.', btn: 'Start'});
   if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + letter(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
   if (dow === 6) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + letter(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
@@ -237,7 +242,7 @@ function vToday2(lib){
   const s0 = startMon(), before = n < 1;
   const L = labs(), last = L[L.length - 1], goal = num(h.set.goalLdl);
   const card = x => `<div class="hj-now"><div class="hj-kick">${esc(x.kick)}</div><h3>${esc(x.title)}</h3><p>${esc(x.sub || '')}</p>
-      <button type="button" class="btn btn-gold hj-go" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.btn)}</button></div>`;
+      <button type="button" class="btn btn-gold hj-go" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.btn)}</button>${x.did ? `<button type="button" class="linkbtn hj-did" data-hja="toggle" data-hjv="${esc(x.key)}">I Did It on My Own</button>` : ''}</div>`;
   return `${hero(lib)}
   ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n} · Phase ${phaseOf(n)}${lightWk(n) ? ' · a lighter week' : ''} · Food Week ${letter(n)}</p>`}
   ${cur ? card(cur) : `<div class="hj-now done"><div class="hj-kick">Today</div><h3>Everything for today is done.</h3><p>Rest well. Tomorrow keeps growing.</p></div>`}
@@ -300,15 +305,12 @@ function shopText(n){
 // ---------- overlays: workout, cook, prep, meditation ----------
 function buildWork(s){
   const w = WK(), ses = (w.sessions || {})[s]; if (!ses) return null;
-  const n = Math.max(1, weekNo(new Date())), ph = String(phaseOf(n)), steps = [];
-  arr(w.warmup).forEach(x => steps.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up'}));
-  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
-    steps.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: lightWk(n) ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', rest: +x.rest || 60, part: b.title || 'Main'}); }));
-  arr(w.cooldown).forEach(x => steps.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown'}));
-  return {k: 'work', s, title: ses.title || 'Session ' + s, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false};
+  const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n));
+  let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
+  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count};
 }
 function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } S.ov = o; wake(true); tick(); rerender(true); }
-function closeOv(){ S.ov = null; wake(false); rerender(true); }
+function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
 let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
 let TK = null; function tick(){ clearInterval(TK); TK = setInterval(() => { const o = S.ov; if (!o){ clearInterval(TK); return; } if (!o.run) return; const ms = o.end - Date.now();
   document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(Math.max(0, ms)));
@@ -321,7 +323,10 @@ function vOv(){
   const o = S.ov; if (!o) return '';
   const top = (title, sub, pct) => `<div class="hj-ovtop"><div><div class="hj-kick">${esc(sub || '')}</div><b>${esc(title)}</b></div><button type="button" class="hj-x" data-hja="ovclose" aria-label="Close">&times;</button></div>${pct != null ? `<div class="hj-prog"><span style="width:${pct}%"></span></div>` : ''}`;
   let body = '';
-  if (o.k === 'work'){
+  if (o.k === 'work' && o.stage === 'start') body = vStart(o, top);
+  else if (o.k === 'work' && o.mode === 'auto') body = vAuto(o, top);
+  else if ((o.k === 'cook' || o.k === 'prep') && o.guide) body = vGuide(o, top);
+  else if (o.k === 'work'){
     const st = o.steps[o.i];
     if (o.fin || !st){ body = `${top(o.title, 'Workout done', 100)}<div class="hj-ovb"><div class="hj-big2">Strong work.</div><p class="hj-sub">${o.done.length} moves finished. Breathe, drink water, and write a word about how it felt.</p>
       <label class="hj-fld"><span>How did it feel? (optional)</span><input id="hj-wnote" placeholder="Felt strong, knees easy..."></label>
@@ -349,7 +354,7 @@ function vOv(){
   } else if (o.k === 'cook' || o.k === 'prep'){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
-    body = `${top(o.title, o.sub, pct)}<div class="hj-ovb hj-left">
+    body = `${top(o.title, o.sub, pct)}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
       ${x.prepped ? `<p class="hj-note"><b>Prepped Sunday:</b> ${esc(x.prepped)}</p>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
       <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
@@ -364,6 +369,7 @@ function vOv(){
 function openKey(key){
   const [k, a, b] = key.split(':');
   if (k === 'work') return openOv(buildWork(a));
+  if (k === 'prac') return openOv(buildPractice());
   if (k === 'med') return openOv({k: 'med', title: 'Meditation', mins: medMins(weekNo(new Date())), left: 0, run: false});
   if (k === 'shop'){ S.sec = 'shop'; S.shopWk = +a; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'prep') return openPrep(a, +b);
@@ -377,9 +383,10 @@ function openPrep(kind, n){ const p = prepFor(kind, n); if (!p) return openOv(nu
   openOv({k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p}); }
 function actTool(a, v){
   const h = H(), o = S.ov;
+  if (actCoach(a, v)) return true;
   switch (a){
     case 'go': return openKey(v), true;
-    case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (v.startsWith('work:')) checkOn('move'); save(); rerender(true); return true; }
+    case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:')) checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
     case 'work': return openOv(buildWork(v)), true;
     case 'cook': { const [w, id] = v.split('|'); openCook(w, id); return true; }
     case 'prep': { const [k, n] = v.split('|'); openPrep(k, +n); return true; }
@@ -409,8 +416,8 @@ function actTool(a, v){
     case 'setdone': { const st = o.steps[o.i], lb = document.getElementById('hj-lb'); if (lb && String(lb.value).trim()){ h.lifts[st.id] = String(lb.value).trim().slice(0, 12); save(); }
       if (o.set < st.sets){ o.rest = true; startTimer(o, st.rest); } else { o.lb = null; o.done.push(o.i); o.i++; o.set = 1; o.swap = false; o.run = false; o.rest = false; if (o.i >= o.steps.length) o.fin = true; } rerender(true); return true; }
     case 'skiprest': o.rest = false; o.run = false; o.set++; rerender(true); return true;
-    case 'wsave': { const nt = document.getElementById('hj-wnote'); h.wlog.push({id: uid(), date: today(), s: o.s, title: o.title, moves: o.done.length, note: String(nt ? nt.value : '').trim().slice(0, 400), u: Date.now()});
-      markDone('work:' + o.s); checkOn('move'); toast('Workout saved. Well done.'); closeOv(); return true; }
+    case 'wsave': { const nt = document.getElementById('hj-wnote'); h.wlog.push({id: uid(), date: today(), s: o.s, title: o.title, moves: o.done.length, mins: o.active ? Math.round(o.active / 60000) : undefined, note: String(nt ? nt.value : '').trim().slice(0, 400), u: Date.now()});
+      markDone(o.key || 'work:' + o.s); checkOn(o.prac ? 'still' : 'move'); toast('Workout saved. Well done.'); closeOv(); return true; }
     case 'mstart': startTimer(o, (o.left && o.left < o.mins * 60000 ? o.left : o.mins * 60000) / 1000); rerender(true); return true;
     case 'mdone': markDone('med'); checkOn('still'); o.run = false; o.fin = true; chime(); rerender(true); return true;
     case 'step': { o.dn = o.dn || {}; o.dn[v] = !o.dn[v]; rerender(true); return true; }
@@ -421,10 +428,203 @@ function actTool(a, v){
   return false;
 }
 
+// ---------- BLD 842: the coach. Play Session (hands-free), Kayti's daily practice, the kitchen guide ----------
+// Every line the voice can say comes from LN below, so allLines() lists exactly what gets recorded (Ava: workouts and
+// the practice; Andrew: the kitchen). Voice Off, Music Off, and I Did It keep every guide optional (Chris, October 24, 2026).
+const VO = () => window.GGVoice || null;
+const NUMW = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen', 'Twenty'];
+const unitOf = st => st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : ' reps';
+const LN = {
+  ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.',
+  time: st => (st.name + '. ' + (st.how || '')).trim(),
+  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + st.reps + unitOf(st) + '.',
+  set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.',
+  go: 'Go.', rest: s => 'Rest ' + s + ' seconds.', ten: 'Ten seconds.', nextSet: 'Next set.',
+  next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.', out: 'That is the session. Strong work today.',
+  count: k => NUMW[k] + '.',
+  pIntro: (t, m) => t + '. About ' + m + ' minutes. Settle in, and we begin.', pOut: 'Your practice is complete. Carry this calm with you.',
+  cIntro: n => 'We are making ' + n + '.', prepIntro: t => 'We are starting ' + t + '.',
+  tset: m => 'Timer set for ' + m + ' minute' + (m === 1 ? '' : 's') + '.', tdone: 'That timer is done.',
+  cOut: 'All done. Enjoy the table together.', prepOut: 'Prep is done. Your week is ready.'
+};
+const repN = st => { const n = parseInt(String(st.reps), 10); return n > 0 && n <= 20 ? n : 0; };
+const AVA = 'ava', ANDREW = 'andrew';
+function stepsFor(ses, ph, light){
+  const w = WK(), out = [];
+  arr(w.warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', fig: x.name}));
+  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
+    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', rest: +x.rest || 60, part: b.title || 'Main', fig: x.name}); }));
+  arr(w.cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', fig: x.name}));
+  return out;
+}
+const PR = () => (APP() || {}).practice || null;
+function practiceFor(d){ const p = PR(); if (!p || !arr(p.sessions).length) return null; const s = p.sessions[(d.getDay() + 6) % 7 % p.sessions.length]; return s; }
+function buildPractice(s){
+  const p = PR(), ss = arr(p && p.sessions).find(x => x.id === s) || practiceFor(new Date()); if (!ss) return null;
+  const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Practice', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
+  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Daily Practice', lead: ss.focus || '', mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, music: '/audio/music/calm-' + (1 + (new Date().getDay() % 7)) + '.mp3', key: 'prac'};
+}
+// Every line, for recording and for tests.
+function allLines(){
+  const out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); }, w = WK(), app = APP() || {};
+  Object.entries(w.sessions || {}).forEach(([id, ses]) => { add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins || 50));
+    ['1', '2', '3'].forEach(ph => [false, true].forEach(light => stepsFor(ses, ph, light).forEach(st => {
+      if (st.t === 'time') add(AVA, LN.time(st));
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.next(st.name)); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); }
+      add(AVA, LN.next(st.name)); }))); });
+  for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
+  [LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut].forEach(t => add(AVA, t));
+  const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
+  const dn = (app.dinners || {}).weeks || {}; Object.values(dn).forEach(wk => arr(wk.dinners).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
+  const sp = (app.shop || {}).weeks || {}; Object.values(sp).forEach(wk => ['sunday', 'wednesday', 'batch'].forEach(k => { const x = wk[k]; if (!x) return; add(ANDREW, LN.prepIntro({sunday: 'Sunday Prep', wednesday: 'Wednesday Mini Prep', batch: x.title || 'Freezer Batch'}[k]));
+    arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
+  [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
+  return [...out.values()];
+}
+// ---------- the hands-free engine ----------
+const sleep = ms => new Promise(r => setTimeout(r, ms));
+function estLeft(o){ let s = 0; o.steps.forEach((st, i) => { if (i < o.i) return; if (st.t === 'time') s += st.secs; else { const left = i === o.i ? st.sets - o.set + 1 : st.sets; s += left * ((repN(st) || 10) * 3 + (st.kind === 'time' ? +st.reps || 30 : 0) + st.rest); } }); return s * 1000; }
+async function speak(o, text){ const V = VO(); if (!V || !text || o.dead) return; const nx = o.steps[o.i + 1]; await V.say(o.voice || AVA, text); if (nx && V.prefetch) V.prefetch(o.voice || AVA, nx.t === 'time' ? LN.time(nx) : LN.ex(nx)); }
+async function hold(o){ while (o.paused && !o.dead && !o.skip) await sleep(120); }
+// A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on rests.
+async function runTimer(o, ms, rest){
+  o.end = Date.now() + ms; o.run = true; o.rest = !!rest; let said10 = false, last = 99; rerender(true);
+  while (!o.dead && !o.skip){
+    if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
+    const left = o.end - Date.now(); if (left <= 0) break;
+    const s = Math.ceil(left / 1000);
+    if (rest && s === 10 && !said10 && ms > 15000){ said10 = true; speak(o, LN.ten); }
+    if (s <= 3 && s !== last){ last = s; VO() && VO().tick(); }
+    document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
+    await sleep(100);
+  }
+  o.run = false; o.rest = false;
+}
+async function waitTap(o){ o.wait = true; rerender(true); while (o.wait && !o.dead && !o.skip) await sleep(120); o.wait = false; }
+async function runSession(o){
+  const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now();
+  if (V){ V.unlock(); V.music(o.music || '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3'); }
+  rerender(true);
+  await speak(o, o.prac ? LN.pIntro(o.title, o.mins || Math.round(estLeft(o) / 60000)) : LN.ses(o.title, o.mins || Math.round(estLeft(o) / 60000)));
+  while (!o.dead && o.i < o.steps.length){
+    const st = o.steps[o.i]; o.skip = false; rerender(true);
+    if (st.t === 'time'){
+      if (!o.prac && st.part === 'Cooldown' && o.steps[o.i - 1] && o.steps[o.i - 1].part !== 'Cooldown') await speak(o, LN.cool);
+      await speak(o, LN.time(st)); await hold(o); if (o.dead) break;
+      if (!o.skip) await runTimer(o, st.secs * 1000);
+      o.done.push(o.i); o.i++; o.set = 1; continue;
+    }
+    if (o.set === 1){ await speak(o, LN.ex(st)); if (st.cue) await speak(o, st.cue); } else await speak(o, LN.set(o.set, st.sets));
+    await hold(o); if (o.dead) break;
+    if (!o.skip){
+      if (st.kind === 'time'){ await speak(o, LN.go); await runTimer(o, (+st.reps || 30) * 1000); }
+      else if (o.count && repN(st)){ await speak(o, LN.go); o.rep = 0; rerender(true);
+        for (let k = 1; k <= repN(st) && !o.dead && !o.skip && !o.wait; k++){ await hold(o); o.rep = k; document.querySelectorAll('[data-hjrep]').forEach(e => e.textContent = k); const t0 = Date.now(); await speak(o, LN.count(k)); const wt = 3000 - (Date.now() - t0); if (wt > 0) await sleep(wt); }
+        o.rep = 0; }
+      else await waitTap(o);
+    }
+    if (o.dead) break;
+    const skipped = o.skip; o.skip = false;
+    if (!skipped && o.set < st.sets){ await speak(o, LN.rest(st.rest)); await runTimer(o, st.rest * 1000, true); if (o.dead) break; o.skip = false; o.set++; continue; }
+    o.done.push(o.i); o.i++; o.set = 1;
+    const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead){ await speak(o, LN.next(nx.name)); }
+  }
+  if (!o.dead){ o.fin = true; o.run = false; rerender(true); await speak(o, o.prac ? LN.pOut : LN.out); }
+  V && V.music(null);
+}
+function sessClock(o){ const now = Date.now(); if (!o.paused) o.active += now - (o.lastT || now); o.lastT = now; return clock(o.active); }
+setInterval(() => { const o = S.ov; if (!o || o.mode !== 'auto' || o.fin) return; const e = document.querySelector('[data-hjsess]'); if (e) e.textContent = sessClock(o); const l = document.querySelector('[data-hjleft]'); if (l) l.textContent = 'about ' + Math.max(1, Math.round(estLeft(o) / 60000)) + ' min left'; }, 1000);
+function figOf(st){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? st.fig : (M.of ? M.of(st.fig || st.name) : 'standing'); return `<div class="hj-fig" aria-hidden="true">${M.svg(pat)}</div>`; } catch(e){ return ''; } }
+function toggles(o){
+  const V = VO(), on = V ? V.on() : false, mu = V ? V.musicOn() : false, ch = V ? V.chimeOn() : true;
+  return `<div class="hj-tg">
+    <button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="tvoice">${on ? 'Voice On' : 'Voice Off'}</button>
+    <button type="button" class="chip${mu ? ' on' : ''}" aria-pressed="${mu}" data-hja="tmusic">${mu ? 'Music On' : 'Music Off'}</button>
+    <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Beeps On' : 'Beeps Off'}</button>
+    ${o && !o.prac ? `<button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Ava Counts Reps' : 'I Tap Done'}</button>` : ''}</div>`;
+}
+function vStart(o, top){
+  const moves = o.steps.filter(s => s.t === 'ex'), mins = o.mins || Math.round(estLeft(o) / 60000);
+  const kit = !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
+  return `${top(o.title, o.prac ? 'Daily Practice' : 'Today\'s Session', null)}<div class="hj-ovb">
+    <div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
+    <p class="hj-sub">${o.prac ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
+    ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
+    ${toggles(o)}
+    <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.prac ? 'Practice' : 'Session'}</button>
+    <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
+    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + s.reps)}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol></div></details></div>`;
+}
+function vAuto(o, top){
+  const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
+  if (o.fin || !st) return `${top(o.title, o.prac ? 'Practice complete' : 'Session complete', 100)}<div class="hj-ovb"><div class="hj-big2">${o.prac ? 'Well done.' : 'Strong work.'}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
+    <label class="hj-fld" style="text-align:left"><span>How did it feel? (optional)</span><input id="hj-wnote" placeholder="${o.prac ? 'Calm, loose, clear...' : 'Felt strong, knees easy...'}"></label>
+    <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button></div>`;
+  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(Math.max(0, o.end - Date.now()))}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>` : st.t === 'ex' ? `<div class="hj-reps">${esc(st.reps)}${esc(unitOf(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
+  const label = o.rest ? `Rest, then ${o.set < st.sets ? 'set ' + (o.set + 1) + ' of ' + st.sets : 'the next move'}` : st.t === 'ex' ? `Set ${o.set} of ${st.sets}` : st.part;
+  return `${top(o.title, (o.i + 1) + ' of ' + o.steps.length, pct)}
+  <div class="hj-sess"><span data-hjsess>${esc(clock(o.active || 0))}</span><span data-hjleft>about ${Math.max(1, Math.round(estLeft(o) / 60000))} min left</span></div>
+  <div class="hj-ovb">${o.rest ? '' : figOf(st)}<div class="hj-kick">${esc(label)}</div><h2 class="hj-exn">${esc(o.swap && st.swap ? st.swap : st.name)}</h2>${big}
+    ${o.rest ? '<p class="hj-how">Breathe slow. Sip water.</p>' : `<p class="hj-how">${esc(st.how || '')}</p>${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}`}
+    ${o.wait ? `<button type="button" class="btn btn-gold hj-go" data-hja="tapdone">Set Done</button>` : ''}
+    <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">Skip</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>
+    ${toggles(o)}</div>`;
+}
+// ---------- the kitchen guide (Andrew) ----------
+function kSteps(o){ return arr(o.data.steps).map(s => typeof s === 'string' ? {t: s} : s); }
+async function kSay(o, text){ const V = VO(); if (V && !o.dead) await V.say(ANDREW, text); }
+function kEnter(o){ const s = kSteps(o)[o.gi]; if (!s) return; kSay(o, s.t); const nx = kSteps(o)[o.gi + 1]; if (nx && VO()) VO().prefetch(ANDREW, nx.t); }
+function kStartTimer(o, i){ const s = kSteps(o)[i]; if (!s || !+s.min) return; o.timers = (o.timers || []).filter(t => t.i !== i); o.timers.push({i, end: Date.now() + s.min * 60000, label: s.t}); kSay(o, LN.tset(+s.min)); rerender(true); }
+setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers.length) return; const now = Date.now();
+  o.timers.forEach(t => { const e = document.querySelector('[data-hjkt="' + t.i + '"]'); if (e) e.textContent = clock(Math.max(0, t.end - now)); });
+  const done = o.timers.filter(t => t.end <= now); if (!done.length) return;
+  o.timers = o.timers.filter(t => t.end > now); o.rang = done[done.length - 1];
+  if (typeof chime === 'function') chime(); kSay(o, LN.tdone); rerender(true); }, 500);
+function vGuide(o, top){
+  const steps = kSteps(o), s = steps[o.gi], pct = Math.round(100 * o.gi / Math.max(1, steps.length));
+  const rang = o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : '';
+  if (!s) return `${top(o.title, o.sub, 100)}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+  const tms = arr(o.timers);
+  return `${top(o.title, 'Step ' + (o.gi + 1) + ' of ' + steps.length, pct)}
+  ${o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : ''}
+  ${tms.length ? `<div class="hj-ktimers">${tms.map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small><button type="button" class="linkbtn" data-hja="kstop" data-hjv="${t.i}">Stop</button></div>`).join('')}</div>` : ''}
+  <div class="hj-ovb">${s.at ? `<div class="hj-kick">${esc(s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>
+    ${+s.min ? (tms.some(t => t.i === o.gi) ? `<p class="hj-sub">Timer running.</p>` : `<button type="button" class="btn btn-line" data-hja="ktimer" data-hjv="${o.gi}">Start ${+s.min} min Timer</button>`) : ''}
+    <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="kback"${o.gi ? '' : ' disabled'}>Back</button><button type="button" class="btn btn-gold" data-hja="knext">${o.gi === steps.length - 1 ? 'Finish' : 'Next Step'}</button></div>
+    <button type="button" class="linkbtn hj-skip" data-hja="krepeat">Say It Again</button>
+    ${toggles(null)}</div>`;
+}
+function actCoach(a, v){
+  const o = S.ov, V = VO(), h = H();
+  switch (a){
+    case 'tvoice': if (V){ V.setOn(!V.on()); } rerender(true); return true;
+    case 'tmusic': if (V){ V.setMusic(!V.musicOn()); if (V.musicOn() && o && o.mode === 'auto' && !o.fin && !o.paused) V.music(o.music || '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3'); } rerender(true); return true;
+    case 'tchime': if (V) V.setChime(!V.chimeOn()); rerender(true); return true;
+    case 'tcount': if (o){ o.count = !o.count; try { localStorage.setItem('gg-health-count', o.count ? '1' : '0'); } catch(e){} } rerender(true); return true;
+    case 'play': if (o) runSession(o); return true;
+    case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
+    case 'didit': if (o){ markDone(o.key || ('work:' + o.s)); checkOn(o.prac ? 'still' : 'move'); toast('Marked done. Well done.'); closeOv(); } return true;
+    case 'apause': if (o){ o.paused = !o.paused; if (V){ o.paused ? V.pause() : V.resume(); } } rerender(true); return true;
+    case 'askip': if (o){ o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
+    case 'amore': if (o && o.run) o.end += 15000; return true;
+    case 'tapdone': if (o) o.wait = false; return true;
+    case 'guide': if (o){ o.guide = true; o.gi = 0; o.timers = []; if (V){ V.unlock(); V.music(null); } kSay(o, o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title)).then(() => { if (S.ov === o && o.guide && o.gi === 0) kEnter(o); }); } rerender(true); return true;
+    case 'knext': if (o){ const n = kSteps(o).length; if (V) V.stop(); o.dn = o.dn || {}; o.dn[o.gi] = true; o.gi = Math.min(n, o.gi + 1); rerender(true); if (o.gi < n) kEnter(o); else kSay(o, o.k === 'cook' ? LN.cOut : LN.prepOut); } return true;
+    case 'kback': if (o && o.gi > 0){ if (V) V.stop(); o.gi--; rerender(true); kEnter(o); } return true;
+    case 'krepeat': if (o){ if (V) V.stop(); kEnter(o); } return true;
+    case 'ktimer': if (o) kStartTimer(o, +v); return true;
+    case 'kstop': if (o){ o.timers = arr(o.timers).filter(t => t.i !== +v); rerender(true); } return true;
+    case 'kok': if (o){ o.rang = null; rerender(true); } return true;
+  }
+  return false;
+}
+
 function vSetup(){
   const h = H(), s = S.set || (S.set = Object.assign({household: '', goals: [], goalLdl: '', nextLabs: '', start: ymd(nextMon())}, h.set));
   return `<div class="hj-blk" id="hj-form">${kick('My Goals')}<h3>Make this plan your own</h3>
     <p class="hj-sub">A few answers shape what you see. Everything stays on this device.</p>
+    ${MINE_ANY() && MINE_ANY().who ? `<p class="hj-sub" style="margin:6px 0"><b>Whose phone is this?</b></p><div class="hj-chips">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip${(s.who || '') === w ? ' on' : ''}" aria-pressed="${(s.who || '') === w}" data-hja="who" data-hjv="${w}">${w}</button>`).join('')}</div>` : ''}
+    <p class="hj-sub" style="margin:6px 0"><b>My training</b></p><div class="hj-chips">${[['strength', 'Strength and Heart, with a coach'], ['practice', 'Daily Practice: movement, breath, stillness'], ['both', 'Both']].map(([k, l]) => `<button type="button" class="chip${(s.track || 'strength') === k ? ' on' : ''}" aria-pressed="${(s.track || 'strength') === k}" data-hja="track" data-hjv="${k}">${l}</button>`).join('')}</div>
     <label class="hj-fld"><span>My plan starts on (a Monday)</span><input type="date" data-hjs="start" value="${esc(s.start || '')}"></label>
     <label class="hj-fld"><span>People who eat at home</span><input type="number" min="1" max="12" inputmode="numeric" data-hjs="household" value="${esc(s.household)}"></label>
     <p class="hj-sub" style="margin:12px 0 6px"><b>What are you growing toward?</b></p>
@@ -435,6 +635,7 @@ function vSetup(){
 
 function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
+  if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
   const h = H(), mine = MINE(), first = !h.set.u;
   let body;
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
@@ -447,7 +648,8 @@ function view(){
   else if (S.sec === 'numbers') body = vNumbers();
   else if (S.sec === 'journey') body = vJourney();
   else body = vToday2(lib);
-  return `<div id="hj-root">${offer}
+  const askWho = MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who ? `<div class="hj-blk hj-offer">${kick('Whose Phone Is This?')}<p class="hj-sub">My Health keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
+  return `<div id="hj-root">${askWho}${offer}
     <div class="hj-secs" role="group" aria-label="My Health">${chip('today', 'Today')}${chip('week', 'This Week')}${chip('shop', 'Shop')}${chip('numbers', 'My Numbers')}${chip('journey', 'Journal')}${chip('learn', 'Why It Works')}</div>
     ${body}${vOv()}</div>`;
 }
@@ -492,9 +694,12 @@ function act(a, v){
       h.panels = h.panels.filter(p => p.id !== v); save(); rerender(true); return; }
     case 'setup': S.setup = true; S.set = null; rerender(false); toForm(); return;
     case 'setup-cancel': S.setup = false; S.set = null; rerender(false); return;
+    case 'whoq': h.set.who = v; if (v === 'Kayti' && !h.set.track) h.set.track = 'practice'; h.set.u = Date.now(); save(); toast('Saved.'); rerender(false); return;
+    case 'who': if (S.set){ S.set.who = v; if (v === 'Kayti' && !S.set.trackSet) S.set.track = 'practice'; } rerender(true); return;
+    case 'track': if (S.set){ S.set.track = v; S.set.trackSet = true; } rerender(true); return;
     case 'goal': { const s = S.set; if (!s) return; s.goals = arr(s.goals); s.goals = s.goals.includes(v) ? s.goals.filter(x => x !== v) : s.goals.concat(v); rerender(true); return; }
     case 'setup-save': { const s = S.set || {}, hh = num(s.household);
-      const sd = parseD(s.start); h.set = {start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()};
+      const sd = parseD(s.start); h.set = {who: s.who || '', track: s.track || 'strength', start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()};
       save(); S.setup = false; S.set = null; if (S.sec !== 'numbers') S.sec = 'today'; S.ov = null; toast('Saved. Welcome to My Health.'); rerender(false); return; }
     case 'note': { const t = document.getElementById('hj-note'), text = String(t ? t.value : '').trim(); if (!text){ toast('Write a line first.'); return; }
       h.notes.push({id: uid(), date: today(), text: text.slice(0, 4000), u: Date.now()}); S.draft = ''; save(); toast('Saved to My Journey.'); rerender(true); return; }
@@ -614,6 +819,14 @@ const CSS = `
 .hj-at{font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;}
 .hj-tm{display:flex;align-items:center;gap:8px;margin-top:6px;flex-wrap:wrap;}.hj-tdone{color:var(--hj);font-weight:600;font-size:14px;}
 .hj-ing{columns:2 220px;padding-left:18px;margin:0;}.hj-ing li{margin:3px 0;break-inside:avoid;}
+.hj-did{display:block;margin:10px auto 0;}
+.hj-tg{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;margin:14px 0;}.hj-tg .chip{min-height:40px;font-size:14px;}
+.hj-sess{display:flex;justify-content:space-between;color:var(--ink-soft);font-size:14px;margin-top:6px;font-variant-numeric:tabular-nums;}.hj-sess span:first-child{font-weight:700;color:var(--ink);}
+.hj-fig{width:min(190px,48vw);margin:0 auto -4px;color:var(--hj);}.hj-fig svg{width:100%;height:auto;display:block;}
+.hj-ctl .btn{min-width:110px;}
+.hj-kstep{font-size:clamp(22px,5.5vw,28px);line-height:1.35;font-weight:600;max-width:32ch;margin:10px auto 16px;}
+.hj-ktimers{display:grid;gap:6px;margin:10px 0;}.hj-ktimers>div{display:flex;align-items:center;gap:8px;background:var(--bg-deep);border-radius:12px;padding:6px 10px;min-width:0;}.hj-ktimers small{flex:1;min-width:0;color:var(--ink-soft);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hj-rang{background:var(--hj);color:#fff;border-radius:12px;padding:10px 12px;margin:10px 0;display:flex;gap:8px;align-items:center;flex-wrap:wrap;}.hj-rang .linkbtn{color:#fff;margin-left:auto;}
 .hj-entry{border-top:1px solid var(--line);padding:10px 0;}.hj-entry:first-of-type{border-top:0;}.hj-entry p{margin:4px 0 0;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
@@ -641,6 +854,6 @@ window.GGHealth = {
     o.lifts = Object.assign({}, i.lifts || {}, o.lifts || {});
     return {added, updated};
   },
-  state: S, act
+  state: S, act, allLines, LN
 };
 })();
