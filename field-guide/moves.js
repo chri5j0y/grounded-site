@@ -36,7 +36,7 @@ function reach(s, t, a, b, sg){
 // Base poses: side (s), front standing (f), front seated with legs crossed (x).
 const BASE = {
   s: {t: [180, 180], h: null, ra: [6, 16], la: [-4, 8], rl: [0, 0, 90], ll: [0, 0, 90], sw: 0, hw: 0, so: 7, s: 1, fl: 1},
-  f: {t: [180, 180], h: null, ra: [9, 5], la: [9, 5], rl: [3, 0, 90], ll: [3, 0, 90], sw: 15, hw: 9, so: 7, s: 1, fl: 0.6},
+  f: {t: [180, 180], h: null, ra: [9, 5], la: [9, 5], rl: [3, 0, 90], ll: [3, 0, 90], sw: 15, hw: 9, so: 7, s: 1, fl: 0.6, kz: [1, 1, 1, 1]},
   x: {t: [180, 180], h: null, ra: [28, 34], la: [28, 34], rl: [76, -97, -90], ll: [76, -97, -90], sw: 15, hw: 9, so: 7, s: 1, fl: 0.6}
 };
 const ANCH = {s: ['rA', 122, 206], f: ['hip', 120, 126], x: ['hip', 120, 194]};
@@ -55,17 +55,18 @@ function fk(p, front, nm){
     J[k + 'S'] = [J.sh[0] + pu[0] * p.sw * g, J.sh[1] + pu[1] * p.sw * g];
     J[k + 'E'] = add(J[k + 'S'], m(A[0]), L.ua); J[k + 'H'] = add(J[k + 'E'], m(A[1]), L.fa);
     J[k + 'P'] = [J.hip[0] + pl[0] * p.hw * g, J.hip[1] + pl[1] * p.hw * g];
-    J[k + 'K'] = add(J[k + 'P'], m(G[0]), L.th); J[k + 'A'] = add(J[k + 'K'], m(G[1]), L.sh);
+    const z = p.kz ? p.kz.slice(k === 'r' ? 0 : 2) : [1, 1];
+    J[k + 'K'] = add(J[k + 'P'], m(G[0]), L.th * z[0]); J[k + 'A'] = add(J[k + 'K'], m(G[1]), L.sh * z[1]);
     J[k + 'T'] = add(J[k + 'A'], m(G[2]), L.ft * p.fl); J[k + 'f'] = m(G[2]);
   }
   return J;
 }
 
-function blend(a, b, u){
+function blend(a, b, u, raw){
   const o = {};
   for (const k in a){
     const x = a[k], y = b[k];
-    if (Array.isArray(x)) o[k] = x.map((v, i) => { let d = y[i] - v; if (ANG.includes(k)) d = ((d % 360) + 540) % 360 - 180; return v + d * u; });
+    if (Array.isArray(x)) o[k] = x.map((v, i) => { let d = y[i] - v; if (!raw && ANG.includes(k)) d = ((d % 360) + 540) % 360 - 180; return v + d * u; });
     else if (k === 'h') o[k] = x + (((y - x) % 360 + 540) % 360 - 180) * u;
     else if (typeof x === 'number' && typeof y === 'number') o[k] = x + (y - x) * u;
     else o[k] = u < 0.5 ? x : y;
@@ -123,7 +124,7 @@ function frames(P, still){
   const n = K.length, per = Math.max(6, Math.round(24 / n)), F = [];
   for (let i = 0; i < n; i++) for (let j = 0; j < per; j++){
     const u = j / per;
-    F.push(place(P, blend(K[i], K[(i + 1) % n], P.e === 'lin' ? u : ease(u)), pins));
+    F.push(place(P, blend(K[i], K[(i + 1) % n], P.e === 'lin' ? u : ease(u), P.raw), pins));
   }
   F.push(F[0]);
   return F;
@@ -152,7 +153,7 @@ const G = {
   bench: (x, y, w) => `<g opacity=".38"><rect x="${x}" y="${y}" width="${w}" height="8" rx="4" fill="currentColor" stroke="none"/><path d="M${x + 10} ${y + 8}V211M${x + w - 10} ${y + 8}V211" stroke-width="5"/></g>`,
   box: (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="${212 - y}" rx="4" fill="currentColor" stroke="none" opacity=".22"/>`,
   bar: '<g opacity=".38"><path d="M30 18H210" stroke-width="6"/><path d="M38 18V211M202 18V211" stroke-width="4" opacity=".6"/></g>',
-  dipbar: '<g opacity=".38"><path d="M70 124H186" stroke-width="6"/><path d="M80 124V211M176 124V211" stroke-width="4" opacity=".6"/></g>',
+  dipbar: '<g opacity=".38"><path d="M104 124H160" stroke-width="6"/><path d="M158 124V211" stroke-width="4" opacity=".6"/></g>',
   chair: '<g opacity=".38"><path d="M70 172H118M70 172L64 108M74 172V211M114 172V211" stroke-width="6"/></g>',
   couch: '<rect x="34" y="150" width="44" height="62" rx="8" fill="currentColor" stroke="none" opacity=".2"/>'
 };
@@ -194,10 +195,10 @@ const P = {
   hang: {v: 'f', an: ['neck', 120, 66], bg: G.bar, d: 3, pin: {rH: [0], lH: [0]},
     k: [{ra: [164, 180], la: [164, 180], rl: [2, 2, 30], ll: [2, 2, 30]}, {ay: 69, ax: 121, rl: [3, 3, 30], ll: [1, 1, 30]}]},
   dip: {v: 's', an: ['neck', 126, 62], bg: G.dipbar, pin: {rH: [-1], lH: [-1]},
-    k: [{t: [178, 180], ra: [0, 0], la: [0, 0], rl: [2, -96, -150], ll: [8, -90, -150]}, {ay: 88, ax: 136, t: [154, 160], h: 166, rl: [10, -88, -150], ll: [16, -82, -150]}]},
+    k: [{t: [168, 174], h: 176, ra: [0, 0], la: [0, 0], rl: [2, -96, -150], ll: [8, -90, -150]}, {ay: 88, ax: 138, t: [150, 156], h: 162, rl: [10, -88, -150], ll: [16, -82, -150]}]},
   curl: {v: 's', db: 'rl', k: [{ra: [2, 6], la: [-2, 4]}, {ra: [6, 166], la: [2, 164]}]},
   triceps: {v: 's', db: 'r', k: [{ra: [176, 178], la: [176, 178]}, {ra: [172, -32], la: [172, -32]}]},
-  'calf-raise': {v: 's', an: ['rT', 128, 187], bg: G.box(122, 192, 64), k: [{rl: [0, 0, 114], ll: [0, 0, 114]}, {rl: [0, 0, 46], ll: [0, 0, 46]}]},
+  'calf-raise': {v: 's', an: ['rT', 140, 175], bg: G.box(128, 180, 64), k: [{rl: [0, 0, 114], ll: [0, 0, 114]}, {rl: [0, 0, 46], ll: [0, 0, 46]}]},
   carry: {v: 's', an: ['hip', 118, 126], db: 'rl', e: 'lin', d: 2.2, k: walk(126, 0).map(k => Object.assign(k, {ra: [1, 1], la: [-1, -1]}))},
   swing: {v: 's', an: ['rA', 102, 206], db: 'r',
     k: [{t: [116, 112], h: 108, rl: [22, -10, 90], ll: [22, -10, 90], ra: [-30, -24], la: [-30, -24]}, {ra: [98, 96], la: [98, 96]}]},
@@ -213,16 +214,18 @@ const P = {
     k: [{t: [108, 108], h: 100, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [108, 108], h: 100, ra: [98, 98], la: [0, 0], rl: [0, -90, -90], ll: [-96, -96, -96]},
       {t: [108, 108], h: 100, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [108, 108], h: 100, ra: [0, 0], la: [98, 98], rl: [-96, -96, -96], ll: [0, -90, -90]}]},
   'cat-cow': {v: 's', an: ['hip', 82, 164], bg: G.mat, d: 3, pin: {rH: [-1], lH: [-1]}, pr: {t: [108, 108], ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]},
-    k: [{t: [130, 86], h: 30, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [86, 128], h: 140, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}]},
-  'child-pose': {v: 's', an: ['rK', 122, 204], bg: G.mat, d: 3, sp: 0,
-    k: [{t: [80, 82], h: 58, rl: [70, -90, -90], ll: [70, -90, -90], ra: [94, 94], la: [94, 94]}, {t: [86, 86], h: 62, rl: [70, -90, -90], ll: [70, -90, -90], ra: [94, 94], la: [94, 94]}]},
+    k: [{t: [136, 80], h: 26, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [82, 132], h: 150, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}]},
+  'child-pose': {v: 's', an: ['rK', 126, 204], bg: G.mat, d: 3, sp: 0,
+    k: [{t: [84, 78], h: 70, rl: [60, -90, -90], ll: [60, -90, -90], ra: [78, 78], la: [78, 78]}, {t: [90, 80], h: 72, rl: [60, -90, -90], ll: [60, -90, -90], ra: [76, 76], la: [76, 76]}]},
   'hip-flexor': {v: 's', an: ['rK', 98, 204], bg: G.couch, d: 3, pin: {lA: [0]},
-    k: [{rl: [-10, -150, 180], ll: [88, 0, 90], ra: [36, 44], la: [36, 44]}, {rl: [-26, -150, 180], ll: [88, 0, 90], ra: [40, 48], la: [40, 48]}]},
-  'figure-4': {v: 's', an: ['hip', 128, 204], bg: G.mat, d: 3, pin: {rA: ['lK', 2, -7, 1], rH: ['lK', -12, 6, 1]},
-    k: [Object.assign({ll: [140, 92, 180], rl: [106, 60, 150], ra: [100, 100], la: [96, 96]}, SUP), Object.assign({ll: [168, 118, 200], rl: [130, 70, 160], ra: [120, 120], la: [96, 96]}, SUP)]},
-  'hip-switch': {v: 'f', nm: true, an: ['hip', 120, 202], d: 3, pin: {rA: [0], lA: [0]},
-    k: [{ra: [34, 34], la: [-34, -34], rl: [150, 30, 90], ll: [-150, -30, -90]}, {ra: [34, 34], la: [-34, -34], rl: [96, 30, 90], ll: [170, -30, -90], t: [180, 176], h: 172},
-      {ra: [34, 34], la: [-34, -34], rl: [150, 30, 90], ll: [-150, -30, -90]}, {ra: [34, 34], la: [-34, -34], rl: [-170, 30, 90], ll: [-96, -30, -90], t: [180, 184], h: 188}]},
+    k: [{rl: [-10, -150, 180], ll: [88, 0, 90], ra: [36, 44], la: [36, 44]}, {rl: [-34, -150, 180], ll: [88, 0, 90], ra: [42, 50], la: [42, 50]}]},
+  'figure-4': {v: 's', an: ['hip', 128, 204], bg: G.mat, d: 3, pin: {lA: ['rK', 3, -7, -1], rH: ['rK', -8, 9, 1], lH: ['rK', -8, 9, 1]},
+    k: [Object.assign({rl: [146, 92, 180], ll: [104, 60, 150]}, SUP), Object.assign({rl: [174, 118, 200], ll: [128, 70, 160]}, SUP)]},
+  'hip-switch': {v: 'f', nm: true, an: ['hip', 120, 202], d: 3,
+    k: [{ra: [34, 34], la: [-34, -34], rl: [150, 30, 90], ll: [-150, -30, -90]},
+      {ra: [34, 34], la: [-34, -34], rl: [97, 66, 90], ll: [145, -63, -90], kz: [0.78, 0.25, 0.61, 1.12], t: [180, 176], h: 172},
+      {ra: [34, 34], la: [-34, -34], rl: [150, 30, 90], ll: [-150, -30, -90]},
+      {ra: [34, 34], la: [-34, -34], rl: [-145, 63, 90], ll: [-97, -66, -90], kz: [0.61, 1.12, 0.78, 0.25], t: [180, 184], h: 188}]},
   // Walking and warming
   walk: {v: 's', an: ['hip', 118, 126], e: 'lin', d: 2.2, k: walk(126, 1)},
   run: {v: 's', an: ['hip', 118, 124], e: 'lin', d: 2,
@@ -238,9 +241,9 @@ const P = {
     k: [{ra: [0, 0], la: [180, 180]}, {ra: [90, 90], la: [270, 270]}, {ra: [180, 180], la: [0, 0]}, {ra: [270, 270], la: [90, 90]}]},
   'arms-up': {v: 'f', d: 3, k: [{ra: [10, 8], la: [10, 8]}, {ra: [172, 178], la: [172, 178]}]},
   'forward-fold': {v: 's', an: ['rA', 126, 206], d: 3,
-    k: [{ra: [178, 180], la: [178, 180]}, {t: [26, 12], h: 4, rl: [10, 0, 90], ll: [10, 0, 90], ra: [6, 10], la: [6, 10]}]},
-  'side-bend': {v: 'f', nm: true, d: 3,
-    k: [{t: [178, 198], h: 206, ra: [192, 232], la: [-8, -4]}, {t: [182, 162], h: 154, la: [168, 128], ra: [8, 4]}]},
+    k: [{ra: [178, 180], la: [178, 180]}, {t: [60, 34], h: 20, rl: [10, 0, 90], ll: [10, 0, 90], ra: [30, 30], la: [30, 30]}]},
+  'side-bend': {v: 'f', nm: true, raw: true, d: 3.2,
+    k: [{t: [178, 200], h: 210, ra: [172, 222], la: [-6, -4]}, {t: [182, 160], h: 150, ra: [6, 4], la: [-172, -222]}]},
   standing: {v: 'f', d: 3, k: [{}, {s: 1.035, ra: [13, 8], la: [13, 8]}]},
   // Seated and lying (yoga)
   seat: {v: 's', an: ['hip', 92, 166], bg: G.chair, d: 3,
@@ -250,9 +253,9 @@ const P = {
   twist: {v: 'x', nm: true, d: 3, sp: 0,
     k: [{t: [180, 184], h: 192, sw: 11, ra: [36, 14], la: [36, 52], ll: [-76, 97, 90]}, {t: [180, 176], h: 168, sw: 11, ra: [-36, -52], la: [-36, -14], ll: [-76, 97, 90]}]},
   'cross-seat': {v: 'x', pin: KNEES, d: 3, k: [{}, {s: 1.035}]},
-  breath: {v: 'x', pin: KNEES, d: 3, k: [{}, {s: 1.05, sw: 17}]},
-  shrug: {v: 'x', pin: KNEES, d: 2.4, k: [{}, {so: -1}]},
-  neck: {v: 'x', pin: KNEES, d: 3, k: [{h: 158}, {h: 202}]},
+  breath: {v: 'x', pin: KNEES, d: 3, k: [{}, {s: 1.08, sw: 18}]},
+  shrug: {v: 'x', pin: KNEES, d: 2.4, k: [{}, {so: -4}]},
+  neck: {v: 'x', pin: KNEES, d: 3, k: [{h: 150}, {h: 210}]},
   'life-nerve': {v: 's', an: ['hip', 58, 202], bg: G.mat, d: 3,
     k: [{rl: [90, 90, 180], ll: [90, 90, 180], ra: [176, 180], la: [176, 180]}, {t: [122, 110], h: 108, rl: [90, 90, 180], ll: [90, 90, 180], ra: [86, 84], la: [86, 84]}]},
   lie: {v: 's', an: ['hip', 126, 204], bg: G.mat, d: 3,
