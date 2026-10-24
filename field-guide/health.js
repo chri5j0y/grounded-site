@@ -204,8 +204,12 @@ function view(){
   else if (S.sec === 'numbers') body = vNumbers();
   else if (S.sec === 'journey') body = vJourney();
   else body = vToday(lib);
+  // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
+  const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
+  const offer = ready ? `<div class="hj-blk hj-offer">${kick('Your Starting Numbers Are Ready')}<p class="hj-sub">Your labs, full panels, starting weight, and goals, ready to add to this device in one tap.</p><button type="button" class="btn btn-gold btn-sm" data-hja="mine">Add My Starting Numbers</button></div>` : '';
+  if (ready && first && !S.setup) body = vToday(lib);
   return `<div id="hj-root">${hero(lib)}
-    <p class="hj-lead">${esc(lib.lead || '')}</p>
+    <p class="hj-lead">${esc(lib.lead || '')}</p>${offer}
     <div class="hj-secs" role="group" aria-label="My Health">${chip('today', 'Today')}${chip('food', 'Food')}${chip('fitness', 'Fitness')}${chip('numbers', 'My Numbers')}${chip('journey', 'My Journey')}</div>
     ${body}</div>`;
 }
@@ -237,7 +241,7 @@ function act(a, v){
       if (m.start.weight && !h.marks.length) h.marks.push({id: uid(), date: (m.start.labs[0] || {}).date || today(), weight: m.start.weight, u: Date.now()});
       if (m.start.goalLdl && !h.set.goalLdl) h.set.goalLdl = m.start.goalLdl; if (m.start.nextLabs && !h.set.nextLabs) h.set.nextLabs = m.start.nextLabs;
       if (m.start.household && !h.set.household) h.set.household = m.start.household; h.set.u = h.set.u || Date.now();
-      save(); toast('Your starting numbers are on this device.'); rerender(true); return; }
+      save(); S.setup = false; S.sec = 'numbers'; toast('Your starting numbers are on this device.'); rerender(false); return; }
     case 'pitem': S.form = {k: 'pitem', pid: v}; rerender(true); toForm(); return;
     case 'psave': { const f = S.form; if (!f) return; const n = String(f.n || '').trim(), val = String(f.v == null ? '' : f.v).trim();
       if (!n || !val){ toast('Add the test name and result.'); return; }
@@ -318,6 +322,7 @@ const CSS = `
 .hj-rb{position:relative;height:8px;border-radius:5px;background:var(--bg-deep);margin:6px 0 2px;}.hj-rb .ok{position:absolute;top:0;bottom:0;background:var(--hj);opacity:.55;border-radius:5px;}
 .hj-rb i{position:absolute;top:-4px;width:4px;height:16px;margin-left:-2px;border-radius:2px;background:var(--ink);}
 .hj-pd{display:block;font-family:'Barlow',sans-serif;font-weight:400;font-size:14px;color:var(--ink-soft);}
+.hj-offer{border-left:4px solid var(--gold);}
 .hj-entry{border-top:1px solid var(--line);padding:10px 0;}.hj-entry:first-of-type{border-top:0;}.hj-entry p{margin:4px 0 0;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
