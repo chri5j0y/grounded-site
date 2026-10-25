@@ -55,6 +55,9 @@ const byDate = (a, b) => String(a.date).localeCompare(String(b.date));
 const labs = () => H().labs.slice().sort(byDate);
 const marks = () => H().marks.slice().sort(byDate);
 
+// Living Sober tie (BLD 851): one quiet line in Why It Works, linking to sleep, food, and movement while growing sober.
+const SOBER = `<p class="hj-note">Growing sober, or walking with someone who is? Living Sober has <a href="https://growwithgrounded.com/living-sober.html#every-day" target="_blank" rel="noopener">sleep, food, and movement tips for early sobriety</a>.</p>`;
+
 // ---------- defaults the library may replace ----------
 const CHECKS = [
   {id: 'move', label: 'Moved with purpose', sub: 'Today\'s session, a walk, or the Y'},
@@ -792,7 +795,7 @@ function view(){
   else if (S.sec === 'week') body = vWeek();
   else if (S.sec === 'shop') body = vShop();
   else if (S.sec === 'prep') body = vPrep();
-  else if (S.sec === 'learn') body = `<p class="hj-lead">The full plans behind every card: why it works, every recipe, every session.</p>${vPlan(lib, 'food')}${vPlan(lib, 'fitness')}`;
+  else if (S.sec === 'learn') body = `<p class="hj-lead">The full plans behind every card: why it works, every recipe, every session.</p>${vPlan(lib, 'food')}${vPlan(lib, 'fitness')}${SOBER}`;
   else if (S.sec === 'numbers') body = vNumbers();
   else if (S.sec === 'journey') body = vJourney();
   else body = vToday2(lib);
