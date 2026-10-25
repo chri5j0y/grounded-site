@@ -475,6 +475,17 @@
     williams07: ["Kipling D. Williams, Ostracism (Annual Review of Psychology, 2007): being left out registers as real pain and threatens the need to belong", "https://doi.org/10.1146/annurev.psych.58.110405.085641"],
     woolley10: ["Woolley, Chabris, Pentland, Hashmi, and Malone, evidence for a collective intelligence factor in the performance of human groups (Science, 2010): groups did better when speaking turns were shared evenly", "https://doi.org/10.1126/science.1193147"],
     // end BLD 783
+    // Living Sober Every Day (GWG BLD 850): Ride the Wave and What Your Body Regains.
+    mbrp21: ["Sarah Bowen, Neha Chawla, Joel Grow, and G. Alan Marlatt, Mindfulness-Based Relapse Prevention for Addictive Behaviors, second edition (Guilford, 2021)", "https://www.guilford.com/books/Mindfulness-Based-Relapse-Prevention-for-Addictive-Behaviors/Bowen-Chawla-Grow-Marlatt/9781462545315", "a"],
+    niaaahang: ["NIAAA, Hangovers (fact sheet): alcohol suppresses vasopressin, so the body lets go of water", "https://www.niaaa.nih.gov/publications/brochures-and-fact-sheets/hangovers"],
+    ebrahim13: ["Ebrahim, Shapiro, Williams, and Fenwick, alcohol and sleep I: effects on normal sleep (Alcoholism: Clinical and Experimental Research, 2013)", "https://doi.org/10.1111/acer.12006"],
+    brown88: ["Brown and Schuckit, changes in depression among abstinent alcoholics (Journal of Studies on Alcohol, 1988)", "https://doi.org/10.15288/jsa.1988.49.412"],
+    sussexdry: ["Richard de Visser, University of Sussex, how Dry January is the secret to better sleep, saving money, and losing weight (study of Dry January 2018 participants)", "https://www.sussex.ac.uk/broadcast/read/47131"],
+    mehta18: ["Mehta and colleagues, short-term abstinence from alcohol and changes in cardiovascular risk factors, liver function tests and cancer-related growth factors: a prospective observational study (BMJ Open, 2018)", "https://doi.org/10.1136/bmjopen-2017-020673"],
+    alfliver: ["American Liver Foundation, Alcohol-Associated Liver Disease", "https://liverfoundation.org/liver-diseases/alcohol-associated-liver-disease/"],
+    roerecke17: ["Roerecke and colleagues, the effect of a reduction in alcohol consumption on blood pressure: a systematic review and meta-analysis (Lancet Public Health, 2017)", "https://doi.org/10.1016/S2468-2667(17)30003-8"],
+    voskoboinik20: ["Voskoboinik and colleagues, alcohol abstinence in drinkers with atrial fibrillation (New England Journal of Medicine, 2020)", "https://doi.org/10.1056/NEJMoa1817591"],
+    zahr17: ["Zahr and Pfefferbaum, alcohol's effects on the brain: neuroimaging results in humans and animal models (Alcohol Research: Current Reviews, 2017)", "https://pubmed.ncbi.nlm.nih.gov/28988573/"],
     // Living Sober (GWG BLD 789): every helper's new sources, one id per work.
     // Kept ids. kelly10 also stands for kellywesterhoff10; meyers02 for craft and sqsocraft; narcanotc for fdanarcan23 (see ALIAS).
     kelly10: ["Kelly and Westerhoff, does it matter how we refer to individuals with substance-related conditions? A randomized study of two commonly used terms (International Journal of Drug Policy, 2010)", "https://doi.org/10.1016/j.drugpo.2009.10.010"],
