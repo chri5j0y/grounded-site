@@ -211,7 +211,8 @@ const shortDate = d => d.toLocaleDateString(undefined, {weekday: 'short', month:
 const logOf = d => { const h = H(), k = ymd(d); return h.log[k] = h.log[k] || {}; };
 const isDone = (d, key) => !!(H().log[ymd(d)] || {})[key];
 function markDone(key, d){ const l = logOf(d || new Date()); l[key] = Date.now(); l.u = Date.now(); save(); }
-function dinnerFor(d){ const n = weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? Object.assign({wk: letter(n)}, x) : null; }
+// Sunday dinner belongs to the coming food week: it is cooked on Sunday prep day, the day after shopping (BLD 846).
+function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? Object.assign({wk: letter(n)}, x) : null; }
 function sesFor(d){ const s = WMAP[d.getDay()], ss = (WK().sessions || {})[s]; return ss ? Object.assign({id: s}, ss) : null; }
 const BAT = () => (APP() || {}).batches || null;
 function prepFor(kind, n){ if (kind === 'pack') return (BAT() || {}).pack || null; if (kind.indexOf('bulk-') === 0){ const b = arr((BAT() || {}).batches).find(x => x.id === kind.slice(5)); return b ? Object.assign({title: b.name}, b) : null; }
@@ -234,7 +235,7 @@ function agenda(d){
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 15, kick: 'Freezer batch', title: b.title || 'Freezer Batch', sub: (b.mins || 40) + ' minutes. A great job to hand off.', btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
   if (dow === 2 || dow === 4){ const ev = arr(WK().evenings), e = ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null; out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.', btn: 'We Did It'}); }
-  const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (dn.prepped ? '. Prepped Sunday: ' + dn.prepped : ''), btn: 'Cook It'});
+  const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   return out.sort((a, b) => a.hour - b.hour);
 }
 // ---------- BLD 846: Keep It Rolling. Reminders from the plan: thaw, freeze, shop, prep, grab and go, freezer stock ----------
@@ -261,7 +262,7 @@ function remindersFor(d, opt){
   if (dow === 2 && n >= 1){ const p = prepFor('wednesday', n); if (p) push('wedprep:' + n, 20, 'Tonight', 'Wednesday mini prep tomorrow', 'About ' + (p.mins || 20) + ' minutes after work.', 'prep:wednesday:' + n, 1, 'wedprep'); }
   if (dow >= 1 && dow <= 4 && (BAT() || {}).pack) push('gg:' + ymd(d), 20.5, 'Tonight', 'Tomorrow\'s grab and go', 'Set out the lunch bags, put the ice packs in the freezer, and move tomorrow\'s frozen breakfast to the fridge.', '', 1, 'gg:' + dow);
   // Freezer stock: once counts are kept on the Prep tab, a nudge Thursday to Saturday when a batch runs low.
-  if (h.stockU && dow >= 4 && !all){ const low = arr((BAT() || {}).batches).filter(b => b.where === 'freezer' && b.low != null && +((h.stock || {})[b.id] || 0) <= +b.low);
+  if (h.stockU && dow >= 4 && !all){ const low = arr((BAT() || {}).batches).filter(b => b.where === 'freezer' && b.low != null && (h.stock || {})[b.id] != null && +h.stock[b.id] <= +b.low);
     if (low.length) push('low:' + n, 18, at(18), 'Freezer stock is low', low.map(b => { const c = +((h.stock || {})[b.id] || 0); return b.name + ': ' + c + (b.unit && c !== 1 ? ' ' + b.unit : '') + ' left'; }).join('. ') + '. Make more this Sunday.', 'prepsec:' + fw); }
   return out.sort((a, b) => a.hour - b.hour);
 }
@@ -439,7 +440,7 @@ function vOv(){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
     body = `${top(o.title, o.sub, pct)}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
-      ${x.prepped ? `<p class="hj-note"><b>Prepped Sunday:</b> ${esc(x.prepped)}</p>` : ''}
+      ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
       <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
         return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
