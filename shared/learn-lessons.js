@@ -34429,7 +34429,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "When something helps you cope, notice what it is.",
        "sub": "Birch asks only about coping.",
-       "say": "Birch also asks whether you have used alcohol, cannabis, or other substances to get through hard feelings. In a national study, cannabis use among people nineteen to thirty reached record highs, while drinking went down. Birch asks about coping, never amounts, and never tells anyone."
+       "say": "Birch also asks whether you have used alcohol or other substances to get through hard feelings. Birch asks about coping, never amounts, and never tells anyone."
       },
       {
        "k": "points",
@@ -35244,10 +35244,10 @@ window.GG_LEARN = {
         ],
         [
          "Using to get through feelings",
-         "Alcohol, cannabis, or other drugs"
+         "Alcohol or other drugs"
         ]
        ],
-       "say": "Some young adults hurt themselves to cope with feelings that seem too big. If you notice marks they keep hidden, stay calm and ask gently, without anger or shock. Self-harm is a sign of real pain, and it deserves support every time. Notice, too, if they are using alcohol, cannabis, or other drugs to get through hard feelings. Drinking is down at this age, while cannabis use is at record highs."
+       "say": "Some young adults hurt themselves to cope with feelings that seem too big. If you notice marks they keep hidden, stay calm and ask gently, without anger or shock. Self-harm is a sign of real pain, and it deserves support every time. Notice, too, if they are using alcohol or other drugs to get through hard feelings."
       },
       {
        "k": "points",

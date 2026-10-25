@@ -2994,7 +2994,7 @@
 "birch:anxiety": "Anxiety and Panic",
 "birch:depression": "Depression and Feeling Stuck",
 "birch:first-signs": "First Signs of a Serious Mental Illness",
-"birch:substances": "Drinking, Cannabis, and Other Drugs",
+"birch:substances": "Drinking and Other Drugs",
 "birch:eating": "Eating Disorders",
 "birch:suicide-thoughts": "Thoughts of Suicide, and a Safety Plan",
 "birch:friend-suicide": "When a Friend Is Thinking About Suicide",

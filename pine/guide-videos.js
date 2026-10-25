@@ -6819,13 +6819,13 @@ window.GG_LEARN_GUIDES.pine = {
       "eyebrow": "When Life Changes",
       "h": "Vaping, Drinking, and Drugs",
       "sub": "For You",
-      "say": "Vapes, drinks, weed, pills. At some point, something gets offered, or you wonder about it. This is for you. Nobody here is asking what you have or haven't done. This is about having a plan that's yours."
+      "say": "Vapes, drinks, pills. At some point, something gets offered, or you wonder about it. This is for you. Nobody here is asking what you have or haven't done. This is about having a plan that's yours."
      },
      {
       "k": "big",
       "h": "Most of your classmates aren't using.",
       "sub": "Even when it seems like everyone is.",
-      "say": "Here's something that surprises people. Most high schoolers aren't using. In a recent national survey, about two in three seniors hadn't used alcohol, nicotine, or weed in the past month. It can feel like everyone is, because the people who are tend to be loud about it."
+      "say": "Here's something that surprises people. Most high schoolers aren't using. In a recent national survey, about two in three seniors hadn't used any of the common substances in the past month. It can feel like everyone is, because the people who are tend to be loud about it."
      },
      {
       "k": "points",
@@ -6957,7 +6957,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Most teens are choosing not to.",
       "sub": "Say so out loud.",
-      "say": "Start with good news. Most high schoolers aren't using. In a recent national survey, about two in three seniors hadn't used alcohol, nicotine, or marijuana in the past month. Telling teens that helps, because many believe everyone else is using."
+      "say": "Start with good news. Most high schoolers aren't using. In a recent national survey, about two in three seniors hadn't used any of the common substances in the past month. Telling teens that helps, because many believe everyone else is using."
      },
      {
       "k": "big",
@@ -13111,7 +13111,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "big",
      "h": "Wait until adulthood.",
      "sub": "Cutting back is a real step there.",
-     "say": "Here's the plain truth, said kindly. For teens, the healthiest amount of alcohol, nicotine, weed, and pills is none, until adulthood. Your brain is still building itself into your twenties. Cutting back is a real step in that direction, and every step counts."
+     "say": "Here's the plain truth, said kindly. For teens, the healthiest amount of alcohol, nicotine, and pills is none, until adulthood. Your brain is still building itself into your twenties. Cutting back is a real step in that direction, and every step counts."
     },
     {
      "k": "points",
@@ -13334,7 +13334,7 @@ window.GG_LEARN_GUIDES.pine = {
      "eyebrow": "When Life Changes",
      "h": "Getting Sober as a Teen",
      "sub": "For You",
-     "say": "If you're getting sober, from drinking, pills, weed, or anything else, this is for you. Maybe you chose it. Maybe someone chose it for you. Either way, your feelings make sense, and we're with you."
+     "say": "If you're getting sober, from drinking, pills, or anything else, this is for you. Maybe you chose it. Maybe someone chose it for you. Either way, your feelings make sense, and we're with you."
     },
     {
      "k": "big",

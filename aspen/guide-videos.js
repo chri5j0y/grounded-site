@@ -14364,8 +14364,8 @@ window.GG_LEARN_GUIDES.aspen = {
     {
      "k": "card",
      "title": "Your brain is still growing.",
-     "body": "Alcohol, vapes, weed, and pills all wait until you're grown.",
-     "say": "Here's something true. Your brain keeps growing until your mid-twenties. Alcohol, vapes, weed, and pills can change a growing brain fast. So all of them wait until you're grown. And most kids your age choose to wait too."
+     "body": "Alcohol, vapes, and pills all wait until you're grown.",
+     "say": "Here's something true. Your brain keeps growing until your mid-twenties. Alcohol, vapes, and pills can change a growing brain fast. So all of them wait until you're grown. And most kids your age choose to wait too."
     },
     {
      "k": "card",
@@ -14461,7 +14461,7 @@ window.GG_LEARN_GUIDES.aspen = {
      "eyebrow": "When Life Changes",
      "h": "When Someone Offers You Alcohol or a Vape",
      "sub": "For the Grown-up",
-     "say": "If a middle schooler you love is being offered alcohol, vapes, weed, or pills, or soon will be, this is for you. You don't need a speech. You need a good question, a calm voice, and a plan."
+     "say": "If a middle schooler you love is being offered alcohol, vapes, or pills, or soon will be, this is for you. You don't need a speech. You need a good question, a calm voice, and a plan."
     },
     {
      "k": "big",
@@ -14483,7 +14483,7 @@ window.GG_LEARN_GUIDES.aspen = {
      "k": "card",
      "title": "Short and true",
      "body": "The brain keeps growing into the mid-twenties.",
-     "say": "Keep the reasons short and true. The brain keeps growing into the mid-twenties, and alcohol, nicotine, weed, and other drugs change it quickly. Research finds that people who start drinking young are more likely to have trouble with alcohol later. So every one of these waits until adulthood."
+     "say": "Keep the reasons short and true. The brain keeps growing into the mid-twenties, and alcohol, nicotine, and other drugs change it quickly. Research finds that people who start drinking young are more likely to have trouble with alcohol later. So every one of these waits until adulthood."
     },
     {
      "k": "card",

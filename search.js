@@ -85,7 +85,6 @@
   var SYN = {
     vape: 'vaping nicotine', vapes: 'vaping nicotine', vaping: 'vaping nicotine', juul: 'vaping nicotine', zyn: 'vaping nicotine pouches',
     pouch: 'vaping nicotine pouches', pouches: 'vaping nicotine pouches', nicotine: 'vaping nicotine', ecig: 'vaping nicotine', cigarette: 'vaping nicotine smoking', smoking: 'vaping nicotine',
-    weed: 'drug alcohol substance vaping', marijuana: 'drug alcohol substance vaping', thc: 'drug alcohol substance vaping', edibles: 'drug alcohol substance',
     drugs: 'drug alcohol substance addiction', drinking: 'drinking alcohol substance addiction', drunk: 'drinking alcohol substance addiction', alcohol: 'alcohol drinking substance addiction',
     meltdown: 'meltdown blowup escalating', tantrum: 'meltdown tantrum', outburst: 'meltdown blowup outburst anger', blowup: 'blowup meltdown escalating',
     freakout: 'meltdown blowup escalating', losingit: 'meltdown blowup escalating', outofcontrol: 'meltdown blowup escalating',
@@ -202,7 +201,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b793'), load('/aspen/guides.js?v=b793'), load('/pine/guides.js?v=b793'), load('/birch/guides.js?v=b793'), load('/oak/guides.js?v=b793'), load('/sequoia/guides.js?v=b793'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b795'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b793'), load('/aspen/guides.js?v=b849'), load('/pine/guides.js?v=b849'), load('/birch/guides.js?v=b849'), load('/oak/guides.js?v=b793'), load('/sequoia/guides.js?v=b793'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b795'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });

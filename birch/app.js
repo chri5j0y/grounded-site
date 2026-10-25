@@ -182,7 +182,7 @@ const PARTS = {
     tree: 'Birch leaves flutter in the lightest breeze and turn gold in the fall. They turn light into energy for the whole tree, and they are the first place stress shows.',
     you: 'Your leaves are your body: Move, Rest, and Nourish. Sleep, movement, food, your phone, and how you cope all live here, on any schedule, shift work included. This part asks about what your body allows, never about looking a certain way.',
     health: ['You get enough sleep most nights, whatever your schedule.', 'You move in ways you enjoy.', 'You eat real meals that give you energy.'],
-    stress: ['You run on too little sleep.', 'Your phone keeps you up or keeps you scrolling.', 'You lean on drinking, cannabis, or other things to get through.']
+    stress: ['You run on too little sleep.', 'Your phone keeps you up or keeps you scrolling.', 'You lean on drinking or other things to get through.']
   },
   fruit: {
     part: 'Fruit', icon: 'fruit',

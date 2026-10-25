@@ -391,7 +391,6 @@
     // end BLD 742
     // Birch When Life Changes (GWG BLD 743)
     blsjobs24: ["US Bureau of Labor Statistics, number of jobs held by people born 1980 to 1984, National Longitudinal Survey of Youth 1997 (2024)", "https://www.bls.gov/news.release/archives/nlsyth_04022024.pdf"],
-    diforti: ["Di Forti and colleagues, the contribution of cannabis use to variation in the incidence of psychotic disorder across Europe (Lancet Psychiatry, 2019), summary via Neuroscience News", "https://neurosciencenews.com/psychosis-thc-10921/"],
     ftcrental: ["Federal Trade Commission, rental listing scams (consumer advice)", "https://consumer.ftc.gov/articles/rental-listing-scams"],
     gallupeng24: ["Gallup, younger workers and engagement by generation, via Fortune (2024)", "https://www.fortune.com/2024/03/05/gen-z-elder-millennials-disengaged-gallup-poll-genx-boomers"],
     hall18: ["Jeffrey A. Hall, how many hours does it take to make a friend? (Journal of Social and Personal Relationships, 2019), via the University of Kansas", "https://news.ku.edu/news/article/2018/03/06/study-reveals-number-hours-it-takes-make-friend"],
@@ -752,7 +751,7 @@
     "birch:faith-own": ["smithsnell"],
     "birch:first-apartment": ["mnagtenant", "ftcrental"],
     "birch:first-job": ["nsfsleep", "gallupeng24"],
-    "birch:first-signs": ["kessler05", "nimhpsych", "diforti"],
+    "birch:first-signs": ["kessler05", "nimhpsych"],
     "birch:first-year": ["healthyminds25", "nsfsleep", "ferpa18"],
     "birch:friend-suicide": ["dazzi", "nsduh24"],
     "birch:friends": ["hall18", "murthy", "mcc24"],
