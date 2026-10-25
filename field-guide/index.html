@@ -681,13 +681,14 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-stories.js?v=b839"></script>
 <script src="moves.js?v=b842"></script>
 <script src="coach.js?v=b842"></script>
-<script src="health.js?v=b846"></script>
+<script src="health.js?v=b847"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
+// The Family Kitchen library (GWG BLD 846): lib-kitchen.js, the food part of My Health for a Family Kitchen code.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
-(function(){ var t = Date.now(); window.__gfgT = t; ['codes','lib-founder','lib-staff','lib-guide'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
+(function(){ var t = Date.now(); window.__gfgT = t; ['codes','lib-founder','lib-staff','lib-guide','lib-kitchen'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
 </script>
 <script>
 if (!window.GFG_GUIDE) document.write('<script src="lib-field.js?t=' + window.__gfgT + '"><\/script>');
@@ -725,7 +726,7 @@ async function open(key, box){ const pt = await crypto.subtle.decrypt({name:'AES
 // Each level's library has its own key. codes.js holds a sealed copy of a library key for every
 // access code (never the code itself), plus "links" that let a higher level open the ones below it.
 // A code is only used once, to set up a device. After that, each person's own passcode unlocks it.
-const BOX = {founder: window.GFG_FOUNDER || null, staff: window.GFG_STAFF || null, guide: window.GFG_GUIDE || window.GFG_FIELD || null};
+const BOX = {founder: window.GFG_FOUNDER || null, staff: window.GFG_STAFF || null, guide: window.GFG_GUIDE || window.GFG_FIELD || null, kitchen: window.GFG_KITCHEN || null};
 // Codes, vaults, drafts, and update files made before the Founder rename (October 2026) carry the old level
 // name (FG_OLD) inside. fgTier, fgCodesNorm, and fgDraftNorm read them under the new name, so no device or
 // code has to be set up again. The Guide rename (GWG BLD 764) works the same way: the Guide level became the Guide
@@ -750,8 +751,8 @@ function fgDraftNorm(d){
   return d;
 }
 const CODES = fgCodesNorm(window.GFG_CODES || {v:1, stamp:'', salt:null, codes:[], links:{}});
-const RANK = {guide:1, staff:2, founder:3};
-const LEVEL_NAME = {founder:'Founder', staff:'Staff', guide:'Guide', org:'Organization', supporter:'Supporter'};
+const RANK = {kitchen:0, guide:1, staff:2, founder:3};
+const LEVEL_NAME = {founder:'Founder', staff:'Staff', guide:'Guide', org:'Organization', supporter:'Supporter', kitchen:'Family Kitchen'};
 async function rawKey(raw){ return crypto.subtle.importKey('raw', unb64(raw), {name:'AES-GCM'}, true, ['encrypt','decrypt']); }
 async function tryOpen(box, raw){ if (!box || !raw) return null; try { return await open(await rawKey(raw), box); } catch(e){ return null; } }
 const newRaw = () => b64(crypto.getRandomValues(new Uint8Array(32)));
@@ -823,7 +824,7 @@ async function enter(inner){
   useLevels(await openLevels(TIER, keys));
   // A Founder device shows library updates waiting to upload, so they can be tried before they go live.
   const dd = DATA.founder.draft;
-  if (TIER === 'founder' && dd && dd.libs) for (const [l, b] of Object.entries(dd.libs)){ const pl = await tryOpen(b, Object.assign({}, KEYS, dd.keys || {})[l]); if (pl){ if (l === 'founder') FDR = pl; else if (l === 'staff') LIB = pl; else FLD = pl; } }
+  if (TIER === 'founder' && dd && dd.libs) for (const [l, b] of Object.entries(dd.libs)){ const pl = await tryOpen(b, Object.assign({}, KEYS, dd.keys || {})[l]); if (pl){ if (l === 'founder') FDR = pl; else if (l === 'staff') LIB = pl; else if (l === 'guide') FLD = pl; } }
   return v2 ? 'ok' : 'upgrade';
 }
 
@@ -1083,6 +1084,8 @@ function tabsFor(){
   // My Health (GWG BLD 840): every level, whenever the Guide library carries healthJourney. Personal numbers stay on this device.
   const hj = hjOpen() ? [['health','My Health','heart']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
+  // A Family Kitchen code (GWG BLD 846) opens My Health's kitchen only: no orientation, no other tabs.
+  if (TIER === 'kitchen') return [['health','My Health','heart']];
   if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
   if (!LIB) return [...hj, ...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
@@ -1777,10 +1780,24 @@ function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return 
 // so names stay off the site); Supporter codes get none, so the Field Guide never opens for them. Every code also gets
 // a record in the Founder library's Access list (FDR.access) carrying its stories wrap, so it opens Grounded Stories.
 // o: {org, n (place in the organization), quiet (the caller relinks, saves, and seals once at the end)}.
+// ---------------- FOUNDER: the Family Kitchen (GWG BLD 846) ----------------
+// A Family Kitchen code opens only the kitchen part of My Health on a family member's phone (Chris, October 25, 2026, "1").
+// Its library, lib-kitchen.js, is cut from the Guide library's healthJourney (dinners, shop lists, batches, plus the audio
+// key for Andrew's cook guide) and the plan's start Monday from this device, sealed with its own key. The key lives in the
+// Founder library (FDR.kitchen.key). Every Guide library update sealed here reseals lib-kitchen.js too.
+function kitchenPlain(g){ const h = (g && g.healthJourney) || {}, a = h.app || {}, me = DATA && DATA.health && DATA.health.set;
+  return {_kitchen: 1, _rev: (g && g._rev) || 0, _updated: today(), start: (me && me.start) || null, audio: (g && g.audio) || null,
+    healthJourney: {v: h.v || 1, title: h.title || 'My Health', tagline: h.tagline || '', lead: h.lead || '', hero: h.hero || null, doctor: h.doctor || '', app: {dinners: a.dinners || null, shop: a.shop || null, batches: a.batches || null}}}; }
+async function kitchenSeal(g){ if (!FDR || !FDR.kitchen || !FDR.kitchen.key || !g) return false; ensureDraft().libs.kitchen = await seal(await rawKey(FDR.kitchen.key), kitchenPlain(g)); return true; }
+async function kitchenReady(){
+  if (!FDR) return null; const g = await pendingPlain('guide'); if (!g || !g.healthJourney) return null;
+  if (!FDR.kitchen || !FDR.kitchen.key) FDR.kitchen = {key: newRaw(), made: today()};
+  await kitchenSeal(g); return FDR.kitchen.key;
+}
 async function makeCode(kind, label, ends, o = {}){
   if (accWaits()) { alert(ACC_WAIT); return null; }
-  const sup = kind === 'supporter', tier = kind === 'org' ? 'guide' : kind, k = sup ? null : effKeys()[tier];
-  if (!sup && !k) { alert("This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
+  const sup = kind === 'supporter', tier = kind === 'org' ? 'guide' : kind, k = sup ? null : tier === 'kitchen' ? await kitchenReady() : effKeys()[tier];
+  if (!sup && !k) { alert(tier === 'kitchen' ? 'The Family Kitchen needs My Health in the Guide library on this Founder device first.' : "This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
   if (sup && !accKey()) { alert('Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).'); return null; }
   const code = wordsCode(), made = today();
   let e;
@@ -1796,7 +1813,7 @@ async function makeCode(kind, label, ends, o = {}){
     const A = accStore(), r = {id:e.id, level:e.tier, label, made};
     if (e.ends) r.ends = e.ends;
     if (o.org){ r.org = o.org; r.n = o.n; }
-    const w = await accWrap(code); if (w) Object.assign(r, w);
+    const w = tier === 'kitchen' ? null : await accWrap(code); if (w) Object.assign(r, w);
     A.codes.push(r);
   }
   if (!o.quiet){ if (!sup) await relink(ensureDraft()); await persist(); await fdrKeep(); }
@@ -1833,7 +1850,7 @@ async function rotateLevel(tier){
 // codes.js lines carry only the level, and stories/data.js wraps carry only a random tag.
 // Uploads: codes.js (field-guide folder) when a Founder, Staff, or Guide code changes; lib-founder.js (field-guide folder)
 // for every change; data.js (stories folder) for every change, sealed by the Story Vault's Seal Grounded Stories.
-const ACC_LV = ['founder', 'staff', 'guide', 'supporter'];
+const ACC_LV = ['founder', 'staff', 'guide', 'supporter', 'kitchen'];
 const ACC_WAIT = 'An update for the Founder library is waiting in Update a Library. Seal it or cancel it there, and the Access list is ready for changes again.';
 const accWaits = () => !!(UPD && UPD.lvl === 'founder');
 const accKey = () => (FDR && FDR.storyVault && FDR.storyVault.key && FDR.storyVault.key.key) || '';
@@ -1866,7 +1883,7 @@ function accStoriesDue(){
   return live.length !== S.size || live.some(c => !S.has(c));
 }
 const accName = r => r.label || (r.org ? 'Person ' + (r.n || '') : LEVEL_NAME[r.level] || 'Code');
-const accOpens = r => r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
+const accOpens = r => r.level === 'kitchen' ? 'the Family Kitchen in My Health' : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
 // Ends codes: takes their codes.js lines out (Founder, Staff, Guide), marks the records cancelled, and saves once.
 async function accCancel(ids){
   if (accWaits()) return alert(ACC_WAIT);
@@ -1978,7 +1995,7 @@ function accView(){
   const makeH = `  <div class="card"><h3>Make a Code</h3>
    <label class="f" for="fdr-kind">Level</label><select id="fdr-kind">${lvlOpt(ACC_LV, 'guide')}</select>
    <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="The person's name" autocomplete="off">
-   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Every code opens Grounded Stories. Supporter codes open Grounded Stories: every story, Early Previews, the Story Behind the Story, the Monthly Letter, and Reflection Cards. New Guides go through Orientation before anything else opens.</p>
+   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Every code opens Grounded Stories. Supporter codes open Grounded Stories: every story, Early Previews, the Story Behind the Story, the Monthly Letter, and Reflection Cards. New Guides go through Orientation before anything else opens. Family Kitchen codes open only the kitchen in My Health: this week's dinners with the cook guide, grab and go, snacks, the shopping list, and prep.</p>
    <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make"${wait}>Make Code</button></div>`;
   const orgMakeH = `  <div class="card" id="acc-orgmake"><h3>Make Codes for an Organization</h3><p class="muted">A personal code for each person, grouped under the organization, ready to copy or print as one list.</p>
    <label class="f" for="acc-org">Organization</label><input type="text" id="acc-org" placeholder="The organization's name" autocomplete="off">
@@ -10698,6 +10715,7 @@ async function sealUpdate(){
   // The pre-levels Staff code opens the Staff library through its salt. Keep it while the key is unchanged.
   if (!d.keys[U.lvl] && BOX[U.lvl] && BOX[U.lvl].salt) box.salt = BOX[U.lvl].salt;
   d.libs[U.lvl] = box;
+  if (U.lvl === 'guide') await kitchenSeal(U.next); // the Family Kitchen follows every Guide library update (BLD 846)
   if (U.lvl === 'founder') FDR = U.next; else if (U.lvl === 'staff') LIB = U.next; else FLD = U.next;
   UPD = null; await persist(); render(); toast('Sealed. It is in Ready to Upload.');
 }
