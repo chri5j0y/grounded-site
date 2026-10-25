@@ -3,7 +3,7 @@
 // Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.
 window.GFG_CODES = {
  "v": 1,
- "stamp": "mv0wphfo107h3",
+ "stamp": "mvn6hte1a35aa",
  "salt": "YDaHLbQgDd0HU0BbtgF6Cg==",
  "codes": [
   {
@@ -12,7 +12,7 @@ window.GFG_CODES = {
    "id": "foumv0wgejeswdz5",
    "tier": "founder",
    "kind": "founder",
-   "label": "Chris",
+   "label": "Founder code",
    "made": "2026-10-09",
    "ends": null
   },
@@ -22,7 +22,7 @@ window.GFG_CODES = {
    "id": "foumv0wlz6nkw0mr",
    "tier": "founder",
    "kind": "founder",
-   "label": "Kate",
+   "label": "Founder code",
    "made": "2026-10-09",
    "ends": null
   },
@@ -32,7 +32,7 @@ window.GFG_CODES = {
    "id": "stamv0wndc96b7hl",
    "tier": "staff",
    "kind": "staff",
-   "label": "Staff",
+   "label": "Staff code",
    "made": "2026-10-09",
    "ends": "2027-10-09"
   },
@@ -42,23 +42,63 @@ window.GFG_CODES = {
    "id": "guimv0wphfozw08a",
    "tier": "guide",
    "kind": "guide",
-   "label": "Guide",
+   "label": "Guide code",
    "made": "2026-10-09",
    "ends": "2027-10-09"
+  },
+  {
+   "iv": "xOmKQm3AIxA6EQKW",
+   "ct": "Em6yDnzin4zQ+yNCW6njLmpPz3c6G2bh/TsJATStzz8N8zCZuokXkTLiuujLcz/zkem9BLLKzhsnJ6RGm6noiV+BKy+mdRUnIhYpWF0FWR/2oRwlIQ==",
+   "id": "kitmvn6djkifpzb9",
+   "tier": "kitchen",
+   "kind": "kitchen",
+   "label": "Family Kitchen code",
+   "made": "2026-10-24",
+   "ends": null
+  },
+  {
+   "iv": "a4iCwG8jJSmM+Hcr",
+   "ct": "lQC4jpgPtVIAEOQ4e8oqG3EqgbQH3ZqxnmJoXC1H5cTggrV75soLbIGrkTgtUJOMzxfuClef2XL9h17A98jEfMx+iXNhmdqvOhdSHNEbaYFemgtFGg==",
+   "id": "kitmvn6h0bk0kn8x",
+   "tier": "kitchen",
+   "kind": "kitchen",
+   "label": "Family Kitchen code",
+   "made": "2026-10-24",
+   "ends": null
+  },
+  {
+   "iv": "bNnxhvRylpbf0qNk",
+   "ct": "B47YTOROIRyZqPzm0Ms/gkOV60GI+ts387Go29h+o/pIt87y4EV02hl2yyx0FOE/eMwmbBFGDIIU5tvvlEovwkyIjicYdKZfWZD/rPSx+LyWm0APSg==",
+   "id": "kitmvn6hjl4392ue",
+   "tier": "kitchen",
+   "kind": "kitchen",
+   "label": "Family Kitchen code",
+   "made": "2026-10-24",
+   "ends": null
+  },
+  {
+   "iv": "VA1q1qAqVC3cRf/a",
+   "ct": "MKVmfLrSfay8jUzU19j+/eKIyXWXTT/nsO6e27ARekJpquRgjs6Z01kp4EewOUVNkCYT3T5fRy7rUNbOIvTvtnYP/Wa5bXduMqCxXfpW9GkMgpCs5A==",
+   "id": "kitmvn6hte1m0gos",
+   "tier": "kitchen",
+   "kind": "kitchen",
+   "label": "Family Kitchen code",
+   "made": "2026-10-24",
+   "ends": null
   }
  ],
  "links": {
   "founder>staff": {
-   "iv": "g+7bA71k3Q7yMePZ",
-   "ct": "Vpi6MpGDxcLvcoOQOmyJViusyRpOnbbapEHIgRSkA6wjgJMmA2IHviaA6jSWgKfK8EhAc9cyHLBTbgbiqF/eJ0EmS4A="
+   "iv": "dRQ98A+fLYqjXgm0",
+   "ct": "IxgL2vh0JHMyGHdnytx0qKBqPavG9oIpvfHY52V0PMOA/bPgI9fEtRiFLpS0o/aBr7Zr9LHD+lVgoelcUThIE9XwRZg="
   },
   "founder>guide": {
-   "iv": "XuC6Xnk7bmH5v1DS",
-   "ct": "3zU1RxQoh1xx1b4EEkC0s64MIsreMRKMMMEWwyu5epaS8rZqlgL1iKfXIAAICh37EVWxz4k6ZobbrHcPXSKi9bOWEUU="
+   "iv": "s3o3Fvnpc7kJgHp3",
+   "ct": "WC/1x9M8R3BjEX2genQZxSdwC1jc6ljKEOZSSCzZpvYo5cS7z8qWVYYTRvQPrRZSZSyGHCHEhG39qRF5d9GXfH9RN2g="
   },
   "staff>guide": {
-   "iv": "+0dRfMdGTHz6wV2H",
-   "ct": "GYG3GlUL+mQ+vPidoTgsz66BACapXiZ/7oi5EXQxYg1XSqtKbA0QxXEDRw/1GAJlisit8nF48QA1xCUIe2NF2rRS/vg="
+   "iv": "w5dGYrKNnnNcCTZ+",
+   "ct": "O81aF+XhkUbtJgQYFwnFUV8RW9TuhM++fLsBkrZbEYWSGh9ufb6OqND5T/ggBIApq2QYSS7KCQGQI3hPVINAYfEJrkA="
   }
  }
 };
