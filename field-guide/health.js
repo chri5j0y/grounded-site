@@ -69,11 +69,11 @@ const CHECKS = [
   {id: 'rest', label: 'Seven hours of sleep', sub: 'Last night counts'}
 ];
 const WEEK = {
-  1: {move: 'Session A: Full Body Strength', food: 'Dinner from Sunday prep'},
-  2: {move: 'Session D: Mobility, Core, and Easy Miles. Evening: the Y', food: 'Fish night'},
-  3: {move: 'Session C: Power and Upper-Lower', food: 'Wednesday mini prep, 20 minutes'},
-  4: {move: 'Session D: Mobility and Core. Evening: the Y', food: 'Plan next week, 10 minutes. Use-it-up night'},
-  5: {move: 'Session B: Full Body Strength', food: 'Write the list, 5 minutes. Fish night'},
+  1: {move: 'Session A: Full Body Strength, then the Core Finisher', food: 'Dinner from Sunday prep'},
+  2: {move: 'Session D: Core and Strength. Evening: the Y', food: 'Fish night'},
+  3: {move: 'Session C: Power and Upper-Lower, then the Core Finisher', food: 'Wednesday mini prep, 20 minutes'},
+  4: {move: 'Session D: Core and Strength. Evening: the Y', food: 'Plan next week, 10 minutes. Use-it-up night'},
+  5: {move: 'Session B: Full Body Strength, then the Core Finisher', food: 'Write the list, 5 minutes. Fish night'},
   6: {move: 'Family hike or the Y when the weather is wild', food: 'Shop: warehouse club and your grocer'},
   0: {move: 'Rest, a long walk, or a family outing', food: 'Sunday prep, about 90 minutes'}
 };
@@ -138,7 +138,7 @@ function vNumbers(){
   const inp = (k, label, type, extra) => `<label class="hj-fld"><span>${esc(label)}</span><input type="${type || 'number'}" inputmode="${type === 'date' ? '' : 'decimal'}" data-hjf="${k}" value="${esc(f && f[k] != null ? f[k] : '')}"${extra || ''}></label>`;
   const labForm = f && f.k === 'lab' ? `<div class="hj-blk" id="hj-form">${kick('Lab Results')}<div class="hj-g3">${inp('date', 'Date', 'date')}${inp('ldl', 'LDL')}${inp('total', 'Total cholesterol')}${inp('hdl', 'HDL')}${inp('trig', 'Triglycerides')}${inp('apob', 'ApoB (if tested)')}</div>${inp('note', 'Note', 'text')}
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="save">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>` : '';
-  const mkForm = f && f.k === 'mark' ? `<div class="hj-blk" id="hj-form">${kick('Body and Training Markers')}<div class="hj-g3">${inp('date', 'Date', 'date')}${inp('weight', 'Weight (lb)')}${inp('waist', 'Waist (in)')}${inp('rhr', 'Resting heart rate')}${inp('pushups', 'Push-ups in a row')}${inp('pullups', 'Pull-ups in a row')}${inp('mile', 'One mile (minutes)')}${inp('energy', 'Energy, 1 to 10')}${inp('sleep', 'Sleep, hours')}${inp('joint', 'Joint comfort, 0 to 10 (10 is easy)')}</div>${inp('note', 'Note', 'text')}
+  const mkForm = f && f.k === 'mark' ? `<div class="hj-blk" id="hj-form">${kick('Body and Training Markers')}<div class="hj-g3">${inp('date', 'Date', 'date')}${inp('weight', 'Weight (lb)')}${inp('waist', 'Waist (in)')}${inp('rhr', 'Resting heart rate')}${inp('pushups', 'Push-ups in a row')}${inp('pullups', 'Pull-ups in a row')}${inp('mile', 'One-mile walk (minutes)')}${inp('energy', 'Energy, 1 to 10')}${inp('sleep', 'Sleep, hours')}${inp('joint', 'Joint comfort, 0 to 10 (10 is easy)')}</div>${inp('note', 'Note', 'text')}
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="save">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>` : '';
   const pForm = f && (f.k === 'panel' || f.k === 'pitem') ? `<div class="hj-blk" id="hj-form">${kick(f.k === 'panel' ? 'New Lab Panel' : 'Add a Result')}<div class="hj-g3">${f.k === 'panel' ? inp('name', 'Panel name', 'text') + inp('date', 'Date', 'date') : ''}${inp('n', 'Test name', 'text')}${inp('v', 'Result', 'text')}${inp('u', 'Unit', 'text')}${inp('lo', 'Range low')}${inp('hi', 'Range high')}</div>
     <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="psave">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>` : '';
@@ -239,7 +239,7 @@ function agenda(d){
     const pk = prepFor('pack', fw); if (pk) out.push({key: 'prep:pack:' + fw, k: 'prep', v: 'pack|' + fw, hour: 18, kick: 'Sunday evening', title: pk.title || 'Pack Lunches', sub: (pk.mins || 20) + ' minutes for the week ahead.', btn: 'Start'});
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 15, kick: 'Freezer batch', title: b.title || 'Freezer Batch', sub: (b.mins || 40) + ' minutes. A great job to hand off.', btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
-  if ((dow === 2 || dow === 4) && !KIT()){ const ev = arr(WK().evenings), e = ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null; out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.', btn: 'We Did It'}); }
+  if ((dow === 2 || dow === 4) && !KIT()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.', btn: 'We Did It'}); }
   const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   return out.sort((a, b) => a.hour - b.hour);
 }
