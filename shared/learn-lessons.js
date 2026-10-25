@@ -12718,7 +12718,7 @@ window.GG_LEARN = {
              3
             ]
            },
-           "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+           "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
           },
           {
            "k": "big",
@@ -13547,7 +13547,7 @@ window.GG_LEARN = {
              "Plan one call or meeting"
             ]
            ],
-           "say": "In the morning, take one slow breath. Set your intention, a Sober day, chosen today. Check in honestly. How are you, really? Tired, hopeful, restless, or steady? Then plan one reach, a call to a sponsor or a friend, a meeting, or a walk with someone."
+           "say": "In the morning, take one slow breath. Set your intention, a Sober day, chosen today. Check in honestly. How are you, really? Tired, hopeful, restless, or steady? Then plan one reach, a call to a mentor or a friend, a meeting, or a walk with someone."
           },
           {
            "k": "flow",
@@ -25551,7 +25551,7 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
       },
       {
        "k": "big",
@@ -36997,7 +36997,7 @@ window.GG_LEARN = {
          3
         ]
        },
-       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like AA, NA, SMART Recovery, or Refuge Recovery, where people walking the same road share their stories too."
+       "say": "Choose someone safe to hear it. A trusted friend who is steady and kind. A doctor or a therapist, who keeps it private and is trained to help. Or a peer group, like SMART Recovery or Refuge Recovery, where people walking the same road share their stories too."
       },
       {
        "k": "big",

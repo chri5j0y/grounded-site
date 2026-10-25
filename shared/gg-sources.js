@@ -475,6 +475,12 @@
     williams07: ["Kipling D. Williams, Ostracism (Annual Review of Psychology, 2007): being left out registers as real pain and threatens the need to belong", "https://doi.org/10.1146/annurev.psych.58.110405.085641"],
     woolley10: ["Woolley, Chabris, Pentland, Hashmi, and Malone, evidence for a collective intelligence factor in the performance of human groups (Science, 2010): groups did better when speaking turns were shared evenly", "https://doi.org/10.1126/science.1193147"],
     // end BLD 783
+    // Living Sober Together (GWG BLD 851): Healthy People, Strong on Your Own, CRAFT, For Guides ring.
+    rosenquist10: ["Rosenquist, Murabito, Fowler, and Christakis, the spread of alcohol consumption behavior in a large social network (Annals of Internal Medicine, 2010)", "https://doi.org/10.7326/0003-4819-152-7-201004060-00007"],
+    smartrec: ["SMART Recovery, and SMART Recovery Family and Friends", "https://smartrecovery.org/"],
+    nguyen18: ["Nguyen, Ryan, and Deci, solitude as an approach to affective self-regulation (Personality and Social Psychology Bulletin, 2018)", "https://doi.org/10.1177/0146167217733073"],
+    meyers04: ["Robert J. Meyers and Brenda L. Wolfe, Get Your Loved One Sober: Alternatives to Nagging, Pleading, and Threatening (Hazelden, 2004)", "https://openlibrary.org/search?q=Get+Your+Loved+One+Sober+Meyers+Wolfe"],
+    bryant07: ["Fred B. Bryant and Joseph Veroff, Savoring: A New Model of Positive Experience (2007)", "https://openlibrary.org/search?q=Savoring+A+New+Model+of+Positive+Experience"],
     // Living Sober Every Day (GWG BLD 850): Ride the Wave and What Your Body Regains.
     mbrp21: ["Sarah Bowen, Neha Chawla, Joel Grow, and G. Alan Marlatt, Mindfulness-Based Relapse Prevention for Addictive Behaviors, second edition (Guilford, 2021)", "https://www.guilford.com/books/Mindfulness-Based-Relapse-Prevention-for-Addictive-Behaviors/Bowen-Chawla-Grow-Marlatt/9781462545315", "a"],
     niaaahang: ["NIAAA, Hangovers (fact sheet): alcohol suppresses vasopressin, so the body lets go of water", "https://www.niaaa.nih.gov/publications/brochures-and-fact-sheets/hangovers"],
@@ -535,7 +541,9 @@
   // so a Sources line that cites both shows the work once.
   var ALIAS = { kbia988asl: 'asl988', socialmodel: 'barnessocial', carterbelong: 'carter19', samhsarecovery: 'samhsarec',
     // Living Sober (GWG BLD 789)
-    kellywesterhoff10: 'kelly10', craft: 'meyers02', sqsocraft: 'meyers02', fdanarcan23: 'narcanotc' };
+    kellywesterhoff10: 'kelly10', craft: 'meyers02', sqsocraft: 'meyers02', fdanarcan23: 'narcanotc',
+    // Living Sober Together (GWG BLD 851)
+    meyerswolfe04: 'meyers04' };
   Object.keys(ALIAS).forEach(function (a) { SRC[a] = SRC[ALIAS[a]]; });
 
   var C = {

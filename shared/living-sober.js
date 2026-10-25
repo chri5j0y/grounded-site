@@ -6,6 +6,9 @@
      Start Here                           three Growing a Healthy Tree videos from Oak (shared/learn-lessons.js, loaded on tap),
                                            played in shared/gg-learn.js with Brian's recorded clips
      Early Days: 90 Days                  the day list from shared/sober-30.js (window.GGSober30), each day in the player overlay
+     Living Sober Together (BLD 851)      Sleep, Food, and Movement (#early-body, inside #every-day), Healthy People, Healthy Places and
+                                           Strong on Your Own (#together), Loving Someone Who Drinks or Uses (#craft, in #love), from
+                                           shared/sober-more.js; each opens in the trees with ?sober=basics, people, solo, mine, or craft
      Share                                every Share button opens a branded picture (shared/gg-sharecard.js); Share This Page
                                            sends the page address (the phone's share sheet, or Copy)
    Links that open a video: #watch=<lesson id> (Start Here) and #day=<n> (Early Days). The video waits on its Play button.
@@ -15,7 +18,7 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b850', LESSONS = '/shared/learn-lessons.js?v=b849';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b851', LESSONS = '/shared/learn-lessons.js?v=b852';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [
@@ -38,7 +41,9 @@
   }
   var TODAY = { daily: null, mantra: null };
   function words() {
-    var n = dayOfYear(), d = pick('daily', n - 1), m = pick('mantras', n - 1);
+    // The page has no stage: daily words come only from items for everyone (no stage tags) or for Thinking About a Change.
+    var W0 = window.GGSoberWords, open = W0 && W0.daily ? W0.daily.filter(function (x) { return !Array.isArray(x.stage) || !x.stage.length || x.stage.indexOf('change') >= 0; }) : [];
+    var n = dayOfYear(), d = open.length ? open[(((n - 1) % open.length) + open.length) % open.length] : pick('daily', n - 1), m = pick('mantras', n - 1);
     TODAY.daily = d; TODAY.mantra = m;
     var dt = $('#ls-daily-text'), mt = $('#ls-mantra-text');
     if (dt) dt.textContent = d ? d.text : 'Today’s encouragement is on its way. Take one slow breath while it arrives.';
@@ -137,6 +142,27 @@
     if (b) b.innerHTML = (B.intro ? '<p>' + esc(B.intro) + '</p>' : '') + '<ul class="ls-bodyl">' + (B.milestones || []).map(function (x) { return '<li><b>' + esc(x.title) + '.</b> ' + esc(x.text) + '</li>'; }).join('') + '</ul>' +
       (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.credits && B.credits.length ? '<p class="ls-src">Sources: ' + B.credits.map(function (c) { return c[1] ? '<a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>' : esc(c[0]); }).join('; ') + '</p>' : '');
   }
+  /* ---------- Living Sober Together (BLD 851): a taste of each piece, with Open in Oak for the full tool ---------- */
+  function srcs(list) { return list && list.length ? '<p class="ls-src">Sources: ' + list.map(function (c) { return c[1] ? '<a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>' : esc(c[0]); }).join('; ') + '</p>' : ''; }
+  function together() {
+    var M = window.GGSoberMore; if (!M) return;
+    var ul = function (a) { return a && a.length ? '<ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : ''; };
+    var P = M.people, S = M.solo, C = M.craft, B = M.basics, h;
+    if (P && (h = $('#ls-people'))) h.innerHTML = (P.how ? '<p>' + esc(P.how) + '</p>' : '') + (P.places || []).map(function (x) {
+      return '<details class="ls-gt" id="pl-' + esc(x.id) + '"><summary><b>' + esc(x.title) + '</b><small>' + esc(x.line || '') + '</small></summary><div class="ls-gtb">' +
+        '<h4>Why It Helps</h4><p>' + esc(x.why || '') + '</p><h4>How to Find One Near You</h4>' +
+        (x.link ? '<p><a class="text-link" href="' + esc(x.link) + '">' + esc((x.find || [])[0] || x.link) + '</a></p>' : '<ul class="ls-words" aria-label="Search words to try">' + (x.find || []).map(function (w) { return '<li>' + esc(w) + '</li>'; }).join('') + '</ul>') +
+        '<h4>A First Step</h4><p>' + esc(x.first || '') + '</p><h4>What to Say the First Time</h4><p class="ls-try">' + esc(x.say || '') + '</p></div></details>';
+    }).join('') + (P.meeting ? '<p class="ls-note">' + (P.meetingUrl ? '<a class="text-link" href="' + esc(P.meetingUrl) + '" target="_blank" rel="noopener">' + esc(P.meeting) + '</a>' : esc(P.meeting)) + '</p>' : '') + srcs(P.credits);
+    if (S && (h = $('#ls-solo'))) h.innerHTML = '<p>' + esc(S.intro || '') + '</p>' + (S.parts || []).map(function (x) {
+      return '<details class="ls-gt" id="so-' + esc(x.id) + '"><summary><b>' + esc(x.title) + '</b>' + (x.lead ? '<small>' + esc(x.lead) + '</small>' : '') + '</summary><div class="ls-gtb">' + ul(x.items) + '</div></details>';
+    }).join('') + (S.few ? '<p class="ls-note"><b>' + esc(S.few.title) + '.</b> ' + esc(S.few.text) + '</p>' : '');
+    if (C && (h = $('#ls-craft'))) h.innerHTML = '<p>' + esc(C.intro || '') + '</p>' + (C.parts || []).map(function (x) {
+      return '<details class="ls-gt" id="cr-' + esc(x.id) + '"><summary><b>' + esc(x.title) + '</b><small>' + esc(x.lead || '') + '</small></summary><div class="ls-gtb">' + ul(x.items) + (x.try ? '<h4>Try Saying</h4><p class="ls-try">' + esc(x.try) + '</p>' : '') + '</div></details>';
+    }).join('') + srcs(C.credits);
+    if (B && (h = $('#ls-basics'))) h.innerHTML = '<p>' + esc(B.intro || '') + '</p><div class="ls-basics">' + (B.parts || []).map(function (x) { return '<div><h4>' + esc(x.title) + '</h4>' + ul(x.items) + '</div>'; }).join('') + '</div>' +
+      (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.health ? '<p class="ls-note"><a class="text-link" href="/field-guide/">' + esc(B.health) + '</a></p>' : '') + srcs(B.credits);
+  }
   function wave(from) {
     var S = window.GGSober30; if (!S || !S.open || !S.wave) return;
     try { if (from && from.focus) from.focus({ preventScroll: true }); } catch (e) {}
@@ -185,11 +211,11 @@
 
   function boot() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-ls-watch],[data-ls-share-watch]'), function (b) { b.hidden = false; });
-    words(); days(); more(); fromLink();
+    words(); days(); more(); together(); fromLink();
   }
   window.GGLivingSober = { watch: watch, playDay: playDay, start: START, words: words, days: days, close: close };
   // The words and the thirty days are separate files; draw what is here now, and again as each arrives.
   function whenLoaded(test, fn) { if (test()) return fn(); var n = 0, iv = setInterval(function () { if (test() || ++n > 40) { clearInterval(iv); if (test()) fn(); } }, 150); }
-  function start() { boot(); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!window.GGSoberMore; }, more); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { Array.prototype.forEach.call(document.querySelectorAll('[data-ls-wave]'), function (b) { b.hidden = !GGSober30.wave; }); days(); fromLink(); }); }
+  function start() { boot(); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!window.GGSoberMore; }, function () { more(); together(); }); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { Array.prototype.forEach.call(document.querySelectorAll('[data-ls-wave]'), function (b) { b.hidden = !GGSober30.wave; }); days(); fromLink(); }); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

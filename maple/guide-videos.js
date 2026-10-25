@@ -4096,7 +4096,7 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "card",
 "title": "Help for the whole family",
-"say": "You don't carry this alone. As kids get older, groups like Alateen can help. Every path to healing is welcome: doctors, treatment, therapy, peer groups, and community. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
+"say": "You don't carry this alone. As kids get older, NACoA and a trusted adult can help. Every path to healing is welcome: doctors, treatment, therapy, peer groups, and community. And if a child tells you someone hurt them, stay calm, believe them, and get help the same day."
 },
 {
 "k": "big",
@@ -17535,7 +17535,7 @@ window.GG_LEARN_GUIDES.maple = {
     {
      "k": "card",
      "title": "Help for the whole family",
-     "say": "You can share this load. Al-Anon and Alateen have groups for families, and NACoA has help made for kids."
+     "say": "You can share this load. SMART Recovery Family and Friends supports the grown-ups, and NACoA has help made for kids."
     },
     {
      "k": "big",
@@ -17793,7 +17793,7 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "When to reach out",
      "body": "Lasting guilt, worry, or sadness: their doctor or school counselor.",
-     "say": "If guilt, worry, or sadness lasts more than a couple of weeks, talk with their doctor or school counselor. NACoA has resources made for kids, and Alateen can help as they grow."
+     "say": "If guilt, worry, or sadness lasts more than a couple of weeks, talk with their doctor or school counselor. NACoA has resources made for kids, and a trusted adult can help as they grow."
     },
     {
      "k": "big",
@@ -17918,8 +17918,8 @@ window.GG_LEARN_GUIDES.maple = {
      "https://www.samhsa.gov/find-help/national-helpline"
     ],
     [
-     "Al-Anon Family Groups and Alateen",
-     "https://al-anon.org/"
+     "SMART Recovery Family and Friends",
+     "https://smartrecovery.org/"
     ]
    ],
    "scenes": [
@@ -18062,8 +18062,8 @@ window.GG_LEARN_GUIDES.maple = {
     {
      "k": "card",
      "title": "Help along the way",
-     "body": "Family programs, Al-Anon, Alateen.",
-     "say": "Ask the treatment program about family sessions and children's groups. Al-Anon and Alateen offer groups for family members."
+     "body": "Family programs, NACoA, your own support.",
+     "say": "Ask the treatment program about family sessions and children's groups. SMART Recovery Family and Friends and NACoA offer support for family members."
     },
     {
      "k": "big",
@@ -18555,7 +18555,7 @@ window.GG_LEARN_GUIDES.maple = {
      "k": "card",
      "title": "Look after yourself too.",
      "body": "Your grief matters. Lean on your people.",
-     "say": "You may be grieving too, and carrying anger or guilt of your own. That's normal. Lean on your people. A grief group, Al-Anon, or Nar-Anon can help family members."
+     "say": "You may be grieving too, and carrying anger or guilt of your own. That's normal. Lean on your people. A grief group, a friend, or a therapist can help family members."
     },
     {
      "k": "card",

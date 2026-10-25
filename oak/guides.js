@@ -533,14 +533,14 @@ const LC_TOPICS = [
 { id: "addiction", ring: "health", title: "Addiction and Recovery", keys: "addiction alcohol drugs drinking sober recovery relapse substance use", parts: ["leaves", "branches", "roots"], sober: [],
   quick: ["Healing is real. Drinking and using often begin as a way to numb pain, and that pain can heal.", "Recovery is possible, and it often takes more than one try.", "Connection is the opposite of addiction. Others can walk this with you.", "For families: you can't control someone else's recovery, but you can take care of yourself."],
   feel: "Shame, cravings, denial, fear of change, or the exhausting hope and heartbreak of loving someone who uses.",
-  self: { first: ["Call the SAMHSA National Helpline at 1-800-662-4357, confidential and open any hour.", "Talk to your doctor honestly, especially before you stop drinking or taking sedatives every day.", "Find the support that fits you: a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a therapist, or a treatment program."],
-    helps: ["Treatment matched to your needs.", "Recovery communities and sponsors.", "New routines for high-risk times."],
+  self: { first: ["Call the SAMHSA National Helpline at 1-800-662-4357, confidential and open any hour.", "Talk to your doctor honestly, especially before you stop drinking or taking sedatives every day.", "Find the support that fits you: people who live sober and thrive, a peer group like SMART Recovery or Refuge Recovery, a therapist, or a treatment program."],
+    helps: ["Treatment matched to your needs.", "Recovery communities and sober mentors.", "New routines for high-risk times."],
     tell: ["“One day at a time is enough.”", "“A slip is not the end of my recovery.”"],
     people: "Try: “I need help with my drinking. I'm ready to talk about it.”" },
   helper: { feel: "They may feel ashamed, defensive, or hopeless.",
     say: ["“I love you and I'm worried about you.”", "“I'll help you find treatment when you're ready.”"],
     avoid: ["Shaming, lecturing, or covering for them.", "Enabling with money."],
-    help: ["Learn about every kind of help: doctors, treatment, medication, therapy, and peer groups.", "Support groups for families, like Al-Anon or Nar-Anon.", "Set clear, loving boundaries."],
+    help: ["Learn about every kind of help: doctors, treatment, medication, therapy, and peer groups.", "Support groups for families, like SMART Recovery Family and Friends.", "Set clear, loving boundaries."],
     you: "Your wellbeing matters. Families need recovery too." },
   faith: "Many recovery paths draw on surrender, a higher power, and community. Grace and accountability can go together.",
   practices: ["branches|Friends", "roots|Prayer", "trunk|Get Counseling"],
@@ -2140,7 +2140,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "id": "sober-change",
   "ring": "sober",
   "title": "Thinking About a Change",
-  "keys": "thinking about quitting drinking too much am i drinking too much cut back cutting back stop drinking quit drinking using drugs pills worried about my drinking sober curious sobriety alcohol beer wine hangover blackout ready to change mixed feelings treatment detox rehab aa na smart recovery samhsa helpline",
+  "keys": "thinking about quitting drinking too much am i drinking too much cut back cutting back stop drinking quit drinking using drugs pills worried about my drinking sober curious sobriety alcohol beer wine hangover blackout ready to change mixed feelings treatment detox rehab smart recovery samhsa helpline",
   "parts": [
    "trunk",
    "leaves",
@@ -2169,7 +2169,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Listing what you'd gain: sleep, mornings, money, health, time with the people you love.",
     "One small experiment, like a few sober days, and noticing what you learn.",
     "Filling the hour you usually drink with something that tends your body: a walk, a shower, a real meal, a call.",
-    "Learning about every kind of help: your doctor, a therapist, treatment programs, and peer groups like AA, NA, SMART Recovery, or Refuge Recovery.",
+    "Learning about every kind of help: your doctor, a therapist, treatment programs, and peer groups like SMART Recovery or Refuge Recovery.",
     "Calling the SAMHSA National Helpline to hear your options, any hour."
    ],
    "tell": [
@@ -2196,7 +2196,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Offer sober plans you can share: a walk, a meal, a hike, a trip to the lake.",
     "If they want it, help them book a doctor's visit or call the helpline."
    ],
-   "you": "Loving someone who is weighing a change takes patience. Their choice is theirs. Keep your own rest, your own people, and your own support, like Al-Anon or Nar-Anon, if their drinking or using has touched your life."
+   "you": "Loving someone who is weighing a change takes patience. Their choice is theirs. Keep your own rest, your own people, and your own support, like SMART Recovery Family and Friends, if their drinking or using has touched your life."
   },
   "faith": "If faith is part of your life, it may hold words for starting again: grace, a new day, being held while you change. Some find a faith community steadies them; others carry hurt from one. What matters is what gives you strength right now. If faith isn't part of your life, meaning and hope grow from your people, your values, and the life you want to build.",
   "practices": [
@@ -2268,7 +2268,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Water through the day, and three simple meals. Your body is doing hard work.",
     "A walk outside every day, even ten minutes.",
     "A steady bedtime, with screens off early. Sleep often takes a few weeks to settle.",
-    "One person you can text any hour, and a group if you want one: AA, NA, SMART Recovery, Refuge Recovery, or another that fits.",
+    "One person you can text any hour, and a group if you want one: SMART Recovery, Refuge Recovery, or another that fits.",
     "Counting days, if that helps you. Every one counts."
    ],
    "tell": [
@@ -2295,7 +2295,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Bring meals, water, and company. Walk with them.",
     "Plan sober things for the evenings and weekends."
    ],
-   "you": "The first month can be intense for the whole family. Rest when you can, and lean on your own support, like Al-Anon or Nar-Anon. Their sobriety is theirs; your steadiness is a gift."
+   "you": "The first month can be intense for the whole family. Rest when you can, and lean on your own support, like SMART Recovery Family and Friends or a trusted friend. Their sobriety is theirs; your steadiness is a gift."
   },
   "faith": "If faith is part of your life, these first days may be a time to lean on it: a short prayer in the morning, a psalm at night, a community that knows your name. If faith isn't part of your life, quiet moments, time outdoors, and people who care can steady you just as well.",
   "practices": [
@@ -2338,7 +2338,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "id": "sober-first-year",
   "ring": "sober",
   "title": "Your First Year Sober",
-  "keys": "first year sober first year of sobriety early recovery months sober sober holidays sober birthday sober anniversary sober celebration firsts bored sober identity who am i now new routine new friends staying sober growing sober recovery milestone chip coin aa na smart recovery",
+  "keys": "first year sober first year of sobriety early recovery months sober sober holidays sober birthday sober anniversary sober celebration firsts bored sober identity who am i now new routine new friends staying sober growing sober recovery milestone chip coin smart recovery",
   "parts": [
    "trunk",
    "branches",
@@ -2395,7 +2395,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Invite them into new routines: a weekly hike, a class, a shared meal.",
     "Notice their growth out loud."
    ],
-   "you": "Living beside someone in their first sober year can stir hope and old worries at once. Keep your own support, like Al-Anon or Nar-Anon, and let yourself enjoy the good days too."
+   "you": "Living beside someone in their first sober year can stir hope and old worries at once. Keep your own support, like SMART Recovery Family and Friends or a trusted friend, and let yourself enjoy the good days too."
   },
   "faith": "If faith is part of your life, this year may bring it new color: gratitude that feels real, a community that celebrates your milestones, a sense of grace for a fresh start. If faith isn't part of your life, wonder, gratitude, and service can give this year the same deep roots.",
   "practices": [
@@ -2494,7 +2494,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Offer something to do: a walk, a meal, a drive somewhere new.",
     "Help them plan ahead for known triggers, like holidays or medical visits."
    ],
-   "you": "Hearing about cravings can scare you. Remember that telling you is a good sign. Keep your own support, like Al-Anon or Nar-Anon, so you can stay calm for them."
+   "you": "Hearing about cravings can scare you. Remember that telling you is a good sign. Keep your own support, like SMART Recovery Family and Friends or a trusted friend, so you can stay calm for them."
   },
   "faith": "If faith is part of your life, a breath prayer, a short verse, or a moment of surrender can steady you while a wave passes. If faith isn't part of your life, a word you repeat, a picture of the people you love, or a few steps outside can do the same.",
   "practices": [
@@ -2517,14 +2517,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    [
     "SMART Recovery",
     "https://smartrecovery.org/"
-   ],
-   [
-    "AA: Find a Meeting",
-    "https://www.aa.org/"
-   ],
-   [
-    "NA: Find a Meeting",
-    "https://na.org/"
    ]
   ],
   "story": {
@@ -2536,7 +2528,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "id": "sober-slip",
   "ring": "sober",
   "title": "After a Slip",
-  "keys": "slip slipped relapse relapsed drank again used again started drinking again return to use lost my sobriety lost my days start over reset day count ashamed blew it failed sobriety again alcohol pills opioids overdose risk tolerance naloxone narcan aa na smart recovery",
+  "keys": "slip slipped relapse relapsed drank again used again started drinking again return to use lost my sobriety lost my days start over reset day count ashamed blew it failed sobriety again alcohol pills opioids overdose risk tolerance naloxone narcan smart recovery",
   "parts": [
    "bark",
    "branches",
@@ -2567,7 +2559,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Speaking to yourself the way you'd speak to a friend who slipped.",
     "Looking at the day it happened, like a detective: sleep, food, feelings, people, place.",
     "One change to your plan, based on what you learned.",
-    "Your group, your sponsor or peer, your doctor, or your therapist, the same week.",
+    "Your group, your mentor or peer, your doctor, or your therapist, the same week.",
     "Remembering that your sober days, and what you learned in them, are still yours."
    ],
    "tell": [
@@ -2594,7 +2586,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Help them reach their person, group, or doctor today.",
     "Keep your own boundaries steady and kind."
    ],
-   "you": "A slip can bring up your own fear, anger, and grief. Those feelings make sense. Talk them through with your own support, like Al-Anon or Nar-Anon, so you can meet them with steadiness."
+   "you": "A slip can bring up your own fear, anger, and grief. Those feelings make sense. Talk them through with your own support, like SMART Recovery Family and Friends or a trusted friend, so you can meet them with steadiness."
   },
   "faith": "If faith is part of your life, a slip may bring fear of having let God down. Many traditions hold that grace meets people right where they fall, and that starting again is holy work. If faith isn't part of your life, the same truth stands: one hard day doesn't erase the person you are becoming.",
   "practices": [
@@ -2787,7 +2779,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "help": [
     "Tell them what helps you rebuild trust: specific, doable actions.",
     "Notice and name the steady changes you see.",
-    "Consider family therapy, or your own support, like Al-Anon or Nar-Anon."
+    "Consider family therapy, or your own support, like SMART Recovery Family and Friends."
    ],
    "you": "You're allowed your own pace, your own feelings, and your own boundaries. Healing the relationship includes healing you. Keep your own support close."
   },
@@ -2805,14 +2797,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "Cravings that grow during hard talks: reach out to your person, your group, or the SAMHSA National Helpline, 1-800-662-4357. Thoughts of suicide: call or text 988."
   ],
   "more": [
-   [
-    "Al-Anon Family Groups",
-    "https://al-anon.org/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
-   ],
    [
     "SMART Recovery Family and Friends",
     "https://smartrecovery.org/family/"
@@ -2907,10 +2891,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    [
     "SMART Recovery",
     "https://smartrecovery.org/"
-   ],
-   [
-    "AA: Find a Meeting",
-    "https://www.aa.org/"
    ],
    [
     "Refuge Recovery",
@@ -3021,7 +3001,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "id": "sober-partner",
   "ring": "sober",
   "title": "When Your Partner Drinks or Uses",
-  "keys": "partner drinks husband drinks too much wife drinks too much spouse drinking boyfriend girlfriend using drugs pills loved one wont get help how to get them into treatment craft community reinforcement and family training enabling boundaries al-anon nar-anon worried about my partner drunk every night hiding bottles overdose naloxone",
+  "keys": "partner drinks husband drinks too much wife drinks too much spouse drinking boyfriend girlfriend using drugs pills loved one wont get help how to get them into treatment craft community reinforcement and family training enabling boundaries worried about my partner drunk every night hiding bottles overdose naloxone",
   "parts": [
    "branches",
    "bark",
@@ -3044,7 +3024,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "first": [
     "Check safety: if you ever feel afraid of your partner, call the National Domestic Violence Hotline, 1-800-799-7233, and make a safety plan.",
     "Notice the pattern for a week: when they drink or use, what comes before, and what comes after.",
-    "Find your own support this week: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a therapist."
+    "Find your own support this week: SMART Recovery Family and Friends, a trusted friend, or a therapist."
    ],
    "helps": [
     "Spending warm, enjoyable time with them when they're sober, and stepping away when they're not.",
@@ -3093,14 +3073,6 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "Treatment options for your partner, and support for you: SAMHSA National Helpline, 1-800-662-4357, any hour. Thoughts of suicide, theirs or yours: call or text 988."
   ],
   "more": [
-   [
-    "Al-Anon Family Groups",
-    "https://al-anon.org/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
-   ],
    [
     "SMART Recovery Family and Friends",
     "https://smartrecovery.org/family/"

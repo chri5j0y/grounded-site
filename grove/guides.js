@@ -2716,7 +2716,7 @@ const TOPICS = [
    "group"
   ],
   "short": "When someone in the family is in recovery, healing from drinking or using or from mental illness: hope, honesty, support for all.",
-  "keys": "recovery addiction sober sobriety rehab treatment drinking alcohol drugs opioids relapse aa na al-anon alateen mom in recovery dad in recovery coming home from treatment mental illness recovery family recovery one day at a time trust again",
+  "keys": "recovery addiction sober sobriety rehab treatment drinking alcohol drugs opioids relapse mom in recovery dad in recovery coming home from treatment mental illness recovery family recovery one day at a time trust again",
   "parts": [
    "fruit",
    "branches",
@@ -2745,7 +2745,7 @@ const TOPICS = [
     "Celebrating milestones, big and small: a day, a week, a year, a promise kept.",
     "Honest, calm talks about feelings, without blame.",
     "Family time that is fun and sober: games, walks, cooking, service together.",
-    "Family groups like Al-Anon, Alateen, or NAMI Family-to-Family, where others understand.",
+    "Family groups like SMART Recovery Family and Friends, NACoA, or NAMI Family-to-Family, where others understand.",
     "A plan for hard moments: who to call, what to do if worry rises, and what to do in a crisis.",
     "Patience with trust. It grows back through small things done again and again."
    ],
@@ -2780,8 +2780,8 @@ const TOPICS = [
    "help": [
     "Learn about recovery together, with the treatment team or a family program.",
     "Support the person's own path: their doctor, treatment, medication, therapy, peer group, and sleep.",
-    "Find your own support: Al-Anon, NAMI Family-to-Family, a therapist, or a faith community.",
-    "Give children their own place to talk: Alateen, a school counselor, or a children's program.",
+    "Find your own support: SMART Recovery Family and Friends, NAMI Family-to-Family, a therapist, or a faith community.",
+    "Give children their own place to talk: NACoA, a school counselor, or a children's program.",
     "Plan what to do if worry rises or a crisis comes, and keep help numbers handy.",
     "Celebrate milestones, and keep family life full of good, sober time together."
    ],
@@ -2828,7 +2828,7 @@ const TOPICS = [
   ],
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support referrals for substance use and mental health. Stopping daily alcohol or sedative pills suddenly can be dangerous: talk with a doctor first.",
-   "Al-Anon and Alateen, for family members and teens affected by someone's drinking. NAMI HelpLine: 1-800-950-6264, for families living with mental illness (not a crisis line).",
+   "SMART Recovery Family and Friends and NACoA, for family members and teens affected by someone's drinking. NAMI HelpLine: 1-800-950-6264, for families living with mental illness (not a crisis line).",
    "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
    "An overdose, or danger right now: call 911.",
    "If a child is unsafe or not being looked after: call or text Childhelp, 1-800-422-4453. If a vulnerable adult is being neglected or harmed: call MAARC, 1-844-880-1574."
@@ -2837,10 +2837,6 @@ const TOPICS = [
    [
     "SAMHSA National Helpline",
     "https://www.samhsa.gov/find-help/national-helpline"
-   ],
-   [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
    ],
    [
     "NACoA: the Seven Cs for children",
@@ -9629,7 +9625,7 @@ var TOPICS = [
    "group"
   ],
   "short": "When someone in the family is growing sober: honest talk, healthy habits, and good sober time for all.",
-  "keys": "sober sobriety growing sober living sober drunk beer wine aa na slip quit drinking stopped drinking stopped using drinking drugs alcohol pills recovery family recovery treatment rehab home from treatment early sobriety first year sober healthy home al-anon alateen nar-anon whole family heals",
+  "keys": "sober sobriety growing sober living sober drunk beer wine slip quit drinking stopped drinking stopped using drinking drugs alcohol pills recovery family recovery treatment rehab home from treatment early sobriety first year sober healthy home whole family heals",
   "parts": [
    "branches",
    "bark",
@@ -9656,7 +9652,7 @@ var TOPICS = [
     "Talking about feelings out loud, so nobody has to carry them alone or numb them.",
     "Tending our bodies together: sleep, water, whole food, movement, and time outdoors.",
     "A weekly Family Night, with a meal everyone helps make, a walk, music, or a game, and small healthy moments on ordinary days too.",
-    "Family groups like Al-Anon, Alateen, or Nar-Anon, where others understand.",
+    "Family groups like SMART Recovery Family and Friends or NACoA, where others understand.",
     "Marking milestones: a day, a week, a season, a promise kept.",
     "A plan for hard nights: who to call, where to go, and what helps."
    ],
@@ -9692,8 +9688,8 @@ var TOPICS = [
     "Learn together about early sobriety, with the treatment team, a doctor, or a family program.",
     "Support the person's own plan: their group, appointments, sleep, and daily practices.",
     "Make home a steady place: regular meals, water, rest, movement, and a sober house.",
-    "Find your own support: Al-Anon, Nar-Anon, a therapist, or a trusted friend.",
-    "Give children their own place to talk: Alateen, a school counselor, or a kids' program.",
+    "Find your own support: SMART Recovery Family and Friends, a therapist, or a trusted friend.",
+    "Give children their own place to talk: NACoA, a school counselor, or a kids' program.",
     "Keep help numbers where everyone can see them, and celebrate the small wins out loud."
    ],
    "you": "Walking with someone growing sober takes stamina. You matter in this too. Your rest, your people, and your honesty help the whole family heal. You can hope with your whole heart and still keep your limits."
@@ -9734,7 +9730,7 @@ var TOPICS = [
   ],
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information, in English and Spanish.",
-   "Al-Anon and Alateen, for family members and teens affected by someone's drinking. Nar-Anon, for families affected by someone's drug use.",
+   "SMART Recovery Family and Friends, for family members affected by someone's drinking or drug use. NACoA, for children and teens growing up with a family member's drinking or drug use.",
    "Stopping alcohol or sedative pills suddenly can be dangerous. Talk with a doctor first.",
    "Thoughts of not wanting to be alive, or a mental health crisis: call or text 988, any time.",
    "An overdose, someone who won't wake up, or danger right now: call 911. Poison Control: 1-800-222-1222.",
@@ -9748,14 +9744,6 @@ var TOPICS = [
    [
     "FindTreatment.gov",
     "https://findtreatment.gov/"
-   ],
-   [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
    ],
    [
     "NACoA: the Seven Cs for children",
@@ -9788,7 +9776,7 @@ var TOPICS = [
    "group"
   ],
   "short": "Honest, simple words for children of every age when a parent is growing sober.",
-  "keys": "drunk beer wine drugs pills slip aa na talking with kids telling children parent sober parent in recovery mom drinking dad drinking parent drugs parent in treatment rehab what to tell kids explain addiction to a child drunk alcohol pills using sober sobriety seven cs alateen kids questions will you drink again family secret honest",
+  "keys": "drunk beer wine drugs pills slip talking with kids telling children parent sober parent in recovery mom drinking dad drinking parent drugs parent in treatment rehab what to tell kids explain addiction to a child drunk alcohol pills using sober sobriety seven cs kids questions will you drink again family secret honest",
   "parts": [
    "branches",
    "bark",
@@ -9817,7 +9805,7 @@ var TOPICS = [
     "Answering the question that was asked, then asking, “What else are you wondering?”",
     "A question jar, where children can drop a question to talk about later.",
     "Keeping daily routines steady: meals, school, bedtime, and time outside.",
-    "Alateen, a kids' program, or a school counselor, so each child has a place of their own to talk.",
+    "NACoA, a kids' program, or a school counselor, so each child has a place of their own to talk.",
     "Coming back to it often, in small moments, so it never becomes a secret again."
    ],
    "say": [
@@ -9853,7 +9841,7 @@ var TOPICS = [
     "Plan the first talk together, then keep the door open with many small talks.",
     "Fit the words to the age: short and concrete for little ones, more of the why for teens.",
     "Tell teens plainly that drinking and drugs wait until adulthood, and that a family history is a good reason to take extra care.",
-    "Give each child their own support: Alateen, a kids' program, or the school counselor.",
+    "Give each child their own support: NACoA, a kids' program, or the school counselor.",
     "Tell children what to do if a grown-up won't wake up: call 911 and find another grown-up.",
     "Notice and name how each child is coping, and keep their routines steady."
    ],
@@ -9894,7 +9882,7 @@ var TOPICS = [
    ]
   ],
   "reach": [
-   "Al-Anon and Alateen: for families and teens affected by someone's drinking. Nar-Anon: for families affected by someone's drug use.",
+   "NACoA: for children and teens affected by a family member's drinking or drug use. SMART Recovery Family and Friends: for families affected by someone's drinking or drug use.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
    "Teach every child: if a grown-up won't wake up or is hard to wake, call 911. Poison Control: 1-800-222-1222.",
    "Thoughts of not wanting to be alive, for anyone at home: call or text 988, any time.",
@@ -9904,14 +9892,6 @@ var TOPICS = [
    [
     "NACoA: the Seven Cs for children",
     "https://nacoa.org/the-seven-cs/"
-   ],
-   [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
    ],
    [
     "SAMHSA National Helpline",
@@ -10044,7 +10024,7 @@ var TOPICS = [
   ],
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
-   "Al-Anon and Alateen: for families and teens affected by someone's drinking.",
+   "SMART Recovery Family and Friends and NACoA: for families and teens affected by someone's drinking.",
    "If someone has had too much and won't wake up, is very hard to wake, or is breathing slowly: call 911. Poison Control: 1-800-222-1222.",
    "Thoughts of not wanting to be alive: call or text 988, any time."
   ],
@@ -10058,8 +10038,8 @@ var TOPICS = [
     "https://www.rethinkingdrinking.niaaa.nih.gov/"
    ],
    [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
+    "NACoA (National Association for Children of Addiction)",
+    "https://nacoa.org/"
    ]
   ],
   "sources": [],
@@ -10146,7 +10126,7 @@ var TOPICS = [
     "Agree together on what openness looks like, chosen freely by the one growing sober.",
     "Set a weekly family meeting to name what's going well and what still hurts.",
     "Plan how a slip will be shared: early, honestly, and with a call to their support.",
-    "Give each person support of their own: Al-Anon, Nar-Anon, a therapist, a group.",
+    "Give each person support of their own: SMART Recovery Family and Friends, a therapist, a group.",
     "Notice and name every kept promise. Trust grows faster when it's seen."
    ],
    "you": "Rebuilding trust is slow work for everyone. You don't have to heal everything at once. Small pieces, in the right direction, are real progress. Take care of your own heart along the way."
@@ -10178,7 +10158,7 @@ var TOPICS = [
    ]
   ],
   "reach": [
-   "Al-Anon and Nar-Anon: for family members affected by someone's drinking or drug use. Alateen for teens.",
+   "SMART Recovery Family and Friends: for family members affected by someone's drinking or drug use. NACoA for teens.",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
    "If anyone at home is being hurt or threatened: call 911. The National Domestic Violence Hotline: 1-800-799-7233, any time.",
    "Thoughts of not wanting to be alive: call or text 988, any time.",
@@ -10186,12 +10166,12 @@ var TOPICS = [
   ],
   "more": [
    [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
+    "SMART Recovery Family and Friends",
+    "https://smartrecovery.org/"
    ],
    [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
+    "NACoA: Just 4 Teens",
+    "https://nacoa.org/families/just-4-teens/"
    ],
    [
     "SAMHSA National Helpline",
@@ -10217,7 +10197,7 @@ var TOPICS = [
    "team"
   ],
   "short": "When a coworker is growing sober or back from treatment: respect, privacy, and belonging.",
-  "keys": "drunk beer wine drugs pills slip aa na coworker sober teammate sober colleague in recovery back from rehab back from treatment returning to work after treatment drinking at work alcohol drugs pills using work party happy hour drinks after work employee assistance program eap hr privacy sobriety recovery slip team lead manager supervisor",
+  "keys": "drunk beer wine drugs pills slip coworker sober teammate sober colleague in recovery back from rehab back from treatment returning to work after treatment drinking at work alcohol drugs pills using work party happy hour drinks after work employee assistance program eap hr privacy sobriety recovery slip team lead manager supervisor",
   "parts": [
    "branches",
    "trunk",
@@ -10340,7 +10320,7 @@ var TOPICS = [
    "group"
   ],
   "short": "Welcoming people growing sober, and their families, into our community with dignity and belonging.",
-  "keys": "drunk beer wine drugs pills slip aa na welcoming someone sober church member sober congregation recovery ministry recovery friendly church group member in recovery communion grape juice potluck sober events hosting aa meetings na meetings al-anon support group drinking alcohol drugs using sobriety faith community small group belonging shame stigma",
+  "keys": "drunk beer wine drugs pills slip welcoming someone sober church member sober congregation recovery ministry recovery friendly church group member in recovery communion grape juice potluck sober events hosting meetings support group drinking alcohol drugs using sobriety faith community small group belonging shame stigma",
   "parts": [
    "branches",
    "roots",
@@ -10487,7 +10467,7 @@ var TOPICS = [
   ],
   "reach": [
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment referral and information.",
-   "Al-Anon and Alateen, for families and teens affected by someone's drinking. Nar-Anon, for families affected by someone's drug use.",
+   "SMART Recovery Family and Friends, for families affected by someone's drinking or drug use. NACoA, for children and teens.",
    "If someone won't wake up, is very hard to wake, or is breathing slowly: call 911. Naloxone (Narcan) reverses an opioid overdose. Poison Control: 1-800-222-1222.",
    "Thoughts of not wanting to be alive: call or text 988, any time.",
    "A vulnerable adult being harmed or neglected: MAARC, 1-844-880-1574."
@@ -10502,12 +10482,12 @@ var TOPICS = [
     "https://findtreatment.gov/"
    ],
    [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/"
+    "SMART Recovery Family and Friends",
+    "https://smartrecovery.org/"
    ],
    [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
+    "NACoA (National Association for Children of Addiction)",
+    "https://nacoa.org/"
    ]
   ],
   "sources": [

@@ -36,6 +36,8 @@
      soberLines(tree) (the stage's help lines), okDate(d), and My Anchor Plan: anchor(id),
      setAnchor(obj | null, id), kept in vault.soberAnchor. The card, milestones, the plan, and the
      ?sober= link live in shared/gg-sober.js.
+   Living Sober Together (GWG BLD 851): My Good People, people(id) and setPeople(obj | null, id), kept in
+     vault.soberPeople ({names, week: {at, who}}), names only.
    ===================================================================== */
 (function () {
   'use strict';
@@ -154,7 +156,6 @@
     // Living Sober (GWG BLD 789). SAMHSA and Poison Control numbers confirmed in the BLD 789 spec; the rest link to each group's own site.
     samhsa: { name: 'SAMHSA National Helpline', how: '1-800-662-4357', tel: '18006624357', url: 'https://www.samhsa.gov/find-help/helplines/national-helpline', note: 'Treatment referral and information for drinking and drug use, any time, day or night, in English and Spanish. Confidential.' },
     findtx: { name: 'FindTreatment.gov', how: 'Open the website', url: 'https://findtreatment.gov/', note: 'SAMHSA\'s national directory of treatment for drinking and drug use, including medication, by place.' },
-    alanon: { name: 'Al-Anon and Alateen', how: 'Find a meeting', url: 'https://al-anon.org/', note: 'Groups for family and friends of someone who drinks, and Alateen for teens, in person and online.', grownup: true },
     smart: { name: 'SMART Recovery', how: 'Find a meeting', url: 'https://smartrecovery.org/', note: 'Peer groups for growing sober, and Family and Friends meetings, in person and online.' },
     poison: { name: 'Poison Control', how: '1-800-222-1222', tel: '18002221222', url: 'https://www.poison.org/', note: 'Any time, day or night, for questions about a medicine, a drug, or a possible poisoning. If someone is hard to wake or breathing slowly, call 911 first.' },
     nacoa: { name: 'NACoA', how: 'Open the website', url: 'https://nacoa.org/', note: 'The National Association for Children of Addiction: help for kids whose family member drinks or uses, and for the grown-ups who love them.', grownup: true },
@@ -163,12 +164,12 @@
   Object.keys(LINES).forEach(function (k) { LINES[k].id = 'life-' + k; LINES[k].show = LINES[k].how; });
   var KIDLINES = { health: ['pacer'], pain: ['pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami', 'pacer'], close: ['sibs', 'nami'] };
   var LINEMAP = {
-    maple: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
-    aspen: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
-    pine: { sober: ['samhsa', 'alanon', 'poison'], soberLove: ['alanon', 'nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
-    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
-    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
-    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
+    maple: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
+    aspen: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
+    pine: { sober: ['samhsa', 'nacoa', 'poison'], soberLove: ['nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
+    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
+    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
+    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
   };
 
   /* ---------- Living Sober growth plan ideas (GWG BLD 789) ----------
@@ -211,7 +212,7 @@
     love: {
       leaves: 'Keep your own sleep, meals, and movement steady. Tending yourself helps the person you love.',
       bark: 'When worry rises, take three slow breaths and come back to what is yours to tend today.',
-      branches: 'Find one place where people understand, like Al-Anon, Nar-Anon, a family group, or a trusted friend.',
+      branches: 'Find one place where people understand, like SMART Recovery Family and Friends, a family group, or a trusted friend.',
       roots: 'Give yourself a few quiet minutes each day that are only for you.',
       trunk: 'Name what gives your own life meaning in this season, and give it a little time each week.',
       fruit: 'Plan one good thing for yourself this week, whatever choices the person you love makes.'
@@ -236,7 +237,7 @@
     pineLove: {
       leaves: 'Keep your own sleep, meals, and movement steady, whatever the day brings at home.',
       bark: 'When worry or anger rises, move it out: a run, a walk, music, or writing it down.',
-      branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into Alateen.',
+      branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into NACoA for teens.',
       roots: 'Give yourself a few quiet minutes each day that are only for you.',
       trunk: 'It is never your fault, and their choices are theirs. Your own path is yours to grow.',
       fruit: 'Plan one thing each week that is just for you and makes you glad.'
@@ -352,6 +353,34 @@
     if (!id) { MEMANCHOR = a; return Promise.resolve(a); }
     var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
     if (a) v.soberAnchor = a; else delete v.soberAnchor;
+    return Promise.resolve(P().save(id)).then(function () { return a; });
+  }
+
+  /* ---------- My Good People (GWG BLD 851, Living Sober Together) ----------
+     A short list of names the person keeps (names only), and this week's plan for "Who will you see this week?".
+     Kept in the locked vault beside the plan (vault.soberPeople); guests keep it for this visit only. Its own Clear erases it.
+     {names: [up to 12 names], week: {at: 'YYYY-MM-DD' (that week's Monday), who: a few words}, set} */
+  var MEMPEOPLE = null;
+  function cleanPeople(o) {
+    if (!o || typeof o !== 'object') return null;
+    var r = { names: [], week: null, set: /^\d{4}-\d\d-\d\d$/.test(String(o.set || '')) ? o.set : '' };
+    (Array.isArray(o.names) ? o.names : []).forEach(function (n) { n = str(n, 60); if (n && r.names.indexOf(n) < 0 && r.names.length < 12) r.names.push(n); });
+    var w = o.week; if (w && typeof w === 'object' && okDate(w.at) && str(w.who, 160)) r.week = { at: w.at, who: str(w.who, 160) };
+    return r.names.length || r.week ? r : null;
+  }
+  function people(id) {
+    id = id || who();
+    if (!id) return MEMPEOPLE ? cleanPeople(MEMPEOPLE) : null;
+    if (helperView(id)) return null;
+    var v = vault(id); return v ? cleanPeople(v.soberPeople) : null;
+  }
+  function setPeople(obj, id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    var a = obj === null ? null : cleanPeople(Object.assign({}, obj || {}, { set: today() }));
+    if (!id) { MEMPEOPLE = a; return Promise.resolve(a); }
+    var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
+    if (a) v.soberPeople = a; else delete v.soberPeople;
     return Promise.resolve(P().save(id)).then(function () { return a; });
   }
 
@@ -685,7 +714,7 @@
     lines: lines, picks: picks, addGuides: addGuides, label: label, chooser: chooser, dialog: dialog, offerCard: offerCard,
     STAGES: STAGES, stages: stagesFor, sober: sober, soberStage: soberStage, ring: ring, ringShows: ringShows, soberSteps: soberSteps,
     DECLARED: DECLARED.slice(), declared: function (tree) { return DECLARED.indexOf(tree) >= 0; }, soberDate: soberDate, soberLines: soberLines, okDate: okDate,
-    anchor: anchor, setAnchor: setAnchor, days: days, setDay: setDay, setCost: setCost, clearDays: clearDays, helperView: function (id) { return helperView(id || who()); },
+    anchor: anchor, setAnchor: setAnchor, people: people, setPeople: setPeople, days: days, setDay: setDay, setCost: setCost, clearDays: clearDays, helperView: function (id) { return helperView(id || who()); },
     use: function (id) { ctx = id || null; fire(who()); }, who: who,
     on: function (fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
   };

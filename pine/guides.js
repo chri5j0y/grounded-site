@@ -1647,7 +1647,7 @@ const LC_TOPICS = [
     "Know where you can go if home gets scary: a relative's, a friend's, a neighbor's."
    ],
    "helps": [
-    "Talking with other teens who get it. Alateen meetings are for teens affected by someone else's drinking, and many groups welcome teens affected by drug use too.",
+    "Talking with other teens who get it. NACoA has words and help for teens who love someone who drinks or uses, and a school support group can connect you with others.",
     "Protecting your own routines: sleep, school, practice, work, friends. You're allowed a life of your own.",
     "Writing down your feelings when you can't say them out loud yet.",
     "Letting go of the job of fixing them. Their recovery belongs to them and the adults helping them.",
@@ -1677,11 +1677,11 @@ const LC_TOPICS = [
    "help": [
     "Name one or more safe adults they can always call, and make sure they have the numbers.",
     "Make a clear safety plan together: rides, where to go, and calling 911 if someone can't wake up or is in danger.",
-    "Help them find Alateen, a school support group, or a counselor.",
+    "Help them find NACoA, a school support group, or a counselor.",
     "Protect normal teen life: sleep, school, sports, work, friends.",
     "If you're the parent who uses, getting help is one of the strongest things you can do for your teen. Tell them honestly, in a calm and sober moment, that it's not their fault."
    ],
-   "you": "Loving someone who drinks or uses is exhausting. Al-Anon and similar family groups exist for adults, and the SAMHSA National Helpline can point you to treatment and support. Your own steadiness is a gift to your teen. If they use Pine, their answers stay private; you may get a quiet “Please check in” alert, never their answers."
+   "you": "Loving someone who drinks or uses is exhausting. SMART Recovery Family and Friends offers support for adults, and the SAMHSA National Helpline can point you to treatment and support. Your own steadiness is a gift to your teen. If they use Pine, their answers stay private; you may get a quiet “Please check in” alert, never their answers."
   },
   "faith": "For some families, a faith community, a pastor, or a recovery group with a spiritual side becomes a real source of strength. For others, faith can add shame, or pressure to forgive and forget. If faith is part of your life, you can be honest with God about your anger and fear, and ask a youth leader you trust for support. If it isn't, saying what hurts out loud to someone safe matters just as much. Either way, your worth doesn't depend on anyone else's choices.",
   "practices": [
@@ -1697,15 +1697,11 @@ const LC_TOPICS = [
    "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. In Pine, this help goes to you directly, not to a family alert.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support for the person using, or for your family.",
-   "Alateen, for teens affected by someone else's drinking: find a meeting through Al-Anon's Teen Corner.",
+   "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses.",
    "Low mood or worry that lasts two weeks or more: talk with a school counselor or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
   ],
   "more": [
-   [
-    "Alateen, Al-Anon Teen Corner",
-    "https://al-anon.org/newcomers/teen-corner-alateen/"
-   ],
    [
     "NACoA: the Seven Cs",
     "https://nacoa.org/the-seven-cs/"
@@ -3060,7 +3056,7 @@ const LC_TOPICS = [
    "Feeling like you can't stop vaping, drinking, or using something: tell a doctor, school counselor, or trusted adult. The SAMHSA National Helpline, 1-800-662-4357, answers any time, in English and Spanish.",
    "If using something is how you're getting through thoughts of not wanting to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "In Minnesota, for a mental health crisis: call **CRISIS (274747) from a cell phone.",
-   "A family member's drinking or drug use is weighing on you: Alateen, for teens.",
+   "A family member's drinking or drug use is weighing on you: NACoA, for teens, and a trusted adult.",
    "Pressure from someone you're dating to drink or use: Love Is Respect, 1-866-331-9474, or text LOVEIS to 22522."
   ],
   "more": [
@@ -3077,8 +3073,8 @@ const LC_TOPICS = [
     "/pine/#life=sober-pills"
    ],
    [
-    "Alateen, Teen Corner (Al-Anon)",
-    "https://al-anon.org/newcomers/teen-corner-alateen/"
+    "NACoA: Just for Teens",
+    "https://nacoa.org/families/just-4-teens/"
    ],
    [
     "988 Suicide and Crisis Lifeline",
@@ -5821,7 +5817,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "samhsarec",
    "mdhminor"
   ],
-  "keys": "getting sober sober teen sobriety quit drinking stop drinking quit drugs stop using pills xanax percs opioids alcohol drunk high every day can't stop cravings withdrawal detox rehab treatment outpatient program recovery high school sober friends first weeks sober staying sober slip relapse aa na smart recovery alateen counselor doctor",
+  "keys": "getting sober sober teen sobriety quit drinking stop drinking quit drugs stop using pills xanax percs opioids alcohol drunk high every day can't stop cravings withdrawal detox rehab treatment outpatient program recovery high school sober friends first weeks sober staying sober slip relapse smart recovery counselor doctor",
   "parts": [
    "bark",
    "leaves",
@@ -5845,7 +5841,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Sleep, water, real meals, and moving your body every day. Your body is healing, and it needs the basics.",
     "Writing it out. Putting a feeling into words helps it move through you.",
     "Friends who are glad you are sober, and time with them doing things you love.",
-    "A therapist or an outpatient program for teens, and a peer group if it helps: Alateen, NA, AA, SMART Recovery, or a group at school.",
+    "A therapist or an outpatient program for teens, and a peer group if it helps: SMART Recovery, sober friends, or a group at school.",
     "In Minnesota, recovery high schools, where every student is growing sober.",
     "In Minnesota, you can agree to health care for drinking or drug use on your own, at any age."
    ],
@@ -5877,7 +5873,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Fill the evenings and weekends with real things: a sport, a job, a gym, a trail, a meal together.",
     "Keep naloxone at home if opioids or pills have been part of the story, and learn how to use it."
    ],
-   "you": "Walking with a teen through early sobriety can bring fear, hope, and exhaustion in one day. Get support for yourself: Al-Anon, a family group, a therapist, or a friend who listens. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+   "you": "Walking with a teen through early sobriety can bring fear, hope, and exhaustion in one day. Get support for yourself: SMART Recovery Family and Friends, a therapist, or a friend who listens. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
   },
   "faith": "For some teens, faith is a real source of strength in getting sober: prayer on a hard night, a youth group that welcomes them, or a sense of being loved through every step. Some have felt judged by a faith community, and that can hurt. If faith is part of your life, you can bring your cravings and your hopes to God honestly, and ask a youth leader you trust to walk with you. If it isn't, the same need for people who stay close points to the friends and grown-ups on your side.",
   "practices": [
@@ -5905,10 +5901,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "Association of Recovery Schools",
     "https://recoveryschools.org/"
-   ],
-   [
-    "Alateen, Al-Anon Teen Corner",
-    "https://al-anon.org/newcomers/teen-corner-alateen/"
    ],
    [
     "SMART Recovery",
@@ -6039,7 +6031,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "sevencs",
    "mccabe25"
   ],
-  "keys": "parent drinks mom drinks dad drinks parent drinking too much parent using drugs mom high dad high parent in rehab parent in treatment parent getting sober parent sober now parent relapse slip broken promises can i trust them again embarrassed angry worried keep it secret talk about it family history will i be like them alateen al-anon nacoa seven cs not my fault",
+  "keys": "parent drinks mom drinks dad drinks parent drinking too much parent using drugs mom high dad high parent in rehab parent in treatment parent getting sober parent sober now parent relapse slip broken promises can i trust them again embarrassed angry worried keep it secret talk about it family history will i be like them nacoa seven cs not my fault",
   "parts": [
    "bark",
    "branches",
@@ -6060,7 +6052,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Keep your own safety plan: who you'll call, where you can go, and a ride that never involves someone who has been drinking or using."
    ],
    "helps": [
-    "Alateen, where teens affected by someone else's drinking talk with other teens who get it. Many groups welcome teens affected by drug use too.",
+    "NACoA, with words and help for teens who love someone who drinks. A school support group can connect you with other teens who get it.",
     "Writing it out: what you feel, what you wish, what you're afraid of.",
     "Your own leaves, your body: sleep, real meals, moving your body, time outside.",
     "Your own life: school, practice, work, friends, plans. You're allowed to have a good life no matter what is happening at home.",
@@ -6091,11 +6083,11 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "help": [
     "Name safe adults the teen can always call, with numbers in their phone.",
     "Make a clear safety plan together: rides, where to go, and calling 911 if someone can't wake up.",
-    "Help them find Alateen, a school group, or a therapist.",
+    "Help them find NACoA, a school group, or a therapist.",
     "Protect normal teen life: sleep, school, sports, work, friends.",
     "If you're the parent growing sober: tell your teen honestly, in a calm and sober moment, what you're doing to heal, and let your steady days do the rest."
    ],
-   "you": "Loving someone who drinks or uses, or growing sober yourself while raising a teen, is a lot to carry. Al-Anon and Nar-Anon are there for family members, and the SAMHSA National Helpline can point you to treatment and family support. If your teen uses Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+   "you": "Loving someone who drinks or uses, or growing sober yourself while raising a teen, is a lot to carry. SMART Recovery Family and Friends is there for family members, and the SAMHSA National Helpline can point you to treatment and family support. If your teen uses Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
   },
   "faith": "For some teens, faith is a place to bring the hurt honestly: anger, fear, and hope all at once, in prayer or with a youth leader they trust. Some feel pressure to forgive and forget quickly, and that can add weight. Forgiveness, if it comes, can take its own time, and safety comes first. If faith isn't part of your life, saying what hurts to someone safe, and choosing your own path, matter just as much.",
   "practices": [
@@ -6111,7 +6103,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline, 1-800-662-4357, any time, for treatment and support for the parent, or for your family.",
-   "Alateen, for teens affected by someone else's drinking: find a meeting through Al-Anon's Teen Corner.",
+   "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
   ],
   "more": [
@@ -6122,14 +6114,6 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "NACoA: the Seven Cs",
     "https://nacoa.org/the-seven-cs/"
-   ],
-   [
-    "Alateen, Al-Anon Teen Corner",
-    "https://al-anon.org/newcomers/teen-corner-alateen/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
    ],
    [
     "SAMHSA National Helpline",

@@ -6,6 +6,7 @@
 // four printouts: Officiant's Script, Order of Service, Program, Family Copy.
 // Funeral types draft an obituary; wedding types keep the license checklist;
 // blessings (home, child) add a Keepsake Copy of the blessing.
+// GWG BLD 851: the Sobriety Milestone (type who 'sober'): Setup asks for the milestone and the sober date, filled as {Milestone} and {Since}.
 // Data: the Staff library's ceremonies key (LIB.ceremonies), with a small
 // built-in fallback so the tab works before that library update is applied.
 // Saved services live in DATA.cer.services: encrypted with the rest of this
@@ -218,7 +219,7 @@ function names(s){
   const last = o => { const p = String(o.name || '').trim().split(/\s+/); return p.length > 1 ? p[p.length - 1] : ''; };
   const pr = PRON[nm.pron] || PRON.they;
   const v = Object.assign({}, pr, {
-    Name: nm.name || '', First: first(nm), Last: last(nm), Born: nm.born || '', Died: nm.died || '',
+    Name: nm.name || '', First: first(nm), Last: last(nm), Born: nm.born || '', Died: nm.died || '', Milestone: nm.mile || '', Since: nm.since || '',
     Partner1: first(s.p1 || {}), Partner2: first(s.p2 || {}), Partner1Full: (s.p1 || {}).name || '', Partner2Full: (s.p2 || {}).name || '',
     Date: nice(s.date), Time: s.time || '', Place: s.place || '', Officiant: (D().settings || {}).name || ''
   });
@@ -233,7 +234,7 @@ function title(s){
   if (famOf(s.type) === 'wedding'){ const n = [(s.p1 || {}).name, (s.p2 || {}).name].filter(Boolean).join(' and '); return n ? t.name + ': ' + n : t.name; }
   return (s.who || {}).name ? t.name + ' for ' + s.who.name : t.name;
 }
-const BLANK = {Name: '[Name]', First: '[Name]', Partner1: '[Partner 1]', Partner2: '[Partner 2]', Partner1Full: '[Partner 1]', Partner2Full: '[Partner 2]', Couple: '[the couple]', Date: '[date]', Place: '[place]', Officiant: '[officiant]'};
+const BLANK = {Name: '[Name]', First: '[Name]', Partner1: '[Partner 1]', Partner2: '[Partner 2]', Partner1Full: '[Partner 1]', Partner2Full: '[Partner 2]', Couple: '[the couple]', Date: '[date]', Place: '[place]', Officiant: '[officiant]', Milestone: '[the milestone]', Since: '[the sober date]'};
 // Fills {Tokens}. A capitalized pronoun token ({They}) capitalizes its word. extra holds question answers for obituaries.
 function fill(t, s, extra){
   const v = names(s);
@@ -267,7 +268,7 @@ const doOf = (e, s) => { const p = partOf(e), o = optOf(e), out = [p.do, o && o.
   if (x && e.piece.kind === 'music') out.push('Music: ' + pieceHead(e) + '.');
   if (x && e.piece.kind === 'ritual'){ if (arr(x.how).length) out.push('How: ' + x.how.map((h, i) => (i + 1) + '. ' + fill(h, s).replace(/\[Name\]/g, names(s).First || '[Name]')).join(' ')); if (arr(x.needs).length) out.push('Bring: ' + x.needs.join('; ') + '.'); }
   return out; };
-const NAMEKEYS = ['Name', 'First', 'Partner1', 'Partner2', 'Partner1Full', 'Partner2Full'];
+const NAMEKEYS = ['Name', 'First', 'Partner1', 'Partner2', 'Partner1Full', 'Partner2Full', 'Milestone', 'Since'];
 const snap = s => { const v = names(s), o = {}; NAMEKEYS.forEach(k => { if (v[k]) o[k] = v[k]; }); return o; };
 const optOf = e => (partOf(e).options || []).find(x => x.id === e.option) || null;
 function minsOf(e){
@@ -571,6 +572,7 @@ function vSetup(s){
   const pron = `<label class="f">Pronouns</label>${chips('pron', [['he', 'He'], ['she', 'She'], ['they', 'They']], s.who.pron || 'they')}`;
   const person = who === 'home' ? `<div class="cer-g2">${inp('cer-n', 'who.name', 'Household', 'Sam and Alex Rivera, or the Rivera family')}${inp('cer-fam', 'who.family', 'Who Lives Here', 'Names, children and pets included')}</div>`
     : who === 'child' ? `<div class="cer-g2">${inp('cer-n', 'who.name', "Child's Full Name")}${inp('cer-fn', 'who.first', 'Goes By', 'First name or nickname')}${inp('cer-b', 'who.born', 'Born or Welcomed', 'March 3, 2026')}${inp('cer-fam', 'who.family', 'Parents or Family', 'Sam and Alex Rivera')}</div>${pron}`
+    : who === 'sober' ? `<div class="cer-g2">${inp('cer-n', 'who.name', 'Full Name')}${inp('cer-fn', 'who.first', 'Goes By', 'First name or nickname')}${inp('cer-ml', 'who.mile', 'The Milestone', 'one year, 90 days, five years')}${inp('cer-sn', 'who.since', 'Sober Since', 'April 1, 2025')}</div>${inp('cer-fam', 'who.family', 'Family Gathered', 'Who will be in the room')}${pron}`
     : fam === 'blessing' ? `<div class="cer-g2">${inp('cer-n', 'who.name', 'Full Name')}${inp('cer-fn', 'who.first', 'Goes By', 'First name or nickname')}</div>${inp('cer-fam', 'who.family', 'Family Gathered', 'Who will be in the room')}${pron}`
     : fam === 'wedding'
     ? `<div class="cer-g2">${[['p1', 'Partner 1'], ['p2', 'Partner 2']].map(([k, l]) => `<div><label class="f" for="cer-${k}n">${l}: Full Name</label><input type="text" id="cer-${k}n" data-cerf="${k}.name" value="${esc((s[k] || {}).name || '')}" autocomplete="off">
@@ -1189,6 +1191,7 @@ function guideType(g){
   if (/graveside|committal/.test(x)) return has('graveside') || has('funeral');
   if (/infant/.test(x)) return has('infant-loss') || has('funeral');
   if (/funeral/.test(x)) return has('funeral');
+  if (/sobri|sober/.test(x)) return has('sober-milestone');
   if (/child/.test(x) && /bless/.test(x)) return has('child-blessing') || has('house-blessing');
   if (/bedside/.test(x)) return null;
   if (/house/.test(x) && /bless/.test(x)) return has('house-blessing');

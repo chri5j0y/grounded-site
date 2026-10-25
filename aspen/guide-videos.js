@@ -2754,7 +2754,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "card",
 "title": "You can always talk about this.",
 "body": "Tell a parent, a school counselor, a coach, a teacher, a relative. You are not in trouble.",
-"say": "You never have to keep this a secret, even if someone asks you to. Telling a grown-up you trust is taking care of yourself, and you are not in trouble. Try the other parent, a relative, a school counselor, a teacher, or a coach. There are groups, like Alateen, for kids exactly like you."
+"say": "You never have to keep this a secret, even if someone asks you to. Telling a grown-up you trust is taking care of yourself, and you are not in trouble. Try the other parent, a relative, a school counselor, a teacher, or a coach. Lots of kids feel just like you, and there are grown-ups ready to help."
 },
 {
 "k": "big",
@@ -2890,7 +2890,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "k": "big",
 "h": "Not their fault. Not their job.",
 "sub": "The full guide has more, whenever you want it.",
-"say": "Caring for yourself matters too. Al-Anon is there for grown-ups who love someone who drinks, and Alateen is there for kids. You don't have to fix this today. Keep telling your kid the truth. It's not your fault, and it's not your job. The full guide has more, whenever you want it."
+"say": "Caring for yourself matters too. Lean on a friend, a therapist, or SMART Recovery Family and Friends, and help your kid find a trusted adult of their own. You don't have to fix this today. Keep telling your kid the truth. It's not your fault, and it's not your job. The full guide has more, whenever you want it."
 }
 ]
 }
@@ -14098,8 +14098,8 @@ window.GG_LEARN_GUIDES.aspen = {
     {
      "k": "card",
      "title": "Help for the whole family",
-     "body": "Alateen, Al-Anon, Nar-Anon.",
-     "say": "There is help for everyone. Alateen is for teens. Al-Anon and Nar-Anon are for grown-ups who love someone who drinks or uses. And if your kid talks about not wanting to be alive, stay with them."
+     "body": "NACoA, a trusted adult, SMART Family and Friends.",
+     "say": "There is help for everyone. NACoA and a trusted adult are there for teens. SMART Recovery Family and Friends is there for grown-ups who love someone who drinks or uses. And if your kid talks about not wanting to be alive, stay with them."
     },
     {
      "k": "big",
@@ -14313,8 +14313,8 @@ window.GG_LEARN_GUIDES.aspen = {
     {
      "k": "card",
      "title": "Support for you too",
-     "body": "Al-Anon, Nar-Anon, Alateen.",
-     "say": "You need support too. Al-Anon and Nar-Anon are for grown-ups who love someone who drinks or uses, and Alateen is for teens. If your child ever talks about not wanting to be alive, stay with them."
+     "body": "A friend, SMART Family and Friends, NACoA.",
+     "say": "You need support too. A friend, a therapist, or SMART Recovery Family and Friends can help grown-ups who love someone who drinks or uses, and NACoA is there for teens. If your child ever talks about not wanting to be alive, stay with them."
     },
     {
      "k": "big",

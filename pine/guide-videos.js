@@ -13412,7 +13412,7 @@ window.GG_LEARN_GUIDES.pine = {
      "k": "card",
      "title": "Your people and your plan",
      "body": "One grown-up who knows. A text for hard moments.",
-     "say": "Pick one grown-up who knows the whole story and is on your side. Have a friend you can text when it gets hard. A therapist, a teen program, or a group like Alateen, NA, AA, or SMART Recovery can help too, whatever fits you. If someone can't wake up, call for emergency help."
+     "say": "Pick one grown-up who knows the whole story and is on your side. Have a friend you can text when it gets hard. A therapist, a teen program, or a group like SMART Recovery or a group at school can help too, whatever fits you. If someone can't wake up, call for emergency help."
     },
     {
      "k": "big",
@@ -13954,14 +13954,14 @@ window.GG_LEARN_GUIDES.pine = {
       ],
       [
        "Their own support",
-       "Alateen, a group, a therapist"
+       "A trusted adult, a group, a therapist"
       ],
       [
        "Normal teen life",
        "Sleep, school, friends"
       ]
      ],
-     "say": "What helps most. Safe adults, with names and numbers in their phone. A safety plan, rides, a place to go, and calling for help if someone can't wake up. Their own support, like Alateen, a school group, or a therapist. And normal teen life, sleep, school, sports, and friends.",
+     "say": "What helps most. Safe adults, with names and numbers in their phone. A safety plan, rides, a place to go, and calling for help if someone can't wake up. Their own support, like a trusted adult, a school group, or a therapist. And normal teen life, sleep, school, sports, and friends.",
      "cue": {
       "at": [
        1,
@@ -13974,8 +13974,8 @@ window.GG_LEARN_GUIDES.pine = {
     {
      "k": "card",
      "title": "Support for you",
-     "body": "Al-Anon, Nar-Anon.",
-     "say": "You need support too. Al-Anon and Nar-Anon are there for family members."
+     "body": "A friend, SMART Family and Friends.",
+     "say": "You need support too. A friend, a therapist, or SMART Recovery Family and Friends can be there for family members."
     },
     {
      "k": "big",

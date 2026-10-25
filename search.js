@@ -42,7 +42,7 @@
     { title: 'Health and Ability', sub: 'In every tree from Maple to Sequoia: a private box in your profile that opens guides and practices for living with a disability, illness, or difference', href: '/tools.html#tools', keys: 'health and ability disability disabled illness chronic condition chronic pain deaf hard of hearing blind low vision autism autistic wheelchair mobility accessible accessibility' },
     { title: 'Eulogy Helper', sub: 'For the one who will speak: prompts, an outline, a reading time, and tips for speaking through tears', href: '/eulogy-helper.html', keys: 'eulogy eulogies speech speaking funeral memorial tribute remarks words celebration of life life story stories crying tears' },
     { title: 'The Grounded Readings Library', sub: 'Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between, with Listen', href: '/readings.html', keys: 'readings reading library prayer prayers scripture psalm psalms bible blessing blessings poem poems poetry hymn hymns song songs spirituals story stories parable parables funeral memorial wedding vows birth baby baptism graveside bedside grief comfort rosary catholic orthodox protestant lutheran methodist baptist quaker celtic irish scottish gaelic carmina gadelica jewish kaddish muslim quran sufi rumi hindu gita buddhist sikh bahai taoist tao te ching stoic humanist secular nature interfaith listen read aloud' },
-    { title: 'Living Sober', sub: 'For anyone growing sober, and the people who love them: today\u2019s encouragement, a mantra, Start Here videos, Early Days: 90 Days, Ride the Wave, Good Times, Sober, My Anchor Plan, and help lines', href: '/living-sober.html', keys: 'living sober sobriety sober alcohol free alcohol-free quit drinking stop drinking drinking less drugs recovery recovering addiction early days 30 days thirty days sober date milestone anniversary chip mantra encouragement anchor plan craving cravings relapse slip family of someone who drinks loved one al-anon aa na smart recovery' }
+    { title: 'Living Sober', sub: 'For anyone growing sober, and the people who love them: today\u2019s encouragement, a mantra, Start Here videos, Early Days: 90 Days, Ride the Wave, Good Times, Sober, My Anchor Plan, and help lines', href: '/living-sober.html', keys: 'living sober sobriety sober alcohol free alcohol-free quit drinking stop drinking drinking less drugs recovery recovering addiction early days 30 days thirty days sober date milestone anniversary chip mantra encouragement anchor plan craving cravings relapse slip family of someone who drinks loved one smart recovery' }
   ];
 
 
@@ -65,6 +65,7 @@
     { title: 'Child Blessings', sub: 'Welcoming a new life into a family', href: '/child-blessings.html', keys: 'baby blessing naming child dedication new baby' },
     { title: 'House Blessings', sub: 'A new home, or a new beginning', href: '/house-blessings.html', keys: 'house blessing new home move' },
     { title: 'Milestones', sub: 'Graduations, retirements, recovery, and more', href: '/milestones.html', keys: 'milestone graduation retirement recovery anniversary' },
+    { title: 'Sobriety Milestone Ceremony', sub: '30 days, one year, or any sober anniversary, celebrated your way', href: '/milestones.html#sobriety', keys: 'sobriety sober milestone anniversary one year 30 days 90 days celebration ceremony recovery' },
     { title: 'Hard Season Support', sub: 'One-on-one support for the seasons that change everything, $125 a session', href: '/hard-season-support.html', keys: 'hard season support hard seasons sudden loss sudden death unexpected loss overdose accident addiction recovery sobriety sober relapse drinking drugs substance use family of addiction paralysis injury spinal cord accident illness diagnosis new diagnosis chronic illness cancer disability long recovery body changed job loss laid off fired career change divorce breakup separation move moving retirement empty nest life change transition faith change faith crisis leaving church church hurt religion losing religion deconstruction doubt spiritual trauma religious trauma spiritual abuse shock anger' },
     { title: 'Grief and Caregiver Support', sub: 'One-on-one support after a loss or while caregiving, $125 a session', href: '/grief-caregiver-support.html', keys: 'grief griefwork bereavement loss caregiver caregiving burnout widow widower' },
     { title: 'Growth', sub: 'Grow deeper. Rest well. Spiritual guidance, meditation, renewal, and retreats', href: '/services-growth.html', keys: 'growth renewal grow deeper rest retreat retreats workshop workshops seminar seminars faith spiritual practice' },
@@ -123,14 +124,14 @@
     beer: 'drinking alcohol', wine: 'drinking alcohol', liquor: 'drinking alcohol', booze: 'drinking alcohol', partying: 'party drinking', addict: 'addiction drinking drug', addicted: 'addiction drinking drug', alcoholic: 'drinking alcohol addiction', alcoholism: 'drinking alcohol addiction',
     rehab: 'treatment rehab recovery', detox: 'detox withdrawal treatment', withdrawal: 'withdrawal detox', relapse: 'slip relapse', relapsed: 'slip relapse', slipped: 'slip relapse', craving: 'craving cravings urge', cravings: 'craving cravings urge', urge: 'craving urge', urges: 'craving urge',
     narcan: 'naloxone narcan overdose', naloxone: 'naloxone narcan overdose', fentanyl: 'fentanyl pills overdose', opioid: 'opioid opioids pills', opioids: 'opioid opioids pills', painpills: 'pills opioid', pills: 'pills', heroin: 'opioid drug', meth: 'drug', cocaine: 'drug',
-    aa: 'aa recovery sober', na: 'na recovery sober', alanon: 'alanon family drinking', alateen: 'alateen alanon family drinking', recovery: 'recovery sober', overdose: 'overdose', overdosed: 'overdose', od: 'overdose',
+    recovery: 'recovery sober', overdose: 'overdose', overdosed: 'overdose', od: 'overdose',
     college: 'college graduation', graduation: 'graduation college leaving', dorm: 'college dorm', homesick: 'college leaving homesick', leavinghome: 'college sibling graduation', movingout: 'college sibling moving',
     angry: 'anger angry blowup meltdown escalating', mad: 'anger mad meltdown', selfharm: 'harm hurting suicide wanting cutting', selfinjury: 'harm hurting cutting', panicattack: 'panic anxiety', stepmom: 'stepfamily', stepdad: 'stepfamily', stepparent: 'stepfamily'
   };
   var PHRASES = [
     [/blow(ing|s)? up|blew up/g, 'blowup'], [/freak(ing|ed|s)? out/g, 'freakout'], [/losing it|lost it/g, 'losingit'], [/out of control/g, 'outofcontrol'],
     [/calm(ing)? (them |him |her |me )?down/g, 'calmdown'], [/de[\s-]?escalat\w*/g, 'deescalate'], [/picked on|picking on/g, 'pickedon'], [/end of life/g, 'endoflife'], [/nursing homes?/g, 'nursinghome'], [/assisted living/g, 'assistedliving'], [/memory care/g, 'memorycare'], [/elder abuse/g, 'elderabuse'],
-    [/pain ?pills?/g, 'painpills'], [/al[\s-]?anon/g, 'alanon'], [/12[\s-]?step\w*|twelve[\s-]?step\w*/g, 'aa'],
+    [/pain ?pills?/g, 'painpills'],
     [/two homes/g, 'twohomes'], [/screen time/g, 'screentime'], [/can'?t sleep|trouble sleeping/g, 'cantsleep'], [/laid off|lay ?off/g, 'laidoff'],
     [/new school/g, 'newschool'], [/e[\s-]?cig\w*/g, 'ecig'], [/alzheimer'?s/g, 'alzheimers'], [/school shooting/g, 'shooting'], [/self[\s-]?harm\w*|cutting|cut (my|him|her|them)sel\w*/g, 'selfharm'], [/panic attacks?/g, 'panicattack'], [/self[\s-]?esteem/g, 'esteem'],
     [/self[\s-]?injur\w*/g, 'selfinjury'], [/burn(ing|ed|s)? (my|him|her|them)sel\w*/g, 'selfharm'],
@@ -171,7 +172,7 @@
   // has its own copies loaded (searching from inside Maple, Aspen, Oak, or The Grove).
   var GPART = null;
   function loadGrove() {
-    return Promise.all(['/grove/data.js?v=b791', '/grove/library.js?v=b791'].map(function (u) {
+    return Promise.all(['/grove/data.js?v=b791', '/grove/library.js?v=b852'].map(function (u) {
       return fetch(u).then(function (r) { return r.ok ? r.text() : ''; }).catch(function () { return ''; });
     })).then(function (t) {
       try {
@@ -201,7 +202,7 @@
     ITEMS = [];
     WAIT.forEach(function (el) { el.textContent = 'Getting everything ready...'; });
     loading = Promise.all([
-      load('/maple/guides.js?v=b793'), load('/aspen/guides.js?v=b849'), load('/pine/guides.js?v=b849'), load('/birch/guides.js?v=b849'), load('/oak/guides.js?v=b793'), load('/sequoia/guides.js?v=b793'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b795'), loadGrove(), loadBooks()
+      load('/maple/guides.js?v=b852'), load('/aspen/guides.js?v=b852'), load('/pine/guides.js?v=b852'), load('/birch/guides.js?v=b852'), load('/oak/guides.js?v=b852'), load('/sequoia/guides.js?v=b852'), load('/willow/guides.js?v=b782'), load('/grove/guides.js?v=b852'), loadGrove(), loadBooks()
     ]).then(function () {
       TOOLS.forEach(function (t) { add({ type: 'tool', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
       PAGES.forEach(function (t) { add({ type: 'page', title: t.title, sub: t.sub, keys: t.keys, href: t.href }); });
