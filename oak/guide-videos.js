@@ -5761,7 +5761,7 @@ window.GG_LEARN_GUIDES.oak = {
 "Someone safe and steady"
 ]
 ],
-"say": "Here are some first steps. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
+"say": "Here are some first steps. It's confidential, and they can point you to help nearby. Talk with your doctor honestly about what is going on, especially before you stop drinking or taking sedatives every day. Find the support that fits you: people who live sober and thrive, a peer group like SMART Recovery or Refuge Recovery, a therapist, or a treatment program. And tell one person who is safe and steady. You might say, I need help with my drinking. I'm ready to talk about it."
 },
 {
 "k": "big",
@@ -5788,7 +5788,7 @@ window.GG_LEARN_GUIDES.oak = {
 ],
 [
 "A recovery community",
-"Meetings, sponsors, peers"
+"Meetings, mentors, peers"
 ],
 [
 "A plan for high-risk times",
@@ -5799,13 +5799,13 @@ window.GG_LEARN_GUIDES.oak = {
 "Recovery grows with others"
 ]
 ],
-"say": "Here is what helps recovery hold. Treatment matched to your needs, which a doctor or treatment provider can help you find. A recovery community, with meetings, sponsors, and peers who understand. A plan for your high-risk times, like evenings, payday, or a hard day, with new routines ready. And connection. Recovery grows with other people around you."
+"say": "Here is what helps recovery hold. Treatment matched to your needs, which a doctor or treatment provider can help you find. A recovery community, with meetings, sober mentors, and peers who understand. A plan for your high-risk times, like evenings, payday, or a hard day, with new routines ready. And connection. Recovery grows with other people around you."
 },
 {
 "k": "card",
 "title": "A slip is not the end of recovery.",
 "body": "Return to use is part of many recoveries. Reach out the same day.",
-"say": "If you slip, or return to use, you are not starting from nothing. A return to use is part of many recoveries. What you learned is still yours. Reach out the same day, to your sponsor, your group, or your doctor, and take the next step. You can tell yourself, a slip is not the end of my recovery."
+"say": "If you slip, or return to use, you are not starting from nothing. A return to use is part of many recoveries. What you learned is still yours. Reach out the same day, to your mentor, your group, or your doctor, and take the next step. You can tell yourself, a slip is not the end of my recovery."
 },
 {
 "k": "card",
@@ -5939,7 +5939,7 @@ window.GG_LEARN_GUIDES.oak = {
 "items": [
 [
 "A family support group",
-"Like Al-Anon"
+"SMART Family and Friends"
 ],
 [
 "A counselor of your own",
@@ -5950,7 +5950,7 @@ window.GG_LEARN_GUIDES.oak = {
 "A life beyond the worry"
 ]
 ],
-"say": "Your wellbeing matters. A support group for families, like Al-Anon, can help you feel less alone. A counselor of your own can help with the weight you carry. And keep rest and friends in your week, a life beyond the worry."
+"say": "Your wellbeing matters. A support group for families, like SMART Recovery Family and Friends, can help you feel less alone. A counselor of your own can help with the weight you carry. And keep rest and friends in your week, a life beyond the worry."
 },
 {
 "k": "big",
@@ -18069,10 +18069,10 @@ window.GG_LEARN_GUIDES.oak = {
       ],
       [
        "Peer groups",
-       "AA, NA, SMART, Refuge Recovery"
+       "SMART, Refuge Recovery"
       ]
      ],
-     "say": "Every kind of help is welcome here. Your doctor, for an honest talk and a safe plan. A therapist or a treatment program, for what sits underneath. Peer groups, like AA, NA, SMART Recovery, or Refuge Recovery, where people walk this together.",
+     "say": "Every kind of help is welcome here. Your doctor, for an honest talk and a safe plan. A therapist or a treatment program, for what sits underneath. Peer groups, like SMART Recovery or Refuge Recovery, where people walk this together.",
      "cue": {
       "at": [
        1,
@@ -18204,14 +18204,14 @@ window.GG_LEARN_GUIDES.oak = {
      "items": [
       [
        "Your own group",
-       "Al-Anon or Nar-Anon"
+       "SMART Family and Friends"
       ],
       [
        "Rest and your people",
        "A life beyond the worry"
       ]
      ],
-     "say": "Keep tending your own tree. Groups like Al-Anon and Nar-Anon are there for families and friends. Rest, and keep your own people close.",
+     "say": "Keep tending your own tree. A group like SMART Recovery Family and Friends is there for you, too. Rest, and keep your own people close.",
      "cue": {
       "at": [
        1,
@@ -18337,7 +18337,7 @@ window.GG_LEARN_GUIDES.oak = {
        "On your team"
       ]
      ],
-     "say": "This goes better with people. One person you can text any hour. A group, if you want one: AA, NA, SMART Recovery, Refuge Recovery, or another that fits you. And your doctor, on your team. Try saying, I've stopped drinking, and the first weeks are hard. Could you check on me most days this month?",
+     "say": "This goes better with people. One person you can text any hour. A group, if you want one: SMART Recovery, Refuge Recovery, or another that fits you. And your doctor, on your team. Try saying, I've stopped drinking, and the first weeks are hard. Could you check on me most days this month?",
      "cue": {
       "at": [
        1,
@@ -18469,7 +18469,7 @@ window.GG_LEARN_GUIDES.oak = {
      "h": "Support for you",
      "items": [
       [
-       "Al-Anon or Nar-Anon",
+       "SMART Family and Friends",
        "For families and friends"
       ],
       [
@@ -18477,7 +18477,7 @@ window.GG_LEARN_GUIDES.oak = {
        "Your own sleep matters"
       ]
      ],
-     "say": "The first month can be intense for the whole family. Groups like Al-Anon and Nar-Anon are there for you. Your own sleep and rest matter.",
+     "say": "The first month can be intense for the whole family. Groups like SMART Recovery Family and Friends are there for you. Your own sleep and rest matter.",
      "cue": {
       "at": [
        1,
@@ -18726,7 +18726,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Hope and old worries, both.",
      "body": "Keep your own support. Enjoy the good days.",
-     "say": "Living beside someone in their first sober year can stir hope and old worries at the same time. Both make sense. Keep your own support, like Al-Anon or Nar-Anon. If they slip, encourage them to reach out the same day, and keep your love steady. And let yourself enjoy the good days, too."
+     "say": "Living beside someone in their first sober year can stir hope and old worries at the same time. Both make sense. Keep your own support, like SMART Recovery Family and Friends or a trusted friend. If they slip, encourage them to reach out the same day, and keep your love steady. And let yourself enjoy the good days, too."
     },
     {
      "k": "big",
@@ -18997,7 +18997,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Calm for them, care for you.",
      "body": "Your own support keeps you steady.",
-     "say": "Hearing about cravings can scare you. That's natural. Keep your own support, like Al-Anon or Nar-Anon, so you can stay calm for them."
+     "say": "Hearing about cravings can scare you. That's natural. Keep your own support, like SMART Recovery Family and Friends or a trusted friend, so you can stay calm for them."
     },
     {
      "k": "big",
@@ -19254,7 +19254,7 @@ window.GG_LEARN_GUIDES.oak = {
        "Your own support"
       ]
      ],
-     "say": "Then help them reconnect. Today, with their person, their group, or their doctor. This week, a kind look at what happened and what they needed. And for you, ongoing support of your own, like Al-Anon or Nar-Anon.",
+     "say": "Then help them reconnect. Today, with their person, their group, or their doctor. This week, a kind look at what happened and what they needed. And for you, ongoing support of your own, like SMART Recovery Family and Friends or a trusted friend.",
      "cue": {
       "at": [
        1,
@@ -19496,7 +19496,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Your own healing, too.",
      "body": "Their healing may stir yours.",
-     "say": "Watching someone heal old hurts can stir your own. Notice what comes up for you. Keep your own support close, like Al-Anon, Nar-Anon, or a therapist of your own."
+     "say": "Watching someone heal old hurts can stir your own. Notice what comes up for you. Keep your own support close, like SMART Recovery Family and Friends, a trusted friend, or a therapist of your own."
     },
     {
      "k": "big",
@@ -19734,7 +19734,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Your healing counts too.",
      "body": "Your own support, your own pace.",
-     "say": "Healing the relationship includes healing you. Al-Anon, Nar-Anon, or a therapist of your own can help with what you carry. Family therapy can help you both be heard."
+     "say": "Healing the relationship includes healing you. SMART Recovery Family and Friends, a trusted friend, or a therapist of your own can help with what you carry. Family therapy can help you both be heard."
     },
     {
      "k": "big",
@@ -20189,7 +20189,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Help that fits, and help for you",
      "body": "A doctor, a financial counselor, your own support.",
-     "say": "Some swaps need their own help: a doctor for eating that feels out of control, a reputable financial counselor for growing debt, a therapist for the feelings underneath. And watching a new habit grow can bring back old fears. Keep your own support close, like Al-Anon or Nar-Anon."
+     "say": "Some swaps need their own help: a doctor for eating that feels out of control, a reputable financial counselor for growing debt, a therapist for the feelings underneath. And watching a new habit grow can bring back old fears. Keep your own support close, like SMART Recovery Family and Friends or a trusted friend."
     },
     {
      "k": "big",
@@ -20307,7 +20307,7 @@ window.GG_LEARN_GUIDES.oak = {
      "items": [
       [
        "Your support",
-       "Al-Anon, Nar-Anon, a therapist"
+       "SMART Family and Friends, a therapist"
       ],
       [
        "Your body",
@@ -20318,7 +20318,7 @@ window.GG_LEARN_GUIDES.oak = {
        "Friends, time outdoors"
       ]
      ],
-     "say": "And tend your own tree. Your support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a therapist. Your body: sleep, real food, movement. And your joys: friends, time outdoors, the things you love. Your life matters too.",
+     "say": "And tend your own tree. Your support: SMART Recovery Family and Friends, a trusted friend, or a therapist. Your body: sleep, real food, movement. And your joys: friends, time outdoors, the things you love. Your life matters too.",
      "cue": {
       "at": [
        1,
@@ -20426,8 +20426,8 @@ window.GG_LEARN_GUIDES.oak = {
     {
      "k": "card",
      "title": "Help them find their people.",
-     "body": "Al-Anon, Nar-Anon, a therapist, ordinary breaks.",
-     "say": "Help them find their own support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a therapist. Offer ordinary breaks: a walk, a meal, a night away from the worry. And keep your own boundaries, so you can stay steady for the long haul."
+     "body": "SMART Family and Friends, a therapist, ordinary breaks.",
+     "say": "Help them find their own support: SMART Recovery Family and Friends, a trusted friend, or a therapist. Offer ordinary breaks: a walk, a meal, a night away from the worry. And keep your own boundaries, so you can stay steady for the long haul."
     },
     {
      "k": "card",

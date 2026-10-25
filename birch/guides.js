@@ -3304,7 +3304,7 @@ const LC_TOPICS = [
   "id": "substances",
   "ring": "br-mind",
   "title": "Drinking and Other Drugs",
-  "keys": "drinking alcohol beer binge drinking blackout hungover party bar vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse aa meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
+  "keys": "drinking alcohol beer binge drinking blackout hungover party bar vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
   "parts": [
    "leaves",
    "bark",
@@ -3359,7 +3359,7 @@ const LC_TOPICS = [
     "Set clear, kind boundaries for your own life and home, and keep them.",
     "Keep naloxone where you live if anyone around you uses opioids or pills from anywhere but a pharmacy. Learn to use it.",
     "If they're ready for help, offer to look at options together: a doctor, therapy, a support group, or the SAMHSA National Helpline.",
-    "Find support for yourself, such as Al-Anon or SMART Recovery Family and Friends."
+    "Find support for yourself, such as SMART Recovery Family and Friends or a therapist."
    ],
    "you": "Loving someone who uses a lot is exhausting, and you can't control their choices. You can take care of yourself, keep the door open, and stay safe. If they use Birch, they choose what you see; their answers stay on their own device, and no alert goes to anyone."
   },
@@ -3388,10 +3388,6 @@ const LC_TOPICS = [
    [
     "DEA: One Pill Can Kill",
     "https://www.dea.gov/onepill"
-   ],
-   [
-    "Al-Anon",
-    "https://al-anon.org"
    ],
    [
     "SMART Recovery",
@@ -5880,7 +5876,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-first-year",
   "ring": "sober",
   "title": "Your First Year Sober",
-  "keys": "first year sober sobriety newly sober early sobriety just quit drinking quit alcohol stopped drinking stopped using drugs getting sober staying sober sober for a month sober for 90 days days sober sober anniversary chip cravings craving a drink urge to drink boredom sober lonely sober cant sleep sober sleep problems sober energy mood swings early recovery recovery aa na smart recovery refuge recovery sponsor meeting detox rehab treatment withdrawal sober curious sober life what to do instead of drinking sober weekends sober holidays first sober birthday my friend just got sober my son is newly sober my partner quit drinking",
+  "keys": "first year sober sobriety newly sober early sobriety just quit drinking quit alcohol stopped drinking stopped using drugs getting sober staying sober sober for a month sober for 90 days days sober sober anniversary chip cravings craving a drink urge to drink boredom sober lonely sober cant sleep sober sleep problems sober energy mood swings early recovery recovery smart recovery refuge recovery meeting detox rehab treatment withdrawal sober curious sober life what to do instead of drinking sober weekends sober holidays first sober birthday my friend just got sober my son is newly sober my partner quit drinking",
   "parts": [
    "bark",
    "leaves",
@@ -5904,7 +5900,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "helps": [
     "Steady basics for your body: water, real meals at regular times, a set wake time, daylight, and movement you enjoy. Sleep often takes weeks to settle, and it does settle.",
     "A plan for cravings: notice it, name it, breathe slowly, and let it rise and fall like a wave. Move, drink water, eat something, or call someone while you wait.",
-    "Your people. One or two friends who support your choice, a peer group, a mentor, or a sober community. Many people find AA, NA, SMART Recovery, Refuge Recovery, or a faith community helpful. Choose what fits you.",
+    "Your people. One or two friends who support your choice, a peer group, a mentor, or a sober community. Many people find SMART Recovery, Refuge Recovery, or a faith community helpful. Choose what fits you.",
     "Healthy ways to change how you feel: a run, a long walk outdoors, a hot shower, music, writing it out, time with a friend, a workout, or slow breathing.",
     "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal what's underneath at your own pace.",
     "Purpose and fun. Try something new: a class, a team, volunteering, a trail, a craft. Many people find serving others steadies them.",
@@ -5936,7 +5932,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Make plans that center on something other than drinking: meals, hikes, games, a movie, a class, a workout.",
     "Keep sparkling water, tea, or other good drinks on hand when they visit.",
     "Ask what they'd like you to do if they're having a hard night, and do that.",
-    "Learn a little about early sobriety. Al-Anon and SMART Recovery Family and Friends welcome people who love someone growing sober.",
+    "Learn a little about early sobriety. SMART Recovery Family and Friends welcomes people who love someone growing sober.",
     "If they talk about wanting to harm themselves, call or text 988 together. If someone can't wake up or is breathing slowly, call 911."
    ],
    "you": "Watching someone you love grow sober brings up a lot. Your feelings count too, including old hurt. Find your own support, keep your own rhythm, and remember that their sobriety is theirs to tend. Your part is warmth and steadiness. If they use Birch, they choose what you see, and no alert goes to anyone."
@@ -5966,18 +5962,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "SMART Recovery",
     "https://smartrecovery.org"
-   ],
-   [
-    "Alcoholics Anonymous",
-    "https://www.aa.org"
-   ],
-   [
-    "Narcotics Anonymous",
-    "https://na.org"
-   ],
-   [
-    "Al-Anon Family Groups",
-    "https://al-anon.org"
    ]
   ],
   "life": [
@@ -6025,7 +6009,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Going with a friend who supports your choice, and agreeing on a signal for when you want to leave.",
     "Leaving early when you've had your fun. You can go home happy and wake up feeling great.",
     "Choosing events built around something to do: concerts, games, intramurals, trivia, open mics, climbing, hikes, late breakfasts.",
-    "Finding sober people. Collegiate recovery programs, sober dorms or recovery housing, peer groups like AA, NA, SMART Recovery, or Refuge Recovery, and sober clubs and meetups.",
+    "Finding sober people. Collegiate recovery programs, sober dorms or recovery housing, peer groups like SMART Recovery or Refuge Recovery, and sober clubs and meetups.",
     "Tending the basics that make nights easier: sleep, real meals, and a plan for the hours when you used to drink.",
     "Noticing your early warning signs, like feeling lonely, bored, or stressed before a big night, and calling someone first.",
     "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking and Other Drugs has more.",
@@ -6115,7 +6099,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-friends-dating",
   "ring": "sober",
   "title": "Sober Friends and Dating",
-  "keys": "sober friends making sober friends losing friends after getting sober friends stopped inviting me friends who still drink drinking buddies old friends lonely sober sober and lonely sober dating dating sober first date without drinking coffee date telling a date i dont drink when to tell someone im sober dating someone who drinks partner drinks sober relationship sober community sober meetup recovery friends sponsor aa friends na friends smart recovery peer support new friends after rehab",
+  "keys": "sober friends making sober friends losing friends after getting sober friends stopped inviting me friends who still drink drinking buddies old friends lonely sober sober and lonely sober dating dating sober first date without drinking coffee date telling a date i dont drink when to tell someone im sober dating someone who drinks partner drinks sober relationship sober community sober meetup recovery friends smart recovery peer support new friends after rehab",
   "parts": [
    "branches",
    "bark",
@@ -6137,7 +6121,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "helps": [
     "Telling the friends who matter most what you need: “I'm sober now, and I'd love to see you. Can we get breakfast or hike?”",
     "Letting some friendships drift kindly when they keep pulling you back toward drinking or using. Some may come back later.",
-    "Peer support. AA, NA, SMART Recovery, Refuge Recovery, and other groups are full of people who get it. Many people meet lifelong friends there.",
+    "Peer support. SMART Recovery, Refuge Recovery, and other groups are full of people who get it. Many people meet lifelong friends there.",
     "Shared activities that build friendship over time: a team, a class, a trail group, a service project, a weekly game night.",
     "Sober first dates: coffee, a walk, a museum, a climbing gym, tacos, a concert, a farmers market.",
     "Sharing your sobriety when it feels right. Many people say it early and simply: “I don't drink. I love coffee dates though.”",
@@ -6194,14 +6178,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "https://smartrecovery.org"
    ],
    [
-    "Alcoholics Anonymous: find a meeting",
-    "https://www.aa.org"
-   ],
-   [
-    "Narcotics Anonymous: find a meeting",
-    "https://na.org"
-   ],
-   [
     "Love Is Respect",
     "https://www.loveisrespect.org"
    ]
@@ -6226,7 +6202,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-after-slip",
   "ring": "sober",
   "title": "After a Slip",
-  "keys": "slip relapse relapsed i relapsed drank again used again after being sober broke my sobriety lost my sober time reset my days started over sober again back to day one ashamed i messed up drinking again using again pills again one night slip binge after sober overdose risk after a break tolerance naloxone narcan aa na smart recovery sponsor tell my sponsor tell my family how to get back on track recovery setback lapse my friend relapsed my son relapsed my partner is drinking again",
+  "keys": "slip relapse relapsed i relapsed drank again used again after being sober broke my sobriety lost my sober time reset my days started over sober again back to day one ashamed i messed up drinking again using again pills again one night slip binge after sober overdose risk after a break tolerance naloxone narcan smart recovery tell my family how to get back on track recovery setback lapse my friend relapsed my son relapsed my partner is drinking again",
   "parts": [
    "bark",
    "branches",
@@ -6243,7 +6219,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "self": {
    "first": [
     "If you're unsafe right now, or someone can't wake up or is breathing slowly, call 911. If you used opioids or pills from anywhere but a pharmacy, keep naloxone close and stay with someone.",
-    "Tell one person today: a friend, a sponsor or peer, a therapist, or a doctor. Say it plainly. Secrets grow in the dark; honesty helps you grow.",
+    "Tell one person today: a friend, a mentor or peer, a therapist, or a doctor. Say it plainly. Secrets grow in the dark; honesty helps you grow.",
     "Get back to your basics in the next 24 hours: water, a real meal, sleep, a walk, and your next meeting, appointment, or check-in."
    ],
    "helps": [
@@ -6251,7 +6227,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Looking at the hours before the slip. What were you feeling? Where were you, and who were you with? Was it a long, empty evening, a hard day, or pain?",
     "Making one change to your plan from what you learned: a new answer, a new evening routine, a call before certain places, or more support on certain days.",
     "Checking in with a doctor if you drank or used for more than a few days. Stopping alcohol or sedatives again can bring withdrawal, and a doctor can help you stop safely.",
-    "Letting your people back in. A peer group, a sponsor, a SMART Recovery meeting, a therapist, or treatment are all ways to get more support. Use what fits you.",
+    "Letting your people back in. A peer group, a mentor, a SMART Recovery meeting, a therapist, or treatment are all ways to get more support. Use what fits you.",
     "Tending what you were trying to quiet. Slips often follow painful feelings. Healing that pain, with support, makes the path steadier.",
     "Counting what you choose. Some people restart their day count, and some count their total sober days. Either way, the growth is yours."
    ],
@@ -6260,7 +6236,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "“Everything I learned is still mine.”",
     "“Every return counts.”"
    ],
-   "people": "Try: “I want to be honest with you. I drank (or used) this weekend. I'm back on track, and I could use your support.” To a sponsor or peer: “I slipped. Can we talk today?” To a doctor: “I started drinking again for a few days, and I'd like help stopping safely.”"
+   "people": "Try: “I want to be honest with you. I drank (or used) this weekend. I'm back on track, and I could use your support.” To a mentor or peer: “I slipped. Can we talk today?” To a doctor: “I started drinking again for a few days, and I'd like help stopping safely.”"
   },
   "helper": {
    "feel": "A parent, partner, roommate, or friend may feel disappointed, scared, or angry, especially if you've been hurt before. Those feelings are real. They're likely feeling deep shame right now. The way people respond in the first days after a slip can help someone return to the path sooner.",
@@ -6279,11 +6255,11 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "help": [
     "Check safety first. If they used opioids or pills from anywhere but a pharmacy, keep naloxone (Narcan) nearby and know how to use it. If someone can't wake up or is breathing slowly, call 911.",
     "Thank them for being honest, and stay calm.",
-    "Help them get support: their doctor, their peer group or sponsor, a therapist, treatment, or the SAMHSA National Helpline.",
+    "Help them get support: their doctor, their peer group or mentor, a therapist, treatment, or the SAMHSA National Helpline.",
     "Keep your own boundaries clear and kind, and keep them.",
     "Notice and say out loud what's going well as they get back on track."
    ],
-   "you": "A slip can stir your own fear and old hurt. Talk with someone you trust, and find your own support: Al-Anon, SMART Recovery Family and Friends, or a therapist. Their path is theirs to walk. Your steadiness, and your own care, still matter."
+   "you": "A slip can stir your own fear and old hurt. Talk with someone you trust, and find your own support: SMART Recovery Family and Friends or a therapist. Their path is theirs to walk. Your steadiness, and your own care, still matter."
   },
   "faith": "If faith is part of your life, this may be a moment for grace: prayer, confession if your tradition holds it, or a talk with a trusted faith leader. Some people hear harsh messages about failure from faith settings; grace and a new beginning are at the heart of many traditions. If faith isn't part of your life, kindness toward yourself and honest support do the same steadying work.",
   "practices": [
@@ -6309,14 +6285,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "SMART Recovery",
     "https://smartrecovery.org"
-   ],
-   [
-    "Alcoholics Anonymous",
-    "https://www.aa.org"
-   ],
-   [
-    "Narcotics Anonymous",
-    "https://na.org"
    ],
    [
     "Poison Help",
@@ -6346,7 +6314,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-after-treatment",
   "ring": "sober",
   "title": "Life After Treatment",
-  "keys": "after rehab after treatment leaving rehab coming home from rehab out of treatment discharge aftercare plan continuing care outpatient iop intensive outpatient php partial hospitalization detox residential treatment inpatient sober living recovery housing halfway house medication for addiction treatment mat moud suboxone buprenorphine methadone naltrexone vivitrol going back to school after rehab going back to work after rehab telling people i was in rehab structure routine first weeks home aa na smart recovery refuge recovery sponsor therapist my son is coming home from rehab my partner finished treatment",
+  "keys": "after rehab after treatment leaving rehab coming home from rehab out of treatment discharge aftercare plan continuing care outpatient iop intensive outpatient php partial hospitalization detox residential treatment inpatient sober living recovery housing halfway house medication for addiction treatment mat moud suboxone buprenorphine methadone naltrexone vivitrol going back to school after rehab going back to work after rehab telling people i was in rehab structure routine first weeks home aa na smart recovery refuge recovery therapist my son is coming home from rehab my partner finished treatment",
   "parts": [
    "leaves",
    "branches",
@@ -6372,7 +6340,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Sober living or recovery housing, if you need a steadier place to live right now.",
     "A daily rhythm for your body: a set wake time, water, real meals, movement, and time outdoors.",
     "Something meaningful each day: school, work, volunteering, a class, a skill, or helping someone else.",
-    "Your people: peers from treatment, a peer group like AA, NA, SMART Recovery, or Refuge Recovery, a mentor, and family who support you.",
+    "Your people: peers from treatment, a peer group like SMART Recovery or Refuge Recovery, a mentor, and family who support you.",
     "Deciding what to share, and with whom. You can say as much or as little as you like: “I was taking care of my health.”"
    ],
    "tell": [
@@ -6401,7 +6369,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Make the home steady: regular meals, a calm evening rhythm, and alcohol out of the house for now if you can.",
     "Keep naloxone (Narcan) at home if opioids were part of their story, and learn how to use it.",
     "Plan sober time together: meals, walks, games, a hike.",
-    "Find your own support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a family program at their treatment center."
+    "Find your own support: SMART Recovery Family and Friends or a family program at their treatment center."
    ],
    "you": "You've likely been carrying a lot for a long time. Rest, your own people, and your own support count. Their path is theirs to walk, and your warm, steady presence helps it. If they use Birch, they choose what you see, and no alert goes to anyone."
   },
@@ -6433,14 +6401,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "SMART Recovery",
     "https://smartrecovery.org"
-   ],
-   [
-    "Narcotics Anonymous",
-    "https://na.org"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org"
    ]
   ],
   "life": [
@@ -6463,7 +6423,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-parent-grown",
   "ring": "sober",
   "title": "A Parent's Drinking or Using, Now That You're Grown",
-  "keys": "parent drinks my mom drinks my dad drinks alcoholic parent alcoholic mom alcoholic dad addict parent my mom uses drugs my dad uses drugs parent addiction parent on pills parent in recovery parent in rehab adult child of an alcoholic adult children growing up with drinking going home for the holidays visiting home drunk parent boundaries with my parent should i cut contact estranged worried about my parent overdose naloxone parent drinking and driving will i become like them family history al-anon nar-anon nacoa therapist childhood trauma aces healing from childhood",
+  "keys": "parent drinks my mom drinks my dad drinks alcoholic parent alcoholic mom alcoholic dad addict parent my mom uses drugs my dad uses drugs parent addiction parent on pills parent in recovery parent in rehab adult child of an alcoholic adult children growing up with drinking going home for the holidays visiting home drunk parent boundaries with my parent should i cut contact estranged worried about my parent overdose naloxone parent drinking and driving will i become like them family history nacoa therapist childhood trauma aces healing from childhood",
   "parts": [
    "bark",
    "branches",
@@ -6474,7 +6434,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Growing up with a parent's drinking or using shapes a person, and healing is real. Many adult children build steady, joyful lives.",
    "You didn't cause it, you can't control it, and you can't cure it. You can take care of yourself, say what you feel, and make healthy choices.",
    "You get to set boundaries with a parent: how often you visit, when you talk, and what you do if they've been drinking or using.",
-   "Support is there for you: Al-Anon or Nar-Anon, a therapist, and people who understand. If your parent ever can't wake up or is breathing slowly, call 911."
+   "Support is there for you: NACoA, a therapist, and people who understand. If your parent ever can't wake up or is breathing slowly, call 911."
   ],
   "feel": "Maybe your parent still drinks or uses, and every call or visit home comes with a knot in your stomach. Maybe they're getting sober now, and you're hopeful and guarded at once. Maybe it was years ago, and you're only now noticing how it shaped you: how you read moods, keep the peace, or carry other people's feelings. You might feel love, anger, grief, guilt, and worry all in the same day. Every one of those feelings makes sense. You're allowed to love your parent and also protect your own life.",
   "self": {
@@ -6487,7 +6447,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Planning visits home: stay somewhere you can leave, have your own way to get around, and keep a friend on text.",
     "Boundaries said simply and kindly: “I'd love to see you. If you've been drinking, I'll head out and we'll try another day.”",
     "Never riding with a parent who has been drinking or using, and never leaving kids in their care when they are.",
-    "Support made for you: Al-Anon or Nar-Anon meetings, NACoA's resources, or a therapist who understands families and drinking.",
+    "Support made for you: NACoA's resources, SMART Recovery Family and Friends, or a therapist who understands families and drinking.",
     "Looking at your own patterns with kindness: keeping the peace, reading moods, or how you use alcohol or other things to cope. Patterns can be healed.",
     "If your parent is getting sober: let trust rebuild at your own pace. Their growth and your healing can both take time.",
     "Your own healthy tree: sleep, movement, time outdoors, your people, and things that bring you joy."
@@ -6516,7 +6476,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "help": [
     "Offer to be their check-in person during visits home, and to pick them up if they want to leave.",
     "Help them plan holidays they enjoy: a sober gathering, a friend's table, or a short visit with a clear end.",
-    "Encourage support made for them: Al-Anon, Nar-Anon, or a therapist.",
+    "Encourage support made for them: NACoA, SMART Recovery Family and Friends, or a therapist.",
     "If they worry about their own drinking, listen calmly and offer to help find support.",
     "If their parent ever can't wake up or is breathing slowly, call 911."
    ],
@@ -6542,14 +6502,6 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    [
     "NACoA: National Association for Children of Addiction",
     "https://nacoa.org"
-   ],
-   [
-    "Al-Anon Family Groups",
-    "https://al-anon.org"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org"
    ],
    [
     "SAMHSA National Helpline",
@@ -6610,7 +6562,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "“What am I really feeling right now?”",
     "“I can heal a little at a time.”"
    ],
-   "people": "Try, to a friend or partner: “I've noticed I've been using food (or shopping, or my phone) the way I used to use drinking. Would you help me notice it?” To a therapist: “I'm sober, and I've noticed new habits taking its place. I'd like to look at what's underneath.” To a sponsor or peer: “I think I swapped one thing for another. Can we talk?”"
+   "people": "Try, to a friend or partner: “I've noticed I've been using food (or shopping, or my phone) the way I used to use drinking. Would you help me notice it?” To a therapist: “I'm sober, and I've noticed new habits taking its place. I'd like to look at what's underneath.” To a mentor or peer: “I think I swapped one thing for another. Can we talk?”"
   },
   "helper": {
    "feel": "A partner, parent, friend, or roommate may notice a new pattern: more eating, more spending, longer hours, more screen time, an all-consuming new passion. You may feel relieved they're sober and worried at the same time. They may feel discouraged or defensive. Gentle, curious support helps far more than pointing it out sharply.",

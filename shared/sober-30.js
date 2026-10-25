@@ -349,7 +349,7 @@
      "k": "big",
      "h": "One person is enough to start.",
      "sub": "Someone who is on your side.",
-     "say": "Think of one person who is on your side. A friend, a family member, a sponsor, or someone from a group. Tell them you are growing sober, and that you might reach out."
+     "say": "Think of one person who is on your side. A friend, a family member, a mentor, or someone from a group. Tell them you are growing sober, and that you might reach out."
     },
     {
      "k": "big",

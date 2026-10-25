@@ -13290,7 +13290,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "card",
      "title": "Every kind of help is welcome",
      "body": "A doctor. Therapy. Treatment. Medication. Peer groups.",
-     "say": "Every kind of help is welcome. A doctor, therapy, treatment, medication, and peer groups like AA, NA, SMART Recovery, or Refuge Recovery. Use what helps you."
+     "say": "Every kind of help is welcome. A doctor, therapy, treatment, medication, and peer groups like SMART Recovery or Refuge Recovery. Use what helps you."
     },
     {
      "k": "big",
@@ -13411,8 +13411,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "big",
      "h": "Tend your own heart too.",
-     "sub": "Al-Anon and family groups welcome you.",
-     "say": "Your feelings count too, including old hurt. Groups like Al-Anon and SMART Recovery Family and Friends welcome people who love someone growing sober. Their sobriety is theirs to tend. Your own heart is yours."
+     "sub": "SMART Recovery Family and Friends welcomes you.",
+     "say": "Your feelings count too, including old hurt. Groups like SMART Recovery Family and Friends welcome people who love someone growing sober. Their sobriety is theirs to tend. Your own heart is yours."
     },
     {
      "k": "big",
@@ -13529,7 +13529,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "card",
      "title": "Find your sober people",
      "body": "Collegiate recovery programs, sober housing, peer groups, clubs, and meetups.",
-     "say": "Find your sober people. Many campuses have collegiate recovery programs, sober housing, and sober events. Ask the dean of students or the campus wellness office. Off campus, peer groups like AA, NA, SMART Recovery, or Refuge Recovery, and sober clubs and meetups, are full of people your age."
+     "say": "Find your sober people. Many campuses have collegiate recovery programs, sober housing, and sober events. Ask the dean of students or the campus wellness office. Off campus, peer groups like SMART Recovery or Refuge Recovery, and sober clubs and meetups, are full of people your age."
     },
     {
      "k": "card",
@@ -13725,7 +13725,7 @@ window.GG_LEARN_GUIDES.birch = {
        "A shift, a project"
       ]
      ],
-     "say": "Where do sober friendships grow? In peer groups like AA, NA, SMART Recovery, or Refuge Recovery, full of people who get it. Around something you love, like a team, a trail group, or a class. And in serving together, on a volunteer shift or a project. Go three times before you decide.",
+     "say": "Where do sober friendships grow? In peer groups like SMART Recovery or Refuge Recovery, full of people who get it. Around something you love, like a team, a trail group, or a class. And in serving together, on a volunteer shift or a project. Go three times before you decide.",
      "cue": {
       "at": [
        0,
@@ -14001,7 +14001,7 @@ window.GG_LEARN_GUIDES.birch = {
      "k": "big",
      "h": "Every return counts.",
      "sub": "The full guide has more, whenever you want it.",
-     "say": "Let your people back in: a friend, a peer group, a sponsor, a therapist, or a doctor. Every return counts. The full guide has more, whenever you want it."
+     "say": "Let your people back in: a friend, a peer group, a mentor, a therapist, or a doctor. Every return counts. The full guide has more, whenever you want it."
     }
    ]
   },
@@ -14108,8 +14108,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "big",
      "h": "Your own care counts too.",
-     "sub": "Al-Anon, family groups, your own people.",
-     "say": "A slip can stir your own fear and old hurt. Talk with someone you trust. Groups like Al-Anon and SMART Recovery Family and Friends welcome you. Keep your boundaries clear and kind."
+     "sub": "SMART Recovery Family and Friends, your own people.",
+     "say": "A slip can stir your own fear and old hurt. Talk with someone you trust. Groups like SMART Recovery Family and Friends welcome you. Keep your boundaries clear and kind."
     },
     {
      "k": "big",
@@ -14338,8 +14338,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "big",
      "h": "Your own support counts.",
-     "sub": "Al-Anon, Nar-Anon, family programs.",
-     "say": "You've likely carried a lot for a long time. Find your own support: Al-Anon, Nar-Anon, SMART Recovery Family and Friends, or a family program at their treatment center. Rest counts. Your people count."
+     "sub": "SMART Family and Friends, family programs.",
+     "say": "You've likely carried a lot for a long time. Find your own support: SMART Recovery Family and Friends or a family program at their treatment center. Rest counts. Your people count."
     },
     {
      "k": "big",
@@ -14464,8 +14464,8 @@ window.GG_LEARN_GUIDES.birch = {
     {
      "k": "card",
      "title": "Support made for you",
-     "body": "Al-Anon. Nar-Anon. A therapist.",
-     "say": "There's support made just for you. Al-Anon and Nar-Anon meetings, and a therapist who understands families and drinking. If your parent ever can't wake up, or is breathing slowly, call for emergency help."
+     "body": "NACoA. SMART Family and Friends. A therapist.",
+     "say": "There's support made just for you. NACoA, SMART Recovery Family and Friends, and a therapist who understands families and drinking. If your parent ever can't wake up, or is breathing slowly, call for emergency help."
     },
     {
      "k": "big",
@@ -14555,14 +14555,14 @@ window.GG_LEARN_GUIDES.birch = {
       ],
       [
        "Support for them",
-       "Al-Anon, Nar-Anon, a therapist"
+       "NACoA, SMART Family and Friends, a therapist"
       ],
       [
        "Safety",
        "Someone won't wake up: call for help"
       ]
      ],
-     "say": "Here are ways to help. Plan holidays they enjoy, like a sober gathering at a friend's table, or a short visit with a clear end. Encourage support made for them, like Al-Anon, Nar-Anon, or a therapist. And know the safety step. If their parent ever can't wake up, or is breathing slowly, call for emergency help.",
+     "say": "Here are ways to help. Plan holidays they enjoy, like a sober gathering at a friend's table, or a short visit with a clear end. Encourage support made for them, like NACoA, SMART Recovery Family and Friends, or a therapist. And know the safety step. If their parent ever can't wake up, or is breathing slowly, call for emergency help.",
      "cue": {
       "at": [
        1,
