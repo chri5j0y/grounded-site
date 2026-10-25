@@ -423,7 +423,7 @@ const LC_TOPICS = [
    "Stress, exhaustion, numbness, or low mood that lasts two weeks or more, or gets in the way of sleep, eating, or people: talk with a doctor, your campus counseling center, or a counselor. Many workplaces offer an employee assistance program too.",
    "For information and support: NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
    "Feeling like you'll never be enough, or like there's no point: call, text, or chat 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Using alcohol, cannabis, or other drugs to get through the pressure: SAMHSA National Helpline, 1-800-662-4357, any time.",
+   "Using alcohol or other drugs to get through the pressure: SAMHSA National Helpline, 1-800-662-4357, any time.",
    "Danger right now: call 911."
   ],
   "more": [
@@ -3040,7 +3040,7 @@ const LC_TOPICS = [
     "A worry window: fifteen minutes a day, away from bedtime, to write worries down and think them through. When a worry shows up at another time, jot it down for the window.",
     "Small, planned steps toward what you've been avoiding: make the call, go to the store at a busy time, stay five minutes longer.",
     "Steady sleep, daily movement, and going easy on caffeine and energy drinks, which can make a racing heart feel worse.",
-    "Noticing what you're using to quiet the feeling. If alcohol, cannabis, or scrolling has become the main way through, that's worth a look.",
+    "Noticing what you're using to quiet the feeling. If alcohol or scrolling has become the main way through, that's worth a look.",
     "A short routine before hard moments, like an interview or a first day: two slow breaths and a cue word, practiced on small moments first.",
     "Talking with a doctor, a counselor, or your school or workplace counseling service if anxiety is getting in the way of work, school, sleep, or people. Therapy that teaches skills for anxiety works well, and a doctor can check for other causes."
    ],
@@ -3136,7 +3136,7 @@ const LC_TOPICS = [
     "Morning daylight and a steady wake time, even on days off.",
     "Being around people, even without talking much: a meal with a roommate, sitting with a friend, staying on the team or in the group.",
     "Doing one thing you used to enjoy, for ten minutes, before you feel like it. Feeling often follows doing.",
-    "Setting alcohol and cannabis aside. They can feel like relief and then deepen the low.",
+    "Setting alcohol aside. It can feel like relief and then deepen the low.",
     "Comparing yourself with your own last month, not with someone else's highlights. Everyone's timeline is different."
    ],
    "tell": [
@@ -3205,7 +3205,7 @@ const LC_TOPICS = [
   "id": "first-signs",
   "ring": "br-mind",
   "title": "First Signs of a Serious Mental Illness",
-  "keys": "something is wrong with my mind not myself scared of my own thoughts hearing voices seeing things paranoid people are watching me suspicious thoughts racing not sleeping and not tired manic mania bipolar psychosis schizophrenia first episode breakdown losing touch with reality confused cant think straight strange ideas my friend is acting strange my son is not making sense my roommate stopped sleeping my partner thinks people are following them weed made me paranoid",
+  "keys": "something is wrong with my mind not myself scared of my own thoughts hearing voices seeing things paranoid people are watching me suspicious thoughts racing not sleeping and not tired manic mania bipolar psychosis schizophrenia first episode breakdown losing touch with reality confused cant think straight strange ideas my friend is acting strange my son is not making sense my roommate stopped sleeping my partner thinks people are following them",
   "parts": [
    "bark",
    "leaves",
@@ -3227,7 +3227,7 @@ const LC_TOPICS = [
    ],
    "helps": [
     "Protecting sleep. Losing sleep can make symptoms stronger, and steady sleep helps your mind settle.",
-    "Stepping back from cannabis, especially high-potency or daily use, and from other drugs. Heavy high-potency cannabis use is linked with a higher risk of psychosis.",
+    "Stepping back from alcohol and other drugs, and from anything that costs you sleep.",
     "Asking about early treatment. Many areas have first-episode programs that bring a team together: therapy, medicine if you choose it, help with work or school, and support for family.",
     "Keeping a simple daily rhythm: meals, daylight, a little movement, one person you talk with.",
     "Choosing who you'd like involved. As an adult, you decide whether your treatment team can talk with family or anyone else.",
@@ -3303,8 +3303,8 @@ const LC_TOPICS = [
  {
   "id": "substances",
   "ring": "br-mind",
-  "title": "Drinking, Cannabis, and Other Drugs",
-  "keys": "drinking alcohol beer binge drinking blackout hungover party bar weed cannabis marijuana thc edibles dab pen vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse aa meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
+  "title": "Drinking and Other Drugs",
+  "keys": "drinking alcohol beer binge drinking blackout hungover party bar vape vaping nicotine pills percs xanax adderall fentanyl cocaine mushrooms drugs high drunk sober curious cutting back quit drinking cant stop using to cope using to sleep recovery relapse aa meetings overdose narcan naloxone friend passed out my roommate drinks too much my partner smokes every day my son is using",
   "parts": [
    "leaves",
    "bark",
@@ -3312,7 +3312,7 @@ const LC_TOPICS = [
    "trunk"
   ],
   "quick": [
-   "You get to decide what fits your life. Many young adults drink less than people assume: binge drinking among adults 19 to 30 is at an all-time low, while cannabis use is at a record high.",
+   "You get to decide what fits your life. Many young adults drink less than people assume: binge drinking among adults 19 to 30 is at an all-time low.",
    "Using something to get through hard feelings is worth noticing. It can feel like relief and then make sleep, mood, and anxiety worse.",
    "A pill that didn't come from a pharmacy can be fake and hold fentanyl, even when it looks real. Naloxone (Narcan) is sold without a prescription.",
    "If someone can't wake up or is breathing slowly or strangely, call 911 right away and stay with them."
@@ -3337,10 +3337,10 @@ const LC_TOPICS = [
     "“Leaving is always an option.”",
     "“If I'm using something to cope, I can find a better tool, and ask for help finding it.”"
    ],
-   "people": "Try: “I've been drinking (or smoking) more than I want to lately, and I'd like to cut back. Would you help me with that?” Or to a doctor: “I'd like to talk honestly about my drinking and cannabis use, and what my options are.” About a friend: “I'm worried about someone. Can I talk it through with you?”"
+   "people": "Try: “I've been drinking more than I want to lately, and I'd like to cut back. Would you help me with that?” Or to a doctor: “I'd like to talk honestly about my drinking, and what my options are.” About a friend: “I'm worried about someone. Can I talk it through with you?”"
   },
   "helper": {
-   "feel": "Whether you're a parent, a partner, a friend, or a roommate, you may feel scared, frustrated, or unsure whether it's your business. It is their life and their choice, and you still get to say you care. They may feel ashamed, defensive, or sure they have it handled. Many young adults use alcohol or cannabis to cope with stress, anxiety, or sleep. They're more likely to talk with someone who stays calm and doesn't lecture.",
+   "feel": "Whether you're a parent, a partner, a friend, or a roommate, you may feel scared, frustrated, or unsure whether it's your business. It is their life and their choice, and you still get to say you care. They may feel ashamed, defensive, or sure they have it handled. Many young adults use alcohol to cope with stress, anxiety, or sleep. They're more likely to talk with someone who stays calm and doesn't lecture.",
    "say": [
     "“I care about you, and I've noticed you've been drinking more lately. How's it going for you?”",
     "“What does it do for you? What does it cost you?”",
@@ -5141,7 +5141,7 @@ const LC_TOPICS = [
     "A steady rhythm: the same wake time, regular meals, daylight, and movement your body likes. Sleep is often the first thing to shift.",
     "Staying connected with your treatment team, and being honest with them about side effects or skipped doses. Decisions about medicine belong to you and your prescriber, together.",
     "Peer support from people who live with a mental health condition too, like NAMI's Peer-to-Peer classes or a local support group.",
-    "Setting aside alcohol, cannabis, and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
+    "Setting aside alcohol and other drugs, which can make symptoms harder to manage. Ask your team about it plainly.",
     "Purpose, at your own pace: school, work, volunteering, or something you make. Your school's disability services office and work accommodations can help.",
     "Choosing who to tell, and how much. You can name it, or simply say you have a health condition you manage.",
     "Your own words for it. Some say “I live with bipolar disorder,” some say “I have a mental illness.” Use what fits you."
@@ -5908,7 +5908,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Healthy ways to change how you feel: a run, a long walk outdoors, a hot shower, music, writing it out, time with a friend, a workout, or slow breathing.",
     "Looking underneath. Drinking or using often numbed painful feelings or old hurts. A therapist can help you heal what's underneath at your own pace.",
     "Purpose and fun. Try something new: a class, a team, volunteering, a trail, a craft. Many people find serving others steadies them.",
-    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking, Cannabis, and Other Drugs has more.",
+    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking and Other Drugs has more.",
     "Marking the wins: a week, a month, ninety days, your first sober holiday. Celebrate with sparkling water, a good meal, a hike, or people you love."
    ],
    "tell": [
@@ -6028,7 +6028,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Finding sober people. Collegiate recovery programs, sober dorms or recovery housing, peer groups like AA, NA, SMART Recovery, or Refuge Recovery, and sober clubs and meetups.",
     "Tending the basics that make nights easier: sleep, real meals, and a plan for the hours when you used to drink.",
     "Noticing your early warning signs, like feeling lonely, bored, or stressed before a big night, and calling someone first.",
-    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking, Cannabis, and Other Drugs has more.",
+    "For cutting back, pills and fentanyl, and naloxone, Birch's guide Drinking and Other Drugs has more.",
     "Hosting. A game night, a cookout, or a movie night with good drinks and food puts you in charge of the vibe."
    ],
    "tell": [
@@ -6683,7 +6683,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
  }
 ];
   T.forEach(function (t) { if (!G.topics.some(function (x) { return x.id === t.id; })) G.topics.push(t); });
-  /* The older guide Drinking, Cannabis, and Other Drugs joins Living Sober too (tags), with its sources listed here. */
+  /* The older guide Drinking and Other Drugs joins Living Sober too (tags), with its sources listed here. */
   var S = G.topics.find(function (x) { return x.id === 'substances'; });
   if (S) { S.life = ['mind', 'sober']; S.sober = ['change']; S.sources = ['mtfpanel24', 'deaonepill', 'narcanotc']; } })();
 /* Living Sober guides end, GWG BLD 789 */

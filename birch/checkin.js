@@ -81,7 +81,7 @@
    questions and for practices chosen for yourself. Anyone of all faith
    traditions and everything in-between can score Strong.
 
-   Substances (decision 8): using alcohol, cannabis, or other substances
+   Substances (decision 8): using alcohol or other substances
    to cope is in the regular bank (Leaves question 8), asked as coping,
    never amounts. It carries a help note with the SAMHSA line, and it
    raises no flag to anyone. OPTIONAL holds one question, betting and
@@ -373,12 +373,12 @@ const Q = {
     { t: 'Felt tired or run down, even after sleeping?', r: 1,
       tip: 'Look at sleep hours, late screens, and work or school schedules. If it keeps up, or they snore loudly, mention it to a doctor.',
       why: 'Feeling run down is worth noticing. It can come from short sleep, stress, or something a doctor can help with.' },
-    { t: 'Used alcohol, cannabis, or other substances to get through hard feelings or stress?', r: 1,
+    { t: 'Used alcohol or other substances to get through hard feelings or stress?', r: 1,
       tip: 'Ask without judgment and without asking amounts. Ask what the hard feelings are, and what else helps. The SAMHSA National Helpline (1-800-662-4357) is open all day and night.',
-      why: 'Using to cope helps for a night, then can add its own weight. Cannabis use among adults your age is at record highs, and it is worth noticing why you reach for it.',
+      why: 'Using to cope helps for a night, then can add its own weight. It is worth noticing why you reach for it.',
       src: ['mtfpanel24'],
       help: { on: ['sometimes', 'often', 'always'],
-        note: 'Reaching for alcohol, cannabis, or other substances to get through hard feelings is common, and it can quietly add weight. Talking it over helps. The SAMHSA National Helpline is private and open all day and night, in English and Spanish.',
+        note: 'Reaching for alcohol or other substances to get through hard feelings is common, and it can quietly add weight. Talking it over helps. The SAMHSA National Helpline is private and open all day and night, in English and Spanish.',
         lines: ['samhsa', '988'] } }
   ],
   fruit: [

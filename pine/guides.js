@@ -1626,7 +1626,7 @@ const LC_TOPICS = [
    "love"
   ],
   "title": "A Family Member's Drinking or Drug Use",
-  "keys": "parent drinks too much mom drinks dad drinks alcoholic parent addiction in my family drug use parent high parent drunk sibling using brother using sister using pills opioids meth weed every day relapse rehab treatment recovery cover for them keep it a secret embarrassed bring friends home drunk driving overdose mood swings broken promises",
+  "keys": "parent drinks too much mom drinks dad drinks alcoholic parent addiction in my family drug use parent high parent drunk sibling using brother using sister using pills opioids meth relapse rehab treatment recovery cover for them keep it a secret embarrassed bring friends home drunk driving overdose mood swings broken promises",
   "parts": [
    "bark",
    "branches",
@@ -2989,7 +2989,7 @@ const LC_TOPICS = [
    "change"
   ],
   "title": "Vaping, Drinking, and Drugs",
-  "keys": "vaping vape nicotine juul e cig drinking alcohol beer party weed marijuana thc edibles pills fentanyl drugs high drunk peer pressure offered something everyone does it how to say no getting out of a party friend passed out overdose stress coping",
+  "keys": "vaping vape nicotine juul e cig drinking alcohol beer party pills fentanyl drugs high drunk peer pressure offered something everyone does it how to say no getting out of a party friend passed out overdose stress coping",
   "parts": [
    "leaves",
    "branches",
@@ -2997,7 +2997,7 @@ const LC_TOPICS = [
    "trunk"
   ],
   "quick": [
-   "Most high schoolers aren't using. In a 2024 national survey, about two in three 12th graders hadn't used alcohol, nicotine, or marijuana in the past month.",
+   "Most high schoolers aren't using. In a 2024 national survey, about two in three 12th graders hadn't used any of the common substances in the past month.",
    "Deciding ahead of time, with a line you'd really say, makes no easier in the moment.",
    "A pill from a friend, a dealer, or social media can be fake and hold fentanyl, even when it looks real.",
    "If someone can't wake up or is having trouble breathing, call 911 right away and stay with them."
@@ -5712,7 +5712,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "rollnick08",
    "mtf24"
   ],
-  "keys": "cutting back cut back drink less drinking too much using too much quit drinking stop using thinking about quitting should i stop am i drinking too much how much is too much weed every day vaping every day pills alcohol party every weekend high a lot drunk a lot worried about my drinking worried about my use change sober curious taking a break wait until 21",
+  "keys": "cutting back cut back drink less drinking too much using too much quit drinking stop using thinking about quitting should i stop am i drinking too much how much is too much vaping every day pills alcohol party every weekend high a lot drunk a lot worried about my drinking worried about my use change sober curious taking a break wait until 21",
   "parts": [
    "bark",
    "trunk",
@@ -5721,7 +5721,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   ],
   "quick": [
    "Wondering about your drinking or using is a strong, honest place to start.",
-   "For teens, the healthiest amount of alcohol, nicotine, weed, and pills is none, until adulthood. Cutting back is a real step toward that.",
+   "For teens, the healthiest amount of alcohol, nicotine, and pills is none, until adulthood. Cutting back is a real step toward that.",
    "Ask yourself what it does for you, what it costs you, and what you want. Your own reasons carry the most power.",
    "If you've been drinking every day or taking pills like Xanax, talk with a doctor before you stop."
   ],
@@ -5821,7 +5821,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "samhsarec",
    "mdhminor"
   ],
-  "keys": "getting sober sober teen sobriety quit drinking stop drinking quit drugs stop using stop smoking weed quit weed pills xanax percs opioids alcohol drunk high every day can't stop cravings withdrawal detox rehab treatment outpatient program recovery high school sober friends first weeks sober staying sober slip relapse aa na smart recovery alateen counselor doctor",
+  "keys": "getting sober sober teen sobriety quit drinking stop drinking quit drugs stop using pills xanax percs opioids alcohol drunk high every day can't stop cravings withdrawal detox rehab treatment outpatient program recovery high school sober friends first weeks sober staying sober slip relapse aa na smart recovery alateen counselor doctor",
   "parts": [
    "bark",
    "leaves",
@@ -5931,7 +5931,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "sources": [
    "mtf24"
   ],
-  "keys": "party pressure peer pressure saying no how to say no offered a drink offered a vape offered weed offered pills everyone was drinking sober at a party sober friends being the sober one what do i say drinking games shots beer pong homecoming prom after party bonfire hangout leave the party code word ride home drunk driver sober fun fitting in left out friends think i'm boring",
+  "keys": "party pressure peer pressure saying no how to say no offered a drink offered a vape offered pills everyone was drinking sober at a party sober friends being the sober one what do i say drinking games shots beer pong homecoming prom after party bonfire hangout leave the party code word ride home drunk driver sober fun fitting in left out friends think i'm boring",
   "parts": [
    "branches",
    "bark",

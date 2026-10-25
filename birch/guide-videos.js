@@ -7187,8 +7187,7 @@ window.GG_LEARN_GUIDES.birch = {
     "blurb": "For the young adult who feels like something in their mind has changed: notice it, say it, and get it checked early.",
     "sources": [
      "kessler05",
-     "nimhpsych",
-     "diforti"
+     "nimhpsych"
     ],
     "scenes": [
      {
@@ -7298,9 +7297,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Protect your sleep. Go easy on weed.",
-      "sub": "Two things that help your mind settle.",
-      "say": "Two things help right away. Protect your sleep, because losing sleep can make symptoms stronger. And step back from cannabis, especially strong or daily use. Heavy use of high-potency cannabis is linked with a higher risk of psychosis."
+      "h": "Protect your sleep.",
+      "sub": "One thing that helps your mind settle.",
+      "say": "One thing helps right away. Protect your sleep, because losing sleep can make symptoms stronger."
      },
      {
       "k": "card",
@@ -7440,13 +7439,13 @@ window.GG_LEARN_GUIDES.birch = {
   {
    "id": "substances",
    "ring": "br-mind",
-   "title": "Drinking, Cannabis, and Other Drugs",
+   "title": "Drinking and Other Drugs",
    "you": {
     "id": "br-g-substances-you",
     "crisis": ["988: call or text, any time", "SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "you",
-    "title": "Drinking, Cannabis, and Other Drugs",
+    "title": "Drinking and Other Drugs",
     "sideName": "For You",
     "mins": 4,
     "blurb": "For the young adult deciding what fits their life: notice the why, plan your answer, and know help is there.",
@@ -7460,15 +7459,15 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Drinking, Cannabis, and Other Drugs",
+      "h": "Drinking and Other Drugs",
       "sub": "For You",
-      "say": "Drinks, weed, pills, and everything in between. This is for you. Nobody here is asking what you have or haven't done, or how much. This is about what fits the life you want."
+      "say": "Drinks, pills, and everything in between. This is for you. Nobody here is asking what you have or haven't done, or how much. This is about what fits the life you want."
      },
      {
       "k": "big",
       "h": "Fewer young adults binge drink.",
       "sub": "You decide what fits your life.",
-      "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. Cannabis use is at a record high. So whatever you choose, we're with you, and you're the one who decides."
+      "say": "Here's a surprise. Binge drinking among young adults is at an all-time low. So whatever you choose, we're with you, and you're the one who decides."
      },
      {
       "k": "big",
@@ -7572,7 +7571,7 @@ window.GG_LEARN_GUIDES.birch = {
     "crisis": ["SAMHSA National Helpline: 1-800-662-4357", "911: emergency"],
     "guide": "substances",
     "side": "helper",
-    "title": "Drinking, Cannabis, and Other Drugs",
+    "title": "Drinking and Other Drugs",
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For the person worried about a young adult's drinking or drug use: stay calm, keep the door open, and take care of yourself.",
@@ -7586,9 +7585,9 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "title",
       "hero": "birch",
       "eyebrow": "When Life Changes",
-      "h": "Drinking, Cannabis, and Other Drugs",
+      "h": "Drinking and Other Drugs",
       "sub": "For the Helper",
-      "say": "This is for the parent, partner, friend, or roommate who's worried about a young adult's drinking, cannabis, or other drug use. It's their life and their choice, and you still get to say you care."
+      "say": "This is for the parent, partner, friend, or roommate who's worried about a young adult's drinking or drug use. It's their life and their choice, and you still get to say you care."
      },
      {
       "k": "big",
@@ -11781,7 +11780,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Protect the steady things.",
       "sub": "Sleep, rhythm, and going easy on substances.",
-      "say": "Protect the steady things. A regular wake time, meals, and daylight. Sleep is often the first thing to shift. And set aside alcohol, cannabis, and other drugs, which can make symptoms harder to manage."
+      "say": "Protect the steady things. A regular wake time, meals, and daylight. Sleep is often the first thing to shift. And set aside alcohol and other drugs, which can make symptoms harder to manage."
      },
      {
       "k": "card",
