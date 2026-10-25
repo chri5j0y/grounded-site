@@ -6,7 +6,7 @@
 
    Privacy: nothing here keeps anything on its own. The choice, the
    sober date, and the milestones shown live in the locked vault through
-   shared/gg-life.js (vault.life); My Anchor Plan lives in vault.soberAnchor.
+   shared/gg-life.js (vault.life); My Anchor Plan lives in vault.soberAnchor, My Good People in vault.soberPeople (BLD 851).
    Guests keep everything in memory for this page visit only. Nothing is
    ever written to browser storage, and nothing ever travels.
 
@@ -21,10 +21,14 @@
      GGSober.reached(date, today)  milestone keys reached: d1 d3 d7 d14 d21, m1 to m11, y1, y2, ...
      GGSober.check(tree)         shows the newest milestone not yet shown, once (then all reached are marked).
      GGSober.anchor(tree, edit)  opens My Anchor Plan (view, or edit).
+     GGSober.together(tree, k)   opens a Living Sober Together piece (BLD 851): 'people' Healthy People, Healthy Places,
+                                 'solo' Strong on Your Own, 'craft' Loving Someone Who Drinks or Uses, 'mine' My Good People,
+                                 'basics' Sleep, Food, and Movement in Early Sobriety. My Good People lives in vault.soberPeople.
      GGSober.daily(tree)         today's encouragement {kind, text}.
      GGSober.refresh()           repaints every card on the page.
    The ?sober= link (read once, then taken off the address): 1 turns Living Sober on, love sets the stage
-   to Someone I Love (change, early, growing, long set theirs), anchor opens My Anchor Plan. Notes for the
+   to Someone I Love (change, early, growing, long set theirs), anchor opens My Anchor Plan; people, solo,
+   craft, mine, and basics open the Living Sober Together pieces (BLD 851). Notes for the
    page are in the BLD 837 build folder (app-api.md).
    Words come from shared/sober-words.js (window.GGSoberWords), with safe lines here while it loads.
    Sharing uses shared/gg-sharecard.js (window.GGShareCard), with the device share or a copied link as backup.
@@ -198,6 +202,7 @@
     '.ggs-kept b{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;color:var(--ls);}' +
     '.ggs-body{margin:0;padding-left:20px;}.ggs-body li{margin:6px 0;opacity:.7;}.ggs-body li.got{opacity:1;}.ggs-body li.got b{color:var(--ls);}' +
     '.ggs-src{font-size:13px !important;color:var(--ink-soft,#6B5A4D);}.ggs-src a{color:inherit;}' +
+    '.ggs-words{margin:4px 0 8px;}.ggs-words span{display:inline-block;padding:6px 12px;border-radius:999px;border:1px dashed var(--line,#E2D8C3);font-size:14px;}.ggs-tog .ggs-row .btn{white-space:normal;text-align:left;}' +
     '.ggs-plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}.ggs-toastline{font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;font-style:italic;}' +
     '@media (max-width:520px){.ggs-card{padding:16px 14px;}.ggs-pp{grid-template-columns:1fr;}.ggs-dlg{padding:20px 16px 16px;}.ggs-stages{grid-template-columns:1fr;}}' +
     '@media (prefers-reduced-motion: reduce){.ggs-star-in,.ggs-rib,.ggs-spark{animation:none;}}' +
@@ -275,6 +280,7 @@
     if (!love) html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm ggs-wave" data-ggs="wave">Ride the Wave</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="week">My Week</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="gains">Milestones and Gains</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="good">Good Times, Sober</button></div>';
     html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm" data-ggs="anchor">My Anchor Plan</button>' +
       '<button type="button" class="btn btn-secondary btn-sm" data-ggs="thirty">' + esc(thirtyLabel(tree)) + '</button></div>';
+    html += togetherHtml(tree, love);
     html += '<div class="ggs-row">' + (stage ? '<button type="button" class="ggs-link" data-ggs="stagechange">Change My Stage</button>' : '') +
       (!love && !APP.dateOpen ? '<button type="button" class="ggs-link" data-ggs="dateopen">' + (date ? 'Change My Sober Date' : 'Add My Sober Date') + '</button>' : '') + '</div>';
     return html + guestHtml() + (APP.note ? '<p class="ggs-soft" role="status">' + esc(APP.note) + '</p>' : '') + '</div>';
@@ -325,6 +331,11 @@
     else if (k === 'week') weekDlg(tree);
     else if (k === 'gains') gainsDlg(tree);
     else if (k === 'good') goodDlg(tree, '');
+    else if (k === 'people') peopleDlg(tree, '');
+    else if (k === 'solo') soloDlg(tree);
+    else if (k === 'craft') craftDlg(tree, '');
+    else if (k === 'mine') mineDlg(tree, false);
+    else if (k === 'basics') basicsDlg(tree);
     else if (k === 'thirty') open30(tree);
     else if (k === 'create') { if (APP.opts.create) APP.opts.create(); }
     else if (k === 'openprof') { if (APP.opts.openProfile) APP.opts.openProfile(); }
@@ -494,6 +505,7 @@
         (kept ? '<p class="ggs-kept"><b>' + money(kept) + '</b> kept so far' + (days >= 7 ? ', about ' + money(all.cost * 52) + ' a year.' : '.') + '</p>' : '') +
         (kept && (Mo.ideas || []).length ? '<p class="ggs-soft">Ideas for it: ' + Mo.ideas.map(esc).join('; ') + '.</p>' : '') +
         '<h3>' + esc(B.title || 'What Your Body Regains') + '</h3><ul class="ggs-body">' + body + '</ul>' + (B.note ? '<p class="ggs-soft">' + esc(B.note) + '</p>' : '') +
+        (M().basics ? '<div class="ggs-enc" style="margin-top:14px"><b>Early Sobriety</b><p style="margin:2px 0 8px">' + esc(M().basics.title) + ': three or four plain tips for each, to help your body heal.</p><button type="button" class="btn btn-secondary btn-sm" data-dd="basics">' + esc(M().basics.title) + '</button></div>' : '') +
         (B.credits && B.credits.length ? '<p class="ggs-src">Sources: ' + B.credits.map(function (x) { return x[1] ? '<a href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + esc(x[0]) + '</a>' : esc(x[0]); }).join('; ') + '</p>' : '') +
         '<div class="ggs-foot"><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>';
       dialog('Milestones and Gains', html, function (d) {
@@ -502,6 +514,7 @@
           var m = e.target.closest('[data-med]'); if (m && !m.disabled) { var x = meds.filter(function (q) { return String(q.n) === m.getAttribute('data-med'); })[0]; needShare(); share({ kind: 'milestone', head: x.label + ' Sober', text: 'One day at a time, and here I am.', star: x.star, count: x.label }); return; }
           var b = e.target.closest('[data-dd]'); if (!b) return;
           if (b.getAttribute('data-dd') === 'close') d.close();
+          else if (b.getAttribute('data-dd') === 'basics') { d.close(); basicsDlg(tree); }
           else { var v = d.box.querySelector('#ggs-cost').value; g.setCost(+v || 0).then(function () { d.close(); gainsDlg(tree); }); }
         });
       });
@@ -522,6 +535,166 @@
         d.box.addEventListener('click', function (e) {
           var t = e.target.closest('[data-gt]'); if (t) { d.close(); goodDlg(tree, t.getAttribute('data-gt')); return; }
           var b = e.target.closest('[data-dd]'); if (b) d.close();
+        });
+      });
+    });
+  }
+
+  /* ---------- Living Sober Together (GWG BLD 851) ----------
+     Healthy People, Healthy Places (where to find healthy, thriving people, and My Good People with a weekly
+     "Who will you see this week?"), Strong on Your Own (solo routines, celebrations, adventures, a lonely evening),
+     Loving Someone Who Drinks or Uses (CRAFT, for Someone I Love), and Sleep, Food, and Movement in Early Sobriety
+     (from Milestones and Gains). Words come from shared/sober-more.js. My Good People saves through
+     GGLife.people / setPeople: locked in the vault (vault.soberPeople), or for this visit only for a guest. */
+  function monday(d) { var p = parts(d || todayStr()), x = new Date(p[0], p[1] - 1, p[2]); x.setDate(x.getDate() - ((x.getDay() + 6) % 7)); return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()); }
+  function goodPeople() { var g = L(); return g && g.people ? g.people() : null; }
+  function thisWeek(gp) { return gp && gp.week && gp.week.at === monday() ? gp.week.who : ''; }
+  function srcLine(list) {
+    return list && list.length ? '<p class="ggs-src">Sources: ' + list.map(function (x) { return x[1] ? '<a href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + esc(x[0]) + '</a>' : esc(x[0]); }).join('; ') + '</p>' : '';
+  }
+  function eb(t) { return '<p class="ggs-eb">' + starSvg('gold', 16, '') + esc(t || 'Living Sober') + '</p>'; }
+  function ul(a) { return a && a.length ? '<ul class="ggs-list">' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : ''; }
+  function togetherHtml(tree, love) {
+    var gp = goodPeople(), wk = thisWeek(gp), h = '<div class="ggs-today ggs-tog"><b>Living Sober Together</b>';
+    if (gp && gp.names.length) h += wk ? '<p class="ggs-soft" style="margin:2px 0 4px">This week: ' + esc(wk) + '</p>' : '<p style="margin:2px 0 4px">Who will you see this week?</p>';
+    h += '<div class="ggs-row" style="margin-top:4px">' +
+      (love ? '<button type="button" class="btn btn-primary btn-sm" data-ggs="craft">Loving Someone Who Drinks or Uses</button>' : '') +
+      '<button type="button" class="btn btn-secondary btn-sm" data-ggs="people">Healthy People, Healthy Places</button>' +
+      '<button type="button" class="btn btn-secondary btn-sm" data-ggs="solo">Strong on Your Own</button>' +
+      '<button type="button" class="btn btn-secondary btn-sm" data-ggs="mine">' + (gp && gp.names.length && !wk ? 'Plan My Week' : 'My Good People') + '</button></div></div>';
+    return h;
+  }
+  function peopleDlg(tree, id) {
+    needMore().then(function () {
+      var P3 = M().people || { places: [] }, x = (P3.places || []).filter(function (q) { return q.id === id; })[0], gp = goodPeople(), mi = P3.mine || {};
+      var html = eb();
+      if (!x) {
+        html += '<h2>' + esc(P3.title || 'Healthy People, Healthy Places') + '</h2><p>' + esc(P3.intro || '') + '</p>' + (P3.how ? '<p class="ggs-soft">' + esc(P3.how) + '</p>' : '') +
+          '<div class="ggs-plans">' + (P3.places || []).map(function (q, i) { return '<button type="button" class="ggs-st" data-pl="' + esc(q.id) + '"' + (i === 0 ? ' data-first' : '') + '><b>' + esc(q.title) + '</b><small>' + esc(q.line || '') + '</small></button>'; }).join('') + '</div>' +
+          (P3.meeting ? '<p class="ggs-soft" style="margin-top:12px">' + (P3.meetingUrl ? '<a href="' + esc(P3.meetingUrl) + '" target="_blank" rel="noopener">' + esc(P3.meeting) + '</a>' : esc(P3.meeting)) + '</p>' : '') +
+          '<h3>' + esc(mi.title || 'My Good People') + '</h3>' + (gp && gp.names.length ? '<p>' + gp.names.map(esc).join(', ') + '</p>' + (thisWeek(gp) ? '<p class="ggs-soft">This week: ' + esc(thisWeek(gp)) + '</p>' : '<p class="ggs-soft">' + esc(mi.nudge || 'Who will you see this week?') + '</p>') : '<p class="ggs-soft">' + esc(mi.lead || '') + '</p>') +
+          srcLine(P3.credits) +
+          '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="mine">' + esc(mi.title || 'My Good People') + '</button><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      } else {
+        html += '<h2>' + esc(x.title) + '</h2><p>' + esc(x.line || '') + '</p>' +
+          '<h3>Why It Helps</h3><p>' + esc(x.why || '') + '</p>' +
+          '<h3>How to Find One Near You</h3>' + (x.link ? '<p><a href="' + esc(x.link) + '">' + esc((x.find || [])[0] || x.link) + '</a></p>' : '<p class="ggs-soft">Search words to try:</p><div class="ggs-chips ggs-words">' + (x.find || []).map(function (w) { return '<span>' + esc(w) + '</span>'; }).join('') + '</div>') +
+          '<h3>A First Step</h3><p>' + esc(x.first || '') + '</p>' +
+          '<h3>What to Say the First Time</h3><p class="ggs-toastline">' + esc(x.say || '') + '</p>' +
+          '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-pl="" data-first>All Places</button><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      }
+      dialog(x ? x.title : (P3.title || 'Healthy People, Healthy Places'), html, function (d) {
+        d.box.setAttribute('data-ggs-people', id || 'all');
+        d.box.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-pl]'); if (t) { d.close(); peopleDlg(tree, t.getAttribute('data-pl')); return; }
+          var b = e.target.closest('[data-dd]'); if (!b) return;
+          d.close(); if (b.getAttribute('data-dd') === 'mine') mineDlg(tree, false);
+        });
+      });
+    });
+  }
+  function soloDlg(tree) {
+    needMore().then(function () {
+      var S2 = M().solo || { parts: [] }, few = S2.few || {};
+      var html = eb() + '<h2>' + esc(S2.title || 'Strong on Your Own') + '</h2><p>' + esc(S2.intro || '') + '</p>' +
+        (S2.parts || []).map(function (q) { return '<h3>' + esc(q.title) + '</h3>' + (q.lead ? '<p class="ggs-soft">' + esc(q.lead) + '</p>' : '') + ul(q.items); }).join('') +
+        (few.title ? '<h3>' + esc(few.title) + '</h3><p>' + esc(few.text || '') + '</p>' : '') +
+        (S2.keep ? '<p class="ggs-toastline">' + esc(S2.keep) + '</p>' : '') +
+        '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="anchor">My Anchor Plan</button><button type="button" class="btn btn-secondary" data-dd="mine">My Good People</button><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>';
+      dialog(S2.title || 'Strong on Your Own', html, function (d) {
+        d.box.setAttribute('data-ggs-solo', tree);
+        d.box.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-dd]'); if (!b) return; var k = b.getAttribute('data-dd');
+          d.close(); if (k === 'mine') mineDlg(tree, false); else if (k === 'anchor') anchorDlg(tree, false);
+        });
+      });
+    });
+  }
+  function craftDlg(tree, id) {
+    needMore().then(function () {
+      var C2 = M().craft || { parts: [] }, x = (C2.parts || []).filter(function (q) { return q.id === id; })[0];
+      var html = eb(C2.eyebrow || 'Someone I Love');
+      if (!x) html += '<h2>' + esc(C2.title || 'Loving Someone Who Drinks or Uses') + '</h2><p>' + esc(C2.intro || '') + '</p>' +
+        '<div class="ggs-plans">' + (C2.parts || []).map(function (q, i) { return '<button type="button" class="ggs-st" data-cr="' + esc(q.id) + '"' + (i === 0 ? ' data-first' : '') + '><b>' + esc(q.title) + '</b><small>' + esc(q.lead || '') + '</small></button>'; }).join('') + '</div>' +
+        (C2.keep ? '<p class="ggs-toastline" style="margin-top:14px">' + esc(C2.keep) + '</p>' : '') + srcLine(C2.credits) +
+        '<div class="ggs-foot"><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      else html += '<h2>' + esc(x.title) + '</h2><p>' + esc(x.lead || '') + '</p>' + ul(x.items) +
+        (x.try ? '<h3>Try Saying</h3><p class="ggs-toastline">' + esc(x.try) + '</p>' : '') +
+        (x.id === 'safe' ? linesHtml(tree) : '') + srcLine(C2.credits) +
+        '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-cr="" data-first>All Steps</button><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      dialog(x ? x.title : (C2.title || 'Loving Someone Who Drinks or Uses'), html, function (d) {
+        d.box.setAttribute('data-ggs-craft', id || 'all');
+        d.box.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-cr]'); if (t) { d.close(); craftDlg(tree, t.getAttribute('data-cr')); return; }
+          var b = e.target.closest('[data-dd]'); if (b) d.close();
+        });
+      });
+    });
+  }
+  function basicsDlg(tree) {
+    needMore().then(function () {
+      var Ba = M().basics || { parts: [] };
+      var html = eb() + '<h2>' + esc(Ba.title || 'Sleep, Food, and Movement in Early Sobriety') + '</h2><p>' + esc(Ba.intro || '') + '</p>' +
+        (Ba.parts || []).map(function (q) { return '<h3>' + esc(q.title) + '</h3>' + ul(q.items); }).join('') +
+        (Ba.note ? '<p class="ggs-soft">' + esc(Ba.note) + '</p>' : '') +
+        (Ba.health ? '<p class="ggs-soft"><a href="' + esc(ROOT + '/field-guide/') + '">' + esc(Ba.health) + '</a></p>' : '') + srcLine(Ba.credits) +
+        '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="gains">Milestones and Gains</button><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>';
+      dialog(Ba.title || 'Sleep, Food, and Movement', html, function (d) {
+        d.box.setAttribute('data-ggs-basics', tree);
+        d.box.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-dd]'); if (!b) return;
+          d.close(); if (b.getAttribute('data-dd') === 'gains') gainsDlg(tree);
+        });
+      });
+    });
+  }
+  // My Good People: names only, and this week's plan. The Anchor Plan's people can be added in one tap.
+  function mineDlg(tree, edit) {
+    var g = L(); if (!g || !g.people || isHelper()) return;
+    needMore().then(function () {
+      var mi = (M().people || {}).mine || {}, title = mi.title || 'My Good People';
+      var gp = goodPeople(), mode = edit || !gp || !gp.names.length ? 'edit' : 'view';
+      function fromAnchor() { var a = g.anchor(), have = (goodPeople() || { names: [] }).names; return a ? a.people.map(function (p) { return p.name; }).filter(function (n) { return n && have.indexOf(n) < 0; }) : []; }
+      function body() {
+        gp = goodPeople();
+        var names = gp ? gp.names : [], wk = thisWeek(gp), top = eb() + '<h2>' + esc(title) + '</h2>';
+        if (mode === 'view') return top + '<p class="ggs-soft">' + esc(mi.lead || '') + '</p><ul class="ggs-list">' + names.map(function (n) { return '<li>' + esc(n) + '</li>'; }).join('') + '</ul>' +
+          '<h3>' + esc(mi.nudge || 'Who will you see this week?') + '</h3>' + (wk ? '<p class="ggs-toastline">' + esc(wk) + '</p>' : '<p class="ggs-soft">' + esc(mi.nudgeHelp || '') + '</p>') +
+          '<label for="ggs-wk">This week</label><input type="text" id="ggs-wk" maxlength="160" value="' + esc(wk) + '" data-first>' +
+          '<p class="ggs-soft" role="status" aria-live="polite" data-gp-status></p>' +
+          '<div class="ggs-foot"><button type="button" class="ggs-link" data-gp="clear">Clear My List</button><button type="button" class="btn btn-secondary" data-gp="edit">Edit Names</button><button type="button" class="btn btn-secondary" data-gp="close">Close</button><button type="button" class="btn btn-primary" data-gp="week">Save My Week</button></div>';
+        var rows = names.slice(); while (rows.length < Math.min(12, Math.max(4, names.length + 2))) rows.push('');
+        var fa = fromAnchor();
+        return top + '<p class="ggs-soft">' + esc(mi.lead || '') + (isGuest() ? ' Kept for this visit only until you open or create a profile.' : '') + '</p>' +
+          (fa.length ? '<div class="ggs-row" style="margin:0 0 8px"><button type="button" class="btn btn-secondary btn-sm" data-gp="anchor">Add From My Anchor Plan: ' + esc(fa.join(', ')) + '</button></div>' : '') +
+          (!names.length ? '<p class="ggs-soft">' + esc(mi.empty || '') + '</p>' : '') +
+          '<div class="ggs-pp ggs-names">' + rows.map(function (n, i) { return '<label>Name<input type="text" name="gn" value="' + esc(n) + '" maxlength="60" autocomplete="off"' + (i === 0 ? ' data-first' : '') + '></label>'; }).join('') + '</div>' +
+          '<p class="ggs-soft" role="status" aria-live="polite" data-gp-status></p>' +
+          '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-gp="close">Close</button><button type="button" class="btn btn-primary" data-gp="save">Save My List</button></div>';
+      }
+      function status(t) { var s = mdlg.box.querySelector('[data-gp-status]'); if (s) s.textContent = t; }
+      function put(o, msg) {
+        return g.setPeople(o).then(function (saved) {
+          if (isGuest()) APP.guestPeople = saved;
+          if (!saved && o) { status(mi.empty || 'Add one name.'); return; }
+          mode = saved && saved.names.length ? 'view' : 'edit'; mdlg.set(body()); var f = mdlg.box.querySelector('[data-first]'); if (f) f.focus(); refresh(); if (msg) toast(msg);
+        }, function (er) { status(er && er.message ? er.message : 'Try saving once more.'); });
+      }
+      var mdlg = dialog(title, body(), function (d) {
+        d.box.setAttribute('data-ggs-mine', tree);
+        d.box.addEventListener('submit', function (e) { e.preventDefault(); });
+        d.box.addEventListener('click', function (e) {
+          var b = e.target.closest('[data-gp]'); if (!b) return; var k = b.getAttribute('data-gp'), cur = goodPeople() || { names: [], week: null };
+          if (k === 'close') d.close();
+          else if (k === 'edit') { mode = 'edit'; d.set(body()); var f = d.box.querySelector('[data-first]'); if (f) f.focus(); }
+          else if (k === 'anchor') {
+            var have = []; d.box.querySelectorAll('input[name=gn]').forEach(function (x) { if (x.value.trim()) have.push(x.value.trim()); });
+            fromAnchor().forEach(function (n) { if (have.indexOf(n) < 0) have.push(n); });
+            put({ names: have, week: cur.week }, 'Saved, locked on this device.');
+          }
+          else if (k === 'save') { var nm = []; d.box.querySelectorAll('input[name=gn]').forEach(function (x) { if (x.value.trim()) nm.push(x.value.trim()); }); put({ names: nm, week: cur.week }, 'Saved, locked on this device.'); }
+          else if (k === 'week') { var w = d.box.querySelector('#ggs-wk').value.trim(); put({ names: cur.names, week: w ? { at: monday(), who: w } : null }, w ? 'Saved. Enjoy your time together.' : ''); }
+          else if (k === 'clear') { if (!confirm('Clear My Good People? The list is erased from this device.')) return; g.setPeople(null).then(function () { APP.guestPeople = null; mode = 'edit'; d.set(body()); refresh(); }); }
         });
       });
     });
@@ -684,6 +857,9 @@
   }
 
   /* ---------- the ?sober= link ---------- */
+  // Living Sober Together (BLD 851): ?sober=people, solo, craft, mine, or basics opens that piece.
+  var TOGETHER = ['people', 'solo', 'craft', 'mine', 'basics'];
+  function openTogether(tree, k) { if (k === 'people') peopleDlg(tree, ''); else if (k === 'solo') soloDlg(tree); else if (k === 'craft') craftDlg(tree, ''); else if (k === 'mine') mineDlg(tree, false); else if (k === 'basics') basicsDlg(tree); }
   function readFlag() {
     var v = null;
     try {
@@ -696,6 +872,7 @@
     var g = L(), stages = g ? g.STAGES.map(function (x) { return x.id; }) : [];
     if (stages.indexOf(v) >= 0) return { stage: v, anchor: false };
     if (v === 'anchor' || v === 'plan') return { stage: '', anchor: true };
+    if (TOGETHER.indexOf(v) >= 0) return { stage: '', anchor: false, open: v };
     if (/^(1|on|yes|true|)$/.test(v)) return { stage: '', anchor: false };
     return null;
   }
@@ -716,6 +893,7 @@
     var isNew = APP.startIds && APP.startIds.indexOf(a.id) < 0;
     APP.guestCarry = null;
     var anc = APP.guestAnchor; APP.guestAnchor = null;
+    var gpp = APP.guestPeople; APP.guestPeople = null;
     if (!isNew) return Promise.resolve();
     var jobs = [];
     var c = g.get();
@@ -727,6 +905,7 @@
       jobs.push(g.set(patch));
     }
     if (anc && !g.anchor()) jobs.push(g.setAnchor(anc));
+    if (gpp && g.people && !g.people()) jobs.push(g.setPeople(gpp));
     return Promise.all(jobs).then(function () { refresh(); });
   }
 
@@ -750,6 +929,7 @@
       setTimeout(function () {
         if (APP.opts.open) try { APP.opts.open(flag.anchor ? 'anchor' : 'sober'); } catch (e) { console.error(e); }
         if (flag.anchor) setTimeout(function () { anchorDlg(tree, false); }, 120);
+        else if (flag.open) setTimeout(function () { openTogether(tree, flag.open); }, 120);
         else check(tree);
       }, 180);
     }).catch(function (e) { console.error(e); });
@@ -757,7 +937,7 @@
       // A guest's choices this visit, so a profile made now can keep them.
       if (d && !d.id) APP.guestCarry = d.choice;
       if (d && d.id && APP.pending && APP.pending.guest) { APP.pending.guest = false; applyPending().then(carryGuest); }
-      else if (d && d.id && (APP.guestCarry || APP.guestAnchor)) carryGuest();
+      else if (d && d.id && (APP.guestCarry || APP.guestAnchor || APP.guestPeople)) carryGuest();
       if (L() && L().sober(APP.tree) && !window.GGSober30) need30().then(refresh);
       setTimeout(function () { check(APP.tree); }, 250);
     });
@@ -765,5 +945,5 @@
   }
 
   window.GGSober = { version: V, TREES: TREES.slice(), init: init, cardHtml: cardHtml, count: count, reached: reached, check: check,
-    anchor: function (tree, edit) { anchorDlg(tree || APP.tree, !!edit); }, daily: daily, refresh: refresh, share: share, milestoneWords: milestoneWords, star: starSvg };
+    anchor: function (tree, edit) { anchorDlg(tree || APP.tree, !!edit); }, together: function (tree, k) { openTogether(tree || APP.tree, k); }, daily: daily, refresh: refresh, share: share, milestoneWords: milestoneWords, star: starSvg };
 })();

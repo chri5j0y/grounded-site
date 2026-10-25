@@ -36,6 +36,8 @@
      soberLines(tree) (the stage's help lines), okDate(d), and My Anchor Plan: anchor(id),
      setAnchor(obj | null, id), kept in vault.soberAnchor. The card, milestones, the plan, and the
      ?sober= link live in shared/gg-sober.js.
+   Living Sober Together (GWG BLD 851): My Good People, people(id) and setPeople(obj | null, id), kept in
+     vault.soberPeople ({names, week: {at, who}}), names only.
    ===================================================================== */
 (function () {
   'use strict';
@@ -351,6 +353,34 @@
     if (!id) { MEMANCHOR = a; return Promise.resolve(a); }
     var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
     if (a) v.soberAnchor = a; else delete v.soberAnchor;
+    return Promise.resolve(P().save(id)).then(function () { return a; });
+  }
+
+  /* ---------- My Good People (GWG BLD 851, Living Sober Together) ----------
+     A short list of names the person keeps (names only), and this week's plan for "Who will you see this week?".
+     Kept in the locked vault beside the plan (vault.soberPeople); guests keep it for this visit only. Its own Clear erases it.
+     {names: [up to 12 names], week: {at: 'YYYY-MM-DD' (that week's Monday), who: a few words}, set} */
+  var MEMPEOPLE = null;
+  function cleanPeople(o) {
+    if (!o || typeof o !== 'object') return null;
+    var r = { names: [], week: null, set: /^\d{4}-\d\d-\d\d$/.test(String(o.set || '')) ? o.set : '' };
+    (Array.isArray(o.names) ? o.names : []).forEach(function (n) { n = str(n, 60); if (n && r.names.indexOf(n) < 0 && r.names.length < 12) r.names.push(n); });
+    var w = o.week; if (w && typeof w === 'object' && okDate(w.at) && str(w.who, 160)) r.week = { at: w.at, who: str(w.who, 160) };
+    return r.names.length || r.week ? r : null;
+  }
+  function people(id) {
+    id = id || who();
+    if (!id) return MEMPEOPLE ? cleanPeople(MEMPEOPLE) : null;
+    if (helperView(id)) return null;
+    var v = vault(id); return v ? cleanPeople(v.soberPeople) : null;
+  }
+  function setPeople(obj, id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    var a = obj === null ? null : cleanPeople(Object.assign({}, obj || {}, { set: today() }));
+    if (!id) { MEMPEOPLE = a; return Promise.resolve(a); }
+    var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
+    if (a) v.soberPeople = a; else delete v.soberPeople;
     return Promise.resolve(P().save(id)).then(function () { return a; });
   }
 
@@ -684,7 +714,7 @@
     lines: lines, picks: picks, addGuides: addGuides, label: label, chooser: chooser, dialog: dialog, offerCard: offerCard,
     STAGES: STAGES, stages: stagesFor, sober: sober, soberStage: soberStage, ring: ring, ringShows: ringShows, soberSteps: soberSteps,
     DECLARED: DECLARED.slice(), declared: function (tree) { return DECLARED.indexOf(tree) >= 0; }, soberDate: soberDate, soberLines: soberLines, okDate: okDate,
-    anchor: anchor, setAnchor: setAnchor, days: days, setDay: setDay, setCost: setCost, clearDays: clearDays, helperView: function (id) { return helperView(id || who()); },
+    anchor: anchor, setAnchor: setAnchor, people: people, setPeople: setPeople, days: days, setDay: setDay, setCost: setCost, clearDays: clearDays, helperView: function (id) { return helperView(id || who()); },
     use: function (id) { ctx = id || null; fire(who()); }, who: who,
     on: function (fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
   };
