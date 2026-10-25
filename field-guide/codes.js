@@ -3,23 +3,13 @@
 // Made and changed by the Access manager (Founder tab). Replace this whole file with the one it downloads.
 window.GFG_CODES = {
  "v": 1,
- "stamp": "mvn6hte1a35aa",
+ "stamp": "mvoa2nexstr7w",
  "salt": "YDaHLbQgDd0HU0BbtgF6Cg==",
  "codes": [
   {
    "iv": "sn7L2vuldif/PCyW",
    "ct": "oJvlDwBF3uP9Ond40I5EFdeIZPFQdz2vLip0Wr9z7WPtAJ7eXrfC29pqnwmyGG+NmXZvN/8fpJuC6pgE2bvaoHZ2iNLrN3/UPQiz5lA3ptppq+24jQ==",
    "id": "foumv0wgejeswdz5",
-   "tier": "founder",
-   "kind": "founder",
-   "label": "Founder code",
-   "made": "2026-10-09",
-   "ends": null
-  },
-  {
-   "iv": "n1hX1tj0kpjZmMlE",
-   "ct": "orSQgv1WZDal7gWTNLkaIFBT0BLagRqa+2BCs9oDoH3e3IiLmvy3oqBxs/2uEsLQO+eulSpViptfrBALY9nWWMaqHx+5aSqqc/8qSe3n23br5P7Dxg==",
-   "id": "foumv0wlz6nkw0mr",
    "tier": "founder",
    "kind": "founder",
    "label": "Founder code",
@@ -85,20 +75,30 @@ window.GFG_CODES = {
    "label": "Family Kitchen code",
    "made": "2026-10-24",
    "ends": null
+  },
+  {
+   "iv": "K8BYkM5+fIBn3fb/",
+   "ct": "Y+E+0bKOsbSBf6G7uFQuha/IJmD7YkfD05ngQ20JlBCi8bstx5PYvBPEAypj1J46FrltKsay35s51Nfz6yd3pYZUwhNY4eecJhVwS6c1P9hHJS8q/Q==",
+   "id": "foumvoa2ndz5vffk",
+   "tier": "founder",
+   "kind": "founder",
+   "label": "Founder code",
+   "made": "2026-10-25",
+   "ends": null
   }
  ],
  "links": {
   "founder>staff": {
-   "iv": "dRQ98A+fLYqjXgm0",
-   "ct": "IxgL2vh0JHMyGHdnytx0qKBqPavG9oIpvfHY52V0PMOA/bPgI9fEtRiFLpS0o/aBr7Zr9LHD+lVgoelcUThIE9XwRZg="
+   "iv": "a5l/uUjrWvOkr4pr",
+   "ct": "wViuDypEFMDJybTE0XUjElICCAP/HmlxTAP5Bu+F0jFBDFyLM3Jk6qJ4P4mBRxlSwwQwwnxhbREAIbtn7+VZZtHKxko="
   },
   "founder>guide": {
-   "iv": "s3o3Fvnpc7kJgHp3",
-   "ct": "WC/1x9M8R3BjEX2genQZxSdwC1jc6ljKEOZSSCzZpvYo5cS7z8qWVYYTRvQPrRZSZSyGHCHEhG39qRF5d9GXfH9RN2g="
+   "iv": "zbQ+76d5LJAXQX7n",
+   "ct": "QND7cM3E4EajhEMMeZDyeegTQvz8oIzOIwcxT725snUHlU266j4eNRq/IiH6OVhHVTJOio7K45NYO+kQcWDnB/EQdLg="
   },
   "staff>guide": {
-   "iv": "w5dGYrKNnnNcCTZ+",
-   "ct": "O81aF+XhkUbtJgQYFwnFUV8RW9TuhM++fLsBkrZbEYWSGh9ufb6OqND5T/ggBIApq2QYSS7KCQGQI3hPVINAYfEJrkA="
+   "iv": "nHMcNmOt9TQmPbTP",
+   "ct": "FQ1VUaIgxLD4tm8lyBeX/Bc63fe7CP76ebb60CV/+SRCFTNcFOKf9DgylsXiu8T9FVGwwdV5v7PxUcN0J7ob1FW/IYQ="
   }
  }
 };
