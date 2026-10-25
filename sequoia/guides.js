@@ -3342,7 +3342,7 @@ const LC_TOPICS = [
    "helps": [
     "Saying out loud what you will do and what you won't, kindly and calmly.",
     "Listening more than advising, when they call. Grown children often want to be heard first.",
-    "A group for families of people with addiction, if that is part of the picture, like Al-Anon or Families Anonymous.",
+    "A group for families of people with addiction, if that is part of the picture, like SMART Recovery Family and Friends.",
     "A set worry time, so worry has a place to go and doesn't take the whole day.",
     "Keeping your own life full: friends, rest, faith or meaning, and things you enjoy."
    ],
@@ -3387,14 +3387,14 @@ const LC_TOPICS = [
    "If your grown child is in crisis or talks about ending their life, call or text 988 any time. You can call for them, or with them. Call 911 if anyone is in danger right now.",
    "Call or text 988 any time if your own worry turns into hopelessness. Veterans: 988, then press 1.",
    "If a grown child, or anyone, pressures you for money, takes it without asking, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential, and it is not a betrayal to ask for help.",
-   "Families of people with addiction: Al-Anon, Families Anonymous, and SAMHSA's National Helpline can point you to support.",
+   "Families of people with addiction: SMART Recovery Family and Friends and SAMHSA's National Helpline can point you to support.",
    "Eldercare Locator, 1-800-677-1116 (call or text): local counseling and help. In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
    "Your doctor, if worry keeps you from sleeping or eating."
   ],
   "more": [
    [
-    "Al-Anon Family Groups",
-    "https://al-anon.org/newcomers/faq/"
+    "SMART Recovery, including Family and Friends meetings",
+    "https://smartrecovery.org/"
    ],
    [
     "SAMHSA: helping families cope",
@@ -5227,7 +5227,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "A reason to get up: a volunteer shift, a class, a garden, a grandchild's game, someone who counts on you.",
     "Moving your body every day, outdoors when you can. Daylight and movement lift mood and help sleep.",
     "A wind-down hour before bed in place of a nightcap: warm light, a book, a slow breath.",
-    "Talking with others who are making the same change, in person or online, in a peer group like AA, SMART Recovery, or a faith community group."
+    "Talking with others who are making the same change, in person or online, in a peer group like SMART Recovery or a faith community group."
    ],
    "tell": [
     "“I am filling my days with what feeds me.”",
@@ -5256,7 +5256,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Offer a ride to the doctor, and encourage them to bring their medicine list.",
     "Learn the signs of danger: confusion, a fall, slurred speech, or very slow breathing after drinking with medicines. Call 911."
    ],
-   "you": "You can be one warm thread in their days, alongside others. Your steady company may matter more than anything you say about drinking. Share the visits and calls with family and friends, and find your own support too. Al-Anon and SMART Recovery Family and Friends welcome people who love someone who drinks."
+   "you": "You can be one warm thread in their days, alongside others. Your steady company may matter more than anything you say about drinking. Share the visits and calls with family and friends, and find your own support too. SMART Recovery Family and Friends welcomes people who love someone who drinks."
   },
   "faith": "For some people, a faith community is a ready place to belong when the days grow quiet: a coffee hour, a choir, a service team, a small group. Many traditions also have words for starting fresh. If faith is part of your life, it can be one of the places your evenings go. If it isn't, clubs, classes, and volunteer teams offer the same steady faces. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
@@ -5336,7 +5336,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Taking unused pills to a pharmacy or drug take-back site once you are done with them.",
     "One person you tell the truth to each day while you are healing: “Here is how the pain is. Here is how many I took.”",
     "A once-a-year medicine review with your pharmacist, or after any hospital stay.",
-    "Peer support, if you want it: AA, NA, SMART Recovery, a faith community group, or a friend who is growing sober too."
+    "Peer support, if you want it: SMART Recovery, a faith community group, or a friend who is growing sober too."
    ],
    "tell": [
     "“A plan made ahead is a strong plan.”",
@@ -5419,7 +5419,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "love"
   ],
   "title": "When Your Adult Child Drinks or Uses",
-  "keys": "my son drinks my daughter drinks adult child drinking using drugs addiction alcohol opioids pills meth heroin fentanyl overdose rehab treatment detox borrowing money asking for money lying stealing worried sick cant sleep enabling tough love cut off al-anon nar-anon smart recovery family and friends craft grown child substance use recovery sober",
+  "keys": "my son drinks my daughter drinks adult child drinking using drugs addiction alcohol opioids pills meth heroin fentanyl overdose rehab treatment detox borrowing money asking for money lying stealing worried sick cant sleep enabling tough love cut off smart recovery family and friends craft grown child substance use recovery sober",
   "parts": [
    "branches",
    "bark",
@@ -5437,7 +5437,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "first": [
     "Tell one trusted person the whole truth this week. Carrying it alone makes it heavier.",
     "Write down what you will gladly do and what you will set down. For example: rides to treatment, yes. Cash, set down.",
-    "Visit a family group once, like Al-Anon, Nar-Anon, or SMART Recovery Family and Friends, in person or online.",
+    "Visit a family group once, like SMART Recovery Family and Friends, in person or online.",
     "If opioids are part of your child's life, get naloxone (Narcan) from a pharmacy and learn how to use it."
    ],
    "helps": [
@@ -5490,19 +5490,11 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Your child is very hard to wake, breathing slowly, or has blue or gray lips: call 911, give naloxone (Narcan) if you have it, and stay with them.",
    "Your child is in crisis or talks about ending their life: call or text 988, any time, for them or with them. Danger right now: 911.",
    "Treatment and support near your child, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
-   "Families of people who drink or use: Al-Anon, Nar-Anon, and SMART Recovery Family and Friends offer groups in person and online.",
+   "Families of people who drink or use: SMART Recovery Family and Friends offers groups in person and online.",
    "A grown child, or anyone, pressures you for money, takes it, or frightens you: in Minnesota, MAARC, 1-844-880-1574, any time. It is confidential. Danger right now: 911.",
    "Your own worry turns into hopelessness: call or text 988, any time. Veterans: dial 988, then press 1."
   ],
   "more": [
-   [
-    "Al-Anon Family Groups",
-    "https://al-anon.org/newcomers/faq/"
-   ],
-   [
-    "Nar-Anon Family Groups",
-    "https://www.nar-anon.org/"
-   ],
    [
     "SMART Recovery, including Family and Friends meetings",
     "https://smartrecovery.org/"
@@ -5535,7 +5527,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "love"
   ],
   "title": "Raising Grandchildren Through a Parent's Drinking or Using",
-  "keys": "raising grandchildren grandkids live with me grandparent raising grandkids kinship care grandfamilies custody guardianship my son my daughter drinking using drugs addiction opioids meth overdose in treatment in jail parent visits what to tell the kids explaining to children seven cs alateen nacoa tired too old for this money worries sober recovery",
+  "keys": "raising grandchildren grandkids live with me grandparent raising grandkids kinship care grandfamilies custody guardianship my son my daughter drinking using drugs addiction opioids meth overdose in treatment in jail parent visits what to tell the kids explaining to children seven cs nacoa tired too old for this money worries sober recovery",
   "parts": [
    "branches",
    "bark",
@@ -5562,7 +5554,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Letting the children love their parent, and keeping visits safe and calm. Visits happen when the parent is sober.",
     "Answering their questions in short, honest pieces, as often as they ask.",
     "A therapist or school counselor who understands families touched by drinking or drugs.",
-    "Groups for kids, like Alateen for teens, and for you, like Al-Anon, Nar-Anon, or a grandparents raising grandchildren group.",
+    "Help for kids, like NACoA for teens, and groups for you, like SMART Recovery Family and Friends or a grandparents raising grandchildren group.",
     "Your own rest, food, movement, and joy. A tended grandparent can tend a child."
    ],
    "tell": [
@@ -5608,7 +5600,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "A parent arrives intoxicated, a child is in danger, or someone is very hard to wake or breathing slowly: call 911.",
    "Treatment and support for the children's parent, or for your family: SAMHSA's National Helpline, 1-800-662-4357, any time. It is confidential.",
    "A grandchild, or you, has thoughts of ending a life: call or text 988, any time. Veterans: dial 988, then press 1.",
-   "Groups for families: Al-Anon and Alateen (for teens), Nar-Anon, and SMART Recovery Family and Friends.",
+   "Groups for families: SMART Recovery Family and Friends, and NACoA for kids and teens.",
    "Help for grandfamilies, rides, and respite near you: Eldercare Locator, 1-800-677-1116. In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
    "If you believe a vulnerable adult is being harmed or exploited, including pressure for money: in Minnesota, MAARC, 1-844-880-1574, any time."
   ],
@@ -5622,8 +5614,8 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "https://www.gu.org/explore-our-topics/grandfamilies/"
    ],
    [
-    "Al-Anon and Alateen",
-    "https://al-anon.org/newcomers/teen-corner-alateen/"
+    "SMART Recovery, including Family and Friends meetings",
+    "https://smartrecovery.org/"
    ],
    [
     "SAMHSA National Helpline",
@@ -5651,7 +5643,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "growing"
   ],
   "title": "Long-Term Sober, Still Growing",
-  "keys": "long term sober years sober decades sober sobriety anniversary sober birthday chip still growing recovery old cravings craving again after surgery pain pills retirement grief losses swapped habits food shopping work religion pride sponsor mentor giving back aa na smart recovery refuge recovery healing old wounds painful emotions staying sober later life",
+  "keys": "long term sober years sober decades sober sobriety anniversary sober birthday chip still growing recovery old cravings craving again after surgery pain pills retirement grief losses swapped habits food shopping work religion pride mentor giving back smart recovery refuge recovery healing old wounds painful emotions staying sober later life",
   "parts": [
    "bark",
    "trunk",
@@ -5664,7 +5656,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "Drinking or using often numbed painful feelings and old hurts. Healing those old hurts, a little at a time, is the work that keeps a life steady.",
    "Later life brings its own tests: retirement, losses, surgeries, pain medicines, and quieter days. Naming them early keeps you strong.",
    "Watch for swapped habits. Food, shopping, work, screens, even religion or pride can quietly take a drink's old place.",
-   "Your story is a gift. Mentoring, sponsoring, and showing up for others keep sobriety bright for you and for them."
+   "Your story is a gift. Mentoring, giving back, and showing up for others keep sobriety bright for you and for them."
   ],
   "feel": "You may feel grateful and steady, and still surprised by an old craving at a funeral, after a surgery, or on a long quiet afternoon. You may notice that the drinking stopped years ago, and some of the pain underneath is still asking for attention. You may miss old friends from your sober community who have moved or died. All of this makes sense. Long-term sobriety is a living thing, and living things keep growing.",
   "self": {
@@ -5677,10 +5669,10 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "helps": [
     "A daily rhythm for mind, body, and spirit: a few minutes of quiet breathing, a daily walk, and time to write out what you feel.",
     "Keeping sober people close as the years change who is nearby: a meeting, a group, a standing call, a new friend.",
-    "Mentoring, sponsoring, volunteering, or simply telling your story to someone who is just starting out.",
+    "Mentoring, volunteering, or simply telling your story to someone who is just starting out.",
     "Marking your sober anniversaries with joy: a favorite meal, a walk, sparkling water, the people who walked with you.",
     "Rest, whole food, water, movement, and time outdoors. A well-tended body steadies the mind.",
-    "Peer support in whatever form fits you: AA, NA, SMART Recovery, Refuge Recovery, a faith community, or friends who share the path."
+    "Peer support in whatever form fits you: SMART Recovery, Refuge Recovery, a faith community, or friends who share the path."
    ],
    "tell": [
     "“The only disease we have is the dis-ease of painful emotions, and healing is real.”",

@@ -154,7 +154,6 @@
     // Living Sober (GWG BLD 789). SAMHSA and Poison Control numbers confirmed in the BLD 789 spec; the rest link to each group's own site.
     samhsa: { name: 'SAMHSA National Helpline', how: '1-800-662-4357', tel: '18006624357', url: 'https://www.samhsa.gov/find-help/helplines/national-helpline', note: 'Treatment referral and information for drinking and drug use, any time, day or night, in English and Spanish. Confidential.' },
     findtx: { name: 'FindTreatment.gov', how: 'Open the website', url: 'https://findtreatment.gov/', note: 'SAMHSA\'s national directory of treatment for drinking and drug use, including medication, by place.' },
-    alanon: { name: 'Al-Anon and Alateen', how: 'Find a meeting', url: 'https://al-anon.org/', note: 'Groups for family and friends of someone who drinks, and Alateen for teens, in person and online.', grownup: true },
     smart: { name: 'SMART Recovery', how: 'Find a meeting', url: 'https://smartrecovery.org/', note: 'Peer groups for growing sober, and Family and Friends meetings, in person and online.' },
     poison: { name: 'Poison Control', how: '1-800-222-1222', tel: '18002221222', url: 'https://www.poison.org/', note: 'Any time, day or night, for questions about a medicine, a drug, or a possible poisoning. If someone is hard to wake or breathing slowly, call 911 first.' },
     nacoa: { name: 'NACoA', how: 'Open the website', url: 'https://nacoa.org/', note: 'The National Association for Children of Addiction: help for kids whose family member drinks or uses, and for the grown-ups who love them.', grownup: true },
@@ -163,12 +162,12 @@
   Object.keys(LINES).forEach(function (k) { LINES[k].id = 'life-' + k; LINES[k].show = LINES[k].how; });
   var KIDLINES = { health: ['pacer'], pain: ['pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami', 'pacer'], close: ['sibs', 'nami'] };
   var LINEMAP = {
-    maple: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
-    aspen: Object.assign({}, KIDLINES, { sober: ['nacoa', 'alanon'] }),
-    pine: { sober: ['samhsa', 'alanon', 'poison'], soberLove: ['alanon', 'nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
-    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
-    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
-    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['alanon', 'smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
+    maple: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
+    aspen: Object.assign({}, KIDLINES, { sober: ['nacoa'] }),
+    pine: { sober: ['samhsa', 'nacoa', 'poison'], soberLove: ['nacoa', 'samhsa'], health: ['transition', 'pacer'], pain: ['transition', 'pacer'], moving: ['pacer'], hearing: ['asl988', 'pacer'], seeing: ['pacer'], learning: ['pacer'], autism: ['pacer'], mind: ['nami'], serious: ['transition'], close: ['aacy', 'sibs', 'nami'] },
+    birch: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['transition', 'smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub', 'pacer'], autism: ['dhub', 'pacer'], mind: ['nami'], serious: ['dhub'], close: ['nami', 'dhub'] },
+    oak: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc'], pain: ['smrc'], moving: ['dhub'], hearing: ['asl988', 'dhub'], seeing: ['dhub'], learning: ['dhub'], autism: ['dhub'], mind: ['nami'], serious: ['smrc', 'dhub'], memory: ['dhub', 'aging'], close: ['nami', 'pacer', 'cpn', 'aging'] },
+    sequoia: { sober: ['samhsa', 'findtx', 'smart', 'poison'], soberLove: ['smart', 'samhsa', 'poison'], health: ['smrc', 'aging'], pain: ['smrc'], moving: ['aging', 'dhub'], hearing: ['asl988', 'aging'], seeing: ['aging', 'dhub'], autism: ['dhub'], mind: ['nami'], serious: ['aging'], memory: ['aging'], close: ['aging', 'nami'] }
   };
 
   /* ---------- Living Sober growth plan ideas (GWG BLD 789) ----------
@@ -211,7 +210,7 @@
     love: {
       leaves: 'Keep your own sleep, meals, and movement steady. Tending yourself helps the person you love.',
       bark: 'When worry rises, take three slow breaths and come back to what is yours to tend today.',
-      branches: 'Find one place where people understand, like Al-Anon, Nar-Anon, a family group, or a trusted friend.',
+      branches: 'Find one place where people understand, like SMART Recovery Family and Friends, a family group, or a trusted friend.',
       roots: 'Give yourself a few quiet minutes each day that are only for you.',
       trunk: 'Name what gives your own life meaning in this season, and give it a little time each week.',
       fruit: 'Plan one good thing for yourself this week, whatever choices the person you love makes.'
@@ -236,7 +235,7 @@
     pineLove: {
       leaves: 'Keep your own sleep, meals, and movement steady, whatever the day brings at home.',
       bark: 'When worry or anger rises, move it out: a run, a walk, music, or writing it down.',
-      branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into Alateen.',
+      branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into NACoA for teens.',
       roots: 'Give yourself a few quiet minutes each day that are only for you.',
       trunk: 'It is never your fault, and their choices are theirs. Your own path is yours to grow.',
       fruit: 'Plan one thing each week that is just for you and makes you glad.'

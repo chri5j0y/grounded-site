@@ -8110,7 +8110,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "So it has a place to go"
        ]
       ],
-      "say": "Here is what helps. Listen more than you advise. Grown children often want to be heard first. Say kindly what you will do, and what you won't. If addiction is part of it, a family group like Al-Anon can help. And give worry a set time each day, so it doesn't take the whole day."
+      "say": "Here is what helps. Listen more than you advise. Grown children often want to be heard first. Say kindly what you will do, and what you won't. If addiction is part of it, a family group like SMART Recovery Family and Friends can help. And give worry a set time each day, so it doesn't take the whole day."
      },
      {
       "k": "card",
@@ -12651,7 +12651,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "big",
      "h": "Find your own support too.",
      "sub": "You are one warm thread among many.",
-     "say": "You can be one warm thread in their days, alongside others. Share the calls and visits. And find your own support. Groups for families, like Al-Anon or SMART Recovery Family and Friends, welcome people who love someone who drinks."
+     "say": "You can be one warm thread in their days, alongside others. Share the calls and visits. And find your own support. Groups for families, like SMART Recovery Family and Friends, welcome people who love someone who drinks."
     },
     {
      "k": "big",
@@ -13014,7 +13014,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      "k": "big",
      "h": "Find your people.",
      "sub": "Family groups meet in person and online.",
-     "say": "This is meant to be carried with others. Family groups like Al-Anon, Nar-Anon, and SMART Recovery Family and Friends meet in person and online. Tell one trusted person the whole truth this week."
+     "say": "This is meant to be carried with others. Family groups like SMART Recovery Family and Friends meet in person and online. Tell one trusted person the whole truth this week."
     },
     {
      "k": "big",
@@ -13496,8 +13496,8 @@ window.GG_LEARN_GUIDES.sequoia = {
     {
      "k": "big",
      "h": "Your story lights the way.",
-     "sub": "Mentor, sponsor, show up.",
-     "say": "Your story is a gift. Mentoring, sponsoring, volunteering, or simply telling someone who is just starting, I've been where you are, keeps sobriety bright for both of you. And celebrate your anniversaries with joy, with the people who walked with you."
+     "sub": "Mentor, give back, show up.",
+     "say": "Your story is a gift. Mentoring, volunteering, or simply telling someone who is just starting, I've been where you are, keeps sobriety bright for both of you. And celebrate your anniversaries with joy, with the people who walked with you."
     },
     {
      "k": "big",
