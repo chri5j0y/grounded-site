@@ -6314,7 +6314,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "id": "sober-after-treatment",
   "ring": "sober",
   "title": "Life After Treatment",
-  "keys": "after rehab after treatment leaving rehab coming home from rehab out of treatment discharge aftercare plan continuing care outpatient iop intensive outpatient php partial hospitalization detox residential treatment inpatient sober living recovery housing halfway house medication for addiction treatment mat moud suboxone buprenorphine methadone naltrexone vivitrol going back to school after rehab going back to work after rehab telling people i was in rehab structure routine first weeks home aa na smart recovery refuge recovery therapist my son is coming home from rehab my partner finished treatment",
+  "keys": "after rehab after treatment leaving rehab coming home from rehab out of treatment discharge aftercare plan continuing care outpatient iop intensive outpatient php partial hospitalization detox residential treatment inpatient sober living recovery housing halfway house medication for addiction treatment mat moud suboxone buprenorphine methadone naltrexone vivitrol going back to school after rehab going back to work after rehab telling people i was in rehab structure routine first weeks home smart recovery refuge recovery therapist my son is coming home from rehab my partner finished treatment",
   "parts": [
    "leaves",
    "branches",

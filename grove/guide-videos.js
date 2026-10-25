@@ -4418,18 +4418,18 @@ window.GG_LEARN_GUIDES.grove = {
        ],
        [
         "The grown-ups",
-        "Al-Anon, NAMI, a therapist"
+        "SMART Family and Friends, NAMI, a therapist"
        ],
        [
         "The children",
-        "Alateen, the school"
+        "NACoA, the school"
        ],
        [
         "The family",
         "Sober fun together"
        ]
       ],
-      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through Al-Anon, NAMI family programs, or a therapist. The children, through Alateen or a school counselor. And the whole family, with good, sober time together."
+      "say": "Recovery goes better when everyone has support. The person in recovery, with their own plan and their own path. The grown-ups, through SMART Recovery Family and Friends, NAMI family programs, or a therapist. The children, through NACoA or a school counselor. And the whole family, with good, sober time together."
      },
      {
       "k": "big",
@@ -17746,18 +17746,18 @@ var V = [
       ],
       [
        "The grown-ups",
-       "Al-Anon, Nar-Anon, a therapist"
+       "SMART Family and Friends, a friend, a therapist"
       ],
       [
        "The children",
-       "Alateen, a school counselor"
+       "NACoA, a school counselor"
       ],
       [
        "The family",
        "Family Night, together"
       ]
      ],
-     "say": "Healing goes better when everyone has support. The person growing sober, with their own plan and their own people. The other grown-ups, through Al-Anon, Nar-Anon, or a therapist. The children, through Alateen or a school counselor. And the whole family, with a weekly Family Night together."
+     "say": "Healing goes better when everyone has support. The person growing sober, with their own plan and their own people. The other grown-ups, through SMART Recovery Family and Friends, a trusted friend, or a therapist. The children, through NACoA or a school counselor. And the whole family, with a weekly Family Night together."
     },
     {
      "k": "card",
@@ -17991,8 +17991,8 @@ var V = [
     {
      "k": "card",
      "title": "Keep the door open",
-     "body": "Many small talks. Alateen. Call for help if someone won't wake up.",
-     "say": "One talk opens the door. Many small talks keep it open. Give each child a place of their own, like Alateen or the school counselor. And teach every child one safety rule: if a grown-up won't wake up, call for help and find another grown-up."
+     "body": "Many small talks. NACoA. Call for help if someone won't wake up.",
+     "say": "One talk opens the door. Many small talks keep it open. Give each child a place of their own, like NACoA or the school counselor. And teach every child one safety rule: if a grown-up won't wake up, call for help and find another grown-up."
     },
     {
      "k": "big",
@@ -18382,7 +18382,7 @@ var V = [
        "So hurt has a place"
       ]
      ],
-     "say": "For the ones who were hurt. Say what helps you feel safer, plainly and kindly. Notice the kept promises, out loud. And find support of your own, like Al-Anon, Nar-Anon, or a therapist, so the hurt has somewhere to go besides the kitchen table."
+     "say": "For the ones who were hurt. Say what helps you feel safer, plainly and kindly. Notice the kept promises, out loud. And find support of your own, like SMART Recovery Family and Friends, a trusted friend, or a therapist, so the hurt has somewhere to go besides the kitchen table."
     },
     {
      "k": "big",
@@ -18903,7 +18903,7 @@ var V = [
      "k": "card",
      "title": "Open your doors",
      "body": "Recovery meetings, family groups, and help numbers.",
-     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
+     "say": "If you have room, open your space to recovery meetings and family groups like SMART Recovery Family and Friends, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
     },
     {
      "k": "big",
@@ -19003,7 +19003,7 @@ var V = [
      "k": "card",
      "title": "Open your doors",
      "body": "Recovery meetings, family groups, and help numbers.",
-     "say": "If you have room, open your space to recovery meetings and family groups like Al-Anon, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
+     "say": "If you have room, open your space to recovery meetings and family groups like SMART Recovery Family and Friends, and list them where people can find them. Keep help close: call for emergency help if anyone won't wake up."
     },
     {
      "k": "big",
