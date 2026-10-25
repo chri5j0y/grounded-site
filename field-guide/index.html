@@ -2096,7 +2096,7 @@ function vFounder(){
   const nFiles = (d ? (d.stamp ? 1 : 0) + Object.keys(d.libs || {}).length : 0) + (storiesUp ? 1 : 0) + (hwUp ? 1 : 0), accN = accRecs().filter(r => !r.cancelled).length + C.codes.filter(e => !accRecs().some(r => r.id === e.id)).length, orgN = accOrgs().length;
   const cards = [
     d || storiesUp || hwUp ? {k: 'ready', title: 'Ready to Upload', desc: 'Files waiting to go live on the site. Download each one, then upload them together.', n: nFiles + (nFiles === 1 ? ' file to upload' : ' files to upload'), hot: true} : null,
-    {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, and Supporter, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
+    {k: 'codes', title: 'Access Codes', desc: 'One list for every code: Founder, Staff, Guide, Supporter, and Family Kitchen, and codes for an organization.', n: accN + (accN === 1 ? ' code in use' : ' codes in use') + (orgN ? ', ' + orgN + (orgN === 1 ? ' organization' : ' organizations') : '')},
     {k: 'rotate', title: 'Rotate a Level', desc: 'A new key and one new code for a level. Staff when someone leaves, Guide for the yearly change.'},
     {k: 'upd', title: 'Update a Library', desc: 'Download for Editing, or choose an update file a chat gave you.', n: UPD ? 'An update is ready to seal' : '', hot: !!UPD},
     window.GGHw ? {k: 'hw', title: 'Seal Heartwood', desc: 'Seal the couple app\'s content for the site, and keep its key in the Staff library.', n: GGHw.hasKey() ? '' : 'No Heartwood key yet'} : null, // GWG BLD 772 hook
