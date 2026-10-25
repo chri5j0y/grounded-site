@@ -5,7 +5,7 @@
                                            a quiet empty state until the words load
      Start Here                           three Growing a Healthy Tree videos from Oak (shared/learn-lessons.js, loaded on tap),
                                            played in shared/gg-learn.js with Brian's recorded clips
-     Early Days: 30 Days                  the day list from shared/sober-30.js (window.GGSober30), each day in the player overlay
+     Early Days: 90 Days                  the day list from shared/sober-30.js (window.GGSober30), each day in the player overlay
      Share                                every Share button opens a branded picture (shared/gg-sharecard.js); Share This Page
                                            sends the page address (the phone's share sheet, or Copy)
    Links that open a video: #watch=<lesson id> (Start Here) and #day=<n> (Early Days). The video waits on its Play button.
@@ -15,7 +15,7 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b849', LESSONS = '/shared/learn-lessons.js?v=b849';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b850', LESSONS = '/shared/learn-lessons.js?v=b849';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [
@@ -84,7 +84,7 @@
         root.addEventListener('click', function (e) { if (e.target.closest('[data-ls-x]')) close(); });
         var btns = [];
         if (nx) btns.push(['next', 'Next: ' + nx.title, 'pri']);
-        else btns.push(['days', 'Early Days: 30 Days', 'pri']);
+        else btns.push(['days', 'Early Days: 90 Days', 'pri']);
         btns.push(['share', 'Share This Video', '']);
         btns.push(['again', 'Watch Again', '']);
         btns.push(['back', 'Back to Living Sober', 'quiet']);
@@ -108,11 +108,11 @@
       });
   }
 
-  /* ---------- Early Days: 30 Days ---------- */
+  /* ---------- Early Days: 90 Days ---------- */
   function days() {
     var host = $('#ls-days'); if (!host) return;
     var S = window.GGSober30;
-    if (!S || !S.lessons || !S.lessons.length) { host.innerHTML = '<p class="ls-empty">The thirty days are on their way. Start Here holds three videos to begin with today.</p>'; return; }
+    if (!S || !S.lessons || !S.lessons.length) { host.innerHTML = '<p class="ls-empty">The ninety days are on their way. Start Here holds three videos to begin with today.</p>'; return; }
     host.innerHTML = '<ol class="ls-days">' + S.lessons.map(function (l) {
       return '<li class="ls-day" id="day-' + l.n + '"><span class="ls-dn" aria-hidden="true">' + l.n + '</span><div class="ls-dt"><b>Day ' + l.n + ': ' + esc(l.title) + '</b><small>' + esc(l.blurb || '') + '</small></div>'
         + '<div class="ls-db"><button type="button" class="btn btn-secondary ls-play" data-ls-day="' + l.n + '" aria-label="Watch Day ' + l.n + ', ' + esc(l.title) + ', about ' + (l.mins || 2) + ' minutes">' + PLAY + '<span>' + (l.mins || 2) + ' min</span></button>'
@@ -124,6 +124,25 @@
     try { if (from && from.focus) from.focus({ preventScroll: true }); } catch (e) {}
     S.open(n, { app: 'site', closeLabel: 'Back to Living Sober', backLabel: 'Back to Living Sober' }).catch(function () {});
   }
+
+  /* ---------- Living Sober Every Day (BLD 850): Ride the Wave, Good Times, Sober, and What Your Body Regains ---------- */
+  function more() {
+    var M = window.GGSoberMore; if (!M) return;
+    var g = $('#ls-good'), b = $('#ls-body'), G = M.goodtimes || {}, B = M.body || {};
+    var ul = function (t, a) { return a && a.length ? '<h4>' + esc(t) + '</h4><ul>' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : ''; };
+    if (g) g.innerHTML = (G.intro ? '<p>' + esc(G.intro) + '</p>' : '') + (G.plans || []).map(function (p) {
+      return '<details class="ls-gt" id="gt-' + esc(p.id) + '"><summary><b>' + esc(p.title) + '</b><small>' + esc(p.line || '') + '</small></summary><div class="ls-gtb">' +
+        ul('Before You Go', p.before) + ul('When Someone Offers a Drink', p.say) + ul('Great Instead', p.instead) + ul('An Easy Exit', p.exit) + (p.toast ? '<h4>A Sober Toast</h4><p>' + esc(p.toast) + '</p>' : '') + '</div></details>';
+    }).join('');
+    if (b) b.innerHTML = (B.intro ? '<p>' + esc(B.intro) + '</p>' : '') + '<ul class="ls-bodyl">' + (B.milestones || []).map(function (x) { return '<li><b>' + esc(x.title) + '.</b> ' + esc(x.text) + '</li>'; }).join('') + '</ul>' +
+      (B.note ? '<p class="ls-note">' + esc(B.note) + '</p>' : '') + (B.credits && B.credits.length ? '<p class="ls-src">Sources: ' + B.credits.map(function (c) { return c[1] ? '<a href="' + esc(c[1]) + '" target="_blank" rel="noopener">' + esc(c[0]) + '</a>' : esc(c[0]); }).join('; ') + '</p>' : '');
+  }
+  function wave(from) {
+    var S = window.GGSober30; if (!S || !S.open || !S.wave) return;
+    try { if (from && from.focus) from.focus({ preventScroll: true }); } catch (e) {}
+    S.open('wave', { app: 'site', closeLabel: 'Back to Living Sober', backLabel: 'Back to Living Sober' }).catch(function () {});
+  }
+  document.addEventListener('click', function (e) { var t = e.target.closest && e.target.closest('[data-ls-wave]'); if (t) wave(t); });
 
   /* ---------- sharing ---------- */
   function card(o) { if (window.GGShareCard) GGShareCard.share(o); }
@@ -166,11 +185,11 @@
 
   function boot() {
     Array.prototype.forEach.call(document.querySelectorAll('[data-ls-watch],[data-ls-share-watch]'), function (b) { b.hidden = false; });
-    words(); days(); fromLink();
+    words(); days(); more(); fromLink();
   }
   window.GGLivingSober = { watch: watch, playDay: playDay, start: START, words: words, days: days, close: close };
   // The words and the thirty days are separate files; draw what is here now, and again as each arrives.
   function whenLoaded(test, fn) { if (test()) return fn(); var n = 0, iv = setInterval(function () { if (test() || ++n > 40) { clearInterval(iv); if (test()) fn(); } }, 150); }
-  function start() { boot(); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { days(); fromLink(); }); }
+  function start() { boot(); whenLoaded(function () { return !!window.GGSoberWords; }, words); whenLoaded(function () { return !!window.GGSoberMore; }, more); whenLoaded(function () { return !!(window.GGSober30 && GGSober30.lessons); }, function () { Array.prototype.forEach.call(document.querySelectorAll('[data-ls-wave]'), function (b) { b.hidden = !GGSober30.wave; }); days(); fromLink(); }); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', start); else start();
 })();

@@ -355,6 +355,64 @@
     return Promise.resolve(P().save(id)).then(function () { return a; });
   }
 
+  /* ---------- Living Sober Every Day (GWG BLD 850) ----------
+     The daily companion: a morning intention and an evening look back for each day, waves ridden, and what a week
+     of drinking used to cost (for Money Kept). Kept in the locked vault beside the plan (vault.soberDays), so it stays
+     even if Living Sober is turned off; guests keep it for this visit only. The newest 400 days are kept.
+     {log: {'YYYY-MM-DD': {i: intention, u: urge 0 to 10, m: mood 1 to 5, s: sleep 1 to 5, h: [helped ids], ho: own words,
+     w: waves ridden}}, cost: dollars a week} */
+  var MEMDAYS = null;
+  function cleanDay(d) {
+    if (!d || typeof d !== 'object') return null;
+    var r = {}, n = function (x, lo, hi) { x = Math.round(+x); return isFinite(x) && x >= lo && x <= hi ? x : null; };
+    var i = str(d.i, 160); if (i) r.i = i;
+    var u = n(d.u, 0, 10); if (u !== null && d.u !== '' && d.u != null) r.u = u;
+    var m = n(d.m, 1, 5); if (m !== null) r.m = m;
+    var sl = n(d.s, 1, 5); if (sl !== null) r.s = sl;
+    var h = (Array.isArray(d.h) ? d.h : []).map(function (x) { return str(x, 30); }).filter(function (x) { return /^[a-z0-9]+$/.test(x); }).slice(0, 12); if (h.length) r.h = h;
+    var ho = str(d.ho, 200); if (ho) r.ho = ho;
+    var w = n(d.w, 0, 99); if (w) r.w = w;
+    return Object.keys(r).length ? r : null;
+  }
+  function cleanDays(o) {
+    var r = { log: {}, cost: 0 }; if (!o || typeof o !== 'object') return r;
+    var c = +o.cost; r.cost = isFinite(c) && c > 0 ? Math.min(10000, Math.round(c * 100) / 100) : 0;
+    Object.keys(o.log && typeof o.log === 'object' ? o.log : {}).filter(okDate).sort().slice(-400).forEach(function (k) { var d = cleanDay(o.log[k]); if (d) r.log[k] = d; });
+    return r;
+  }
+  function days(id) {
+    id = id || who();
+    if (!id) return cleanDays(MEMDAYS);
+    if (helperView(id)) return cleanDays(null);
+    var v = vault(id); return cleanDays(v && v.soberDays);
+  }
+  function putDays(next, id) {
+    if (!id) { MEMDAYS = next; return Promise.resolve(next); }
+    var v = vault(id); if (!v) return Promise.reject(new Error('Open the profile first.'));
+    if (Object.keys(next.log).length || next.cost) v.soberDays = next; else delete v.soberDays;
+    return Promise.resolve(P().save(id)).then(function () { return next; });
+  }
+  // setDay(date, patch): merges into that day's entry (null clears a field); setDays(null) erases them all.
+  function setDay(date, patch, id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    if (!okDate(date)) return Promise.reject(new Error('Choose a day up to today.'));
+    var all = days(id), cur = Object.assign({}, all.log[date] || {}, patch || {});
+    Object.keys(cur).forEach(function (k) { if (cur[k] === null) delete cur[k]; });
+    var d = cleanDay(cur); if (d) all.log[date] = d; else delete all.log[date];
+    return putDays(cleanDays(all), id);
+  }
+  function setCost(n, id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    var all = days(id); all.cost = +n || 0; return putDays(cleanDays(all), id);
+  }
+  function clearDays(id) {
+    id = id || who();
+    if (id && helperView(id)) return Promise.reject(new Error('Only the person can change this.'));
+    return putDays(cleanDays(null), id);
+  }
+
   /* ---------- reading the choice ---------- */
   function cats(tree) { return CATS.filter(function (c) { return !c.special && c.trees.indexOf(tree) >= 0; }).map(function (c) { return { id: c.id, name: c.words[tree], line: c.line[tree] }; }); }
   function has() { return get().ids.length > 0; }
@@ -627,7 +685,7 @@
     lines: lines, picks: picks, addGuides: addGuides, label: label, chooser: chooser, dialog: dialog, offerCard: offerCard,
     STAGES: STAGES, stages: stagesFor, sober: sober, soberStage: soberStage, ring: ring, ringShows: ringShows, soberSteps: soberSteps,
     DECLARED: DECLARED.slice(), declared: function (tree) { return DECLARED.indexOf(tree) >= 0; }, soberDate: soberDate, soberLines: soberLines, okDate: okDate,
-    anchor: anchor, setAnchor: setAnchor, helperView: function (id) { return helperView(id || who()); },
+    anchor: anchor, setAnchor: setAnchor, days: days, setDay: setDay, setCost: setCost, clearDays: clearDays, helperView: function (id) { return helperView(id || who()); },
     use: function (id) { ctx = id || null; fire(who()); }, who: who,
     on: function (fn) { window.addEventListener('gglife:change', function (e) { try { fn(e.detail); } catch (x) { console.error(x); } }); }
   };

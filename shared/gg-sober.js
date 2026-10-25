@@ -33,7 +33,7 @@
 (function () {
   'use strict';
   if (window.GGSober) return;
-  var V = 'b839';
+  var V = 'b850';
   var TREES = ['birch', 'oak', 'sequoia'];
   var SITE = 'https://growwithgrounded.com/living-sober';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
@@ -47,6 +47,7 @@
   function needWords() { return script('/shared/sober-words.js?v=' + V, function () { return !!window.GGSoberWords; }); }
   function needShare() { return script('/shared/gg-sharecard.js?v=' + V, function () { return !!window.GGShareCard; }); }
   function need30() { return script('/shared/sober-30.js?v=' + V, function () { return !!window.GGSober30; }); }
+  function needMore() { return script('/shared/sober-more.js?v=' + V, function () { return !!window.GGSoberMore; }); }
 
   /* ---------- the count: one number, never the date ---------- */
   function count(date, now) {
@@ -188,6 +189,16 @@
     '@keyframes ggsRib{from{transform:scaleY(0);opacity:0;}to{transform:none;opacity:1;}}' +
     '@keyframes ggsSpark{0%{opacity:0;}40%{opacity:1;}100%{opacity:.55;}}' +
     '.ggs-toast{position:fixed;left:50%;bottom:24px;transform:translateX(-50%);z-index:9999;max-width:calc(100% - 32px);padding:10px 16px;border-radius:12px;background:#2E2118;color:#F6EFE2;font:15px Barlow,system-ui,sans-serif;box-shadow:0 8px 24px rgba(0,0,0,.25);}' +
+    '.ggs-today{margin:12px 0 4px;padding:12px 14px;border:1px solid var(--line,#E2D8C3);border-radius:12px;}.ggs-today b{display:block;font-family:"Barlow Condensed",sans-serif;font-size:12.5px;letter-spacing:1.2px;text-transform:uppercase;color:var(--ls);margin-bottom:2px;}' +
+    '.ggs-card .ggs-intent{font-family:"Cormorant Garamond",Georgia,serif;font-size:22px;line-height:1.3;margin:0 0 4px !important;}' +
+    '.ggs-pick{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 6px;}.ggs-pick button{min-width:44px;min-height:44px;padding:6px 12px;border-radius:10px;border:1.5px solid var(--line,#E2D8C3);background:var(--card,#fff);color:inherit;font:15px Barlow,system-ui,sans-serif;cursor:pointer;}.ggs-pick button[aria-checked=true]{border-color:var(--ls);background:var(--ls-soft);font-weight:600;}' +
+    '.ggs-list{margin:0 0 6px;padding-left:20px;}.ggs-list li{margin:3px 0;}' +
+    '.ggs-tw{overflow-x:auto;}.ggs-tbl{border-collapse:collapse;width:100%;font-size:14px;}.ggs-tbl th,.ggs-tbl td{padding:6px 8px;border-bottom:1px solid var(--line,#E2D8C3);text-align:left;vertical-align:top;}' +
+    '.ggs-meds{display:grid;grid-template-columns:repeat(auto-fill,minmax(92px,1fr));gap:6px;}.ggs-med{display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px;border:1px solid var(--line,#E2D8C3);border-radius:12px;background:transparent;color:inherit;font:13.5px Barlow,system-ui,sans-serif;cursor:pointer;}.ggs-med[disabled]{opacity:.45;cursor:default;}.ggs-med.got{border-color:var(--ls);}' +
+    '.ggs-kept b{font-family:"Cormorant Garamond",Georgia,serif;font-size:30px;color:var(--ls);}' +
+    '.ggs-body{margin:0;padding-left:20px;}.ggs-body li{margin:6px 0;opacity:.7;}.ggs-body li.got{opacity:1;}.ggs-body li.got b{color:var(--ls);}' +
+    '.ggs-src{font-size:13px !important;color:var(--ink-soft,#6B5A4D);}.ggs-src a{color:inherit;}' +
+    '.ggs-plans{display:grid;grid-template-columns:repeat(auto-fill,minmax(220px,1fr));gap:8px;}.ggs-toastline{font-family:"Cormorant Garamond",Georgia,serif;font-size:21px;font-style:italic;}' +
     '@media (max-width:520px){.ggs-card{padding:16px 14px;}.ggs-pp{grid-template-columns:1fr;}.ggs-dlg{padding:20px 16px 16px;}.ggs-stages{grid-template-columns:1fr;}}' +
     '@media (prefers-reduced-motion: reduce){.ggs-star-in,.ggs-rib,.ggs-spark{animation:none;}}' +
     '@media print{.ggs-card{display:none;}}';
@@ -259,7 +270,9 @@
     if (!love) {
       if (APP.dateOpen) html += '<div class="ggs-date"><label for="ggs-date-in" class="ggs-soft" style="flex-basis:100%">My sober date. It stays locked on this device; only the count shows.</label><input id="ggs-date-in" type="date" data-ggs="date" max="' + todayStr() + '" min="1900-01-01" value="' + esc(date) + '"><button type="button" class="btn btn-secondary btn-sm" data-ggs="datedone">Done</button>' + (date ? '<button type="button" class="ggs-link" data-ggs="nodate">Clear the Date</button>' : '') + '</div>';
     }
+    if (!love) html += todayHtml(tree);
     html += '<div class="ggs-enc"><b>' + (love ? 'For You Today' : 'Today\'s Encouragement') + '</b><q>' + esc(enc.text) + '</q><div class="ggs-row"><button type="button" class="btn btn-secondary btn-sm" data-ggs="share-daily">Share</button></div></div>';
+    if (!love) html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm ggs-wave" data-ggs="wave">Ride the Wave</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="week">My Week</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="gains">Milestones and Gains</button><button type="button" class="btn btn-secondary btn-sm" data-ggs="good">Good Times, Sober</button></div>';
     html += '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm" data-ggs="anchor">My Anchor Plan</button>' +
       '<button type="button" class="btn btn-secondary btn-sm" data-ggs="thirty">' + esc(thirtyLabel(tree)) + '</button></div>';
     html += '<div class="ggs-row">' + (stage ? '<button type="button" class="ggs-link" data-ggs="stagechange">Change My Stage</button>' : '') +
@@ -268,7 +281,8 @@
   }
   function thirtyLabel(tree) {
     var S = window.GGSober30, n = next30(tree);
-    return S && n > 1 ? 'Early Days: Day ' + n + ' of 30' : 'Early Days: 30 Days';
+    var c = S && S.count ? S.count : 90;
+    return S && n > 1 ? 'Early Days: Day ' + n + ' of ' + c : 'Early Days: ' + c + ' Days';
   }
   function next30(tree) {
     var S = window.GGSober30; if (!S || !S.lessons) return 1;
@@ -305,6 +319,12 @@
     else if (k === 'nodate') { APP.dateOpen = false; save({ soberDate: '' }); }
     else if (k === 'share-daily') { var x = daily(tree); share({ kind: x.kind, head: x.kind === 'love' ? 'For You Today' : 'Today\'s Encouragement', text: x.text, star: null, count: null }); }
     else if (k === 'anchor') anchorDlg(tree, false);
+    else if (k === 'intent') intentDlg(tree);
+    else if (k === 'look') lookDlg(tree);
+    else if (k === 'wave') waveDlg(tree);
+    else if (k === 'week') weekDlg(tree);
+    else if (k === 'gains') gainsDlg(tree);
+    else if (k === 'good') goodDlg(tree, '');
     else if (k === 'thirty') open30(tree);
     else if (k === 'create') { if (APP.opts.create) APP.opts.create(); }
     else if (k === 'openprof') { if (APP.opts.openProfile) APP.opts.openProfile(); }
@@ -322,10 +342,188 @@
   function open30(tree) {
     need30().then(function () {
       var S = window.GGSober30;
-      if (!S) { toast('Early Days: 30 Days is on its way. Check back soon.'); return; }
+      if (!S) { toast('Early Days is on its way. Check back soon.'); return; }
       var n = next30(tree), l = S.lesson ? S.lesson(n) : (S.lessons || [])[n - 1];
       if (window.GGLearn && GGLearn.open && l) GGLearn.open(tree, l.id);
       else if (S.open) S.open(n, { app: tree });
+    });
+  }
+
+  /* ---------- Living Sober Every Day (GWG BLD 850): the daily companion ----------
+     A morning intention, an evening look back (urge, mood, sleep, what helped), Ride the Wave (Brian, ten minutes),
+     My Week, Milestones and Gains (medallions, money kept, what the body regains), and Good Times, Sober (plans for
+     unwinding, celebrating, letting loose, and big days). Everything saves through GGLife.days / setDay / setCost:
+     locked in the vault, or for this visit only for a guest. Words and plans come from shared/sober-more.js. */
+  var MOOD = ['Heavy', 'Low', 'Okay', 'Good', 'Bright'], SLEEP = ['Rough', 'Light', 'Okay', 'Good', 'Deep'];
+  var HELP = [['water', 'Water'], ['food', 'A real meal'], ['walk', 'A walk'], ['move', 'Movement'], ['outside', 'Time outside'], ['shower', 'A warm shower'],
+    ['music', 'Music'], ['rest', 'Rest'], ['people', 'My good people'], ['family', 'Family'], ['quiet', 'Quiet time'], ['write', 'Writing it out'],
+    ['wave', 'Riding the wave'], ['plan', 'My Anchor Plan'], ['hobby', 'A hobby'], ['early', 'Early to bed']];
+  var HELPN = {}; HELP.forEach(function (x) { HELPN[x[0]] = x[1]; });
+  var INTENTS = ['Water first', 'Move my body', 'Get outside', 'Eat real meals', 'Call a good friend', 'Be present', 'Early to bed', 'Ride every wave', 'Kind to myself', 'Make something'];
+  function M() { return window.GGSoberMore || {}; }
+  function addDays(d, n) { var p = parts(d), x = new Date(p[0], p[1] - 1, p[2] + n); return x.getFullYear() + '-' + pad(x.getMonth() + 1) + '-' + pad(x.getDate()); }
+  function dayLog(tree, d) { var g = L(); return g && g.days ? (g.days().log[d || todayStr()] || {}) : {}; }
+  function setDay(patch, d) { var g = L(); if (!g || !g.setDay) return Promise.resolve(); return g.setDay(d || todayStr(), patch).then(function () { refresh(); }, function (e) { toast(e && e.message ? e.message : 'Try saving once more.'); }); }
+  function todayHtml(tree) {
+    var t = dayLog(tree), looked = t.u != null || t.m || t.s;
+    return '<div class="ggs-today"><b>Today</b>' +
+      (t.i ? '<p class="ggs-intent">' + esc(t.i) + '</p>' : '<p class="ggs-soft">Start the day with one intention.</p>') +
+      '<div class="ggs-row" style="margin-top:4px"><button type="button" class="btn btn-secondary btn-sm" data-ggs="intent">' + (t.i ? 'Change My Intention' : 'Set Today\'s Intention') + '</button>' +
+      '<button type="button" class="btn btn-secondary btn-sm" data-ggs="look">' + (looked ? 'Evening Look Back: Done' : 'Evening Look Back') + '</button>' +
+      (t.w ? '<span class="ggs-soft">' + t.w + (t.w === 1 ? ' wave ridden today' : ' waves ridden today') + '</span>' : '') + '</div></div>';
+  }
+  function choiceRow(name, list, cur, first) {
+    return '<div class="ggs-pick" role="radiogroup" aria-label="' + esc(name) + '">' + list.map(function (x, i) {
+      var v = x[0], lab = x[1]; return '<button type="button" role="radio" aria-checked="' + (String(cur) === String(v)) + '" data-pick="' + esc(name) + '" data-v="' + esc(v) + '"' + (first && i === 0 ? ' data-first' : '') + '>' + esc(lab) + '</button>';
+    }).join('') + '</div>';
+  }
+  function pickable(box) {
+    box.addEventListener('click', function (e) {
+      var b = e.target.closest('[data-pick]'); if (!b) return;
+      b.parentNode.querySelectorAll('[data-pick]').forEach(function (x) { x.setAttribute('aria-checked', String(x === b && x.getAttribute('aria-checked') !== 'true')); });
+    });
+  }
+  function picked(box, name) { var b = box.querySelector('[data-pick="' + name + '"][aria-checked=true]'); return b ? b.getAttribute('data-v') : null; }
+  function intentDlg(tree) {
+    var t = dayLog(tree);
+    dialog('Today\'s Intention', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Today\'s Intention</h2><p class="ggs-soft">One simple aim for today. Tap one, or write your own.</p>' +
+      '<div class="ggs-chips">' + INTENTS.map(function (x) { return '<button type="button" data-it="' + esc(x) + '">' + esc(x) + '</button>'; }).join('') + '</div>' +
+      '<label style="margin-top:12px" for="ggs-it">My intention</label><input type="text" id="ggs-it" maxlength="160" value="' + esc(t.i || '') + '" data-first>' +
+      '<div class="ggs-foot">' + (t.i ? '<button type="button" class="ggs-link" data-dd="clear">Clear</button>' : '') + '<button type="button" class="btn btn-secondary" data-dd="close">Close</button><button type="button" class="btn btn-primary" data-dd="save">Save</button></div>', function (d) {
+      d.box.setAttribute('data-ggs-intent', tree);
+      d.box.addEventListener('click', function (e) {
+        var c = e.target.closest('[data-it]'); if (c) { var i = d.box.querySelector('#ggs-it'); i.value = c.getAttribute('data-it'); i.focus(); return; }
+        var b = e.target.closest('[data-dd]'); if (!b) return; var k = b.getAttribute('data-dd');
+        if (k === 'close') d.close();
+        else if (k === 'clear') setDay({ i: null }).then(d.close);
+        else { var v = d.box.querySelector('#ggs-it').value.trim(); if (!v) { d.box.querySelector('#ggs-it').focus(); return; } setDay({ i: v }).then(function () { d.close(); toast('Saved. Have a good day.'); }); }
+      });
+    });
+  }
+  function lookDlg(tree) {
+    var t = dayLog(tree), u = [];
+    for (var i = 0; i <= 10; i++) u.push([i, String(i)]);
+    dialog('Evening Look Back', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Evening Look Back</h2><p class="ggs-soft">A minute to notice today. It stays locked on this device.</p>' +
+      (t.i ? '<p>Today\'s intention: <b>' + esc(t.i) + '</b></p>' : '') +
+      '<h3>The strongest urge today</h3><p class="ggs-soft">0 is calm, 10 is a big wave.</p>' + choiceRow('u', u, t.u, true) +
+      '<h3>Mood</h3>' + choiceRow('m', MOOD.map(function (x, i) { return [i + 1, x]; }), t.m) +
+      '<h3>Last night\'s sleep</h3>' + choiceRow('s', SLEEP.map(function (x, i) { return [i + 1, x]; }), t.s) +
+      '<h3>What helped today</h3><div class="ggs-ideas">' + HELP.map(function (x) { return '<label><input type="checkbox" name="h" value="' + x[0] + '"' + ((t.h || []).indexOf(x[0]) >= 0 ? ' checked' : '') + '> ' + esc(x[1]) + '</label>'; }).join('') + '</div>' +
+      '<label style="margin-top:10px" for="ggs-ho">In my own words (optional)</label><input type="text" id="ggs-ho" maxlength="200" value="' + esc(t.ho || '') + '">' +
+      '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="close">Close</button><button type="button" class="btn btn-primary" data-dd="save">Save</button></div>', function (d) {
+      d.box.setAttribute('data-ggs-look', tree); pickable(d.box);
+      d.box.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-dd]'); if (!b) return;
+        if (b.getAttribute('data-dd') === 'close') { d.close(); return; }
+        var h = []; d.box.querySelectorAll('input[name=h]:checked').forEach(function (x) { h.push(x.value); });
+        var uu = picked(d.box, 'u'), mm = picked(d.box, 'm'), ss = picked(d.box, 's');
+        setDay({ u: uu === null ? null : +uu, m: mm === null ? null : +mm, s: ss === null ? null : +ss, h: h, ho: d.box.querySelector('#ggs-ho').value }).then(function () { d.close(); toast('Saved. Rest well tonight.'); });
+      });
+    });
+  }
+  function openWave(tree) {
+    need30().then(function () {
+      var S = window.GGSober30;
+      if (!S || !S.open || !S.wave) { toast('Ride the Wave is on its way. Check back soon.'); return; }
+      S.open('wave', { app: tree, onEnd: function (b) { if (b !== 'back') return; } , onDone: function () { var t = dayLog(tree); setDay({ w: (t.w || 0) + 1 }); toast('You rode it. Well done.'); } });
+    });
+  }
+  function waveDlg(tree) {
+    var g = L(), a = g && g.anchor ? g.anchor() : null, ppl = a && a.people ? a.people.filter(function (p) { return p.name || p.num; }) : [];
+    dialog('Ride the Wave', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Ride the Wave</h2>' +
+      '<p>An urge is a wave. It rises, peaks, and passes, often within fifteen to thirty minutes. You can ride it out.</p>' +
+      '<div class="ggs-row"><button type="button" class="btn btn-primary" data-dd="play" data-first>Ride It With Me, 10 Minutes</button><button type="button" class="btn btn-secondary" data-dd="rode">I Rode It Out</button></div>' +
+      '<h3>Play the Tape Forward</h3><p class="ggs-soft">Picture tonight and tomorrow morning both ways. Which morning do you want to wake up to?</p>' +
+      '<h3>One Kind Next Step</h3><ul class="ggs-list"><li>A tall glass of water</li><li>A walk outside, ten minutes</li><li>A warm shower</li><li>Something good to eat</li><li>Text one of your good people</li></ul>' +
+      (ppl.length ? '<h3>My Good People</h3><ul class="ggs-list">' + ppl.map(function (p) { var h = telHref(p.num); return '<li>' + esc(p.name || p.num) + (h ? ' <a href="' + esc(h) + '">' + esc(p.num) + '</a>' : '') + '</li>'; }).join('') + '</ul>' : '<p class="ggs-soft">Add your good people in My Anchor Plan, and they show here.</p>') +
+      '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-dd="anchor">My Anchor Plan</button><button type="button" class="btn btn-secondary" data-dd="close">Close</button></div>', function (d) {
+      d.box.setAttribute('data-ggs-wave', tree);
+      d.box.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-dd]'); if (!b) return; var k = b.getAttribute('data-dd');
+        if (k === 'close') d.close();
+        else if (k === 'anchor') { d.close(); anchorDlg(tree, false); }
+        else if (k === 'rode') { var t = dayLog(tree); setDay({ w: (t.w || 0) + 1 }).then(function () { d.close(); toast('You rode it. Well done.'); }); }
+        else if (k === 'play') { d.close(); openWave(tree); }
+      });
+    });
+  }
+  function weekDlg(tree) {
+    var g = L(), all = g && g.days ? g.days() : { log: {} }, today = todayStr(), rows = [], tally = {}, us = [];
+    for (var i = 6; i >= 0; i--) {
+      var d = addDays(today, -i), x = all.log[d] || {}, p = parts(d), nm = new Date(p[0], p[1] - 1, p[2]).toLocaleDateString(undefined, { weekday: 'short' });
+      (x.h || []).forEach(function (h) { tally[h] = (tally[h] || 0) + 1; }); if (x.u != null) us.push(x.u);
+      rows.push('<tr><th>' + esc(i === 0 ? 'Today' : nm) + '</th><td>' + (x.i ? esc(x.i) : '') + '</td><td>' + (x.u != null ? esc(x.u) : '') + '</td><td>' + (x.m ? esc(MOOD[x.m - 1]) : '') + '</td><td>' + (x.s ? esc(SLEEP[x.s - 1]) : '') + '</td><td>' + (x.w ? esc(x.w) : '') + '</td></tr>');
+    }
+    var top = Object.keys(tally).sort(function (a, b) { return tally[b] - tally[a]; }).slice(0, 3);
+    var waves = Object.keys(all.log).filter(function (k) { return k >= addDays(today, -6); }).reduce(function (a, k) { return a + (all.log[k].w || 0); }, 0);
+    dialog('My Week', '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>My Week</h2>' +
+      (top.length ? '<p><b>What helped most:</b> ' + top.map(function (h) { return esc(HELPN[h] || h) + ' (' + tally[h] + ')'; }).join(', ') + '</p>' : '<p class="ggs-soft">Your evening look backs fill this in, day by day.</p>') +
+      (waves ? '<p><b>Waves ridden this week:</b> ' + waves + '. Each one is strength you are building.</p>' : '') +
+      (us.length > 1 ? '<p><b>Urges:</b> from ' + us[0] + ' to ' + us[us.length - 1] + ' across the week.</p>' : '') +
+      '<div class="ggs-tw"><table class="ggs-tbl"><thead><tr><th>Day</th><th>Intention</th><th>Urge</th><th>Mood</th><th>Sleep</th><th>Waves</th></tr></thead><tbody>' + rows.join('') + '</tbody></table></div>' +
+      '<div class="ggs-foot"><button type="button" class="ggs-link" data-dd="clear">Clear My Days</button><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>', function (d) {
+      d.box.setAttribute('data-ggs-week', tree);
+      d.box.addEventListener('click', function (e) {
+        var b = e.target.closest('[data-dd]'); if (!b) return;
+        if (b.getAttribute('data-dd') === 'close') d.close();
+        else { if (!confirm('Clear every day you have saved? It is erased from this device.')) return; L().clearDays().then(function () { d.close(); refresh(); toast('Cleared.'); }); }
+      });
+    });
+  }
+  // Medallions: days 1, 3, 7, 14, 21, 30, 60, 90, six months, one year, then every year.
+  var MEDS = [[1, '1 Day'], [3, '3 Days'], [7, '1 Week'], [14, '2 Weeks'], [21, '3 Weeks'], [30, '30 Days'], [60, '60 Days'], [90, '90 Days'], [182, '6 Months'], [365, '1 Year']];
+  function medals(days) {
+    var out = MEDS.map(function (x) { return { n: x[0], label: x[1], star: x[0] < 30 ? 'bronze' : x[0] < 365 ? 'silver' : 'gold', got: days >= x[0] }; });
+    for (var y = 2; y <= Math.max(2, Math.floor(days / 365) + 1); y++) out.push({ n: y * 365, label: y + ' Years', star: 'gold', got: days >= y * 365 });
+    return out;
+  }
+  function money(n) { return '$' + Math.round(n).toLocaleString(); }
+  function gainsDlg(tree) {
+    needMore().then(function () {
+      var g = L(), date = g.soberDate(tree), c = date ? count(date) : null, days = c ? c.days + 1 : 0, all = g.days ? g.days() : { cost: 0 }, B = M().body || {}, Mo = M().money || {};
+      var meds = medals(days), kept = all.cost ? all.cost * days / 7 : 0;
+      var body = (B.milestones || []).map(function (x) {
+        var need = { d1: 1, d3: 3, d7: 7, d14: 14, m1: 30, m3: 90, m6: 182, y1: 365 }[x.key] || 0, got = days >= need && days > 0;
+        return '<li class="' + (got ? 'got' : '') + '"><b>' + esc(x.title) + '</b> ' + esc(x.text) + '</li>';
+      }).join('');
+      var html = '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p><h2>Milestones and Gains</h2>' +
+        (date ? '<p>' + esc(c.label) + ' sober. Every day counts.</p>' : '<p class="ggs-soft">Add your sober date on the card, and your medallions and gains fill in.</p>') +
+        '<h3>Medallions</h3><div class="ggs-meds">' + meds.map(function (m) { return '<button type="button" class="ggs-med' + (m.got ? ' got' : '') + '" data-med="' + m.n + '"' + (m.got ? '' : ' disabled') + ' aria-label="' + esc(m.label + (m.got ? ', reached. Share it.' : ', ahead')) + '">' + starSvg(m.got ? m.star : 'silver', 34, '') + '<span>' + esc(m.label) + '</span></button>'; }).join('') + '</div>' +
+        '<h3>Money Kept</h3><p class="ggs-soft">' + esc(Mo.ask || 'In a typical week, about how much did drinking cost?') + '</p>' +
+        '<div class="ggs-date"><label for="ggs-cost" class="ggs-soft" style="flex-basis:100%">' + esc(Mo.help || 'Count drinks, rides, takeout, and the rest. A rough number is fine.') + '</label><span>$</span><input id="ggs-cost" type="number" inputmode="decimal" min="0" step="1" value="' + (all.cost || '') + '" style="max-width:140px"><button type="button" class="btn btn-secondary btn-sm" data-dd="cost">Save</button></div>' +
+        (kept ? '<p class="ggs-kept"><b>' + money(kept) + '</b> kept so far' + (days >= 7 ? ', about ' + money(all.cost * 52) + ' a year.' : '.') + '</p>' : '') +
+        (kept && (Mo.ideas || []).length ? '<p class="ggs-soft">Ideas for it: ' + Mo.ideas.map(esc).join('; ') + '.</p>' : '') +
+        '<h3>' + esc(B.title || 'What Your Body Regains') + '</h3><ul class="ggs-body">' + body + '</ul>' + (B.note ? '<p class="ggs-soft">' + esc(B.note) + '</p>' : '') +
+        (B.credits && B.credits.length ? '<p class="ggs-src">Sources: ' + B.credits.map(function (x) { return x[1] ? '<a href="' + esc(x[1]) + '" target="_blank" rel="noopener">' + esc(x[0]) + '</a>' : esc(x[0]); }).join('; ') + '</p>' : '') +
+        '<div class="ggs-foot"><button type="button" class="btn btn-primary" data-dd="close" data-first>Close</button></div>';
+      dialog('Milestones and Gains', html, function (d) {
+        d.box.setAttribute('data-ggs-gains', tree);
+        d.box.addEventListener('click', function (e) {
+          var m = e.target.closest('[data-med]'); if (m && !m.disabled) { var x = meds.filter(function (q) { return String(q.n) === m.getAttribute('data-med'); })[0]; needShare(); share({ kind: 'milestone', head: x.label + ' Sober', text: 'One day at a time, and here I am.', star: x.star, count: x.label }); return; }
+          var b = e.target.closest('[data-dd]'); if (!b) return;
+          if (b.getAttribute('data-dd') === 'close') d.close();
+          else { var v = d.box.querySelector('#ggs-cost').value; g.setCost(+v || 0).then(function () { d.close(); gainsDlg(tree); }); }
+        });
+      });
+    });
+  }
+  function goodDlg(tree, id) {
+    needMore().then(function () {
+      var G = M().goodtimes || { plans: [] }, P2 = (G.plans || []).filter(function (x) { return x.id === id; })[0];
+      var list = function (t, a) { return a && a.length ? '<h3>' + esc(t) + '</h3><ul class="ggs-list">' + a.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul>' : ''; };
+      var html = '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p>';
+      if (!P2) html += '<h2>' + esc(G.title || 'Good Times, Sober') + '</h2><p>' + esc(G.intro || '') + '</p><div class="ggs-plans">' + (G.plans || []).map(function (x, i) { return '<button type="button" class="ggs-st" data-gt="' + esc(x.id) + '"' + (i === 0 ? ' data-first' : '') + '><b>' + esc(x.title) + '</b><small>' + esc(x.line || '') + '</small></button>'; }).join('') + '</div>' +
+        '<div class="ggs-foot"><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      else html += '<h2>' + esc(P2.title) + '</h2><p>' + esc(P2.line || '') + '</p>' + list('Before You Go', P2.before) + list('When Someone Offers a Drink', P2.say) + list('Great Instead', P2.instead) + list('An Easy Exit', P2.exit) +
+        (P2.toast ? '<h3>A Sober Toast</h3><p class="ggs-toastline">' + esc(P2.toast) + '</p>' : '') +
+        '<div class="ggs-foot"><button type="button" class="btn btn-secondary" data-gt="" data-first>All Plans</button><button type="button" class="btn btn-primary" data-dd="close">Close</button></div>';
+      dialog(P2 ? P2.title : 'Good Times, Sober', html, function (d) {
+        d.box.setAttribute('data-ggs-good', id || 'all');
+        d.box.addEventListener('click', function (e) {
+          var t = e.target.closest('[data-gt]'); if (t) { d.close(); goodDlg(tree, t.getAttribute('data-gt')); return; }
+          var b = e.target.closest('[data-dd]'); if (b) d.close();
+        });
+      });
     });
   }
 
