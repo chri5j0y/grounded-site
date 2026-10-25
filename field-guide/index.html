@@ -681,7 +681,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-stories.js?v=b839"></script>
 <script src="moves.js?v=b842"></script>
 <script src="coach.js?v=b842"></script>
-<script src="health.js?v=b847"></script>
+<script src="health.js?v=b848"></script>
 <script src="vault.js?v=b791"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1883,7 +1883,7 @@ function accStoriesDue(){
   return live.length !== S.size || live.some(c => !S.has(c));
 }
 const accName = r => r.label || (r.org ? 'Person ' + (r.n || '') : LEVEL_NAME[r.level] || 'Code');
-const accOpens = r => r.level === 'kitchen' ? 'the Family Kitchen in My Health' : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
+const accOpens = r => r.level === 'kitchen' ? 'the Family Kitchen in My Health' + (r.c ? ' and Grounded Stories' : '') : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
 // Ends codes: takes their codes.js lines out (Founder, Staff, Guide), marks the records cancelled, and saves once.
 async function accCancel(ids){
   if (accWaits()) return alert(ACC_WAIT);
