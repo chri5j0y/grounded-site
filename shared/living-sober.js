@@ -18,7 +18,7 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b852', LESSONS = '/shared/learn-lessons.js?v=b852';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b851', LESSONS = '/shared/learn-lessons.js?v=b852';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [

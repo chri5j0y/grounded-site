@@ -659,8 +659,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
-<script src="../shared/gg-sources.js?v=b850"></script>
-<script src="../shared/gg-learn.js?v=b852"></script>
+<script src="../shared/gg-sources.js?v=b851"></script>
+<script src="../shared/gg-learn.js?v=b851"></script>
 <script src="../shared/gg-print.js?v=b836"></script>
 <script src="../shared/grove-scene.js?v=w2k"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -668,7 +668,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="share.js?v=b836"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b817"></script>
-<script src="ceremonies.js?v=b836"></script>
+<script src="ceremonies.js?v=b851"></script>
 <script src="sessions.js?v=b836"></script>
 <script src="farewell.js?v=b811"></script>
 <script src="wedding.js?v=b798"></script>
@@ -678,10 +678,10 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b852"></script>
+<script src="../shared/gg-stories.js?v=b851"></script>
 <script src="moves.js?v=b842"></script>
 <script src="coach.js?v=b842"></script>
-<script src="health.js?v=b848"></script>
+<script src="health.js?v=b851"></script>
 <script src="vault.js?v=b852"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -4027,7 +4027,11 @@ function gvPractice(T, partId, wi){
 const gxT = () => GT || {practices: [], featured: [], themes: []};
 const gxP = id => gxT().practices.find(p => p.id === id) || null;
 const gxF = () => (GVG() && GVG().family) || null;
-const gxS = () => (GVG() && GVG().series) || null;
+// BLD 851: more Group Series beside the twelve themes (groveGuide.moreSeries [{key, title, sessions, ...}], like Living Sober Together).
+// GX_SET holds the key of the one on screen ('' is the twelve themes); a group's record keeps its series in r.set.
+let GX_SET = '';
+const gxSets = () => ((GVG() || {}).moreSeries || []).filter(s => s && s.key && Array.isArray(s.sessions) && s.sessions.length);
+const gxS = () => (GVG() && ((GX_SET && gxSets().find(s => s.key === GX_SET)) || GVG().series)) || null;
 function gxData(){ if (!Array.isArray(DATA.gvg)) DATA.gvg = []; return DATA.gvg; }
 const gxRec = id => gxData().find(r => r.id === id) || null;
 const gxList = kind => gxData().filter(r => r.kind === kind && !r.closed).sort((a, b) => (gxLast(b) || b.created || '').localeCompare(gxLast(a) || a.created || ''));
@@ -4193,12 +4197,13 @@ function vGV(){
   const wait = gvNeedData(); if (wait) return wait;
   if (V.gvv && window.GGGv && GGGv.on()) return GGGv.view(); // GWG BLD 776 hook: a visit or a group session's check-in
   if (V.gvcl && window.GGGv) return `<button class="linkbtn" data-act="gv-home">&larr; Back to the Grove Guide</button><div style="margin-top:12px">${GGGv.caseload()}</div>`;
+  { const r0 = gxRec(V.gvr || V.gvsr); if (r0 && r0.kind === 'series') GX_SET = r0.set || ''; }
   if (V.gvr){ const r = gxRec(V.gvr); if (r) return vGXRec(r); }
   if (V.gvs){ const x = gxSessions()[V.gvs - 1]; if (x) return vGXSession(x, V.gvsr ? gxRec(V.gvsr) : null); }
   if (V.gvp){ const c = CL(V.gvp); if (c && c.gv) return vGVTree(c); }
   const I = S.introduce || {}, P = S.paths || {}, earlier = DATA.clients.filter(c => c.gv && c.status !== 'closed'), local = gvLocalPeople().length, m = gvmState();
   const hello = `<div class="hello gv-hello"><div class="eyebrow" style="color:#B9D3A6">Grounded Field Guide&trade;</div><h1>${esc(S.title)}</h1><p>${esc(S.lead)}</p></div>`;
-  const nF = gxList('family').length, nS = gxList('series').length, F = gxF() || {}, SS = gxS() || {};
+  const nF = gxList('family').length, nS = gxList('series').length, F = gxF() || {}, SS = S.series || {};
   const cards = [
     {k: 'family', eb: 'Path 1', title: F.title || 'Family Visit', desc: P.family || F.lead || 'Sit with one family and lead them through The Grove\'s Together practices.', n: nF + (nF === 1 ? ' family' : ' families')},
     {k: 'series', eb: 'Path 2', title: SS.title || 'Group Series', desc: P.series || SS.lead || 'Lead a group through The Grove\'s twelve themes over several weeks.', n: nS + (nS === 1 ? ' group' : ' groups')},
@@ -4215,6 +4220,7 @@ function vGV(){
   const about = `<div class="card">${(S.intro || []).map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}</div>`;
   const part = {caseload: () => window.GGGv ? GGGv.caseload() : '', family: () => vGXFamily(), series: () => vGXSeries(), intro: () => intro, sets: () => sets, about: () => about, earlier: () => vGXEarlier(earlier, local)}[C];
   if (part) return secPage('grove', 'Back to the Grove Guide', part());
+  GX_SET = '';
   return hello + (GVM() && !m.complete ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><p>${m.done ? 'Finish' : 'Start'} Grove Guide Training before your first family visit or group. Everything here is open to read and practice.</p><button class="btn btn-gold btn-sm" data-act="gv-mhome">${m.done ? 'Continue' : 'Start'}</button></div></div>` : '') + secCards('grove', cards);
 }
 // The "new record" card on each path: codes or initials only. New records wait on Grove Guide Training.
@@ -4229,7 +4235,7 @@ function gxAddCard(kind){
    <div class="row" style="margin-top:10px"><button class="btn btn-gold" data-act="gx-new" data-v="${kind}">${icon('plus')} ${fam ? 'Add the Family' : 'Add the Group'}</button></div></div>`;
 }
 function gxRecRows(kind){
-  const L = gxList(kind), fam = kind === 'family', N = gxSessions().length;
+  const L = gxList(kind).filter(r => kind === 'family' || (r.set || '') === GX_SET), fam = kind === 'family', N = gxSessions().length;
   return `<div class="card"><h3>${fam ? 'Families You Visit' : 'Groups You Lead'}</h3>
    ${L.length ? L.map(r => { const met = (r.meets || []).length, last = gxLast(r);
      return `<div class="list-row"><div class="lr-main"><b>${esc(r.name)}</b>${gxWords(r) ? ` <span class="pill">${gxWords(r)}</span>` : ''}${!gxConsented(r) ? ` <span class="pill warn">${r.consent && r.consent.how === 'declined' ? 'Said no for now' : 'Ask first'}</span>` : ''}<br><small class="muted">${fam ? (met ? met + (met === 1 ? ' visit' : ' visits') + ', last ' + nice(last) : 'No visits yet') : (new Set((r.meets || []).map(x => x.n)).size + ' of ' + N + ' sessions met' + (last ? ', last ' + nice(last) : ''))}</small></div><button class="btn btn-line btn-sm" data-act="gx-open" data-v="${r.id}">Open</button></div>`; }).join('')
@@ -4254,13 +4260,28 @@ function vGXFamily(){
 // Path 2: Group Series. Setting up, the agreements, the twelve sessions, and the groups you lead.
 function vGXSeries(){
   const S = GVG(), SS = gxS() || {}, X = gxSessions();
-  return `<div class="page-head"><div class="eyebrow">Path 2</div><h1>${esc(SS.title || 'Group Series')}</h1><p>${esc(SS.lead || '')}</p></div>
+  const more = GX_SET ? '' : gxSets().map(s => `<div class="list-row"><div class="lr-main"><b>${esc(s.title)}</b><br><small class="muted">${esc(s.card || s.lead || '')} ${s.sessions.length} sessions.</small></div><button class="btn btn-line btn-sm" data-act="gx-set" data-v="${esc(s.key)}">Open</button></div>`).join('');
+  return `${GX_SET ? `<button class="linkbtn" data-act="gx-series">&larr; Back to ${esc((S.series || {}).title || 'Group Series')}</button>` : ''}<div class="page-head"${GX_SET ? ' style="margin-top:14px"' : ''}><div class="eyebrow">Path 2</div><h1>${esc(SS.title || 'Group Series')}</h1><p>${esc(SS.lead || '')}</p></div>
   ${(SS.setup || []).length ? `<div class="card"><h3>Setting Up</h3>${SS.setup.map(x => Array.isArray(x) ? `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>` : `<p style="margin-top:10px">${esc(x)}</p>`).join('')}</div>` : ''}
   ${(SS.groupRules || []).length ? `<div class="card"><h3>Group Agreements</h3><ul class="checklist" style="margin-top:8px">${SS.groupRules.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc(SS.safety || S.safety)}</div>
-  <div class="card"><h3>The Twelve Sessions</h3><p class="muted" style="font-size:15px">One for each of The Grove's twelve themes, in order. Tap one for the leader's outline and the session sheet.</p>
+  <div class="card"><h3>${esc(SS.sessHead || 'The Twelve Sessions')}</h3><p class="muted" style="font-size:15px">${esc(SS.sessNote || 'One for each of The Grove\'s twelve themes, in order. Tap one for the leader\'s outline and the session sheet.')}</p>
    ${X.map(x => { const p = gxP(x.practice); return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${p ? `<br><small class="muted">${esc(p.name)}</small>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-sess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
+  ${more ? `<div class="card"><h3>More Series</h3><p class="muted" style="font-size:15px">Shorter series for a group with a shared season. Each has its own sessions, videos, and sheets.</p>${more}</div>` : ''}
   ${gxRecRows('series')}${gxAddCard('series')}`;
+}
+// BLD 851: a session's video, played in the room (moreSeries sessions carry video {scenes, crisis}).
+const gxVid = x => !!(window.GGLearn && x && x.video && Array.isArray(x.video.scenes) && x.video.scenes.length);
+function gxVidTrack(){ const SS = gxS() || {}; return {id: 'gxs-' + (GX_SET || 'grove'), title: SS.title || 'Group Series', lessons: gxSessions().filter(gxVid).map(x => ({id: 'gxs-' + (GX_SET || 'grove') + '-' + x.n, n: x.n, title: x.theme, mins: x.mins || 3, sources: x.sources || [], scenes: x.video.scenes, crisis: x.video.crisis || []}))}; }
+function gxVidMount(n){
+  const host = $('#gxv-host'); if (!host || !window.GGLearn) return;
+  const tr = gxVidTrack(), l = tr.lessons.find(y => y.n === n); if (!l) return;
+  if (LN) lnStop();
+  const back = () => { lnStop(); go('grove', {gvs: n, gvsr: V.gvsr || null}); };
+  LN = GGLearn.player(host, {sealed: fgSealed(FLD), mark: {name: 'Grove Guide'}, mood: 'learning', lesson: l, track: tr, tracks: [tr], done: {}, at: 0, accent: '#3A6B46',
+    onAt: () => { lastAct = Date.now(); }, // a playing video must not lock the Field Guide
+    open: id => { const y = tr.lessons.find(z => z.id === id); lnStop(); go('grove', {gvs: y ? y.n : n, gvsr: V.gvsr || null}); },
+    home: back});
 }
 // One series session: the leader's outline. From a group's record it can be marked as met, with notes.
 function vGXSession(x, r){
@@ -4268,14 +4289,18 @@ function vGXSession(x, r){
   const back = r ? `<button class="linkbtn" data-act="gx-open" data-v="${r.id}">&larr; Back to ${esc(r.name)}</button>` : `<button class="linkbtn" data-act="gx-series">&larr; Back to ${esc((gxS() || {}).title || 'Group Series')}</button>`;
   return `${back}
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Session ${x.n} of ${N}${r ? ' &middot; ' + esc(r.name) : ''}</div><h1>${esc(x.theme)}</h1></div>
-  ${r && window.GGGv ? GGGv.seriesCard(r, x.n) : ''}
+  ${r && window.GGGv && !GX_SET ? GGGv.seriesCard(r, x.n) : ''}
   ${x.open ? `<div class="card step-card"><h3>Opening</h3>${gxBlk('Say', gxArr(x.open), 'say')}</div>` : ''}
+  ${gxVid(x) ? (GGLearn.css(), setTimeout(() => gxVidMount(x.n), 0), `<div class="card"><h3>Watch Together</h3><p class="muted" style="font-size:15px">About ${x.mins || 3} minutes. Play it on a screen everyone can see, with a moment to pause and do it together.</p><div id="gxv-host" style="margin-top:10px"></div></div>`) : ''}
   ${(x.talk || []).length ? `<div class="card step-card"><h3>Talk Together</h3>${gxBlk('Ask', gxArr(x.talk))}</div>` : ''}
   ${p ? `<div class="card"><h3>Practice</h3>${gxPrac(p, true, true)}</div>` : ''}
   ${x.together ? `<div class="card step-card"><h3>Do Together</h3><p>${esc(x.together)}</p></div>` : ''}
   ${x.home ? `<div class="card step-card"><h3>Take Home</h3><p>${esc(x.home)}</p></div>` : ''}
   ${x.close ? `<div class="card step-card"><h3>Closing</h3>${gxBlk('Say', gxArr(x.close), 'say')}</div>` : ''}
+  ${x.kids && (!r || r.kids) ? `<div class="card step-card"><h3>With Children</h3><p>${esc(x.kids)}</p></div>` : ''}
+  ${x.faith && (!r || r.words === 'faith') ? `<div class="card step-card"><h3>For a Group With Faith Words</h3><p>${esc(x.faith)}</p></div>` : ''}
   <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc((gxS() || {}).safety || S.safety)}</div>
+  ${window.GGSources && (x.sources || x.video) ? `<div class="card">${GGSources.lesson('', {id: 'gxs-' + x.n, sources: x.sources || [], scenes: (x.video && x.video.scenes) || []}) || ''}</div>` : ''}
   ${r ? `<div class="card"><h3>This Session With ${esc(r.name)}</h3>
     <label class="f" for="gx-mdate">Date</label><input type="date" id="gx-mdate" value="${esc(m ? m.date : today())}" style="max-width:220px">
     <label class="f" for="gx-mnotes">Session notes (private)</label><textarea id="gx-mnotes" placeholder="${esc(S.notesNote || '')}">${esc(m ? m.notes || '' : '')}</textarea>
@@ -4324,8 +4349,8 @@ function vGXRec(r){
   const met = n => (r.meets || []).find(m => m.n === n);
   return `${back}${head}
   ${r.agreed ? '' : `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><p>Share the group agreements at the first session, and again whenever someone new joins.</p><button class="btn btn-gold btn-sm" data-act="gx-agreed">Agreements Shared Today</button></div></div>`}
-  <div class="card"><h3>The Twelve Sessions</h3>${X.map(x => { const m = met(x.n);
-    return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${window.GGGv ? GGGv.seriesPill(r, x.n) : ''}${m ? ` <span class="pill sage">Met ${nice(m.date)}</span>` : ''}${m && m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-rsess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
+  <div class="card"><h3>${esc((gxS() || {}).sessHead || 'The Twelve Sessions')}</h3>${X.map(x => { const m = met(x.n);
+    return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${window.GGGv && !GX_SET ? GGGv.seriesPill(r, x.n) : ''}${m ? ` <span class="pill sage">Met ${nice(m.date)}</span>` : ''}${m && m.notes ? `<p class="muted" style="font-size:15px;margin-top:4px;white-space:pre-wrap">${esc(m.notes)}</p>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-rsess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
   ${notes}${details}`;
 }
 // Earlier, from Grove Guide: individual trees from before, and trees still waiting in the public Grove on this browser.
@@ -4378,11 +4403,11 @@ function gxPrintFam(r, mid){
 function gxPrintSess(n){
   const S = GVG(), SS = gxS() || {}, x = gxSessions()[n - 1], r = V.gvsr ? gxRec(V.gvsr) : null; if (!x) return;
   const N = gxSessions().length, p = gxP(x.practice), kids = r ? !!r.kids : false;
-  fgSheet(ph('Group Series') + `<p>Session ${x.n} of ${N}</p><h1>${esc(x.theme)}</h1>
+  fgSheet(ph(GX_SET ? SS.title || 'Group Series' : 'Group Series') + `<p>Session ${x.n} of ${N}</p><h1>${esc(x.theme)}</h1>
     ${p ? `<h2>Today's practice</h2>${gxSheetPrac(p, kids)}` : ''}
     ${x.home ? `<h2>Try at home this week</h2><p>${esc(x.home)}</p>` : ''}
     ${(SS.groupRules || []).length ? `<h2>Our group agreements</h2><ul>${SS.groupRules.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}
-    ${gxHelp()}<div class="pr-foot">${esc((SS.sheet || {}).foot || S.sheetClose || '')}<br>${esc(tmFoot('The Grove'))}</div>`, 'The Grove, Session ' + x.n, {file:'grove-session-' + x.n});
+    ${gxHelp()}<div class="pr-foot">${esc((SS.sheet || {}).foot || S.sheetClose || '')}<br>${esc(tmFoot('The Grove'))}</div>`, (GX_SET ? SS.title || 'The Grove' : 'The Grove') + ', Session ' + x.n, {file:'grove-' + (GX_SET ? GX_SET + '-' : '') + 'session-' + x.n});
 }
 function gvPrintGrew(c){
   const S = GVG(), T = c.gv, wi = gvWeek(T);
@@ -4456,15 +4481,17 @@ function gxNew(kind){
   if (!gxReady()) return;
   const n = $('#gx-name').value.trim(); if (!n){ $('#gx-name').focus(); return; }
   const r = {id:uid(), u:Date.now(), kind, name:n.slice(0, 40), words:$('#gx-words').value, kids:$('#gx-kids').checked, created:today(), meets:[], notes:'', consent:null, agreed:null};
+  if (kind === 'series' && GX_SET) r.set = GX_SET;
   gxData().push(r); save(); V.gxpk = null; go('grove', {gvr:r.id}); toast(kind === 'family' ? 'Family added.' : 'Group added.');
 }
 function gxAct(a, v, t){
   const r = V.gvr ? gxRec(V.gvr) : V.gvsr ? gxRec(V.gvsr) : null;
   switch(a){
     case 'gx-new': gxNew(v); return true;
-    case 'gx-open': V.gxpk = null; go('grove', {gvr:v}); return true;
-    case 'gx-path': SEC.grove = v; go('grove'); return true;
-    case 'gx-series': SEC.grove = 'series'; go('grove'); return true;
+    case 'gx-open': { const x = gxRec(v); if (x && x.kind === 'series') GX_SET = x.set || ''; V.gxpk = null; go('grove', {gvr:v}); return true; }
+    case 'gx-path': if (v === 'series') GX_SET = ''; SEC.grove = v; go('grove'); return true;
+    case 'gx-series': GX_SET = ''; SEC.grove = 'series'; go('grove'); return true;
+    case 'gx-set': GX_SET = gxSets().some(s => s.key === v) ? v : ''; SEC.grove = 'series'; go('grove'); return true;
     case 'gx-sess': go('grove', {gvs:+v, gvsr:V.gvsr || null}); return true;
     case 'gx-rsess': if (r) go('grove', {gvs:+v, gvsr:r.id}); return true;
     case 'gx-pk': { const P = V.gxpk || (V.gxpk = []), i = P.indexOf(v); if (i >= 0) P.splice(i, 1); else P.push(v); const y = window.scrollY; render(); window.scrollTo(0, y); return true; }
