@@ -270,7 +270,7 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 const KW = [
   [/cat ?cow/, 'cat-cow'], [/child/, 'child-pose'], [/couch|hip flexor/, 'hip-flexor'], [/figure ?(4|four)|pigeon/, 'figure-4'],
   [/90\/90|hip switch|windshield/, 'hip-switch'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
-  [/dead ?bugs?/, 'dead-bug'], [/bird ?dogs?/, 'bird-dog'], [/side plank/, 'side-plank'], [/plank/, 'plank'],
+  [/dead ?bugs?|hollow|crunch|leg raise/, 'dead-bug'], [/y.?t raise|reverse fly|rear delt/, 'row'], [/bird ?dogs?/, 'bird-dog'], [/side plank/, 'side-plank'], [/plank/, 'plank'],
   [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/bench press|incline|chest press|floor press/, 'bench-press'],
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
