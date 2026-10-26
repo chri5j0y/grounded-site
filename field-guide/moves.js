@@ -1,10 +1,15 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): Moves, the animated figures of the My Health workout player (GWG BLD 841).
+// GROUNDED FIELD GUIDE (TM): Moves, the animated figures of the My Health workout player (GWG BLD 841, color and new moves BLD 857).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A simple rounded line figure shows each move on screen while the voice coaches.
 //   GGMoves.svg(pattern, opts): an inline SVG string, 240 by 240, looping with SMIL.
-//     opts: {size: px (default 160), still: true for one held pose, label: the spoken name}.
-//     The figure and its gear use currentColor, so they take the theme color.
+//     opts: {size: px (default 160), still: true for one held pose, pose: a key pose number to hold,
+//       flip: true to mirror the figure and its gear (the left side), label: the spoken name, speed: 1 is the
+//       pattern's own pace, 2 twice as fast}.
+//     Colors come from CSS custom properties, each falling back to currentColor, so a plain page shows one
+//     theme color and GGStage (stage.js) dresses the figure: --ggm-ink (body), --ggm-far (far limbs opacity),
+//     --ggm-gear and --ggm-gear-op (bench, bar, step), --ggm-db and --ggm-steel (dumbbell plates and handle),
+//     --ggm-mat and --ggm-mat-op, --ggm-ground-op (the floor line), --ggm-shadow and --ggm-shadow-op.
 //     prefers-reduced-motion, or still: true, gives one held middle pose.
 //     A player can pause a figure with svgElement.pauseAnimations() and go on with unpauseAnimations().
 //   GGMoves.patterns: every pattern id.
@@ -115,16 +120,18 @@ function poses(P){
   return K;
 }
 
-function frames(P, still){
+function frames(P, still, pose){
   const K = poses(P), pins = pinsOf(P, P.pr ? Object.assign({}, BASE[P.v], P.pr) : K[0]);
+  if (pose != null) return [place(P, K[Math.max(0, Math.min(K.length - 1, pose | 0))], pins)];
   if (still){
     const p = P.sp != null ? (Number.isInteger(P.sp) ? K[P.sp] : blend(K[0], K[1], P.sp)) : blend(K[0], K[1 % K.length], 0.5);
     return [place(P, p, pins)];
   }
-  const n = K.length, per = Math.max(6, Math.round(24 / n)), F = [];
+  // Dense frames (about 48 a loop) with an eased curve give a smooth, lively motion; each key pose holds a beat.
+  const n = K.length, per = Math.max(12, Math.round(48 / n)), F = [];
   for (let i = 0; i < n; i++) for (let j = 0; j < per; j++){
-    const u = j / per;
-    F.push(place(P, blend(K[i], K[(i + 1) % n], P.e === 'lin' ? u : ease(u), P.raw), pins));
+    const u = j / per, v = P.e === 'lin' ? u : ease(Math.min(1, u * 1.12));
+    F.push(place(P, blend(K[i], K[(i + 1) % n], v, P.raw), pins));
   }
   F.push(F[0]);
   return F;
@@ -141,21 +148,27 @@ function anim(F, attr, f, dur){
   return `<animate attributeName="${attr}" dur="${dur}s" repeatCount="indefinite" values="${F.map(f).join(';')}"/>`;
 }
 
+// A dumbbell: a steel handle and two colored plates, carried at a hand.
 function dumbbell(F, k, dur, op){
   const at = J => r1(J[k][0]) + ' ' + r1(J[k][1]);
   const mv = F.length === 1 ? '' : `<animateTransform attributeName="transform" type="translate" dur="${dur}s" repeatCount="indefinite" values="${F.map(at).join(';')}"/>`;
-  return `<g transform="translate(${at(F[0])})"${op ? ' opacity="' + op + '"' : ''}><path d="M-9 0H9" stroke-width="4"/><rect x="-14" y="-8" width="7" height="16" rx="2.5" fill="currentColor" stroke="none"/><rect x="7" y="-8" width="7" height="16" rx="2.5" fill="currentColor" stroke="none"/>${mv}</g>`;
+  return `<g transform="translate(${at(F[0])})"${op ? ' style="opacity:var(--ggm-far,' + op + ')"' : ''}><path d="M-10 0H10" stroke-width="4" style="stroke:var(--ggm-steel,currentColor)"/>` +
+    `<g style="color:var(--ggm-db,currentColor)"><rect x="-16" y="-9" width="8" height="18" rx="3" fill="currentColor" stroke="none"/><rect x="8" y="-9" width="8" height="18" rx="3" fill="currentColor" stroke="none"/></g>${mv}</g>`;
 }
 
-// Gear, drawn soft behind the figure.
+// Gear, drawn behind the figure: soft in one theme color on a plain page, in its own colors on a GGStage.
+const GS = 'style="color:var(--ggm-gear,currentColor);opacity:var(--ggm-gear-op,.38)"';
 const G = {
-  mat: '<rect x="16" y="209" width="208" height="5" rx="2.5" fill="currentColor" stroke="none" opacity=".28"/>',
-  bench: (x, y, w) => `<g opacity=".38"><rect x="${x}" y="${y}" width="${w}" height="8" rx="4" fill="currentColor" stroke="none"/><path d="M${x + 10} ${y + 8}V211M${x + w - 10} ${y + 8}V211" stroke-width="5"/></g>`,
-  box: (x, y, w) => `<rect x="${x}" y="${y}" width="${w}" height="${212 - y}" rx="4" fill="currentColor" stroke="none" opacity=".22"/>`,
-  bar: '<g opacity=".38"><path d="M30 18H210" stroke-width="6"/><path d="M38 18V211M202 18V211" stroke-width="4" opacity=".6"/></g>',
-  dipbar: '<g opacity=".38"><path d="M104 124H160" stroke-width="6"/><path d="M158 124V211" stroke-width="4" opacity=".6"/></g>',
-  chair: '<g opacity=".38"><path d="M70 172H118M70 172L64 108M74 172V211M114 172V211" stroke-width="6"/></g>',
-  couch: '<rect x="34" y="150" width="44" height="62" rx="8" fill="currentColor" stroke="none" opacity=".2"/>'
+  mat: '<rect x="16" y="209" width="208" height="5" rx="2.5" fill="currentColor" stroke="none" style="color:var(--ggm-mat,currentColor);opacity:var(--ggm-mat-op,.28)"/>',
+  bench: (x, y, w) => `<g ${GS}><rect x="${x}" y="${y}" width="${w}" height="9" rx="4.5" fill="currentColor" stroke="none"/><path d="M${x + 10} ${y + 8}V210M${x + w - 10} ${y + 8}V210" stroke-width="5"/><path d="M${x + 3} 211H${x + 17}M${x + w - 17} 211H${x + w - 3}" stroke-width="4"/></g>`,
+  box: (x, y, w) => `<g ${GS}><rect x="${x}" y="${y}" width="${w}" height="${212 - y}" rx="4" fill="currentColor" stroke="none" opacity=".55"/><path d="M${x + 2} ${y + 1}H${x + w - 2}" stroke-width="4"/></g>`,
+  bar: `<g ${GS}><path d="M30 18H210" stroke-width="6"/><path d="M38 18V211M202 18V211" stroke-width="4" opacity=".6"/><path d="M28 211H48M192 211H212" stroke-width="4" opacity=".6"/></g>`,
+  dipbar: `<g ${GS}><path d="M100 124H164" stroke-width="6"/><path d="M158 124V211" stroke-width="4" opacity=".6"/><path d="M146 211H170" stroke-width="4" opacity=".6"/></g>`,
+  chair: `<g ${GS}><path d="M70 172H118M70 172L64 108M74 172V211M114 172V211" stroke-width="6"/></g>`,
+  couch: '<rect x="34" y="150" width="44" height="62" rx="8" fill="currentColor" stroke="none" style="color:var(--ggm-gear,currentColor);opacity:var(--ggm-gear-op,.2)"/>',
+  wall: '<rect x="70" y="30" width="100" height="182" rx="4" fill="currentColor" stroke="none" style="color:var(--ggm-gear,currentColor);opacity:calc(var(--ggm-gear-op,.38) * .4)"/>',
+  // An adjustable bench set on an incline: a seat, a back pad at about 45 degrees, and legs.
+  incline: (x, y, up) => `<g ${GS}><path d="M${x} ${y}H${x + 46}" stroke-width="9"/><path d="M${x + 2} ${y}L${x + 2 + (up ? 44 : -44)} ${y - 44}" stroke-width="9"/><path d="M${x + 8} ${y + 4}V210M${x + 40} ${y + 4}V210M${x + 8} ${y - 6}L${x + (up ? 26 : -18)} 210" stroke-width="4" opacity=".7"/></g>`
 };
 
 // Walking cycle helpers: four keys, near leg forward, passing, far leg forward, passing.
