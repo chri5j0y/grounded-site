@@ -208,8 +208,12 @@ const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
 const parseD = s => { const m = /^(\d{4})-(\d{2})-(\d{2})$/.exec(String(s || '')); return m ? new Date(+m[1], +m[2] - 1, +m[3]) : null; };
 const addD = (d, n) => { const x = new Date(d); x.setDate(x.getDate() + n); return x; };
 const day0 = d => { const x = new Date(d); x.setHours(0, 0, 0, 0); return x; };
-const nextMon = () => { const t = day0(new Date()); return addD(t, ((8 - t.getDay()) % 7) || 7); };
-function startMon(){ const s = parseD(H().set.start); return s || nextMon(); }
+// The coming Monday, or today when today is a Monday (BLD 857b: on a Monday the old default jumped a week ahead).
+const nextMon = () => { const t = day0(new Date()); return addD(t, (8 - t.getDay()) % 7); };
+const monOf = d => addD(day0(d), -((d.getDay() + 6) % 7));
+// With no saved start, the Monday of the first day anything was logged holds the plan in place; then the coming Monday.
+function firstMon(){ const h = H(), ds = Object.keys(h.log || {}).concat(arr(h.wlog).map(w => w.date)).map(parseD).filter(Boolean).sort((a, b) => a - b); return ds.length ? monOf(ds[0]) : null; }
+function startMon(){ const s = parseD(H().set.start); return s || firstMon() || nextMon(); }
 const weekNo = d => Math.floor((day0(d) - startMon()) / (7 * DAYMS)) + 1;
 const letter = n => 'ABCD'[(Math.max(1, n) - 1) % 4];
 const phaseOf = n => { n = Math.max(1, n); return n <= 12 ? Math.ceil(n / 4) : 2 + Math.floor(((n - 13) % 8) / 4); };
@@ -943,7 +947,7 @@ function actCoach(a, v){
 }
 
 function vSetup(){
-  const h = H(), s = S.set || (S.set = Object.assign({household: '', goals: [], goalLdl: '', nextLabs: '', start: ymd(nextMon())}, h.set));
+  const h = H(), s = S.set || (S.set = Object.assign({household: '', goals: [], goalLdl: '', nextLabs: '', start: ymd(startMon())}, h.set));
   return `<div class="hj-blk" id="hj-form">${kick('My Goals')}<h3>Make this plan your own</h3>
     <p class="hj-sub">A few answers shape what you see. Everything stays on this device.</p>
     ${MINE_ANY() && MINE_ANY().who ? `<p class="hj-sub" style="margin:6px 0"><b>Whose phone is this?</b></p><div class="hj-chips">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip${(s.who || '') === w ? ' on' : ''}" aria-pressed="${(s.who || '') === w}" data-hja="who" data-hjv="${w}">${w}</button>`).join('')}</div>` : ''}
@@ -960,6 +964,8 @@ function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
   if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
   const h = H(), mine = MINE();
+  // Keep the start date once the plan is running, so it never drifts (BLD 857b).
+  if (!KIT() && !h.set.start && firstMon()){ h.set.start = ymd(firstMon()); save(); }
   if (KIT()){ const st = ((C.fld && C.fld()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep'].includes(S.sec)) S.sec = 'today'; }
   const first = !h.set.u;
   let body;
