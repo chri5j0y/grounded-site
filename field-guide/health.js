@@ -453,7 +453,7 @@ function vOv(){
       <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save Workout</button></div>`; }
     else {
       const pct = Math.round(100 * o.i / o.steps.length), lb = H().lifts[st.id], state = stState(o), ring = o.run && (o.rest || o.between) ? {pct: Math.max(0, o.end - Date.now()) / (o.tot || 1), secs: Math.ceil(Math.max(0, o.end - Date.now()) / 1000)} : {};
-      const t = trans(o, state), wrap = x => `${stagePanel(state, Object.assign({fig: o.rest ? '' : moveFig(st)}, ring))}<div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}">${x}</div>`;
+      const t = trans(o, state), wrap = x => `${stagePanel(state, Object.assign({fig: moveFig(st, false, o.rest || o.between)}, ring))}<div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}">${x}</div>`;
       if (st.t === 'time'){ const ms = o.run ? o.end - Date.now() : (o.left || st.secs * 1000);
         body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<h2 class="hj-exn">${esc(st.name)}</h2><p class="hj-how">${esc(st.how || '')}</p>
           <div class="hj-clock" data-hjclock>${clock(ms)}</div>
@@ -479,7 +479,7 @@ function vOv(){
   } else if (o.k === 'cook' || o.k === 'prep'){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
-    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
+    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
       ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
@@ -491,7 +491,7 @@ function vOv(){
       <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   }
   const sc = stCol(stState(o), HOUR());
-  return `<div class="hj-ov hj-st" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};--st0:${esc(TR.prev || sc.accent)}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'My Health')}"><div class="hj-ovin">${body}</div></div>`;
+  return `<div class="hj-ov hj-st" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'My Health')}"><div class="hj-ovin">${body}</div></div>`;
 }
 function openKey(key){
   const [k, a, b] = key.split(':');
@@ -788,12 +788,12 @@ const STC = {work: ['#1C7CE0', '#2A6FB5', '#B8612E'], rest: ['#0FA394', '#26907F
   last: ['#F0631A', '#DF5F28', '#CC512E'], done: ['#2FA350', '#4F9A48', '#6C984C'], cook: ['#E0852A', '#C9772B', '#B5632C'], med: ['#7766CC', '#7A68A6', '#94688C'], practice: ['#1FA37C', '#3F977A', '#6E8E5C']};
 function stCol(state, hour){
   if (window.GGStage && GGStage.colors){ try { const c = GGStage.colors(state, hour); if (c && c.accent) return c; } catch(e){} }
-  const a = STC[state] || STC.work, k = hour < 12 ? 0 : hour < 18 ? 1 : 2; return {bg: a[k], fg: '#FFFFFF', accent: a[k]};
+  const a = STC[state] || STC.work, k = hour < 12 ? 0 : hour < 18 ? 1 : 2; return {bg: '', fg: '', accent: a[k]};
 }
 let FLIP_OK = null;
-function moveFig(st, flip){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? st.fig : (M.of ? M.of(st.fig || st.name) : 'standing');
-  if (!flip) return M.svg(pat); if (FLIP_OK == null) FLIP_OK = M.svg('standing', {flip: true, still: true}) !== M.svg('standing', {still: true});
-  return FLIP_OK ? M.svg(pat, {flip: true}) : `<div style="transform:scaleX(-1)">${M.svg(pat)}</div>`; } catch(e){ return ''; } }
+function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+  if (!flip) return M.svg(pat, op); if (FLIP_OK == null) FLIP_OK = M.svg('standing', {flip: true, still: true}) !== M.svg('standing', {still: true});
+  return FLIP_OK ? M.svg(pat, Object.assign(op, {flip: true})) : `<div style="transform:scaleX(-1)">${M.svg(pat, op)}</div>`; } catch(e){ return ''; } }
 function figOf(st, flip){ if (st && st.candle) return candle(); const f = moveFig(st, flip); return f ? `<div class="hj-fig" aria-hidden="true">${f}</div>` : ''; }
 function stageFallback(state, op){ const c = stCol(state, op.hour);
   return `<div class="hj-scn" data-ggstage data-st="${esc(state)}" style="--ac:${esc(c.accent)}"><div class="hj-sky"></div>${op.inhale ? `<div class="hj-breath" style="--in:${+op.inhale}s;--out:${+op.exhale || +op.inhale}s"></div>` : ''}
@@ -801,8 +801,8 @@ function stageFallback(state, op){ const c = stCol(state, op.hour);
     ${op.side ? `<span class="hj-sidebadge">${op.side === 'L' ? 'Left' : 'Right'}</span>` : ''}</div>`; }
 function stagePanel(state, op){ op = Object.assign({hour: HOUR()}, op || {}); let inner = '';
   if (window.GGStage && GGStage.scene){ try { inner = GGStage.scene(state, op) || ''; } catch(e){ inner = ''; } }
-  if (!inner) inner = stageFallback(state, op);
-  return `<div class="hj-stagebox${op.small ? ' sm' : ''}" aria-hidden="true">${inner}</div>`; }
+  const fb = !inner; if (fb) inner = stageFallback(state, op);
+  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}" aria-hidden="true">${inner}</div>`; }
 function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'); if (!el) return;
   if (window.GGStage && GGStage.update){ try { GGStage.update(el, {pct, secs}); } catch(e){} return; }
   const r = el.querySelector('.hj-ring'); if (r){ r.style.setProperty('--p', pct.toFixed(3)); const b = r.querySelector('b'); if (b && secs != null) b.textContent = secs; } }
@@ -867,7 +867,8 @@ function vAuto(o, top){
   if (o.fin || !st) return `${top(o.title, o.prac ? 'Practice complete' : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
   const state = stState(o), left = o.run ? Math.max(0, o.end - Date.now()) : 0, ring = o.run && (o.rest || o.between || o.sw) ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : {};
   const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : null;
-  const flip = o.side === 'L', sop = Object.assign({fig: o.rest ? '' : st.candle ? candle() : moveFig(st, flip), side: o.side || '', inhale: br && br[0], exhale: br && br[1]}, ring);
+  const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
+  const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, o.rest || o.between), side: o.side || '', label: pill, inhale: br && br[0], exhale: br && br[1]}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>` : st.t === 'ex' ? `<div class="hj-reps">${esc(repTxt(st))}${esc(unitOf(st))}${st.side ? ' each side' : ''}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? ' · Left side' : o.side === 'R' ? ' · Right side' : '';
   const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
@@ -902,11 +903,11 @@ setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers
 function vGuide(o, top){
   const steps = kSteps(o), s = steps[o.gi], pct = Math.round(100 * o.gi / Math.max(1, steps.length));
   const rang = o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : '';
-  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: window.GGStage ? '' : POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   const tms = arr(o.timers);
   const t = trans(o, 'cook'), ft = tms.length ? tms.slice().sort((a, b) => a.end - b.end)[0] : null, fs = ft ? arr(o.data.steps)[ft.i] : null, ftot = fs ? (+fs.min || 1) * 60000 : 1;
   return `${top(o.title, 'Step ' + (o.gi + 1) + ' of ' + steps.length, pct)}
-  ${stagePanel('cook', Object.assign({fig: POT, small: true}, ft ? {pct: Math.max(0, Math.min(1, (ft.end - Date.now()) / ftot)), secs: Math.ceil(Math.max(0, ft.end - Date.now()) / 1000)} : {}))}
+  ${stagePanel('cook', Object.assign({fig: window.GGStage ? '' : POT, small: true}, ft ? {pct: Math.max(0, Math.min(1, (ft.end - Date.now()) / ftot)), secs: Math.ceil(Math.max(0, ft.end - Date.now()) / 1000)} : {}))}
   ${o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : ''}
   ${tms.length ? `<div class="hj-ktimers">${tms.map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small><button type="button" class="linkbtn" data-hja="kstop" data-hjv="${t.i}">Stop</button></div>`).join('')}</div>` : ''}
   <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="cook">${s.at ? `<div class="hj-kick">${esc(s.at)}</div>` : ''}<p class="hj-kstep">${esc(s.t)}</p>
@@ -1167,12 +1168,14 @@ const CSS = `
 .hj-stock{display:flex;align-items:center;gap:6px;}.hj-stock span{text-align:center;min-width:52px;}.hj-stock small{display:block;font-size:12px;color:var(--ink-soft);}.hj-stock .chip{min-height:38px;min-width:40px;}
 .hj-entry{border-top:1px solid var(--line);padding:10px 0;}.hj-entry:first-of-type{border-top:0;}.hj-entry p{margin:4px 0 0;}
 /* BLD 857: color and the stage. Each player wears its state color (--st); the stage panel holds the scene from GGStage. */
-.hj-ov.hj-st{background:var(--bg);background:color-mix(in srgb,var(--st) 10%,var(--bg));}
+.hj-ov.hj-st{background:var(--bg);background:var(--stbg,color-mix(in srgb,var(--st) 10%,var(--bg)));color:var(--stfg,var(--ink));}
+.hj-st .hj-clock{color:var(--stfg,var(--ink));}.hj-st .hj-how{color:var(--stfg,var(--ink-soft));opacity:.85;}
 .hj-st .hj-prog span{background:var(--st);}.hj-st .hj-reps{color:var(--st);}.hj-st .hj-stk{color:var(--st);}
 .hj-st .hj-ovtop .hj-kick{color:var(--st);}
-.hj-stagebox{position:relative;height:clamp(170px,32vh,290px);border-radius:22px;overflow:hidden;margin:10px 0 0;background:var(--st);}
-.hj-stagebox.sm{height:clamp(96px,16vh,130px);}
-.hj-stagebox>*{position:absolute;inset:0;}
+.hj-stagebox{position:relative;margin:10px 0 0;}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
+.hj-stagebox.fb{height:clamp(170px,32vh,290px);border-radius:22px;overflow:hidden;background:var(--st);}
+.hj-stagebox.fb.sm{height:clamp(96px,16vh,130px);}
+.hj-stagebox.fb>*{position:absolute;inset:0;}
 .hj-scn{color:#fff;background:linear-gradient(180deg,color-mix(in srgb,var(--ac) 55%,#fff) 0%,var(--ac) 100%);display:flex;align-items:center;justify-content:center;}
 .hj-scn .hj-sky{position:absolute;inset:0;background:radial-gradient(circle at 78% 18%,rgba(255,240,200,.75) 0,rgba(255,240,200,0) 30%);}
 .hj-scn[data-st="rest"] .hj-sky,.hj-scn[data-st="med"] .hj-sky,.hj-scn[data-st="breathe"] .hj-sky{background:radial-gradient(circle at 50% 110%,rgba(255,255,255,.35) 0,rgba(255,255,255,0) 60%);}
@@ -1191,6 +1194,7 @@ const CSS = `
 .hj-light{background:var(--card);border:1px solid var(--line);border-left:4px solid #E5A823;border-radius:12px;padding:10px 12px;max-width:44ch;margin:8px auto 10px;text-align:left;font-size:15.5px;}
 .hj-wtl{max-width:44ch;margin:6px auto;color:var(--ink);font-size:15.5px;}.hj-wt .hj-lb{margin-top:4px;}
 .hj-ovb.hj-in{animation:hjin .45s ease-out both;animation-delay:var(--hjd,0ms);}
+.hj-ovb[data-hjstate="rest"] .hj-clock,.hj-ovb[data-hjstate="next"] .hj-clock{font-size:clamp(34px,9vw,48px);margin:4px 0 8px;opacity:.8;}
 @keyframes hjin{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 .hj-stagebox .hj-steam{animation:hjst 2.4s ease-in-out infinite;}@keyframes hjst{0%,100%{opacity:.25;transform:translateY(4px);}50%{opacity:.7;transform:none;}}
 @media (prefers-reduced-motion: reduce){.hj-ovb.hj-in,.hj-breath,.hj-stagebox .hj-steam{animation:none;}.hj-ring{transition:none;}}
