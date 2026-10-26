@@ -14,6 +14,7 @@
 //     A player can pause a figure with svgElement.pauseAnimations() and go on with unpauseAnimations().
 //   GGMoves.patterns: every pattern id.
 //   GGMoves.of(nameOrId): the best pattern for an exercise name or item id, by keywords; "standing" by default.
+//   GGMoves.pick(fig, name): a step's own pattern, unless it is a plain standing or seat and the name fits better.
 // How it draws: each pattern is a few key poses written as joint angles (0 points down, 90 forward,
 // 180 up, minus 90 back). The player eases between them, works out every joint, and keeps planted hands
 // and feet in place with a two bone reach. Side view faces right, with the far arm and leg drawn soft.
@@ -274,6 +275,50 @@ const P = {
   lie: {v: 's', an: ['hip', 126, 204], bg: G.mat, d: 3,
     k: [Object.assign({rl: [90, 90, 180], ll: [90, 90, 180], ra: [86, 86], la: [86, 86]}, SUP), {t: [-95, -84], h: -90, rl: [90, 90, 180], ll: [90, 90, 180], ra: [86, 88], la: [86, 88]}]}
 };
+// BLD 857: a pattern for every move in sessions A to D, the warm-up, and the cooldown.
+const HALF = {rl: [0, -90, -90], ll: [90, 0, 90]};
+Object.assign(P, {
+  'bench-squat': {v: 's', an: ['rA', 124, 206], bg: G.bench(70, 171, 50),
+    k: [{ra: [6, 16], la: [6, 16]}, {t: [146, 150], rl: [80, -30, 90], ll: [80, -30, 90], ra: [92, 90], la: [92, 90]}]},
+  'reverse-lunge': {v: 's', an: ['rA', 150, 206], db: 'rl',
+    k: [{ra: [2, 2], la: [-2, -2]}, {rl: [86, -4, 90], ll: [-6, -84, 40], ra: [2, 2], la: [-2, -2]}]},
+  'ankle-rock': {v: 's', an: ['rA', 150, 206], bg: G.mat, d: 2.8, pin: {lA: [0]},
+    k: [{rl: [90, 0, 90], ll: [-10, -90, -90], ra: [66, 70], la: [62, 66]}, {t: [174, 178], rl: [84, -20, 90], ll: [-4, -90, -90], ra: [70, 74], la: [66, 70]}]},
+  'hip-thrust': {v: 's', an: ['rA', 176, 206], db: 'r', bg: G.bench(34, 168, 62), pin: {rH: ['hip', 2, -8, 1], lH: ['hip', 2, -8, 1]},
+    k: [{t: [-124, -112], h: -104, rl: [136, 22, 90], ll: [136, 22, 90]}, {t: [-92, -94], h: -86, rl: [98, 10, 90], ll: [98, 10, 90]}]},
+  'bridge-march': {v: 's', an: ['hip', 125, 174], bg: G.mat, d: 3.2,
+    k: [{t: [-53, -53], h: -96, rl: [100, 14, 90], ll: [100, 14, 90], ra: [92, 92], la: [92, 92]}, {t: [-53, -53], h: -96, rl: [158, 62, 140], ll: [100, 14, 90], ra: [92, 92], la: [92, 92]},
+      {t: [-53, -53], h: -96, rl: [100, 14, 90], ll: [100, 14, 90], ra: [92, 92], la: [92, 92]}, {t: [-53, -53], h: -96, ll: [158, 62, 140], rl: [100, 14, 90], ra: [92, 92], la: [92, 92]}]},
+  'reverse-crunch': {v: 's', an: ['neck', 74, 199], bg: G.mat,
+    k: [Object.assign({rl: [160, 84, 170], ll: [160, 84, 170], ra: [90, 90], la: [90, 90]}, SUP), {t: [-64, -86], h: -90, rl: [-140, 70, 150], ll: [-140, 70, 150], ra: [90, 90], la: [90, 90]}]},
+  'leg-raise': {v: 's', an: ['hip', 126, 164], bg: G.bench(56, 170, 128),
+    k: [Object.assign({rl: [94, 94, 170], ll: [94, 94, 170], ra: [-104, -70], la: [-104, -70]}, SUP), Object.assign({rl: [172, 172, 250], ll: [172, 172, 250], ra: [-104, -70], la: [-104, -70]}, SUP)]},
+  'hollow': {v: 's', an: ['hip', 122, 200], bg: G.mat, d: 3,
+    k: [{t: [-106, -116], h: -118, ra: [-112, -112], la: [-112, -112], rl: [112, 112, 176], ll: [112, 112, 176]}, {t: [-103, -112], h: -114, ra: [-107, -107], la: [-107, -107], rl: [108, 108, 172], ll: [108, 108, 172]}]},
+  'knee-raise': {v: 's', an: ['neck', 120, 62], bg: G.bar, pin: {rH: [0], lH: [0]},
+    k: [{ra: [178, 180], la: [178, 180], rl: [2, 0, 40], ll: [2, 0, 40]}, {t: [184, 178], rl: [96, 4, 70], ll: [92, 2, 70]}]},
+  'pull-through': {v: 's', an: ['rT', 30, 208], db: 'r', bg: G.mat, d: 3,
+    k: [{t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]}, {t: [112, 112], h: 104, rl: [-68, -68, 12], ll: [-66, -66, 12], ra: [-34, -30], la: [0, 0]},
+      {t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]}, {t: [112, 112], h: 104, rl: [-66, -66, 12], ll: [-68, -68, 12], ra: [0, 0], la: [-34, -30]}]},
+  'reach-through': {v: 'f', nm: true, an: ['rE', 154, 204], bg: G.mat,
+    k: [{t: [104, 104], h: 112, sw: 11, hw: 8, ra: [0, 90], la: [180, 180], rl: [-76, -76, -60], ll: [-76, -76, -60], fl: 0.8},
+      {t: [100, 96], h: 96, sw: 11, hw: 8, ra: [0, 90], la: [20, -14], rl: [-76, -76, -60], ll: [-76, -76, -60], fl: 0.8}]},
+  'kneel-press': {v: 's', an: ['rK', 108, 204], db: 'r', bg: G.mat,
+    k: [Object.assign({ra: [14, 168], la: [26, -40]}, HALF), Object.assign({ra: [176, 180], la: [26, -40]}, HALF)]},
+  'push-press': {v: 'f', db: 'rl', d: 2.2,
+    k: [{ra: [78, 178], la: [78, 178]}, {ay: 134, kz: [0.8, 1, 0.8, 1], ra: [78, 178], la: [78, 178]}, {ay: 122, ra: [168, 178], la: [168, 178], rl: [3, 0, 60], ll: [3, 0, 60]}, {ra: [170, 178], la: [170, 178]}]},
+  'incline-press': {v: 's', an: ['hip', 128, 162], db: 'r', bg: G.incline(126, 170, false),
+    k: [{t: [-136, -136], h: -130, rl: [80, 0, 90], ll: [80, 0, 90], ra: [14, 134], la: [14, 134]}, {t: [-136, -136], h: -130, rl: [80, 0, 90], ll: [80, 0, 90], ra: [134, 136], la: [134, 136]}]},
+  'chest-row': {v: 's', an: ['hip', 104, 138], db: 'rl', bg: G.incline(92, 156, true),
+    k: [{t: [134, 134], h: 120, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [0, 0], la: [0, 0]}, {t: [134, 134], h: 120, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [-104, 8], la: [-104, 8]}]},
+  'yt-raise': {v: 's', an: ['hip', 104, 138], bg: G.incline(92, 156, true), d: 3.4,
+    k: [{t: [134, 134], h: 120, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [2, 2], la: [2, 2]}, {t: [134, 134], h: 124, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [146, 146], la: [146, 146]},
+      {t: [134, 134], h: 120, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [2, 2], la: [2, 2]}, {t: [134, 134], h: 122, rl: [-24, -24, 60], ll: [-24, -24, 60], ra: [96, 96], la: [96, 96]}]},
+  suitcase: {v: 's', an: ['hip', 118, 126], db: 'r', e: 'lin', d: 2.2, k: walk(126, 0).map(k => Object.assign(k, {t: [181, 182], ra: [1, 1], la: [-1, -1]}))},
+  'fast-push-up': {v: 's', an: ['rT', 30, 208], bg: G.mat, pin: {rH: [-1], lH: [-1]}, d: 1.4,
+    k: [{t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]}, {t: [97, 97], h: 96, rl: [-83, -83, 12], ll: [-83, -83, 12]}]},
+  'wall-slide': {v: 'f', bg: G.wall, d: 3.2, k: [{ra: [104, 176], la: [104, 176]}, {ra: [158, 172], la: [158, 172]}]}
+});
 // The far leg of a crossed seat is drawn mirrored by hand where the view keeps absolute angles.
 P.twist.k.forEach(k => { k.rl = [76, -97, -90]; k.ll = [-76, 97, 90]; });
 P.twist.pin = null;
@@ -282,15 +327,19 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 // Keywords, in order: the first that matches wins.
 const KW = [
   [/cat ?cow/, 'cat-cow'], [/child/, 'child-pose'], [/couch|hip flexor/, 'hip-flexor'], [/figure ?(4|four)|pigeon/, 'figure-4'],
-  [/90\/90|hip switch|windshield/, 'hip-switch'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
-  [/dead ?bugs?|hollow|crunch|leg raise/, 'dead-bug'], [/y.?t raise|reverse fly|rear delt/, 'row'], [/bird ?dogs?/, 'bird-dog'], [/side plank/, 'side-plank'], [/plank/, 'plank'],
-  [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/bench press|incline|chest press|floor press/, 'bench-press'],
+  [/90\/90|hip switch|windshield/, 'hip-switch'], [/hanging (knee|leg)|knee raise|knees? to chest/, 'knee-raise'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
+  [/hollow/, 'hollow'], [/reverse crunch/, 'reverse-crunch'], [/leg raise/, 'leg-raise'], [/dead ?bugs?|crunch/, 'dead-bug'],
+  [/y.?t raise|reverse fly|rear delt/, 'yt-raise'], [/chest.?supported/, 'chest-row'], [/bird ?dogs?/, 'bird-dog'],
+  [/side plank.*reach|reach.?through|thread the needle/, 'reach-through'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
+  [/fast push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
+  [/incline (dumbbell |db )?press|incline bench/, 'incline-press'], [/bench press|chest press|floor press/, 'bench-press'], [/kneeling.*press|half.?kneel/, 'kneel-press'],
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
-  [/romanian|\brdl|deadlift|hinge|good morning/, 'hinge'], [/hip thrust|bridge/, 'bridge'], [/swing/, 'swing'],
-  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/lunge|split squat|ankle rock/, 'lunge'],
-  [/squat|sit to stand|chair stand/, 'squat'], [/\brows?\b/, 'row'], [/\bdips?\b/, 'dip'], [/wall slide|arms? up|reach up|sun salut/, 'arms-up'],
-  [/press|overhead|jerk/, 'press'], [/carry|farmer|suitcase/, 'carry'], [/march|jacks?\b|high knee/, 'march'],
+  [/romanian|\brdl|deadlift|hinge|good morning/, 'hinge'], [/bridge march|marching bridge/, 'bridge-march'], [/hip thrust/, 'hip-thrust'], [/bridge/, 'bridge'], [/swing/, 'swing'],
+  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/ankle rock|knee to wall/, 'ankle-rock'], [/reverse lunge|back lunge|step back/, 'reverse-lunge'],
+  [/lunge|split squat/, 'lunge'], [/squats? to (the )?(bench|box|chair)|box squat|bench squat/, 'bench-squat'],
+  [/squat|sit to stand|chair stand/, 'squat'], [/\brows?\b/, 'row'], [/\bdips?\b/, 'dip'], [/wall slide|wall angel/, 'wall-slide'], [/arms? up|reach up|sun salut/, 'arms-up'],
+  [/press|overhead|jerk/, 'press'], [/suitcase|one.?arm carry|single.?arm carry/, 'suitcase'], [/carry|farmer/, 'carry'], [/march|jacks?\b|high knee/, 'march'],
   [/\brun|jog|sprint|stride|interval/, 'run'], [/walk|mile|hike|treadmill|elliptical|zone 2|cardio/, 'walk'],
   [/spinal flex|spine flex/, 'spinal-flex'], [/twist/, 'twist'], [/arm circle/, 'arm-circles'], [/shrug|shoulder roll/, 'shrug'],
   [/\bneck/, 'neck'], [/life nerve|hamstring|toe touch|seated fold/, 'life-nerve'], [/forward fold|fold forward|ragdoll/, 'forward-fold'],
@@ -312,19 +361,32 @@ const escA = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;'
 
 function svg(pattern, opts){
   opts = opts || {};
-  const id = P[pattern] ? pattern : of(pattern), M = P[id], dur = M.d || 2.6, size = opts.size || 160;
-  const F = frames(M, !!opts.still || reduced()), side = M.v === 's';
-  const line = (k, op) => `<polyline points="${pts(F[0], SEG[k])}"${op ? ' opacity="' + op + '"' : ''}>${anim(F, 'points', J => pts(J, SEG[k]), dur)}</polyline>`;
+  const id = P[pattern] ? pattern : of(pattern), M = P[id], dur = r1((M.d || 2.6) / (+opts.speed > 0 ? +opts.speed : 1)), size = opts.size || 160;
+  const F = frames(M, !!opts.still || reduced(), opts.pose), side = M.v === 's';
+  const far = op => op ? ` style="opacity:var(--ggm-far,${op})"` : '';
+  const line = (k, op) => `<polyline points="${pts(F[0], SEG[k])}"${far(op)}>${anim(F, 'points', J => pts(J, SEG[k]), dur)}</polyline>`;
   const db = k => M.db && M.db.includes(k[0]) ? dumbbell(F, k, dur, side && k[0] === 'l' ? '.42' : '') : '';
   const head = `<circle r="${L.hr}" cx="${r1(F[0].head[0])}" cy="${r1(F[0].head[1])}" fill="currentColor" stroke="none">${anim(F, 'cx', J => r1(J.head[0]), dur)}${anim(F, 'cy', J => r1(J.head[1]), dur)}</circle>`;
+  // A soft shadow on the floor follows the hips, so the figure stands on the ground of a stage.
+  const sx = J => r1(J.hip[0]), srx = J => r1(Math.max(16, 30 - Math.max(0, 150 - J.hip[1]) * 0.12));
+  const shadow = `<ellipse cx="${sx(F[0])}" cy="213" rx="${srx(F[0])}" ry="4.5" fill="currentColor" stroke="none" style="color:var(--ggm-shadow,currentColor);opacity:var(--ggm-shadow-op,0)">${anim(F, 'cx', sx, dur)}${anim(F, 'rx', srx, dur)}</ellipse>`;
   let body;
   if (side) body = line('la', '.42') + db('lH') + line('ll', '.42') + line('sp') + line('rl') + line('ra') + db('rH') + head;
   else body = line('ll') + line('rl') + line('hpb') + line('sp') + line('shb') + line('la') + line('ra') + db('lH') + db('rH') + head;
   const label = escA(opts.label || id.replace(/-/g, ' '));
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move" data-move="${id}">` +
-    `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round">` +
-    `<path d="M14 212H226" stroke-width="3" opacity=".22"/>${M.bg || ''}<g stroke-width="9">${body}</g></g></svg>`;
+  const flip = opts.flip ? ' transform="translate(240 0) scale(-1 1)"' : '';
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}">` +
+    `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"${flip}>` +
+    `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
 }
 
-window.GGMoves = {svg, of, patterns: Object.keys(P)};
+// For a step that names a pattern itself (the Daily Practice), keep a specific pattern, and let a plain
+// "standing" or "seat" give way to a better match for the step's name.
+function pick(fig, name){
+  const f = fig && P[fig] ? fig : null, n = name ? of(name) : 'standing';
+  if (!f) return n;
+  return (f === 'standing' || f === 'seat') && n !== 'standing' && n !== 'seat' ? n : f;
+}
+
+window.GGMoves = {svg, of, pick, patterns: Object.keys(P)};
 })();
