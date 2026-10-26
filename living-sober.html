@@ -27,95 +27,286 @@
 <link rel="stylesheet" href="style.css?v=b817">
 <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","name":"Living Sober","url":"https://growwithgrounded.com/living-sober","description":"Encouragement, short videos, and ninety days for the early days, for anyone growing sober and the people who love them.","publisher":{"@type":"Organization","name":"Grow With Grounded","url":"https://growwithgrounded.com/"}}</script>
 <style>
-.ls{--ls:#4E7D6A;--ls-deep:#3B6352;--ls-soft:rgba(78,125,106,.10);--ls-line:rgba(78,125,106,.32);}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ls{--ls:#8DBCA6;--ls-deep:#A9D0BD;--ls-soft:rgba(141,188,166,.10);--ls-line:rgba(141,188,166,.30);}}
-:root[data-theme="dark"] .ls{--ls:#8DBCA6;--ls-deep:#A9D0BD;--ls-soft:rgba(141,188,166,.10);--ls-line:rgba(141,188,166,.30);}
-.ls section.ls-sec{padding:56px 0;}
-.ls section.ls-sec + section.ls-sec{padding-top:8px;}
-.ls .eyebrow{color:var(--ls);}
+/* BLD 856: Living Sober, redesigned. Colors: the Living Sober green plus warm chapter and section accents from the Golden Hour palette. */
+html{scroll-padding-top:140px;}
+.ls{--ls:#4E7D6A;--ls-deep:#3B6352;--ls-soft:rgba(78,125,106,.10);--ls-line:rgba(78,125,106,.32);--on:#fff;
+  --honey:#A86A1C;--honey-ink:#8A5712;--honey-soft:#F6E7CC;
+  --green:#4E7D6A;--green-ink:#3B6352;--green-soft:#DCEBE3;
+  --blue:#4A7494;--blue-ink:#355A76;--blue-soft:#DDE8F0;
+  --clay:#A9562A;--clay-ink:#8E431C;--clay-soft:#F4E0D2;
+  --plum:#6E5A8A;--plum-ink:#5A4775;--plum-soft:#E9E3F0;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ls{--ls:#8DBCA6;--ls-deep:#A9D0BD;--ls-soft:rgba(141,188,166,.10);--ls-line:rgba(141,188,166,.30);--on:#1A1612;
+  --honey:#E8A955;--honey-ink:#EDB85E;--honey-soft:#43341B;--green:#8DBCA6;--green-ink:#A9D0BD;--green-soft:#22362D;--blue:#94BAD8;--blue-ink:#A9C9E2;--blue-soft:#223446;
+  --clay:#EE9C72;--clay-ink:#F0AE8A;--clay-soft:#462B1E;--plum:#BCA9DB;--plum-ink:#CBBBE6;--plum-soft:#362D44;}}
+:root[data-theme="dark"] .ls{--ls:#8DBCA6;--ls-deep:#A9D0BD;--ls-soft:rgba(141,188,166,.10);--ls-line:rgba(141,188,166,.30);--on:#1A1612;
+  --honey:#E8A955;--honey-ink:#EDB85E;--honey-soft:#43341B;--green:#8DBCA6;--green-ink:#A9D0BD;--green-soft:#22362D;--blue:#94BAD8;--blue-ink:#A9C9E2;--blue-soft:#223446;
+  --clay:#EE9C72;--clay-ink:#F0AE8A;--clay-soft:#462B1E;--plum:#BCA9DB;--plum-ink:#CBBBE6;--plum-soft:#362D44;}
+/* accent sets: a section or card picks one */
+.ls .a-honey{--c:var(--honey);--ci:var(--honey-ink);--cs:var(--honey-soft);}
+.ls .a-green{--c:var(--green);--ci:var(--green-ink);--cs:var(--green-soft);}
+.ls .a-blue{--c:var(--blue);--ci:var(--blue-ink);--cs:var(--blue-soft);}
+.ls .a-clay{--c:var(--clay);--ci:var(--clay-ink);--cs:var(--clay-soft);}
+.ls .a-plum{--c:var(--plum);--ci:var(--plum-ink);--cs:var(--plum-soft);}
+.ls svg.i{width:1em;height:1em;flex:none;}
+.ls section.ls-sec{padding:64px 0;position:relative;}
+.ls section.ls-alt{background:var(--bg-deep);}
+.ls .eyebrow{color:var(--ci,var(--ls-deep));}
 .ls h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:clamp(32px,4vw,46px);line-height:1.1;margin:0 0 12px;}
-.ls .ls-lead{font-size:clamp(18px,1.6vw,20px);max-width:760px;color:var(--ink-soft);margin:0 0 18px;}
-.ls .ls-frame{max-width:640px;margin:14px auto 0;font-size:16px;color:var(--ink-soft);font-style:italic;}
-.ls .ls-intro{max-width:780px;margin:0 auto;text-align:center;}
-.ls .ls-intro p{font-size:clamp(18px,1.7vw,21px);}
-.ls .ls-intro .ls-stance{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(25px,2.8vw,33px);line-height:1.25;color:var(--ink);margin:6px auto 18px;max-width:760px;}
-.ls .ls-star{display:inline-block;width:22px;height:22px;vertical-align:-3px;margin-right:6px;}
-.ls-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
-.ls-grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
-.ls .ls-card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:24px 24px 20px;box-shadow:0 6px 20px rgba(40,60,50,.07);display:flex;flex-direction:column;min-width:0;}
-.ls .ls-card h3{font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.15;margin:0 0 8px;}
-.ls .ls-card p{margin:0 0 12px;}
-.ls .ls-card .ls-acts{margin-top:auto;display:flex;flex-wrap:wrap;gap:8px;align-items:center;}
-.ls .ls-word{border-top:4px solid var(--ls);}
-.ls .ls-word blockquote{margin:0 0 16px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(24px,2.4vw,30px);line-height:1.3;color:var(--ink);}
-.ls .ls-word.mantra blockquote{font-style:italic;font-size:clamp(28px,3vw,38px);}
+.ls h3{font-family:'Cormorant Garamond',serif;}
+.ls .ls-lead{font-size:clamp(18px,1.6vw,20px);max-width:760px;color:var(--ink-soft);margin:0 0 22px;}
+/* section header with an icon badge */
+.ls .ls-hd{display:flex;gap:18px;align-items:flex-start;margin:0 0 6px;}
+.ls .ls-hd>div{min-width:0;}
+.ls .ls-badge{flex:none;width:58px;height:58px;border-radius:18px;display:grid;place-items:center;background:var(--cs);color:var(--ci);border:1px solid color-mix(in srgb,var(--c) 35%,transparent);font-size:30px;box-shadow:0 6px 18px rgba(40,60,50,.08);}
+/* hero */
+.ls .ls-hero{padding-bottom:120px;}
+.ls .ls-hero-acts .btn{display:inline-flex;align-items:center;gap:8px;}
+.ph-living-sober{--shade-rgb:12,16,6;}
+/* bright facts, lifted over the bottom of the hero */
+.ls .ls-facts{position:relative;z-index:2;margin:-96px auto 0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.ls .ls-fact{display:flex;gap:14px;align-items:center;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:20px;padding:18px 18px 16px;box-shadow:0 14px 34px rgba(30,40,30,.16);min-width:0;transition:transform .25s ease,box-shadow .25s ease;}
+.ls .ls-fact:hover,.ls .ls-fact:focus-visible{transform:translateY(-3px);box-shadow:0 18px 40px rgba(30,40,30,.22);}
+.ls .ls-fact .ls-fig{flex:none;width:64px;height:64px;border-radius:50%;display:grid;place-items:center;background:var(--cs);color:var(--ci);font-size:32px;}
+.ls .ls-fact b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:40px;line-height:1;color:var(--ci);}
+.ls .ls-fact span{display:block;font-size:16px;line-height:1.4;color:var(--ink-soft);margin-top:4px;}
+/* the sticky chip menu */
+.ls .ls-chips{position:sticky;top:calc(68px + env(safe-area-inset-top,0px));z-index:40;margin-top:26px;background:color-mix(in srgb,var(--bg) 88%,transparent);backdrop-filter:blur(8px);-webkit-backdrop-filter:blur(8px);border-top:1px solid var(--line);border-bottom:1px solid var(--line);}
+.ls .ls-chips ul{position:relative;list-style:none;margin:0 auto;padding:10px 22px;display:flex;gap:8px;overflow-x:auto;scrollbar-width:none;max-width:1280px;}
+.ls .ls-chips li:first-child{margin-left:auto;}.ls .ls-chips li:last-child{margin-right:auto;}
+.ls .ls-chips ul::-webkit-scrollbar{display:none;}
+.ls .ls-chips a{display:inline-flex;align-items:center;gap:6px;white-space:nowrap;text-decoration:none;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:999px;padding:8px 14px;min-height:40px;transition:background .2s,color .2s,border-color .2s;}
+.ls .ls-chips a svg{color:var(--ci);font-size:17px;}
+.ls .ls-chips a:hover{border-color:var(--c);}
+.ls .ls-chips a[aria-current="true"]{background:var(--c);border-color:var(--c);color:var(--on);}
+.ls .ls-chips a[aria-current="true"] svg{color:var(--on);}
+/* welcome */
+.ls .ls-welcome{display:grid;grid-template-columns:1.25fr 1fr;gap:40px;align-items:center;}
+.ls .ls-stance{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(26px,2.8vw,34px);line-height:1.22;color:var(--ink);margin:6px 0 16px;}
+.ls .ls-welcome p{margin:0 0 14px;}
+.ls .ls-rule{display:grid;grid-template-columns:1.5fr 1fr 1fr;gap:12px;}
+.ls .ls-pct{border-radius:20px;padding:18px 16px 16px;background:var(--cs);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);min-width:0;}
+.ls .ls-pct.today{background:var(--c);border-color:var(--c);color:var(--on);}
+.ls .ls-pct b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:52px;line-height:1;}
+.ls .ls-pct span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;margin:6px 0 4px;}
+.ls .ls-pct p{margin:0;font-size:15.5px;line-height:1.45;}
+.ls .ls-rulecap{font-size:16px;color:var(--ink-soft);font-style:italic;margin:12px 0 10px;}
+.ls .ls-sharebar{display:flex;flex-wrap:wrap;align-items:center;gap:10px;}
+.ls .ls-sharebar.c{justify-content:center;}
+.ls .ls-sharebar.c .ls-smsg{flex-basis:100%;text-align:center;}
 .ls .ls-share{display:inline-flex;align-items:center;gap:8px;}
 .ls .ls-share:disabled{opacity:.5;cursor:default;}
-.ls .ls-week{margin-top:18px;background:var(--ls-soft);border:1px solid var(--ls-line);border-radius:18px;padding:18px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
+.ls .ls-smsg{min-height:1.5em;font-size:16px;color:var(--ink-soft);overflow-wrap:anywhere;}
+.ls .ls-link{font-weight:600;color:var(--gold);}
+/* cards */
+.ls-grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px;}
+.ls-grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}
+.ls .ls-card{background:var(--card);border:1px solid var(--line);border-radius:22px;padding:24px 24px 20px;box-shadow:0 8px 24px rgba(40,60,50,.07);display:flex;flex-direction:column;min-width:0;position:relative;overflow:hidden;}
+.ls .ls-card h3{font-size:27px;line-height:1.15;margin:0 0 8px;}
+.ls .ls-card p{margin:0 0 12px;}
+.ls .ls-card .ls-acts{margin-top:auto;display:flex;flex-wrap:wrap;gap:10px;align-items:center;}
+.ls .ls-card.fill{background:var(--cs);border-color:color-mix(in srgb,var(--c) 30%,transparent);}
+.ls .ls-card .ls-ci{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;background:var(--cs);color:var(--ci);font-size:26px;margin:0 0 12px;}
+.ls .ls-card.fill .ls-ci{background:var(--card);}
+.ls .ls-word blockquote{margin:0 0 16px;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:clamp(24px,2.4vw,30px);line-height:1.3;color:var(--ink);position:relative;}
+.ls .ls-word.mantra blockquote{font-style:italic;font-size:clamp(28px,3vw,38px);}
+.ls .ls-word .ls-art{position:absolute;right:-14px;top:-14px;width:120px;height:120px;color:var(--c);opacity:.18;pointer-events:none;}
+.ls .ls-week{margin-top:18px;background:var(--cs);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);border-radius:20px;padding:18px 22px;display:flex;gap:16px;align-items:center;flex-wrap:wrap;}
 .ls .ls-week div{flex:1 1 320px;min-width:0;}
-.ls .ls-week b{font-family:'Cormorant Garamond',serif;font-size:23px;display:block;line-height:1.2;}
+.ls .ls-week b{font-family:'Cormorant Garamond',serif;font-size:24px;display:block;line-height:1.2;}
 .ls .ls-week p{margin:4px 0 0;font-size:17px;}
-.ls-rule{display:grid;grid-template-columns:1.6fr 1fr 1fr;gap:14px;margin:18px 0 8px;}
-.ls .ls-pct{border-radius:20px;padding:22px 22px 18px;background:var(--card);border:1px solid var(--line);min-width:0;}
-.ls .ls-pct.today{background:var(--ls);border-color:var(--ls);color:#fff;}
-:root[data-theme="dark"] .ls .ls-pct.today{color:#14241D;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ls .ls-pct.today{color:#14241D;}}
-.ls .ls-pct b{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:54px;line-height:1;letter-spacing:.5px;}
-.ls .ls-pct span{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:2.5px;text-transform:uppercase;margin:6px 0 8px;}
-.ls .ls-pct p{margin:0;font-size:17px;line-height:1.55;}
-.ls .ls-vid{padding:0;overflow:hidden;}
-.ls .ls-vid .ls-vh{background:linear-gradient(160deg,#1F3A30,#4E7D6A);color:#fff;padding:22px 22px 18px;min-height:120px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;}
-.ls .ls-vid .ls-vh small{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:13px;color:#F3D58C;}
-.ls .ls-vid .ls-vh b{font-family:'Cormorant Garamond',serif;font-size:27px;line-height:1.15;}
-.ls .ls-vid .ls-vb{padding:16px 22px 20px;display:flex;flex-direction:column;flex:1;}
-.ls .ls-vid .ls-vb p{font-size:17px;}
-.ls-more{margin-top:28px;}.ls-more h3{font-family:'Cormorant Garamond',serif;font-size:28px;margin:0 0 10px;}.ls-gt{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:0 0 10px;}.ls-gt summary{cursor:pointer;padding:14px 18px;list-style:none;}.ls-gt summary b{display:block;font-size:18px;}.ls-gt summary small{color:var(--ink-soft);}.ls-gt .ls-gtb{padding:0 18px 14px;}.ls-gt h4{margin:12px 0 4px;font-size:15px;letter-spacing:.04em;text-transform:uppercase;color:var(--ink-soft);}.ls-gt ul,.ls-bodyl{margin:0;padding-left:20px;}.ls-bodyl li{margin:8px 0;}.ls-src{font-size:13.5px;color:var(--ink-soft);}.ls-src a{color:inherit;}.ls-open1{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;}.ls-tool .ls-acts .text-link{margin-left:4px;}.ls-gt .ls-try{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;margin:6px 0 0;}.ls-words,.ls-gt ul.ls-words{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none;}.ls-words li{padding:4px 12px;border:1px dashed var(--line);border-radius:999px;font-size:15px;}.ls-basics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;}.ls-basics>div{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:16px 18px;min-width:0;}.ls-basics h4{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:23px;}.ls-basics ul{margin:0;padding-left:20px;}.ls-basics li{margin:6px 0;}@media (max-width:900px){.ls-basics{grid-template-columns:1fr;}}
-.ls-days{list-style:none;margin:18px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;}
-.ls .ls-day{display:flex;gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:10px 12px;min-width:0;scroll-margin-top:90px;}
-.ls .ls-dn{flex:none;width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--ls-soft);color:var(--ls);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;border:1px solid var(--ls-line);}
-.ls .ls-dt{flex:1;min-width:0;}
-.ls .ls-dt b{display:block;font-weight:600;font-size:16.5px;line-height:1.3;}
-.ls .ls-dt small{display:block;font-size:14.5px;line-height:1.4;color:var(--ink-soft);}
-.ls .ls-db{display:flex;gap:6px;align-items:center;flex:none;}
-.ls .ls-play{display:inline-flex;align-items:center;gap:6px;padding:8px 12px;font-size:14.5px;min-height:44px;margin:0;}
+/* buttons */
+.ls .ls-btn{background:var(--c,var(--ls));border:1px solid var(--c,var(--ls));color:var(--on);display:inline-flex;align-items:center;gap:8px;}
+.ls .ls-btn:hover{filter:brightness(.92);}
+.ls .text-link{color:var(--ci,var(--gold));}
 .ls .ls-ic{width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink-soft);display:grid;place-items:center;cursor:pointer;}
-.ls .ls-ic:hover,.ls .ls-ic:focus-visible{color:var(--ls);border-color:var(--ls);}
-.ls .ls-empty{color:var(--ink-soft);font-style:italic;}
-.ls .ls-stage{border-left:5px solid var(--ls);}
-.ls .ls-stage .ls-who{font-size:15.5px;color:var(--ink-soft);margin-top:auto;}
-.ls .ls-tree{align-items:center;text-align:center;}
-.ls .ls-tree img{width:84px;height:84px;border-radius:20px;margin:0 0 10px;}
-.ls .ls-tree .btn{width:100%;justify-content:center;text-align:center;}
-.ls .ls-btn{background:var(--ls);border-color:var(--ls);color:#fff;}
-.ls .ls-btn:hover{background:#3B6352;}
-:root[data-theme="dark"] .ls .ls-btn{color:#14241D;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .ls .ls-btn{color:#14241D;}}
+.ls .ls-ic:hover,.ls .ls-ic:focus-visible{color:var(--ci,var(--ls));border-color:var(--c,var(--ls));}
+/* Start Here video cards */
+.ls .ls-vid{padding:0;}
+.ls .ls-vh{position:relative;min-height:150px;padding:20px 22px 18px;display:flex;flex-direction:column;justify-content:flex-end;color:#fff;background:linear-gradient(150deg,var(--g1),var(--g2));overflow:hidden;}
+.ls .ls-vh svg.ls-scene{position:absolute;right:-6px;top:-6px;width:150px;height:150px;opacity:.9;}
+.ls .ls-vh small{position:relative;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:2px;text-transform:uppercase;font-size:13px;color:#FFE7BD;}
+.ls .ls-vh b{position:relative;font-family:'Cormorant Garamond',serif;font-size:29px;line-height:1.1;text-shadow:0 1px 8px rgba(0,0,0,.35);}
+.ls .ls-vid.v1 .ls-vh{--g1:#2E4A3C;--g2:#5F8A62;}
+.ls .ls-vid.v2 .ls-vh{--g1:#7A4A1E;--g2:#D49A4A;}
+.ls .ls-vid.v3 .ls-vh{--g1:#203A52;--g2:#5B88A8;}
+.ls .ls-vb{padding:16px 22px 20px;display:flex;flex-direction:column;flex:1;}
+.ls .ls-vb p{font-size:17px;}
 .ls .ls-note{font-size:16px;color:var(--ink-soft);margin:14px 0 0;}
-.ls .ls-anchor{background:var(--ls-soft);border:1px solid var(--ls-line);border-radius:24px;padding:28px;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;}
-.ls .ls-anchor ul{margin:0;padding:0;list-style:none;}
-.ls .ls-anchor li{padding:8px 0 8px 34px;position:relative;border-bottom:1px solid var(--ls-line);}
-.ls .ls-anchor li:last-child{border-bottom:none;}
-.ls .ls-anchor li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:18px;border-radius:50%;background:var(--ls);opacity:.85;}
-.ls .ls-anchor .ls-acts{display:flex;flex-direction:column;gap:10px;justify-content:center;}
-.ls .ls-love{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:16px 0 0;}
-.ls .ls-love a{display:block;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;text-decoration:none;color:inherit;min-width:0;}
-.ls .ls-love a:hover,.ls .ls-love a:focus-visible{border-color:var(--ls);}
+.ls .ls-empty{color:var(--ink-soft);font-style:italic;}
+/* Early Days: the 90 day path */
+.ls .ls-path{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0;margin:8px 0 22px;position:relative;}
+.ls .ls-path a{position:relative;display:flex;flex-direction:column;align-items:center;text-align:center;text-decoration:none;color:var(--ink);padding:0 8px;min-width:0;}
+.ls .ls-path a::before{content:"";position:absolute;top:31px;left:0;right:0;height:6px;background:var(--c);opacity:.55;}
+.ls .ls-path a:first-child::before{left:50%;border-radius:6px 0 0 6px;}
+.ls .ls-path a:last-child::before{right:50%;}
+.ls .ls-path .ls-pdot{position:relative;width:68px;height:68px;border-radius:50%;background:var(--c);color:var(--on);display:grid;place-items:center;font-size:32px;box-shadow:0 0 0 6px var(--bg),0 8px 18px rgba(0,0,0,.15);}
+.ls section.ls-alt .ls-path .ls-pdot{box-shadow:0 0 0 6px var(--bg-deep),0 8px 18px rgba(0,0,0,.15);}
+.ls .ls-path small{display:block;margin-top:10px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--ci);}
+.ls .ls-path strong{display:block;font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.15;}
+.ls .ls-path:hover a::before{opacity:.75;}
+/* Ride the Wave, the urge SOS */
+.ls .ls-wave{position:relative;overflow:hidden;border-radius:24px;padding:24px 26px;margin:0 0 22px;background:linear-gradient(120deg,#1E3B52,#2F6A86 55%,#3E8C9C);color:#fff;display:flex;gap:22px;align-items:center;flex-wrap:wrap;box-shadow:0 14px 34px rgba(20,50,70,.22);}
+.ls .ls-wave>div{position:relative;flex:1 1 380px;min-width:0;}
+.ls .ls-wave .ls-sos{display:inline-block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:2.5px;text-transform:uppercase;background:rgba(255,255,255,.16);border:1px solid rgba(255,255,255,.35);border-radius:999px;padding:3px 12px;margin-bottom:8px;color:#fff;}
+.ls .ls-wave h3{font-size:clamp(30px,3vw,38px);line-height:1.1;margin:0 0 6px;color:#fff;}
+.ls .ls-wave p{margin:0;color:#E6F1F6;font-size:17.5px;}
+.ls .ls-wave .btn{position:relative;background:#FFF8EC;color:#1E3B52;border:none;display:inline-flex;align-items:center;gap:8px;}
+.ls .ls-wave .btn:hover{background:#fff;}
+.ls .ls-waves{position:absolute;left:0;right:0;bottom:-2px;height:70px;width:200%;pointer-events:none;opacity:.5;}
+.ls .ls-waves path{fill:rgba(255,255,255,.18);}
+.ls .ls-waves path+path{fill:rgba(255,255,255,.12);}
+@keyframes lsWave{from{transform:translateX(0)}to{transform:translateX(-50%)}}
+.ls .ls-waves.go{animation:lsWave 14s linear infinite;}
+.ls .ls-waves.go2{animation-duration:22s;bottom:6px;opacity:.4;}
+/* the three chapters */
+.ls .ls-ch{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:22px;margin:0 0 16px;overflow:hidden;scroll-margin-top:140px;box-shadow:0 8px 24px rgba(40,60,50,.06);}
+.ls .ls-ch>summary{list-style:none;cursor:pointer;display:flex;align-items:center;gap:18px;padding:18px 20px;background:var(--cs);}
+.ls .ls-ch>summary::-webkit-details-marker{display:none;}
+.ls .ls-ch .ls-chart{flex:none;width:76px;height:76px;border-radius:20px;background:var(--card);display:grid;place-items:center;color:var(--ci);}
+.ls .ls-ch .ls-chart svg{width:58px;height:58px;}
+.ls .ls-ch .ls-cht{flex:1;min-width:0;}
+.ls .ls-ch .ls-cht small{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:2px;text-transform:uppercase;color:var(--ci);}
+.ls .ls-ch .ls-cht b{display:block;font-family:'Cormorant Garamond',serif;font-size:clamp(26px,2.6vw,32px);line-height:1.1;}
+.ls .ls-ch .ls-cht span{display:block;font-size:16px;line-height:1.45;color:var(--ink-soft);margin-top:4px;}
+.ls .ls-ch .ls-chev{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--card);color:var(--ci);transition:transform .25s ease;font-size:20px;}
+.ls .ls-ch[open] .ls-chev{transform:rotate(180deg);}
+.ls .ls-tiles{list-style:none;margin:0;padding:18px;display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;}
+.ls .ls-tile{position:relative;min-width:0;scroll-margin-top:150px;}
+.ls .ls-tbtn{width:100%;height:100%;min-height:118px;display:flex;flex-direction:column;align-items:flex-start;gap:4px;text-align:left;cursor:pointer;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:16px;padding:10px 12px 10px;transition:transform .2s ease,border-color .2s,background .2s,box-shadow .2s;}
+.ls .ls-tbtn:hover,.ls .ls-tbtn:focus-visible{transform:translateY(-2px);border-color:var(--c);background:var(--cs);box-shadow:0 8px 18px rgba(0,0,0,.08);}
+.ls .ls-tn{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:30px;line-height:1;color:var(--ci);}
+.ls .ls-tt{font-size:14.5px;line-height:1.3;font-weight:600;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.ls .ls-tm{margin-top:auto;display:inline-flex;align-items:center;gap:5px;font-size:13px;color:var(--ink-soft);}
+.ls .ls-tm svg{color:var(--ci);font-size:16px;}
+.ls .ls-tile.big .ls-tbtn{background:var(--c);border-color:var(--c);color:var(--on);}
+.ls .ls-tile.big .ls-tn,.ls .ls-tile.big .ls-tm,.ls .ls-tile.big .ls-tm svg{color:var(--on);}
+.ls .ls-tile.big .ls-tbtn:hover{filter:brightness(.95);}
+.ls .ls-tsh{position:absolute;top:6px;right:6px;width:34px;height:34px;border-radius:50%;border:1px solid transparent;background:transparent;color:var(--ink-soft);display:grid;place-items:center;cursor:pointer;}
+.ls .ls-tsh:hover,.ls .ls-tsh:focus-visible{border-color:var(--c);color:var(--ci);background:var(--card);}
+.ls .ls-tile.big .ls-tsh{color:var(--on);}
+.ls .ls-tile.big .ls-tsh:hover,.ls .ls-tile.big .ls-tsh:focus-visible{color:var(--ci);}
+/* expanders */
+.ls-more{margin-top:34px;scroll-margin-top:140px;}
+.ls .ls-subhd{display:flex;align-items:center;gap:12px;margin:0 0 10px;}
+.ls .ls-subhd .ls-ci{width:44px;height:44px;border-radius:14px;display:grid;place-items:center;background:var(--cs);color:var(--ci);font-size:24px;flex:none;}
+.ls .ls-subhd h3{font-size:30px;line-height:1.1;margin:0;}
+.ls .ls-more>div>p:first-child{color:var(--ink-soft);max-width:780px;}
+.ls .ls-gtw{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 14px;align-items:start;}
+.ls-gt{background:var(--card);border:1px solid var(--line);border-radius:16px;margin:0 0 10px;min-width:0;transition:border-color .2s;}
+.ls .ls-gtw .ls-gt{margin:0;}
+.ls-gt[open]{border-color:var(--c,var(--ls));}
+.ls-gt summary{cursor:pointer;padding:14px 46px 14px 18px;list-style:none;position:relative;}
+.ls-gt summary::-webkit-details-marker{display:none;}
+.ls-gt summary::after{content:"+";position:absolute;right:16px;top:12px;width:24px;height:24px;border-radius:50%;display:grid;place-items:center;background:var(--cs,var(--ls-soft));color:var(--ci,var(--ls));font-weight:700;line-height:1;}
+.ls-gt[open] summary::after{content:"\2212";}
+.ls-gt summary b{display:block;font-size:18px;line-height:1.3;}
+.ls-gt summary small{display:block;color:var(--ink-soft);font-size:15px;line-height:1.4;margin-top:2px;}
+.ls-gt .ls-gtb{padding:0 18px 14px;}
+.ls-gt h4{margin:12px 0 4px;font-size:14px;letter-spacing:.08em;text-transform:uppercase;color:var(--ci,var(--ink-soft));}
+.ls-gt ul{margin:0;padding-left:20px;}
+.ls-src{font-size:13.5px;color:var(--ink-soft);margin-top:12px;}
+.ls-src a{color:inherit;}
+.ls-open1{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin-top:14px;}
+.ls-gt .ls-try{font-family:'Cormorant Garamond',serif;font-size:20px;font-style:italic;margin:6px 0 0;}
+.ls-words,.ls-gt ul.ls-words{display:flex;flex-wrap:wrap;gap:6px;margin:4px 0 0;padding:0;list-style:none;}
+.ls-words li{padding:4px 12px;border:1px dashed var(--line);border-radius:999px;font-size:15px;}
+/* What Your Body Regains: a medallion timeline */
+.ls .ls-tl{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 22px;}
+.ls .ls-tl li{display:flex;gap:14px;align-items:flex-start;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 16px;min-width:0;}
+.ls .ls-med{flex:none;width:62px;height:62px;border-radius:50%;display:grid;place-items:center;text-align:center;background:var(--cs);border:3px double var(--c);color:var(--ci);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;line-height:1.05;letter-spacing:.5px;text-transform:uppercase;padding:4px;}
+.ls .ls-tl li b{display:block;font-size:17.5px;}
+.ls .ls-tl li p{margin:2px 0 0;font-size:16px;line-height:1.5;}
+.ls-basics{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.ls-basics>div{background:var(--card);border:1px solid var(--line);border-top:5px solid var(--c);border-radius:16px;padding:16px 18px;min-width:0;}
+.ls-basics h4{margin:0 0 6px;font-family:'Cormorant Garamond',serif;font-size:24px;display:flex;align-items:center;gap:8px;}
+.ls-basics h4 svg{color:var(--ci);font-size:22px;}
+.ls-basics ul{margin:0;padding-left:20px;}
+.ls-basics li{margin:6px 0;font-size:17px;}
+/* stages along a path, and the trees */
+.ls .ls-stages{list-style:none;margin:6px 0 0;padding:0;display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;counter-reset:st;}
+.ls .ls-stage{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:20px 20px 16px;min-width:0;position:relative;}
+.ls .ls-stage .ls-sn{display:inline-grid;place-items:center;width:38px;height:38px;border-radius:50%;background:var(--c);color:var(--on);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:20px;margin-bottom:8px;}
+.ls .ls-stage h3{font-size:25px;line-height:1.15;margin:0 0 6px;}
+.ls .ls-stage p{margin:0 0 8px;font-size:17px;}
+.ls .ls-stage .ls-who{font-size:15px;color:var(--ci);font-weight:600;margin:0;}
+.ls .ls-stage.priv{background:var(--cs);border-style:dashed;}
+.ls .ls-open{margin-top:34px;scroll-margin-top:140px;}
+.ls .ls-trees{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;}
+.ls .ls-tree{display:flex;gap:14px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:20px;padding:14px 16px;min-width:0;}
+.ls .ls-tree img{width:64px;height:64px;border-radius:16px;flex:none;}
+.ls .ls-tree div{min-width:0;flex:1;}
+.ls .ls-tree h3{font-size:24px;line-height:1.1;margin:0;}
+.ls .ls-tree p{margin:0 0 8px;font-size:15.5px;color:var(--ink-soft);line-height:1.4;}
+.ls .ls-tree .btn{padding:9px 16px;font-size:14px;}
+/* Someone I Love */
+.ls .ls-love{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 0;}
+.ls .ls-love a{display:block;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--c);border-radius:16px;padding:14px 16px;text-decoration:none;color:inherit;min-width:0;transition:transform .2s;}
+.ls .ls-love a:hover,.ls .ls-love a:focus-visible{border-color:var(--c);transform:translateY(-2px);}
 .ls .ls-love b{display:block;font-size:17px;line-height:1.3;}
 .ls .ls-love span{display:block;font-size:15px;color:var(--ink-soft);line-height:1.4;margin-top:2px;}
-.ls .ls-love .ls-app{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--ls);margin:0 0 2px;}
-.ls .ls-lines{list-style:none;margin:16px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;}
+.ls .ls-love .ls-app{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:2px;text-transform:uppercase;color:var(--ci);margin:0 0 2px;}
+/* Anchor Plan and help */
+.ls .ls-anchor{position:relative;overflow:hidden;background:var(--cs);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);border-radius:26px;padding:28px;display:grid;grid-template-columns:1.3fr 1fr;gap:24px;scroll-margin-top:140px;}
+.ls .ls-anchor .ls-anart{position:absolute;right:-20px;bottom:-30px;width:220px;height:220px;color:var(--c);opacity:.12;pointer-events:none;}
+.ls .ls-anchor>div{position:relative;min-width:0;}
+.ls .ls-anchor h2{font-size:clamp(30px,3.4vw,40px);}
+.ls .ls-anchor ul{margin:0;padding:0;list-style:none;}
+.ls .ls-anchor li{padding:8px 0 8px 34px;position:relative;border-bottom:1px solid color-mix(in srgb,var(--c) 25%,transparent);}
+.ls .ls-anchor li:last-child{border-bottom:none;}
+.ls .ls-anchor li::before{content:"";position:absolute;left:4px;top:15px;width:18px;height:18px;border-radius:50%;background:var(--c);opacity:.85;}
+.ls .ls-anchor .ls-acts{display:flex;flex-direction:column;gap:10px;justify-content:center;}
+.ls .ls-anchor .ls-acts .btn{justify-content:center;}
+.ls .ls-lines{list-style:none;margin:22px 0 0;padding:0;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px 18px;}
 .ls .ls-lines li{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 16px;font-size:16px;line-height:1.5;min-width:0;overflow-wrap:anywhere;}
 .ls .ls-lines b{display:block;font-size:17px;}
 .ls .ls-quiet{font-size:15px;color:var(--ink-soft);margin:14px 0 0;}
-.ls .ls-sharebar{text-align:center;}
-.ls .ls-smsg{min-height:1.5em;margin:10px 0 0;font-size:16px;color:var(--ink-soft);overflow-wrap:anywhere;}
-.ls .ls-link{font-weight:600;color:var(--gold);}
-.ls .ls-hero-acts .btn{display:inline-flex;align-items:center;gap:8px;}
-/* BLD 839: Living Sober has its own painting; the tint follows its greens */
-.ph-living-sober{--shade-rgb:12,16,6;}
-@media (max-width:480px){.ls .ls-day{flex-wrap:wrap;}.ls .ls-dt{flex:1 1 calc(100% - 60px);}.ls .ls-db{margin-left:54px;}}
-@media (max-width:900px){.ls-grid3{grid-template-columns:1fr;}.ls-rule{grid-template-columns:1fr;}.ls .ls-anchor{grid-template-columns:1fr;}}
-@media (max-width:760px){.ls-grid2,.ls-days,.ls .ls-love,.ls .ls-lines{grid-template-columns:1fr;}.ls section.ls-sec{padding:40px 0;}.ls .ls-card{padding:20px 18px 18px;}.ls .ls-anchor{padding:22px 18px;}}
+/* share */
+.ls .ls-pass{text-align:center;max-width:760px;margin:0 auto;}
+.ls .ls-pass .ls-badge{margin:0 auto 12px;}
+/* gentle motion: rise in on scroll (only with motion allowed) */
+.ls-anim .ls .ls-rise{opacity:0;transform:translateY(22px);transition:opacity .7s ease,transform .7s ease;}
+.ls-anim .ls .ls-rise.in{opacity:1;transform:none;}
+@media (prefers-reduced-motion: reduce){.ls .ls-waves.go{animation:none;}.ls *{transition:none !important;}html{scroll-behavior:auto;}}
+@media print{.ls .ls-rise{opacity:1 !important;transform:none !important;}.ls .ls-chips{display:none;}}
+/* sizes */
+@media (max-width:980px){.ls .ls-tiles{grid-template-columns:repeat(5,minmax(0,1fr));}}
+@media (max-width:900px){.ls-grid3,.ls .ls-trees,.ls .ls-stages{grid-template-columns:1fr;}.ls .ls-welcome{grid-template-columns:1fr;gap:24px;}.ls .ls-anchor{grid-template-columns:1fr;}.ls-basics{grid-template-columns:1fr;}.ls .ls-facts{grid-template-columns:1fr;gap:10px;max-width:560px;}.ls .ls-tiles{grid-template-columns:repeat(4,minmax(0,1fr));}}
+@media (max-width:760px){.ls-grid2,.ls .ls-love,.ls .ls-lines,.ls .ls-gtw,.ls .ls-tl{grid-template-columns:1fr;}.ls section.ls-sec{padding:44px 0;}.ls .ls-card{padding:20px 18px 18px;}.ls .ls-vid{padding:0;}.ls .ls-anchor{padding:22px 18px;}.ls .ls-badge{width:48px;height:48px;font-size:25px;border-radius:15px;}.ls .ls-hd{gap:14px;}}
+@media (max-width:560px){
+  .ls .ls-hero{padding-bottom:96px;}
+  .ls .ls-facts{margin-top:-80px;}
+  .ls .ls-facts{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;}
+  .ls .ls-fact{flex-direction:column;text-align:center;padding:12px 8px;gap:6px;border-top-width:4px;border-radius:16px;}
+  .ls .ls-fact .ls-fig{width:40px;height:40px;font-size:21px;}
+  .ls .ls-fact b{font-size:22px;}
+  .ls .ls-fact span span{font-size:12.5px;line-height:1.3;}
+  .ls .ls-hd{flex-direction:column;gap:10px;}
+  .ls .ls-chips ul{padding:8px 16px;}
+  .ls .ls-chips a{font-size:14px;padding:7px 12px;}
+  .ls .ls-rule{grid-template-columns:1fr 1fr 1fr;gap:8px;}
+  .ls .ls-pct{padding:14px 10px 12px;}
+  .ls .ls-pct b{font-size:38px;}
+  .ls .ls-pct span{font-size:12px;letter-spacing:1px;}
+  .ls .ls-pct p{font-size:14px;}
+  .ls .ls-path .ls-pdot{width:54px;height:54px;font-size:26px;}
+  .ls .ls-path a::before{top:24px;height:5px;}
+  .ls .ls-path strong{font-size:18px;}
+  .ls .ls-path small{font-size:12px;letter-spacing:1px;}
+  .ls .ls-wave{padding:20px 18px 26px;}
+  .ls .ls-wave .btn{width:100%;justify-content:center;}
+  .ls .ls-ch>summary{gap:12px;padding:14px 14px;}
+  .ls .ls-ch .ls-chart{width:56px;height:56px;border-radius:16px;}
+  .ls .ls-ch .ls-chart svg{width:42px;height:42px;}
+  .ls .ls-ch .ls-cht span{font-size:15px;}
+  .ls .ls-ch .ls-chev{width:34px;height:34px;}
+  .ls .ls-tiles{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;padding:12px;}
+  .ls .ls-tbtn{min-height:104px;padding:8px 9px;border-radius:14px;}
+  .ls .ls-tn{font-size:24px;}
+  .ls .ls-tt{font-size:13px;}
+  .ls .ls-tm{font-size:12px;}
+  .ls .ls-tsh{top:2px;right:2px;}
+  .ls .ls-tree{flex-wrap:wrap;}
+}
 </style>
 </head>
 <body>
@@ -126,127 +317,196 @@
   <nav class="site-menu" id="site-menu" aria-label="Main"><a href="index.html">Home</a><a href="services.html">Services</a><a href="tools.html" class="current" aria-current="page">Tools</a><a href="stories.html">Stories</a><a href="about.html">About</a><a href="contact.html">Contact</a></nav>
 </div></header>
 <main id="main" class="ls">
-<section class="pg-hero soft ph ph-living-sober ph-top" style="--img:url(/shared/heroes/living-sober-wide.webp?v=b839);--img-n:url(/shared/heroes/living-sober-narrow.webp?v=b839)">
+<!-- BLD 856: the page's small drawings, used through <use href="#lsi-..."> -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">
+  <symbol id="lsi-leaf" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" d="M5 19c0-8 5-13 14-14 0 9-5 14-13 14H5zM5 19l7-7"/></symbol>
+  <symbol id="lsi-sprout" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-9"/><path d="M12 12c0-4-3-6-7-6 0 4 3 6 7 6zM12 10c0-4 3-6 7-6 0 4-3 6-7 6z"/><path d="M7 21h10"/></g></symbol>
+  <symbol id="lsi-sun" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="12" cy="12" r="4.2"/><path d="M12 2.5v2.2M12 19.3v2.2M2.5 12h2.2M19.3 12h2.2M5.3 5.3l1.6 1.6M17.1 17.1l1.6 1.6M5.3 18.7l1.6-1.6M17.1 6.9l1.6-1.6"/></g></symbol>
+  <symbol id="lsi-sunrise" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M6.5 17a5.5 5.5 0 0 1 11 0"/><path d="M2.5 20.5h19M12 5v3M4.6 9.6l2 2M19.4 9.6l-2 2M2.5 17h2M19.5 17h2"/></g></symbol>
+  <symbol id="lsi-path" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M5 21c0-4 4-5 7-6s6-3 5-7-5-4-5-4"/><circle cx="12" cy="4" r="1.6" fill="currentColor"/><circle cx="5" cy="21" r="1.2" fill="currentColor"/></g></symbol>
+  <symbol id="lsi-wave" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M2.5 15c2 0 2.5-2 4.75-2S9.75 15 12 15s2.5-2 4.75-2 2.75 2 4.75 2"/><path d="M2.5 19.5c2 0 2.5-2 4.75-2s2.5 2 4.75 2 2.5-2 4.75-2 2.75 2 4.75 2"/><path d="M6 10.5C7 6 11 4 15 5c-2 1-3 3-2 5"/></g></symbol>
+  <symbol id="lsi-people" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19c.5-3.5 2.8-5.5 5.5-5.5S13.5 15.5 14 19M14.5 14.2c.6-.3 1.3-.4 2-.4 2.4 0 4 1.8 4.5 5"/></g></symbol>
+  <symbol id="lsi-tree" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21v-7M12 14l-3-2.5M12 15.5l3-2.5"/><path d="M7.5 14.5a4.5 4.5 0 0 1-1-8.6A5.5 5.5 0 0 1 17 5.4a4.5 4.5 0 0 1-.5 9.1z"/><path d="M8 21h8"/></g></symbol>
+  <symbol id="lsi-heart" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M12 20s-7.5-4.6-7.5-10A4.3 4.3 0 0 1 12 7.4 4.3 4.3 0 0 1 19.5 10c0 5.4-7.5 10-7.5 10z"/></symbol>
+  <symbol id="lsi-anchor" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="5" r="2"/><path d="M12 7v14M8 10.5h8M4.5 13.5c0 4 3.3 7.5 7.5 7.5s7.5-3.5 7.5-7.5"/><path d="M3 15l1.5-1.5L6 15M18 15l1.5-1.5L21 15"/></g></symbol>
+  <symbol id="lsi-share" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></g></symbol>
+  <symbol id="lsi-play" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></g></symbol>
+  <symbol id="lsi-spark" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8z"/><path d="M19 16l.7 1.8 1.8.7-1.8.7L19 21l-.7-1.8-1.8-.7 1.8-.7z"/></g></symbol>
+  <symbol id="lsi-medal" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="14.5" r="5.5"/><path d="M9 3l3 6 3-6M12 12l.9 1.8 2 .3-1.45 1.4.35 2-1.8-.95-1.8.95.35-2-1.45-1.4 2-.3z"/></g></symbol>
+  <symbol id="lsi-moon" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round" d="M19.5 14.5A8 8 0 0 1 9.5 4.5a8 8 0 1 0 10 10z"/></symbol>
+  <symbol id="lsi-bowl" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3.5 11.5h17a8.5 8.5 0 0 1-17 0z"/><path d="M9 8c0-2 2-2 2-4M13 8c0-2 2-2 2-4"/></g></symbol>
+  <symbol id="lsi-walk" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="13" cy="4.5" r="1.8"/><path d="M10 21l2-6 3 3v3M8 11l3-3 3 2 2 3M12 15l-1-4"/></g></symbol>
+  <symbol id="lsi-chev" viewBox="0 0 24 24"><path fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" d="M6 9l6 6 6-6"/></symbol>
+  <symbol id="lsi-help" viewBox="0 0 24 24"><g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M4 14v-2a8 8 0 0 1 16 0v2"/><rect x="3" y="14" width="4" height="6" rx="1.5"/><rect x="17" y="14" width="4" height="6" rx="1.5"/></g></symbol>
+</svg>
+
+<section class="pg-hero soft ph ph-living-sober ph-top ls-hero" style="--img:url(/shared/heroes/living-sober-wide.webp?v=b839);--img-n:url(/shared/heroes/living-sober-narrow.webp?v=b839)">
   <div class="wrap pg-hero-in">
     <a class="cp-back" href="tools.html">&larr; All Tools</a>
     <div class="eyebrow">Living Sober</div>
     <h1>Living Sober</h1>
     <p class="cer-sub">A clear mind, a healthy body, and a life you're fully present for.</p>
-    <div class="card-actions cer-actions ls-hero-acts gg-watch-acts"><!-- PAGE VIDEO (BLD 838) --><button type="button" class="btn btn-primary gg-watch gg-watch-hero" data-gg-watch="demo-living-sober" hidden>Watch: Living Sober</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="#start">Start Here</a><a class="btn btn-light" href="#open">Open in Your Tree</a></div>
+    <div class="card-actions cer-actions ls-hero-acts gg-watch-acts"><!-- PAGE VIDEO (BLD 838) --><button type="button" class="btn btn-primary gg-watch gg-watch-hero" data-gg-watch="demo-living-sober" hidden>Watch: Living Sober</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="#start">Start Here</a><a class="btn btn-light" href="#early-days">Early Days: 90 Days</a></div>
   </div>
 </section>
 
-<section class="ls-sec" id="welcome">
-  <div class="wrap ls-intro">
-    <div class="eyebrow">Welcome</div>
-    <p class="ls-stance">Grounded stands for living alcohol-free and free of harmful drugs: a clear mind, a healthy body, and a life you're fully present for.</p>
-    <p>Wherever you are, you belong here. Thinking about a change, counting your first days, many years along, or loving someone who drinks or uses: we meet you right where you are, and we walk with you toward an alcohol-free life, one day at a time.</p>
-    <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
-    <p class="ls-frame">Everything here is shaped by a simple framework Chris lives by: about 80% of your attention on today, 10% honoring how far you have come, and 10% on the life ahead.</p>
-    <p class="ls-sharebar"><button type="button" class="btn btn-secondary ls-share" data-ls-share="page"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share This Page</button><span class="ls-smsg" role="status" aria-live="polite"></span></p>
+<div class="wrap">
+  <div class="ls-facts">
+    <a class="ls-fact a-green ls-rise" href="#early-days"><span class="ls-fig"><svg class="i" aria-hidden="true"><use href="#lsi-path"/></svg></span><span><b>90 Days</b><span>of short videos, one for each early day</span></span></a>
+    <a class="ls-fact a-honey ls-rise" href="#today"><span class="ls-fig"><svg class="i" aria-hidden="true"><use href="#lsi-sun"/></svg></span><span><b>365 Words</b><span>of encouragement, one for every day of the year</span></span></a>
+    <a class="ls-fact a-blue ls-rise" href="#wave"><span class="ls-fig"><svg class="i" aria-hidden="true"><use href="#lsi-wave"/></svg></span><span><b>10 Minutes</b><span>to Ride the Wave when an urge rises</span></span></a>
   </div>
-</section>
+</div>
 
-<section class="ls-sec" id="today">
-  <div class="wrap">
-    <div class="eyebrow">For Today</div>
-    <h2>Words to carry with you.</h2>
-    <p class="ls-lead">A fresh encouragement and a mantra each day. Share one with someone who could use it.</p>
-    <div class="ls-grid2">
-      <div class="ls-card ls-word"><div class="eyebrow">Today's Encouragement</div><blockquote id="ls-daily-text">One day at a time, starting with this one.</blockquote><div class="ls-acts"><button type="button" class="btn btn-secondary ls-share" data-ls-share="daily" disabled><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div></div>
-      <div class="ls-card ls-word mantra"><div class="eyebrow">Mantra</div><blockquote id="ls-mantra-text">One day at a time.</blockquote><div class="ls-acts"><button type="button" class="btn btn-secondary ls-share" data-ls-share="mantra" disabled><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div></div>
+<nav class="ls-chips" aria-label="On this page"><ul>
+  <li><a class="a-honey" href="#today"><svg class="i" aria-hidden="true"><use href="#lsi-sun"/></svg>Today</a></li>
+  <li><a class="a-clay" href="#start"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg>Start Here</a></li>
+  <li><a class="a-green" href="#early-days"><svg class="i" aria-hidden="true"><use href="#lsi-path"/></svg>90 Days</a></li>
+  <li><a class="a-honey" href="#every-day"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg>Every Day</a></li>
+  <li><a class="a-blue" href="#together"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg>Together</a></li>
+  <li><a class="a-green" href="#stages"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg>Your Tree</a></li>
+  <li><a class="a-plum" href="#love"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg>Someone I Love</a></li>
+  <li><a class="a-green" href="#help"><svg class="i" aria-hidden="true"><use href="#lsi-anchor"/></svg>Anchor and Help</a></li>
+  <li><a class="a-clay" href="#share"><svg class="i" aria-hidden="true"><use href="#lsi-share"/></svg>Share</a></li>
+</ul></nav>
+
+<section class="ls-sec a-green" id="welcome">
+  <div class="wrap ls-welcome">
+    <div class="ls-rise">
+      <div class="eyebrow">Welcome</div>
+      <p class="ls-stance">Grounded stands for living alcohol-free and free of harmful drugs: a clear mind, a healthy body, and a life you're fully present for.</p>
+      <p>Wherever you are, you belong here. Thinking about a change, counting your first days, many years along, or loving someone who drinks or uses: we meet you right where you are, and we walk with you toward an alcohol-free life, one day at a time.</p>
+      <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
+      <div class="ls-sharebar"><button type="button" class="btn btn-secondary ls-share" data-ls-share="page"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share This Page</button><span class="ls-smsg" role="status" aria-live="polite"></span></div>
     </div>
-    <div class="ls-week" id="ls-week" hidden><div><span class="eyebrow">This Week</span><b id="ls-week-title"></b><p id="ls-week-text"></p></div><button type="button" class="btn btn-secondary ls-share" data-ls-share="weekly"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share</button></div>
+    <div class="ls-rise">
+      <div class="ls-rule" aria-label="Chris's framework: 80, 10, 10">
+        <div class="ls-pct today a-green"><b>80%</b><span>Today</span><p>Most of your attention, right here.</p></div>
+        <div class="ls-pct a-honey"><b>10%</b><span>Behind You</span><p>Honor how far you have come.</p></div>
+        <div class="ls-pct a-blue"><b>10%</b><span>Ahead</span><p>A little looks forward.</p></div>
+      </div>
+      <p class="ls-rulecap">Everything here is shaped by a simple framework Chris lives by: about 80% of your attention on today, 10% honoring how far you have come, and 10% on the life ahead.</p>
+      <button type="button" class="btn btn-secondary ls-share" data-ls-share="rule"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share 80, 10, 10</button>
+    </div>
   </div>
 </section>
 
-<section class="ls-sec" id="start">
+<section class="ls-sec ls-alt a-honey" id="today">
   <div class="wrap">
-    <div class="eyebrow">Start Here</div>
-    <h2>Three short videos to begin.</h2>
-    <p class="ls-lead">From Growing a Healthy Tree, the Living Sober series in Birch, Oak, and Sequoia. Each one plays right here, with a calm voice and a moment to try it.</p>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-sun"/></svg></span><div><div class="eyebrow">For Today</div><h2>Words to carry with you.</h2><p class="ls-lead">A fresh encouragement and a mantra each day. Share one with someone who could use it.</p></div></div>
+    <div class="ls-grid2">
+      <div class="ls-card ls-word fill a-honey ls-rise"><svg class="ls-art" aria-hidden="true"><use href="#lsi-sun"/></svg><div class="eyebrow">Today's Encouragement</div><blockquote id="ls-daily-text">One day at a time, starting with this one.</blockquote><div class="ls-acts"><button type="button" class="btn btn-secondary ls-share" data-ls-share="daily" disabled><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share</button></div></div>
+      <div class="ls-card ls-word mantra fill a-green ls-rise"><svg class="ls-art" aria-hidden="true"><use href="#lsi-leaf"/></svg><div class="eyebrow">Mantra</div><blockquote id="ls-mantra-text">One day at a time.</blockquote><div class="ls-acts"><button type="button" class="btn btn-secondary ls-share" data-ls-share="mantra" disabled><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share</button></div></div>
+    </div>
+    <div class="ls-week a-blue" id="ls-week" hidden><div><span class="eyebrow">This Week</span><b id="ls-week-title"></b><p id="ls-week-text"></p></div><button type="button" class="btn btn-secondary ls-share" data-ls-share="weekly"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share</button></div>
+  </div>
+</section>
+
+<section class="ls-sec a-clay" id="start">
+  <div class="wrap">
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><div><div class="eyebrow">Start Here</div><h2>Three short videos to begin.</h2><p class="ls-lead">From Growing a Healthy Tree, the Living Sober series in Birch, Oak, and Sequoia. Each one plays right here, with a calm voice and a moment to try it.</p></div></div>
     <div class="ls-grid3">
-      <div class="ls-card ls-vid"><div class="ls-vh"><small>Start Here, 1 of 3</small><b>The Healthy Tree</b></div><div class="ls-vb"><p>The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit. About 6 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-tree" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-tree" aria-label="Share The Healthy Tree" hidden><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button></div></div></div>
-      <div class="ls-card ls-vid"><div class="ls-vh"><small>Start Here, 2 of 3</small><b>A First Morning Rhythm</b></div><div class="ls-vb"><p>Water, light, breath, a choice, and a short walk to start a Sober day. About 4 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-morning" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-morning" aria-label="Share A First Morning Rhythm" hidden><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button></div></div></div>
-      <div class="ls-card ls-vid"><div class="ls-vh"><small>Start Here, 3 of 3</small><b>Breathe Through It</b></div><div class="ls-vb"><p>Slow, low, and long: a breath for cravings, anger, and hard nights. About 4 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-breathe" hidden><svg viewBox="0 0 24 24" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M10 8.5v7l6-3.5z" fill="currentColor"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-breathe" aria-label="Share Breathe Through It" hidden><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg></button></div></div></div>
+      <div class="ls-card ls-vid v1 a-green ls-rise"><div class="ls-vh"><svg class="ls-scene" viewBox="0 0 120 120" aria-hidden="true"><circle cx="78" cy="40" r="26" fill="#F3D58C" opacity=".35"/><path d="M60 112V70" stroke="#E9DDB8" stroke-width="5" stroke-linecap="round"/><circle cx="60" cy="52" r="26" fill="#9DC08B" opacity=".9"/><circle cx="44" cy="62" r="16" fill="#7FA870"/><circle cx="76" cy="62" r="16" fill="#86B077"/></svg><small>Start Here, 1 of 3</small><b>The Healthy Tree</b></div><div class="ls-vb"><p>The six parts of your tree, and Chris's three kinds of tools: mind, body, and spirit. About 6 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-tree" hidden><svg aria-hidden="true" width="18" height="18"><use href="#lsi-play"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-tree" aria-label="Share The Healthy Tree" hidden><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg></button></div></div></div>
+      <div class="ls-card ls-vid v2 a-honey ls-rise"><div class="ls-vh"><svg class="ls-scene" viewBox="0 0 120 120" aria-hidden="true"><circle cx="64" cy="84" r="34" fill="#FFE7A8" opacity=".85"/><g stroke="#FFF1CC" stroke-width="4" stroke-linecap="round" opacity=".8"><path d="M64 30v12M28 52l8 7M100 52l-8 7M18 84h12M98 84h12"/></g><rect x="0" y="84" width="120" height="40" fill="#7A4A1E" opacity=".55"/></svg><small>Start Here, 2 of 3</small><b>A First Morning Rhythm</b></div><div class="ls-vb"><p>Water, light, breath, a choice, and a short walk to start a Sober day. About 4 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-morning" hidden><svg aria-hidden="true" width="18" height="18"><use href="#lsi-play"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-morning" aria-label="Share A First Morning Rhythm" hidden><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg></button></div></div></div>
+      <div class="ls-card ls-vid v3 a-blue ls-rise"><div class="ls-vh"><svg class="ls-scene" viewBox="0 0 120 120" aria-hidden="true"><g fill="none" stroke="#CFE6F5" stroke-linecap="round"><circle cx="64" cy="58" r="14" stroke-width="5" opacity=".9"/><circle cx="64" cy="58" r="28" stroke-width="3" opacity=".55"/><circle cx="64" cy="58" r="42" stroke-width="2" opacity=".3"/></g></svg><small>Start Here, 3 of 3</small><b>Breathe Through It</b></div><div class="ls-vb"><p>Slow, low, and long: a breath for cravings, anger, and hard nights. About 4 minutes.</p><div class="ls-acts"><button type="button" class="btn ls-btn ls-share" data-ls-watch="ok-ls-breathe" hidden><svg aria-hidden="true" width="18" height="18"><use href="#lsi-play"/></svg>Watch</button><button type="button" class="ls-ic" data-ls-share-watch="ok-ls-breathe" aria-label="Share Breathe Through It" hidden><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg></button></div></div></div>
     </div>
     <noscript><p class="ls-note">The videos play with JavaScript turned on.</p></noscript>
   </div>
 </section>
 
-<section class="ls-sec" id="early-days">
+<section class="ls-sec ls-alt a-green" id="early-days">
   <div class="wrap">
-    <div class="eyebrow">Early Days: 90 Days</div>
-    <h2>One short video a day.</h2>
-    <p class="ls-lead">Ninety videos for your first ninety days, about a minute or two each, or for any day you want a fresh start. Each one has a moment to pause and try it.</p>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-path"/></svg></span><div><div class="eyebrow">Early Days: 90 Days</div><h2>Ninety days, one short video at a time.</h2><p class="ls-lead">Ninety videos for your first ninety days, about a minute or two each, or for any day you want a fresh start. Each one has a moment to pause and try it. Three chapters, one path.</p></div></div>
+    <div class="ls-path ls-rise" aria-label="The three chapters">
+      <a class="a-honey" href="#chapter-1" data-ls-ch="1"><span class="ls-pdot"><svg class="i" aria-hidden="true"><use href="#lsi-sunrise"/></svg></span><small>Days 1 to 30</small><strong>Today Is Enough</strong></a>
+      <a class="a-green" href="#chapter-2" data-ls-ch="2"><span class="ls-pdot"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><small>Days 31 to 60</small><strong>Growing Strong</strong></a>
+      <a class="a-blue" href="#chapter-3" data-ls-ch="3"><span class="ls-pdot"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><small>Days 61 to 90</small><strong>A Life You Love</strong></a>
+    </div>
+    <div class="ls-wave ls-rise" id="wave">
+      <svg class="ls-waves go" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 35 Q75 5 150 35 T300 35 T450 35 T600 35 T750 35 T900 35 T1050 35 T1200 35 V70 H0z"/></svg>
+      <svg class="ls-waves go go2" viewBox="0 0 1200 70" preserveAspectRatio="none" aria-hidden="true"><path d="M0 40 Q100 15 200 40 T400 40 T600 40 T800 40 T1000 40 T1200 40 V70 H0z"/></svg>
+      <div><span class="ls-sos">When an Urge Rises</span><h3>Ride the Wave</h3><p>An urge rises, peaks, and passes. Ride it out with a calm voice, ten minutes, one breath at a time.</p></div>
+      <button type="button" class="btn" data-ls-wave hidden><svg aria-hidden="true" width="20" height="20"><use href="#lsi-wave"/></svg>Ride the Wave Now</button>
+    </div>
     <div id="ls-days"><p class="ls-empty">Loading the ninety days...</p></div>
   </div>
 </section>
 
-<section class="ls-sec" id="every-day">
+<section class="ls-sec a-honey" id="every-day">
   <div class="wrap">
-    <div class="eyebrow">Living Sober Every Day</div>
-    <h2>Tools for every day, and every big day.</h2>
-    <p class="ls-lead">Ride out a wave when it rises, plan a great night out, and watch your body grow stronger. You define your own sobriety; these tools meet you there.</p>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg></span><div><div class="eyebrow">Living Sober Every Day</div><h2>Tools for every day, and every big day.</h2><p class="ls-lead">Plan a great night out, watch your body grow stronger, and steady your sleep, food, and movement. You define your own sobriety; these tools meet you there.</p></div></div>
     <div class="ls-grid3">
-      <div class="ls-card ls-tool"><h3>Ride the Wave</h3><p>An urge rises, peaks, and passes. Ride it out with a calm voice, ten minutes, one breath at a time.</p><div class="ls-acts"><button type="button" class="btn ls-btn" data-ls-wave hidden>Ride the Wave</button></div></div>
-      <div class="ls-card ls-tool"><h3>In Your Tree</h3><p>A morning intention, an evening look back, My Week, medallions for every milestone, and Money Kept, all locked on your device.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=1">Open in Oak</a></div></div>
-      <div class="ls-card ls-tool"><h3>Good Times, Sober</h3><p>Unwinding after work, celebrating, letting loose, weddings, holidays, and travel: a plan for each one.</p><div class="ls-acts"><a class="btn ls-btn" href="#good-times">See the Plans</a></div></div>
+      <div class="ls-card ls-tool fill a-green ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><h3>In Your Tree</h3><p>A morning intention, an evening look back, My Week, medallions for every milestone, and Money Kept, all locked on your device.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=1">Open in Oak</a></div></div>
+      <div class="ls-card ls-tool fill a-clay ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg></span><h3>Good Times, Sober</h3><p>Unwinding after work, celebrating, letting loose, weddings, holidays, and travel: a plan for each one.</p><div class="ls-acts"><a class="btn ls-btn" href="#good-times">See the Plans</a></div></div>
+      <div class="ls-card ls-tool fill a-honey ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-medal"/></svg></span><h3>What Your Body Regains</h3><p>From the first day to the first year: how sleep, energy, and health grow back, with sources for each step.</p><div class="ls-acts"><a class="btn ls-btn" href="#body-gains">See the Timeline</a></div></div>
     </div>
-    <div id="good-times" class="ls-more"><h3>Good Times, Sober</h3><div id="ls-good"><p class="ls-empty">Loading the plans...</p></div></div>
-    <div id="body-gains" class="ls-more"><h3>What Your Body Regains</h3><div id="ls-body"><p class="ls-empty">Loading...</p></div></div>
-    <div id="early-body" class="ls-more"><h3>Sleep, Food, and Movement in Early Sobriety</h3><div id="ls-basics"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/oak/?sober=basics">Open in Oak</a></div></div>
+    <div id="good-times" class="ls-more a-clay ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-spark"/></svg></span><h3>Good Times, Sober</h3></div><div id="ls-good"><p class="ls-empty">Loading the plans...</p></div></div>
+    <div id="body-gains" class="ls-more a-honey ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-medal"/></svg></span><h3>What Your Body Regains</h3></div><div id="ls-body"><p class="ls-empty">Loading...</p></div></div>
+    <div id="early-body" class="ls-more a-green ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-moon"/></svg></span><h3>Sleep, Food, and Movement in Early Sobriety</h3></div><div id="ls-basics"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/oak/?sober=basics">Open in Oak</a></div></div>
   </div>
 </section>
 
-<section class="ls-sec" id="together">
+<section class="ls-sec ls-alt a-blue" id="together">
   <div class="wrap">
-    <div class="eyebrow">Living Sober Together</div>
-    <h2>Healthy people, healthy places, and a strong you.</h2>
-    <p class="ls-lead">Look at the people around you, and you will see yourself in five years. Find healthy, thriving people near you, keep a short list of your good people, and grow strong on your own too.</p>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg></span><div><div class="eyebrow">Living Sober Together</div><h2>Healthy people, healthy places, and a strong you.</h2><p class="ls-lead">Look at the people around you, and you will see yourself in five years. Find healthy, thriving people near you, keep a short list of your good people, and grow strong on your own too.</p></div></div>
     <div class="ls-grid3">
-      <div class="ls-card ls-tool"><h3>Healthy People, Healthy Places</h3><p>Running and hiking groups, classes, service, music and maker groups, leagues, and sober events: why each one helps, how to find one, and what to say the first time.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=people">Open in Oak</a><a class="text-link" href="#places">See the Places</a></div></div>
-      <div class="ls-card ls-tool"><h3>Strong on Your Own</h3><p>For people who like their own company: solo mornings, evenings, and weekends, solo celebrations and adventures, and a plan for a lonely evening.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=solo">Open in Oak</a><a class="text-link" href="#solo">See the Ideas</a></div></div>
-      <div class="ls-card ls-tool"><h3>My Good People</h3><p>A short list of the people who leave you better, names only, locked on your device. Each week it asks one gentle question: who will you see this week?</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=mine">Open in Oak</a></div></div>
+      <div class="ls-card ls-tool a-blue ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg></span><h3>Healthy People, Healthy Places</h3><p>Running and hiking groups, classes, service, music and maker groups, leagues, and sober events: why each one helps, how to find one, and what to say the first time.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=people">Open in Oak</a><a class="text-link" href="#places">See the Places</a></div></div>
+      <div class="ls-card ls-tool a-honey ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-sunrise"/></svg></span><h3>Strong on Your Own</h3><p>For people who like their own company: solo mornings, evenings, and weekends, solo celebrations and adventures, and a plan for a lonely evening.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=solo">Open in Oak</a><a class="text-link" href="#solo">See the Ideas</a></div></div>
+      <div class="ls-card ls-tool a-green ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><h3>My Good People</h3><p>A short list of the people who leave you better, names only, locked on your device. Each week it asks one gentle question: who will you see this week?</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=mine">Open in Oak</a></div></div>
     </div>
-    <div id="places" class="ls-more"><h3>Healthy People, Healthy Places</h3><div id="ls-people"><p class="ls-empty">Loading...</p></div></div>
-    <div id="solo" class="ls-more"><h3>Strong on Your Own</h3><div id="ls-solo"><p class="ls-empty">Loading...</p></div></div>
+    <div id="places" class="ls-more a-blue ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-people"/></svg></span><h3>Healthy People, Healthy Places</h3></div><div id="ls-people"><p class="ls-empty">Loading...</p></div></div>
+    <div id="solo" class="ls-more a-honey ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-sunrise"/></svg></span><h3>Strong on Your Own</h3></div><div id="ls-solo"><p class="ls-empty">Loading...</p></div></div>
   </div>
 </section>
 
-<section class="ls-sec" id="stages">
+<section class="ls-sec a-green" id="stages">
   <div class="wrap">
-    <div class="eyebrow">Five Stages</div>
-    <h2>Wherever you are on the path.</h2>
-    <p class="ls-lead">In Birch, Oak, and Sequoia you choose your stage privately, and Living Sober fits itself to you: the guides, the videos, and the growth plan ideas for where you are.</p>
-    <div class="ls-grid3">
-      <div class="ls-card ls-stage"><h3>Thinking About a Change</h3><p>Honest questions, a gentle look at what drinking or using does for you and costs you, and safe first steps, starting with a doctor.</p><p class="ls-who">For anyone curious about drinking or using less, or stopping.</p></div>
-      <div class="ls-card ls-stage"><h3>Early Days</h3><p>The first 90 days: sleep, cravings, mornings, evenings, and people in your corner. One day at a time, with Early Days: 90 Days alongside.</p><p class="ls-who">For the first weeks and months.</p></div>
-      <div class="ls-card ls-stage"><h3>Growing Sober</h3><p>Healing what you drank over, repairing relationships, sober friendships and celebrations, and a life that keeps getting fuller.</p><p class="ls-who">For the first years.</p></div>
-      <div class="ls-card ls-stage"><h3>Long-Term Sober</h3><p>Still growing: new seasons, staying honest, helping others, and marking your anniversaries with gratitude.</p><p class="ls-who">For years along the path.</p></div>
-      <div class="ls-card ls-stage"><h3>Someone I Love</h3><p>Steady support for loving a parent, partner, child, or friend who drinks or uses, and for tending your own tree too.</p><p class="ls-who">For family and friends.</p></div>
-      <div class="ls-card ls-stage"><h3>Your Stage Stays Yours</h3><p>Your stage, your sober date, and your plan stay on your device, locked in your own profile. Only you see them.</p><p class="ls-who">Private by design.</p></div>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><div><div class="eyebrow">Five Stages, Your Tree</div><h2>Wherever you are on the path.</h2><p class="ls-lead">In Birch, Oak, and Sequoia you choose your stage privately, and Living Sober fits itself to you: the guides, the videos, and the growth plan ideas for where you are.</p></div></div>
+    <ol class="ls-stages">
+      <li class="ls-stage a-honey ls-rise"><span class="ls-sn" aria-hidden="true">1</span><h3>Thinking About a Change</h3><p>Honest questions, a gentle look at what drinking or using does for you and costs you, and safe first steps, starting with a doctor.</p><p class="ls-who">For anyone curious about drinking or using less, or stopping.</p></li>
+      <li class="ls-stage a-clay ls-rise"><span class="ls-sn" aria-hidden="true">2</span><h3>Early Days</h3><p>The first 90 days: sleep, cravings, mornings, evenings, and people in your corner. One day at a time, with Early Days: 90 Days alongside.</p><p class="ls-who">For the first weeks and months.</p></li>
+      <li class="ls-stage a-green ls-rise"><span class="ls-sn" aria-hidden="true">3</span><h3>Growing Sober</h3><p>Healing what you drank over, repairing relationships, sober friendships and celebrations, and a life that keeps getting fuller.</p><p class="ls-who">For the first years.</p></li>
+      <li class="ls-stage a-blue ls-rise"><span class="ls-sn" aria-hidden="true">4</span><h3>Long-Term Sober</h3><p>Still growing: new seasons, staying honest, helping others, and marking your anniversaries with gratitude.</p><p class="ls-who">For years along the path.</p></li>
+      <li class="ls-stage a-plum ls-rise"><span class="ls-sn" aria-hidden="true">5</span><h3>Someone I Love</h3><p>Steady support for loving a parent, partner, child, or friend who drinks or uses, and for tending your own tree too.</p><p class="ls-who">For family and friends.</p></li>
+      <li class="ls-stage priv a-green ls-rise"><span class="ls-sn" aria-hidden="true"><svg class="i" aria-hidden="true"><use href="#lsi-leaf"/></svg></span><h3>Your Stage Stays Yours</h3><p>Your stage, your sober date, and your plan stay on your device, locked in your own profile. Only you see them.</p><p class="ls-who">Private by design.</p></li>
+    </ol>
+    <div class="ls-open" id="open">
+      <div class="ls-subhd ls-rise"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-tree"/></svg></span><h3>Living Sober, inside your tree</h3></div>
+      <p class="ls-lead ls-rise">Each button opens the app with Living Sober turned on. Inside, you'll find your stage, today's encouragement, an optional sober date with a star for each milestone, My Anchor Plan, and every Living Sober guide and video.</p>
+      <div class="ls-trees">
+        <div class="ls-tree ls-rise"><img src="/shared/marks/birch.svg" alt="" width="64" height="64"><div><h3>Birch</h3><p>For ages 18 to 26.</p><a class="btn ls-btn" href="/birch/?sober=1">Open in Birch</a></div></div>
+        <div class="ls-tree ls-rise"><img src="/shared/marks/oak.svg" alt="" width="64" height="64"><div><h3>Oak</h3><p>For adults, 26 to 60.</p><a class="btn ls-btn" href="/oak/?sober=1">Open in Oak</a></div></div>
+        <div class="ls-tree ls-rise"><img src="/shared/marks/sequoia.svg" alt="" width="64" height="64"><div><h3>Sequoia</h3><p>For 60 and up.</p><a class="btn ls-btn" href="/sequoia/?sober=1">Open in Sequoia</a></div></div>
+      </div>
+      <p class="ls-note">Everything stays on your device. Make a profile with a passcode to keep your choices locked and private.</p>
     </div>
   </div>
 </section>
 
-<section class="ls-sec" id="open">
+<section class="ls-sec ls-alt a-plum" id="love">
   <div class="wrap">
-    <div class="eyebrow">Open in Your Tree</div>
-    <h2>Living Sober, inside your tree.</h2>
-    <p class="ls-lead">Each button opens the app with Living Sober turned on. Inside, you'll find your stage, today's encouragement, an optional sober date with a star for each milestone, My Anchor Plan, and every Living Sober guide and video.</p>
-    <div class="ls-grid3">
-      <div class="ls-card ls-tree"><img src="/shared/marks/birch.svg" alt="" width="84" height="84"><h3>Birch</h3><p>For ages 18 to 26.</p><div class="ls-acts"><a class="btn ls-btn" href="/birch/?sober=1">Open in Birch</a></div></div>
-      <div class="ls-card ls-tree"><img src="/shared/marks/oak.svg" alt="" width="84" height="84"><h3>Oak</h3><p>For adults, 26 to 60.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=1">Open in Oak</a></div></div>
-      <div class="ls-card ls-tree"><img src="/shared/marks/sequoia.svg" alt="" width="84" height="84"><h3>Sequoia</h3><p>For 60 and up.</p><div class="ls-acts"><a class="btn ls-btn" href="/sequoia/?sober=1">Open in Sequoia</a></div></div>
+    <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><div><div class="eyebrow">Someone I Love</div><h2>For the people who love someone who drinks or uses.</h2><p class="ls-lead">Loving someone through this is heavy, and you deserve support too. These guides help you speak honestly, keep yourself and your family steady, and tend your own tree.</p></div></div>
+    <div class="ls-trees">
+      <div class="ls-tree ls-rise"><img src="/shared/marks/oak.svg" alt="" width="64" height="64"><div><h3>Oak</h3><p>When Your Partner Drinks or Uses, Grieving an Overdose, and more for adults.</p><a class="btn ls-btn" href="/oak/?sober=love">Open in Oak</a></div></div>
+      <div class="ls-tree ls-rise"><img src="/shared/marks/sequoia.svg" alt="" width="64" height="64"><div><h3>Sequoia</h3><p>When Your Adult Child Drinks or Uses, and Raising Grandchildren Through a Parent.</p><a class="btn ls-btn" href="/sequoia/?sober=love">Open in Sequoia</a></div></div>
+      <div class="ls-tree ls-rise"><img src="/shared/marks/birch.svg" alt="" width="64" height="64"><div><h3>Birch</h3><p>A Parent, for young adults whose mom or dad drinks or uses.</p><a class="btn ls-btn" href="/birch/?sober=love">Open in Birch</a></div></div>
     </div>
-    <p class="ls-note">Everything stays on your device. Make a profile with a passcode to keep your choices locked and private.</p>
+    <div class="ls-more ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-sprout"/></svg></span><h3>For kids, teens, and the whole family</h3></div>
+    <div class="ls-love">
+      <a href="/pine/#life=sober-parent"><span class="ls-app">Pine, grades 9 to 12</span><b>A Parent</b><span>For teens whose parent drinks or uses.</span></a>
+      <a href="/aspen/#talk=sober-family"><span class="ls-app">Aspen, grades 6 to 8</span><b>Someone in My Family Drinks or Uses</b><span>For middle schoolers, and the grown-ups who love them.</span></a>
+      <a href="/maple/#talk=addiction"><span class="ls-app">Maple, grades K to 5</span><b>When a Family Member Drinks or Uses</b><span>For a grown-up to read with a child.</span></a>
+      <a href="/grove/#life=recovery"><span class="ls-app">The Grove, together</span><b>Recovery in the Family</b><span>For the whole family, growing together.</span></a>
+    </div></div>
+    <div id="craft" class="ls-more ls-rise"><div class="ls-subhd"><span class="ls-ci"><svg class="i" aria-hidden="true"><use href="#lsi-heart"/></svg></span><h3>Loving Someone Who Drinks or Uses</h3></div><div id="ls-craft"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/oak/?sober=craft">Open in Oak</a><a class="btn ls-btn" href="/sequoia/?sober=craft">Open in Sequoia</a><a class="btn ls-btn" href="/birch/?sober=craft">Open in Birch</a></div></div>
+    <p class="ls-sharebar" style="margin-top:22px"><button type="button" class="btn btn-secondary ls-share" data-ls-share="love"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share a Word for Families</button></p>
   </div>
 </section>
 
-<section class="ls-sec" id="anchor">
+<section class="ls-sec a-green" id="help">
   <div class="wrap">
-    <div class="ls-anchor">
+    <div class="ls-anchor a-green ls-rise" id="anchor">
+      <svg class="ls-anart" aria-hidden="true"><use href="#lsi-anchor"/></svg>
       <div>
         <div class="eyebrow">My Anchor Plan</div>
         <h2>A plan for hard moments, made on a good day.</h2>
@@ -266,53 +526,27 @@
         <a class="btn ls-btn" href="/sequoia/?sober=anchor">My Anchor Plan in Sequoia</a>
       </div>
     </div>
-  </div>
-</section>
-
-<section class="ls-sec" id="love">
-  <div class="wrap">
-    <div class="eyebrow">Someone I Love</div>
-    <h2>For the people who love someone who drinks or uses.</h2>
-    <p class="ls-lead">Loving someone through this is heavy, and you deserve support too. These guides help you speak honestly, keep yourself and your family steady, and tend your own tree.</p>
-    <div class="ls-grid3">
-      <div class="ls-card ls-tree"><img src="/shared/marks/oak.svg" alt="" width="84" height="84"><h3>Oak</h3><p>When Your Partner Drinks or Uses, Grieving an Overdose, and more for adults.</p><div class="ls-acts"><a class="btn ls-btn" href="/oak/?sober=love">Open in Oak</a></div></div>
-      <div class="ls-card ls-tree"><img src="/shared/marks/sequoia.svg" alt="" width="84" height="84"><h3>Sequoia</h3><p>When Your Adult Child Drinks or Uses, and Raising Grandchildren Through a Parent.</p><div class="ls-acts"><a class="btn ls-btn" href="/sequoia/?sober=love">Open in Sequoia</a></div></div>
-      <div class="ls-card ls-tree"><img src="/shared/marks/birch.svg" alt="" width="84" height="84"><h3>Birch</h3><p>A Parent, for young adults whose mom or dad drinks or uses.</p><div class="ls-acts"><a class="btn ls-btn" href="/birch/?sober=love">Open in Birch</a></div></div>
+    <div class="ls-more a-blue">
+      <div class="ls-hd ls-rise"><span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-help"/></svg></span><div><div class="eyebrow">Help Lines</div><h2>Every kind of help is welcome.</h2><p class="ls-lead">A doctor is a strong first call, especially for anyone who drinks or uses every day, because stopping all at once can need medical support. Meetings, treatment, medicine, therapy, faith, and friends all help people grow sober.</p></div></div>
+      <ul class="ls-lines">
+        <li><b>SAMHSA National Helpline</b>1-800-662-4357, any time, day or night, in English and Spanish. Treatment referral and information.</li>
+        <li><b>FindTreatment.gov</b>A national directory of treatment by place. <a class="text-link" href="https://findtreatment.gov/" target="_blank" rel="noopener">findtreatment.gov</a></li>
+        <li><b>SMART Recovery</b>Peer groups for growing sober, and Family and Friends meetings, in person and online. <a class="text-link" href="https://smartrecovery.org/" target="_blank" rel="noopener">smartrecovery.org</a></li>
+        <li><b>NACoA</b>Help for kids whose family member drinks or uses, and for the grown-ups who love them. <a class="text-link" href="https://nacoa.org/" target="_blank" rel="noopener">nacoa.org</a></li>
+        <li><b>Poison Control</b>1-800-222-1222, any time, for questions about a medicine, a drug, or a possible poisoning.</li>
+      </ul>
+      <p class="ls-quiet">Support any time: 988, call or text &middot; 911, emergency. If someone is hard to wake or breathing slowly, call 911.</p>
     </div>
-    <p class="ls-lead" style="margin-top:22px">For kids, teens, and the whole family:</p>
-    <div class="ls-love">
-      <a href="/pine/#life=sober-parent"><span class="ls-app">Pine, grades 9 to 12</span><b>A Parent</b><span>For teens whose parent drinks or uses.</span></a>
-      <a href="/aspen/#talk=sober-family"><span class="ls-app">Aspen, grades 6 to 8</span><b>Someone in My Family Drinks or Uses</b><span>For middle schoolers, and the grown-ups who love them.</span></a>
-      <a href="/maple/#talk=addiction"><span class="ls-app">Maple, grades K to 5</span><b>When a Family Member Drinks or Uses</b><span>For a grown-up to read with a child.</span></a>
-      <a href="/grove/#life=recovery"><span class="ls-app">The Grove, together</span><b>Recovery in the Family</b><span>For the whole family, growing together.</span></a>
-    </div>
-    <div id="craft" class="ls-more"><h3>Loving Someone Who Drinks or Uses</h3><div id="ls-craft"><p class="ls-empty">Loading...</p></div><div class="ls-acts ls-open1"><a class="btn ls-btn" href="/oak/?sober=craft">Open in Oak</a><a class="btn ls-btn" href="/sequoia/?sober=craft">Open in Sequoia</a><a class="btn ls-btn" href="/birch/?sober=craft">Open in Birch</a></div></div>
-    <p><button type="button" class="btn btn-secondary ls-share" data-ls-share="love" style="margin-top:18px"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share a Word for Families</button></p>
   </div>
 </section>
 
-<section class="ls-sec" id="help">
-  <div class="wrap">
-    <div class="eyebrow">Help Lines</div>
-    <h2>Every kind of help is welcome.</h2>
-    <p class="ls-lead">A doctor is a strong first call, especially for anyone who drinks or uses every day, because stopping all at once can need medical support. Meetings, treatment, medicine, therapy, faith, and friends all help people grow sober.</p>
-    <ul class="ls-lines">
-      <li><b>SAMHSA National Helpline</b>1-800-662-4357, any time, day or night, in English and Spanish. Treatment referral and information.</li>
-      <li><b>FindTreatment.gov</b>A national directory of treatment by place. <a class="text-link" href="https://findtreatment.gov/" target="_blank" rel="noopener">findtreatment.gov</a></li>
-      <li><b>SMART Recovery</b>Peer groups for growing sober, and Family and Friends meetings, in person and online. <a class="text-link" href="https://smartrecovery.org/" target="_blank" rel="noopener">smartrecovery.org</a></li>
-      <li><b>NACoA</b>Help for kids whose family member drinks or uses, and for the grown-ups who love them. <a class="text-link" href="https://nacoa.org/" target="_blank" rel="noopener">nacoa.org</a></li>
-      <li><b>Poison Control</b>1-800-222-1222, any time, for questions about a medicine, a drug, or a possible poisoning.</li>
-    </ul>
-    <p class="ls-quiet">Support any time: 988, call or text &middot; 911, emergency. If someone is hard to wake or breathing slowly, call 911.</p>
-  </div>
-</section>
-
-<section class="ls-sec" id="share">
-  <div class="wrap ls-intro">
+<section class="ls-sec ls-alt a-clay" id="share">
+  <div class="wrap ls-pass ls-rise">
+    <span class="ls-badge"><svg class="i" aria-hidden="true"><use href="#lsi-share"/></svg></span>
     <div class="eyebrow">Pass It On</div>
     <h2>Know someone who would love this?</h2>
     <p>Send them this page. It opens for anyone, right away.</p>
-    <p class="ls-sharebar"><button type="button" class="btn btn-primary ls-share" data-ls-share="page"><svg viewBox="0 0 24 24" width="17" height="17" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 15V3"/><path d="M7.5 7.5L12 3l4.5 4.5"/><path d="M5 12v7a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2v-7"/></svg>Share Living Sober</button><span class="ls-smsg" role="status" aria-live="polite"></span></p>
+    <div class="ls-sharebar c"><button type="button" class="btn btn-primary ls-share" data-ls-share="page"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share Living Sober</button><span class="ls-smsg" role="status" aria-live="polite"></span></div>
   </div>
 </section>
 
@@ -340,7 +574,7 @@
 <script src="/shared/sober-30.js?v=b851" defer></script>
 <script src="/shared/sober-more.js?v=b851" defer></script>
 <script src="/shared/gg-sharecard.js?v=b839" defer></script>
-<script src="/shared/living-sober.js?v=b851" defer></script>
+<script src="/shared/living-sober.js?v=b856" defer></script>
 <!-- PAGE VIDEO (BLD 838) --><script src="/shared/page-videos.js?v=b851" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>
