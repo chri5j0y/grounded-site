@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b851'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b868'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -34,23 +34,21 @@
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
-    // The Grounded Way (GWG BLD 866): the all-in path with Tending, and My Home, each person's own private page.
-    { name: 'The Grounded Way', items: [
-      { id: 'way', title: 'The Grounded Way', desc: 'The all-in path with Tending: food for your goal, movement for every level, and Morning Quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
-      { id: 'home', title: 'My Home', desc: 'Your own private page: your tree, Tending, and your tools, on your device', href: HOME + '/home/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-home.webp?v=b866" alt="" width="42" height="42">', bg: '#F1E6CC' }
-    ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
       { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
     ] },
-    // For Families (GWG BLD 863): Living Sober (BLD 837, with its gold star mark) beside the farewell helpers.
-    { name: 'For Families', items: [
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' },
+    // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page.
+    { name: 'Healthy Living', items: [
+      { id: 'way', title: 'The Grounded Way', desc: 'The all-in path with Tending: food for your goal, movement for every level, and Morning Quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' }
+    ] },
+    { name: 'When Someone Dies', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
       { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
       { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
     ] },
-    { name: 'Further Reading', items: [
+    { name: 'Libraries', items: [
       { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
       { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
     ] },
