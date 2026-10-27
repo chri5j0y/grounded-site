@@ -132,6 +132,168 @@ function chart(L, goal){
     ${goal ? `<line x1="0" x2="${W}" y1="${y(goal).toFixed(1)}" y2="${y(goal).toFixed(1)}" class="g"/><text x="${W - 4}" y="${(y(goal) - 4).toFixed(1)}" text-anchor="end" class="t">Goal ${esc(goal)}</text>` : ''}
     <path d="${line}" class="l"/>${pts.map((p, i) => `<circle cx="${x(i).toFixed(1)}" cy="${y(+p.ldl).toFixed(1)}" r="4" class="p"/><text x="${x(i).toFixed(1)}" y="${Ht - 4}" text-anchor="middle" class="t">${short(p.date)}</text>`).join('')}</svg>`;
 }
+// ---------- BLD 860: My LDL Path. Where the food plan can take LDL, lever by lever, and about how long to 100 ----------
+// Chris, October 27, 2026: "show me a chart that estimates all my changes to reduce LDLs and lets estimate how long it will take to get sub 100".
+// The model (research-informed estimates for a talk with a doctor; the person's own labs always lead):
+//   Baseline B: the latest lab LDL on or before the plan start, startMon() (else the first lab).
+//   Each lever i has a full effect e_i (central, low, high) as a share of the LDL that remains, an adherence a_i, and a ramp r_i(t),
+//   with t in weeks from the plan start: LDL(t) = B x product over levers of (1 - e_i x a_i x r_i(t)).
+//   r_i(t) = 1 - exp(-t / 2.5). Psyllium also eases in by dose: week 1 at 25 percent, week 2 at 50 percent, week 3 on in full.
+//   Adherence: psyllium, sterols, and nuts are the share of the last 14 days checked (today counts once it is checked);
+//   movement is planned workouts or practices done in the last 14 days; the other food levers, and any lever with fewer
+//   than 7 days of data, use 0.85.
+//   Lines: Central (central effects, current adherence), Best (high effects, full adherence), Careful (low effects, current adherence).
+//   Calibration: with a lab after the start, every line is scaled by measured / Central at that lab. The scale eases in from 1 at
+//   the start to the full ratio at the lab, so the path runs through the measured number and keeps that ratio ahead.
+//   Medicine scenario: from today, a further 40 percent (30 to 50) on top of the Central line, on the same 2.5 week time course.
+//   Lever bars: each lever's share of the full drop, split by log(1 - e_i x a_i), so the bars add up to the whole drop.
+const LDL_TAU = 2.5, LDL_ASSUME = 0.85, LDL_MED = [0.40, 0.30, 0.50], LDL_GOAL = 100;
+const LDL_LV = [
+  {id: 'satfat', t: 'Saturated Fat Swap', sub: 'Soy milk in coffee, the whole food plan', e: [0.12, 0.08, 0.15], src: 'Mensink RP, "Effects of saturated fatty acids on serum lipids and lipoproteins", World Health Organization, 2016'},
+  {id: 'psyllium', t: 'Psyllium', sub: 'About 10 g a day', e: [0.07, 0.05, 0.09], ck: 'psyllium', dose: 1, src: 'Jovanovski E and others, American Journal of Clinical Nutrition, 2018'},
+  {id: 'sterols', t: 'Plant Sterols', sub: 'About 2 g a day', e: [0.085, 0.06, 0.10], ck: 'sterols', src: 'Gylling H and others, Atherosclerosis, 2014'},
+  {id: 'oats', t: 'Oats and Barley', sub: 'About 3 g of beta-glucan a day', e: [0.05, 0.03, 0.07], src: 'Ho HVT and others, British Journal of Nutrition, 2016'},
+  {id: 'nuts', t: 'Nuts', sub: 'About 1.5 oz a day', e: [0.045, 0.03, 0.06], ck: 'nuts', src: 'Del Gobbo LC and others, American Journal of Clinical Nutrition, 2015'},
+  {id: 'soy', t: 'Soy Milk', sub: 'Soy protein', e: [0.02, 0.01, 0.04], src: 'Blanco Mejia S and others, Journal of Nutrition, 2019'},
+  {id: 'move', t: 'Movement', sub: 'Strength and walks', e: [0.02, 0, 0.04], mv: 1, src: 'Source unknown'}
+];
+// A per-person override (BLD 860, the lead for Chris): coming off keto with heavy cream in coffee (28 to 40 g of saturated fat a day
+// from cream alone, toward a plan of 13 to 15 g a day), the saturated fat lever is larger for that plan's owner.
+const SATFAT_BIG = {who: 'Chris', central: 0.18, low: 0.12, high: 0.28, note: 'Coming off keto, this change is often larger'};
+const ldlE = lv => { const m = MINE(); return lv.id === 'satfat' && m && m.who === SATFAT_BIG.who ? [SATFAT_BIG.central, SATFAT_BIG.low, SATFAT_BIG.high] : lv.e; };
+const ldlNote = lv => { const m = MINE(); return lv.id === 'satfat' && m && m.who === SATFAT_BIG.who ? SATFAT_BIG.note : ''; };
+const LDL_MED_SRC = 'Grundy SM and others, "2018 AHA/ACC Guideline on the Management of Blood Cholesterol", Circulation, 2019';
+function ldlAdh(){
+  const h = H(), lib = FLDH(), mine = MINE(), t0 = day0(new Date()), tk = ymd(t0), s0 = startMon();
+  const have = new Set((arr(lib && lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks)).map(c => c.id));
+  const from = new Date(Math.max(+s0, +addD(t0, -13))), days = [];
+  for (let d = new Date(from); d <= t0; d = addD(d, 1)) days.push(d);
+  const share = on => { const kept = days.filter(d => ymd(d) !== tk || on(d)); if (kept.length < 7) return {a: LDL_ASSUME, est: 1};
+    return {a: kept.filter(on).length / kept.length, est: 0, n: kept.length}; };
+  const out = {};
+  LDL_LV.forEach(lv => {
+    if (lv.ck && have.has(lv.ck)) out[lv.id] = share(d => !!((h.days[ymd(d)] || {}).checks || {})[lv.ck]);
+    else if (lv.mv){
+      const did = d => { const k = ymd(d); return Object.keys(h.log[k] || {}).some(x => /^(work:|prac)/.test(x)) || h.wlog.some(w => w.date === k); };
+      const plan = d => agenda(d).some(x => x.k === 'work' || x.k === 'prac');
+      const pd = days.filter(d => plan(d) && (ymd(d) !== tk || did(d)));
+      out[lv.id] = days.length < 7 || pd.length < 4 ? {a: LDL_ASSUME, est: 1} : {a: Math.min(1, days.filter(did).length / pd.length), est: 0, n: pd.length};
+    } else out[lv.id] = {a: LDL_ASSUME, est: 1};
+  });
+  return out;
+}
+function ldlModel(){
+  const L = labs().filter(x => num(x.ldl) != null && parseD(x.date)); if (!L.length) return null;
+  const s0 = startMon(), sk = ymd(s0), wk = d => (day0(d) - s0) / (7 * DAYMS);
+  const base = L.filter(x => x.date <= sk).pop() || L[0], B = +base.ldl, adh = ldlAdh();
+  const ramp = (lv, t) => t <= 0 ? 0 : (1 - Math.exp(-t / LDL_TAU)) * (lv.dose ? (t < 1 ? 0.25 : t < 2 ? 0.5 : 1) : 1);
+  const K = {c: 0, k: 1, b: 2}, raw = (t, k) => B * LDL_LV.reduce((p, lv) => p * (1 - ldlE(lv)[K[k]] * (k === 'b' ? 1 : adh[lv.id].a) * ramp(lv, t)), 1);
+  const tNow = Math.max(0, wk(new Date()));
+  const after = L.filter(x => x.date > sk && x !== base), cal = after.length ? after[after.length - 1] : null;
+  const tL = cal ? Math.max(1 / 7, wk(parseD(cal.date))) : 0, pred = cal ? raw(tL, 'c') : 0, ratio = cal ? +cal.ldl / pred : 1;
+  const kf = t => !cal ? 1 : t >= tL ? ratio : 1 + (ratio - 1) * t / tL;
+  const f = (t, k) => raw(t, k) * kf(t);
+  const med = (t, m) => t < tNow ? null : f(t, 'c') * (1 - (m == null ? LDL_MED[0] : m) * (1 - Math.exp(-(t - tNow) / LDL_TAU)));
+  const cross = fn => { for (let t = 0; t <= 156; t += 0.1){ const v = fn(t); if (v != null && v <= LDL_GOAL) return t; } return null; };
+  const level = f(520, 'c'), drop = B * ratio - level;
+  const lns = LDL_LV.map(lv => Math.log(1 - ldlE(lv)[0] * adh[lv.id].a)), lsum = lns.reduce((a, b) => a + b, 0) || 1;
+  const levers = LDL_LV.map((lv, i) => ({lv, a: adh[lv.id], mg: drop * lns[i] / lsum})).sort((a, b) => b.mg - a.mg);
+  const pts = L.map(x => ({x, t: x === base ? 0 : wk(parseD(x.date))})).filter(p => p.x === base || p.t > 0);
+  const maxW = Math.min(104, Math.max(26, Math.ceil((tNow + 6) / 2) * 2, cal ? Math.ceil((tL + 4) / 2) * 2 : 0));
+  return {B, base, s0, tNow, cal, pred, ratio, f, med, level, best: f(520, 'b'), careful: f(520, 'k'), now: f(tNow, 'c'),
+    tC: cross(t => f(t, 'c')), tM: cross(t => med(t)), medLevel: med(520), levers, pts, maxW, drop,
+    dateAt: t => addD(s0, Math.round(t * 7))};
+}
+const r0 = v => Math.round(v);
+const wkDate = (m, t) => short(ymd(m.dateAt(t)));
+function ldlRows(m){
+  const rows = [];
+  for (let t = 0; t <= m.maxW; t++){ const md = m.med(t), lab = m.pts.find(p => Math.round(p.t) === t);
+    rows.push({t, date: wkDate(m, t), c: r0(m.f(t, 'c')), b: r0(m.f(t, 'b')), k: r0(m.f(t, 'k')), m: md == null ? null : r0(md), lab: lab ? {v: +lab.x.ldl, date: short(lab.x.date)} : null}); }
+  return rows;
+}
+function ldlSvg(m){
+  const phone = (window.innerWidth || 390) < 560, W = Math.round(Math.max(300, Math.min(720, (window.innerWidth || 390) - 72))), Ht = phone ? 270 : 310;
+  const pl = 34, pr = phone ? 70 : 84, pt = 24, pb = 40, pw = W - pl - pr, ph = Ht - pt - pb;
+  const all = [m.B, m.medLevel, m.best, LDL_GOAL].concat(m.pts.map(p => +p.x.ldl));
+  const lo = Math.max(0, Math.floor((Math.min(...all) - 12) / 20) * 20), hi = Math.ceil((Math.max(...all) + 8) / 20) * 20;
+  const x = t => pl + Math.max(0, Math.min(m.maxW, t)) / m.maxW * pw, y = v => pt + (hi - v) / (hi - lo) * ph, f1 = n => n.toFixed(1);
+  const path = fn => { let d = '', on = false; for (let t = 0; t <= m.maxW + 1e-9; t += 0.25){ const v = fn(t); if (v == null){ on = false; continue; } d += (on ? 'L' : 'M') + f1(x(t)) + ' ' + f1(y(v)); on = true; } return d; };
+  const band = (() => { let a = [], b = []; for (let t = 0; t <= m.maxW + 1e-9; t += 0.25){ a.push(f1(x(t)) + ' ' + f1(y(m.f(t, 'k')))); b.unshift(f1(x(t)) + ' ' + f1(y(m.f(t, 'b')))); } return 'M' + a.join('L') + 'L' + b.join('L') + 'Z'; })();
+  const step = hi - lo > 140 ? 40 : 20, ticks = [];
+  for (let v = lo; v <= hi; v += step) if ([100, 130].every(s => v === s || Math.abs(v - s) >= 15)) ticks.push(v);
+  [100, 130].forEach(v => { if (v > lo && v < hi && !ticks.includes(v)) ticks.push(v); });
+  const xs = []; for (let t = 0; t <= m.maxW; t += phone ? (m.maxW > 30 ? 8 : 4) : (m.maxW > 30 ? 4 : 2)) xs.push(t);
+  // End labels on the right: nudged apart with a short leader when two would touch.
+  const ends = [['c', 'Food plan', m.f(m.maxW, 'c')], ['b', 'Best', m.f(m.maxW, 'b')], ['k', 'Careful', m.f(m.maxW, 'k')], ['m', 'Medicine', m.med(m.maxW)]].map(([k, l, v]) => ({k, l: l + ' ' + r0(v), y0: y(v), y: y(v)})).sort((a, b) => a.y - b.y);
+  for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
+  const xe = x(m.maxW), tx = x(m.tNow);
+  const desc = `LDL path from ${r0(m.B)}. Estimate now ${r0(m.now)}. The food plan levels off near ${r0(m.level)}, with a range from ${r0(m.best)} to ${r0(m.careful)}.${m.tC != null ? ` It reaches 100 near week ${Math.ceil(m.tC)}.` : ''} With a medicine, ${m.tM != null ? `100 near week ${Math.ceil(m.tM)}` : `about ${r0(m.medLevel)}`}.`;
+  S.lp = {W, pl, pw, maxW: m.maxW, x0: x, rows: ldlRows(m)};
+  return `<div class="hj-lpw"><svg class="hj-lpsvg" viewBox="0 0 ${W} ${Ht}" width="${W}" height="${Ht}" role="img" tabindex="0" aria-label="${esc(desc)}">
+    ${ticks.map(v => `<line x1="${pl}" x2="${f1(pl + pw)}" y1="${f1(y(v))}" y2="${f1(y(v))}" class="${v === 100 ? 'tg' : 'gr'}"/><text x="${pl - 6}" y="${f1(y(v) + 4)}" text-anchor="end" class="ax">${v}</text>`).join('')}
+    ${100 > lo && 100 < hi ? `<text x="${pl + 6}" y="${f1(y(100) - 6)}" class="tl">Target 100</text>` : ''}
+    <line x1="${pl}" x2="${f1(pl + pw)}" y1="${f1(pt + ph)}" y2="${f1(pt + ph)}" class="bs"/>
+    ${xs.map(t => `<text x="${f1(x(t))}" y="${f1(pt + ph + 16)}" text-anchor="middle" class="ax">${t}</text>`).join('')}
+    <text x="${f1(pl + pw / 2)}" y="${Ht - 4}" text-anchor="middle" class="ax">Weeks on the plan</text>
+    <path d="${band}" class="bd"/>
+    ${m.tNow > 0 ? `<line x1="${f1(tx)}" x2="${f1(tx)}" y1="${pt - 6}" y2="${f1(pt + ph)}" class="td"/><text x="${f1(tx)}" y="${pt - 10}" text-anchor="${tx > pl + pw - 30 ? 'end' : 'start'}" class="ax">Today</text>` : ''}
+    <path d="${path(t => m.f(t, 'c'))}" class="lc"/>
+    <path d="${path(t => m.med(t))}" class="lm"/>
+    ${m.pts.map(p => `<circle cx="${f1(x(p.t))}" cy="${f1(y(+p.x.ldl))}" r="4.5" class="lab"/>`).join('')}
+    ${ends.map(e => `${Math.abs(e.y - e.y0) > 3 ? `<line x1="${f1(xe + 2)}" x2="${f1(xe + 7)}" y1="${f1(e.y0)}" y2="${f1(e.y - 4)}" class="ld"/>` : ''}<text x="${f1(xe + 8)}" y="${f1(e.y + 4)}" class="el${e.k === 'c' ? ' on' : ''}">${esc(e.l)}</text>`).join('')}
+    <line class="xh" x1="0" x2="0" y1="${pt}" y2="${f1(pt + ph)}" visibility="hidden"/>
+    <rect class="hit" x="${pl}" y="${pt}" width="${f1(pw)}" height="${f1(ph)}"/>
+  </svg><div class="hj-lptip" hidden></div></div>`;
+}
+function ldlTable(m){
+  const rows = S.lp ? S.lp.rows : ldlRows(m), shown = rows.filter(r => r.t % 2 === 0 || r.lab || r.t === Math.round(m.tNow));
+  return `<div class="hj-tw"><table class="hj-tbl hj-lptbl"><thead><tr><th>Week</th><th>Date</th><th>Estimate</th><th>Careful to Best</th><th>With a Medicine</th><th>Lab</th></tr></thead><tbody>
+    ${shown.map(r => `<tr><td>${r.t}</td><td>${esc(r.date)}</td><td><b>${r.c}</b></td><td>${r.b} to ${r.k}</td><td>${r.m == null ? '' : r.m}</td><td>${r.lab ? `${r.lab.v}<small>${esc(r.lab.date)}</small>` : ''}</td></tr>`).join('')}</tbody></table></div>
+    <div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Lever</th><th>Takes Off (mg/dL)</th><th>Days on Track</th></tr></thead><tbody>
+    ${m.levers.map(x => `<tr><td>${esc(x.lv.t)}<small>${esc(x.lv.sub)}${ldlNote(x.lv) ? '. ' + esc(ldlNote(x.lv)) + '.' : ''}</small></td><td><b>${r0(x.mg)}</b></td><td>${r0(x.a.a * 100)}%${x.a.est ? ' (estimated)' : ''}</td></tr>`).join('')}</tbody></table></div>`;
+}
+function ldlPath(){
+  const m = ldlModel();
+  if (!m) return `<div class="hj-blk">${kick('My LDL Path')}<p class="hj-sub">Add your lab numbers to see your LDL path and about how long to 100.</p></div>`;
+  const wkLine = (t, who) => `${who} reaches 100 near week ${Math.ceil(t)}, around ${esc(wkDate(m, t))}.`;
+  const tile = (l, v, s) => `<div class="hj-lpk"><small>${esc(l)}</small><b>${v}</b>${s ? `<span>${esc(s)}</span>` : ''}</div>`;
+  const maxMg = Math.max(...m.levers.map(x => x.mg), 1);
+  const srcs = LDL_LV.map(lv => `${lv.t}: ${lv.src}.`).concat(`Medicine estimate: ${LDL_MED_SRC}.`).join(' ');
+  return `<div class="hj-blk hj-lp">${kick('My LDL Path')}
+    <div class="hj-lpks">${tile('Start', r0(m.B), short(m.base.date))}${tile('Estimate now', r0(m.now), m.tNow > 0 ? 'week ' + Math.floor(m.tNow) : 'plan start')}${tile('Food plan levels off near', r0(m.level), r0(m.best) + ' to ' + r0(m.careful))}${tile('Target', LDL_GOAL, '')}</div>
+    <p class="hj-sub">${m.tC != null ? wkLine(m.tC, 'The food plan estimate') : `Food changes alone level off near ${r0(m.level)}.`} ${m.tM != null ? wkLine(m.tM, 'With a medicine, the estimate') : `With a medicine, the estimate levels off near ${r0(m.medLevel)}.`}</p>
+    ${m.cal ? `<p class="hj-sub hj-lpcal">Fitted to your lab on ${esc(short(m.cal.date))} (${r0(+m.cal.ldl)}; the estimate for that day was ${r0(m.pred)}), so the path ahead runs through your measured number.</p>` : ''}
+    ${m.B >= 190 ? `<p class="hj-note">An LDL of 190 or above is a reason to talk with your doctor about a medicine alongside these changes. The food plan keeps working either way.</p>` : ''}
+    <div class="hj-lpleg" aria-hidden="true"><span><i class="k-c"></i>Food plan estimate</span><span><i class="k-b"></i>Careful to Best range</span><span><i class="k-m"></i>If your doctor adds a medicine</span><span><i class="k-l"></i>Your labs</span></div>
+    ${S.lpTable ? ldlTable(m) : ldlSvg(m)}
+    <button type="button" class="btn btn-line btn-sm" data-hja="lptable" aria-pressed="${!!S.lpTable}">${S.lpTable ? 'View as Chart' : 'View as Table'}</button>
+    ${S.lpTable ? '' : `<div class="hj-kick" style="margin-top:16px">What Each Lever Takes Off</div><p class="hj-sub">mg/dL at full effect, with your days on track over the last two weeks. Together about ${r0(m.drop)}.</p>
+    <div class="hj-lvs">${m.levers.map(x => `<div class="hj-lvr"><div class="hj-lvt"><b>${esc(x.lv.t)}</b><small>${r0(x.a.a * 100)}% of days${x.a.est ? ', estimated' : ''}</small></div><div class="hj-lvb"><span style="width:${(x.mg / maxMg * 72).toFixed(1)}%"></span><em>${r0(x.mg)} mg/dL</em></div>${ldlNote(x.lv) ? `<p class="hj-lvn">${esc(ldlNote(x.lv))}.</p>` : ''}</div>`).join('')}</div>`}
+    <p class="hj-sub" style="font-size:14px">Research-informed estimates to talk over with your doctor. Your labs tell the real story, and each new lab refits the path.</p>
+    <p class="hj-src">Sources: ${esc(srcs)}</p>
+  </div>`;
+}
+function ldlSum(){
+  if (!MINE()) return ''; const m = ldlModel(); if (!m) return '';
+  return `<small class="hj-lps">My LDL Path: about ${r0(m.now)} now${m.tC != null ? `, 100 near week ${Math.ceil(m.tC)}` : `, leveling near ${r0(m.level)}`}. Target 100.</small>`;
+}
+function lpHover(svg, wkv){
+  const L = S.lp, wrap = svg.parentNode, tip = wrap && wrap.querySelector('.hj-lptip'), xh = svg.querySelector('.xh'); if (!L || !tip || !xh) return;
+  if (wkv == null){ tip.hidden = true; xh.setAttribute('visibility', 'hidden'); return; }
+  const t = Math.max(0, Math.min(L.maxW, Math.round(wkv))), r = L.rows[t]; if (!r) return; S.lpAt = t;
+  const xv = L.x0(t); xh.setAttribute('x1', xv); xh.setAttribute('x2', xv); xh.setAttribute('visibility', 'visible');
+  tip.textContent = '';
+  const add = (cls, val, lab) => { const d = document.createElement('div'), i = document.createElement('i'), b = document.createElement('b'), s = document.createElement('span'); if (cls) i.className = cls; b.textContent = val; s.textContent = lab; d.append(i, b, s); tip.appendChild(d); };
+  const hd = document.createElement('div'); hd.className = 'hd'; hd.textContent = 'Week ' + r.t + ' · ' + r.date; tip.appendChild(hd);
+  add('k-c', String(r.c), 'Food plan estimate'); add('k-b', r.b + ' to ' + r.k, 'Careful to Best');
+  if (r.m != null) add('k-m', String(r.m), 'With a medicine');
+  if (r.lab) add('k-l', String(r.lab.v), 'Lab on ' + r.lab.date);
+  tip.hidden = false;
+  const rc = svg.getBoundingClientRect(), px = xv / L.W * rc.width, tw = tip.offsetWidth || 170;
+  tip.style.left = Math.max(0, Math.min(rc.width - tw, px > rc.width / 2 ? px - tw - 12 : px + 12)) + 'px';
+}
+const lpWeekAt = (svg, cx) => { const L = S.lp, rc = svg.getBoundingClientRect(); if (!L || !rc.width) return null; const px = (cx - rc.left) * L.W / rc.width; return (px - L.pl) / L.pw * L.maxW; };
 function vPlan(lib, key){
   const mine = MINE(), hh = num(H().set.household);
   const scale = key === 'food' && hh && hh !== 6 ? `<p class="hj-note">Costs and amounts are for a household of six. For ${hh}, multiply by about ${(hh / 6).toFixed(2).replace(/0$/, '')}. Freezer batches keep well, so smaller households can make the full batch and freeze more.</p>` : '';
@@ -151,6 +313,7 @@ function vNumbers(){
   return `${loadMine}
   <div class="row" style="margin-bottom:14px"><button type="button" class="btn btn-gold btn-sm" data-hja="new" data-hjv="lab">Add Lab Results</button><button type="button" class="btn btn-line btn-sm" data-hja="new" data-hjv="mark">Add Markers</button><button type="button" class="btn btn-line btn-sm" data-hja="new" data-hjv="panel">Add a Lab Panel</button><button type="button" class="btn btn-line btn-sm" data-hja="setup">My Goals</button></div>
   ${labForm}${mkForm}${pForm}
+  ${ldlPath()}
   <div class="hj-blk">${kick('LDL Over Time')}${chart(labs(), num(h.set.goalLdl)) || '<p class="hj-sub">Your chart starts with your first lab results.</p>'}
     ${L.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>LDL</th><th>Total</th><th>HDL</th><th>Trig</th><th>ApoB</th><th></th></tr></thead><tbody>${L.map(x => `<tr><td>${short(x.date)}${x.note ? `<small>${esc(x.note)}</small>` : ''}</td><td><b>${cell(x.ldl)}</b></td><td>${cell(x.total)}</td><td>${cell(x.hdl)}</td><td>${cell(x.trig)}</td><td>${cell(x.apob)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="lab|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : ''}</div>
   <div class="hj-blk">${kick('Markers')}${M.length ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>Weight</th><th>Waist</th><th>Rest HR</th><th>Push-ups</th><th>Pull-ups</th><th>Mile</th><th>Energy</th><th>Sleep</th><th>Joints</th><th></th></tr></thead><tbody>${M.map(x => `<tr><td>${short(x.date)}</td><td>${cell(x.weight)}</td><td>${cell(x.waist)}</td><td>${cell(x.rhr)}</td><td>${cell(x.pushups)}</td><td>${cell(x.pullups)}</td><td>${cell(x.mile)}</td><td>${cell(x.energy)}</td><td>${cell(x.sleep)}</td><td>${cell(x.joint)}</td><td><button type="button" class="linkbtn" data-hja="edit" data-hjv="mark|${esc(x.id)}">Edit</button></td></tr>`).join('')}</tbody></table></div>` : '<p class="hj-sub">Test your markers in week 1, then every four weeks. The Fitness plan shows how.</p>'}</div>
@@ -336,7 +499,7 @@ function vToday2(lib){
   ${remBlock(d)}
   ${items.length ? `<div class="hj-blk">${kick('Today')}${items.map(x => { const ok = isDone(d, x.key); return `<div class="hj-ag${ok ? ' ok' : ''}${cur && cur.key === x.key ? ' cur' : ''}"><button type="button" class="hj-agck" data-hja="toggle" data-hjv="${esc(x.key)}" aria-pressed="${ok}" aria-label="Done: ${esc(x.title)}">${ok ? '&#10003;' : ''}</button><button type="button" class="hj-agt" data-hja="go" data-hjv="${esc(x.key)}"><b>${esc(x.title)}</b><small>${esc(x.kick)}</small></button></div>`; }).join('')}</div>` : ''}
   ${KIT() ? '' : `<div class="hj-blk">${kick('Daily Habits')}<div class="hj-habits">${checks.map(c => { const on = !!(day.checks && day.checks[c.id]); return `<button type="button" class="hj-hb${on ? ' on' : ''}" aria-pressed="${on}" data-hja="check" data-hjv="${esc(c.id)}"><span class="box">${on ? '&#10003;' : ''}</span>${esc(c.label)}</button>`; }).join('')}</div></div>
-  `}${KIT() ? '' : `<button type="button" class="hj-ldl" data-hja="sec" data-hjv="numbers"><span class="hj-kick">LDL</span><b>${last && last.ldl != null ? esc(last.ldl) : 'Add'}</b><span>${last ? 'on ' + short(last.date) + (goal ? '. Goal ' + esc(goal) + '.' : '') : 'Add your first lab results'}</span></button>`}
+  `}${KIT() ? '' : `<button type="button" class="hj-ldl" data-hja="sec" data-hjv="numbers"><span class="hj-kick">LDL</span><b>${last && last.ldl != null ? esc(last.ldl) : 'Add'}</b><span>${last ? 'on ' + short(last.date) + (goal ? '. Goal ' + esc(goal) + '.' : '') : 'Add your first lab results'}</span>${ldlSum()}</button>`}
   ${lib.doctor ? `<p class="hj-note">${esc(lib.doctor)}</p>` : ''}`;
 }
 // Play anything, anytime (Chris, October 24, 2026: "give me access to the yoga set you made for kayti.. in case i want to incorporate these to my day").
@@ -1033,6 +1196,7 @@ function act(a, v){
       save(); S.form = null; toast('Saved on this device.'); rerender(true); return; }
     case 'pdel': { if (!confirm('Remove this lab panel from this device?')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.health = d.deleted.health || {}; d.deleted.health[v] = Date.now();
       h.panels = h.panels.filter(p => p.id !== v); save(); rerender(true); return; }
+    case 'lptable': S.lpTable = !S.lpTable; rerender(true); return;
     case 'setup': S.setup = true; S.set = null; rerender(false); toForm(); return;
     case 'setup-cancel': S.setup = false; S.set = null; rerender(false); return;
     case 'whoq': h.set.who = v; if (v === 'Kayti' && !h.set.track) h.set.track = 'practice'; h.set.u = Date.now(); save(); toast('Saved.'); rerender(false); return;
@@ -1062,13 +1226,22 @@ document.addEventListener('input', e => {
   if (t.id === 'hj-note') S.draft = t.value;
   if (t.id === 'hj-lb' && S.ov){ S.ov.lb = t.value; const id = t.dataset.hjid, v = String(t.value).trim().slice(0, 12); if (id && H()){ if (v) H().lifts[id] = v; else delete H().lifts[id]; clearTimeout(S.lbT); S.lbT = setTimeout(save, 700); } }
 });
+// BLD 860: the My LDL Path crosshair follows the pointer and snaps to whole weeks; arrow keys move it when the chart has focus.
+// On a phone a tap shows the readout and it stays until a tap lands somewhere else.
+['pointermove', 'pointerdown'].forEach(n => document.addEventListener(n, e => { const svg = e.target.closest && e.target.closest('.hj-lpsvg');
+  if (svg) lpHover(svg, lpWeekAt(svg, e.clientX)); else if (n === 'pointerdown'){ const o = document.querySelector('.hj-lpsvg'); if (o && document.activeElement !== o) lpHover(o, null); } }));
+document.addEventListener('pointerout', e => { const svg = e.target.closest && e.target.closest('.hj-lpsvg'); if (svg && e.pointerType !== 'touch' && !(e.relatedTarget && svg.contains(e.relatedTarget)) && document.activeElement !== svg) lpHover(svg, null); });
+document.addEventListener('focusin', e => { if (e.target.classList && e.target.classList.contains('hj-lpsvg') && S.lp) lpHover(e.target, S.lpAt != null ? S.lpAt : Math.round((ldlModel() || {tNow: 0}).tNow)); });
+document.addEventListener('focusout', e => { if (e.target.classList && e.target.classList.contains('hj-lpsvg')) lpHover(e.target, null); });
+document.addEventListener('keydown', e => { const svg = e.target; if (!svg.classList || !svg.classList.contains('hj-lpsvg') || !S.lp) return;
+  const d = e.key === 'ArrowRight' ? 1 : e.key === 'ArrowLeft' ? -1 : 0; if (!d) return; e.preventDefault(); lpHover(svg, (S.lpAt || 0) + d); });
 document.addEventListener('toggle', e => { const d = e.target; if (d && d.dataset && d.dataset.hjd) S.open[d.dataset.hjd] = d.open; }, true);
 
 // ---------- styles ----------
 const CSS = `
-#hj-root{min-width:0;--hj:#5F7D48;--hjcalm:#6C7FA6;}
-:root[data-theme="dark"] #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;}}
+#hj-root{min-width:0;--hj:#5F7D48;--hjcalm:#6C7FA6;--lpc:#4A8A2C;--lpm:#3D6FCC;}
+:root[data-theme="dark"] #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}}
 .hj-hero{position:relative;border-radius:20px;overflow:hidden;margin:0 0 14px;min-height:220px;display:flex;align-items:flex-end;background:#3E5A2E;}
 .hj-hero picture,.hj-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .hj-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,35,18,.05) 20%,rgba(25,35,18,.72));}
@@ -1125,7 +1298,41 @@ const CSS = `
 .hj-hb{display:flex;align-items:center;gap:8px;text-align:left;background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;padding:9px 10px;color:var(--ink);font:inherit;font-size:15px;cursor:pointer;min-height:48px;}
 .hj-hb .box{flex:0 0 24px;height:24px;border-radius:7px;border:2px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;}.hj-hb.on .box{background:var(--hj);border-color:var(--hj);}
 .hj-ldl{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap;width:100%;text-align:left;background:var(--card);border:1px solid var(--line);border-radius:16px;padding:14px 18px;margin:0 0 14px;color:var(--ink);font:inherit;cursor:pointer;}
-.hj-ldl b{font-family:'Cormorant Garamond',Georgia,serif;font-size:40px;line-height:1;}.hj-ldl span:last-child{color:var(--ink-soft);font-size:15px;}
+.hj-ldl b{font-family:'Cormorant Garamond',Georgia,serif;font-size:40px;line-height:1;}.hj-ldl span:last-of-type{color:var(--ink-soft);font-size:15px;}
+.hj-ldl .hj-lps{flex-basis:100%;color:var(--ink-soft);font-size:14.5px;}
+/* BLD 860: My LDL Path. Series colors validated with the dataviz palette check on the card surfaces (light #FFFCF6, dark #231A13). */
+.hj-lpks{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:4px 0 10px;}@media(max-width:700px){.hj-lpks{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.hj-lpk{background:var(--bg-deep);border-radius:12px;padding:10px 12px;min-width:0;}.hj-lpk small{display:block;color:var(--ink-soft);font-size:13.5px;line-height:1.25;}
+.hj-lpk b{display:block;font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:600;font-size:28px;line-height:1.15;color:var(--ink);}.hj-lpk span{display:block;color:var(--ink-soft);font-size:13px;}
+.hj-lpcal{font-size:14.5px;}
+.hj-lpleg{display:flex;flex-wrap:wrap;gap:6px 16px;margin:4px 0 6px;font-size:13.5px;color:var(--ink-soft);}.hj-lpleg span{display:inline-flex;align-items:center;gap:6px;}
+.hj-lp i[class^="k-"]{display:inline-block;flex:0 0 auto;width:18px;height:0;border-top:2px solid var(--lpc);}
+.hj-lp i.k-b{height:10px;border:0;border-radius:2px;background:color-mix(in srgb,var(--lpc) 16%,transparent);}
+.hj-lp i.k-m{border-top:2px dashed var(--lpm);}.hj-lp i.k-l{width:9px;height:9px;border:0;border-radius:50%;background:var(--ink);}
+.hj-lpw{position:relative;margin:4px 0 10px;}
+.hj-lpsvg{display:block;width:100%;max-width:720px;height:auto;touch-action:pan-y;outline:none;border-radius:8px;}.hj-lpsvg:focus-visible{box-shadow:0 0 0 2px var(--gold);}
+.hj-lpsvg text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11.5px;}
+.hj-lpsvg .ax{fill:var(--ink-soft);font-variant-numeric:tabular-nums;}.hj-lpsvg .tl{fill:var(--ink);font-weight:600;}
+.hj-lpsvg .el{fill:var(--ink-soft);}.hj-lpsvg .el.on{fill:var(--ink);font-weight:600;}
+.hj-lpsvg .gr{stroke:var(--line);stroke-width:1;}.hj-lpsvg .tg{stroke:var(--ink-soft);stroke-width:1;opacity:.75;}.hj-lpsvg .bs{stroke:var(--ink-soft);stroke-width:1;opacity:.5;}
+.hj-lpsvg .td{stroke:var(--ink-soft);stroke-width:1;}.hj-lpsvg .ld{stroke:var(--ink-soft);stroke-width:1;}
+.hj-lpsvg .bd{fill:var(--lpc);opacity:.12;stroke:none;}
+.hj-lpsvg .lc{fill:none;stroke:var(--lpc);stroke-width:2;stroke-linejoin:round;stroke-linecap:round;}
+.hj-lpsvg .lm{fill:none;stroke:var(--lpm);stroke-width:2;stroke-dasharray:6 4;stroke-linejoin:round;stroke-linecap:round;}
+.hj-lpsvg .lab{fill:var(--ink);stroke:var(--card);stroke-width:2;}
+.hj-lpsvg .xh{stroke:var(--ink-soft);stroke-width:1;}.hj-lpsvg .hit{fill:transparent;cursor:crosshair;}
+.hj-lptip{position:absolute;top:6px;left:0;z-index:2;pointer-events:none;background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.14);padding:8px 10px;font-size:13.5px;min-width:150px;max-width:220px;}
+.hj-lptip .hd{color:var(--ink-soft);font-size:12.5px;margin-bottom:4px;}.hj-lptip div{display:flex;align-items:center;gap:7px;line-height:1.5;}
+.hj-lptip b{color:var(--ink);font-variant-numeric:tabular-nums;}.hj-lptip span{color:var(--ink-soft);}
+.hj-lvs{display:grid;gap:10px;margin:6px 0 12px;}
+.hj-lvr{display:grid;grid-template-columns:minmax(0,38%) minmax(0,1fr);gap:4px 12px;align-items:center;}
+.hj-lvt b{display:block;font-size:15px;line-height:1.2;}.hj-lvt small{display:block;color:var(--ink-soft);font-size:13px;}
+.hj-lvb{display:flex;align-items:center;gap:8px;min-width:0;}.hj-lvb span{display:block;height:14px;min-width:2px;background:var(--lpc);border-radius:0 4px 4px 0;}
+.hj-lvr:hover .hj-lvb span{filter:brightness(1.12);}
+.hj-lvb em{font-style:normal;font-size:13.5px;color:var(--ink);white-space:nowrap;font-variant-numeric:tabular-nums;}
+.hj-lvn{grid-column:1 / -1;margin:0;color:var(--ink-soft);font-size:13.5px;font-style:italic;}
+.hj-lptbl td small{display:block;}
+.hj-src{color:var(--ink-soft);font-size:13px;line-height:1.45;margin:8px 0 0;overflow-wrap:anywhere;}
 .hj-wkbar{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 12px;}.hj-wkbar>div{text-align:center;min-width:0;}.hj-wkbar small{display:block;color:var(--ink-soft);font-size:13.5px;}
 .hj-day{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);}.hj-day:first-child{border-top:0;}.hj-day.t .hj-dl b{color:var(--hj);}
 .hj-dl{flex:0 0 52px;}.hj-dl small{display:block;color:var(--ink-soft);font-size:13px;}.hj-dr{flex:1;min-width:0;display:flex;flex-wrap:wrap;gap:6px;}
