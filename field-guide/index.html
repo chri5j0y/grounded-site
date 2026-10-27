@@ -660,25 +660,25 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b851"></script>
-<script src="../shared/gg-learn.js?v=b851"></script>
+<script src="../shared/gg-learn.js?v=b863"></script>
 <script src="../shared/gg-print.js?v=b836"></script>
-<script src="../shared/grove-scene.js?v=w2k"></script>
+<script src="../shared/grove-scene.js?v=b863"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
-<script src="qr.js?v=b782"></script>
+<script src="qr.js?v=b863"></script>
 <script src="share.js?v=b836"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
-<script src="../shared/gg-readings.js?v=b817"></script>
-<script src="ceremonies.js?v=b851"></script>
+<script src="../shared/gg-readings.js?v=b863"></script>
+<script src="ceremonies.js?v=b863"></script>
 <script src="sessions.js?v=b836"></script>
-<script src="farewell.js?v=b811"></script>
-<script src="wedding.js?v=b798"></script>
-<script src="premarital.js?v=b798"></script>
+<script src="farewell.js?v=b863"></script>
+<script src="wedding.js?v=b863"></script>
+<script src="premarital.js?v=b863"></script>
 <script src="clients.js?v=b836"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b851"></script>
+<script src="../shared/gg-stories.js?v=b863"></script>
 <script src="moves.js?v=b857"></script>
 <script src="stage.js?v=b857"></script>
 <script src="coach.js?v=b842"></script>
@@ -8477,7 +8477,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b782'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b863'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
