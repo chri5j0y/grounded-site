@@ -15,7 +15,8 @@
 // carried in the locked backup (merged by GGHealth.merge; deletions in DATA.deleted.health):
 //   {set: {household, goals: [], goalLdl, start, nextLabs, u}, labs: [{id, date, ldl, total, hdl, trig, apob, note, u}],
 //    marks: [{id, date, weight, waist, rhr, pushups, pullups, mile, energy, sleep, joint, u}],
-//    days: {'YYYY-MM-DD': {checks: {id: true}, u}}, notes: [{id, date, text, u}],
+//    days: {'YYYY-MM-DD': {checks: {id: true}, eat: [Today's Plate entries, BLD 861], u}}, notes: [{id, date, text, u}],
+//    myFoods: [{id, name, per, nut, u}], supps: {list: [{id, name, when, note}], u}, eatUse: {key: {c, t}} (BLD 861),
 //    panels: [{id, date, name, note, items: [{n, v, u, lo, hi}], u}]}  (full lab panels, shown with range bars)
 // Library html is written by Grounded (sealed by the Founder); typed entries are always escaped.
 // =====================================================================
@@ -50,7 +51,7 @@ function H(){
   const d = D(); if (!d) return null;
   const h = d.health = d.health && typeof d.health === 'object' ? d.health : {};
   h.set = h.set && typeof h.set === 'object' ? h.set : {};
-  h.labs = arr(h.labs); h.marks = arr(h.marks); h.notes = arr(h.notes); h.panels = arr(h.panels);
+  h.labs = arr(h.labs); h.marks = arr(h.marks); h.notes = arr(h.notes); h.panels = arr(h.panels); h.myFoods = arr(h.myFoods);
   h.days = h.days && typeof h.days === 'object' ? h.days : {};
   ['log', 'shop', 'lifts'].forEach(k => { h[k] = h[k] && typeof h[k] === 'object' && !Array.isArray(h[k]) ? h[k] : {}; }); h.wlog = arr(h.wlog);
   return h;
@@ -139,7 +140,9 @@ function chart(L, goal){
 //   Each lever i has a full effect e_i (central, low, high) as a share of the LDL that remains, an adherence a_i, and a ramp r_i(t),
 //   with t in weeks from the plan start: LDL(t) = B x product over levers of (1 - e_i x a_i x r_i(t)).
 //   r_i(t) = 1 - exp(-t / 2.5). Psyllium also eases in by dose: week 1 at 25 percent, week 2 at 50 percent, week 3 on in full.
-//   Adherence: psyllium, sterols, and nuts are the share of the last 14 days checked (today counts once it is checked);
+//   Adherence: psyllium, sterols, and nuts are the share of the last 14 days checked (today counts once it is checked; BLD 861: one of
+//   the two morning and evening My Supplements checks counts half); saturated fat is the share of days logged on Today's Plate at or
+//   under the saturated fat target (BLD 861);
 //   movement is planned workouts or practices done in the last 14 days; the other food levers, and any lever with fewer
 //   than 7 days of data, use 0.85.
 //   Lines: Central (central effects, current adherence), Best (high effects, full adherence), Careful (low effects, current adherence).
@@ -168,11 +171,15 @@ function ldlAdh(){
   const have = new Set((arr(lib && lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks)).map(c => c.id));
   const from = new Date(Math.max(+s0, +addD(t0, -13))), days = [];
   for (let d = new Date(from); d <= t0; d = addD(d, 1)) days.push(d);
-  const share = on => { const kept = days.filter(d => ymd(d) !== tk || on(d)); if (kept.length < 7) return {a: LDL_ASSUME, est: 1};
-    return {a: kept.filter(on).length / kept.length, est: 0, n: kept.length}; };
-  const out = {};
+  // BLD 861: a day's share can be a half (one of the two My Supplements checks for a lever).
+  const share = on => { const kept = days.filter(d => ymd(d) !== tk || on(d) > 0); if (kept.length < 7) return {a: LDL_ASSUME, est: 1};
+    return {a: kept.reduce((s, d) => s + on(d), 0) / kept.length, est: 0, n: kept.length}; };
+  const out = {}, sp = supps(), hiSf = tHi(targets().sf) || 15;
   LDL_LV.forEach(lv => {
-    if (lv.ck && have.has(lv.ck)) out[lv.id] = share(d => !!((h.days[ymd(d)] || {}).checks || {})[lv.ck]);
+    // BLD 861: Today's Plate. The saturated fat lever is the share of logged days at or under the target (today counts once it is past it).
+    if (lv.id === 'satfat'){ const L = days.filter(d => { const t = totals(ymd(d)); return t.n > 0 && (ymd(d) !== tk || t.sf > hiSf); });
+      out[lv.id] = L.length < 7 ? {a: LDL_ASSUME, est: 1} : {a: L.filter(d => totals(ymd(d)).sf <= hiSf).length / L.length, est: 0, n: L.length}; }
+    else if (lv.ck && (have.has(lv.ck) || sp.some(s => lever(s) === lv.ck))) out[lv.id] = share(d => leverDay(ymd(d), lv.ck));
     else if (lv.mv){
       const did = d => { const k = ymd(d); return Object.keys(h.log[k] || {}).some(x => /^(work:|prac)/.test(x)) || h.wlog.some(w => w.date === k); };
       const plan = d => agenda(d).some(x => x.k === 'work' || x.k === 'prac');
@@ -487,7 +494,9 @@ function nowCard(items, d){
 }
 function vToday2(lib){
   const h = H(), d = new Date(), items = agenda(d), cur = nowCard(items, d), n = weekNo(d), mine = MINE();
-  const checks = (arr(lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks));
+  // BLD 861: movement, stillness, and the supplements a person lists live in Today's Plate, so Daily Habits holds the rest.
+  const onPlate = new Set(['move', 'still'].concat(APP() ? supps().map(lever).filter(Boolean) : []));
+  const checks = (arr(lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks)).filter(c => KIT() || !APP() || !onPlate.has(c.id));
   const day = h.days[today()] || {checks: {}};
   const s0 = startMon(), before = n < 1;
   const L = labs(), last = L[L.length - 1], goal = num(h.set.goalLdl);
@@ -496,6 +505,7 @@ function vToday2(lib){
   return `${hero(lib)}
   ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n}${KIT() ? '' : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · a lighter week' : '')} · Food Week ${letter(n)}</p>`}
   ${cur ? card(cur) : `<div class="hj-now done"><div class="hj-kick">Today</div><h3>Everything for today is done.</h3><p>Rest well. Tomorrow keeps growing.</p></div>`}
+  ${vPlate()}
   ${remBlock(d)}
   ${items.length ? `<div class="hj-blk">${kick('Today')}${items.map(x => { const ok = isDone(d, x.key); return `<div class="hj-ag${ok ? ' ok' : ''}${cur && cur.key === x.key ? ' cur' : ''}"><button type="button" class="hj-agck" data-hja="toggle" data-hjv="${esc(x.key)}" aria-pressed="${ok}" aria-label="Done: ${esc(x.title)}">${ok ? '&#10003;' : ''}</button><button type="button" class="hj-agt" data-hja="go" data-hjv="${esc(x.key)}"><b>${esc(x.title)}</b><small>${esc(x.kick)}</small></button></div>`; }).join('')}</div>` : ''}
   ${KIT() ? '' : `<div class="hj-blk">${kick('Daily Habits')}<div class="hj-habits">${checks.map(c => { const on = !!(day.checks && day.checks[c.id]); return `<button type="button" class="hj-hb${on ? ' on' : ''}" aria-pressed="${on}" data-hja="check" data-hjv="${esc(c.id)}"><span class="box">${on ? '&#10003;' : ''}</span>${esc(c.label)}</button>`; }).join('')}</div></div>
@@ -1116,6 +1126,209 @@ function actCoach(a, v){
   return false;
 }
 
+// ---------- BLD 861: Today's Plate. Tap what you eat, see the day's numbers live, check off movement, stillness, and supplements ----------
+// Chris, October 27, 2026: "maybe we can create a check box system that tracks what i eat and then shows my daily sat fat live
+// tracking to stay under target. also for sugars protein and other important datas", then "also to check off fitness, meditation,
+// and taking the supplements breakfast and dinner.. i also take magnesium glycinate at evening".
+// Library: FLD.healthJourney.app.foods [{name, per, cat, nut, plan, quick, est, id}], app.foodsSrc {t, url, note}, app.targets;
+// FDR.healthMine.targets and healthKayti.targets {sf, pro, fib, sol, sug, cal, na} (a number is a daily aim, [aim, ceiling] a range),
+// and .supplements [{name, when: 'morning' or 'evening', note}].
+// DATA.health adds: days[date].eat [{id, k, n, per, q, v: 'h' or 'f', g, nut, t}] (nut is copied in, so history keeps its numbers),
+// myFoods [{id, name, per, nut, u}], supps {list: [{id, name, when, note}], u} (once edited), eatUse {key: {c, t}} (recent and favorite).
+// Keys: b:i, l:i, s:i (breakfasts, lunches, snacks), d:W:id (a dinner), f:slug (the food list), m:id (My Foods).
+const NK = ['sf', 'pro', 'fib', 'sol', 'sug', 'cal', 'na'];
+const TGT_DEF = {sf: 15, pro: 90, fib: 30, sol: 10, sug: 25, cal: null, na: 2300};
+function targets(){ const m = MINE(), a = APP(), t = (m && m.targets) || (a && a.targets) || {}; return Object.assign({}, TGT_DEF, t); }
+const tLo = v => Array.isArray(v) ? +v[0] : v == null ? null : +v;
+const tHi = v => Array.isArray(v) ? +v[v.length - 1] : v == null ? null : +v;
+const FOODS = () => arr((APP() || {}).foods).filter(f => f && f.name && nOk(f.nut));
+const slug = s => String(s || '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '');
+const r1 = v => Math.round(v * 10) / 10;
+const fmt = v => { v = +v || 0; return v >= 1000 ? Math.round(v).toLocaleString('en-US') : v >= 100 ? String(Math.round(v)) : String(r1(v)); };
+const fmtQ = q => q === 0.5 ? '1/2' : q === 1.5 ? '1 1/2' : String(q);
+const DINS = {b: 'breakfasts', l: 'lunches', s: 'snacks'};
+function plateItem(k){
+  const app = APP() || {}, din = app.dinners || {}, p = String(k).split(':'), t = p[0];
+  const mk = (x, per) => x && nOk(x.nut) ? {k, name: x.name, per: x.nut.per || per || '', nut: x.nut, heart: nOk(x.nutHeart) ? x.nutHeart : null} : null;
+  if (DINS[t]) return mk(arr(din[DINS[t]])[+p[1]], '1 serving');
+  if (t === 'd') return mk(arr(((din.weeks || {})[p[1]] || {}).dinners).find(z => z.id === p.slice(2).join(':')), '1 serving');
+  if (t === 'f'){ const x = FOODS().find(z => slug(z.name) === p[1]); return x ? {k, name: x.name, per: x.per || '', nut: x.nut, heart: null, est: !!x.est} : null; }
+  if (t === 'm'){ const x = arr(H().myFoods).find(z => z.id === p[1]); return x ? {k, name: x.name, per: x.per || 'My portion', nut: x.nut, heart: null, mine: 1} : null; }
+  return null;
+}
+function plateGroups(d){
+  const din = (APP() || {}).dinners || {}, idx = (t, list) => arr(list).map((x, i) => t + ':' + i), dn = dinnerFor(d);
+  return [['morning', 'Morning', FOODS().filter(f => f.plan === 'morning').map(f => 'f:' + slug(f.name)).concat(idx('b', din.breakfasts))],
+    ['midday', 'Midday', idx('l', din.lunches)], ['evening', 'Evening', dn ? ['d:' + dn.wk + ':' + dn.id] : []], ['snacks', 'Snacks', idx('s', din.snacks)]]
+    .map(([id, t, ks]) => ({id, t, items: ks.map(plateItem).filter(Boolean)})).filter(g => g.items.length);
+}
+const plateV = () => H().set.plate === 'f' ? 'f' : 'h';
+const eatOf = k => arr((H().days[k] || {}).eat);
+// ---- My Supplements: seeded from the plan (supplements, else the add-ons), edited on this device ----
+const lever = s => /psyllium/i.test(s.name || '') ? 'psyllium' : /sterol/i.test(s.name || '') ? 'sterols' : '';
+const suppId = s => 'sp:' + s.id;
+function seedSupps(){
+  const m = MINE(), mk = (name, when, note) => ({id: slug(name) + '-' + when, name, when, note: note || ''});
+  if (m && arr(m.supplements).length) return m.supplements.filter(s => s && s.name).map(s => mk(s.name, s.when === 'evening' ? 'evening' : 'morning', s.note));
+  const out = []; arr(m && m.addons).forEach(a => { const l = lever(a); if (l === 'psyllium') out.push(mk('Psyllium', 'morning', 'Before breakfast'), mk('Psyllium', 'evening', 'Before dinner'));
+    if (l === 'sterols') out.push(mk('Plant sterols', 'morning', 'With breakfast'), mk('Plant sterols', 'evening', 'With dinner')); });
+  return out;
+}
+function supps(){ const h = H(); return h.supps && Array.isArray(h.supps.list) ? h.supps.list : seedSupps(); }
+function keepSupps(list){ H().supps = {list, u: Date.now()}; save(); }
+const PSY = () => FOODS().find(f => f.id === 'psyllium');
+function totals(k){
+  const day = H().days[k] || {}, ck = day.checks || {}, t = {sf: 0, pro: 0, fib: 0, sol: 0, sug: 0, cal: 0, na: 0};
+  arr(day.eat).forEach(e => NK.forEach(n => { t[n] += (+((e.nut || {})[n]) || 0) * (+e.q || 0); }));
+  const p = PSY(); if (p) supps().filter(s => lever(s) === 'psyllium' && ck[suppId(s)]).forEach(() => NK.forEach(n => { t[n] += +(p.nut[n] || 0); }));
+  NK.forEach(n => { t[n] = r1(t[n]); }); t.n = arr(day.eat).length; return t;
+}
+// The LDL Path's psyllium and sterol levers: the plan's own check counts as a full day; otherwise each My Supplements half counts its share.
+function leverDay(k, ck){ const c = (H().days[k] || {}).checks || {}; if (c[ck]) return 1; const L = supps().filter(s => lever(s) === ck); return L.length ? L.filter(s => c[suppId(s)]).length / L.length : 0; }
+const eatPick = n => { const o = {}; NK.concat('carb').forEach(x => { if (n[x] != null && isFinite(+n[x])) o[x] = +n[x]; }); return o; };
+function eatAdd(k, q, g){
+  const it = plateItem(k); if (!it) return null; const h = H(), t = today(), d = h.days[t] = h.days[t] || {checks: {}};
+  d.eat = arr(d.eat); const v = it.heart && plateV() === 'h' ? 'h' : 'f', n = v === 'h' ? it.heart : it.nut;
+  const ex = d.eat.find(e => e.k === k && e.v === v);
+  if (ex) ex.q = r1((+ex.q || 0) + q); else d.eat.push({id: uid(), k, n: it.name, per: n.per || it.per || '', q, v, g: g || '', nut: eatPick(n), t: Date.now()});
+  if (g === 'x'){ h.eatUse = h.eatUse && typeof h.eatUse === 'object' ? h.eatUse : {}; const u = h.eatUse[k] = h.eatUse[k] || {c: 0, t: 0}; u.c++; u.t = Date.now(); }
+  d.u = Date.now(); save(); return it;
+}
+function eatLess(k){ const d = H().days[today()]; if (!d) return; d.eat = arr(d.eat); const L = d.eat.filter(e => e.k === k), e = L[L.length - 1]; if (!e) return;
+  e.q = r1((+e.q || 0) - 1); if (e.q <= 0) d.eat = d.eat.filter(x => x !== e); d.u = Date.now(); save(); }
+// ---- the search: every plan item (all weeks), the food list, and My Foods ----
+let EIX = null;
+function eatIndex(){
+  const app = APP(), mf = arr(H().myFoods), sig = mf.map(x => x.id + (x.u || '')).join(','); if (EIX && EIX.app === app && EIX.sig === sig) return EIX.list;
+  const din = (app || {}).dinners || {}, seen = new Set(), list = [], add = (k, cat) => { const it = plateItem(k); if (!it || seen.has(it.name.toLowerCase())) return; seen.add(it.name.toLowerCase()); list.push(Object.assign({cat, q: (it.name + ' ' + cat).toLowerCase()}, it)); };
+  mf.forEach(x => add('m:' + x.id, 'My Foods'));
+  Object.entries(DINS).forEach(([t, key]) => arr(din[key]).forEach((x, i) => add(t + ':' + i, 'My Plan')));
+  'ABCD'.split('').forEach(w => arr(((din.weeks || {})[w] || {}).dinners).forEach(x => add('d:' + w + ':' + x.id, 'My Plan, Week ' + w)));
+  FOODS().forEach(f => add('f:' + slug(f.name), f.cat || 'Foods'));
+  EIX = {app, sig, list}; return list;
+}
+function eatFind(q){
+  const words = String(q || '').toLowerCase().split(/[^a-z0-9%]+/).filter(Boolean), use = H().eatUse || {}, L = eatIndex();
+  if (!words.length){ const fav = L.filter(x => use[x.k]).sort((a, b) => (use[b.k].c - use[a.k].c) || (use[b.k].t - use[a.k].t)).slice(0, 5);
+    return {head: fav.length ? 'Recent and Favorites' : 'Quick Adds', list: fav.concat(L.filter(x => !use[x.k] && (x.mine || (FOODS().find(f => f.name === x.name) || {}).quick))).slice(0, 8)}; }
+  const sc = x => { const n = x.name.toLowerCase(); return (use[x.k] ? 40 + Math.min(20, use[x.k].c) : 0) + (x.mine ? 30 : 0) + (n.startsWith(words[0]) ? 20 : 0) + (/^My Plan/.test(x.cat) ? 5 : 0) - n.length / 40; };
+  return {head: '', list: L.filter(x => words.every(w => x.q.includes(w))).sort((a, b) => sc(b) - sc(a)).slice(0, 12)};
+}
+function eatResults(){
+  const r = eatFind(S.eatQuery), Q = [0.5, 1, 1.5, 2], q = S.eatQ || 1;
+  if (!r.list.length) return `<p class="hj-sub">Add it as your own below, and it stays in My Foods for next time.</p>`;
+  return `${r.head ? `<div class="hj-eh">${esc(r.head)}</div>` : ''}${r.list.map(x => { const on = S.eatPick === x.k, n = x.heart && plateV() === 'h' ? x.heart : x.nut;
+    return `<div class="hj-er${on ? ' on' : ''}"><button type="button" class="hj-ert" data-hja="eatpick" data-hjv="${esc(x.k)}" aria-expanded="${on}"><b>${esc(x.name)}</b><small>${esc(n.per || x.per || '')}${n.per || x.per ? ' · ' : ''}${fmt(n.sf)} g sat fat · ${fmt(n.pro)} g protein${x.cat ? ' · ' + esc(x.cat) : ''}</small></button>
+    ${on ? `<div class="hj-eq"><span>Servings</span>${Q.map(v => `<button type="button" class="chip${v === q ? ' on' : ''}" aria-pressed="${v === q}" data-hja="eatq" data-hjv="${v}">${fmtQ(v)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-hja="eatx" data-hjv="${esc(x.k)}">Add</button></div>` : ''}</div>`; }).join('')}`;
+}
+const eatRes = () => { const b = document.getElementById('hj-eatres'); if (b) b.innerHTML = eatResults(); };
+// ---- meters ----
+const MT = [['sf', 'Saturated fat', ' g', 'lim'], ['pro', 'Protein', ' g', 'reach'], ['fib', 'Fiber', ' g', 'reach'], ['sol', 'Soluble fiber', ' g', 'reach'], ['sug', 'Added sugar', ' g', 'lim'], ['cal', 'Calories', '', 'range'], ['na', 'Sodium', ' mg', 'lim']];
+const MST = {ok: ['On track', '&#10003;'], close: ['Getting close', '&#9679;'], past: ['Past your aim', '&#9650;'], build: ['Building', '&#8599;'], done: ['Reached', '&#10003;'], none: ['', '']};
+function mInfo(k, kind, v, tv){
+  const lo = tLo(tv), hi = tHi(tv), u = k === 'na' ? ' mg' : k === 'cal' ? '' : ' g';
+  if (tv == null || !isFinite(hi)) return {st: 'none', aim: '', scale: Math.max(v, 1), lo: null, hi: null};
+  if (kind === 'lim'){ const a = Array.isArray(tv) ? lo : hi * 0.85; return {st: v <= a ? 'ok' : v <= hi ? 'close' : 'past', aim: (Array.isArray(tv) ? fmt(lo) + ' to ' : '') + fmt(hi) + u + ' or less', scale: Math.max(hi * 1.3, v), lo: a, hi}; }
+  if (kind === 'reach') return {st: v >= lo ? 'done' : 'build', aim: Array.isArray(tv) ? fmt(lo) + ' to ' + fmt(hi) + u : fmt(lo) + u + ' or more', scale: Math.max(hi * 1.15, v), lo, hi: Array.isArray(tv) ? hi : null};
+  return {st: v < lo ? 'build' : v <= hi ? 'ok' : 'past', aim: 'about ' + fmt(lo) + ' to ' + fmt(hi), scale: Math.max(hi * 1.15, v), lo, hi};
+}
+function meter(row, v, T, big){
+  const [k, label, u, kind] = row, m = mInfo(k, kind, v, T[k]), pct = x => Math.max(0, Math.min(100, x / m.scale * 100)).toFixed(1), s = MST[m.st];
+  return `<div class="hj-mt${big ? ' big' : ''}" data-hjm="${k}" data-st="${m.st}"><div class="hj-mth"><span class="l">${esc(label)}${k === 'sol' ? ' <small>where known</small>' : ''}</span><b>${fmt(v)}${u}</b></div>
+    <div class="hj-mtb" role="img" aria-label="${esc(label)} ${fmt(v)}${esc(u)}${m.aim ? ', aim ' + esc(m.aim) + ', ' + esc(s[0]) : ''}"><span class="f" style="width:${pct(v)}%"></span>${m.lo != null ? `<i style="left:${pct(m.lo)}%"></i>` : ''}${m.hi != null && m.hi !== m.lo ? `<i style="left:${pct(m.hi)}%"></i>` : ''}</div>
+    <div class="hj-mts">${m.aim ? `<span>Aim ${esc(m.aim)}</span>` : '<span>Counted through the day</span>'}${s[0] ? `<em>${s[1]} ${esc(s[0])}</em>` : ''}</div></div>`;
+}
+// ---- the 7-day view: saturated fat and protein, one chart each (one axis each) ----
+function weekBars(rows, key, aim, cls, label){
+  const W = 320, Ht = 132, pl = 30, pr = 8, pt = 14, pb = 22, pw = W - pl - pr, ph = Ht - pt - pb, vals = rows.map(r => r.t[key]);
+  const top = Math.max(aim || 0, ...vals, 1) * 1.15, step = top > 120 ? 50 : top > 60 ? 20 : top > 30 ? 10 : 5, y = v => pt + ph - v / top * ph, bw = pw / 7 * 0.56, f1 = n => n.toFixed(1);
+  const bar = (x, v) => { const h = Math.max(0, ph * v / top), r = Math.min(4, h, bw / 2), y0 = pt + ph; if (h <= 0) return ''; return `M${f1(x)},${f1(y0)}V${f1(y0 - h + r)}Q${f1(x)},${f1(y0 - h)} ${f1(x + r)},${f1(y0 - h)}H${f1(x + bw - r)}Q${f1(x + bw)},${f1(y0 - h)} ${f1(x + bw)},${f1(y0 - h + r)}V${f1(y0)}Z`; };
+  const ticks = []; for (let v = 0; v <= top; v += step) ticks.push(v);
+  const last = rows[rows.length - 1];
+  return `<svg class="hj-wbsvg ${cls}" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="${esc(label)}, last 7 days: ${rows.map(r => r.lab + ' ' + (r.t.n ? fmt(r.t[key]) + ' g' : 'nothing logged')).join(', ')}. Aim ${fmt(aim)} g.">
+    ${ticks.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${f1(y(v))}" y2="${f1(y(v))}" class="gr"/><text x="${pl - 5}" y="${f1(y(v) + 4)}" text-anchor="end" class="ax">${v}</text>`).join('')}
+    ${rows.map((r, i) => { const x = pl + pw / 7 * i + (pw / 7 - bw) / 2; return `<g class="hj-wbg" data-ptip="${esc(r.lab + ': ' + (r.t.n || r.t[key] ? fmt(r.t[key]) + ' g ' + label.toLowerCase() : 'nothing logged yet'))}"><rect class="hit" x="${f1(pl + pw / 7 * i)}" y="${pt}" width="${f1(pw / 7)}" height="${ph}"/><path d="${bar(x, r.t[key])}" class="b"/><text x="${f1(x + bw / 2)}" y="${Ht - 6}" text-anchor="middle" class="ax${i === 6 ? ' on' : ''}">${esc(r.d1)}</text></g>`; }).join('')}
+    ${aim ? `<line x1="${pl}" x2="${W - pr}" y1="${f1(y(aim))}" y2="${f1(y(aim))}" class="aim"/><text x="${W - pr}" y="${f1(y(aim) - 4)}" text-anchor="end" class="al">Aim ${fmt(aim)}</text>` : ''}
+    ${last.t.n ? `<text x="${f1(pl + pw / 7 * 6 + pw / 14)}" y="${f1(Math.max(10, y(last.t[key]) - 5))}" text-anchor="middle" class="vl">${fmt(last.t[key])}</text>` : ''}
+  </svg>`;
+}
+function plateWeek(T){
+  const d0 = day0(new Date()), rows = [6, 5, 4, 3, 2, 1, 0].map(i => { const d = addD(d0, -i), k = ymd(d); return {k, d1: DOW[d.getDay()].slice(0, 2), lab: DOW[d.getDay()] + ' ' + short(k), t: totals(k)}; });
+  const hi = tHi(T.sf), pro = tLo(T.pro), L = rows.filter(r => r.t.n), under = L.filter(r => r.t.sf <= hi).length;
+  const body = S.eatTable ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Day</th><th>Sat Fat (g)</th><th>Protein (g)</th><th>Fiber (g)</th><th>Calories</th></tr></thead><tbody>${rows.slice().reverse().map(r => `<tr><td>${esc(r.lab)}</td><td>${r.t.n ? '<b>' + fmt(r.t.sf) + '</b>' : ''}</td><td>${r.t.n ? fmt(r.t.pro) : ''}</td><td>${r.t.n ? fmt(r.t.fib) : ''}</td><td>${r.t.n ? fmt(r.t.cal) : ''}</td></tr>`).join('')}</tbody></table></div>`
+    : `<div class="hj-wbs"><div class="hj-wb"><div class="hj-wbt">Saturated Fat (g)</div>${weekBars(rows, 'sf', hi, 'sf', 'Saturated fat')}</div><div class="hj-wb"><div class="hj-wbt">Protein (g)</div>${weekBars(rows, 'pro', pro, 'pro', 'Protein')}</div><div class="hj-ptip" hidden></div></div>`;
+  return `<details class="hj-doc hj-pw"${S.open['eat7'] ? ' open' : ''} data-hjd="eat7"><summary><span>My Last 7 Days</span></summary><div class="hj-body">
+    <p class="hj-sub">${L.length ? `${under} of ${L.length} logged day${L.length === 1 ? '' : 's'} at or under ${fmt(hi)} g of saturated fat. Each of these days feeds the saturated fat lever on My LDL Path.` : 'Your week fills in as you log each day. Each logged day feeds the saturated fat lever on My LDL Path.'}</p>
+    ${body}<button type="button" class="btn btn-line btn-sm" data-hja="eattable" aria-pressed="${!!S.eatTable}">${S.eatTable ? 'View as Chart' : 'View as Table'}</button></div></details>`;
+}
+// ---- the card ----
+function vPlate(){
+  if (KIT() || !APP()) return '';
+  const h = H(), d = new Date(), k = today(), day = h.days[k] || {checks: {}}, ck = day.checks || {}, T = targets(), tot = totals(k), eat = arr(day.eat), gs = plateGroups(d), hr = d.getHours();
+  const inPlan = new Set(gs.flatMap(g => g.items.map(i => i.k))), extras = eat.filter(e => !inPlan.has(e.k)), cur = hr < 11 ? 'morning' : hr < 15 ? 'midday' : 'evening';
+  const anyHeart = gs.some(g => g.items.some(i => i.heart)), V = plateV();
+  const row = (it, g) => { const q = eat.filter(e => e.k === it.k).reduce((a, e) => a + (+e.q || 0), 0), n = it.heart && V === 'h' ? it.heart : it.nut;
+    return `<div class="hj-pr8${q ? ' on' : ''}"><button type="button" class="hj-prt" data-hja="eat" data-hjv="${esc(it.k)}|${g}" aria-label="${q ? 'One more serving' : 'Add one serving'}: ${esc(it.name)}"><span class="box">${q ? (q === 1 ? '&#10003;' : esc(fmtQ(q))) : ''}</span><span class="nm"><b>${esc(it.name)}</b><small>${esc(n.per || it.per || '')}${n.per || it.per ? ' · ' : ''}${fmt(n.sf)} g sat fat · ${fmt(n.pro)} g protein</small></span></button>${q ? `<button type="button" class="hj-prm" data-hja="eatless" data-hjv="${esc(it.k)}" aria-label="One less: ${esc(it.name)}">&minus;</button>` : ''}</div>`; };
+  const grp = g => { const id = 'eatg:' + g.id, n = g.items.filter(i => eat.some(e => e.k === i.k)).length, open = S.open[id] != null ? S.open[id] : (g.id === cur || (g.id === 'snacks' && n > 0) || (g.id === 'morning' && hr < 11));
+    return `<details class="hj-pg8"${open ? ' open' : ''} data-hjd="${id}"><summary><span>${esc(g.t)}</span><small>${n ? n + ' logged' : g.items.length + ' on the plan'}</small></summary>${g.items.map(i => row(i, g.id)).join('')}</details>`; };
+  const sp = supps(), cb = (id, label, sub) => `<button type="button" class="hj-hb hj-pck${ck[id] ? ' on' : ''}" aria-pressed="${!!ck[id]}" data-hja="check" data-hjv="${esc(id)}"><span class="box">${ck[id] ? '&#10003;' : ''}</span><span>${esc(label)}${sub ? `<small>${esc(sub)}</small>` : ''}</span></button>`;
+  const ses = (H().set.track || 'strength') !== 'practice' ? sesFor(d) : null;
+  const ckRow = (t, list) => list.length ? `<div class="hj-ckg"><div class="hj-eh">${esc(t)}</div><div class="hj-habits">${list.join('')}</div></div>` : '';
+  const src = (APP() || {}).foodsSrc;
+  return `<div class="hj-blk hj-plate" id="hj-plate">${kick('Today\'s Plate')}
+    <div class="hj-mts0">${meter(MT[0], tot.sf, T, true)}<div class="hj-mtg">${MT.slice(1).map(r => meter(r, tot[r[0]], T)).join('')}</div></div>
+    <p class="hj-sub hj-p8s">${eat.length ? 'Tap again for a second serving.' : 'Tap what you eat. Each tap adds one serving.'} Numbers are estimates per listed portion.</p>
+    ${anyHeart ? `<div class="hj-chips hj-pv8" role="group" aria-label="Which plate">${[['h', 'Heart-Health Plate'], ['f', 'Family Plate']].map(([v, l]) => `<button type="button" class="chip${V === v ? ' on' : ''}" aria-pressed="${V === v}" data-hja="platev" data-hjv="${v}">${l}</button>`).join('')}</div>` : ''}
+    ${gs.map(grp).join('')}
+    <div class="hj-se"><div class="hj-eh">Something Else</div>
+      ${extras.length ? `<div class="hj-ex">${extras.map(e => `<div class="hj-exr"><span><b>${esc(e.n)}</b><small>${esc(fmtQ(+e.q))} × ${esc(e.per || 'serving')} · ${fmt((e.nut || {}).sf * e.q)} g sat fat</small></span><button type="button" class="linkbtn" data-hja="eatdel" data-hjv="${esc(e.id)}">Remove</button></div>`).join('')}</div>` : ''}
+      <input id="hj-eatq" type="search" placeholder="Search foods: eggs, pizza, cream..." autocomplete="off" value="${esc(S.eatQuery || '')}" aria-label="Search foods">
+      <div id="hj-eatres" aria-live="polite">${eatResults()}</div>
+      <details class="hj-doc hj-own"${S.open['eatown'] ? ' open' : ''} data-hjd="eatown"><summary><span>Add My Own</span></summary><div class="hj-body">
+        <label class="hj-fld"><span>Name</span><input data-hjo="name" autocomplete="off"></label><label class="hj-fld"><span>Portion (optional)</span><input data-hjo="per" placeholder="1 bowl" autocomplete="off"></label>
+        <div class="hj-g3">${[['sf', 'Sat fat (g)'], ['pro', 'Protein (g)'], ['fib', 'Fiber (g), optional'], ['sug', 'Added sugar (g), optional'], ['cal', 'Calories, optional'], ['na', 'Sodium (mg), optional']].map(([f, l]) => `<label class="hj-fld"><span>${l}</span><input data-hjo="${f}" inputmode="decimal"></label>`).join('')}</div>
+        <button type="button" class="btn btn-gold btn-sm" data-hja="eatown">Save to My Foods and Add</button></div></details></div>
+    <div class="hj-eh hj-ckh">Daily Checklist</div>
+    ${ckRow('Movement', [cb('move', ses ? ses.title || 'Today\'s workout' : 'Movement today', 'Checks itself when the workout finishes')])}
+    ${ckRow('Stillness', [cb('still', 'Meditation and the Daily Practice', 'Checks itself when one finishes')])}
+    ${ckRow('Morning', sp.filter(s => s.when !== 'evening').map(s => cb(suppId(s), s.name, s.note)))}
+    ${ckRow('Evening', sp.filter(s => s.when === 'evening').map(s => cb(suppId(s), s.name, s.note)))}
+    <details class="hj-doc hj-sps"${S.open['supps'] ? ' open' : ''} data-hjd="supps"><summary><span>My Supplements</span></summary><div class="hj-body">
+      ${sp.length ? sp.map(s => `<div class="hj-exr"><span><b>${esc(s.name)}</b><small>${s.when === 'evening' ? 'Evening' : 'Morning'}${s.note ? ' · ' + esc(s.note) : ''}</small></span><button type="button" class="linkbtn" data-hja="spdel" data-hjv="${esc(s.id)}">Remove</button></div>`).join('') : '<p class="hj-sub">Add what you take, and it joins your checklist.</p>'}
+      <div class="hj-add"><input id="hj-spname" placeholder="Add a supplement" autocomplete="off" aria-label="Supplement name"></div>
+      <div class="hj-chips" style="margin:8px 0 0">${['morning', 'evening'].map(w => `<button type="button" class="chip${(S.spWhen || 'evening') === w ? ' on' : ''}" aria-pressed="${(S.spWhen || 'evening') === w}" data-hja="spwhen" data-hjv="${w}">${w === 'morning' ? 'Morning' : 'Evening'}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-hja="spadd">Add</button></div></div></details>
+    ${plateWeek(T)}
+    ${src ? `<p class="hj-src">${src.url ? `<a href="${esc(src.url)}" target="_blank" rel="noopener">${esc(src.t)}</a>` : esc(src.t)}. ${esc(src.note || '')} Plan items carry the plan's own estimates.</p>` : ''}
+  </div>`;
+}
+function actPlate(a, v){
+  const h = H();
+  switch (a){
+    case 'eat': { const [k, g] = v.split('|'); eatAdd(k, 1, g); rerender(true); return true; }
+    case 'eatless': eatLess(v); rerender(true); return true;
+    case 'eatdel': { const d = h.days[today()]; if (d){ d.eat = arr(d.eat).filter(e => e.id !== v); d.u = Date.now(); save(); } rerender(true); return true; }
+    case 'platev': h.set.plate = v === 'f' ? 'f' : 'h'; h.set.u = Date.now(); save(); rerender(true); return true;
+    case 'eatpick': S.eatPick = S.eatPick === v ? null : v; S.eatQ = 1; eatRes(); return true;
+    case 'eatq': S.eatQ = +v || 1; eatRes(); return true;
+    case 'eatx': { const it = eatAdd(v, S.eatQ || 1, 'x'); S.eatPick = null; S.eatQ = 1; S.eatQuery = ''; if (it) toast('Added: ' + it.name + '.'); rerender(true); return true; }
+    case 'eatown': { const val = f => { const i = document.querySelector('[data-hjo="' + f + '"]'); return i ? String(i.value).trim() : ''; }, name = val('name').slice(0, 80), sf = num(val('sf')), pro = num(val('pro'));
+      if (!name || sf == null || pro == null){ toast('Add a name, the sat fat, and the protein.'); return true; }
+      const nut = {sf, pro}; ['fib', 'sug', 'cal', 'na'].forEach(f => { const n = num(val(f)); if (n != null) nut[f] = n; });
+      const x = {id: uid(), name, per: val('per').slice(0, 60), nut, u: Date.now()}; h.myFoods = arr(h.myFoods); h.myFoods.push(x);
+      eatAdd('m:' + x.id, 1, 'x'); S.open['eatown'] = false; toast('Saved to My Foods and added.'); rerender(true); return true; }
+    case 'eattable': S.eatTable = !S.eatTable; S.open['eat7'] = true; rerender(true); return true;
+    case 'spwhen': S.spWhen = v; rerender(true); return true;
+    case 'spadd': { const i = document.getElementById('hj-spname'), name = String(i ? i.value : '').trim().slice(0, 60); if (!name){ if (i) i.focus(); return true; }
+      const when = S.spWhen || 'evening', list = supps().slice(); let id = slug(name) + '-' + when; while (list.some(s => s.id === id)) id += '1';
+      list.push({id, name, when, note: ''}); keepSupps(list); S.open['supps'] = true; toast('Added to My Supplements.'); rerender(true); return true; }
+    case 'spdel': keepSupps(supps().filter(s => s.id !== v)); rerender(true); return true;
+  }
+  return false;
+}
+document.addEventListener('pointerover', e => { const g = e.target.closest && e.target.closest('[data-ptip]'); if (!g) return; const wrap = g.closest('.hj-wbs'), tip = wrap && wrap.querySelector('.hj-ptip'); if (!tip) return;
+  tip.textContent = g.dataset.ptip; tip.hidden = false; const rc = wrap.getBoundingClientRect(), gr = g.getBoundingClientRect(); tip.style.left = Math.max(0, Math.min(rc.width - (tip.offsetWidth || 150), gr.left - rc.left + gr.width / 2 - (tip.offsetWidth || 150) / 2)) + 'px'; tip.style.top = Math.max(0, gr.top - rc.top - 6) + 'px'; });
+document.addEventListener('pointerout', e => { const g = e.target.closest && e.target.closest('[data-ptip]'); if (!g || (e.relatedTarget && g.contains(e.relatedTarget))) return; const tip = g.closest('.hj-wbs') && g.closest('.hj-wbs').querySelector('.hj-ptip'); if (tip && e.pointerType !== 'touch') tip.hidden = true; });
+
 function vSetup(){
   const h = H(), s = S.set || (S.set = Object.assign({household: '', goals: [], goalLdl: '', nextLabs: '', start: ymd(startMon())}, h.set));
   return `<div class="hj-blk" id="hj-form">${kick('My Goals')}<h3>Make this plan your own</h3>
@@ -1168,6 +1381,7 @@ const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], ma
 function act(a, v){
   const h = H(); if (!h) return;
   if (actTool(a, v)) return;
+  if (actPlate(a, v)) return;
   switch (a){
     case 'sec': S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; rerender(false); window.scrollTo(0, 0); return;
     case 'check': { const t = today(), d = h.days[t] = h.days[t] || {checks: {}}; d.checks = d.checks || {}; d.checks[v] = !d.checks[v]; d.u = Date.now(); save(); rerender(true); return; }
@@ -1218,12 +1432,13 @@ document.addEventListener('click', e => {
   const t = e.target.closest && e.target.closest('[data-hja]'); if (!t || !D() || !t.closest('#hj-root')) return;
   e.preventDefault(); act(t.dataset.hja, t.dataset.hjv || '');
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov && document.getElementById('hj-root')) act('ovclose'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-addname') act('shopadd'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov && document.getElementById('hj-root')) act('ovclose'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-addname') act('shopadd'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-spname') act('spadd'); });
 document.addEventListener('input', e => {
   const t = e.target; if (!t.closest || !t.closest('#hj-root')) return;
   if (t.dataset.hjf && S.form) S.form[t.dataset.hjf] = t.value;
   if (t.dataset.hjs && S.set) S.set[t.dataset.hjs] = t.value;
   if (t.id === 'hj-note') S.draft = t.value;
+  if (t.id === 'hj-eatq'){ S.eatQuery = t.value; S.eatPick = null; eatRes(); }
   if (t.id === 'hj-lb' && S.ov){ S.ov.lb = t.value; const id = t.dataset.hjid, v = String(t.value).trim().slice(0, 12); if (id && H()){ if (v) H().lifts[id] = v; else delete H().lifts[id]; clearTimeout(S.lbT); S.lbT = setTimeout(save, 700); } }
 });
 // BLD 860: the My LDL Path crosshair follows the pointer and snaps to whole weeks; arrow keys move it when the chart has focus.
@@ -1420,6 +1635,52 @@ const CSS = `
 @keyframes hjin{from{opacity:0;transform:translateY(14px);}to{opacity:1;transform:none;}}
 .hj-stagebox .hj-steam{animation:hjst 2.4s ease-in-out infinite;}@keyframes hjst{0%,100%{opacity:.25;transform:translateY(4px);}50%{opacity:.7;transform:none;}}
 @media (prefers-reduced-motion: reduce){.hj-ovb.hj-in,.hj-breath,.hj-stagebox .hj-steam{animation:none;}.hj-ring{transition:none;}}
+/* BLD 861: Today's Plate. Meter states carry an icon and a word; getting close and past also wear a stripe, so state never rests on color alone.
+   State colors checked with the dataviz palette validator on the card surfaces (normal vision separation passes; green and amber lean on the icon, word, and stripe). */
+#hj-root{--mok:#4A8A2C;--mclose:#C2740C;--mpast:#8E5BA6;--mbuild:var(--ink-soft);}
+:root[data-theme="dark"] #hj-root{--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}}
+.hj-plate{padding-bottom:12px;}
+.hj-mts0{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:12px 18px;align-items:start;margin:2px 0 4px;}@media(max-width:700px){.hj-mts0{grid-template-columns:minmax(0,1fr);}}
+.hj-mtg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px;}@media(max-width:700px){.hj-mtg{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.hj-mt{min-width:0;--mc:var(--mbuild);}.hj-mt[data-st="ok"],.hj-mt[data-st="done"]{--mc:var(--mok);}.hj-mt[data-st="close"]{--mc:var(--mclose);}.hj-mt[data-st="past"]{--mc:var(--mpast);}.hj-mt[data-st="none"]{--mc:var(--ink-soft);}
+.hj-mth{display:flex;justify-content:space-between;align-items:baseline;gap:6px;}.hj-mth .l{font-size:13.5px;color:var(--ink-soft);line-height:1.2;}.hj-mth .l small{font-size:11.5px;}
+.hj-mth b{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-weight:600;font-size:17px;color:var(--ink);font-variant-numeric:tabular-nums;white-space:nowrap;}
+.hj-mt.big .hj-mth .l{font-size:15px;font-weight:600;color:var(--ink);}.hj-mt.big .hj-mth b{font-size:34px;line-height:1.05;}
+.hj-mtb{position:relative;height:8px;border-radius:5px;background:color-mix(in srgb,var(--mc) 18%,var(--bg-deep));margin:5px 0 4px;overflow:visible;}.hj-mt.big .hj-mtb{height:14px;border-radius:7px;}
+.hj-mtb .f{position:absolute;left:0;top:0;bottom:0;border-radius:inherit;background:var(--mc);transition:width .35s ease;min-width:0;}
+.hj-mt[data-st="close"] .hj-mtb .f,.hj-mt[data-st="past"] .hj-mtb .f{background-image:repeating-linear-gradient(45deg,rgba(255,255,255,.28) 0 3px,transparent 3px 7px);}
+.hj-mtb i{position:absolute;top:-3px;bottom:-3px;width:2px;margin-left:-1px;background:var(--ink);opacity:.55;border-radius:1px;}
+.hj-mts{display:flex;justify-content:space-between;gap:6px;flex-wrap:wrap;font-size:12.5px;color:var(--ink-soft);line-height:1.3;}.hj-mts em{font-style:normal;color:var(--ink);font-weight:600;white-space:nowrap;}.hj-mt.big .hj-mts{font-size:14px;}
+@media (prefers-reduced-motion: reduce){.hj-mtb .f{transition:none;}}
+.hj-p8s{font-size:14px;margin:8px 0;}.hj-pv8{margin:0 0 8px;}.hj-pv8 .chip{min-height:40px;font-size:14px;}
+.hj-pg8{border-top:1px solid var(--line);}.hj-pg8 summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:8px;padding:11px 0;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-size:15px;}
+.hj-pg8 summary::-webkit-details-marker{display:none;}.hj-pg8 summary small{font-family:'Barlow',sans-serif;letter-spacing:0;text-transform:none;color:var(--ink-soft);font-weight:500;font-size:13.5px;}
+.hj-pg8 summary::after{content:'+';color:var(--gold);padding-left:8px;font-family:'Barlow',sans-serif;}.hj-pg8[open] summary::after{content:'\\2212';}
+.hj-pg8 summary small{margin-left:auto;}
+.hj-pr8{display:flex;align-items:center;gap:6px;min-width:0;}
+.hj-prt{flex:1;min-width:0;display:flex;align-items:center;gap:10px;text-align:left;background:none;border:0;border-radius:10px;padding:7px 4px;color:var(--ink);font:inherit;cursor:pointer;min-height:48px;}
+.hj-prt:hover{background:var(--bg-deep);}.hj-prt .nm{min-width:0;}.hj-prt b{display:block;font-weight:600;font-size:15.5px;overflow-wrap:anywhere;}.hj-prt small{display:block;color:var(--ink-soft);font-size:13px;overflow-wrap:anywhere;}
+.hj-prt .box{flex:0 0 30px;height:30px;border-radius:9px;border:2px solid var(--line);background:var(--card);display:flex;align-items:center;justify-content:center;color:#fff;font-weight:700;font-size:14px;}
+.hj-pr8.on .box{background:var(--mok);border-color:var(--mok);}
+.hj-prm{flex:0 0 40px;height:40px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);font-size:20px;line-height:1;cursor:pointer;}
+.hj-eh{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.4px;text-transform:uppercase;color:var(--gold);font-size:14px;margin:12px 0 6px;}
+.hj-se{border-top:1px solid var(--line);margin-top:4px;}.hj-se #hj-eatq{width:100%;min-width:0;min-height:46px;}
+.hj-er{border-top:1px solid var(--line);}.hj-er:first-of-type{border-top:0;}
+.hj-ert{display:block;width:100%;text-align:left;background:none;border:0;padding:8px 2px;color:var(--ink);font:inherit;cursor:pointer;}.hj-ert b{font-weight:600;font-size:15px;overflow-wrap:anywhere;}.hj-ert small{display:block;color:var(--ink-soft);font-size:13px;overflow-wrap:anywhere;}
+.hj-eq{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:0 0 10px;}.hj-eq>span{font-size:13.5px;color:var(--ink-soft);margin-right:2px;}.hj-eq .chip{min-height:40px;min-width:46px;}
+#hj-eatres{margin:6px 0 4px;}#hj-eatres .hj-eh{margin-top:6px;font-size:13px;}
+.hj-ex{margin:0 0 8px;}.hj-exr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);min-width:0;}.hj-exr:first-child{border-top:0;}.hj-exr>span{min-width:0;}.hj-exr b{display:block;font-weight:600;font-size:15px;overflow-wrap:anywhere;}.hj-exr small{display:block;color:var(--ink-soft);font-size:13px;}
+.hj-own,.hj-sps,.hj-pw{margin:10px 0 0;}.hj-own summary,.hj-sps summary,.hj-pw summary{font-size:19px;padding:11px 14px;}
+.hj-ckh{border-top:1px solid var(--line);padding-top:12px;margin-top:14px;}.hj-ckg{margin:0 0 8px;}.hj-ckg .hj-eh{color:var(--ink-soft);font-size:12.5px;margin:6px 0 4px;}
+.hj-pck small{display:block;color:var(--ink-soft);font-size:12.5px;line-height:1.25;}
+.hj-wbs{position:relative;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px 18px;margin:4px 0 10px;}@media(max-width:700px){.hj-wbs{grid-template-columns:minmax(0,1fr);}}
+.hj-wbt{font-size:13.5px;font-weight:600;color:var(--ink);margin-bottom:2px;}
+.hj-wbsvg{display:block;width:100%;max-width:420px;height:auto;}.hj-wbsvg text{font-family:system-ui,-apple-system,'Segoe UI',sans-serif;font-size:11px;}
+.hj-wbsvg .ax{fill:var(--ink-soft);font-variant-numeric:tabular-nums;}.hj-wbsvg .ax.on{fill:var(--ink);font-weight:600;}.hj-wbsvg .gr{stroke:var(--line);stroke-width:1;}
+.hj-wbsvg.sf .b{fill:var(--lpc);}.hj-wbsvg.pro .b{fill:var(--lpm);}.hj-wbsvg .hit{fill:transparent;}.hj-wbg:hover .b{filter:brightness(1.12);}
+.hj-wbsvg .aim{stroke:var(--ink);stroke-width:1.25;stroke-dasharray:5 4;opacity:.7;}.hj-wbsvg .al{fill:var(--ink);font-weight:600;}.hj-wbsvg .vl{fill:var(--ink);font-weight:600;font-variant-numeric:tabular-nums;}
+.hj-ptip{position:absolute;z-index:2;pointer-events:none;transform:translateY(-100%);background:var(--card);border:1px solid var(--line);border-radius:10px;box-shadow:0 6px 18px rgba(0,0,0,.14);padding:6px 10px;font-size:13.5px;color:var(--ink);white-space:nowrap;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
@@ -1433,7 +1694,7 @@ window.GGHealth = {
     out.deleted = out.deleted || {clients: {}, sessions: {}}; out.deleted.health = out.deleted.health || {};
     Object.entries((inc.deleted || {}).health || {}).forEach(([id, ts]) => { out.deleted.health[id] = Math.max(out.deleted.health[id] || 0, ts); });
     const o = out.health = out.health && typeof out.health === 'object' ? out.health : {}, i = inc.health || {}; let added = 0, updated = 0;
-    ['labs', 'marks', 'notes', 'panels', 'wlog'].forEach(k => {
+    ['labs', 'marks', 'notes', 'panels', 'wlog', 'myFoods'].forEach(k => {
       o[k] = arr(o[k]);
       arr(i[k]).forEach(x => { if (!x || !x.id) return; const j = o[k].findIndex(y => y.id === x.id); if (j < 0){ o[k].push(x); added++; } else if ((x.u || 0) > (o[k][j].u || 0)){ o[k][j] = x; updated++; } });
       o[k] = o[k].filter(x => !(out.deleted.health[x.id] && out.deleted.health[x.id] >= (x.u || 0)));
@@ -1444,6 +1705,8 @@ window.GGHealth = {
     o.log = o.log && typeof o.log === 'object' ? o.log : {}; Object.entries(i.log || {}).forEach(([d, x]) => { if (x && (!o.log[d] || (x.u || 0) > (o.log[d].u || 0))) o.log[d] = x; });
     o.shop = o.shop && typeof o.shop === 'object' ? o.shop : {}; Object.entries(i.shop || {}).forEach(([w, x]) => { if (x && (!o.shop[w] || (x.u || 0) > (o.shop[w].u || 0))) o.shop[w] = x; });
     o.lifts = Object.assign({}, i.lifts || {}, o.lifts || {});
+    if (i.supps && (!o.supps || (i.supps.u || 0) > (o.supps.u || 0))) o.supps = i.supps;
+    o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
     return {added, updated};
   },
