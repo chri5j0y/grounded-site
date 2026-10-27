@@ -1,0 +1,368 @@
+// =====================================================================
+// GROUNDED . TENDING PLANNER (GWG BLD 866): the food plan, the shopping list, the workouts, and the targets for public Tending.
+// (c) 2026 Grow With Grounded LLC.
+// Pure functions with no page and no storage: the same code runs in the browser (window.GGTendPlan) and in Node (require).
+// Every choice is steady for the same inputs (a seeded order), so a plan stays put until the person asks for a new one.
+//
+//   needOk(recipe, need), fitsAll(recipe, set)      food needs and typed allergies
+//   planWeeks(recipes, set) -> {weeks: {A..D: {dinners: [dinner items]}}, ids: {A..D: [ids by day]}, stats: {A..D}}
+//       set: {needs: [], allergies: 'sesame, shrimp', goals: [], kids: true, seed: 1, leftovers: true}
+//       Weekly rules (the Grounded Nutritional Standards): fish dinners 2 or more, red meat 1 at most, no repeats in a week,
+//       every dinner used before one comes back, four rotating weeks, seven dinners a week (Saturday a Leftovers Night
+//       unless leftovers is false; Sunday a cook-once night that makes extra).
+//   weeksFromIds(recipes, ids)                      the same weeks from saved ids (what Tending stores)
+//   planMeals(recipes, set) -> {breakfasts: [ids], lunches: [ids], snacks: [ids]}
+//   planDay(recipes, set, dayIndex) -> {breakfast, lunch, snack} recipes for one day (a steady rotation)
+//   swapDinner(recipes, set, ids, wk, day, n)       a new ids object with one dinner swapped, rules kept
+//   swapMeal(recipes, set, list, type, i, n)        a new id list with one breakfast, lunch, or snack swapped
+//   shopList(weeks, week, extras) -> [{name, amt, sec, for}]   ingredients merged by name, grouped by section
+//   buildSessions(moves, templates, opts) -> {sessions: {A..D}, warmup, cooldown}
+//       opts: {level: 'root'|'rise'|'thrive', place: 'home'|'light'|'gym', mins: 20|40|60, warmup: [], cooldown: []}
+//       Sessions use the Field Guide item shape the player already plays; rests never over 60 seconds; the time estimate is
+//       the same honest clock as field-guide/health.js (planSecs), fitted close to the chosen minutes.
+//   estimate(session, warmup, cooldown, phase, light)  seconds, the player's own model
+//   targets(goalIds, goals, {weightKg, teen})       the strictest of each target across the chosen goals
+//   kidAims(band, sex)                              a child's daily aims from an age band (no weight, no calories)
+//   ldlRange(base, levers, picks, opts)             the LDL Path range for the levers a person chose
+// =====================================================================
+(function(root){
+'use strict';
+const arr = x => Array.isArray(x) ? x : [];
+const DAYS = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+const WEEKS = ['A', 'B', 'C', 'D'];
+
+// ---------- a seeded order ----------
+function rng(seed){ let s = (Math.abs(Math.floor(+seed || 1)) % 2147483646) + 1; return () => { s = s * 16807 % 2147483647; return (s - 1) / 2147483646; }; }
+function shuffle(list, rand){ const a = list.slice(); for (let i = a.length - 1; i > 0; i--){ const j = Math.floor(rand() * (i + 1)); [a[i], a[j]] = [a[j], a[i]]; } return a; }
+
+// ---------- food needs and allergies ----------
+const FISH_RE = /\b(fish|salmon|tuna|cod|halibut|tilapia|trout|sardines?|anchov(y|ies)|mackerel|shrimp|prawns?|scallops?|crab|lobster|clams?|mussels?|oysters?|pollock|haddock|catfish|mahi)\b/i;
+const EGG_RE = /\beggs?\b|\bmayonnaise\b|\bmayo\b/i;
+const MEAT_RE = /\b(chicken|turkey|beef|pork|lamb|bison|venison|steak|sirloin)\b/i;
+// Common allergy words cover their family: shellfish covers shrimp, and so on.
+const ALLERGY = {
+  shellfish: /\b(shrimp|prawns?|crab|lobster|scallops?|clams?|mussels?|oysters?|shellfish)\b/i,
+  'tree nut': /\b(almonds?|walnuts?|pecans?|cashews?|pistachios?|hazelnuts?|macadamias?|brazil nuts?|pine nuts?)\b/i,
+  nut: /\b(almonds?|walnuts?|pecans?|cashews?|pistachios?|hazelnuts?|macadamias?|peanuts?|pine nuts?|nut butter)\b/i,
+  peanut: /\bpeanuts?\b/i, sesame: /\b(sesame|tahini)\b/i, soy: /\b(soy|tofu|edamame|tempeh|miso|tamari)\b/i,
+  dairy: /\b(milk|cheese|yogurt|parmesan|feta|ricotta|kefir|whey)\b/i, milk: /\b(milk|cheese|yogurt|parmesan|feta|ricotta|kefir|whey)\b/i,
+  gluten: /\b(wheat|barley|rye|farro|bulgur|couscous|pasta|bread|tortillas?|pita|flour|panko)\b/i, wheat: /\b(wheat|farro|bulgur|couscous|pasta|bread|tortillas?|pita|flour|panko)\b/i,
+  egg: EGG_RE, fish: FISH_RE
+};
+const recText = r => [r.name].concat(arr(r.ingredients), arr(r.shop).map(s => s && s.name)).join(' \n ');
+function needOk(r, need){
+  const f = arr(r.fits);
+  if (f.includes(need)) return true;
+  if (need === 'vegetarian') return f.includes('vegan');
+  if (need === 'fishFree') return r.protein !== 'fish' && !FISH_RE.test(recText(r));
+  if (need === 'eggFree') return r.protein !== 'eggs' && !EGG_RE.test(recText(r));
+  return false;
+}
+function allergyWords(a){ return (Array.isArray(a) ? a : String(a || '').split(/[,;\n]+/)).map(x => String(x).trim().toLowerCase()).filter(x => x.length > 1); }
+function allergyOk(r, words){
+  const t = recText(r).toLowerCase();
+  return words.every(w => {
+    const key = w.replace(/\s*allerg(y|ies)\s*/g, '').replace(/s$/, '').trim(); if (!key) return true;
+    if (ALLERGY[key] && ALLERGY[key].test(t)) return false;
+    const esc = key.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    return !new RegExp('\\b' + esc + '(e?s)?\\b', 'i').test(t);
+  });
+}
+function fitsAll(r, set){ set = set || {}; return arr(set.needs).every(n => needOk(r, n)) && allergyOk(r, allergyWords(set.allergies)); }
+const goalScore = (r, set) => arr(r.goals).filter(g => arr(set.goals).includes(g)).length * 2 + (set.kids && arr(r.fits).includes('kidFriendly') ? 1 : 0);
+// The pool for a meal: what fits, the best match for the person's goals first, a steady shuffle inside each score.
+function pool(recipes, set, meal){
+  const rand = rng((+set.seed || 1) * 31 + meal.length);
+  const ok = shuffle(arr(recipes).filter(r => r && r.id && r.meal === meal && fitsAll(r, set)), rand);
+  return ok.map((r, i) => ({r, s: goalScore(r, set), i})).sort((a, b) => b.s - a.s || a.i - b.i).map(x => x.r);
+}
+
+// ---------- dinners ----------
+const isFish = r => r && r.protein === 'fish';
+const isRed = r => r && r.protein === 'redmeat';
+const LEFT = {id: 'leftovers', name: 'Leftovers Night', meal: 'dinner', leftover: true, mins: 15, active: 15, protein: 'mixed',
+  ingredients: [], serve: 'Set out the week\'s leftovers with a big bowl of raw vegetables or a quick salad, so half the plate stays vegetables.',
+  steps: [{t: 'Take out the lidded containers from this week, and check that each is within 3 to 4 days.', min: 0},
+    {t: 'Warm each one until it steams, 165 F in the center, about 2 to 3 minutes in the microwave or 10 minutes in a covered skillet.', min: 0},
+    {t: 'Fill half of each plate with vegetables or fruit, then add the leftovers.', min: 0}],
+  tip: 'A Leftovers Night keeps the week simple and lets nothing go to waste.', keeps: 'Leftovers keep 3 to 4 days in the fridge in lidded containers.'};
+function dinnerItem(r, day){
+  if (!r) return null;
+  if (r.leftover) return Object.assign({}, r, {day});
+  const nut = r.nut && typeof r.nut === 'object' ? Object.assign({per: '1 serving'}, r.nut) : null;
+  return {id: r.id, day, name: r.name, mins: r.mins, active: r.active, serves: r.serves, protein: r.protein, fits: arr(r.fits), goals: arr(r.goals),
+    nut, ingredients: arr(r.ingredients), steps: arr(r.steps), serve: r.serve || '', tip: r.tip || '', keeps: r.keeps || '', kid: r.kid || '',
+    swaps: r.swaps || null, shop: r.shop || null, cost: r.cost != null ? r.cost : undefined, batch: day === 'Sun' ? true : undefined};
+}
+// Order a week's cooked dinners: quickest on weeknights, the longest cook on Sunday, fish apart, no protein two nights running.
+function arrange(list, days){
+  const sun = days.includes('Sun') ? list.slice().sort((a, b) => (+b.mins || 0) - (+a.mins || 0) || (+b.serves || 0) - (+a.serves || 0))[0] : null;
+  let rest = list.filter(r => r !== sun), out = [];
+  const wd = days.filter(d => d !== 'Sun');
+  for (let i = 0; i < wd.length; i++){
+    const prev = out[out.length - 1];
+    const pick = rest.find(r => !prev || r.protein !== prev.protein) || rest[0];
+    out.push(pick); rest = rest.filter(r => r !== pick);
+  }
+  // Fish apart: if two fish dinners sit next to each other, move one later when a spot allows.
+  for (let i = 1; i < out.length; i++) if (isFish(out[i]) && isFish(out[i - 1])){ const j = out.findIndex((r, k) => k > i + 1 && !isFish(r) && !isFish(out[k - 1]) && !(out[k + 1] && isFish(out[k + 1]))); if (j > 0){ [out[i], out[j]] = [out[j], out[i]]; } }
+  const map = {}; wd.forEach((d, i) => { map[d] = out[i]; }); if (sun) map.Sun = sun; return map;
+}
+function planWeeks(recipes, set){
+  set = Object.assign({needs: [], goals: [], allergies: '', seed: 1, leftovers: true}, set || {});
+  const P = pool(recipes, set, 'dinner'), fishP = P.filter(isFish), otherP = P.filter(r => !isFish(r));
+  const ids = {}, stats = {};
+  const cookDays = set.leftovers === false ? DAYS.slice() : DAYS.filter(d => d !== 'Sat');
+  const need = cookDays.length;
+  let fq = 0, oq = 0;
+  // Fish fills two nights first (or more when the pool is mostly fish); then the rest rotates through every other dinner.
+  WEEKS.forEach(w => {
+    const week = [], has = r => week.some(x => x.id === r.id);
+    const fishWant = fishP.length ? Math.min(need, Math.max(2, Math.round(need * fishP.length / Math.max(1, P.length)))) : 0;
+    for (let k = 0, guard = 0; week.filter(isFish).length < Math.min(fishWant, 2) && guard < fishP.length * 3 + 2; guard++, k++){
+      const r = fishP[fq++ % fishP.length]; if (!has(r) || fishP.length < 2) week.push(r); }
+    for (let guard = 0; week.length < need && guard < otherP.length * 3 + 4; guard++){
+      if (!otherP.length) break;
+      const r = otherP[oq++ % otherP.length];
+      if (has(r) && otherP.length + fishP.length >= need) continue;
+      if (isRed(r) && week.some(isRed)) continue;
+      week.push(r);
+    }
+    // A small pool: fill with more fish, then allow repeats (never a second red meat).
+    for (let guard = 0; week.length < need && guard < 40 && P.length; guard++){ const r = P[(fq + oq + guard) % P.length]; if (isRed(r) && week.some(isRed)) continue; if (has(r) && P.filter(x => !(isRed(x) && week.some(isRed))).some(x => !has(x))) continue; week.push(r); }
+    const map = arrange(week, cookDays);
+    ids[w] = DAYS.map(d => map[d] ? map[d].id : (d === 'Sat' && set.leftovers !== false ? 'leftovers' : ''));
+  });
+  const weeks = weeksFromIds(recipes, ids);
+  WEEKS.forEach(w => { stats[w] = weekStats(weeks[w].dinners); });
+  return {weeks, ids, stats};
+}
+function weekStats(dinners){
+  const cooked = arr(dinners).filter(x => x && !x.leftover);
+  const costs = cooked.map(x => x.cost).filter(x => x != null && isFinite(+x));
+  return {fish: cooked.filter(isFish).length, red: cooked.filter(isRed).length, mins: cooked.reduce((a, x) => a + (+x.mins || 0), 0),
+    active: cooked.reduce((a, x) => a + (+x.active || +x.mins || 0), 0), cost: costs.length === cooked.length && cooked.length ? Math.round(costs.reduce((a, b) => a + +b, 0) * 100) / 100 : null, nights: arr(dinners).length};
+}
+function byId(recipes){ const m = {}; arr(recipes).forEach(r => { if (r && r.id) m[r.id] = r; }); m.leftovers = LEFT; return m; }
+function weeksFromIds(recipes, ids){
+  const m = byId(recipes), out = {};
+  WEEKS.forEach(w => { out[w] = {dinners: arr(ids && ids[w]).map((id, i) => dinnerItem(m[id], DAYS[i])).filter(Boolean)}; });
+  return out;
+}
+// Swap one dinner: the next dinner in the rotation that keeps fish at 2 or more and red meat at 1 at most.
+function swapDinner(recipes, set, ids, wk, day, n){
+  set = set || {}; const m = byId(recipes), list = arr(ids && ids[wk]).slice(), di = DAYS.indexOf(day); if (di < 0) return ids;
+  const cur = m[list[di]], others = list.filter((x, i) => i !== di).map(x => m[x]).filter(Boolean);
+  const fishLeft = others.filter(isFish).length, redLeft = others.filter(isRed).length;
+  const P = pool(recipes, set, 'dinner').filter(r => !list.includes(r.id) && (!isRed(r) || redLeft < 1));
+  const fishOk = P.some(isFish);
+  const cands = fishLeft < 2 && fishOk ? P.filter(isFish) : P;
+  if (!cands.length && !(cur && cur.leftover)) return ids;
+  const pick = cands.length ? cands[Math.abs(+n || 0) % cands.length] : null;
+  if (!pick) return ids;
+  list[di] = pick.id; return Object.assign({}, ids, {[wk]: list});
+}
+
+// ---------- breakfasts, lunches, snacks ----------
+const MEALS = {breakfasts: 'breakfast', lunches: 'lunch', snacks: 'snack'}, MCOUNT = {breakfasts: 4, lunches: 4, snacks: 5};
+function planMeals(recipes, set){ set = set || {}; const out = {}; Object.keys(MEALS).forEach(k => { out[k] = pool(recipes, set, MEALS[k]).slice(0, MCOUNT[k]).map(r => r.id); }); return out; }
+function planDay(recipes, set, dayIndex){
+  const m = planMeals(recipes, set), b = byId(recipes), at = (list, k) => list.length ? b[list[((+dayIndex || 0) + k) % list.length]] : null;
+  return {breakfast: at(m.breakfasts, 0), lunch: at(m.lunches, 1), snack: at(m.snacks, 2)};
+}
+function swapMeal(recipes, set, list, type, i, n){
+  const meal = MEALS[type]; if (!meal) return arr(list); const L = arr(list).slice(), P = pool(recipes, set || {}, meal).filter(r => !L.includes(r.id));
+  if (!P.length) return L; L[i] = P[Math.abs(+n || 0) % P.length].id; return L;
+}
+
+// ---------- the shopping list ----------
+const SECTIONS = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Frozen', 'Pantry', 'Spices'];
+const SEC_RE = [
+  ['Frozen', /\bfrozen\b/i],
+  ['Spices', /\b(salt|pepper|cumin|paprika|oregano|basil, dried|dried (basil|thyme|oregano|dill|rosemary)|thyme, dried|chili powder|chile powder|cinnamon|turmeric|coriander|curry powder|garam masala|nutmeg|ginger, ground|ground ginger|red pepper flakes|bay leaf|bay leaves|italian seasoning|smoked paprika|cayenne|seasoning|garlic powder|onion powder|za'atar|sumac|cloves, ground|allspice|cardamom|mustard seed|fennel seed|chili flakes)\b/i],
+  ['Proteins', /\b(salmon|tuna|cod|halibut|tilapia|trout|sardines?|shrimp|fish|chicken|turkey|beef|sirloin|pork|tofu|tempeh|lamb|bison)\b/i],
+  ['Dairy and Eggs', /\b(eggs?|milk|yogurt|cheese|parmesan|feta|ricotta|kefir|cottage)\b/i],
+  ['Grains and Beans', /\b(rice|quinoa|oats|oatmeal|farro|barley|bulgur|couscous|pasta|spaghetti|penne|noodles|bread|tortillas?|pita|beans?|chickpeas|lentils|split peas|edamame|wheat|flour|crackers|cereal|granola)\b/i],
+  ['Produce', /\b(lettuce|spinach|kale|arugula|greens|cabbage|broccoli|cauliflower|carrots?|celery|onions?|shallots?|garlic|ginger|peppers?|tomato(es)?|cucumbers?|zucchini|squash|potato(es)?|sweet potato(es)?|mushrooms?|green beans|asparagus|brussels|beets?|corn|peas|avocados?|lemons?|limes?|oranges?|apples?|bananas?|berries|blueberries|strawberries|raspberries|grapes|pears?|peaches|mango|pineapple|melon|cilantro|parsley|basil|dill|mint|thyme|rosemary|scallions?|green onions?|herbs|radish(es)?|jalape[nñ]os?|chiles?|fruit|vegetables|salad|clementines?|kiwi|cherries|dates|raisins)\b/i],
+  ['Pantry', /./]
+];
+const secOf = name => (SEC_RE.find(([, re]) => re.test(name)) || ['Pantry'])[0];
+const NUMW = {a: 1, an: 1, one: 1, two: 2, three: 3, four: 4, five: 5, six: 6, seven: 7, eight: 8, nine: 9, ten: 10, twelve: 12, half: 0.5};
+const UNIT_RE = '(?:(?:\\d+(?:\\.\\d+)?|\\d+/\\d+)\\s*(?:oz|ounce|ounces|lb|lbs|pound|pounds|g|quart|quarts?)\\s+)?(?:cans?|cups?|tbsp|tablespoons?|tsp|teaspoons?|lbs?|pounds?|oz|ounces?|g|grams?|cloves?|bunch(?:es)?|heads?|packages?|pkgs?|bags?|jars?|cartons?|pints?|quarts?|slices?|stalks?|sprigs?|handfuls?|pinch(?:es)?|dash(?:es)?|containers?|blocks?|fillets?|boxes?|bottles?|ears?|loaf|loaves|links?|pieces?|large|medium|small|whole)';
+const AMT_RE = new RegExp('^((?:about\\s+)?(?:\\d+\\s+\\d+/\\d+|\\d+/\\d+|\\d+(?:\\.\\d+)?|a|an|one|two|three|four|five|six|seven|eight|nine|ten|twelve|half)(?:\\s*(?:to|or|-)\\s*(?:\\d+/\\d+|\\d+(?:\\.\\d+)?))?(?:\\s+' + UNIT_RE + '\\b\\.?(?:\\s+' + UNIT_RE + '\\b)?)?)\\s+(?:of\\s+)?(.+)$', 'i');
+const toNum = s => { s = String(s).trim().toLowerCase(); if (NUMW[s] != null) return NUMW[s]; let m = /^(\d+)\s+(\d+)\/(\d+)$/.exec(s); if (m) return +m[1] + m[2] / m[3]; m = /^(\d+)\/(\d+)$/.exec(s); if (m) return m[1] / m[2]; return isFinite(+s) ? +s : null; };
+const fmtN = n => { const w = Math.floor(n + 1e-9), f = n - w, fr = [[0.25, '1/4'], [1 / 3, '1/3'], [0.5, '1/2'], [2 / 3, '2/3'], [0.75, '3/4']].find(([v]) => Math.abs(f - v) < 0.04); return f < 0.04 ? String(w) : fr ? (w ? w + ' ' : '') + fr[1] : String(Math.round(n * 10) / 10); };
+function parseIng(line){
+  let t = String(line || '').replace(/\([^)]*\)/g, '').replace(/\s+/g, ' ').trim(); if (!t) return null;
+  const m = AMT_RE.exec(t); let amt = '', name = t;
+  if (m){ amt = m[1].trim(); name = m[2]; }
+  name = name.split(/,| for | plus /)[0].replace(/^(?:of|fresh|plain)\s+/i, '').trim();
+  if (!name) return null;
+  const um = /^((?:about\s+)?\S+)\s*(.*)$/.exec(amt || ''), q = um ? toNum(um[1].replace(/^about\s+/i, '')) : null;
+  return {name: name.replace(/^./, c => c.toUpperCase()), amt, q, unit: um ? um[2].toLowerCase().replace(/s$/, '') : ''};
+}
+const keyOf = n => String(n).toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(Boolean).map(w => w.length > 3 && /ies$/.test(w) ? w.slice(0, -3) + 'y' : w.length > 3 && /oes$/.test(w) ? w.slice(0, -2) : w.length > 3 && /[^s]s$/.test(w) ? w.slice(0, -1) : w).join(' ');
+// weeks: the planWeeks weeks object (or one week's {dinners}); week: 'A' to 'D'; extras: more recipes (breakfasts, lunches, snacks) to add.
+function shopList(weeks, week, extras){
+  const w = weeks && weeks.dinners ? weeks : (weeks || {})[week] || {}, recs = arr(w.dinners).filter(x => x && !x.leftover).concat(arr(extras).filter(Boolean));
+  const map = new Map();
+  recs.forEach(r => {
+    const lines = arr(r.shop).length ? arr(r.shop).map(s => ({name: s.name, amt: s.amt || '', sec: s.sec, q: null, unit: ''})) : arr(r.ingredients).map(parseIng).filter(Boolean);
+    lines.forEach(x => {
+      if (/^(water|ice|hot water|cold water)$/i.test(x.name)) return;
+      const k = keyOf(x.name), sec = SECTIONS.includes(x.sec) ? x.sec : secOf(x.name), cur = map.get(k);
+      if (!cur){ map.set(k, {name: x.name, amts: [x], sec, for: [r.name]}); return; }
+      cur.amts.push(x); if (!cur.for.includes(r.name)) cur.for.push(r.name);
+    });
+  });
+  const out = [];
+  map.forEach(v => {
+    const units = new Set(v.amts.map(a => a.unit)), allQ = v.amts.every(a => a.q != null);
+    let amt;
+    if (allQ && units.size === 1){ const u = [...units][0], tot = v.amts.reduce((s, a) => s + a.q, 0); amt = fmtN(tot) + (u ? ' ' + u + (tot > 1 && !/s$|oz|tbsp|tsp|lb|g$/.test(u) ? 's' : '') : ''); }
+    else amt = v.amts.map(a => a.amt).filter(Boolean).join(' + ');
+    out.push({name: v.name, amt, sec: v.sec, for: v.for.join(', ')});
+  });
+  return out.sort((a, b) => SECTIONS.indexOf(a.sec) - SECTIONS.indexOf(b.sec) || a.name.localeCompare(b.name));
+}
+
+// ---------- the honest clock, the same model as field-guide/health.js (planSecs and sessSecs) ----------
+const lineSecs = t => 1.4 + String(t).split(/\s+/).length / 2.4;
+const REPS_RE = /^\s*(\d+)(\s*to\s*\d+)?\s*(reps?|seconds?|per side|each side|total|each)?\s*$/i;
+const repWords = st => !REPS_RE.test(String(st.reps));
+const repTxt = st => String(st.reps).replace(/\s*(per side|each side)\s*$/i, '').trim();
+const unitOf = st => repWords(st) ? '' : st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : (/total$/i.test(repTxt(st)) ? '' : ' reps');
+const secsOf = st => parseInt(String(st.reps), 10) || 30;
+const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10); return n > 0 && n <= 20 ? n : 0; };
+const REST_MAX = 60, GET_READY = 30, SWITCH = 5, REP_SECS = 3, TAP_EST = 35;
+const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
+const halfSide = x => /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
+const LN = {ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.', time: st => (st.name + '. ' + (st.how || '')).trim(),
+  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + repTxt(st) + unitOf(st) + (st.side ? ' each side' : '') + '.',
+  set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.', go: 'Go.', next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.',
+  out: 'That is the session. Strong work today.', left: 'Left side.', sw: 'Switch sides.'};
+function steps(ses, warmup, cooldown, ph, light){
+  const out = [];
+  arr(warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', half: halfSide(x)}));
+  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
+    out.push({t: 'ex', name: x.name, cue: x.cue, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main',
+      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: !!x.side || /per side|each side/i.test(reps)}); }));
+  for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
+  arr(cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', half: halfSide(x)}));
+  return out;
+}
+function planSecs(S){
+  let s = 0;
+  S.forEach((st, i) => { const nx = S[i + 1];
+    if (st.t === 'time'){ s += st.secs + lineSecs(LN.time(st)) + (st.half ? lineSecs(LN.sw) : 0);
+      if (st.part === 'Cooldown' && S[i - 1] && S[i - 1].part !== 'Cooldown') s += lineSecs(LN.cool);
+      if (nx && nx.t === 'ex') s += GET_READY; return; }
+    const left = Math.max(0, st.sets), sides = st.side ? 2 : 1, work = st.kind === 'time' ? secsOf(st) : repN(st) ? repN(st) * REP_SECS : TAP_EST;
+    const perSet = lineSecs(LN.go) + sides * work + (st.side ? 2 * lineSecs(LN.left) + lineSecs(LN.sw) + SWITCH : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
+    s += lineSecs(LN.ex(st)) + (st.cue ? lineSecs(st.cue) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
+    if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
+  return s;
+}
+function estimate(ses, warmup, cooldown, ph, light){
+  return planSecs(steps(ses, warmup, cooldown, String(ph || '1'), !!light)) + lineSecs(LN.ses(ses.title || '', 50)) + lineSecs('') + lineSecs(LN.out) + lineSecs('');
+}
+
+// ---------- workouts ----------
+const FALL = {squat: ['lunge', 'hinge'], lunge: ['squat', 'balance'], hinge: ['squat', 'core'], push: ['core', 'carry'], pull: ['hinge', 'core'], core: ['balance', 'mobility'],
+  carry: ['core', 'cardio'], cardio: ['lunge', 'core'], mobility: ['core', 'balance'], balance: ['core', 'mobility']};
+const LEVELS = ['root', 'rise', 'thrive'];
+const placeOk = (m, place) => !arr(m.places).length || arr(m.places).includes(place);
+function lv(m, level){ const L = m.levels || {}; return L[level] || L[LEVELS[Math.max(0, LEVELS.indexOf(level) - 1)]] || L.root || null; }
+function itemFor(m, level, place, sets, rest){
+  const L = lv(m, level) || {}, time = m.kind === 'time' || (L.secs != null && L.reps == null);
+  const reps = time ? (+L.secs || 30) + ' seconds' : String(L.reps || '10');
+  const s = Math.max(1, Math.min(6, sets)), eq = (m.equip || {})[place] || '';
+  return {id: m.id, name: m.name, how: m.how || '', cue: m.cue || '', swap: m.swap || '', tips: arr(m.tips).filter(Boolean).slice(0, 2),
+    sets: {'1': s, '2': s, '3': s}, reps: {'1': reps, '2': reps, '3': reps}, rest: capRest(rest), restAfter: capRest(rest), kind: time ? 'time' : 'reps',
+    secs: time ? (+L.secs || 30) : undefined, side: !!m.unilateral, unilateral: !!m.unilateral, load: place === 'home' ? '' : (m.load || ''), equip: eq, pattern: m.pattern};
+}
+function pickWarm(list, place, n){ const L = arr(list).filter(x => x && x.name && placeOk(x, place)); return n != null ? L.slice(0, Math.max(0, n)) : L; }
+function buildSessions(moves, templates, opts){
+  opts = Object.assign({level: 'rise', place: 'home', mins: 40}, opts || {});
+  const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place = opts.place, mins = +opts.mins || 40;
+  const len = (T.lengths || {})[mins] || (T.lengths || {})[String(mins)] || {main: mins <= 20 ? 3 : mins <= 40 ? 5 : 7, sets: mins <= 20 ? 'low' : mins <= 40 ? 'mid' : 'high'};
+  const setAdj = {low: -1, mid: 0, high: 1}[len.sets] != null ? {low: -1, mid: 0, high: 1}[len.sets] : (+len.sets ? null : 0);
+  const restBase = Math.min(REST_MAX, +((T.rest || {})[level]) || REST_MAX);
+  const days = Object.assign({A: 'Full Body Strength', B: 'Lower Body and Core', C: 'Upper Body and Conditioning', D: 'Full Body and Cardio'}, T.days || {});
+  const warmup = pickWarm(opts.warmup, place, len.warm), cooldown = pickWarm(opts.cooldown, place, len.cool);
+  const M = arr(moves).filter(m => m && m.id && m.name && placeOk(m, place) && lv(m, level));
+  const byPat = {}; M.forEach(m => { (byPat[m.pattern] = byPat[m.pattern] || []).push(m); });
+  const target = mins * 60, sessions = {}, used = {};
+  ['A', 'B', 'C', 'D'].forEach((d, di) => {
+    const slots0 = arr((T.slots || {})[d]).length ? T.slots[d] : ['squat', 'push', 'hinge', 'pull', 'core'];
+    const want = Math.max(1, +len.main || slots0.length), slots = Array.from({length: want}, (x, i) => slots0[i % slots0.length]);
+    const inS = new Set(), items = [];
+    const take = (pat, k) => { const tries = [pat].concat(FALL[pat] || []); for (const p of tries){ const L = (byPat[p] || []).filter(m => !inS.has(m.id)); if (!L.length) continue;
+      const fresh = L.filter(m => !used[m.id]), pickFrom = fresh.length ? fresh : L, m = pickFrom[(di + k) % pickFrom.length]; inS.add(m.id); used[m.id] = (used[m.id] || 0) + 1; return m; } return null; };
+    slots.forEach((p, k) => { const m = take(p, k); if (m){ const base = +((lv(m, level) || {}).sets) || 3, s = setAdj == null ? +len.sets : base + setAdj; items.push(itemFor(m, level, place, s, Math.min(restBase, +m.rest || REST_MAX))); } });
+    const ses = {title: days[d], day: '', lead: '', blocks: [{title: 'Main', items}]};
+    // Fit the honest clock to the chosen minutes: trim or add sets, then moves, until it lands close.
+    const est = () => estimate(ses, warmup, cooldown, '1', false);
+    const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
+    for (let g = 0; g < 40 && est() > target * 1.04; g++){
+      const big = items.slice().sort((a, b) => b.sets['1'] - a.sets['1'])[0];
+      if (big && big.sets['1'] > 1 && big.sets['1'] > (items.length > 2 ? 1 : 2)){ setAll(big, big.sets['1'] - 1); continue; }
+      if (items.length > 1){ items.pop(); continue; } break;
+    }
+    for (let g = 0, k = slots.length; g < 40 && est() < target * 0.96; g++){
+      const before = est(), small = items.slice().sort((a, b) => a.sets['1'] - b.sets['1'])[0];
+      if (small && small.sets['1'] < 4){ setAll(small, small.sets['1'] + 1); if (est() > target * 1.06){ setAll(small, small.sets['1'] - 1); } else continue; }
+      const m = take(slots0[k % slots0.length], k++) || take('core', k) || take('cardio', k);
+      if (!m) break;
+      const it = itemFor(m, level, place, 2, Math.min(restBase, +m.rest || REST_MAX)); items.push(it);
+      if (est() > target * 1.06){ setAll(it, 1); if (est() > target * 1.06){ items.pop(); break; } }
+      if (est() === before) break;
+    }
+    ses.mins = Math.round(est() / 60); ses.est = Math.round(est());
+    ses.lead = items.length + ' moves, about ' + ses.mins + ' minutes.';
+    sessions[d] = ses;
+  });
+  return {sessions, warmup, cooldown};
+}
+
+// ---------- targets ----------
+const TDEF = {sf: 13, sug: 25, na: 2300, fib: 30, sol: null, proPerKg: [0.8, 1]};
+function targets(goalIds, goals, o){
+  o = o || {}; const G = arr(goals).filter(g => g && arr(goalIds).includes(g.id)).map(g => g.targets || {}), pick = (k, f) => { const v = G.map(t => t[k]).filter(x => x != null && isFinite(+x)).map(Number); return v.length ? f(...v) : null; };
+  const sf = pick('sf', Math.min) || TDEF.sf, sug = pick('sug', Math.min) || TDEF.sug, na = pick('na', Math.min) || TDEF.na, fib = pick('fib', Math.max) || TDEF.fib, sol = pick('sol', Math.max);
+  const pk = G.map(t => t.proPerKg).filter(Array.isArray);
+  const lo = pk.length ? Math.max(...pk.map(p => +p[0] || 0.8)) : TDEF.proPerKg[0], hi = pk.length ? Math.max(...pk.map(p => +p[p.length - 1] || +p[0] || 1)) : TDEF.proPerKg[1];
+  let pro;
+  if (o.teen) pro = [46, 52];
+  else if (+o.weightKg > 25) pro = [Math.round(lo * o.weightKg), Math.round(Math.max(lo, hi) * o.weightKg)];
+  else pro = [Math.round(lo * 70), Math.round(Math.max(lo, hi) * 70)];
+  return {sf, sug, na, fib, sol, pro, cal: null, proPerKg: [lo, hi], est: !o.teen && !(+o.weightKg > 25)};
+}
+
+// ---------- kids ----------
+const nOf = v => { if (v == null) return null; if (typeof v === 'number') return v; const m = /([\d.]+)(?:\s*(?:to|-)\s*([\d.]+))?/.exec(String(v)); return m ? +(m[2] || m[1]) : null; };
+function kidAims(band, sex){
+  band = band || {}; const iron = band.iron && typeof band.iron === 'object' ? (sex === 'f' ? band.iron.f : sex === 'm' ? band.iron.m : Math.max(nOf(band.iron.f) || 0, nOf(band.iron.m) || 0)) : band.iron;
+  return {fruit: nOf(band.fruit), veg: nOf(band.veg), protein: nOf(band.protein), grains: nOf(band.grains), dairy: nOf(band.dairy), fiber: nOf(band.fiber), iron: nOf(iron), ca: nOf(band.ca), water: nOf(band.water), sugarMax: nOf(band.sugarMax)};
+}
+
+// ---------- the LDL Path range ----------
+// Each chosen lever lowers what remains: the low and high ends multiply (1 - effect) across levers. Food, fiber, and supplement levers
+// together are capped (35 percent unless the library says otherwise); a medicine lever then works on what remains.
+function ldlRange(base, levers, picks, opts){
+  opts = opts || {}; const cap = (+opts.foodCap || 35) / 100, B = +base; if (!isFinite(B) || B <= 0) return null;
+  const on = arr(levers).filter(l => l && (picks || {})[l.id] === 'do');
+  const food = on.filter(l => l.kind !== 'med'), med = on.filter(l => l.kind === 'med');
+  const comb = (L, k) => 1 - L.reduce((p, l) => p * (1 - Math.max(0, Math.min(90, +l[k] || 0)) / 100), 1);
+  const fLo = Math.min(cap, comb(food, 'lo')), fHi = Math.min(cap, comb(food, 'hi'));
+  const mLo = comb(med, 'lo'), mHi = comb(med, 'hi');
+  const lo = 1 - (1 - fLo) * (1 - mLo), hi = 1 - (1 - fHi) * (1 - mHi);
+  return {base: B, pctLo: Math.round(lo * 100), pctHi: Math.round(hi * 100), high: Math.round(B * (1 - lo)), low: Math.round(B * (1 - hi)), capped: comb(food, 'hi') > cap, count: on.length,
+    at: (weeks, which) => { const r = 1 - Math.exp(-Math.max(0, weeks) / 2.5), p = which === 'lo' ? lo : hi; return B * (1 - p * r); }};
+}
+
+const API = {needOk, fitsAll, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
+  buildSessions, estimate, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX};
+if (typeof module === 'object' && module.exports) module.exports = API;
+if (root) root.GGTendPlan = API;
+})(typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : null));
