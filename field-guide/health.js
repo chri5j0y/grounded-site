@@ -799,10 +799,12 @@ const repWords = st => !REPS_RE.test(String(st.reps));
 const repTxt = st => String(st.reps).replace(/\s*(per side|each side)\s*$/i, '').trim();
 const unitOf = st => repWords(st) ? '' : st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : (/total$/i.test(repTxt(st)) ? '' : ' reps');
 const secsOf = st => parseInt(String(st.reps), 10) || 30;
+// BLD 866: a long timed item (3 minutes or more, whole minutes, like the Gentle walks) is said in minutes.
+const amtTxt = st => { const n = +repTxt(st); if (st.kind === 'time' && !repWords(st) && n >= 180 && n % 60 === 0){ const m = n / 60; return m + ' minute' + (m === 1 ? '' : 's'); } return repTxt(st) + unitOf(st); };
 const LN = {
   ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.',
   time: st => (st.name + '. ' + (st.how || '')).trim(),
-  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + repTxt(st) + unitOf(st) + (st.side ? ' each side' : '') + '.',
+  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + amtTxt(st) + (st.side ? ' each side' : '') + '.',
   set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.',
   go: 'Go.', rest: s => 'Rest ' + s + ' seconds.', ten: 'Ten seconds.', nextSet: 'Next set.',
   next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.', out: 'That is the session. Strong work today.',
@@ -2942,6 +2944,10 @@ const CSS = `
 .tn-gimg img{display:block;width:100%;height:100%;object-fit:cover;}
 .tn-gimg.big{width:64px;height:64px;border-radius:19px;}
 /* BLD 866: public Tending. Base pieces a public host page may lack, scoped to public Tending only */
+#hj-root.tn-pub section{padding:0;border-top:0;background:none;}
+#hj-root.tn-pub .tn-hero .day{font-size:clamp(44px,19cqw,112px);line-height:.88;margin:10px 0 4px;}
+#hj-root.tn-pub .tn-head h2{font-size:clamp(32px,7vw,42px);}#hj-root.tn-pub .tn-grp h2{font-size:30px;}
+#hj-root.tn-pub .hj-sub{margin:6px 0 10px;}#hj-root.tn-pub .tn-kv h2{font-size:clamp(38px,9vw,60px);}#hj-root.tn-pub .tn-kvc h3{font-size:clamp(28px,6vw,38px);}
 #hj-root.tn-pub{--ok:#3F7F3A;--okb:#CFE5C4;--t-good:#3F8A47;--t-ok:#8DB257;--t-watch:#D69A2D;--t-high:#C4553B;}
 :root[data-theme="dark"] #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}}
@@ -2953,9 +2959,7 @@ const CSS = `
 .tn-pub .linkbtn{background:none;border:0;color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit;min-height:40px;}
 .tn-pub .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}.tn-pub .spread{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;}
 .tn-pub .chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-soft);font-family:inherit;}
-.tn-pub .chip[aria-pressed="true"],.tn-pub .chip.on{background:var(--umber,#2E2118);border-color:var(--umber,#2E2118);color:#F4EBDA;}
-:root[data-theme="dark"] .tn-pub .chip[aria-pressed="true"],:root[data-theme="dark"] .tn-pub .chip.on{background:var(--gold);border-color:var(--gold);color:#1A1612;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tn-pub .chip[aria-pressed="true"],:root:not([data-theme="light"]) .tn-pub .chip.on{background:var(--gold);border-color:var(--gold);color:#1A1612;}}
+#hj-root.tn-pub .chip[aria-pressed="true"],#hj-root.tn-pub .chip.on{background:var(--c,var(--t-leaves));border-color:var(--c,var(--t-leaves));color:var(--t-on);}
 .tn-pub input,.tn-pub select,.tn-pub textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:46px;max-width:100%;}
 .tn-pub .chip small{display:block;font-weight:400;font-size:12.5px;}
 /* the start-up check */
