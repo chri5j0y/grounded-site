@@ -268,58 +268,72 @@ function estimate(ses, warmup, cooldown, ph, light){
 }
 
 // ---------- workouts ----------
+// Follows the workshop's reference (patches/bld866/content/move.py build_session): moves come from templates.order[place][level][pattern]
+// (the first not yet used in the session), the Main block from templates.slots[day] with sets held inside lengths[n].sets[level],
+// then the finisher, cardio, and mobility blocks; warm-up and cooldown by id from lengths[n]. The player's own clock then
+// trims or adds a set (or a finisher move) until the estimate lands close to the chosen minutes.
 const FALL = {squat: ['lunge', 'hinge'], lunge: ['squat', 'balance'], hinge: ['squat', 'core'], push: ['core', 'carry'], pull: ['hinge', 'core'], core: ['balance', 'mobility'],
   carry: ['core', 'cardio'], cardio: ['lunge', 'core'], mobility: ['core', 'balance'], balance: ['core', 'mobility']};
 const LEVELS = ['root', 'rise', 'thrive'];
 const placeOk = (m, place) => !arr(m.places).length || arr(m.places).includes(place);
 function lv(m, level){ const L = m.levels || {}; return L[level] || L[LEVELS[Math.max(0, LEVELS.indexOf(level) - 1)]] || L.root || null; }
-function itemFor(m, level, place, sets, rest){
+function itemFor(m, level, place, sets, rest, restAfter, prefix){
   const L = lv(m, level) || {}, time = m.kind === 'time' || (L.secs != null && L.reps == null);
-  const reps = time ? (+L.secs || 30) + ' seconds' : String(L.reps || '10');
-  const s = Math.max(1, Math.min(6, sets)), eq = (m.equip || {})[place] || '';
-  return {id: m.id, name: m.name, how: m.how || '', cue: m.cue || '', swap: m.swap || '', tips: arr(m.tips).filter(Boolean).slice(0, 2),
-    sets: {'1': s, '2': s, '3': s}, reps: {'1': reps, '2': reps, '3': reps}, rest: capRest(rest), restAfter: capRest(rest), kind: time ? 'time' : 'reps',
-    secs: time ? (+L.secs || 30) : undefined, side: !!m.unilateral, unilateral: !!m.unilateral, load: place === 'home' ? '' : (m.load || ''), equip: eq, pattern: m.pattern};
+  const reps = time ? String(+L.secs || 30) : String(L.reps || '10');
+  const n = Math.max(1, Math.min(6, sets)), eq = (m.equip || {})[place] || '';
+  const it = {id: (prefix ? prefix + '-' : '') + String(m.id).replace(/^m-/, ''), move: m.id, name: m.name, how: m.how || '', cue: m.cue || '', swap: m.swap || '', tips: arr(m.tips).filter(Boolean).slice(0, 2),
+    sets: {'1': n, '2': n, '3': n}, reps: {'1': reps, '2': reps, '3': reps}, rest: capRest(rest), restAfter: capRest(restAfter), kind: time ? 'time' : 'reps',
+    load: (m.loadAt || {})[place] || m.load || '', equip: eq, fig: m.fig || '', pattern: m.pattern};
+  if (time) it.secs = +L.secs || 30;
+  if (m.unilateral) it.side = true;
+  return it;
 }
-function pickWarm(list, place, n){ const L = arr(list).filter(x => x && x.name && placeOk(x, place)); return n != null ? L.slice(0, Math.max(0, n)) : L; }
+const byIdList = (list, ids) => { const L = arr(list); if (!Array.isArray(ids)) return null; return ids.map(id => L.find(x => x && x.id === id)).filter(Boolean); };
 function buildSessions(moves, templates, opts){
   opts = Object.assign({level: 'rise', place: 'home', mins: 40}, opts || {});
-  const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place = opts.place, mins = +opts.mins || 40;
-  const len = (T.lengths || {})[mins] || (T.lengths || {})[String(mins)] || {main: mins <= 20 ? 3 : mins <= 40 ? 5 : 7, sets: mins <= 20 ? 'low' : mins <= 40 ? 'mid' : 'high'};
-  const setAdj = {low: -1, mid: 0, high: 1}[len.sets] != null ? {low: -1, mid: 0, high: 1}[len.sets] : (+len.sets ? null : 0);
-  const restBase = Math.min(REST_MAX, +((T.rest || {})[level]) || REST_MAX);
+  const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place = ['home', 'light', 'gym'].includes(opts.place) ? opts.place : 'home', mins = +opts.mins || 40;
+  const len = (T.lengths || {})[String(mins)] || (T.lengths || {})[mins] || {main: mins <= 20 ? 4 : mins <= 40 ? 5 : 6, sets: null, finisher: mins <= 20 ? 0 : 2, finisherSets: 2, cardio: mins >= 60 ? 1 : 0, mobility: mins >= 60 ? 1 : 0, restAfter: 45};
+  const restCap = Math.min(REST_MAX, +((T.rest || {})[level]) || REST_MAX), restAfter = Math.min(REST_MAX, len.restAfter != null ? +len.restAfter : REST_MAX);
   const days = Object.assign({A: 'Full Body Strength', B: 'Lower Body and Core', C: 'Upper Body and Conditioning', D: 'Full Body and Cardio'}, T.days || {});
-  const warmup = pickWarm(opts.warmup, place, len.warm), cooldown = pickWarm(opts.cooldown, place, len.cool);
-  const M = arr(moves).filter(m => m && m.id && m.name && placeOk(m, place) && lv(m, level));
-  const byPat = {}; M.forEach(m => { (byPat[m.pattern] = byPat[m.pattern] || []).push(m); });
-  const target = mins * 60, sessions = {}, used = {};
-  ['A', 'B', 'C', 'D'].forEach((d, di) => {
-    const slots0 = arr((T.slots || {})[d]).length ? T.slots[d] : ['squat', 'push', 'hinge', 'pull', 'core'];
-    const want = Math.max(1, +len.main || slots0.length), slots = Array.from({length: want}, (x, i) => slots0[i % slots0.length]);
-    const inS = new Set(), items = [];
-    const take = (pat, k) => { const tries = [pat].concat(FALL[pat] || []); for (const p of tries){ const L = (byPat[p] || []).filter(m => !inS.has(m.id)); if (!L.length) continue;
-      const fresh = L.filter(m => !used[m.id]), pickFrom = fresh.length ? fresh : L, m = pickFrom[(di + k) % pickFrom.length]; inS.add(m.id); used[m.id] = (used[m.id] || 0) + 1; return m; } return null; };
-    slots.forEach((p, k) => { const m = take(p, k); if (m){ const base = +((lv(m, level) || {}).sets) || 3, s = setAdj == null ? +len.sets : base + setAdj; items.push(itemFor(m, level, place, s, Math.min(restBase, +m.rest || REST_MAX))); } });
-    const ses = {title: days[d], day: '', lead: '', blocks: [{title: 'Main', items}]};
-    // Fit the honest clock to the chosen minutes: trim or add sets, then moves, until it lands close.
-    const est = () => estimate(ses, warmup, cooldown, '1', false);
+  const warmup = byIdList(opts.warmup, len.warmup) || arr(opts.warmup).slice(0, mins <= 20 ? 4 : mins <= 40 ? 6 : 9);
+  const cooldown = byIdList(opts.cooldown, len.cooldown) || arr(opts.cooldown).slice(0, mins <= 20 ? 3 : mins <= 40 ? 4 : 6);
+  const M = arr(moves).filter(m => m && m.id && m.name && placeOk(m, place) && lv(m, level)), MB = {}; M.forEach(m => { MB[m.id] = m; });
+  const ord = ((T.order || {})[place] || {})[level] || null;
+  const listFor = pat => ord && Array.isArray(ord[pat]) ? ord[pat].map(id => MB[id]).filter(Boolean) : M.filter(m => m.pattern === pat);
+  const [sLo, sHi] = Array.isArray(((len.sets || {})[level])) ? len.sets[level] : [1, 6];
+  const target = mins * 60, sessions = {};
+  ['A', 'B', 'C', 'D'].forEach(d => {
+    const used = new Set(), pre = d.toLowerCase();
+    const pick = pat => { for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p).find(x => !used.has(x.id)); if (m){ used.add(m.id); return m; } } return null; };
+    const blocks = [], add = (title, pats, setsf) => { const items = []; pats.forEach(p => { const m = pick(p); if (m) items.push(itemFor(m, level, place, setsf(m), Math.min(+m.rest || REST_MAX, restCap), restAfter, pre)); }); if (items.length) blocks.push({title, items}); };
+    const base = m => +((lv(m, level) || {}).sets) || 3;
+    const slots = arr((T.slots || {})[d]).length ? T.slots[d] : ['squat', 'push', 'hinge', 'pull', 'core'];
+    add((T.blockTitles || {}).main || 'Main', slots.slice(0, +len.main || slots.length), m => Math.max(sLo, Math.min(base(m), sHi)));
+    if (+len.finisher) add((T.finisherTitle || {})[d] || 'Finisher', arr((T.finisher || {})[d]).length ? T.finisher[d].slice(0, +len.finisher) : Array(+len.finisher).fill('core'), m => Math.min(base(m), +len.finisherSets || 2));
+    if (+len.cardio) add((T.blockTitles || {}).cardio || 'Cardio', Array(+len.cardio).fill('cardio'), base);
+    if (+len.mobility) add((T.blockTitles || {}).mobility || 'Mobility', Array(+len.mobility).fill('mobility'), base);
+    const ses = {title: days[d], lead: (T.leads || {})[d] || '', blocks};
+    const items = () => blocks.flatMap(b => b.items), est = () => estimate(ses, warmup, cooldown, '1', false);
     const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
-    for (let g = 0; g < 40 && est() > target * 1.04; g++){
-      const big = items.slice().sort((a, b) => b.sets['1'] - a.sets['1'])[0];
-      if (big && big.sets['1'] > 1 && big.sets['1'] > (items.length > 2 ? 1 : 2)){ setAll(big, big.sets['1'] - 1); continue; }
-      if (items.length > 1){ items.pop(); continue; } break;
+    // Too long: one set less on the move with the most sets (never under 1, Main keeps 2 while it can), then the last finisher move.
+    for (let g = 0; g < 60 && est() > target * 1.05; g++){
+      const all = items(), big = all.slice().sort((a, b) => b.sets['1'] - a.sets['1'])[0];
+      if (big && big.sets['1'] > 2){ setAll(big, big.sets['1'] - 1); continue; }
+      const tail = blocks.length > 1 ? blocks[blocks.length - 1] : null;
+      if (tail){ tail.items.pop(); if (!tail.items.length) blocks.pop(); continue; }
+      if (big && big.sets['1'] > 1){ setAll(big, big.sets['1'] - 1); continue; }
+      if (blocks[0].items.length > 2){ blocks[0].items.pop(); continue; } break;
     }
-    for (let g = 0, k = slots.length; g < 40 && est() < target * 0.96; g++){
-      const before = est(), small = items.slice().sort((a, b) => a.sets['1'] - b.sets['1'])[0];
-      if (small && small.sets['1'] < 4){ setAll(small, small.sets['1'] + 1); if (est() > target * 1.06){ setAll(small, small.sets['1'] - 1); } else continue; }
-      const m = take(slots0[k % slots0.length], k++) || take('core', k) || take('cardio', k);
-      if (!m) break;
-      const it = itemFor(m, level, place, 2, Math.min(restBase, +m.rest || REST_MAX)); items.push(it);
-      if (est() > target * 1.06){ setAll(it, 1); if (est() > target * 1.06){ items.pop(); break; } }
-      if (est() === before) break;
+    // Too short: one more set where there are fewest (up to 5), then another move.
+    for (let g = 0; g < 60 && est() < target * 0.95; g++){
+      const all = items(), small = all.slice().sort((a, b) => a.sets['1'] - b.sets['1'])[0];
+      if (small && small.sets['1'] < Math.max(4, sHi + 1)){ setAll(small, small.sets['1'] + 1); if (est() <= target * 1.05) continue; setAll(small, small.sets['1'] - 1); }
+      const m = pick(slots[all.length % slots.length]) || pick('core') || pick('cardio'); if (!m) break;
+      const it = itemFor(m, level, place, 2, Math.min(+m.rest || REST_MAX, restCap), restAfter, pre); blocks[0].items.push(it);
+      if (est() > target * 1.05){ setAll(it, 1); if (est() > target * 1.05){ blocks[0].items.pop(); break; } }
     }
-    ses.mins = Math.round(est() / 60); ses.est = Math.round(est());
-    ses.lead = items.length + ' moves, about ' + ses.mins + ' minutes.';
+    items().forEach(it => { it.restAfter = restAfter; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
+    ses.est = Math.round(est()); ses.mins = Math.round(ses.est / 60);
     sessions[d] = ses;
   });
   return {sessions, warmup, cooldown};

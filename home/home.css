@@ -85,7 +85,7 @@ body.hm-page{overflow-x:hidden;}
 .hm-p-leaves{--c:var(--leaves);--cs:var(--leaves-s);}
 .hm-p-fruit{--c:var(--fruit);--cs:var(--fruit-s);}
 
-.hm button{font:inherit;color:inherit;cursor:pointer;}
+:where(.hm) button{font:inherit;color:inherit;cursor:pointer;}
 .hm svg.i{width:1em;height:1em;flex:none;stroke:currentColor;fill:none;stroke-width:1.9;stroke-linecap:round;stroke-linejoin:round;}
 .hm-k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--c,var(--gold));}
 .hm-h2,.hm-h3,.hm h1{font-family:'Cormorant Garamond',serif;font-weight:700;margin:0;line-height:1.1;color:var(--ink);}

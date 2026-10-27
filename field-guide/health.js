@@ -19,6 +19,24 @@
 //    myFoods: [{id, name, per, nut, u}], supps: {list: [{id, name, when, note}], u}, eatUse: {key: {c, t}} (BLD 861),
 //    panels: [{id, date, name, note, items: [{n, v, u, lo, hi}], u}]}  (full lab panels, shown with range bars)
 // Library html is written by Grounded (sealed by the Founder); typed entries are always escaped.
+//
+// BLD 866, public Tending: the same engine runs for everyone on any page when the library passed through C.fld() is
+// window.GGTendPublic (shared/tending-public.js, public: true). Every public change sits behind PUB(); the Field Guide
+// (tiers guide, staff, founder, kitchen) works exactly as before. The host contract for a public page:
+//   <script src="/shared/tending-public.js"></script> <script src="/shared/gg-tend-plan.js"></script>
+//   <script src="/field-guide/moves.js"></script> <script src="/field-guide/stage.js"></script>
+//   <script src="/field-guide/coach.js"></script> <script src="/field-guide/health.js"></script>
+//   GGHealth.init({data: () => wrapper, fld: () => window.GGTendPublic, fdr: () => null, tier: () => 'public',
+//     save: () => { GGP.save(id); }, render: () => { box.innerHTML = GGHealth.view(); }, go: () => {}, toast: m => ...,
+//     age: () => GGP.active().age (optional: 'pine' marks a teen), name: () => first name (optional),
+//     asset: path => '/' + path (optional; default: the site root worked out from this script's own address)})
+//   where wrapper is the profile vault object GGP.data(id, 'tending'), holding {health: {...}, deleted: {health: {}}}.
+//   GGHealth.view() returns the HTML for the container the host gives; GGHealth.open(sec) works when C.go is a no-op;
+//   GGHealth.summary() returns what the Home shows (see the API at the end of this file).
+// Public adds to DATA.health: set {pubDone, who, teen, goals, needs, allergies, house: {adults, kids: [{id, name, band, sex}]},
+//   check {qid: true}, checkYes, cleared, level, place, mins, days, weightLb, sex, goalLdl, ldlPick {leverId: 'do' or 'pass'}},
+//   plan {seed, ids: {A..D: [dinner ids Mon to Sun]}, meals: {breakfasts, lunches, snacks}, sig, n, u},
+//   team {list: [{id, ...fields, u}], u}, kids {log: {kidId: {date: {g: {group: amount}, eat: [{k, q}], rainbow: {}, play: {}, u}}}, u}.
 // =====================================================================
 (function(){
 'use strict';
@@ -27,7 +45,14 @@ const S = {sec: 'today', form: null, setup: false, open: {}, ov: null};
 const D = () => C.data ? C.data() : null;
 // A Family Kitchen code (BLD 846): the kitchen only. Dinners, cook guide, grab and go, snacks, lists, prep, reminders.
 const KIT = () => !!(C.tier && C.tier() === 'kitchen');
-const FLDH = () => { const f = C.fld && C.fld(); const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
+const FLDH = () => { const f = C.fld && C.fld(); if (f && f.public) return f; const h = f && f.healthJourney; return h && (Array.isArray(h.food) || Array.isArray(h.fitness) || h.app) ? h : null; };
+// BLD 866: public Tending (the library is GGTendPublic). TEEN: a profile under 18 sees no weight and no calories.
+const PUB = () => { const f = C.fld && C.fld(); return !!(f && f.public); };
+const PLIB = () => { const f = C.fld && C.fld(); return f && f.public ? f : null; };
+const TEEN = () => { if (!PUB()) return false; try { if (C.age && /^(pine|teen|aspen|maple)$/i.test(String(C.age() || ''))) return true; } catch(e){} const d = D(); return !!(d && d.health && d.health.set && d.health.set.teen); };
+// The painted cards (shared/heroes/way/): a host may pass C.asset(path); otherwise the site root is worked out from this script's address.
+const ROOT0 = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('../', s).href : '/'; } catch(e){ return '/'; } })();
+const asset = p => { try { if (C.asset) return C.asset(p); } catch(e){} return ROOT0 + p; };
 // BLD 855: each founder has a plan of their own: FDR.healthMine (Chris) and FDR.healthKayti (Kayti), same shape.
 const PLANS = () => { const f = C.fdr && C.fdr(); return f ? [f.healthMine, f.healthKayti].filter(m => m && typeof m === 'object') : []; };
 const MINE = () => { const ps = PLANS(); if (!ps.length) return null;
@@ -303,7 +328,7 @@ function lpHover(svg, wkv){
 const lpWeekAt = (svg, cx) => { const L = S.lp, rc = svg.getBoundingClientRect(); if (!L || !rc.width) return null; const px = (cx - rc.left) * L.W / rc.width; return (px - L.pl) / L.pw * L.maxW; };
 function vPlan(lib, key){
   const mine = MINE(), hh = num(H().set.household);
-  const scale = key === 'food' && hh && hh !== 6 ? `<p class="hj-note">Costs and amounts are for a household of six. For ${hh}, multiply by about ${(hh / 6).toFixed(2).replace(/0$/, '')}. Freezer batches keep well, so smaller households can make the full batch and freeze more.</p>` : '';
+  const scale = key === 'food' && hh && hh !== 6 && !PUB() ? `<p class="hj-note">Costs and amounts are for a household of six. For ${hh}, multiply by about ${(hh / 6).toFixed(2).replace(/0$/, '')}. Freezer batches keep well, so smaller households can make the full batch and freeze more.</p>` : '';
   return `${scale}${mine && arr(mine[key]).length ? `<div class="hj-blk">${kick(mine.title || 'My Plan')}<p class="hj-sub">${esc(mine.lead || 'Your own plan, written for you.')}</p>${docBlocks(mine[key], 'mine-' + key)}</div>${kick('The Grounded Plan')}` : ''}${docBlocks(lib[key], key)}`;
 }
 function vNumbers(){
@@ -371,7 +396,7 @@ function vJourney(){
 // FLD.healthJourney.app = {workouts, dinners: {weeks, breakfasts, lunches, snacks}, shop: {weeks: {A: {shop, sunday, wednesday, batch}}, staples}}
 // FDR.healthMine.addons = [shop items added to Week A lists]; FDR.healthMine.checks = [extra daily checks].
 // DATA.health adds: log {'YYYY-MM-DD': {key: time}}, shop {'<week no>': {items: [...], u}}, lifts {exerciseId: lb}, wlog [{id, date, s, sets, note, u}].
-const APP = () => { const l = FLDH(); return l && l.app && typeof l.app === 'object' ? l.app : null; };
+const APP = () => { if (PUB()) return pubApp(); const l = FLDH(); return l && l.app && typeof l.app === 'object' ? l.app : null; };
 const WK = () => (APP() || {}).workouts || {};
 const DAYMS = 864e5, DOW = ['Sun','Mon','Tue','Wed','Thu','Fri','Sat'], DOWL = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
 const WMAP = {1: 'A', 2: 'D', 3: 'C', 4: 'D', 5: 'B'};
@@ -398,7 +423,7 @@ const isDone = (d, key) => !!(H().log[ymd(d)] || {})[key];
 function markDone(key, d){ const l = logOf(d || new Date()); l[key] = Date.now(); l.u = Date.now(); save(); }
 // Sunday dinner belongs to the coming food week: it is cooked on Sunday prep day, the day after shopping (BLD 846).
 function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? Object.assign({wk: letter(n)}, x) : null; }
-function sesFor(d){ const s = WMAP[d.getDay()], ss = (WK().sessions || {})[s]; return ss ? Object.assign({id: s}, ss) : null; }
+function sesFor(d){ const s = PUB() ? pubSesKey(d) : WMAP[d.getDay()], ss = (WK().sessions || {})[s]; return ss ? Object.assign({id: s}, ss) : null; }
 const BAT = () => (APP() || {}).batches || null;
 function prepFor(kind, n){ if (kind === 'pack') return (BAT() || {}).pack || null; if (kind.indexOf('bulk-') === 0){ const b = arr((BAT() || {}).batches).find(x => x.id === kind.slice(5)); return b ? Object.assign({title: b.name}, b) : null; }
   return prepFor0(kind, n); }
@@ -414,12 +439,12 @@ function agenda(d){
   const mf = medFor(d);
   if (track !== 'practice' && MED()) out.push({did: true, key: 'med', k: 'med', hour: 8, kick: dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning', title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
   if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + letter(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
-  if (dow === 6 && !KIT()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
+  if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + letter(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
     const pk = prepFor('pack', fw); if (pk) out.push({key: 'prep:pack:' + fw, k: 'prep', v: 'pack|' + fw, hour: 18, kick: 'Sunday evening', title: pk.title || 'Pack Lunches', sub: (pk.mins || 20) + ' minutes for the week ahead.', btn: 'Start'});
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 15, kick: 'Freezer batch', title: b.title || 'Freezer Batch', sub: (b.mins || 40) + ' minutes. A great job to hand off.', btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
-  if ((dow === 2 || dow === 4) && !KIT()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
+  if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
   const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   return out.sort((a, b) => a.hour - b.hour);
 }
@@ -563,11 +588,13 @@ function vPrep(){
 // ---------- the shop list (on this device) ----------
 const SECS = ['Grab and Go', 'Produce', 'Meat and Fish', 'Eggs, Dairy, and Milks', 'Bread and Tortillas', 'Frozen', 'Pantry', 'Add-ons', 'Other'];
 const STORES = {costco: 'Costco', grocer: 'Coborn\'s'}; // Coborn's, the local grocer (Chris, October 24, 2026: Cub is 24 miles away)
+const SECS_P = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Frozen', 'Pantry', 'Spices', 'Grab and Go', 'Other'];
+const SECX = () => PUB() ? SECS_P : SECS;
 function shopList(n){
   const h = H(), key = String(Math.max(1, n)); if (h.shop[key]) return h.shop[key];
   const sp = (APP() || {}).shop, w = sp && sp.weeks && sp.weeks[letter(n)]; if (!w) return null;
   const mine = MINE(), add = letter(n) === 'A' ? arr(mine && mine.addons) : [];
-  return {seed: true, items: arr(w.shop).concat(add).map((x, i) => ({id: 's' + i, store: x.store === 'grocer' ? 'grocer' : 'costco', sec: x.gg ? 'Grab and Go' : SECS.includes(x.sec) ? x.sec : (x.sec ? 'Add-ons' : 'Other'), name: x.name, amt: x.amt || '', price: +x.price || 0, for: x.for || '', nut: nOk(x.nut) ? x.nut : undefined, done: false, n: i}))};
+  return {seed: true, items: arr(w.shop).concat(add).map((x, i) => ({id: 's' + i, store: x.store === 'grocer' ? 'grocer' : 'costco', sec: x.gg ? 'Grab and Go' : SECX().includes(x.sec) ? x.sec : (x.sec && !PUB() ? 'Add-ons' : 'Other'), name: x.name, amt: x.amt || '', price: +x.price || 0, for: x.for || '', nut: nOk(x.nut) ? x.nut : undefined, done: false, n: i}))};
 }
 // Lists kept on a phone before BLD 846 lack numbers: look them up by name in the library.
 function nutOf(x, n){ if (nOk(x.nut)) return x.nut; const k = String(x.name || '').toLowerCase(), app = APP() || {}, w = ((app.shop || {}).weeks || {})[letter(n)] || {}, din = app.dinners || {};
@@ -577,15 +604,15 @@ function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[
 function vShop(){
   const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = num(h.set.household);
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
-  const st = S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st), left = vis.filter(x => !x.done);
+  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
-  const groups = SECS.map(s => [s, vis.filter(x => (SECS.includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
+  const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${letter(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
-  ${hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
-  <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${['costco', 'grocer', 'all'].map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
-    <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span><span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span></div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
-  ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' ? esc(STORES[x.store]) + ' · ' : ''}${esc(x.amt)}${x.for ? ' · ' + esc(x.for) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label><label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label></div>
+  ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${letter(n)}: dinners, plus your breakfasts, lunches, and snacks. Recipes serve 4.${hhNote(4)}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
+  <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
+    <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
+  ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(x.amt)}${x.for ? ' · ' + esc(x.for) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="shopsave" data-hjv="${esc(x.id)}">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="shopclose">Close</button><button type="button" class="linkbtn" data-hja="shopdel" data-hjv="${esc(x.id)}">Remove</button></div></div>` : '')).join(''); }).join('')}
   <div class="hj-add"><input id="hj-addname" placeholder="Add an item" autocomplete="off"><button type="button" class="btn btn-gold btn-sm" data-hja="shopadd">Add</button></div>
   <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-hja="shopcopy">Copy for a Text</button><button type="button" class="btn btn-line btn-sm" data-hja="shopreset">${S.sureReset ? 'Tap Again to Clear the Checks' : 'Start Over'}</button></div>
@@ -593,9 +620,9 @@ function vShop(){
   <p class="hj-note">Prices are estimates. Tap any item to change it. This list lives on this device.</p>`;
 }
 function shopText(n){
-  const L = shopList(n), st = S.store || 'costco', out = [];
-  (st === 'all' ? ['costco', 'grocer'] : [st]).forEach(s => { const g = L.items.filter(x => x.store === s && !x.done); if (!g.length) return; out.push(STORES[s].toUpperCase());
-    SECS.forEach(sec => { const r = g.filter(x => (SECS.includes(x.sec) ? x.sec : 'Other') === sec); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (x.amt ? ' (' + x.amt + ')' : ''))); }); out.push(''); });
+  const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
+  (PUB() ? [''] : st === 'all' ? ['costco', 'grocer'] : [st]).forEach(s => { const g = L.items.filter(x => (!s || x.store === s) && !x.done); if (!g.length) return; if (s) out.push(STORES[s].toUpperCase());
+    SECX().forEach(sec => { const r = g.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === sec); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (x.amt ? ' (' + x.amt + ')' : ''))); }); out.push(''); });
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
@@ -668,7 +695,7 @@ function vOv(){
       <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
         return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
           ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>
-      ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}
+      ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
       <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   }
@@ -794,12 +821,12 @@ const REST_MAX = 60, GET_READY = 30, SWITCH = 5, REP_SECS = 3, TAP_EST = 35;
 const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // A warm-up or cooldown hold done on each side (Couch Stretch, Figure-4): Ava says Switch sides at the halfway point.
 const halfSide = x => /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
-function stepsFor(ses, ph, light){
-  const w = WK(), out = [];
+function stepsFor(ses, ph, light, w0){
+  const w = w0 || WK(), out = [];
   arr(w.warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', fig: x.name, half: halfSide(x)}));
   arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
-    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.name,
-      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: !!x.side || /per side|each side/i.test(reps), tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || ''}); }));
+    out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
+      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: !!x.side || /per side|each side/i.test(reps), tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || ''}); }));
   // The last move flows straight into the cooldown.
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
   arr(w.cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', fig: x.name, half: halfSide(x)}));
@@ -834,6 +861,7 @@ function buildPractice(s){
 }
 // Every line, for recording and for tests.
 function allLines(){
+  if (PUB()) return allLinesPub();
   const out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); }, w = WK(), app = APP() || {};
   Object.entries(w.sessions || {}).forEach(([id, ses]) => { add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins || 50));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light); S2.forEach((st, i) => {
@@ -852,6 +880,29 @@ function allLines(){
   const sp = (app.shop || {}).weeks || {}; Object.values(sp).forEach(wk => ['sunday', 'wednesday', 'batch'].forEach(k => { const x = wk[k]; if (!x) return; add(ANDREW, LN.prepIntro({sunday: 'Sunday Prep', wednesday: 'Wednesday Mini Prep', batch: x.title || 'Freezer Batch'}[k]));
     arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
   const bt = app.batches || {}; arr(bt.batches).concat(bt.pack ? [Object.assign({name: bt.pack.title || 'Pack Lunches'}, bt.pack)] : []).forEach(x => { add(ANDREW, LN.prepIntro(x.title || x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
+  [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
+  return [...out.values()];
+}
+// BLD 866: every public line: each level, place, and length's sessions, every Gentle session at every walk week, every recipe.
+function allLinesPub(){
+  const L = PLIB() || {}, P = TP(), out = new Map(), add = (v, t) => { if (t) out.set(v + '|' + t, {voice: v, text: t}); };
+  const sesLines = (sessions, w0) => Object.entries(sessions || {}).forEach(([id, ses]) => {
+    [ses.mins].concat(Object.values(ses.minsByPhase || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
+    ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
+      if (st.t === 'time'){ add(AVA, LN.time(st)); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t));
+        if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); })); });
+  if (P) ['root', 'rise', 'thrive'].forEach(lv => ['home', 'light', 'gym'].forEach(pl => [20, 40, 60].forEach(m => { const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl, mins: m, warmup: L.warmup, cooldown: L.cooldown}); sesLines(b.sessions, b); })));
+  const G = L.gentle || {}, walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
+  (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
+    if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
+    sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); });
+  for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
+  [LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap].forEach(t => add(AVA, t));
+  arr(L.motivation).forEach(t => add(AVA, t));
+  const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
+  const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
+  arr(L.recipes).concat(P && P.LEFT ? [P.LEFT] : []).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
   return [...out.values()];
 }
@@ -979,7 +1030,7 @@ function stCol(state, hour){
   const a = STC[state] || STC.work, k = hour < 12 ? 0 : hour < 18 ? 1 : 2; return {bg: '', fg: '', accent: a[k]};
 }
 let FLIP_OK = null;
-function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (st.fig && arr(M.patterns).includes(st.fig) ? st.fig : M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
   if (!flip) return M.svg(pat, op); if (FLIP_OK == null) FLIP_OK = M.svg('standing', {flip: true, still: true}) !== M.svg('standing', {still: true});
   return FLIP_OK ? M.svg(pat, Object.assign(op, {flip: true})) : `<div style="transform:scaleX(-1)">${M.svg(pat, op)}</div>`; } catch(e){ return ''; } }
 function figOf(st, flip){ if (st && st.candle) return candle(); const f = moveFig(st, flip); return f ? `<div class="hj-fig" aria-hidden="true">${f}</div>` : ''; }
@@ -1034,7 +1085,7 @@ function toggles(o){
 }
 function vStart(o, top){
   const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
-  const kit = o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
+  const kit = !o.med && !o.prac && PUB() ? [...new Set(moves.map(m => m.equip).filter(Boolean))] : o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
   const st0 = o.steps.find(s => s.t === 'ex') || o.steps[0], lt = !o.prac && lightLine('start');
   return `${top(o.title, o.med ? 'Daily Meditation' : o.prac ? 'Daily Practice' : 'Today\'s Session', null)}${stagePanel(stState(o), {fig: o.med ? candle() : moveFig(st0)})}<div class="hj-ovb">
     <div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
@@ -1163,7 +1214,7 @@ function plateItem(k){
 }
 function plateGroups(d){
   const din = (APP() || {}).dinners || {}, idx = (t, list) => arr(list).map((x, i) => t + ':' + i), dn = dinnerFor(d);
-  return [['morning', 'Morning', FOODS().filter(f => f.plan === 'morning').map(f => 'f:' + slug(f.name)).concat(idx('b', din.breakfasts))],
+  return [['morning', 'Morning', FOODS().filter(f => f.plan === 'morning' && !PUB()).map(f => 'f:' + slug(f.name)).concat(idx('b', din.breakfasts))],
     ['midday', 'Midday', idx('l', din.lunches)], ['evening', 'Evening', dn ? ['d:' + dn.wk + ':' + dn.id] : []], ['snacks', 'Snacks', idx('s', din.snacks)]]
     .map(([id, t, ks]) => ({id, t, items: ks.map(plateItem).filter(Boolean)})).filter(g => g.items.length);
 }
@@ -1293,7 +1344,7 @@ function plateWeek(T){
   const body = S.eatTable ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Day</th><th>Sat Fat (g)</th><th>Protein (g)</th><th>Fiber (g)</th><th>Calories</th></tr></thead><tbody>${rows.slice().reverse().map(r => `<tr><td>${esc(r.lab)}</td><td>${r.t.n ? '<b>' + fmt(r.t.sf) + '</b>' : ''}</td><td>${r.t.n ? fmt(r.t.pro) : ''}</td><td>${r.t.n ? fmt(r.t.fib) : ''}</td><td>${r.t.n ? fmt(r.t.cal) : ''}</td></tr>`).join('')}</tbody></table></div>`
     : `<div class="hj-wbs"><div class="hj-wb"><div class="hj-wbt">Saturated Fat (g)</div>${weekBars(rows, 'sf', hi, 'sf', 'Saturated fat')}</div><div class="hj-wb"><div class="hj-wbt">Protein (g)</div>${weekBars(rows, 'pro', pro, 'pro', 'Protein')}</div><div class="hj-ptip" hidden></div></div>`;
   return `<details class="hj-doc hj-pw"${S.open['eat7'] ? ' open' : ''} data-hjd="eat7"><summary><span>My Last 7 Days</span></summary><div class="hj-body">
-    <p class="hj-sub">${L.length ? `${under} of ${L.length} logged day${L.length === 1 ? '' : 's'} at or under ${fmt(hi)} g of saturated fat. Each of these days feeds the saturated fat lever on My LDL Path.` : 'Your week fills in as you log each day. Each logged day feeds the saturated fat lever on My LDL Path.'}</p>
+    <p class="hj-sub">${L.length ? `${under} of ${L.length} logged day${L.length === 1 ? '' : 's'} at or under ${fmt(hi)} g of saturated fat. ${PUB() ? '' : ' Each of these days feeds the saturated fat lever on My LDL Path.'}` : PUB() ? 'Your week fills in as you log each day.' : 'Your week fills in as you log each day. Each logged day feeds the saturated fat lever on My LDL Path.'}</p>
     ${body}<button type="button" class="btn btn-line btn-sm" data-hja="eattable" aria-pressed="${!!S.eatTable}">${S.eatTable ? 'View as Chart' : 'View as Table'}</button></div></details>`;
 }
 // ---- the card ----
@@ -1311,7 +1362,7 @@ function vPlate(mode){
   const ckRow = (t, list) => list.length ? `<div class="hj-ckg"><div class="hj-eh">${esc(t)}</div><div class="hj-habits">${list.join('')}</div></div>` : '';
   const src = (APP() || {}).foodsSrc;
   return `<div class="hj-blk hj-plate tn-card tn-edge a-plate" id="hj-plate"><div class="tn-hd">${badge('plate')}<div style="flex:1;min-width:0"><div class="tn-k">Today\'s Plate</div><div class="tn-sub">${eat.length ? eat.length + ' logged today' : 'Tap what you eat, and the rings fill'}</div></div>${tpt('Leaves')}</div>
-    <div class="hj-mts0">${meter(MT[0], tot.sf, T, true)}<div class="hj-mtg">${MT.slice(1).map(r => meter(r, tot[r[0]], T)).join('')}</div></div>
+    <div class="hj-mts0">${meter(MT[0], tot.sf, T, true)}<div class="hj-mtg">${MT.slice(1).filter(r => !(r[0] === 'cal' && TEEN())).map(r => meter(r, tot[r[0]], T)).join('')}</div></div>
     <p class="hj-sub hj-p8s">${eat.length ? 'Tap again for a second serving.' : 'Tap what you eat. Each tap adds one serving.'} Numbers are estimates per listed portion.</p>
     ${qaRow(eat)}
     ${anyHeart ? `<div class="hj-chips hj-pv8" role="group" aria-label="Which plate">${[['h', 'Heart-Health Plate'], ['f', 'Family Plate']].map(([v, l]) => `<button type="button" class="chip${V === v ? ' on' : ''}" aria-pressed="${V === v}" data-hja="platev" data-hjv="${v}">${l}</button>`).join('')}</div>` : ''}
@@ -1322,7 +1373,7 @@ function vPlate(mode){
       <div id="hj-eatres" aria-live="polite">${eatResults()}</div>
       <details class="hj-doc hj-own"${S.open['eatown'] ? ' open' : ''} data-hjd="eatown"><summary><span>Add My Own</span></summary><div class="hj-body">
         <label class="hj-fld"><span>Name</span><input data-hjo="name" autocomplete="off"></label><label class="hj-fld"><span>Portion (optional)</span><input data-hjo="per" placeholder="1 bowl" autocomplete="off"></label>
-        <div class="hj-g3">${[['sf', 'Sat fat (g)'], ['pro', 'Protein (g)'], ['fib', 'Fiber (g), optional'], ['sug', 'Added sugar (g), optional'], ['cal', 'Calories, optional'], ['na', 'Sodium (mg), optional']].map(([f, l]) => `<label class="hj-fld"><span>${l}</span><input data-hjo="${f}" inputmode="decimal"></label>`).join('')}</div>
+        <div class="hj-g3">${[['sf', 'Sat fat (g)'], ['pro', 'Protein (g)'], ['fib', 'Fiber (g), optional'], ['sug', 'Added sugar (g), optional'], ['cal', 'Calories, optional'], ['na', 'Sodium (mg), optional']].filter(([f]) => !(f === 'cal' && TEEN())).map(([f, l]) => `<label class="hj-fld"><span>${l}</span><input data-hjo="${f}" inputmode="decimal"></label>`).join('')}</div>
         <button type="button" class="btn btn-gold btn-sm" data-hja="eatown">Save to My Foods and Add</button></div></details></div>${lite ? '</details>' : ''}
     ${lite ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="plate" style="margin-top:12px">${ic('plate')}My Plate, Supplements, and 7 Days</button>` : `<div class="hj-eh hj-ckh">Daily Checklist</div>
     ${ckRow('Movement', [cb('move', ses ? ses.title || 'Today\'s workout' : 'Movement today', 'Checks itself when the workout finishes')])}
@@ -1542,8 +1593,11 @@ function tck(a, v, on, label, sub, cls){
 const tsw = (a, v, on, label) => `<button type="button" class="tn-sw" role="switch" aria-checked="${!!on}" data-hja="${a}" data-hjv="${esc(v)}" aria-label="${esc(label)}"></button>`;
 const tpt = p => p ? `<span class="tn-pt ${PCLS[p] || 'p-leaves'}">${esc(p)}</span>` : '';
 const badge = (n, cls) => `<span class="tn-badge${cls ? ' ' + cls : ''}">${ic(n)}</span>`;
-const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="tn-${id}">${badge(icn)}<h2>${esc(title)}</h2>${tpt(part)}<span class="sp"></span></div>`;
-function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${badge(icn)}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
+// BLD 866: each Today section wears its painting (shared/heroes/way/tend-*.webp), for the Field Guide and public Tending alike.
+const TIMG = {body: 'tend-body', move: 'tend-move', mind: 'tend-mind', spirit: 'tend-spirit', people: 'tend-people', fruit: 'tend-fruit'};
+const paint = (id, cls) => TIMG[id] ? `<span class="tn-gimg${cls ? ' ' + cls : ''}" aria-hidden="true"><img src="${esc(asset('shared/heroes/way/' + TIMG[id] + '.webp'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span>` : '';
+const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="tn-${id}">${TIMG[id] ? paint(id) : badge(icn)}<h2>${esc(title)}</h2>${tpt(part)}<span class="sp"></span></div>`;
+function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn)}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
 // A plan card: scene tile, time kicker, title, one line, actions with a check.
 function planCard(o){
   return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene">${scene(o.scene, o.hour)}</div><div style="min-width:0">
@@ -1627,7 +1681,7 @@ function vSettings(){
     <div class="${on ? '' : 'dim'}">${row('a-week', 'week', 'Also on This Week', 'Each day\'s notes on the week view', tsw('remwk', '', on && !h.set.remWk, 'Also on This Week'))}
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
-  const plan = kit ? '' : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Whose phone, your training, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
+  const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Whose phone, your training, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
     <div class="tn-two"><div class="tn-col">${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
@@ -1673,7 +1727,8 @@ function tendWeek(){
 }
 function fruitCards(){
   const out = [], kit = KIT(); if (kit) return '';
-  if (U('labs')){ const m = ldlModel();
+  if (U('labs') && PUB()) out.push(pubLdlCard());
+  else if (U('labs')){ const m = ldlModel();
     out.push(m ? `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers" aria-label="Open My LDL Path. Start ${r0(m.B)}, estimate now ${r0(m.now)}, the food plan path levels near ${r0(m.level)}.">
       <div class="tn-hd">${badge('star')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Food plan estimate${m.tNow > 0 ? ', week ' + Math.max(1, Math.ceil(m.tNow)) : ''}</div></div></div>
       <div class="tn-nums"><div><b>${r0(m.B)}</b><small>Start, ${esc(short(m.base.date))}</small></div><div><b>${r0(m.now)}</b><small>Estimate now</small></div><div><b class="soft">${r0(m.level)}</b><small>Food plan path</small></div></div>
@@ -1695,7 +1750,7 @@ const ACC = {work: 'a-move', prac: 'a-move', mark: 'a-move', med: 'p-bark', cook
 const SCN = {work: 'work', prac: 'practice', mark: 'work', med: 'practice', cook: 'cook', shop: 'bowl', prep: 'cook', quiet: 'dawn', supp: 'night'};
 function habitList(){
   const lib = FLDH() || {}, mine = MINE(), sp = supps(), lv = new Set(sp.map(lever).filter(Boolean));
-  const all = (arr(lib.today && lib.today.checks).length ? lib.today.checks : CHECKS).concat(arr(mine && mine.checks));
+  const all = (arr(lib.today && lib.today.checks).length ? lib.today.checks : PUB() ? CHECKS_P : CHECKS).concat(arr(mine && mine.checks));
   const food = ['fiber', 'plants', 'water', 'nuts', 'psyllium', 'sterols'];
   return all.filter(c => c && c.id && !['move', 'still'].includes(c.id) && !(U('supps') && (lv.has(c.id) || (sp.length && ['psyllium', 'sterols'].includes(c.id)))))
     .map(c => Object.assign({part: food.includes(c.id) ? 'food' : c.id === 'walk' ? 'move' : U('food') ? 'food' : 'move'}, c)).filter(c => U(c.part));
@@ -1710,7 +1765,8 @@ function vTodayT(lib){
   ['morning', 'evening'].forEach(w => { const L = spOf(w); if (L.length) nowList.push({key: 'supp:' + w, k: 'supp', v: w, hour: w === 'morning' ? 6.2 : 20.5, kick: w === 'morning' ? 'This morning' : 'This evening', title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', done: allOn(L)}); });
   nowList.sort((a, b) => a.hour - b.hour);
   const open = nowList.filter(x => !x.done), due = open.filter(x => x.hour <= hr + 0.25), cur = due.length ? due[due.length - 1] : open[0];
-  const greet = (hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') + (['Chris', 'Kayti'].includes(h.set.who) ? ', ' + h.set.who : '');
+  const nm = PUB() ? (() => { try { return C.name ? String(C.name() || '').trim().split(/\s+/)[0] : ''; } catch(e){ return ''; } })() : '';
+  const greet = (hr < 12 ? 'Good morning' : hr < 17 ? 'Good afternoon' : 'Good evening') + (['Chris', 'Kayti'].includes(h.set.who) ? ', ' + h.set.who : nm ? ', ' + nm : '');
   const plan = U('food') || U('move');
   const chips = kit || plan ? (before ? `<span class="tn-chip">Starts ${esc(shortDate(s0))}</span>` : `<span class="tn-chip">Week ${n}</span>${U('food') ? `<span class="tn-chip g">${ic('leaf')}Food Week ${letter(foodWeek(d))}</span>` : ''}`) : '';
   const hero = `<div class="tn-hero"><svg class="tn-sky" viewBox="0 0 400 300" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">${outdoors(skyAt(hr), 400, 300, {flip: true})}</svg>
@@ -1724,7 +1780,7 @@ function vTodayT(lib){
   const cardFor = x => { tally(partOf(x), x.done); const mark = x.k === 'mark';
     return planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: x.kick, title: x.title, sub: x.sub, btn: mark ? '' : x.k === 'cook' ? 'Guide Me' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, mark ? x.btn : x.k === 'cook' ? 'Cooked' : 'Done')}); };
   if (U('move')){ const mv = ag.filter(x => partOf(x) === 'move'); mv.forEach(x => body.push(cardFor(x)));
-    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', 'A walk, the dog, fresh air')}</div></div>`); } }
+    if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
   if (U('food')){ const pl = vPlate('today'); if (pl){ tally('food', arr(day.eat).length); body.push(pl); }
     ag.filter(x => partOf(x) === 'food').forEach(x => body.push(cardFor(x))); }
   if (sp.length){ sp.forEach(s => tally('supps', c[suppId(s)]));
@@ -1733,6 +1789,7 @@ function vTodayT(lib){
   else if (U('supps') && !kit) body.push(`<div class="tn-card a-today"><div class="tn-hd">${badge('capsule')}<div><div class="tn-k">Supplements</div><div class="tn-sub">Add what you take on the Plate page, and it joins Today morning and evening.</div></div></div><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="${U('food') ? 'plate' : 'settings'}">${ic('plus')}Add a Supplement</button></div>`);
   if (!kit && plan){ const hb = habitList(); if (hb.length){ hb.forEach(x => tally(x.part, c[x.id]));
     body.push(`<div class="tn-card a-today" id="tn-checks"><div class="tn-hd">${badge('leaf', 'a-plate')}<div><div class="tn-k">Daily Checks</div><div class="tn-sub">Small things that add up</div></div></div><div class="tn-list tn-l2">${hb.map(x => tck('check', x.id, c[x.id], x.label, x.sub)).join('')}</div></div>`); } }
+  if (PUB()) pubTodayCards(body, people, c, tally);
   // Mind
   if (U('mind') && !kit){ ag.filter(x => x.k === 'med').forEach(x => mind.push(cardFor(x))); tally('mind', c.mindful);
     mind.push(`<div class="tn-card p-bark"><div class="tn-hd">${badge('wind')}<div><div class="tn-k">Mindful Moments</div><div class="tn-sub">Slow breath and quiet attention through the day</div></div></div><div class="tn-list">${tck('check', 'mindful', c.mindful, 'Mindful Moment', 'One slow breath before each meal')}</div></div>`); }
@@ -1746,7 +1803,7 @@ function vTodayT(lib){
     people.push(`<article class="tn-card tn-edge p-branches"><div class="tn-k">Family Meals and Connection</div><div class="tn-list">${tck('check', 'together', c.together, 'Dinner Together', dn ? dn.name + ', at the table' : 'Around the table, together')}${tck('check', 'unplugged', c.unplugged, 'Unplugged Table', 'Phones rest away from the table')}</div>
       <div class="tn-note">${ic('star')}<div><div class="tn-k">Tonight's Question</div><div class="tn-q">${esc(q)}</div></div></div></article>`); }
   // Today's Rhythm: things tended today.
-  const dn0 = tl.filter(x => x.done).length, parts = USE().filter(p => p !== 'labs' && (!kit || p === 'food'));
+  const dn0 = tl.filter(x => x.done).length; S.tally = {done: dn0, total: tl.length}; const parts = USE().filter(p => p !== 'labs' && (!kit || p === 'food'));
   const rhythm = tl.length ? `<div class="tn-card a-today tn-rhythm"><div class="tn-prog">${ring(dn0, tl.length, 104, 11, `<b>${dn0}</b><small>of ${tl.length}</small>`)}<div style="min-width:0"><div class="tn-k">Today's Rhythm</div><div class="tn-big">${dn0} thing${dn0 === 1 ? '' : 's'} tended</div><div class="tn-sub">${esc(t.intro.quiet)}</div></div></div>
       ${parts.length > 1 ? `<div class="tn-dots">${parts.map(p => { const on = tl.some(x => x.part === p && x.done); return `<span class="${PARTS[p].a}${on ? ' f' : ''}">${ic(PARTS[p].i)}<em>${esc((t.choose.find(z => z.id === p) || {}).name || p)}${on ? ', tended' : ''}</em></span>`; }).join('')}</div>` : ''}</div>` : '';
   // Trunk: My Why.
@@ -1780,14 +1837,14 @@ function vKitchen(){
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(L)}. Dinners with Andrew guiding, step by step.`)}${kitTabs('kitchen')}
     <div class="tn-kgrid">${feat}${rest.map(x => `<button type="button" class="tn-card tn-lift tn-kc" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${scene('bowl', 12, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
     ${w.batch ? `<p class="hj-note"><b>Freezer batch this week:</b> ${esc(String(w.batch).replace(/^Freezer batch:\s*/i, ''))}</p>` : ''}
-    ${aims()}${ideasBlk('Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk('Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
+    ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
 }
 function vMove(){
   const d = new Date(), h = H(), ses = Object.entries(WK().sessions || {}), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
   const ag = agenda(d).filter(x => partOf(x) === 'move').map(x => Object.assign({done: isDone(d, x.key)}, x));
   const tile = (key, sc, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene(sc, sc === 'work' ? 7.5 : 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
   const lifts = Object.entries(h.lifts || {}).filter(([, v]) => v);
-  return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and the Daily Practice, with Ava coaching. Play any of them, any day.')}
+  return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and the Daily Practice, with Ava coaching. Play any of them, any day.')}${PUB() ? pubMoveHead() : ''}
     ${ag.length ? `<div class="tn-kgrid">${ag.map(x => planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: 'Today · ' + x.kick, title: x.title, sub: x.sub, btn: x.k === 'mark' ? '' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, x.k === 'mark' ? x.btn : 'Done')})).join('')}</div>` : ''}
     ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightWk(n) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>` : ''}
     ${pr.length ? `<h3 class="tn-h3">Daily Practice</h3><div class="tn-kgrid">${pr.map(x => tile('pracid:' + x.id, 'practice', x.mins ? x.mins + ' min' : 'Practice', x.title, x.focus || '', 'a-move')).join('')}</div>` : ''}
@@ -1798,7 +1855,7 @@ function vMove(){
 const NAVDEF = {today: ['Today', 'today', 'a-today'], week: ['Week', 'week', 'a-week'], plate: ['Plate', 'plate', 'a-plate'], kitchen: ['Kitchen', 'kitchen', 'a-kitchen'], move: ['Move', 'move', 'a-move'], numbers: ['Numbers', 'numbers', 'a-numbers']};
 function navIds(){ if (KIT()) return ['today', 'week', 'kitchen']; const f = U('food'), m = U('move');
   return ['today'].concat(f || m ? ['week'] : [], f ? ['plate', 'kitchen'] : [], m ? ['move'] : [], U('labs') ? ['numbers'] : []); }
-const navCur = () => ({shop: 'kitchen', prep: 'kitchen', journey: 'numbers'})[S.sec] || S.sec;
+const navCur = () => ({shop: 'kitchen', prep: 'kitchen', journey: 'numbers', kids: 'today', kidview: 'today', team: 'move'})[S.sec] || S.sec;
 function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2) return '';
   if (kind === 'top') return `<nav class="tn-top" aria-label="Tending sections">${ids.map(id => { const x = NAVDEF[id]; return `<button type="button" class="${x[2]}" data-hja="sec" data-hjv="${id}"${cur === id ? ' aria-current="page"' : ''}>${ic(x[1])}${x[0]}</button>`; }).join('')}</nav>`;
   return `<nav class="tn-bnav" aria-label="Tending sections"><ul style="grid-template-columns:repeat(${ids.length},minmax(0,1fr))">${ids.map(id => { const x = NAVDEF[id]; return `<li><button type="button" class="${x[2]}" data-hja="sec" data-hjv="${id}"${cur === id ? ' aria-current="page"' : ''}><span class="ic">${ic(x[1])}</span>${x[0]}</button></li>`; }).join('')}</ul></nav>`;
@@ -1813,30 +1870,35 @@ function view(){
   // BLD 857c: b857b saved the Monday before a weekend of shopping and prep (one week early); put that one start right, once.
   if (!KIT() && h.set.startFix !== 2){ const d = firstLog(); if (d && h.set.start === ymd(monOf(d)) && h.set.start !== ymd(firstMon())){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; } h.set.startFix = 2; save(); }
   if (KIT()){ const st = ((C.fld && C.fld()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'settings'].includes(S.sec)) S.sec = 'today'; }
-  const first = !h.set.u || !!h.set.needSetup, chosen = useSet();
+  const first = !h.set.u || !!h.set.needSetup, chosen = PUB() ? !!h.set.pubDone : useSet();
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
   const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
   const offer = ready && chosen ? `<div class="hj-blk hj-offer tn-card a-numbers">${kick('Your Starting Numbers Are Ready')}<p class="hj-sub">Your labs, full panels, starting weight, and goals, ready to add to this device in one tap.</p><button type="button" class="btn btn-gold btn-sm" data-hja="mine">Add My Starting Numbers</button></div>` : '';
-  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings'];
+  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
   if (!SECS2.includes(S.sec)) S.sec = 'today';
   let body;
-  if (!chosen) body = vChoose();
+  if (PUB() && (!chosen || S.setup)) body = vCheck();
+  else if (!chosen) body = vChoose();
   else if (!KIT() && (S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
   else if (S.sec === 'week') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'This Week', 'Every day of the plan, the dinners, the sessions, and the notes that keep it rolling.')}${vWeek()}</div>`;
-  else if (S.sec === 'plate') body = `<div class="tn-sec a-plate">${secHead('plate', 'a-plate', 'Today\'s Plate', 'Tap what you eat. The rings fill as you go, and each logged day feeds My LDL Path.')}${vPlate('full')}${aims()}</div>`;
+  else if (S.sec === 'plate') body = `<div class="tn-sec a-plate">${secHead('plate', 'a-plate', 'Today\'s Plate', PUB() ? 'Tap what you eat. The rings fill as you go, with aims set by your goals.' : 'Tap what you eat. The rings fill as you go, and each logged day feeds My LDL Path.')}${vPlate('full')}${PUB() ? pubAims() : aims()}</div>`;
   else if (S.sec === 'kitchen') body = vKitchen();
   else if (S.sec === 'shop') body = `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'The shopping list, on this device.')}${kitTabs('shop')}${vShop()}</div>`;
   else if (S.sec === 'prep') body = `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'This week\'s prep, the batch calendar, and freezer stock.')}${kitTabs('prep')}${vPrep()}</div>`;
   else if (S.sec === 'move') body = vMove();
   else if (S.sec === 'learn') body = `<div class="tn-sec a-today">${secHead('book', 'a-today', 'Why It Works', 'The full plans behind every card: why it works, every recipe, every session.')}${vPlan(lib, 'food')}${vPlan(lib, 'fitness')}${SOBER}</div>`;
+  else if (S.sec === 'numbers' && PUB()) body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Your labs beside their recommended ranges, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vLabsP()}</div>`;
   else if (S.sec === 'numbers') body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Labs, markers, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vNumbers()}</div>`;
+  else if (S.sec === 'kids') body = vKids();
+  else if (S.sec === 'kidview') body = vKidView();
+  else if (S.sec === 'team') body = vTeam();
   else if (S.sec === 'journey') body = `<div class="tn-sec a-numbers">${secHead('compass', 'a-numbers', 'My Journey', 'What you noticed, what felt strong, and every milestone.')}${numTabs('journey')}${vJourney()}</div>`;
   else if (S.sec === 'settings') body = vSettings();
   else body = vTodayT(lib);
   if (chosen && !KIT()) celebrate(milestonesT());
   const askWho = chosen && MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who && !first ? `<div class="hj-blk hj-offer tn-card">${kick('Whose Phone Is This?')}<p class="hj-sub">Tending keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
-  const nav = chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today'));
-  return `<div id="hj-root" class="tn${an ? ' tn-anim' : ''}">
+  const nav = chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
+  return `<div id="hj-root" class="tn${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}${an ? ' tn-anim' : ''}">
     <div class="tn-bar"><div class="tn-brand"><b>${ic('sprout')}</b>${esc(TNAME())}</div>${nav ? navHtml('top') : ''}<span class="sp"></span>${nav ? `<button type="button" class="tn-iconbtn${S.sec === 'settings' ? ' on' : ''}" data-hja="sec" data-hjv="settings" aria-label="Settings">${ic('gear')}</button>` : ''}</div>
     ${KIT() ? '' : askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${vOv()}</div>`;
@@ -1851,6 +1913,7 @@ const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], ma
 
 function act(a, v){
   const h = H(); if (!h) return;
+  if (PUB() && actPub(a, v)) return;
   if (actTool(a, v)) return;
   if (actPlate(a, v)) return;
   switch (a){
@@ -1915,6 +1978,452 @@ function act(a, v){
     case 'note-del': { if (!confirm('Remove this entry?')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.health = d.deleted.health || {}; d.deleted.health[v] = Date.now();
       h.notes = h.notes.filter(n => n.id !== v); save(); rerender(true); return; }
   }
+}
+
+// =====================================================================
+// BLD 866: PUBLIC TENDING. Everything below runs only when the library is GGTendPublic (PUB()).
+// The food plan and the workouts are built by shared/gg-tend-plan.js (GGTendPlan) into the same shapes the Field Guide's views
+// already play: dinners.weeks A to D, breakfasts, lunches, snacks, shop.weeks, and workouts.sessions A to D.
+// =====================================================================
+const TP = () => window.GGTendPlan || null;
+const CHECKS_P = [
+  {id: 'walk', label: 'Time outdoors', sub: 'A walk, fresh air, and daylight'},
+  {id: 'fiber', label: 'Fiber at two meals', sub: 'Oats, beans, lentils, whole grains, fruit'},
+  {id: 'plants', label: 'Five colors of plants', sub: 'Vegetables, fruit, nuts, seeds'},
+  {id: 'water', label: 'Water through the day', sub: 'The family drink'},
+  {id: 'rest', label: 'Seven hours of sleep', sub: 'Last night counts'}];
+const LVL = [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive'], ['gentle', 'Gentle']];
+const PLACE = [['home', 'Home'], ['light', 'Light Weights'], ['gym', 'Full Gym']];
+const DAYSETS = {2: [1, 4], 3: [1, 3, 5], 4: [1, 2, 4, 5], 5: [1, 2, 3, 4, 5], 6: [1, 2, 3, 4, 5, 6]};
+const BAND_PORTION = {'1-3': 0.5, '4-8': 0.75, '9-13': 1, '14-18': 1};
+const KIDS = () => arr(((H() || {}).set || {}).house && H().set.house.kids);
+const srcOf = id => arr((PLIB() || {}).sources).find(x => x && x.id === id) || null;
+const srcLinks = ids => arr(Array.isArray(ids) ? ids : [ids]).filter(Boolean).map(srcOf).filter(Boolean).map(x => x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}` : esc(x.t) + (x.who ? ', ' + esc(x.who) : '')).join('; ');
+const hhNote = serves => { const s = H().set, hh = (+((s.house || {}).adults) || 0) + KIDS().length; return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
+function planSet(){ const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: arr(s.goals).length ? s.goals : ['well'], kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
+// The saved plan: ids only, so a library update keeps working; a change of needs, allergies, goals, or household builds it again.
+function ensurePlan(force){
+  const h = H(), L = PLIB(), P = TP(); if (!h || !L || !P) return null;
+  const set = planSet(), sig = JSON.stringify(set), cur = h.plan && typeof h.plan === 'object' ? h.plan : null;
+  const known = new Set(arr(L.recipes).map(r => r.id).concat('leftovers'));
+  const intact = cur && cur.ids && 'ABCD'.split('').every(w => arr(cur.ids[w]).length === 7 && cur.ids[w].every(id => !id || known.has(id))) && cur.meals && Object.values(cur.meals).every(l => arr(l).every(id => known.has(id)));
+  if (cur && cur.sig === sig && intact && !force) return cur;
+  const seed = force || !cur ? (Date.now() % 100000) + 1 : cur.seed || 1;
+  const pw = P.planWeeks(L.recipes, Object.assign({seed}, set)), meals = P.planMeals(L.recipes, Object.assign({seed}, set));
+  h.plan = {seed, ids: pw.ids, meals, sig, n: 0, u: Date.now()}; PA = null; save(); return h.plan;
+}
+const recOf = id => arr((PLIB() || {}).recipes).find(r => r.id === id) || null;
+function ideaOf(r){ if (!r) return null; const P = TP();
+  return {id: r.id, name: r.name, mins: r.mins, how: r.serve || '', nut: r.nut ? Object.assign({per: '1 serving'}, r.nut) : null, steps: arr(r.steps), ingredients: arr(r.ingredients),
+    serve: r.serve || '', tip: r.tip || '', keeps: r.keeps || '', kid: r.kid || '', serves: r.serves, swaps: r.swaps || null,
+    shop: P ? P.shopList({dinners: [Object.assign({}, r, {leftover: false})]}).map(x => ({name: x.name, amt: x.amt, sec: x.sec})) : []}; }
+// Workouts on the chosen days: the sessions rotate A, B, C, D across the weeks.
+const pubDays = () => DAYSETS[+H().set.days] || DAYSETS[3];
+function pubSesKey(d){ const dd = pubDays(), k = dd.indexOf(d.getDay()); if (k < 0) return null; const keys = Object.keys(WK().sessions || {}).slice(0, 4); if (!keys.length) return null;
+  const n = Math.max(1, weekNo(d)); return keys[((n - 1) * dd.length + k) % keys.length]; }
+let PA = null;
+function pubApp(){
+  const L = PLIB(), h = H(), P = TP(); if (!L || !h) return null;
+  const s = h.set, wk = Math.max(1, weekNo(new Date())), plan = P ? ensurePlan() : null;
+  const sig = JSON.stringify([s.level, s.place, s.mins, s.days, s.goals, s.weightLb, s.teen, TEEN(), plan && plan.u, plan && plan.n, wk, s.house]);
+  if (PA && PA.L === L && PA.sig === sig) return PA.app;
+  const app = Object.assign({}, L.app || {}), lvl = s.level || 'root';
+  // Targets: the strictest of each across the chosen goals; protein by body weight when it is known (never for anyone under 18).
+  const tg = P ? P.targets(arr(s.goals).length ? s.goals : ['well'], L.goals, {weightKg: TEEN() ? 0 : (+s.weightLb || 0) / 2.2046, teen: TEEN()}) : null;
+  if (tg) app.targets = {sf: tg.sf, pro: tg.pro, fib: tg.fib, sol: tg.sol, sug: tg.sug, cal: null, na: tg.na, est: tg.est};
+  // Workouts.
+  const wo = {meditation: Object.assign({start: 5, end: 12}, (L.app && L.app.workouts && L.app.workouts.meditation) || {}), motivation: arr(L.motivation)};
+  if (lvl === 'gentle'){
+    const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
+    const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
+      if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
+      c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
+    Object.assign(wo, {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)});
+  } else if (P){
+    const b = P.buildSessions(L.moves, L.templates, {level: lvl, place: s.place || 'home', mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown});
+    Object.assign(wo, {sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown});
+  }
+  app.workouts = wo;
+  // Food: the plan's four weeks, breakfasts, lunches, snacks, and a shopping list for each week.
+  if (P && plan){
+    const weeks = P.weeksFromIds(L.recipes, plan.ids), m = plan.meals || {}, ideas = k => arr(m[k]).map(recOf).map(ideaOf).filter(Boolean);
+    app.dinners = {weeks, breakfasts: ideas('breakfasts'), lunches: ideas('lunches'), snacks: ideas('snacks')};
+    const extras = ['breakfasts', 'lunches', 'snacks'].flatMap(k => arr(m[k]).map(recOf)).filter(Boolean).map(r => Object.assign({}, r, {leftover: false}));
+    app.shop = {weeks: {}}; 'ABCD'.split('').forEach(w => { app.shop.weeks[w] = {shop: P.shopList(weeks, w, extras).map(x => ({name: x.name, amt: x.amt, sec: x.sec, store: 'grocer', for: x.for}))}; });
+  }
+  PA = {L, sig, app}; return app;
+}
+// The Daily Aims in public: the person's own targets, from their goals, with the Standards.
+function pubAims(){ const T = targets(), L = PLIB() || {}, gs = arr(L.goals).filter(g => arr(H().set.goals).includes(g.id)), f = v => Array.isArray(v) ? fmt(v[0]) + ' to ' + fmt(v[v.length - 1]) : fmt(v);
+  return `<details class="hj-doc"${S.open['aims'] ? ' open' : ''} data-hjd="aims"><summary><span>My Daily Aims</span></summary><div class="hj-body"><ul class="hj-ing">
+    <li><b>Saturated fat:</b> ${f(T.sf)} g a day or less.</li><li><b>Added sugar:</b> ${f(T.sug)} g a day or less.</li><li><b>Sodium:</b> ${Array.isArray(T.na) ? 'aim for ' + fmt(T.na[0]) + ' mg, up to ' + fmt(T.na[1]) + ' mg' : fmt(T.na) + ' mg or less'} a day.</li>
+    <li><b>Fiber:</b> ${f(T.fib)} g a day or more${T.sol ? `, with about ${fmt(T.sol)} g soluble` : ''}.</li><li><b>Protein:</b> about ${f(T.pro)} g a day${TEEN() ? '' : T.est ? ' (add your weight in the start-up check for your own aim)' : ', from your weight and goals'}.</li></ul>
+    <p class="hj-sub">${gs.length ? 'Set by ' + esc(gs.map(g => g.name).join(', ')) + '. ' : ''}When goals differ, Tending keeps the strictest of each.</p>
+    ${L.standards && L.standards.html ? `<details class="hj-doc"><summary><span>The Grounded Nutritional Standards</span></summary><div class="hj-body">${L.standards.html}</div></details>` : ''}</div></details>`; }
+
+// ---------- the start-up check ----------
+function ckDraft(){
+  if (S.ck) return S.ck; const s = H().set;
+  const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: arr(s.goals).slice(), needs: arr(s.needs).slice(),
+    allergies: s.allergies || '', house: JSON.parse(JSON.stringify(s.house || {adults: 1, kids: []})), check: Object.assign({}, s.check || {}), cleared: !!s.cleared,
+    level: s.level || '', place: s.place || 'home', mins: +s.mins || 20, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
+    lab: {date: today()}};
+  return S.ck = {i: 0, d};
+}
+function ckSteps(d){
+  const u = id => arr(d.use).includes(id), out = ['who', 'use', 'goals'];
+  if (u('food')) out.push('food'); if (d.who === 'family') out.push('house');
+  if (u('move')) out.push('check', 'level'); if (!TEEN() && !d.teen) out.push('body'); if (u('labs')) out.push('labs');
+  return out.concat('done');
+}
+function vCheck(){
+  const L = PLIB() || {}, K = L.check || {}, ck = ckDraft(), d = ck.d, steps = ckSteps(d), i = Math.min(ck.i, steps.length - 1), step = steps[i], t = TD();
+  const chips = (field, list, multi) => `<div class="hj-chips" role="group">${list.map(([v, l, sub]) => { const on = multi ? arr(d[field]).includes(v) : String(d[field]) === String(v);
+    return `<button type="button" class="chip tn-ckc${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckset" data-hjv="${esc(field + '|' + v + '|' + (multi ? 1 : 0))}">${esc(l)}${sub ? `<small>${esc(sub)}</small>` : ''}</button>`; }).join('')}</div>`;
+  const inp = (k, label, type, extra) => `<label class="hj-fld"><span>${esc(label)}</span><input type="${type || 'number'}"${type === 'text' || type === 'date' ? '' : ' inputmode="decimal"'} data-hjck="${esc(k)}" value="${esc(k.split('.').reduce((o, x) => o == null ? '' : o[x], d) || '')}"${extra || ''}></label>`;
+  const anyYes = arr(K.questions).some(q => d.check[q.id] === true);
+  let body = '';
+  if (step === 'who') body = `<h3>Who is Tending for?</h3><p class="hj-sub">${esc(L.lead || t.intro.line)}</p>${chips('who', [['me', 'Me'], ['family', 'Me and My Family']])}
+    ${C.age ? '' : `<p class="hj-sub" style="margin-top:14px">Tending keeps the focus on food and energy for anyone under 18, with no weight and no calories.</p>${chips('teen', [['false', '18 or Older'], ['true', 'Under 18']])}`}`;
+  else if (step === 'use') body = `<h3>${esc(t.intro.chooseH)}</h3><p class="hj-sub">${esc(t.intro.choose)}</p>${chips('use', t.choose.map(c => [c.id, c.name]), true)}`;
+  else if (step === 'goals') body = `<h3>What are you growing toward?</h3><p class="hj-sub">Choose one or more. When goals differ, Tending keeps the strictest aim of each.</p>
+    <div class="tn-ckg">${arr(L.goals).map(g => { const on = arr(d.goals).includes(g.id); return `<button type="button" class="tn-ckcard${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckset" data-hjv="goals|${esc(g.id)}|1"><b>${esc(g.name)}</b><small>${esc(g.line || '')}</small></button>`; }).join('')}</div>`;
+  else if (step === 'food') body = `<h3>Food needs</h3><p class="hj-sub">Every recipe in your plan fits each need you choose.</p>${chips('needs', arr(L.needs).map(n => [n.id, n.name]), true)}
+    ${arr(L.needs).filter(n => arr(d.needs).includes(n.id) && n.line).map(n => `<p class="hj-sub"><b>${esc(n.name)}:</b> ${esc(n.line)}</p>`).join('')}
+    <label class="hj-fld" style="margin-top:12px"><span>Allergies (optional)</span><input type="text" data-hjck="allergies" value="${esc(d.allergies)}" placeholder="sesame, shellfish" autocomplete="off"></label><p class="hj-sub">${esc(L.allergyLine || '')}</p>`;
+  else if (step === 'house') body = `<h3>Your household</h3><p class="hj-sub">${esc((L.kids || {}).lead || 'Track the food, never the body.')}</p>${inp('house.adults', 'Grown-ups who eat at home')}
+    ${arr(d.house.kids).map((k, j) => `<div class="tn-kidrow"><label class="hj-fld"><span>Child's first name or nickname (optional)</span><input type="text" data-hjck="house.kids.${j}.name" value="${esc(k.name || '')}" autocomplete="off"></label>
+      <div class="hj-chips">${arr((L.kids || {}).ages).map(a => `<button type="button" class="chip${k.band === a.id ? ' on' : ''}" aria-pressed="${k.band === a.id}" data-hja="ckkid" data-hjv="${j}|band|${esc(a.id)}">${esc(a.name)}</button>`).join('')}</div>
+      <div class="hj-chips">${[['f', 'Girl'], ['m', 'Boy'], ['', 'Skip']].map(([v, l]) => `<button type="button" class="chip${(k.sex || '') === v ? ' on' : ''}" aria-pressed="${(k.sex || '') === v}" data-hja="ckkid" data-hjv="${j}|sex|${v}">${l}</button>`).join('')}<button type="button" class="linkbtn" data-hja="ckkid" data-hjv="${j}|remove|">Remove</button></div></div>`).join('')}
+    <button type="button" class="btn btn-line btn-sm" data-hja="ckkid" data-hjv="-1|add|">Add a Child</button><p class="hj-sub">Girl or Boy only sets the daily amounts for iron and fiber by age.</p>`;
+  else if (step === 'check') body = `<h3>A quick health check</h3><p class="hj-sub">${esc(K.lead || '')}</p>
+    ${arr(K.questions).map(q => `<div class="tn-ckq"><p><b>${esc(q.q)}</b></p><div class="hj-chips">${[['true', 'Yes'], ['false', 'No']].map(([v, l]) => { const on = String(d.check[q.id]) === v; return `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckq" data-hjv="${esc(q.id)}|${v}">${l}</button>`; }).join('')}</div>${q.why && d.check[q.id] === true ? `<p class="hj-sub">${esc(q.why)}</p>` : ''}</div>`).join('')}
+    ${anyYes ? `<div class="hj-note tn-yes"><p><b>${esc(K.yes || '')}</b></p><p>${esc(K.yesMore || '')}</p>${chips('cleared', [['true', (arr(K.continue).find(x => x.id === 'cleared') || {}).label || 'My doctor or therapist says I can begin']])}</div>`
+      : arr(K.questions).every(q => d.check[q.id] === false) ? `<p class="hj-note">${esc(K.allClear || '')}</p>` : ''}
+    ${K.fullScreen ? `<p class="hj-sub">${esc(K.fullScreen.t)} <a href="${esc(K.fullScreen.url)}" target="_blank" rel="noopener">Open the PAR-Q+</a></p>` : ''}`;
+  else if (step === 'level'){ const T = L.templates || {}, yesHold = anyYes && !d.cleared;
+    body = `<h3>Your movement path</h3>${yesHold ? `<p class="hj-note">${esc(K.yes || '')} ${esc(K.yesMore || '')}</p>` : ''}
+    <p class="hj-sub" style="margin:6px 0"><b>Level</b></p>${chips('level', LVL.filter(([v]) => !yesHold || v === 'gentle').map(([v, l]) => [v, l]))}
+    ${d.level ? `<p class="hj-sub">${esc(d.level === 'gentle' ? (L.gentle || {}).lead || '' : (T.levelLines || {})[d.level] || '')}</p>` : ''}
+    ${d.level && d.level !== 'gentle' ? `<p class="hj-sub" style="margin:10px 0 6px"><b>Where you move</b></p>${chips('place', PLACE)}${(T.placeLines || {})[d.place] ? `<p class="hj-sub">${esc(T.placeLines[d.place])}</p>` : ''}
+      <p class="hj-sub" style="margin:10px 0 6px"><b>Minutes</b></p>${chips('mins', [[20, '20 Minutes'], [40, '40 Minutes'], [60, '60 Minutes']])}` : ''}
+    <p class="hj-sub" style="margin:10px 0 6px"><b>Days a week</b></p>${chips('days', [2, 3, 4, 5, 6].map(n => [n, n + ' Days']))}
+    ${yesHold ? `<button type="button" class="btn btn-line btn-sm" data-hja="ckteam">Add My Plan from My Team</button>` : ''}`; }
+  else if (step === 'body') body = `<h3>Your protein aim (optional)</h3><p class="hj-sub">Your weight sets your daily protein aim. It stays on this device, and you can skip it.</p>${inp('weightLb', 'Weight (lb)')}`;
+  else if (step === 'labs'){ const lg = arr((L.ldl || {}).goals);
+    body = `<h3>Your labs (optional)</h3><p class="hj-sub">${esc((L.labs || {}).lead || '')} Skip this anytime, and add numbers later in Numbers.</p>
+    <div class="hj-g3">${inp('lab.date', 'Lab date', 'date')}${inp('lab.ldl', 'LDL')}${inp('lab.hdl', 'HDL')}${inp('lab.total', 'Total cholesterol')}${inp('lab.trig', 'Triglycerides')}</div>
+    <p class="hj-sub" style="margin:10px 0 6px"><b>Your LDL goal, set with your doctor</b></p>${chips('goalLdl', lg.map(g => [g.v, 'Under ' + g.v]))}${inp('goalLdl', 'Or your own goal')}`; }
+  else body = `<h3>Ready to tend</h3><p class="hj-sub">${esc(t.intro.private)} ${esc(t.intro.quiet)}</p>${L.disclaimers && L.disclaimers.welcome ? `<p class="hj-note">${esc(L.disclaimers.welcome)}</p>` : ''}`;
+  const last = i === steps.length - 1, canCancel = !!H().set.pubDone;
+  return `<section class="tn-sec a-numbers tn-check" id="hj-form" data-tn="check">${secHead('sprout', 'a-numbers', H().set.pubDone ? 'My Start-Up Check' : 'Welcome to Tending', esc(L.tagline || ''))}
+    <div class="tn-ckbar" aria-hidden="true"><span style="width:${Math.round(100 * (i + 1) / steps.length)}%"></span></div><p class="hj-sub tn-ckn">Step ${i + 1} of ${steps.length}</p>
+    <div class="hj-blk tn-card">${body}</div>
+    <div class="row tn-cknav">${i ? `<button type="button" class="btn btn-line" data-hja="ckback">Back</button>` : ''}<button type="button" class="btn btn-gold" data-hja="${last ? 'cksave' : 'cknext'}">${last ? (canCancel ? 'Save My Changes' : 'Start Tending') : 'Next'}</button>${canCancel ? `<button type="button" class="linkbtn" data-hja="ckcancel">Cancel</button>` : ''}</div>
+    ${L.disclaimers && L.disclaimers.check && step === 'check' ? `<p class="hj-sub">${esc(L.disclaimers.check)}</p>` : ''}</section>`;
+}
+function ckSave(){
+  const h = H(), d = S.ck.d, L = PLIB() || {}, anyYes = arr((L.check || {}).questions).some(q => d.check[q.id] === true);
+  const kids = arr(d.house.kids).filter(k => k && k.band).map(k => ({id: k.id || uid(), name: String(k.name || '').trim().slice(0, 40), band: k.band, sex: k.sex || ''}));
+  const was = h.set.pubDone;
+  h.set = Object.assign({}, h.set, {who: d.who, teen: !C.age && d.teen === true, use: PART_IDS.filter(x => arr(d.use).includes(x)), goals: arr(d.goals).length ? d.goals : ['well'], needs: arr(d.needs),
+    allergies: String(d.allergies || '').slice(0, 200), house: {adults: Math.max(1, Math.min(12, Math.round(+((d.house || {}).adults) || 1))), kids: d.who === 'family' ? kids : []},
+    check: d.check, checkYes: anyYes, cleared: !!d.cleared, level: d.level || (anyYes && !d.cleared ? 'gentle' : 'root'), place: d.place || 'home', mins: +d.mins || 20, days: +d.days || 3,
+    weightLb: TEEN() || d.teen ? '' : (num(d.weightLb) || ''), goalLdl: num(d.goalLdl) || '', pubDone: 1, u: Date.now()});
+  if (anyYes && !d.cleared) h.set.level = 'gentle';
+  h.set.household = h.set.house.adults + h.set.house.kids.length;
+  if (!h.set.start) h.set.start = ymd(monOf(new Date()));
+  if (!was) h.set.remOff = true;
+  const lab = d.lab || {}, rec = {id: uid(), date: /^\d{4}-\d{2}-\d{2}$/.test(String(lab.date || '')) ? lab.date : today(), u: Date.now()};
+  ['ldl', 'hdl', 'total', 'trig'].forEach(k => { const n = num(lab[k]); if (n != null) rec[k] = n; });
+  if (Object.keys(rec).length > 3) h.labs.push(rec);
+  PA = null; ensurePlan(); save(); S.ck = null; S.setup = false; S.sec = 'today'; S.anim = true;
+  toast(was ? 'Saved. Your plan follows your answers.' : 'Welcome to Tending.'); rerender(false); window.scrollTo(0, 0);
+}
+
+// ---------- Today: My Plan from My Team, the start-up check note, the family's food ----------
+function teamList(){ const t = H().team; return t && Array.isArray(t.list) ? t.list : []; }
+function pubTodayCards(body, people, c, tally){
+  const L = PLIB() || {}, K = L.check || {}, s = H().set, tm = teamList();
+  if (tm.length){ tm.forEach(x => tally('move', c['team:' + x.id]));
+    body.push(`<article class="tn-card tn-edge a-move" id="tn-team"><div class="tn-hd">${badge('compass')}<div style="min-width:0;flex:1"><div class="tn-k">${esc(((K.team || {}).remind) || 'Your team\'s plan for today')}</div><div class="tn-sub">${esc(((K.team || {}).keep) || '')}</div></div></div>
+      <div class="tn-list">${tm.map(x => tck('check', 'team:' + x.id, c['team:' + x.id], x.name || 'My team\'s exercise', [x.amount || x.dose, x.often || x.when].filter(Boolean).join(' · '))).join('')}</div>
+      <button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('book')}Open My Plan from My Team</button></article>`); }
+  if (U('move') && s.checkYes && !s.cleared && !tm.length) body.push(`<div class="tn-card a-move"><div class="tn-hd">${badge('shield')}<div><div class="tn-k">Before You Move More</div><div class="tn-sub">${esc(K.yes || '')}</div></div></div>
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="team">${ic('plus')}Add My Plan from My Team</button><button type="button" class="tn-btn sm line" data-hja="pcleared">${esc((arr(K.continue).find(x => x.id === 'cleared') || {}).label || 'My doctor or therapist says I can begin')}</button></div></div>`);
+  const kids = KIDS(); if (kids.length){ const k0 = today();
+    const card = `<article class="tn-card tn-edge p-branches" id="tn-kids"><div class="tn-hd">${badge('people')}<div style="min-width:0;flex:1"><div class="tn-k">Family Food</div><div class="tn-sub">${esc(((L.kids || {}).lead || '').split('.')[0] + '.')}</div></div></div>
+      <div class="tn-kidl">${kids.map((k, j) => { const day = kidDay(k.id, k0), n = Object.keys(day.rainbow || {}).length + Object.values(day.g || {}).filter(v => +v > 0).length; tally('people', n > 0);
+        return `<div class="tn-kidc"><b>${esc(kidName(k, j))}</b><small>${esc(bandName(k.band))}</small><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="kidopen" data-hjv="${esc(k.id)}">${ic('plate')}Log Food</button><button type="button" class="tn-btn sm line" data-hja="kidview" data-hjv="${esc(k.id)}">${ic('star')}Kid View</button></div></div>`; }).join('')}</div></article>`;
+    (U('people') ? people : body).push(card); }
+}
+const kidName = (k, j) => k.name || 'Child ' + (j + 1);
+const bandName = id => (arr(((PLIB() || {}).kids || {}).ages).find(a => a.id === id) || {}).name || '';
+
+// ---------- the Move section head: the path, the Gentle lead, and My Plan from My Team ----------
+function pubMoveHead(){
+  const L = PLIB() || {}, s = H().set, T = L.templates || {}, G = L.gentle || {}, lvl = s.level || 'root', K = L.check || {};
+  const path = lvl === 'gentle' ? 'Gentle' : [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], (PLACE.find(x => x[0] === s.place) || [, 'Home'])[1], (+s.mins || 20) + ' Minutes'].join(' · ');
+  return `<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3><p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}</p>
+    ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div>
+    ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}</div>`;
+}
+
+// ---------- the Kitchen: swap a meal, build a new plan ----------
+function pubPlanEdit(wk){
+  const h = H(), plan = h.plan || {}, ids = arr((plan.ids || {})[wk]), m = plan.meals || {}, P = TP(); if (!P) return '';
+  const st = P.weekStats(P.weeksFromIds(PLIB().recipes, plan.ids)[wk].dinners);
+  const row = (key, label, r, sub) => `<div class="tn-pe"><span class="d">${esc(label)}</span><span class="n"><b>${esc(r ? r.name : 'Leftovers Night')}</b><small>${esc(sub)}</small></span><button type="button" class="tn-btn sm line" data-hja="pswap" data-hjv="${esc(key)}">Swap</button></div>`;
+  const PROT = {fish: 'Fish', poultry: 'Poultry', beans: 'Beans', lentils: 'Lentils', tofu: 'Tofu', eggs: 'Eggs', yogurt: 'Yogurt', redmeat: 'Lean red meat', mixed: 'Mixed'};
+  return `<details class="hj-doc tn-planed"${S.open['planed'] ? ' open' : ''} data-hjd="planed"><summary><span>My Plan for Food Week ${esc(wk)}</span></summary><div class="hj-body">
+    <p class="hj-sub">${st.fish} fish dinners and ${st.red ? st.red + ' lean red meat dinner' : 'no red meat'} this week, about ${st.mins} minutes of cooking in all${st.cost != null ? ', about $' + st.cost : ''}. Swap any meal and the shopping list follows.</p>
+    ${ids.map((id, i) => { const r = id === 'leftovers' ? null : recOf(id); return row('d|' + wk + '|' + DOW[(i + 1) % 7], DOWL[(i + 1) % 7], r, r ? [PROT[r.protein] || '', r.mins ? r.mins + ' min' : ''].filter(Boolean).join(' · ') : 'This week\'s leftovers, warmed through'); }).join('')}
+    ${['breakfasts', 'lunches', 'snacks'].map(k => arr(m[k]).length ? `<h4 class="hj-sec">${k === 'breakfasts' ? 'Breakfasts' : k === 'lunches' ? 'Lunches' : 'Snacks'}</h4>` + arr(m[k]).map((id, i) => { const r = recOf(id); return r ? row('m|' + k + '|' + i, '', r, r.mins ? r.mins + ' min' : '') : ''; }).join('') : '').join('')}
+    <div class="tn-acts" style="margin-top:12px"><button type="button" class="tn-btn sm line" data-hja="pleft">${h.set.leftovers === false ? 'Make Saturday a Leftovers Night' : 'Cook Saturday Too'}</button><button type="button" class="tn-btn sm line" data-hja="pnew">${S.sureNew ? 'Tap Again for a New Plan' : 'Build a New Plan'}</button></div></div></details>`;
+}
+
+// ---------- My Plan from My Team ----------
+function vTeam(){
+  const L = PLIB() || {}, T = (L.check || {}).team || {}, F = arr(T.fields).length ? T.fields : [{id: 'name', label: 'Exercise or instruction'}, {id: 'how', label: 'How to do it'}, {id: 'amount', label: 'Sets, reps, or time'}, {id: 'often', label: 'How often'}, {id: 'who', label: 'Who gave you this plan'}];
+  const list = teamList(), ed = S.teamEd, cur = ed && ed !== 'new' ? list.find(x => x.id === ed) || {} : {};
+  const form = ed ? `<div class="hj-blk" id="hj-form">${kick(ed === 'new' ? 'Add to My Plan' : 'Edit')}${F.map(f => `<label class="hj-fld"><span>${esc(f.label)}</span>${/how|notes/.test(f.id) ? `<textarea rows="3" data-hjtm="${esc(f.id)}">${esc(cur[f.id] || '')}</textarea>` : `<input type="text" data-hjtm="${esc(f.id)}" value="${esc(cur[f.id] || '')}" autocomplete="off">`}</label>`).join('')}
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="tmsave">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="tmcancel">Cancel</button></div></div>` : '';
+  return `<div class="tn-sec a-move">${secHead('compass', 'a-move', T.h || 'My Plan from My Team', esc(T.lead || ''))}
+    ${form}${list.length ? list.map(x => `<div class="tn-card a-move tn-tm"><h3>${esc(x.name || 'My team\'s exercise')}</h3>${F.filter(f => f.id !== 'name' && x[f.id]).map(f => `<p class="tn-sub"><b>${esc(f.label)}:</b> ${esc(x[f.id]).replace(/\n/g, '<br>')}</p>`).join('')}
+      <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="tmedit" data-hjv="${esc(x.id)}">Edit</button><button type="button" class="linkbtn" data-hja="tmdel" data-hjv="${esc(x.id)}">Remove</button></div></div>`).join('') : ed ? '' : `<p class="hj-note">Add each exercise or instruction from your physical therapist, doctor, or coach. It shows on Today as a reminder.</p>`}
+    ${ed ? '' : `<button type="button" class="tn-btn" data-hja="tmedit" data-hjv="new">${ic('plus')}Add an Exercise or Instruction</button>`}
+    <p class="tn-sub" style="margin-top:12px">${esc(T.keep || '')}</p></div>`;
+}
+
+// ---------- labs: every marker beside its recommended range ----------
+const TONE_RANK = {good: 0, ok: 1, watch: 2, high: 3};
+function markerBands(mk, entry){
+  const b = mk.bands; if (Array.isArray(b)) return b;
+  if (mk.bySex && b) return b[H().set.sex === 'm' ? 'm' : 'f'] || b.f || b.m || [];
+  if (mk.byUnit && b) return b[(entry && entry[mk.id + 'U']) || mk.unit] || Object.values(b)[0] || [];
+  return [];
+}
+function bandIdx(bands, v){ for (let i = 0; i < bands.length; i++){ const hi = bands[i].hi != null ? +bands[i].hi : null; if (hi == null || v < hi) return i; } return bands.length - 1; }
+function markerVal(mk, e){ if (!e) return null; if (mk.fields) return mk.fields.every(f => num(e[f]) != null) ? mk.fields.map(f => +e[f]) : null;
+  if (mk.computed){ const t = num(e.total), hd = num(e.hdl); return num(e[mk.id]) != null ? +e[mk.id] : t != null && hd != null ? t - hd : null; } return num(e[mk.id]); }
+// The band a reading falls in: {band, idx, list}. Blood pressure takes the higher band of its two numbers (rule 'higher').
+function markerBand(mk, e){
+  const v = markerVal(mk, e); if (v == null) return null;
+  if (mk.fields){ const B = mk.bands || {};
+    if (Array.isArray(B)){ const idx = Math.max(...mk.fields.map((f, j) => { for (let i = 0; i < B.length; i++){ const hi = B[i][f]; if (hi == null || v[j] < hi) return i; } return B.length - 1; })); return {band: B[idx], idx, list: B, v}; }
+    const per = mk.fields.map((f, j) => { const L = arr(B[f]), i = bandIdx(L, v[j]); return {f, L, i, b: L[i] || {}}; });
+    const top = per.slice().sort((a, b) => (TONE_RANK[b.b.tone] || 0) - (TONE_RANK[a.b.tone] || 0))[0];
+    return {band: top.b, idx: top.i, list: per[0].L, v, per}; }
+  const L = markerBands(mk, e), i = bandIdx(L, v); return {band: L[i] || {}, idx: i, list: L, v};
+}
+// A range bar: one equal segment per band, colored by tone, the reading marked inside its band.
+function rangeBar(list, v, marks){
+  const n = list.length; if (!n) return '';
+  const pos = x => { const i = bandIdx(list, x), lo = i ? +list[i - 1].hi : 0, hi = list[i].hi != null ? +list[i].hi : (i ? lo + (lo - (i > 1 ? +list[i - 2].hi : 0)) : lo * 2 || 1);
+    const f = Math.max(0.04, Math.min(0.96, (x - lo) / ((hi - lo) || 1))); return (i + f) / n * 100; };
+  return `<div class="tn-rb" aria-hidden="true">${list.map((b, i) => `<span class="t-${esc(b.tone || 'ok')}" style="left:${(i / n * 100).toFixed(2)}%;width:${(100 / n).toFixed(2)}%"></span>`).join('')}
+    ${arr(marks).map(m => m.lo != null ? `<em class="rg" style="left:${pos(m.hi).toFixed(1)}%;width:${Math.max(1, pos(m.lo) - pos(m.hi)).toFixed(1)}%"></em>` : `<i class="${esc(m.cls || '')}" style="left:${pos(m.v).toFixed(1)}%"></i>`).join('')}
+    ${v != null ? `<i class="me" style="left:${pos(v).toFixed(1)}%"></i>` : ''}</div>
+    <div class="tn-rbl" aria-hidden="true">${list.map((b, i) => `<span style="left:${(i / n * 100).toFixed(2)}%;width:${(100 / n).toFixed(2)}%">${esc(b.label || '')}${b.hi != null ? `<small>under ${esc(b.hi)}</small>` : ''}</span>`).join('')}</div>`;
+}
+function vLabsP(){
+  const L = PLIB() || {}, h = H(), M = arr((L.labs || {}).markers), E = labs(), f = S.form;
+  const latest = mk => { for (let i = E.length - 1; i >= 0; i--){ if (markerVal(mk, E[i]) != null) return E[i]; } return null; };
+  const inp = (k, label, extra) => `<label class="hj-fld"><span>${esc(label)}</span><input type="number" inputmode="decimal" data-hjf="${esc(k)}" value="${esc(f && f[k] != null ? f[k] : '')}"${extra || ''}></label>`;
+  const form = f && f.k === 'plab' ? `<div class="hj-blk" id="hj-form">${kick('Add Lab Results')}<label class="hj-fld"><span>Date</span><input type="date" data-hjf="date" value="${esc(f.date || '')}"></label>
+    <div class="hj-g3">${M.filter(mk => !mk.computed).map(mk => mk.fields ? mk.fields.map(x => inp(x, mk.name + (x === 'sys' ? ', top number' : x === 'dia' ? ', bottom number' : ''))).join('')
+      : inp(mk.id, mk.name + (mk.optional ? ' (optional)' : '') + (mk.units ? '' : ' (' + (mk.unit || '') + ')'))).join('')}</div>
+    ${M.filter(mk => mk.units).map(mk => `<p class="hj-sub" style="margin:6px 0">${esc(mk.name)} unit</p><div class="hj-chips">${mk.units.map(u => `<button type="button" class="chip${(f[mk.id + 'U'] || mk.unit) === u ? ' on' : ''}" aria-pressed="${(f[mk.id + 'U'] || mk.unit) === u}" data-hja="plabu" data-hjv="${esc(mk.id + '|' + u)}">${esc(u)}</button>`).join('')}</div>`).join('')}
+    ${M.some(mk => mk.bySex) ? `<p class="hj-sub" style="margin:6px 0">HDL ranges differ for women and men</p><div class="hj-chips">${[['f', 'Woman'], ['m', 'Man']].map(([v, l]) => `<button type="button" class="chip${(h.set.sex || 'f') === v ? ' on' : ''}" aria-pressed="${(h.set.sex || 'f') === v}" data-hja="psex" data-hjv="${v}">${l}</button>`).join('')}</div>` : ''}
+    <label class="hj-fld"><span>Note (optional)</span><input type="text" data-hjf="note" value="${esc(f.note || '')}"></label>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="plabsave">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>` : '';
+  const card = mk => { const e = latest(mk), r = e ? markerBand(mk, e) : null, hist = E.filter(x => markerVal(mk, x) != null).slice(-6), vs = v => Array.isArray(v) ? v.join('/') : fmt(v);
+    const unit = e && e[mk.id + 'U'] || mk.unit || '', open = S.open['mk:' + mk.id];
+    return `<div class="tn-card tn-mk${r ? ' t-' + esc(r.band.tone || 'ok') : ''}"><div class="spread"><div style="min-width:0"><div class="tn-k">${esc(mk.name)}${mk.optional ? ' <small>optional</small>' : ''}</div>
+      ${r ? `<div class="tn-mkv"><b>${esc(vs(r.v))}</b> <small>${esc(unit)}</small></div><span class="tn-tone t-${esc(r.band.tone || 'ok')}">${esc(r.band.label || '')}</span>` : `<p class="tn-sub">${mk.computed ? 'Worked out from total cholesterol and HDL.' : 'Add a result to see where it falls.'}</p>`}</div>
+      ${r ? `<small class="tn-mkd">${esc(short(e.date))}</small>` : ''}</div>
+      ${rangeBar(r ? r.list : (mk.fields && !Array.isArray(mk.bands) ? arr((mk.bands || {})[mk.fields[0]]) : markerBands(mk, e)), r ? (Array.isArray(r.v) ? r.v[0] : r.v) : null)}
+      ${r && r.per ? `<p class="tn-sub">${r.per.map(p => esc(p.f === 'sys' ? 'Top' : 'Bottom') + ' ' + esc(r.v[mk.fields.indexOf(p.f)]) + ': ' + esc(p.b.label || '')).join('. ')}.</p>` : ''}
+      <details class="tn-more"${open ? ' open' : ''} data-hjd="mk:${esc(mk.id)}"><summary>About ${esc(mk.name)}</summary>${mk.note ? `<p class="tn-sub">${esc(mk.note)}</p>` : ''}
+        ${hist.length > 1 ? `<p class="tn-sub">${hist.map(x => esc(short(x.date)) + ': ' + esc(vs(markerVal(mk, x)))).join(' · ')}</p>` : ''}<p class="hj-src">Source: ${srcLinks([mk.src].concat(arr(mk.src2)))}</p></details></div>`; };
+  return `<div class="row" style="margin-bottom:14px"><button type="button" class="btn btn-gold btn-sm" data-hja="plabnew">Add Lab Results</button>${E.length ? `<button type="button" class="btn btn-line btn-sm" data-hja="new" data-hjv="mark">Add Markers</button>` : ''}</div>
+    ${form}${f && f.k === 'mark' ? pubMarkForm() : ''}
+    <p class="hj-sub">${esc((L.labs || {}).lead || '')}</p>
+    <div class="tn-mks">${M.map(card).join('')}</div>
+    ${vLdlP()}
+    ${L.disclaimers && L.disclaimers.labs ? `<p class="hj-note">${esc(L.disclaimers.labs)}</p>` : ''}
+    <p class="hj-note">Saved only on this device, locked inside your profile.</p>`;
+}
+function pubMarkForm(){ const f = S.form, teen = TEEN(), inp = (k, label) => `<label class="hj-fld"><span>${esc(label)}</span><input type="number" inputmode="decimal" data-hjf="${k}" value="${esc(f && f[k] != null ? f[k] : '')}"></label>`;
+  return `<div class="hj-blk" id="hj-form">${kick('Markers')}<label class="hj-fld"><span>Date</span><input type="date" data-hjf="date" value="${esc(f.date || '')}"></label><div class="hj-g3">${teen ? '' : inp('weight', 'Weight (lb)') + inp('waist', 'Waist (in)')}${inp('rhr', 'Resting heart rate')}${inp('energy', 'Energy, 1 to 10')}${inp('sleep', 'Sleep, hours')}${inp('joint', 'Joint comfort, 0 to 10 (10 is easy)')}</div>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="save">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>`; }
+
+// ---------- the LDL Path: your LDL, your goal, the levers you choose ----------
+function ldlNow(){ const L = labs().filter(x => num(x.ldl) != null); return L.length ? L[L.length - 1] : null; }
+function ldlCalc(){ const L = PLIB() || {}, P = TP(), e = ldlNow(); if (!P || !e) return null; return P.ldlRange(+e.ldl, arr((L.ldl || {}).levers), H().set.ldlPick || {}, (L.ldl || {}).combine || {}); }
+function ldlChart(r, goal){
+  const W = 340, Ht = 190, pl = 34, pr = 70, pt = 14, pb = 30, pw = W - pl - pr, ph = Ht - pt - pb, wks = 16, f1 = n => n.toFixed(1);
+  const vals = [r.base, r.low, goal || r.low].filter(v => v != null), lo = Math.max(0, Math.floor((Math.min(...vals) - 15) / 20) * 20), hi = Math.ceil((Math.max(...vals) + 10) / 20) * 20;
+  const x = t => pl + t / wks * pw, y = v => pt + (hi - v) / (hi - lo || 1) * ph;
+  let up = [], dn = [], mid = ''; for (let t = 0; t <= wks; t += 0.5){ up.push(f1(x(t)) + ' ' + f1(y(r.at(t, 'lo')))); dn.unshift(f1(x(t)) + ' ' + f1(y(r.at(t, 'hi')))); mid += (t ? 'L' : 'M') + f1(x(t)) + ' ' + f1(y(r.at(t, 'mid'))); }
+  const ticks = []; for (let v = lo; v <= hi; v += (hi - lo > 120 ? 40 : 20)) ticks.push(v);
+  return `<svg class="tn-ldlsvg" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="${esc(`From ${r.base}, your choices may bring LDL to about ${r.mid}, in a range of ${r.low} to ${r.high}, over about 12 weeks.${goal ? ' Your goal: ' + goal + '.' : ''}`)}">
+    ${ticks.map(v => `<line x1="${pl}" x2="${pl + pw}" y1="${f1(y(v))}" y2="${f1(y(v))}" class="gr"/><text x="${pl - 6}" y="${f1(y(v) + 4)}" text-anchor="end" class="ax">${v}</text>`).join('')}
+    ${[0, 4, 8, 12, 16].map(t => `<text x="${f1(x(t))}" y="${Ht - 12}" text-anchor="middle" class="ax">${t}</text>`).join('')}<text x="${f1(pl + pw / 2)}" y="${Ht - 1}" text-anchor="middle" class="ax">Weeks</text>
+    ${r.count ? `<path d="M${up.join('L')}L${dn.join('L')}Z" class="bd"/><path d="${mid}" class="ln"/>` : ''}
+    ${goal ? `<line x1="${pl}" x2="${pl + pw}" y1="${f1(y(goal))}" y2="${f1(y(goal))}" class="gl"/><text x="${pl + pw + 4}" y="${f1(y(goal) + 4)}" class="tl">Goal ${esc(goal)}</text>` : ''}
+    <circle cx="${f1(x(0))}" cy="${f1(y(r.base))}" r="5" class="me"/><text x="${pl + pw + 4}" y="${f1(y(r.count ? r.mid : r.base) + 4)}" class="tl b">${r.count ? 'About ' + r.mid : 'Now ' + r.base}</text></svg>`;
+}
+function vLdlP(){
+  const L = PLIB() || {}, D0 = L.ldl || {}, h = H(), e = ldlNow(), pick = h.set.ldlPick || {}, goal = num(h.set.goalLdl), r = ldlCalc(), mk = arr((L.labs || {}).markers).find(m => m.id === 'ldl');
+  const levers = arr(D0.levers), inside = new Set(levers.filter(l => pick[l.id] === 'do').flatMap(l => arr(l.bundle))), B = e ? +e.ldl : null;
+  const lev = l => { const st = pick[l.id], inB = inside.has(l.id), mid = l.mid != null ? l.mid : Math.round(((+l.lo || 0) + (+l.hi || 0)) / 2);
+    return `<div class="tn-card tn-lev${st === 'do' ? ' do' : st === 'pass' ? ' pass' : ''}${inB ? ' inb' : ''}"><div class="spread"><div style="min-width:0;flex:1"><h3>${esc(l.name)}</h3><p class="tn-sub">${esc(l.how || '')}</p></div>
+      <div class="tn-levr"><b>${esc(l.lo)} to ${esc(l.hi)}%</b><small>about ${esc(mid)}%${B ? `, ${Math.round(B * (+l.lo || 0) / 100)} to ${Math.round(B * (+l.hi || 0) / 100)} mg/dL` : ''}</small></div></div>
+      ${l.daily ? `<p class="tn-sub"><b>Each day:</b> ${esc(l.daily)}</p>` : ''}${l.note ? `<p class="tn-sub">${esc(l.note)}</p>` : ''}
+      ${l.kind === 'med' && D0.medicine ? `<p class="hj-note">${esc(typeof D0.medicine === 'string' ? D0.medicine : [D0.medicine.line, D0.medicine.change].filter(Boolean).join(' '))}</p>` : ''}
+      ${inB ? `<p class="tn-sub"><b>Counted inside The Portfolio Pattern.</b></p>` : ''}
+      <div class="tn-acts"><button type="button" class="tn-btn sm${st === 'do' ? '' : ' line'}" aria-pressed="${st === 'do'}" data-hja="lpick" data-hjv="${esc(l.id)}|do">${ic('check')}${l.kind === 'med' ? 'Do It, with My Doctor' : 'Do It'}</button><button type="button" class="tn-btn sm line${st === 'pass' ? ' on' : ''}" aria-pressed="${st === 'pass'}" data-hja="lpick" data-hjv="${esc(l.id)}|pass">Pass</button></div>
+      <p class="hj-src">Source: ${srcLinks([l.src].concat(arr(l.src2)))}</p></div>`; };
+  const goals = arr(D0.goals);
+  return `<div class="hj-blk tn-ldlp" id="tn-ldlp">${kick('My LDL Path')}<p class="hj-sub">${esc(D0.lead || '')}</p>
+    ${e ? '' : `<p class="hj-note">Add your LDL in Add Lab Results to see your path.</p>`}
+    <p class="hj-sub" style="margin:10px 0 6px"><b>My LDL goal, set with my doctor</b></p>
+    <div class="hj-chips">${goals.map(g => `<button type="button" class="chip${goal === +g.v ? ' on' : ''}" aria-pressed="${goal === +g.v}" data-hja="lgoal" data-hjv="${esc(g.v)}">Under ${esc(g.v)}</button>`).join('')}</div>
+    ${goals.filter(g => goal === +g.v).map(g => `<p class="tn-sub">${esc(g.line)}</p>`).join('')}${D0.goalsSrc ? `<p class="hj-src">Source: ${srcLinks(D0.goalsSrc)}</p>` : ''}
+    ${mk ? `<div class="tn-card tn-mk"><div class="tn-k">Recommended Levels and Yours</div>${rangeBar(markerBands(mk), B, r && r.count ? [{lo: r.low, hi: r.high}].concat(goal ? [{v: goal - 0.01, cls: 'go'}] : []) : goal ? [{v: goal - 0.01, cls: 'go'}] : [])}
+      <div class="tn-leg"><span><i class="me"></i>My LDL${B != null ? ' ' + B : ''}</span>${r && r.count ? `<span><i class="rg"></i>Where my choices may lead, ${r.low} to ${r.high}</span>` : ''}${goal ? `<span><i class="go"></i>My goal, under ${goal}</span>` : ''}</div></div>` : ''}
+    ${r ? `<div class="tn-card"><div class="tn-k">Where My Choices May Lead</div>${r.count ? `<p class="tn-big2">About ${r.mid} <small>mg/dL</small></p><p class="tn-sub">A range of ${r.low} to ${r.high}, about ${r.pctLo} to ${r.pctHi} percent lower, as each change settles in over about 12 weeks.${r.capped ? ' Food and movement together are capped near their research-informed limit.' : ''}${goal ? (r.mid < goal ? ` That reaches your goal of under ${goal}.` : r.low < goal ? ` Your goal of under ${goal} sits inside this range.` : ` Your goal of under ${goal} is a talk to have with your doctor.`) : ''}</p>` : `<p class="tn-sub">Choose Do It on any lever below, and the range appears here.</p>`}
+      ${ldlChart(r, goal)}</div>` : ''}
+    <h3 class="tn-h3">The Levers</h3>${levers.map(lev).join('')}
+    ${D0.note ? `<p class="hj-sub">${esc(D0.note)}</p>` : ''}${L.disclaimers && L.disclaimers.ldl ? `<p class="hj-note">${esc(L.disclaimers.ldl)}</p>` : ''}</div>`;
+}
+function pubLdlCard(){
+  const e = ldlNow(), r = ldlCalc(), goal = num(H().set.goalLdl);
+  if (!e) return `<div class="tn-card p-fruit"><div class="tn-hd">${badge('flask')}<div><div class="tn-k">Fruit · My Numbers</div><div class="tn-sub">Add your lab numbers to see them beside their recommended ranges, private to this device.</div></div></div><button type="button" class="tn-btn sm" data-hja="sec" data-hjv="numbers">${ic('plus')}Add Numbers</button></div>`;
+  return `<button type="button" class="tn-card tn-lift tn-ldl p-fruit" data-hja="sec" data-hjv="numbers"><div class="tn-hd">${badge('star')}<div style="min-width:0;flex:1"><div class="tn-k">Fruit · My LDL Path</div><div class="tn-sub">Your LDL, your goal, your choices</div></div></div>
+    <div class="tn-nums"><div><b>${esc(e.ldl)}</b><small>LDL, ${esc(short(e.date))}</small></div>${goal ? `<div><b>${esc(goal)}</b><small>My goal</small></div>` : ''}${r && r.count ? `<div><b class="soft">${r.low} to ${r.high}</b><small>Where my choices may lead</small></div>` : ''}</div>
+    <span class="tn-link">Open My LDL Path${ic('arrow')}</span></button>`;
+}
+
+// ---------- Kids: track the food, never the body ----------
+function kidDay(id, k){ const h = H(); h.kids = h.kids && typeof h.kids === 'object' ? h.kids : {log: {}}; h.kids.log = h.kids.log || {}; const L = h.kids.log[id] = h.kids.log[id] || {}; return L[k] = L[k] || {g: {}, eat: [], rainbow: {}, play: {}}; }
+function kidTot(id, k){ const d = kidDay(id, k), kid = KIDS().find(x => x.id === id) || {}, f = BAND_PORTION[kid.band] || 1, t = {fiber: 0, proteinG: 0, iron: 0, ca: 0, sug: 0};
+  arr(d.eat).forEach(e => { const r = recOf(e.k), n = r && r.nut; if (!n) return; const q = (+e.q || 1) * f; t.fiber += (+n.fib || 0) * q; t.proteinG += (+n.pro || 0) * q; t.iron += (+n.iron || 0) * q; t.ca += (+n.ca || 0) * q; t.sug += (+n.sug || 0) * q; });
+  Object.keys(t).forEach(x => { t[x] = r1(t[x]); }); return t; }
+function kidBar(label, v, aim, unit, lim){ const a = aim && typeof aim === 'object' ? aim : {lo: aim, hi: aim}; if (a.lo == null) return '';
+  const full = lim ? Math.max(a.hi || 1, v) : Math.max(a.hi || a.lo, v, 0.01), st = lim ? (v <= a.hi ? 'ok' : 'past') : v >= a.lo ? 'done' : 'build';
+  return `<div class="tn-kb" data-st="${st}"><div class="spread"><b>${esc(label)}</b><small>${esc(fmtQ(r1(v)))} ${esc(unit)} · ${lim ? 'up to ' + esc(fmt(a.hi)) : 'aim ' + esc(a.lo === a.hi ? fmt(a.lo) : fmt(a.lo) + ' to ' + fmt(a.hi))} ${esc(unit)}</small></div><div class="tn-kbb"><span style="width:${Math.min(100, v / full * 100).toFixed(1)}%"></span></div></div>`; }
+function vKids(){
+  const L = PLIB() || {}, KD = L.kids || {}, kids = KIDS(), P = TP(), k0 = today(), cur = S.kid && kids.find(x => x.id === S.kid) ? S.kid : (kids[0] || {}).id;
+  if (!kids.length) return `<div class="tn-sec p-branches">${secHead('people', 'p-branches', 'Family Food', esc(KD.lead || ''))}<p class="hj-note">Add children in your start-up check, and each one gets a food card here.</p><button type="button" class="tn-btn" data-hja="setup" data-hjv="house">${ic('plus')}Add a Child</button></div>`;
+  const kid = kids.find(x => x.id === cur), j = kids.indexOf(kid), band = arr(KD.ages).find(a => a.id === kid.band) || {}, A = P ? P.kidAims(band, kid.sex) : {}, day = kidDay(kid.id, k0), t = kidTot(kid.id, k0), U2 = KD.units || {};
+  const G = arr(KD.groups), step = id => /cups/.test((G.find(g => g.id === id) || {}).unit || U2[id] || '') ? 0.5 : 1;
+  const din = (APP() || {}).dinners || {}, tn = dinnerFor(new Date()), opts = [].concat(tn && !tn.leftover ? [tn] : [], arr(din.breakfasts), arr(din.lunches), arr(din.snacks)).filter((x, i, a) => x && x.id && a.findIndex(y => y.id === x.id) === i);
+  return `<div class="tn-sec p-branches">${secHead('people', 'p-branches', 'Family Food', esc(KD.lead || ''))}
+    ${kids.length > 1 ? `<div class="hj-chips">${kids.map((x, i) => `<button type="button" class="chip${x.id === cur ? ' on' : ''}" aria-pressed="${x.id === cur}" data-hja="kidopen" data-hjv="${esc(x.id)}">${esc(kidName(x, i))}</button>`).join('')}</div>` : ''}
+    <div class="tn-card p-branches"><div class="spread"><div><div class="tn-k">${esc(kidName(kid, j))} · Today</div><div class="tn-sub">${esc(band.name || '')}</div></div><button type="button" class="tn-btn sm" data-hja="kidview" data-hjv="${esc(kid.id)}">${ic('star')}Kid View</button></div>
+      <h3 class="tn-h3">Food Groups</h3>${G.map(g => { const v = +((day.g || {})[g.id]) || 0, aim = A[g.id];
+        return `<div class="tn-kg"><span class="dot" style="background:${esc(g.color || 'var(--c)')}"></span>${kidBar(g.name, v, aim, g.unit || U2[g.id] || '')}<div class="tn-kgb"><button type="button" class="tn-qm" data-hja="kidg" data-hjv="${esc(kid.id + '|' + g.id + '|-' + step(g.id))}" aria-label="Less ${esc(g.name)}">&minus;</button><button type="button" class="tn-qm" data-hja="kidg" data-hjv="${esc(kid.id + '|' + g.id + '|' + step(g.id))}" aria-label="More ${esc(g.name)}">+</button></div></div>`; }).join('')}
+      <h3 class="tn-h3">From the Plan Today</h3><p class="tn-sub">Tap what ${esc(kidName(kid, j))} ate. Nutrients count a ${BAND_PORTION[kid.band] === 1 ? 'full' : BAND_PORTION[kid.band] === 0.5 ? 'half' : 'three-quarter'} portion for this age.</p>
+      <div class="tn-qcs">${opts.map(x => { const n = arr(day.eat).filter(e => e.k === x.id).reduce((a, e) => a + (+e.q || 0), 0); return `<span class="tn-qc${n ? ' on' : ''}"><button type="button" class="tn-qa1" data-hja="kideat" data-hjv="${esc(kid.id + '|' + x.id + '|1')}">${n ? '' : ic('plus')}${esc(qaShort(x.name))}${n ? ` <b>${esc(fmtQ(n))}</b>` : ''}</button>${n ? `<button type="button" class="tn-qm" data-hja="kideat" data-hjv="${esc(kid.id + '|' + x.id + '|-1')}" aria-label="One less">&minus;</button>` : ''}</span>`; }).join('')}</div>
+      <h3 class="tn-h3">Nutrients</h3>${kidBar('Fiber', t.fiber, A.fiber, 'g')}${kidBar('Protein', t.proteinG, A.proteinG, 'g')}${kidBar('Iron', t.iron, A.iron, 'mg')}${kidBar('Calcium', t.ca, A.ca, 'mg')}${kidBar('Added sugar', t.sug, {lo: 0, hi: A.sugarMax != null ? A.sugarMax : 25}, 'g', true)}
+      ${band.note ? `<p class="tn-sub">${esc(band.note)}</p>` : ''}</div>
+    ${KD.needs ? `<p class="hj-note">${esc(KD.needs)}</p>` : ''}${L.disclaimers && L.disclaimers.kids ? `<p class="tn-sub">${esc(L.disclaimers.kids)}</p>` : ''}
+    <p class="hj-src">Sources: ${srcLinks(arr(band.src).length ? band.src : KD.src)}</p></div>`;
+}
+// Kid View: big, bright, playful, and no numbers.
+function vKidView(){
+  const L = PLIB() || {}, KD = L.kids || {}, pf = KD.playful || {}, kids = KIDS(), kid = kids.find(x => x.id === S.kid) || kids[0]; if (!kid) return vKids();
+  const day = kidDay(kid.id, today()), rb = arr(pf.rainbow), got = rb.filter(c => (day.rainbow || {})[c.id || c.name]).length, mv = arr(pf.move), d0 = new Date().getDate();
+  const ideas = mv.length ? [0, 1, 2].map(i => mv[(d0 + i * 3) % mv.length]).filter((x, i, a) => a.indexOf(x) === i) : [], cheers = arr(pf.cheers), sl = pf.sleep || {};
+  return `<section class="tn-kv" data-tn="kidview"><div class="tn-kvtop"><h2>Hi, ${esc(kid.name || 'friend')}!</h2><button type="button" class="tn-btn sm line" data-hja="kidback">Back to Grown-up View</button></div>
+    <div class="tn-kvc"><h3>Eat a Rainbow</h3><p>${esc(pf.rainbowGoal || 'Tap each color you eat today.')}</p>
+      <div class="tn-rbw">${rb.map(c => { const k = c.id || c.name, on = !!(day.rainbow || {})[k]; return `<button type="button" class="tn-rbc${on ? ' on' : ''}" style="--rc:${esc(c.color || c.hex || '#4C9A4A')}" aria-pressed="${on}" data-hja="kidrb" data-hjv="${esc(kid.id + '|' + k)}"><span class="b">${on ? '&#9733;' : ''}</span><b>${esc(c.name || c.color)}</b><small>${esc(c.line || '')}</small></button>`; }).join('')}</div>
+      ${got >= 3 && cheers.length ? `<p class="tn-cheer">${esc(cheers[(d0 + got) % cheers.length])}</p>` : ''}</div>
+    <div class="tn-kvc"><h3>Move and Play</h3><div class="tn-rbw">${ideas.map((x, i) => { const on = !!(day.play || {})[x]; return `<button type="button" class="tn-rbc play${on ? ' on' : ''}" aria-pressed="${on}" data-hja="kidplay" data-hjv="${esc(kid.id + '|' + x)}"><span class="b">${on ? '&#9733;' : ''}</span><b>${esc(x)}</b></button>`; }).join('')}</div></div>
+    <div class="tn-kvc"><h3>Sleep Well</h3><p>${esc(sl.lead || sl.line || '')}</p>${arr(sl.tips).length ? `<ul>${sl.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : ''}</div></section>`;
+}
+
+// ---------- Settings: the start-up check, the team plan, the family ----------
+function pubSettingsCard(){
+  const s = H().set, kids = KIDS();
+  return `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Goals, food needs, household, the health check, and your movement path.</div></div></div>
+    <div class="tn-acts"><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Start-Up Check</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">My Plan from My Team</button>${kids.length || s.who === 'family' ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="kids">Family Food</button>` : ''}</div></div>`;
+}
+
+function actPub(a, v){
+  const h = H();
+  switch (a){
+    case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } rerender(false); window.scrollTo(0, 0); return true;
+    case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
+      if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
+      rerender(true); return true; }
+    case 'ckq': { const [q, val] = v.split('|'), d = ckDraft().d; d.check[q] = val === 'true'; rerender(true); return true; }
+    case 'ckkid': { const [j, f, val] = v.split('|'), d = ckDraft().d, K = d.house.kids = arr(d.house.kids);
+      if (f === 'add') K.push({id: uid(), name: '', band: '', sex: ''}); else if (f === 'remove') K.splice(+j, 1); else if (K[+j]) K[+j][f] = val; rerender(true); return true; }
+    case 'cknext': { const ck = ckDraft(), steps = ckSteps(ck.d), step = steps[ck.i];
+      if (step === 'use' && !arr(ck.d.use).length){ toast('Choose at least one part.'); return true; }
+      if (step === 'goals' && !arr(ck.d.goals).length){ toast('Choose at least one goal.'); return true; }
+      if (step === 'check' && arr(((PLIB() || {}).check || {}).questions).some(q => ck.d.check[q.id] == null)){ toast('Answer each question with Yes or No.'); return true; }
+      if (step === 'level' && !ck.d.level){ toast('Choose a level.'); return true; }
+      ck.i = Math.min(steps.length - 1, ck.i + 1); rerender(false); window.scrollTo(0, 0); return true; }
+    case 'ckback': S.ck.i = Math.max(0, S.ck.i - 1); rerender(false); window.scrollTo(0, 0); return true;
+    case 'ckcancel': S.ck = null; S.setup = false; rerender(false); return true;
+    case 'ckteam': ckSave(); S.sec = 'team'; S.teamEd = 'new'; rerender(false); return true;
+    case 'cksave': ckSave(); return true;
+    case 'pcleared': h.set.cleared = true; h.set.u = Date.now(); save(); toast('Saved. Welcome to your movement path.'); rerender(true); return true;
+    case 'pswap': { const P = TP(), plan = h.plan, L = PLIB(); if (!P || !plan) return true; const [k, w, x] = v.split('|'); plan.n = (plan.n || 0) + 1;
+      if (k === 'd') plan.ids = P.swapDinner(L.recipes, Object.assign({seed: plan.seed}, planSet()), plan.ids, w, x, plan.n);
+      else plan.meals = Object.assign({}, plan.meals, {[w]: P.swapMeal(L.recipes, Object.assign({seed: plan.seed}, planSet()), arr(plan.meals[w]), w, +x, plan.n)});
+      plan.u = Date.now(); clearShop(); PA = null; save(); S.open['planed'] = true; toast('Swapped. The shopping list follows.'); rerender(true); return true; }
+    case 'pnew': if (!S.sureNew){ S.sureNew = true; rerender(true); setTimeout(() => { if (S.sureNew){ S.sureNew = false; rerender(true); } }, 3500); return true; }
+      S.sureNew = false; ensurePlan(true); clearShop(); PA = null; toast('A new plan is ready.'); rerender(true); return true;
+    case 'pleft': h.set.leftovers = h.set.leftovers === false; h.set.u = Date.now(); PA = null; ensurePlan(); clearShop(); save(); rerender(true); return true;
+    case 'tmedit': S.teamEd = v; rerender(true); toForm(); return true;
+    case 'tmcancel': S.teamEd = null; rerender(true); return true;
+    case 'tmsave': { const x = {}; document.querySelectorAll('[data-hjtm]').forEach(i => { const t = String(i.value || '').trim(); if (t) x[i.dataset.hjtm] = t.slice(0, 1200); });
+      if (!Object.keys(x).length){ toast('Add the exercise or instruction first.'); return true; }
+      const t = h.team = h.team && Array.isArray(h.team.list) ? h.team : {list: []}, id = S.teamEd !== 'new' ? S.teamEd : uid(), i = t.list.findIndex(y => y.id === id);
+      const rec = Object.assign({id, u: Date.now()}, x); if (i < 0) t.list.push(rec); else t.list[i] = rec; t.u = Date.now(); S.teamEd = null; save(); toast('Saved, just as you wrote it.'); rerender(true); return true; }
+    case 'tmdel': { if (!confirm('Remove this from My Plan from My Team?')) return true; const t = h.team; if (t){ t.list = arr(t.list).filter(y => y.id !== v); t.u = Date.now(); const d = D(); d.deleted = d.deleted || {}; d.deleted.health = d.deleted.health || {}; d.deleted.health[v] = Date.now(); save(); } rerender(true); return true; }
+    case 'plabnew': S.form = {k: 'plab', date: today()}; rerender(true); toForm(); return true;
+    case 'plabu': { const [id, u] = v.split('|'); if (S.form) S.form[id + 'U'] = u; rerender(true); return true; }
+    case 'psex': h.set.sex = v; h.set.u = Date.now(); save(); rerender(true); return true;
+    case 'plabsave': { const f = S.form; if (!f) return true; if (!/^\d{4}-\d{2}-\d{2}$/.test(String(f.date || ''))){ toast('Choose a date.'); return true; }
+      const rec = {id: uid(), date: f.date, u: Date.now()}; arr(((PLIB() || {}).labs || {}).markers).forEach(mk => { if (mk.computed) return; (mk.fields || [mk.id]).forEach(k => { const n = num(f[k]); if (n != null) rec[k] = n; }); if (mk.units && rec[mk.id] != null) rec[mk.id + 'U'] = f[mk.id + 'U'] || mk.unit; });
+      const nt = String(f.note || '').trim(); if (nt) rec.note = nt.slice(0, 400);
+      if (Object.keys(rec).length <= 3){ toast('Add at least one number.'); return true; }
+      h.labs.push(rec); save(); S.form = null; toast('Saved on this device.'); rerender(true); return true; }
+    case 'lpick': { const [id, c] = v.split('|'), p = h.set.ldlPick = Object.assign({}, h.set.ldlPick || {}); p[id] = p[id] === c ? '' : c; h.set.u = Date.now(); save(); rerender(true); return true; }
+    case 'lgoal': h.set.goalLdl = num(h.set.goalLdl) === +v ? '' : +v; h.set.u = Date.now(); save(); rerender(true); return true;
+    case 'kidopen': S.kid = v; S.sec = 'kids'; S.anim = true; rerender(false); window.scrollTo(0, 0); return true;
+    case 'kidview': S.kid = v; S.sec = 'kidview'; rerender(false); window.scrollTo(0, 0); return true;
+    case 'kidback': S.sec = 'kids'; rerender(false); window.scrollTo(0, 0); return true;
+    case 'kidg': { const [id, g, d] = v.split('|'), day = kidDay(id, today()); day.g[g] = Math.max(0, r1((+day.g[g] || 0) + (+d))); day.u = Date.now(); h.kids.u = Date.now(); save(); rerender(true); return true; }
+    case 'kideat': { const [id, k, d] = v.split('|'), day = kidDay(id, today()); const e = day.eat.find(x => x.k === k); if (e) e.q = Math.max(0, (+e.q || 0) + (+d)); else if (+d > 0) day.eat.push({k, q: 1});
+      day.eat = day.eat.filter(x => +x.q > 0); day.u = Date.now(); h.kids.u = Date.now(); save(); rerender(true); return true; }
+    case 'kidrb': case 'kidplay': { const i = v.indexOf('|'), id = v.slice(0, i), k = v.slice(i + 1), day = kidDay(id, today()), o = a === 'kidrb' ? day.rainbow : day.play; if (o[k]) delete o[k]; else o[k] = Date.now(); day.u = Date.now(); h.kids.u = Date.now(); save(); rerender(true); return true; }
+  }
+  return false;
+}
+function clearShop(){ const h = H(), n = foodWeek(new Date()); Object.keys(h.shop || {}).forEach(k => { if (+k >= n) delete h.shop[k]; }); }
+document.addEventListener('input', e => { const t = e.target; if (!t.closest || !t.closest('#hj-root') || !t.dataset.hjck || !S.ck) return;
+  const path = t.dataset.hjck.split('.'); let o = S.ck.d; for (let i = 0; i < path.length - 1; i++){ o = o[path[i]] = o[path[i]] == null ? {} : o[path[i]]; } o[path[path.length - 1]] = t.value; });
+
+// ---------- the Home's summary ----------
+function pubSummary(){
+  const lib = FLDH(), h = H(); if (!lib || !h) return {on: false};
+  const ready = PUB() ? !!h.set.pubDone : useSet(), d = new Date();
+  if (ready){ try { vTodayT(lib); } catch(e){ S.tally = null; } }
+  const T = targets(), t = totals(today()), wk = ready && U('move') ? sesFor(d) : null;
+  return {on: true, ready, name: TNAME(), use: ready ? USE() : [],
+    today: {checksDone: ready && S.tally ? S.tally.done : 0, checksTotal: ready && S.tally ? S.tally.total : 0},
+    plate: {sf: t.sf, pro: t.pro, fib: t.fib, sug: t.sug, na: t.na, logged: t.n},
+    targets: {sf: tHi(T.sf), pro: tLo(T.pro), fib: tLo(T.fib), sug: tHi(T.sug), na: tHi(T.na)},
+    workout: wk ? {title: wk.title || 'Session ' + wk.id, mins: wk.mins || null, done: isDone(d, 'work:' + wk.id)} : null,
+    nextLabs: h.set.nextLabs || '', kidsCount: PUB() ? KIDS().length : 0};
 }
 
 // ---------- events ----------
@@ -2428,6 +2937,82 @@ const CSS = `
 .tn .tn-steam path{animation:tnsteam 3.2s ease-in-out infinite;opacity:0;}.tn .tn-steam path:nth-child(2){animation-delay:1s;}.tn .tn-steam path:nth-child(3){animation-delay:2s;}
 @keyframes tnsteam{0%{opacity:0;transform:translateY(6px);}35%{opacity:.75;}100%{opacity:0;transform:translateY(-16px);}}
 @media (prefers-reduced-motion: reduce){.tn *,.tn *::before,.tn *::after{animation:none !important;transition:none !important;}.tn .tn-steam path{opacity:.6;}}
+/* BLD 866: the Today paintings, for every tier */
+.tn-gimg{flex:none;width:52px;height:52px;border-radius:16px;overflow:hidden;background:var(--cs,var(--bg-deep));border:1px solid color-mix(in srgb,var(--c,var(--line)) 28%,transparent);display:block;}
+.tn-gimg img{display:block;width:100%;height:100%;object-fit:cover;}
+.tn-gimg.big{width:64px;height:64px;border-radius:19px;}
+/* BLD 866: public Tending. Base pieces a public host page may lack, scoped to public Tending only */
+#hj-root.tn-pub{--ok:#3F7F3A;--okb:#CFE5C4;--t-good:#3F8A47;--t-ok:#8DB257;--t-watch:#D69A2D;--t-high:#C4553B;}
+:root[data-theme="dark"] #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}}
+.tn-pub .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;border-radius:30px;padding:12px 22px;border:1px solid transparent;cursor:pointer;min-height:46px;text-decoration:none;}
+.tn-pub .btn-gold{background:var(--gold);color:#fff;}.tn-pub .btn-line{background:var(--card);border-color:var(--line);color:var(--ink);}.tn-pub .btn-sm{min-height:40px;padding:8px 16px;font-size:14px;}
+.tn-pub .btn[disabled]{opacity:.5;cursor:default;}
+.tn-pub .linkbtn{background:none;border:0;color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit;min-height:40px;}
+.tn-pub .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}.tn-pub .spread{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;}
+.tn-pub .chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-soft);font-family:inherit;}
+.tn-pub .chip[aria-pressed="true"],.tn-pub .chip.on{background:var(--umber,#2E2118);border-color:var(--umber,#2E2118);color:#F4EBDA;}
+:root[data-theme="dark"] .tn-pub .chip[aria-pressed="true"],:root[data-theme="dark"] .tn-pub .chip.on{background:var(--gold);border-color:var(--gold);color:#1A1612;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tn-pub .chip[aria-pressed="true"],:root:not([data-theme="light"]) .tn-pub .chip.on{background:var(--gold);border-color:var(--gold);color:#1A1612;}}
+.tn-pub input,.tn-pub select,.tn-pub textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:46px;max-width:100%;}
+.tn-pub .chip small{display:block;font-weight:400;font-size:12.5px;}
+/* the start-up check */
+.tn-ckbar{height:8px;border-radius:5px;background:var(--bg-deep);overflow:hidden;margin:0 0 6px;}.tn-ckbar span{display:block;height:100%;background:var(--c,var(--gold));border-radius:5px;}
+.tn-ckn{margin:0 0 10px;font-size:14px;}
+.tn-check h3{font-size:clamp(24px,5vw,30px);margin:0 0 6px;}
+.tn-ckg{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,220px),1fr));gap:10px;margin:8px 0;}
+.tn-ckcard{display:block;text-align:left;background:var(--t-card2,var(--bg-deep));border:2px solid var(--line);border-radius:16px;padding:12px 14px;color:var(--ink);font:inherit;cursor:pointer;min-height:64px;}
+.tn-ckcard b{display:block;font-size:17px;}.tn-ckcard small{display:block;color:var(--ink-soft);font-size:14px;line-height:1.35;margin-top:2px;}
+.tn-ckcard.on{border-color:var(--c,var(--gold));background:var(--cs,var(--bg-deep));box-shadow:0 0 0 1px var(--c,var(--gold)) inset;}
+.tn-ckq{padding:10px 0;border-top:1px solid var(--line);}.tn-ckq:first-of-type{border-top:0;}.tn-ckq p{margin:0 0 6px;}.tn-ckq .hj-chips{margin:0;}
+.tn-yes p{margin:0 0 8px;}
+.tn-kidrow{border:1px solid var(--line);border-radius:14px;padding:10px 12px;margin:10px 0;}.tn-kidrow .hj-chips{margin:6px 0;}
+.tn-cknav{margin:14px 0 8px;}.tn-cknav .btn{min-width:120px;}
+/* My Path, the plan editor, the team plan */
+.tn-path h3{margin:2px 0 4px;font-size:26px;}
+.tn-pe{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid var(--line);min-width:0;}.tn-pe:first-of-type{border-top:0;}
+.tn-pe .d{flex:0 0 84px;font-weight:700;font-size:14px;color:var(--ink-soft);}.tn-pe .d:empty{display:none;}.tn-pe .n{flex:1;min-width:0;}.tn-pe .n b{display:block;overflow-wrap:anywhere;font-size:15.5px;}.tn-pe .n small{display:block;color:var(--ink-soft);font-size:13px;}
+@media(max-width:520px){.tn-pe{flex-wrap:wrap;}.tn-pe .d{flex-basis:100%;}}
+.tn-tm h3{margin:0 0 6px;}.tn-tm p{margin:4px 0;}
+/* labs */
+.tn-mks{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr));gap:12px;margin:0 0 14px;}
+.tn-mk{min-width:0;}.tn-mkv{margin:2px 0;}.tn-mkv b{font-family:'Cormorant Garamond',Georgia,serif;font-size:34px;line-height:1;}.tn-mkd{color:var(--ink-soft);font-size:13px;}
+.tn-tone{display:inline-block;padding:2px 10px;border-radius:999px;font-size:13px;font-weight:700;color:#fff;background:var(--t-ok);}
+.tn-tone.t-good{background:var(--t-good);}.tn-tone.t-ok{background:var(--t-ok);color:#1A1612;}.tn-tone.t-watch{background:var(--t-watch);color:#1A1612;}.tn-tone.t-high{background:var(--t-high);}
+.tn-rb{position:relative;height:14px;margin:14px 0 4px;}.tn-rb>span{position:absolute;top:0;bottom:0;opacity:.85;}.tn-rb>span:first-child{border-radius:7px 0 0 7px;}
+.tn-rb>span.t-good{background:var(--t-good);}.tn-rb>span.t-ok{background:var(--t-ok);}.tn-rb>span.t-watch{background:var(--t-watch);}.tn-rb>span.t-high{background:var(--t-high);}
+.tn-rb i{position:absolute;top:-6px;width:6px;height:26px;margin-left:-3px;border-radius:3px;background:var(--ink);box-shadow:0 0 0 2px var(--card);}
+.tn-rb i.go{background:transparent;border:2px dashed var(--ink);width:4px;}
+.tn-rb em.rg{position:absolute;top:-3px;height:20px;border-radius:6px;background:color-mix(in srgb,var(--card) 35%,transparent);border:2px solid var(--ink);}
+.tn-rbl{position:relative;height:34px;font-size:11.5px;color:var(--ink-soft);line-height:1.15;}.tn-rbl span{position:absolute;top:0;padding:0 2px;overflow:hidden;text-overflow:ellipsis;}.tn-rbl small{display:block;font-size:10.5px;}
+.tn-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--ink-soft);}.tn-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
+.tn-leg i.me{background:var(--ink);}.tn-leg i.rg{border:2px solid var(--ink);}.tn-leg i.go{border:2px dashed var(--ink);}
+.tn-more summary{cursor:pointer;color:var(--gold);font-weight:600;font-size:14.5px;margin-top:8px;}
+.tn-big2{font-family:'Cormorant Garamond',Georgia,serif;font-size:40px;font-weight:700;line-height:1;margin:6px 0;}.tn-big2 small{font-family:'Barlow',sans-serif;font-size:15px;color:var(--ink-soft);font-weight:400;}
+.tn-ldlsvg{display:block;width:100%;max-width:560px;height:auto;margin:10px 0 0;}.tn-ldlsvg .gr{stroke:var(--line);}.tn-ldlsvg .ax{fill:var(--ink-soft);font-size:11px;font-family:'Barlow',sans-serif;}
+.tn-ldlsvg .bd{fill:color-mix(in srgb,var(--lpc,#4A8A2C) 22%,transparent);}.tn-ldlsvg .ln{fill:none;stroke:var(--lpc,#4A8A2C);stroke-width:3;}.tn-ldlsvg .gl{stroke:var(--ink);stroke-width:1.5;stroke-dasharray:5 4;}
+.tn-ldlsvg .tl{fill:var(--ink);font-size:12px;font-family:'Barlow',sans-serif;}.tn-ldlsvg .tl.b{font-weight:700;}.tn-ldlsvg .me{fill:var(--ink);}
+.tn-lev h3{margin:0 0 4px;font-size:22px;}.tn-levr{text-align:right;}.tn-levr b{display:block;font-size:18px;}.tn-levr small{color:var(--ink-soft);font-size:13px;}
+.tn-lev.do{border-color:var(--t-good);box-shadow:0 0 0 1px var(--t-good) inset;}.tn-lev.pass{opacity:.8;}.tn-lev.inb{opacity:.75;}
+.tn-lev .tn-btn.on{background:var(--bg-deep);}
+/* kids */
+.tn-kidl{display:grid;gap:10px;}.tn-kidc{background:var(--t-card2);border:1px solid var(--line);border-radius:16px;padding:10px 12px;}.tn-kidc b{font-size:18px;}.tn-kidc small{color:var(--ink-soft);margin-left:8px;}
+.tn-kg{display:flex;align-items:center;gap:10px;padding:6px 0;border-top:1px solid var(--line);}.tn-kg:first-of-type{border-top:0;}.tn-kg .dot{flex:none;width:14px;height:14px;border-radius:50%;}
+.tn-kg .tn-kb{flex:1;min-width:0;border:0;padding:0;}.tn-kgb{display:flex;gap:4px;}.tn-kgb .tn-qm{border:1px solid var(--line);border-radius:12px;background:var(--card);}
+.tn-kb{padding:6px 0;}.tn-kb b{font-size:15px;}.tn-kb small{color:var(--ink-soft);font-size:13px;}
+.tn-kbb{height:10px;border-radius:6px;background:var(--bg-deep);overflow:hidden;margin-top:4px;}.tn-kbb span{display:block;height:100%;background:var(--t-ok);border-radius:6px;}
+.tn-kb[data-st="done"] .tn-kbb span,.tn-kb[data-st="ok"] .tn-kbb span{background:var(--t-good);}.tn-kb[data-st="past"] .tn-kbb span{background:var(--t-watch);}
+/* Kid View: big, bright, no numbers */
+.tn-kv{padding:4px 0 24px;}.tn-kvtop{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;margin:0 0 14px;}
+.tn-kvtop h2{font-size:clamp(38px,9vw,60px);margin:0;}
+.tn-kvc{background:var(--card);border:1px solid var(--line);border-radius:28px;padding:18px;margin:0 0 16px;}.tn-kvc h3{font-size:clamp(28px,6vw,38px);margin:0 0 6px;}.tn-kvc p,.tn-kvc li{font-size:19px;}
+.tn-rbw{display:grid;grid-template-columns:repeat(auto-fill,minmax(min(100%,150px),1fr));gap:12px;margin-top:10px;}
+.tn-rbc{display:flex;flex-direction:column;align-items:center;gap:6px;text-align:center;background:color-mix(in srgb,var(--rc,#4C9A4A) 14%,var(--card));border:3px solid color-mix(in srgb,var(--rc,#4C9A4A) 55%,transparent);border-radius:24px;padding:14px 10px;cursor:pointer;color:var(--ink);font:inherit;min-height:120px;}
+.tn-rbc .b{display:grid;place-items:center;width:56px;height:56px;border-radius:50%;background:var(--rc,#4C9A4A);color:#fff;font-size:30px;box-shadow:0 4px 0 color-mix(in srgb,var(--rc,#4C9A4A) 60%,#000);}
+.tn-rbc b{font-size:20px;}.tn-rbc small{font-size:14px;color:var(--ink-soft);line-height:1.3;}
+.tn-rbc.on{border-color:var(--rc,#4C9A4A);background:color-mix(in srgb,var(--rc,#4C9A4A) 30%,var(--card));transform:scale(1.02);}
+.tn-rbc.play{--rc:#2AA8B8;}
+.tn-cheer{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700;text-align:center;margin:14px 0 0;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
@@ -2435,7 +3020,10 @@ window.GGHealth = {
   init(ctx){ C = ctx || {}; },
   on: () => !!FLDH(),
   view,
-  open(sec){ S.sec = sec || 'today'; if (C.go) C.go('health'); },
+  open(sec){ S.sec = sec || 'today'; S.setup = false; if (C.go) C.go('health'); if (PUB()) rerender(false); },
+  // BLD 866: what the Home shows. {on, ready, name, today: {checksDone, checksTotal}, plate: {sf, pro, fib, sug, na}, targets,
+  // workout: {title, mins, done} or null, nextLabs, kidsCount, use: [parts]}
+  summary: () => pubSummary(),
   // Backups: entries combine; the newest copy of each wins and removed entries stay removed.
   merge(out, inc){
     out.deleted = out.deleted || {clients: {}, sessions: {}}; out.deleted.health = out.deleted.health || {};
@@ -2456,6 +3044,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
+    ['plan', 'team', 'kids'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
   state: S, act, allLines, LN,
