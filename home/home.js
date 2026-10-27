@@ -18,6 +18,7 @@
    Views (the address names each one, so Back works)
      /home/            the Home (or the welcome, before a profile is open)
      /home/#tending    Tending, inside the Home, with a way back
+     /home/#recipe-<id> Tending's Recipes with that recipe open (BLD 875), after the profile is open
      /home/#privacy    Settings and Privacy
 
    Tending host contract (helper A, field-guide/health.js public mode)
@@ -32,7 +33,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b872';
+  var V = 'b875';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -328,7 +329,7 @@
   }
 
   /* ---------- routing ---------- */
-  function viewOf() { var h = decodeURIComponent(location.hash || ''); return h === '#tending' ? 'tending' : (h === '#privacy' || h === '#more') ? 'more' : h === '#tree' ? 'tree' : 'home'; }
+  function viewOf() { var h = decodeURIComponent(location.hash || ''); return h === '#tending' || /^#recipe-./.test(h) ? 'tending' : (h === '#privacy' || h === '#more') ? 'more' : h === '#tree' ? 'tree' : 'home'; }
   function goTo(v) {
     var hash = v === 'home' ? '' : '#' + v;
     if (v === 'home') { try { history.pushState(null, '', location.pathname); } catch (e) { location.hash = ''; } render(); }
@@ -776,6 +777,12 @@
       if (tendReady()) { if (S.tendInit !== S.id) initTending(); try { html = window.GGHealth.view() || ''; } catch (e) { if (window.console) console.error(e); html = ''; } }
       if (!html) html = tendSoonHtml();
       b.innerHTML = html;
+      // BLD 875: /home/#recipe-<id> opens Recipes with that recipe in Andrew's cook guide, then the address settles on #tending.
+      var rm = /^#recipe-(.+)$/.exec(decodeURIComponent(location.hash || ''));
+      if (rm && tendReady() && typeof window.GGHealth.openRecipe === 'function') {
+        try { history.replaceState(null, '', location.pathname + '#tending'); } catch (e) {}
+        if (!window.GGHealth.openRecipe(rm[1])) toast('Every recipe is here in Recipes.');
+      }
       var h = homeRec(); if (!tendOn(h) && tendReady()) { h.parts = h.parts.concat(['move', 'food']); saveHome(); }
     });
   }
