@@ -562,7 +562,7 @@
       } else cEl.innerHTML = invite('A printable card each month for members', 'A line from a Grounded Story and a practice to carry it into your week. Join on Substack to receive your member code.', Cs.map(function (c) { return monthLabel(c.month) + ': ' + c.title; }));
     }
   }
-  var PRINT_JS = '/shared/gg-print.js?v=b836', SOURCES_JS = '/shared/gg-sources.js?v=b851';
+  var PRINT_JS = '/shared/gg-print.js?v=b836', SOURCES_JS = '/shared/gg-sources.js?v=b866';
   function warmPrint() { return need(SOURCES_JS, function () { return !!root.GGSources; }).then(function () { return need(PRINT_JS, function () { return !!root.GGPrint; }); }); }
   function cardModel(id) { var c = cardOf(id), t = ((data() || {}).cards || []).filter(function (x) { return x.id === id; })[0]; if (!c || !t) return null; return { month: t.month, line: c.line, story: c.story, practice: c.practice }; }
   function cardAct(g, id, btn) {

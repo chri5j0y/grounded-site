@@ -34,6 +34,11 @@
       { id: 'sequoia', title: 'Sequoia', desc: 'For 60 and up', href: HOME + '/sequoia/', icon: ic.sequoia, bg: '#F3DED6' },
       { id: 'willow', title: 'Willow', desc: 'For hospice, and the people who love them', href: HOME + '/willow/', icon: ic.willow, bg: '#E8ECDD' }
     ] },
+    // The Grounded Way (GWG BLD 866): the all-in path with Tending, and My Home, each person's own private page.
+    { name: 'The Grounded Way', items: [
+      { id: 'way', title: 'The Grounded Way', desc: 'The all-in path with Tending: food for your goal, movement for every level, and Morning Quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
+      { id: 'home', title: 'My Home', desc: 'Your own private page: your tree, Tending, and your tools, on your device', href: HOME + '/home/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-home.webp?v=b866" alt="" width="42" height="42">', bg: '#F1E6CC' }
+    ] },
     { name: 'Together', items: [
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
       { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
@@ -74,6 +79,8 @@
     if (p.indexOf('/eulogy-helper') === 0) return 'eulogy';
     if (p.indexOf('/readings') === 0) return 'readings';
     if (p.indexOf('/living-sober') === 0) return 'sober';
+    if (p.indexOf('/the-grounded-way') === 0) return 'way'; // GWG BLD 866
+    if (p.indexOf('/home/') === 0 || p === '/home') return 'home';
     return '';
   }
 
@@ -406,7 +413,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b862';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b866';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });

@@ -6,6 +6,8 @@
 // of HMAC SHA-256(key, voice + '|' + text); file = 12-byte IV + AES-GCM of the mp3, at
 // https://audio.growwithgrounded.com/<round>/<folder>/<name>.bin, with the key from the Guide library (FLD.audio).
 // A missing clip falls back to the device voice; Voice Off says nothing. Music plays softly under the voice.
+// Public Tending (BLD 866): the same call, GGVoice.setKey(GGTendPublic.audio), with {key, round: 'p1', folder: 't'}. That key is
+// unsealed on purpose (public clips are open to everyone); clip names and decryption are the same as the sealed rounds.
 // =====================================================================
 (function(){
 'use strict';
@@ -54,7 +56,7 @@ let SIL = ''; function silent(){ if (SIL) return SIL; const n = 2400, b = new Ar
   w(0, 'RIFF'); d.setUint32(4, 36 + n * 2, true); w(8, 'WAVE'); w(12, 'fmt '); d.setUint32(16, 16, true); d.setUint16(20, 1, true); d.setUint16(22, 1, true); d.setUint32(24, 24000, true); d.setUint32(28, 48000, true); d.setUint16(32, 2, true); d.setUint16(34, 16, true); w(36, 'data'); d.setUint32(40, n * 2, true);
   return SIL = URL.createObjectURL(new Blob([b], {type: 'audio/wav'})); }
 const V = window.GGVoice = {
-  setKey(k){ KEY = k && k.key ? k : null; },
+  setKey(k){ KEY = k && typeof k.key === 'string' && k.key ? k : null; },
   on: () => pref('voice', true), setOn(v){ setPref('voice', v); if (!v) V.stop(); },
   musicOn: () => pref('music', true), setMusic(v){ setPref('music', v); if (!v) V.music(null); },
   chimeOn: () => pref('chime', true), setChime(v){ setPref('chime', v); },
