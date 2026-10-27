@@ -214,7 +214,7 @@ function ldlRows(m){
 }
 function ldlSvg(m){
   const phone = (window.innerWidth || 390) < 560, W = Math.round(Math.max(300, Math.min(720, (window.innerWidth || 390) - 72))), Ht = phone ? 270 : 310;
-  const pl = 34, pr = phone ? 70 : 84, pt = 24, pb = 40, pw = W - pl - pr, ph = Ht - pt - pb;
+  const pl = 34, pr = phone ? 82 : 108, pt = 24, pb = 40, pw = W - pl - pr, ph = Ht - pt - pb;
   const all = [m.B, m.medLevel, m.best, LDL_GOAL].concat(m.pts.map(p => +p.x.ldl));
   const lo = Math.max(0, Math.floor((Math.min(...all) - 12) / 20) * 20), hi = Math.ceil((Math.max(...all) + 8) / 20) * 20;
   const x = t => pl + Math.max(0, Math.min(m.maxW, t)) / m.maxW * pw, y = v => pt + (hi - v) / (hi - lo) * ph, f1 = n => n.toFixed(1);
@@ -225,7 +225,7 @@ function ldlSvg(m){
   [100, 130].forEach(v => { if (v > lo && v < hi && !ticks.includes(v)) ticks.push(v); });
   const xs = []; for (let t = 0; t <= m.maxW; t += phone ? (m.maxW > 30 ? 8 : 4) : (m.maxW > 30 ? 4 : 2)) xs.push(t);
   // End labels on the right: nudged apart with a short leader when two would touch.
-  const ends = [['c', 'Food plan', m.f(m.maxW, 'c')], ['b', 'Best', m.f(m.maxW, 'b')], ['k', 'Careful', m.f(m.maxW, 'k')], ['m', 'Medicine', m.med(m.maxW)]].map(([k, l, v]) => ({k, l: l + ' ' + r0(v), y0: y(v), y: y(v)})).sort((a, b) => a.y - b.y);
+  const ends = [['c', phone ? 'Plan' : 'Food plan', m.f(m.maxW, 'c')], ['b', 'Best', m.f(m.maxW, 'b')], ['k', 'Careful', m.f(m.maxW, 'k')], ['m', 'Medicine', m.med(m.maxW)]].map(([k, l, v]) => ({k, l: l + ' ' + r0(v), y0: y(v), y: y(v)})).sort((a, b) => a.y - b.y);
   for (let i = 1; i < ends.length; i++) if (ends[i].y - ends[i - 1].y < 13) ends[i].y = ends[i - 1].y + 13;
   const xe = x(m.maxW), tx = x(m.tNow);
   const desc = `LDL path from ${r0(m.B)}. Estimate now ${r0(m.now)}. The food plan levels off near ${r0(m.level)}, with a range from ${r0(m.best)} to ${r0(m.careful)}.${m.tC != null ? ` It reaches 100 near week ${Math.ceil(m.tC)}.` : ''} With a medicine, ${m.tM != null ? `100 near week ${Math.ceil(m.tM)}` : `about ${r0(m.medLevel)}`}.`;
