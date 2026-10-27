@@ -75,17 +75,7 @@
     "cdc-joint-pain-activity": ["Physical Activity and Joint Pain, Centers for Disease Control and Prevention", "https://archive.cdc.gov/www_cdc_gov/arthritis/basics/physical-activity/pain.html"],
     "tend-usda-fdc": ["FoodData Central, U.S. Department of Agriculture", "https://fdc.nal.usda.gov/"],
     "tend-usda-temps": ["Safe Minimum Internal Temperature Chart, U.S. Department of Agriculture, Food Safety and Inspection Service", "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"],
-    "way-aha-satfat": ["American Heart Association, Saturated Fat, the-grounded-way.html (Standards, Each Day) and the page video pv-the-grounded-way", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/saturated-fats"],
-    "way-aha-sugar": ["American Heart Association, Added Sugars, the-grounded-way.html and pv-the-grounded-way", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/sugar/added-sugars"],
-    "way-aha-sodium": ["American Heart Association, How Much Sodium Should I Eat per Day?, the-grounded-way.html and pv-the-grounded-way", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/sodium/how-much-sodium-should-i-eat-per-day"],
-    "way-aha-fish": ["American Heart Association, Fish and Omega-3 Fatty Acids, the-grounded-way.html (fish twice a week) and pv-the-grounded-way", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
-    "way-dga": ["Dietary Guidelines for Americans, 2020 to 2025, the-grounded-way.html and pv-the-grounded-way", "https://www.dietaryguidelines.gov/"],
-    "way-predimed": ["Estruch and colleagues, the PREDIMED trial of a Mediterranean diet (New England Journal of Medicine, 2018), the-grounded-way.html (the Mediterranean base) and pv-the-grounded-way", "https://doi.org/10.1056/NEJMoa1800389"],
-    "way-portfolio": ["Jenkins and colleagues, the Portfolio Diet (JAMA, 2003), the-grounded-way.html (Heart and Cholesterol: soluble fiber)", "https://doi.org/10.1001/jama.290.4.502"],
-    "way-chol2018": ["Grundy and colleagues, the 2018 AHA and ACC Guideline on the Management of Blood Cholesterol (Circulation, 2019), the-grounded-way.html (labs and the LDL Path)", "https://doi.org/10.1161/CIR.0000000000000625"],
-    "way-protein-ath": ["Thomas, Erdman, and Burke, Nutrition and Athletic Performance (Medicine and Science in Sports and Exercise, 2016), the-grounded-way.html (protein for Strength, 1.2 to 1.6 g per kg)", "https://doi.org/10.1249/MSS.0000000000000852"],
-    "way-pag": ["Physical Activity Guidelines for Americans, 2nd edition, the-grounded-way.html (levels) and pv-the-grounded-way", "https://odphp.health.gov/our-work/nutrition-physical-activity/physical-activity-guidelines"],
-    "way-cdc-chronic": ["CDC, Physical Activity for People with Chronic Health Conditions and Disabilities, the-grounded-way.html (the Gentle path)", "https://www.cdc.gov/physical-activity-basics/guidelines/chronic-health-conditions-and-disabilities.html"],
+    "way-aha-fish": ["Fish and Omega-3 Fatty Acids, American Heart Association", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
 /* BLD866 sources end */
 /* BLD809 sources start */
     // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.
