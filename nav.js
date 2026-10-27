@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b868'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b869'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -411,7 +411,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b866';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b869';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
@@ -534,4 +534,27 @@
     var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (x) { return; }
     if (u.origin === location.origin && /^\/home\//.test(u.pathname)) { e.preventDefault(); window.top.postMessage('gg-home-close', location.origin); }
   }, true);
+})();
+
+/* BLD 869: on a tree or tool page, when a profile is open on this device, a slim line leads into The Grounded Way app,
+   where the tree lives as a tab beside Today and Tending. Hidden inside the app's own frame. */
+(function () {
+  try { if (window.self !== window.top) return; } catch (e) { return; }
+  var p = location.pathname;
+  var tree = (/^\/(maple|aspen|pine|birch|oak|sequoia|willow|grove|heartwood)\//.exec(p) || [])[1];
+  if (!tree && !/^\/(living-sober|get-grounded-now|readings)\.html/.test(p)) return;
+  var css = '.gg-wayline{display:flex;justify-content:center;align-items:center;gap:10px;flex-wrap:wrap;padding:8px max(16px,env(safe-area-inset-left,0px));font:500 14px/1.3 Barlow,system-ui,sans-serif;background:#F4EAD6;color:#3A2A1C;border-bottom:1px solid #E6D9C2;}' +
+    '.gg-wayline a{color:#8B5E1A;font-weight:700;text-decoration:none;border-bottom:1px solid currentColor;}' +
+    '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gg-wayline{background:#2E2118;color:#EFE5D3;border-color:#4A3626;}:root:not([data-theme="light"]) .gg-wayline a{color:#D9A847;}}' +
+    ':root[data-theme="dark"] .gg-wayline{background:#2E2118;color:#EFE5D3;border-color:#4A3626;}:root[data-theme="dark"] .gg-wayline a{color:#D9A847;}';
+  function show() {
+    if (document.querySelector('.gg-wayline') || !(window.GGP && GGP.active && GGP.active())) return;
+    var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
+    var bar = document.createElement('div'); bar.className = 'gg-wayline';
+    bar.innerHTML = '<span>Your profile is open.</span><a href="/home/' + (tree ? '#tree' : '') + '">Open The Grounded Way</a>';
+    var top = document.querySelector('.topbar');
+    if (top && top.parentNode) top.parentNode.insertBefore(bar, top.nextSibling); else document.body.insertBefore(bar, document.body.firstChild);
+  }
+  function wait(n) { if (window.GGP && GGP.ready) { GGP.ready.then(show); if (GGP.on) GGP.on(function (t) { if (t === 'change') { if (GGP.active && GGP.active()) show(); else { var b = document.querySelector('.gg-wayline'); if (b) b.remove(); } } }); } else if (n < 40) setTimeout(function () { wait(n + 1); }, 250); }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { wait(0); }); else wait(0);
 })();

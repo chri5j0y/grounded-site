@@ -32,7 +32,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b867';
+  var V = 'b869';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -328,7 +328,7 @@
   }
 
   /* ---------- routing ---------- */
-  function viewOf() { var h = decodeURIComponent(location.hash || ''); return h === '#tending' ? 'tending' : h === '#privacy' ? 'privacy' : 'home'; }
+  function viewOf() { var h = decodeURIComponent(location.hash || ''); return h === '#tending' ? 'tending' : (h === '#privacy' || h === '#more') ? 'more' : h === '#tree' ? 'tree' : 'home'; }
   function goTo(v) {
     var hash = v === 'home' ? '' : '#' + v;
     if (v === 'home') { try { history.pushState(null, '', location.pathname); } catch (e) { location.hash = ''; } render(); }
@@ -351,14 +351,15 @@
     var root = app(); if (!root) return;
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
-    if (!a) { if (location.hash === '#tending' || location.hash === '#privacy') { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'home'; root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
+    if (!a) { if (/^#(tending|privacy|more|tree)$/.test(location.hash)) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'home'; root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
     var changed = S.id !== a.id;
     S.id = a.id; S.p = GGP.get ? GGP.get(a.id) : a; S.tree = treeOfProfile(S.p);
     if (changed) { S.tendInit = false; S.words = null; }
     S.view = viewOf();
-    if (isKid(S.p)) { S.view = 'home'; root.innerHTML = kidHtml(); paintNav('kid'); return; }
+    if (isKid(S.p)) { if (S.view === 'tree') { root.innerHTML = treeTabHtml(); paintNav('kidtree'); return; } S.view = 'home'; root.innerHTML = kidHtml(); paintNav('kid'); return; }
     if (S.view === 'tending') { root.innerHTML = tendingHtml(); paintNav('tending'); paintTending(); return; }
-    if (S.view === 'privacy') { root.innerHTML = privacyHtml(); paintNav('privacy'); return; }
+    if (S.view === 'more') { root.innerHTML = moreHtml(); paintNav('more'); return; }
+    if (S.view === 'tree') { root.innerHTML = treeTabHtml(); paintNav('tree'); return; }
     root.innerHTML = homeHtml(); paintNav('home'); afterHome();
   }
 
@@ -368,17 +369,13 @@
     var tabs = document.getElementById('hm-tabs');
     if (!S.id || !cur) { if (tabs) tabs.innerHTML = ''; return; }
     var t = TREES[S.tree] || TREES.oak, h = homeRec();
-    var items = [['home', '/home/', 'home', 'Home', 'Home']];
-    items.push(['tree', t.href, 'tree', 'My ' + t.n, 'My ' + t.n]);
-    if (cur !== 'kid') {
-      items.push(['tending', '#tending', 'sprout', 'Tending', 'Tending']);
-      if (soberDate()) items.push(['sober', '#hm-sober', 'sun2', 'Living Sober', 'Sober']);
-      items.push(['tools', '#hm-tools', 'grid', 'Tools', 'Tools']);
-      items.push(['privacy', '#privacy', 'gear', 'Settings and Privacy', 'Settings']);
-    }
-    var on = cur === 'kid' ? 'home' : cur;
+    // BLD 869: The Grounded Way app: Today, My Tree, Tending, More (kids: Today and My Tree).
+    var kid = cur === 'kid' || cur === 'kidtree';
+    var items = [['home', '/home/', 'home', 'Today', 'Today'], ['tree', '#tree', 'tree', 'My ' + t.n, 'My Tree']];
+    if (!kid) { items.push(['tending', '#tending', 'sprout', 'Tending', 'Tending']); items.push(['more', '#more', 'grid', 'More', 'More']); }
+    var on = cur === 'kid' ? 'home' : cur === 'kidtree' ? 'tree' : cur;
     if (tabs) tabs.innerHTML = items.map(function (x) { return '<a href="' + x[1] + '"' + (x[0] === on ? ' aria-current="page"' : '') + ' data-hm-nav="' + x[0] + '">' + I(x[2]) + esc(x[3]) + '</a>'; }).join('');
-    var bn = document.createElement('nav'); bn.className = 'hm-bnav'; bn.id = 'hm-bnav'; bn.setAttribute('aria-label', 'My Home');
+    var bn = document.createElement('nav'); bn.className = 'hm-bnav'; bn.id = 'hm-bnav'; bn.setAttribute('aria-label', 'The Grounded Way');
     var phone = items.filter(function (x) { return x[0] !== 'privacy' || items.length <= 5; }).slice(0, 5);
     bn.innerHTML = '<ul style="--n:' + phone.length + '">' + phone.map(function (x) { return '<li><a href="' + x[1] + '"' + (x[0] === on ? ' aria-current="page"' : '') + ' data-hm-nav="' + x[0] + '"><span class="ic">' + I(x[2]) + '</span><span class="l">' + esc(x[4]) + '</span></a></li>'; }).join('') + '</ul>';
     var host = document.querySelector('main.hm') || document.body; host.appendChild(bn);
@@ -415,7 +412,7 @@
     var hero = '<div class="hm-hero welcome"><picture><source media="(max-width:699px)" srcset="' + IMG + 'welcome-narrow.webp"><img class="art" src="' + IMG + 'welcome-wide.webp" alt="" width="1800" height="1012" fetchpriority="high"></picture>' +
       '<div class="in"><div class="hm-greet">' + I('sprout') + '<span>' + (back ? 'Welcome Back' : 'Welcome to Grounded') + '</span></div><h1>Your Home</h1>' +
       '<p>See your tree, tend your day, and keep everything you use in one calm place.</p>' +
-      (back ? '<div class="hm-acts tight"><button type="button" class="hm-btn light" data-hm="open">' + I('lock') + 'Open My Home</button></div>' : '<div class="hm-acts tight"><a class="hm-btn light" href="#hm-steps">' + I('sprout') + 'Begin</a></div>') +
+      (back ? '<div class="hm-acts tight"><button type="button" class="hm-btn light" data-hm="open">' + I('lock') + 'Open The Grounded Way</button></div>' : '<div class="hm-acts tight"><a class="hm-btn light" href="#hm-steps">' + I('sprout') + 'Begin</a></div>') +
       '</div></div>';
     var sp = '<div class="hm-species" id="hm-species">' + STAGES.map(function (s) {
       if (!s[0]) return '<div class="hm-sp-k">' + s[1] + '</div>';
@@ -500,7 +497,7 @@
     var col1 = treeCardHtml(ck, ed, t) + fam;
     var col2 = full ? '<div class="hm-col o3" id="hm-today">' + todayHtml(h, null) + '</div>' : '';
     var col3 = (sd ? soberHtml(sd) : (h.parts.indexOf('sober') >= 0 ? soberInviteHtml() : '')) + forYouHtml(ed) + progressHtml(h, ck, tend) + (full ? '' : offerHtml(h));
-    return '<div class="hm-wrap">' + '<nav class="hm-tabs" id="hm-tabs" aria-label="My Home"></nav>' + heroHtml(S.p.name, chips) +
+    return '<div class="hm-wrap">' + '<nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav>' + heroHtml(S.p.name, chips) +
       '<div class="hm-grid' + (full ? '' : ' c2') + '">' +
         '<div class="hm-col">' + col1 + '</div>' + col2 + '<div class="hm-col">' + col3 + '</div>' +
       '</div>' + toolsHtml(h, full) + '</div>';
@@ -768,7 +765,7 @@
 
   /* ---------- Tending, inside the Home ---------- */
   function tendingHtml() {
-    return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="My Home"></nav><div class="hm-back"><button type="button" class="hm-btn sm line hm-p-leaves" data-hm="home">' + I('back') + 'Back to My Home</button></div>' +
+    return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><div class="hm-back"><button type="button" class="hm-btn sm line hm-p-leaves" data-hm="home">' + I('back') + 'Back to Today</button></div>' +
       '<div id="hm-tend"><div class="hm-loading">Opening Tending…</div></div>' + helpLine() + '</div>';
   }
   function paintTending() {
@@ -786,7 +783,7 @@
     return '<div class="hm-card hm-p-leaves"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-body.webp" alt=""></div><div style="min-width:0"><div class="hm-k">Tending</div><h2 class="hm-h2">Tending Opens Here</h2>' +
       '<p class="hm-sub" style="margin-top:6px">Food for your goal, movement for every level, quiet, your own labs and the LDL Path, and family nutrition. Built to thrive, and kept on this device inside your locked profile.</p>' +
       '<p class="hm-sub" style="margin-top:8px">Tending is getting ready for your Home. Your tree, check-ins, and practices are all here today.</p>' +
-      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-leaves" data-hm="home">' + I('home') + 'Back to My Home</button><a class="hm-btn sm line hm-p-leaves" href="/the-grounded-way.html">The Grounded Way</a></div></div></div></div>';
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-p-leaves" data-hm="home">' + I('home') + 'Back to Today</button><a class="hm-btn sm line hm-p-leaves" href="/the-grounded-way.html">The Grounded Way</a></div></div></div></div>';
   }
 
   /* ---------- Settings and Privacy ---------- */
@@ -801,7 +798,7 @@
         '<div class="hm-row hm-p-fruit"><span class="ic2">' + I('gear') + '</span><div class="tx"><b>Start Fresh</b><small>Manage My Profile removes a profile and its saved days from this device for good. Save a backup first to keep anything.</small></div></div>' +
       '</div>' +
       (open ? '<div class="hm-acts"><button class="hm-btn hm-p-leaves" type="button" data-hm="backup">' + I('save') + 'Save a Backup</button><button class="hm-btn line hm-p-leaves" type="button" data-hm="restore">' + I('open') + 'Open a Backup</button></div>' +
-        '<div class="hm-acts">' + (GGP.rootState && GGP.rootState(S.id) ? '<button class="hm-btn line hm-p-trunk" type="button" data-hm="rootwords">' + I('key') + 'See My Root Words</button>' : '') + '<button class="hm-btn line hm-p-fruit" type="button" data-hm="manage">' + I('gear') + 'Manage My Profile</button><button class="hm-btn line hm-p-branches" type="button" data-hm="lock">' + I('lock') + 'Lock My Home</button></div>' : '') +
+        '<div class="hm-acts">' + (GGP.rootState && GGP.rootState(S.id) ? '<button class="hm-btn line hm-p-trunk" type="button" data-hm="rootwords">' + I('key') + 'See My Root Words</button>' : '') + '<button class="hm-btn line hm-p-fruit" type="button" data-hm="manage">' + I('gear') + 'Manage My Profile</button><button class="hm-btn line hm-p-branches" type="button" data-hm="lock">' + I('lock') + 'Lock</button></div>' : '') +
       '</article><div class="hm-col">' +
         '<article class="hm-card hm-a-numbers"><div class="hm-hd"><span class="hm-badge">' + I('heart') + '</span><div><div class="hm-k">A Note on Health Numbers</div><h3 class="hm-h3">Talk It Over With Your Doctor</h3></div></div><div class="hm-sub">Plate rings, lab lines, and progress paths are research-informed estimates. They are here to help you notice and plan, and to bring to your doctor. Grounded offers guidance and support, and your doctor guides your medical choices.</div></article>' +
         '<article class="hm-card hm-p-trunk"><div class="hm-hd"><span class="hm-badge">' + I('people') + '</span><div><div class="hm-k">Kids and Helpers</div><h3 class="hm-h3">A Key for Those Who Help</h3></div></div><div class="hm-sub">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode. In Birch, Sequoia, and Willow, a helper sees only what the person chooses to share.</div></article>' +
@@ -810,7 +807,7 @@
   }
   function privacyHtml() {
     var h = homeRec(), on = {}; h.parts.forEach(function (k) { on[k] = true; });
-    return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="My Home"></nav><div class="hm-back"><h1 class="hm-h2">Settings and Privacy</h1><button type="button" class="hm-btn sm line hm-p-leaves" data-hm="home">' + I('back') + 'Back to My Home</button></div>' +
+    return '<div class="hm-wrap"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><div class="hm-back"><h1 class="hm-h2">Settings and Privacy</h1><button type="button" class="hm-btn sm line hm-p-leaves" data-hm="home">' + I('back') + 'Back to Today</button></div>' +
       privacyBrief(true) +
       '<div class="hm-lay c2" style="margin-top:22px"><article class="hm-card hm-p-roots"><div class="hm-hd"><span class="hm-badge">' + I('choice') + '</span><div><div class="hm-k">Your Home</div><h3 class="hm-h3">What Would You Like to Tend?</h3></div></div>' +
         '<p class="hm-sub" style="margin:0 0 12px">Your tree check-in comes with every Home. Turn on any daily tending you like; the Home shows only what you choose.</p>' + tend6Html(on, 'data-hm-setpart') +
@@ -819,6 +816,19 @@
         '<p class="hm-sub">Add a child (Maple, Aspen, or Pine) with your own passcode as their grown-up, or set up a profile for someone you love and stay close as their helper.</p>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-branches" data-hm="addkid">' + I('plus') + 'Add a Family Member</button><button type="button" class="hm-btn line hm-p-branches" data-hm="addlove">' + I('love') + 'Someone I Love</button></div></article></div>' +
       helpLine() + '</div>';
+  }
+
+  /* ---------- BLD 869: My Tree, a tab of the app (the person's own tree, inside) ---------- */
+  function treeTabHtml() {
+    var t = TREES[S.tree] || TREES.oak;
+    return '<div class="hm-treetab"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><iframe class="hm-tree-if" src="' + t.href + '" title="My ' + esc(t.n) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe></div>';
+  }
+  /* ---------- BLD 869: More (your tools, then settings and privacy) ---------- */
+  function moreHtml() {
+    var h = homeRec(), x = privacyHtml();
+    x = x.replace('<h1 class="hm-h2">Settings and Privacy</h1>', '<h1 class="hm-h2">More</h1>');
+    var i = x.indexOf('</div>', x.indexOf('class="hm-back"')) + 6;
+    return x.slice(0, i) + toolsHtml(h, true).replace('<a href="#privacy">Settings and Privacy</a>', '') + '<h2 class="hm-h2" style="margin-top:30px">Settings and Privacy</h2>' + x.slice(i);
   }
 
   /* ---------- Kid Home: Maple and Aspen, playful, no numbers ---------- */
@@ -849,7 +859,7 @@
     if (!t || !t.closest('.hm')) return;
     if (t.hasAttribute('data-hm-nav')) {
       var nv = t.getAttribute('data-hm-nav');
-      if (nv === 'home' || nv === 'privacy' || nv === 'tending') { e.preventDefault(); goTo(nv); return; }
+      if (nv === 'home' || nv === 'more' || nv === 'tending' || nv === 'tree') { e.preventDefault(); goTo(nv); return; }
       if ((nv === 'tools' || nv === 'sober') && S.view !== 'home') { e.preventDefault(); var tgt = nv === 'tools' ? 'hm-tools' : 'hm-sober'; goTo('home'); setTimeout(function () { var x = document.getElementById(tgt); if (x) x.scrollIntoView({ block: 'start' }); }, 60); }
       return;
     }
@@ -909,7 +919,7 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 
   /* ---------- BLD 867: trees and tools open inside the Home ----------
-     A tap on a tree or a tool from the Home opens it in a full-page frame with a slim My Home bar, so the person
+     A tap on a tree or a tool from the Home opens it in a full-page frame with a slim Back bar, so the person
      never leaves Home. The phone's Back closes it (history state). nav.js hides the site's own top bar and footer
      inside the frame. When it closes, the Home redraws with anything new (a check-in, a sober day). */
   var FRAME = null;
@@ -931,7 +941,7 @@
   function openFrame(u, push) {
     closeFrame(true);
     var wrap = document.createElement('div'); wrap.className = 'hm-frame'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-label', frameTitle(u));
-    wrap.innerHTML = '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>My Home</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>' +
+    wrap.innerHTML = '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>Back</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>' +
       '<iframe class="hm-frame-if" title="' + esc(frameTitle(u)) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>';
     var host = document.querySelector('main.hm') || document.body; host.appendChild(wrap);
     var ifr = wrap.querySelector('iframe'); ifr.src = u.pathname + u.search + u.hash;
@@ -949,7 +959,10 @@
     if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
     var a = e.target.closest && e.target.closest('#hm-app a[href]'); var u = inHomeLink(a); if (!u) return;
     if (!(window.GGP && GGP.active && GGP.active())) return;
-    e.preventDefault(); openFrame(u);
+    e.preventDefault();
+    var own = (TREES[S.tree] || TREES.oak).href;
+    if (u.pathname === own && !u.hash) { goTo('tree'); return; }
+    openFrame(u);
   });
   window.addEventListener('popstate', function () { if (FRAME && !(history.state && history.state.hmFrame)) closeFrame(); });
   window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); } });
