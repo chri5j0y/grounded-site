@@ -76,7 +76,7 @@ function H(){
   const d = D(); if (!d) return null;
   const h = d.health = d.health && typeof d.health === 'object' ? d.health : {};
   h.set = h.set && typeof h.set === 'object' ? h.set : {};
-  h.labs = arr(h.labs); h.marks = arr(h.marks); h.notes = arr(h.notes); h.panels = arr(h.panels); h.myFoods = arr(h.myFoods);
+  h.labs = arr(h.labs); h.marks = arr(h.marks); h.risk = arr(h.risk); h.notes = arr(h.notes); h.panels = arr(h.panels); h.myFoods = arr(h.myFoods);
   h.days = h.days && typeof h.days === 'object' ? h.days : {};
   ['log', 'shop', 'lifts'].forEach(k => { h[k] = h[k] && typeof h[k] === 'object' && !Array.isArray(h[k]) ? h[k] : {}; }); h.wlog = arr(h.wlog);
   return h;
@@ -1889,8 +1889,8 @@ function view(){
   else if (S.sec === 'prep') body = `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'This week\'s prep, the batch calendar, and freezer stock.')}${kitTabs('prep')}${vPrep()}</div>`;
   else if (S.sec === 'move') body = vMove();
   else if (S.sec === 'learn') body = `<div class="tn-sec a-today">${secHead('book', 'a-today', 'Why It Works', 'The full plans behind every card: why it works, every recipe, every session.')}${vPlan(lib, 'food')}${vPlan(lib, 'fitness')}${SOBER}</div>`;
-  else if (S.sec === 'numbers' && PUB()) body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Your labs beside their recommended ranges, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vLabsP()}</div>`;
-  else if (S.sec === 'numbers') body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Labs, markers, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vNumbers()}</div>`;
+  else if (S.sec === 'numbers' && PUB()) body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Your labs beside their recommended ranges, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vLabsP()}${vRisk()}</div>`;
+  else if (S.sec === 'numbers') body = `<div class="tn-sec a-numbers">${secHead('numbers', 'a-numbers', 'Numbers', 'Labs, markers, and My LDL Path. Private to this device.')}${numTabs('numbers')}${vNumbers()}${vRisk()}</div>`;
   else if (S.sec === 'kids') body = vKids();
   else if (S.sec === 'kidview') body = vKidView();
   else if (S.sec === 'team') body = vTeam();
@@ -1910,6 +1910,41 @@ function view(){
     ${KIT() ? '' : askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${vOv()}</div>`;
 }
+// ---------- BLD 871: Heart Risk (PREVENT scores from the person's doctor) ----------
+// Shows an example for a healthy adult until the person adds their own 10-year and 30-year scores; then theirs, with history.
+// Tending never computes PREVENT itself: the scores come from the doctor (Chris, October 27, 2026).
+const RISK_EX = {r10: 2, r30: 8};
+const RISK_BANDS = [[0, 5, 'Low', 'var(--rk-good)'], [5, 7.5, 'Borderline', 'var(--rk-warn)'], [7.5, 20, 'Intermediate', 'var(--rk-ser)'], [20, 25, 'High', 'var(--rk-crit)']];
+const riskBand = v => { const b = RISK_BANDS.find(x => v < x[1]) || RISK_BANDS[3]; return b; };
+function riskDots(v, label){ const whole = Math.floor(v), part = v - whole; let h = '';
+  for (let i = 0; i < 100; i++){ const on = i < whole, pt = i === whole && part > 0.05; h += `<i class="${on ? 'on' : pt ? 'pt' : ''}"${pt ? ` style="--pp:${Math.round(part * 100)}%"` : ''}></i>`; }
+  return `<div class="hj-rk-dots" role="img" aria-label="${esc(label)}">${h}</div>`; }
+function vRisk(){
+  const h = H(), f = S.form, R = h.risk.slice().sort(byDate), cur = R.length ? R[R.length - 1] : null, ex = !cur, d = cur || RISK_EX;
+  const pct = v => v == null ? '' : (Math.round(v * 100) / 100) + '%';
+  const form = f && f.k === 'risk' ? `<div class="hj-blk" id="hj-form">${kick('Add My Heart Risk Scores')}<p class="hj-sub">From your doctor: the PREVENT 10-year and 30-year ASCVD risk, in percent.</p>
+    <div class="hj-g3"><label class="hj-fld"><span>Date</span><input type="date" data-hjf="date" value="${esc(f.date || '')}"></label><label class="hj-fld"><span>10-year risk (%)</span><input type="number" inputmode="decimal" step="0.01" data-hjf="r10" value="${esc(f.r10 != null ? f.r10 : '')}"></label><label class="hj-fld"><span>30-year risk (%)</span><input type="number" inputmode="decimal" step="0.01" data-hjf="r30" value="${esc(f.r30 != null ? f.r30 : '')}"></label></div>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="risksave">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="cancel">Cancel</button></div></div>` : '';
+  const b10 = d.r10 != null ? riskBand(d.r10) : null;
+  const mk = d.r10 != null ? Math.min(100, d.r10 / 25 * 100) : null;
+  const scale = d.r10 != null ? `<div class="hj-rk-scale"><div class="hj-rk-mk" style="left:${mk}%">${ex ? 'Example' : 'Me'}: ${pct(d.r10)}</div><div class="hj-rk-bands">${RISK_BANDS.map(x => `<span title="${esc(x[2])}" style="flex:${x[1] - x[0]};background:${x[3]}"></span>`).join('')}</div>
+    <div class="hj-rk-ticks"><span style="left:0">0%</span><span style="left:20%">5%</span><span style="left:30%">7.5%</span><span style="left:80%">20%</span><span style="left:100%">25%+</span></div>
+    <div class="hj-rk-key">${RISK_BANDS.map(x => `<span><i style="background:${x[3]}"></i>${esc(x[2])}</span>`).join('')}</div></div>` : '';
+  const hist = R.length > 1 ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>10-year</th><th>30-year</th><th></th></tr></thead><tbody>${R.slice().reverse().map(x => `<tr><td>${esc(short(x.date))}</td><td>${pct(x.r10)}</td><td>${pct(x.r30)}</td><td><button type="button" class="linkbtn" data-hja="riskdel" data-hjv="${esc(x.id)}">Remove</button></td></tr>`).join('')}</tbody></table></div>` : '';
+  return `<div class="hj-blk hj-rk" id="hj-risk">${kick('My Heart Risk')}
+    ${ex ? `<p class="hj-sub"><b>Example: a healthy adult.</b> Add the PREVENT scores from your doctor and this card becomes yours.</p>` : `<p class="hj-sub">Your PREVENT scores from your doctor, ${esc(short(cur.date))}: the chance of a heart attack or stroke (ASCVD).</p>`}
+    <div class="hj-rk-tiles${ex ? ' ex' : ''}">
+      ${d.r10 != null ? `<div><b>${pct(d.r10)}</b><small>Next 10 years</small><em><i style="background:${b10[3]}"></i>${esc(b10[2])}</em></div>` : ''}
+      ${d.r30 != null ? `<div><b>${pct(d.r30)}</b><small>Next 30 years</small><em>About ${Math.round(d.r30)} in 100</em></div>` : ''}
+    </div>
+    <div class="hj-rk-arr">${d.r10 != null ? `<div>${riskDots(d.r10, 'About ' + Math.round(d.r10) + ' of 100 in 10 years')}<small>10 years: about ${Math.round(d.r10)} of 100 people with these numbers</small></div>` : ''}${d.r30 != null ? `<div>${riskDots(d.r30, 'About ' + Math.round(d.r30) + ' of 100 in 30 years')}<small>30 years: about ${Math.round(d.r30)} of 100</small></div>` : ''}</div>
+    ${scale}
+    <p class="hj-note">Bands for 10-year risk from the 2018 AHA/ACC Cholesterol Guideline; 30-year risk has no standard bands. An LDL of 190 or more usually brings a statin into the conversation whatever the score. These are your doctor's numbers to talk through together; ask for a new PREVENT score with each new set of labs.</p>
+    ${hist}
+    ${form ? '' : `<div class="row"><button type="button" class="btn ${ex ? 'btn-gold' : 'btn-line'} btn-sm" data-hja="riskadd">${ex ? 'Add My Scores' : 'Add New Scores'}</button></div>`}
+  </div>${form}`;
+}
+
 // ---------- BLD 867: Move to My Home ----------
 // The Field Guide's own Tending (plan, library copy, and everything logged) moves into the person's My Home vault
 // (GGP.data(id, 'tending')), where /home/ runs it with the same engine. Private: it stays on this device, locked.
@@ -1964,6 +1999,14 @@ function act(a, v){
   if (actPlate(a, v)) return;
   switch (a){
     case 'movehome': moveHome(); return;
+    case 'riskadd': S.form = {k: 'risk', date: today()}; S.edit = null; rerender(true); toForm(); return;
+    case 'risksave': { const f = S.form; if (!f) return; if (!/^\d{4}-\d{2}-\d{2}$/.test(String(f.date || ''))){ toast('Choose a date.'); return; }
+      const r10 = num(f.r10), r30 = num(f.r30); if (r10 == null && r30 == null){ toast('Add at least one score.'); return; }
+      if ((r10 != null && (r10 < 0 || r10 > 100)) || (r30 != null && (r30 < 0 || r30 > 100))){ toast('Scores are percents from 0 to 100.'); return; }
+      const rec = {id: S.edit || uid(), date: f.date, u: Date.now()}; if (r10 != null) rec.r10 = r10; if (r30 != null) rec.r30 = r30;
+      const i = h.risk.findIndex(x => x.id === rec.id); if (i < 0) h.risk.push(rec); else h.risk[i] = rec;
+      save(); S.form = null; S.edit = null; toast('Saved on this device.'); rerender(true); return; }
+    case 'riskdel': { const i = h.risk.findIndex(x => x.id === v); if (i >= 0){ (D().deleted = D().deleted || {}).health = D().deleted.health || {}; D().deleted.health[v] = Date.now(); h.risk.splice(i, 1); save(); rerender(true); } return; }
     case 'movehere': S.hereOk = true; rerender(false); return;
     case 'openhome': location.href = '../home/#tending'; return;
     case 'sec': S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
@@ -2503,6 +2546,33 @@ document.addEventListener('toggle', e => { const d = e.target; if (d && d.datase
 
 // ---------- styles ----------
 const CSS = `
+/* BLD 871: My Heart Risk. Status steps from the validated dataviz palette; every band also carries its name. */
+#hj-root{--rk-good:#0ca30c;--rk-warn:#fab219;--rk-ser:#ec835a;--rk-crit:#d03b3b;--rk-ev:#B5452F;--rk-empty:#E3D7C2;}
+:root[data-theme="dark"] #hj-root{--rk-ev:#E0705A;--rk-empty:#3D342B;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--rk-ev:#E0705A;--rk-empty:#3D342B;}}
+.hj-rk-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0;}
+.hj-rk-tiles>div{border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0;}
+.hj-rk-tiles b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;line-height:1;}
+.hj-rk-tiles small{display:block;color:var(--ink-soft);margin-top:4px;}
+.hj-rk-tiles em{display:inline-flex;align-items:center;gap:6px;font-style:normal;font-weight:700;font-size:12px;letter-spacing:.6px;text-transform:uppercase;margin-top:8px;color:var(--ink);}
+.hj-rk-tiles em i{width:9px;height:9px;border-radius:50%;display:inline-block;}
+.hj-rk-tiles.ex>div{border-style:dashed;}
+.hj-rk-arr{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:16px;margin:6px 0 4px;}
+.hj-rk-arr>div{min-width:0}.hj-rk-arr small{color:var(--ink-soft);font-size:13px;}
+.hj-rk-dots{display:grid;grid-template-columns:repeat(10,1fr);gap:4px;max-width:220px;margin:6px 0;}
+.hj-rk-dots i{aspect-ratio:1;border-radius:50%;background:var(--rk-empty);}
+.hj-rk-dots i.on{background:var(--rk-ev);}
+.hj-rk-dots i.pt{background:linear-gradient(90deg,var(--rk-ev) var(--pp),var(--rk-empty) var(--pp));}
+.hj-rk-scale{position:relative;margin:34px 0 6px;}
+.hj-rk-mk{position:absolute;top:-30px;transform:translateX(-50%);font-weight:700;font-size:13px;white-space:nowrap;}
+.hj-rk-mk::after{content:'';display:block;width:2px;height:28px;background:var(--ink);margin:2px auto 0;border-radius:1px;}
+.hj-rk-bands{display:flex;gap:2px;height:18px;border-radius:5px;overflow:hidden;}
+.hj-rk-ticks{position:relative;height:16px;margin-top:5px;color:var(--ink-soft);font-size:12px;}
+.hj-rk-ticks span{position:absolute;transform:translateX(-50%);}.hj-rk-ticks span:first-child{transform:none}.hj-rk-ticks span:last-child{transform:translateX(-100%)}
+.hj-rk-key{display:flex;flex-wrap:wrap;gap:12px;margin-top:8px;font-size:12px;color:var(--ink-soft);}
+.hj-rk-key i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;}
+@media (max-width:520px){.hj-rk-tiles,.hj-rk-arr{grid-template-columns:1fr;}}
+
 #hj-root{min-width:0;--hj:#5F7D48;--hjcalm:#6C7FA6;--lpc:#4A8A2C;--lpm:#3D6FCC;}
 :root[data-theme="dark"] #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}
 @media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}}
@@ -3082,7 +3152,7 @@ window.GGHealth = {
     out.deleted = out.deleted || {clients: {}, sessions: {}}; out.deleted.health = out.deleted.health || {};
     Object.entries((inc.deleted || {}).health || {}).forEach(([id, ts]) => { out.deleted.health[id] = Math.max(out.deleted.health[id] || 0, ts); });
     const o = out.health = out.health && typeof out.health === 'object' ? out.health : {}, i = inc.health || {}; let added = 0, updated = 0;
-    ['labs', 'marks', 'notes', 'panels', 'wlog', 'myFoods'].forEach(k => {
+    ['labs', 'marks', 'notes', 'panels', 'wlog', 'myFoods', 'risk'].forEach(k => {
       o[k] = arr(o[k]);
       arr(i[k]).forEach(x => { if (!x || !x.id) return; const j = o[k].findIndex(y => y.id === x.id); if (j < 0){ o[k].push(x); added++; } else if ((x.u || 0) > (o[k][j].u || 0)){ o[k][j] = x; updated++; } });
       o[k] = o[k].filter(x => !(out.deleted.health[x.id] && out.deleted.health[x.id] >= (x.u || 0)));
