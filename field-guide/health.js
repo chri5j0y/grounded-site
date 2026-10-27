@@ -1227,6 +1227,33 @@ function eatResults(){
     ${on ? `<div class="hj-eq"><span>Servings</span>${Q.map(v => `<button type="button" class="chip${v === q ? ' on' : ''}" aria-pressed="${v === q}" data-hja="eatq" data-hjv="${v}">${fmtQ(v)}</button>`).join('')}<button type="button" class="btn btn-gold btn-sm" data-hja="eatx" data-hjv="${esc(x.k)}">Add</button></div>` : ''}</div>`; }).join('')}`;
 }
 const eatRes = () => { const b = document.getElementById('hj-eatres'); if (b) b.innerHTML = eatResults(); };
+// ---- BLD 862: Quick Add (Chris, October 27, 2026: "could be able to add additional cups of coffee.. a banana, apple, items on our diet").
+// One tap adds one serving; the chip shows today's count, with a small minus. Defaults: the plan's everyday staples, then the most used
+// extras. Edit Quick Adds keeps the person's own list on this device: DATA.health.quick [plate keys], DATA.health.quickU.
+const QA_DEF = ['Coffee with unsweetened soy milk', 'Banana', 'Apple', 'Clementine', ['Blueberries', 'Frozen mixed berries'], 'Almonds', 'Walnuts', 'Unsweetened soy milk', 'Avocado'];
+function quickKeys(){
+  const h = H(); if (Array.isArray(h.quick)) return h.quick.filter(k => plateItem(k));
+  const F = FOODS(), key = n => { const f = F.find(x => x.name.toLowerCase() === String(n).toLowerCase()); return f ? 'f:' + slug(f.name) : null; };
+  const out = QA_DEF.map(n => Array.isArray(n) ? n.map(key).find(Boolean) : key(n)).filter(Boolean), use = h.eatUse || {};
+  Object.keys(use).filter(k => !out.includes(k) && plateItem(k)).sort((a, b) => (use[b].c - use[a].c) || (use[b].t - use[a].t)).slice(0, 3).forEach(k => out.push(k));
+  return out;
+}
+const qaShort = n => { const t = String(n).split(/ with |, | \(/)[0]; return t.length > 22 ? t.slice(0, 21).trim() + '.' : t; };
+function qaRow(eat){
+  const ks = quickKeys(); if (!ks.length && !S.qaEd) return '';
+  const chips = ks.map(k => { const it = plateItem(k); if (!it) return ''; const n = eat.filter(e => e.k === k).reduce((a, e) => a + (+e.q || 0), 0);
+    return `<span class="tn-qc${n ? ' on' : ''}"><button type="button" class="tn-qa1" data-hja="eat" data-hjv="${esc(k)}|q" aria-label="Add one serving: ${esc(it.name)}${n ? ', ' + fmtQ(n) + ' today' : ''}">${n ? '' : ic('plus')}${esc(qaShort(it.name))}${n ? ` <b>${esc(fmtQ(n))}</b>` : ''}</button>${n ? `<button type="button" class="tn-qm" data-hja="eatless" data-hjv="${esc(k)}" aria-label="One less: ${esc(it.name)}">&minus;</button>` : ''}</span>`; }).join('');
+  const ed = S.qaEd ? `<div class="tn-qaed"><div class="tn-qal">${ks.map(k => { const it = plateItem(k); return it ? `<span class="tn-qx">${esc(qaShort(it.name))}<button type="button" data-hja="qarm" data-hjv="${esc(k)}" aria-label="Remove from Quick Add: ${esc(it.name)}">${ic('plus')}</button></span>` : ''; }).join('')}</div>
+      <input id="hj-qaq" type="search" placeholder="Add a food: pear, oats, eggs..." autocomplete="off" value="${esc(S.qaQuery || '')}" aria-label="Find a food for Quick Add"><div id="hj-qares" aria-live="polite">${qaResults()}</div>
+      <button type="button" class="tn-btn sm" data-hja="qaed">Done</button></div>` : '';
+  return `<div class="tn-qa"><div class="tn-qah"><span class="hj-eh">Quick Add</span><button type="button" class="linkbtn" data-hja="qaed" aria-expanded="${!!S.qaEd}">${S.qaEd ? 'Close' : 'Edit Quick Adds'}</button></div><div class="tn-qcs">${chips}</div>${ed}</div>`;
+}
+function qaResults(){
+  const q = String(S.qaQuery || '').trim(); if (!q) return ''; const ks = quickKeys(), r = eatFind(q).list.filter(x => !ks.includes(x.k)).slice(0, 8);
+  if (!r.length) return `<p class="hj-sub">Add My Own under Something Else, and it can join Quick Add.</p>`;
+  return r.map(x => `<div class="hj-er"><div class="tn-qr"><span><b>${esc(x.name)}</b><small>${esc(x.per || '')}${x.cat ? ' · ' + esc(x.cat) : ''}</small></span><button type="button" class="tn-btn sm line" data-hja="qaadd" data-hjv="${esc(x.k)}">${ic('plus')}Add</button></div></div>`).join('');
+}
+const qaRes = () => { const b = document.getElementById('hj-qares'); if (b) b.innerHTML = qaResults(); };
 // ---- meters ----
 const MT = [['sf', 'Saturated fat', ' g', 'lim'], ['pro', 'Protein', ' g', 'reach'], ['fib', 'Fiber', ' g', 'reach'], ['sol', 'Soluble fiber', ' g', 'reach'], ['sug', 'Added sugar', ' g', 'lim'], ['cal', 'Calories', '', 'range'], ['na', 'Sodium', ' mg', 'lim']];
 const MST = {ok: ['On track', '&#10003;'], close: ['Getting close', '&#9679;'], past: ['Past your aim', '&#9650;'], build: ['Building', '&#8599;'], done: ['Reached', '&#10003;'], none: ['', '']};
@@ -1286,6 +1313,7 @@ function vPlate(mode){
   return `<div class="hj-blk hj-plate tn-card tn-edge a-plate" id="hj-plate"><div class="tn-hd">${badge('plate')}<div style="flex:1;min-width:0"><div class="tn-k">Today\'s Plate</div><div class="tn-sub">${eat.length ? eat.length + ' logged today' : 'Tap what you eat, and the rings fill'}</div></div>${tpt('Leaves')}</div>
     <div class="hj-mts0">${meter(MT[0], tot.sf, T, true)}<div class="hj-mtg">${MT.slice(1).map(r => meter(r, tot[r[0]], T)).join('')}</div></div>
     <p class="hj-sub hj-p8s">${eat.length ? 'Tap again for a second serving.' : 'Tap what you eat. Each tap adds one serving.'} Numbers are estimates per listed portion.</p>
+    ${qaRow(eat)}
     ${anyHeart ? `<div class="hj-chips hj-pv8" role="group" aria-label="Which plate">${[['h', 'Heart-Health Plate'], ['f', 'Family Plate']].map(([v, l]) => `<button type="button" class="chip${V === v ? ' on' : ''}" aria-pressed="${V === v}" data-hja="platev" data-hjv="${v}">${l}</button>`).join('')}</div>` : ''}
     ${gs.map(grp).join('')}
     ${lite ? `<details class="hj-pg8 tn-se"${S.open['eatse'] || extras.length || S.eatQuery ? ' open' : ''} data-hjd="eatse"><summary><span>Something Else</span><small>${extras.length ? extras.length + ' logged' : 'Search any food'}</small></summary>` : ''}<div class="hj-se">${lite ? '' : '<div class="hj-eh">Something Else</div>'}
@@ -1324,6 +1352,9 @@ function actPlate(a, v){
       const nut = {sf, pro}; ['fib', 'sug', 'cal', 'na'].forEach(f => { const n = num(val(f)); if (n != null) nut[f] = n; });
       const x = {id: uid(), name, per: val('per').slice(0, 60), nut, u: Date.now()}; h.myFoods = arr(h.myFoods); h.myFoods.push(x);
       eatAdd('m:' + x.id, 1, 'x'); S.open['eatown'] = false; toast('Saved to My Foods and added.'); rerender(true); return true; }
+    case 'qaed': S.qaEd = !S.qaEd; S.qaQuery = ''; rerender(true); if (S.qaEd) setTimeout(() => { const i = document.getElementById('hj-qaq'); if (i) i.focus(); }, 30); return true;
+    case 'qaadd': { const ks = quickKeys(); if (!ks.includes(v)) ks.push(v); h.quick = ks; h.quickU = Date.now(); S.qaQuery = ''; save(); const it = plateItem(v); toast('Added to Quick Add' + (it ? ': ' + it.name : '') + '.'); rerender(true); return true; }
+    case 'qarm': h.quick = quickKeys().filter(k => k !== v); h.quickU = Date.now(); save(); rerender(true); return true;
     case 'eattable': S.eatTable = !S.eatTable; S.open['eat7'] = true; rerender(true); return true;
     case 'spwhen': S.spWhen = v; rerender(true); return true;
     case 'spadd': { const i = document.getElementById('hj-spname'), name = String(i ? i.value : '').trim().slice(0, 60); if (!name){ if (i) i.focus(); return true; }
@@ -1898,6 +1929,7 @@ document.addEventListener('input', e => {
   if (t.dataset.hjs && S.set) S.set[t.dataset.hjs] = t.value;
   if (t.id === 'hj-note') S.draft = t.value;
   if (t.id === 'hj-eatq'){ S.eatQuery = t.value; S.eatPick = null; eatRes(); }
+  if (t.id === 'hj-qaq'){ S.qaQuery = t.value; qaRes(); }
   if (t.id === 'hj-lb' && S.ov){ S.ov.lb = t.value; const id = t.dataset.hjid, v = String(t.value).trim().slice(0, 12); if (id && H()){ if (v) H().lifts[id] = v; else delete H().lifts[id]; clearTimeout(S.lbT); S.lbT = setTimeout(save, 700); } }
 });
 // BLD 860: the My LDL Path crosshair follows the pointer and snaps to whole weeks; arrow keys move it when the chart has focus.
@@ -2367,6 +2399,18 @@ const CSS = `
 .tn .tn-rm .hj-mts{display:block;font-size:12px;line-height:1.3;}.tn .tn-rm .hj-mts span,.tn .tn-rm .hj-mts em{display:block;}
 .tn .tn-rm.big{flex-direction:row;gap:16px;text-align:left;background:var(--t-card2);border:1px solid var(--line);border-radius:18px;padding:12px;}
 .tn .tn-rm.big .hj-mth b{font-size:28px;}.tn .tn-rm.big .l{font-size:17px;}.tn .tn-rm.big .hj-mts{font-size:14px;}.tn .tn-rm.big .tx{margin:0;}
+.tn-qa{margin:12px 0 6px;}.tn-qah{display:flex;align-items:baseline;justify-content:space-between;gap:10px;}.tn-qah .hj-eh{margin:0 0 6px;}.tn-qah .linkbtn{font-size:14px;min-height:44px;}
+.tn-qcs{display:flex;flex-wrap:wrap;gap:8px;}
+.tn-qc{display:inline-flex;align-items:stretch;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--c) 45%,var(--line));background:var(--card);overflow:hidden;}
+.tn-qc.on{background:var(--cs);border-color:var(--c);}
+.tn-qa1{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 14px;border:0;background:none;color:var(--ink);font:inherit;font-weight:600;font-size:15px;cursor:pointer;}
+.tn-qa1 .tn-i{color:var(--c);font-size:16px;}.tn-qa1 b{display:inline-grid;place-items:center;min-width:24px;height:24px;padding:0 6px;border-radius:999px;background:var(--c);color:var(--t-on);font-size:14px;}
+.tn-qm{min-width:44px;min-height:44px;border:0;border-left:1px solid color-mix(in srgb,var(--c) 35%,var(--line));background:none;color:var(--ink);font-size:20px;line-height:1;cursor:pointer;}
+.tn-qaed{margin-top:10px;padding:12px;border-radius:16px;background:var(--t-card2);border:1px solid var(--line);display:grid;gap:10px;}
+.tn-qaed #hj-qaq{width:100%;min-width:0;min-height:46px;}
+.tn-qal{display:flex;flex-wrap:wrap;gap:6px;}.tn-qx{display:inline-flex;align-items:center;gap:2px;padding-left:12px;border-radius:999px;background:var(--card);border:1px solid var(--line);font-size:14px;font-weight:600;}
+.tn-qx button{display:grid;place-items:center;width:44px;height:40px;border:0;background:none;color:var(--ink-soft);cursor:pointer;font-size:16px;}.tn-qx button .tn-i{transform:rotate(45deg);}
+.tn-qr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:6px 0;}.tn-qr span{min-width:0;}.tn-qr b{display:block;font-weight:600;font-size:15px;overflow-wrap:anywhere;}.tn-qr small{display:block;color:var(--ink-soft);font-size:13px;}
 /* Morning Quiet */
 .tn-qscene{height:clamp(170px,30vh,260px);border-radius:22px;overflow:hidden;margin-top:10px;}.tn-qscene svg{display:block;}
 .tn-qmins{justify-content:center;margin:6px 0 0;}
@@ -2409,6 +2453,7 @@ window.GGHealth = {
     o.shop = o.shop && typeof o.shop === 'object' ? o.shop : {}; Object.entries(i.shop || {}).forEach(([w, x]) => { if (x && (!o.shop[w] || (x.u || 0) > (o.shop[w].u || 0))) o.shop[w] = x; });
     o.lifts = Object.assign({}, i.lifts || {}, o.lifts || {});
     if (i.supps && (!o.supps || (i.supps.u || 0) > (o.supps.u || 0))) o.supps = i.supps;
+    if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
     return {added, updated};
