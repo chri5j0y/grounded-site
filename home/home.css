@@ -479,3 +479,13 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
 @media (prefers-reduced-motion: reduce){
   .hm *,.hm *::before,.hm *::after{animation:none !important;transition:none !important;}
 }
+
+/* BLD 867: trees and tools open inside the Home */
+.hm-frame{position:fixed;inset:0;z-index:900;display:flex;flex-direction:column;background:var(--bg);}
+.hm-frame-bar{display:flex;align-items:center;gap:12px;padding:calc(8px + env(safe-area-inset-top,0px)) max(14px,env(safe-area-inset-right,0px)) 8px max(14px,env(safe-area-inset-left,0px));background:var(--umber);color:#F7F1E6;box-shadow:0 2px 10px rgba(0,0,0,.18);}
+.hm-frame-home{display:inline-flex;align-items:center;gap:8px;min-height:40px;padding:0 14px;border-radius:999px;border:1px solid rgba(247,241,230,.35);background:transparent;color:inherit;font:600 15px/1 inherit;cursor:pointer;}
+.hm-frame-home .i{width:18px;height:18px;}
+.hm-frame-t{font-size:16px;font-weight:600;letter-spacing:.02em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;min-width:0;}
+.hm-frame-sp{flex:1;}
+.hm-frame-if{flex:1;width:100%;border:0;background:var(--bg);}
+html.hm-framed,html.hm-framed body{overflow:hidden;}

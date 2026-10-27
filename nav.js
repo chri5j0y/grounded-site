@@ -520,3 +520,20 @@
   // After the light and dark toggle mounts (same file, earlier), so it can sit just before it.
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(mount, 0); }); else setTimeout(mount, 0);
 })();
+
+/* BLD 867: inside My Home's frame (a tree or tool opened from /home/), the site's own top bar, menu, and footer step
+   aside so My Home's bar leads; links back to My Home close the frame. */
+(function () {
+  var inHome = false;
+  try { inHome = window.self !== window.top && /^\/home\//.test(window.top.location.pathname); } catch (e) {}
+  if (!inHome) return;
+  document.documentElement.classList.add('gg-inhome');
+  var st = document.createElement('style');
+  st.textContent = 'html.gg-inhome .topbar,html.gg-inhome .site-menu,html.gg-inhome .site-footer{display:none!important;}';
+  (document.head || document.documentElement).appendChild(st);
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href]'); if (!a) return;
+    var u; try { u = new URL(a.getAttribute('href'), location.href); } catch (x) { return; }
+    if (u.origin === location.origin && /^\/home\//.test(u.pathname)) { e.preventDefault(); window.top.postMessage('gg-home-close', location.origin); }
+  }, true);
+})();
