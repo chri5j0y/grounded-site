@@ -1248,7 +1248,7 @@ function weekBars(rows, key, aim, cls, label){
   return `<svg class="hj-wbsvg ${cls}" viewBox="0 0 ${W} ${Ht}" role="img" aria-label="${esc(label)}, last 7 days: ${rows.map(r => r.lab + ' ' + (r.t.n ? fmt(r.t[key]) + ' g' : 'nothing logged')).join(', ')}. Aim ${fmt(aim)} g.">
     ${ticks.map(v => `<line x1="${pl}" x2="${W - pr}" y1="${f1(y(v))}" y2="${f1(y(v))}" class="gr"/><text x="${pl - 5}" y="${f1(y(v) + 4)}" text-anchor="end" class="ax">${v}</text>`).join('')}
     ${rows.map((r, i) => { const x = pl + pw / 7 * i + (pw / 7 - bw) / 2; return `<g class="hj-wbg" data-ptip="${esc(r.lab + ': ' + (r.t.n || r.t[key] ? fmt(r.t[key]) + ' g ' + label.toLowerCase() : 'nothing logged yet'))}"><rect class="hit" x="${f1(pl + pw / 7 * i)}" y="${pt}" width="${f1(pw / 7)}" height="${ph}"/><path d="${bar(x, r.t[key])}" class="b"/><text x="${f1(x + bw / 2)}" y="${Ht - 6}" text-anchor="middle" class="ax${i === 6 ? ' on' : ''}">${esc(r.d1)}</text></g>`; }).join('')}
-    ${aim ? `<line x1="${pl}" x2="${W - pr}" y1="${f1(y(aim))}" y2="${f1(y(aim))}" class="aim"/><text x="${W - pr}" y="${f1(y(aim) - 4)}" text-anchor="end" class="al">Aim ${fmt(aim)}</text>` : ''}
+    ${aim ? `<line x1="${pl}" x2="${W - pr}" y1="${f1(y(aim))}" y2="${f1(y(aim))}" class="aim"/><text x="${pl + 4}" y="${f1(y(aim) - 4)}" class="al">Aim ${fmt(aim)}</text>` : ''}
     ${last.t.n ? `<text x="${f1(pl + pw / 7 * 6 + pw / 14)}" y="${f1(Math.max(10, y(last.t[key]) - 5))}" text-anchor="middle" class="vl">${fmt(last.t[key])}</text>` : ''}
   </svg>`;
 }
@@ -1670,7 +1670,7 @@ const CSS = `
 .hj-ert{display:block;width:100%;text-align:left;background:none;border:0;padding:8px 2px;color:var(--ink);font:inherit;cursor:pointer;}.hj-ert b{font-weight:600;font-size:15px;overflow-wrap:anywhere;}.hj-ert small{display:block;color:var(--ink-soft);font-size:13px;overflow-wrap:anywhere;}
 .hj-eq{display:flex;align-items:center;flex-wrap:wrap;gap:6px;padding:0 0 10px;}.hj-eq>span{font-size:13.5px;color:var(--ink-soft);margin-right:2px;}.hj-eq .chip{min-height:40px;min-width:46px;}
 #hj-eatres{margin:6px 0 4px;}#hj-eatres .hj-eh{margin-top:6px;font-size:13px;}
-.hj-ex{margin:0 0 8px;}.hj-exr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);min-width:0;}.hj-exr:first-child{border-top:0;}.hj-exr>span{min-width:0;}.hj-exr b{display:block;font-weight:600;font-size:15px;overflow-wrap:anywhere;}.hj-exr small{display:block;color:var(--ink-soft);font-size:13px;}
+.hj-ex{margin:0 0 8px;}.hj-exr{display:flex;align-items:center;justify-content:space-between;gap:10px;padding:7px 0;border-top:1px solid var(--line);min-width:0;}.hj-exr:first-child{border-top:0;}.hj-exr>span{min-width:0;}.hj-exr .linkbtn{flex:0 0 auto;white-space:nowrap;}.hj-exr b{display:block;font-weight:600;font-size:15px;overflow-wrap:anywhere;}.hj-exr small{display:block;color:var(--ink-soft);font-size:13px;}
 .hj-own,.hj-sps,.hj-pw{margin:10px 0 0;}.hj-own summary,.hj-sps summary,.hj-pw summary{font-size:19px;padding:11px 14px;}
 .hj-ckh{border-top:1px solid var(--line);padding-top:12px;margin-top:14px;}.hj-ckg{margin:0 0 8px;}.hj-ckg .hj-eh{color:var(--ink-soft);font-size:12.5px;margin:6px 0 4px;}
 .hj-pck small{display:block;color:var(--ink-soft);font-size:12.5px;line-height:1.25;}
