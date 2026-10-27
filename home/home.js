@@ -349,7 +349,7 @@
     var root = app(); if (!root) return;
     var a = window.GGP && GGP.active && GGP.active();
     document.body.classList.toggle('hm-bn', !!a);
-    if (!a) { S.id = null; S.view = 'home'; root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
+    if (!a) { if (location.hash === '#tending' || location.hash === '#privacy') { try { history.replaceState(null, '', location.pathname); } catch (e) {} } S.id = null; S.view = 'home'; root.innerHTML = welcomeHtml(); paintNav(''); afterWelcome(); return; }
     var changed = S.id !== a.id;
     S.id = a.id; S.p = GGP.get ? GGP.get(a.id) : a; S.tree = treeOfProfile(S.p);
     if (changed) { S.tendInit = false; S.words = null; }
@@ -453,7 +453,7 @@
     if (t.season) mine.season = stage;
     var adultTree = stage === 'birch' || stage === 'sequoia' ? stage : 'oak';
     var hasAdult = GGP.list().some(function (p) { return p.age === 'adult'; });
-    var done = function () { render(); window.scrollTo(0, 0); };
+    var done = function () { if (location.hash) { try { history.replaceState(null, '', location.pathname); } catch (e) {} } render(); window.scrollTo(0, 0); };
     if (kid) {
       var kidStep = function () {
         GGP.createDialog({ age: t.age, reason: t.n + ' is set up with a grown-up. Add the name your child goes by.', onCreated: function (kidId) { writeHome(kidId, { stage: stage }).then(done); } }).then(function () { done(); });
@@ -890,8 +890,8 @@
     else if (act === 'rootwords') GGP.rootWords(S.id);
     else if (act === 'manage') GGP.manage(S.id);
     else if (act === 'lock') GGP.lock().then(function () { goTo('home'); });
-    else if (act === 'addkid') GGP.createDialog({ reason: 'Add a family member. Kids and teens are set up with you as their grown-up.' }).then(render);
-    else if (act === 'addlove') GGP.createDialog({ forOther: true, keepMe: true }).then(render);
+    else if (act === 'addkid') GGP.createDialog({ reason: 'Add a family member. Kids and teens are set up with you as their grown-up.' }).then(function (ok) { if (ok) goTo('home'); else render(); });
+    else if (act === 'addlove') GGP.createDialog({ forOther: true, keepMe: true }).then(function (ok) { if (ok) goTo('home'); else render(); });
     else if (act === 'kiddid') { var hd = homeRec(); hd.kid[today()] = hd.kid[today()] ? 0 : 1; saveHome(); render(); }
   });
   function pruneDays(h) { var cut = addDays(today(), -60); Object.keys(h.days).forEach(function (k) { if (k < cut) delete h.days[k]; }); }

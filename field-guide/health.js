@@ -695,7 +695,7 @@ function vOv(){
       <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
         return `<li class="${on ? 'on' : ''}"><button type="button" class="hj-agck" data-hja="step" data-hjv="${i}" aria-pressed="${on}">${on ? '&#10003;' : i + 1}</button><div>${t.at ? `<span class="hj-at">${esc(t.at)}</span> ` : ''}${esc(t.t || '')}
           ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>
-      ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
+      ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.swaps && typeof x.swaps === 'object' ? Object.entries(x.swaps).filter(([, t]) => t).map(([k, t]) => `<p class="hj-sub"><b>Swap for ${esc((arr((PLIB() || {}).needs).find(z => z.id === k) || {}).name || k.replace(/([A-Z])/g, ' $1').toLowerCase())}:</b> ${esc(t)}</p>`).join('') : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
       <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   }
@@ -2225,7 +2225,7 @@ function rangeBar(list, v, marks){
   return `<div class="tn-rb" aria-hidden="true">${list.map((b, i) => `<span class="t-${esc(b.tone || 'ok')}" style="left:${(i / n * 100).toFixed(2)}%;width:${(100 / n).toFixed(2)}%"></span>`).join('')}
     ${arr(marks).map(m => m.lo != null ? `<em class="rg" style="left:${pos(m.hi).toFixed(1)}%;width:${Math.max(1, pos(m.lo) - pos(m.hi)).toFixed(1)}%"></em>` : `<i class="${esc(m.cls || '')}" style="left:${pos(m.v).toFixed(1)}%"></i>`).join('')}
     ${v != null ? `<i class="me" style="left:${pos(v).toFixed(1)}%"></i>` : ''}</div>
-    <div class="tn-rbl" aria-hidden="true">${list.map((b, i) => `<span style="left:${(i / n * 100).toFixed(2)}%;width:${(100 / n).toFixed(2)}%">${esc(b.label || '')}${b.hi != null ? `<small>under ${esc(b.hi)}</small>` : ''}</span>`).join('')}</div>`;
+    <div class="tn-rbl" aria-hidden="true" style="grid-template-columns:repeat(${n},minmax(0,1fr))">${list.map((b, i) => `<span>${esc(b.label || '')}${b.hi != null ? `<small>under ${esc(b.hi)}</small>` : ''}</span>`).join('')}</div>`;
 }
 function vLabsP(){
   const L = PLIB() || {}, h = H(), M = arr((L.labs || {}).markers), E = labs(), f = S.form;
@@ -2294,7 +2294,7 @@ function vLdlP(){
     ${goals.filter(g => goal === +g.v).map(g => `<p class="tn-sub">${esc(g.line)}</p>`).join('')}${D0.goalsSrc ? `<p class="hj-src">Source: ${srcLinks(D0.goalsSrc)}</p>` : ''}
     ${mk ? `<div class="tn-card tn-mk"><div class="tn-k">Recommended Levels and Yours</div>${rangeBar(markerBands(mk), B, r && r.count ? [{lo: r.low, hi: r.high}].concat(goal ? [{v: goal - 0.01, cls: 'go'}] : []) : goal ? [{v: goal - 0.01, cls: 'go'}] : [])}
       <div class="tn-leg"><span><i class="me"></i>My LDL${B != null ? ' ' + B : ''}</span>${r && r.count ? `<span><i class="rg"></i>Where my choices may lead, ${r.low} to ${r.high}</span>` : ''}${goal ? `<span><i class="go"></i>My goal, under ${goal}</span>` : ''}</div></div>` : ''}
-    ${r ? `<div class="tn-card"><div class="tn-k">Where My Choices May Lead</div>${r.count ? `<p class="tn-big2">About ${r.mid} <small>mg/dL</small></p><p class="tn-sub">A range of ${r.low} to ${r.high}, about ${r.pctLo} to ${r.pctHi} percent lower, as each change settles in over about 12 weeks.${r.capped ? ' Food and movement together are capped near their research-informed limit.' : ''}${goal ? (r.mid < goal ? ` That reaches your goal of under ${goal}.` : r.low < goal ? ` Your goal of under ${goal} sits inside this range.` : ` Your goal of under ${goal} is a talk to have with your doctor.`) : ''}</p>` : `<p class="tn-sub">Choose Do It on any lever below, and the range appears here.</p>`}
+    ${r ? `<div class="tn-card"><div class="tn-k">Where My Choices May Lead</div>${r.count ? `<p class="tn-big2">About ${r.mid} <small>mg/dL</small></p><p class="tn-sub">A range of ${r.low} to ${r.high}, about ${r.pctLo} to ${r.pctHi} percent lower, as each change settles in over about 12 weeks.${r.capped ? ' Food and movement together are capped near their research-informed limit.' : ''}${goal ? (r.mid < goal ? ` That reaches your goal of under ${goal}.` : r.low < goal ? ` Your goal of under ${goal} sits inside this range.` : ` Talk with your doctor about the path to under ${goal}.`) : ''}</p>` : `<p class="tn-sub">Choose Do It on any lever below, and the range appears here.</p>`}
       ${ldlChart(r, goal)}</div>` : ''}
     <h3 class="tn-h3">The Levers</h3>${levers.map(lev).join('')}
     ${D0.note ? `<p class="hj-sub">${esc(D0.note)}</p>` : ''}${L.disclaimers && L.disclaimers.ldl ? `<p class="hj-note">${esc(L.disclaimers.ldl)}</p>` : ''}</div>`;
@@ -2948,6 +2948,8 @@ const CSS = `
 .tn-pub .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;border-radius:30px;padding:12px 22px;border:1px solid transparent;cursor:pointer;min-height:46px;text-decoration:none;}
 .tn-pub .btn-gold{background:var(--gold);color:#fff;}.tn-pub .btn-line{background:var(--card);border-color:var(--line);color:var(--ink);}.tn-pub .btn-sm{min-height:40px;padding:8px 16px;font-size:14px;}
 .tn-pub .btn[disabled]{opacity:.5;cursor:default;}
+:root[data-theme="dark"] .tn-pub .btn-gold{color:#1A1612;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .tn-pub .btn-gold{color:#1A1612;}}
 .tn-pub .linkbtn{background:none;border:0;color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit;min-height:40px;}
 .tn-pub .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}.tn-pub .spread{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;}
 .tn-pub .chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-soft);font-family:inherit;}
@@ -2984,7 +2986,7 @@ const CSS = `
 .tn-rb i{position:absolute;top:-6px;width:6px;height:26px;margin-left:-3px;border-radius:3px;background:var(--ink);box-shadow:0 0 0 2px var(--card);}
 .tn-rb i.go{background:transparent;border:2px dashed var(--ink);width:4px;}
 .tn-rb em.rg{position:absolute;top:-3px;height:20px;border-radius:6px;background:color-mix(in srgb,var(--card) 35%,transparent);border:2px solid var(--ink);}
-.tn-rbl{position:relative;height:34px;font-size:11.5px;color:var(--ink-soft);line-height:1.15;}.tn-rbl span{position:absolute;top:0;padding:0 2px;overflow:hidden;text-overflow:ellipsis;}.tn-rbl small{display:block;font-size:10.5px;}
+.tn-rbl{display:grid;gap:0 4px;font-size:11.5px;color:var(--ink-soft);line-height:1.15;}.tn-rbl span{min-width:0;padding:0 2px;overflow-wrap:anywhere;}.tn-rbl small{display:block;font-size:10.5px;}
 .tn-leg{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13.5px;color:var(--ink-soft);}.tn-leg i{display:inline-block;width:12px;height:12px;border-radius:3px;margin-right:6px;vertical-align:-1px;}
 .tn-leg i.me{background:var(--ink);}.tn-leg i.rg{border:2px solid var(--ink);}.tn-leg i.go{border:2px dashed var(--ink);}
 .tn-more summary{cursor:pointer;color:var(--gold);font-weight:600;font-size:14.5px;margin-top:8px;}

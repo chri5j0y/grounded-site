@@ -139,7 +139,7 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
 .hm-quiet{display:flex;align-items:center;flex-wrap:wrap;gap:8px;font-size:14.5px;color:var(--ink-soft);}
 .hm-quiet a,.hm-quiet button{color:var(--c,var(--leaves));font-weight:600;text-decoration:none;background:none;border:0;padding:0;}
 .hm-acts{display:flex;flex-wrap:wrap;gap:10px;margin-top:14px;align-items:center;}
-.hm-acts>.hm-btn{flex:1 1 200px;}
+.hm-acts>.hm-btn{flex:1 1 220px;}
 .hm-acts.tight>.hm-btn{flex:0 0 auto;}
 
 /* the hero: a painting, the day and date in large type */
@@ -462,11 +462,12 @@ body.hm-bn .site-footer{padding-bottom:calc(110px + env(safe-area-inset-bottom,0
   .hm-tools{grid-template-columns:repeat(6,minmax(0,1fr));}
   .hm-tools.few{grid-template-columns:repeat(3,minmax(0,1fr));}
   .hm-lay.c2{grid-template-columns:1.1fr 1fr;gap:22px;align-items:start;}
-  .hm-lay.kidlay{grid-template-columns:minmax(0,520px) 1fr;gap:28px;align-items:start;}
+  .hm-lay.kidlay{grid-template-columns:minmax(0,560px);justify-content:center;}
 }
 @media (max-width:699px){
   .hm-grid{display:flex;flex-direction:column;}
   .hm-grid>.hm-col{display:contents;}
+  .hm-grid>#hm-today{display:grid;}
   .o1{order:1}.o2{order:2}.o3{order:3}.o4{order:4}.o5{order:5}.o6{order:6}.o7{order:7}.o8{order:8}
   .hm-hero{min-height:0;}
   .hm-hero picture,.hm-hero img.art{position:relative;inset:auto;display:block;aspect-ratio:4 / 3;height:auto;}
