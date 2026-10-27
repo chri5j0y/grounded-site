@@ -38,21 +38,19 @@
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
       { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
     ] },
-    // Living Sober (GWG BLD 837): declared, with its gold star mark, for anyone growing sober and the people who love them.
-    { name: 'Healthy Living', items: [
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' }
-    ] },
+    // For Families (GWG BLD 863): Living Sober (BLD 837, with its gold star mark) beside the farewell helpers.
     { name: 'For Families', items: [
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' },
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
       { id: 'obituary', title: 'Obituary Helper', desc: 'Their life, in your words', href: HOME + '/obituary-helper.html', icon: ic.obituary, bg: '#F1E6CC' },
       { id: 'eulogy', title: 'Eulogy Helper', desc: 'For the one who will speak', href: HOME + '/eulogy-helper.html', icon: ic.eulogy, bg: '#F1E6CC' }
     ] },
     { name: 'Further Reading', items: [
-      { id: 'library', title: 'The Grounded Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
-      { id: 'readings', title: 'The Grounded Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
+      { id: 'library', title: 'Book Library', desc: 'The books behind Grounded, twenty years of study', href: HOME + '/library/', icon: ic.library, bg: '#F1E6CC' },
+      { id: 'readings', title: 'Readings Library', desc: 'Prayers, poems, blessings, songs, and stories for all faith traditions and everything in-between, with Listen', href: HOME + '/readings.html', icon: mk('readings'), bg: '#F1E6CC' }
     ] },
     { name: 'For Professionals', items: [
-      { id: 'field', title: 'Grounded Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: ic.fieldguide, bg: '#EDE7DA' }
+      { id: 'field', title: 'Field Guide', desc: 'For chaplains, pastors, teachers, coaches, and anyone who walks with others: a Guide for every tree, For Guides training, and the Certified Grounded Guide', href: HOME + '/the-field-guide.html', icon: ic.fieldguide, bg: '#EDE7DA' }
     ] }
   ];
 

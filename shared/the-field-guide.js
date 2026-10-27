@@ -84,7 +84,7 @@
           app: 'site', lesson: l, track: track, tracks: [track], done: done, at: 0, accent: ACC, mood: 'calm',
           voice: GGLearn.recVoice({ app: 'oak', lesson: l, track: hit.t }, true) || 'brian',
           mark: { name: 'Field Guide' },
-          ending: { eyebrow: 'The Grounded Field Guide', h: 'Take all the time you need.', sub: nx ? 'Up next: ' + nx.title : 'The Field Guide holds a Guide, training, and videos like this for every tree.', say: 'Take all the time you need.', ok: true, buttons: btns },
+          ending: { eyebrow: 'The Field Guide', h: 'Take all the time you need.', sub: nx ? 'Up next: ' + nx.title : 'The Field Guide holds a Guide, training, and videos like this for every tree.', say: 'Take all the time you need.', ok: true, buttons: btns },
           onDone: function (x) { done[x] = 1; },
           onEnd: function (b) {
             if (b === 'next' && nx) watch(nx.id);

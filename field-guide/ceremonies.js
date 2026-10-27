@@ -653,7 +653,7 @@ function picker(s, e){
     <label class="f" for="cer-pq">Search</label><input type="text" id="cer-pq" data-cerq="1" value="${esc(S.pq)}" placeholder="A word, a title, or a verse" autocomplete="off">
     <label class="f">Kind</label>${chips('pk', KINDS, S.pk)}
     <label class="sc-cb" style="display:flex;gap:8px;align-items:center;margin-top:10px;font-weight:600;color:var(--ink-soft)"><input type="checkbox" data-cer-pall="1"${S.pall ? ' checked' : ''}> Show every reading, not only those that fit this service</label>
-    ${window.GGReadings ? `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-cer="rd-lib" data-v="${e.k}">From the Grounded Readings Library</button></div>` : ''}
+    ${window.GGReadings ? `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-cer="rd-lib" data-v="${e.k}">From the Readings Library</button></div>` : ''}
     <div class="cer-pick-list" id="cer-pick-list">${pickList(s, e)}</div></div>`;
 }
 
@@ -1102,7 +1102,7 @@ function act(k, v, el){
     case 'rd-add': { const i = v.indexOf('|'), e = entry(v.slice(0, i)), id = v.slice(i + 1), r = RD(id); if (!e || !r) return; e.rd = e.rd || [];
       if (e.rd.some(x => x.id === id)){ toast('Already added.'); return; }
       e.rd.push({id, ver: r.versions ? (r.versions[s.bible] && !gone(s.bible) ? s.bible : 'kjv') : null}); e.touched = true; keep(s); S.pick = null; rerender(true); toast('Reading added.'); return; }
-    // GWG BLD 798: a reading from the Grounded Readings Library (shared/gg-readings.js) joins this service as one of its
+    // GWG BLD 798: a reading from the Readings Library (shared/gg-readings.js) joins this service as one of its
     // own pieces (My Pieces, kept for this service only), with its source line, then shows and prints like any reading.
     case 'rd-lib': { const e = entry(v); if (!e || !window.GGReadings) return; const fam = famOf(s.type);
       GGReadings.pick({occasion: fam === 'wedding' ? 'wedding' : fam === 'blessing' ? 'blessing' : 'funeral', button: 'Add to the Service', offline: true}).then(r => {

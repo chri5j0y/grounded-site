@@ -1,6 +1,6 @@
 /* =====================================================================
    FROM CHRIS'S SHELF (gg-shelf.js)
-   Links between the Grounded library (/library/) and the When Life Changes guides and
+   Links between the Book Library (/library/) and the When Life Changes guides and
    practices. Each line: "tool:id": [book numbers]. Tools: maple, aspen,
    pine, birch, oak, sequoia, willow (When Life Changes guides) and practice
    (the shared practice library). Matched by topic in the Library session

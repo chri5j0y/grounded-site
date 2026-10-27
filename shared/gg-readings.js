@@ -1,5 +1,5 @@
 /* =====================================================================
-   THE GROUNDED READINGS LIBRARY (shared/gg-readings.js, GWG BLD 798). (c) 2026 Grow With Grounded LLC.
+   THE READINGS LIBRARY (shared/gg-readings.js, GWG BLD 798). (c) 2026 Grow With Grounded LLC.
    Prayers, scripture, blessings, poems, hymns, songs, and stories for all faith traditions and everything in-between.
    Data: shared/readings/index.js (a light list of every reading: id, title, by, tags, first line) loads first, and each
    group file (shared/readings/<group>.js) loads only when one of its readings is opened, or when a person asks to search
@@ -394,9 +394,9 @@
     '.p-foot{margin-top:8mm;padding-top:3mm;border-top:.6pt solid #E2D8C3;font-size:9.5pt;color:#6B5A4D;}a{color:inherit;text-decoration:none;}';
   function printHtml(r) {
     return '<!doctype html><html lang="en"><head><meta charset="utf-8"><title>' + esc(r.title) + '</title><link rel="stylesheet" href="' + esc(new URL('../../fonts/fonts.css', BASE).href) + '"><style>' + PCSS + '</style></head><body>' +
-      '<p class="p-eb">The Grounded Readings Library</p><h1>' + esc(r.title) + '</h1><p class="p-by">' + esc(bylineOf(r)) + '</p><div class="p-text">' +
+      '<p class="p-eb">Readings Library</p><h1>' + esc(r.title) + '</h1><p class="p-by">' + esc(bylineOf(r)) + '</p><div class="p-text">' +
       (r.translit ? '<p class="p-tl">' + esc(r.translit) + '</p>' : '') + stanzas(r).map(function (s) { return '<p>' + esc(s).replace(/\n/g, '<br>') + '</p>'; }).join('') + '</div>' +
-      '<p class="p-foot">' + sourceHtml(r) + '<br>From the Grounded Readings Library, growwithgrounded.com/readings. For all faith traditions and everything in-between.</p></body></html>';
+      '<p class="p-foot">' + sourceHtml(r) + '<br>From the Readings Library, growwithgrounded.com/readings. For all faith traditions and everything in-between.</p></body></html>';
   }
   function printReading(r) {
     var old = document.getElementById('ggr-print'); if (old) old.remove();
@@ -574,7 +574,7 @@
     if (openDlg) openDlg.close(null);
     var last = document.activeElement, dlg = document.createElement('div');
     dlg.className = 'ggr-dlg'; dlg.setAttribute('role', 'dialog'); dlg.setAttribute('aria-modal', 'true'); dlg.setAttribute('aria-labelledby', 'ggr-dlg-h');
-    dlg.innerHTML = '<div class="ggr-panel"><div class="ggr-top"><h2 id="ggr-dlg-h">' + esc(opts.title || 'The Grounded Readings Library') + '</h2><button type="button" class="ggr-x" aria-label="Close">' + IC.stop + '</button></div><div class="ggr-host"></div></div>';
+    dlg.innerHTML = '<div class="ggr-panel"><div class="ggr-top"><h2 id="ggr-dlg-h">' + esc(opts.title || 'Readings Library') + '</h2><button type="button" class="ggr-x" aria-label="Close">' + IC.stop + '</button></div><div class="ggr-host"></div></div>';
     document.body.appendChild(dlg); document.body.classList.add('ggr-lock');
     var done = false, ctl;
     function close(val) {

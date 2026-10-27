@@ -1029,7 +1029,7 @@ html.ts-2 main{zoom:1.25;}
     <p class="gg-hero-tag">Shelter for others. Strength for you.</p>
     <p class="gg-hero-sub">Six parts make you whole. Learn to tend them all.<br>Built for adults, 26 to 60.</p>
     <div class="gg-hero-actions"><!-- PAGE VIDEO (BLD 780) --><button type="button" class="gg-hero-btn gg-watch gg-watch-app" data-gg-watch="demo-oak" hidden>Watch: Meet Oak</button><!-- /PAGE VIDEO --><button class="gg-hero-btn main" type="button" onclick="startCheckin()">Start a check-in</button><button class="gg-hero-btn line" type="button" onclick="showView('client-intro');scrollToViewTop('client-intro',true,true)">How it works</button></div>
-    <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Grounded Field Guide.</p>
+    <p class="gg-hero-pro">Chaplain or caregiver? Walk someone through Oak with <a href="https://growwithgrounded.com/field-guide/#about">Oak Guide</a>, in the Field Guide.</p>
   </div>
   <div class="gg-hero-scene" aria-hidden="true"></div>
 </section>
@@ -2108,7 +2108,7 @@ function printGrowthPlanNow(sheetId) {
 }
 
 // ---------- PRACTITIONER SESSIONS SAVED BEFORE SESSION 11 ----------
-// Practitioner mode moved to Oak Guide in the Grounded Field Guide. Sessions saved here before
+// Practitioner mode moved to Oak Guide in the Field Guide. Sessions saved here before
 // that stay until they're moved: the Field Guide can move them straight from this browser, or from the
 // backup file below. This card lets people download that file and then clear this browser.
 const FG_ABOUT = 'https://growwithgrounded.com/field-guide/#about';
@@ -2117,7 +2117,7 @@ function renderPracMoved() {
   const codes = storageAvailable() ? getClientIndex() : [];
   if (!codes.length) { box.innerHTML = ''; return; }
   const n = codes.length;
-  box.innerHTML = `<div class="privacy-note prac-moved"><strong>Practitioner mode has moved.</strong> Walking someone else through Oak now lives in Oak Guide, part of the Grounded Field Guide, where visits stay encrypted on your device. You still have sessions for ${n} ${n === 1 ? 'person' : 'people'} saved in this browser. Oak Guide can move them in from this browser or from a backup file. Once they're moved, remove them here.
+  box.innerHTML = `<div class="privacy-note prac-moved"><strong>Practitioner mode has moved.</strong> Walking someone else through Oak now lives in Oak Guide, part of the Field Guide, where visits stay encrypted on your device. You still have sessions for ${n} ${n === 1 ? 'person' : 'people'} saved in this browser. Oak Guide can move them in from this browser or from a backup file. Once they're moved, remove them here.
    <div class="btn-row" style="margin:14px 0 0;"><button class="btn btn-primary" onclick="exportBackup()">Download a Locked Backup</button><button class="btn btn-secondary" onclick="removePracSessions()">Remove From This Browser</button><a class="btn btn-secondary" href="${FG_ABOUT}">About the Field Guide</a></div></div>`;
 }
 function removePracSessions() {
@@ -3015,7 +3015,7 @@ function loadPersonalFile(input) {
     // Birch and Pine results files load too, set apart as From Birch and From Pine.
     const take = data => {
       if (window.GGParts && data) GGParts.fix(data);
-      if (data && data.clients) { showToast('That is a practitioner backup. Move it into Oak Guide in the Grounded Field Guide.'); return; }
+      if (data && data.clients) { showToast('That is a practitioner backup. Move it into Oak Guide in the Field Guide.'); return; }
       if (!data || !['oak', 'the-root-system', 'birch', 'pine'].includes(data.app) || data.type !== 'personal' || !Array.isArray(data.entries)) throw new Error('Not an Oak results file');
       const valid = data.entries.filter(e => e && e.scores && typeof e.scores === 'object');
       const ids = new Set(personalHistory.map(e => e.id));

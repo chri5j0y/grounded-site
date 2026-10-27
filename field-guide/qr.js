@@ -1,4 +1,4 @@
-/* Grounded Field Guide: QR codes for handouts, made on this device. Nothing is sent anywhere.
+/* Field Guide: QR codes for handouts, made on this device. Nothing is sent anywhere.
    GGQR.svg(text) returns an SVG QR code; GGQR.matrix(text) the same code as rows of true/false. Built on Project Nayuki's QR Code generator (MIT License),
    whose notice follows. */
 /* 
