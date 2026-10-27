@@ -40,8 +40,8 @@
     ] },
     // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page.
     { name: 'Healthy Living', items: [
-      { id: 'way', title: 'The Grounded Way', desc: 'The all-in path with Tending: food for your goal, movement for every level, and Morning Quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
-      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober, and the people who love them: encouragement, short videos, and 30 days to begin', href: HOME + '/living-sober.html', icon: mk('living-sober', 'b839'), bg: '#DCE8E1' }
+      { id: 'way', title: 'The Grounded Way', desc: 'The app: Today, your tree, and Tending in one private place, plus the all-in path for food, movement, and quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
+      { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' }
     ] },
     { name: 'When Someone Dies', items: [
       { id: 'farewell', title: 'Planning a Farewell', desc: 'One thing at a time, when a death is near or has happened', href: HOME + '/planning-a-farewell.html', icon: ic.farewell, bg: '#F1E6CC' },
@@ -557,4 +557,24 @@
   }
   function wait(n) { if (window.GGP && GGP.ready) { GGP.ready.then(show); if (GGP.on) GGP.on(function (t) { if (t === 'change') { if (GGP.active && GGP.active()) show(); else { var b = document.querySelector('.gg-wayline'); if (b) b.remove(); } } }); } else if (n < 40) setTimeout(function () { wait(n + 1); }, 250); }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { wait(0); }); else wait(0);
+})();
+
+/* BLD 870: The Grounded Way in the main menu bar on every page, right after Home, as a gold pill (a plain row in the phone menu). */
+(function () {
+  function add() {
+    var menu = document.getElementById('site-menu') || document.querySelector('.site-menu');
+    if (!menu || menu.querySelector('.gg-way-link')) return;
+    var p = location.pathname, here = /^\/home\//.test(p) || /^\/the-grounded-way/.test(p);
+    var a = document.createElement('a'); a.href = '/home/'; a.className = 'gg-way-link' + (here ? ' current' : ''); a.textContent = 'The Grounded Way';
+    if (here) a.setAttribute('aria-current', 'page');
+    var first = menu.querySelector('a'); if (first && /index\.html$|\/$/.test(first.getAttribute('href') || '') && /home/i.test(first.textContent)) { first.classList.add('gg-home-link'); first.after(a); } else menu.insertBefore(a, menu.firstChild);
+    if (here) menu.querySelectorAll('a.current').forEach(function (x) { if (x !== a) { x.classList.remove('current'); x.removeAttribute('aria-current'); } });
+    var st = document.createElement('style');
+    st.textContent = '@media (min-width:981px){.site-menu a.gg-home-link{display:none;}}@media (min-width:981px) and (max-width:1380px){.site-menu a,.site-menu .gn-tools-btn{padding-left:8px!important;padding-right:8px!important;letter-spacing:.6px!important;}}' + '@media (min-width:981px) and (max-width:1120px){.site-menu a,.site-menu .gn-tools-btn{padding-left:5px!important;padding-right:5px!important;font-size:13.5px!important;letter-spacing:.2px!important;}.site-menu a.gg-way-link{padding:7px 10px!important;margin:0 2px;}}' + '@media (min-width:981px){.site-menu a.gg-way-link{background:#8B5E1A;color:#FFF8EA;border-radius:999px;padding:8px 14px!important;margin:0 4px;}.site-menu a.gg-way-link:hover,.site-menu a.gg-way-link.current{background:#6E4A14;color:#FFF8EA;}}' +
+      '@media (max-width:980px){.site-menu a.gg-way-link{color:#8B5E1A;}}' +
+      '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .site-menu a.gg-way-link{background:#D9A847;color:#2E2118;}}:root[data-theme="dark"] .site-menu a.gg-way-link{background:#D9A847;color:#2E2118;}' +
+      '@media (max-width:980px){:root .site-menu a.gg-way-link{background:transparent!important;color:#C9952F!important;}}';
+    document.head.appendChild(st);
+  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', add); else add();
 })();
