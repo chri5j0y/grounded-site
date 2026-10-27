@@ -193,15 +193,16 @@
     btn.innerHTML = o.label + ' <svg viewBox="0 0 12 12" aria-hidden="true"><path d="M2 4l4 4 4-4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/></svg>';
     link.parentNode.replaceChild(btn, link);
     // keep the site's own menu link styling
-    var ls = getComputedStyle(menu.querySelector('a') || btn);
+    var ls = getComputedStyle(menu.querySelector('a:not(.gg-way-link)') || btn);
     ['fontFamily', 'fontWeight', 'fontSize', 'letterSpacing', 'textTransform', 'padding'].forEach(function (k) { btn.style[k] = ls[k]; });
     if (link.getAttribute('aria-current')) btn.setAttribute('aria-current', link.getAttribute('aria-current'));
     // Color: match a plain menu link (or a current one when this button marks the current section), and repaint when the theme changes.
     var isCur = /(^|\s)current(\s|$)/.test(link.className) || !!link.getAttribute('aria-current');
     function paint() {
       btn.style.color = '';
-      var as = Array.prototype.slice.call(menu.querySelectorAll('a'));
+      var as = Array.prototype.slice.call(menu.querySelectorAll('a')).filter(function (a) { return !/(^|\s)gg-way-link(\s|$)/.test(a.className); }); // BLD 873: the gold Grounded Way pill is never the color to match
       var ref = isCur ? as.filter(function (a) { return /(^|\s)current(\s|$)/.test(a.className) || a.getAttribute('aria-current'); })[0] : as.filter(function (a) { return !/(^|\s)current(\s|$)/.test(a.className) && !a.getAttribute('aria-current'); })[0];
+      if (!ref && isCur){ var probe = document.createElement('a'); probe.className = 'current'; probe.style.cssText = 'position:absolute;visibility:hidden;pointer-events:none'; probe.textContent = '.'; menu.appendChild(probe); btn.style.color = getComputedStyle(probe).color; probe.remove(); return; }
       if (ref) btn.style.color = getComputedStyle(ref).color;
     }
     paint();
