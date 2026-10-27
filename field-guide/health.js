@@ -583,7 +583,7 @@ function vPrep(){
   ${bs.length ? `<div class="hj-blk">${kick('Batch Calendar')}<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Make</th>${weeks.map(w => `<th>${w === L ? '<b>' + w + '</b>' : w}</th>`).join('')}<th>Keeps</th></tr></thead><tbody>${bs.map(b => `<tr><td><b>${esc(b.name)}</b><small>${esc(b.makes || '')}</small></td>${weeks.map(w => `<td>${inWk(b, w) ? '&#9679;' : ''}</td>`).join('')}<td><small>${esc(b.keeps || '')}</small></td></tr>`).join('')}</tbody></table></div><p class="hj-sub">Food Week ${L} is this list's week. A dot means make it that week.</p></div>
   <div class="hj-blk">${kick('Bulk Basics and Freezer Stock')}${bs.map(b => { const c = +((h.stock || {})[b.id] || 0); return `<div class="hj-pc"><div style="min-width:0"><b>${esc(b.name)}</b><small>${esc(b.uses || '')}${b.mins ? ' · ' + esc(b.mins) + ' min' : ''}</small></div>
     ${b.where === 'freezer' ? `<div class="hj-stock"><button type="button" class="chip" data-hja="stock" data-hjv="${esc(b.id)}|-1" aria-label="One less">&minus;</button><span><b>${c}</b><small>in freezer</small></span><button type="button" class="chip" data-hja="stock" data-hjv="${esc(b.id)}|1" aria-label="One more">+</button></div>` : ''}
-    <button type="button" class="btn btn-line btn-sm" data-hja="prep" data-hjv="bulk-${esc(b.id)}|${n}">Make It</button></div>`; }).join('')}</div>` : '<p class="hj-note">The batch calendar arrives with the next library update.</p>'}`;
+    <button type="button" class="btn btn-line btn-sm" data-hja="prep" data-hjv="bulk-${esc(b.id)}|${n}">Make It</button></div>`; }).join('')}</div>` : PUB() ? '<p class="hj-note">Each recipe in your plan carries its own make-ahead and leftover tips. Open any dinner in the Kitchen to cook it with Andrew.</p>' : '<p class="hj-note">The batch calendar arrives with the next library update.</p>'}`;
 }
 // ---------- the shop list (on this device) ----------
 const SECS = ['Grab and Go', 'Produce', 'Meat and Fish', 'Eggs, Dairy, and Milks', 'Bread and Tortillas', 'Frozen', 'Pantry', 'Add-ons', 'Other'];
@@ -1897,6 +1897,11 @@ function view(){
   else if (S.sec === 'journey') body = `<div class="tn-sec a-numbers">${secHead('compass', 'a-numbers', 'My Journey', 'What you noticed, what felt strong, and every milestone.')}${numTabs('journey')}${vJourney()}</div>`;
   else if (S.sec === 'settings') body = vSettings();
   else body = vTodayT(lib);
+  // BLD 867: one Tending, in My Home. The Field Guide offers the move once; after it, this tab points to My Home.
+  if (MOVABLE() && chosen){
+    if (h.set.movedHome && !S.hereOk) body = vMoved();
+    else if (!h.set.movedHome && S.sec === 'today') body = vMoveOffer() + body;
+  }
   if (chosen && !KIT()) celebrate(milestonesT());
   const askWho = chosen && MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who && !first ? `<div class="hj-blk hj-offer tn-card">${kick('Whose Phone Is This?')}<p class="hj-sub">Tending keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
   const nav = chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
@@ -1905,6 +1910,45 @@ function view(){
     ${KIT() ? '' : askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${vOv()}</div>`;
 }
+// ---------- BLD 867: Move to My Home ----------
+// The Field Guide's own Tending (plan, library copy, and everything logged) moves into the person's My Home vault
+// (GGP.data(id, 'tending')), where /home/ runs it with the same engine. Private: it stays on this device, locked.
+const MOVABLE = () => !PUB() && !KIT() && !(C.host === 'home');
+function vMoveOffer(){
+  return `<div class="hj-blk hj-offer tn-card">${kick('One Tending, in My Home')}<p class="hj-sub">Bring your plan and everything you have logged into My Home, where your tree and Tending live together. One tap, and it stays private on this phone.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Move to My Home'}</button></div></div>`;
+}
+function vMoved(){
+  return `<div class="hj-blk tn-card">${kick('Your Tending Lives in My Home')}<h3>Open My Home</h3>
+    <p class="hj-sub">Your plan, your week, and everything you logged moved to My Home on ${esc(shortDate(parseD(H().set.movedHome)))}. Open it there, with your tree, so there is one Tending.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open My Home</button><button type="button" class="btn btn-line btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Bring Over What\'s New'}</button><button type="button" class="linkbtn" data-hja="movehere">Use Tending Here Today</button></div></div>`;
+}
+const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
+function loadGGP(){
+  if (window.GGP) return Promise.resolve();
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b867'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+}
+async function moveHome(){
+  if (S.moving) return; S.moving = true; rerender(true);
+  try {
+    await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
+    const ok = await window.GGP.require({reason: 'Open My Home to bring your Tending over.'});
+    const a = ok && window.GGP.active && window.GGP.active(); if (!a) throw new Error('locked');
+    const w = window.GGP.data(a.id, 'tending'); if (!w) throw new Error('vault');
+    const f = (C.fld && C.fld()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
+    w.lib = clone({healthJourney: f.healthJourney, audio: f.audio});
+    w.fdr = fd ? clone({healthMine: fd.healthMine, healthKayti: fd.healthKayti}) : null;
+    w.tier = C.tier ? C.tier() : 'guide'; w.moved = Date.now();
+    const fresh = !w.health || !w.health.set || w.health.set.pubDone || !w.movedOnce;
+    if (fresh){ w.health = clone(d.health || {}); w.deleted = {health: clone(((d.deleted || {}).health) || {})}; }
+    else window.GGHealth.merge(w, {health: d.health || {}, deleted: d.deleted || {}});
+    w.movedOnce = 1;
+    await window.GGP.save(a.id);
+    const h = H(); h.set.movedHome = h.set.movedHome || today(); h.set.u = Date.now(); save();
+    S.moving = false; S.hereOk = false; toast('Your Tending is in My Home.'); rerender(false);
+  } catch (e){ S.moving = false; toast('My Home stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
+}
+
 function rerender(keep){
   const root = document.getElementById('hj-root'); if (!root){ if (C.render) C.render(); return; }
   const y = window.scrollY, w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild);
@@ -1919,6 +1963,9 @@ function act(a, v){
   if (actTool(a, v)) return;
   if (actPlate(a, v)) return;
   switch (a){
+    case 'movehome': moveHome(); return;
+    case 'movehere': S.hereOk = true; rerender(false); return;
+    case 'openhome': location.href = '../home/#tending'; return;
     case 'sec': S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
     // BLD 862: Choose What You Use, Settings, My Why, Morning Quiet, and the evening and morning supplements in one tap.
     case 'usetg': { const P = S.pick = S.pick || USE().slice(); S.pick = P.includes(v) ? P.filter(x => x !== v) : PART_IDS.filter(x => P.includes(x) || x === v); rerender(true); return; }

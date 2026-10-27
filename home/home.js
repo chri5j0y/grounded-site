@@ -32,7 +32,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b866';
+  var V = 'b867';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -291,7 +291,7 @@
     if (!w.deleted.health || typeof w.deleted.health !== 'object') w.deleted.health = {};
     return w;
   }
-  function tendStarted() { var w = GGP.data(S.id, 'tending'); return !!(w && w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)); }
+  function tendStarted() { var w = GGP.data(S.id, 'tending'); return !!(w && (w.lib || (w.health && (obj(w.health.set).u || obj(w.health.set).pubDone || Object.keys(obj(w.health.days)).length)))); }
   function tendOn(h) { return h.parts.some(function (k) { return HEALTH_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
   function anyTend(h) { return h.parts.some(function (k) { return TEND_PARTS.indexOf(k) >= 0; }) || tendStarted(); }
 
@@ -305,9 +305,11 @@
     if (!window.GGHealth || !S.id) return false;
     window.GGHealth.init({
       data: function () { return S.id ? tendWrap(S.id) : null; },
-      fld: function () { return window.GGTendPublic || null; },
-      fdr: function () { return null; },
-      tier: function () { return 'public'; },
+      // BLD 867: a plan moved from the Field Guide runs as itself (its own library copy, kept in this vault).
+      fld: function () { var w = tendWrap(S.id); return (w && w.lib) || window.GGTendPublic || null; },
+      fdr: function () { var w = tendWrap(S.id); return (w && w.lib && w.fdr) || null; },
+      tier: function () { var w = tendWrap(S.id); return w && w.lib ? (w.tier || 'guide') : 'public'; },
+      host: 'home',
       save: function () { saveHome(); },
       render: function () { if (S.view === 'tending') paintTending(); else paintToday(); },
       go: function (t) { if (t === 'health') goTo('tending'); },
@@ -318,7 +320,7 @@
     S.tendInit = S.id;
     return true;
   }
-  function tendReady() { return !!(window.GGHealth && window.GGTendPublic); }
+  function tendReady() { var w = S.id && window.GGP ? GGP.data(S.id, 'tending') : null; return !!(window.GGHealth && (window.GGTendPublic || (w && w.lib))); }
   function summary() {
     if (!tendReady() || typeof window.GGHealth.summary !== 'function') return null;
     if (S.tendInit !== S.id) initTending();
@@ -905,4 +907,50 @@
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
+
+  /* ---------- BLD 867: trees and tools open inside the Home ----------
+     A tap on a tree or a tool from the Home opens it in a full-page frame with a slim My Home bar, so the person
+     never leaves Home. The phone's Back closes it (history state). nav.js hides the site's own top bar and footer
+     inside the frame. When it closes, the Home redraws with anything new (a check-in, a sober day). */
+  var FRAME = null;
+  function inHomeLink(a) {
+    if (!a || !a.getAttribute) return null;
+    var href = a.getAttribute('href'); if (!href || href.charAt(0) === '#' || a.target || a.hasAttribute('download')) return null;
+    var u; try { u = new URL(href, location.href); } catch (e) { return null; }
+    if (u.origin !== location.origin || /^\/home\//.test(u.pathname) || /^(mailto|tel):/.test(href)) return null;
+    if (!/(\/|\.html)$/.test(u.pathname)) return null;
+    if (a.closest('#hm-bnav, .site-footer, .topbar, .site-menu')) return null;
+    return u;
+  }
+  function frameTitle(u) {
+    var seg = u.pathname.split('/').filter(Boolean)[0] || '';
+    if (TREES[seg]) return TREES[seg].n;
+    var t = { 'living-sober.html': 'Living Sober', 'get-grounded-now.html': 'Get Grounded Now', 'readings.html': 'Readings Library', 'the-grounded-way.html': 'The Grounded Way' }[seg];
+    return t || 'Grounded';
+  }
+  function openFrame(u, push) {
+    closeFrame(true);
+    var wrap = document.createElement('div'); wrap.className = 'hm-frame'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-label', frameTitle(u));
+    wrap.innerHTML = '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>My Home</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>' +
+      '<iframe class="hm-frame-if" title="' + esc(frameTitle(u)) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>';
+    var host = document.querySelector('main.hm') || document.body; host.appendChild(wrap);
+    var ifr = wrap.querySelector('iframe'); ifr.src = u.pathname + u.search + u.hash;
+    ifr.addEventListener('load', function () { try { var t = (ifr.contentDocument.title || '').replace(/\s*\|.*$/, ''); if (t) wrap.querySelector('.hm-frame-t').textContent = t; } catch (e) {} });
+    wrap.querySelector('.hm-frame-home').addEventListener('click', function () { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); });
+    document.documentElement.classList.add('hm-framed');
+    FRAME = wrap;
+    if (push !== false) { try { history.pushState({ hmFrame: u.pathname + u.search + u.hash }, '', location.pathname + location.hash); } catch (e) {} }
+  }
+  function closeFrame(quiet) {
+    if (!FRAME) return; FRAME.remove(); FRAME = null; document.documentElement.classList.remove('hm-framed');
+    if (!quiet) render();
+  }
+  document.addEventListener('click', function (e) {
+    if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
+    var a = e.target.closest && e.target.closest('#hm-app a[href]'); var u = inHomeLink(a); if (!u) return;
+    if (!(window.GGP && GGP.active && GGP.active())) return;
+    e.preventDefault(); openFrame(u);
+  });
+  window.addEventListener('popstate', function () { if (FRAME && !(history.state && history.state.hmFrame)) closeFrame(); });
+  window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); } });
 })();
