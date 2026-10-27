@@ -326,39 +326,58 @@ function buildSessions(moves, templates, opts){
 }
 
 // ---------- targets ----------
+// Each goal's targets: {sf, sug, na, fib, sol, proPerKg: [lo, hi]}; na may be [aim, ceiling]; null is ignored.
 const TDEF = {sf: 13, sug: 25, na: 2300, fib: 30, sol: null, proPerKg: [0.8, 1]};
 function targets(goalIds, goals, o){
-  o = o || {}; const G = arr(goals).filter(g => g && arr(goalIds).includes(g.id)).map(g => g.targets || {}), pick = (k, f) => { const v = G.map(t => t[k]).filter(x => x != null && isFinite(+x)).map(Number); return v.length ? f(...v) : null; };
-  const sf = pick('sf', Math.min) || TDEF.sf, sug = pick('sug', Math.min) || TDEF.sug, na = pick('na', Math.min) || TDEF.na, fib = pick('fib', Math.max) || TDEF.fib, sol = pick('sol', Math.max);
+  o = o || {}; const G = arr(goals).filter(g => g && arr(goalIds).includes(g.id)).map(g => g.targets || {});
+  const vals = (k, i) => G.map(t => t[k]).filter(x => x != null).map(x => Array.isArray(x) ? +x[i == null ? 0 : Math.min(i, x.length - 1)] : +x).filter(isFinite);
+  const pick = (k, f, i) => { const v = vals(k, i); return v.length ? f(...v) : null; };
+  const sf = pick('sf', Math.min) || TDEF.sf, sug = pick('sug', Math.min) || TDEF.sug, fib = pick('fib', Math.max) || TDEF.fib, sol = pick('sol', Math.max);
+  const naAim = pick('na', Math.min, 0) || TDEF.na, naCeil = pick('na', Math.min, 1) || TDEF.na, na = naAim < naCeil ? [naAim, naCeil] : naCeil;
   const pk = G.map(t => t.proPerKg).filter(Array.isArray);
   const lo = pk.length ? Math.max(...pk.map(p => +p[0] || 0.8)) : TDEF.proPerKg[0], hi = pk.length ? Math.max(...pk.map(p => +p[p.length - 1] || +p[0] || 1)) : TDEF.proPerKg[1];
   let pro;
-  if (o.teen) pro = [46, 52];
+  if (o.teen) pro = Array.isArray(o.teenPro) ? o.teenPro : [46, 52];
   else if (+o.weightKg > 25) pro = [Math.round(lo * o.weightKg), Math.round(Math.max(lo, hi) * o.weightKg)];
   else pro = [Math.round(lo * 70), Math.round(Math.max(lo, hi) * 70)];
   return {sf, sug, na, fib, sol, pro, cal: null, proPerKg: [lo, hi], est: !o.teen && !(+o.weightKg > 25)};
 }
 
 // ---------- kids ----------
-const nOf = v => { if (v == null) return null; if (typeof v === 'number') return v; const m = /([\d.]+)(?:\s*(?:to|-)\s*([\d.]+))?/.exec(String(v)); return m ? +(m[2] || m[1]) : null; };
+// An age band holds amounts as a number, a [lo, hi] range, or by sex {f, m} (each a number or a range). Aims come back as
+// {lo, hi} for the food groups (cups or oz), numbers for nutrients; with no sex chosen, the higher of the two.
+const nOf = v => { if (v == null) return null; if (typeof v === 'number') return v; if (Array.isArray(v)) return +v[0]; const m = /([\d.]+)/.exec(String(v)); return m ? +m[1] : null; };
+const rangeOf = v => Array.isArray(v) ? {lo: +v[0], hi: +v[v.length - 1]} : v == null ? null : {lo: nOf(v), hi: nOf(v)};
+function bySex(v, sex){
+  if (!v || typeof v !== 'object' || Array.isArray(v)) return v;
+  if (sex === 'f' || sex === 'm') return v[sex] != null ? v[sex] : (v.f != null ? v.f : v.m);
+  const f = rangeOf(v.f), m = rangeOf(v.m); if (!f) return v.m; if (!m) return v.f;
+  return [Math.max(f.lo, m.lo), Math.max(f.hi, m.hi)];
+}
 function kidAims(band, sex){
-  band = band || {}; const iron = band.iron && typeof band.iron === 'object' ? (sex === 'f' ? band.iron.f : sex === 'm' ? band.iron.m : Math.max(nOf(band.iron.f) || 0, nOf(band.iron.m) || 0)) : band.iron;
-  return {fruit: nOf(band.fruit), veg: nOf(band.veg), protein: nOf(band.protein), grains: nOf(band.grains), dairy: nOf(band.dairy), fiber: nOf(band.fiber), iron: nOf(iron), ca: nOf(band.ca), water: nOf(band.water), sugarMax: nOf(band.sugarMax)};
+  band = band || {}; const R = k => { const r = rangeOf(bySex(band[k], sex)); return r && isFinite(r.lo) ? r : null; }, V = k => { const r = R(k); return r ? r.hi : null; };
+  return {fruit: R('fruit'), veg: R('veg'), protein: R('protein'), grains: R('grains'), dairy: R('dairy'), water: R('water'),
+    fiber: V('fiber'), proteinG: V('proteinG'), iron: V('iron'), ca: V('ca'), sugarMax: V('sugarMax')};
 }
 
 // ---------- the LDL Path range ----------
-// Each chosen lever lowers what remains: the low and high ends multiply (1 - effect) across levers. Food, fiber, and supplement levers
-// together are capped (35 percent unless the library says otherwise); a medicine lever then works on what remains.
+// Each chosen lever lowers what remains: LDL x (1 - e1) x (1 - e2) and so on, for lo, mid, and hi separately. When a bundle lever
+// (Portfolio) is chosen, its parts count inside it once. Food, supplement, movement, and weight levers together are capped
+// (30 percent mid, 35 percent hi unless the library says otherwise); a medicine then works on top of what remains.
 function ldlRange(base, levers, picks, opts){
-  opts = opts || {}; const cap = (+opts.foodCap || 35) / 100, B = +base; if (!isFinite(B) || B <= 0) return null;
-  const on = arr(levers).filter(l => l && (picks || {})[l.id] === 'do');
+  opts = opts || {}; const B = +base; if (!isFinite(B) || B <= 0) return null;
+  const capHi = (+opts.foodCapPct || 35) / 100, capMid = (+opts.foodCapMidPct || +opts.foodCapPct || 30) / 100;
+  let on = arr(levers).filter(l => l && (picks || {})[l.id] === 'do');
+  const inside = new Set(on.flatMap(l => arr(l.bundle))); on = on.filter(l => !inside.has(l.id));
   const food = on.filter(l => l.kind !== 'med'), med = on.filter(l => l.kind === 'med');
-  const comb = (L, k) => 1 - L.reduce((p, l) => p * (1 - Math.max(0, Math.min(90, +l[k] || 0)) / 100), 1);
-  const fLo = Math.min(cap, comb(food, 'lo')), fHi = Math.min(cap, comb(food, 'hi'));
-  const mLo = comb(med, 'lo'), mHi = comb(med, 'hi');
-  const lo = 1 - (1 - fLo) * (1 - mLo), hi = 1 - (1 - fHi) * (1 - mHi);
-  return {base: B, pctLo: Math.round(lo * 100), pctHi: Math.round(hi * 100), high: Math.round(B * (1 - lo)), low: Math.round(B * (1 - hi)), capped: comb(food, 'hi') > cap, count: on.length,
-    at: (weeks, which) => { const r = 1 - Math.exp(-Math.max(0, weeks) / 2.5), p = which === 'lo' ? lo : hi; return B * (1 - p * r); }};
+  const eff = (l, k) => { const v = l[k] != null ? +l[k] : k === 'mid' ? ((+l.lo || 0) + (+l.hi || 0)) / 2 : 0; return Math.max(0, Math.min(90, v || 0)) / 100; };
+  const comb = (L, k) => 1 - L.reduce((p, l) => p * (1 - eff(l, k)), 1);
+  const f = {lo: comb(food, 'lo'), mid: Math.min(capMid, comb(food, 'mid')), hi: Math.min(capHi, comb(food, 'hi'))}; f.lo = Math.min(f.lo, f.mid);
+  const tot = k => 1 - (1 - f[k]) * (1 - comb(med, k));
+  const lo = tot('lo'), mid = tot('mid'), hi = tot('hi');
+  return {base: B, pctLo: Math.round(lo * 100), pctMid: Math.round(mid * 100), pctHi: Math.round(hi * 100),
+    high: Math.round(B * (1 - lo)), mid: Math.round(B * (1 - mid)), low: Math.round(B * (1 - hi)), capped: comb(food, 'hi') > capHi || comb(food, 'mid') > capMid, count: on.length, bundled: [...inside],
+    at: (weeks, which) => { const r = 1 - Math.exp(-Math.max(0, weeks) / 2.5), p = which === 'lo' ? lo : which === 'hi' ? hi : mid; return B * (1 - p * r); }};
 }
 
 const API = {needOk, fitsAll, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
