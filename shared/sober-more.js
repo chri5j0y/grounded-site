@@ -874,7 +874,7 @@ window.GGSoberMore = {
     ]
    }
   ],
-  "health": "Use the Field Guide? My Health there keeps meals, movement, and sleep together in one plan.",
+  "health": "Use the Field Guide? Tending there keeps meals, movement, and sleep together in one plan.",
   "note": "A doctor can help with sleep, energy, and nutrition, especially in the first weeks after heavy daily drinking.",
   "credits": [
    [

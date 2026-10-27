@@ -186,7 +186,7 @@
   // The Book Library (Library session): read as text, so a page that already loaded books.js isn't disturbed.
   var BOOKS = [];
   function loadBooks() {
-    return fetch('/library/books.js?v=b863').then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
+    return fetch('/library/books.js?v=b862').then(function (r) { return r.ok ? r.text() : ''; }).then(function (txt) {
       var sec = {}, m = /const SECTIONS = \{([\s\S]*?)\};/.exec(txt);
       if (m) m[1].replace(/([A-Z]{2}):\s*\['([^']+)'/g, function (a, k, n) { sec[k] = n; });
       var d = /const BOOK_DATA = `([\s\S]*?)`/.exec(txt);

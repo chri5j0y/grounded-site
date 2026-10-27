@@ -660,34 +660,34 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b851"></script>
-<script src="../shared/gg-learn.js?v=b863"></script>
+<script src="../shared/gg-learn.js?v=b862"></script>
 <script src="../shared/gg-print.js?v=b836"></script>
-<script src="../shared/grove-scene.js?v=b863"></script>
+<script src="../shared/grove-scene.js?v=b862"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
-<script src="qr.js?v=b863"></script>
+<script src="qr.js?v=b862"></script>
 <script src="share.js?v=b836"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
-<script src="../shared/gg-readings.js?v=b863"></script>
-<script src="ceremonies.js?v=b863"></script>
+<script src="../shared/gg-readings.js?v=b862"></script>
+<script src="ceremonies.js?v=b862"></script>
 <script src="sessions.js?v=b836"></script>
-<script src="farewell.js?v=b863"></script>
-<script src="wedding.js?v=b863"></script>
-<script src="premarital.js?v=b863"></script>
+<script src="farewell.js?v=b862"></script>
+<script src="wedding.js?v=b862"></script>
+<script src="premarital.js?v=b862"></script>
 <script src="clients.js?v=b836"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b788"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b863"></script>
-<script src="moves.js?v=b857"></script>
-<script src="stage.js?v=b857"></script>
-<script src="coach.js?v=b842"></script>
-<script src="health.js?v=b861"></script>
+<script src="../shared/gg-stories.js?v=b862"></script>
+<script src="moves.js?v=b862"></script>
+<script src="stage.js?v=b862"></script>
+<script src="coach.js?v=b862"></script>
+<script src="health.js?v=b862"></script>
 <script src="vault.js?v=b852"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
-// The Family Kitchen library (GWG BLD 846): lib-kitchen.js, the food part of My Health for a Family Kitchen code.
+// The Family Kitchen library (GWG BLD 846): lib-kitchen.js, the food part of Tending (formerly My Health) for a Family Kitchen code.
 // The Guide library (GWG BLD 764): lib-guide.js. lib-field.js (the name before the rename) loads only if lib-guide.js is missing.
 (function(){ var t = Date.now(); window.__gfgT = t; ['codes','lib-founder','lib-staff','lib-guide','lib-kitchen'].forEach(function(n){ document.write('<script src="' + n + '.js?t=' + t + '"><\/script>'); }); })();
 </script>
@@ -1082,11 +1082,11 @@ function tabsFor(){
   const grown = [...(stOpen() ? [['oak','Oak','tree']] : []), ...(sqOpen() ? [['sequoia','Sequoia','sequoia']] : []), ...(wlOpen() ? [['willow','Willow','willow']] : []), ...(gvOpen() ? [['grove','Grove','grove']] : []), ...(htOpen() ? [['talks','When Life Changes','talk']] : [])];
   // The Hospital Guide (GWG BLD 763) is open to everyone whenever it is in the Guide library: after the trees, before Learn.
   const hp = hpOpen() ? [['hospital','Hospital','hospital']] : [];
-  // My Health (GWG BLD 840): every level, whenever the Guide library carries healthJourney. Personal numbers stay on this device.
-  const hj = hjOpen() ? [['health','My Health','heart']] : [];
+  // Tending, formerly My Health (GWG BLD 840; renamed in BLD 862): every level, whenever the Guide library carries healthJourney. Personal numbers stay on this device.
+  const hj = hjOpen() ? [['health','Tending','sprout']] : [];
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
-  // A Family Kitchen code (GWG BLD 846) opens My Health's kitchen only: no orientation, no other tabs.
-  if (TIER === 'kitchen') return [['health','My Health','heart']];
+  // A Family Kitchen code (GWG BLD 846) opens the Tending kitchen only: no orientation, no other tabs.
+  if (TIER === 'kitchen') return [['health','Tending','sprout']];
   if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
   if (!LIB) return [...hj, ...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
@@ -1130,7 +1130,7 @@ function render(){
 // Grouped tabs (GWG BLD 822). tabsFor() stays the one flat list of what each person may open; the bar shows it in
 // six groups, and the open group's own tabs in a second row. Both rows sit inside #tabs, so the tab handlers still work.
 const TREE_IDS = ['maple','aspen','pine','birch','oak','sequoia','willow','grove'];
-const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['me','My Health','heart'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
+const TAB_GRPS = [['path','Your Path','award'], ['home','Home','home'], ['me','Tending','sprout'], ['trees','Trees','tree'], ['gde','Guides','talk'], ['staff','Staff','people'], ['fdr','Founder','key']];
 const grpOf = id => id === 'path' || PATH_SUB.includes(id) ? 'path' : id === 'home' ? 'home' : id === 'health' ? 'me' : id === 'trees' || TREE_IDS.includes(id) ? 'trees' : ['talks','hospital','safety'].includes(id) ? 'gde' : ['founder','books'].includes(id) ? 'fdr' : id === 'settings' ? '' : 'staff';
 const GRP_LAST = {};
 function drawTabs(tabs, pathSub){
@@ -1213,6 +1213,7 @@ const IC = {
  birch:'<path d="M9.5 21V9.5M14.5 21V8"/><path d="M8.8 13h1.4M8.8 17h1.4M13.8 11.5h1.4M13.8 16h1.4"/><path d="M9.5 9.5C6.6 9.5 5 8 5 6.2S6.6 3 8.8 3.4C9.6 2.4 11 2 12.2 2.5c1.1-.6 2.7-.5 3.8.4 2.3-.1 3.6 1.5 3.3 3.3-.3 1.7-2 2.8-4.8 1.8"/><path d="M7 21h10"/>',
  grove:'<circle cx="7" cy="9.5" r="3.5"/><circle cx="16" cy="7.5" r="4.5"/><path d="M7 13v7M16 12v8M3 20h18"/>',
  heart:'<path d="M12 20s-7.5-4.6-7.5-10.2A4.2 4.2 0 0 1 12 7.3a4.2 4.2 0 0 1 7.5 2.5C19.5 15.4 12 20 12 20z"/>',
+ sprout:'<path d="M12 21v-8"/><path d="M12 13c0-4.4-3-7-7.5-7 0 4.4 3 7 7.5 7z"/><path d="M12 11c0-3.6 2.6-6 6.8-6 0 3.6-2.6 6-6.8 6z"/><path d="M7.5 21h9"/>',
  talk:'<path d="M4 4.5h11a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2H9.5L6 17.5v-3H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M17 9h3a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-1v2.5L15.5 19H12a2 2 0 0 1-1.7-1"/>',
  hospital:'<path d="M4 21V8l8-4 8 4v13"/><path d="M12 9v6M9 12h6"/><path d="M2.5 21h19"/><path d="M10 21v-3h4v3"/>',
  file:'<path d="M7 3h7l5 5v13H7z"/><path d="M14 3v5h5"/><path d="M10 13h6M10 17h6"/>',
@@ -1244,7 +1245,7 @@ if (window.GGCer){ GGCer.tier = () => TIER; GGCer.saveAll = (key, item) => piece
 // Clients and Intake (GWG BLD 767, clients.js): Staff and Founders, the Clients tab, the Back Up Now card on Home.
 if (window.GGCli) GGCli.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
   sheet: (h, t, o) => fgSheet(h, t, o), ph: r => ph(r), pf: () => pf()});
-// My Health (GWG BLD 840, health.js): every level; content from the Guide library, a Founder's own plan from the Founder library.
+// Tending, formerly My Health (GWG BLD 840, health.js): every level; content from the Guide library, a Founder's own plan from the Founder library.
 if (window.GGHealth) GGHealth.init({data: () => DATA, fld: () => FLD, fdr: () => FDR, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m)});
 // Books (GWG BLD 770, books.js): Founders only, the Books tab and the Set Aside for Taxes card on Home.
 if (window.GGBooks) GGBooks.init({data: () => DATA, lib: () => LIB, tier: () => TIER, save: () => save(), render: () => render(), go: (t, x) => go(t, x), toast: m => toast(m),
@@ -1782,13 +1783,13 @@ function needsSetup(){ const k = effKeys(), L = workCodes().links || {}; return 
 // a record in the Founder library's Access list (FDR.access) carrying its stories wrap, so it opens Grounded Stories.
 // o: {org, n (place in the organization), quiet (the caller relinks, saves, and seals once at the end)}.
 // ---------------- FOUNDER: the Family Kitchen (GWG BLD 846) ----------------
-// A Family Kitchen code opens only the kitchen part of My Health on a family member's phone (Chris, October 25, 2026, "1").
+// A Family Kitchen code opens only the kitchen part of Tending on a family member's phone (Chris, October 25, 2026, "1").
 // Its library, lib-kitchen.js, is cut from the Guide library's healthJourney (dinners, shop lists, batches, plus the audio
 // key for Andrew's cook guide) and the plan's start Monday from this device, sealed with its own key. The key lives in the
 // Founder library (FDR.kitchen.key). Every Guide library update sealed here reseals lib-kitchen.js too.
 function kitchenPlain(g){ const h = (g && g.healthJourney) || {}, a = h.app || {}, me = DATA && DATA.health && DATA.health.set;
   return {_kitchen: 1, _rev: (g && g._rev) || 0, _updated: today(), start: (me && me.start) || null, audio: (g && g.audio) || null,
-    healthJourney: {v: h.v || 1, title: h.title || 'My Health', tagline: h.tagline || '', lead: h.lead || '', hero: h.hero || null, doctor: h.doctor || '', app: {dinners: a.dinners || null, shop: a.shop || null, batches: a.batches || null}}}; }
+    healthJourney: {v: h.v || 1, title: 'Tending', tagline: h.tagline || '', lead: h.lead || '', hero: h.hero || null, doctor: h.doctor || '', app: {dinners: a.dinners || null, shop: a.shop || null, batches: a.batches || null}}}; }
 async function kitchenSeal(g){ if (!FDR || !FDR.kitchen || !FDR.kitchen.key || !g) return false; ensureDraft().libs.kitchen = await seal(await rawKey(FDR.kitchen.key), kitchenPlain(g)); return true; }
 async function kitchenReady(){
   if (!FDR) return null; const g = await pendingPlain('guide'); if (!g || !g.healthJourney) return null;
@@ -1798,7 +1799,7 @@ async function kitchenReady(){
 async function makeCode(kind, label, ends, o = {}){
   if (accWaits()) { alert(ACC_WAIT); return null; }
   const sup = kind === 'supporter', tier = kind === 'org' ? 'guide' : kind, k = sup ? null : tier === 'kitchen' ? await kitchenReady() : effKeys()[tier];
-  if (!sup && !k) { alert(tier === 'kitchen' ? 'The Family Kitchen needs My Health in the Guide library on this Founder device first.' : "This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
+  if (!sup && !k) { alert(tier === 'kitchen' ? 'The Family Kitchen needs Tending in the Guide library on this Founder device first.' : "This device can't open the " + LEVEL_NAME[tier] + ' library yet, so it can\'t make that kind of code. See "Finish Setup."'); return null; }
   if (sup && !accKey()) { alert('Supporter codes open Grounded Stories. They arrive with the Story Vault (the BLD 784 Founder update).'); return null; }
   const code = wordsCode(), made = today();
   let e;
@@ -1884,7 +1885,7 @@ function accStoriesDue(){
   return live.length !== S.size || live.some(c => !S.has(c));
 }
 const accName = r => r.label || (r.org ? 'Person ' + (r.n || '') : LEVEL_NAME[r.level] || 'Code');
-const accOpens = r => r.level === 'kitchen' ? 'the Family Kitchen in My Health' + (r.c ? ' and Grounded Stories' : '') : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
+const accOpens = r => r.level === 'kitchen' ? 'the Family Kitchen in Tending' + (r.c ? ' and Grounded Stories' : '') : r.level === 'supporter' ? 'Grounded Stories' : r.c ? 'the Field Guide and Grounded Stories' : 'the Field Guide';
 // Ends codes: takes their codes.js lines out (Founder, Staff, Guide), marks the records cancelled, and saves once.
 async function accCancel(ids){
   if (accWaits()) return alert(ACC_WAIT);
@@ -1996,7 +1997,7 @@ function accView(){
   const makeH = `  <div class="card"><h3>Make a Code</h3>
    <label class="f" for="fdr-kind">Level</label><select id="fdr-kind">${lvlOpt(ACC_LV, 'guide')}</select>
    <label class="f" for="fdr-label">Name</label><input type="text" id="fdr-label" placeholder="The person's name" autocomplete="off">
-   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Every code opens Grounded Stories. Supporter codes open Grounded Stories: every story, Early Previews, the Story Behind the Story, the Monthly Letter, and Reflection Cards. New Guides go through Orientation before anything else opens. Family Kitchen codes open only the kitchen in My Health: this week's dinners with the cook guide, grab and go, snacks, the shopping list, and prep.</p>
+   <label class="f" for="fdr-ends">Ends</label><input type="date" id="fdr-ends" value="${oneYear()}"><p class="muted" style="font-size:14px;margin-top:4px">Leave blank for no end date. Every code opens Grounded Stories. Supporter codes open Grounded Stories: every story, Early Previews, the Story Behind the Story, the Monthly Letter, and Reflection Cards. New Guides go through Orientation before anything else opens. Family Kitchen codes open only the kitchen in Tending: this week's dinners with the cook guide, grab and go, snacks, the shopping list, and prep.</p>
    <button class="btn btn-gold" style="margin-top:12px" data-act="fdr-make"${wait}>Make Code</button></div>`;
   const orgMakeH = `  <div class="card" id="acc-orgmake"><h3>Make Codes for an Organization</h3><p class="muted">A personal code for each person, grouped under the organization, ready to copy or print as one list.</p>
    <label class="f" for="acc-org">Organization</label><input type="text" id="acc-org" placeholder="The organization's name" autocomplete="off">
@@ -8477,7 +8478,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b863'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b862'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -10961,7 +10962,7 @@ function mergeData(cur, inc){
   if (window.GGCli){ const cl = GGCli.merge(out, inc); stats.added += cl.added; stats.updated += cl.updated; }
   // Books (BLD 770): newest copy of each entry wins; deleted entries stay deleted.
   if (window.GGBooks){ const bk = GGBooks.merge(out, inc); stats.added += bk.added; stats.updated += bk.updated; }
-  // My Health (BLD 840): newest copy of each entry wins; removed entries stay removed.
+  // Tending (BLD 840 as My Health): newest copy of each entry wins; removed entries stay removed.
   if (window.GGHealth){ const hm = GGHealth.merge(out, inc); stats.added += hm.added; stats.updated += hm.updated; }
   out.clients = out.clients.filter(c => !(out.deleted.clients[c.id] && out.deleted.clients[c.id] >= (c.u || 0)));
   out.sessions = out.sessions.filter(x => !(out.deleted.sessions[x.id] && out.deleted.sessions[x.id] >= (x.u || 0)));

@@ -1,5 +1,5 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): Stage, the set and setting behind every My Health player (GWG BLD 857).
+// GROUNDED FIELD GUIDE (TM): Stage, the set and setting behind every Tending player (GWG BLD 857).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A scene panel: a sky that follows the hour (a gold sun rising through a bright blue-white morning, warmer
 // light toward evening, dusk and stars at night), soft light rays, rolling hills, and a wooden deck the figure
