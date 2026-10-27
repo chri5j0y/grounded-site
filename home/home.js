@@ -32,7 +32,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b871';
+  var V = 'b872';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';

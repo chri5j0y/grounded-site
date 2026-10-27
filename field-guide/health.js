@@ -1919,6 +1919,50 @@ const riskBand = v => { const b = RISK_BANDS.find(x => v < x[1]) || RISK_BANDS[3
 function riskDots(v, label){ const whole = Math.floor(v), part = v - whole; let h = '';
   for (let i = 0; i < 100; i++){ const on = i < whole, pt = i === whole && part > 0.05; h += `<i class="${on ? 'on' : pt ? 'pt' : ''}"${pt ? ` style="--pp:${Math.round(part * 100)}%"` : ''}></i>`; }
   return `<div class="hj-rk-dots" role="img" aria-label="${esc(label)}">${h}</div>`; }
+// BLD 872: the PREVENT calculator (American Heart Association, base model, ASCVD, 10 and 30 years), the published
+// coefficients (Khan and others, Circulation 2024), checked against the preventr package's worked example
+// (woman, 50: 9.2% and 35.4%). Valid for ages 30 to 79. The doctor's number is the one that counts.
+const PREVENT_B = {"f10":{"k":-3.819975,"age":0.719883,"nh":0.117697,"hdl":-0.151185,"sl":-0.083536,"sh":0.359285,"dm":0.834858,"smk":0.483108,"el":0.486462,"eh":0.039778,"bp":0.226531,"st":-0.059237,"bpsh":-0.039576,"stnh":0.084442,"anh":-0.056784,"ahdl":0.032569,"ash":-0.103598,"adm":-0.241754,"asmk":-0.079114,"ael":-0.167149},"m10":{"k":-3.500655,"age":0.709985,"nh":0.165866,"hdl":-0.114429,"sl":-0.283721,"sh":0.323998,"dm":0.71896,"smk":0.395697,"el":0.369007,"eh":0.020362,"bp":0.203652,"st":-0.086558,"bpsh":-0.032292,"stnh":0.114563,"anh":-0.03,"ahdl":0.023275,"ash":-0.092702,"adm":-0.201852,"asmk":-0.097053,"ael":-0.121708},"f30":{"k":-1.974074,"age":0.46692,"age2":-0.089312,"nh":0.12569,"hdl":-0.154225,"sl":-0.001809,"sh":0.322949,"dm":0.629671,"smk":0.268292,"el":0.100106,"eh":0.049966,"bp":0.187529,"st":0.015248,"bpsh":-0.027612,"stnh":0.073615,"anh":-0.052196,"ahdl":0.031692,"ash":-0.10461,"adm":-0.272779,"asmk":-0.153091,"ael":-0.129915},"m30":{"k":-1.736444,"age":0.39941,"age2":-0.093748,"nh":0.174464,"hdl":-0.120203,"sl":-0.066512,"sh":0.275304,"dm":0.479026,"smk":0.178263,"el":-0.021879,"eh":0.060255,"bp":0.142118,"st":0.0136,"bpsh":-0.021826,"stnh":0.101315,"anh":-0.031262,"ahdl":0.020673,"ash":-0.092093,"adm":-0.215995,"asmk":-0.154881,"ael":-0.071255}};
+function preventCalc(i, yrs){
+  const c = PREVENT_B[(i.sex === 'm' ? 'm' : 'f') + yrs]; if (!c) return null;
+  const a = (i.age - 55) / 10, nh = (i.tc - i.hdl) * 0.02586 - 3.5, hd = (i.hdl * 0.02586 - 1.3) / 0.3;
+  const sl = (Math.min(i.sbp, 110) - 110) / 20, sh = (Math.max(i.sbp, 110) - 130) / 20;
+  const el = (Math.min(i.egfr, 60) - 60) / -15, eh = (Math.max(i.egfr, 60) - 90) / -15;
+  const bp = i.bp ? 1 : 0, st = i.st ? 1 : 0, dm = i.dm ? 1 : 0, sm = i.smk ? 1 : 0;
+  let x = c.k + c.age * a + c.nh * nh + c.hdl * hd + c.sl * sl + c.sh * sh + c.dm * dm + c.smk * sm + c.el * el + c.eh * eh + c.bp * bp + c.st * st + c.bpsh * bp * sh + c.stnh * st * nh
+    + a * (c.anh * nh + c.ahdl * hd + c.ash * sh + c.adm * dm + c.asmk * sm + c.ael * el);
+  if (c.age2) x += c.age2 * a * a;
+  return Math.exp(x) / (1 + Math.exp(x)) * 100;
+}
+const PV_RANGE = {age: [30, 79], tc: [130, 320], hdl: [20, 100], sbp: [90, 180], egfr: [15, 140]};
+function pvDefaults(){
+  const h = H(), sv = (h.set && h.set.prevent) || {}, E = labs(), last = k => { for (let i = E.length - 1; i >= 0; i--){ const v = num(E[i][k]); if (v != null) return v; } return null; };
+  return Object.assign({sex: 'm', bp: false, st: false, dm: false, smk: false}, sv, {tc: last('total') != null ? last('total') : sv.tc, hdl: last('hdl') != null ? last('hdl') : sv.hdl, sbp: last('sys') != null ? last('sys') : sv.sbp});
+}
+function pvResult(i){
+  const miss = ['age', 'tc', 'hdl', 'sbp', 'egfr'].filter(k => num(i[k]) == null);
+  if (miss.length) return {msg: 'Fill in every number to see your estimate.'};
+  const v = {}; ['age', 'tc', 'hdl', 'sbp', 'egfr'].forEach(k => { v[k] = +i[k]; });
+  const out = Object.keys(PV_RANGE).filter(k => v[k] < PV_RANGE[k][0] || v[k] > PV_RANGE[k][1]);
+  if (out.length) return {msg: 'PREVENT was built for ages 30 to 79, total cholesterol 130 to 320, HDL 20 to 100, top blood pressure 90 to 180, and eGFR 15 to 140. Your doctor can give you a score outside those ranges.'};
+  const x = Object.assign({}, i, v);
+  return {r10: preventCalc(x, 10), r30: preventCalc(x, 30)};
+}
+function vPrevent(){
+  const i = S.pv || (S.pv = pvDefaults()), r = pvResult(i), pct = v => (Math.round(v * 100) / 100) + '%';
+  const nf = (k, label) => `<label class="hj-fld"><span>${esc(label)}</span><input type="number" inputmode="decimal" data-hjpv="${k}" value="${esc(i[k] != null ? i[k] : '')}"></label>`;
+  const tg = (k, label) => `<button type="button" class="chip${i[k] ? ' on' : ''}" aria-pressed="${!!i[k]}" data-hja="pvtg" data-hjv="${k}">${esc(label)}</button>`;
+  return `<div class="hj-blk hj-pv" id="hj-pv">${kick('Calculate With PREVENT')}<p class="hj-sub">The American Heart Association's PREVENT equations, the same ones doctors use. Change any number to see how your risk moves.</p>
+    <div class="row hj-pv-sex"><button type="button" class="chip${i.sex === 'f' ? ' on' : ''}" aria-pressed="${i.sex === 'f'}" data-hja="pvsex" data-hjv="f">Female</button><button type="button" class="chip${i.sex === 'm' ? ' on' : ''}" aria-pressed="${i.sex === 'm'}" data-hja="pvsex" data-hjv="m">Male</button></div>
+    <div class="hj-g3">${nf('age', 'Age')}${nf('tc', 'Total cholesterol')}${nf('hdl', 'HDL')}${nf('sbp', 'Blood pressure, top number')}${nf('egfr', 'eGFR (kidney, from your labs)')}</div>
+    <div class="row">${tg('bp', 'Blood pressure medicine')}${tg('st', 'Statin')}${tg('dm', 'Diabetes')}${tg('smk', 'Smoke now')}</div>
+    <div class="hj-pv-out" id="hj-pv-out">${pvOut(r)}</div>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="pvsave"${r.r10 == null ? ' disabled' : ''}>Save This Estimate</button><button type="button" class="btn btn-line btn-sm" data-hja="pvclose">Close</button></div>
+    <p class="hj-note">An estimate from the published equations (base model), for talking over with your doctor; your doctor's score is the one that counts. Sources: Khan and others, PREVENT, Circulation (2024); checked against the preventr package (Mayer, R).</p></div>`;
+}
+function pvOut(r){ if (r.msg) return `<p class="hj-sub">${esc(r.msg)}</p>`; const pct = v => (Math.round(v * 100) / 100) + '%', b = riskBand(r.r10);
+  return `<div class="hj-rk-tiles"><div><b>${pct(r.r10)}</b><small>Next 10 years</small><em><i style="background:${b[3]}"></i>${esc(b[2])}</em></div><div><b>${pct(r.r30)}</b><small>Next 30 years</small><em>About ${Math.round(r.r30)} in 100</em></div></div>`; }
+
 function vRisk(){
   const h = H(), f = S.form, R = h.risk.slice().sort(byDate), cur = R.length ? R[R.length - 1] : null, ex = !cur, d = cur || RISK_EX;
   const pct = v => v == null ? '' : (Math.round(v * 100) / 100) + '%';
@@ -1930,9 +1974,9 @@ function vRisk(){
   const scale = d.r10 != null ? `<div class="hj-rk-scale"><div class="hj-rk-mk" style="left:${mk}%">${ex ? 'Example' : 'Me'}: ${pct(d.r10)}</div><div class="hj-rk-bands">${RISK_BANDS.map(x => `<span title="${esc(x[2])}" style="flex:${x[1] - x[0]};background:${x[3]}"></span>`).join('')}</div>
     <div class="hj-rk-ticks"><span style="left:0">0%</span><span style="left:20%">5%</span><span style="left:30%">7.5%</span><span style="left:80%">20%</span><span style="left:100%">25%+</span></div>
     <div class="hj-rk-key">${RISK_BANDS.map(x => `<span><i style="background:${x[3]}"></i>${esc(x[2])}</span>`).join('')}</div></div>` : '';
-  const hist = R.length > 1 ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>10-year</th><th>30-year</th><th></th></tr></thead><tbody>${R.slice().reverse().map(x => `<tr><td>${esc(short(x.date))}</td><td>${pct(x.r10)}</td><td>${pct(x.r30)}</td><td><button type="button" class="linkbtn" data-hja="riskdel" data-hjv="${esc(x.id)}">Remove</button></td></tr>`).join('')}</tbody></table></div>` : '';
+  const hist = R.length > 1 ? `<div class="hj-tw"><table class="hj-tbl"><thead><tr><th>Date</th><th>10-year</th><th>30-year</th><th></th></tr></thead><tbody>${R.slice().reverse().map(x => `<tr><td>${esc(short(x.date))}${x.src === 'calc' ? ' <small>(calculated)</small>' : ''}</td><td>${pct(x.r10)}</td><td>${pct(x.r30)}</td><td><button type="button" class="linkbtn" data-hja="riskdel" data-hjv="${esc(x.id)}">Remove</button></td></tr>`).join('')}</tbody></table></div>` : '';
   return `<div class="hj-blk hj-rk" id="hj-risk">${kick('My Heart Risk')}
-    ${ex ? `<p class="hj-sub"><b>Example: a healthy adult.</b> Add the PREVENT scores from your doctor and this card becomes yours.</p>` : `<p class="hj-sub">Your PREVENT scores from your doctor, ${esc(short(cur.date))}: the chance of a heart attack or stroke (ASCVD).</p>`}
+    ${ex ? `<p class="hj-sub"><b>Example: a healthy adult.</b> Add the PREVENT scores from your doctor and this card becomes yours.</p>` : `<p class="hj-sub">${cur.src === 'calc' ? 'Your PREVENT estimate, calculated' : 'Your PREVENT scores from your doctor'}, ${esc(short(cur.date))}: the chance of a heart attack or stroke (ASCVD).</p>`}
     <div class="hj-rk-tiles${ex ? ' ex' : ''}">
       ${d.r10 != null ? `<div><b>${pct(d.r10)}</b><small>Next 10 years</small><em><i style="background:${b10[3]}"></i>${esc(b10[2])}</em></div>` : ''}
       ${d.r30 != null ? `<div><b>${pct(d.r30)}</b><small>Next 30 years</small><em>About ${Math.round(d.r30)} in 100</em></div>` : ''}
@@ -1941,8 +1985,8 @@ function vRisk(){
     ${scale}
     <p class="hj-note">Bands for 10-year risk from the 2018 AHA/ACC Cholesterol Guideline; 30-year risk has no standard bands. An LDL of 190 or more usually brings a statin into the conversation whatever the score. These are your doctor's numbers to talk through together; ask for a new PREVENT score with each new set of labs.</p>
     ${hist}
-    ${form ? '' : `<div class="row"><button type="button" class="btn ${ex ? 'btn-gold' : 'btn-line'} btn-sm" data-hja="riskadd">${ex ? 'Add My Scores' : 'Add New Scores'}</button></div>`}
-  </div>${form}`;
+    ${form ? '' : `<div class="row"><button type="button" class="btn ${ex ? 'btn-gold' : 'btn-line'} btn-sm" data-hja="riskadd">${ex ? 'Add My Scores From My Doctor' : 'Add New Scores'}</button>${S.pvOpen ? '' : `<button type="button" class="btn btn-line btn-sm" data-hja="pvopen">Calculate With PREVENT</button>`}</div>`}
+  </div>${form}${S.pvOpen ? vPrevent() : ''}`;
 }
 
 // ---------- BLD 867: Move to My Home ----------
@@ -1999,6 +2043,12 @@ function act(a, v){
   if (actPlate(a, v)) return;
   switch (a){
     case 'movehome': moveHome(); return;
+    case 'pvopen': S.pvOpen = true; S.pv = pvDefaults(); rerender(true); setTimeout(() => { const e = document.getElementById('hj-pv'); if (e && e.scrollIntoView) e.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 30); return;
+    case 'pvclose': S.pvOpen = false; rerender(true); return;
+    case 'pvsex': S.pv.sex = v; rerender(true); return;
+    case 'pvtg': S.pv[v] = !S.pv[v]; rerender(true); return;
+    case 'pvsave': { const r = pvResult(S.pv); if (r.r10 == null) return; const sv = {}; ['sex', 'age', 'tc', 'hdl', 'sbp', 'egfr', 'bp', 'st', 'dm', 'smk'].forEach(k => { sv[k] = S.pv[k]; }); h.set.prevent = sv; h.set.u = Date.now();
+      h.risk.push({id: uid(), date: today(), r10: Math.round(r.r10 * 100) / 100, r30: Math.round(r.r30 * 100) / 100, src: 'calc', u: Date.now()}); save(); S.pvOpen = false; toast('Saved on this device.'); rerender(true); return; }
     case 'riskadd': S.form = {k: 'risk', date: today()}; S.edit = null; rerender(true); toForm(); return;
     case 'risksave': { const f = S.form; if (!f) return; if (!/^\d{4}-\d{2}-\d{2}$/.test(String(f.date || ''))){ toast('Choose a date.'); return; }
       const r10 = num(f.r10), r30 = num(f.r30); if (r10 == null && r30 == null){ toast('Add at least one score.'); return; }
@@ -2527,6 +2577,7 @@ document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov && do
 document.addEventListener('input', e => {
   const t = e.target; if (!t.closest || !t.closest('#hj-root')) return;
   if (t.dataset.hjf && S.form) S.form[t.dataset.hjf] = t.value;
+  if (t.dataset.hjpv && S.pv){ S.pv[t.dataset.hjpv] = t.value; const o = document.getElementById('hj-pv-out'); if (o) o.innerHTML = pvOut(pvResult(S.pv)); const b = document.querySelector('[data-hja="pvsave"]'); if (b) b.disabled = pvResult(S.pv).r10 == null; }
   if (t.dataset.hjs && S.set) S.set[t.dataset.hjs] = t.value;
   if (t.id === 'hj-note') S.draft = t.value;
   if (t.id === 'hj-eatq'){ S.eatQuery = t.value; S.eatPick = null; eatRes(); }
