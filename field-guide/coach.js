@@ -1,5 +1,5 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): the coach voice and the hands-free players for My Health (GWG BLD 842).
+// GROUNDED FIELD GUIDE (TM): the coach voice and the hands-free players for Tending (GWG BLD 842).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // GGVoice speaks a line in a recorded voice: Ava for workouts and the daily practice, Andrew for the kitchen
 // (Chris, October 24, 2026). Clips are locked like every sealed video (BLD 781 SPEC): name = hex of the first 16 bytes

@@ -937,7 +937,7 @@ function piecesPanel(p){
       <div class="fw-fld" style="max-width:340px"><label class="f" for="fw-lbby">Who leads</label><input id="fw-lbby" type="text" list="fw-lbleaders" data-fwlby="1" value="${esc(L.by)}" placeholder="${esc(me())}" autocomplete="off"><datalist id="fw-lbleaders">${lead.map(l => `<option value="${esc(l)}">`).join('')}</datalist></div></div>
     <div class="fw-lbl-list" id="fw-lb-list">${lbRows(p)}</div>
     ${lbOwnForm(p)}
-    <div class="row" style="margin-top:6px">${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-fwa="lb-lib">From the Grounded Readings Library</button>` : ''}<button type="button" class="btn btn-line btn-sm" data-fwa="lb-mypieces">Open My Pieces</button></div>`;
+    <div class="row" style="margin-top:6px">${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-fwa="lb-lib">From the Readings Library</button>` : ''}<button type="button" class="btn btn-line btn-sm" data-fwa="lb-mypieces">Open My Pieces</button></div>`;
 }
 
 V[5] = p => sayBox(p, STEP(5).say) +
@@ -1959,7 +1959,7 @@ function act(a, v, el){
       const id = c.savePiece(m, p.svc, !!g('fw-lo-keep')); if (!id) return;
       const r = c.addPiece(p.svc, {kind: k, id, moment: S.lb.place === 'best' ? null : S.lb.place, by: S.lb.by});
       S.lb.own = false; touch(p); rerender(true); toast(r ? 'Added to ' + r.part + '.' : 'Saved.'); return; }
-    // GWG BLD 798: a reading from the Grounded Readings Library (shared/gg-readings.js) joins the service as one of its
+    // GWG BLD 798: a reading from the Readings Library (shared/gg-readings.js) joins the service as one of its
     // own pieces, at the moment chosen in Add it at, led by Who leads, with its source line.
     case 'lb-lib': { if (!window.GGReadings) return;
       GGReadings.pick({occasion: 'funeral', q: S.lb.q || '', button: 'Add to the Service', offline: true}).then(r => {

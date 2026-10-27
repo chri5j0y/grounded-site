@@ -152,7 +152,7 @@
         return '<div class="ln-phone"><div class="ln-ptop" style="background:' + c + '">' + (sc.app && sc.app !== 'field' && sc.app !== 'site' ? '<img src="' + MARK(sc.app + '-tab') + '" alt="">' : '') + '<b>' + h(sc.app_name || '') + '</b><span>' + h(sc.title || '') + '</span></div>' + (sc.rows || []).map(function (r, j) { return '<div class="ln-prow' + (j === sc.tap ? ' ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '><span>' + h(r[0]) + '</span><span' + (r[2] ? ' style="color:' + r[2] + ';font-weight:600"' : '') + '>' + h(r[1] || '') + '</span></div>'; }).join('') + '</div>'
           + (sc.panel ? '<div class="ln-panel" style="border-left-color:' + (sc.panel.c || c) + '"><h4>' + h(sc.panel.h) + '</h4>' + (sc.panel.sub ? '<p>' + h(sc.panel.sub) + '</p>' : '') + ((sc.panel.items || []).length ? '<ul>' + sc.panel.items.map(function (x) { return '<li>' + h(x) + '</li>'; }).join('') + '</ul>' : '') + '</div>' : '') + (sc.tap != null ? HAND : '');
       }
-      case 'tabs': return '<div class="ln-fg"><div class="ln-fgtop"' + (sc.app && COL[sc.app] && sc.app !== 'field' ? ' style="background:' + COL[sc.app] + ';color:#FFF8EC"' : '') + '><b>' + h(sc.app_name || 'Grounded Field Guide') + '</b></div><div class="ln-fgtabs">' + (sc.tabs || []).map(function (x, j) { return '<span class="' + (j === sc.tap ? 'ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '>' + h(x) + '</span>'; }).join('') + '</div>'
+      case 'tabs': return '<div class="ln-fg"><div class="ln-fgtop"' + (sc.app && COL[sc.app] && sc.app !== 'field' ? ' style="background:' + COL[sc.app] + ';color:#FFF8EC"' : '') + '><b>' + h(sc.app_name || 'Field Guide') + '</b></div><div class="ln-fgtabs">' + (sc.tabs || []).map(function (x, j) { return '<span class="' + (j === sc.tap ? 'ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '>' + h(x) + '</span>'; }).join('') + '</div>'
         + (sc.note ? '<div class="ln-note"><h4>' + h(sc.note.h) + '</h4><p>' + h(sc.note.p || '') + '</p></div>' : '') + '</div>' + (sc.tap != null ? HAND : '');
       case 'card': return '<div class="ln-card"><h4>' + h(sc.title) + '</h4>' + (sc.body ? '<p>' + h(sc.body) + '</p>' : '') + (sc.fields || []).map(function (f) { return '<label>' + h(f[0]) + '</label><div class="ln-in">' + h(f[1] || '') + '</div>'; }).join('') + '<div class="ln-btns">' + (sc.btns || []).map(function (b, j) { return '<span class="ln-b' + (j === 0 ? ' pri' : '') + (j === sc.tap ? ' ln-tgt' : '') + '"' + (j === sc.tap ? ' data-tap' : '') + '>' + h(b) + '</span>'; }).join('') + '</div></div>'
         + (sc.result ? '<div class="ln-res">' + h(sc.result) + '</div>' : '') + (sc.tap != null ? HAND : '');
@@ -1185,7 +1185,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b851'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b862'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

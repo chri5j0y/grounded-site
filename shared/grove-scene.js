@@ -2,7 +2,7 @@
    GROUNDED . THE GROVE TREE DRAWING (shared)
    One tree per person, shaped by their life stage. The parts someone is
    tending show their colors on the tree. Used by The Grove (/grove/) and
-   the Grove Guide in the Grounded Field Guide, so both draw the same tree.
+   the Grove Guide in the Field Guide, so both draw the same tree.
    Change the drawing here, not in either page.
    ===================================================================== */
 window.GGScene = (function(){

@@ -1,5 +1,5 @@
 // =====================================================================
-// GROUNDED FIELD GUIDE (TM): Moves, the animated figures of the My Health workout player (GWG BLD 841, color and new moves BLD 857).
+// GROUNDED FIELD GUIDE (TM): Moves, the animated figures of the Tending workout player (GWG BLD 841, color and new moves BLD 857).
 // (c) 2026 Grow With Grounded LLC. Proprietary and confidential.
 // A simple rounded line figure shows each move on screen while the voice coaches.
 //   GGMoves.svg(pattern, opts): an inline SVG string, 240 by 240, looping with SMIL.

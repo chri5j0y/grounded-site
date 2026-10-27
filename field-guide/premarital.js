@@ -222,7 +222,7 @@ function faithBlock(c){
     }
   }
   if (P.ask) h += `<p class="muted" style="font-size:15px">${esc(P.ask)}</p>`;
-  // GWG BLD 798: wedding readings for both traditions in the Grounded Readings Library (shared/gg-readings.js), to read together.
+  // GWG BLD 798: wedding readings for both traditions in the Readings Library (shared/gg-readings.js), to read together.
   const libT = window.GGReadings ? [a, b].filter(named).find(id => GGReadings.labels.trad[id] && id !== 'christian') : null;
   return h + `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="about">Change Faith Backgrounds</button>${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-pm="lib" data-v="${esc(libT || '')}">Wedding Readings in the Library</button>` : ''}</div></div>`;
 }

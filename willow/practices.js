@@ -15,7 +15,7 @@ const PERSON = {
   roots: [
     ['wr-prayer', `Your Prayer, Your Way`, `Pray, or have someone read, a prayer you've always known. Rosary, Jesus Prayer, dhikr, the Shema, chanting God's name, loving-kindness, or silence all count.`, `2 to 10 min`, 'wisdom'],
     ['wr-breath', `Breath Prayer`, `Breathe in on a short phrase, out on another. "Be still / and know." "Lord Jesus / have mercy." "Allah / is near." "I am held / I am loved."`, `1 to 3 min`, 'growing'],
-    ['wr-read', `A Reading Aloud`, `Pick one from the Readings library. A helper reads it slowly, twice.`, `3 min`, 'wisdom'],
+    ['wr-read', `A Reading Aloud`, `Pick one from the Readings Library. A helper reads it slowly, twice.`, `3 min`, 'wisdom'],
     ['wr-rite', `A Rite From Your Tradition`, `Ask for the sacrament, blessing, or ritual your faith offers. Willow helps call the right person.`, `Varies`, 'wisdom'],
     ['wr-honest', `Honest Prayer`, `Tell God, or the silence, what's really true, even if it's angry. The Psalms do this.`, `2 min`, 'growing'],
     ['wr-bless', `Receive a Blessing`, `Ask a chaplain, clergy, or family member to bless you, in words that fit your faith, or wherever you are in-between.`, `2 min`, 'wisdom'],

@@ -1,4 +1,4 @@
-/* Grounded library data. One book per line:
+/* Book Library data. One book per line:
    number | title | author | year | copies | tree parts | summary | tags
    Private books are not listed here. Add a book by adding a line.
    AMAZON_TAG: paste the Amazon Associates tag here once the LLC signs up
