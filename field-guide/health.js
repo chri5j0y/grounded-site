@@ -1915,24 +1915,24 @@ function view(){
 // (GGP.data(id, 'tending')), where /home/ runs it with the same engine. Private: it stays on this device, locked.
 const MOVABLE = () => !PUB() && !KIT() && !(C.host === 'home');
 function vMoveOffer(){
-  return `<div class="hj-blk hj-offer tn-card">${kick('One Tending, in My Home')}<p class="hj-sub">Bring your plan and everything you have logged into My Home, where your tree and Tending live together. One tap, and it stays private on this phone.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Move to My Home'}</button></div></div>`;
+  return `<div class="hj-blk hj-offer tn-card">${kick('One Tending, in The Grounded Way')}<p class="hj-sub">Bring your plan and everything you have logged into The Grounded Way app, where your tree and Tending live together. One tap, and it stays private on this phone.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Move to The Grounded Way'}</button></div></div>`;
 }
 function vMoved(){
-  return `<div class="hj-blk tn-card">${kick('Your Tending Lives in My Home')}<h3>Open My Home</h3>
-    <p class="hj-sub">Your plan, your week, and everything you logged moved to My Home on ${esc(shortDate(parseD(H().set.movedHome)))}. Open it there, with your tree, so there is one Tending.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open My Home</button><button type="button" class="btn btn-line btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Bring Over What\'s New'}</button><button type="button" class="linkbtn" data-hja="movehere">Use Tending Here Today</button></div></div>`;
+  return `<div class="hj-blk tn-card">${kick('Your Tending Lives in The Grounded Way')}<h3>Open The Grounded Way</h3>
+    <p class="hj-sub">Your plan, your week, and everything you logged moved to The Grounded Way on ${esc(shortDate(parseD(H().set.movedHome)))}. Open it there, with your tree, so there is one Tending.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button><button type="button" class="btn btn-line btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Bring Over What\'s New'}</button><button type="button" class="linkbtn" data-hja="movehere">Use Tending Here Today</button></div></div>`;
 }
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b868'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b869'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving) return; S.moving = true; rerender(true);
   try {
     await loadGGP(); if (window.GGP.ready) await window.GGP.ready;
-    const ok = await window.GGP.require({reason: 'Open My Home to bring your Tending over.'});
+    const ok = await window.GGP.require({reason: 'Open The Grounded Way to bring your Tending over.'});
     const a = ok && window.GGP.active && window.GGP.active(); if (!a) throw new Error('locked');
     const w = window.GGP.data(a.id, 'tending'); if (!w) throw new Error('vault');
     const f = (C.fld && C.fld()) || {}, fd = C.fdr && C.fdr(), d = D() || {};
@@ -1945,8 +1945,8 @@ async function moveHome(){
     w.movedOnce = 1;
     await window.GGP.save(a.id);
     const h = H(); h.set.movedHome = h.set.movedHome || today(); h.set.u = Date.now(); save();
-    S.moving = false; S.hereOk = false; toast('Your Tending is in My Home.'); rerender(false);
-  } catch (e){ S.moving = false; toast('My Home stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
+    S.moving = false; S.hereOk = false; toast('Your Tending is in The Grounded Way.'); rerender(false);
+  } catch (e){ S.moving = false; toast('The Grounded Way stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
 }
 
 function rerender(keep){

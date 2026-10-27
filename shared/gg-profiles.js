@@ -1088,7 +1088,7 @@
     if (p) {
       var a = AGE[p.age] || AGE.adult, v = open[p.id].data, nSaved = Object.keys((v.stories || {}).saved || {}).length;
       html += '<div class="ggp-who">' + av(p.avatar, p.name, 48) + '<div><b>' + esc(p.name) + '</b><small>' + a.name + '. Unlocked on this device until ' + untilText(cur.until) + '.</small></div></div>';
-      html += link('/home/', 'My Home');
+      html += link('/home/', 'Open The Grounded Way');
       html += link('/grove/', 'The Grove');
       var ta = toolOf(p);
       html += link(ta.href, 'My tree in ' + ta.tool);
@@ -1102,7 +1102,7 @@
     } else {
       var n = readList().length + legacyOak().length;
       html += '<div class="ggp-who">' + '<span style="display:grid;place-items:center;width:44px;height:44px;border-radius:50%;background:var(--ggp-gold-soft);color:var(--ggp-gold)">' + PERSON_SVG + '</span><div><b>Profiles on this device</b><small>Save your check-ins, your tree, and stories, locked with your own passcode. Nothing leaves this device.</small></div></div>';
-      html += link('/home/', 'My Home');
+      html += link('/home/', 'Open The Grounded Way');
       if (n) html += item('open', 'Open a profile');
       html += item('create', 'Create a profile') + item('ld', 'Load a backup') + item('bk', 'Back up everything') + link('/privacy.html#profiles', 'How profiles work');
     }
