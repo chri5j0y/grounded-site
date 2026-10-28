@@ -61,6 +61,12 @@
 .way-band .way-go{background:#D9A847;color:#2E2118;}
 .way-band .way-go:hover{background:#E8BE62;}
 .way-band .way-more{background:transparent;color:#fff;border:2px solid rgba(255,255,255,.75);}
+/* BLD 877: Grounded Recipes, a line of its own under the two doors */
+.way-band .way-rec{display:inline-block;line-height:1.45;margin-top:26px;padding:12px 20px;border-radius:16px;background:rgba(20,24,12,.42);border:1px solid rgba(255,255,255,.28);color:#fff;text-decoration:none;max-width:620px;text-shadow:0 1px 4px rgba(0,0,0,.5);transition:background .2s ease,border-color .2s ease;}
+.way-band .way-rec:hover,.way-band .way-rec:focus-visible{background:rgba(20,24,12,.6);border-color:#F3D58C;}
+.way-band .way-rec-k{display:block;margin-bottom:2px;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1.2px;text-transform:uppercase;font-size:15px;color:#F3D58C;}
+.way-band .way-rec-t{font-size:16px;line-height:1.45;color:#F6EEDB;}
+.way-band .way-rec-go{font-weight:700;color:#F3D58C;margin-left:6px;white-space:nowrap;}
 @media (max-width:640px){#way-door.way-band{background-image:var(--img-n);padding:64px 0;}}
 #living-sober.ls-band{position:relative;padding:72px 0;background:#1F3A30 var(--img) center 70%/cover no-repeat;color:#fff;text-align:center;overflow:hidden;}
 .ls-band::before{content:"";position:absolute;inset:0;background:linear-gradient(180deg,rgba(18,34,27,.55),rgba(31,58,48,.72) 55%,rgba(16,30,24,.82));}
@@ -398,6 +404,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
     <p>Your tree, your daily tending, and the people you love, together in one private app. Food for your goals, movement for your level, quiet for your spirit. It lives on your device, locked with your passcode.</p>
     <ul class="way-tabs" aria-label="Inside the app"><li>Today</li><li>My Tree</li><li>Tending</li><li>More</li></ul>
     <div class="way-acts"><a class="btn btn-primary way-go" href="/home/">Open The Grounded Way</a><a class="btn way-more" href="/the-grounded-way.html">See What&rsquo;s Inside</a></div>
+    <a class="way-rec" href="/recipes/"><span class="way-rec-k">Grounded Recipes</span><span class="way-rec-t">Every meal of the day, with a calm voice to guide each step.<span class="way-rec-go" aria-hidden="true">&rarr;</span></span></a>
   </div>
 </section>
 <section class="home-where" aria-labelledby="where-title">
@@ -530,7 +537,7 @@ a.ht-wlc:hover{border-color:var(--gold);}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="site.js?v=b779n"></script>
-<script src="nav.js?v=b875" defer></script>
+<script src="nav.js?v=b877" defer></script>
 <script>
 /* Grounded service scenes: one small illustrated moment per topic.
    Motion plays once, then settles, except tiny living details. Reduced motion shows the still final scene. */

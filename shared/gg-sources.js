@@ -76,6 +76,7 @@
     "tend-usda-fdc": ["FoodData Central, U.S. Department of Agriculture", "https://fdc.nal.usda.gov/"],
     "tend-usda-temps": ["Safe Minimum Internal Temperature Chart, U.S. Department of Agriculture, Food Safety and Inspection Service", "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"],
     "way-aha-fish": ["Fish and Omega-3 Fatty Acids, American Heart Association", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
+    "tend-prevent": ["Development and Validation of the American Heart Association PREVENT Equations, Khan SS and others, Circulation, 2024", "https://doi.org/10.1161/CIRCULATIONAHA.123.067626"],
 /* BLD866 sources end */
 /* BLD809 sources start */
     // Get Grounded Now (GWG BLD 809): credits for its practices and prayers.

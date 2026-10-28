@@ -33,7 +33,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b875';
+  var V = 'b878';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -314,6 +314,8 @@
       save: function () { saveHome(); },
       render: function () { if (S.view === 'tending') paintTending(); else paintToday(); },
       go: function (t) { if (t === 'health') goTo('tending'); },
+      // BLD 877: a public recipe opens the public Recipes page (/recipes/#<id>) in the frame, so there is one recipe design.
+      openPage: function (path) { var u; try { u = new URL(path, location.href); } catch (e) { return false; } if (u.origin !== location.origin) return false; openFrame(u); return true; },
       toast: toast,
       age: function () { return S.p ? S.p.age : 'adult'; },
       name: function () { return S.p ? S.p.name : ''; }
@@ -581,7 +583,7 @@
     var chosen = TEND6.filter(function (t) { return parts.indexOf(t[0]) >= 0 && t[0] !== 'sober'; });
     if (sm && sm.workout && parts.indexOf('move') >= 0) {
       var wd = !!sm.workout.done;
-      cards.push('<article class="hm-card edge lift hm-a-move' + (wd ? ' done' : '') + '"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-move.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">' + (hr < 12 ? 'Morning' : hr < 17 ? 'Today' : 'This evening') + (sm.workout.mins ? ' · ' + esc(sm.workout.mins) + ' min' : '') + '</div><h3 class="hm-h3">' + esc(sm.workout.title || 'Today\'s Workout') + '</h3><div class="hm-meta"><span>' + I('move') + 'Movement</span><span>Ava coaches</span></div>' +
+      cards.push('<article class="hm-card edge lift hm-a-move' + (wd ? ' done' : '') + '"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-move.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">' + (hr < 12 ? 'Morning' : hr < 17 ? 'Today' : 'This evening') + (sm.workout.mins ? ' · ' + esc(sm.workout.mins) + ' min' : '') + '</div><h3 class="hm-h3">' + esc(sm.workout.title || 'Today\'s Workout') + '</h3><div class="hm-meta"><span>' + I('move') + 'Movement</span><span>Voice coaching</span></div>' +
         '<div class="hm-acts tight"><button class="hm-btn sm" type="button" data-hm-open="move">' + I('play') + (wd ? 'Open' : 'Start') + '</button>' + (wd ? '<span class="hm-chip">' + I('check') + 'Done</span>' : '') + '</div></div></div></article>');
       total++; if (wd) done++;
     }
@@ -593,6 +595,11 @@
         '<div class="hm-meter">' + ring(74, 8, num(pl.pro) || 0, pro || Math.max(1, num(pl.pro) || 1), '<b>' + Math.round(num(pl.pro) || 0) + 'g</b>', '#3F6F94') + '<div class="nm">Protein</div><div class="nt">' + (pro ? 'goal ' + pro + ' g' : 'set by your goal') + '</div></div>' +
         '<div class="hm-meter">' + ring(74, 8, num(pl.sf) || 0, sf, '<b>' + Math.round(num(pl.sf) || 0) + 'g</b>', '#C2410C') + '<div class="nm">Saturated Fat</div><div class="nt">' + sf + ' g or less</div></div>' +
         '</div><div class="hm-acts tight"><button class="hm-btn sm line" type="button" data-hm-open="plate">' + I('plus') + 'Log a Meal</button></div></article>');
+    }
+    // BLD 877: Grounded Recipes, every public recipe with its step by step guide, opened in the frame (/recipes/ is an in-home link).
+    {
+      cards.push('<article class="hm-card edge lift hm-a-plate hm-recipes"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-fruit.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Any meal</div><h3 class="hm-h3">Grounded Recipes</h3><div class="hm-meta"><span>' + I('plate') + 'Breakfast, lunch, dinner, and snacks</span><span>Guided step by step</span></div>' +
+        '<div class="hm-acts tight"><a class="hm-btn sm" href="/recipes/">' + I('book') + 'Open Recipes</a></div></div></div></article>');
     }
     if (parts.indexOf('still') >= 0) {
       total++; if (d.quiet) done++;
@@ -758,6 +765,8 @@
     if (h.who === 'family' && out.length < 6) out.push(tool('hm-p-branches', '/grove/', 'people', 'The Grove', 'Your family\'s trees, together', mark('grove')));
     out.push(tool('hm-p-bark', '/get-grounded-now.html', 'wind', 'Get Grounded Now', 'Calm in a minute or two'));
     out.push(tool('hm-p-roots', '/readings.html', 'feather', 'Readings Library', 'Prayers, poems, and blessings'));
+    // BLD 877: Grounded Recipes (with Tending on, it is a card in Today's Tending instead).
+    if (!full) out.push(tool('hm-a-plate', '/recipes/', 'plate', 'Grounded Recipes', 'Every meal, guided step by step'));
     if (full) out.push(tool('hm-p-trunk', '/library/', 'book', 'Book Library', 'Books and studies we draw from'));
     out = out.slice(0, 6);
     return '<div style="margin-top:28px" id="hm-tools"><div class="hm-plan-hd"><h2 class="hm-h2">Your Tools</h2><span class="hm-time">Everything you use</span></div><div class="hm-tools' + (out.length <= 3 ? ' few' : '') + '">' + out.join('') + '</div>' +
@@ -777,7 +786,8 @@
       if (tendReady()) { if (S.tendInit !== S.id) initTending(); try { html = window.GGHealth.view() || ''; } catch (e) { if (window.console) console.error(e); html = ''; } }
       if (!html) html = tendSoonHtml();
       b.innerHTML = html;
-      // BLD 875: /home/#recipe-<id> opens Recipes with that recipe in Andrew's cook guide, then the address settles on #tending.
+      // BLD 875: /home/#recipe-<id> opens Recipes with that recipe, then the address settles on #tending. BLD 877: in public mode the
+      // recipe opens on the public Recipes page in the frame (GGHealth.openRecipe calls openPage), over the Recipes tab.
       var rm = /^#recipe-(.+)$/.exec(decodeURIComponent(location.hash || ''));
       if (rm && tendReady() && typeof window.GGHealth.openRecipe === 'function') {
         try { history.replaceState(null, '', location.pathname + '#tending'); } catch (e) {}
@@ -942,7 +952,7 @@
   function frameTitle(u) {
     var seg = u.pathname.split('/').filter(Boolean)[0] || '';
     if (TREES[seg]) return TREES[seg].n;
-    var t = { 'living-sober.html': 'Living Sober', 'get-grounded-now.html': 'Get Grounded Now', 'readings.html': 'Readings Library', 'the-grounded-way.html': 'The Grounded Way' }[seg];
+    var t = { 'living-sober.html': 'Living Sober', 'get-grounded-now.html': 'Get Grounded Now', 'readings.html': 'Readings Library', 'the-grounded-way.html': 'The Grounded Way', 'recipes': 'Grounded Recipes' }[seg];
     return t || 'Grounded';
   }
   function openFrame(u, push) {
