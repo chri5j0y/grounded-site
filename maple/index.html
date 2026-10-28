@@ -265,6 +265,7 @@ h4.grown{font-family:var(--sans);font-weight:600;font-size:18px;margin:18px 0 4p
 .q-why p{margin:4px 0 0;padding-left:12px;border-left:3px solid var(--gold);}
 .qtip b{color:var(--ink);}
 .safe-note{font-size:16px;color:var(--ink-soft);margin:0 0 8px;}
+.mp-quiet{font-size:14px;line-height:1.45;color:var(--ink-soft);margin:14px 0 0;}
 .calm-card{border:3px solid var(--sky-bright);background:var(--sky-soft);border-radius:22px;padding:16px 18px;margin:0 0 18px;}
 .calm-card h3{font-family:var(--kid);font-weight:500;font-size:24px;margin:0 0 6px;}
 .calm-card p{margin:6px 0;font-size:17px;line-height:1.45;}
@@ -934,7 +935,7 @@ a.big-btn{text-decoration:none;}
   </nav>
   <p class="foot-local foot-way"><a class="text-link" href="/the-grounded-way.html">Go further with The Grounded Way.</a></p>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
-  <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, any time.</p>
+  <p class="foot-crisis">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>
   <p class="footer-privacy">Check-ins stay in this browser. Everything a child enters here stays on this device.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. The Grow With Grounded Maple name, logo, six-part tree framework, questions, activities, illustrations, and guide are original works protected by copyright and may not be copied, adapted, or redistributed without written permission.</p>
 </footer>
@@ -944,14 +945,14 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b885"></script>
+<script src="/shared/gg-profiles.js?v=b887"></script>
 <script src="/shared/gg-life.js?v=b851"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/maple/guides.js?v=b852"></script>
-<script src="/maple/checkin.js?v=b782"></script>
+<script src="/maple/checkin.js?v=b887"></script>
 <script src="/maple/life.js?v=b789"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b852"></script>
+<script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
@@ -1155,7 +1156,7 @@ const PARTS = [
       you: 'Your fruit is hope: the good things you are looking forward to.',
       q: 'How is your fruit today?',
       sunny: ['I have something fun coming up.', 'I think tomorrow can be good.', 'I have a dream for when I grow up.'],
-      rainy: ['I don\'t want tomorrow to come.', 'Nothing good is coming.', 'I feel stuck.']
+      rainy: ['Tomorrow feels hard.', 'Nothing good is coming.', 'I feel stuck.']
     },
     kind: {
       sun: 'Your fruit is bright and full of seeds. Good things are coming!',
@@ -1167,20 +1168,12 @@ const PARTS = [
     guide: {
       starters: ['What are you looking forward to?', 'What do you want to be or do someday?', 'What is one good thing that could happen tomorrow?'],
       why: 'Hope can be taught: a goal, a path to get there, and "I can do it."',
-      rainy: 'Plan something small and good together so there is something to look forward to. Take "I don\'t want tomorrow to come" seriously and keep talking (see When to reach out).',
+      rainy: 'Plan something small and good together so there is something to look forward to. If tomorrow feels hard to them, ask gently what makes it hard, and keep talking (see When to reach out).',
       sel: 'Connects to self-management and responsible decision-making.'
     }
   }
 ];
 
-/* Signs a grown-up should hear about, by part key and sign text */
-const FLAG_SIGNS = {
-  'Someone is being mean to me.': 'bully',
-  'I don\'t want tomorrow to come.': 'hope',
-  'Nothing good is coming.': 'hope',
-  'I feel all alone inside.': 'alone',
-  'I feel alone inside.': 'alone'
-};
 
 const ACTIVITIES = [
   /* Eight for each part (Rebrand Session 4). k2 is for grades K to 2, g35 for grades 3 to 5,
@@ -1452,7 +1445,6 @@ const gradeLabel = g => g === 'k2' ? 'Grades K to 2' : g === '35' ? 'Grades 3 to
 // The questions in a wording (the one in use unless a saved check-in names its own).
 const qsFor = (grade, key, wording) => ((CK.getBank ? CK.getBank(grade, wording || curWording()) : CK.questions[grade]) || {})[key] || [];
 const whyFor = (grade, key, i, wording) => CK.whyOf ? CK.whyOf(grade, key, i, wording || curWording()) : ((((CK.why || {})[grade] || {})[key]) || [])[i] || '';   // Why this question? (for the grown-up)
-const safetyFor = grade => isK2(grade) ? CK.safety.young : CK.safety.older;
 const ANS = Object.fromEntries(CK.answers.map(a => [a[0], a]));
 const ANS_ICON = {
   yes: '<svg viewBox="0 0 40 28" aria-hidden="true"><rect x="4" y="16" width="8" height="10" rx="2" fill="currentColor"/><rect x="16" y="9" width="8" height="17" rx="2" fill="currentColor"/><rect x="28" y="2" width="8" height="24" rx="2" fill="currentColor"/></svg>',
@@ -1731,7 +1723,7 @@ function startCheckin() {
   if (!name) { $('start-error').textContent = 'Type your first name to start.'; $('kid-name').focus(); return; }
   if (!S.grade) { $('start-error').textContent = 'Pick your grade to start.'; return; }
   S.name = name.charAt(0).toUpperCase() + name.slice(1);
-  S.step = 0; S.answers = {}; S.done = []; S.picks = []; S.weeks = 2; S.recordId = null; S.safety = []; S.inSafety = false;
+  S.step = 0; S.answers = {}; S.done = []; S.picks = []; S.weeks = 2; S.recordId = null;
   S.readAloud = isK2(S.grade);
   const kid = loadKids()[kidId(S.name)];
   const last = kid && kid.checkins.length ? kid.checkins[kid.checkins.length - 1] : null;
@@ -1780,7 +1772,7 @@ function artGrowthHtml(kid) {
 function treeLive(mapleKey) {
   $('dots').innerHTML = PARTS.map((q, i) => {
     const done = S.done.includes(q.key);
-    return `<span class="dot${done ? ' done' : ''}${!S.inSafety && i === S.step ? ' here' : ''}" style="${done ? 'background:' + q.color : ''}" title="${q.name}">${ICONS[q.icon]}</span>`;
+    return `<span class="dot${done ? ' done' : ''}${i === S.step ? ' here' : ''}" style="${done ? 'background:' + q.color : ''}" title="${q.name}">${ICONS[q.icon]}</span>`;
   }).join('');
   const grown = {};
   S.done.forEach(k => { if (S.answers[k]) grown[k] = S.answers[k]; });
@@ -1796,7 +1788,6 @@ function toStepTop(first) {
 }
 function sayBtn(i) { return `<button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud">${ICONS.speaker}</button>`; }
 function renderStep(first, mapleKey) {
-  if (S.inSafety) return renderSafety(first, mapleKey);
   const p = PARTS[S.step];
   const g = gradeData(p, S.grade);
   const qs = qsFor(S.grade, p.key);
@@ -1809,7 +1800,7 @@ function renderStep(first, mapleKey) {
       <div class="learn-card tree kid-text"><small>What ${p.key === 'trunk' ? 'a ' : ''}${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for a tree</small>${esc(g.tree)}</div>
       <div class="learn-card you kid-text"><small>What your ${p.name.toLowerCase()} ${p.plural ? 'do' : 'does'} for you</small>${esc(g.you)}</div>
     </div>
-    <div class="qs">${qs.map((q, i) => { const ln = q[3] ? { ex: [], tip: [] } : mpNote(p.key, i, loadKids()[kidId(S.name || '')] || { _pid: null }); return `<div class="qcard${qa[i] ? ' answered' : ''}">
+    <div class="qs">${qs.map((q, i) => { const ln = mpTalk(p.key, i) ? { ex: [], tip: [] } : mpNote(p.key, i, loadKids()[kidId(S.name || '')] || { _pid: null }); return `<div class="qcard${qa[i] ? ' answered' : ''}">
       <div class="qline"><p class="qtext" id="q-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
       <div class="ans-row" role="group" aria-labelledby="q-${i}">${CK.answers.map(an => `<button class="ansb" aria-pressed="${qa[i] === an[0]}" onclick="pickAns(${i},'${an[0]}')">${ANS_ICON[an[0]]}<span>${esc(an[1])}</span></button>`).join('')}</div>
       ${ln.ex.length ? `<ul class="mp-ex kid-text" aria-label="An example">${ln.ex.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}
@@ -1820,13 +1811,13 @@ function renderStep(first, mapleKey) {
       <button class="soft-btn" onclick="skipStep()">Skip</button>
       <button class="big-btn" onclick="nextStep()">Next</button>
       <p class="step-error" id="step-error" role="alert"></p>
-    </div>`;
+    </div>
+    ${mpQuiet()}`;
   if (first || mapleKey !== undefined) toStepTop(first);
   voiceSlots();
   if (S.readAloud && (first || mapleKey !== undefined)) setTimeout(() => say(`${p.name}. ${g.tree} ${g.you} ${qs.length ? qs[0][0] : ''}`), 350);
 }
 function sayQ(i) {
-  if (S.inSafety) { const q = safetyFor(S.grade)[i]; if (q) say(q[0]); return; }
   const q = qsFor(S.grade, PARTS[S.step].key)[i]; if (q) say(q[0]);
 }
 /* The shared voice picker and speed (read.js), shown while read aloud is on. */
@@ -1845,7 +1836,6 @@ function toggleRead() {
   b.innerHTML = `${ICONS.speaker}Read Aloud: ${S.readAloud ? 'on' : 'off'}`;
   voiceSlots();
   if (S.readAloud) {
-    if (S.inSafety) { say(safetyFor(S.grade).map(q => q[0]).join(' ')); return; }
     const p = PARTS[S.step], g = gradeData(p, S.grade), qs = qsFor(S.grade, p.key);
     say(`${p.name}. ${g.tree} ${g.you} ${qs.length ? qs[0][0] : ''}`);
   }
@@ -1888,44 +1878,16 @@ function advance(key) {
   const fresh = !S.done.includes(key);
   if (fresh) S.done.push(key);
   if (S.step < PARTS.length - 1) { S.step++; renderStep(false, fresh ? key : null); }
-  else { S.inSafety = true; S.lastKey = fresh ? key : null; renderSafety(false, S.lastKey); }
+  else finishCheckin(fresh ? key : null);
 }
 function prevStep() {
-  if (S.inSafety) { S.inSafety = false; renderStep(false, null); return; }
   if (S.step > 0) { S.step--; renderStep(false, null); }
 }
-/* ---------- safety step ---------- */
-function renderSafety(first, mapleKey) {
-  const qs = safetyFor(S.grade);
-  treeLive(mapleKey);
-  $('step').innerHTML = `
-    <div class="step-head"><div><p class="step-count kid-text">Almost done</p><h2 class="step-name">Staying safe</h2></div></div>
-    <div class="say-row"><button class="say-btn" aria-pressed="${S.readAloud}" onclick="toggleRead()">${ICONS.speaker}Read Aloud: ${S.readAloud ? 'on' : 'off'}</button><div class="voice-slot"></div></div>
-    <p class="safe-note kid-text">${esc(qs.length > 1 ? CK.safety.intro : CK.safety.introYoung)}</p>
-    <div class="qs">${qs.map((q, i) => `<div class="qcard${S.safety[i] ? ' answered' : ''}">
-      <div class="qline"><p class="qtext" id="sq-${i}">${esc(q[0])}</p>${sayBtn(i)}</div>
-      <div class="ans-row" style="grid-template-columns:repeat(3,1fr)" role="group" aria-labelledby="sq-${i}">${CK.safety.answers.map(an => `<button class="ansb" aria-pressed="${S.safety[i] === an[0]}" onclick="pickSafe(${i},'${an[0]}')"><span>${esc(an[1])}</span></button>`).join('')}</div>
-    </div>`).join('')}</div>
-    <div class="step-nav">
-      <button class="soft-btn" onclick="prevStep()">Back</button>
-      <button class="soft-btn" onclick="finishCheckin(S.lastKey)">Skip</button>
-      <button class="big-btn" onclick="safetyDone()">See my tree</button>
-      <p class="step-error" id="step-error" role="alert"></p>
-    </div>`;
-  if (mapleKey !== undefined) toStepTop(false);
-  voiceSlots();
-  if (S.readAloud && mapleKey !== undefined) setTimeout(() => say(`${qs.length > 1 ? CK.safety.intro : CK.safety.introYoung} ${qs[0][0]}`), 350);
-}
-function pickSafe(i, v) {
-  S.safety[i] = S.safety[i] === v ? null : v;
-  if (S.readAloud && S.safety[i]) say(CK.safety.answers.find(a => a[0] === v)[1]);
-  const y = window.scrollY; renderSafety(false); window.scrollTo(0, y);
-}
-function safetyDone() {
-  const n = safetyFor(S.grade).length;
-  for (let i = 0; i < n; i++) if (!S.safety[i]) { $('step-error').textContent = 'Answer each question, or tap Skip.'; return; }
-  finishCheckin(S.lastKey);
-}
+/* GWG BLD 887: no safety step. Grounded asks open, curious questions and never a harm question.
+   The quiet kids line is type only: never spoken, never a card. TALK marks the questions that
+   give the grown-up a gentle conversation idea (CK.talk, same place in every grade). */
+function mpQuiet() { return `<p class="mp-quiet no-read">${esc(CK.quiet || '')}</p>`; }
+function mpTalk(part, i) { return ((CK.talk || {})[part] || {})[i] || ''; }
 
 /* ---------- results ---------- */
 function finishCheckin(lastKey) {
@@ -1935,9 +1897,8 @@ function finishCheckin(lastKey) {
   kids[id].name = S.name;
   kids[id].grade = S.grade;
   if (!plainLocked(kids[id]) && (!kids[id].wording || (S.mode === 'grown' && S.pickW))) kids[id].wording = curWording();
-  hush(); S.inSafety = false;
-  const safety = safetyFor(S.grade).map((q, i) => S.safety[i] || null);
-  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, wording: curWording(), answers: JSON.parse(JSON.stringify(S.answers)), safety, safetyFlag: safety.some(a => a === 'yes' || a === 'unsure'), plan: null };
+  hush();
+  const rec = { id: 'c' + Date.now(), date: new Date().toISOString(), grade: S.grade, std: CK.version, mode: S.mode, wording: curWording(), answers: JSON.parse(JSON.stringify(S.answers)), plan: null };
   kids[id].checkins.push(rec);
   saveKids(kids);
   S.recordId = rec.id;
@@ -1945,45 +1906,33 @@ function finishCheckin(lastKey) {
   const nudge = saveNudge(id); if (nudge) $('view-results').insertAdjacentHTML('afterbegin', nudge);
   go('results');
 }
-function concernInfo(answers, grade, safety, wording) {
+// Rainy parts, skipped parts, and the TALK questions whose answer leans hard (a gentle idea for the grown-up,
+// on this device only). No flags, no alerts, no pause (GWG BLD 887); old saved safety answers stay unread.
+function concernInfo(answers, grade, wording) {
   const rainy = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'rain');
   const skipped = PARTS.filter(p => answers[p.key] && answers[p.key].w === 'skip');
-  const flags = [];
+  const talks = [];
   PARTS.forEach(p => {
     const a = answers[p.key];
-    if (a && a.signs) a.signs.forEach(s => { if (FLAG_SIGNS[s]) flags.push({ sign: s, type: FLAG_SIGNS[s], part: p }); });
-    if (a && a.qa) qsFor(grade, p.key, wording).forEach((q, i) => { if (q[3] && (a.qa[i] === 'yes' || a.qa[i] === 'some')) flags.push({ sign: q[0], ans: ANS[a.qa[i]][1], type: q[3], part: p }); });
+    if (a && a.qa) qsFor(grade, p.key, wording).forEach((q, i) => { const t = mpTalk(p.key, i), an = ANS[a.qa[i]]; if (t && an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1)) talks.push({ sign: q[0], ans: an[1], type: t, part: p }); });
   });
-  const sq = safetyFor(grade), safe = [];
-  (safety || []).forEach((v, i) => { if ((v === 'yes' || v === 'unsure') && sq[i]) safe.push({ kind: sq[i][1], q: sq[i][0], ans: v }); });
-  return { rainy, skipped, flags, safe, concern: rainy.length >= 2 || flags.length > 0 || safe.length > 0 };
+  return { rainy, skipped, talks, concern: rainy.length >= 2 };
 }
-const saidHTML = (f, name) => f.ans ? `${esc(name)} answered "${esc(f.ans)}" to "${esc(f.sign)}"` : `${esc(name)} tapped "${esc(f.sign)}"`;
-function safetyNoteHTML(info, name) {
-  if (!info.safe || !info.safe.length) return '';
-  const self = info.safe.some(x => x.kind === 'self'), hurt = info.safe.some(x => x.kind === 'safe');
-  let h = `<div class="calm-card"><h3>Please check in with ${esc(name)} today</h3>`;
-  info.safe.forEach(x => { h += `<p>${esc(name)} answered "${x.ans === 'yes' ? 'Yes' : 'Not sure'}" to "${esc(x.q)}"</p>`; });
-  h += `<p>Stay calm, find a quiet moment, and ask gently what is going on. Listen more than you talk, thank them for telling you, and don't promise to keep it a secret.</p>`;
-  if (self) h += `<p>If ${esc(name)} talks about wanting to die or to hurt themselves, stay with them. Call or text 988, the Suicide and Crisis Lifeline, any time, or call their doctor right away.</p>`;
-  if (hurt) h += `<p>If someone is hurting ${esc(name)}, report it to your county child protection agency or the police. Teachers, counselors, and other mandated reporters should follow their own reporting steps. The Childhelp hotline, 1-800-422-4453, can help you figure out who to call.</p>`;
-  h += `<p><b>If a child is in danger right now, call 911.</b></p><div class="action-row"><a class="big-btn" href="tel:911">Call 911</a><a class="soft-btn" href="tel:988">Call 988</a><a class="soft-btn" href="sms:988">Text 988</a></div></div>`;
-  return h;
-}
+const saidHTML = (f, name) => `${esc(name)} answered "${esc(f.ans)}" to "${esc(f.sign)}"`;
 function answersHTML(rec) {
   if (!rec || rec.std !== CK.version) return '';
   return `<details><summary>See every answer from ${fmtDate(rec.date)}</summary>${PARTS.map(p => {
     const a = rec.answers[p.key] || {}, lv = levelOf(a.score), qs = qsFor(rec.grade, p.key, rec.wording);
     return `<p style="margin:12px 0 0"><b>${p.name}</b>${lv ? `<span class="lvl ${lv[0]}">${lv[1]}</span>` : '<span class="lvl">Skipped</span>'}</p>${a.qa && a.qa.length ? `<ul class="ans-list">${qs.map((q, i) => { const an = ANS[a.qa[i]], hard = an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1); return `<li${hard ? ' class="hard"' : ''}>${esc(q[0])} <i>${an ? esc(an[1]) : 'No answer'}</i></li>`; }).join('')}</ul>` : ''}`;
-  }).join('')}${rec.safety ? `<p style="margin:12px 0 0"><b>Staying safe</b></p><ul class="ans-list">${safetyFor(rec.grade).map((q, i) => { const v = rec.safety[i]; return `<li${v && v !== 'no' ? ' class="hard"' : ''}>${esc(q[0])} <i>${v ? CK.safety.answers.find(x => x[0] === v)[1] : 'Skipped'}</i></li>`; }).join('')}</ul>` : ''}</details>`;
+  }).join('')}</details>`;
 }
 function grownNoteHTML(info, name, rec) {
-  let h = safetyNoteHTML(info, name);
+  let h = '';
   if (info.concern) h += `<p>${esc(name)} may be carrying something heavy right now. Spend some unhurried time together, ask about the rainy parts, and listen more than you fix. If it doesn't lift in a couple of weeks, reach out to someone you trust, like ${isPlain() ? '' : 'a pastor, '}a teacher, a school counselor, or ${esc(name)}'s doctor.</p>`;
-  info.flags.forEach(f => {
-    if (f.type === 'bully') h += `<p>${saidHTML(f, name)}. Listen first and ask what has been happening. Then let their teacher or school know so they can help. <button class="link-btn" onclick="openTalk('bullied','tree')">Read the Being Bullied guide</button></p>`;
+  info.talks.forEach(f => {
+    if (f.type === 'kind') h += `<p>${saidHTML(f, name)}. Ask about friends, recess, and lunch, and listen first. If something hard is happening with other kids, let their teacher or school know so they can help. <button class="link-btn" onclick="openTalk('friendship','tree')">Read the Friendship guide</button></p>`;
     if (f.type === 'alone') h += `<p>${saidHTML(f, name)}. Extra closeness this week, like one-on-one time, a walk, or a bedtime talk, can make a big difference. <button class="link-btn" onclick="openTalk('sadness','tree')">Read the Sadness That Lingers guide</button></p>`;
-    if (f.type === 'hope') h += `<p>${saidHTML(f, name)}. Most of the time this means a child feels worn out or sad, but please ask gently how they are feeling. If a child ever talks about wanting to die or to hurt themselves, call their doctor right away, or call or text 988, the Suicide and Crisis Lifeline, any time. <button class="link-btn" onclick="openTalk('wanting-die','tree')">Read the guide on when a child talks about wanting to die</button></p>`;
+    if (f.type === 'hope') h += `<p>${saidHTML(f, name)}. Spend some unhurried time together, ask gently how they are feeling, and plan one small, good thing to look forward to. <button class="link-btn" onclick="openTalk('sadness','tree')">Read the Sadness That Lingers guide</button></p>`;
   });
   if (rec && rec.std === CK.version) h += `<p><b>Levels:</b> ${PARTS.map(p => { const lv = levelOf((rec.answers[p.key] || {}).score); return `${p.name} ${lv ? lv[1] : 'skipped'}`; }).join(', ')}.</p>`;
   else if (info.rainy.length) h += `<p><b>Rainy parts:</b> ${info.rainy.map(p => p.name).join(', ')}.</p>`;
@@ -2000,7 +1949,7 @@ function thenNowHTML(prev, cur, name) {
     <button class="soft-btn" onclick="S.seasonSub='grown';openTree(kidId(S.name),'grown')">See how I've grown</button></div>`;
 }
 function renderResults(rec, lastKey) {
-  const info = concernInfo(rec.answers, rec.grade, rec.safety, rec.wording);
+  const info = concernInfo(rec.answers, rec.grade, rec.wording);
   const name = S.name;
   const kind = PARTS.map(p => {
     const a = rec.answers[p.key] || { w: 'skip' };
@@ -2009,9 +1958,6 @@ function renderResults(rec, lastKey) {
   let note = '';
   if (S.mode === 'grown') {
     note = `<div class="grown-open"><h3>For the grown-up</h3>${grownNoteHTML(info, name, rec)}</div>`;
-  } else if (info.safe.length) {
-    note = `<div class="calm-card"><h3>Thank you for telling</h3><p>That took courage. Please show this to a grown-up you trust today, like a parent, a teacher, or a school counselor.</p><p>You can call or text 988 any time to talk to someone kind. If you are in danger right now, call 911.</p><div class="action-row"><a class="big-btn" href="tel:911">Call 911</a><a class="soft-btn" href="tel:988">Call 988</a><a class="soft-btn" href="sms:988">Text 988</a></div></div>
-      <details class="grown-box"><summary>For Grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
   } else if (info.concern) {
     note = `<div class="invite"><p>Your tree has had some rainy days. Show it to a grown-up you trust.</p></div>
       <details class="grown-box"><summary>For Grown-ups</summary><div class="inner">${grownNoteHTML(info, name, rec)}</div></details>`;
@@ -2034,6 +1980,7 @@ function renderResults(rec, lastKey) {
           <button class="soft-btn" onclick="openTree(kidId(S.name), 'tree')">Go to my tree</button>
           ${S.mode === 'grown' ? '<button class="soft-btn" onclick="nextChild()">Start with the next child</button>' : ''}
         </div>
+        ${mpQuiet()}
       </div>
     </div>`;
   artStick($('results-tree'), loadKids()[kidId(name)]);
@@ -2101,7 +2048,6 @@ function currentRecord() {
 }
 function nextChild() {
   hush();
-  S.inSafety = false; S.safety = [];
   S.name = ''; S.answers = {}; S.step = 0; S.picks = []; S.recordId = null; S.prior = null;
   $('kid-name').value = '';
   go('home');
@@ -2275,7 +2221,7 @@ function renderTree() {
   MP_KID = kid; S.wording = kidWording(kid);
   const tab = S.treeTab || 'today';
   const last = kid.checkins[kid.checkins.length - 1];
-  const info = last ? concernInfo(last.answers, last.grade, last.safety, last.wording) : null;
+  const info = last ? concernInfo(last.answers, last.grade, last.wording) : null;
   $('view-tree').innerHTML = `<div class="mp-app">
     <div class="mt-head"><button class="kid-pic" onclick="GGTend.openSettings()" aria-label="${esc(kid.name)}'s picture and settings">${GGAv.html(kid.avatar, kid.name, 60)}<span>Settings</span></button>
       <div class="mp-who"><h2 class="kid">${esc(kid.name)}'s tree</h2><p>${esc(gradeLabel(kid.grade || ''))}${mpMulti() ? ` <span aria-hidden="true">/</span> <button class="link-btn" onclick="go('home')">Whose tree?</button>` : ''}</p></div>
@@ -2437,8 +2383,6 @@ function mpInit(kid) {
     todayExtra: s => mpTodayExtra(s),
     seasonExtra: s => mpSeasonExtra(s),
     onCheck: (done, key, s, parts) => mpOnCheck(done, key, s, parts),
-    pause: () => mpPause(),
-    pauseLine: 'Your tree is cozy and safe. It stays green and happy while your grown-ups help.',
     actions: {
       fullCheckin: () => newCheckinFor(S.kid), quickCheckin: () => newCheckinFor(S.kid),
       results: () => { S.seasonSub = 'checkins'; mpTab('season'); }, progress: () => { S.seasonSub = 'grown'; mpTab('season'); },
@@ -2560,17 +2504,7 @@ function mpCheckNew(s, quiet) {
   CRITTERS.forEach(c => { if (cr[c.key] && !R.friends[c.key]) { R.friends[c.key] = dkey(); if (!fresh.friend) fresh.friend = c; } });
   return fresh;
 }
-// The pause: for 14 days after a check-in says a child feels alone or without hope, or the safety
-// step asks for help, the tree holds as it is and only kind words show.
-function mpPause() {
-  const k = MP_KID; if (!k) return false;
-  const cut = addDays(dkey(), -14);
-  return (k.checkins || []).some(c => {
-    if (!c || !c.date || dkey(new Date(c.date)) < cut) return false;
-    const info = concernInfo(c.answers || {}, c.grade, c.safety, c.wording);
-    return info.flags.some(f => f.type === 'alone' || f.type === 'hope') || info.safe.some(x => x.kind === 'self');
-  });
-}
+// GWG BLD 887: the 14 day pause tied to flags is gone; the tree simply grows with each day of tending.
 function mpCheer(text, sub, critter) {
   let el = $('mp-cheer');
   if (!el) { el = document.createElement('div'); el.id = 'mp-cheer'; el.className = 'mp-cheer'; el.setAttribute('role', 'status'); el.setAttribute('aria-live', 'polite'); document.body.appendChild(el); }
@@ -2581,7 +2515,7 @@ function mpCheer(text, sub, critter) {
 }
 /* ---------- a card from a Maple Guide visit (GWG BLD 746) ----------
    A Maple Guide's QR code or link (GGApp.visit, /shared/gg-app.js) carries only a first name, the date,
-   the strong parts, and what the child chose to try. Never levels, notes, safety answers, the optional
+   the strong parts, and what the child chose to try. Never levels, notes, answers, the optional
    question, or anyone else's name. It asks before saving, then lives on the child's own tree (visitCards
    in the kid record), shows on Today, and can be removed any time. When the Guide's school or group asks
    for Plain wording (pl 1), adding the card also locks Plain on this child's tree (plainLock true in the
@@ -2665,8 +2599,8 @@ function mpVisitCheck(force) {
 }
 window.addEventListener('gg-visit', () => mpVisitCheck(true));
 function mpTodayExtra(s) {
-  const n = window.GGTend ? GGTend.partsOn(dkey()) : 0, paused = mpPause();
-  const line = paused ? 'Tend it whenever you like. Your tree is always glad to see you.' : n ? mpKindWord(n) : 'One practice is enough to start. Your tree is waiting for you.';
+  const n = window.GGTend ? GGTend.partsOn(dkey()) : 0;
+  const line = n ? mpKindWord(n) : 'One practice is enough to start. Your tree is waiting for you.';
   const days = mpDays(s), L = mpLevel(days), wk = mpWeekParts(s, mpMonday(dkey())), wn = Object.keys(wk).length;
   const cr = MP_KID ? critterState(MP_KID) : {}, met = CRITTERS.some(c => cr[c.key]);
   return mpVisitHtml() + `<div class="gt-card mp-kind"><p class="mp-kind-line">${esc(line)}</p></div>
@@ -2700,7 +2634,7 @@ function mpOnCheck(done, key, s, parts) {
    Settings keeps the way back. Start My Aspen makes a new Middle school profile with Aspen
    as its tree (a grown-up agrees), and copies Maple's rings, labeled From Maple, and the
    Faith or Plain choice, and offers to bring their Health and Ability choices. The copies
-   keep only the date, grade, and each part's score, never the answers or the safety step.
+   keep only the date, grade, and each part's score, never the answers.
    Maple keeps its own record whole. Aspen reads them from student.earlier, and the wording
    from aspen.wording. */
 function mpMoveDue(k) { return !!(k && window.GGP && GGP.moveOn && GGP.moveOn.gradeDue('5', k.checkins || [], k.done5)); }
@@ -3076,7 +3010,7 @@ function renderGuide() {
     <ul>
       <li>Pick <b>On my own</b> or <b>With a grown-up</b>, then the child's grade. Kindergarten and each grade from 1 to 5 has its own questions, written for that age. Kindergarten through grade 2 starts with read aloud on. With a grown-up adds a short tip under every question.</li>
       <li>For each of the six parts, the child learns what that part does for a tree and for them, then answers four short questions: Yes, a lot; Sometimes; Not really; or I don't know. They can skip any part. Their answers decide the weather for that part of the tree.</li>
-      <li>At the end there is a short safety step. Every grade answers whether anyone is hurting them or making them feel scared. Grades 3 to 5 also answer one gentle question about wishing they were not alive. Any yes or not sure shows the child a calm card with 988 and 911, and shows the grown-up what to do next.</li>
+      <li>Every question is open and curious, and every answer is welcome. A quiet line under the questions reminds the child to tell a trusted grown-up right away whenever they feel unsafe, with 988 and 911 for an emergency.</li>
       <li>Their tree grows one piece at a time. At the end they see the whole tree with a kind word for each part.</li>
       <li>Then their tree is ready to tend right here in Maple: a few small things a day for each part, done together. Their tree also stands in The Grove beside the rest of the family's trees.</li>
       <li>Every check-in adds a ring to their tree here. Maple invites a new check-in every four weeks, and every check-in stays on their tree page, so you can see how they have grown over time.</li>
@@ -3135,7 +3069,7 @@ function renderGuide() {
       <li>sleep, eating, or schoolwork changes a lot, or</li>
       <li>a child says someone is hurting them or being mean to them.</li>
     </ul>
-    <p><b>If a child ever talks about wanting to die or to hurt themselves, take it seriously.</b> Call their doctor right away, or call or text 988, the Suicide and Crisis Lifeline, any time. If someone is in immediate danger, call 911.</p>
+    <p><b>If a child ever talks about hurting themselves, take it seriously and stay close.</b> Call their doctor right away, or call or text 988 any time. If someone is in danger right now, call 911.</p>
 
     <h3 class="grown" id="g-sources">Sources</h3>
     <p>Maple's activities come from research on how children grow resilient. For anyone who wants to read more:</p>
@@ -3394,9 +3328,9 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b862" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b850';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b879" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b879';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b884" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

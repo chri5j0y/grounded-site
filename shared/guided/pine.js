@@ -1,6 +1,6 @@
 /* Grow With Grounded: Guided Check-in script for Pine, grades 9 to 12 (BLD 886).
    Read by shared/gg-guided.js. The questions are read live from pine/checkin.js
-   (PINE_CHECKIN.getBank, weeklyList, sensitiveList, safety), never copied here.
+   (PINE_CHECKIN.getBank, weeklyList, sensitiveList), never copied here.
    GG_GUIDED.pine = {voice, tipSkip, kinds: {start, full, quick, plan}}
      open    a few warm lines before question 1 (the engine picks one or two)
      enter   one line as each part begins (optional for the engine)
@@ -9,9 +9,9 @@
              shows a Growing Edge for that part
      close   lines that celebrate and point to the next step
      plan    {open, part: {part: [why lines]}, close}
-   tipSkip names the questions that never get a tip: flagged questions, the
-   optional questions, and the safety step. The tree's own calm card and
-   text lines handle those, and no help line is ever spoken.
+   tipSkip names the questions that never get a tip: any question the tree
+   still marks with a flag, and the optional questions. No safety step (GWG
+   BLD 887), and no help line is ever spoken.
    Roots lines name no faith, so they fit Faith and Plain wording alike.
    Voice: the Pine narrator (the BLD 778 voice map). No line names a narrator.
    No dashes. Edit words here; keep them warm, brief, and forward. */
@@ -19,7 +19,7 @@
 window.GG_GUIDED = window.GG_GUIDED || {};
 const G = window.GG_GUIDED.pine = {
   voice: 'jenny',
-  tipSkip: ['flag', 'sens', 'safety'],
+  tipSkip: ['flag', 'sens'],
   kinds: {
     start: {
       open: [

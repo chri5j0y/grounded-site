@@ -146,7 +146,7 @@ const DEF = {
       close: {title: 'Closing', say: ['Thank you, everyone. What we saw today belongs to all of us together.'], phone: ['Thank you, everyone.'], family: 'Thank you.'}
     },
     big: 'In a big group, listen to the room and tap the answer that fits what you hear.',
-    safety: 'If someone shares something that points to harm or danger, thank them, keep the group calm, and speak with that person privately as soon as you can, with a co-leader holding the room. Then follow your safety protocol. Call or text 988 any time. In an emergency, call 911. A vulnerable adult at risk: MAARC 1-844-880-1574.'
+    safety: 'If someone shares something that points to harm or danger, thank them, keep the group calm, and speak with that person privately as soon as you can, with a co-leader holding the room. Then follow the Grounded Response Plan. Call or text 988 any time. In an emergency, call 911. A vulnerable adult at risk: MAARC 1-844-880-1574.'
   },
   followUp: {
     intro: 'Short and light: a note, two quick check-ins, and a week 12 visit.',

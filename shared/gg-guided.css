@@ -123,6 +123,8 @@ html.ggd-open,html.ggd-open body{overflow:hidden !important;}
 .ggd-btn[hidden]{display:none;}
 .ggd-btn:disabled{opacity:.45;cursor:default;}
 .ggd-foot .ggd-sp{flex:1;}
+/* the quiet line (GWG BLD 887): type only, never spoken */
+.ggd-quiet{position:relative;z-index:2;margin:-8px auto 0;padding:0 20px max(10px,env(safe-area-inset-bottom));max-width:820px;width:100%;box-sizing:border-box;font:400 13.5px/1.45 var(--sans);color:var(--soft);text-align:center;}
 
 /* the Growth Plan step */
 .ggd-why{font-family:var(--serif);font-style:italic;font-size:21px;color:var(--soft);margin:10px 0 0;}

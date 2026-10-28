@@ -18,7 +18,6 @@
      Card v2: {v: 2, q, n, to, fw: 'f' or 'p', a: '<digits>', fb: '<faith id or empty>'}. Card v1 has no fb.
      a: one digit (0 to 5, 0 is skipped) for each question in BTV_Q.questions, in order; when the app has
      faith.js, the digits for GM_FAITH.two.questions follow. Readers ignore digits past what they know.
-     The private safety questions are never on a card.
    GMCore.answersOf(a) -> {id: v} from a card's digits (the two-tradition digits included when faith.js is here).
    GMCore.week (GWG BLD 755)  The Week Card for the couple's leaders: make, read, codeOf, link, clean (see below). */
 (function () {

@@ -68,7 +68,7 @@ const FB = {
   },
   weekCard: {title: 'From the Couple This Week', lead: 'Before a session, the couple can choose to share a Week Card from Heartwood: the videos they watched, the practices they tried, workbook answers they marked to share, and one question. Paste the link here, then let the couple type their shared word.', yes: 'The couple said yes to sharing this Week Card with us for this session.', empty: 'No Week Card for this session yet. It is always the couple\'s choice.'},
   card: {lead: 'If the couple wants to, they can share their cards from Heartwood with you. Paste one card link from each partner, then let the couple type the word only the two of them know.', yes: 'Both partners said yes to sharing this card with us for our sessions.'},
-  safety: {lead: 'Meet with each partner alone for a few minutes. Whatever they share stays with them. Give each person these lines privately.', lines: [['Love Is Respect', 'Call 1-866-331-9474 or text LOVEIS to 22522'], ['National Domestic Violence Hotline', 'Call 1-800-799-7233'], ['Day One (Minnesota)', 'Call 1-866-223-1111'], ['988 Suicide and Crisis Lifeline', 'Call or text 988'], ['Emergency', 'Call 911']]},
+  safety: {lead: 'Meet with each partner alone for a few minutes. Ask open questions and listen: how are you feeling about the marriage ahead, and what would help you most? What they share stays with them. If harm comes up on its own, stay present and follow the Grounded Response Plan. Give each person these lines privately.', lines: [['Love Is Respect', 'Call 1-866-331-9474 or text LOVEIS to 22522'], ['National Domestic Violence Hotline', 'Call 1-800-799-7233'], ['Day One (Minnesota)', 'Call 1-866-223-1111'], ['988 Suicide and Crisis Lifeline', 'Call or text 988'], ['Emergency', 'Call 911']]},
   credits: []
 };
 // Area names, used until Heartwood's questions load.
@@ -287,11 +287,16 @@ function tipsBlock(open){
   return `<details class="card pm-det"${open ? ' open' : ''}><summary><h3>${esc(R.title || 'Reading the Results')}</h3></summary>${R.lead ? `<p>${esc(R.lead)}</p>` : ''}
     ${R.tips.map(t => `<div class="pm-tip"><b>${esc(t.title)}</b><p>${esc(t.text)}</p></div>`).join('')}</details>`;
 }
+// BLD 887: time alone with each partner uses open questions only. A library lead that still asks about fear, pressure,
+// control, or harm is set aside for the lead above, so an older Staff library never brings that question back.
+const PM_ASK = /ask (gently )?whether|afraid, pressured|controlled, or hurt|are you safe|feel (afraid|unsafe)/i;
+const pmAloneLead = P => { const l = ((P && P.safety) || {}).lead || ''; return l && !PM_ASK.test(l) ? l : FB.safety.lead; };
+const pmRP = () => typeof rpBtn === 'function' ? `<div class="row" style="margin-top:10px">${rpBtn()}</div>` : '';
 function referBlock(){
   const R = pm().refer, lines = (pm().safety.lines || []).map(([n, h]) => `<li><b>${esc(n)}</b>: ${esc(h)}</li>`).join('');
   if (!(R.items || []).length) return '';
   return `<details class="card pm-det"><summary><h3>${esc(R.title || 'When to Add Sessions or Refer')}</h3></summary>${R.lead ? `<p>${esc(R.lead)}</p>` : ''}
-    ${R.items.map(x => `<div class="pm-tip${x.id === 'safety' ? ' pm-safe' : ''}"><b>${esc(x.title)}</b>${x.when ? `<p><span class="pm-min">When</span> ${esc(x.when)}</p>` : ''}${x.what ? `<p><span class="pm-min">What to Do</span> ${esc(x.what)}</p>` : ''}${x.id === 'safety' ? `<ul class="pm-ul">${lines}</ul>` : ''}</div>`).join('')}</details>`;
+    ${R.items.map(x => `<div class="pm-tip${x.id === 'safety' ? ' pm-safe' : ''}"><b>${esc(x.title)}</b>${x.when ? `<p><span class="pm-min">When</span> ${esc(x.when)}</p>` : ''}${x.what ? `<p><span class="pm-min">What to Do</span> ${esc(x.what)}</p>` : ''}${x.id === 'safety' ? `<ul class="pm-ul">${lines}</ul>${pmRP()}` : ''}</div>`).join('')}</details>`;
 }
 function sessCard(c, s, extra){
   const st = sess(c, skey(s)), n = (s.outline || []).length, d = Object.keys(st.ck).filter(k => st.ck[k]).length, lg = minsFor(c, s);
@@ -374,7 +379,7 @@ function vSession(c){
     ${s.bridge ? `<h3 style="margin-top:14px">Before Next Time</h3><p>${esc(s.bridge)}</p>` : ''}
     ${(s.btvAreas || []).length ? `<h3 style="margin-top:14px">Before the Vows Areas</h3><div class="pm-tags">${s.btvAreas.map(a => `<span class="pill">${esc(areaName(a))}</span>`).join('')}</div>${talkFor(c, s.btvAreas)}` : ''}
   </div>
-  ${s.safety ? `<div class="card pm-safe"><h3>Time with Each Partner Alone</h3><p>${esc(P.safety.lead || '')}</p><ul class="pm-ul">${lines}</ul></div>` : ''}
+  ${s.safety ? `<div class="card pm-safe"><h3>Time with Each Partner Alone</h3><p>${esc(pmAloneLead(P))}</p><ul class="pm-ul">${lines}</ul>${pmRP()}</div>` : ''}
   ${s.results ? resultsBlock(c) + tipsBlock(true) : ''}
   ${s.faith ? faithBlock(c) : ''}
   ${s.finish && isEss(c) ? `<div class="card"><h3>Finishing Well</h3><p>${esc(ESS().finish || 'Confirm the hours and present the Certificate of Completion.')}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="cert">Certificate of Completion</button></div></div>${upgradeBlock(c)}` : ''}

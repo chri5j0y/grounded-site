@@ -120,7 +120,7 @@ const LC_TOPICS = [
     "If they sound low for more than a few weeks, stop eating, sleeping, or going to class, or talk about not wanting to live, encourage the counseling center or a doctor, and call or text 988 together if it's urgent.",
     "Send something small from home: a card, a photo, a favorite snack. It says you're thinking of them without asking anything back."
    ],
-   "you": "Their first year can be a hard year for you too: a quieter house, worry you can't fix, pride you don't always get to share with them. Name that to someone in your own life. If they use Birch, their answers stay on their own device; you'll see only what they choose to share, never their safety answers, and Birch sends no alert to anyone. Your trust is part of what helps them find their footing."
+   "you": "Their first year can be a hard year for you too: a quieter house, worry you can't fix, pride you don't always get to share with them. Name that to someone in your own life. If they use Birch, their answers stay on their own device; you'll see only what they choose to share, and Birch sends nothing to anyone. Your trust is part of what helps them find their footing."
   },
   "faith": "For some students, faith steadies the first year: a campus ministry, a congregation near school, or a practice from home that still fits. For others, college is where faith questions get louder, and that's a normal part of these years. If faith is part of your life, you might look for one place to bring both your gratitude and your questions. If it isn't, the same need is real: a few people who share what matters most to you, and a quiet habit that steadies you on a hard day.",
   "practices": [
@@ -792,7 +792,7 @@ const LC_TOPICS = [
     "Invite them to low-cost things that have nothing to do with work.",
     "If you're helping with money or a place to live, agree on clear, kind terms together so no one is guessing.",
     "Watch for signs of depression: sleeping all day, pulling away, or talk of being a burden. Ask directly how they're doing.",
-    "If you're a Birch helper, you see only what they choose to share, and never their safety answers."
+    "If you're a Birch helper, you see only what they choose to share, and never their private notes."
    ],
    "you": "It can be hard to watch someone you love struggle to get started or start over, and easy to worry out loud. Your steady belief in them, said plainly, is one of the most useful things you can give."
   },
@@ -2234,7 +2234,7 @@ const LC_TOPICS = [
     "“I deserve to feel safe, all the time.”",
     "“Asking for help is strong.”"
    ],
-   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, the National Domestic Violence Hotline, Day One, and 911. Your answers stay on your device behind your own passcode. Birch sends no alert to anyone, and a helper never sees your safety answers, so you stay in charge of who you tell."
+   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, the National Domestic Violence Hotline, Day One, and 911. Your answers stay on your device behind your own passcode. Birch sends nothing to anyone, and a helper never sees your private notes, so you stay in charge of who you tell."
   },
   "helper": {
    "feel": "They may feel confused, ashamed, scared, or loyal to the person hurting them. Many don't call it abuse. They may defend the partner, play down what happened, or go back after leaving. Leaving often takes more than one try. Control often works by cutting a person off from the people who love them, so pulling away from you may be part of the pattern, not a rejection of you. They're an adult, and the decisions are theirs, which can be hard to watch.",
@@ -2458,7 +2458,7 @@ const LC_TOPICS = [
     "Let them set some of the rhythm: how often you talk, when they visit, what they share.",
     "Notice and name what they're doing well. Young adults often hear far more about what's left to do.",
     "When values differ, stay curious. Ask what led them there, and share what matters to you without pressure.",
-    "If you're worried about their safety or mood, say so plainly and kindly, and share 988 (call, text, or chat). Helpers in Birch see only what the young adult chooses to share, and never safety answers, so asking directly matters."
+    "If you're worried about their safety or mood, say so plainly and kindly, and share 988 (call, text, or chat). Helpers in Birch see only what the young adult chooses to share, and never private notes, so asking directly matters."
    ],
    "you": "Letting a grown child steer their own life is a real loss and a real gift at the same time. It's okay to grieve the old closeness while you build a new one. Find your own people to talk with: a friend, your partner, a support group, or a counselor."
   },
@@ -2661,7 +2661,7 @@ const LC_TOPICS = [
     "If you're the partner, say how you feel honestly and kindly, and listen just as carefully. Pressure, threats, or force in any direction are never okay.",
     "If you see someone pressuring, threatening, or hurting them, help them reach Love Is Respect or Day One. In danger, call 911.",
     "Watch their mood. If they seem overwhelmed or low, share the National Maternal Mental Health Hotline (call or text 1-833-852-6262). If they talk about not wanting to be alive, call, text, or chat 988 together.",
-    "In Birch, a helper sees only what the young adult chooses to share, and never safety answers. Asking directly and kindly is how you'll know how they are."
+    "In Birch, a helper sees only what the young adult chooses to share, and never private notes. Asking directly and kindly is how you'll know how they are."
    ],
    "you": "You may have strong feelings, hopes, or beliefs of your own about this. They're real, and they deserve a place too. Talk them through with your own friend, counselor, or someone you trust, so your time with the young adult can stay about listening."
   },
@@ -2762,7 +2762,7 @@ const LC_TOPICS = [
     "Know the signs of postpartum depression and anxiety in moms and in dads, and encourage a call to the doctor or the National Maternal Mental Health Hotline if sadness or worry lasts more than two weeks.",
     "If the baby's crying is wearing them down, offer to take a shift, and remind them it's always okay to put the baby down safely and step away.",
     "If you see thoughts of harming themselves or the baby, call or text 988, or call 911 now.",
-    "In Birch, a helper sees only what the young parent chooses to share, and never safety answers. Ask directly and kindly how they're doing."
+    "In Birch, a helper sees only what the young parent chooses to share, and never private notes. Ask directly and kindly how they're doing."
    ],
    "you": "If you're the grandparent, this may have changed your life too, and your feelings about it are real. Take care of your own rest, and find your own people to talk with, so you can be the steady help they need."
   },
@@ -2870,7 +2870,7 @@ const LC_TOPICS = [
     "Protect their sleep: take a night feeding, or a morning, so they get one longer stretch.",
     "Bring food, do dishes, and handle errands without being asked.",
     "Know the emergency signs: seeing or hearing things others don't, confusion, days without sleep, or thoughts of harming themselves or the baby. Call 911, or 988.",
-    "In Birch, a helper sees only what the person chooses to share, and never safety answers. Asking kindly and directly matters."
+    "In Birch, a helper sees only what the person chooses to share, and never private notes. Asking kindly and directly matters."
    ],
    "you": "Supporting a struggling new parent is hard work, especially if you're the other parent and short on sleep yourself. Watch your own mood too. The hotline is there for partners and family as well."
   },
@@ -2969,7 +2969,7 @@ const LC_TOPICS = [
     "Use the baby's name if they've shared one.",
     "Put the due date and the anniversary in your calendar, and reach out on those days.",
     "Watch for grief that turns into depression or anxiety that lasts. Share the National Maternal Mental Health Hotline, and if they talk about not wanting to be alive, call, text, or chat 988 together.",
-    "In Birch, a helper sees only what the person chooses to share, and never safety answers. Asking kindly and directly matters."
+    "In Birch, a helper sees only what the person chooses to share, and never private notes. Asking kindly and directly matters."
    ],
    "you": "Be gentle with yourself if you are also expecting or have small children; it's okay to love them and to step back a little for their sake. If you're the baby's grandparent, you're grieving too, and you deserve support of your own."
   },
@@ -3167,7 +3167,7 @@ const LC_TOPICS = [
     "If they mention guns or a lot of medicine where they live, ask whether someone they trust could hold them for now.",
     "If you're worried they may be thinking about suicide, ask directly, stay with them, and call or text 988 together."
    ],
-   "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; safety answers are never shown to a helper, and no alert goes to anyone, so your own checking in matters."
+   "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; private notes are never shown to a helper, and nothing is sent to anyone, so your own checking in matters."
   },
   "faith": "If faith is part of your life, honest sorrow has a long history there. Many traditions hold lament, words for feeling far away or empty, and the comfort of being carried by a community on dark days. Feeling numb doesn't mean you've failed at faith. If faith isn't part of your life, the same steadiness can come from people who keep showing up for you.",
   "practices": [
@@ -3262,7 +3262,7 @@ const LC_TOPICS = [
     "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911.",
     "Learn about it. NAMI offers classes and support groups for families and friends."
    ],
-   "you": "This can be one of the most frightening things to watch in someone you love. You don't have to understand it all to be helpful. Get support for yourself, through NAMI's family programs, a counselor, or people you trust. If they use Birch, they choose what you see; safety answers are never shown, and no alert goes to anyone."
+   "you": "This can be one of the most frightening things to watch in someone you love. You don't have to understand it all to be helpful. Get support for yourself, through NAMI's family programs, a counselor, or people you trust. If they use Birch, they choose what you see; private notes are never shown, and nothing is sent to anyone."
   },
   "faith": "If faith is part of your life, a faith leader or community can be one more steady presence, and a source of comfort while you get checked out. Strong spiritual experiences can be meaningful, and they can also overlap with symptoms when sleep and stress are way off, so it helps to talk with both a trusted faith leader and a doctor. If faith isn't part of your life, the same steadiness can come from people who know you well.",
   "practices": [
@@ -5170,7 +5170,7 @@ const LC_TOPICS = [
     "Learn about the illness, and find support for yourself. NAMI's Family-to-Family classes are for family and friends.",
     "If they talk about harming themselves or someone else, or seem in danger: call or text 988, call **CRISIS (274747) from a cell phone in Minnesota for a mobile crisis team, or call 911."
    ],
-   "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; safety answers are never shown, and no alert goes to anyone."
+   "you": "Loving someone with a serious mental illness can be a long road, with good years and hard weeks. Get your own support, rest, and people. If they use Birch, they choose what you see; private notes are never shown, and nothing is sent to anyone."
   },
   "faith": "If faith is part of your life, a faith community can be one more steady place, with people who knew you before and will know you after. Some people also carry hard messages, like being told to just pray more, or that treatment shows weak faith. Many traditions welcome both faith and good treatment, and a trusted faith leader can talk that through with you. If faith isn't part of your life, steadiness can come from people who know you well.",
   "practices": [

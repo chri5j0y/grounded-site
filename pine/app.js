@@ -7,7 +7,7 @@
 
    Where the words live (edit them there, not here)
      pine/checkin.js     the question bank, grade bands, Faith or Plain wording,
-                         flags, safety step, help lines, optional questions (PINE_CHECKIN)
+                         quiet line, help lines, optional question (PINE_CHECKIN)
      pine/practices.js   the practice library: parts, practices, how-to guides (PINE_PRACTICES)
      pine/nextsteps.js   the Next Steps notebook chapters and prompts (PINE_NEXTSTEPS)
      shared/gg-journey.js  the twelve weeks, anchors, and movement levels (AGES.pine)
@@ -21,13 +21,10 @@
      was made, and can only clear a forgotten passcode, never read.
    - Save to a file writes a passcode-locked file (shared/gg-filelock.js).
 
-   What a grown-up sees (decision 4)
-   - Only a quiet "Please check in" alert in The Grove, written by pineTeenAlert
-     with oakTeenAlert's exact shape: GGP.setShared(pid, {safety: {flag: date, kinds}}).
-     kinds come only from PINE_CHECKIN.ALERT_KINDS (the safety step, feeling alone,
-     losing hope). Never answers, levels, notes, faith answers, or Next Steps.
-   - When a teen says someone is hurting them, it never goes to the alert. The teen
-     sees outside help instead (PINE_CHECKIN.safety.lines.hurt).
+   What a grown-up sees (decision 4, GWG BLD 887)
+   - No alert of any kind, and never answers, levels, notes, faith answers, or Next Steps.
+     Pine asks open, curious questions and never a harm question; a quiet line of type
+     (988 and 911) sits on the check-in and results, and the help list is one tap away.
    - The big picture of tending (days tended, rings, parts tended) shows in The Grove
      only while the teen's own switch is on, the same as every tree.
 
@@ -38,8 +35,7 @@
    - Balance bonus: all six parts tended in one week (Monday to Sunday).
    - Steady by default (the gentle tree). Hardy, which the teen can choose, shows
      trouble on a part left untended a long while, and one practice heals it.
-   - No leaderboards, no random rewards, no streak shame. Everything pauses its
-     penalties for 14 days after a check-in flags losing hope or feeling alone.
+   - No leaderboards, no random rewards, no streak shame.
 
    When Life Changes (GWG BLD 740): Pine's own guides, built like Sequoia's.
    The words live in pine/guides.js (PINE_GUIDES = {rings, links, topics}); the
@@ -163,7 +159,7 @@ const PARTS = {
     tree: 'Branches reach out and hold the needles up to the light. Pines grow in stands, sheltering each other from the wind.',
     you: 'Your branches are your people: friends, family by blood or by choice, teammates, and the adults in your corner. Who shows up for you, and who you show up for.',
     health: ['You have at least one person you can be real with.', 'You can say no to pressure and still belong.', 'There is an adult you could go to if something went wrong.'],
-    stress: ['You feel left out, or alone in a crowd.', 'A friendship or relationship leaves you feeling worse about yourself.', 'Someone is bullying, threatening, or controlling you.']
+    stress: ['You feel left out, or alone in a crowd.', 'A friendship or relationship leaves you feeling worse about yourself.', 'Time with certain people leaves you tense or on edge.']
   },
   leaves: {
     part: 'Leaves', icon: 'leaf',
@@ -224,11 +220,10 @@ function toggleGuide(btn) {
 
 // =====================================================================
 // HEALTH AND ABILITY (GWG BLD 756, HA 1). The teen's choice lives in shared/gg-life.js, locked in
-// their own vault (only their passcode opens it; a grown-up never sees it, and alerts never mention
-// it). It only reorders and adds lines: practices that fit show first with Fits You and their adapt
+// their own vault (only their passcode opens it; a grown-up never sees it). It only reorders and adds lines: practices that fit show first with Fits You and their adapt
 // line, a few check-in questions get an example or tip, growth ideas add one line per choice for a
 // Growing Edge part, guides get Picked for You, and information lines sit below the crisis lines.
-// Questions, scores, flags, alerts, and crisis lines never change. pine/life.js holds the data.
+// Questions, scores, and help lines never change. pine/life.js holds the data.
 // =====================================================================
 const PL = window.PINE_LIFE || { notes: [], steps: {} };
 const lifeOn = () => !!window.GGLife;
@@ -236,7 +231,7 @@ function lifeTags(key, name) { const f = FLAGS_P[key + '|' + name] || {}, g = GU
 function lifeFits(key, name) { return lifeOn() && GGLife.fits(lifeTags(key, name)); }
 function lifeIds() { return lifeOn() ? GGLife.chosen('pine') : []; }
 const lifeUniq = a => a.filter((x, i) => x && a.indexOf(x) === i);
-// Check-in notes for one question: { ex: [], tip: [] }. Never on a flagged question.
+// Check-in notes for one question: { ex: [], tip: [] }.
 function lifeNote(q) {
   const out = { ex: [], tip: [] }; if (!q || q.flag || q._k == null) return out;
   const ids = lifeIds(); if (!ids.length) return out;
@@ -333,7 +328,7 @@ function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promis
 // CHECKIN: one question on the screen at a time
 // The bank is /pine/checkin.js, read by Pine and, later, Pine Guide: 7 per
 // part in two grade bands, a tip and a "why" line on each, two reverse
-// questions per part, flags, the optional questions, and the safety step.
+// questions per part, and the optional question. No safety step, no flags (GWG BLD 887).
 // Question 1 of each part is the quick check-in question. Each answer moves
 // on by itself after a moment; Back and Skip always work. In "With someone I
 // trust" the tip shows after each answer as a conversation prompt, and the
@@ -341,12 +336,8 @@ function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promis
 // =====================================================================
 const ST_STD = CKB.version || 1;
 const Q_OPTS = CKB.answers || [['rarely', 'Rarely', 0], ['sometimes', 'Sometimes', 1], ['often', 'Often', 2], ['always', 'Almost always', 3], ['unsure', 'Not sure', null]];
-const SAFETY = CKB.safety || {};
-const ST_FLAGS = CKB.flags || {};
-const ALERT_KINDS = CKB.ALERT_KINDS || CKB.alertKinds || ['safety', 'alone', 'hope'];
-const SAFE_ON = SAFETY.on || { safe: ['yes', 'unsure'], self: ['yes', 'unsure'], now: ['yes', 'unsure'] };
-const SAFE_ANS = SAFETY.answers || [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', "I'd rather not say"]];
-const LINES = (function () { const L = SAFETY.lines || {}; return Array.isArray(L) ? { calm: L, hurt: L.filter(x => x.first === 'hurt') } : { calm: L.calm || [], hurt: L.hurt || [] }; })();
+const HELP = CKB.help || {};
+const LINES = (function () { const L = HELP.lines || {}; return Array.isArray(L) ? { calm: L, hurt: L.filter(x => x.first === 'hurt') } : { calm: L.calm || [], hurt: L.hurt || [] }; })();
 function bankFor(band, wording) {
   if (typeof CKB.getBank === 'function') return CKB.getBank(band, wording);
   const out = {}; Object.keys(CKB.questions || {}).forEach(k => { out[k] = (CKB.questions[k] || []).map(q => Object.assign({}, q, (q.v || {})[band] || {}, wording === 'plain' ? (q.plain || {}) : {})); });
@@ -360,7 +351,7 @@ const Q_STEM = (CKB.stems || {}).standard || 'In the past two weeks, how often h
 const quickQ = key => ((QUESTIONS[key] || [])[0] || {}).t || '';
 const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
-let ST_ANS = {}, ST_SAFE = {}, ST_SENS = {}, ST_QUICK = false, CK_MODE = 'self', CK_BAND = '9-10', CK_SENS = false;
+let ST_ANS = {}, ST_SENS = {}, ST_QUICK = false, CK_MODE = 'self', CK_BAND = '9-10', CK_SENS = false;
 
 function partScore(key, answers) {
   const qs = QUESTIONS[key] || []; let sum = 0, n = 0;
@@ -403,35 +394,10 @@ function answerQ(key, i, val) {
   const card = document.querySelector(`[data-q="${key}-${i}"]`);
   if (card) { card.classList.add('answered'); const tb = card.querySelector('.pn-tipbox'); if (tb) tb.innerHTML = tipHtml(stQ(key, i)); }
   syncNextLabel(currentStep);
-  const q = stQ(key, i), f = q && q.flag && ST_FLAGS[q.flag];
-  if (f && (f.calm || []).includes(val)) { showCalm('flag', q.flag); return; }
   moveOn();
 }
 
-// ---------- safety (Aspen's two questions, fitted to grades 9 to 12) ----------
-const SAFE_Q = { safe: ((SAFETY.questions || []).find(x => x[1] === 'safe') || [])[0] || 'Is anyone hurting you, threatening you, or making you feel unsafe?',
-  self: ((SAFETY.questions || []).find(x => x[1] === 'self') || [])[0] || 'Over the past few weeks, have you had thoughts of ending your life, or of not wanting to be alive?',
-  now: SAFETY.now || 'Right now, today, are those thoughts with you?' };
-const safeOn = (which, v) => !!v && (SAFE_ON[which] || []).includes(v);
-function safetyScreenHtml(which) {
-  const cur = ST_SAFE[which] || '';
-  const lead = which === 'safe' ? (SAFETY.intro || '') : which === 'self' ? (SAFETY.selfLead || '') : '';
-  return `${lead ? `<p class="safe-lead">${escapeHtml(lead)}</p>` : ''}
-    <div class="q-card sq-one${cur ? ' answered' : ''}" data-s="${which}" role="radiogroup" aria-label="${escapeHtml(SAFE_Q[which])}"><p class="q-text sq-qtext">${escapeHtml(SAFE_Q[which])}</p>
-    <div class="q-opts sq-opts">${SAFE_ANS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${cur === x[0]}" onclick="answerSafe('${which}','${x[0]}')"><span class="sq-dot" aria-hidden="true"></span>${x[1]}</button>`).join('')}</div></div>`;
-}
-function answerSafe(which, val) {
-  ST_SAFE[which] = val;
-  if (which === 'self' && !safeOn('self', val)) delete ST_SAFE.now;
-  document.querySelectorAll(`[data-s="${which}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
-  const c = document.querySelector(`[data-s="${which}"]`); if (c) c.classList.add('answered');
-  syncNextLabel(currentStep);
-  if (safeOn(which, val)) { showCalm(which === 'safe' ? 'hurt' : which); return; }
-  const here = currentStep; clearTimeout(ADV);
-  ADV = setTimeout(() => { if (currentStep === here && SCREENS[here + 1]) goToStep(here + 1); }, 650);
-}
-
-// ---------- help lines (pine/checkin.js safety.lines: calm and hurt) ----------
+// ---------- help lines (pine/checkin.js help.lines: calm and hurt), opened only by a quiet link ----------
 function lineById(id) { return LINES.calm.find(x => x.id === id) || LINES.hurt.find(x => x.id === id) || null; }
 function lineHtml(x, first) {
   const sms = x.sms ? 'sms:' + x.sms + (x.smsBody ? '?&body=' + encodeURIComponent(x.smsBody) : '') : '';
@@ -448,21 +414,19 @@ function linesHtml(list, compact, firstIds) {
   return `<ul class="calm-list${compact ? ' sq-lines' : ''}">${L.map(x => lineHtml(x, first.includes(x.id))).join('')}</ul>`;
 }
 function linesFor(ids) { return (ids || []).map(lineById).filter(Boolean); }
-function showCalm(why, flagKey) {
+function showCalm(why) {
   const old = document.getElementById('calm-card'); if (old) old.remove();
-  let title = SAFETY.title || 'You matter, and you don\'t have to carry this alone.', lead, list = LINES.calm, first = [];
-  if (why === 'hurt') { title = SAFETY.hurtTitle || 'No one has the right to hurt you.'; lead = `<p>${escapeHtml(SAFETY.hurtIntro || '')}</p>`; list = LINES.hurt; }
-  else if (why === 'self' || why === 'now') { lead = `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`; if (why === 'now') first = ['988', '911']; }
-  else if (why === 'flag' && ST_FLAGS[flagKey]) { const f = ST_FLAGS[flagKey]; lead = `<p>${escapeHtml(f.note || '')}</p>`; list = linesFor(f.lines).length ? linesFor(f.lines) : LINES.calm; }
-  else lead = `<p>${escapeHtml(SAFETY.calmIntro || 'These people want to help, any time. You can also tell a grown-up you trust.')}</p>`;
+  let title = HELP.title || 'You have people with you.', lead, list = LINES.calm, first = [];
+  if (why === 'hurt') { title = HELP.hurtTitle || 'Help from outside your home'; lead = `<p>${escapeHtml(HELP.hurtIntro || '')}</p>`; list = LINES.hurt; }
+  else lead = `<p>${escapeHtml(HELP.calmIntro || 'These people want to help, any time. You can also tell a grown-up you trust.')}</p>`;
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
     <h2 id="calm-title">${escapeHtml(title)}</h2>
     ${lead}
     ${linesHtml(list, false, first)}
-    ${why === 'hurt' || why === 'self' || why === 'now' ? '' : lifeLinesHtml(true)}
-    ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Someone hurting you? Help from outside your home</button></p>' : ''}
+    ${why === 'hurt' ? '' : lifeLinesHtml(true)}
+    ${why !== 'hurt' && LINES.hurt.length ? '<p class="gt-small"><button type="button" class="text-btn" onclick="showCalm(\'hurt\')">Help from outside your home</button></p>' : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
@@ -485,12 +449,9 @@ function buildScreens(quick) {
     sens.filter(x => x.part === d.key).forEach(x => out.push({ kind: 'q', key: 'sens_' + x.id, part: d.key, pi, i: 0, n: 1, sens: true }));
     out.push({ kind: 'sit', part: d.key, pi });
   });
-  out.push({ kind: 'safe', which: 'safe' }); out.push({ kind: 'safe', which: 'self' }); out.push({ kind: 'safe', which: 'now' });
   out.push({ kind: 'finish' });
   return out;
 }
-// The "right now" question is asked only after Yes or Not sure to the self question.
-const skipScreen = i => { const sc = SCREENS[i]; return !!sc && sc.kind === 'safe' && sc.which === 'now' && !safeOn('self', ST_SAFE.self); };
 function signsHtml(d) {
   const p = PARTS[d.key], stress = isPlain() && p.plainStress ? p.plainStress : p.stress;
   return `<details class="signs-details"><summary>Signs of health and signs of stress</summary><div class="signs">
@@ -525,29 +486,24 @@ function screenHtml(sc, idx) {
       <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${partDef(d).prompt || 'What is true for you in this part of your life right now?'}</p>
       <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you want, or use your phone's microphone key to speak it. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">${nextLabel}</button></div></section>`;
-  if (sc.kind === 'safe') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title">${sc.which === 'now' ? 'One more' : 'Before you see your tree'}</h2></div></div>
-      <div class="safe-wrap" id="pn-safe-${sc.which}">${safetyScreenHtml(sc.which)}</div>
-      <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
-      <div class="btn-row step-nav">${back}<button class="btn btn-secondary pn-next" onclick="goToStep(${idx + 1})">${ST_SAFE[sc.which] ? 'Next' : 'Skip this one'}</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Nice work</h2></div></div>
       <p class="lead">Your answers stay on this device, locked in your profile. Tap below to see your tree.</p>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">See My Tree</button></div></section>`;
   return '';
 }
 function nextLabelFor(idx) {
-  let j = idx + 1; while (skipScreen(j)) j++;
-  const nxt = SCREENS[j];
+  const nxt = SCREENS[idx + 1];
   return !nxt ? '' : nxt.kind === 'finish' ? 'Almost done' : nxt.kind === 'intro' ? 'Next: ' + DOMAIN_BY_KEY[nxt.part].part : 'Next';
 }
 function syncNextLabel(i) {
   const sc = SCREENS[i], panel = document.getElementById('step-' + i); if (!sc || !panel) return;
   const b = panel.querySelector('.pn-next'); if (!b) return;
-  const has = sc.kind === 'safe' ? !!ST_SAFE[sc.which] : sc.sens ? !!ST_SENS[sc.key.slice(5)] : !!(ST_ANS[sc.key] || {})[sc.i];
-  b.textContent = has ? (sc.kind === 'safe' ? 'Next' : nextLabelFor(i)) : 'Skip this one';
+  const has = sc.sens ? !!ST_SENS[sc.key.slice(5)] : !!(ST_ANS[sc.key] || {})[sc.i];
+  b.textContent = has ? nextLabelFor(i) : 'Skip this one';
 }
 function renderCheckin() {
   SCREENS = buildScreens(ST_QUICK);
-  document.getElementById('step-container').innerHTML = SCREENS.map(screenHtml).join('');
+  document.getElementById('step-container').innerHTML = SCREENS.map(screenHtml).join('') + quietHtml();
   const m = document.getElementById('pn-mode'); if (m) m.innerHTML = modeHtml();
   goToStep(0, true);
 }
@@ -565,10 +521,9 @@ function renderStepProgress() {
       ${partIcon(d, 24)}<span class="lbl">${d.part}</span>
     </button>`).join('');
 }
-function goBack(idx) { let j = idx - 1; while (j > 0 && skipScreen(j)) j--; goToStep(j); }
+function goBack(idx) { goToStep(idx - 1); }
 function goToStep(i, noScroll) {
   if (i < 0 || i >= SCREENS.length) return;
-  while (skipScreen(i) && i < SCREENS.length - 1) i++;
   clearTimeout(ADV);
   currentStep = i;
   document.querySelectorAll('#step-container .step-panel').forEach((el, n) => el.classList.toggle('active', n === i));
@@ -620,7 +575,7 @@ function setGrade(g) {
 }
 function beginCheck(quick) {
   loadBank(); CK_BAND = bandNow(); CK_SENS = !quick && sensOn();
-  ST_QUICK = !!quick; ST_ANS = {}; ST_SAFE = {}; ST_SENS = {};
+  ST_QUICK = !!quick; ST_ANS = {}; ST_SENS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
@@ -750,13 +705,9 @@ function generateGrowthPlanDoc(mode) {
   document.getElementById(sheetId).scrollIntoView({ behavior: 'smooth', block: 'start' });
   showToast('Growth plan made below.');
 }
-// Help lines on every plan: the short teen list, and the full lines for anything the
-// latest check-in flagged (never lost).
+// Help lines on every plan: the same short teen list for everyone (no flags, GWG BLD 887).
 function planHelpHtml() {
-  const e = oakLatestEntry(), f = (e && e.flags) || [];
   const ids = ['988', 'ctl', 'mncrisis', '911'];
-  f.forEach(k => ((ST_FLAGS[k] || {}).lines || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }));
-  if (e && safeOn('safe', (e.safety || {}).safe)) LINES.hurt.forEach(x => { if (!ids.includes(x.id)) ids.push(x.id); });
   // The plan's page keeps the choice private: the help lines only, never the Health and Ability lines.
   return `<div class="growth-plan-next sq-planhelp"><div class="growth-plan-next-label">Help Any Time</div>${linesHtml(linesFor(ids), true)}</div>`;
 }
@@ -791,43 +742,14 @@ function buildPersonalSections(scores, unsure) {
   entries.slice(-2).reverse().map(partDef).forEach(d => { const steps = d.growth_steps.concat(d.score < 5 ? lifeSteps(d.key).map(escapeHtml) : []); html += block(d, 'growth-block', steps.length ? `<ul>${steps.map(s => `<li>${s}</li>`).join('')}</ul>` : '<p>Your growth plan has practices for this part.</p>'); });
   return html + `</div>`;
 }
-// Flagged answers from this check-in: alone, hope, bully from the questions, and hurt
-// from the safety step. Quick check-ins ask question 1 of each part, which is never a flag.
-function stFlagsNow() {
-  const out = [];
-  if (!ST_QUICK) Object.keys(QUESTIONS).forEach(k => (QUESTIONS[k] || []).forEach((q, i) => {
-    const a = (ST_ANS[k] || {})[i];
-    if (q.flag && a && ST_FLAGS[q.flag] && (ST_FLAGS[q.flag].on || []).includes(a) && !out.includes(q.flag)) out.push(q.flag);
-  }));
-  if (safeOn('safe', ST_SAFE.safe)) out.push('hurt');
-  return out;
-}
-function alertKinds(e) {
-  const kinds = [];
-  if (ALERT_KINDS.includes('safety') && (safeOn('self', (e.safety || {}).self) || safeOn('now', (e.safety || {}).now))) kinds.push('safety');
-  (e.flags || []).forEach(f => { if (ALERT_KINDS.includes(f) && f !== 'safety' && !kinds.includes(f)) kinds.push(f); });
-  return kinds;
-}
-// The quiet "Please check in" alert for the grown-ups who agreed (decision 4 and 5).
-// The same shape as oakTeenAlert, so The Grove reads it with no change. Only
-// ALERT_KINDS raise it. Someone hurting the teen never does (decision 6).
-function pineTeenAlert(e) {
-  if (!PROF || !window.GGP || !e || !GGP.isOpen(PROF.id)) return [];
-  const kinds = alertKinds(e);
-  if (kinds.length) GGP.setShared(PROF.id, { safety: { flag: e.date, kinds } });
-  return kinds;
-}
-function flagBoxHtml(flags, entry) {
+// The optional question's private note: never shared, never a score. No flags, no alerts (GWG BLD 887).
+function privateNoteHtml() {
   let html = '';
-  const shown = flags.filter(f => f !== 'hurt' && ST_FLAGS[f]);
-  if (shown.length) html += `<div class="flag-box" role="note"><h3>Worth tending</h3>${shown.map(f => `<p><strong>${escapeHtml(ST_FLAGS[f].title)}.</strong> ${escapeHtml(ST_FLAGS[f].note)}</p>${linesHtml(linesFor(ST_FLAGS[f].lines), true)}`).join('')}
-    <p><button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p></div>`;
-  if (flags.includes('hurt')) html += `<div class="flag-box pn-hurt" role="note"><h3>${escapeHtml(SAFETY.hurtTitle || 'No one has the right to hurt you.')}</h3><p>${escapeHtml((ST_FLAGS.hurt || {}).note || SAFETY.hurtIntro || '')}</p>${linesHtml(LINES.hurt, true)}<p class="gt-small">This answer stays with you. It is never part of the note to your grown-up.</p></div>`;
-  if (entry && (safeOn('self', (entry.safety || {}).self))) html += `<div class="flag-box" role="note"><h3>${escapeHtml(SAFETY.title || 'You matter.')}</h3><p>${escapeHtml(SAFETY.yes || '')}</p>${linesHtml(linesFor(['988', 'ctl', 'mncrisis', '911']), true, safeOn('now', (entry.safety || {}).now) ? ['988', '911'] : [])}</div>`;
-  // the optional questions: a private note, never shared, never a score
   sensList().forEach(x => { const a = ST_SENS[x.id]; if (a && (x.on || []).includes(a)) html += `<div class="flag-box pn-private" role="note"><h3>Just for you</h3><p>${escapeHtml(x.note || '')}</p>${linesHtml(linesFor(x.lines), true)}</div>`; });
   return html;
 }
+// The quiet line (GWG BLD 887): type only, never read aloud (no-read), never a card.
+function quietHtml() { return `<p class="pn-quiet no-read">${escapeHtml(CKB.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')}</p>`; }
 function calculateResults() {
   const scores = {}, reflections = {}, unsure = [];
   ALL_DOMAINS.forEach(d => {
@@ -840,28 +762,23 @@ function calculateResults() {
     reflections[d.key] = notes ? notes.value : '';
   });
   const shown = k => unsure.includes(k) ? null : scores[k];
-  const flags = stFlagsNow();
-  const safety = { safe: ST_SAFE.safe || 'skipped', self: ST_SAFE.self || 'skipped' };
-  if (safeOn('self', ST_SAFE.self)) safety.now = ST_SAFE.now || 'skipped';
   const sens = {}; if (CK_SENS) sensList().forEach(x => { if (ST_SENS[x.id]) sens[x.id] = ST_SENS[x.id]; });
   const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, bank: CKB.bank || 1, band: CK_BAND, grade: gradeNow(), wording: isPlain() ? 'plain' : 'faith',
-    scores, unsure, reflections, flags, safety, sens, mode: CK_MODE, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
-  const kinds = alertKinds(entry), grown = PROF && window.GGP ? ((GGP.get(PROF.id) || {}).grown || []) : [];
-  const told = kinds.length && grown.length ? `<p class="sq-flagnote">${escapeHtml(CKB.alertTold || 'A grown-up you chose will get a quiet note to check in with you. They won\'t see your answers.')}</p>` : '';
+    scores, unsure, reflections, sens, mode: CK_MODE, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)) };
   const html = `
     <div class="results-summary">
       <div id="client-results-tree" class="results-art" style="margin:16px 0 6px;"></div>
       <p class="tree-caption">Each part of the tree shines with how it is doing. Tap a part to work on it in your growth plan.</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <div class="interpretation">${interpretResults(scores, unsure)}</div>
-      ${flagBoxHtml(flags, entry)}
-      ${told}
+      ${privateNoteHtml()}
       <div id="pn-life-offer" class="no-print"></div>
     </div>
     ${buildPersonalSections(scores, unsure)}
     ${lcSuggestHtml(scores, unsure)}
     <div class="reminder-banner"><p>Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.</p></div>
     <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button></div>
+    ${quietHtml()}
     <div id="client-save-box"></div>`;
   document.getElementById('client-results-content').innerHTML = html;
   window.lastClientScores = scores;
@@ -871,7 +788,6 @@ function calculateResults() {
   renderGrowthPlanBuilder('client');
   if (PROF) {
     personalHistory.push(JSON.parse(JSON.stringify(entry))); sortEntries(personalHistory); profPersist();
-    pineTeenAlert(entry);
     if (!ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(entry); if (msg) setTimeout(() => showToast(msg), 900); }
   }
   // Health and Ability: one quiet card after the first full check-in, at most once (gg-life.js keeps the flag in the vault).
@@ -940,7 +856,7 @@ function printGrowthPlanNow(sheetId) {
 // the site-wide search reads the same file. A ring with no guides yet stays
 // hidden, and a small note names the rings still to come. Two views: For You
 // (the teen) and For the Grown-up. Help lines are Pine's teen lines from
-// pine/checkin.js (safety.lines), never another tree's.
+// pine/checkin.js (help.lines), never another tree's.
 // =====================================================================
 const LC_RINGS = (window.PINE_GUIDES || {}).rings || [];
 const LC_TOPICS = (window.PINE_GUIDES || {}).topics || [];
@@ -1186,7 +1102,7 @@ function lcSuggestHtml(scores, unsure) {
   const picks = [];
   low.forEach(k => LC_TOPICS.filter(t => (t.parts || []).includes(k) && !picks.includes(t)).slice(0, 2).forEach(t => picks.push(t)));
   if (!picks.length) return '';
-  const crisis = scores.fruit <= 2 && !skip.includes('fruit') ? `<p><b>If you are having thoughts of ending your life, call or text 988 now, or text HOME to 741741. In danger right now, call 911.</b></p>` : '';
+  const crisis = '';   // GWG BLD 887: no crisis card from a score; the quiet line sits on Results
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
     <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
     ${crisis}<div class="lc-links">${picks.map(t => `<button type="button" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" onclick="lcOpen('client',null)">Browse all guides</button></div></div>`;
@@ -1194,7 +1110,7 @@ function lcSuggestHtml(scores, unsure) {
 
 // =====================================================================
 // THE GAME LAYER (decision 14): mastery, tree levels, milestones, the balance
-// bonus, Steady or Hardy, and the 14-day pause. Never streaks, never shame,
+// bonus, and Steady or Hardy. No pause tied to answers (GWG BLD 887). Never streaks, never shame,
 // never random rewards, never anything taken away. Saved in tend.pn.
 // =====================================================================
 const KIND_WORDS = [
@@ -1246,16 +1162,10 @@ function fullWeeks(s) { const w = weeksOf(s); return Object.keys(w).filter(m => 
 function partLastTended(s, key) { let last = null; Object.keys(s.days || {}).forEach(k => { if (((s.days[k] || {}).d || []).some(id => id.split('|')[0] === key) && (!last || k > last)) last = k; }); return last; }
 function planParts(s) { const p = s.plan || {}; return PART_ORDER.filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
 function pnMode(s) { return (s && s.pn && s.pn.mode) === 'hardy' ? 'hardy' : 'steady'; }
-// The pause: for 14 days after a check-in flags losing hope or feeling alone, or the
-// safety step asks for support, the tree holds as it is and Hardy rests.
-function pnPause() {
-  const cut = addD(todayKey(), -14);
-  return (personalHistory || []).some(e => e && !e.from && e.date >= cut && ((e.flags || []).some(f => f === 'hope' || f === 'alone') || safeOn('self', (e.safety || {}).self)));
-}
 // Hardy: a part with practices in the plan, left untended for HARDY_DAYS or more, shows
 // trouble. One practice in that part heals it. Steady never shows trouble.
 function hardyDays(s, key) {
-  if (pnMode(s) !== 'hardy' || pnPause() || !planParts(s).includes(key)) return 0;
+  if (pnMode(s) !== 'hardy' || !planParts(s).includes(key)) return 0;
   const since = partLastTended(s, key) || pnRec(s).hardyFrom || s.start; if (!since) return 0;
   const n = Math.round((dOf(todayKey()) - dOf(since)) / 86400000);
   return n >= HARDY_DAYS ? n : 0;
@@ -1284,15 +1194,15 @@ function checkMiles(s, quiet) {
   return fresh;
 }
 function todayKindHtml(s) {
-  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0, paused = pnPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you grew stays.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0;
+  const lineA = n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length;
   const trouble = PART_ORDER.filter(k => hardyDays(s, k));
   checkMiles(s, true);
   return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
     <div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
     <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
-    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? (paused ? 'Hardy is resting for now, and every part stays clear.' : 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="text-btn" onclick="GGTend.openSettings('pn-set-game')">Change</button></p>
+    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days shows trouble until you tend it.' : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="text-btn" onclick="GGTend.openSettings('pn-set-game')">Change</button></p>
     ${trouble.length ? `<p class="pn-trouble">${trouble.map(k => escapeHtml(DOMAIN_BY_KEY[k].part)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + setupCardHtml() + bringOakHtml() + movingOnHtml(true);
 }
@@ -1404,7 +1314,7 @@ function oakSavePlan() {
 // A CARD FROM A Pine GUIDE VISIT (GWG BLD 746)
 // A Guide's QR code or link (GGApp.visit, /shared/gg-app.js) carries only a first
 // name, the date, the strong parts, and what the person chose to try. Never levels,
-// notes, safety answers, the optional question, or anyone else's name. It asks
+// notes, answers, the optional question, or anyone else's name. It asks
 // before saving, then lives in the person's own locked profile, as visitCards in
 // the pine record, shows on Today, and can be removed any time.
 // =====================================================================
@@ -1528,8 +1438,6 @@ const TEND_CFG = {
   seasonExtra: s => seasonExtraHtml(s),
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
-  pause: () => pnPause(),
-  pauseLine: 'Your tree is holding still with you. It stays in the light while you get support.',
   onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'pine'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1698,9 +1606,8 @@ async function profResume() {
 // SETTINGS, behind the profile picture
 // =====================================================================
 // What a grown-up can see (decision 4), Aspen's promise rewritten for high school.
-const PN_SEE = `<p><b>A quiet note, only when it matters</b>If a check-in shows you might be thinking about not wanting to be alive, feeling alone, or losing hope, a grown-up who agreed to your profile gets a quiet note in The Grove to check in with you. The note never says what you answered.</p>
-  <p><b>The big picture, only while you leave it on</b>Days tended, rings, and which parts you tended, through The Grove. You can turn this off any time with Show my growth on The Grove.</p>
-  <p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, your optional questions, your reflections, and your Next Steps notebook. If you say someone is hurting you, that stays with you too, and Pine shows you help from outside your home. Only your passcode opens your profile. A grown-up can help reset a forgotten passcode, but can never read what is inside.</p>`;
+const PN_SEE = `  <p><b>The big picture, only while you leave it on</b>Days tended, rings, and which parts you tended, through The Grove. You can turn this off any time with Show my growth on The Grove.</p>
+  <p><b>Just yours</b>Every answer, your levels, your notes, your faith answers, your optional questions, your reflections, and your Next Steps notebook. Only your passcode opens your profile. A grown-up can help reset a forgotten passcode, but can never read what is inside.</p>`;
 function pnProfileHtml() {
   const a = window.GGP && GGP.active();
   if (!a || a.age !== 'pine') return `<section><h3>Your Profile</h3><p>Open your profile, or create one, to keep your tree, practices, check-ins, and Next Steps on this device.</p><div class="btn-row"><button class="btn btn-primary btn-sm" onclick="GGTend.closeSettings();pnOpenAny()">Open my profile</button><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();profCreateDialog()">Create my profile</button></div></section>`;

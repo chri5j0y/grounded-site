@@ -15,16 +15,15 @@
    - Four answers plus "Not sure." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (Oak: two).
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to the age, always with 988 and 911.
-   - Flagged answers (alone, losing hope, not safe at home) are never
-     lost: the person sees help lines, and a guide sees them at goodbye.
+   - Open, curious questions only (GWG BLD 887): no safety step, no
+     flags, and one quiet line of type with 988 and 911 on the screen.
 
    Leaves holds three strands, Move, Rest, and Nourish. One Leaves question
    for each is tagged s: 'move', 'rest', or 'nourish'. The weekly quick
    check-in asks question 1 of every part plus each tagged strand.
 
    Each question: { t, tip, why } plus r: 1 for reverse questions
-   ("Often" is the hard answer) and flag: 'alone', 'hope', or 'home'.
+   ("Often" is the hard answer).
    Question 1 of every part is the quick check-in question, so it is never
    a reverse question.
 
@@ -86,7 +85,7 @@ const Q = {
   ],
   trunk: [
     { t: 'Felt that your life matters?',
-      tip: 'If they hesitate, ask who would notice if they were gone. Listen for hopelessness and move to safety if it is there.',
+      tip: 'If they hesitate, ask who and what their life touches. Listen with care, and let them lead.',
       why: 'Knowing your life matters is the core of the trunk.' },
     { t: 'Had a clear sense of what you\'re living for?',
       tip: 'Ask them to name it. It can be a person, a cause, a craft, or simply today.',
@@ -152,10 +151,10 @@ const Q = {
     { t: 'Been able to let go of resentment, without excusing harm?',
       tip: 'Forgiveness never requires excusing harm or reconnecting with someone unsafe. Say so.',
       why: 'Letting go of resentment frees you. It never means saying harm was okay.' },
-    { t: 'Felt safe with the people you live with?', flag: 'home',
-      tip: 'If not, ask privately and calmly whether they are safe right now. Have the domestic violence line ready, and follow your reporting duties.',
-      why: 'Everyone deserves to feel safe at home. If you don\'t, help is available.' },
-    { t: 'Felt lonely?', r: 1, flag: 'alone',
+    { t: 'Felt at ease and cared for at home?',
+      tip: 'Ask what helps home feel restful, and listen with care to whatever they share.',
+      why: 'Home is where you rest and refill. Ease and care at home help every part of you grow.' },
+    { t: 'Felt lonely?', r: 1,
       tip: 'Loneliness is common and painful. Ask when it is worst, and who they wish they could talk to.',
       why: 'Loneliness hurts body and spirit. It is worth tending, not hiding.' },
     { t: 'Felt strain or conflict in an important relationship?', r: 1,
@@ -207,9 +206,9 @@ const Q = {
     { t: 'Had moments of joy or delight?',
       tip: 'Laughter belongs here, even in hard seasons. Ask what made them laugh lately.',
       why: 'Joy is fruit. Even small moments of it feed the whole tree.' },
-    { t: 'Felt that things will never get better?', r: 1, flag: 'hope',
-      tip: 'Take this seriously. Ask gently how long they have felt this way, and listen for thoughts of not wanting to be alive. The safety step comes next.',
-      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
+    { t: 'Felt that good things are still ahead for you?',
+      tip: 'Ask what they are looking forward to, even something small. Stay curious about what they share.',
+      why: 'Sensing good ahead is hope at work. When it runs low, others can help you carry it.' },
     { t: 'Felt like you had nothing to look forward to?', r: 1,
       tip: 'Help them find one small thing in the next few days, together.',
       why: 'Having nothing to look forward to drains hope. Small things count.' }
@@ -315,7 +314,7 @@ const STAFF = {
     { t: 'Felt respected on your team?',
       tip: 'Listen for disrespect or harassment. Point to the right reporting path if you hear it.',
       why: 'Respect is part of being safe at work.' },
-    { t: 'Felt alone in the hard parts of your work?', r: 1, flag: 'alone',
+    { t: 'Felt alone in the hard parts of your work?', r: 1,
       tip: 'Ask who they wish they could talk to. Help them find one person.',
       why: 'Carrying hard work alone makes it heavier. You deserve company in it.' },
     { t: 'Felt tension or conflict on your team?', r: 1,
@@ -370,69 +369,44 @@ const STAFF = {
     { t: 'Thought about leaving because it is too much?', r: 1,
       tip: 'Listen without judging. This is a burnout sign worth taking seriously, not a failure.',
       why: 'Wanting to leave because it is too much is a sign you need more support.' },
-    { t: 'Felt that things will never get better at work?', r: 1, flag: 'hope',
-      tip: 'Take this seriously. Ask how it spills into the rest of life, and listen for hopelessness beyond work.',
-      why: 'When hope runs low, you deserve support. Others can help you carry it.' }
+    { t: 'Felt that things at work can get better from here?',
+      tip: 'Ask what would help work feel better, and how work spills into the rest of life.',
+      why: 'Seeing a better way ahead keeps helpers going. Others can help you carry the hard parts.' }
   ]
 };
 
-// What a flagged answer means, and which answers flag it.
-// alone and hope flag on Often or Almost always; Almost always also opens the calm card.
-// home flags on Rarely, Sometimes, or Not sure; Rarely also opens the calm card.
+// Flags (GWG BLD 887): no question carries a flag any more, and nothing new is ever
+// flagged. These titles stay, read only, so a visit saved earlier that lists a flag
+// still shows its name. on and calm are empty, so nothing ever opens or marks.
 const FLAGS = {
-  alone: { on: ['often', 'always'], calm: ['always'], title: 'Feeling alone',
-    note: 'You said you have felt lonely often. That is worth tending. Reaching out to one person this week, or calling 988 if it feels heavy, can help.',
-    guide: 'They named loneliness. Talk together about one person they could reach toward, and consider a referral to grief or community support.' },
-  hope: { on: ['often', 'always'], calm: ['always'], title: 'Losing hope',
-    note: 'You said things have felt like they will never get better. You can share that weight. Call or text 988 any time to talk with someone.',
-    guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive.' },
-  home: { on: ['rarely', 'sometimes', 'unsure'], calm: ['rarely'], title: 'Safety at home',
-    note: 'You said you haven\'t always felt safe with the people you live with. You deserve to be safe. The National Domestic Violence Hotline is free and private: 1-800-799-7233, or text START to 88788. In danger now, call 911.',
-    guide: 'They named not feeling safe at home. Ask privately whether they are safe right now. Share the domestic violence line, and follow your reporting duties for vulnerable adults.' }
+  alone: { on: [], calm: [], title: 'Feeling alone', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' },
+  hope: { on: [], calm: [], title: 'Hope', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' },
+  home: { on: [], calm: [], title: 'Home', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' }
 };
 
-// The safety step (GWG BLD 745, the newest shape, from Birch). The opener and the
-// direct question keep their wording, so every Oak check-in still reads the same.
-// The opener is answered on the answer scale; the direct question uses directOpts.
-// now is asked only after Sometimes or Often to the direct question; a Yes or Not
-// sure to it opens the calm card with 988 and 911 at the top. The calm card adds
-// yes, burden, and means after a yes. Direct wording is the research-informed way
-// to ask, and asking does not plant the idea. Nothing here is ever sent to anyone
-// or shown to a helper. The Field Guide reads opener, direct, and directOpts only
-// from its own library, so the added keys change nothing there.
-const SAFETY = {
-  lead: 'Two last questions. They\'re here because we care, and your answers stay on this device.',
-  opener: 'Some seasons are heavy. In the past two weeks, how often have you felt hopeless, or like a burden to others?',
-  directLead: 'Sometimes, when life gets heavy, people feel hopeless or like a burden, and think about not wanting to be alive. Many adults have had that thought, and it is safe to say so here.',
-  direct: 'In the past two weeks, have you had thoughts of ending your life or hurting yourself?',
-  directOpts: [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', 'I\'d rather not say']],
-  now: 'Right now, today, are those thoughts with you?',
-  nowOpts: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', 'I\'d rather not say']],
-  // Which answers count. 'skip' is respected and never counts as a yes.
-  on: { opener: ['often', 'always'], direct: ['sometimes', 'often'], now: ['yes', 'unsure'] },
-  yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
-  burden: 'You matter to people, even when it is hard to see. Feeling like a burden is a sign to reach out, not a fact about you.',
-  means: 'If there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.',
-  title: 'You matter, and others can help you carry this.',
-  intro: 'If you\'re thinking about suicide or feel unsafe, reach out now. Someone will listen.',
-  // Oak's help lines, in the order shown. tel and sms are dialable; smsBody is the
-  // word to text. first: 'home' moves a line to the top when the home flag shows.
+// Help is close (GWG BLD 887): a quiet list a person opens only by tapping a link.
+// Nothing opens it on its own, and no answer moves a line. quiet is the one line of
+// type shown on the check-in screen and on results, never spoken.
+const HELP = {
+  quiet: 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.',
+  title: 'Help Is Close',
+  intro: 'Someone will listen, any time, day or night.',
   lines: [
     { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call 988', tel: '988', sms: '988', note: 'Any time, day or night. Veterans, call 988 and press 1.' },
     { id: 'ctl', name: 'Crisis Text Line in Minnesota', show: 'Text MN to 741741', sms: '741741', smsBody: 'MN' },
     { id: 'mncrisis', name: 'Minnesota mobile crisis', show: 'Call **CRISIS (274747)', tel: '274747', note: 'From a cell phone.' },
     { id: 'central', name: 'Central Minnesota, 24 hours', show: '320-253-5555', tel: '13202535555' },
-    { id: 'dv', name: 'National Domestic Violence Hotline', show: '1-800-799-7233', tel: '18007997233', sms: '88788', smsBody: 'START', first: 'home' },
+    { id: 'dv', name: 'National Domestic Violence Hotline', show: '1-800-799-7233', tel: '18007997233', sms: '88788', smsBody: 'START' },
     { id: 'samhsa', name: 'SAMHSA National Helpline', show: '1-800-662-4357', tel: '18006624357', note: 'For substance use and mental health help.' },
-    { id: '911', name: 'In immediate danger?', show: 'Call 911', tel: '911' }
+    { id: '911', name: 'In danger now', show: 'Call 911', tel: '911' }
   ]
 };
 
-window.OAK_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, stems: STEMS, questions: Q, staff: STAFF, flags: FLAGS, safety: SAFETY };
+window.OAK_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, stems: STEMS, questions: Q, staff: STAFF, flags: FLAGS, help: HELP };
 })();
 /* LIFE notes start: Health and Ability notes (GWG BLD 756, HA 1). Like My Season, a note adds only
    ex (an example) and tip, read for the chosen ids. The question, the answers, and the score never change,
-   and no safety or flagged question carries a note. Generated by worker A. */
+   and the reworded open questions of BLD 887 carry none. Generated by worker A. */
 (function () { var C = window.OAK_CHECKIN; if (!C || !C.questions) return; var N = {"leaves": {"0": {"pain": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "serious": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "mind": {"ex": "Mood and some medicines can change sleep. Notice what helps you rest."}}, "1": {"moving": {"ex": "Any way your body moves counts: rolling, stretching, chair exercises, swimming, or adapted sports.", "tip": "Ask what kind of movement feels good in their body, not what it should look like."}, "pain": {"ex": "On a hard day, a gentle stretch or a few minutes of movement counts.", "tip": "Ask what movement looks like on good days and on hard days."}, "health": {"ex": "Movement that fits your body and your doctor's advice counts fully."}, "memory": {"ex": "A short walk with someone, or chair moves to music, counts."}}, "3": {"pain": {"ex": "Rest you take on purpose, before you are spent, counts."}, "serious": {"ex": "Rest during treatment or recovery counts fully."}, "close": {"ex": "Rest while someone else helps the person you care for counts."}}, "4": {"moving": {"ex": "Sitting by a bright window, on a porch, or on an accessible path counts."}}, "5": {"health": {"ex": "Like noticing early signs of a flare, or when you need rest."}, "pain": {"ex": "Like resting before pain builds, or changing plans to fit your body."}}}, "bark": {"0": {"pain": {"ex": "Like being gentle with yourself on a hard body day."}, "health": {"ex": "Like being gentle with yourself on a hard body day."}, "mind": {"ex": "Like using a calming skill a therapist might teach, instead of being harsh with yourself."}}, "3": {"close": {"ex": "Like the stress of caring for someone you love."}, "serious": {"ex": "Like the stress of tests, treatment, or waiting for news."}}, "4": {"pain": {"ex": "Like slow breathing or one calm task when pain rises."}, "autism": {"ex": "Like being absorbed in something you love."}}}, "branches": {"1": {"hearing": {"ex": "Like a Deaf community group, a captioned class, or friends who sign."}, "moving": {"ex": "Like a group that meets online, or a place you can get into easily."}, "health": {"ex": "Like a group for people living with the same condition."}, "close": {"ex": "Like a group for people caring for someone they love."}}, "3": {"moving": {"ex": "Asking for a ride, a seat, or a hand counts."}, "hearing": {"ex": "Asking for captions, an interpreter, or for people to face you counts."}, "seeing": {"ex": "Asking for large print, a ride, or a description counts."}, "memory": {"ex": "Asking for a reminder or a hand with plans counts."}}}, "trunk": {"3": {"moving": {"ex": "Roles that have nothing to do with what your body can do count fully."}, "health": {"ex": "Roles that have nothing to do with what your body can do count fully."}, "close": {"ex": "Caring for someone you love is real, meaningful work."}}}, "fruit": {"2": {"pain": {"ex": "Energy comes and goes. Count the days you had some."}, "health": {"ex": "Energy comes and goes. Count the days you had some."}, "serious": {"ex": "Energy comes and goes during treatment. Count the days you had some."}}, "3": {"moving": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "hearing": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "seeing": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "memory": {"ex": "Like a new routine or a tool that helps you remember."}}}};
   Object.keys(N).forEach(function (p) { Object.keys(N[p]).forEach(function (i) { var q = (C.questions[p] || [])[+i]; if (q && !q.flag && !q.help) q.life = N[p][i]; }); }); })();
 /* LIFE notes end */

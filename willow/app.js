@@ -516,7 +516,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Faith comes first</h3>
   <p class="lead">Willow asks about faith on the second screen, every time, because a chaplain always asks. Every answer is welcome, including none. Each person answers for themselves.</p>
   <h3 class="section-title">What's inside</h3>
-  <p class="lead">Gentle check-ins on the six parts, What Matters to Me, Cuttings for stories and letters, and help at the Bedside. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and in every safety step.</p>
+  <p class="lead">Gentle check-ins on the six parts, What Matters to Me, Cuttings for stories and letters, and help at the Bedside. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and under every check-in.</p>
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
@@ -551,7 +551,7 @@ function startCheckin(quick) {
   if (remembered(t)) { toast('Their tree is remembered now. Nothing more to check.'); return; }
   if (!r.started) { r.started = today(); r.role = t === a.id ? (r.role || 'person') : 'person'; persist(t); }
   const self = t === a.id;
-  S.ck = { pid: t, role: roleOf(t), self, by: self ? 'self' : '', askWho: !self, quick: !!quick, i: 0, ans: {}, faith: r.faith ? JSON.parse(JSON.stringify(r.faith)) : { lives: [] }, faithEdit: !r.faith, safety: {}, note: '', done: false };
+  S.ck = { pid: t, role: roleOf(t), self, by: self ? 'self' : '', askWho: !self, quick: !!quick, i: 0, ans: {}, faith: r.faith ? JSON.parse(JSON.stringify(r.faith)) : { lives: [] }, faithEdit: !r.faith, note: '', done: false };
   S.tab = 'checkin'; render(); scrollTop(true);
 }
 function ckStem(ck) {
@@ -614,7 +614,7 @@ VIEWS.checkin = () => {
       <p class="q-stem">${ckStem(ck)}</p>${bank(ck.role)[st].map((q, i) => qHtml(ck, st, i)).join('')}`;
   } else body = closeStep(ck);
   const nextP = PART[steps[ck.i + 1]];
-  return `<div class="w-ck" data-read="Read this aloud">${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}`;
+  return `<div class="w-ck" data-read="Read this aloud">${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}${quietHtml()}`;
 };
 function who(v) { const ck = S.ck; if (!ck) return; ck.by = v; render(); }
 
@@ -658,47 +658,23 @@ function faith(k, v) {
   const y = window.scrollY; render(); window.scrollTo(0, y);
 }
 
-/* the safety step, and closing */
+/* closing (GWG BLD 887: no safety step, only the quiet line of type) */
 function ckFlags(ck) {
   const out = [];
   PARTS.forEach(p => (bank(ck.role)[p.key] || []).forEach((q, i) => { const a = (ck.ans[p.key] || [])[i]; if (flagOn(ck, q, a) && !out.includes(q.flag)) out.push(q.flag); }));
   return out;
 }
-function linesHtml(hospiceOnly) {
-  const L = line();
-  const first = L ? `<li><b>${esc(L.name || 'Your hospice\'s 24/7 line')}</b><a href="${telHref(L.phone)}">${esc(L.phone)}</a></li>` : `<li><b>${esc(C.safety.lines[0])}</b><span>On your admission papers or the fridge sheet.</span></li>`;
-  const rest = hospiceOnly ? '' : `<li><b>988 Suicide and Crisis Lifeline</b><a href="tel:988">Call 988</a> or <a href="sms:988">text 988</a></li><li><b>In danger now</b><a href="tel:911">Call 911</a></li>`;
-  return `<ul class="w-lines">${first}${rest}</ul>`;
-}
-// Minnesota Adult Abuse Reporting Center (MAARC), any time
-function homeLines() {
-  return linesHtml(true).replace('</ul>', '<li><b>Minnesota Adult Abuse Reporting Center</b><a href="tel:18448801574">1-844-880-1574</a></li><li><b>In danger now</b><a href="tel:911">Call 911</a></li></ul>');
+// The quiet line: the hospice's 24/7 line first, then 988 and 911. Type only, never read aloud.
+function quietHtml() {
+  const L = line(), H = C.help || {};
+  const hos = L ? `Call ${esc(L.name || H.hospice || 'your hospice\'s 24/7 line')} first, day or night: <a class="text-link" href="${telHref(L.phone)}">${esc(L.phone)}</a>.` : esc(H.hospiceFirst || 'Call your hospice\'s 24/7 line first, day or night.');
+  return `<p class="w-small w-quiet" style="margin-top:14px">${hos} ${esc(H.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')}</p>`;
 }
 function closeStep(ck) {
-  const fl = ckFlags(ck), n = esc(nameOf(ck.pid)), sf = ck.safety, SA = C.safety;
   let h = `<div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title" style="--domain-color:var(--gold)">Before you see the tree</h2></div></div>`;
-  if (ck.role === 'person' && fl.includes('end')) {
-    if (ck.by === 'observed') {
-      h += `<div class="q-card"><p class="q-text">${esc(SA.observed.ask)}</p><div class="q-opts w-opts3">${[['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure']].map(o => `<button type="button" aria-pressed="${sf.observed === o[0]}" onclick="W.safe('observed','${o[0]}')">${o[1]}</button>`).join('')}</div>${sf.observed === 'yes' ? `<p class="w-flagnote">${esc(SA.observed.help)}</p>` : ''}</div>`;
-    } else {
-      const ch = SA.options.find(o => o[0] === sf.choice);
-      h += `<div class="q-card w-safe"><p class="q-text">${esc(SA.ask)}</p><div class="w-safeopts">${SA.options.map(o => `<button type="button" aria-pressed="${sf.choice === o[0]}" onclick="W.safe('choice','${o[0]}')">${esc(o[1])}</button>`).join('')}</div>
-        ${ch && ch[2] ? `<p class="w-flagnote">${esc(ch[2])}</p>` : ''}
-        ${ch && SA.urgent.includes(ch[0]) ? linesHtml() : ch && SA.tellTeam.includes(ch[0]) ? linesHtml(true) : ''}</div>`;
-    }
-  }
-  if (ck.role === 'helper' && fl.includes('hope')) {
-    h += `<div class="q-card w-safe"><p class="q-text">${esc(SA.helper.ask)}</p><div class="q-opts w-opts3">${[['yes', 'Yes'], ['no', 'No'], ['skip', 'I\'d rather not say']].map(o => `<button type="button" aria-pressed="${sf.helper === o[0]}" onclick="W.safe('helper','${o[0]}')">${o[1]}</button>`).join('')}</div>
-      ${sf.helper === 'yes' ? `<p class="w-flagnote">${esc(SA.helper.yes)}</p>${linesHtml()}` : sf.helper === 'no' ? `<p class="w-flagnote">${esc(SA.helper.no)}</p>` : ''}</div>`;
-  }
-  if (ck.role === 'person' && ck.by === 'self') {
-    h += `<div class="q-card"><p class="q-text">${esc(SA.home.ask)}</p><p class="w-small">Only you see this answer. It is never shared with helpers.</p><div class="q-opts w-opts3">${SA.home.options.map(o => `<button type="button" aria-pressed="${sf.home === o[0]}" onclick="W.safe('home','${o[0]}')">${esc(o[1])}</button>`).join('')}</div>
-      ${sf.home && sf.home !== 'yes' ? `<p class="w-flagnote">${esc(SA.home.help)}</p>${homeLines()}` : ''}</div>`;
-  }
   h += `<label class="w-l" for="w-cknote">${ck.by === 'observed' ? 'Anything you noticed today (optional)' : 'Anything to remember about today? (optional)'}</label><textarea id="w-cknote" rows="3" maxlength="800" oninput="W.S.ck.note=this.value">${esc(ck.note)}</textarea>`;
   return h;
 }
-function safe(k, v) { const ck = S.ck; if (!ck) return; ck.safety[k] = v; const y = window.scrollY; render(); window.scrollTo(0, y); }
 function finish() {
   const ck = S.ck, a = me(); if (!ck || !a) return;
   const r = rec(ck.pid); if (!r) return;
@@ -706,7 +682,7 @@ function finish() {
   PARTS.forEach(p => { const s = scorePart(ck.role, p.key, ck.ans[p.key]); if (s != null) { sc[p.key] = s; lv[p.key] = levelOf(s); } });
   if (!Object.keys(lv).length) { toast('Answer at least one question first. "Not sure" counts.'); return; }
   const by = ck.by || 'self';
-  const e = { id: uid(), date: today(), by, helper: by === 'self' ? '' : a.name, quick: ck.quick, role: ck.role, answers: JSON.parse(JSON.stringify(ck.ans)), levels: lv, sc, flags: ckFlags(ck), safety: JSON.parse(JSON.stringify(ck.safety)), note: ck.note || '', v: C.version };
+  const e = { id: uid(), date: today(), by, helper: by === 'self' ? '' : a.name, quick: ck.quick, role: ck.role, answers: JSON.parse(JSON.stringify(ck.ans)), levels: lv, sc, flags: ckFlags(ck), note: ck.note || '', v: C.version };
   if (by !== 'observed' && (ck.faithEdit || !r.faith) && (ck.faith.trad || ck.faith.own)) { r.faith = Object.assign({}, ck.faith, { date: today(), by: by === 'tapped' ? 'tapped' : 'self' }); }
   if (by !== 'observed' && r.faith && r.faith.never && !(r.matters || {}).never) { r.matters = r.matters || {}; r.matters.never = r.faith.never; }
   r.checkins.push(e);
@@ -720,20 +696,15 @@ VIEWS.results = () => {
   const need = ['edge', 'steady', 'strong'].map(l => PARTS.find(p => e.levels[p.key] === l)).find(Boolean);
   const st = need && PART_STORY[need.key];
   const words = `<ul class="w-words">${PARTS.map(p => e.levels[p.key] ? `<li style="--pc:${p.color}"><b>${p.part}</b><span>${esc(seen ? C.words[e.levels[p.key]].replace(/your tree/g, 'their tree').replace(/You don't/g, 'They don\'t') : C.words[e.levels[p.key]])}</span></li>` : `<li style="--pc:${p.color}"><b>${p.part}</b><span>Not sure today. That's okay.</span></li>`).join('')}</ul>`;
-  const flags = (e.flags || []).filter(f => !seen).map(f => `<p class="w-flagnote"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].note)}${GUIDE_FOR_FLAG[f] ? ` <button type="button" class="text-btn" onclick="W.guide('${GUIDE_FOR_FLAG[f]}')">A guide for this</button>` : ''}</p>`).join('');
-  const sf = e.safety || {}, urgent = C.safety.urgent.includes(sf.choice) || sf.helper === 'yes';
-  const tell = !urgent && (C.safety.tellTeam.includes(sf.choice) || sf.observed === 'yes');
-  const tellText = sf.observed === 'yes' ? C.safety.observed.help : ((C.safety.options.find(o => o[0] === sf.choice) || [])[2] || '');
+  const flags = (e.flags || []).filter(f => !seen && C.flags[f] && C.flags[f].note).map(f => `<p class="w-flagnote"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].note)}${GUIDE_FOR_FLAG[f] ? ` <button type="button" class="text-btn" onclick="W.guide('${GUIDE_FOR_FLAG[f]}')">A guide for this</button>` : ''}</p>`).join('');
   return `<div class="w-head"><p class="w-eyebrow">${seen ? 'What you\'ve seen' : self ? 'Your tree today' : n + '\'s tree today'}</p><h2>${seen ? 'From what you see' : 'Here\'s how the tree is doing'}</h2>
     <p class="lead">${seen ? 'This is kept apart from ' + n + '\'s own answers, and doesn\'t add a ring. It helps their helpers and their hospice team notice what\'s changing.' : 'These are gentle words, not grades. Every part of a tree has seasons.'}</p></div>
-    ${urgent ? `<div class="w-card w-urgent"><p class="w-eyebrow">Please reach out now</p>${linesHtml()}</div>` : ''}
-    ${self && sf.home && sf.home !== 'yes' ? `<div class="w-card w-never"><p class="w-eyebrow">Only you see this</p><p>${esc(C.safety.home.help)}</p>${homeLines()}</div>` : ''}
-    ${tell ? `<div class="w-card"><p class="w-eyebrow">Let the hospice team know</p><p>${esc(tellText)}</p>${linesHtml(true)}</div>` : ''}
     <div class="w-card w-treecard"><div class="w-treewrap">${artTreeHtml(e.levels, (seen ? 'From what you see: ' : '') + 'the willow painting, each part in light', seen ? 'w-seen' : '')}<p class="w-rings">${seen ? 'No new ring' : ringsOf(r) === 1 ? 'A first ring' : ringsOf(r) + ' rings'}</p></div><div class="w-treetext">${words}</div></div>
     ${flags ? `<div class="w-card"><p class="w-eyebrow">Gently</p>${flags}</div>` : ''}
     ${need && !seen ? `<div class="w-card"><p class="w-eyebrow">One small thing</p><p>Today's practice in Today leans toward the ${esc(need.part.toLowerCase())}: ${esc(need.name.toLowerCase())}.</p><div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button>${!(r.matters || {}).who && ck.role === 'person' ? `<button type="button" class="btn btn-secondary" onclick="W.go('matters')">Write what matters</button>` : ''}</div></div>` : `<div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.go('today')">Go to Today</button></div>`}
     ${st ? `<div class="w-card w-story"><p class="w-eyebrow">A Grounded story</p><h3><a class="text-link" href="${storyUrl(st[0])}" target="_blank" rel="noopener">${esc(st[0])}</a></h3><p class="w-quote">${esc(st[1])}</p></div>` : ''}
-    <p class="w-small" style="text-align:center">Stories from the edge of life arrive by email. <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></p>`;
+    <p class="w-small" style="text-align:center">Stories from the edge of life arrive by email. <a class="text-link" href="https://chri5j0y.substack.com/subscribe" target="_blank" rel="noopener">Subscribe to Grounded</a></p>
+    ${quietHtml()}`;
 };
 VIEWS.history = () => {
   const t = target(), r = rec(t); if (!r) return VIEWS.today();
@@ -1154,12 +1125,12 @@ function openSettings(focus) {
     h += `<section><h3>Profile</h3><p class="w-who">${window.GGAv ? GGAv.html(a.avatar, a.name, 40) : ''}<b>${esc(a.name)}</b></p>
       <div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGP.manage()">Picture, passcode, and more</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();GGP.openDialog()">Switch person</button><button type="button" class="btn btn-secondary btn-sm" onclick="W.closeSettings();W.lock()">Lock</button></div></section>`;
     const lr = self && !person ? (helped()[0] ? rec(helped()[0].id) : null) : r, lw = self && !person ? (helped()[0] || {}).name : nameOf(t);
-    if (lr) h += `<section id="w-set-line"><h3>Hospice 24/7 line</h3><p class="w-small">Shown at the top of Today and in every safety step${self && person ? '' : ', for ' + esc(lw)}. Call it first, day or night.</p>
+    if (lr) h += `<section id="w-set-line"><h3>Hospice 24/7 line</h3><p class="w-small">Shown at the top of Today and under every check-in${self && person ? '' : ', for ' + esc(lw)}. Call it first, day or night.</p>
       <label class="w-l" for="w-ln">Hospice name</label><input type="text" id="w-ln" maxlength="80" value="${esc(lr.line.name)}" placeholder="Our hospice">
       <label class="w-l" for="w-lp">24/7 phone number</label><input type="tel" id="w-lp" maxlength="30" value="${esc(lr.line.phone)}" placeholder="320-555-0100">
       <div class="btn-row"><button type="button" class="btn btn-primary btn-sm" onclick="W.saveLine()">Save the number</button></div></section>`;
     if (self && person) {
-      h += `<section id="w-set-share"><h3>What helpers see</h3><p class="w-small">Helpers open your Willow with their own passcode. They see only what's switched on here. Your safety answers about home are never shared.</p>
+      h += `<section id="w-set-share"><h3>What helpers see</h3><p class="w-small">Helpers open your Willow with their own passcode. They see only what's switched on here.</p>
         ${SHARE_ROWS.map(x => `<label class="w-switch"><input type="checkbox" ${r.share[x[0]] ? 'checked' : ''} onchange="W.share('${x[0]}',this.checked)"><span><b>${esc(x[1])}</b><small>${esc(x[2])}</small></span></label>`).join('')}</section>`;
       const hs = (GP() ? GGP.helpers(t) : []).map(id => GGP.get(id)).filter(Boolean);
       const can = (GP() ? GGP.list() : []).filter(p => p.age === 'adult' && p.id !== t && !hs.some(x => x.id === p.id));
@@ -1212,7 +1183,7 @@ function unremember() { const t = target(); GGP.setShared(t, { remembered: null 
 
 /* ---------- the bridge: Willow and a chaplain's or doula's Willow Guide (Willow Build Session 3) ----------
    Both ways, in person, sealed with a short spoken code (shared/gg-bridge.js). Nothing is uploaded.
-   Share with my chaplain or doula: check-ins, and only what the person chose to share. Never the home safety answer.
+   Share with my chaplain or doula: check-ins, and only what the person chose to share.
    From your visit: a card from Willow Guide with practices, What matters, and the vigil plan. Fills in blanks only. */
 const GB = () => window.GGBridge || null;
 const first = n => String(n || '').trim().split(/\s+/)[0] || '';
@@ -1236,7 +1207,6 @@ VIEWS.share = () => {
       ${row('faith', 'Faith answers', 'Tradition, how it\'s lived out, who to call, and anything never to do.', !sees('faith') ? n + ' keeps this private.' : 'Not answered yet.')}
       ${row('matters', 'What Matters and vigil wishes', 'In ' + (self ? 'your' : 'their') + ' own words.', !sees('matters') ? n + ' keeps this private.' : 'Ready when you are.')}
       ${row('notes', 'Notes from check-ins', 'Anything written at the end of a check-in.', !sees('answers') ? 'Kept private.' : 'Notes will show here.')}
-      <p class="w-small">Never shared: the answer about feeling safe at home.</p>
       <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.shareMake()">Make the code</button><button type="button" class="btn btn-secondary" onclick="W.go('today')">Maybe later</button></div>
     </div>`;
 };
@@ -1245,8 +1215,7 @@ function shareMake() {
   const a = me(), t = target(), r = rec(t); if (!a || !r || !GB()) { toast('Sharing needs a newer browser.'); return; }
   const d = { n: first((GGP.get(t) || a).name), d: today(), by: first(a.name), role: roleOf(t) };
   if (SHARE_PICK.checkins && sees('tree')) d.ck = (r.checkins || []).slice(-4).reverse().map(c => {
-    const o = { id: c.id, d: c.date, q: c.quick ? 1 : 0, by: c.by, h: first(c.helper), role: c.role, a: c.answers, sc: c.sc, fl: c.flags || [], v: c.v || 1,
-      sf: { choice: (c.safety || {}).choice || '', observed: (c.safety || {}).observed || '', helper: (c.safety || {}).helper || '' } };
+    const o = { id: c.id, d: c.date, q: c.quick ? 1 : 0, by: c.by, h: first(c.helper), role: c.role, a: c.answers, sc: c.sc, fl: (c.flags || []).filter(x => C.flags[x] && C.flags[x].on.length), v: c.v || 1 };
     if (SHARE_PICK.notes && sees('answers') && c.note) o.note = String(c.note).slice(0, 600);
     return o;
   });
@@ -1393,7 +1362,7 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'w
 window.W = window.W || {};
 Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
-  checkin: startCheckin, step, who, answer, faith, safe, finish, did, another, addLog,
+  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog,
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
   guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,

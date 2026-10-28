@@ -17,9 +17,9 @@
    stay as forms. Heartwood has no Growth Plan; Practices for Two stay as
    they are, so there is no kinds.plan.
    Slots: open, mid {every, lines}, tips {area: lines}, close, plus extras:
-   wording (before the Faith or Plain choice), safety (before Just for You),
-   handoff (when one device passes to the other partner).
-   Helplines are never spoken: Just for You keeps its own text lines.
+   wording (before the Faith or Plain choice) and handoff (when one device
+   passes to the other partner). No safety page and no safety slot (GWG BLD
+   887). Helplines are never spoken: Heartwood keeps one quiet line of type.
    Jenny narrates Heartwood (Heartwood's Learn, sealed: voice jenny).
    ===================================================================== */
 (function () {
@@ -97,10 +97,6 @@
           'Steady and honest. Keep going.'
         ] },
         tips: TIPS,
-        safety: [
-          'These last few questions are just for you. Your answers stay on this screen, with you alone.',
-          'One last page, only for you. Answer only if you feel safe doing so right now.'
-        ],
         handoff: [
           'Thank you. Your answers are locked. Now hand the device to your partner for their turn.',
           'Your part is done and locked. Your partner’s turn begins with their own passcode.'

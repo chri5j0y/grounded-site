@@ -117,7 +117,7 @@ const LC_TOPICS = [
     "Expect a bumpy first term. Praise effort, strategy, and asking for help more than the grade.",
     "Get to know one adult at school yourself: their counselor, a coach, or an advisor."
    ],
-   "you": "Your job shifts this year from managing to coaching. Stay curious, keep the door open, and let them tell you about their life in their own time. If they use Pine, you will never see their answers; if they ever seem unsafe, you'll get only a quiet “Please check in” alert. What you know about their life will mostly come from what they choose to tell you, and they tell more when it feels safe to."
+   "you": "Your job shifts this year from managing to coaching. Stay curious, keep the door open, and let them tell you about their life in their own time. If they use Pine, their answers stay private to them. What you know about their life will mostly come from what they choose to tell you, and they tell more when it feels safe to."
   },
   "faith": "Some students find belonging in a youth group, a faith community, or a quiet minute of prayer before a hard day. Others find it in a walk, music, or a few slow breaths. If faith is part of your life, it can be one steady place while everything else is new. If it isn't, the same need points to whatever helps you feel grounded and connected.",
   "practices": [
@@ -212,7 +212,7 @@ const LC_TOPICS = [
     "If they seem stuck, ask if they'd like to talk with the school counselor, and offer to help set it up.",
     "Look at your own pressure, too. Ask yourself whose goal this is, and talk about it together."
    ],
-   "you": "Warmth plus clear, reasonable expectations is what helps teens do well. Your steady love, shown on a bad-grade day, teaches more than any lecture. If they use Pine, their answers stay private to them; if they ever might not be safe, you'll get only a quiet “Please check in” alert."
+   "you": "Warmth plus clear, reasonable expectations is what helps teens do well. Your steady love, shown on a bad-grade day, teaches more than any lecture. If they use Pine, their answers stay private to them."
   },
   "faith": "Some people find that faith loosens the grip of perfectionism: the sense that they are loved and worthy before they achieve anything. For some, that comes through prayer, a faith community, or words from scripture; for others, through people who love them as they are, or quiet time outside. If faith is part of your life, you might bring the pressure there honestly. If it isn't, the same truth stands: your worth isn't something you earn with grades.",
   "practices": [
@@ -760,7 +760,7 @@ const LC_TOPICS = [
     "“One small step today is enough.”",
     "“I can be kind to myself while I wait for my people.”"
    ],
-   "people": "Try: “Want to grab food after practice?” or “I'm going to the game Friday. Want to come?” To an adult you trust: “I've been feeling kind of alone lately. Can we talk?” Your Pine check-in also helps here: if it shows you've been feeling alone a lot, a grown-up you chose may get a quiet note to check in with you. They never see your answers."
+   "people": "Try: “Want to grab food after practice?” or “I'm going to the game Friday. Want to come?” To an adult you trust: “I've been feeling kind of alone lately. Can we talk?”"
   },
   "helper": {
    "feel": "They may not use the word lonely. They may say they're bored, that school is fine, or that they don't care about the party. They may scroll for hours, sleep a lot, or snap at you. Underneath, many lonely teens feel ashamed, as if being left out proves something about them. They may also be afraid that telling you will make it a big deal.",
@@ -781,7 +781,7 @@ const LC_TOPICS = [
     "Help find a side door into belonging: a team, club, class, job, youth group, or volunteer role built around something they like. Offer to drive.",
     "Make sure they have at least one trusted adult outside the family, and help them connect with that person.",
     "Plan time together that isn't about the problem: a meal, a drive, a game, an errand.",
-    "If you get a “Please check in” alert from Pine, you won't see their answers. Simply check in warmly: “Hey, how are you really doing?” and listen.",
+    "Pine keeps their answers private, so simply check in warmly: “Hey, how are you really doing?” and listen.",
     "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be here. That needs help right away: call, text, or chat 988 together."
    ],
    "you": "You can't make friends for them, and you don't need to. Your steady warmth is a real connection, and one trusted adult can change a whole year. Keep inviting, keep listening, and keep the bar low for what counts as a good step."
@@ -1294,7 +1294,7 @@ const LC_TOPICS = [
     "Tell a school counselor or coach, with your teen's okay, so someone at school is watching out for them.",
     "Check in again in a few months. Questions and feelings come in waves as things change."
    ],
-   "you": "Your own grief and stress are real. Get your support from adults: friends, family, a counselor, a support group. A calmer you is one of the best gifts you can give your teen right now. If you use Pine together, their answers stay private; you may get a quiet “Please check in” alert, never their answers."
+   "you": "Your own grief and stress are real. Get your support from adults: friends, family, a counselor, a support group. A calmer you is one of the best gifts you can give your teen right now. If you use Pine together, their answers stay private."
   },
   "faith": "Some families lean on their faith community during a divorce, and it can be a place of welcome and steady people. For others, faith teachings or comments from people at church, temple, or mosque can add guilt or shame. If faith is part of your life, you can bring your honest feelings to God in prayer, or to a youth leader or pastor you trust. If it isn't, quiet time and the people who steady you can hold the same weight. Either way, your parents' choices are never a judgment on you.",
   "practices": [
@@ -1681,7 +1681,7 @@ const LC_TOPICS = [
     "Protect normal teen life: sleep, school, sports, work, friends.",
     "If you're the parent who uses, getting help is one of the strongest things you can do for your teen. Tell them honestly, in a calm and sober moment, that it's not their fault."
    ],
-   "you": "Loving someone who drinks or uses is exhausting. SMART Recovery Family and Friends offers support for adults, and the SAMHSA National Helpline can point you to treatment and support. Your own steadiness is a gift to your teen. If they use Pine, their answers stay private; you may get a quiet “Please check in” alert, never their answers."
+   "you": "Loving someone who drinks or uses is exhausting. SMART Recovery Family and Friends offers support for adults, and the SAMHSA National Helpline can point you to treatment and support. Your own steadiness is a gift to your teen. If they use Pine, their answers stay private."
   },
   "faith": "For some families, a faith community, a pastor, or a recovery group with a spiritual side becomes a real source of strength. For others, faith can add shame, or pressure to forgive and forget. If faith is part of your life, you can be honest with God about your anger and fear, and ask a youth leader you trust for support. If it isn't, saying what hurts out loud to someone safe matters just as much. Either way, your worth doesn't depend on anyone else's choices.",
   "practices": [
@@ -1876,7 +1876,7 @@ const LC_TOPICS = [
     "Talk it through later, when everyone is calm. Ask what was underneath, and make a plan together in their words: where they can cool off and who they can call.",
     "Own your part out loud when you've crossed a line. It teaches more than any lecture.",
     "Get help early if blowups keep happening, come with drinking or drugs, driving angry, talk of hurting someone or themselves, or seem tied to something bigger: their doctor or the school counselor.",
-    "Pine keeps your teen's check-in private. You never see their answers. If something they share raises a concern, you'll see a quiet “Please check in” alert, and that's your cue to reach out gently."
+    "Pine keeps your teen's check-in private. You never see their answers. Reaching out gently and often is your part."
    ],
    "you": "Blowups can stir up your own history: how fights went in the home you grew up in. If you feel your own temper rising, it's okay to say “I need a break too” and step away. If the blowups at home are between adults, or you feel unsafe, reach out for support for yourself as well. Day One (1-866-223-1111) talks with anyone in Minnesota facing violence at home."
   },
@@ -2076,7 +2076,7 @@ const LC_TOPICS = [
     "Say the name of the person who died, and mark the anniversary and birthday together, in a way the teen helps choose.",
     "Look for a teen grief group or grief camp nearby. Hospices and grief centers often host them.",
     "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a counselor, and call or text 988 if they talk about not wanting to be alive.",
-    "Pine keeps a teen's check-in private. If their answers raise a concern, you'll see only a quiet “Please check in” alert."
+    "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
    "you": "If you're the surviving parent, you're grieving too, maybe while handling everything else. Your teen doesn't need you to be fine. It's okay to cry in front of them and say, “I miss him too.” Find your own support, a group, a counselor, or friends, so you're not carrying it alone, and let other trusted adults share the load."
   },
@@ -2172,7 +2172,7 @@ const LC_TOPICS = [
     "Help them limit time with the posts, rumors, and pictures, without taking away the friends who are grieving with them.",
     "Watch for warning signs: pulling away, talk of not wanting to be alive or of joining their friend, giving things away, sudden calm after being very low, more drinking or drugs, or reckless driving. Ask directly, and call or text 988 together.",
     "If there are guns or a lot of medicine at home, lock them up or keep them somewhere else for now.",
-    "Pine keeps a teen's check-in private. If their answers raise a concern, you'll see only a quiet “Please check in” alert."
+    "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
    "you": "The death of a young person shakes adults too, and it may stir fear for your own teen. Talk with another adult about that fear, so your teen gets your steadiness. You don't need the right words; staying close and keeping the door open is what helps."
   },
@@ -2267,7 +2267,7 @@ const LC_TOPICS = [
     "Let them see you grieve, and tell them it's okay, so they don't have to hide theirs.",
     "If the grandparent raised them or lived with them, treat it like the loss of a parent: tell the school, look for a teen grief group, and watch for grief that gets stuck.",
     "Mark the birthday and the anniversary in a way your teen helps choose.",
-    "Pine keeps a teen's check-in private. If their answers raise a concern, you'll see only a quiet “Please check in” alert."
+    "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
    "you": "If the one who died was your own parent, you're grieving while you parent. You don't have to hide it or hold it all together. Lean on your own people, let other adults help your teen too, and give yourself the same patience you're giving them."
   },
@@ -2456,7 +2456,7 @@ const LC_TOPICS = [
     "Name one steady adult they can go to: an aunt, a coach, a youth leader, a family friend.",
     "If the illness may lead to death, let them choose whether and how to be part of the last weeks, and prepare them for what they may see."
    ],
-   "you": "You may be the one caring for the sick person, or the one who is sick. Either way you can't do it all. Ask for help with rides, meals, and time with your teen, and find someone to talk to yourself. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "You may be the one caring for the sick person, or the one who is sick. Either way you can't do it all. Ask for help with rides, meals, and time with your teen, and find someone to talk to yourself. Pine keeps your teen's answers private."
   },
   "faith": "When someone is seriously ill, big questions come up: why this is happening, what happens after we die, whether anyone is listening. For some teens, prayer, a faith community, worship, or a favorite verse or song is a real comfort. For others, quiet time, nature, music, or a family tradition holds them. Some feel closer to God, and some feel far away or even angry. All of these are honest. Faith can be a comfort, and it can also be hard for a while. A pastor, chaplain, youth leader, or any wise adult can listen without needing you to have answers.",
   "practices": [
@@ -2654,7 +2654,7 @@ const LC_TOPICS = [
     "Notice skipped meals, rigid food rules, hours of exercise, or hiding the body. These may point to an eating disorder: talk with their doctor soon.",
     "Coaches: avoid weigh-ins and comments about bodies, and talk about fuel and recovery instead."
    ],
-   "you": "Your own words about bodies, yours included, teach more than any lecture. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Your own words about bodies, yours included, teach more than any lecture. Pine keeps your teen's answers private."
   },
   "faith": "For some teens, faith is a real help here. Many traditions teach that every person has worth far beyond how they look, and a short prayer, a favorite verse, or a quiet moment with God can soften a harsh day. For others, the same truth comes through family, friends, music, or time outside: your worth is in who you are, how you treat people, and what you love.",
   "practices": [
@@ -2746,7 +2746,7 @@ const LC_TOPICS = [
     "If your teen is an athlete or dancer, talk with the coach about weigh-ins, cutting weight, and comments about bodies.",
     "Get emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat."
    ],
-   "you": "Supporting recovery is exhausting. Find support for yourself too, through ANAD, a parent group, or a counselor. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Supporting recovery is exhausting. Find support for yourself too, through ANAD, a parent group, or a counselor. Pine keeps your teen's answers private."
   },
   "faith": "Some teens find comfort in prayer, a faith community, or a felt sense of being loved by God just as they are, apart from how they eat or look. Others find it in family, friends, music, or nature. If a faith practice, like fasting, ever starts to feel tied up with food rules, talk with a trusted faith leader and your treatment team; many traditions excuse people who are unwell from fasting.",
   "practices": [
@@ -2935,7 +2935,7 @@ const LC_TOPICS = [
     "Help them plan ahead for trips, parties, practices, and overnights, so they can say yes.",
     "Watch for low mood or worry that lasts. Teens with ongoing health conditions benefit from someone to talk to, and at 16 in Minnesota, they can ask for counseling themselves."
    ],
-   "you": "Caring for a teen with a chronic condition is a long road, and your own rest and support matter. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Caring for a teen with a chronic condition is a long road, and your own rest and support matter. Pine keeps your teen's answers private."
   },
   "faith": "Living with an illness or disability can raise hard questions: why me, and what does this mean for my life. Some teens find strength in prayer, a faith community, or a felt sense that God is with them in it. Others find it in family, friends, nature, or music. Some feel angry or far from God for a while. All of these are honest. A youth leader, chaplain, or any wise adult can listen without needing to explain it away.",
   "practices": [
@@ -4780,7 +4780,7 @@ const LC_TOPICS = [
     "Ask the care team about the move to adult care: when it usually happens and what to prepare.",
     "Learn what changes at 18, when your teen becomes the one who decides who can see their health information, and talk about it together ahead of time."
    ],
-   "you": "Stepping back from something you have carried for years can feel strange, even sad. Your role is changing, not ending: from manager to coach, and then to someone they call for advice. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Stepping back from something you have carried for years can feel strange, even sad. Your role is changing, not ending: from manager to coach, and then to someone they call for advice. Pine keeps your teen's answers private."
   },
   "faith": "Growing up includes learning to look after the body and life you've been given. Some teens find that prayer, a faith community, or a sense of being held helps them carry the routine on hard days. Others find that steadiness in family, friends, music, or quiet time. If faith is part of your life, it can be one steady place in the middle of appointments and refills. If it isn't, the same need points to whatever helps you feel grounded and connected.",
   "practices": [
@@ -4880,7 +4880,7 @@ const LC_TOPICS = [
     "Protect sleep: a steady wake time and a calm wind-down help many teens with pain.",
     "Watch for low mood or worry that lasts two weeks or more, and help them talk with their doctor or a counselor."
    ],
-   "you": "Watching your teen hurt, and not being able to fix it, is one of the hardest parts of being a parent. Find someone you can be honest with too. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Watching your teen hurt, and not being able to fix it, is one of the hardest parts of being a parent. Find someone you can be honest with too. Pine keeps your teen's answers private."
   },
   "faith": "Pain can raise big questions, and it can make prayer or worship feel harder to reach some days. Some teens find comfort in a short prayer, music, or a faith community that welcomes them on a seated, quiet day. Others find steadiness in friends, family, or time outside. If faith is part of your life, you can bring the pain there honestly, words or no words. If it isn't, the same honesty helps with someone you trust. Faith Questions When Your Body Hurts is a guide for the bigger questions.",
   "practices": [
@@ -4983,7 +4983,7 @@ const LC_TOPICS = [
     "Learn together how supports change after high school: no IEP, and the student asks for help themselves.",
     "In Minnesota, PACER Center helps families with IEPs, 504 plans, and transition. Ask early about what changes at 18."
    ],
-   "you": "Advocating for a student over many years is tiring, and handing them the microphone takes trust. The goal is a young adult who can speak up for themselves, and knows you'll be there if they want help. Pine keeps a teen's answers private; if a check-in shows they are losing hope or feeling alone, a grown-up sees only a quiet “Please check in.”"
+   "you": "Advocating for a student over many years is tiring, and handing them the microphone takes trust. The goal is a young adult who can speak up for themselves, and knows you'll be there if they want help. Pine keeps a teen's answers private."
   },
   "faith": "Many traditions teach that each person is made with gifts to share, and that a community is better when everyone belongs. Some teens find that confidence in a youth group or faith community that makes room for how they learn and move. Others find it with family, mentors, or friends. If faith is part of your life, it can remind you that your worth was never measured by a test. If it isn't, the same truth holds: your worth was never measured by a test.",
   "practices": [
@@ -5078,7 +5078,7 @@ const LC_TOPICS = [
     "Turn on captions at home, and plan family events so they can follow along.",
     "Make sure they know 988 has an ASL option by videophone, and that they can text 988 too."
    ],
-   "you": "Some parents grieve when they learn their child is Deaf or hard of hearing, and many later find a rich community they didn't know about. Learning even a little sign, if your teen signs, says “I'm in your world too.” Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Some parents grieve when they learn their child is Deaf or hard of hearing, and many later find a rich community they didn't know about. Learning even a little sign, if your teen signs, says “I'm in your world too.” Pine keeps your teen's answers private."
   },
   "faith": "Many faith communities offer interpreters, captioned livestreams, printed words, or Deaf congregations where worship happens in sign. If faith is part of your life, you can ask your community for what helps you take part. Some teens find it meaningful to pray or reflect in sign or in silence. If faith isn't part of your life, belonging can come through Deaf clubs, teams, and friends who share your language.",
   "practices": [
@@ -5173,7 +5173,7 @@ const LC_TOPICS = [
     "Say who you are when you walk in, describe what's around, and ask before you guide.",
     "Plan transportation together so they can join the things their friends do."
    ],
-   "you": "Watching your teen face barriers can bring out the urge to protect. The bigger gift is confidence: tools, skills, practice, and your belief that they can. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Watching your teen face barriers can bring out the urge to protect. The bigger gift is confidence: tools, skills, practice, and your belief that they can. Pine keeps your teen's answers private."
   },
   "faith": "Many faith communities offer large print, braille, or audio versions of their readings, and welcome people who need a guide or a seat near the front. If faith is part of your life, you can ask for the format that lets you take part, and for prayers or songs you can learn by heart. If faith isn't part of your life, music, nature, and people who know you can be places of peace and belonging too.",
   "practices": [
@@ -5270,7 +5270,7 @@ const LC_TOPICS = [
     "Help them find people who share their interests, and autistic mentors or groups. In Minnesota, the Autism Society of Minnesota offers camps, classes, and support for autistic people and their families.",
     "Watch for anxiety, low mood, or burnout that lasts, and find a counselor who understands autism."
    ],
-   "you": "You may have spent years explaining your teen to others. It helps to have your own support too, from other parents who understand. Let your teen teach you what being autistic is like for them. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "You may have spent years explaining your teen to others. It helps to have your own support too, from other parents who understand. Let your teen teach you what being autistic is like for them. Pine keeps your teen's answers private."
   },
   "faith": "Some autistic teens find faith communities a place of deep meaning, especially when the routines are steady and the welcome is real. Others find services too loud, long, or crowded, and do better with a quieter time, a seat near the door, or worship from home. If faith is part of your life, you can ask for what helps you take part. If it isn't, steady routines, nature, music, and the things you love can be places of peace too.",
   "practices": [
@@ -5367,7 +5367,7 @@ const LC_TOPICS = [
     "Work with the school on a plan for missed days and keeping up at home or in the hospital.",
     "Look after siblings too, and accept help with meals, rides, and the house. Courageous Parents Network offers videos and guides for parents of a child with a serious illness."
    ],
-   "you": "Walking with a child through serious illness is one of the hardest things a parent can do. You deserve support of your own: a friend, a counselor, a support group, or a chaplain. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "Walking with a child through serious illness is one of the hardest things a parent can do. You deserve support of your own: a friend, a counselor, a support group, or a chaplain. Pine keeps your teen's answers private."
   },
   "faith": "Serious illness often raises the biggest questions: why this is happening, what comes next, and where to find strength. Some teens find comfort in prayer, a hospital chaplain, a faith community that shows up with meals and messages, or a sense that God is with them in it. Some feel angry or far from God for a while, and that honesty is welcome. Others find strength in family, friends, music, or nature. Faith Questions When Your Body Hurts is a guide for the bigger questions.",
   "practices": [
@@ -5462,7 +5462,7 @@ const LC_TOPICS = [
     "Work with the school on a plan for attendance and catching up, especially after a hospital stay or program.",
     "Learn about the condition. The NAMI HelpLine, 1-800-950-6264, offers information and support for families (not a crisis line)."
    ],
-   "you": "Loving someone through a long-term condition can wear you down, and worry can become constant. Your own support matters: a friend, a counselor, or a family group. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.” In Minnesota, at 16, a teen can ask for outpatient counseling on their own."
+   "you": "Loving someone through a long-term condition can wear you down, and worry can become constant. Your own support matters: a friend, a counselor, or a family group. Pine keeps your teen's answers private. In Minnesota, at 16, a teen can ask for outpatient counseling on their own."
   },
   "faith": "Some teens find steady strength in prayer, a faith community, or the sense that they are loved on every kind of day. Some have heard that more faith would make the condition go away, and that can hurt. A mental health condition is a health condition, and treatment and faith can go together. If faith is part of your life, a youth leader or chaplain who understands mental health can be a good support. If it isn't, the same need for steady love points to the people who stay.",
   "practices": [
@@ -5561,7 +5561,7 @@ const LC_TOPICS = [
     "Let the school counselor know, with your teen's okay, so school can be flexible when needed.",
     "Connect them with others who understand. The American Association of Caregiving Youth and the Sibling Support Project offer support for young carers and siblings."
    ],
-   "you": "If you are the parent who needs help, it can be painful to see your child carry so much. Accepting help from other adults is one of the best things you can do for them. Pine keeps your teen's answers private; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "If you are the parent who needs help, it can be painful to see your child carry so much. Accepting help from other adults is one of the best things you can do for them. Pine keeps your teen's answers private."
   },
   "faith": "Many traditions honor caring for family as a deep act of love, and also teach rest. Some teens find strength in prayer, a faith community that brings meals or rides, or a youth group where they can just be a teen. Others find it in friends, music, or time outside. If faith is part of your life, you can bring the tiredness and the love there honestly. If it isn't, the same truth stands: you are worth caring for too.",
   "practices": [
@@ -5662,7 +5662,7 @@ const LC_TOPICS = [
     "Offer a faith mentor or chaplain they choose, if they want one.",
     "Watch for questions that sit on top of something heavier, like hopelessness or low mood, and get support for that."
    ],
-   "you": "You may have your own questions about why your child is hurting. Bring them to someone you trust, so you can stay open to your teen's. Your faith or your doubts don't have to match theirs. In Pine, their check-in answers, faith answers included, stay private to them; if a check-in shows they are losing hope or feeling alone, you'll see a quiet “Please check in.”"
+   "you": "You may have your own questions about why your child is hurting. Bring them to someone you trust, so you can stay open to your teen's. Your faith or your doubts don't have to match theirs. In Pine, their check-in answers, faith answers included, stay private to them."
   },
   "faith": "This guide's topic is faith, so it sits at the center here, offered as one door among several. Many traditions have honest prayers of complaint and lament, and stories of people who asked God why and were not turned away. For many teens with a long-term illness, finding strength in faith goes with feeling better over time, while feeling punished or abandoned weighs more heavily, which is why that weight deserves a gentle listener, not a lecture. If faith isn't part of your life, the same questions about meaning and fairness are real, and people who love you, nature, music, and purpose can hold you up too.",
   "practices": [
@@ -5764,7 +5764,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Ask their doctor to talk with them privately at their next visit.",
     "If daily drinking or daily pills are part of it, involve a doctor before they stop. Stopping suddenly can be dangerous."
    ],
-   "you": "It can be hard to stay calm when you're worried. Breathe before you talk, and get support of your own: a friend, a therapist, or a family group. Your steadiness helps them think clearly. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+   "you": "It can be hard to stay calm when you're worried. Breathe before you talk, and get support of your own: a friend, a therapist, or a family group. Your steadiness helps them think clearly. If they use Pine, their answers stay private."
   },
   "faith": "If faith is part of your life, it can help to bring this question there: to pray about it, or talk with a youth leader you trust, without fear of being judged. Some teens worry that faith people will only be disappointed in them. Many will be glad you're taking an honest look. If faith isn't part of your life, your own values can do the same work: what kind of person do you want to be, and how does this fit?",
   "practices": [
@@ -5873,7 +5873,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Fill the evenings and weekends with real things: a sport, a job, a gym, a trail, a meal together.",
     "Keep naloxone at home if opioids or pills have been part of the story, and learn how to use it."
    ],
-   "you": "Walking with a teen through early sobriety can bring fear, hope, and exhaustion in one day. Get support for yourself: SMART Recovery Family and Friends, a therapist, or a friend who listens. If they use Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+   "you": "Walking with a teen through early sobriety can bring fear, hope, and exhaustion in one day. Get support for yourself: SMART Recovery Family and Friends, a therapist, or a friend who listens. If they use Pine, their answers stay private."
   },
   "faith": "For some teens, faith is a real source of strength in getting sober: prayer on a hard night, a youth group that welcomes them, or a sense of being loved through every step. Some have felt judged by a faith community, and that can hurt. If faith is part of your life, you can bring your cravings and your hopes to God honestly, and ask a youth leader you trust to walk with you. If it isn't, the same need for people who stay close points to the friends and grown-ups on your side.",
   "practices": [
@@ -6087,7 +6087,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "Protect normal teen life: sleep, school, sports, work, friends.",
     "If you're the parent growing sober: tell your teen honestly, in a calm and sober moment, what you're doing to heal, and let your steady days do the rest."
    ],
-   "you": "Loving someone who drinks or uses, or growing sober yourself while raising a teen, is a lot to carry. SMART Recovery Family and Friends is there for family members, and the SAMHSA National Helpline can point you to treatment and family support. If your teen uses Pine, their answers stay private; you may see a quiet “Please check in,” never their answers."
+   "you": "Loving someone who drinks or uses, or growing sober yourself while raising a teen, is a lot to carry. SMART Recovery Family and Friends is there for family members, and the SAMHSA National Helpline can point you to treatment and family support. If your teen uses Pine, their answers stay private."
   },
   "faith": "For some teens, faith is a place to bring the hurt honestly: anger, fear, and hope all at once, in prayer or with a youth leader they trust. Some feel pressure to forgive and forget quickly, and that can add weight. Forgiveness, if it comes, can take its own time, and safety comes first. If faith isn't part of your life, saying what hurts to someone safe, and choosing your own path, matter just as much.",
   "practices": [
@@ -6403,7 +6403,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
     "If the friend died: help them take part in a memorial or funeral, if they want to, and keep the friend's memory welcome at home.",
     "Watch over the next weeks for trouble sleeping, pulling away, or using. Bring in a therapist if it lasts."
    ],
-   "you": "Hearing that your teen's friend overdosed can shake you to the core. It's natural to feel fear for your own child. Steady yourself before you talk: a breath, a walk, a call to a friend. If you're grieving too, you can grieve together. If they use Pine, their answers stay private; you may see a quiet “Please check in.”"
+   "you": "Hearing that your teen's friend overdosed can shake you to the core. It's natural to feel fear for your own child. Steady yourself before you talk: a breath, a walk, a call to a friend. If you're grieving too, you can grieve together. If they use Pine, their answers stay private."
   },
   "faith": "If faith is part of your life, you might find comfort in prayer, in a service of remembrance, or with a youth leader who sits with you without needing answers. Some teens feel angry at God, and that's an honest prayer too. If faith isn't part of your life, gathering with people who loved your friend, and remembering them together, does sacred work of its own.",
   "practices": [

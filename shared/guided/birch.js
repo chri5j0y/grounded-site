@@ -1,6 +1,6 @@
 /* Grow With Grounded: Guided Check-in script for Birch, ages 18 to 26 (BLD 886).
    Read by shared/gg-guided.js. The questions are read live from birch/checkin.js
-   (BIRCH_CHECKIN.getBank, weeklyList, optionalList, safety), never copied here.
+   (BIRCH_CHECKIN.getBank, weeklyList, optionalList), never copied here.
    GG_GUIDED.birch = {voice, tipSkip, kinds: {start, full, quick, together, plan}}
      open    a few warm lines before question 1 (the engine picks one or two)
      enter   one line as each part begins (optional for the engine)
@@ -10,10 +10,10 @@
      close   lines that celebrate and point to the next step
      plan    {open, part: {part: [why lines]}, close}
    together is a check-in where a helper taps while the person answers
-   (startCheckin('tapped', id)); the safety step stays with the person.
-   tipSkip names the questions that never get a tip: flagged questions,
-   questions with a help note, the optional question, and the safety step.
-   The tree's own calm card and text lines handle those, and no help line
+   (startCheckin('tapped', id)).
+   tipSkip names the questions that never get a tip: any question the tree
+   still marks with a flag, questions with a help note, and the optional
+   question. No safety step (GWG BLD 887), and no help line
    is ever spoken.
    Roots lines name no faith, so they fit Faith and Plain wording alike.
    Voice: the Birch narrator (the BLD 778 voice map). No line names a narrator.
@@ -75,7 +75,7 @@ const TIPS = {
 };
 const G = window.GG_GUIDED.birch = {
   voice: 'brian',
-  tipSkip: ['flag', 'help', 'sens', 'safety'],
+  tipSkip: ['flag', 'help', 'sens'],
   kinds: {
     start: {
       open: [

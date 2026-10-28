@@ -10,10 +10,10 @@
      enter:  {part: variants}, one line as each part begins (start and full only)
      mid:    {every: N, lines: variants}, an encouragement after every N questions
      tips:   {part: variants}, after an answer that shows a Growing Edge in that part
-     close:  after the last question and the tree's own safety step
+     close:  after the last question
      plan:   {open, part: {part: [why lines]}, close} for the Guided Growth Plan
-     tipSkip: questions that never get a tip: flagged ones (q[3] alone, bully, hope), the optional
-       sensitive question (Aspen), and the safety step; there the tree's own calm card or note speaks.
+     tipSkip: questions that never get a tip: any question the tree still marks with a flag, and the
+       optional sensitive question (Aspen). No safety step (GWG BLD 887).
      kinds: start (first check-in), full (every later check-in), week (the GGTend weekly check-in in
        the Week tab), quick (the same object as week), plan.
    Overrides, used in place of the same slot when they apply:
@@ -29,8 +29,7 @@ window.GG_GUIDED["aspen"] = {
  "kids": true,
  "tipSkip": [
   "flag",
-  "sens",
-  "safety"
+  "sens"
  ],
  "kinds": {
   "start": {

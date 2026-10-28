@@ -1399,7 +1399,7 @@
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b852';
-  var GUIDES = { oak: ['/oak/guides.js?v=b885', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b852', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b885', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b852', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=b885', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b887', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b885', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b887', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   function learnOf(tree) {

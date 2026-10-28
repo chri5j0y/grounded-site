@@ -19,11 +19,16 @@
      "why" line the person can tap to read.
    - Oak's four answers plus "Not sure", asked about the past two weeks
      (decision 5). Scores run 1 to 10 for every tool.
-   - Two or three reverse worded questions in every part.
+   - Two or three reverse worded questions in most parts; Branches and
+     Fruit have one since GWG BLD 887.
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to young adults, always with 988 and 911.
-   - Flagged answers (alone, losing hope, someone hurting me) are never
-     lost: the person sees help lines right away.
+   - No safety step and no flags (GWG BLD 887): Grounded asks open,
+     curious questions and never a harm question. One quiet line of type
+     (never spoken) sits on the check-in and results: QUIET. A help list
+     stays one tap away (HELP), never opened by an answer. Branches asks
+     seven questions since BLD 887 (its last question, about someone
+     close controlling or hurting you, was removed), and Fruit's hope
+     question was reworded as an open, forward question.
 
    Leaves holds three strands, Move, Rest, and Nourish. One Leaves question
    for each is tagged s: 'move', 'rest', or 'nourish'. The weekly quick
@@ -32,7 +37,6 @@
 
    Each question: { t, tip, why } plus
      r: 1        a reverse question ("Often" is the hard answer)
-     flag        'alone', 'hope', or 'hurt' (see FLAGS)
      s           'move', 'rest', or 'nourish' (Leaves strands)
      src: ['id'] where the "why" line rests on a study or measure
      plain       the Plain wording: any of { t, tip, why, src } that
@@ -44,7 +48,7 @@
                  A season note may hold its own plain: { ex, tip } for
                  Plain wording. Only ex and tip are ever read, so a
                  season never changes the question, the why line, the
-                 sources, reverse scoring, flags, or scores.
+                 sources, reverse scoring, or scores.
      help        a quiet note on the results for one answer range, with
                  topic lines: { on, note, lines }. It is not a flag, never
                  sent to anyone, and never shown to a helper.
@@ -84,33 +88,31 @@
    Substances (decision 8): using alcohol or other substances
    to cope is in the regular bank (Leaves question 8), asked as coping,
    never amounts. It carries a help note with the SAMHSA line, and it
-   raises no flag to anyone. OPTIONAL holds one question, betting and
+   is never sent to anyone. OPTIONAL holds one question, betting and
    gambling: off unless the person turns it on in settings, never scored,
    never shared, never shown to a helper, never printed for anyone else.
 
-   Who sees what (decision 11): Birch has no grown-up alert, and nothing
-   is ever sent to anyone. ALERT_KINDS is empty on purpose. Helpers, when
-   the person turns them on (Sequoia's model), see only what the person
-   shares, and NEVER_SHARE lists what a helper never sees: the safety
-   step, every flag and its note, help notes, and the optional question.
+   Who sees what (decision 11): Birch has no alert, and nothing is ever
+   sent to anyone. Helpers, when the person turns them on (Sequoia's
+   model), see only what the person shares, and NEVER_SHARE lists what a
+   helper never sees: help notes and the optional question.
 
    Questions are written fresh. The Mental Health Continuum Short Form,
    the BMMRS, the Brief RCOPE, spiritual struggles themes, the Meaning in
    Life Questionnaire, the Claremont Purpose Scale, PHQ-2, GAD-2, the
    Perceived Stress Scale, the CFPB Financial Well-Being Scale, the
-   three-item loneliness scale, AUDIT-C themes, the Adult Hope Scale, and
-   the NIMH ASQ are foundations only. None of their items are copied.
+   three-item loneliness scale, AUDIT-C themes, and the Adult Hope Scale
+   are foundations only. None of their items are copied.
 
    Sources used (ids for gg-sources.js; the lead merges
    p742/out/checkin-sources.json):
      Roots:    koenig, smithsnell, exline, rcope
      Trunk:    damon03, mlq, sumner, bronk18, ryff, arnett
      Bark:     neff, kessler05, gad2, phq2, cfpbfwb, shed24
-     Branches: murthy, pewparents, nisvs, mcc21, ucla3
+     Branches: murthy, pewparents, mcc21, ucla3
      Leaves:   nsfsleep, pag, noetel, white, mtfpanel24
      Fruit:    snyder, arnett, nsduh24
      Optional: fdupoll
-     Safety:   asq, dazzi, nsduh24
    ===================================================================== */
 (function(){
 const VERSION = 1;   // the Grounded tree standard
@@ -152,7 +154,7 @@ const BANDS = [[BAND, 'Birch, 18 to 26', []]];
 
 // My Season (decision 6). Pick any, or none. id, name (Title Case, as
 // shown in settings), line (what it covers), lines (topic help lines
-// that fit, from SAFETY.lines.topic), guides (suggested guides; Birch's
+// that fit, from HELP.lines.topic), guides (suggested guides; Birch's
 // When Life Changes guides arrive in Birch 2, so these stay empty now).
 const MY_SEASON = [
   { id: 'school', name: 'In School or Training', line: 'College, a trade program, an apprenticeship, classes, or training of any kind', lines: ['nami'], guides: [] },
@@ -325,21 +327,16 @@ const Q = {
       tip: 'Ask who in their family they feel closest to now. Closeness can look new at this age. If family isn\'t safe or close, the people they choose as family count fully.',
       why: 'Most young adults get along well with their parents, and the relationship keeps changing in these years. Closeness can take a new shape.',
       src: ['pewparents'] },
-    { t: 'If you\'re dating or married, felt safe, respected, and able to be yourself?',
-      tip: 'If they aren\'t dating, "Not sure" is fine. Keep the door open without prying. Love Is Respect (call 1-866-331-9474, or text LOVEIS to 22522) helps people think it through.',
-      why: 'Many people who are ever hurt by a partner are first hurt before 25. Respect and safety are what every relationship deserves.',
-      src: ['nisvs'] },
+    { t: 'If you\'re dating or married, felt respected, cared for, and able to be yourself?',
+      tip: 'If they aren\'t dating, "Not sure" is fine. Ask what respect and care look like to them, and keep the door open without prying. Love Is Respect (call 1-866-331-9474, or text LOVEIS to 22522) helps people think it through.',
+      why: 'Respect, care, and room to be yourself are what every relationship deserves, and these years shape what you expect from love.' },
     { t: 'Had at least one person you can be fully yourself with?',
       tip: 'Ask who it is. If no one comes to mind, gently note that, and come back to it in the growth plan.',
       why: 'One person who knows the real you can carry you through a great deal.' },
-    { t: 'Felt lonely, even with people around?', r: 1, flag: 'alone',
+    { t: 'Felt lonely, even with people around?', r: 1,
       tip: 'Plan some time together this week. Ask when it feels that way most, and listen without fixing.',
       why: 'Loneliness peaks in the young adult years. It\'s common, it\'s worth naming, and it can change.',
-      src: ['mcc21', 'ucla3'] },
-    { t: 'Had someone close to you control, threaten, or hurt you, in person or online?', r: 1, flag: 'hurt',
-      tip: 'Listen first and thank them for telling you. Ask privately whether they are safe right now. Love Is Respect, the National Domestic Violence Hotline, and Day One can help them think it through.',
-      why: 'No one has the right to control, threaten, or hurt you. Help is there any time, and you are not in trouble for telling.',
-      src: ['nisvs'] }
+      src: ['mcc21', 'ucla3'] }
   ],
   leaves: [
     { t: 'Gotten enough sleep to wake up feeling rested?', s: 'rest',
@@ -402,9 +399,9 @@ const Q = {
     { t: 'Done kind things for others, even when no one was watching?',
       tip: 'Notice and name the kind things they do. Do one together this month.',
       why: 'Kindness lifts the giver too, and it grows hope in you and in others.' },
-    { t: 'Felt like there\'s no point in trying anymore?', r: 1, flag: 'hope',
-      tip: 'Take this seriously and keep talking. Ask gently how long it has felt this way. If they talk about wanting to die or hurting themselves, call or text 988 right away, or call 911 in an emergency. The safety step comes next.',
-      why: 'Many people your age go through stretches of feeling hopeless. You don\'t have to carry it alone, and it can get better with help.',
+    { t: 'Felt like it\'s worth it to keep trying, even when things get hard?',
+      tip: 'Ask what keeps them going. If the answer is rarely, take it seriously, keep talking, and stay close.',
+      why: 'Many people your age go through stretches when hope runs low. You don\'t have to carry it alone, and hope can grow again with support.',
       src: ['nsduh24'] },
     { t: 'Felt like everyone else is ahead of you?', r: 1,
       tip: 'Ask who they compare themselves with, and where. Help them name one thing they are proud of that no one else sees.',
@@ -418,67 +415,18 @@ const Q = {
 // comparisons read the right way. Indexes are within each part.
 const WEEKLY = { roots: [0], trunk: [0], bark: [0], branches: [0], leaves: [0, 1, 2], fruit: [0] };
 
-// What a flagged answer means, and which answers flag it.
-// alone and hope flag on Often or Almost always; Almost always also opens the calm card.
-// hurt flags on Sometimes, Often, or Almost always (Branches question 8),
-// and also comes from the safety step's first question (from: 'safety');
-// Often or Almost always opens the calm card with the hurt lines.
-// alert is false for every flag: Birch never alerts anyone.
-// lines names the help lines (ids in SAFETY.lines) to show with the note.
-// Flags and their notes are never shown to a helper (NEVER_SHARE).
-const FLAGS = {
-  alone: { on: ['often', 'always'], calm: ['always'], alert: false, title: 'Feeling alone',
-    note: 'You said you\'ve felt lonely often. That\'s worth tending, and lots of people your age feel it too. Reaching out to one person this week can help: a friend, someone in your family, a coworker, or a group you could try. If it feels heavy, call or text 988 any time.',
-    lines: ['988', 'ctl'],
-    guide: 'They named loneliness. Talk together about one person they could reach toward, and one group, class, or team to try. Listen for hopelessness.' },
-  hope: { on: ['often', 'always'], calm: ['always'], alert: false, title: 'Losing hope',
-    note: 'You said it\'s felt like there\'s no point in trying. You can share that weight, and it can get better with help. Call or text 988, or text HOME to 741741, any time, day or night. Veterans and service members, call 988 and press 1.',
-    lines: ['988', 'veterans', 'ctl', '911'],
-    guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive.' },
-  hurt: { on: ['sometimes', 'often', 'always'], calm: ['often', 'always'], from: 'safety', alert: false, title: 'Someone hurting me',
-    note: 'Thank you for telling me. No one has the right to control, threaten, or hurt you, at home, at work, online, or in a relationship. These people can help any time, and you can talk it through privately.',
-    lines: ['loveisrespect', 'thehotline', 'dayone', 'rainn', 'stopncii', '911'],
-    guide: 'They said someone close is controlling, threatening, or hurting them. Ask privately whether they are safe right now. Share Love Is Respect, the National Domestic Violence Hotline, or Day One. If they are a vulnerable adult, follow your reporting duties (MAARC, 1-844-880-1574).' }
-};
-
-// No alert to anyone (decision 11). Empty on purpose, so apps built from
-// Pine's code send nothing. NEVER_ALERT keeps Pine's shape for those apps.
-const ALERT_KINDS = [];
-const NEVER_ALERT = ['safety', 'alone', 'hope', 'hurt', 'betting'];
+// GWG BLD 887: no flags, no alerts, and no safety step. Grounded asks open, curious
+// questions and never a harm question. QUIET is the one line of type on the check-in
+// and results (never spoken). HELP is the help list opened only by a quiet link.
+const QUIET = 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.';
 // What a helper never sees, even when the person shares their check-in:
-// the safety step, every flag and its note, help notes on questions, and
-// the optional question.
-const NEVER_SHARE = ['safety', 'flags', 'help', 'optional'];
-
-// The safety step, fitted to young adults: Pine's two questions in adult
-// words, with Oak's hopelessness and burden themes in the lead, "I'd
-// rather not say", and the 'now' follow-up. Shaped by the NIMH ASQ's
-// direct approach (never its items). Direct wording is the
-// research-informed way to ask, and asking does not plant the idea.
-// questions: [text, kind]. kind 'safe' is someone hurting me (the hurt
-// flag); kind 'self' is thoughts of suicide. now is asked only after a
-// yes or not sure to the self question; a yes to it opens the calm card
-// with 988 and 911 at the top. Nothing here is ever sent to anyone or
-// shown to a helper.
-const SAFETY = {
-  intro: 'These years can bring some heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
-  questions: [
-    ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at work, online, or in a relationship?', 'safe'],
-    ['In the past two weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']
-  ],
-  selfLead: 'Sometimes, when life gets heavy, people feel hopeless or like a burden, and think about not wanting to be alive. Lots of people your age have had that thought, and it\'s safe to say so here.',
-  now: 'Right now, today, are those thoughts with you?',
-  answers: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', 'I\'d rather not say']],
-  // Which answers count. 'skip' is respected and never counts as a yes.
-  on: { safe: ['yes', 'unsure'], self: ['yes', 'unsure'], now: ['yes', 'unsure'] },
-  kinds: { safe: 'hurt', self: 'safety' },
-  yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
-  means: 'If there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.',
-  burden: 'You matter to people, even when it is hard to see. Feeling like a burden is a sign to reach out, not a fact about you.',
-  title: 'You matter, and others can help you carry this.',
+// help notes on questions, and the optional question.
+const NEVER_SHARE = ['help', 'optional'];
+const HELP = {
+  title: 'You have people with you.',
   calmIntro: 'These people want to help, any time. You can also tell someone you trust, like a friend, someone in your family, a doctor, or a counselor.',
-  hurtTitle: 'No one has the right to hurt you.',
-  hurtIntro: 'These people can help any time, and you can talk it through privately. You are not in trouble for telling.',
+  hurtTitle: 'Help any time, privately',
+  hurtIntro: 'These people can help any time, and you can talk it through privately.',
   // Help lines in the order shown, numbers only from docs/birch-research.md
   // section 4. tel and sms are dialable; smsBody is the word to text.
   // calm is the calm card; hurt is shown when someone is hurting the
@@ -517,9 +465,7 @@ const SAFETY = {
       { id: 'poison', name: 'Poison Help', show: 'Call 1-800-222-1222', tel: '18002221222', note: 'All day and night.' }
     ]
   },
-  src: ['asq', 'dazzi', 'nsduh24']
 };
-
 // Optional question (decision 8). Off unless the person turns it on in
 // settings; only they can. Asked on the answer scale right after its
 // part. Never part of a score, never shared, never shown to a helper,
@@ -575,7 +521,7 @@ function weekly(seasons, wording) {
 }
 function optional() { return OPTIONAL.map(q => Object.assign({}, q)); }
 function lineById(id) {
-  const L = SAFETY.lines;
+  const L = HELP.lines;
   return L.calm.find(x => x.id === id) || L.hurt.find(x => x.id === id) || L.topic.find(x => x.id === id) || null;
 }
 function seasonLines(seasons) {
@@ -585,15 +531,14 @@ function seasonLines(seasons) {
 }
 
 window.BIRCH_CHECKIN = { version: VERSION, bank: BANK, perPart: PER_PART, answers: ANSWERS, levels: LEVELS, stems: STEMS,
-  parts: PARTS, band: BAND, bands: BANDS, mySeason: MY_SEASON, MY_SEASON: MY_SEASON, modes: MODES, questions: Q, weekly: WEEKLY, flags: FLAGS,
-  alertKinds: ALERT_KINDS, ALERT_KINDS: ALERT_KINDS, neverAlert: NEVER_ALERT, neverShare: NEVER_SHARE, NEVER_SHARE: NEVER_SHARE,
-  safety: SAFETY, optional: OPTIONAL, OPTIONAL: OPTIONAL, sensitive: OPTIONAL, SENSITIVE: OPTIONAL,
+  parts: PARTS, band: BAND, bands: BANDS, mySeason: MY_SEASON, MY_SEASON: MY_SEASON, modes: MODES, questions: Q, weekly: WEEKLY,
+  neverShare: NEVER_SHARE, NEVER_SHARE: NEVER_SHARE, quiet: QUIET, help: HELP, optional: OPTIONAL, OPTIONAL: OPTIONAL, sensitive: OPTIONAL, SENSITIVE: OPTIONAL,
   bandOf: bandOf, resolve: resolve, getBank: bank, weeklyList: weekly, optionalList: optional, sensitiveList: optional,
   lineById: lineById, seasonLines: seasonLines };
 })();
 /* LIFE notes start: Health and Ability notes (GWG BLD 756, HA 1). Like My Season, a note adds only
    ex (an example) and tip, read for the chosen ids. The question, the answers, and the score never change,
-   and no safety or flagged question carries a note. Generated by worker A. */
+   and no question with a help note carries one. Generated by worker A. */
 (function () { var C = window.BIRCH_CHECKIN; if (!C || !C.questions) return; var N = {"leaves": {"0": {"pain": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "serious": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "mind": {"ex": "Mood and some medicines can change sleep. Notice what helps you rest."}}, "1": {"moving": {"ex": "Any way your body moves counts: rolling, stretching, chair exercises, swimming, or adapted sports.", "tip": "Ask what kind of movement feels good in their body, not what it should look like."}, "pain": {"ex": "On a hard day, a gentle stretch or a few minutes of movement counts.", "tip": "Ask what movement looks like on good days and on hard days."}, "health": {"ex": "Movement that fits your body and your doctor's advice counts fully."}}, "3": {"moving": {"ex": "Sitting by a bright window, on a balcony, or on a porch counts."}}, "4": {"health": {"ex": "Like knowing your specialist, your pharmacy, and who to call after hours.", "tip": "Ask who is on their care team now, and what changes at 26."}, "serious": {"ex": "Like knowing your care team, your pharmacy, and who to call after hours."}, "mind": {"ex": "Like knowing how to reach your counselor or prescriber between visits."}}}, "bark": {"0": {"autism": {"ex": "Like stepping away to a quiet spot, or putting on headphones."}, "pain": {"ex": "Like slow breathing or resting when pain rises."}, "close": {"ex": "Like taking a break while someone else helps the person you care for."}}, "3": {"hearing": {"ex": "Reaching out by text, chat, or video in sign counts."}, "autism": {"ex": "Reaching out by text or in writing counts."}}, "4": {"learning": {"ex": "Using reminders, lists, or a helper to keep track counts as handling it."}, "health": {"ex": "Like keeping up with refills, appointments, and insurance."}, "autism": {"ex": "Using routines, lists, or a helper counts as handling it."}}}, "branches": {"1": {"hearing": {"ex": "Friendships online, by text, or in sign count fully."}, "autism": {"ex": "Friendships online, by text, or built around a shared interest count fully."}}, "2": {"hearing": {"ex": "Like a Deaf community group, a captioned class, or friends who sign."}, "moving": {"ex": "Like an adapted sports team, or a group that meets online."}, "autism": {"ex": "Like a group built around something you love, online or in person."}, "health": {"ex": "Like a group for people living with the same condition."}}, "3": {"close": {"ex": "Like time with a family member who is ill, or a break from helping care for them.", "tip": "Ask how caring for someone in the family is changing things at home."}}}, "trunk": {"3": {"moving": {"ex": "Strengths that have nothing to do with what your body can do count fully."}, "health": {"ex": "Strengths that have nothing to do with what your body can do count fully."}, "learning": {"ex": "Like creativity, problem solving, or noticing what others miss."}}}, "fruit": {"2": {"moving": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "hearing": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "seeing": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}, "learning": {"ex": "Like finding a workaround, an accommodation, or a tool that helps."}}, "4": {"health": {"ex": "Like a good day, an appointment handled, or rest you took without guilt."}, "pain": {"ex": "Like a good day, or rest you took without guilt."}, "serious": {"ex": "Like a treatment finished, a good hour, or a visit you enjoyed."}, "mind": {"ex": "Like a calmer day, or using a tool from counseling."}}}};
-  Object.keys(N).forEach(function (p) { Object.keys(N[p]).forEach(function (i) { var q = (C.questions[p] || [])[+i]; if (q && !q.flag && !q.help) q.life = N[p][i]; }); }); })();
+  Object.keys(N).forEach(function (p) { Object.keys(N[p]).forEach(function (i) { var q = (C.questions[p] || [])[+i]; if (q && !q.help) q.life = N[p][i]; }); }); })();
 /* LIFE notes end */

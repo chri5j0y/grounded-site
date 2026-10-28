@@ -16,16 +16,20 @@
    - At least one reverse worded question in every part (marked 'r').
      Aspen has two in every part.
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to the age, always with 988 and 911.
-   - Flagged answers (alone, bullied, losing hope) always reach a grown-up.
+   - No safety step and no flags (GWG BLD 887): Grounded asks open, curious
+     questions and never a harm question. One quiet line of type (never
+     spoken) sits on the check-in and results: the kids line with 988 and 911.
+   - TALK names the questions a grown-up always sees, with a gentle
+     conversation idea: Branches 3 (feeling lonely or left out), Branches 4
+     (being treated kindly), Fruit 4 (hope). Branches 4 and Fruit 4 were
+     reworded in BLD 887 as open, forward questions, so "Not really" is now
+     their hard answer; Branches and Fruit each keep one reverse question.
 
-   Each question: [text, tip] or [text, tip, 'r'] or [text, tip, 'r', flag].
+   Each question: [text, tip] or [text, tip, 'r'].
    Question 1 of every part is the quick check-in question, so it is never
    a reverse question. WHY holds a short "Why this question?" line for
    every question, in the same order, written for students.
-   'r' means "yes" is the hard answer. flag names a sign a grown-up
-   should hear about when the answer is yes or sometimes:
-   'alone', 'bully', 'hope'.
+   'r' means "yes" is the hard answer.
 
    BANK 2 (session 23): six questions per part. Questions 1 to 4 are the
    same as bank 1, word for word, so rings saved with four questions still
@@ -40,7 +44,7 @@
    wording at setup and can change it later; Faith is the default. Every
    line that names faith (a question, its tip, or its Why line) has a
    Plain wording in PLAIN and PLAIN_WHY below. Plain asks the same thing
-   without religious words, keeps the same reverse mark and flag, and
+   without religious words, keeps the same reverse mark, and
    scores the same way, so rings compare across the two wordings.
    Q stays the Faith wording, so anything that reads questions directly
    still gets Faith. getBank(grade, wording, sens) returns the questions
@@ -110,8 +114,8 @@ const Q = {
     branches: [
       ['Do you have at least one friend you can be yourself around?', 'If they name someone, ask what makes that friend easy to be around.'],
       ['Is there a grown-up you trust enough to tell almost anything?', 'Help them name that grown-up. It might be you.'],
-      ['Do you feel lonely or left out?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r', 'alone'],
-      ['Is anyone bullying you, in person or online?', 'If yes, listen first and thank them for telling you. Save any messages, then work with the school.', 'r', 'bully'],
+      ['Do you feel lonely or left out?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r'],
+      ['Do other kids treat you with kindness and respect, in person and online?', 'Ask how kids treat each other at school and online, and listen first. If something hard comes up, thank them for telling you, save any messages, and work with the school.'],
       ['Do you feel close to someone in your family?', 'Plan ten minutes of one-on-one time this week, doing something they pick. Put your phone away while you do.'],
       ['Do you feel like you belong at your school?', 'Ask where at school they feel most at home, and where they don\'t. Help them find one club, team, or group to try.']
     ],
@@ -127,7 +131,7 @@ const Q = {
       ['Do you have something to look forward to this week?', 'If not, plan one small good thing together.'],
       ['Do you believe things can get better, even when they\'re hard?', 'Share a time something hard got better for you.'],
       ['Do you notice good things that happen, even small ones?', 'Try trading three good things at dinner or bedtime.'],
-      ['Do you ever feel like giving up on everything?', 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away, or call 911 in an emergency.', 'r', 'hope'],
+      ['Do you feel ready to keep going, even when things get hard?', 'Ask what helps them keep going. If the answer is not really, take it seriously, keep talking, and stay close.'],
       ['Do you do kind things for other people?', 'Do one kind thing together this week, like a note, a favor, or a meal for someone. Talk about how it felt afterward.'],
       ['When one thing goes wrong, does it feel like your whole day is ruined?', 'Help them name what went wrong and what still went okay. One bad moment doesn\'t make a bad day.', 'r']
     ]
@@ -160,8 +164,8 @@ const Q = {
     branches: [
       ['Do you have friends who treat you well, even when you disagree?', 'Talk about what a good friend does when you disagree.'],
       ['If a friend, or someone you liked, ever pressured you or made you feel bad about yourself, would you know someone you could talk to?', 'Keep the door open without prying. Say: "You can always tell me, and you won\'t be in trouble for telling."'],
-      ['Do you feel lonely or left out, even around other kids?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r', 'alone'],
-      ['Is anyone bullying you, in person, in group chats, or online?', 'If yes, listen first and thank them for telling you. Save any messages, then work with the school.', 'r', 'bully'],
+      ['Do you feel lonely or left out, even around other kids?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r'],
+      ['Do people treat you kindly, in person, in group chats, and online?', 'Ask what group chats and online spaces feel like for them, and listen first. If something hard comes up, thank them for telling you, save any messages, and work with the school.'],
       ['Is there someone in your family you feel close to and can count on?', 'Plan regular one-on-one time, doing something they choose. Keep showing up, even if they act like they don\'t care.'],
       ['Is there a group, team, or club where you feel like you belong?', 'Help them find a group, or stick with one they like. Belonging grows with time.']
     ],
@@ -177,7 +181,7 @@ const Q = {
       ['Do you have something coming up that you\'re excited about?', 'If not, plan one good thing together this month.'],
       ['Do you believe you can handle hard things, with help if you need it?', 'Remind them of something hard they already got through.'],
       ['Do you have a dream or goal for your future?', 'Ask about it with curiosity, not advice. Help them take one small step.'],
-      ['Do you ever feel hopeless, like nothing will ever get better?', 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away, or call 911 in an emergency.', 'r', 'hope'],
+      ['Do you feel hopeful that things will get better?', 'Ask what gives them hope right now. If the answer is not really, take it seriously, keep talking, and stay close.'],
       ['Do you do kind or helpful things for other people?', 'Look for one way to help together this month, at home, at school, or in your community.'],
       ['When something goes wrong, do you think it will always be that way?', 'Help them remember a time something hard changed. Hard things usually don\'t last forever.', 'r']
     ]
@@ -210,8 +214,8 @@ const Q = {
     branches: [
       ['Do you have friends who have your back?', 'Ask who those friends are and how they show it.'],
       ['If someone you liked or went out with ever pressured you, controlled you, or made you feel bad about yourself, would you know someone you could talk to?', 'Keep the door open without prying. Say: "You can always tell me, and you won\'t be in trouble for telling."'],
-      ['Do you feel lonely, even when people are around?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r', 'alone'],
-      ['Is anyone bullying, threatening, or embarrassing you, in person or online?', 'If yes, listen first and thank them for telling you. Save any messages or pictures, then work with the school.', 'r', 'bully'],
+      ['Do you feel lonely, even when people are around?', 'If yes, plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.', 'r'],
+      ['Do people treat you with respect, in person and online?', 'Ask how people treat each other in their world, in person and online, and listen first. If something hard comes up, thank them for telling you, save any messages or pictures, and work with the school.'],
       ['Do you feel close to someone in your family, even when you don\'t agree?', 'Keep regular one-on-one time, even short. Disagreeing and still staying close is something you can show them.'],
       ['Do you feel like you belong somewhere, like at school, on a team, or in a group?', 'Ask where they feel most at home. Help them stay connected to that group.']
     ],
@@ -227,7 +231,7 @@ const Q = {
       ['Are you looking forward to high school, or to something else coming next?', 'Ask what they look forward to, and what feels scary about it.'],
       ['Do you believe your life can turn out good, even when things are hard right now?', 'Share a time you got through something hard.'],
       ['Do you have people who believe in your future?', 'Tell them, plainly, that you believe in their future.'],
-      ['Do you ever feel like there\'s no point in trying anymore?', 'Take this seriously and keep talking. If they ever talk about wanting to die or hurting themselves, call or text 988 right away, or call 911 in an emergency.', 'r', 'hope'],
+      ['Do you feel like it\'s worth it to keep trying?', 'Ask what keeps them going. If the answer is not really, take it seriously, keep talking, and stay close.'],
       ['Do you do kind things for people, even when no one is watching?', 'Notice and name the kind things they do. Do one together this month.'],
       ['When something goes wrong, do you blame yourself for all of it?', 'Help them sort what was theirs and what wasn\'t. Share a time you were too hard on yourself.', 'r']
     ]
@@ -265,7 +269,7 @@ const WHY = {
       'One friend you can be yourself around can make a big difference.',
       'A grown-up you trust is someone to go to when things get hard.',
       'Feeling lonely or left out hurts, and it\'s something grown-ups want to know about.',
-      'Bullying is never your fault, and no one should have to handle it alone.',
+      'Being treated with kindness and respect helps you enjoy school and friends, and grown-ups want to hear how it is going.',
       'Feeling close to your family is one of the strongest protections for kids your age.',
       'Feeling like you belong at school helps with friends, mood, and learning.'
     ],
@@ -281,7 +285,7 @@ const WHY = {
       'Having something to look forward to gives each week a little more light.',
       'Believing things can get better helps you keep going when life is hard.',
       'Noticing good things, even small ones, trains your brain to see more of them.',
-      'Feeling like giving up is important to share, so the people who care about you can help.',
+      'Feeling ready to keep going is hope in action, and sharing how it feels lets the people who care about you help.',
       'Being kind to others is one of the surest ways to feel hopeful yourself.',
       'Seeing a bad moment as just a moment helps hope last through hard days.'
     ]
@@ -315,7 +319,7 @@ const WHY = {
       'Good friends treat you well even when you don\'t agree.',
       'Knowing who you could talk to helps you get help fast if someone treats you badly.',
       'Feeling lonely, even around other kids, is worth sharing with someone you trust.',
-      'Bullying in person or online is never your fault, and you don\'t have to handle it alone.',
+      'Kindness in person and online helps you feel at ease, and you never have to handle a hard situation alone.',
       'Feeling close to family helps people your age handle stress, school, and friendships.',
       'Belonging to a group gives you people who notice you and cheer you on.'
     ],
@@ -331,7 +335,7 @@ const WHY = {
       'Something to be excited about helps you get through the slower days.',
       'Believing you can handle hard things, with help, makes them easier to face.',
       'A dream or goal gives you something to grow toward.',
-      'Feeling hopeless is important to share, so people who care about you can help.',
+      'Feeling hopeful helps you keep going, and sharing how it feels lets people who care about you help.',
       'Helping others builds hope in you, too.',
       'Knowing that hard times can change is a big part of hope.'
     ]
@@ -365,7 +369,7 @@ const WHY = {
       'Friends who have your back make hard things easier to face.',
       'Knowing who you could talk to helps you get help fast if someone treats you badly.',
       'Feeling lonely, even around people, is worth sharing with someone you trust.',
-      'Bullying, threats, or being embarrassed online is never your fault, and you don\'t have to handle it alone.',
+      'Respect in person and online helps you feel at ease, and you never have to handle a hard situation alone.',
       'Staying close to family, even when you disagree, helps you through the teen years.',
       'Belonging somewhere gives you people who notice you and cheer you on.'
     ],
@@ -381,7 +385,7 @@ const WHY = {
       'Looking forward to what\'s next helps you get through changes.',
       'Believing your life can turn out good helps you keep going through hard times.',
       'People who believe in your future help you believe in it too.',
-      'Feeling like there\'s no point is important to share, so people who care about you can help.',
+      'Feeling like trying is worth it keeps hope alive, and sharing how it feels lets people who care about you help.',
       'Kindness that no one sees still grows hope, in you and in others.',
       'Blaming yourself for everything makes hard times heavier than they need to be.'
     ]
@@ -389,7 +393,7 @@ const WHY = {
 };
 
 /* Plain wording (BLD 745). [grade][part][index] = [text, tip]. Only the lines that
-   name faith are here; the reverse mark and flag always come from Q. */
+   name faith are here; the reverse mark always comes from Q. */
 const PLAIN = {
   '6': {
     roots: {
@@ -449,18 +453,13 @@ const WEEKLY = {
   '8': {}
 };
 
-// The safety step. The same two questions for grades 6 to 8.
-const SAFETY = {
-  questions: [
-    ['Is anyone hurting you, or making you feel unsafe at home, at school, or online?', 'safe'],
-    ['Sometimes when life is really hard, people think about hurting themselves or not wanting to be alive. Have you had thoughts like that lately?', 'self']
-  ],
-  answers: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure']],
-  intro: 'These help make sure you\'re safe. Every answer is welcome, and you can skip if you want.'
-};
+/* GWG BLD 887: no safety step. The quiet line is type only, never spoken. TALK: the questions,
+   by part and place, a grown-up always sees with a gentle conversation idea (every grade). */
+const QUIET = 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.';
+const TALK = { branches: { 2: 'alone', 3: 'kind' }, fruit: { 3: 'hope' } };
 
 /* The questions ready to ask: the wording ('faith', the default, or 'plain') and,
-   when sens is on, the optional question in its place. Each is [text, tip, 'r', flag]. */
+   when sens is on, the optional question in its place. Each is [text, tip, 'r']. */
 function question(grade, part, i, wording, sens) {
   const g = String(grade), x = sens && SENSITIVE[g];
   if (x && x[0] === part && x[1] === i) return x[2].slice();
@@ -481,5 +480,5 @@ function whyOf(grade, part, i, wording, sens) {
   return p || (((WHY[g] || {})[part] || [])[i]) || '';
 }
 
-window.ASPEN_CHECKIN = { getBank: getBank, question: question, whyOf: whyOf, plain: PLAIN, plainWhy: PLAIN_WHY, weekly: WEEKLY, version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, safety: SAFETY };
+window.ASPEN_CHECKIN = { getBank: getBank, question: question, whyOf: whyOf, plain: PLAIN, plainWhy: PLAIN_WHY, weekly: WEEKLY, version: VERSION, bank: BANK, perPart: PER_PART, bankSizes: BANK_SIZES, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, sensitive: SENSITIVE, sensitiveWhy: SENSITIVE_WHY, quiet: QUIET, talk: TALK };
 })();

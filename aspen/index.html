@@ -241,6 +241,7 @@ h3{font-family:var(--sans);font-weight:700;font-size:20px;}
 .q-why p{margin:6px 0 0;padding:8px 12px;border-left:3px solid var(--line);}
 .voice-slot .gg-rbar{margin:10px 0 4px;}
 .note{background:var(--teal-soft);border-radius:14px;padding:14px 16px;margin:0 0 16px;}
+.as-quiet{font-size:14px;line-height:1.45;color:var(--ink-soft);margin:16px 0 0;}
 
 /* Results and rings */
 .status-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:8px;margin:12px 0 18px;}
@@ -482,7 +483,7 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
   </nav>
   <p class="foot-local foot-way"><a class="text-link" href="/the-grounded-way.html">Go further with The Grounded Way.</a></p>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
-  <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, any time.</p>
+  <p class="foot-crisis">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>
   <p class="footer-privacy">Check-ins stay in this browser. Everything a student enters here stays on this device.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. The Grow With Grounded Aspen name, logo, six-part tree framework, questions, practices, illustrations, and guides are original works protected by copyright and may not be copied, adapted, or redistributed without written permission.</p>
 </footer>
@@ -495,12 +496,12 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b885"></script>
+<script src="/shared/gg-profiles.js?v=b887"></script>
 <script src="/shared/gg-life.js?v=b851"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="checkin.js?v=b782"></script>
+<script src="checkin.js?v=b887"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b852"></script>
+<script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
@@ -1073,9 +1074,9 @@ const STYLE_NAMES = {move:'Move', write:'Write or draw', quiet:'Quiet', connect:
 const CK = window.ASPEN_CHECKIN;
 const ANSWERS = CK.answers;
 const ANS = Object.fromEntries(ANSWERS.map(a => [a[0], a]));
-const SAFETY_Q = CK.safety.questions.map(q => q[0]);
-const SAFETY_KIND = CK.safety.questions.map(q => q[1]);
-const SAFETY_A = CK.safety.answers;
+/* GWG BLD 887: no safety step and no flags. The quiet kids line is type only, never spoken. */
+const asQuiet = () => `<p class="as-quiet no-read">${esc(CK.quiet || '')}</p>`;
+const asTalk = (key, i) => ((CK.talk || {})[CK_KEY[key]] || {})[i] || '';
 /* ---------- Faith or Plain (Parity Sweep 1, GWG BLD 745) ----------
    A grown-up sets the wording when a student is added and can change it later; Faith is the
    default. Faith wording names God, prayer, and faith as one door among several. Plain asks the
@@ -1253,7 +1254,7 @@ function applyTheme(s){ document.body.classList.remove('theme-winter','theme-aut
 /* Rings on the standard carry std (CK.version) and bank (which set of questions; bank 1 asked 4 per part,
    bank 2 asks 6). Rings with no std keep their own questions (QUESTIONS_V0). Rings on the standard from an
    earlier bank read the first questions of each part, which never changed. Only rings with the same std and
-   bank are ever compared. isStd: on the standard (flags, safety, Grove). isNow: on the current bank. */
+   bank are ever compared. isStd: on the standard (talk answers, Grove). isNow: on the current bank. */
 const isStd = ring => !!ring && ring.std === CK.version;
 const bankOf = ring => (ring && ring.bank) || 1;
 const isNow = ring => isStd(ring) && bankOf(ring) === CK.bank;
@@ -1310,14 +1311,15 @@ function statusCell(ring, prev, key, grown){
 function lowestTwo(ring){
   return PARTS.map(p => [p.key, ringScore(ring, p.key) ?? 5.5]).sort((a,b)=>a[1]-b[1]).slice(0,2).map(x=>x[0]);
 }
-/* Flagged answers on a standard ring: a flag question answered "Yeah, most of the time" or "Sometimes". */
-function ringFlags(ring){
+/* Answers worth a gentle conversation on a standard ring: a TALK question whose answer leans hard
+   (yes or sometimes on a reverse question, not really on a forward one). Read fresh, never saved as a flag. */
+const asHard = (q, a) => { const an = ANS[a]; return !!an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1); };
+function ringTalks(ring){
   if (!isStd(ring)) return [];
   const out = [];
-  PARTS.forEach(p => ringQs(ring, p.key).forEach((q, i) => { const a = ringQa(ring, p.key)[i]; if (q[3] && (a === 'yes' || a === 'some')) out.push({part:p.key, i, type:q[3], q:q[0], ans:ANS[a][1]}); }));
+  PARTS.forEach(p => ringQs(ring, p.key).forEach((q, i) => { const a = ringQa(ring, p.key)[i], t = asTalk(p.key, i); if (t && asHard(q, a)) out.push({part:p.key, i, type:t, q:q[0], ans:ANS[a][1]}); }));
   return out;
 }
-const ringSafe = ring => (ring.safety || []).map((v, i) => ({v, i})).filter(x => x.v === 'yes' || x.v === 'unsure');
 
 /* ---------- the tree art (GWG BLD 780) ----------
    Aspen's own painting with six glowing markers (shared/gg-treeart.js, spots in
@@ -1474,7 +1476,7 @@ function aspPracticeInfo(key, name){
   }
   return {};
 }
-const ASP_SEE = `<p><b>Always shown to your grown-up</b>If you answer that someone is hurting you, that you've thought about hurting yourself, that you're being bullied, that you feel lonely or left out, or that you feel like giving up, your grown-up sees that answer so they can help.</p>
+const ASP_SEE = `<p><b>Always shown to your grown-up</b>If you answer the questions about feeling lonely or left out, how people treat you, or feeling hopeful, your grown-up sees that answer so they can cheer you on and help.</p>
   <p><b>The big picture</b>How each part of your tree is doing (Strong, Steady, or Growing Edge), how your tree looks today, how many days you tended it, and which parts you're tending.</p>
   <p><b>Just yours</b>The rest of your answers, the practices you check off each day, your notes, and your weekly reflections. You can share a reflection with your grown-up anytime.</p>`;
 function aspProfileHtml(){
@@ -1508,7 +1510,7 @@ function renderGuidesTab(){
 
 /* ---------- a card from an Aspen Guide visit ----------
    A guide's QR or link carries only a first name, the date, what's growing strong, and what the student chose
-   to try, and pl 1 when the Guide's school or group asks for Plain wording (that locks Plain on this tree). It lands on the student's own tree, for them. No levels, notes, safety answers, the optional question,
+   to try, and pl 1 when the Guide's school or group asks for Plain wording (that locks Plain on this tree). It lands on the student's own tree, for them. No levels, notes, answers, the optional question,
    or anyone else's name ever travel. Grown-up pages never show it. */
 const CK_PART = Object.fromEntries(Object.entries(CK_KEY).map(([k, v]) => [v, k]));
 const vPart = k => PART[CK_PART[k]];
@@ -1582,7 +1584,7 @@ function setTheme(k){ const s=me(); s.theme=k; save(); renderDash(); }
 function startCheckin(){
   const s = me();
   const sens = !!s.askSens && !!CK.sensitive[String(s.grade)];
-  s.draft = {step:'intro', page:0, mode:'self', grade:s.grade, std:CK.version, bank:CK.bank, sens, answers:{}, safety:SAFETY_Q.map(() => null), flags:[], started:new Date().toISOString()};
+  s.draft = {step:'intro', page:0, mode:'self', grade:s.grade, std:CK.version, bank:CK.bank, sens, answers:{}, started:new Date().toISOString()};
   save(); go('checkin');
 }
 function renderCheckin(){
@@ -1591,24 +1593,25 @@ function renderCheckin(){
   // A checkin started before the questions were updated starts fresh on the new questions.
   if (s.draft.std !== CK.version || (s.draft.bank || 1) !== CK.bank){
     const mode = s.draft.mode || 'self', sens = !!s.askSens && !!CK.sensitive[String(s.grade)];
-    s.draft = {step:'intro', page:0, mode, grade:s.grade, std:CK.version, bank:CK.bank, sens, answers:{}, safety:SAFETY_Q.map(() => null), flags:[], started:new Date().toISOString()};
+    s.draft = {step:'intro', page:0, mode, grade:s.grade, std:CK.version, bank:CK.bank, sens, answers:{}, started:new Date().toISOString()};
     save(); toast('Aspen\'s questions were updated, so this check-in starts fresh.');
   }
+  if (s.draft.step === 'safety'){ s.draft.step = 'parts'; s.draft.page = 5; save(); }   // a draft saved at the old safety step picks up on the last part
   const d = s.draft, v = $('view-checkin');
-  const prog = `<div class="progress" aria-hidden="true">${PARTS.map((p,i)=>`<span class="${d.step==='parts'&&i===d.page?'now':((d.step==='parts'&&i<d.page)||d.step==='safety'?'done':'')}"></span>`).join('')}<span class="${d.step==='safety'?'now':''}"></span></div>`;
+  const prog = `<div class="progress" aria-hidden="true">${PARTS.map((p,i)=>`<span class="${d.step==='parts'&&i===d.page?'now':(d.step==='parts'&&i<d.page?'done':'')}"></span>`).join('')}</div>`;
   if (d.step === 'intro'){
     v.innerHTML = `
       <button class="back" onclick="go('dash')">&larr; Back</button>
       <h2>Before you start</h2>
-      <div class="note"><b>This is yours.</b> Your grown-up sees how each part of your tree is doing, not your answers, except a few safety answers, so they can help. <button class="asp-link" onclick="GGTend.openSettings()">What your grown-up can see</button>. Every answer is welcome. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Growing Edge.</div>
+      <div class="note"><b>This is yours.</b> Your grown-up sees how each part of your tree is doing, not your answers, except a few about friends and hope, so they can cheer you on. <button class="asp-link" onclick="GGTend.openSettings()">What your grown-up can see</button>. Every answer is welcome. "Not sure" is always okay. Afterward you'll see how each part of your tree is doing: Strong, Steady, or Growing Edge.</div>
       <div class="panel">
         <h3>How are you doing this check-in?</h3>
         <div class="seg" role="group" aria-label="Check-in mode"><button aria-pressed="${d.mode==='self'}" onclick="setMode('self')">On my own</button><button aria-pressed="${d.mode==='grown'}" onclick="setMode('grown')">With a grown-up</button></div>
         <p class="muted small" style="margin-top:10px">${d.mode==='grown' ? 'Your grown-up will see a gold note with a question to talk about after each answer.' : 'Read each question and pick what fits best.'}</p>
         <p style="margin:14px 0 0"><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read Aloud: ${readOn?'on':'off'}</button></p><div class="voice-slot"></div>
       </div>
-      <p class="muted">Grade ${d.grade} questions. Six parts, ${['zero','one','two','three','four','five','six','seven','eight'][CK.perPart] || CK.perPart} questions each, then ${SAFETY_Q.length === 2 ? 'two' : SAFETY_Q.length} short safety questions.</p>
-      <button class="btn" onclick="toStep('parts')">Let's go</button>`;
+      <p class="muted">Grade ${d.grade} questions. Six parts, ${['zero','one','two','three','four','five','six','seven','eight'][CK.perPart] || CK.perPart} questions each.</p>
+      <button class="btn" onclick="toStep('parts')">Let's go</button>${asQuiet()}`;
     voiceSlots();
     return;
   }
@@ -1618,23 +1621,14 @@ function renderCheckin(){
       <div class="part-head" style="--pc:${pcolor(p.key)}"><span class="pi">${ICONS[p.key]}</span><div><b>${p.name}</b><span>${p.sub}, part ${d.page+1} of 6</span></div></div>
       <p class="muted">${p.about}</p>
       <p><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read Aloud: ${readOn?'on':'off'}</button></p><div class="voice-slot"></div>
-      ${qs.map((q,i)=>{ const ln = q[3] ? {ex:[], tip:[]} : asNote(p.key, i, d.grade); return `<div class="q" id="q-${i}"><p class="qt">${esc(q[0])} <button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button></p>
+      ${qs.map((q,i)=>{ const ln = asTalk(p.key, i) ? {ex:[], tip:[]} : asNote(p.key, i, d.grade); return `<div class="q" id="q-${i}"><p class="qt">${esc(q[0])} <button class="q-say" onclick="sayQ(${i})" aria-label="Read this question aloud"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9z"/><path d="M16.5 8.5a5 5 0 0 1 0 7"/></svg></button></p>
         ${whyFor(d.grade, p.key, i, d.sens, wd) ? `<details class="q-why"><summary>Why this question?</summary><p>${esc(whyFor(d.grade, p.key, i, d.sens, wd))}</p></details>` : ''}
         ${d.mode==='grown' && ans[i] ? `<div class="follow"><b>For the grown-up</b>${esc(q[1])}${ln.tip.map(x => ' ' + esc(x)).join('')}</div>` : ''}
         <div class="answers" role="group" aria-label="${esc(q[0])}">${ANSWERS.map(a=>`<button class="ans" aria-pressed="${ans[i]===a[0]}" onclick="answer(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div>
         ${ln.ex.length ? `<ul class="as-ex" aria-label="An example">${ln.ex.map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : ''}</div>`; }).join('')}
-      <div class="row"><button class="btn ghost" onclick="prevPage()">Back</button><button class="btn" ${ans.filter(Boolean).length<qs.length?'disabled':''} onclick="nextPage()">${d.page<5?'Next part':'Almost done'}</button><button class="btn ghost small" onclick="pauseCheckin()">Pause</button></div>`;
+      <div class="row"><button class="btn ghost" onclick="prevPage()">Back</button><button class="btn" ${ans.filter(Boolean).length<qs.length?'disabled':''} onclick="nextPage()">${d.page<5?'Next part':'Finish and add my ring'}</button><button class="btn ghost small" onclick="pauseCheckin()">Pause</button></div>${asQuiet()}`;
     voiceSlots();
     if (readOn) say(`${p.name}. ${qs[0][0]}`);
-    return;
-  }
-  if (d.step === 'safety'){
-    v.innerHTML = `${prog}
-      <h2>${SAFETY_Q.length === 2 ? 'Two last questions' : 'Last questions'}</h2>
-      <div class="note">${esc(CK.safety.intro)}</div>
-      ${SAFETY_Q.map((q,i)=>`<div class="q"><p class="qt">${q}</p><div class="answers" role="group" aria-label="${esc(q)}">${SAFETY_A.map(a=>`<button class="ans" aria-pressed="${d.safety[i]===a[0]}" onclick="safety(${i},'${a[0]}')">${a[1]}</button>`).join('')}</div></div>`).join('')}
-      <div class="row"><button class="btn ghost" onclick="toStep('parts',5)">Back</button><button class="btn" onclick="finishCheckin()">Finish and add my ring</button></div>`;
-    if (readOn) say(SAFETY_Q[0]);
     return;
   }
 }
@@ -1648,36 +1642,21 @@ function toStep(step, page){ const d = me().draft; d.step = step; if (page != nu
 function answer(i, a){
   const s = me(), d = s.draft, p = PARTS[d.page], qs = qsFor(d.grade, p.key, d.sens, wordingOf(s)), q = qs[i];
   d.answers[p.key] = d.answers[p.key] || qs.map(() => null);
-  const before = d.answers[p.key][i];
   d.answers[p.key][i] = a; save();
-  /* A flag question (alone, bullied, losing hope) answered yes or sometimes is marked for the grown-up.
-     The calm card opens right away for "Yeah, most of the time," and for "Sometimes" on bullied or losing hope. */
-  const flagged = q[3] && (a === 'yes' || a === 'some');
-  const calmFor = x => !!q[3] && (x === 'yes' || (x === 'some' && q[3] !== 'alone'));
-  const calm = calmFor(a), calmBefore = calmFor(before);
-  const fkey = p.key+':'+i;
-  const was = d.flags.includes(fkey);
-  if (!flagged) d.flags = d.flags.filter(f => f !== fkey);
-  else if (!was) d.flags.push(fkey);
-  save(); renderCheckin();
-  if (calm && !calmBefore){ showCalm({during:true}); return; }
+  renderCheckin();
   const next = $('q-'+(i+1)); if (readOn && next) say(qs[i+1][0]);
 }
-function nextPage(){ const d = me().draft; if (d.page < 5){ d.page++; save(); renderCheckin(); toTop(true); } else toStep('safety'); }
+function nextPage(){ const d = me().draft; if (d.page < 5){ d.page++; save(); renderCheckin(); toTop(true); } else finishCheckin(); }
 function prevPage(){ const d = me().draft; if (d.page > 0){ d.page--; save(); renderCheckin(); toTop(true); } else toStep('intro'); }
 function pauseCheckin(){ toast('Saved. You can pick up where you left off.'); go('dash'); }
-function safety(i, a){ const d = me().draft; d.safety[i] = d.safety[i] === a ? null : a; save(); renderCheckin(); if (readOn && i===0) say(SAFETY_Q[1]); }
 function finishCheckin(){
   const s = me(), d = s.draft;
   const answers = {};
   PARTS.forEach(p => { const qa = (d.answers[p.key] || qsFor(d.grade, p.key, d.sens).map(() => null)).slice(); answers[p.key] = {qa, score: partScore(d.grade, p.key, qa, d.sens)}; });
-  const safetyFlag = d.safety.some(a => a === 'yes' || a === 'unsure');
-  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, bank:CK.bank, sens:!!d.sens, wording:wordingOf(s), mode:d.mode, answers, safety:d.safety.slice(), flags:d.flags.slice(), safetyFlag};
-  ring.flagged = safetyFlag || ringFlags(ring).length > 0;
+  const ring = {id:uid(), date:new Date().toISOString(), grade:d.grade, std:CK.version, bank:CK.bank, sens:!!d.sens, wording:wordingOf(s), mode:d.mode, answers};
   s.rings.push(ring); s.draft = null; s.leaves = (s.leaves||0)+3; save();   // each checkin: one ring, three leaves
   const seasonMsg = window.GGTend ? GGTend.onFullCheckin({date: dayKey(ring.date)}) : null;
   renderResult(ring, seasonMsg);
-  if (safetyFlag) showCalm({final:true});
 }
 function renderResult(ring, seasonMsg){
   const s = me(), prev = s.rings[s.rings.length-2], cmp = sameStd(ring, prev) ? prev : null;
@@ -1690,7 +1669,7 @@ function renderResult(ring, seasonMsg){
     <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,false)).join('')}</div>
     ${strong.length ? `<p class="muted">Growing strong: ${strong.join(', ')}.</p>` : ''}
     <div class="note">Aspen suggests tending <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b> first. Your growth plan suggests about 3 practices for each part, and a few more for your Growing Edges.</div>
-    <div class="row"><button class="btn" onclick="aspTab('plan')">Build my growth plan</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="aspTab('today')">Back to my tree</button></div>`;
+    <div class="row"><button class="btn" onclick="aspTab('plan')">Build my growth plan</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="aspTab('today')">Back to my tree</button></div>${asQuiet()}`;
   toTop(true);
 }
 
@@ -1706,15 +1685,11 @@ function calmList(){
     <li><b>In danger right now? Call 911.</b></li>
   </ul>`;
 }
-function showCalm(o){
-  o = o || {};
-  const head = o.final ? 'Thank you for being honest.' : o.during ? 'Thanks for telling the truth.' : 'You have people with you.';
-  const body = o.final ? 'You deserve help right now. Please tell a grown-up you trust today, like a parent, teacher, school counselor, coach, or another family member. You can also reach out to one of these now.'
-    : o.during ? 'That sounds hard. You matter, and people want to help. When you can, tell a grown-up you trust, like a parent, teacher, school counselor, or another family member. These are here too, any time.'
-    : 'These people want to help, any time. You can also tell a grown-up you trust, like a parent, teacher, school counselor, or another family member.';
+/* The help list opens only when someone taps a quiet help link (GWG BLD 887): never on its own after an answer. */
+function showCalm(){
   $('overlay-root').innerHTML = `<div class="overlay" role="dialog" aria-modal="true" aria-labelledby="calm-h" onclick="if(event.target===this)closeCalm()"><div class="calm">
-    <h2 id="calm-h">${head}</h2><p>${body}</p>${calmList()}${o.final || o.during ? '' : asLifeLinesHtml()}
-    <button class="btn teal" id="calm-close" onclick="closeCalm()">${o.during?'Keep going':'Close'}</button></div></div>`;
+    <h2 id="calm-h">You have people with you.</h2><p>These people want to help, any time. You can also tell a grown-up you trust, like a parent, teacher, school counselor, or another family member.</p>${calmList()}${asLifeLinesHtml()}
+    <button class="btn teal" id="calm-close" onclick="closeCalm()">Close</button></div></div>`;
   $('calm-close').focus();
   document.addEventListener('keydown', calmKey);
 }
@@ -1884,7 +1859,7 @@ function renderHelpPlan(){
     <div class="panel"><h3>Water your tree</h3><p>Your practices show up in Today. Check off any one and your tree is watered for the day. Tend all six parts and it glows.</p></div>
     <div class="panel"><h3>Grow at your pace</h3><p>Miss a few days and your tree rests in a soft mist, and everything you grew stays. One practice brings the light back, and a few days bring it all the way back.</p></div>
     <div class="panel"><h3>Watch your tree grow up</h3><p>Every day you tend your tree moves it toward its next stage, from Seed to Golden Aspen. Practices you keep doing move from Tried to Building to Mine. Milestones mark firsts, like tending all six parts in one week, and new scenery opens as you go: new lakes to pick from in Season.</p></div>
-    <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and everything you grew stays. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it. After a hard check-in, the tree holds still for two weeks either way.</p></div>
+    <div class="panel"><h3>Steady or Hardy</h3><p>Your tree starts Steady: gentle, and everything you grew stays. Want a little more challenge? Pick Hardy in Settings. Then a part of your plan left untended for ten days shows trouble until one practice heals it.</p></div>
     <div class="panel"><h3>Easier today</h3><p>Hard day? Tap <b>Easier today</b> on a practice for a smaller version that still counts.</p></div>
     <div class="panel"><h3>Change it anytime</h3><p>Open <b>Growth Plan</b> to add or remove practices whenever you want.</p></div>
     <div class="help-strip"><div><b>Need to talk to someone?</b><br><span class="muted">Help is private and open all day and night.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>`;
@@ -1910,39 +1885,35 @@ function ringDetail(s, i, grown){
   if (!ring) return '';
   const std = isStd(ring), name = esc(s.name);
   let h = `<h3>Ring ${i+1}: grade ${ring.grade}, ${fmtDate(ring.date)}</h3>
-    <p class="muted small">${ring.mode==='grown'?'Done with a grown-up':'Done on their own'}${ring.flagged && grown ? ' <span class="marker">Worth a check-in</span>' : ''}</p>
+    <p class="muted small">${ring.mode==='grown'?'Done with a grown-up':'Done on their own'}${grown && ringTalks(ring).length ? ' <span class="marker">Worth a conversation</span>' : ''}</p>
     ${isNow(ring) ? '' : `<p class="earlier muted small">${std ? 'An earlier check-in, with four questions for each part.' : 'An earlier check-in, from before Aspen\'s questions were updated.'} ${grown ? 'Its levels are shown for this ring only and are not compared with newer rings.' : 'It is not compared with newer rings.'}</p>`}
     <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,grown)).join('')}</div>`;
   if (grown){
-    const flags = ringFlags(ring), safe = ringSafe(ring);
-    if (std && (flags.length || safe.length)){
-      h += `<div class="note"><b>Please check in with ${name}.</b>`;
-      safe.forEach(x => { h += `<p>${name} answered "${x.v === 'yes' ? 'Yes' : 'Not sure'}" to "${esc(SAFETY_Q[x.i])}"</p>`; });
-      if (safe.some(x => SAFETY_KIND[x.i] === 'self')) h += `<p>If ${name} talks about wanting to die or hurting themselves, stay with them. Call or text 988, the Suicide and Crisis Lifeline, any time. If they are in danger right now, call 911.</p>`;
-      if (safe.some(x => SAFETY_KIND[x.i] === 'safe')) h += `<p>If someone is hurting ${name}, report it to your county child protection agency or the police. Teachers, counselors, and other mandated reporters should follow their own reporting steps. Childhelp, 1-800-422-4453, can help you figure out who to call.</p>`;
-      flags.forEach(f => {
+    const talks = ringTalks(ring);
+    if (std && talks.length){
+      h += `<div class="note"><b>Worth a conversation with ${name}.</b>`;
+      talks.forEach(f => {
         const said = `${name} answered "${esc(f.ans)}" to "${esc(f.q)}"`;
-        if (f.type === 'bully') h += `<p>${said}. Listen first and ask what has been happening. Save any messages, then work with the school. <a href="#" onclick="go('guide',{id:'bullying'});return false">Read the bullying guide</a></p>`;
+        if (f.type === 'kind') h += `<p>${said}. Ask how things are going with friends and other kids, and listen first. If something hard is happening, save any messages and work with the school. <a href="#" onclick="go('guide',{id:'bullying'});return false">Read the guide on bullying</a></p>`;
         if (f.type === 'alone') h += `<p>${said}. Extra closeness this week, like one-on-one time, a walk, or a drive together, can make a real difference. <a href="#" onclick="go('guide',{id:'leftout'});return false">Read the Being Left Out guide</a></p>`;
-        if (f.type === 'hope') h += `<p>${said}. Most of the time this means a student feels worn out or sad, but please ask gently how they are feeling. If they ever talk about wanting to die or hurting themselves, call or text 988 any time, or call 911 in an emergency.</p>`;
+        if (f.type === 'hope') h += `<p>${said}. Spend some unhurried time together, ask gently how they are feeling, and plan one good thing to look forward to.</p>`;
       });
       h += `</div>`;
     }
-    /* Three layers (Rebrand Session 4): a grown-up always sees the safety answers and the lonely,
-       bullied, and giving up answers. Every answer shows only for a check-in done together. */
+    /* Three layers (Rebrand Session 4, GWG BLD 887): a grown-up always sees the lonely or left out,
+       kindness, and hope answers. Every answer shows only for a check-in done together. */
     const together = ring.mode === 'grown';
-    h += together ? `<details class="panel"><summary><b>See every answer</b></summary><p class="muted small">You did this check-in together, so every answer is here. Answers worth a gentle check-in are in bold.</p><ul class="answers-list">`
-      : `<details class="panel"><summary><b>Answers always shown to you</b></summary><p class="muted small">The safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The rest of ${name}'s answers are theirs.</p><ul class="answers-list">`;
+    h += together ? `<details class="panel"><summary><b>See every answer</b></summary><p class="muted small">You did this check-in together, so every answer is here. Answers worth a gentle conversation are in bold.</p><ul class="answers-list">`
+      : `<details class="panel"><summary><b>Answers always shown to you</b></summary><p class="muted small">The questions about feeling lonely or left out, how people treat them, and feeling hopeful. The rest of ${name}'s answers are theirs.</p><ul class="answers-list">`;
     PARTS.forEach(p => ringQs(ring, p.key).forEach((q,qi)=>{
-      if (!together && !(std ? q[3] : (ring.flags || []).includes(p.key+':'+qi))) return;
+      const talk = std && asTalk(p.key, qi);
+      if (!together && !talk) return;
       const a = ringQa(ring, p.key)[qi], an = ANS[a];
-      const hard = std ? (an && an[2] != null && (q[2] === 'r' ? an[2] >= 2 : an[2] === 1)) : (an && an[2] === 1);
-      const mark = std ? (q[3] && (a === 'yes' || a === 'some')) : (ring.flags || []).includes(p.key+':'+qi);
-      h += `<li${hard ? ' class="hard"' : ''}><span>${esc(q[0])}</span>${an ? an[1] : 'No answer'}${mark ? ' <span class="marker">Worth a check-in</span>' : ''}</li>`;
+      const hard = std ? asHard(q, a) : (an && an[2] === 1);
+      h += `<li${hard ? ' class="hard"' : ''}><span>${esc(q[0])}</span>${an ? an[1] : 'No answer'}${talk && hard ? ' <span class="marker">Worth a conversation</span>' : ''}</li>`;
     }));
-    SAFETY_Q.forEach((q,qi)=>{ const a = (ring.safety||[])[qi]; const worry = std ? (a === 'yes' || a === 'unsure') : a !== 'no'; h += `<li${worry ? ' class="hard"' : ''}><span>${esc(q)}</span>${a ? SAFETY_A.find(x=>x[0]===a)[1] : 'Skipped'}${worry && a ? ' <span class="marker">Worth a check-in</span>' : ''}</li>`; });
     h += `</ul></details>`;
-    if (ring.flagged) h += `<div class="note"><b>How to start the check-in.</b> Pick a calm, private moment. Say what you noticed without alarm: "I saw some of your answers and I care about how you're doing." Listen more than you talk. Thank them for being honest. If anything points to someone hurting them or thoughts of not wanting to be alive, stay with them and use the calm card resources together, or call 988. Teachers should follow their school's reporting and crisis steps.</div>`;
+    if (talks.length) h += `<div class="note"><b>How to start the conversation.</b> Pick a calm, private moment. Say what you noticed without alarm: "I saw some of your answers and I care about how you're doing." Listen more than you talk, and thank them for being honest.</div>`;
   }
   return h;
 }
@@ -1969,7 +1940,7 @@ function renderGrown(){
       ${(()=>{ if (!window.GGP) return ''; const act = GGP.active(), locked = GGP.list().filter(p => p.age === 'aspen' && !GGP.isOpen(p.id));
         if (act && act.age === 'adult') return locked.length ? `<p class="muted">${locked.length} more student profile${locked.length===1?'':'s'} on this device ${locked.length===1?'is':'are'} locked. Only the grown-ups who agreed for a student can open them.</p>` : '';
         return `<p class="muted">Open your own grown-up profile (the button at the top of the page) to see every student you agreed for.</p>`; })()}
-      ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&l.flagged?'<span class="flagged">Worth a check-in</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">Students add themselves from the Students tab.</p>'}
+      ${list.length ? `<div class="people">${list.map(s=>{const l=s.rings[s.rings.length-1];return `<button class="person" onclick="openG('${s.id}')">${GGAv.html(s.avatar, s.name, 44)}<b>${esc(s.name)}</b><span class="muted">Grade ${s.grade}, ${s.rings.length} ${s.rings.length===1?'ring':'rings'}${l?', last '+fmtDate(l.date):''}</span>${l&&ringTalks(l).length?'<span class="flagged">Worth a conversation</span>':''}</button>`;}).join('')}</div>` : '<p class="muted">Students add themselves from the Students tab.</p>'}
       <div class="row"><button class="btn ghost small" onclick="exportFile()">Save to a file</button><label class="btn ghost small" style="cursor:pointer">Load from a file<input type="file" accept="application/json,.json" hidden onchange="importFile(this)"></label></div>
       <p class="muted small">Everything lives in this browser only. Save to a file now and then, since clearing the browser or resetting a device erases it. Each file is locked with a passcode you choose.</p>
     </div>
@@ -1982,14 +1953,14 @@ function renderGrown(){
     </div>
     <div class="panel"><h3>What you can see</h3>
       <p>Aspen gives students some privacy, in three layers, and tells them so plainly before they start. Kids answer more honestly when they know up front.</p>
-      <p><b>Always shown to you.</b> The two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. When an answer is worrying, you see exactly what they said and what to do next.</p>
+      <p><b>Always shown to you.</b> The questions about feeling lonely or left out, how people treat them, and feeling hopeful. When an answer leans hard, you see exactly what they said and a gentle idea for a conversation.</p>
       <p><b>The big picture.</b> How each part of the tree is doing (Strong, Steady, or Growing Edge), how the tree looks today, how many days they tended it, and which parts they're tending.</p>
       <p><b>Just theirs.</b> The rest of their answers, the practices they check off each day, their notes, and their weekly reflections, unless they choose to share a reflection with you.</p>
     </div>
-    <div class="panel"><h3>Safety and the calm card</h3>
-      <p>Every grade has gentle questions about feeling lonely or left out, being bullied, and losing hope, plus two direct safety questions at the end. When a student answers one of them in a worrying way, you see a "Worth a check-in" marker on that ring, with what they said and what to do next. The student sees a calm card right away with safe people to talk to and helplines they can call or text on their own. For loneliness, the calm card opens when the answer is "Yeah, most of the time," since feeling left out sometimes is common at this age, but you still see every "Sometimes."</p>
-      <p>Aspen is not a screening tool and cannot follow up on its own. If an answer worries you, stay calm, listen, and use the resources below. Teachers should follow their school's reporting and crisis steps.</p>
-      <button class="btn ghost small" onclick="showCalm()">See the calm card</button>
+    <div class="panel"><h3>Open Questions and Quiet Help</h3>
+      <p>Every Aspen question is open and curious, and every answer is welcome. Every grade asks about feeling lonely or left out, how people treat them, and feeling hopeful. When one of those answers leans hard, you see a "Worth a conversation" marker on that ring, with what they said and a gentle way to start talking.</p>
+      <p>Aspen is for reflection and growth, and it stays on this device. A quiet line under every check-in reminds students to tell a trusted grown-up right away whenever they feel unsafe, with 988 and 911 for an emergency, and a help list is always one tap away.</p>
+      <button class="btn ghost small" onclick="showCalm()">See the help list</button>
     </div>
     <div class="panel"><h3>Why each part matters</h3>
       <p><b>Roots (What grounds you).</b> Research from Lisa Miller at Columbia University finds that a sense of being held by something greater is one of the strongest protections young people have in hard seasons, and early adolescence is when that spiritual life often wakes up. <a class="src" href="https://www.tc.columbia.edu/faculty/lfm14/" target="_blank" rel="noopener">Teachers College</a></p>
@@ -2028,8 +1999,8 @@ function renderGStudent(){
   const shared = Object.keys(t.weeks || {}).map(k => t.weeks[k]).filter(x => x && x.share && x.refl).sort((x, y) => String(y.date).localeCompare(String(x.date)));
   $('view-gstudent').innerHTML = `<button class="back" onclick="go('grown')">&larr; All students</button>
     <div class="me-row">${GGAv.html(s.avatar, s.name, 56)}<div><h2 style="margin:0">${esc(s.name)}</h2><p class="muted" style="margin:0">Grade ${s.grade}</p></div></div>
-    <p class="muted small">What you see here: safety answers always, and the big picture of ${esc(s.name)}'s tree. The rest of their answers, the practices they check off, and their reflections are theirs unless they share them.</p>
-    ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${r.flagged?' <span class="marker">Worth a check-in</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No check-ins yet.</p>'}
+    <p class="muted small">What you see here: the answers about friends and hope always, and the big picture of ${esc(s.name)}'s tree. The rest of their answers, the practices they check off, and their reflections are theirs unless they share them.</p>
+    ${n ? `<div class="rings-wrap"><div>${ringsSVG(s, sel, 'pickGRing')}<div class="ringlist">${s.rings.map((r,i)=>`<button class="ringbtn" aria-pressed="${i===sel}" onclick="pickGRing(${i})">Ring ${i+1}: grade ${r.grade}, ${fmtDate(r.date)}${ringTalks(r).length?' <span class="marker">Worth a conversation</span>':''}</button>`).join('')}</div></div><div>${ringDetail(s, sel, true)}</div></div>` : '<p class="muted">No check-ins yet.</p>'}
     ${n ? artGrowthHtml(s, sel) : ''}
     ${fromRingsHtml(s, true)}
     ${wordingPanel(s)}
@@ -2093,7 +2064,7 @@ function guidesData(){ return (window.ASPEN_GUIDES && window.ASPEN_GUIDES.groups
    A grown-up who agreed for the student chooses it together with them, in the grown-up view. It lives
    in the student's locked profile (shared/gg-life.js). The student sees only the effects: practices
    that fit come first with Fits You and their other way, guides Picked for You, a few examples, and
-   information lines below the crisis lines. Questions, scores, flags, and alerts never change.
+   information lines below the crisis lines. Questions and scores never change.
    A student not saved in a profile uses the choice for this visit only, and only when no grown-up
    profile is open, so a grown-up's own choice is never used for a student. */
 function asLifePid(s){ s = s || me(); return (s && s._pid) || null; }
@@ -2186,7 +2157,7 @@ function renderLife(){
     <input class="life-search" id="life-search" type="search" placeholder="Search: vaping, group chats, grief, bullying..." aria-label="Search the guides and all of Grow With Grounded" value="${esc(LIFE_FIND)}" oninput="lifeFind(this)" enterkeyhint="search">
     ${asChipsHtml('life', shown)}
     <div id="life-groups"></div>
-    <div class="help-strip"><div><b>Is someone in danger right now?</b><br><span class="muted">Call or text 988, or call 911.</span></div><button class="btn small" onclick="showCalm()">See the calm card</button></div>${asLifeLinesHtml()}`;
+    <div class="help-strip"><div><b>Want to talk to someone?</b><br><span class="muted">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</span></div><button class="btn small" onclick="showCalm()">Find help now</button></div>${asLifeLinesHtml()}`;
   asLifeList();
   if (LIFE_FIND) lifeFind($('life-search'));
 }
@@ -2369,8 +2340,7 @@ function reopenSettings(focus){ if (!window.GGTend) return; GGTend.openSettings(
 
 /* ---------- the game layer (Parity Sweep 1, GWG BLD 745, Decision 3) ----------
    Pine's full set in Aspen's words: mastery (Tried, Building, Mine), tree levels, milestones,
-   the balance bonus, Steady by default with Hardy by choice, and the 14-day pause after a
-   check-in flags losing hope or feeling alone, or the safety step asks about hurting themselves.
+   the balance bonus, and Steady by default with Hardy by choice. No pause tied to answers (GWG BLD 887).
    Plus Aspen's own unlockable scenery. Never streaks, never shame, no leaderboards, nothing ever
    taken away. Saved in the student's tending record as pn, so it stays in their profile. */
 const AS_KIND = [
@@ -2421,17 +2391,10 @@ function asPartLast(t, key){ let last = null; Object.keys(t.days || {}).forEach(
 function asPlanParts(t){ const p = t.plan || {}; return PARTS.map(x => x.key).filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
 function asItems(t){ const out = [], p = t.plan || {}; PARTS.forEach(x => ((p[x.key] || {}).selected || []).forEach(n => out.push({key:x.key, name:n}))); return out; }
 function asMode(t){ return (t && t.pn && t.pn.mode) === 'hardy' ? 'hardy' : 'steady'; }
-// The pause: for 14 days after a check-in flags losing hope or feeling alone, or the safety step
-// asks for support about hurting themselves, the tree holds as it is and Hardy rests.
-function asPause(){
-  const s = me(); if (!s) return false;
-  const cut = asAdd(today(), -14);
-  return (s.rings || []).some(r => r && !r.from && isStd(r) && dayKey(r.date) >= cut && (ringFlags(r).some(f => f.type === 'hope' || f.type === 'alone') || ringSafe(r).some(x => SAFETY_KIND[x.i] === 'self')));
-}
 // Hardy: a part with practices in the plan, left untended for AS_HARDY_DAYS or more, shows
 // trouble. One practice in that part heals it. Steady never shows trouble.
 function asHardy(t, key){
-  if (asMode(t) !== 'hardy' || asPause() || !asPlanParts(t).includes(key)) return 0;
+  if (asMode(t) !== 'hardy' || !asPlanParts(t).includes(key)) return 0;
   const since = asPartLast(t, key) || asRec(t).hardyFrom || t.start; if (!since) return 0;
   const n = Math.round((asD(today()) - asD(since)) / 86400000);
   return n >= AS_HARDY_DAYS ? n : 0;
@@ -2459,15 +2422,15 @@ function asCheckMiles(t, quiet, ringsOnly){
 }
 function asTodayExtra(t){
   const s = me(); if (!s || !t) return '';
-  const n = window.GGTend ? GGTend.partsOn(today()) : 0, paused = asPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you grew stays.' : n ? asKind(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const n = window.GGTend ? GGTend.partsOn(today()) : 0;
+  const lineA = n ? asKind(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = asDays(t), L = asLevel(days), wk = asWeekParts(t, asMonday(today())), wn = Object.keys(wk).length;
   const trouble = PARTS.filter(p => asHardy(t, p.key));
   asCheckMiles(t, true, true); if (!Array.isArray(asRec(t).seen)) asSceneryCheck(s, t, true);
   return `<div class="gt-card as-kind"><p class="as-kind-line">${esc(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
     <div class="gt-card as-game"><div class="as-level"><span class="as-k">Your tree</span><b>${esc(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${esc(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
     <div class="as-level"><span class="as-k">This week</span><div class="as-dots" role="img" aria-label="${wn} of 6 parts tended this week">${PARTS.map(p => `<span class="as-dot${wk[p.key] ? ' on' : ''}" style="--pc:${pcolor(p.key)}" title="${p.name}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
-    <p class="gt-small as-wide">${asMode(t) === 'hardy' ? (paused ? 'Hardy is resting for now, and every part stays clear.' : 'Hardy is on: a part left untended for ' + AS_HARDY_DAYS + ' days shows trouble until you tend it.') : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="asp-link" onclick="GGTend.openSettings();reopenSettings('as-set-game')">Change</button></p>
+    <p class="gt-small as-wide">${asMode(t) === 'hardy' ? 'Hardy is on: a part left untended for ' + AS_HARDY_DAYS + ' days shows trouble until you tend it.' : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="asp-link" onclick="GGTend.openSettings();reopenSettings('as-set-game')">Change</button></p>
     ${trouble.length ? `<p class="as-trouble as-wide">${trouble.map(p => esc(p.name)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + movingOnHtml(true);
 }
@@ -2498,7 +2461,7 @@ function asGameSettings(){
   return `<section id="as-set-game"><h3>Your Tree: Steady or Hardy</h3>${asHardyRests() ? '<p class="gt-small"><b>Steady fits best right now.</b> It stays gentle on hard weeks, and everything you grew stays. Rest Week on Today holds your tree still any time.</p>' : ''}
     <label class="gt-radio"><input type="radio" name="as-mode" value="steady"${mode === 'steady' ? ' checked' : ''}${dis} onchange="setAsMode('steady')"><span><b>Steady</b>The gentle tree. It may rest in a soft mist when you miss days, and everything you grew stays.</span></label>
     <label class="gt-radio"><input type="radio" name="as-mode" value="hardy"${mode === 'hardy' ? ' checked' : ''}${dis} onchange="setAsMode('hardy')"><span><b>Hardy</b>${asHardyRests() ? 'Here whenever you want it.' : 'A little more challenge.'} A part of your plan left untended for ${AS_HARDY_DAYS} days shows trouble, and one practice in that part heals it.</span></label>
-    <p class="gt-small">Your tree grows at your own pace, just for you. After a hard check-in, the tree holds still for two weeks either way.</p></section>`;
+    <p class="gt-small">Your tree grows at your own pace, just for you.</p></section>`;
 }
 
 /* ---------- Aspen's unlockable scenery ----------
@@ -2613,8 +2576,6 @@ if (window.GGTend) GGTend.init({
   seasonExtra: t => asSeasonExtra(t),
   itemTag: (key, name, t) => asItemTag(key, name, t),
   partNote: (key, t) => asPartNote(key, t),
-  pause: () => asPause(),
-  pauseLine: 'Your tree is holding still with you. It stays in the light while you get support.',
   onCheck: (done, key, t, parts) => asOnCheck(done, key, t, parts),
   history: () => { const s = me(); return s ? s.rings.map(r => ({ date: dayKey(r.date), type: 'full' })) : []; },
   hasResults: () => !!(me() && me().rings.length),
@@ -2656,9 +2617,9 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b862" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b850';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b879" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b879';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b884" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

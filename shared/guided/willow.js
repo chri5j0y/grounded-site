@@ -16,11 +16,12 @@
      observed  a helper answering from what they see (full or quick)
      helper    a helper's own check-in, about themselves (full or quick)
    Slots: open, enter {part: lines} (one line as each part begins, full style
-   kinds), mid {every, lines}, tips {part: lines}, close, plus three
+   kinds), mid {every, lines}, tips {part: lines}, close, plus two
    extras the engine may use when it shows those screens: faith (before the
-   faith screen), who (before Who Is Answering), safety (before the closing
-   gentle questions). Lines never name a narrator and never speak a crisis
-   line or helpline: Willow's own text lines stay on screen, hospice first.
+   faith screen) and who (before Who Is Answering). No safety step and no
+   safety slot (GWG BLD 887). Lines never name a narrator and never speak a
+   crisis line or helpline: Willow's own quiet line of type stays on screen,
+   hospice first.
    Willow has no Growth Plan builder today (Today offers one gentle practice
    a day). kinds.plan below is ready for the day Willow's Growth Plan joins
    Today (shared/practice-rhythm.js already holds Willow's rhythms); the page
@@ -158,10 +159,6 @@
     fruit: ['Fruit: hope, and picturing yourself on the other side of this.']
   };
 
-  var SAFETY_PERSON = [
-    'One more gentle question. Every answer is welcome, and you can pass.',
-    'Here is one more question, asked with care. Answer only what feels right.'
-  ];
   var FAITH_PERSON = [
     'Next, a few words about faith, spirit, or whatever has mattered to you. Every answer is welcome here, including none.',
     'Before the questions, we ask what grounds you. Faith, spirit, or something else. Take your time.'
@@ -169,8 +166,8 @@
 
   window.GG_GUIDED.willow = {
     voice: 'brian',
-    // No tip on a flagged question (flag in WILLOW_CHECKIN.questions or .helper) or in the safety step: Willow's own flag note shows there.
-    tipSkip: ['flag', 'safety'],
+    // No tip on a flagged question (struggle, regret, burden, guilt in WILLOW_CHECKIN): Willow's own gentle note shows there.
+    tipSkip: ['flag'],
     kinds: {
       start: {
         open: [
@@ -189,7 +186,6 @@
         ] },
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
-        safety: SAFETY_PERSON,
         close: [
           'Thank you. That was a gift of honesty, and your tree is planted.',
           'Your tree has its first ring now. What you see next are gentle words, simply listening to you.',
@@ -217,7 +213,6 @@
         ] },
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
-        safety: SAFETY_PERSON,
         close: [
           'Thank you. Your tree has a new ring.',
           'Every part of a tree has seasons. What you shared today helps the people beside you know how to be present.',
@@ -238,7 +233,6 @@
           'You are doing well. Take a breath if you like.'
         ] },
         tips: PERSON_TIPS,
-        safety: SAFETY_PERSON,
         close: [
           'Thank you. That is a gentle snapshot of today.',
           'Your tree is ready to see. Today has one small practice waiting, whenever you like.',
@@ -267,7 +261,6 @@
         ] },
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
-        safety: SAFETY_PERSON,
         close: [
           'Thank you both. Their tree has a new ring, in their own words.',
           'What they shared helps everyone beside them know how to be present.',
@@ -292,9 +285,6 @@
         ] },
         enter: ENTER_OBSERVED,
         tips: OBSERVED_TIPS,
-        safety: [
-          'One more question about what you have heard them say. Answer as best you can.'
-        ],
         close: [
           'Thank you. This helps their helpers and their hospice team notice what is changing.',
           'Please take a moment for yourself too. Your own tree is here whenever you want it.',
@@ -315,9 +305,6 @@
         ] },
         enter: ENTER_HELPER,
         tips: HELPER_TIPS,
-        safety: [
-          'One more gentle question, just for you. Answer only what feels right.'
-        ],
         close: [
           'Thank you. Your own tree grows here too.',
           'Today has one small thing for you. Five minutes for yourself counts, and it helps them too.',

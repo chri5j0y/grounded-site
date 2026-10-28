@@ -22,6 +22,9 @@
      opts.isEdge     function (question, value): true when the answer shows a Growing Edge (else: an option with
                      edge: true, or the lowest third of a scale)
      opts.hero       a painting url for the background (else shared/heroes/<tree>-wide.webp and -phone.webp)
+     opts.quiet      the quiet line of type under the player, never spoken (GWG BLD 887). Else the grown-up line,
+                     or the kid line for opts.kid, Maple, and Aspen. A tree passes its own (Willow: hospice first);
+                     false shows none.
      opts.onAnswer(id, value)   each answer, the moment it is chosen
      opts.onPlan(part, names)   each Growth Plan step, when Next is tapped
      opts.onDone({answers, plan})   the last screen's Done (plan is null when the run has no plan steps)
@@ -43,12 +46,13 @@
    (read.js GGRead.say, else speechSynthesis) for that sentence. Voice Off says nothing and fetches nothing
    (kept on this device as gg-guided-voice). Music: the soft Learn music, the same Volume setting (gg-music).
    Privacy: answers live only in memory here and go to the tree through onAnswer and onDone.
-   No crisis line or helpline is ever spoken here: trees keep their own text line.
+   No crisis line or helpline is ever spoken here: the quiet line shows only as type (opts.quiet). No check-in here
+   asks about harm: there is no safety kind and no safety step (GWG BLD 887).
    ===================================================================== */
 (function () {
   'use strict';
   if (window.GGGuided) return;
-  var V = 'b886';
+  var V = 'b887';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
   var TREE_VOICE = { maple: 'jenny', aspen: 'jenny', pine: 'jenny', grove: 'jenny', birch: 'brian', oak: 'brian', sequoia: 'brian', willow: 'brian' };
@@ -56,6 +60,8 @@
   var PARTS = { roots: 'Roots', trunk: 'Trunk', bark: 'Bark', branches: 'Branches', leaves: 'Leaves', fruit: 'Fruit' };
   var RHY = { d: 'Daily', f: 'A Few Times a Week', w: 'Weekly', n: 'Now and Then' };
   var RESUME = ["Welcome back. We'll pick up right where you left off."];
+  var QUIET = { grown: 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.',
+    kid: 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.' };
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   function lsGet(k) { try { return localStorage.getItem(k); } catch (e) { return null; } }
   function lsSet(k, v) { try { localStorage.setItem(k, v); } catch (e) {} }
@@ -231,7 +237,8 @@
       + '<button type="button" class="ggd-tb ggd-done" data-g="close">Done</button></div>'
       + '<div class="ggd-bar" aria-hidden="true"><i></i></div></header>'
       + '<main class="ggd-stage"></main>'
-      + '<footer class="ggd-foot"><button type="button" class="ggd-btn" data-g="back">' + I.back + 'Back</button><span class="ggd-sp"></span><button type="button" class="ggd-btn pri" data-g="next" hidden></button></footer>';
+      + '<footer class="ggd-foot"><button type="button" class="ggd-btn" data-g="back">' + I.back + 'Back</button><span class="ggd-sp"></span><button type="button" class="ggd-btn pri" data-g="next" hidden></button></footer>'
+      + (o.quiet === false ? '' : '<p class="ggd-quiet">' + (typeof o.quiet === 'string' ? esc(o.quiet) : esc(o.kid || o.tree === 'maple' || o.tree === 'aspen' ? QUIET.kid : QUIET.grown)) + '</p>');
     document.body.appendChild(el);
     document.documentElement.classList.add('ggd-open');
     S.el = el;

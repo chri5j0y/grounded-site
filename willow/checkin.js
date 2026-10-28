@@ -13,6 +13,8 @@
    - One reverse question per part (r: 1), where "Almost always" is hard.
    - Leaves holds three strands: comfort, rest, senses (s).
    - Every answer records who answered (by).
+   - Open, curious questions only (GWG BLD 887): no safety step, and one
+     quiet line of type, hospice line first, then 988 and 911.
    - Questions are written fresh. FICA, HOPE, the PC-6, the struggles scale,
      Dignity Therapy, and the Serious Illness Conversation Guide are
      foundations only. None of their items are copied.
@@ -99,7 +101,7 @@ const Q = {
       tip: `Offer help writing or recording them. Forgiveness is never forced, and never toward someone unsafe.` },
     { t: `Felt like a burden to the people caring for you?`, r: 1, flag: 'burden',
       why: `Most people near the end feel this sometimes. Your family usually sees it differently.`,
-      tip: `Let it stand, and listen. Ask what being cared for is like. Name receiving care as part of love. Listen for a wish to hasten death.` }
+      tip: `Let it stand, and listen. Ask what being cared for is like. Name receiving care as part of love. Stay curious, and let them lead.` }
   ],
   leaves: [
     { t: `Felt comfortable enough in your body to rest?`, s: 'comfort',
@@ -119,9 +121,9 @@ const Q = {
     { t: `Felt ready, or getting ready, for what's ahead?`,
       why: `Readiness grows a little at a time.`,
       tip: `Ask which part feels unready: affairs, people, or spirit.` },
-    { t: `Felt hopeless, or wished it would all end soon?`, r: 1, flag: 'end',
-      why: `Many people near the end feel this. You can say it out loud here.`,
-      tip: `Stay calm and curious. Explore what it means: relief, suffering, readiness, or thoughts of ending life. The safety step follows.` }
+    { t: `Felt that each day still holds something good for you?`,
+      why: `Even near the end, a day can hold something good. Whatever is true for you is welcome here.`,
+      tip: `Stay calm and curious. Ask what makes a day good now, and what is making days hard. Let them lead.` }
   ]
 };
 
@@ -145,7 +147,7 @@ const HELPER = {
   branches: [
     { t: `Had someone to lean on?` },
     { t: `Said what you want to say to them?` },
-    { t: `Felt alone in this, or at odds with family?`, r: 1, flag: 'alone' }
+    { t: `Felt alone in this, or at odds with family?`, r: 1 }
   ],
   leaves: [
     { t: `Eaten, slept, and moved enough to keep going?` },
@@ -155,11 +157,13 @@ const HELPER = {
   fruit: [
     { t: `Felt hopeful about something, even something small?` },
     { t: `Pictured yourself getting through what comes after?` },
-    { t: `Felt hopeless, or like you can't go on?`, r: 1, flag: 'hope' }
+    { t: `Felt you have the strength and support to keep going?` }
   ]
 };
 
-// Flags are never lost. The person sees help right away; a guide sees the flag.
+// Flags (GWG BLD 887): only gentle spiritual and caregiver notes remain (struggle,
+// regret, burden, guilt). end, alone, and hope are carried by no question now and
+// never mark; their titles stay, read only, for check-ins saved earlier.
 const FLAGS = {
   struggle: { who: 'person', on: ['often', 'always'], title: `Spiritual struggle`,
     note: `Feeling far from what you hold sacred is common, and others can help you sort it out. A chaplain can sit with this.`,
@@ -169,43 +173,24 @@ const FLAGS = {
     guide: `Regret. Sort repairable from grievable. Listen for shame.` },
   burden: { who: 'person', on: ['often', 'always'], title: `Feeling like a burden`,
     note: `Most people feel this sometimes. Receiving care is part of love too.`,
-    guide: `Self-perceived burden. Ask about a wish to hasten death.` },
-  end: { who: 'person', on: ['sometimes', 'often', 'always'], title: `Wishing it would end`,
-    note: `Thank you for being honest. Let's take one more gentle question.`,
-    guide: `Wish to die. Read the safety step answer before visiting.` },
+    guide: `Self-perceived burden. Listen with open questions, and follow the Grounded Response Plan if harm comes up on its own.` },
+  end: { who: 'person', on: [], title: `Hope`, note: ``,
+    guide: `An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.` },
   guilt: { who: 'helper', on: ['often', 'always'], title: `Caregiver guilt`,
     note: `Guilt usually means you love them. You are doing enough.`,
     guide: `Caregiver guilt. Watch for complicated grief risk.` },
-  alone: { who: 'helper', on: ['often', 'always'], title: `Alone or at odds`,
-    note: `You shouldn't carry this alone. Who could you call today?`,
+  alone: { who: 'helper', on: [], title: `Alone or at odds`, note: ``,
     guide: `Isolation or family conflict.` },
-  hope: { who: 'helper', on: ['often', 'always'], title: `Caregiver hopelessness`,
-    note: `This is one of the hardest things a person does. Let's take one more gentle question.`,
-    guide: `Caregiver hopelessness. Follow up within a day.` }
+  hope: { who: 'helper', on: [], title: `Caregiver hope`, note: ``,
+    guide: `An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.` }
 };
 
-// The Willow safety step. A wish to die near the end is usually not suicidal,
-// so it separates readiness from a plan to end life.
-const SAFETY = {
-  ask: `When you think about dying, which is closest for you right now?`,
-  options: [
-    ['notready', `I'm not ready yet.`, `That makes sense. Let's talk about what you're hoping for.`],
-    ['ready', `I'm ready when it comes.`, `Thank you for telling me. That kind of peace is a gift.`],
-    ['sooner', `I wish it would come sooner.`, `Thank you for trusting me with that. Many people feel this. Your hospice team should know, so they can help with whatever is making it hard.`],
-    ['self', `I've thought about ending my life myself.`, `Thank you for telling me. Please tell someone right now.`],
-    ['skip', `I'd rather not say.`, ``]
-  ],
-  urgent: ['self'],
-  tellTeam: ['sooner'],
-  lines: [`Your hospice's 24/7 line`, `988 (call or text)`, `911 if you are in danger now`],
-  home: { ask: `Do you feel safe where you are, and with the people caring for you?`,
-    options: [['yes', `Yes`], ['notalways', `Not always`], ['no', `No`]],
-    help: `You deserve to be safe. Your hospice social worker can help. The Minnesota Adult Abuse Reporting Center takes reports any time. In danger now, call 911.` },
-  observed: { ask: `Have they said things like wanting it to be over?`,
-    help: `This is common near the end, and worth talking about. Let the hospice nurse and chaplain know.` },
-  helper: { ask: `Caring for someone you love through this is one of the hardest things a person does. Are you having thoughts of not wanting to go on yourself?`,
-    yes: `Please reach out now: 988 (call or text), or 911 if you are in danger. Your hospice social worker and bereavement team are there for you too.`,
-    no: `Thank you. Here's one small thing to do for yourself today.` }
+// The quiet line (GWG BLD 887): type only, never spoken, on the check-in screen and
+// on results. Willow names the hospice's 24/7 line first, then 988 and 911.
+const HELP = {
+  hospice: `Your hospice's 24/7 line`,
+  hospiceFirst: `Call your hospice's 24/7 line first, day or night.`,
+  quiet: `If you ever feel like hurting yourself, call or text 988. In danger now, call 911.`
 };
 
 // Willow Guide: open prompts for chaplains and doulas. Pick three or four.
@@ -249,5 +234,5 @@ const GUIDE = {
   hope: { asked: [['no', `Not yet`], ['yes', `Yes, and we talked`], ['declined', `Yes, but they declined`]] }
 };
 
-window.WILLOW_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, words: WORDS, stems: STEMS, answeredBy: ANSWERED_BY, questions: Q, helper: HELPER, flags: FLAGS, safety: SAFETY, guide: GUIDE };
+window.WILLOW_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, words: WORDS, stems: STEMS, answeredBy: ANSWERED_BY, questions: Q, helper: HELPER, flags: FLAGS, help: HELP, guide: GUIDE };
 })();

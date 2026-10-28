@@ -876,11 +876,7 @@ html.ts-2 main{zoom:1.25;}
 .earlier-tag{font-size:11px;font-weight:700;background:var(--bg-deep, #F2ECE0);color:var(--ink-soft);border-radius:999px;padding:2px 8px;margin-left:6px;}
 
 .sit-with .opt{font-weight:500;text-transform:none;letter-spacing:0;}
-.safe-wrap{margin:6px 0 10px;}
-.safe-lead{color:var(--ink-soft);margin:0 0 12px;}
-.safe-wrap .q-opts{grid-template-columns:repeat(4,minmax(0,1fr));}
-@media (max-width:560px){.safe-wrap .q-opts{grid-template-columns:repeat(2,minmax(0,1fr));}}
-.safe-help{margin:6px 0 0;}
+.ck-quiet{color:var(--ink-soft);font-size:15px;line-height:1.5;margin:14px 0 6px;}
 .text-btn{background:none;border:none;padding:0;font:inherit;color:var(--gold);font-weight:600;text-decoration:underline;cursor:pointer;}
 .quick-part{margin-bottom:6px;}
 .quick-label{font-weight:700;font-size:14px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin:10px 0 6px;}
@@ -1139,24 +1135,24 @@ html.ts-2 main{zoom:1.25;}
   </nav>
   <p class="foot-local foot-way"><a class="text-link" href="/the-grounded-way.html">Go further with The Grounded Way.</a></p>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
-  <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, any time.</p>
+  <p class="foot-crisis">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>
   <p class="footer-privacy">Your answers stay in your browser. Everything you enter here stays private, on this device.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Grow With Grounded Oak and its content, framework, and practices may not be copied, reproduced, or redistributed without permission.</p>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js?v=b782"></script>
-<script src="/oak/checkin.js?v=b782"></script>
+<script src="/oak/checkin.js?v=b887"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b885"></script>
+<script src="/shared/gg-profiles.js?v=b887"></script>
 <script src="/shared/gg-life.js?v=b851"></script>
 <script src="/shared/gg-life-kit.js?v=b789"></script>
 <script src="/shared/gg-sober.js?v=b851"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b852"></script>
+<script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/oak/guides.js?v=b885"></script>
@@ -1462,7 +1458,7 @@ function signsHtml(d) {
 // =====================================================================
 // CHECKIN QUESTIONS: the shared bank in /oak/checkin.js, on the
 // Grounded tree standard (version 1): 8 per part, a guide tip and a "why"
-// line on each, two reverse questions per part, flags, and the safety step.
+// line on each, and reverse questions. Open questions only, no safety step (GWG BLD 887).
 // Question 1 of each part is the quick check-in question.
 // =====================================================================
 const CKB = window.OAK_CHECKIN;
@@ -1471,17 +1467,16 @@ const Q_STEM = CKB.stems.standard;
 const Q_OPTS = CKB.answers;
 const QUESTIONS = CKB.questions;
 const QUICK_Q = Object.fromEntries(Object.keys(QUESTIONS).map(k => [k, QUESTIONS[k][0].t]));
-const ST_FLAGS = CKB.flags;
 const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
-let ST_ANS = {}, ST_SAFE = {}, ST_QUICK = false;
+let ST_ANS = {}, ST_QUICK = false;
 // Who is answering (Sequoia's and Birch's model): 'self', or 'tapped' (the person answers, a helper taps).
 let CK = { by: 'self', forId: null, name: '' };
 function setMode(by, forId) {
   const p = forId && window.GGP ? GGP.get(forId) : null;
   CK = { by: by === 'tapped' && p ? 'tapped' : 'self', forId: p ? forId : null, name: p ? p.name : '' };
 }
-function whoLine() { return CK.by === 'tapped' ? `<p class="sq-who">${escapeHtml(CK.name)} answers, and you tap. The safety questions stay with ${escapeHtml(CK.name)}, for their own check-ins.</p>` : ''; }
+function whoLine() { return CK.by === 'tapped' ? `<p class="sq-who">${escapeHtml(CK.name)} answers, and you tap.</p>` : ''; }
 
 function partScore(key, answers) {
   const qs = QUESTIONS[key]; let sum = 0, n = 0;
@@ -1509,8 +1504,6 @@ function answerQ(key, i, val) {
   document.querySelectorAll(`[data-q="${key}-${i}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
   if (QUESTIONS[key]) { const sc = partScore(key, ST_ANS[key]); setSlider('client', key, sc == null ? 5 : sc); }
   const q = stQ(key, i);
-  if (q && q.flag === 'home') ST_SAFE.home = ['rarely', 'sometimes', 'unsure'].includes(val);
-  if (q && q.flag && ST_FLAGS[q.flag].calm.includes(val)) showCalm();
   const card = document.querySelector(`[data-q="${key}-${i}"]`);
   if (card) card.classList.add('answered');
 }
@@ -1534,51 +1527,12 @@ function questionsBlock(d) {
   return `<p class="q-stem">${Q_STEM}</p>` + QUESTIONS[d.key].map((q, i) => questionHtml(d.key, i, q.t)).join('');
 }
 
-// ---------- safety (GWG BLD 745: Birch's newest shape, with Oak's help lines) ----------
-// The opener and the direct question keep their wording. After Sometimes or Often to the
-// direct question, one more: "Right now, today, are those thoughts with you?" A Yes or Not
-// sure opens the calm card with 988 and 911 first. A helper tapping never sees this step.
-const SAFETY = CKB.safety || {};
-const SAFE_OPTS = SAFETY.directOpts || [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', "I'd rather not say"]];
-const NOW_OPTS = SAFETY.nowOpts || [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', "I'd rather not say"]];
-const SAFE_ON = SAFETY.on || { opener: ['often', 'always'], direct: ['sometimes', 'often'], now: ['yes', 'unsure'] };
-const safeOn = (which, v) => !!v && (SAFE_ON[which] || []).includes(v);
-// True when a saved check-in's safety step asked for support (older saved check-ins read the same way).
-function safeAsked(sf) { sf = sf || {}; return safeOn('direct', sf.direct) || safeOn('opener', sf.opener) || safeOn('now', sf.now); }
-function nowHtml() {
-  if (!safeOn('direct', ST_SAFE.direct)) return '';
-  const o3 = ST_SAFE.now || '';
-  return `<div class="q-card${o3 ? ' answered' : ''}" data-s="now" role="radiogroup" aria-label="Right now, today">
-      <p class="q-text">${escapeHtml(SAFETY.now || 'Right now, today, are those thoughts with you?')}</p>
-      <div class="q-opts">${NOW_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o3 === x[0]}" onclick="answerSafe('now','${x[0]}')">${x[1]}</button>`).join('')}</div>
-    </div>`;
-}
-function safetyHtml() {
-  if (CK.by === 'tapped') return `<div class="safe-wrap"><p class="safe-lead">The safety questions stay with ${escapeHtml(CK.name)}, for their own check-ins.</p></div>`;
-  const o1 = (ST_SAFE.opener || ''), o2 = (ST_SAFE.direct || '');
-  return `<div class="safe-wrap">
-    <p class="safe-lead">${escapeHtml(SAFETY.lead || "Two last questions. They're here because we care, and your answers stay on this device.")}</p>
-    <div class="q-card${o1 ? ' answered' : ''}" data-s="opener" role="radiogroup" aria-label="Hopeless or a burden">
-      <p class="q-text">${escapeHtml(SAFETY.opener || '')}</p>
-      <div class="q-opts">${Q_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o1 === x[0]}" onclick="answerSafe('opener','${x[0]}')">${x[1]}</button>`).join('')}</div>
-    </div>
-    ${SAFETY.directLead ? `<p class="safe-lead">${escapeHtml(SAFETY.directLead)}</p>` : ''}
-    <div class="q-card${o2 ? ' answered' : ''}" data-s="direct" role="radiogroup" aria-label="Thoughts of ending your life">
-      <p class="q-text">${escapeHtml(SAFETY.direct || '')}</p>
-      <div class="q-opts">${SAFE_OPTS.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${o2 === x[0]}" onclick="answerSafe('direct','${x[0]}')">${x[1]}</button>`).join('')}</div>
-    </div>
-    <div class="oak-now">${nowHtml()}</div>
-    <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
-  </div>`;
-}
-function answerSafe(which, val) {
-  ST_SAFE[which] = val;
-  if (which === 'direct') { if (!safeOn('direct', val)) delete ST_SAFE.now; document.querySelectorAll('.oak-now').forEach(n => { n.innerHTML = nowHtml(); }); }
-  document.querySelectorAll(`[data-s="${which}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
-  const c = document.querySelector(`[data-s="${which}"]`); if (c) c.classList.add('answered');
-  if (which === 'now' && safeOn('now', val)) showCalm('now');
-  else if (which === 'direct' && safeOn('direct', val)) showCalm('self');
-  else if (which === 'opener' && safeOn('opener', val)) showCalm('burden');
+// ---------- the quiet line and Help Is Close (GWG BLD 887) ----------
+// No safety step. One quiet line of type on the check-in screen and on results, never
+// spoken, with a link that opens the help lines only when tapped.
+const HELP_LINES = CKB.help || {};
+function quietHtml() {
+  return `<p class="ck-quiet">${escapeHtml(HELP_LINES.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')} <button type="button" class="text-btn" onclick="showCalm()">See help lines</button></p>`;
 }
 function lineHtml(x, first) {
   const sms = x.sms ? 'sms:' + x.sms + (x.smsBody ? '?&body=' + encodeURIComponent(x.smsBody) : '') : '';
@@ -1587,22 +1541,17 @@ function lineHtml(x, first) {
   const extra = x.tel && sms ? ` <span class="pn-or">or <a href="${escapeHtml(sms)}">${x.smsBody ? 'text ' + escapeHtml(x.smsBody) + ' to ' + escapeHtml(x.sms) : 'text ' + escapeHtml(x.sms)}</a></span>` : '';
   return `<li${first ? ' class="calm-first"' : ''}><b>${escapeHtml(x.name)}</b>${main}${extra}${x.note ? `<span class="sq-linenote">${escapeHtml(x.note)}</span>` : ''}</li>`;
 }
-// why: 'self' (direct question), 'now' (thoughts are with them today: 988 and 911 first),
-// 'burden' (the opener), or nothing (the help link). The home flag moves the home lines up.
-function showCalm(why) {
+// Help Is Close: opens only when a person taps a help link.
+function showCalm() {
   const old = document.getElementById('calm-card'); if (old) old.remove();
-  const home = ST_SAFE.home, lines = SAFETY.lines || [];
-  const first = x => (why === 'now' && (x.id === '988' || x.id === '911')) || (home && x.first === 'home');
-  let lead = `<p>${escapeHtml(SAFETY.intro || "If you're thinking about suicide or feel unsafe, reach out now. Someone will listen.")}</p>`;
-  if (why === 'self' || why === 'now') lead = `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.burden ? `<p>${escapeHtml(SAFETY.burden)}</p>` : ''}${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`;
-  else if (why === 'burden') lead = `<p>${escapeHtml(SAFETY.burden || '')}</p>${lead}`;
+  const lines = HELP_LINES.lines || [];
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
-    <h2 id="calm-title">${escapeHtml(SAFETY.title || "You matter, and others can help you carry this.")}</h2>
-    ${lead}
-    <ul class="calm-list">${lines.map(x => lineHtml(x, first(x))).join('')}</ul>
-    ${why !== 'self' && why !== 'now' && window.GGLifeKit ? GGLifeKit.linesHtml('oak', x => lineHtml(x)) : ''}
+    <h2 id="calm-title">${escapeHtml(HELP_LINES.title || 'Help Is Close')}</h2>
+    <p>${escapeHtml(HELP_LINES.intro || 'Someone will listen, any time, day or night.')}</p>
+    <ul class="calm-list">${lines.map(x => lineHtml(x)).join('')}</ul>
+    ${window.GGLifeKit ? GGLifeKit.linesHtml('oak', x => lineHtml(x)) : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
@@ -1616,13 +1565,13 @@ function closeCalm() { const c = document.getElementById('calm-card'); if (c) c.
 // ---------- quick check-in ----------
 function startQuick(by, forId) {
   setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = true; ST_ANS = {}; ST_SAFE = {};
+  ST_QUICK = true; ST_ANS = {};
   const container = document.getElementById('step-container');
   container.innerHTML = `${whoLine()}<section class="step-panel active" id="step-quick">
     <div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title">Quick Check-in</h2><div class="step-domain">One question for each part of your tree</div></div></div>
     <p class="q-stem">${Q_STEM}</p>
     ${ALL_DOMAINS.map(d => `<div class="quick-part" style="--domain-color:${d.color};"><div class="quick-label" style="color:${d.color};">${partIcon(d, 20)} ${d.part}</div>${questionHtml('quick_' + d.key, 0, QUICK_Q[d.key])}</div>`).join('')}
-    ${safetyHtml()}
+    ${quietHtml()}
     <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckin(CK.by, CK.forId)">Take the full check-in instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
   </section>`;
   document.getElementById('step-progress').innerHTML = '';
@@ -1658,7 +1607,7 @@ function sliderCardHtml(d, mode, withHeader) {
           oninput="document.getElementById('${mode}-${d.key}-display').textContent=this.value">
       </div>
       <div class="slider-hint"><span>1 Depleted</span><span>10 Thriving</span></div>
-      <textarea class="reflection-area" id="${mode}-${d.key}-notes" aria-label="${d.part} notes" placeholder="${mode === 'prac' ? 'Visit notes: what they shared, safety concerns, context...' : 'What resources do you actually have here? Be specific.'}" style="--domain-color:${d.color};"></textarea>
+      <textarea class="reflection-area" id="${mode}-${d.key}-notes" aria-label="${d.part} notes" placeholder="${mode === 'prac' ? 'Visit notes: what they shared, context...' : 'What resources do you actually have here? Be specific.'}" style="--domain-color:${d.color};"></textarea>
       ${mode === 'prac' ? `<details class="signs-details"><summary>Signs of health and stress</summary>${signsHtml(d)}</details>` : ''}
       <div class="restore-toggle">
         <button class="restore-btn" style="--domain-color:${d.color};color:${d.color};" aria-expanded="false" onclick="toggleRestore('${mode}-${d.key}', this)">View Practices &darr;</button>
@@ -1696,15 +1645,10 @@ function renderCheckin() {
       <div class="btn-row step-nav">
         ${i > 0 ? `<button class="btn btn-secondary" onclick="goToStep(${i - 1})">Back</button>` : '<span></span>'}
         ${next ? `<button class="btn btn-primary" onclick="goToStep(${i + 1})">Next: ${next.part}</button>`
-               : `<button class="btn btn-primary" onclick="goToStep(${i + 1})">Almost done</button>`}
+               : `<button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'tapped' ? 'See the Tree' : 'See My Tree'}</button>`}
       </div>
     </section>`;
-  }).join('') + `
-    <section class="step-panel" id="step-${ALL_DOMAINS.length}">
-      <div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title">Before you see your tree</h2></div></div>
-      ${safetyHtml()}
-      <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="goToStep(${ALL_DOMAINS.length - 1})">Back</button><button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'tapped' ? 'See the Tree' : 'See My Tree'}</button></div>
-    </section>`;
+  }).join('') + quietHtml();
   renderStepProgress();
   goToStep(0, true);
 }
@@ -1738,7 +1682,7 @@ function scrollToViewTop(id, smooth, always) {
 function startCheckin(by, forId) {
   const was = CK.by + '|' + CK.forId;
   setMode(typeof by === 'string' ? by : 'self', forId);
-  if (ST_QUICK || !document.getElementById('step-0') || was !== CK.by + '|' + CK.forId) { ST_QUICK = false; ST_ANS = {}; ST_SAFE = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
+  if (ST_QUICK || !document.getElementById('step-0') || was !== CK.by + '|' + CK.forId) { ST_QUICK = false; ST_ANS = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
   goToStep(0);
 }
@@ -1891,22 +1835,6 @@ function inviteHtml() {
   return `<p class="quiet-sub">New stories from the edge of life arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
 }
 
-// Flagged answers from this check-in: alone, hope, home. Quick check-ins have none
-// (question 1 of each part is never a flag question).
-function stFlagsNow() {
-  if (ST_QUICK) return [];
-  const out = [];
-  Object.keys(QUESTIONS).forEach(k => QUESTIONS[k].forEach((q, i) => {
-    const a = (ST_ANS[k] || {})[i];
-    if (q.flag && a && ST_FLAGS[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
-  }));
-  return out;
-}
-function flagBoxHtml(flags) {
-  if (!flags.length) return '';
-  return `<div class="flag-box" role="note"><h3>Worth tending</h3>${flags.map(f => `<p><strong>${escapeHtml(ST_FLAGS[f].title)}.</strong> ${escapeHtml(ST_FLAGS[f].note)}</p>`).join('')}
-    <p><button type="button" class="text-btn" onclick="showCalm()">See help lines</button></p></div>`;
-}
 
 function calculateResults(mode) {
   const prefix = mode === 'client' ? 'client' : 'prac';
@@ -1924,8 +1852,7 @@ function calculateResults(mode) {
     reflections[d.key] = notes ? notes.value : '';
   });
   const shown = k => unsure.includes(k) ? null : scores[k];
-  const flags = isClient ? stFlagsNow() : [];
-  if (isClient && CK.by === 'tapped') { tappedResults(scores, unsure, reflections, flags); return; }
+  if (isClient && CK.by === 'tapped') { tappedResults(scores, unsure, reflections); return; }
   const reminder = isClient
     ? 'Come back and take this check-in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'
     : 'Save this session from the Growth Plan tab to add it to this client\'s history.';
@@ -1936,7 +1863,7 @@ function calculateResults(mode) {
       <p class="tree-caption">Each part of your tree shines with how it is doing. Tap a part to work on it in your growth plan.</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       <div class="interpretation">${interpretResults(scores)}</div>
-      ${flagBoxHtml(flags)}
+      ${isClient ? quietHtml() : ''}
     </div>
     ${buildPersonalSections(Object.fromEntries(ALL_DOMAINS.map(d => [d.key, scores[d.key]])), isClient)}
     ${lcSuggestHtml(scores, mode)}
@@ -1957,13 +1884,10 @@ function calculateResults(mode) {
     window.lastClientScores = scores;
     window.lastClientUnsure = unsure;
     window.lastClientReflections = reflections;
-    const safety = { opener: ST_SAFE.opener || 'skipped', direct: ST_SAFE.direct || 'skipped' };
-    if (safeOn('direct', ST_SAFE.direct)) safety.now = ST_SAFE.now || 'skipped';
-    window.currentClientEntry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, flags, safety, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'self' };
+    window.currentClientEntry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'self' };
     showView('client-results', document.querySelectorAll('#client-nav .nav-btn')[2]);
     renderGrowthPlanBuilder('client');
     if (PROF) { const c = JSON.parse(JSON.stringify(currentClientEntry)); personalHistory.push(c); sortEntries(personalHistory); profPersist(); }
-    if (PROF) oakTeenAlert(currentClientEntry);
     if (PROF && !ST_QUICK && window.GGTend) { const msg = GGTend.onFullCheckin(currentClientEntry); if (msg) setTimeout(() => showToast(msg), 900); }
     // Health and Ability (GWG BLD 756): one quiet card after a full check-in, at most once per profile.
     if (!ST_QUICK && CK.by === 'self' && !HELP && window.GGLife) { const host = document.querySelector('#client-results-content .results-summary'); if (host) GGLife.offerCard(host, 'oak', { onChoose: () => reopenSettings('ok-set-life') }); }
@@ -1975,18 +1899,18 @@ function calculateResults(mode) {
 }
 
 // A check-in taken together: the person answers, a helper taps. It saves to the person's
-// own Oak, marked as taken together. The safety step stays with the person (GWG BLD 745).
-function tappedResults(scores, unsure, reflections, flags) {
+// own Oak, marked as taken together.
+function tappedResults(scores, unsure, reflections) {
   const shown = k => unsure.includes(k) ? null : scores[k];
   const helperName = ((window.GGP && GGP.active()) || {}).name || '';
-  const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, flags, safety: { asked: 'not with a helper' }, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'tapped', helper: helperName };
+  const entry = { id: Date.now().toString(36), date: todayKey(), std: ST_STD, scores, unsure, reflections, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by: 'tapped', helper: helperName };
   document.getElementById('client-results-content').innerHTML = `
     <div class="results-summary">
       <p class="sq-who">${escapeHtml(CK.name)} answered, and ${escapeHtml(helperName)} tapped.</p>
       <div id="client-results-tree" class="results-art" style="margin:16px 0 6px;"></div>
       <p class="tree-caption">Each part of the tree shines with how it is doing.</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
-      <p class="gt-small">Help any time: call or text 988. In immediate danger, call 911. <button type="button" class="text-btn" onclick="showCalm()">See all help lines</button></p>
+      ${quietHtml()}
     </div>
     <div class="reminder-banner"><p>Saved to ${escapeHtml(CK.name)}'s tree, marked as taken together.</p></div>
     <div class="btn-row"><button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button></div>`;
@@ -2251,8 +2175,7 @@ function oakSavePlan() {
 // =====================================================================
 // THE GAME LAYER (GWG BLD 745, Decision 3: Pine's full set plus grace days)
 // Mastery, tree levels, milestones, the balance bonus, Steady by default with
-// Hardy by choice, the 14-day pause after a hope or alone flag or a safety
-// answer, and grace days: two a week are yours to rest. Five days tended makes a
+// Hardy by choice, and grace days: two a week are yours to rest. Five days tended makes a
 // full week, and Hardy never counts grace days. Never streaks, never shame, never
 // random rewards, never anything taken away. Saved in tend.ok.
 // =====================================================================
@@ -2315,16 +2238,10 @@ function daysPastGrace(since) {
 function partLastTended(s, key) { let last = null; Object.keys(s.days || {}).forEach(k => { if (((s.days[k] || {}).d || []).some(id => id.split('|')[0] === key) && (!last || k > last)) last = k; }); return last; }
 function planParts(s) { const p = s.plan || {}; return PART_ORDER.filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
 function pnMode(s) { return (s && s.ok && s.ok.mode) === 'hardy' ? 'hardy' : 'steady'; }
-// The pause: for 14 days after a check-in flags losing hope or feeling alone, or the
-// safety step asks for support, the tree holds as it is and Hardy rests.
-function pnPause() {
-  const cut = addD(todayKey(), -14);
-  return (personalHistory || []).some(e => e && !e.from && e.date >= cut && ((e.flags || []).some(f => f === 'hope' || f === 'alone') || safeAsked(e.safety)));
-}
 // Hardy: a part with practices in the plan, left untended for HARDY_DAYS or more (grace
 // days not counted), shows trouble. One practice in that part heals it. Steady never does.
 function hardyDays(s, key) {
-  if (pnMode(s) !== 'hardy' || pnPause() || !planParts(s).includes(key)) return 0;
+  if (pnMode(s) !== 'hardy' || !planParts(s).includes(key)) return 0;
   const since = partLastTended(s, key) || pnRec(s).hardyFrom || s.start; if (!since) return 0;
   if (daysPastGrace(since) < HARDY_DAYS) return 0;
   return Math.round((dOf(todayKey()) - dOf(since)) / 86400000);
@@ -2349,8 +2266,8 @@ function checkMiles(s, quiet) {
   return fresh;
 }
 function todayKindHtml(s) {
-  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0, paused = pnPause();
-  const lineA = paused ? 'Your tree is holding still with you right now. Tend it when you can. Everything you\'ve grown stays safe.' : n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
+  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0;
+  const lineA = n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
   const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length, gl = graceLeft(s);
   const trouble = PART_ORDER.filter(k => hardyDays(s, k));
   checkMiles(s, true);
@@ -2358,7 +2275,7 @@ function todayKindHtml(s) {
     <div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
     <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
     <p class="gt-small ok-grace"><b>Grace days.</b> ${gl ? `${gl} of ${GRACE_DAYS} left this week.` : 'Both are resting days this week.'} Two days a week are yours to rest, so five days tended makes a full week.</p>
-    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? (paused ? 'Hardy is resting for now, and nothing shows trouble.' : 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days, grace days not counted, shows trouble until you tend it.') : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="text-btn" onclick="reopenSettings('pn-set-game')">Change</button></p>
+    <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days, grace days not counted, shows trouble until you tend it.' : 'Steady tree: gentle, and nothing is ever lost.'} <button type="button" class="text-btn" onclick="reopenSettings('pn-set-game')">Change</button></p>
     ${trouble.length ? `<p class="pn-trouble">${trouble.map(k => escapeHtml(DOMAIN_BY_KEY[k].part)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + gwCardHtml() + moveSeqHtml(true);
 }
@@ -2552,8 +2469,6 @@ const TEND_CFG = {
   seasonExtra: s => seasonExtraHtml(s),
   itemTag: (key, name, s) => itemTagHtml(key, name, s),
   partNote: (key, s) => partNoteHtml(key, s),
-  pause: () => pnPause(),
-  pauseLine: 'Your tree is holding still with you while you get support. Everything is kept.',
   onCheck: (done, key, s, parts) => onCheckGame(done, key, s, parts),
   store: {
     get: () => { if (!PROF || HELP || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -2652,16 +2567,8 @@ function renderProfileBar() {
    schoolers' profiles stay in Maple, Aspen, and Pine (GWG BLD 739). One adult skips the list and
    goes straight to their passcode. */
 /* High schoolers tend in Pine now (GWG BLD 739). A High school profile that opens Oak sees a note
-   with a link to Pine, and its old Oak check-ins stay here. This alert stays as a safety net: only
-   the teen's own passcode opens their profile, and the grown-ups who agreed for them see only that
-   a check-in asked for a caring conversation (safety, feeling alone, losing hope), never the answers. */
-function oakTeenAlert(e) {
-  if (!PROF || PROF.age !== 'pine' || !window.GGP || !e) return;
-  const sf = e.safety || {}, kinds = [];
-  if (safeAsked(sf)) kinds.push('safety');
-  (e.flags || []).forEach(f => { if ((f === 'alone' || f === 'hope') && !kinds.includes(f)) kinds.push(f); });
-  if (kinds.length) GGP.setShared(PROF.id, { safety: { flag: e.date, kinds } });
-}
+   with a link to Pine, and its old Oak check-ins stay here. No alert is ever sent from an answer
+   (GWG BLD 887). */
 function oakAdults() {
   const list = window.GGP ? GGP.list().filter(p => p.age === 'adult').map(p => ({ id: p.id, name: p.name, avatar: p.avatar })) : [];
   let old = []; try { old = JSON.parse(localStorage.getItem('oak:profiles') || '[]') || []; } catch (e) {}
@@ -2738,8 +2645,8 @@ function treeNow(id) { return window.GGP && GGP.tree ? GGP.tree(id) : 'oak'; }
 function okRec() { if (!PROF || !window.GGP || !GGP.isOpen(PROF.id)) return null; const d = GGP.data(PROF.id, 'oak'); if (!Array.isArray(d.history)) d.history = []; return d; }
 function ageNow() { const r = okRec(); return r && GGP.moveOn ? GGP.moveOn.age(PROF.id, r.age) : null; }   // the birthday first (GWG BLD 758), else an older optional age
 function persistRec() { return (PROF && window.GGP) ? GGP.save(PROF.id) : Promise.resolve(); }
-const OK_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, your reflections, and your safety answers stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>
-  <p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share, and never your safety answers or flags. This stays off unless you turn it on.</p>
+const OK_SEE = `<p><b>Just yours</b>Every answer, your levels, your notes, and your reflections stay in your profile on this device. Only your passcode opens it. Nothing is ever sent to anyone.</p>
+  <p><b>Helpers, only if you choose</b>You can let someone you trust open your Oak with their own passcode. They see only what you share. This stays off unless you turn it on.</p>
   <p><b>Share to Family, only by your hand</b>A link with the shape of your tree: days tended and parts tended. Never answers or notes.</p>`;
 function oakSettingsHtml() {
   if (HELP) return helperSettingsHtml();
@@ -2883,7 +2790,7 @@ function gwPrintAll() {
 // HELPERS (Decision 5, GWG BLD 745: Sequoia's and Birch's model). Off unless the
 // person turns on Add a Helper; only the person can turn it on. A helper opens the
 // person's Oak with their own passcode and sees only what the person shares. Roots
-// and notes start private. Never the safety step, flags, or their notes.
+// and notes start private.
 // =====================================================================
 const SHARE_DEF = { tree: true, plan: true, faith: false, notes: false };
 const SHARE_ROWS = [
@@ -2902,7 +2809,7 @@ function helperSettingsHtml() {
   if (!PROF || !window.GGP || PROF.age !== 'adult') return '';
   if (HELP) {
     const n = escapeHtml((GGP.get(HELP) || {}).name || 'They');
-    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Oak settings. Their safety answers are never shared.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Oak</button></div></section>`;
+    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Oak settings.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Oak</button></div></section>`;
   }
   const d = okRec(); if (!d) return '';
   const on = !!d.helpersOn, sh = shareOf(PROF.id);
@@ -2912,7 +2819,6 @@ function helperSettingsHtml() {
     <p class="gt-small">A helper is someone you trust, like a spouse, a grown child, a friend, or a mentor. They open your Oak with their own passcode, and they can sit with you for a check-in. This stays off unless you turn it on, and only you can turn it on.</p>
     <label class="gt-switch"><input type="checkbox" id="ok-helpers-on"${on ? ' checked' : ''} onchange="okHelpersOn(this.checked)"> Let helpers open my Oak</label>
     ${on ? `<h4 class="sq-h4">What Helpers See</h4>${SHARE_ROWS.map(x => `<label class="gt-switch"><input type="checkbox"${sh[x[0]] ? ' checked' : ''} onchange="okShare('${x[0]}',this.checked)"> <span><b>${escapeHtml(x[1])}</b><br><small>${escapeHtml(x[2])}</small></span></label>`).join('')}
-      <p class="gt-small"><b>Never shared:</b> your safety answers, and flags and their notes.</p>
       <h4 class="sq-h4">Your Helpers</h4>
       ${hs.length ? hs.map(x => `<p class="sq-helper">${GGAv.html(x.avatar, x.name, 32)}<b>${escapeHtml(x.name)}</b><button type="button" class="text-btn" onclick="dropHelper('${x.id}')">Remove</button></p>`).join('') : '<p class="gt-small">No helpers yet.</p>'}
       ${can.length ? `<label class="gt-small" for="ok-hid">Add a helper</label><select id="ok-hid" class="sq-select">${can.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>
@@ -2961,7 +2867,7 @@ function renderHelpTabs() {
   if (!HELP || !window.GGP) return;
   const p = GGP.get(HELP) || {}, n = escapeHtml(p.name || 'them'), d = GGP.data(HELP, 'oak'), sh = shareOf(HELP);
   const own = (d.history || []).filter(e => e && e.scores && !e.from), last = own[own.length - 1];
-  const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give. The check-in saves to ${n}'s tree, marked as taken together. The safety questions stay with ${n}, for their own check-ins.</p>
+  const acts = `<div class="gt-card"><h3>Check In Together</h3><p>Sit with ${n} and tap the answers they give. The check-in saves to ${n}'s tree, marked as taken together.</p>
     <div class="btn-row"><button class="btn btn-primary" onclick="startCheckin('tapped','${HELP}')">${n} Answers, I Tap</button><button class="btn btn-secondary" onclick="startQuick('tapped','${HELP}')">Quick Check-in Together</button></div></div>`;
   const tree = sh.tree ? `<div class="gt-card"><h3>${n}'s Tree</h3>${last ? `<p class="gt-small">From the check-in on ${escapeHtml(formatDate(last.date))}${last.by === 'tapped' ? ', taken together' : ''}.</p>${helpLevels(last, sh)}` : '<p>Your first check-in will show here.</p>'}
     ${own.length ? `<h4 class="sq-h4">Check-ins</h4><ul class="gt-hist">${own.slice().reverse().slice(0, 8).map(e => `<li><b>${escapeHtml(formatDate(e.date))}</b><span>${e.type === 'quick' ? 'Quick' : 'Full'}${e.by === 'tapped' ? ', ' + escapeHtml(BY_LABEL.tapped) + (e.helper ? ' (' + escapeHtml(e.helper) + ')' : '') : ''}</span></li>`).join('')}</ul>` : ''}
@@ -3379,10 +3285,9 @@ function lcSuggestHtml(scores, mode) {
   low.forEach(k => (LC_SUGGEST[k] || []).forEach(id => { if (!ids.includes(id)) ids.push(id); }));
   const picks = ids.slice(0, 5).map(id => LC_TOPICS.find(t => t.id === id)).filter(Boolean);
   const m = mode === 'client' ? 'client' : 'prac';
-  const crisis = scores.fruit <= 2 ? `<p><b>If you are having thoughts of ending your life, call or text 988 now.</b> <button class="lc-back" onclick="lcOpen('${m}','suicidal-self')">Read the guide</button></p>` : '';
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
     <p>Some parts of ${m === 'client' ? 'your' : 'this'} tree are carrying a lot right now. These guides may help${m === 'client' ? ' you' : ''} find words and next steps.</p>
-    ${crisis}<div class="lc-links">${picks.map(t => `<button onclick="lcOpen('${m}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button onclick="LCS['${m}'].open=null;lcOpen('${m}',null)">Browse all guides</button></div></div>`;
+    <div class="lc-links">${picks.map(t => `<button onclick="lcOpen('${m}','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button onclick="LCS['${m}'].open=null;lcOpen('${m}',null)">Browse all guides</button></div></div>`;
 }
 
 /* Deep links and Back/Forward: #life opens the guides, #life=topic opens one guide, #today, #week, #season and #plan open
@@ -3455,9 +3360,9 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b862" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b850';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b879" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b879';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b884" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

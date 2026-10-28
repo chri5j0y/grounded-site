@@ -438,6 +438,15 @@ footer.notice svg{width:54px;height:auto;color:var(--gold);display:block;margin:
 .cd-wname{font-family:'Cormorant Garamond',serif;font-size:28px;display:block;line-height:1.1;}
 .chip.cd-pchip[aria-pressed="true"]{background:var(--pc);border-color:var(--pc);color:#fff;}
 .cd-dot{display:inline-block;width:10px;height:10px;border-radius:50%;background:var(--pc);margin-right:8px;vertical-align:middle;}
+#rp-full{position:fixed;inset:0;z-index:220;background:rgba(20,14,9,.55);display:flex;align-items:flex-start;justify-content:center;padding:calc(18px + env(safe-area-inset-top,0px)) 16px calc(18px + env(safe-area-inset-bottom,0px));overflow:auto;}
+.rp-card{max-width:720px;width:100%;margin:auto 0;}
+.rp-t{font-size:1.5em;margin-bottom:10px;}
+.rp-heart{margin:0 0 14px;padding:14px 16px;border-left:5px solid var(--gold);background:var(--bg-deep);border-radius:10px;}
+.rp-heart p{font-size:1.12em;line-height:1.5;font-style:italic;} .rp-heart cite{display:block;margin-top:8px;font-style:normal;color:var(--ink-soft);font-size:.92em;}
+.rp-lead{margin-top:4px;} .rp-steps{padding-left:24px;margin-top:10px;} .rp-steps li{margin-top:9px;line-height:1.5;overflow-wrap:anywhere;}
+.rp-lines{margin-top:14px;border-top:1px solid var(--line);} .rp-line{display:flex;flex-wrap:wrap;justify-content:space-between;gap:4px 12px;padding:9px 0;border-bottom:1px solid var(--line);}
+.rp-line span{color:var(--ink-soft);flex:1 1 220px;} .rp-line a,.rp-line b{font-weight:700;color:var(--danger);white-space:nowrap;}
+.rp-foot{margin-top:12px;font-size:.95em;} .hm-lines a{font-weight:700;color:var(--danger);}
 #cd-full{position:fixed;inset:0;z-index:200;background:var(--bg);display:flex;align-items:center;justify-content:center;padding:calc(18px + env(safe-area-inset-top,0px)) 18px calc(18px + env(safe-area-inset-bottom,0px));overflow:auto;}
 .cdf-in{width:min(920px,100%);}
 .cd-huge{min-height:62vh;}
@@ -660,30 +669,30 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b878"></script>
-<script src="../shared/gg-learn.js?v=b862"></script>
-<script src="../shared/gg-print.js?v=b836"></script>
+<script src="../shared/gg-learn.js?v=b887"></script>
+<script src="../shared/gg-print.js?v=b887"></script>
 <script src="../shared/grove-scene.js?v=b862"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b862"></script>
-<script src="share.js?v=b836"></script>
+<script src="share.js?v=b887"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b862"></script>
 <script src="ceremonies.js?v=b862"></script>
-<script src="sessions.js?v=b836"></script>
+<script src="sessions.js?v=b887"></script>
 <script src="farewell.js?v=b862"></script>
 <script src="wedding.js?v=b862"></script>
-<script src="premarital.js?v=b862"></script>
+<script src="premarital.js?v=b887"></script>
 <script src="clients.js?v=b836"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b836"></script>
-<script src="grovevisit.js?v=b788"></script>
+<script src="grovevisit.js?v=b887"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b862"></script>
+<script src="../shared/gg-stories.js?v=b887"></script>
 <script src="moves.js?v=b862"></script>
 <script src="stage.js?v=b862"></script>
 <script src="coach.js?v=b879"></script>
-<script src="health.js?v=b883"></script>
-<script src="vault.js?v=b852"></script>
+<script src="health.js?v=b887"></script>
+<script src="vault.js?v=b887"></script>
 <script src="offline.js?v=b798"></script>
 <script>
 // Load the code and library files fresh every time, so an upload from the Access manager is picked up right away.
@@ -1087,7 +1096,7 @@ function tabsFor(){
   // GWG BLD 772 HG: premarital and marriage work is Staff and Founders only; Guides have no Premarital tab.
   // A Family Kitchen code (GWG BLD 846) opens the Tending kitchen only: no orientation, no other tabs.
   if (TIER === 'kitchen') return [['health','Tending','sprout']];
-  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ...(FSAFE() ? [['safety','Safety','shield']] : [])];
+  if (TIER === 'guide') return OR() && !orState().complete ? [['path','Your Path','award']] : [['path','Your Path','award'], ['home','Home','home'], ...hj, ...kids, ...grown, ...hp, ['safety','Safety','shield']];
   if (!LIB) return [...hj, ...kids, ...grown, ...hp];
   // Tabs in groups by who they are meant for (Chris, October 7, 2026). For Everyone: every tab the Field Guide
   // offers Guides (Home, the trees, The Grove, When Life Changes, Learn), whether or not the Founder has opened it to
@@ -1297,7 +1306,7 @@ function vHome(){
     <div class="card"><h3 class="aud-h">Recent Sessions ${audTag('staff')}</h3>
       ${recent.length ? recent.map(s => { const c = CL(s.clientId); return `<div class="list-row"><div class="lr-main"><b>${esc(c ? c.name : 'No person')}</b> <span class="muted">${esc(sessTitle(s))}</span><br><small class="muted">${nice(s.date)}</small></div><button class="btn btn-line btn-sm" data-act="view-session" data-v="${s.id}">View</button></div>`; }).join('') : '<p class="muted" style="margin-top:8px">No sessions yet. Start one above.</p>'}</div>
   </div>
-  <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>In a crisis?</b> <span class="muted">Open the Crisis Protocol, or call now.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="guide" data-v="crisis">Crisis Protocol</button><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
+  <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>When harm comes up</b> <span class="muted">Open the Grounded Response Plan, or call now.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="rp-open">Response Plan</button><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
 function addDays(s, n){ const [y,m,d] = s.split('-').map(Number); const t = new Date(y, m-1, d + n); return `${t.getFullYear()}-${String(t.getMonth()+1).padStart(2,'0')}-${String(t.getDate()).padStart(2,'0')}`; }
 
@@ -1325,6 +1334,7 @@ function stepHTML(s, i, forPrint){
   return blk('Say', s.say, 'say') + blk('Ask', s.ask) + blk('Do', s.do) + (s.tip ? `<div class="tipbox">${mark(s.tip)}</div>` : '') + (s.link && !forPrint ? `<div class="blk">${toolLink(s.link)}</div>` : '');
 }
 function toolLink(k){
+  if (k === 'rp') return rpBtn();
   if (k === '988') return `<a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call or text 988</a>`;
   if (k === '911') return `<a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a>`;
   const t = LIB.tools.flatMap(g => g[1]).find(x => x[2] === k);
@@ -1533,19 +1543,143 @@ function vTraining(){
 }
 
 // ---------------- SAFETY ----------------
-// Safety (Chris, October 8, 2026): Guides use it too. Guides read it from the Guide library (FLD.safety: steps,
-// scope, conf, in the Crisis Protocol's shape), so the tab shows for them once that library update is applied.
-const FSAFE = () => (FLD && FLD.safety && Array.isArray(FLD.safety.steps) && FLD.safety.steps.length) ? FLD.safety : null;
+// Safety (Chris, October 8, 2026): Guides use it too. Since BLD 887 the tab shows the Grounded Response Plan for every
+// level; Guides read scope and conf from the Guide library (FLD.safety), Staff and Founders from LIB.policies.
+const FSAFE = () => (FLD && FLD.safety && typeof FLD.safety === 'object') ? FLD.safety : null;
 function vSafety(){
-  const F = TIER === 'guide' ? FSAFE() : null;
-  if (TIER === 'guide' && !F) return `<div class="card"><p>Safety arrives with the next Guide library update. If someone is in danger, call 911. For a mental health crisis, call or text 988.</p></div>`;
-  const g = F ? {steps: F.steps} : G('crisis'), scope = F ? F.scope : LIB.policies.find(p => p[0] === 'Scope of practice'), conf = F ? F.conf : LIB.policies.find(p => p[0] === 'Confidentiality');
-  return `<div class="page-head"><div class="eyebrow" style="color:var(--danger)">Safety</div><h1>If someone is in danger</h1></div>
+  // BLD 887: the Safety tab is the Grounded Response Plan for every level. The plan's words live in this file (RP_DEF),
+  // so the tab works with any library; scope of practice and confidentiality still come from the library.
+  const F = TIER === 'guide' ? FSAFE() : null, pol = n => ((LIB && LIB.policies) || []).find(p => p[0] === n);
+  const scope = F ? F.scope : pol('Scope of practice'), conf = F ? F.conf : pol('Confidentiality');
+  return `<div class="page-head"><div class="eyebrow" style="color:var(--danger)">Safety</div><h1>${esc(RP().title)}</h1><p>Open questions, presence, and clear steps when harm comes up on its own.</p></div>
   <div class="row" style="margin-bottom:14px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line" href="sms:988">Text 988</a></div>
-  ${g.steps.map((s,i) => `<div class="card step-card" style="border-left-color:var(--danger)"><h4><span class="n">STEP ${i+1}</span> ${esc(s.t)}</h4>${stepHTML(s,i)}</div>`).join('')}
-  <div class="card"><h3>${esc(scope[0])}</h3><p style="margin-top:6px">${mark(scope[1])}</p></div>
-  <div class="card"><h3>${esc(conf[0])}</h3><p style="margin-top:6px">${mark(conf[1])}</p></div>`;
+  <div class="card" style="border-left:4px solid var(--danger)">${rpHTML(false)}</div>
+  ${Array.isArray(scope) && scope.length > 1 ? `<div class="card"><h3>${esc(scope[0])}</h3><p style="margin-top:6px">${mark(scope[1])}</p></div>` : ''}
+  ${Array.isArray(conf) && conf.length > 1 ? `<div class="card"><h3>${esc(conf[0])}</h3><p style="margin-top:6px">${mark(conf[1])}</p></div>` : ''}`;
 }
+
+// ---------------- THE GROUNDED RESPONSE PLAN (BLD 887) ----------------
+// Chris, October 28, 2026: open questions, curious, without judgement or expectation; never a leading question about
+// harm. When harm comes up on its own in a guide-led visit, the guide follows the Grounded Response Plan, which adopts
+// mandatory reporting law (Minnesota as the baseline). The plan lives here in the code so every runner and the Safety
+// tab show the same card; a library may add data.responsePlan {title, heart, heartBy, lead, steps [[title, text]],
+// lines [[label, number, href]], foot} to update the wording without a site build. Each tree guide may carry
+// harm {title, lead, open [], presence []} to change its "If Harm Comes Up" panel.
+const RP_DEF = {
+  title: 'The Grounded Response Plan',
+  heart: 'Follow your instincts, when in doubt check it out, see something say something, and anytime you think a person is at risk of harming themselves or others, report it to appropriate authorities.',
+  heartBy: 'Chris Joy, Founder',
+  lead: 'Grounded follows the mandatory reporting law of the state where the visit takes place. Minnesota is the baseline.',
+  steps: [
+    ['Stay present', 'Listen, stay calm, and say what you will do next. Never promise to keep harm a secret.'],
+    ['Danger right now', 'Call 911. Stay with the person if it is safe to.'],
+    ['Any sign a person may harm themselves or someone else', 'Words, plans, giving things away, a sudden calm after despair, a gut feeling: act, even when unsure. Stay with the person and connect together with 988 (call or text). When the risk feels high, or they choose to wait, report to the appropriate authority: 911, or the county mobile crisis team (in Minnesota, call **CRISIS, that is **274747, from a cell phone). Together with 988 or the crisis team, talk about making home safer for now: medicines and anything that could cause harm put away, locked, or held by someone they trust. In hospice, call the hospice\'s 24/7 line first. A threat against another person: call 911. Tell the person what you are doing and why, with kindness.'],
+    ['A child may be abused or neglected', 'Now or within the past three years: report immediately, no later than 24 hours, to the county child protection agency or law enforcement (Minn. Stat. 260E.06). A written report follows within 72 hours (weekends and holidays excluded) when the agency asks for one. Clergy report too, except information that is privileged under Minn. Stat. 595.02, subd. 1(c).'],
+    ['A vulnerable adult may be maltreated', 'Report immediately, no later than 24 hours, to MAARC, 1-844-880-1574, open 24/7 (Minn. Stat. 626.557).'],
+    ['Tell Chris or Kayti the same day', 'No names in texts or email; a call is best.'],
+    ['Write a short factual note in the visit record', 'What was said, what you did, who you reported to, and when. Facts only.'],
+    ['Follow your instincts', 'When in doubt, check it out. See something, say something. A good faith report is protected by law, and a report that turns out unneeded is always better than a missed one.']
+  ],
+  lines: [
+    ['Danger right now', '911', 'tel:911'],
+    ['Call or text', '988', 'tel:988'],
+    ['County mobile crisis team, Minnesota, from a cell phone', '**CRISIS (**274747)', 'tel:%2A%2A274747'],
+    ['Vulnerable adults, Minnesota (MAARC), 24/7', '1-844-880-1574', 'tel:18448801574'],
+    ['A child: county child protection or police', 'Within 24 hours', '']
+  ],
+  foot: 'Every Guide, Staff, and Founder is trained in this plan and follows it as a mandated reporter would, whatever their own legal status.'
+};
+const RP = () => { const L = (FLD && FLD.responsePlan) || (LIB && LIB.responsePlan) || {}, o = Object.assign({}, RP_DEF); Object.keys(RP_DEF).forEach(k => { if (L[k] && (typeof L[k] === 'string' || (Array.isArray(L[k]) && L[k].length))) o[k] = L[k]; }); return o; };
+function rpHTML(inCard){
+  const P = RP();
+  return `<div class="rp">${inCard ? `<h2 class="rp-t">${esc(P.title)}</h2>` : ''}
+   <blockquote class="rp-heart"><p>${esc(P.heart)}</p><cite>${esc(P.heartBy)}</cite></blockquote>
+   <p class="rp-lead">${esc(P.lead)}</p>
+   <ol class="rp-steps">${P.steps.map(s => `<li><b>${esc(s[0])}.</b> ${esc(s[1])}</li>`).join('')}</ol>
+   <div class="rp-lines">${P.lines.map(l => `<div class="rp-line"><span>${esc(l[0])}</span>${l[2] ? `<a href="${esc(l[2])}">${esc(l[1])}</a>` : `<b>${esc(l[1])}</b>`}</div>`).join('')}</div>
+   <p class="muted rp-foot">${esc(P.foot)}</p></div>`;
+}
+const rpBtn = (cls) => `<button type="button" class="btn ${cls || 'btn-line btn-sm'}" data-act="rp-open">${icon('shield')} The Grounded Response Plan</button>`;
+function rpOpen(){
+  let el = $('#rp-full'); if (!el){ el = document.createElement('div'); el.id = 'rp-full'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-label', RP().title); document.body.appendChild(el); }
+  el.innerHTML = `<div class="rp-card card">${rpHTML(true)}<div class="row" style="margin-top:16px"><button type="button" class="btn btn-gold" data-act="rp-close">Close</button></div></div>`;
+  RP_BACK = document.activeElement;
+  document.body.classList.add('cd-noscroll');
+  const b = el.querySelector('[data-act="rp-close"]'); if (b) b.focus();
+}
+let RP_BACK = null;
+function rpClose(){ const el = $('#rp-full'); if (el) el.remove(); if (!$('#cd-full')) document.body.classList.remove('cd-noscroll'); if (RP_BACK && RP_BACK.isConnected) try { RP_BACK.focus(); } catch(e){} RP_BACK = null; }
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && $('#rp-full')){ e.preventDefault(); e.stopPropagation(); rpClose(); } }, true);
+
+// Every Report a Concern card names the Grounded Response Plan (BLD 887), with the same timelines and numbers.
+function rpAlign(kind){
+  const lines = ['Danger right now, or a threat against another person: call 911.', 'Any sign of harm to self: stay with them and connect together with 988 (call or text). In Minnesota, the county mobile crisis team is **CRISIS (**274747) from a cell phone.' + (kind === 'hospice' ? ' The hospice 24/7 line first.' : ''),
+    'A child: report within 24 hours to county child protection or police.', 'A vulnerable adult: report within 24 hours to MAARC, 1-844-880-1574, open 24/7.', 'Tell Chris or Kayti the same day, and write a short, facts-only note.'];
+  return `<div class="card rp-align" style="border-left:4px solid var(--gold)"><h3>The Grounded Response Plan</h3><ul style="margin-top:8px;padding-left:20px">${lines.map(x => `<li style="margin-top:4px">${esc(x)}</li>`).join('')}</ul><div class="row" style="margin-top:10px">${rpBtn()}</div></div>`;
+}
+// "If Harm Comes Up": the panel each visit runner shows where the old safety step was. Nothing is asked; the guide
+// marks only what came up on its own, what they did, and a facts-only note (Response Plan step 7). Saved as s.harm.
+const HM_GROUP = {st:'adult', sq:'adult', br:'adult', sp:'kid', sa:'kid', pn:'teen', wl:'hospice'};
+const HM_DEF = {
+  adult: {open: ['What has this season been like for you?', 'What feels heaviest right now?', 'What helps you through the hard days?', 'Who walks with you in this?'],
+    presence: ['Listen more than you speak, and let silence do its work.', 'Reflect back what you hear, in their own words.', 'Stay calm, warm, and unhurried.']},
+  teen: {open: ['What has been on your mind lately?', 'What has been the hardest part of this year?', 'Who are the people you can count on?', 'What helps when a day gets heavy?'],
+    presence: ['Listen more than you speak, and let them lead.', 'Reflect back what you hear, in their own words.', 'When harm comes up, say kindly that you will bring in a grown-up who can help, and stay with them.']},
+  kid: {open: ['What has been on your mind lately?', 'Who are the grown-ups who help you?', 'What makes a hard day a little better?'],
+    presence: ['Stay calm and warm, and let them lead.', 'Thank them for telling you, and say what you will do next.', 'When harm comes up, say kindly that you will share it with a grown-up who can help.']},
+  hospice: {open: ['What has this time been like for you?', 'What is on your heart today?', 'What gives you comfort right now?', 'Who would you like near you?'],
+    presence: ['Listen more than you speak, and let silence do its work.', 'Stay calm, warm, and unhurried.', 'In hospice, call the hospice\'s 24/7 line first, any hour.']}
+};
+const HM_LEAD = 'Ask open questions and stay curious, without judgement or expectation. When harm comes up on its own, stay present and follow the Grounded Response Plan.';
+const HM_DID = ['Stayed present and listened', 'Called 911', 'Connected with 988 together', 'Called the county crisis team', 'Called the hospice 24/7 line', 'Reported to child protection or police', 'Reported to MAARC', 'Told Chris or Kayti'];
+const hmNew = () => ({up:false, did:[], note:''});
+const hmOf = r => { if (!r.harm || typeof r.harm !== 'object') r.harm = hmNew(); if (!Array.isArray(r.harm.did)) r.harm.did = []; return r.harm; };
+function hmText(kind, S){
+  const d = HM_DEF[HM_GROUP[kind] || 'adult'], L = (S && S.harm && typeof S.harm === 'object') ? S.harm : {};
+  const arr = (x, f) => Array.isArray(x) && x.length ? x : f;
+  return {title: L.title || 'If Harm Comes Up', lead: L.lead || HM_LEAD, open: arr(L.open, d.open), presence: arr(L.presence, d.presence)};
+}
+// rep: the runner's own Report a Concern button html, or ''.
+function hmStep(kind, S, rep){
+  const T = hmText(kind, S), h = hmOf(RUN), did = HM_DID.filter(x => kind === 'wl' || x !== 'Called the hospice 24/7 line');
+  const ul = (lab, a, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${a.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
+  return `<div class="run-step-n">Open questions and presence</div><h2 class="run-step-t">${esc(T.title)}</h2><p class="purpose">${esc(T.lead)}</p>
+   <div class="card step-card hm-card">${ul('Open questions', T.open, 'say')}${ul('Presence', T.presence)}</div>
+   <div class="row" style="margin-top:12px">${rpBtn()}${rep || ''}</div>
+   <label class="cb" style="margin-top:16px"><input type="checkbox" data-hm="up" ${h.up ? 'checked' : ''}> Harm came up on its own today</label>
+   ${h.up ? `<div class="card hm-up" style="margin-top:12px;border-left:4px solid var(--danger)">
+     <p class="hm-lines">Danger right now: <a href="tel:911">911</a>. Call or text <a href="tel:988">988</a>.${kind === 'wl' ? ' The hospice 24/7 line first.' : ''}</p>
+     <h4 style="margin-top:12px">What you did</h4><div class="st-opts">${did.map(a => `<button type="button" class="chip" data-act="hm-did" data-v="${esc(a)}" aria-pressed="${h.did.includes(a)}">${esc(a)}</button>`).join('')}</div>
+     <label class="f" for="hm-note">Facts only note</label><textarea id="hm-note" data-hm="note" style="min-height:90px" placeholder="What was said, what you did, who you reported to, and when">${esc(h.note || '')}</textarea></div>` : ''}`;
+}
+const HM_KEEP = {st:() => stKeep(), sq:() => sqKeep(), sp:() => spKeep(), sa:() => saKeep(), pn:() => pnKeep(), br:() => brKeep(), wl:() => wlKeep()};
+const HM_DRAW = {st:() => stDraw(), sq:() => sqDraw(), sp:() => spDraw(), sa:() => saDraw(), pn:() => pnDraw(), br:() => brDraw(), wl:() => wlDraw()};
+function hmKeep(){ if (RUN && HM_KEEP[RUN.kind]) HM_KEEP[RUN.kind](); }
+function hmRedraw(){ if (!RUN || !HM_DRAW[RUN.kind]) return; const b = $('#run-body'), y = b ? b.scrollTop : 0; HM_DRAW[RUN.kind](); const n = $('#run-body'); if (n) n.scrollTop = y; }
+function hmAct(a, v, t){
+  if (a !== 'hm-did' || !RUN) return false;
+  const h = hmOf(RUN), i = h.did.indexOf(v);
+  if (i < 0) h.did.push(v); else h.did.splice(i, 1);
+  t.setAttribute('aria-pressed', i < 0); hmKeep(); return true;
+}
+function hmInput(t, ev){
+  if (!RUN || !t.dataset || !t.dataset.hm) return false;
+  const h = hmOf(RUN);
+  if (t.dataset.hm === 'up'){ if (ev === 'change'){ h.up = !!t.checked; hmKeep(); hmRedraw(); } }
+  else if (t.dataset.hm === 'note'){ h.note = t.value; hmKeep(); }
+  return true;
+}
+// What a saved visit keeps: only when harm came up.
+const hmSave = r => { const h = r && r.harm; return h && h.up ? {up:true, did:(h.did || []).slice(), note:h.note || ''} : null; };
+const hmHas = s => !!(s && s.harm && s.harm.up);
+function hmCard(s){
+  if (!hmHas(s)) return '';
+  const h = s.harm;
+  return `<div class="card" style="border-left:4px solid var(--danger)"><h3>When Harm Came Up</h3>${(h.did || []).length ? `<div class="row" style="margin-top:8px">${h.did.map(x => `<span class="pill">${esc(x)}</span>`).join('')}</div>` : ''}${h.note ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(h.note)}</p>` : ''}<div class="row" style="margin-top:10px">${rpBtn()}</div></div>`;
+}
+const hmNote = s => hmHas(s) ? 'Harm came up on its own: ' + [((s.harm.did || []).join(', ') || 'actions not marked'), s.harm.note].filter(Boolean).join('. ') + (/[.!?]$/.test(s.harm.note || '') ? '' : '.') : '';
+// Visits saved before BLD 887 may hold a safety record; it stays readable on the visit, marked as an earlier visit.
+const hmOldSafety = sf => !!(sf && typeof sf === 'object' && Object.keys(sf).some(k => k !== 'actions' && k !== 'mode' && sf[k] && !(Array.isArray(sf[k]) && !sf[k].length)));
 
 // ---------------- FIELD HOME ----------------
 function vFieldHome(){
@@ -1569,7 +1703,7 @@ function vFieldHome(){
   ${fieldDue()}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
    <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
-  <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988.</span></div><div class="row"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
+  <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988. When harm comes up, follow the Grounded Response Plan.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="rp-open">Response Plan</button><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
 
 // Follow-ups due this week, for Guides (Staff and Founders see them on Home). Only people Field can open.
@@ -2705,7 +2839,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b836'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b887'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -2798,7 +2932,7 @@ function stRunFlags(r){
   const out = [];
   STG().parts.forEach(p => stQuestions(r.visit, r.set, p.key).forEach((q, i) => {
     const a = ((r.ans || {})[p.key] || {})[i];
-    if (q.flag && a && STC.flags[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+    if (q.flag && a && STC.flags && STC.flags[q.flag] && (STC.flags[q.flag].on || []).includes(a) && !out.includes(q.flag)) out.push(q.flag);
   }));
   return out;
 }
@@ -2962,6 +3096,7 @@ function vSTReport(cid){
   return `<button class="linkbtn" ${c ? `data-act="st-open" data-v="${c.id}"` : 'data-tab="oak"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Oak Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div><p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p></div>
+  ${rpAlign('adult')}
   <div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
   <div class="card"><h3>What counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>
   <div class="card"><div class="row" role="group" aria-label="Where are they?"><button class="chip" data-act="st-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota</button><button class="chip" data-act="st-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
@@ -3079,7 +3214,7 @@ function vSTPerson(c){
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${stPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
     <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-stfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${s.notToday ? ' <span class="pill">Not today</span>' : ''}${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? ' <span class="pill">Earlier questions</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(stVisitName(s.visit))}</b>${s.imported ? ' <span class="pill">Imported</span>' : ''}${s.notToday ? ' <span class="pill">Not today</span>' : ''}${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? ' <span class="pill">Earlier questions</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${stSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="st-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
    <label class="f">Code or initials</label><input type="text" data-stc="name" value="${esc(c.name)}">
    ${me ? '' : `<label class="f">Who they are</label><select data-stc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === c.st.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select>
@@ -3107,9 +3242,10 @@ function vSTVisit(){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'staff' ? ' &middot; Staff questions' : ''}</div><h1>${esc(stVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.imported ? ' &middot; Moved from public Oak' : ''}</p></div>
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
   ${!s.std && !s.imported && !s.notToday && s.visit !== 'open' ? '<div class="card"><p class="muted">This visit used the questions from before the session 22 update. It stays here, but it isn\'t compared with newer visits.</p></div>' : ''}
-  ${(s.flags || []).length && STC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => `<p style="margin-top:8px"><b>${esc(STC.flags[f].title)}.</b> ${esc(STC.flags[f].guide)}</p>`).join('')}</div>` : ''}
+  ${(s.flags || []).length && STC && STC.flags ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => STC.flags[f] ? `<p style="margin-top:8px"><b>${esc(STC.flags[f].title)}.</b> ${esc(STC.flags[f].guide || '')}</p>` : '').join('')}</div>` : ''}
   <div class="card"><h3>The Six Parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
-  ${s.imported ? '' : `<div class="card" ${stSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(stSafetyText(sf))}</p></div>`}
+  ${s.imported || !hmOldSafety(sf) ? '' : `<div class="card" ${stSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(stSafetyText(sf))}</p></div>`}
+  ${hmCard(s)}
   ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
@@ -3122,7 +3258,7 @@ function vSTVisit(){
 function stSafetyText(sf){
   if (!sf || (!sf.direct && !sf.notAsked)) return 'Not recorded.';
   if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
-  const o = (STG().scale.find(x => x[0] === sf.opener) || [])[1], d = (STG().safety.directOpts.find(x => x[0] === sf.direct) || [])[1];
+  const o = (STG().scale.find(x => x[0] === sf.opener) || [])[1], d = (((STG().safety || {}).directOpts || []).find(x => x[0] === sf.direct) || [])[1];
   const flag = stSafetyFlag(sf);
   return (flag ? 'Positive screen. ' : 'Negative screen. ') + (o ? 'Hopeless or a burden: ' + o + '. ' : '') + (d ? 'Thoughts of ending life or self-harm: ' + d + '.' : '') + (flag ? ' Actions: ' + ((sf.actions||[]).join(', ') || 'none recorded') + '.' : '');
 }
@@ -3137,7 +3273,8 @@ function stNote(s, c){
   if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
   if ((s.did||[]).length) L.push('Interventions: ' + s.did.join(', ') + '.');
   if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
-  if (!s.imported) L.push('Safety: ' + stSafetyText(s.safety));
+  if (!s.imported && hmOldSafety(s.safety)) L.push('Safety: ' + stSafetyText(s.safety));
+  if (hmHas(s)) L.push(hmNote(s));
   const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
   if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
   if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
@@ -3160,7 +3297,7 @@ function stStart(visit, cid, demo){
   const type = c.st.type;
   RUN = {kind:'st', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set:(visit !== 'open' && type === 'staff') ? 'staff' : 'standard',
     stem:type === 'patient' ? 'patient' : (visit !== 'open' && type === 'staff') ? 'staff' : 'standard', started:Date.now(), step:0, yes:'', notSup:false, own:'',
-    ans:{}, impr:{}, pn:{}, safety:{opener:'', direct:'', notAsked:false, reason:'', reasonText:'', actions:[]}, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
+    ans:{}, impr:{}, pn:{}, harm:hmNew(), tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
   stOpenRun();
 }
 const stSteps = r => ['open', ...(r.visit === 'full' ? STG().parts.map(p => 'p:' + p.key) : [r.visit === 'quick' ? 'quick' : 'talk']), 'safety', 'close', 'plan'];
@@ -3200,17 +3337,7 @@ function stDraw(){
       <div class="st-opts" role="group" aria-label="${esc(p.part)}">${S.impressions.map(o => stChip('st-impr', `data-k="${p.key}" data-v="${o[0]}"`, RUN.impr[p.key] === o[0], o[1])).join('')}</div>
       <textarea data-stpn="${p.key}" style="min-height:64px;margin-top:10px" placeholder="Your notes (private)" aria-label="${esc(p.part)} notes">${esc(RUN.pn[p.key]||'')}</textarea></div>`).join('')}`;
   } else if (st === 'safety'){
-    const F = S.safety, sf = RUN.safety, flag = stSafetyFlag(sf);
-    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
-     <div class="card step-card">${blk('Say', [F.say], 'say')}</div>
-     <div class="st-q"><p>${esc(F.opener)}</p><div class="st-opts" role="group" aria-label="Hopeless or a burden">${S.scale.map(o => stChip('st-safe', `data-k="opener" data-v="${o[0]}"`, sf.opener === o[0], o[1])).join('')}</div></div>
-     <div class="st-q"><p>${esc(F.direct)}</p><div class="st-opts" role="group" aria-label="Thoughts of ending life">${F.directOpts.map(o => stChip('st-safe', `data-k="direct" data-v="${o[0]}"`, sf.direct === o[0], o[1])).join('')}</div></div>
-     <div class="tipbox">${esc(F.note)}</div>
-     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>
-       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('st-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-     <label class="cb" style="margin-top:16px"><input type="checkbox" data-stsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-     ${sf.notAsked ? `<select data-stsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-stsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+    body = hmStep('st', S, STG().report && !RUN.demo ? `<button class="btn btn-line btn-sm" data-act="st-run-report">${icon('shield')} Report a Concern</button>` : '');
   } else if (st === 'close'){
     const fl = stRunFlags(RUN);
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
@@ -3234,22 +3361,19 @@ function stDraw(){
   tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
 }
 function stNext(){
-  const st = stSteps(RUN)[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  const st = stSteps(RUN)[RUN.step], c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
   if (st === 'open' && !stIsMe(c0)){
     if (c0 && c0.st.type === 'staff' && !RUN.notSup) return alert('Check that you do not supervise this person. Oak visits are never done by someone\'s supervisor.');
     if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
     if (RUN.yes === 'no') return stNotToday();
   }
-  if (st === 'safety' && !sf.notAsked && !sf.direct) return alert('Ask the second safety question, or check "I didn\'t ask these today" and say why.');
-  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-  if (st === 'safety' && stSafetyFlag(sf) && !sf.actions.length && !confirm('This is a positive screen. You haven\'t marked what you did. Go on anyway?')) return;
   RUN.step++; stKeep(); stDraw();
 }
 function stSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
   const s = {id:r.id, u:Date.now(), kind:'st', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)),
     visit:r.visit, set:r.set, ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, scores:stScore(r),
-    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
+    harm:hmSave(r), tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
     std:ST_STD, flags:stRunFlags(r), yes:r.yes || '', own:r.own || '', notSup:!!r.notSup};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ s.person = c; V = {tab:'oak', stv:'demo', stDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
@@ -3268,10 +3392,10 @@ function stToggle(t){
   const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
   if (a === 'st-ans'){ const i = t.dataset.i; RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][i] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
   else if (a === 'st-impr'){ RUN.impr[k] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
-  else if (a === 'st-safe'){ RUN.safety[k] = v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
+  else if (a === 'st-safe'){ (RUN.safety = RUN.safety || {})[k] = v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
   else if (a === 'st-yes'){ RUN[k] = k === 'notSup' ? on : v; stKeep(); const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; return; }
   else if (a === 'st-plan'){ const arr = RUN.plan[k] = RUN.plan[k] || []; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
-  else if (a === 'st-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  else if (a === 'st-tog'){ const g = t.dataset.g, arr = g === 'actions' ? ((RUN.safety = RUN.safety || {}).actions = RUN.safety.actions || []) : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
   stKeep();
 }
 
@@ -3396,7 +3520,7 @@ function sqRunFlags(r){
   const out = [];
   SQG().parts.forEach(p => sqQuestions(r.set, p.key).forEach((q, i) => {
     const a = ((r.ans || {})[p.key] || {})[i];
-    if (q.flag && a && SQC.flags[q.flag] && SQC.flags[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+    if (q.flag && a && SQC.flags && SQC.flags[q.flag] && (SQC.flags[q.flag].on || []).includes(a) && !out.includes(q.flag)) out.push(q.flag);
   }));
   return out;
 }
@@ -3577,6 +3701,7 @@ function vSQReport(cid){
   return `<button class="linkbtn" ${c ? `data-act="sq-open" data-v="${c.id}"` : 'data-tab="sequoia"'}>Back${c ? ' to ' + esc(c.name) : ''}</button>
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Sequoia Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div><p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p></div>
+  ${rpAlign('adult')}
   <div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
   <div class="card"><h3>What counts</h3>${R.kinds.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>
   <div class="card"><div class="row" role="group" aria-label="Where are they?"><button class="chip" data-act="sq-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota</button><button class="chip" data-act="sq-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
@@ -3683,7 +3808,7 @@ function vSQPerson(c){
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${sqPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
     <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-sqfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sqVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.by === 'observed' ? ' <span class="pill">From what I see</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${sqSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sq-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(sqVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.by === 'observed' ? ' <span class="pill">From what I see</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${sqSafetyFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sq-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
    <label class="f">Code or initials</label><input type="text" data-sqc="name" value="${esc(c.name)}">
    ${me ? '' : `<label class="f">Who they are</label><select data-sqc="type">${S.people.map(p => `<option value="${p[0]}" ${p[0] === c.sq.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select>
@@ -3706,9 +3831,10 @@ function vSQVisit(){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.set === 'helper' ? ' &middot; Helper questions' : ''}${s.by && s.set !== 'helper' && s.visit !== 'open' ? ' &middot; ' + esc(sqByName(s.by)) : ''}</div><h1>${esc(sqVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}</p></div>
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>` : ''}
   ${s.by === 'observed' ? '<div class="card"><p class="muted">Answered from what was seen, not in their own voice. It is kept here, and it doesn\'t add a ring to their tree.</p></div>' : ''}
-  ${(s.flags || []).length && SQC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => SQC.flags[f] ? `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  ${(s.flags || []).length && SQC && SQC.flags ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => SQC.flags[f] ? `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
   <div class="card"><h3>The Six Parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
-  ${s.notToday ? '' : `<div class="card" ${sqSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(sqSafetyText(sf))}</p></div>`}
+  ${s.notToday || !hmOldSafety(sf) ? '' : `<div class="card" ${sqSafetyFlag(sf) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(sqSafetyText(sf))}</p></div>`}
+  ${hmCard(s)}
   ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
@@ -3728,7 +3854,7 @@ function sqSafetyText(sf){
   const yn = {yes:'yes', no:'no', unsure:'not sure', skip:'rather not say'}[sf.other] || sf.other || '';
   if (sf.mode === 'observed') return (flag ? 'Concern noted. ' : 'No concern noted. ') + 'Asked of the person answering from what they see. They have heard them say they wish it were over: ' + yn + '.' + acts;
   if (sf.mode === 'helper') return (flag ? 'Positive screen. ' : 'Negative screen. ') + 'Thoughts of not wanting to go on: ' + yn + '.' + acts;
-  const o = (sqScale().find(x => x[0] === sf.opener) || [])[1], d = (SQG().safety.directOpts.find(x => x[0] === sf.direct) || [])[1];
+  const o = (sqScale().find(x => x[0] === sf.opener) || [])[1], d = (((SQG().safety || {}).directOpts || []).find(x => x[0] === sf.direct) || [])[1];
   return (flag ? 'Positive screen. ' : 'Negative screen. ') + (o ? 'Hopeless or a burden: ' + o + '. ' : '') + (d ? 'Wished to not wake up, or thoughts of ending life: ' + d + '.' : '') + acts;
 }
 function sqNote(s, c){
@@ -3743,7 +3869,8 @@ function sqNote(s, c){
   if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
   if ((s.did||[]).length) L.push('Interventions: ' + s.did.join(', ') + '.');
   if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
-  L.push('Safety: ' + sqSafetyText(s.safety));
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + sqSafetyText(s.safety));
+  if (hmHas(s)) L.push(hmNote(s));
   const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
   if (plan.length || s.custom) L.push('', 'Plan: ' + [...plan, s.custom].filter(Boolean).join('; ') + '.');
   if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
@@ -3764,7 +3891,7 @@ function sqStart(visit, cid, demo){
   if (!SQC && visit !== 'open') { sqLoad(); return toast(SQC_FAIL ? "The Sequoia questions didn't load. Check your connection and try again." : 'Loading the Sequoia questions. Try again in a moment.'); }
   const set = visit !== 'open' ? sqSetFor(c.sq.type) : 'standard';
   RUN = {kind:'sq', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, set, by:'self', started:Date.now(), step:0, yes:'', own:'',
-    ans:{}, impr:{}, pn:{}, safety:{mode:'', opener:'', direct:'', other:'', notAsked:false, reason:'', reasonText:'', actions:[]}, tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
+    ans:{}, impr:{}, pn:{}, harm:hmNew(), tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:''};
   sqOpenRun();
 }
 const sqSteps = r => ['open', ...(r.visit === 'full' ? SQG().parts.map(p => 'p:' + p.key) : [r.visit === 'quick' ? 'quick' : 'talk']), 'safety', 'close', 'plan'];
@@ -3772,35 +3899,12 @@ function sqOpenRun(){ $('#runner').classList.remove('hide'); sqDraw(); clearInte
 function sqKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
 function sqRedraw(){ const b = $('#run-body'), y = b ? b.scrollTop : 0; sqDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
 function sqQ(k, i, text, q){
-  const cur = ((RUN.ans||{})[k]||{})[i], f = q && q.flag && SQC && SQC.flags[q.flag], hot = f && f.on.includes(cur);
+  const cur = ((RUN.ans||{})[k]||{})[i], f = q && q.flag && SQC && SQC.flags && SQC.flags[q.flag], hot = f && (f.on || []).includes(cur) && f.guide;
   return `<div class="st-q"><p>${i === 'q' || RUN.visit === 'quick' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}${q && q.r ? ' <small class="muted">(reverse)</small>' : ''}</p><div class="st-opts" role="group" aria-label="${esc(text)}">${sqScale().map(o => stChip('sq-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>${q && q.tip ? `<p class="muted st-tip" style="font-size:14px;margin-top:6px">${esc(q.tip)}</p>` : ''}${hot ? `<p class="wl-hot">${esc(f.guide)}</p>` : ''}</div>`;
 }
 const sqSafeMode = r => r.visit !== 'open' && r.set === 'helper' ? 'helper' : r.visit !== 'open' && r.by === 'observed' ? 'observed' : 'standard';
 function sqSafetyStep(c){
-  const S = SQG(), F = S.safety, A = (SQC && SQC.safety) || {}, sf = RUN.safety, flag = sqSafetyFlag(sf), mode = sqSafeMode(RUN);
-  const blk = (lab, arr, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
-  const nm = (c && c.name) || 'them';
-  let h = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>`;
-  if (mode === 'observed' && A.observed){
-    h += `<div class="st-q"><p>${esc(A.observed.ask.replace('{name}', nm))}</p><div class="st-opts" role="group" aria-label="What they have heard">${[['no','No'],['yes','Yes'],['unsure','Not sure']].map(o => stChip('sq-safe', `data-k="other" data-v="${o[0]}"`, sf.other === o[0], o[1])).join('')}</div>
-     ${sf.other === 'yes' ? `<p class="tipbox">${esc(A.observed.help.replace(/\{name\}/g, nm))}</p>` : ''}</div>`;
-  } else if (mode === 'helper' && A.helper){
-    h += `<div class="st-q"><p>${esc(A.helper.ask)}</p><div class="st-opts" role="group" aria-label="Thoughts of not wanting to go on">${[['no','No'],['yes','Yes'],['skip','I\'d rather not say']].map(o => stChip('sq-safe', `data-k="other" data-v="${o[0]}"`, sf.other === o[0], o[1])).join('')}</div>
-     ${sf.other === 'yes' ? `<p class="tipbox">${esc(A.helper.yes)}</p>` : sf.other === 'no' && A.helper.no ? `<p class="tipbox">${esc(A.helper.no)}</p>` : ''}</div>`;
-  } else {
-    h += `<div class="card step-card">${blk('Say', [F.say], 'say')}</div>
-     <div class="st-q"><p>${esc(A.opener || F.opener)}</p><div class="st-opts" role="group" aria-label="Hopeless or a burden">${sqScale().map(o => stChip('sq-safe', `data-k="opener" data-v="${o[0]}"`, sf.opener === o[0], o[1])).join('')}</div>
-      ${['often','always'].includes(sf.opener) && A.burden ? `<p class="tipbox">${esc(A.burden)}</p>` : ''}</div>
-     <div class="st-q">${F.directLead || A.directLead ? `<p class="muted" style="font-size:16px">${esc(F.directLead || A.directLead)}</p>` : ''}<p${F.directLead || A.directLead ? ' style="margin-top:8px"' : ''}>${esc(A.direct || F.direct)}</p><div class="st-opts" role="group" aria-label="Thoughts of ending life">${(A.directOpts || F.directOpts).map(o => stChip('sq-safe', `data-k="direct" data-v="${o[0]}"`, sf.direct === o[0], o[1])).join('')}</div>
-      ${sf.direct && sf.direct !== 'no' && sf.direct !== 'skip' ? `<p class="tipbox">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p>` : ''}</div>`;
-  }
-  h += `<div class="tipbox">${esc(F.note)}</div>
-   ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-     <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>
-     <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sq-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-   <label class="cb" style="margin-top:16px"><input type="checkbox" data-sqsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-   ${sf.notAsked ? `<select data-sqsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-sqsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
-  return h;
+  return hmStep('sq', SQG(), SQG().report && !RUN.demo ? `<button class="btn btn-line btn-sm" data-act="sq-run-report">${icon('shield')} Report a Concern</button>` : '');
 }
 function sqDraw(){
   const S = SQG(), steps = sqSteps(RUN); if (RUN.step >= steps.length) RUN.step = steps.length - 1;
@@ -3837,7 +3941,7 @@ function sqDraw(){
   } else if (st === 'close'){
     const fl = sqRunFlags(RUN);
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
-     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide)}</p>`).join('')}${fl.includes('home') && S.report ? `<div class="row" style="margin-top:10px">${sqShield(RUN.clientId || '')}</div>` : ''}</div>` : ''}
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(SQC.flags[f].title)}.</b> ${esc(SQC.flags[f].guide || '')}</p>`).join('')}${fl.includes('home') && S.report ? `<div class="row" style="margin-top:10px">${sqShield(RUN.clientId || '')}</div>` : ''}</div>` : ''}
      ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('sq-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
      <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('sq-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
      <label class="f" for="sq-sum">Summary for the visit note</label><textarea id="sq-sum" data-sqf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>
@@ -3857,26 +3961,19 @@ function sqDraw(){
   tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
 }
 function sqNext(){
-  const st = sqSteps(RUN)[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  const st = sqSteps(RUN)[RUN.step], c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
   if (st === 'open' && !sqIsMe(c0)){
     if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
     if (RUN.yes === 'no') return sqNotToday();
     if (RUN.visit !== 'open' && RUN.set !== 'helper' && !RUN.by) return alert('Choose who is answering today.');
   }
-  if (st === 'safety'){
-    const mode = sqSafeMode(RUN); sf.mode = mode;
-    if (!sf.notAsked && (mode === 'standard' ? !sf.direct : !sf.other)) return alert(mode === 'standard' ? 'Ask the second safety question, or check "I didn\'t ask these today" and say why.' : 'Ask the safety question, or check "I didn\'t ask these today" and say why.');
-    if (sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-    if (sqSafetyFlag(sf) && !sf.actions.length && !confirm('This is a positive screen. You haven\'t marked what you did. Go on anyway?')) return;
-  }
   RUN.step++; sqKeep(); sqDraw();
 }
 function sqSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId);
-  r.safety.mode = sqSafeMode(r);
   const s = {id:r.id, u:Date.now(), kind:'sq', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)),
     visit:r.visit, set:r.set, by:r.visit === 'open' ? '' : (r.set === 'helper' ? 'self' : r.by), ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, scores:sqScore(r),
-    safety:r.safety, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
+    harm:hmSave(r), tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext,
     std:(SQC && SQC.version) || 1, flags:sqRunFlags(r), yes:r.yes || '', own:r.own || ''};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ s.person = c; V = {tab:'sequoia', sqv:'demo', sqDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
@@ -3895,11 +3992,11 @@ function sqToggle(t){
   const a = t.dataset.act, k = t.dataset.k, v = t.dataset.v;
   if (a === 'sq-ans'){ const i = t.dataset.i; RUN.ans[k] = RUN.ans[k] || {}; RUN.ans[k][i] = v; sqKeep(); sqRedraw(); return; }
   else if (a === 'sq-impr'){ RUN.impr[k] = v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t)); }
-  else if (a === 'sq-safe'){ RUN.safety[k] = v; sqKeep(); sqRedraw(); return; }
+  else if (a === 'sq-safe'){ (RUN.safety = RUN.safety || {})[k] = v; sqKeep(); sqRedraw(); return; }
   else if (a === 'sq-yes'){ RUN[k] = v; sqKeep(); sqRedraw(); return; }
   else if (a === 'sq-by'){ RUN.by = v; sqKeep(); sqRedraw(); return; }
   else if (a === 'sq-plan'){ const arr = RUN.plan[k] = RUN.plan[k] || []; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
-  else if (a === 'sq-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
+  else if (a === 'sq-tog'){ const g = t.dataset.g, arr = g === 'actions' ? ((RUN.safety = RUN.safety || {}).actions = RUN.safety.actions || []) : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); }
   sqKeep();
 }
 
@@ -3985,7 +4082,7 @@ function sqInput(t, ev){
   if (RUN && RUN.kind === 'sq'){
     if (t.dataset.sqf){ RUN[t.dataset.sqf] = t.value; sqKeep(); return true; }
     if (t.dataset.sqpn){ RUN.pn[t.dataset.sqpn] = t.value; sqKeep(); return true; }
-    if (t.dataset.sqsafe){ if (ev === 'input' && t.dataset.sqsafe !== 'reasonText') return true; const k = t.dataset.sqsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; sqKeep(); if (k === 'notAsked') sqRedraw(); return true; }
+    if (t.dataset.sqsafe){ if (ev === 'input' && t.dataset.sqsafe !== 'reasonText') return true; const k = t.dataset.sqsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; sqKeep(); if (k === 'notAsked') sqRedraw(); return true; }
   }
   if (t.dataset.sqc && V.sqp){ const c = CL(V.sqp); if (!c || !c.sq) return true;
     if (ev === 'input'){ if (t.tagName !== 'SELECT'){ if (t.dataset.sqc === 'forName') c.sq.forName = t.value; else c[t.dataset.sqc] = t.value; touch(c); save(); } return true; }
@@ -4336,7 +4433,7 @@ function vGXFamily(){
   ${(F.words || []).length ? `<div class="card"><h3>Words That Help</h3>${gxBlk('Say', F.words, 'say')}</div>` : ''}
   ${(F.practices || []).length ? `<div class="card"><h3>Together Practices</h3><p class="muted" style="font-size:15px">From The Grove. Offer two or three, and let the family choose.</p>${F.practices.map(id => gxPrac(gxP(id), true)).join('')}</div>` : ''}
   ${F.close ? `<div class="card"><h3>Closing</h3><p>${esc(F.close)}</p></div>` : ''}
-  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc(S.safety)}</div>
+  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc(S.safety)}<div class="row" style="margin-top:10px">${rpBtn()}</div></div>
   <div class="row" style="margin:14px 0"><button class="btn btn-line btn-sm" data-act="gx-print-fam">${icon('print')} Save or Print a Blank Family Visit Sheet</button></div>
   ${gxRecRows('family')}${gxAddCard('family')}`;
 }
@@ -4347,7 +4444,7 @@ function vGXSeries(){
   return `${GX_SET ? `<button class="linkbtn" data-act="gx-series">&larr; Back to ${esc((S.series || {}).title || 'Group Series')}</button>` : ''}<div class="page-head"${GX_SET ? ' style="margin-top:14px"' : ''}><div class="eyebrow">Path 2</div><h1>${esc(SS.title || 'Group Series')}</h1><p>${esc(SS.lead || '')}</p></div>
   ${(SS.setup || []).length ? `<div class="card"><h3>Setting Up</h3>${SS.setup.map(x => Array.isArray(x) ? `<p style="margin-top:10px"><b>${esc(x[0])}.</b> ${esc(x[1])}</p>` : `<p style="margin-top:10px">${esc(x)}</p>`).join('')}</div>` : ''}
   ${(SS.groupRules || []).length ? `<div class="card"><h3>Group Agreements</h3><ul class="checklist" style="margin-top:8px">${SS.groupRules.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
-  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc(SS.safety || S.safety)}</div>
+  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc(SS.safety || S.safety)}<div class="row" style="margin-top:10px">${rpBtn()}</div></div>
   <div class="card"><h3>${esc(SS.sessHead || 'The Twelve Sessions')}</h3><p class="muted" style="font-size:15px">${esc(SS.sessNote || 'One for each of The Grove\'s twelve themes, in order. Tap one for the leader\'s outline and the session sheet.')}</p>
    ${X.map(x => { const p = gxP(x.practice); return `<div class="list-row"><div class="lr-main"><small class="muted">Session ${x.n}</small><br><b>${esc(x.theme)}</b>${p ? `<br><small class="muted">${esc(p.name)}</small>` : ''}</div><button class="btn btn-line btn-sm" data-act="gx-sess" data-v="${x.n}">Open</button></div>`; }).join('')}</div>
   ${more ? `<div class="card"><h3>More Series</h3><p class="muted" style="font-size:15px">Shorter series for a group with a shared season. Each has its own sessions, videos, and sheets.</p>${more}</div>` : ''}
@@ -4382,7 +4479,7 @@ function vGXSession(x, r){
   ${x.close ? `<div class="card step-card"><h3>Closing</h3>${gxBlk('Say', gxArr(x.close), 'say')}</div>` : ''}
   ${x.kids && (!r || r.kids) ? `<div class="card step-card"><h3>With Children</h3><p>${esc(x.kids)}</p></div>` : ''}
   ${x.faith && (!r || r.words === 'faith') ? `<div class="card step-card"><h3>For a Group With Faith Words</h3><p>${esc(x.faith)}</p></div>` : ''}
-  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc((gxS() || {}).safety || S.safety)}</div>
+  <div class="card tipbox" style="border-left:4px solid var(--danger)">${esc((gxS() || {}).safety || S.safety)}<div class="row" style="margin-top:10px">${rpBtn()}</div></div>
   ${window.GGSources && (x.sources || x.video) ? `<div class="card">${GGSources.lesson('', {id: 'gxs-' + x.n, sources: x.sources || [], scenes: (x.video && x.video.scenes) || []}) || ''}</div>` : ''}
   ${r ? `<div class="card"><h3>This Session With ${esc(r.name)}</h3>
     <label class="f" for="gx-mdate">Date</label><input type="date" id="gx-mdate" value="${esc(m ? m.date : today())}" style="max-width:220px">
@@ -5135,6 +5232,7 @@ function spRepDraw(){
     <div class="row" style="margin-top:4px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line" href="${spTel(R.childhelp)}">Childhelp ${esc(R.childhelp)}</a></div>
     <p class="muted" style="margin-top:10px">${esc(R.lead)}</p>
     ${k.who || k.phone || k.step ? `<div class="card" style="border-left:4px solid var(--gold)"><h4>Your Reporting Contact</h4><p style="margin-top:6px">${esc(k.who)}${k.phone ? ' &middot; ' + esc(k.phone) : ''}</p>${k.step ? `<p class="muted" style="margin-top:6px">${esc(k.step)}</p>` : ''}${k.phone ? `<div class="row" style="margin-top:8px">${call(k.phone, 'Call', 'btn-line')}</div>` : ''}</div>` : ''}
+    ${rpAlign('child')}
     <div class="card"><h4>In the moment</h4><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>
     <h3 style="margin-top:18px">Where to report</h3>
     <div class="st-opts">${stChip('sp-rep-state', 'data-v="MN"', r.state === 'MN', 'Minnesota')}${stChip('sp-rep-state', 'data-v="other"', r.state !== 'MN', 'Another state')}</div>
@@ -5273,7 +5371,7 @@ function vSPPerson(c){
    <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-spfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="sp-fd" aria-label="Follow-up date"><input type="text" id="sp-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sp-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(spVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Share with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sp-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(spVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Share with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.std !== SC_STD() ? ' &middot; earlier standard' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sp-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   ${fgNoticedLatest(SPK(), vs, S.parts)}
   <div class="card st-private"><div class="spread"><h3>Report Records</h3><button class="btn btn-line btn-sm" data-act="sp-rep-for" data-v="${c.id}">Report a Concern</button></div><p class="muted" style="font-size:14px">${esc(S.report.recordNote)}</p>
    ${reps.length ? reps.map(r => `<div class="list-row"><div class="lr-main"><b>${nice(r.date)}</b> <span class="muted">${esc(r.agency || r.county || '')}</span>${r.due && !r.written ? ' <span class="pill warn">Written report due</span>' : ''}</div><button class="btn btn-line btn-sm" data-act="sp-rec" data-v="${r.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">None.</p>'}</div>
@@ -5289,7 +5387,7 @@ const spSafeFlag = sf => !!sf && !sf.notAsked && (sf.safe === 'yes' || sf.safe =
 function spSafetyText(sf){
   if (!sf) return 'Not recorded.';
   if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
-  const A = SPG().safety.answers, an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
+  const A = (SPG().safety || {}).answers || [], an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
   return (spSafeFlag(sf) ? 'Concern noted. ' : 'No concern noted. ') + 'Feeling safe: ' + an(sf.safe) + '.' + (sf.self !== undefined && sf.self !== '' ? ' Wishing they weren\'t alive or hurting themselves: ' + an(sf.self) + '.' : '') + ((sf.listen || []).length ? ' Noticed: ' + sf.listen.join(', ') + '.' : '') + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
 }
 function spFindVisit(){ return V.spv === 'demo' ? (V.spDemo || null) : DATA.sessions.find(x => x.id === V.spv) || null; }
@@ -5313,7 +5411,8 @@ function vSPVisit(){
   ${(s.flags || []).length ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(S.goodbye.flagTitle)}</h3><ul style="margin-top:6px">${s.flags.map(f => `<li>${esc(f.q)} <b>${esc((spAns(f.a) || [])[1] || f.a)}</b></li>`).join('')}</ul><p class="muted" style="margin-top:6px">${s.told === 'told' ? 'Shared with the grown-up.' : s.told === 'concern' ? 'Not shared: the worry is about the grown-up.' : 'Not marked as shared.'}</p></div>` : ''}
   <details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
    ${S.parts.map(p => { const qs = spQs(s.grade, p.key, s.wording), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idxs.map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i][0])} ${qa[i] ? (spHard(qs[i], qa[i]) ? `<b>${esc((spAns(qa[i]) || [])[1])}</b>` : esc((spAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}${((s.gv || {}).ans || {})[p.key] ? `<p class="muted" style="margin-top:4px">Grown-up: ${esc(((S.grownView.answers.find(o => o[0] === s.gv.ans[p.key]) || [])[1]) || '')}${(s.gv.words || {})[p.key] ? ', "' + esc(s.gv.words[p.key]) + '"' : ''}</p>` : ''}`; }).join('')}</details>
-  <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(spSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
+  ${hmOldSafety(s.safety) ? `<div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(spSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>` : ''}
+  ${hmCard(s)}${!hmOldSafety(s.safety) && reps.length ? `<div class="card"><p class="muted">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p></div>` : ''}
   ${fgNoticedCard(SPK(), s, S.parts)}
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}</div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
@@ -5329,7 +5428,8 @@ function spNote(s, c){
   L.push('', 'Levels:');
   S.parts.forEach(p => { const x = (s.levels || {})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (x ? spLvName(x.pick).toLowerCase() + (x.mixed ? ', mixed signals' : '') : 'not scored')); });
   if ((s.flags || []).length) L.push('', 'Answers shared with the grown-up: ' + s.flags.length + (s.told === 'concern' ? ' (not shared: the worry is about the grown-up)' : '') + '.');
-  L.push('Safety: ' + spSafetyText(s.safety));
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + spSafetyText(s.safety));
+  if (hmHas(s)) L.push(hmNote(s));
   fgNoticedNote(SPK(), s, S.parts, L);
   if ((s.tryh || []).length) L.push('Try at home: ' + s.tryh.join(', ') + '.');
   return L.join('\n');
@@ -5347,7 +5447,7 @@ function spStart(visit, cid, demo){
   RUN = {kind:'sp', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sp.grade, std:SC.version, started:Date.now(), step:0,
     wording:lock ? 'plain' : fgWord(c.sp.wording), plainLock:lock,
     screen:'guide', room:{where:'', who:[]}, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:spK2(c.sp.grade),
-    safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]}, share:'', tryh:[], told:'', talkHome:true, priv:'', pn:{}, stopped:false,
+    harm:hmNew(), reports:[], topic:{deck:'', used:[]}, share:'', tryh:[], told:'', talkHome:true, priv:'', pn:{}, stopped:false,
     impr:{}, tags:[], did:[], refs:[], summary:''};
   spOpenRun();
 }
@@ -5422,22 +5522,11 @@ function spDraw(){
      ${S.parts.map(p => { const q = spQs(RUN.grade, p.key, RUN.wording)[0]; return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${q ? spQ(p.key, 0, q) : ''}${spSeenRow(p.key)}</div>`; }).join('')}
      <label class="f" for="sp-pq">Your notes (private)</label><textarea id="sp-pq" data-spf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
   } else if (st === 'safety'){
-    const F = S.safety, sf = RUN.safety, older = !spK2(RUN.grade), sq = SC.safety, q1 = (older ? sq.older : sq.young)[0], q2 = older ? sq.older[1] : null, flag = spSafeFlag(sf);
-    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
-     <div class="card step-card">${blk('Say', [F.say[band]], 'say')}${blk('Ask, then listen', F.open[band], 'say')}</div>
-     <div class="st-q"><p>${esc(q1[0])}</p><div class="st-opts">${F.answers.map(o => stChip('sp-safe', `data-k="safe" data-v="${o[0]}"`, sf.safe === o[0], o[1])).join('')}</div></div>
-     ${q2 ? `<div class="st-q"><p>${esc(q2[0])}</p><div class="st-opts">${F.answers.map(o => stChip('sp-safe', `data-k="self" data-v="${o[0]}"`, sf.self === o[0], o[1])).join('')}</div></div>`
-      : `<div class="st-q"><p><b>Listen for</b> <span class="muted">(kindergarten to grade 2). Tap anything you noticed.</span></p><div class="st-opts">${F.listenFor.map(x => stChip('sp-listen', `data-v="${esc(x)}"`, sf.listen.includes(x), x)).join('')}</div></div>`}
-     <div class="tipbox">${esc(F.note)}</div>
-     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="sp-rep-run">${icon('shield')} Report a Concern</button></div>
-       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sp-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-     <label class="cb" style="margin-top:16px"><input type="checkbox" data-spsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-     ${sf.notAsked ? `<select data-spsafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-spsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+    body = hmStep('sp', S, RUN.demo ? '' : `<button class="btn btn-line btn-sm" data-act="sp-rep-run">${icon('shield')} Report a Concern</button>`);
   } else if (st === 'notice'){
     body = fgNoticeStep(SPK(), RUN, S.parts, 'sp');
   } else if (st === 'levels'){
-    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)} The safety step never changes a level.</p>
+    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)}</p>
      ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} stopped the visit. Mark only what you have. "${esc(S.levels.notEnough)}" is fine.</div>` : ''}
      ${S.parts.map(p => { const g = spSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug, needWhy = spStepGap(pick, g.sug) >= 2;
        return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>
@@ -5471,16 +5560,12 @@ function spFlags(run){
   return out;
 }
 function spNext(){
-  const steps = spSteps(RUN), st = steps[RUN.step], sf = RUN.safety;
+  const steps = spSteps(RUN), st = steps[RUN.step];
   if (st === 'start'){
     if (!RUN.room.where) return alert('A grown-up must be in the room, or within sight with the door open, before the visit starts. Mark which.');
     if (RUN.yes !== 'yes') return alert('Ask the child first. The visit starts only with their yes.');
   }
   if (st === 'topic' && !RUN.topic.deck) return alert('Choose a topic, or go back and pick a different visit.');
-  if (st === 'safety' && !sf.notAsked && !sf.safe) return alert('Ask the safety question, or check "I didn\'t ask these today" and say why.');
-  if (st === 'safety' && !sf.notAsked && !spK2(RUN.grade) && !sf.self) return alert('Ask the second safety question, or check "I didn\'t ask these today" and say why.');
-  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-  if (st === 'safety' && spSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
   if (st === 'levels'){
     for (const p of SPG().parts){ const g = spSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug; if (spStepGap(pick, g.sug) >= 2 && !(cur.why || '').trim()) return alert(p.part + ': you changed the level by two steps. Add a quick reason.'); }
   }
@@ -5489,7 +5574,7 @@ function spNext(){
 function spStop(fromKid){
   if (!fromKid && !confirm('Stop the visit now? That is always okay.')) return;
   spKidClose();
-  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = SPG().safety.notAskedReasons[0];
+  RUN.stopped = true;
   RUN.step = spSteps(RUN).indexOf('levels'); spKeep(); spDraw();
   toast(SPG().stop.say);
 }
@@ -5497,7 +5582,7 @@ function spSaveRun(){
   const r = RUN, c = r.demo ? r.person : CL(r.clientId), levels = {};
   SPG().parts.forEach(p => { const g = spSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
   const s = {id:r.id, u:Date.now(), kind:'sp', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, grade:r.grade, visit:r.visit, screen:r.screen,
-    room:r.room, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
+    room:r.room, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, harm:hmSave(r), topic:r.visit === 'topic' ? r.topic : null,
     flags:spFlags(r), told:r.told, talkHome:r.talkHome, share:r.share, tryh:r.tryh, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || [],
     wording:r.wording, plainLock:!!r.plainLock, impr:r.impr, tags:r.tags, did:r.did, refs:r.refs, summary:r.summary};
   spKidClose(); RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
@@ -5536,9 +5621,6 @@ function spToggle(t){
     case 'sp-yes': RUN.yes = v; return redraw();
     case 'sp-warm': { const arr = RUN.warm[k] = RUN.warm[k] || [], i = arr.indexOf(+v); if (i >= 0) arr.splice(i, 1); else arr.push(+v); t.setAttribute('aria-pressed', i < 0); break; }
     case 'sp-card': flip(RUN.topic.used); break;
-    case 'sp-safe': RUN.safety[k] = v; return redraw();
-    case 'sp-listen': flip(RUN.safety.listen); return redraw();
-    case 'sp-act': flip(RUN.safety.actions); break;
     case 'sp-lv': RUN.lv[k] = Object.assign({}, RUN.lv[k], {pick:v}); return redraw();
     case 'sp-told': RUN.told = v; return redraw();
     case 'sp-try': flip(RUN.tryh); break;
@@ -5696,7 +5778,7 @@ function spInput(t, ev){
     if (t.dataset.spdeck && ev === 'change'){ RUN.topic = {deck:t.value, used:[]}; spKeep(); spDraw(); return true; }
     if (t.dataset.spread && ev === 'change'){ RUN.read = t.checked; spKeep(); return true; }
     if (t.dataset.sptalk && ev === 'change'){ RUN.talkHome = t.checked; spKeep(); return true; }
-    if (t.dataset.spsafe){ const k = t.dataset.spsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; spKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; spDraw(); $('#run-body').scrollTop = y; } return true; }
+    if (t.dataset.spsafe){ const k = t.dataset.spsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; spKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; spDraw(); $('#run-body').scrollTop = y; } return true; }
   }
   if (t.dataset.splock && V.spp && ev === 'change'){ const c = CL(V.spp); if (!c) return true; c.sp.plainLock = t.checked; if (t.checked) c.sp.wording = 'plain'; touch(c); save(); render(); return true; }
   if (t.dataset.spc && V.spp){ const c = CL(V.spp); if (!c) return true; if (t.dataset.spc === 'name' || t.dataset.spc === 'status') c[t.dataset.spc] = t.value; else c.sp[t.dataset.spc] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
@@ -6044,7 +6126,7 @@ function vSAPerson(c){
    <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-safu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="sa-fd" aria-label="Follow-up date"><input type="text" id="sa-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="sa-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !saCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(saVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${spSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !saCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="sa-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   ${fgNoticedLatest(SAK(), vs, S.parts)}
   <div class="card st-private"><div class="spread"><h3>Report Records</h3><button class="btn btn-line btn-sm" data-act="sa-rep-for" data-v="${c.id}">Report a Concern</button></div><p class="muted" style="font-size:14px">${esc(SPG().report.recordNote)}</p>
    ${reps.length ? reps.map(r => `<div class="list-row"><div class="lr-main"><b>${nice(r.date)}</b> <span class="muted">${esc(r.agency || r.county || '')}</span>${r.due && !r.written ? ' <span class="pill warn">Written report due</span>' : ''}</div><button class="btn btn-line btn-sm" data-act="sa-rec" data-v="${r.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">None.</p>'}</div>
@@ -6059,7 +6141,7 @@ function vSAPerson(c){
 function saSafetyText(sf){
   if (!sf) return 'Not recorded.';
   if (sf.notAsked) return 'Safety questions not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
-  const A = SAG().safety.answers, an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
+  const A = (SAG().safety || {}).answers || [], an = x => ((A.find(o => o[0] === x) || [])[1] || 'not recorded');
   return (spSafeFlag(sf) ? 'Concern noted. ' : 'No concern noted. ') + 'Anyone hurting them or making them feel unsafe: ' + an(sf.safe) + '. Thoughts of hurting themselves or not wanting to be alive: ' + an(sf.self) + '.' + ((sf.actions || []).length ? ' Actions: ' + sf.actions.join(', ') + '.' : '');
 }
 function saFindVisit(){ return V.sav === 'demo' ? (V.saDemo || null) : DATA.sessions.find(x => x.id === V.sav) || null; }
@@ -6087,7 +6169,8 @@ function vSAVisit(){
    ${S.parts.map(p => { const qs = saQs(s.grade, p.key, s.wording), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${idxs.map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i][0])} ${qa[i] ? (spHard(qs[i], qa[i]) ? `<b>${esc((saAns(qa[i]) || [])[1])}</b>` : esc((saAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}${((s.gv || {}).ans || {})[p.key] ? `<p class="muted" style="margin-top:4px">Grown-up: ${esc(((S.grownView.answers.find(o => o[0] === s.gv.ans[p.key]) || [])[1]) || '')}${(s.gv.words || {})[p.key] ? ', "' + esc(s.gv.words[p.key]) + '"' : ''}</p>` : ''}`; }).join('')}</details>
   <div class="card st-private"><h3>${esc(S.sensitive.title)}</h3><p class="muted" style="font-size:14px">Private between the student and you. Never printed, copied, or used in a level.</p>
    <p style="margin-top:8px">${sq ? `${esc(sq[0])} ${sens.a && sens.a !== 'skip' ? `<b>${esc((saAns(sens.a) || [])[1] || '')}</b>` : `<span class="muted">${esc(S.sensitive.skip)}</span>`}` : esc(S.sensitive.off[sens.why] || S.sensitive.off.visit)}</p></div>
-  <div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(saSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
+  ${hmOldSafety(s.safety) ? `<div class="card" ${spSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(saSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>` : ''}
+  ${hmCard(s)}${!hmOldSafety(s.safety) && reps.length ? `<div class="card"><p class="muted">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p></div>` : ''}
   ${fgNoticedCard(SAK(), s, S.parts)}
   ${s.share || (s.tryh || []).length ? `<div class="card">${s.share ? `<p><b>${esc(S.takeHome.share)}:</b> ${esc(s.share)}</p>` : ''}${(s.tryh || []).length ? `<p style="margin-top:6px"><b>${esc(S.takeHome.try)}:</b> ${s.tryh.map(esc).join(', ')}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${s.seenSheet ? 'The student saw the take-home sheet.' : 'Not marked as seen by the student.'}${Object.values(s.hide || {}).some(Boolean) ? ' They left some things out.' : ''}</p></div>` : ''}
   ${s.priv || Object.values(s.pn || {}).some(Boolean) ? `<div class="card st-private"><h3>Private Notes</h3><p class="muted" style="font-size:14px">Only here. Never printed or copied.</p>${s.priv ? `<p style="white-space:pre-wrap;margin-top:8px">${esc(s.priv)}</p>` : ''}${S.parts.map(p => (s.pn || {})[p.key] ? `<p style="margin-top:8px"><b>${esc(p.part)}:</b> ${esc(s.pn[p.key])}</p>` : '').join('')}</div>` : ''}
@@ -6104,7 +6187,8 @@ function saNote(s, c){
   L.push('', 'Levels:');
   S.parts.forEach(p => { const x = (s.levels || {})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (x ? saLvName(x.pick).toLowerCase() + (x.mixed ? ', mixed signals' : '') : 'not scored')); });
   if ((s.flags || []).length) L.push('', 'Answers shared with the grown-up: ' + s.flags.length + ' (' + saTold(s.told).toLowerCase() + (s.heard ? '; the student heard first' : '') + ').');
-  L.push('Safety: ' + saSafetyText(s.safety));
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + saSafetyText(s.safety));
+  if (hmHas(s)) L.push(hmNote(s));
   fgNoticedNote(SAK(), s, S.parts, L);
   if ((s.tryh || []).length) L.push('Try at home: ' + s.tryh.join(', ') + '.');
   return L.join('\n');
@@ -6160,7 +6244,7 @@ function saStart(visit, cid, demo){
   const why = saSensWhy(visit, c.sa.grade, c);
   RUN = {kind:'sa', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade:c.sa.grade, std:SAC.version, bank:SA_BANK(), started:Date.now(), step:0,
     screen:'guide', room:{where:'', who:[]}, promise:false, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, gv:{ans:{}, words:{}}, lv:{}, read:false,
-    sens:{on:!why, why, a:''}, safety:{safe:'', self:'', listen:[], notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[], topic:{deck:'', used:[]},
+    sens:{on:!why, why, a:''}, harm:hmNew(), reports:[], topic:{deck:'', used:[]},
     share:'', tryh:[], told:'', heard:false, talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, copy:false, priv:'', pn:{}, stopped:false,
     wording:c.sa.plainLock ? 'plain' : fgWord(c.sa.wording), plainLock:!!c.sa.plainLock, impr:{}, tags:[], did:[], refs:[], summary:''};
   saOpenRun();
@@ -6245,20 +6329,11 @@ function saDraw(){
      ${S.parts.map(p => { const q = saQs(RUN.grade, p.key, RUN.wording)[0]; return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>${q ? saQ(p.key, 0, q) : ''}${saSeenRow(p.key)}</div>`; }).join('')}
      <label class="f" for="sa-pq">Your notes (private)</label><textarea id="sa-pq" data-saf="priv" style="min-height:70px">${esc(RUN.priv)}</textarea>`;
   } else if (st === 'safety'){
-    const F = S.safety, sf = RUN.safety, sq = SAC.safety.questions, flag = spSafeFlag(sf);
-    body = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
-     <div class="card step-card">${blk('Say', [F.say], 'say')}${blk('Ask, then listen', F.open, 'say')}</div>
-     ${sq.map(([q, k]) => `<div class="st-q"><p>${esc(q)}</p><div class="st-opts">${F.answers.map(o => stChip('sa-safe', `data-k="${k}" data-v="${o[0]}"`, sf[k] === o[0], o[1])).join('')}</div></div>`).join('')}
-     <div class="tipbox">${esc(F.note)}</div>
-     ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-       <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="sa-rep-run">${icon('shield')} Report a Concern</button></div>
-       <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('sa-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-     <label class="cb" style="margin-top:16px"><input type="checkbox" data-sasafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-     ${sf.notAsked ? `<select data-sasafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-sasafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+    body = hmStep('sa', S, RUN.demo ? '' : `<button class="btn btn-line btn-sm" data-act="sa-rep-run">${icon('shield')} Report a Concern</button>`);
   } else if (st === 'notice'){
     body = fgNoticeStep(SAK(), RUN, S.parts, 'sa');
   } else if (st === 'levels'){
-    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)} The safety step and the optional question never change a level.</p>
+    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(S.levels.lead)} The optional question never changes a level.</p>
      ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} stopped the visit. Mark only what you have. "${esc(S.levels.notEnough)}" is fine.</div>` : ''}
      ${S.parts.map(p => { const g = saSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug, needWhy = spStepGap(pick, g.sug) >= 2;
        return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>
@@ -6303,22 +6378,19 @@ function saRunAsVisit(){
   const r = RUN, levels = {};
   SAG().parts.forEach(p => { const g = saSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
   return {id:r.id, u:Date.now(), kind:'sa', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, bank:r.bank || 1, grade:r.grade, visit:r.visit, screen:r.screen,
-    room:r.room, promise:r.promise, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety, topic:r.visit === 'topic' ? r.topic : null,
+    room:r.room, promise:r.promise, yes:'yes', ans:r.ans, warm:r.warm, seen:r.seen, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, harm:hmSave(r), topic:r.visit === 'topic' ? r.topic : null,
     sens:{asked:r.sens.on && !r.stopped, why:r.stopped && r.sens.on && !r.sens.a ? 'stopped' : r.sens.why, a:r.sens.on ? r.sens.a : ''},
     flags:saFlags(r), told:r.told, heard:r.heard, share:r.share, tryh:r.tryh, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet, copy:r.copy, priv:r.priv, pn:r.pn, stopped:r.stopped, reports:r.reports || [],
     wording:r.wording, plainLock:!!r.plainLock, impr:r.impr, tags:r.tags, did:r.did, refs:r.refs, summary:r.summary};
 }
 function saNext(){
-  const steps = saSteps(RUN), st = steps[RUN.step], sf = RUN.safety;
+  const steps = saSteps(RUN), st = steps[RUN.step];
   if (st === 'start'){
     if (!RUN.room.where) return alert('Another adult must be able to see in before the visit starts. Mark which.');
     if (!RUN.promise) return alert('Read the promise ("what stays between us") to the student first, then check the box.');
     if (RUN.yes !== 'yes') return alert('Ask the student first. The visit starts only with their yes.');
   }
   if (st === 'topic' && !RUN.topic.deck) return alert('Choose a topic, or go back and pick a different visit.');
-  if (st === 'safety' && !sf.notAsked && (!sf.safe || !sf.self)) return alert('Ask both safety questions, or check "I didn\'t ask these today" and say why.');
-  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-  if (st === 'safety' && spSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
   if (st === 'levels'){
     for (const p of SAG().parts){ const g = saSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug; if (spStepGap(pick, g.sug) >= 2 && !(cur.why || '').trim()) return alert(p.part + ': you changed the level by two steps. Add a quick reason.'); }
   }
@@ -6331,7 +6403,7 @@ function saNext(){
 function saStop(fromKid){
   if (!fromKid && !confirm('Stop the visit now? That is always okay.')) return;
   saKidClose();
-  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = SAG().safety.notAskedReasons[0];
+  RUN.stopped = true;
   RUN.step = saSteps(RUN).indexOf('levels'); saKeep(); saDraw();
   toast(SAG().stop.say);
 }
@@ -6374,8 +6446,6 @@ function saToggle(t){
     case 'sa-yes': RUN.yes = v; return redraw();
     case 'sa-warm': { const arr = RUN.warm[k] = RUN.warm[k] || [], i = arr.indexOf(+v); if (i >= 0) arr.splice(i, 1); else arr.push(+v); t.setAttribute('aria-pressed', i < 0); break; }
     case 'sa-card': flip(RUN.topic.used); break;
-    case 'sa-safe': RUN.safety[k] = v; return redraw();
-    case 'sa-act': flip(RUN.safety.actions); break;
     case 'sa-lv': RUN.lv[k] = Object.assign({}, RUN.lv[k], {pick:v}); return redraw();
     case 'sa-told': RUN.told = v; return redraw();
     case 'sa-try': flip(RUN.tryh); break;
@@ -6504,7 +6574,7 @@ function saInput(t, ev){
     if (t.dataset.saseen && ev === 'change'){ RUN.seenSheet = t.checked; saKeep(); return true; }
     if (t.dataset.sacopy && ev === 'change'){ RUN.copy = t.checked; saKeep(); return true; }
     if (t.dataset.sahide && ev === 'change'){ RUN.hide[t.dataset.sahide] = t.checked; saKeep(); const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; return true; }
-    if (t.dataset.sasafe){ const k = t.dataset.sasafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; saKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; } return true; }
+    if (t.dataset.sasafe){ const k = t.dataset.sasafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; saKeep(); if (k === 'notAsked' && ev === 'change'){ const y = $('#run-body').scrollTop; saDraw(); $('#run-body').scrollTop = y; } return true; }
   }
   if (t.dataset.salock && V.sap && ev === 'change'){ const c = CL(V.sap); if (!c) return true; c.sa.plainLock = t.checked; if (t.checked) c.sa.wording = 'plain'; touch(c); save(); render(); return true; }
   if (t.dataset.sac && V.sap){ const c = CL(V.sap); if (!c) return true; if (t.dataset.sac === 'name' || t.dataset.sac === 'status') c[t.dataset.sac] = t.value; else c.sa[t.dataset.sac] = t.value; touch(c); save(); if (ev === 'change' && t.tagName === 'SELECT') render(); return true; }
@@ -6815,6 +6885,7 @@ function vPNReport(cid){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Pine Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   ${draft ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Your visit is paused.</b> <span class="muted">Everything so far is kept.</span></div><button class="btn btn-gold btn-sm" data-act="pn-resume">Back to the Visit</button></div></div>` : ''}
   <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line" href="${spTel(R.childhelp)}">Childhelp ${esc(R.childhelp)}</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
+  ${rpAlign('teen')}
   ${R.steps.length ? `<div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   <div class="card"><div class="row" role="group" aria-label="Where and how old"><button class="chip" data-act="pn-where" data-v="mn" aria-pressed="${where === 'mn'}">In Minnesota, under 18</button>${R.adult ? `<button class="chip" data-act="pn-where" data-v="adult" aria-pressed="${where === 'adult'}">In Minnesota, 18</button>` : ''}<button class="chip" data-act="pn-where" data-v="out" aria-pressed="${where === 'out'}">Outside Minnesota</button></div>
    ${where === 'mn' ? `<h3 style="margin-top:12px">${esc(mn.title || 'In Minnesota')}</h3>${mn.cite ? `<p class="muted" style="font-size:14px">${esc(mn.cite)}</p>` : ''}${mn.lead ? `<p style="margin-top:6px">${esc(mn.lead)}</p>` : ''}
@@ -6843,7 +6914,7 @@ const pnShield = cid => `<button class="btn btn-line btn-sm" data-act="pn-report
 const PN_SAFE_ON = {safe:['yes','unsure'], self:['yes','unsure'], now:['yes','unsure']};
 const pnSafeOn = k => (((PNC && PNC.safety && PNC.safety.on) || PN_SAFE_ON)[k]) || PN_SAFE_ON[k];
 const pnSafeQs = () => (PNC && PNC.safety && PNC.safety.questions) || [];
-const pnSafeAns = () => (PNC && PNC.safety && PNC.safety.answers) || PNG().safety.answers || [];
+const pnSafeAns = () => (PNC && PNC.safety && PNC.safety.answers) || (PNG().safety || {}).answers || [];
 const pnHurt = sf => !!sf && !sf.notAsked && pnSafeOn('safe').includes(sf.safe);
 const pnNow = sf => pnSelfFlag(sf) && pnSafeOn('now').includes(sf.now);
 const pnSafeFlag = sf => pnHurt(sf) || pnSelfFlag(sf);
@@ -6941,7 +7012,7 @@ function vPNPerson(c){
    <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-pnfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="pn-fd" aria-label="Follow-up date"><input type="text" id="pn-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="pn-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(pnVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.told && s.told !== 'concern' ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${pnSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.grade ? ' &middot; ' + esc(pnGradeName(s.grade)) : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !pnCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="pn-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(pnVisitName(s.visit))}</b>${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.told && s.told !== 'concern' ? ' <span class="pill gold">Shared with grown-up</span>' : ''}${pnSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${s.grade ? ' &middot; ' + esc(pnGradeName(s.grade)) : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}${s.std && s.visit !== 'nottoday' && !pnCur(s) ? ' &middot; earlier questions' : ''}</small></div><button class="btn btn-line btn-sm" data-act="pn-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   ${gvPersonCard(c)}
   ${htPersonCard(c)}
   <div class="card"><h3>Details</h3>
@@ -6972,12 +7043,13 @@ function vPNVisit(){
     <span class="row" style="gap:6px"><span class="pill ${spLvCls(L.pick)}">${esc(pnLvName(L.pick || 'none'))}</span>${c && !demo ? pnPrevLevel(c, s, p.key) : ''}${L.mixed ? `<span class="pill">${esc(pnLevels().mixed)}</span>` : ''}</span>
     <small class="muted sp-src">${open ? `How it seemed: ${esc(((pnImpr().find(o => o[0] === (s.impr || {})[p.key]) || [])[1]) || 'not marked')}` : `Student: ${L.child == null ? 'no answers' : esc(pnLvName(spLvOf(L.child)))} &middot; Saw: ${esc(((S.seen.find(o => o[0] === (s.seen || {})[p.key]) || [])[1]) || 'not marked')}`} &middot; Grown-up: ${L.grown == null ? 'not asked' : esc(pnLvName(spLvOf(L.grown)))}${L.pick !== L.sug ? ' &middot; suggested ' + esc(pnLvName(L.sug)) + (L.why ? ', changed because: ' + esc(L.why) : '') : ''}</small></div>`; }).join('')}</div>
   ${s.told ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>${esc(S.goodbye.flagTitle)}</h3><p class="muted" style="margin-top:6px">${esc(pnTold(s.told))}${s.heard ? '. The student heard first.' : ''}</p></div>` : ''}
-  ${flagged.length && PNC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${[...new Set(flagged.map(f => f.flag))].map(f => PNC.flags[f] ? `<p style="margin-top:8px"><b>${esc(PNC.flags[f].title)}.</b> ${esc(PNC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  ${flagged.length && PNC && PNC.flags ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${[...new Set(flagged.map(f => f.flag))].map(f => PNC.flags[f] ? `<p style="margin-top:8px"><b>${esc(PNC.flags[f].title)}.</b> ${esc(PNC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
   ${open ? '' : `<details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
    ${S.parts.map(p => { const qs = pnQs(s, p.key), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${pnIdx(s, p.key).map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i].t)} ${qa[i] ? (pnHard(qs[i], qa[i]) ? `<b>${esc((pnAns(qa[i]) || [])[1])}</b>` : esc((pnAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}${((s.gv || {}).ans || {})[p.key] ? `<p class="muted" style="margin-top:4px">Grown-up: ${esc(((S.grownView.answers.find(o => o[0] === s.gv.ans[p.key]) || [])[1]) || '')}${(s.gv.words || {})[p.key] ? ', "' + esc(s.gv.words[p.key]) + '"' : ''}</p>` : ''}`; }).join('')}</details>`}
   ${s.visit === 'full' ? `<div class="card st-private"><h3>${esc(S.sensitive.title)}</h3><p class="muted" style="font-size:14px">Private between the student and you. Never printed, copied, or used in a level.</p>
    ${sens.asked && (sens.on || []).length ? (sens.on || []).map(id => { const q = pnSensList().find(x => x.id === id), a = (sens.a || {})[id]; return q ? `<p style="margin-top:8px">${esc(q.t)} ${a && a !== 'skip' ? `<b>${esc((pnAns(a) || [])[1] || '')}</b>` : `<span class="muted">${esc(S.sensitive.skip)}</span>`}</p>` : ''; }).join('') : `<p style="margin-top:8px">${esc(pnSensOff(sens.why || 'student'))}</p>`}</div>` : ''}
-  <div class="card" ${pnSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(pnSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>
+  ${hmOldSafety(s.safety) ? `<div class="card" ${pnSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(pnSafetyText(s.safety))}</p>${reps.length ? `<p class="muted" style="margin-top:6px">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p>` : ''}</div>` : ''}
+  ${hmCard(s)}${!hmOldSafety(s.safety) && reps.length ? `<div class="card"><p class="muted">${reps.length} report record${reps.length === 1 ? '' : 's'} kept separately on ${esc(c.name)}'s page.</p></div>` : ''}
   ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
@@ -6999,7 +7071,8 @@ function pnNote(s, c){
   L.push('', 'Levels:');
   S.parts.forEach(p => { const x = (s.levels || {})[p.key]; L.push('  ' + p.part + ' (' + p.name + '): ' + (x ? pnLvName(x.pick).toLowerCase() + (x.mixed ? ', mixed signals' : '') : 'not scored')); });
   if (s.told) L.push('', 'Shared with the grown-up: ' + pnTold(s.told).toLowerCase() + (s.heard ? '; the student heard first' : '') + '.');
-  L.push('Safety: ' + pnSafetyText(s.safety));
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + pnSafetyText(s.safety));
+  if (hmHas(s)) L.push(hmNote(s));
   if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
   if ((s.did||[]).length) L.push('Offered: ' + s.did.join(', ') + '.');
   if ((s.refs||[]).length) L.push('Referrals: ' + s.refs.join(', ') + '.');
@@ -7024,7 +7097,7 @@ function pnHomeModel(s, c){
   const strong = S.parts.filter(p => ((s.levels || {})[p.key] || {}).pick === 'strong');
   if (strong.length) sec.push({h:H.strong, p:[strong.map(p => p.part + ' (' + p.name.toLowerCase() + ')').join(', ')]});
   const G = (S.grownView || {}).sees || {}, talk = [];
-  if (s.told && s.told !== 'concern'){ if (G.note) talk.push(G.note); if (pnSelfFlag(s.safety)) talk.push('If they ever talk about wanting to die or hurting themselves, call or text 988 right away.'); }
+  if (s.told && s.told !== 'concern'){ if (G.note) talk.push(G.note); }
   if (s.talkNote && !hide.talk) talk.push(s.talkNote);
   if (talk.length) sec.push({h:H.talk, p:talk});
   const tries = pnTries(s);
@@ -7065,7 +7138,7 @@ function pnStart(visit, cid, demo){
   const why = pnSensWhy(visit, c), grade = String(c.pn.grade || '9');
   RUN = {kind:'pn', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, grade, band:pnBand(grade), wording:c.pn.wording === 'plain' ? 'plain' : 'faith', std:PNC.version, bank:PN_BANK(), started:Date.now(), step:0,
     screen:'guide', room:{where:'', who:[]}, promise:false, yes:'', gvWhen:'skip', ans:{}, warm:{}, seen:{}, impr:{}, gv:{ans:{}, words:{}}, lv:{}, read:false,
-    sens:{can:!why, why, on:[], a:{}}, safety:{safe:'', self:'', now:'', notAsked:false, reason:'', reasonText:'', actions:[]}, reports:[],
+    sens:{can:!why, why, on:[], a:{}}, harm:hmNew(), reports:[],
     tags:[], did:[], refs:[], summary:'', fdate:'', ftext:'',
     share:'', tryh:[], told:'', heard:false, talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, copy:false, priv:'', pnote:{}, stopped:false};
   pnOpenRun();
@@ -7098,23 +7171,7 @@ const pnSeenRow = key => `<div class="sp-seen"><span class="muted" style="font-s
 const pnStem = () => ((PNC && PNC.stems) || {}).standard || '';
 const pnPartSay = p => RUN.wording === 'plain' && p.plainSay ? p.plainSay : p.say;
 function pnSafetyStep(){
-  const F = PNG().safety, A = (PNC && PNC.safety) || {}, sf = RUN.safety, flag = pnSafeFlag(sf), hurt = pnHurt(sf), self = pnSelfFlag(sf), now = pnNow(sf);
-  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
-  const chips = k => `<div class="st-opts">${pnSafeAns().map(o => stChip('pn-safe', `data-k="${k}" data-v="${o[0]}"`, sf[k] === o[0], o[1])).join('')}</div>`;
-  const L = A.lines || {};
-  return `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
-   ${now ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>${esc(A.title || 'Stay with them now.')}</h3><p style="margin-top:6px">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p><div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div></div>` : ''}
-   <div class="card step-card">${blk('Say', [F.say || A.intro], 'say')}${blk('Ask, then listen', F.open, 'say')}${F.from ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(F.from)}</p>` : ''}</div>
-   ${pnSafeQs().map(([q, k]) => `<div class="st-q">${k === 'self' && A.selfLead ? `<p class="muted" style="font-size:16px">${esc(A.selfLead)}</p>` : ''}<p${k === 'self' && A.selfLead ? ' style="margin-top:8px"' : ''}>${esc(q)}</p>${chips(k)}
-     ${k === 'safe' && hurt ? `<div class="card" style="margin-top:10px;border-left:4px solid var(--danger)"><h4>${esc(A.hurtTitle || '')}</h4>${PNC.flags.hurt ? `<p class="wl-hot">${esc(PNC.flags.hurt.guide)}</p>` : ''}<p style="margin-top:6px">${esc(A.hurtIntro || '')}</p>${pnLinesHTML(L.hurt || [])}<div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="pn-run-report">${icon('shield')} Report a Concern</button></div></div>` : ''}
-     ${k === 'self' && self && A.now ? `<div class="st-q" style="margin-top:10px"><p>${esc(A.now)}</p>${chips('now')}</div><p class="tipbox">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p>` : ''}</div>`).join('')}
-   <div class="tipbox">${esc(F.note)}</div>
-   ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-     <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="pn-run-report">${icon('shield')} Report a Concern</button></div>
-     ${self ? `<h4 style="margin-top:14px">Help lines for the student</h4>${pnLinesHTML(L.calm || [])}` : ''}
-     <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('pn-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-   <label class="cb" style="margin-top:16px"><input type="checkbox" data-pnsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-   ${sf.notAsked ? `<select data-pnsafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-pnsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  return hmStep('pn', PNG(), !RUN.demo ? `<button class="btn btn-line btn-sm" data-act="pn-run-report">${icon('shield')} Report a Concern</button>` : '');
 }
 function pnDraw(){
   const S = PNG(), steps = pnSteps(RUN); if (RUN.step >= steps.length) RUN.step = steps.length - 1;
@@ -7177,7 +7234,7 @@ function pnDraw(){
     body = pnSafetyStep();
   } else if (st === 'levels'){
     const LV = pnLevels(), open = RUN.visit === 'open';
-    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(LV.lead)} The safety step and the optional questions never change a level.</p>
+    body = `<div class="run-step-n">Levels</div><h2 class="run-step-t">How each part is growing</h2><p class="muted">${esc(LV.lead)} The optional questions never change a level.</p>
      ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} stopped the visit. Mark only what you have. "${esc(LV.notEnough)}" is fine.</div>` : ''}
      ${S.parts.map(p => { const g = pnSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug, needWhy = spStepGap(pick, g.sug) >= 2;
        return `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)} <small>${esc(p.name)}</small></div>
@@ -7198,11 +7255,11 @@ function pnDraw(){
      <div class="card step-card">${blk('Say', [G.say], 'say')}${blk('Ask', [G.shareQ], 'say')}</div>
      <label class="f" for="pn-share">Something ${esc(c ? c.name : 'they')} chose to share (goes on the take-home sheet, unless they leave it out)</label><input type="text" id="pn-share" data-pnf="share" value="${esc(RUN.share)}">
      ${self || flags.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:14px"><h3>${esc(G.flagTitle)}</h3><p class="muted">${esc(G.flagLead)}</p>
-       ${self ? blk('Say to the student', [G.flagSay], 'say') : ''}${flags.length ? `<ul style="margin-top:6px">${[...new Set(flags.map(f => f.flag))].map(f => `<li>${esc((PNC.flags[f] || {}).title || f)}</li>`).join('')}</ul>${blk('Say to the student', [G.alertSay || ((S.grownView || {}).sees || {}).told || ''], 'say')}` : ''}
+       ${self ? blk('Say to the student', [G.flagSay], 'say') : ''}${flags.length ? `<ul style="margin-top:6px">${[...new Set(flags.map(f => f.flag))].map(f => `<li>${esc((((PNC && PNC.flags) || {})[f] || {}).title || f)}</li>`).join('')}</ul>${blk('Say to the student', [G.alertSay || ((S.grownView || {}).sees || {}).told || ''], 'say')}` : ''}
        <label class="cb" style="margin-top:8px"><input type="checkbox" data-pnheard="1" ${RUN.heard ? 'checked' : ''}> ${esc(G.heard)}</label>
        <div class="st-opts" style="margin-top:8px">${G.flagOpts.filter(o => self || o[0] === 'note' || o[0] === 'concern').map(o => stChip('pn-told', `data-v="${o[0]}"`, RUN.told === o[0], o[1])).join('')}</div>
        ${RUN.told === 'concern' ? `<p style="margin-top:8px">${esc(S.room.concern)}</p><button class="btn btn-line btn-sm" style="margin-top:8px" data-act="pn-run-report">${icon('shield')} Report a Concern</button>` : ''}</div>` : ''}
-     ${other.length ? `<div class="card" style="margin-top:14px"><h3>Worth talking through</h3>${[...new Set(other.map(f => f.flag))].map(f => PNC.flags[f] ? `<p style="margin-top:8px"><b>${esc(PNC.flags[f].title)}.</b> ${esc(PNC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+     ${other.length ? `<div class="card" style="margin-top:14px"><h3>Worth talking through</h3>${[...new Set(other.map(f => f.flag))].map(f => PNC && PNC.flags && PNC.flags[f] ? `<p style="margin-top:8px"><b>${esc(PNC.flags[f].title)}.</b> ${esc(PNC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
      <h4 style="margin-top:16px">${esc(S.takeHome.try)} <span class="muted" style="font-weight:400">(let them pick one or two)</span></h4>
      ${S.parts.map(p => `<div class="st-qp" style="--pc:${p.color}"><div class="st-qh">${esc(p.part)}</div><div class="st-opts">${pnTryList(RUN, p.key).map(t => stChip('pn-try', `data-v="${esc(t[0])}"`, RUN.tryh.includes(t[0]), t[0])).join('')}</div></div>`).join('')}
      <label class="f" for="pn-priv">Private Notes</label><textarea id="pn-priv" data-pnf="priv" style="min-height:80px" placeholder="Only for you. Never printed or copied.">${esc(RUN.priv)}</textarea>`;
@@ -7231,22 +7288,18 @@ function pnRunAsVisit(){
   PNG().parts.forEach(p => { const g = pnSuggest(r, p.key), cur = r.lv[p.key] || {}; levels[p.key] = {child:g.child, seen:g.seen, grown:g.grown, sug:g.sug, mixed:g.mixed, pick:cur.pick || g.sug, why:cur.why || ''}; });
   const asked = r.visit === 'full' && r.sens.can && r.sens.on.length > 0 && !r.stopped;
   return {id:r.id, u:Date.now(), kind:'pn', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), std:r.std, bank:r.bank || 1, grade:r.grade, band:r.band, wording:r.wording, visit:r.visit, screen:r.screen,
-    room:r.room, promise:r.promise, yes:'yes', ans:r.visit === 'open' ? {} : r.ans, warm:r.warm, seen:r.seen, impr:r.visit === 'open' ? r.impr : {}, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, safety:r.safety,
+    room:r.room, promise:r.promise, yes:'yes', ans:r.visit === 'open' ? {} : r.ans, warm:r.warm, seen:r.seen, impr:r.visit === 'open' ? r.impr : {}, gv:r.gvWhen === 'skip' ? {when:'skip'} : Object.assign({when:r.gvWhen}, r.gv), levels, harm:hmSave(r),
     sens:{asked, on:asked ? r.sens.on : [], why:!r.sens.can ? r.sens.why : r.stopped && r.sens.on.length ? 'stopped' : !r.sens.on.length ? 'student' : '', a:asked ? r.sens.a : {}},
     flags:pnFlags(r).map(f => f.flag), told:r.told, heard:r.heard, share:r.share, tryh:r.tryh, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet, copy:r.copy,
     tags:r.tags, did:r.did, refs:r.refs, summary:r.summary, fdate:r.fdate, ftext:r.ftext, priv:r.priv, pnote:r.pnote, stopped:r.stopped, reports:r.reports || []};
 }
 function pnNext(){
-  const steps = pnSteps(RUN), st = steps[RUN.step], sf = RUN.safety;
+  const steps = pnSteps(RUN), st = steps[RUN.step];
   if (st === 'start'){
     if (!RUN.room.where) return alert('Another adult must be able to see in before the visit starts. Mark which.');
     if (!RUN.promise) return alert('Read the promise ("What Stays Between Us") to the student first, then check the box.');
     if (RUN.yes !== 'yes') return alert('Ask the student first. The visit starts only with their yes.');
   }
-  if (st === 'safety' && !sf.notAsked && (!sf.safe || !sf.self)) return alert('Ask both safety questions, or check "I didn\'t ask these today" and say why.');
-  if (st === 'safety' && !sf.notAsked && pnSelfFlag(sf) && PNC.safety.now && !sf.now) return alert('Ask whether those thoughts are with them today.');
-  if (st === 'safety' && sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-  if (st === 'safety' && pnSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
   if (st === 'levels'){
     for (const p of PNG().parts){ const g = pnSuggest(RUN, p.key), cur = RUN.lv[p.key] || {}, pick = cur.pick || g.sug; if (spStepGap(pick, g.sug) >= 2 && !(cur.why || '').trim()) return alert(p.part + ': you changed the level by two steps. Add a quick reason.'); }
   }
@@ -7259,7 +7312,7 @@ function pnNext(){
 function pnStop(fromKid){
   if (!fromKid && !confirm('Stop the visit now? That is always okay.')) return;
   pnKidClose();
-  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = PNG().safety.notAskedReasons[0];
+  RUN.stopped = true;
   RUN.step = pnSteps(RUN).indexOf('levels'); pnKeep(); pnDraw();
   toast(PNG().stop.say);
 }
@@ -7318,8 +7371,6 @@ function pnToggle(t){
     case 'pn-screen': RUN.screen = v; return pnRedraw();
     case 'pn-yes': RUN.yes = v; return pnRedraw();
     case 'pn-warm': { const arr = RUN.warm[k] = RUN.warm[k] || [], i = arr.indexOf(+v); if (i >= 0) arr.splice(i, 1); else arr.push(+v); t.setAttribute('aria-pressed', i < 0); break; }
-    case 'pn-safe': RUN.safety[k] = v; if (k === 'self' && !pnSafeOn('self').includes(v)) RUN.safety.now = ''; return pnRedraw();
-    case 'pn-act': flip(RUN.safety.actions); break;
     case 'pn-lv': RUN.lv[k] = Object.assign({}, RUN.lv[k], {pick:v}); return pnRedraw();
     case 'pn-told': RUN.told = v; return pnRedraw();
     case 'pn-try': flip(RUN.tryh); break;
@@ -7451,7 +7502,7 @@ function pnInput(t, ev){
     if (t.dataset.pnseen && ev === 'change'){ RUN.seenSheet = t.checked; pnKeep(); return true; }
     if (t.dataset.pncopy && ev === 'change'){ RUN.copy = t.checked; pnKeep(); return true; }
     if (t.dataset.pnhide && ev === 'change'){ RUN.hide[t.dataset.pnhide] = t.checked; pnRedraw(); return true; }
-    if (t.dataset.pnsafe){ if (ev === 'input' && t.dataset.pnsafe !== 'reasonText') return true; const k = t.dataset.pnsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; pnKeep(); if (k === 'notAsked') pnRedraw(); return true; }
+    if (t.dataset.pnsafe){ if (ev === 'input' && t.dataset.pnsafe !== 'reasonText') return true; const k = t.dataset.pnsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; pnKeep(); if (k === 'notAsked') pnRedraw(); return true; }
   }
   if (t.dataset.pnc && V.pnp){ const c = CL(V.pnp); if (!c || !c.pn) return true;
     if (ev === 'input' && t.tagName === 'SELECT') return true;
@@ -7769,6 +7820,7 @@ function vBRReport(cid){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Birch Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   ${draft ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Your visit is paused.</b> <span class="muted">Everything so far is kept.</span></div><button class="btn btn-gold btn-sm" data-act="br-resume">Back to the Visit</button></div></div>` : ''}
   <div class="card" style="border-left:4px solid var(--danger)"><div class="row"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
+  ${rpAlign('adult')}
   ${R.steps.length ? `<div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${(R.lines || []).length ? `<div class="card"><h3>Help They Can Reach Privately</h3>${R.lines.map(x => `<p style="margin-top:8px"><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}</div>` : ''}
   ${RO && (RO.items || []).length ? `<div class="card"><h3>${esc(RO.title || 'What your role requires')}</h3>${RO.lead ? `<p class="muted" style="font-size:15px;margin-top:4px">${esc(RO.lead)}</p>` : ''}${RO.items.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>` : ''}
@@ -7855,7 +7907,7 @@ function vBRPerson(c){
    <div class="card"><h3>Growth Plan</h3>${latest ? `<p class="muted" style="font-size:14px">From ${nice(latest.date)}</p>${brPlanList(latest)}` : '<p class="muted" style="margin-top:8px">No plan yet. It comes at the end of a visit.</p>'}
     <h3 style="margin-top:20px">Follow-Ups</h3>
     ${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-brfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}</div></div>
-  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(brVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.youth === 'yes' ? ' <span class="pill">Youth setting</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${brSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}</small></div><button class="btn btn-line btn-sm" data-act="br-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
+  <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(brVisitName(s.visit))}</b>${s.notToday ? ' <span class="pill">Not today</span>' : ''}${s.stopped ? ' <span class="pill">Stopped</span>' : ''}${s.youth === 'yes' ? ' <span class="pill">Youth setting</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${brSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + s.minutes + ' min' : ''}${stAvg(s.scores) != null ? ' &middot; ' + stLevel(Math.round(stAvg(s.scores))) + ' overall' : ''}${s.wording === 'plain' ? ' &middot; Plain wording' : ''}</small></div><button class="btn btn-line btn-sm" data-act="br-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div>
   <div class="card"><h3>Details</h3>
    <label class="f">Code or initials</label><input type="text" data-brc="name" value="${esc(c.name)}">
    <div class="grid g2">${me ? '' : `<div><label class="f">Who they are</label><select data-brc="type">${(S.people || []).map(p => `<option value="${p[0]}" ${p[0] === c.br.type ? 'selected' : ''}>${esc(p[1])}</option>`).join('')}</select></div>`}
@@ -7882,13 +7934,14 @@ function vBRVisit(){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.visit !== 'open' && !s.notToday ? ' &middot; ' + esc(brWordName(s.wording)) : ''}${(s.season || []).length ? ' &middot; ' + esc(brSeasonNames(s.season).join(', ')) : ''}</div><h1>${esc(brVisitName(s.visit))}</h1><p>${esc(c ? c.name : '')}${s.stopped ? ' &middot; they chose to stop, and that was honored' : ''}</p></div>
   ${me ? '' : `<div class="card"><p><b>Their yes:</b> ${s.notToday ? 'Not today' : 'Yes'}${youth ? ' &middot; ' + youth : ''}</p></div>`}
   ${s.notToday ? `<div class="card"><p>They said "Not today." Nothing else was asked.</p></div>${demo ? '' : `<button class="btn btn-danger btn-sm" data-act="br-del-visit" data-v="${s.id}">Delete</button>`}` : `
-  ${(s.flags || []).length && BRC ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
+  ${(s.flags || []).length && BRC && BRC.flags ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
   <div class="card"><h3>The Six Parts</h3>${S.parts.map(p => { const v = (s.scores||{})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${stLvlCls(v)}">${s.visit === 'open' && v == null ? 'Not talked about' : stLevel(v)}</span></div>`; }).join('')}</div>
   ${s.visit === 'open' || !BRC ? '' : `<details class="card sp-every"><summary><b>See every answer</b> <span class="muted">Hard answers are in bold.</span></summary>
    ${S.parts.map(p => { const qs = brQs(s, p.key), qa = (s.ans || {})[p.key] || {}; return `<h4 style="margin-top:12px">${esc(p.part)}</h4>${brIdx(s, p.key).map(i => qs[i] ? `<p style="margin-top:4px">${esc(qs[i].t)} ${qa[i] ? (brHard(qs[i], qa[i]) ? `<b>${esc((brAns(qa[i]) || [])[1])}</b>` : esc((brAns(qa[i]) || [])[1])) : '<span class="muted">skipped</span>'}</p>` : '').join('')}`; }).join('')}</details>`}
   ${s.visit === 'full' ? `<div class="card st-private"><h3>${esc(O.title || 'The Optional Question')}</h3><p class="muted" style="font-size:14px">Private. Never scored, and never printed or copied unless they asked.${opt.share ? ' They asked for it on their sheet and in the visit note.' : ''}</p>
    ${opt.asked ? (opt.on || []).map(id => { const q = brOptList().find(x => x.id === id), a = (opt.a || {})[id]; return q ? `<p style="margin-top:8px">${esc(q.t)} ${a && a !== 'skip' ? `<b>${esc((brAns(a) || [])[1] || '')}</b>` : `<span class="muted">${esc(O.skip || 'Skipped')}</span>`}</p>` : ''; }).join('') : `<p style="margin-top:8px">${s.stopped ? 'Not asked: they stopped the visit.' : 'Not asked: they kept it off.'}</p>`}</div>` : ''}
-  <div class="card" ${brSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(brSafetyText(s.safety))}</p>${s.told ? `<p class="muted" style="margin-top:6px">${esc(brTold(s.told))}${s.heard ? '. Talked through with them.' : ''}</p>` : ''}</div>
+  ${hmOldSafety(s.safety) ? `<div class="card" ${brSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p><p style="margin-top:6px">${esc(brSafetyText(s.safety))}</p>${s.told ? `<p class="muted" style="margin-top:6px">${esc(brTold(s.told))}${s.heard ? '. Talked through with them.' : ''}</p>` : ''}</div>` : ''}
+  ${hmCard(s)}
   ${(s.tags||[]).length || (s.did||[]).length || (s.refs||[]).length ? `<div class="card">${(s.tags||[]).length ? `<h4>What you noticed</h4><div class="row" style="margin-top:6px">${s.tags.map(t => `<span class="pill">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.did||[]).length ? `<h4 style="margin-top:12px">What you offered</h4><div class="row" style="margin-top:6px">${s.did.map(t => `<span class="pill gold">${esc(t)}</span>`).join('')}</div>` : ''}
    ${(s.refs||[]).length ? `<h4 style="margin-top:12px">Referrals</h4><div class="row" style="margin-top:6px">${s.refs.map(t => `<span class="pill sage">${esc(t)}</span>`).join('')}</div>` : ''}</div>` : ''}
@@ -7913,8 +7966,9 @@ function brNote(s, c){
   if ((s.tags||[]).length) L.push('', 'Observed: ' + s.tags.join(', ') + '.');
   if ((s.did||[]).length) L.push('Offered: ' + s.did.join(', ') + '.');
   if ((s.flags || []).length) L.push('Flagged answers: ' + s.flags.length + '. See the visit in the Field Guide.');
-  L.push('Safety: ' + brSafetyText(s.safety));
-  if (s.told) L.push('After the safety step: ' + brTold(s.told).toLowerCase() + '.');
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + brSafetyText(s.safety));
+  if (s.told) L.push('After talking it through: ' + brTold(s.told).toLowerCase() + '.');
+  if (hmHas(s)) L.push(hmNote(s));
   const opt = s.opt || {};
   if (opt.share && opt.asked) (opt.on || []).forEach(id => { const q = brOptList().find(x => x.id === id), a = (opt.a || {})[id]; if (q) L.push('Optional question, shared at their request: ' + q.t + ' ' + (a && a !== 'skip' ? ((brAns(a) || [])[1] || '') : 'skipped') + '.'); });
   const plan = S.parts.map(p => { const a = (s.plan||{})[p.key] || []; return a.length ? p.part + ': ' + a.join(', ') : ''; }).filter(Boolean);
@@ -7969,7 +8023,7 @@ function brStart(visit, cid, demo){
   if (!demo && !brReady()){ toast('Finish Birch Guide Training to start real visits. Demo visits are always open.'); return go('birch', {brm:1}); }
   RUN = {kind:'br', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, started:Date.now(), step:0,
     youth:brIsMe(c) ? 'no' : '', room:{where:''}, yes:brIsMe(c) ? 'yes' : '', wording:c.br.wording === 'plain' ? 'plain' : 'faith', season:(c.br.season || []).slice(), std:BRC ? BRC.version : 1, bank:BR_BANK(),
-    opt:{on:[], a:{}, share:false}, ans:{}, impr:{}, pn:{}, safety:{safe:'', self:'', now:'', notAsked:false, reason:'', reasonText:'', actions:[]},
+    opt:{on:[], a:{}, share:false}, ans:{}, impr:{}, pn:{}, harm:hmNew(),
     tags:[], did:[], refs:[], plan:{}, custom:'', summary:'', priv:'', fdate:'', ftext:'', share:'', told:'', heard:false, tryh:[], talkNote:'', hide:{did:false, share:false, talk:false}, seenSheet:false, stopped:false};
   brOpenRun();
 }
@@ -7982,7 +8036,7 @@ function brOpenRun(){ $('#runner').classList.remove('hide'); brDraw(); clearInte
 function brKeep(){ if (RUN && RUN.kind === 'br' && !RUN.demo){ DATA.draft = RUN; save(); } }
 function brRedraw(){ brKeep(); const b = $('#run-body'), y = b ? b.scrollTop : 0; brDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
 function brQ(key, i, q, num){
-  const cur = ((RUN.ans || {})[key] || {})[i], f = brFlagOn(q, cur) ? BRC.flags[q.flag] : null;
+  const cur = ((RUN.ans || {})[key] || {})[i], f = brFlagOn(q, cur) && BRC.flags[q.flag].guide ? BRC.flags[q.flag] : null;
   return `<div class="st-q"><p>${num ? `<span class="st-n">${num}</span>` : ''}${esc(q.t)}${q.r ? ' <span class="pill" title="Often is the hard answer here">reverse</span>' : ''}</p>
    ${(q.ex || []).length ? `<p class="muted" style="font-size:14px;margin-top:4px">${q.ex.map(esc).join(' ')}</p>` : ''}
    <div class="st-opts" role="group" aria-label="${esc(q.t)}">${brScale().map(o => stChip('br-ans', `data-k="${key}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>
@@ -7998,23 +8052,8 @@ function brOptBlock(part){
    <label class="cb" style="margin-top:8px"><input type="checkbox" data-bropts="1" ${RUN.opt.share ? 'checked' : ''}> They want this on their take-home sheet and in the visit note</label></div></div>`; }).join('');
 }
 function brSafetyStep(){
-  const F = BRG().safety, A = (BRC && BRC.safety) || {}, sf = RUN.safety, flag = brSafeFlag(sf), hurt = brHurt(sf), self = brSelf(sf), now = brNow(sf);
-  const blk = (lab, arr, cls) => arr && arr.length ? `<div class="blk ${cls||''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
-  const chips = k => `<div class="st-opts">${brSafeAns().map(o => stChip('br-safe', `data-k="${k}" data-v="${o[0]}"`, sf[k] === o[0], o[1])).join('')}</div>`;
-  const L = A.lines || {}, lead = F.directLead || A.selfLead;
-  return `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>
-   ${now ? `<div class="card" style="border-left:4px solid var(--danger)"><h3>${esc(A.title || 'Stay with them now.')}</h3><p style="margin-top:6px">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p><div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div></div>` : ''}
-   <div class="card step-card">${blk('Say', [F.say || A.intro], 'say')}${F.from ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(F.from)}</p>` : ''}</div>
-   ${brSafeQs().map(([q, k]) => `<div class="st-q">${k === 'self' && lead ? `<p class="muted" style="font-size:16px">${esc(lead)}</p>` : ''}<p${k === 'self' && lead ? ' style="margin-top:8px"' : ''}>${esc(q)}</p>${chips(k)}
-     ${k === 'safe' && hurt ? `<div class="card" style="margin-top:10px;border-left:4px solid var(--danger)"><h4>${esc(A.hurtTitle || '')}</h4>${BRC && BRC.flags.hurt ? `<p class="wl-hot">${esc(BRC.flags.hurt.guide)}</p>` : ''}<p style="margin-top:6px">${esc(A.hurtIntro || '')}</p>${brLinesHTML(L.hurt || [])}<div class="row" style="margin-top:8px"><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div></div>` : ''}
-     ${k === 'self' && self ? `<div class="st-q" style="margin-top:10px"><p>${esc(F.now || A.now || '')}</p>${chips('now')}</div><p class="tipbox">${esc([A.yes, A.means].filter(Boolean).join(' '))}</p>` : ''}</div>`).join('')}
-   <div class="tipbox">${esc(F.note)}</div>
-   ${flag ? `<div class="card st-protocol" style="margin-top:14px"><h3>${esc(F.protocolTitle)}</h3><ul class="checklist" style="margin-top:8px">${F.protocol.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul>
-     <div class="row" style="margin-top:12px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div>
-     ${self ? `<h4 style="margin-top:14px">Help lines for them</h4>${brLinesHTML(L.calm || [])}` : ''}
-     <h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('br-act', `data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div></div>` : ''}
-   <label class="cb" style="margin-top:16px"><input type="checkbox" data-brsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask these today</label>
-   ${sf.notAsked ? `<select data-brsafe="reason" aria-label="Why not" style="max-width:420px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-brsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
+  const c = RUN.demo ? RUN.person : CL(RUN.clientId);
+  return hmStep('br', BRG(), BRG().report && !RUN.demo && !brIsMe(c) ? `<button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button>` : '');
 }
 // What needs talking through at goodbye: a safety answer about themselves, or feeling really alone or losing hope.
 const brNeedTalk = r => brSelf(r.safety) || brRunFlags(r).some(f => f === 'alone' || f === 'hope');
@@ -8066,7 +8105,7 @@ function brDraw(){
     const fl = brRunFlags(RUN);
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2><p class="muted">These go in the visit note, never on the take-home sheet.</p>
      ${RUN.stopped ? `<div class="tipbox">${esc(c ? c.name : '')} chose to stop. Mark only what you have.</div>` : ''}
-     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}${fl.includes('hurt') && S.report ? `<div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div>` : ''}</div>` : ''}
+     ${fl.length && BRC && BRC.flags ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => BRC.flags[f] ? `<p style="margin-top:8px"><b>${esc(BRC.flags[f].title)}.</b> ${esc(BRC.flags[f].guide)}</p>` : '').join('')}${fl.includes('hurt') && S.report ? `<div class="row" style="margin-top:10px"><button class="btn btn-line btn-sm" data-act="br-run-report">${icon('shield')} Report a Concern</button></div>` : ''}</div>` : ''}
      ${(S.tags || []).map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('br-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
      <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${(S.did || []).map(t => stChip('br-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
      ${me ? '' : `<label class="f" for="br-sum">Summary for the visit note</label><textarea id="br-sum" data-brf="summary" placeholder="A few plain lines your team can read">${esc(RUN.summary)}</textarea>`}
@@ -8114,22 +8153,16 @@ function brRunAsVisit(){
     visit:r.visit, youth:r.youth, room:r.youth === 'yes' ? r.room : null, yes:'yes', wording:r.wording, season:r.season.slice(),
     ans:r.visit === 'open' ? null : r.ans, impr:r.visit === 'open' ? r.impr : null, scores:brScore(r), flags:brRunFlags(r),
     opt:{asked, on:asked ? r.opt.on.slice() : [], a:asked ? r.opt.a : {}, share:asked && !!r.opt.share},
-    safety:r.safety, told:r.told, heard:r.heard, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, tryh:r.tryh, share:r.share, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet,
+    harm:hmSave(r), told:r.told, heard:r.heard, tags:r.tags, did:r.did, refs:r.refs, plan:r.plan, custom:r.custom, tryh:r.tryh, share:r.share, talkNote:r.talkNote, hide:r.hide, seenSheet:r.seenSheet,
     summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext, stopped:r.stopped};
 }
 function brNext(){
-  const steps = brSteps(RUN), st = steps[RUN.step], sf = RUN.safety, c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
+  const steps = brSteps(RUN), st = steps[RUN.step], c0 = RUN.demo ? RUN.person : CL(RUN.clientId);
   if (st === 'open' && !brIsMe(c0)){
     if (!RUN.youth) return alert('Ask whether they are still in high school or a youth program, and mark their answer.');
     if (RUN.youth === 'yes' && !RUN.room.where) return alert('In a youth setting, another adult must be able to see in. Mark which before you begin.');
     if (!RUN.yes) return alert('Ask if they want to go ahead today, and mark their answer.');
     if (RUN.yes === 'no') return brNotToday();
-  }
-  if (st === 'safety'){
-    if (!sf.notAsked && (!sf.safe || !sf.self)) return alert('Ask both safety questions, or check "I didn\'t ask these today" and say why.');
-    if (!sf.notAsked && brSelf(sf) && !sf.now) return alert('Ask whether those thoughts are with them today.');
-    if (sf.notAsked && !sf.reason) return alert('Choose why the safety questions weren\'t asked.');
-    if (brSafeFlag(sf) && !sf.actions.length && !confirm('Something here needs follow-up. You haven\'t marked what you did. Go on anyway?')) return;
   }
   if (st === 'goodbye' && brNeedTalk(RUN) && !brIsMe(c0)){
     if (!RUN.heard) return alert('Talk it through with them first, then check the box.');
@@ -8139,8 +8172,7 @@ function brNext(){
 }
 function brStop(){
   if (!confirm('Stop the visit now? That is always okay.')) return;
-  const F = BRG().safety || {};
-  RUN.stopped = true; RUN.safety.notAsked = true; RUN.safety.reason = (F.notAskedReasons || [])[0] || 'They stopped the visit';
+  RUN.stopped = true;
   RUN.step = brSteps(RUN).indexOf('close'); brKeep(); brDraw();
   toast((BRG().stop || {}).say || 'We can stop right now.');
 }
@@ -8194,8 +8226,6 @@ function brToggle(t){
     case 'br-word': RUN.wording = v === 'plain' ? 'plain' : 'faith'; return brRedraw();
     case 'br-season': flip(RUN.season); break;
     case 'br-yes': RUN.yes = v; return brRedraw();
-    case 'br-safe': RUN.safety[k] = v; if (k === 'self' && !brSafeOn('self').includes(v)) RUN.safety.now = ''; return brRedraw();
-    case 'br-act': flip(RUN.safety.actions); break;
     case 'br-told': RUN.told = v; one(); break;
     case 'br-try': flip(RUN.tryh); break;
     case 'br-plan': { const arr = RUN.plan[k] = RUN.plan[k] || [], i = arr.indexOf(v); if (i >= 0) arr.splice(i, 1); else arr.push(v); t.setAttribute('aria-pressed', i < 0); break; }
@@ -8273,7 +8303,7 @@ function brInput(t, ev){
     if (t.dataset.brheard && ev === 'change'){ RUN.heard = t.checked; brKeep(); return true; }
     if (t.dataset.brseen && ev === 'change'){ RUN.seenSheet = t.checked; brKeep(); return true; }
     if (t.dataset.brhide && ev === 'change'){ RUN.hide[t.dataset.brhide] = t.checked; brRedraw(); return true; }
-    if (t.dataset.brsafe){ if (ev === 'input' && t.dataset.brsafe !== 'reasonText') return true; const k = t.dataset.brsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; brKeep(); if (k === 'notAsked') brRedraw(); return true; }
+    if (t.dataset.brsafe){ if (ev === 'input' && t.dataset.brsafe !== 'reasonText') return true; const k = t.dataset.brsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; brKeep(); if (k === 'notAsked') brRedraw(); return true; }
     if (t.dataset.bropts || t.dataset.brheard || t.dataset.brseen || t.dataset.brhide) return true;
   }
   if (t.dataset.brc && V.brp){ const c = CL(V.brp); if (!c || !c.br) return true;
@@ -8599,8 +8629,8 @@ function wlRunFlags(r){
   if (!WC || !(r.visit === 'full' || r.visit === 'quick')) return [];
   const out = [], who = r.role === 'helper' ? 'helper' : 'person';
   WL_PARTS.forEach(p => (wlBank(r.role)[p.key] || []).forEach((q, i) => {
-    const a = ((r.ans || {})[p.key] || [])[i], f = q.flag && WC.C.flags[q.flag];
-    if (f && f.who === who && f.on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
+    const a = ((r.ans || {})[p.key] || [])[i], f = q.flag && WC.C.flags && WC.C.flags[q.flag];
+    if (f && f.who === who && (f.on || []).includes(a) && !out.includes(q.flag)) out.push(q.flag);
   }));
   return out;
 }
@@ -9102,7 +9132,7 @@ function wlReportLib(){
   const B = (BRG() && BRG().report) || {};
   return Object.assign({title:'Report a Concern',
     lead:'The person and their family decide who hears what they share, with three exceptions: danger right now, harm to a vulnerable adult, and what the law and your hospice require of your role.',
-    danger:'In danger right now, call 911. For thoughts of suicide, call or text 988 together, and follow the safety protocol.',
+    danger:'In danger right now, call 911. For any sign of harm to self, connect together with 988 and follow the Grounded Response Plan.',
     steps:['Stay calm, listen, and thank them for telling you. Believe them.', 'Make sure they are safe right now. In danger now, call 911.', 'Call the hospice nurse, and tell your supervisor and the hospice social worker today.', "Don't dig for details or question anyone they name. Just listen.", 'Write down their exact words, what you saw, and when, as soon as you can.', 'If they may be a vulnerable adult who is being abused, neglected, or exploited, report to MAARC. Tell them first when you can.'],
     kinds:B.kinds || [],
     mn:{title:'In Minnesota: MAARC', lead:'For a vulnerable adult who may be abused, neglected, or exploited. The Minnesota Adult Abuse Reporting Center takes reports 24 hours a day, every day.', phone:'1-844-880-1574', tel:'18448801574', form:(B.mn || {}).form || '', notes:[]},
@@ -9116,6 +9146,7 @@ function vWLReport(cid){
   <div class="page-head" style="margin-top:14px"><div class="eyebrow">Willow Guide</div><h1>${esc(R.title)}</h1><p>${esc(R.lead)}</p></div>
   ${draft ? `<div class="card" style="border-left:4px solid var(--gold)"><div class="spread"><div><b>Your visit is paused.</b> <span class="muted">Everything so far is kept.</span></div><button class="btn btn-gold btn-sm" data-act="wl-resume">Back to the Visit</button></div></div>` : ''}
   <div class="card" style="border-left:4px solid var(--danger)"><p><b>Call the hospice 24/7 line first, any hour.</b></p><div class="row" style="margin-top:10px"><a class="btn btn-danger" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger" href="tel:988">${icon('phone')} Call 988</a></div>${R.danger ? `<p class="muted" style="font-size:14px;margin-top:8px">${esc(R.danger)}</p>` : ''}</div>
+  ${rpAlign('hospice')}
   ${(R.steps || []).length ? `<div class="card"><h3>In the moment</h3><ul class="checklist" style="margin-top:8px">${R.steps.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>` : ''}
   ${(R.lines || []).length ? `<div class="card"><h3>Help They Can Reach Privately</h3>${R.lines.map(x => `<p style="margin-top:8px"><b>${esc(x[0])}:</b> ${esc(x[1])}</p>`).join('')}</div>` : ''}
   ${RO && (RO.items || []).length ? `<div class="card"><h3>${esc(RO.title || 'What your role requires')}</h3>${RO.lead ? `<p class="muted" style="font-size:15px;margin-top:4px">${esc(RO.lead)}</p>` : ''}${RO.items.map(([h, p]) => `<p style="margin-top:8px"><b>${esc(h)}.</b> ${esc(p)}</p>`).join('')}</div>` : ''}
@@ -9239,7 +9270,7 @@ function vWLPerson(c){
    <div class="card"><h3>Follow-Ups</h3>${(c.followups||[]).map((f,i) => `<label class="tick ${f.done?'done':''}"><input type="checkbox" data-wlfu="${i}" ${f.done?'checked':''}><span>${nice(f.date)}: ${esc(f.text)}</span></label>`).join('') || '<p class="muted">None yet.</p>'}
     <div class="grid g2" style="margin-top:10px"><input type="date" id="wl-fd" aria-label="Follow-up date"><input type="text" id="wl-ft" placeholder="Follow-up: what to do" aria-label="Follow-up note"></div>
     <button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-add-fu" data-v="${c.id}">${icon('plus')} Add Follow-up</button></div>
-   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(wlVisitName(s.visit))}</b>${s.by === 'observed' ? ' <span class="pill">Seen by family</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${wlSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.quick ? ' &middot; quick' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div></div>
+   <div class="card"><h3>Visits</h3><div style="margin-top:6px">${vs.length ? vs.map(s => `<div class="list-row"><div class="lr-main"><b>${esc(wlVisitName(s.visit))}</b>${s.by === 'observed' ? ' <span class="pill">Seen by family</span>' : ''}${(s.flags || []).length ? ' <span class="pill gold">Flagged</span>' : ''}${wlSafeFlag(s.safety) ? ' <span class="pill warn">Safety</span>' : ''}${hmHas(s) ? ' <span class="pill warn">Harm came up</span>' : ''}<br><small class="muted">${nice(s.date)}${s.minutes ? ' &middot; ' + mins(s.minutes) : ''}${s.quick ? ' &middot; quick' : ''}</small></div><button class="btn btn-line btn-sm" data-act="wl-visit" data-v="${s.id}">View</button></div>`).join('') : '<p class="muted" style="margin-top:8px">No visits yet.</p>'}</div></div></div>
   ${htPersonCard(c)}
   <div class="card"><h3>Details</h3>
    <label class="f">First name or initials</label><input type="text" data-wlc="name" value="${esc(c.name)}">
@@ -9269,7 +9300,7 @@ function wlSafetyText(sf, forNote){
   if (!sf) return 'Not recorded.';
   const A = WC ? WC.C.safety : null, bits = [];
   if (sf.notAsked) return 'Safety question not asked' + (sf.reason ? ': ' + sf.reason : '') + (sf.reasonText ? ', ' + sf.reasonText : '') + '.';
-  if (sf.choice && A){ const o = A.options.find(x => x[0] === sf.choice); bits.push('When asked about dying, they chose: "' + String(o ? o[1] : sf.choice).replace(/\.$/, '') + '"'); }
+  if (sf.choice){ const o = ((A && A.options) || []).find(x => x[0] === sf.choice); bits.push('When asked about dying, they chose: "' + String(o ? o[1] : sf.choice).replace(/\.$/, '') + '"'); }
   if (sf.observed) bits.push('Family says they have said things like wanting it over: ' + ({yes:'yes', no:'no', unsure:'not sure'}[sf.observed] || sf.observed));
   if (sf.helper) bits.push('Caregiver thoughts of not wanting to go on: ' + ({yes:'yes', no:'no', skip:'would rather not say'}[sf.helper] || sf.helper));
   if (sf.home && !forNote) bits.push('Feels safe at home and with caregivers: ' + ({yes:'yes', notalways:'not always', no:'no'}[sf.home] || sf.home));
@@ -9297,7 +9328,8 @@ function vWLVisit(){
   ${s.lv && Object.keys(s.lv).length ? `<div class="card"><h3>The Six Parts</h3>${WL_PARTS.map(p => { const v = (s.sc || {})[p.key], l = (s.lv || {})[p.key]; return `<div class="st-bar-row"><span class="st-bar-lab"><span class="st-dot" style="background:${p.color}"></span>${esc(p.part)} <small class="muted">${esc(p.name)}</small></span><span class="st-bar"><i style="width:${v == null ? 0 : v * 10}%;background:${p.color}"></i></span><span class="pill ${wlLvCls(l)}">${esc(wlLvName(l))}${v != null ? ' ' + wlFmt(v) : ''}</span></div>`; }).join('')}
    ${s.by === 'observed' ? '<p class="muted" style="font-size:14px;margin-top:8px">Answered by family from what they see. Kept apart from the person\'s own answers.</p>' : ''}</div>` : ''}
   ${(s.flags || []).length ? `<div class="card" style="border-left:4px solid var(--gold)"><h3>Flagged Answers</h3>${s.flags.map(f => C.flags[f] ? `<p style="margin-top:8px"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].guide)}</p>` : '').join('')}</div>` : ''}
-  <div class="card" ${wlSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3><p style="margin-top:6px">${esc(wlSafetyText(s.safety))}</p>${s.safety && s.safety.home && s.safety.home !== 'yes' ? `<p class="muted" style="font-size:14px;margin-top:6px">${esc(S.safety.homePrivate)}</p>` : ''}</div>
+  ${hmOldSafety(s.safety) ? `<div class="card" ${wlSafeFlag(s.safety) ? 'style="border-left:4px solid var(--danger)"' : ''}><h3>Safety</h3>${s.visit === 'shared' ? '' : '<p class="muted" style="font-size:14px">Recorded before the Grounded Response Plan.</p>'}<p style="margin-top:6px">${esc(wlSafetyText(s.safety))}</p>${s.safety && s.safety.home && s.safety.home !== 'yes' ? `<p class="muted" style="font-size:14px;margin-top:6px">${esc((S.safety || {}).homePrivate || '')}</p>` : ''}</div>` : ''}
+  ${hmCard(s)}
   ${!shared && s.faithCheck ? `<div class="card"><h3>Faith</h3><p style="margin-top:6px">${esc({same:'Still true, they said.', changed:'Something changed, and it was updated.', new:'Asked for the first time.', skip:'Not asked today.'}[s.faithCheck] || '')}${s.faith ? ' ' + esc(wlFaithText(s.faith)) : ''}</p></div>` : ''}
   ${struggles.length || (s.guilt && s.guilt.kind != null) || s.hopeAsked ? `<div class="card"><h3>What you heard</h3>${struggles.length ? `<p style="margin-top:6px"><b>Struggle:</b> ${struggles.map(x => esc(x[1])).join(', ')}</p>` : ''}${s.guilt && s.guilt.kind != null && C.guide.guiltShame[s.guilt.kind] ? `<p style="margin-top:6px"><b>Guilt and shame:</b> ${esc(C.guide.guiltShame[s.guilt.kind][0])}</p>` : ''}${s.hopeAsked ? `<p style="margin-top:6px"><b>HOPE questions:</b> ${esc(((C.guide.hope.asked.find(x => x[0] === s.hopeAsked) || [])[1]) || '')}</p>` : ''}</div>` : ''}
   ${(s.tags || []).length || (s.did || []).length || (s.refs || []).length ? `<div class="card">${(s.tags || []).length ? `<p><b>Noticed:</b> ${s.tags.map(esc).join(', ')}</p>` : ''}${(s.did || []).length ? `<p style="margin-top:6px"><b>Offered:</b> ${s.did.map(esc).join(', ')}</p>` : ''}${(s.refs || []).length ? `<p style="margin-top:6px"><b>Referred to:</b> ${s.refs.map(esc).join(', ')}</p>` : ''}</div>` : ''}
@@ -9331,7 +9363,8 @@ function wlNote(s, c){
     WL_PARTS.forEach(p => { const l = (s.lv || {})[p.key]; L.push('  ' + p.part + ' (' + p.name.toLowerCase() + '): ' + (l ? wlLvName(l).toLowerCase() + ', ' + wlFmt(s.sc[p.key]) + ' of 10' : 'not scored')); });
   }
   if ((s.flags || []).length && C) L.push('', 'Flagged: ' + s.flags.map(f => C.flags[f] ? C.flags[f].title.toLowerCase() : f).join(', ') + '.');
-  L.push('Safety: ' + wlSafetyText(s.safety, true));
+  if (hmOldSafety(s.safety)) L.push('Safety: ' + wlSafetyText(s.safety, true));
+  if (hmHas(s)) L.push(hmNote(s));
   if ((s.struggles || []).length && C) L.push('Spiritual struggle: ' + s.struggles.map(id => ((C.guide.struggles.find(x => x[0] === id) || [])[1] || id).toLowerCase()).join(', ') + '.');
   if ((s.tags || []).length) L.push('Noticed: ' + s.tags.join(', ').toLowerCase() + '.');
   if ((s.did || []).length) L.push('Offered: ' + s.did.join(', ').toLowerCase() + '.');
@@ -9466,7 +9499,7 @@ function wlStart(visit, cid, demo){
   const role = wlRunRole(c);
   RUN = {kind:'wl', id:uid(), clientId:demo ? null : c.id, demo:!!demo, person:demo ? c : null, visit, role, by:role === 'helper' ? 'self' : '', setting:wlRole(), std:WC.C.version, started:Date.now(), step:0, yes:'',
     faith:c.wl.faith ? JSON.parse(JSON.stringify(c.wl.faith)) : {lives:[]}, faithEdit:!c.wl.faith, faithCheck:'', ans:{}, impr:{}, pn:{},
-    safety:{ask:false, choice:'', observed:'', helper:'', home:'', homeAsk:false, notAsked:false, reason:'', reasonText:'', actions:[]},
+    harm:hmNew(),
     hope:Object.assign({}, c.wl.hope || {}), hopeAsked:'', struggles:[], guilt:{kind:null}, vigil:Object.assign({}, c.wl.vigil || {}),
     tags:[], did:[], refs:[], newPlans:[], planChg:{}, tryp:[], summary:'', priv:'', fdate:'', ftext:''};
   wlOpenRun();
@@ -9478,7 +9511,7 @@ function wlOpenRun(){ $('#runner').classList.remove('hide'); wlDraw(); clearInte
 function wlKeep(){ if (RUN && !RUN.demo){ DATA.draft = RUN; save(); } }
 function wlRedraw(){ const b = $('#run-body'), y = b ? b.scrollTop : 0; wlDraw(); const n = $('#run-body'); if (n) n.scrollTop = y; }
 function wlQ(k, i, q){
-  const cur = ((RUN.ans || {})[k] || [])[i], text = wlQText(RUN, q), f = q.flag && WC.C.flags[q.flag], hot = f && f.on.includes(cur) && f.who === (RUN.role === 'helper' ? 'helper' : 'person');
+  const cur = ((RUN.ans || {})[k] || [])[i], text = wlQText(RUN, q), f = q.flag && WC.C.flags && WC.C.flags[q.flag], hot = f && (f.on || []).includes(cur) && f.guide && f.who === (RUN.role === 'helper' ? 'helper' : 'person');
   return `<div class="st-q"><p>${RUN.visit === 'quick' ? '' : `<span class="st-n">${i + 1}</span>`}${esc(text)}${q.r ? ' <small class="muted">(reverse)</small>' : ''}${q.anchor ? ' <small class="muted">(anchor)</small>' : ''}</p>
    <div class="st-opts" role="group" aria-label="${esc(text)}">${WC.C.answers.map(o => stChip('wl-ans', `data-k="${k}" data-i="${i}" data-v="${o[0]}"`, cur === o[0], o[1])).join('')}</div>
    ${q.tip ? `<p class="muted st-tip" style="font-size:14px;margin-top:6px">${esc(q.tip)}</p>` : ''}${hot ? `<p class="wl-hot">${esc(f.guide)}</p>` : ''}</div>`;
@@ -9509,40 +9542,7 @@ function wlFaithStep(c){
   return h;
 }
 function wlSafetyStep(){
-  const S = WLG(), F = S.safety, A = WC.C.safety, sf = RUN.safety, fl = wlRunFlags(RUN), person = RUN.role === 'person';
-  const endQ = person && (fl.includes('end') || sf.ask), helpQ = !person && (fl.includes('hope') || sf.ask), seen = RUN.by === 'observed';
-  const blk = (lab, arr, cls) => `<div class="blk ${cls || ''}"><div class="lab">${lab}</div><ul>${arr.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>`;
-  const proto = (title, items) => `<div class="card st-protocol" style="margin-top:12px"><h3>${esc(title)}</h3><ul class="checklist" style="margin-top:8px">${items.map(x => `<li>${icon('check')}<span>${esc(x)}</span></li>`).join('')}</ul></div>`;
-  let h = `<div class="run-step-n">Safety</div><h2 class="run-step-t">${esc(F.lead)}</h2>`;
-  if (fl.includes('end') || fl.includes('hope')) h += `<div class="card" style="border-left:4px solid var(--gold)"><p><b>${esc(WC.C.flags[fl.includes('end') ? 'end' : 'hope'].title)}.</b> ${esc(F.flagged)}</p></div>`;
-  if (endQ && seen){
-    h += `<div class="st-q"><p>${esc(A.observed.ask)}</p><div class="st-opts">${[['yes','Yes'],['no','No'],['unsure','Not sure']].map(o => stChip('wl-safe', `data-k="observed" data-v="${o[0]}"`, sf.observed === o[0], o[1])).join('')}</div></div>
-      ${sf.observed === 'yes' ? proto(F.titles.observed, F.protocol.observed) : ''}`;
-  } else if (endQ){
-    const ch = A.options.find(o => o[0] === sf.choice);
-    h += `<div class="card step-card">${blk('Say', [F.say], 'say')}</div>
-      <div class="st-q"><p>${esc(A.ask)}</p><div class="st-opts wl-safeopts">${A.options.map(o => stChip('wl-safe', `data-k="choice" data-v="${o[0]}"`, sf.choice === o[0], o[1])).join('')}</div>
-      ${ch ? `<p class="tipbox">${esc((F.means || {})[ch[0]] || ch[2] || '')}</p>` : ''}</div>
-      ${sf.choice === 'self' ? proto(F.titles.self, F.protocol.self) + `<div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a></div>` : ''}
-      ${sf.choice === 'sooner' ? proto(F.titles.sooner, F.protocol.sooner) : ''}`;
-  }
-  if (helpQ){
-    h += `<div class="st-q"><p>${esc(A.helper.ask)}</p><div class="st-opts">${[['yes','Yes'],['no','No'],['skip','I\'d rather not say']].map(o => stChip('wl-safe', `data-k="helper" data-v="${o[0]}"`, sf.helper === o[0], o[1])).join('')}</div></div>
-      ${sf.helper === 'yes' ? proto(F.titles.helperYes, F.protocol.helperYes) + `<div class="row" style="margin-top:10px"><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} Call 988</a><a class="btn btn-line btn-sm" href="sms:988">Text 988</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a></div>` : ''}`;
-  }
-  if (!endQ && !helpQ) h += `<div class="card"><p>${esc(F.optional)}</p><button class="btn btn-line btn-sm" style="margin-top:10px" data-act="wl-safe-ask">${esc(person ? F.askAnyway : F.askAnywayHelper)}</button></div>`;
-  if (person && !seen){
-    h += `<div class="card" style="margin-top:14px"><h3>${esc(F.homeTitle)}</h3><p class="muted" style="font-size:15px">${esc(F.homeWhen)}</p>
-      <label class="cb"><input type="checkbox" data-wlsafe="homeAsk" ${sf.homeAsk ? 'checked' : ''}> ${esc(F.homeAskBox)}</label>
-      ${sf.homeAsk ? `<div class="st-q"><p>${esc(A.home.ask)}</p><div class="st-opts">${A.home.options.map(o => stChip('wl-safe', `data-k="home" data-v="${o[0]}"`, sf.home === o[0], o[1])).join('')}</div></div>
-      ${sf.home && sf.home !== 'yes' ? proto(F.titles.home, F.protocol.home) + `<div class="row" style="margin-top:10px"><a class="btn btn-line btn-sm" href="tel:18448801574">${icon('phone')} MAARC 1-844-880-1574</a><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} Call 911</a></div>` : ''}` : ''}</div>`;
-  }
-  if (wlSafeFlag(sf)) h += `<h4 style="margin-top:16px">What you did</h4><div class="st-opts">${F.actions.map(a => stChip('wl-tog', `data-g="actions" data-v="${esc(a)}"`, sf.actions.includes(a), a)).join('')}</div>`;
-  if (endQ || helpQ){
-    h += `<label class="cb" style="margin-top:16px"><input type="checkbox" data-wlsafe="notAsked" ${sf.notAsked ? 'checked' : ''}> I didn't ask today</label>
-     ${sf.notAsked ? `<select data-wlsafe="reason" aria-label="Why not" style="max-width:360px"><option value="">Why not?</option>${F.notAskedReasons.map(x => `<option ${sf.reason === x ? 'selected' : ''}>${esc(x)}</option>`).join('')}</select><input type="text" data-wlsafe="reasonText" value="${esc(sf.reasonText)}" placeholder="A few words (optional)" style="margin-top:8px">` : ''}`;
-  }
-  return h;
+  return hmStep('wl', WLG(), RUN.demo ? '' : `<button class="btn btn-line btn-sm" data-act="wl-run-report">${icon('shield')} Report a Concern</button>`);
 }
 function wlHeartStep(){
   const S = WLG(), G = WC.C.guide, fl = wlRunFlags(RUN), sel = RUN.struggles;
@@ -9608,7 +9608,7 @@ function wlDraw(){
     const fl = wlRunFlags(RUN);
     body = `<div class="run-step-n">Wrap up</div><h2 class="run-step-t">What you noticed</h2>
      <div class="card step-card">${blk('Say', G.closing.map(x => x.replace('{x}', '...').replace('{y}', '...')), 'say')}</div>
-     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(WC.C.flags[f].title)}.</b> ${esc(WC.C.flags[f].guide)}</p>`).join('')}</div>` : ''}
+     ${fl.length ? `<div class="card" style="border-left:4px solid var(--gold);margin-top:12px"><h3>Flagged Answers</h3>${fl.map(f => `<p style="margin-top:8px"><b>${esc(WC.C.flags[f].title)}.</b> ${esc(WC.C.flags[f].guide || '')}</p>`).join('')}</div>` : ''}
      ${S.tags.map(([g, ts]) => `<h4 style="margin-top:14px">${esc(g)}</h4><div class="st-opts">${ts.map(t => stChip('wl-tog', `data-g="tags" data-v="${esc(t)}"`, RUN.tags.includes(t), t)).join('')}</div>`).join('')}
      <h4 style="margin-top:18px">What you offered</h4><div class="st-opts">${S.did.map(t => stChip('wl-tog', `data-g="did" data-v="${esc(t)}"`, RUN.did.includes(t), t)).join('')}</div>
      <h4 style="margin-top:18px">Referrals</h4><div class="st-opts">${S.refs.map(t => stChip('wl-tog', `data-g="refs" data-v="${esc(t)}"`, RUN.refs.includes(t), t)).join('')}</div>
@@ -9640,7 +9640,7 @@ function wlDraw(){
   tick(); const b = $('#run-body'); if (b) b.scrollTop = 0;
 }
 function wlNext(){
-  const st = wlSteps(RUN)[RUN.step], sf = RUN.safety, fl = wlRunFlags(RUN);
+  const st = wlSteps(RUN)[RUN.step];
   if (st === 'open'){
     if (!RUN.yes) return alert('Ask if now is an okay time, and mark their answer.');
     if (RUN.yes !== 'yes') return wlNotToday();
@@ -9649,14 +9649,6 @@ function wlNext(){
   if (st === 'faith'){
     if (!RUN.faithEdit && !RUN.faithCheck) return alert('Ask if their faith answer is still true, and mark it.');
     if (RUN.faithEdit && !RUN.faith.trad && !RUN.faith.own) return alert('Choose one, write their own words, or "I\'d rather not say."');
-  }
-  if (st === 'safety'){
-    const endQ = RUN.role === 'person' && (fl.includes('end') || sf.ask), helpQ = RUN.role === 'helper' && (fl.includes('hope') || sf.ask);
-    if (endQ && !sf.notAsked && !(RUN.by === 'observed' ? sf.observed : sf.choice)) return alert('Ask the safety question, or check "I didn\'t ask today" and say why.');
-    if (helpQ && !sf.notAsked && !sf.helper) return alert('Ask the safety question, or check "I didn\'t ask today" and say why.');
-    if (sf.notAsked && !sf.reason) return alert('Choose why it wasn\'t asked.');
-    if (sf.homeAsk && !sf.home) return alert('Mark their answer about feeling safe, or uncheck that box.');
-    if (wlSafeFlag(sf) && !sf.actions.length && !confirm('This needs action. You haven\'t marked what you did. Go on anyway?')) return;
   }
   RUN.step++; wlKeep(); wlDraw();
 }
@@ -9674,7 +9666,7 @@ function wlSaveRun(){
   const s = {id:r.id, u:Date.now(), kind:'wl', clientId:r.clientId, date:today(), minutes:Math.max(1, Math.round((Date.now() - r.started) / 60000)), visit:r.visit, role:r.role, by:r.by, setting:r.setting, std:r.std,
     ans:r.visit === 'full' || r.visit === 'quick' ? r.ans : null, impr:r.visit === 'open' ? r.impr : null, sc, lv, flags:wlRunFlags(r), yes:r.yes,
     faithCheck:r.by === 'observed' ? '' : (r.faithEdit ? (c.wl.faith ? 'changed' : 'new') : r.faithCheck), faith:r.by === 'observed' ? null : (useFaith ? r.faith : (c.wl.faith || null)),
-    safety:r.safety, struggles:r.struggles, guilt:r.guilt, hopeAsked:r.hopeAsked, tags:r.tags, did:r.did, refs:r.refs, tryp:r.tryp,
+    harm:hmSave(r), struggles:r.struggles, guilt:r.guilt, hopeAsked:r.hopeAsked, tags:r.tags, did:r.did, refs:r.refs, tryp:r.tryp,
     plans:newPlans.map(p => p.id).concat(touched), summary:r.summary, priv:r.priv, pn:r.pn, fdate:r.fdate, ftext:r.ftext};
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ s.person = c; s.planList = newPlans; V = {tab:'willow', wlv:'demo', wlDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
@@ -9707,11 +9699,11 @@ function wlToggle(t){
   if (a === 'wl-ftrad'){ RUN.faith.trad = RUN.faith.trad === v ? '' : v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-fset'){ RUN.faith[k] = RUN.faith[k] === v ? '' : v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-flive'){ const L = RUN.faith.lives = RUN.faith.lives || []; if (L.includes(v)) L.splice(L.indexOf(v), 1); else L.push(v); t.setAttribute('aria-pressed', !!L.includes(v)); return wlKeep(); }
-  if (a === 'wl-safe'){ RUN.safety[k] = v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-safe'){ (RUN.safety = RUN.safety || {})[k] = v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-strug'){ const L = RUN.struggles; if (on) L.push(v); else L.splice(L.indexOf(v), 1); wlKeep(); return wlRedraw(); }
   if (a === 'wl-guilt'){ RUN.guilt.kind = RUN.guilt.kind === +v ? null : +v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-hopeask'){ RUN.hopeAsked = RUN.hopeAsked === v ? '' : v; t.parentNode.querySelectorAll('.chip').forEach(b => b.setAttribute('aria-pressed', b === t && RUN.hopeAsked === v)); return wlKeep(); }
-  if (a === 'wl-tog'){ const g = t.dataset.g, arr = g === 'actions' ? RUN.safety.actions : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); return wlKeep(); }
+  if (a === 'wl-tog'){ const g = t.dataset.g, arr = g === 'actions' ? ((RUN.safety = RUN.safety || {}).actions = RUN.safety.actions || []) : RUN[g]; if (on) arr.push(v); else arr.splice(arr.indexOf(v), 1); t.setAttribute('aria-pressed', on); return wlKeep(); }
   if (a === 'wl-try'){ const i = RUN.tryp.findIndex(x => x[0] === k && x[1] === v); if (i > -1) RUN.tryp.splice(i, 1); else { if (RUN.tryp.length >= 3) return toast('Three is plenty. Less is more.'); RUN.tryp.push([k, v]); } t.setAttribute('aria-pressed', i < 0); return wlKeep(); }
   if (a === 'wl-rplan'){ const i = +v, P = WC.P.plans[i]; if (i >= 0 && RUN.newPlans.some(x => x.tpl === i)) return; RUN.newPlans.push(i >= 0 ? {tpl:i, need:P[0], goal:P[1], approach:P[2], action:P[3]} : {tpl:-1, need:'', goal:'', approach:'', action:''}); wlKeep(); return wlRedraw(); }
   return false;
@@ -9727,7 +9719,7 @@ function wlInput(t, ev){
     if (t.dataset.wlchg){ RUN.planChg[t.dataset.wlchg] = Object.assign({}, RUN.planChg[t.dataset.wlchg], {changed:t.value}); wlKeep(); return true; }
     if (t.dataset.wlpdone && ev === 'change'){ RUN.planChg[t.dataset.wlpdone] = Object.assign({}, RUN.planChg[t.dataset.wlpdone], {done:t.checked}); wlKeep(); return true; }
     if (t.dataset.wlnp !== undefined){ const p = RUN.newPlans[+t.dataset.wlnp]; if (p){ p[t.dataset.k] = t.value; wlKeep(); } return true; }
-    if (t.dataset.wlsafe){ const k = t.dataset.wlsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; wlKeep(); if ((k === 'notAsked' || k === 'homeAsk') && ev === 'change') wlRedraw(); return true; }
+    if (t.dataset.wlsafe){ const k = t.dataset.wlsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; wlKeep(); if ((k === 'notAsked' || k === 'homeAsk') && ev === 'change') wlRedraw(); return true; }
   }
   if (t.dataset.wli && V.wli){ V.wli[t.dataset.wli] = t.value; if (t.dataset.wli === 'cid' && ev === 'change') render(); return true; }
   if (t.dataset.wlsf && ev === 'change' && V.wlsf){ V.wlsf[t.dataset.wlsf] = t.checked; return true; }
@@ -9757,7 +9749,7 @@ function wlAct(a, v, t){
     case 'wl-prev': if (RUN.step > 0){ RUN.step--; wlKeep(); wlDraw(); } return true;
     case 'wl-save': wlSaveRun(); return true;
     case 'wl-pause': wlPause(); return true;
-    case 'wl-safe-ask': RUN.safety.ask = true; wlKeep(); wlRedraw(); return true;
+    case 'wl-safe-ask': (RUN.safety = RUN.safety || {}).ask = true; wlKeep(); wlRedraw(); return true;
     case 'wl-hope-open': RUN.hopeOpen = true; wlRedraw(); return true;
     case 'wl-rplan-del': RUN.newPlans.splice(+v, 1); wlKeep(); wlRedraw(); return true;
     case 'wl-consent': V.wlch = null; go('willow', {wlc:v}); return true;
@@ -9894,7 +9886,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b852', '../aspen/guides.js?v=b852', '../oak/guides.js?v=b885', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b885', '../pine/guides.js?v=b852', '../birch/guides.js?v=b852'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b852', '../aspen/guides.js?v=b852', '../oak/guides.js?v=b885', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b885', '../pine/guides.js?v=b887', '../birch/guides.js?v=b887'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
@@ -10457,6 +10449,28 @@ function cdFullClose(){ const el = $('#cd-full'); if (el){ el.remove(); } docume
 function cdLive(){ htKeep(); if ($('#cd-full')) cdFull(); }
 
 // ---------------- SESSION PLANS ----------------
+// BLD 887: the guide-only step is open questions and presence, never a harm question. The library may carry
+// hardTalks.plans.presence (or a rewritten plans.safety) as {title, maple, aspen, pine, oak, birch, sequoia, willow:
+// {say [], do []}}; spoken wording that still asks about harm is set aside for the words below, so an older library never
+// brings a harm question back.
+const PL_HARM_Q = /hurting (you|yourself)|hurt yourself|harm(ing)? yourself|not wanting to (be alive|live)|end(ing)? your (own )?life|kill(ing)? yourself|suicid|are you safe|anyone hurting/i;
+const PL_PRESENCE = {
+  kid: {say: ['Before we finish, what has been on your mind today?'], do: ['Listen, stay calm, and let them lead.', 'If harm comes up on its own, stay with them, thank them, and say what you will do next. Follow the Grounded Response Plan today.']},
+  teen: {say: ['Before we wrap up, what has been on your mind lately?'], do: ['Listen with curiosity, without judgement or expectation.', 'If harm comes up on its own, stay with them, say what you will do next, and follow the Grounded Response Plan today.']},
+  adult: {say: ['Before we finish, how are you doing with all of this?'], do: ['Listen with curiosity, without judgement or expectation.', 'If harm comes up on its own, stay present and follow the Grounded Response Plan today.']},
+  willow: {say: ['Before we finish, what is on your heart today?'], do: ['Call the hospice nurse line first, any hour.', 'Listen with curiosity, without judgement or expectation.', 'If harm comes up on its own, stay present and follow the Grounded Response Plan today.']}
+};
+function plPresence(P, main){
+  const grp = main === 'maple' || main === 'aspen' ? 'kid' : main === 'pine' ? 'teen' : main === 'willow' ? 'willow' : 'adult';
+  const fall = {maple:['aspen'], aspen:['maple'], pine:['aspen'], birch:['oak'], sequoia:['oak'], willow:['oak']}[main] || [];
+  const ok = x => x && Array.isArray(x.say) && x.say.length && !x.say.some(t => PL_HARM_Q.test(cdTxt(t)) || /\?\s*$/.test(cdTxt(t)) && /\b(safe|hurt|harm|alive)\b/i.test(cdTxt(t)));
+  for (const src of [P.presence, P.safety]){
+    if (!src) continue;
+    const x = [src[main], ...fall.map(k => src[k])].find(ok);
+    if (x) return {title: src.title && !/^safety/i.test(src.title) ? src.title : 'Open Questions and Presence', say: x.say, do: main === 'willow' && !src.willow ? ['Call the hospice nurse line first, any hour.', ...(x.do || [])] : (x.do || [])};
+  }
+  return Object.assign({title: 'Open Questions and Presence'}, PL_PRESENCE[grp]);
+}
 let PS = null;
 function plNew(over){ return Object.assign({fmt:'one', min:45, stages:['oak'], topic:'', gi:0, focus:'', ppart:'', pkey:'', seed:uid(), off:{}, name:'', id:null}, over || {}); }
 function plState(){ if (!PS) PS = plNew(); return PS; }
@@ -10542,9 +10556,7 @@ function plBuild(S){
     const pd = ((P.parts || {})[k] || {})[voice] || {};
     steps.push({kind:'part', k, name: cdPart(k).name, sub: cdPart(k).sub, min: times.parts[k], bridge: br[i] || '', say: plLine(pd.say), listen: pd.listen || '', cards: plCards(S, k, deck), practice: pp === k ? prac : null, focus: S.focus === k});
   });
-  if (guideOnly){ let sf = (P.safety || {})[ST.main] || (ST.main === 'sequoia' || ST.main === 'birch' || ST.main === 'willow' ? (P.safety || {}).oak : ST.main === 'pine' ? (P.safety || {}).aspen : null) || {};
-    // Willow keeps the hospice nurse line first.
-    if (ST.main === 'willow' && !(P.safety || {}).willow) sf = Object.assign({}, sf, {do:['Call the hospice nurse line first, any hour.', ...(sf.do || [])]}); steps.push({kind:'safety', name:(P.safety || {}).title || 'Safety step', min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || []}); }
+  if (guideOnly){ const sf = plPresence(P, ST.main); steps.push({kind:'safety', name:sf.title, min:times.safety, say:(sf.say || []).map(plLine), todo: sf.do || [], rp:true}); }
   steps.push({kind:'close', name:'Close', min:times.close, bridge: br[6] || '', say:fLines('close').map(plLine)});
   let at = 0; steps.forEach(s => { s.at = at; at += s.min; });
   const title = (S.name || '').trim() || (T ? T.title : 'The whole tree') + ', ' + F.name.toLowerCase();
@@ -10570,7 +10582,7 @@ function plStepHTML(s, edit){
    <p class="pl-say">${esc(s.say)}</p>${s.cards.map(c => plCardHTML(c, edit)).join('')}
    ${s.practice !== null || (edit && !GD) ? plPracticeHTML(s.practice, edit) : ''}
    <p class="pl-listen"><b>Listen for.</b> ${esc(s.listen)}</p></div>`;
-  if (s.kind === 'safety') return `<div class="pl-step pl-safety"><div class="pl-head"><b>${esc(s.name)}</b><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>${s.say.map(t => `<p class="pl-say">${esc(t)}</p>`).join('')}<ul>${s.todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul></div>`;
+  if (s.kind === 'safety') return `<div class="pl-step pl-safety"><div class="pl-head"><b>${esc(s.name)}</b><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>${s.say.map(t => `<p class="pl-say">${esc(t)}</p>`).join('')}<ul>${s.todo.map(t => `<li>${esc(t)}</li>`).join('')}</ul>${s.rp ? `<div class="row" style="margin-top:8px">${rpBtn()}</div>` : ''}</div>`;
   return `<div class="pl-step pl-${s.kind}">${s.bridge ? `<p class="pl-bridge">${esc(s.bridge)}</p>` : ''}<div class="pl-head"><b>${esc(s.name)}</b><small class="muted">${plAt(s.at)} &middot; ${plClock(s.min)}</small></div>${s.say.map(t => `<p class="pl-say">${esc(t)}</p>`).join('')}</div>`;
 }
 function plGuideHTML(B){
@@ -11128,6 +11140,9 @@ document.addEventListener('click', async e => {
   if (t.dataset.tab && !t.dataset.act){ closeMenu(); if (t.closest('#tabs')) SEC[t.dataset.tab] = null; if (t.dataset.sec) SEC[t.dataset.tab] = t.dataset.sec; go(t.dataset.tab); return; }
   const a = t.dataset.act, v = t.dataset.v;
   if (a === 'th'){ fgTHGo(t.dataset.k, v); return; }
+  if (a === 'rp-open'){ rpOpen(); return; }
+  if (a === 'rp-close'){ rpClose(); return; }
+  if (a && a.startsWith('hm-') && hmAct(a, v, t)) return;
   if (a && a.startsWith('sec-') && secAct(a, v)) return;
   if (a && a.startsWith('gv-') && gvAct(a, v, t)) return;
   if (a && a.startsWith('gx-') && gxAct(a, v, t)) return;
@@ -11301,6 +11316,7 @@ document.addEventListener('click', async e => {
 });
 document.addEventListener('input', e => {
   const t = e.target; if (!DATA) return;
+  if (hmInput(t, 'input')) return;
   if (spInput(t, 'input')) return;
   if (saInput(t, 'input')) return;
   if (wlInput(t, 'input')) return;
@@ -11316,7 +11332,7 @@ document.addEventListener('input', e => {
   if (RUN && RUN.kind === 'st'){
     if (t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
     if (t.dataset.stpn){ RUN.pn[t.dataset.stpn] = t.value; stKeep(); return; }
-    if (t.dataset.stsafe === 'reasonText'){ RUN.safety.reasonText = t.value; stKeep(); return; }
+    if (t.dataset.stsafe === 'reasonText'){ (RUN.safety = RUN.safety || {}).reasonText = t.value; stKeep(); return; }
   }
   if (t.dataset.gvn && V.gvp){ const c = CL(V.gvp); if (c && c.gv){ c.gv.notes = t.value; touch(c); save(); } return; }
   if ((t.dataset.gxn || t.dataset.gxd) && gxInput(t)) return;
@@ -11330,6 +11346,7 @@ document.addEventListener('input', e => {
 });
 document.addEventListener('change', e => {
   const t = e.target; if (!DATA) return;
+  if (hmInput(t, 'change')) return;
   if (spInput(t, 'change')) return;
   if (saInput(t, 'change')) return;
   if (wlInput(t, 'change')) return;
@@ -11342,7 +11359,7 @@ document.addEventListener('change', e => {
   if (t.dataset.plf === 'topic' && PS){ PS.topic = t.value; PS.off = {}; PS.gi = 0; htKeep(); return; }
   if (t.dataset.plr && V.plf){ V.plf[t.dataset.plr] = t.value; if (t.id === 'pl-who') htKeep(); return; }
   if (t.dataset.htf && V.htf){ V.htf[t.dataset.htf] = t.value; if (t.id === 'ht-who') htKeep(); return; }
-  if (RUN && RUN.kind === 'st' && t.dataset.stsafe){ const k = t.dataset.stsafe; RUN.safety[k] = t.type === 'checkbox' ? t.checked : t.value; stKeep(); if (k === 'notAsked'){ const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; } return; }
+  if (RUN && RUN.kind === 'st' && t.dataset.stsafe){ const k = t.dataset.stsafe; (RUN.safety = RUN.safety || {})[k] = t.type === 'checkbox' ? t.checked : t.value; stKeep(); if (k === 'notAsked'){ const y = $('#run-body').scrollTop; stDraw(); $('#run-body').scrollTop = y; } return; }
   if (RUN && RUN.kind === 'st' && t.dataset.stf){ RUN[t.dataset.stf] = t.value; stKeep(); return; }
   if (t.dataset.stc && V.stp){ const c = CL(V.stp); if (t.dataset.stc === 'type') c.st.type = t.value; else c[t.dataset.stc] = t.value; touch(c); save(); if (t.tagName === 'SELECT') render(); return; }
   if (t.dataset.stfu !== undefined && V.stp){ const c = CL(V.stp); c.followups[+t.dataset.stfu].done = t.checked; touch(c); save(); t.closest('.tick').classList.toggle('done', t.checked); return; }
