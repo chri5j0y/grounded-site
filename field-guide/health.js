@@ -633,7 +633,9 @@ function buildWork(s){
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count};
 }
-function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } S.ov = o; wake(true); tick(); rerender(true); }
+// BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
+function keyVoice(){ if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio); }
+function openOv(o){ if (!o) { toast('That part arrives with the next library update.'); return; } keyVoice(); S.ov = o; wake(true); tick(); rerender(true); }
 function closeOv(){ const o = S.ov; if (o){ o.dead = true; o.skip = true; } const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); rerender(true); }
 let WL = null; function wake(on){ try { if (on && navigator.wakeLock && !WL) navigator.wakeLock.request('screen').then(l => { WL = l; }).catch(() => {}); if (!on && WL){ WL.release(); WL = null; } } catch(e){} }
 // BLD 857 (note 2, "says 3 sets, only does 2 sets"): this tick also ended Play Session's rests, so when it fired between the end
@@ -3545,7 +3547,7 @@ const CSS = `
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
 window.GGHealth = {
-  init(ctx){ C = ctx || {}; },
+  init(ctx){ C = ctx || {}; keyVoice(); },
   on: () => !!FLDH(),
   view,
   open(sec){ S.sec = sec || 'today'; S.setup = false; if (C.go) C.go('health'); if (PUB()) rerender(false); },
