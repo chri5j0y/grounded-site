@@ -784,3 +784,109 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 .hm-kdc .hm-burst{left:24px;top:24px;}
 .hm-kp.done .tx b{opacity:.75;}
 @media (prefers-reduced-motion: reduce){ .hm-fsheet::after{animation:none;} .hm-kdc svg{transition:none;} }
+
+/* =====================================================================
+   BLD 882: the pre-881 Home's look is the base again (Chris: "bring back UI and UX"). The big bright hero with the
+   day and date, cards with paintings and bold edges, the animated Done check, a Right Now color block, and two
+   columns on a wide screen. The four tabs and the bottom tab bar stay. No dashes in any words here.
+   ===================================================================== */
+.hm-app[data-tab="today"],.hm-app[data-tab="grow"],.hm-app[data-tab="week"],.hm-app[data-tab="library"]{max-width:1280px;}
+@media (min-width:1000px){
+  .hm-app[data-tab="today"] .hm-pane,.hm-app[data-tab="week"] .hm-pane{max-width:none;}
+}
+/* Today's hero: the day and date, today's words, the count, and the profile button */
+.hm-thero{min-height:360px;margin-bottom:18px;}
+.hm-thero .in{padding:22px 22px 26px;max-width:760px;}
+.hm-thero .hm-me{position:absolute;top:16px;right:16px;background:rgba(255,252,246,.92);border-color:rgba(255,255,255,.7);color:#2C1810;}
+.hm-mantra{margin:14px 0 0;max-width:34ch;display:flex;flex-direction:column;gap:2px;}
+.hm-mantra span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:1.6px;text-transform:uppercase;color:#F6DFA6;text-shadow:0 1px 6px rgba(10,20,50,.5);}
+.hm-mantra b{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-style:italic;font-size:clamp(22px,5.6vw,30px);line-height:1.15;text-shadow:0 2px 12px rgba(10,20,50,.55);}
+.hm-hcount{position:absolute;right:20px;bottom:20px;display:flex;flex-direction:column;align-items:center;gap:6px;padding:12px 12px 10px;border-radius:22px;background:rgba(28,18,10,.42);backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px);color:#FFF7E8;}
+.hm-hcount .hm-ring .tr{stroke:rgba(255,247,232,.22);}
+.hm-hcount .hm-ring .mid b{color:#FFF7E8;font-size:28px;}
+.hm-hcount .hm-ring .mid small{color:#F1E3C8;}
+.hm-hcount>span{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;}
+.hm-hero .chips .hm-chip.s{background:#3F6F94;color:#fff;border-color:#3F6F94;}
+@media (max-width:699px){
+  .hm-thero{min-height:0;}
+  .hm-thero picture,.hm-thero img.art{position:absolute;inset:0;width:100%;height:100%;aspect-ratio:auto;}
+  .hm-thero img.art{object-position:50% 70%;}
+  .hm .hm-thero .in{position:relative;padding:20px 18px 136px;}
+  .hm-hcount{left:16px;right:auto;bottom:16px;flex-direction:row;padding:8px 16px 8px 8px;gap:12px;}
+  .hm-hcount>span{font-size:14px;}
+}
+@media (min-width:700px){ .hm-thero{min-height:420px;} .hm-thero .in{padding:36px 44px 34px;} .hm-hcount{right:28px;bottom:28px;} .hm-thero .hm-me{top:22px;right:22px;} }
+/* the day and the panels beside it */
+.hm-tgrid{display:grid;gap:18px;align-items:start;}
+.hm-tgrid .hm-list{gap:14px;}
+@media (min-width:980px){ .hm-tgrid{grid-template-columns:minmax(0,1.25fr) minmax(0,1fr);gap:24px;} }
+/* Right Now: a bold color block over the item's painting */
+.hm-now{position:relative;overflow:hidden;isolation:isolate;border-radius:24px;min-height:200px;padding:22px 22px 20px;color:#FFFCF6;background:var(--c,#4E7D4A);box-shadow:var(--shadow-up);}
+.hm-now .bg{position:absolute;right:0;top:0;width:62%;height:100%;object-fit:cover;z-index:-2;}
+.hm-now::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--nowc) 0%,var(--nowc) 40%,color-mix(in srgb,var(--nowc) 60%,transparent) 70%,color-mix(in srgb,var(--nowc) 18%,transparent) 100%);}
+.hm-now{--nowc:color-mix(in srgb,var(--c,#4E7D4A) 92%,#1C120A);}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hm-now{--nowc:color-mix(in srgb,var(--c,#9CCB8A) 50%,#1C120A);}}
+:root[data-theme="dark"] .hm-now{--nowc:color-mix(in srgb,var(--c,#9CCB8A) 50%,#1C120A);}
+.hm-now{background:var(--nowc);}
+.hm-now .in{position:relative;max-width:440px;}
+.hm-now .k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.6px;text-transform:uppercase;color:rgba(255,252,246,.86);}
+.hm .hm-now h2{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:clamp(30px,7vw,40px);line-height:1.05;margin:4px 0 6px;color:#FFFCF6;}
+.hm-now p{margin:0 0 14px;font-size:15.5px;line-height:1.4;color:rgba(255,252,246,.92);max-width:38ch;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;}
+.hm-now .hm-btn.big{width:auto;min-width:200px;background:#FFFCF6;color:#2C1810;box-shadow:0 8px 22px rgba(0,0,0,.25);}
+.hm-btn.pulse{animation:hmpulse 2.4s ease-in-out infinite;}
+@keyframes hmpulse{0%,100%{box-shadow:0 8px 22px rgba(0,0,0,.25),0 0 0 0 rgba(255,252,246,.55);}50%{box-shadow:0 8px 22px rgba(0,0,0,.25),0 0 0 12px rgba(255,252,246,0);}}
+@media (max-width:599px){ .hm-now .bg{width:100%;opacity:.45;} .hm-now::before{background:linear-gradient(180deg,color-mix(in srgb,var(--nowc) 70%,transparent) 0%,var(--nowc) 70%);} }
+/* each thing in the day, the pre-881 card */
+.hm-titem .hm-pc .scene{width:96px;height:96px;}
+.hm-titem .tx{display:flex;flex-direction:column;gap:2px;min-width:0;}
+.hm-titem .hm-h3{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:25px;line-height:1.1;color:var(--ink);}
+.hm-titem .hm-time{color:var(--c);}
+.hm-titem small.hm-meta{display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;margin-top:4px;font-size:14.5px;}
+.hm-titem .hm-acts{margin-top:10px;}
+.hm-card.done{background:color-mix(in srgb,var(--c) 8%,var(--card));}
+.hm-card.done .hm-h3{color:var(--ink-soft);}
+.hm-card.done .scene img{filter:saturate(.8);}
+@media (max-width:420px){ .hm-titem .hm-pc .scene{width:76px;height:76px;} .hm-titem .hm-h3{font-size:22px;} }
+.hm-startc .hm-linkbtn{margin-left:4px;}
+/* Tonight's Question over its painting */
+.hm-tqcard{position:relative;overflow:hidden;isolation:isolate;}
+.hm-tqcard .bg{position:absolute;right:0;bottom:0;width:46%;height:100%;object-fit:cover;z-index:-2;opacity:.9;}
+.hm-tqcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(90deg,var(--card) 0%,var(--card) 52%,color-mix(in srgb,var(--card) 55%,transparent) 78%,color-mix(in srgb,var(--card) 10%,transparent) 100%);}
+.hm-tqcard .hm-tq{max-width:24ch;}
+/* the painted banner over Week, Grow, and Library */
+.hm-banner{position:relative;overflow:hidden;isolation:isolate;border-radius:26px;min-height:180px;padding:22px 20px;margin-bottom:18px;align-items:flex-end;color:#FFFCF6;box-shadow:var(--shadow-up);}
+.hm-banner .bg,.hm-banner .bg img{position:absolute;inset:0;width:100%;height:100%;z-index:-2;}
+.hm-banner .bg img{object-fit:cover;object-position:50% 55%;}
+.hm-banner::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(0deg,rgba(24,14,8,.78) 0%,rgba(24,14,8,.35) 55%,rgba(24,14,8,.08) 100%);}
+.hm-banner .hm-ak{color:#F6DFA6;}
+.hm .hm-banner .hm-at{color:#FFFCF6;font-size:clamp(44px,11vw,72px);text-shadow:0 2px 16px rgba(10,20,50,.45);}
+.hm-asub{margin:4px 0 0;font-size:15.5px;color:#F4EBDD;}
+.hm-banner .hm-me{align-self:flex-start;background:rgba(255,252,246,.92);color:#2C1810;}
+@media (min-width:700px){ .hm-banner{min-height:230px;padding:30px 36px;} }
+/* Living Sober: today's words, the mantra, and the share cards */
+.hm-sk{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.4px;text-transform:uppercase;color:var(--c);margin-top:14px;}
+.hm-sober .hm-sk+.words{margin-top:6px;}
+.hm-smantra{margin-top:12px;padding:14px 16px;border-radius:16px;background:#3F6F94;color:#FFFCF6;display:flex;flex-direction:column;gap:2px;}
+.hm-smantra .hm-sk{color:rgba(255,252,246,.85);margin:0;}
+.hm-smantra b{font-family:'Cormorant Garamond',Georgia,serif;font-size:26px;line-height:1.15;font-style:italic;}
+.hm-shares{margin-top:10px;}
+/* Week: the shopping list and prep beside the seven days on a wide screen */
+.hm-wgrid{display:grid;gap:16px;align-items:start;}
+@media (min-width:980px){ .hm-wgrid{grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:24px;} .hm-wgrid .hm-wside{grid-column:2;grid-row:1;} .hm-wgrid .hm-wmain{grid-column:1;grid-row:1;} }
+.hm-wgrid .hm-wside>*{margin:0;}
+/* Grow: the tree card's painting and part bars */
+.hm-gcard .hm-sub{margin-top:4px;}
+#hm-tree .hm-gpic{margin:6px 0 12px;}
+#hm-tree .hm-parts{margin-bottom:12px;}
+.hm-part.hm-p-roots,.hm-part.hm-p-trunk,.hm-part.hm-p-bark,.hm-part.hm-p-branches,.hm-part.hm-p-leaves,.hm-part.hm-p-fruit{border-top:4px solid var(--c);}
+#hm-fruit .tn-card{margin:0 0 14px;}
+.hm .hm-thero .hm-day{color:#FFFFFF;margin:10px 0 4px;}
+.hm-thero .hm-date{color:#FFFFFF;}
+.hm .hm-thero{padding:0;}
+.hm-app .hm-ah.hm-banner{max-width:none;margin:0 0 18px;}
+.hm-wday{border-left:6px solid var(--tn-k);}
+.hm-wday:nth-child(3n+2){border-left-color:var(--tn-p);}
+.hm-wday:nth-child(3n){border-left-color:var(--tn-m);}
+.hm-wday.today{background:color-mix(in srgb,var(--gold-soft) 16%,var(--card));border-left-color:var(--gold);}
+.hm-wday .hm-wdin{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:19px;line-height:1.2;}
+.hm-wday .dn{font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.6px;text-transform:uppercase;}

@@ -2725,6 +2725,7 @@ function bareBody(b){
     case 'quiet': return vQuietShelf();
     case 'setup': return vSetupBare(b);
     case 'week': return box('a-week', vWeek());
+    case 'fruit': return KIT() ? '' : box('p-fruit', fruitCards());   // BLD 882: milestones, the last 7 days, and the LDL path, for the Home's Grow tab
     case 'learn': return box('a-today', vPlan(lib, 'food') + vPlan(lib, 'fitness') + SOBER);
     case 'team': return PUB() ? vTeam() : '';
     case 'kids': return PUB() ? vKids() : '';

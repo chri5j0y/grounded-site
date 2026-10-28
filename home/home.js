@@ -503,13 +503,29 @@
     var from = prev ? prev.at : date, span = Math.max(1, between(from, next.at)), into = between(from, nowS), left = between(nowS, next.at);
     return '<article class="hm-card hm-sober hm-a-sober o4" id="hm-sober"><div class="row">' + ring(108, 10, into, span, '<b>' + (c.days + 1) + '</b><small>' + (c.days === 0 ? 'day' : 'days') + '</small>') +
       '<div style="min-width:0"><div class="dn">Living Sober</div><h3 class="hm-h3" style="font-size:28px">' + (c.days === 0 ? 'Day One' : 'Day ' + (c.days + 1)) + '</h3><div class="hm-sub">Next medallion: ' + esc(next.name) + ', in ' + left + (left === 1 ? ' day' : ' days') + '.</div></div></div>' +
-      '<p class="words" id="hm-words">Every day counts. Today is one more.</p>' +
+      '<div class="hm-sk">Today\'s Encouragement</div><p class="words" id="hm-words">Every day counts. Today is one more.</p>' +
+      '<div class="hm-smantra"><span class="hm-sk">Mantra</span><b class="hm-mtext">One day at a time.</b></div>' +
+      '<div class="hm-acts tight hm-shares"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="daily">' + I('open') + 'Share Today\'s Words</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="mantra">' + I('open') + 'Share the Mantra</button></div>' +
       '<div class="hm-acts"><a class="hm-btn sm hm-a-sober" href="/living-sober.html#today">' + I('sunrise') + 'Today\'s Intention</a><a class="hm-btn sm line hm-a-sober" href="/living-sober.html#wave">' + I('wind') + 'Ride the Wave</a></div></article>';
   }
   function soberInviteHtml() {
     var t = TREES[S.tree] || TREES.oak;
     return '<article class="hm-card hm-a-sober o4 hm-offer" id="hm-sober"><span class="hm-badge">' + I('sun2') + '</span><div style="flex:1;min-width:0"><div class="hm-k">Living Sober</div><div class="hm-sub">Turn on Living Sober and add your sober date in My ' + esc(t.n) + ', and your day count, words for today, and medallions show here.</div>' +
       '<div class="hm-quiet" style="margin-top:8px"><a href="' + t.href + '">Open My ' + esc(t.n) + '</a><span>·</span><a href="/living-sober.html">About Living Sober</a></div></div></article>';
+  }
+  /* BLD 882: the mantra of the day (Living Sober's mantras, by days since the sober date) in the hero and the Living Sober card. */
+  function fillMantra() {
+    if (!document.querySelector('#hm-mantra,.hm-mtext')) return;
+    load(WORDS_SRC).then(function () {
+      var G = window.GGSoberWords, list = G ? arr(G.mantras) : [], c = soberCount(soberDate()); if (!list.length || !c) return;
+      var m = list[c.days % list.length]; S.mantra = m.text;
+      document.querySelectorAll('#hm-mantra,.hm-mtext').forEach(function (el) { el.textContent = m.text; });
+    });
+  }
+  function shareCard(kind) {
+    var text = kind === 'mantra' ? (S.mantra || '') : ((document.getElementById('hm-words') || {}).textContent || '');
+    if (!text) return;
+    load('/shared/gg-sharecard.js?v=b839').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: kind, text: text }); else toast('Sharing opens on Living Sober.'); });
   }
   function fillWords() {
     var el = document.getElementById('hm-words'); if (!el) return;
@@ -733,9 +749,17 @@
     return tab === 'grow' ? 'Grow' : 'Library';
   }
   function weekLabel(l) { l = String(l || ''); return /^week\b/i.test(l) ? l : 'Week ' + l; }
+  function meBtn() { return '<button type="button" class="hm-me" data-hm="me" aria-label="Your profile, numbers, and settings" aria-haspopup="dialog">' + esc(initials(S.p && S.p.name)) + '</button>'; }
+  /* BLD 882 (Chris: "bring back UI and UX"): the pre-881 Home's look is the base again. Today opens on the big bright hero
+     with the day and date; Week, Grow, and Library open on a painted banner with the tab's name. */
+  var BANNER = { week: ['recipes', 'Your meals, your movement, and Sunday Together Prep'], grow: ['tree', 'Your tree, its six parts, and your growth plan'], library: ['library', 'Lessons, guides, recipes, workouts, and quiet'] };
+  function bannerHtml(tab) {
+    var b = BANNER[tab] || BANNER.grow, wide = b[0] === 'tree' ? HERO + 'page-growth-wide.webp' : b[0] === 'recipes' ? IMG + 'recipes-wide.webp' : HERO + 'library-wide.webp', narrow = b[0] === 'tree' ? HERO + 'page-growth-narrow.webp' : b[0] === 'recipes' ? IMG + 'recipes-narrow.webp' : HERO + 'library-phone.webp';
+    return '<header class="hm-ah hm-banner"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + narrow + '"><img src="' + wide + '" alt="" fetchpriority="high"></picture>' +
+      '<div class="hm-ahl"><div class="hm-ak">The Grounded Way</div><h1 class="hm-at">' + esc(headingOf(tab)) + '</h1><p class="hm-asub">' + esc(b[1]) + '</p></div>' + meBtn() + '</header>';
+  }
   function shellHtml(tab, body) {
-    return '<div class="hm-app" data-tab="' + tab + '"><header class="hm-ah"><div class="hm-ahl"><div class="hm-ak">The Grounded Way</div><h1 class="hm-at">' + esc(headingOf(tab)) + '</h1></div>' +
-      '<button type="button" class="hm-me" data-hm="me" aria-label="Your profile, numbers, and settings" aria-haspopup="dialog">' + esc(initials(S.p && S.p.name)) + '</button></header>' +
+    return '<div class="hm-app" data-tab="' + tab + '">' + (tab === 'today' ? '' : bannerHtml(tab)) +
       '<div class="hm-pane" id="hm-pane">' + body + '</div>' + helpLine() + '</div>';
   }
   function paintTabbar(cur) {
@@ -764,8 +788,8 @@
     if (!tendReady() || S.tendInit !== S.id) loadTending().then(function () { if (S.id && app() && S.paintedFor !== S.id + ':' + S.view) { S.paintedFor = S.id + ':' + S.view; refreshPane(); } });
   }
   function afterTab(tab) {
-    if (tab === 'today') { paintRings(app()); }
-    else if (tab === 'grow') { fillAlso(); fillWords(); paintRings(app()); }
+    if (tab === 'today') { paintRings(app()); fillAlso(); fillWords(); fillMantra(); }
+    else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); fillFruit(); }
     else if (tab === 'library') fillLibrary();
     else if (tab === 'week') { var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); }
   }
@@ -958,8 +982,8 @@
     }
     var hasQuiet = items.some(function (x) { return /quiet|med/i.test(x.kind + ' ' + x.hkey); });
     if (h.parts.indexOf('still') >= 0 && !hasQuiet) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'A few minutes of breath and stillness', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
-    if (h.parts.indexOf('pray') >= 0) items.push({ key: 'pray', hour: 12.5, when: 'Any time', title: 'A Sacred Pause', sub: 'Prayer, a reading, or quiet, in your own way', btn: 'Begin', tint: 'roots', done: !!d.pray, src: 'home' });
-    if (h.parts.indexOf('connect') >= 0) items.push({ key: 'talk', hour: 18.5, when: 'At dinner', title: 'Tonight\'s Question', sub: pick(QUESTIONS, dayIndex() + (+d.q || 0)), btn: 'Another', tint: 'branches', done: !!d.talk, src: 'home' });
+    if (h.parts.indexOf('pray') >= 0) items.push({ side: true, key: 'pray', hour: 12.5, when: 'Any time', title: 'A Sacred Pause', sub: 'Prayer, a reading, or quiet, in your own way', btn: 'Begin', tint: 'roots', done: !!d.pray, src: 'home' });
+    if (h.parts.indexOf('connect') >= 0) items.push({ side: true, key: 'talk', hour: 18.5, when: 'At dinner', title: 'Tonight\'s Question', sub: pick(QUESTIONS, dayIndex() + (+d.q || 0)), btn: 'Another', tint: 'branches', done: !!d.talk, src: 'home' });
     // BLD 882: each practice in the tree's Growth Plan, its own card.
     planItems(false).forEach(function (x) { items.push(x); });
     items.push(treeItem(h, d));
@@ -968,26 +992,70 @@
     return { items: items, ready: ready, loading: !tendReady() && !S.tendLoadDone };
   }
   var DONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.4 4.4L19 7.4"/></svg>';
+  /* BLD 882: each thing in the day wears the pre-881 Home's card: a painting, the time in Barlow Condensed, the name in
+     Cormorant, a bold action, and the animated Done check. */
+  function doneBtn(x, label) {
+    return '<button class="hm-ck" type="button" aria-pressed="' + !!x.done + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
+  }
+  var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play' };
   function itemHtml(x) {
-    return '<article class="hm-item ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
-      '<button type="button" class="hm-dc" data-hm-done="' + esc(x.key) + '" aria-pressed="' + x.done + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + DONE_SVG + '</button>' +
-      tile(x.image || artFor(x)) + '<div class="bd"><div class="tx"><span class="ey">' + esc(x.when) + '</span><b>' + esc(x.title) + '</b>' + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</div>' +
-      '<button type="button" class="hm-pill" data-hm-go="' + esc(x.key) + '">' + esc(x.btn) + '</button></div></article>';
+    return '<article class="hm-titem hm-card edge lift ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
+      '<div class="hm-pc"><div class="scene">' + '<img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
+      '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I(GO_ICON[x.btn] || 'arrow') + esc(x.btn) + '</button>' + doneBtn(x) + '</div></div></div></article>';
+  }
+  /* Right Now: the next thing that is due, in a bold color block with a big button (Tending's own Right Now card, BLD 857). */
+  function nowHtml(items) {
+    var hr = now().getHours() + now().getMinutes() / 60, open = items.filter(function (x) { return !x.done && !x.side; });
+    var due = open.filter(function (x) { return x.hour <= hr + 0.25; }), cur = due.length ? due[due.length - 1] : open[0];
+    if (!cur) return '<article class="hm-now hm-tn-p"><img class="bg" src="' + IMG + 'home-evening-narrow.webp" alt="" aria-hidden="true"><div class="in"><div class="k">Right Now</div><h2>Everything for today is tended.</h2><p>Rest well. Tomorrow keeps growing.</p></div></article>';
+    return '<article class="hm-now ' + tintClass(cur.tint, cur.kind) + '"><img class="bg" src="' + esc(cur.image || artFor(cur)) + '" alt="" aria-hidden="true"><div class="in"><div class="k">Right Now · ' + esc(cur.when) + '</div><h2>' + esc(cur.title) + '</h2>' + (cur.sub ? '<p>' + esc(cur.sub) + '</p>' : '') +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn big pulse" data-hm-go="' + esc(cur.key) + '">' + I(GO_ICON[cur.btn] || 'play') + esc(cur.btn) + '</button></div></div></article>';
+  }
+  /* The hero: the day and date over the morning or evening painting, as the pre-881 Home had it, with today's count and words. */
+  var LINES = ['One small practice at a time grows a whole tree.', 'Tend what is in front of you today. It is enough.', 'Roots first. Slow and steady is how a tree grows.', 'Today is a good day to grow.', 'Breathe in. Begin where you are.', 'Small steps, tended daily, change a life.', 'You are growing, even on the quiet days.'];
+  function heroLine() {
+    var sd = soberDate(); if (sd) return { k: 'Today\'s Mantra', id: 'hm-mantra', text: 'One day at a time.' };
+    var w = GGP.data(S.id, 'tending'), why = obj(obj(w && w.health).set).why;
+    if (why) return { k: 'My Why', text: why };
+    return { k: 'For Today', text: pick(LINES, dayIndex()) };
+  }
+  function todayHero(done, n) {
+    var d = now(), hr = d.getHours() + d.getMinutes() / 60, eve = hr >= 17 || hr < 5, k = eve ? 'home-evening' : 'home-morning', t = TREES[S.tree] || TREES.oak, tend = tendOf(S.id, S.tree), wk = weekNo(tend), hl = heroLine();
+    var chips = '<span class="hm-chip g">' + I('tree') + esc(t.n) + '</span>' + (wk ? '<span class="hm-chip">Season ' + (tend.season || 1) + ' · Week ' + Math.min(12, wk) + '</span>' : '') + (soberDate() ? '<span class="hm-chip s">' + I('sun2') + 'Day ' + (soberCount(soberDate()).days + 1) + ' Sober</span>' : '');
+    return '<section class="hm-hero hm-thero o1' + (eve ? ' eve' : '') + '" aria-label="Today"><picture><source media="(max-width:699px)" srcset="' + IMG + k + '-narrow.webp"><img class="art" src="' + IMG + k + '-wide.webp" alt="" width="2000" height="800" fetchpriority="high"></picture>' +
+      '<div class="in"><div class="hm-greet">' + I(eve ? 'moon' : 'sunrise') + '<span>' + esc(greetWord()) + (firstName() ? ', ' + esc(firstName()) : '') + '</span></div>' +
+      '<h1 class="hm-day">' + DAYS[d.getDay()] + '</h1><div class="hm-date">' + MONTHS[d.getMonth()] + ' ' + d.getDate() + '</div>' +
+      '<p class="hm-mantra"><span>' + esc(hl.k) + '</span><b' + (hl.id ? ' id="' + hl.id + '"' : '') + '>' + esc(hl.text) + '</b></p><div class="chips">' + chips + '</div></div>' +
+      '<div class="hm-hcount">' + ring(innerWidth < 700 ? 72 : 96, innerWidth < 700 ? 8 : 9, done, Math.max(1, n), '<b>' + done + '</b><small>of ' + n + '</small>', '#F2C66B') + '<span>' + (n && done === n ? 'All tended' : 'Tended today') + '</span></div>' + meBtn() + '</section>';
+  }
+  /* The rich panels beside the day (one column on a phone, after the day). */
+  function sideHtml(items, ed) {
+    var h = homeRec(), sd = soberDate(), d = h.days[today()] || {}, out = [];
+    if (sd) out.push(soberHtml(sd)); else if (h.parts.indexOf('sober') >= 0) out.push(soberInviteHtml());
+    out.push(forYouHtml(ed));
+    items.filter(function (x) { return x.side; }).forEach(function (x) {
+      if (x.key === 'pray') out.push('<article class="hm-card edge lift hm-p-roots hm-side' + (x.done ? ' done' : '') + '"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-spirit.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Any time</div><h3 class="hm-h3">A Sacred Pause</h3><div class="hm-meta"><span>' + I('flame') + 'Prayer, a reading, or quiet, in your own way</span></div>' +
+        '<div class="hm-acts tight"><button type="button" class="hm-btn sm" data-hm-go="pray">' + I('play') + 'Begin</button><a class="hm-btn sm line" href="/readings.html">' + I('feather') + 'Readings</a>' + doneBtn(x) + '</div></div></div></article>');
+      if (x.key === 'talk') out.push('<article class="hm-card edge hm-p-branches hm-side hm-tqcard' + (x.done ? ' done' : '') + '"><img class="bg" src="' + IMG + 'tend-people.webp" alt="" aria-hidden="true" loading="lazy"><div class="hm-hd" style="margin-bottom:4px"><span class="hm-badge">' + I('people') + '</span><div><div class="hm-k">Tonight\'s Question</div><div class="hm-sub">For dinner together, phones away</div></div></div><p class="hm-tq">' + esc(pick(QUESTIONS, dayIndex() + (+d.q || 0))) + '</p>' +
+        '<div class="hm-acts tight"><button class="hm-btn sm line" type="button" data-hm-go="talk">' + I('swap') + 'Another Question</button>' + doneBtn(x, 'We Talked') + '</div></article>');
+    });
+    out.push(progressHtml(h, lastCheckin(S.id, S.tree), tendOf(S.id, S.tree)));
+    return out.join('');
   }
   function todayHtml() {
-    var T = todayItems(), h = homeRec(), items = T.items, done = items.filter(function (x) { return x.done; }).length, n = items.length;
-    var line = done === 0 ? nWord(n) + (n === 1 ? ' thing' : ' things') + ' today. Tap each one when it is done.' : done === n ? 'Every one tended today. Well done.' : done + ' of ' + n + ' done. One at a time.';
-    var hr0 = now().getHours(), eve0 = hr0 >= 17 || hr0 < 5, sky = eve0 ? 'home-evening' : 'home-morning';
-    var hero = '<section class="hm-hero2" aria-label="Today"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + sky + '-narrow.webp"><img src="' + IMG + sky + '-wide.webp" alt="" fetchpriority="high"></picture>' + ring(68, 7, done, Math.max(1, n), '<b>' + done + '</b><small>of ' + n + '</small>', '#D9A847') +
-      '<div class="tx"><b>' + esc(greetWord()) + (firstName() ? ', ' + esc(firstName()) : '') + '</b><span>' + esc(line) + '</span></div></section>';
+    var T = todayItems(), h = homeRec(), items = T.items, done = items.filter(function (x) { return x.done; }).length, n = items.length, ed = edgesOf(lastCheckin(S.id, S.tree));
     var lead = '';
     if (T.loading) lead = '<p class="hm-loading">Opening your Tending…</p>';
     else if (!T.ready && !h.hidden.tend) {
-      lead = '<article class="hm-start">' + tile(ART2.start, 'wide') + '<div class="tx"><span class="ey">Tending</span><b>Start Tending</b><small>' + (tendStarted() ? 'Finish a short start-up check and your meals, movement, and quiet fill this list.' : 'A short start-up check shapes it to you: your goals, the people at your table, and movement for your level.') + '</small></div>' +
-        '<div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="today=tending">' + (tendStarted() ? 'Continue' : 'Start') + '</button><button type="button" class="hm-linkbtn" data-hm="hidetend">Hide this card</button></div></article>';
+      lead = '<article class="hm-startc hm-card edge lift hm-p-leaves"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-body.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-k">Tending</div><h3 class="hm-h3">' + (tendStarted() ? 'Your Tending Plan' : 'Begin Your Tending') + '</h3><p class="hm-sub" style="margin-top:4px">' + (tendStarted() ? 'Finish a short start-up check and your meals, movement, and quiet fill your day.' : 'A short start-up check shapes it to you: your goals, the people at your table, and movement for your level.') + '</p>' +
+        '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="today=tending">' + I('sprout') + (tendStarted() ? 'Continue' : 'Start Tending') + '</button><button type="button" class="hm-linkbtn" data-hm="hidetend">Hide this card</button></div></div></div></article>';
     }
+    var list = items.filter(function (x) { return !x.side; });
+    var head = '<div class="hm-grp hm-p-leaves"><span class="hm-badge">' + I('sprout') + '</span><h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
     var fab = T.ready ? '<button type="button" class="hm-fab" data-hm-tab="today=log" aria-label="Log a plate or a note">' + I('plus') + '</button>' : '';
-    return hero + lead + '<div class="hm-list" id="hm-today">' + items.map(itemHtml).join('') + '</div>' + fab;
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div></div>' +
+      '<div class="hm-col hm-tside">' + sideHtml(items, ed) + '</div></div>' + fab;
   }
   function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
   function itemGo(key) {
@@ -1009,7 +1077,7 @@
       if (hasFn('done')) hCall('done', x.hkey, on); else if (hasFn('toggle')) hCall('toggle', x.hkey); else hCall('act', x.hkey, 'done');
     } else if (x.src === 'old') { itemGo(key); return; }
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome(); }
-    if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item'); if (card) card.classList.toggle('done', on); }
+    if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item,.hm-card'); if (card) card.classList.toggle('done', on); }
     if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
     setTimeout(function () { if (isKid(S.p)) render(); else refreshPane(); }, on ? 650 : 0);
   }
@@ -1035,7 +1103,7 @@
         (!din.title && !mv.title ? '<span class="hm-wnone">A day to rest</span>' : '') +
         '</div></div>';
     }).join('');
-    return shop + prep + '<h2 class="hm-label">This Week</h2><div class="hm-wlist">' + rows + '</div>';
+    return '<div class="hm-wgrid"><div class="hm-col hm-wside">' + shop + prep + '</div><div class="hm-col hm-wmain"><h2 class="hm-label">This Week</h2><div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
   /* ---------- Grow: the tree, the six parts, this season, the Growth Plan, history ---------- */
@@ -1047,23 +1115,73 @@
     return t.href;
   }
   function treePic() { return '<picture class="hm-gpic" aria-hidden="true"><source media="(max-width:699px)" srcset="' + treeArt(S.tree) + '"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"></picture>'; }
-  function growHtml() {
-    var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), tend = tendOf(S.id, S.tree), wk = weekNo(tend), sd = soberDate();
-    var top;
+  /* BLD 882: the pre-881 Home's tree card (the drawn tree with each part's level), restored on Grow. */
+  function checkHref(t) { return t.href + (t.ck ? '#checkin' : ''); }
+  function treeCardHtml(ck, ed, t) {
     if (!ck) {
-      top = '<section class="hm-gtree">' + treePic() + '<h2 class="hm-h2">Your ' + esc(t.n) + '</h2><p class="hm-sub">Six parts make you whole: Roots, Trunk, Bark, Branches, Leaves, and Fruit. Your first check-in plants your tree here and shows how each part is growing.</p>' +
-        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Begin My First Check-in</button></div></section>';
-    } else {
-      var lv = ed.lv, strong = PARTS.filter(function (p) { return lv[p.k] === 'strong'; }).map(function (p) { return p.n; });
-      var line = (strong.length ? 'Strong: ' + strong.join(', ') + '. ' : '') + (ed.edges.length ? 'Your Growing Edge: ' + ed.edges.map(function (k) { return PART[k].n; }).join(', ') + '.' : 'Every part is Steady or Strong. Keep tending what is working.');
-      top = '<section class="hm-gtree">' + treePic() + '<h2 class="hm-h2">Your ' + esc(t.n) + '</h2><p class="hm-gline">' + esc(line) + '</p>' +
-        '<p class="hm-sub">Last check-in ' + esc(niceDay(ck.date)) + '</p>' +
-        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Check In</button><button type="button" class="hm-btn line hm-p-leaves" data-hm-tree="quick">' + I('clock') + 'Quick Check-in</button></div></section>';
+      return '<article class="hm-card hm-p-leaves o2" id="hm-tree"><div class="hm-hd"><span class="hm-badge"><img src="' + mark(S.tree) + '" alt=""></span><div><div class="hm-k">Your Tree</div><div class="hm-sub">Your first check-in plants your tree here.</div></div></div>' +
+        treePic() + '<div class="hm-plant"><p class="hm-sub" style="max-width:36ch">Six parts make you whole: Roots, Trunk, Bark, Branches, Leaves, and Fruit. A check-in shows how each one is growing, Strong, Steady, or a Growing Edge.</p></div>' +
+        '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Begin My First Check-in</button></div></article>';
     }
-    var parts = '<div class="hm-parts">' + PARTS.map(function (p) {
+    var lv = ed.lv, cnt = { strong: 0, steady: 0 }; PARTS.forEach(function (p) { if (cnt[lv[p.k]] != null) cnt[lv[p.k]]++; });
+    var sum = (cnt.strong ? '<span class="hm-lvl s">' + cnt.strong + ' Strong</span>' : '') + (cnt.steady ? '<span class="hm-lvl st">' + cnt.steady + ' Steady</span>' : '') +
+      (ed.edges.length ? '<span class="hm-lvl g hm-p-' + ed.edges[0] + '">Growing Edge: ' + ed.edges.map(function (k) { return PART[k].n; }).join(', ') + '</span>' : '');
+    var line = ed.edges.length ? PART[ed.edges[0]].n + ', ' + PART[ed.edges[0]].m + ', is your Growing Edge this week. For You Today leans toward it.' : 'Every part is Steady or Strong. Keep tending what is working.';
+    return '<article class="hm-card hm-p-leaves o2" id="hm-tree"><div class="hm-hd"><span class="hm-badge"><img src="' + mark(S.tree) + '" alt=""></span><div><div class="hm-k">Your Tree</div><div class="hm-last">' + I('check') + 'Last check-in ' + esc(niceDay(ck.date)) + '</div></div></div>' +
+      treePic() + partsBars(ck, ed) + '<div class="hm-lvsum">' + sum + '</div><div class="hm-sub">' + esc(line) + '</div>' +
+      '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tree="checkin">' + I('check') + 'Check In</button><button type="button" class="hm-btn line hm-p-leaves" data-hm-tree="quick">' + I('clock') + 'Quick Check-in</button></div>' +
+      '<div class="hm-ckline"><span>' + I('check') + ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(MONTHS[parse(ck.first).getMonth()]) + '</span><span>' + I('clock') + (ck.type === 'quick' ? 'Last one quick, about 2 minutes' : 'Full check-in, about 8 minutes') + '</span></div></article>';
+  }
+
+  /* Your Progress (pre-881 Home, BLD 882 restored) */
+  function progressHtml(h, ck, tend) {
+    var rows = [], sd = soberDate();
+    if (sd) { var ms = medallions(sd).filter(function (m) { return m.at <= today(); }); if (ms.length) rows.push('<div><i>' + I('check') + '</i>' + esc(ms[ms.length - 1].name) + ' Sober medallion</div>'); }
+    var td = tendedDays(tend), mo = today().slice(0, 7), inMo = td.filter(function (k) { return k.slice(0, 7) === mo; }).length;
+    if (inMo) rows.push('<div><i>' + I('check') + '</i>' + inMo + (inMo === 1 ? ' day' : ' days') + ' tended in ' + MONTHS[now().getMonth()] + '</div>');
+    if (ck) rows.push('<div><i>' + I('check') + '</i>' + ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '</div>');
+    var rings = arr(tend.rings).length, wk = weekNo(tend);
+    if (rings) rows.push('<div><i>' + I('tree') + '</i>' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree</div>');
+    if (wk && wk < 12) { var wl = 12 - wk + 1; rows.push('<div class="up"><i>' + I('tree') + '</i>' + (rings ? 'Next ring' : 'First ring') + ' at week 12, in about ' + wl + (wl === 1 ? ' week' : ' weeks') + '</div>'); }
+    else if (wk >= 12) rows.push('<div class="up"><i>' + I('tree') + '</i>Your season check-in is ready: a full check-in adds a ring</div>');
+    var ldl = ldlHtml();
+    if (!rows.length && !ldl) rows.push('<div class="up"><i>' + I('sprout') + '</i>Your progress fills in as you check in and tend.</div>');
+    return '<article class="hm-card hm-p-fruit o6" id="hm-progress"><div class="hm-hd"><span class="hm-badge">' + I('medal') + '</span><div><div class="hm-k">Your Progress</div><div class="hm-sub">What you have grown, counted with joy</div></div></div><div class="hm-mile">' + rows.join('') + '</div>' + ldl + '</article>';
+  }
+  function ldlHtml() {
+    var w = GGP.data(S.id, 'tending'), hh = obj(w && w.health);
+    var pts = arr(hh.labs).filter(function (l) { return l && num(l.ldl) != null && /^\d{4}-\d{2}-\d{2}/.test(l.date || ''); }).sort(function (a, b) { return a.date < b.date ? -1 : 1; }).slice(-6);
+    if (!pts.length) return '';
+    var goal = num(obj(hh.set).goalLdl), last = pts[pts.length - 1], first = pts[0], vals = pts.map(function (p) { return +p.ldl; });
+    var hi = Math.max.apply(null, vals.concat(goal || 0)) + 8, lo = Math.min.apply(null, vals.concat(goal || 999)) - 8, n = pts.length;
+    var X = function (i) { return n === 1 ? 160 : 18 + i * (284 / (n - 1)); }, Y = function (v) { return 10 + (hi - v) * (70 / Math.max(1, hi - lo)); };
+    var line = pts.map(function (p, i) { return (i ? 'L' : 'M') + X(i).toFixed(1) + ' ' + Y(+p.ldl).toFixed(1); }).join(' ');
+    var svg = (goal ? '<line class="tg" x1="0" x2="320" y1="' + Y(goal) + '" y2="' + Y(goal) + '"/><text x="316" y="' + (Y(goal) + 15) + '" text-anchor="end">Goal ' + goal + '</text>' : '') +
+      (n > 1 ? '<path class="area" d="' + line + ' L' + X(n - 1) + ' 92 L' + X(0) + ' 92Z"/><path class="done" d="' + line + '"/>' : '') +
+      pts.map(function (p, i) { return '<circle cx="' + X(i) + '" cy="' + Y(+p.ldl) + '" r="4.5" fill="var(--c)"/><text x="' + X(i) + '" y="' + (Y(+p.ldl) - 9) + '" text-anchor="middle">' + esc(MONTHS[parse(p.date).getMonth()].slice(0, 3)) + '</text>'; }).join('');
+    var pct = n > 1 && +first.ldl > +last.ldl ? Math.round((first.ldl - last.ldl) / first.ldl * 100) : 0;
+    return '<div class="hm-ldl hm-a-numbers"><div class="hm-k">LDL Path</div><div class="nums"><div><b>' + esc(last.ldl) + '</b><small>' + esc(shortDate(last.date)) + ' labs</small></div>' + (goal ? '<div><b style="font-size:30px;color:var(--ink-soft)">' + goal + '</b><small>your goal</small></div>' : '') + (pct ? '<div style="margin-left:auto;text-align:right"><span class="hm-chip">' + I('check') + 'Down ' + pct + '%</span></div>' : '') + '</div>' +
+      '<svg class="spark" viewBox="0 0 320 96" preserveAspectRatio="none" role="img" aria-label="LDL from your labs, ' + pts.map(function (p) { return p.ldl + ' on ' + niceDate(p.date); }).join(', ') + '">' + svg + '</svg>' +
+      '<div class="hm-note" style="margin-top:8px">' + I('heart') + '<span>Your own lab numbers, kept on this device. Talk them over with your doctor.</span></div></div>';
+  }
+
+  /* The quiet Tending invitation for a person who uses check-ins */
+  function offerHtml(h) {
+    if (h.hidden.tend) return '';
+    return '<div class="hm-card hm-p-leaves hm-offer o7"><span class="hm-badge">' + I('sprout') + '</span><div style="flex:1;min-width:0"><div class="hm-k">Whenever You Like</div><div class="hm-sub">Tending adds a few daily practices for body, mind, spirit, and the people you love.</div>' +
+      '<div class="hm-quiet" style="margin-top:8px"><button type="button" data-hm="addtend">Add Tending</button><span>·</span><button type="button" data-hm="hidetend">Hide this card</button></div></div></div>';
+  }
+
+  function partsBars(ck, ed) {
+    return '<div class="hm-parts">' + PARTS.map(function (p) {
       var l = ck ? ed.lv[p.k] : 'unsure', sc = ck ? num(ck.scores[p.k]) : null, w = sc == null ? 0 : Math.max(4, Math.min(100, sc * 10));
-      return '<div class="hm-part lv-' + l + '"><b>' + p.n + '</b><span class="bar" role="img" aria-label="' + p.n + ': ' + LV[l][0] + (sc != null ? ', ' + sc + ' of 10' : '') + '"><i style="width:' + w + '%"></i></span><small>' + esc(ck ? LV[l][0] : p.m.charAt(0).toUpperCase() + p.m.slice(1)) + '</small></div>';
+      return '<div class="hm-part hm-p-' + p.k + ' lv-' + l + '"><b>' + p.n + '</b><span class="bar" role="img" aria-label="' + p.n + ': ' + LV[l][0] + (sc != null ? ', ' + sc + ' of 10' : '') + '"><i style="width:' + w + '%"></i></span><small>' + esc(ck ? LV[l][0] : p.m.charAt(0).toUpperCase() + p.m.slice(1)) + '</small></div>';
     }).join('') + '</div>';
+  }
+  /* Grow, BLD 882: the pre-881 tree card on the left with Your Family; this season, the Growth Plan, Living Sober,
+     and Tending's own milestones and last seven days on the right. */
+  function growHtml() {
+    var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), tend = tendOf(S.id, S.tree), wk = weekNo(tend), sd = soberDate(), h = homeRec();
     var trend = '';
     if (ck && ck.prev) {
       var avg = function (e) { var v = PARTS.map(function (p) { return num(e.scores[p.k]); }).filter(function (x) { return x != null; }); return v.length ? v.reduce(function (a, b) { return a + b; }, 0) / v.length : null; };
@@ -1071,15 +1189,17 @@
       if (a != null && b != null) trend = a - b >= 0.3 ? ' Growing since your last check-in.' : b - a >= 0.3 ? ' A little lower than last time: your Growing Edge shows where to tend.' : ' Holding steady since your last check-in.';
     }
     var rings = arr(tend.rings).length;
-    var season = '<article class="hm-wcard hm-tn-b">' + tile(ART2.growth) + '<div class="tx"><span class="ey">This Season</span><b>' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</b><small>' +
-      (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + esc(trend) + '</small></div>' +
-      (ck ? '<button type="button" class="hm-pill" data-hm-tree="history">History</button>' : '') + '</article>';
+    var season = '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'home-morning-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
+      (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + esc(trend) + '</p>' +
+      (ck ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="history">' + I('clock') + 'History</button></div>' : '') + '</div></div></article>';
     var pc = planList(S.id, S.tree).length;
-    var plan = '<article class="hm-wcard hm-tn-g">' + tile(ART2.spirit) + '<div class="tx"><span class="ey">Growth Plan</span><b>Your Growth Plan</b><small>' + (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' in your plan. Open it when you change one.' : ck ? 'Choose a few practices for each part. Open it to begin.' : 'Your growth plan grows from your first check-in.') + '</small></div>' +
-      '<button type="button" class="hm-pill" data-hm-tree="plan">Open</button></article>';
-    var sober = sd ? soberHtml(sd) : (homeRec().parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
-    return '<div class="hm-grow"><div class="hm-gcol">' + top + parts + '</div><div class="hm-gcol">' + season + plan + forYouHtml(ed) + sober + '</div></div>';
+    var plan = '<article class="hm-card edge lift hm-p-trunk hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + ART2.spirit + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">Growth Plan</div><h3 class="hm-h3">Your Growth Plan</h3><p class="hm-sub">' + (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' in your plan, each one on Today. Open it when you change one.' : ck ? 'Choose a few practices for each part. Each one joins Today.' : 'Your growth plan grows from your first check-in.') + '</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="plan">' + I('sprout') + 'Open</button></div></div></div></article>';
+    var sober = sd ? soberHtml(sd) : (h.parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
+    var fruit = tendReady() && tendIsReady() && hasFn('render') ? '<div id="hm-fruit" class="hm-sec"></div>' : '';
+    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + treeCardHtml(ck, ed, t) + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + season + plan + sober + fruit + (h.hidden.tend || tendStarted() ? '' : offerHtml(h)) + '</div></div>';
   }
+  function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b852';
@@ -1231,7 +1351,7 @@
 
   /* ---------- clicks ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-tree],[data-hm-shelf],[data-hm-res]');
+    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share]');
     if (!t || !t.closest('.hm')) return;
     if (t.hasAttribute('data-hm-nav')) { var nv = t.getAttribute('data-hm-nav'); e.preventDefault(); goTo(nv === 'tree' ? 'tree' : 'today'); return; }
     if (t.hasAttribute('data-hm-tab')) { e.preventDefault(); var tb = t.getAttribute('data-hm-tab'); if (document.getElementById('hm-sheet')) { S.sheetPushed = 0; closeSheet(true); } goTo(tb); return; }
@@ -1245,6 +1365,7 @@
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
     if (t.hasAttribute('data-hm-tree')) { openTreeSheet(t.getAttribute('data-hm-tree')); return; }
+    if (t.hasAttribute('data-hm-share')) { shareCard(t.getAttribute('data-hm-share')); return; }
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
       var rs = t.getAttribute('data-hm-res').split('|'), k = rs[0], id = rs.slice(1).join('|'), tt = TREES[S.tree] || TREES.oak;
@@ -1271,6 +1392,7 @@
     else if (act === 'home') goTo('today');
     else if (act === 'me') { S.sheetDepth = 1; S.sheetPushed = 1; location.hash = '#me'; }
     else if (act === 'closeme') leaveSheet();
+    else if (act === 'addtend') goTo('today=tending');
     else if (act === 'hidetend') { homeRec().hidden.tend = true; saveHome(); toast('Hidden. Start Tending waits in Settings whenever you like.'); refreshPane(); }
     else if (act === 'showtend') { homeRec().hidden.tend = false; saveHome(); toast('Start Tending is back on Today.'); fillSheet('settings'); refreshPane(); }
     else if (act === 'backup') GGP.saveBackup();
