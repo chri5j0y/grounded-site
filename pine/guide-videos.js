@@ -271,7 +271,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for a low that lasts.",
       "body": "Two weeks or more: talk with them, and the school counselor.",
-      "say": "Watch gently for a low mood, pulling away from everyone, or trouble sleeping that lasts two weeks or more. Talk with them, and with the school counselor. If they use Pine, you won't see their answers. If they might not be safe, you'll get a quiet alert asking you to check in."
+      "say": "Watch gently for a low mood, pulling away from everyone, or trouble sleeping that lasts two weeks or more. Talk with them, and with the school counselor. If they use Pine, their answers stay private to them. Checking in warmly yourself is what helps."
      },
      {
       "k": "big",
@@ -1802,9 +1802,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Your check-in has your back.",
-      "body": "Feeling alone a lot? A grown-up you chose may get a quiet note to check in. They never see your answers.",
-      "say": "Your Pine check-in has your back too. If it shows you've been feeling alone a lot, a grown-up you chose may get a quiet note to check in with you. They never see your answers. It's just a nudge for someone to say, hey, how are you really doing?"
+      "title": "Reach out to your people.",
+      "body": "Feeling alone a lot? Tell a grown-up you trust.",
+      "say": "Your Pine check-in is private, just for you. If you've been feeling alone a lot, tell a grown-up you trust. You can say, I've been feeling kind of alone lately. Can we talk?"
      },
      {
       "k": "card",
@@ -1908,9 +1908,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "If Pine asks you to check in",
-      "body": "You won't see their answers. Check in warmly, and listen.",
-      "say": "If Pine sends you a quiet alert to check in, you won't see their answers, and that's on purpose. Simply check in warmly. Hey, how are you really doing? Then listen. Loneliness together with hopelessness, or talk of being a burden, needs help right away."
+      "title": "Check in warmly.",
+      "body": "Ask an open question, and listen.",
+      "say": "Pine keeps your teen's answers private, and that's on purpose. So check in warmly yourself. Hey, how are you really doing? Then listen. Loneliness together with hopelessness, or talk of being a burden, needs help right away."
      },
      {
       "k": "big",
@@ -2016,9 +2016,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Your check-in, and help now",
-      "body": "Say someone is hurting you, and Pine shows outside help, not a family alert.",
-      "say": "One more thing. If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family."
+      "title": "Help, right now",
+      "body": "Someone hurting you? Tell a trusted adult right away.",
+      "say": "One more thing. If someone is hurting you, tell a trusted adult right away, like a parent, a school counselor, or a coach. The help lines stay on the screen the whole time."
      },
      {
       "k": "big",
@@ -2119,7 +2119,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "When to call for more help",
       "body": "Threats, stalking, or shared sexual images: police, Take It Down.",
-      "say": "Some things need more help. Threats of violence, stalking, or sharing sexual images call for the police. For a sexual image of anyone under eighteen, use Take It Down, in the full guide. Bullying is linked with sadness and suicide risk, so watch their mood. If they seem hopeless, ask directly."
+      "say": "Some things need more help. Threats of violence, stalking, or sharing sexual images call for the police. For a sexual image of anyone under eighteen, use Take It Down, in the full guide. Bullying is linked with sadness and suicide risk, so watch their mood. If they seem hopeless, ask an open question, like, how are you, really? Then stay close."
      },
      {
       "k": "big",
@@ -2571,7 +2571,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for more than heartbreak",
       "body": "Two weeks of low mood or pulling away: counselor or doctor. Control or threats: dating abuse guide.",
-      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or changes in sleep or eating. Bring in a counselor or doctor. If the ex is threatening, harassing, or sharing pictures, see the dating abuse guide. And if your teen talks about not wanting to be here, ask directly and stay with them."
+      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or changes in sleep or eating. Bring in a counselor or doctor. If the ex is threatening, harassing, or sharing pictures, see the dating abuse guide. And if your teen talks about not wanting to be here, stay with them, and get help together right away."
      },
      {
       "k": "big",
@@ -2688,9 +2688,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Your check-in keeps you in charge",
-      "body": "Say someone is hurting you, and Pine shows outside help. No family alert.",
-      "say": "If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family. You stay in charge of who you tell."
+      "title": "You stay in charge of who you tell.",
+      "body": "Tell a trusted adult. Help lines are on the screen.",
+      "say": "If someone is hurting you, you stay in charge of who you tell. Tell a trusted adult, like a school counselor, a coach, or a relative. Your Pine check-in stays private, just for you."
      },
      {
       "k": "big",
@@ -2806,9 +2806,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Privacy, and urgent help",
-      "body": "Pine shows a teen outside help, never a family alert, for being hurt.",
-      "say": "One thing to know. If your teen tells their Pine check-in that someone is hurting them, Pine shows them outside help, not a family alert. That keeps them safe to answer honestly. So your warmth matters even more."
+      "title": "Privacy, and your warmth",
+      "body": "Pine keeps a teen's answers private. Your warmth matters even more.",
+      "say": "One thing to know. Pine keeps your teen's check-in private, just for them. Being a calm, safe adult makes it more likely they'll come to you. So your warmth matters even more."
      },
      {
       "k": "big",
@@ -3031,7 +3031,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Lean on adults, not on your teen.",
       "sub": "Your support matters too.",
-      "say": "Your grief and stress are real. Get your support from adults: friends, family, a counselor, a group. If your teen uses Pine, their answers stay private. You may get a quiet alert asking you to check in, never their answers."
+      "say": "Your grief and stress are real. Get your support from adults: friends, family, a counselor, a group. If your teen uses Pine, their answers stay private to them. Checking in warmly yourself is what helps."
      },
      {
       "k": "big",
@@ -3792,7 +3792,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Unsafe? Reach out.",
-      "say": "In Pine, that help comes straight to you, not to a family alert."
+      "say": "If you ever feel unsafe at home, tell a trusted adult right away. The help lines stay on the screen the whole time."
      },
      {
       "k": "big",
@@ -3898,7 +3898,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Danger and safety",
       "body": "Can't wake up or danger: call for help.",
-      "say": "If someone can't wake up, or there is danger, call for emergency help. If they use Pine, their answers stay private. You may get a quiet alert to check in, never their answers."
+      "say": "If someone can't wake up, or there is danger, call for emergency help. If they use Pine, their answers stay private to them."
      },
      {
       "k": "big",
@@ -4224,7 +4224,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "If someone is hurting you",
-      "say": "If anyone at home hurts you, threatens you, or makes you feel unsafe, that's more than a fight. Get to a safe place. Pine's check-in shows you outside help for this, and it never sends an alert to your family."
+      "say": "If anyone at home hurts you, threatens you, or makes you feel unsafe, that's more than a fight. Get to a safe place, and tell a trusted adult outside your home, like a school counselor, coach, or teacher. The help lines stay on the screen the whole time."
      },
      {
       "k": "big",
@@ -4334,7 +4334,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "big",
       "h": "Calm is contagious.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Your teen's check-in in Pine stays private. You'll only see a quiet Please check in alert if something needs you. In a blowup, your steady voice is the most powerful tool you have, and it spreads. The full guide has more, whenever you want it."
+      "say": "Your teen's check-in in Pine stays private to them. In a blowup, your steady voice is the most powerful tool you have, and it spreads. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -4771,7 +4771,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "When grief gets stuck",
       "body": "A counselor helps.",
-      "say": "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a grief counselor. If they talk about not wanting to be alive, ask them plainly, and stay with them."
+      "say": "Watch gently for signs that grief is getting stuck: pulling away for weeks, grades sliding hard, drinking or drugs, reckless driving, or talk of wanting to be with the person who died. Bring in a grief counselor. If they talk about not wanting to be alive, stay with them, and get help together right away."
      },
      {
       "k": "big",
@@ -4908,11 +4908,7 @@ window.GG_LEARN_GUIDES.pine = {
     "sideName": "For the Grown-up",
     "mins": 4,
     "blurb": "For the grown-up beside a teen whose friend or classmate has died.",
-    "sources": [
-     "dougy",
-     "gould05",
-     "dazzi"
-    ],
+    "sources": ["dougy"],
     "scenes": [
      {
       "k": "title",
@@ -4969,24 +4965,16 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Ask it plainly.",
+      "h": "Ask open questions.",
       "sub": "Practice the words, so they are ready.",
-      "say": "Research finds that asking a teen directly about suicide doesn't put the idea in their head. Many adults freeze, so practice now. Take a breath. Say this out loud once, calmly and kindly: Are you thinking about suicide?",
-      "beats": [
-       "Research finds that asking a teen directly about suicide doesn't put the idea in their head.",
-       "Many adults freeze, so practice now.",
-       "Take a breath.",
-       {
-        "t": "Say this out loud once, calmly and kindly: Are you thinking about suicide?",
-        "w": 10
-       }
-      ]
+      "say": "Open questions help a grieving teen keep talking. Many adults freeze, so practice now. Take a breath. Say this out loud once, calmly and kindly: How are you really doing, with all of this?",
+      "beats": ["Open questions help a grieving teen keep talking.", "Many adults freeze, so practice now.", "Take a breath.", {"t": "Say this out loud once, calmly and kindly: How are you really doing, with all of this?", "w": 10}]
      },
      {
       "k": "card",
-      "title": "If the answer is yes",
+      "title": "If they share thoughts of suicide",
       "body": "Stay with them.",
-      "say": "If the answer is yes, thank them for telling you. Stay with them. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. Your teen's check-in in Pine stays private, and a quiet Please check in alert is all you'll ever see. Asking out loud is always okay."
+      "say": "If they share thoughts of suicide, thank them for telling you. Stay with them. In Minnesota, star star CRISIS from a cell phone reaches a county crisis team. Your calm, open questions keep the door open."
      },
      {
       "k": "big",
@@ -5624,7 +5612,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for a low that lasts.",
       "body": "Two weeks or more: a counselor or doctor.",
-      "say": "Watch gently for sadness that lasts two weeks or more, pulling away from everything, or talk of not wanting to be here. Help them talk with a school counselor or their doctor. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you will see a quiet alert to check in."
+      "say": "Watch gently for sadness that lasts two weeks or more, pulling away from everything, or talk of not wanting to be here. Help them talk with a school counselor or their doctor. Pine keeps your teen's answers private to them."
      },
      {
       "k": "big",
@@ -6095,7 +6083,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for food rules.",
       "body": "Skipped meals, rigid rules, hours of exercise, hiding the body: talk with their doctor soon.",
-      "say": "Watch gently for skipped meals, rigid food rules, hours of exercise, or hiding their body. These can be early signs of an eating disorder, which is a serious illness at any body size. Talk with their doctor soon, and see the guide on eating disorders. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
+      "say": "Watch gently for skipped meals, rigid food rules, hours of exercise, or hiding their body. These can be early signs of an eating disorder, which is a serious illness at any body size. Talk with their doctor soon, and see the guide on eating disorders. Pine keeps your teen's answers private to them."
      },
      {
       "k": "big",
@@ -6321,7 +6309,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Emergency signs",
       "body": "Fainting, chest pain, confusion, a racing or very slow heartbeat: call for help.",
-      "say": "Call for emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
+      "say": "Call for emergency help for fainting, chest pain, confusion, or a racing or very slow heartbeat. Pine keeps your teen's answers private to them."
      },
      {
       "k": "big",
@@ -6784,7 +6772,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for a low that lasts.",
       "body": "Two weeks or more: their doctor or a counselor. At 16 in Minnesota, they can ask for counseling.",
-      "say": "Watch gently for low mood or worry that lasts two weeks or more. Help them talk with their doctor or a counselor. In Minnesota, at sixteen, they can ask for outpatient counseling on their own, and that's a good thing. Pine keeps your teen's answers private, and if a check-in shows they are losing hope or feeling alone, you'll see a quiet alert to check in."
+      "say": "Watch gently for low mood or worry that lasts two weeks or more. Help them talk with their doctor or a counselor. In Minnesota, at sixteen, they can ask for outpatient counseling on their own, and that's a good thing. Pine keeps your teen's answers private to them."
      },
      {
       "k": "big",
@@ -7471,12 +7459,8 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Depression and Feeling Numb",
     "sideName": "For the Grown-up",
     "mins": 4,
-    "blurb": "For the grown-up beside a teen who seems low, numb, or withdrawn: notice, ask plainly, and get help together.",
-    "sources": [
-     "yrbs23",
-     "gould05",
-     "grossman05"
-    ],
+    "blurb": "For the grown-up beside a teen who seems low, numb, or withdrawn: notice, ask open questions, and get help together.",
+    "sources": ["yrbs23", "grossman05"],
     "scenes": [
      {
       "k": "title",
@@ -7535,9 +7519,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Ask about suicide plainly.",
-      "sub": "Are you thinking about killing yourself?",
-      "say": "If you're worried, ask plainly. Are you thinking about killing yourself? In a study in high schools, asking students about suicide did not raise their distress or put the idea in their heads. If the answer is yes, stay with them."
+      "h": "Ask open questions.",
+      "sub": "What's it been like?",
+      "say": "If you're worried, ask open questions. What's it been like? What has been the hardest part? Then listen, without fixing. If they share thoughts of suicide, stay with them."
      },
      {
       "k": "big",
@@ -7587,8 +7571,8 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Pine and privacy",
-      "body": "You see a quiet \"Please check in,\" never their answers.",
-      "say": "If your teen uses Pine, their answers stay private. If their check-in shows they may be losing hope, or feeling alone, you'll see a quiet note in The Grove: please check in. You won't see what they said. Just check in, warmly."
+      "body": "Their answers stay private to them.",
+      "say": "If your teen uses Pine, their answers stay private to them. Just check in, warmly, and often."
      },
      {
       "k": "big",
@@ -7722,11 +7706,8 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Self-Harm",
     "sideName": "For the Grown-up",
     "mins": 4,
-    "blurb": "For the grown-up who has just learned a high schooler is hurting themselves: stay calm, ask, and get help together.",
-    "sources": [
-     "gould05",
-     "cornellsirr"
-    ],
+    "blurb": "For the grown-up who has just learned a high schooler is hurting themselves: stay calm, listen, and get help together.",
+    "sources": ["cornellsirr"],
     "scenes": [
      {
       "k": "title",
@@ -7774,9 +7755,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Ask directly.",
-      "sub": "Are you thinking about killing yourself?",
-      "say": "Then ask plainly, in a calm voice. Are you thinking about killing yourself? Asking is safe. It does not put the idea in their head. If they say yes, stay with them, and call or text 988 together, right then."
+      "h": "Stay close, and listen.",
+      "sub": "Can you tell me more about that?",
+      "say": "Then keep your questions open, in a calm voice. Can you tell me more about that? How are you, really? Listen without fixing. If they share thoughts of suicide, stay with them, and call or text 988 together, right then."
      },
      {
       "k": "points",
@@ -7954,9 +7935,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "In your Pine check-in",
-      "body": "Help shows right away. A grown-up you chose is asked to check in. They never see your answers.",
-      "say": "If you answer the safety question in your Pine check-in, Pine shows you help right away and lets a grown-up you chose know to check in with you. They won't see your answers. And if someone is hurting you, Pine points you to outside help instead."
+      "title": "Your Pine check-in is yours.",
+      "body": "Private, just for you. Help is one call or text away.",
+      "say": "Your Pine check-in is private, just for you, and it stays on your device. If thoughts of suicide come, reach out right away. Call or text 988, and tell a trusted adult. And if someone is hurting you, tell a trusted adult outside your home."
      },
      {
       "k": "big",
@@ -7984,13 +7965,8 @@ window.GG_LEARN_GUIDES.pine = {
     "title": "Thoughts of Suicide, and Making a Safety Plan",
     "sideName": "For the Grown-up",
     "mins": 4,
-    "blurb": "For the grown-up worried a teen may be thinking about suicide: ask plainly, stay close, and make a plan together.",
-    "sources": [
-     "gould05",
-     "grossman05",
-     "stanley",
-     "asq"
-    ],
+    "blurb": "For the grown-up worried a teen may be thinking about suicide: ask open questions, stay close, and make a plan together.",
+    "sources": ["grossman05", "stanley"],
     "scenes": [
      {
       "k": "title",
@@ -8039,30 +8015,21 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "big",
-      "h": "Ask plainly.",
-      "sub": "Are you thinking about killing yourself?",
-      "say": "If you're worried, ask plainly. Are you thinking about killing yourself? In a study in high schools, asking students about suicide did not raise their distress or put the idea in their heads. Direct words work better than hints."
+      "h": "Ask open questions.",
+      "sub": "How are you, really?",
+      "say": "If you're worried, ask open questions, calmly. How are you, really? What has been the hardest part? Then listen, without fixing. Many teens are relieved the moment someone finally listens."
      },
      {
       "k": "words",
       "h": "Say it out loud",
-      "items": [
-       "Are you thinking about killing yourself?"
-      ],
-      "sub": "Calm and plain.",
-      "say": "Let's practice, because the first time is the hardest. Take one slow breath. Now say it out loud, calm and plain. Are you thinking about killing yourself?",
-      "beats": [
-       "Let's practice, because the first time is the hardest.",
-       "Take one slow breath.",
-       {
-        "t": "Now say it out loud, calm and plain. Are you thinking about killing yourself?",
-        "w": 10
-       }
-      ]
+      "items": ["How are you, really?"],
+      "sub": "Calm and kind.",
+      "say": "Let's practice, because the first time is the hardest. Take one slow breath. Now say it out loud, calm and kind. How are you, really?",
+      "beats": ["Let's practice, because the first time is the hardest.", "Take one slow breath.", {"t": "Now say it out loud, calm and kind. How are you, really?", "w": 10}]
      },
      {
       "k": "points",
-      "h": "If they say yes",
+      "h": "If they share it with you",
       "items": [
        [
         "Thank them",
@@ -8081,7 +8048,7 @@ window.GG_LEARN_GUIDES.pine = {
         "And go with them"
        ]
       ],
-      "say": "If they say yes, thank them. I'm glad you told me. Stay with them, and call or text 988 together. Be honest that you can't keep safety a secret, and say it kindly. And get them seen soon by a doctor or mental health professional, and go with them. Leave out you have so much to live for, and promise me you won't. A promise isn't a plan.",
+      "say": "If they share thoughts of suicide, thank them. I'm glad you told me. Stay with them, and call or text 988 together. Be honest that you can't keep safety a secret, and say it kindly. And get them seen soon by a doctor or mental health professional, and go with them. Leave out you have so much to live for, and promise me you won't. A promise isn't a plan.",
       "cue": {
        "at": [
         0,
@@ -8130,9 +8097,9 @@ window.GG_LEARN_GUIDES.pine = {
      },
      {
       "k": "card",
-      "title": "Pine and the quiet alert",
-      "body": "A quiet \"Please check in.\" Never their answers.",
-      "say": "If your teen uses Pine and answers the safety question, you'll see a quiet note in The Grove: please check in. You won't see their answers, and that privacy is part of why teens answer honestly. When you see it, go to them warmly, and ask."
+      "title": "Pine and privacy",
+      "body": "Their answers stay private to them.",
+      "say": "If your teen uses Pine, their answers stay private to them, and that privacy helps teens be honest with themselves. So go to them warmly, often, and ask open questions. Your presence is what helps."
      },
      {
       "k": "big",
@@ -8622,7 +8589,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Stay close in the days after.",
       "body": "Check in at night.",
-      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them. In Pine, a teen's check-in stays private, and a safety answer can send you a quiet alert to check in."
+      "say": "Stay close in the days after, especially at night, when it often feels worst. If anything points to thoughts of not wanting to be alive, stay with them, and get help together right away. In Pine, a teen's check-in stays private to them."
      },
      {
       "k": "big",
@@ -9668,7 +9635,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "If someone at home is hurting you",
       "body": "Tell a trusted adult outside your home.",
-      "say": "If the person hurting you is in your home, or is an adult in your life, tell a trusted adult outside your home, like a school counselor, coach, or teacher. If you say in a Pine check-in that someone is hurting you, Pine shows you outside help, and that answer never goes to your family alert."
+      "say": "If the person hurting you is in your home, or is an adult in your life, tell a trusted adult outside your home, like a school counselor, coach, or teacher. The help lines stay on the screen the whole time."
      },
      {
       "k": "big",
@@ -11543,7 +11510,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch for a low that lasts.",
       "body": "Two weeks or more: their doctor or a counselor.",
-      "say": "Pain, worry, and low mood can feed each other. If your teen seems down or anxious for two weeks or more, help them talk with their doctor or a counselor. Pine keeps your teen's answers private, and if a check-in shows they're losing hope, you'll see a quiet alert to check in."
+      "say": "Pain, worry, and low mood can feed each other. If your teen seems down or anxious for two weeks or more, help them talk with their doctor or a counselor. Pine keeps your teen's answers private to them."
      },
      {
       "k": "big",
@@ -12680,7 +12647,7 @@ window.GG_LEARN_GUIDES.pine = {
      {
       "k": "card",
       "title": "Know the lines.",
-      "say": "Know the lines. If your teen talks about ending their life, stay with them. In Minnesota, at sixteen, a teen can ask for counseling on their own. Pine keeps their answers private, and a quiet alert tells you when to check in."
+      "say": "Know the lines. If your teen talks about ending their life, stay with them. In Minnesota, at sixteen, a teen can ask for counseling on their own. Pine keeps their answers private to them, so checking in warmly yourself is what helps."
      },
      {
       "k": "big",
@@ -13056,7 +13023,7 @@ window.GG_LEARN_GUIDES.pine = {
       "k": "card",
       "title": "Watch what sits underneath.",
       "body": "Hopelessness or low mood: their doctor, a counselor.",
-      "say": "Sometimes faith questions sit on top of something heavier, like hopelessness or low mood. If that lasts, help them talk with their doctor or a counselor. In Pine, their faith answers stay private to them, and a quiet alert tells you when to check in."
+      "say": "Sometimes faith questions sit on top of something heavier, like hopelessness or low mood. If that lasts, help them talk with their doctor or a counselor. In Pine, their faith answers stay private to them."
      },
      {
       "k": "big",

@@ -428,22 +428,22 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "Asking directly is safe and caring.",
-"body": "\"Are you having any thoughts of ending your life?\"",
-"say": "If you are worried, ask directly. Are you having any thoughts of ending your life? Asking directly is safe and caring. If the answer is yes, stay with them."
+"title": "Open questions open the door.",
+"body": "\"How are you, really? What has been the hardest part?\"",
+"say": "If you are worried, ask an open question. How are you, really? What has been the hardest part? If they share thoughts of not wanting to be alive, stay with them and get help together."
 },
 {
 "k": "words",
-"h": "Practice the question",
+"h": "Practice an open question",
 "items": [
-"Are you having any thoughts of ending your life?"
+"How are you, really?"
 ],
 "sub": "Out loud, in your own calm voice.",
-"say": "The question is easier to ask the second time. Here it is. Are you having any thoughts of ending your life? Now say it out loud yourself, in your own calm voice.",
+"say": "An open question is easier to ask the second time. Here it is. How are you, really? Now say it out loud yourself, in your own calm voice.",
 "beats": [
-"The question is easier to ask the second time.",
+"An open question is easier to ask the second time.",
 "Here it is.",
-"Are you having any thoughts of ending your life?",
+"How are you, really?",
 {
 "t": "Now say it out loud yourself, in your own calm voice.",
 "w": 10
@@ -3266,9 +3266,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "If you're worried, ask directly.",
-"body": "\"Are you having thoughts of suicide?\" If yes: call or text 988 together. Danger right now: 911.",
-"say": "Grief after a suicide can raise a survivor's own risk. Watch for signs of risk, and if you're worried, ask directly and kindly. Are you having thoughts of suicide? A plain question shows them they can tell you the truth. If the answer is yes, call or text 988 together. If they are in danger right now, call 911."
+"title": "If you're worried, stay close.",
+"body": "\"How are you holding up, really?\" If they share thoughts of suicide: call or text 988 together. Danger right now: 911.",
+"say": "Grief after a suicide can raise a survivor's own risk. Watch for signs of risk, and if you're worried, ask open questions, kindly. How are you holding up, really? A warm question shows them they can tell you the truth. If they share thoughts of suicide, call or text 988 together. If they are in danger right now, call 911."
 },
 {
 "k": "big",
@@ -7557,7 +7557,7 @@ window.GG_LEARN_GUIDES.oak = {
 {
 "k": "card",
 "title": "Watch for hopelessness",
-"say": "Gambling problems raise the risk of suicide, especially when the debt comes to light. If they sound hopeless, ask them directly whether they're thinking about suicide."
+"say": "Gambling problems raise the risk of suicide, especially when the debt comes to light. If they sound hopeless, ask open questions and listen. If they share thoughts of not wanting to be alive, stay with them and get help together."
 },
 {
 "k": "big",
@@ -9195,8 +9195,8 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "card",
-"title": "If you are worried about safety, ask.",
-"say": "If you're worried about their safety, ask them directly, in plain words. Are you thinking about ending your life?"
+"title": "If you are worried, stay close.",
+"say": "If you're worried about them, ask an open question, in plain words. How are you, really?"
 },
 {
 "k": "card",
@@ -14153,9 +14153,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When You're Thinking About Suicide",
 "sideName": "For the Helper",
 "mins": 2,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -14186,12 +14184,12 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "words",
-"h": "Ask plainly",
+"h": "Ask open questions",
 "items": [
-"Are you thinking about killing yourself?",
+"How are you, really?",
 "I'm glad you told me. I'm staying with you."
 ],
-"say": "Ask plainly. Are you thinking about killing yourself? Asking directly does not put the idea in their head. It tells them they can tell you the truth. If they say yes, say this. I'm glad you told me. I'm staying with you."
+"say": "Ask open questions. How are you, really? What has been the hardest part? Open, warm words tell them they can tell you the truth. If they share thoughts of suicide, say this. I'm glad you told me. I'm staying with you."
 },
 {
 "k": "points",
@@ -14248,9 +14246,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Someone Else Is Thinking About Suicide",
 "sideName": "For You",
 "mins": 3,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -14302,7 +14298,7 @@ window.GG_LEARN_GUIDES.oak = {
 "After deep despair"
 ]
 ],
-"say": "It helps to know the warning signs. Talk of death. Giving things away. Saying goodbye. And a sudden calm after deep despair. If you notice any of these, it's time to ask.",
+"say": "It helps to know the warning signs. Talk of death. Giving things away. Saying goodbye. And a sudden calm after deep despair. If you notice any of these, it's time to reach out.",
 "cue": {
 "at": [
 1,
@@ -14317,8 +14313,8 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Four steps",
 "steps": [
 [
-"Ask directly",
-"It does not plant the idea"
+"Ask open questions",
+"How are you, really?"
 ],
 [
 "Listen",
@@ -14333,7 +14329,7 @@ window.GG_LEARN_GUIDES.oak = {
 "And stay with them"
 ]
 ],
-"say": "Here are four steps. Ask directly, are you thinking about killing yourself? It does not plant the idea. Listen without arguing or judging. Help keep them safe by putting distance between them and medications and firearms. And connect them to help today, and stay with them. The For the Helper video walks through each one.",
+"say": "Here are four steps. Ask open questions, like how are you, really? Then let them lead. Listen without arguing or judging. Help keep them safe by putting distance between them and medications and firearms. And connect them to help today, and stay with them. The For the Helper video walks through each one.",
 "cue": {
 "at": [
 1,
@@ -14369,9 +14365,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Someone Else Is Thinking About Suicide",
 "sideName": "For the Helper",
 "mins": 2,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -14402,12 +14396,12 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "words",
-"h": "Ask directly",
+"h": "Ask open questions",
 "items": [
-"Are you thinking about ending your life?",
+"How are you, really?",
 "Thank you for telling me. I want to help you stay safe."
 ],
-"say": "Ask directly, in plain words. Are you thinking about ending your life? Asking does not put the idea in their head. They may test whether you really want to hear. Stay. If they say yes, say this. Thank you for telling me. I want to help you stay safe."
+"say": "Ask open questions, in plain words. How are you, really? Then listen, and let them lead. They may test whether you really want to hear. Stay. If they share thoughts of suicide, say this. Thank you for telling me. I want to help you stay safe."
 },
 {
 "k": "points",
@@ -14592,9 +14586,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "When Someone Is Escalating",
 "sideName": "For the Helper",
 "mins": 3,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -14608,7 +14600,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "card",
 "title": "Unsafe? Leave.",
 "body": "Call for help early rather than late.",
-"say": "Safety comes first, for everyone, you included. If there is a weapon, a threat, or you feel unsafe, leave. Call for help early rather than late. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. Stay with them if it's safe."
+"say": "Safety comes first, for everyone, you included. If there is a weapon, a threat, or you feel unsafe, leave. Call for help early rather than late. If they share thoughts of not wanting to be alive, listen, and get help together. Stay with them if it's safe."
 },
 {
 "k": "big",
@@ -14985,9 +14977,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Living with Past Abuse",
 "sideName": "For the Helper",
 "mins": 2,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -15050,7 +15040,7 @@ window.GG_LEARN_GUIDES.oak = {
 "k": "big",
 "h": "Help them find trauma-informed support.",
 "sub": "Offer, and let them choose.",
-"say": "If they want it, help them find a trauma-informed counselor. Offer, and let them choose. If they talk about not wanting to be alive, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head."
+"say": "If they want it, help them find a trauma-informed counselor. Offer, and let them choose. If they share thoughts of not wanting to be alive, stay with them, listen, and get help together."
 },
 {
 "k": "big",
@@ -15168,9 +15158,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "After a Sexual Assault",
 "sideName": "For the Helper",
 "mins": 2,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -15244,9 +15232,9 @@ window.GG_LEARN_GUIDES.oak = {
 },
 {
 "k": "big",
-"h": "Worried? Ask plainly.",
-"sub": "\"Are you thinking about suicide?\"",
-"say": "If you're worried, ask plainly. Are you thinking about suicide? Asking does not put the idea in their head. If they say yes, stay with them."
+"h": "Worried? Stay close.",
+"sub": "\"How are you holding up, really?\"",
+"say": "If you're worried, ask an open question. How are you holding up, really? Then listen. If they share thoughts of suicide, stay with them."
 },
 {
 "k": "big",
@@ -15370,9 +15358,7 @@ window.GG_LEARN_GUIDES.oak = {
 "title": "Self-Harm",
 "sideName": "For the Helper",
 "mins": 2,
-"sources": [
-"dazzi"
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -15406,10 +15392,10 @@ window.GG_LEARN_GUIDES.oak = {
 "h": "Words that help",
 "items": [
 "Thank you for telling me. I'm not going anywhere.",
-"Are you thinking about killing yourself?",
+"What would help you most right now?",
 "Let's find someone who can help with the pain underneath."
 ],
-"say": "They may feel ashamed, or afraid you will be angry. Start here. Thank you for telling me. I'm not going anywhere. Then ask plainly. Are you thinking about killing yourself? Asking does not plant the idea. Then, let's find someone who can help with the pain underneath."
+"say": "They may feel ashamed, or afraid you will be angry. Start here. Thank you for telling me. I'm not going anywhere. Then ask, what would help you most right now? And listen. Then, let's find someone who can help with the pain underneath."
 },
 {
 "k": "points",
@@ -20362,19 +20348,19 @@ window.GG_LEARN_GUIDES.oak = {
     },
     {
      "k": "card",
-     "title": "Ask about safety.",
+     "title": "Ask how home is.",
      "body": "Gently, and privately.",
-     "say": "Ask about safety, gently and privately. Are you safe at home? And know that leaving can be the most dangerous time, so a safety plan matters."
+     "say": "Ask how things are at home, gently and privately. How are things at home for you these days? And know that leaving can be the most dangerous time, so a safety plan matters."
     },
     {
      "k": "words",
      "h": "Words that help",
      "items": [
       "\"I'm glad you told me.\"",
-      "\"Are you safe at home?\"",
+      "\"How are things at home for you?\"",
       "\"What would help you this week?\""
      ],
-     "say": "Here are words that help. That sounds so hard. I'm glad you told me. Are you safe at home? And, what would help you this week?",
+     "say": "Here are words that help. That sounds so hard. I'm glad you told me. How are things at home for you? And, what would help you this week?",
      "cue": {
       "at": [
        2,
@@ -20411,14 +20397,14 @@ window.GG_LEARN_GUIDES.oak = {
     },
     {
      "k": "big",
-     "h": "Practice the safety question.",
+     "h": "Practice an open question.",
      "sub": "Calm and private.",
-     "say": "Let's practice the hardest question, so it comes easily. Let your voice soften. Now say it out loud, calm and private: are you safe at home?",
+     "say": "Let's practice an open question, so it comes easily. Let your voice soften. Now say it out loud, calm and private: how are things at home for you?",
      "beats": [
-      "Let's practice the hardest question, so it comes easily.",
+      "Let's practice an open question, so it comes easily.",
       "Let your voice soften.",
       {
-       "t": "Now say it out loud, calm and private: are you safe at home?",
+       "t": "Now say it out loud, calm and private: how are things at home for you?",
        "w": 10
       }
      ]
@@ -20672,7 +20658,7 @@ window.GG_LEARN_GUIDES.oak = {
      "k": "card",
      "title": "Watch for safety.",
      "body": "Opioids nearby: naloxone.",
-     "say": "Keep safety in view. Grief this heavy can bring thoughts of not wanting to live. If you're worried, ask directly. If others in their circle use opioids, encourage naloxone at home. And point them toward GRASP, or a grief group, where people understand."
+     "say": "Keep safety in view. Grief this heavy can bring thoughts of not wanting to live. If you're worried, ask open questions, stay close, and get help together. If others in their circle use opioids, encourage naloxone at home. And point them toward GRASP, or a grief group, where people understand."
     },
     {
      "k": "card",

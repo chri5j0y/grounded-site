@@ -10704,13 +10704,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "A Death by Suicide in the Community",
 "sideName": "For the Grown-up",
 "mins": 4,
-"sources": [
-"dazzi",
-[
-"AFSP and SPRC: After a Suicide, A Toolkit for Schools",
-"https://sprc.org/resources/after-suicide-toolkit-schools"
-]
-],
+"sources": [["AFSP and SPRC: After a Suicide, A Toolkit for Schools", "https://sprc.org/resources/after-suicide-toolkit-schools"]],
 "scenes": [
 {
 "k": "title",
@@ -10790,9 +10784,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Ask directly.",
-"sub": "Are you thinking about suicide?",
-"say": "Watch closely over the person's friends and teammates, and over your own child. Notice pulling away, changes in sleep, or talk of feeling hopeless. Then ask plainly, in a calm voice. Are you thinking about suicide? Asking is safe. It does not put the idea in their head. If they say yes, call or text 988 together, right then."
+"h": "Ask open questions.",
+"sub": "How are you, really?",
+"say": "Watch closely over the person's friends and teammates, and over your own child. Notice pulling away, changes in sleep, or talk of feeling hopeless. Then ask open questions, in a calm voice. How are you, really? What has been the hardest part? Listen without fixing. If they share thoughts of suicide, stay with them, and call or text 988 together, right then."
 },
 {
 "k": "words",
@@ -11420,17 +11414,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "Self-Harm and Cutting",
 "sideName": "For the Grown-up",
 "mins": 3,
-"sources": [
-"dazzi",
-[
-"Cornell Self-Injury and Recovery Resources",
-"https://selfinjury.bctr.cornell.edu"
-],
-[
-"Child Mind Institute",
-"https://childmind.org"
-]
-],
+"sources": [["Cornell Self-Injury and Recovery Resources", "https://selfinjury.bctr.cornell.edu"], ["Child Mind Institute", "https://childmind.org"]],
 "scenes": [
 {
 "k": "title",
@@ -11477,9 +11461,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Ask directly.",
-"sub": "Are you thinking about killing yourself?",
-"say": "Then ask plainly, in a calm voice. Are you thinking about killing yourself? Asking is safe. It does not put the idea in their head. If they say yes, call or text 988 together, right then."
+"h": "Stay close, and listen.",
+"sub": "Can you tell me more about that?",
+"say": "Then keep your questions open, in a calm voice. Can you tell me more about that? How are you, really? Listen without fixing. If they share thoughts of suicide, stay with them, and call or text 988 together, right then."
 },
 {
 "k": "points",
@@ -11653,17 +11637,7 @@ window.GG_LEARN_GUIDES.aspen = {
 "title": "When a Friend Is Hurting",
 "sideName": "For the Grown-up",
 "mins": 3,
-"sources": [
-"dazzi",
-[
-"NIMH: Ask Suicide-Screening Questions toolkit",
-"https://sprc.org/wp-content/uploads/2022/12/asQToolkit_0-1.pdf"
-],
-[
-"AAP: Screening for suicide risk",
-"https://www.aap.org/en/patient-care/blueprint-for-youth-suicide-prevention/strategies-for-clinical-settings-for-youth-suicide-prevention/screening-for-suicide-risk-in-clinical-practice/"
-]
-],
+"sources": [],
 "scenes": [
 {
 "k": "title",
@@ -11735,9 +11709,9 @@ window.GG_LEARN_GUIDES.aspen = {
 },
 {
 "k": "big",
-"h": "Asking directly is safe.",
-"sub": "Are you thinking about killing yourself?",
-"say": "If you talk with the friend, or your own child seems weighed down, ask plainly. Are you thinking about killing yourself? Asking kids about suicide is safe and important. Talking about it doesn't put the idea in their head."
+"h": "Open questions help.",
+"sub": "How are you, really?",
+"say": "If you talk with the friend, or your own child seems weighed down, ask open questions. How are you, really? Can you tell me more about that? Then listen, and stay close. If they share thoughts of hurting themselves, stay with them, and get help together that same day."
 },
 {
 "k": "words",

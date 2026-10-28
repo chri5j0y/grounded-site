@@ -3875,17 +3875,17 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "Start with tonight.",
       "sub": "A safe place, food, a charged phone.",
-      "say": "Start with tonight. Ask gently, are you safe tonight? Do you have somewhere to sleep? A safe place, a meal, and a charged phone come before any long-term plan."
+      "say": "Start with tonight. Ask gently, where will you sleep tonight? What do you need most right now? A safe place, a meal, and a charged phone come before any long-term plan."
      },
      {
       "k": "words",
       "h": "Words that help",
       "items": [
        "Thank you for telling me.",
-       "Are you safe tonight?",
+       "Where will you sleep tonight?",
        "This does not change how I see you."
       ],
-      "say": "Here are words that help. Thank you for telling me. Let's figure out the next step together. Are you safe tonight? And, this doesn't change how I see you."
+      "say": "Here are words that help. Thank you for telling me. Let's figure out the next step together. Where will you sleep tonight? And, this doesn't change how I see you."
      },
      {
       "k": "big",
@@ -4242,8 +4242,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your check-in stays yours",
-      "body": "Birch offers ideas and help lines on your own screen. No alert to anyone. Helpers see only what you share.",
-      "say": "If your Birch check-in shows you've been feeling alone a lot, Birch offers ideas and help lines right on your own screen. It sends no alert to anyone. A helper sees only what you choose to share."
+      "body": "Ideas and help lines on your own screen. Everything stays on your device. Helpers see only what you share.",
+      "say": "Your Birch check-in keeps ideas for connection and help lines right on your own screen. Everything stays on your own device. A helper sees only what you choose to share."
      },
      {
       "k": "card",
@@ -4372,7 +4372,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "When it is heavier than lonely",
-      "say": "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now. Ask directly and stay with them."
+      "say": "Watch for loneliness that comes with hopelessness, talk of being a burden, or not wanting to be alive. That needs help now. Stay with them, listen, and help them reach help today."
      },
      {
       "k": "big",
@@ -4826,7 +4826,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Watch for more than heartbreak",
       "body": "Two weeks of low mood, pulling away, heavier use: a doctor or counselor.",
-      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or heavier drinking or use. Encourage a doctor or counselor. If the ex is threatening or controlling, see the guide on controlling or abusive relationships. And if they talk about not wanting to be alive, ask directly and stay with them."
+      "say": "Watch gently for signs it's more than heartbreak. Two weeks or more of low mood, pulling away from everyone, or heavier drinking or use. Encourage a doctor or counselor. If the ex is threatening or controlling, see the guide on controlling or abusive relationships. And if they share thoughts of not wanting to be alive, stay with them and help them reach help today."
      },
      {
       "k": "big",
@@ -4938,8 +4938,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Your check-in keeps you in charge",
-      "body": "Say someone is hurting you, and Birch shows outside help. No alert to anyone. Helpers never see it.",
-      "say": "If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away. Birch sends no alert to anyone, and a helper never sees your safety answers. You stay in charge of who you tell."
+      "body": "Everything stays on your device. Helpers see only what you share. The help lines here are ready any time.",
+      "say": "Your Birch check-in stays on your own device, just for you. Birch sends nothing to anyone, and a helper sees only what you choose to share. You stay in charge of who you tell."
      },
      {
       "k": "big",
@@ -5063,8 +5063,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Privacy, and urgent help",
-      "body": "Birch shows outside help, never an alert. Safety answers stay just for you.",
-      "say": "One thing to know. If they tell their Birch check-in that someone is hurting them, Birch shows them outside help, and sends no alert to anyone. Safety answers stay just for you. That keeps them safe to answer honestly, so your warmth matters even more."
+      "body": "Their answers stay on their device. Birch sends nothing to anyone.",
+      "say": "One thing to know. Their Birch check-in stays on their own device, and Birch sends nothing to anyone. Their answers stay just for them. That keeps them free to answer honestly, so your warmth matters even more."
      },
      {
       "k": "big",
@@ -5513,8 +5513,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "What a helper sees in Birch",
-      "body": "Only what they choose to share. Never safety answers. Worried? Ask.",
-      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share, and never their safety answers. No alert goes to anyone. So if you're worried about their mood or safety, ask them directly and kindly."
+      "body": "Only what they choose to share. Worried? Ask how they are.",
+      "say": "One thing to know. In Birch, a helper sees only what the young adult chooses to share. Everything else stays on their device. So if you're worried, ask an open question, kindly, like how are you, really?"
      },
      {
       "k": "big",
@@ -6182,8 +6182,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "What a helper sees in Birch",
-      "body": "Only what they choose to share. Never safety answers. Ask kindly.",
-      "say": "In Birch, a helper sees only what the young parent chooses to share, and never their safety answers. No alert goes to anyone. So ask, directly and kindly, how they're doing. And if the crying is wearing them down, offer to take a shift."
+      "body": "Only what they choose to share. Ask kindly.",
+      "say": "In Birch, a helper sees only what the young parent chooses to share. Everything else stays on their device. So ask, warmly and kindly, how they're doing. And if the crying is wearing them down, offer to take a shift."
      },
      {
       "k": "big",
@@ -6418,7 +6418,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Emergency signs",
       "body": "Seeing or hearing things, confusion, days without sleep, thoughts of harm: call for help.",
-      "say": "Know the emergency signs. Seeing or hearing things others don't. Confusion. Days without sleep. Or thoughts of harming themselves or the baby. In Birch, a helper sees only what they choose to share, and never safety answers, so asking kindly and directly matters."
+      "say": "Know the emergency signs. Seeing or hearing things others don't. Confusion. Days without sleep. Or thoughts of harming themselves or the baby. In Birch, a helper sees only what they choose to share, so a warm, open question matters."
      },
      {
       "k": "big",
@@ -6639,8 +6639,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "What a helper sees in Birch",
-      "body": "Only what they choose to share. Never safety answers. Ask kindly.",
-      "say": "In Birch, a helper sees only what the person chooses to share, and never their safety answers. No alert goes to anyone. So ask, kindly and directly, how they're doing, and keep asking in the months ahead."
+      "body": "Only what they choose to share. Ask kindly.",
+      "say": "In Birch, a helper sees only what the person chooses to share. Everything else stays on their device. So ask, kindly and warmly, how they're doing, and keep asking in the months ahead."
      },
      {
       "k": "big",
@@ -7045,7 +7045,7 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Depression and Feeling Stuck",
     "sideName": "For the Helper",
     "mins": 3,
-    "blurb": "For the person beside a young adult who seems low or stuck: notice, stay close, ask plainly, and help them find help.",
+    "blurb": "For the person beside a young adult who seems low or stuck: notice, stay close, listen well, and help them find help.",
     "sources": [
      "healthyminds25",
      "nsduh24"
@@ -7102,9 +7102,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Ask plainly about suicide.",
-      "sub": "Asking is safe. It opens the door.",
-      "say": "If you're worried, ask plainly. Are you having thoughts of ending your life? Asking is safe, and it doesn't put the idea in their head. Thoughts of suicide are more common at eighteen to twenty five than at any other adult age. If the answer is yes, stay with them."
+      "h": "Ask open questions.",
+      "sub": "Then listen, and let them lead.",
+      "say": "If you're worried, ask open questions. How are you, really? What has been the hardest part? Then listen, without rushing to fix. If they share thoughts of not wanting to be alive, stay with them and get help together."
      },
      {
       "k": "big",
@@ -7161,13 +7161,13 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "big",
       "h": "A companion, not a cure.",
       "sub": "Keep your own supports.",
-      "say": "Supporting someone who is depressed is tiring. Keep your own sleep and people, and share the load. If they use Birch, they choose what you see, safety answers are never shown, and no alert goes to anyone. So your own checking in matters."
+      "say": "Supporting someone who is depressed is tiring. Keep your own sleep and people, and share the load. If they use Birch, they choose what you see, and everything else stays on their device. So your own checking in matters."
      },
      {
       "k": "big",
-      "h": "Notice. Stay close. Ask plainly.",
+      "h": "Notice. Stay close. Listen well.",
       "sub": "The full guide has more, whenever you want it.",
-      "say": "Notice. Stay close. Ask plainly. Help them find help. The full guide has more, whenever you want it."
+      "say": "Notice. Stay close. Listen well. Help them find help. The full guide has more, whenever you want it."
      }
     ]
    }
@@ -8210,8 +8210,7 @@ window.GG_LEARN_GUIDES.birch = {
     "blurb": "For the young adult having thoughts of suicide: people are with you, help is here now, and a safety plan helps.",
     "sources": [
      "nsduh24",
-     "stanley",
-     "dazzi"
+     "stanley"
     ],
     "scenes": [
      {
@@ -8302,8 +8301,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "In your Birch check-in",
-      "body": "Help shows right away. Everything stays on your device. Safety answers stay just for you.",
-      "say": "If you answer the safety question in your Birch check-in, Birch shows you help right away. Your answers stay on your device. Everything stays on your device, and safety answers stay just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
+      "body": "Open questions. Everything stays on your device, just for you.",
+      "say": "Your Birch check-in asks open questions about your six parts. Your answers stay on your device. Everything stays just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
      },
      {
       "k": "big",
@@ -8326,9 +8325,8 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Thoughts of Suicide, and a Safety Plan",
     "sideName": "For the Helper",
     "mins": 5,
-    "blurb": "For the person beside a young adult who may be thinking about suicide: ask plainly, stay close, and make a plan together.",
+    "blurb": "For the person beside a young adult who may be thinking about suicide: listen with open questions, stay close, and make a plan together.",
     "sources": [
-     "dazzi",
      "stanley",
      "meansmatter"
     ],
@@ -8380,30 +8378,30 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Ask plainly.",
-      "sub": "Are you thinking about killing yourself?",
-      "say": "If you're worried, ask plainly. Are you thinking about killing yourself? Asking about suicide does not put the idea in someone's head. Direct words tell them you can handle the answer."
+      "h": "Ask open questions.",
+      "sub": "How are you, really?",
+      "say": "If you're worried, ask open questions. How are you, really? What has been the hardest part? Calm, warm words tell them you can hear the answer."
      },
      {
       "k": "words",
       "h": "Say it out loud",
       "items": [
-       "Are you thinking about killing yourself?"
+       "How are you, really?"
       ],
-      "sub": "Calm and plain.",
-      "say": "Let's practice, because the first time is the hardest. Take one slow breath. Now say it out loud, calm and plain. Are you thinking about killing yourself?",
+      "sub": "Warm and open.",
+      "say": "Let's practice, because the first time is the hardest. Take one slow breath. Now say it out loud, warm and open. How are you, really?",
       "beats": [
        "Let's practice, because the first time is the hardest.",
        "Take one slow breath.",
        {
-        "t": "Now say it out loud, calm and plain. Are you thinking about killing yourself?",
+        "t": "Now say it out loud, warm and open. How are you, really?",
         "w": 10
        }
       ]
      },
      {
       "k": "points",
-      "h": "If they say yes",
+      "h": "If they share it",
       "items": [
        [
         "Thank them",
@@ -8422,7 +8420,7 @@ window.GG_LEARN_GUIDES.birch = {
         "And offer to go"
        ]
       ],
-      "say": "If they say yes, thank them. I'm glad you told me. Stay with them, and call or text nine eight eight together. Be honest that you can't keep safety a secret, and say it kindly. Help them get seen soon by a doctor or counselor, and offer to go along. Leave out you have so much to live for, and promise me you won't. A promise isn't a plan.",
+      "say": "If they share thoughts of suicide, thank them. I'm glad you told me. Stay with them, and call or text nine eight eight together. Be honest that you can't keep safety a secret, and say it kindly. Help them get seen soon by a doctor or counselor, and offer to go along. Leave out you have so much to live for, and promise me you won't. A promise isn't a plan.",
       "cue": {
        "at": [
         0,
@@ -8472,8 +8470,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Birch keeps their answers private.",
-      "body": "Safety answers stay with them. Asking is how you find out.",
-      "say": "If they use Birch, know this. Birch sends no alerts to anyone, and a helper never sees safety answers, even when they share their check-in. That privacy is on purpose, for adults. So asking them directly is how you find out."
+      "body": "Their answers stay with them. Your open questions matter.",
+      "say": "If they use Birch, know this. Birch sends nothing to anyone, and a helper sees only what they choose to share. That privacy is on purpose, for adults. So your open questions and steady presence matter most."
      },
      {
       "k": "big",
@@ -8501,9 +8499,8 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "When a Friend Is Thinking About Suicide",
     "sideName": "For You",
     "mins": 4,
-    "blurb": "For the young adult worried a friend may be thinking about suicide: ask, listen, and connect them with help today.",
+    "blurb": "For the young adult worried a friend may be thinking about suicide: reach out, listen, and connect them with help today.",
     "sources": [
-     "dazzi",
      "nsduh24"
     ],
     "scenes": [
@@ -8554,9 +8551,9 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "big",
-      "h": "Ask directly.",
-      "sub": "Are you thinking about killing yourself?",
-      "say": "If you're worried, ask directly. Are you thinking about killing yourself? It feels hard to say. But asking does not put the idea in their head, and many people feel relief when someone finally asks."
+      "h": "Ask open questions.",
+      "sub": "How are you, really?",
+      "say": "If you're worried, ask open questions. How are you, really? What has been the hardest part? Many people feel relief when someone finally listens."
      },
      {
       "k": "big",
@@ -8574,7 +8571,7 @@ window.GG_LEARN_GUIDES.birch = {
      },
      {
       "k": "flow",
-      "h": "If they say yes",
+      "h": "If they share it",
       "steps": [
        [
         "Listen",
@@ -8593,7 +8590,7 @@ window.GG_LEARN_GUIDES.birch = {
         "Guns and medicine held for now"
        ]
       ],
-      "say": "If they say yes, listen, and let them finish. Thank them for telling you. Then connect them with help today: call or text nine eight eight together, or go with them to a counselor or a doctor. And if there are guns or a lot of medicine where they live, ask if someone they trust can hold them for now.",
+      "say": "If they share thoughts of suicide, listen, and let them finish. Thank them for telling you. Then connect them with help today: call or text nine eight eight together, or go with them to a counselor or a doctor. And if there are guns or a lot of medicine where they live, ask if someone they trust can hold them for now.",
       "cue": {
        "at": [
         0,
@@ -8639,9 +8636,7 @@ window.GG_LEARN_GUIDES.birch = {
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For the person beside a young adult who is worried about a friend: back them up, share the weight, and check on them too.",
-    "sources": [
-     "dazzi"
-    ],
+    "sources": [],
     "scenes": [
      {
       "k": "title",
@@ -8720,8 +8715,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Check on them, too.",
-      "body": "Sleep, mood, drinking. Are you having any thoughts like that yourself?",
-      "say": "Check on them in the days and weeks after. Notice their sleep, their mood, and their drinking. A friend's crisis can stir up hard feelings, especially for someone who has lost a person before. If you're worried, ask them plainly, too. Are you having any thoughts like that yourself? Asking is safe."
+      "body": "Sleep, mood, drinking. How is all of this sitting with you?",
+      "say": "Check on them in the days and weeks after. Notice their sleep, their mood, and their drinking. A friend's crisis can stir up hard feelings, especially for someone who has lost a person before. Ask them an open question, too. How is all of this sitting with you? Then listen."
      },
      {
       "k": "big",
@@ -8838,7 +8833,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "Your Birch check-in is yours.",
       "body": "Answers stay on your device. Everything stays on your device.",
-      "say": "Your Birch check-in is yours. Answers stay on your device, and safety answers stay just for you, even with a helper. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
+      "say": "Your Birch check-in is yours. Answers stay on your device, just for you, even with a helper. Telling someone is your choice, and Birch keeps the help lines close whenever you want them."
      },
      {
       "k": "big",
@@ -8860,9 +8855,8 @@ window.GG_LEARN_GUIDES.birch = {
     "title": "Self-Harm",
     "sideName": "For the Helper",
     "mins": 4,
-    "blurb": "For the person who has learned a young adult they love is hurting themselves: stay calm, ask, and offer help together.",
+    "blurb": "For the person who has learned a young adult they love is hurting themselves: stay calm, listen, and offer help together.",
     "sources": [
-     "dazzi",
      "cornellsirr"
     ],
     "scenes": [
@@ -8906,9 +8900,9 @@ window.GG_LEARN_GUIDES.birch = {
       "items": [
        "Thank you for telling me. I'm not going anywhere.",
        "What was happening right before?",
-       "Are you thinking about killing yourself?"
+       "What would help you most right now?"
       ],
-      "say": "Start gently. Thank you for telling me. I'm not going anywhere. Later, ask, what was happening right before? And ask plainly, in a calm voice. Are you thinking about killing yourself? Asking is safe. If they say yes, stay with them, and call or text nine eight eight together."
+      "say": "Start gently. Thank you for telling me. I'm not going anywhere. Later, ask, what was happening right before? And ask, in a calm voice, what would help you most right now? Then listen. If they share thoughts of suicide, stay with them, and call or text nine eight eight together."
      },
      {
       "k": "points",
@@ -10294,8 +10288,7 @@ window.GG_LEARN_GUIDES.birch = {
     "mins": 3,
     "blurb": "For a parent, partner, roommate, or friend beside a young adult who is grieving: show up, say the name, and stay.",
     "sources": [
-     "dougy",
-     "dazzi"
+     "dougy"
     ],
     "scenes": [
      {
@@ -10372,8 +10365,8 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "If you are worried",
-      "body": "Ask directly.",
-      "say": "If you're worried, ask directly and kindly whether they're thinking about suicide. Research finds that asking does not put the idea in someone's head. If they say yes, stay with them."
+      "body": "Ask open questions. Stay close.",
+      "say": "If you're worried, ask open questions, kindly, like how are you holding up, really? Then listen, and stay close. If they share thoughts of not wanting to be alive, stay with them and get help together."
      },
      {
       "k": "big",

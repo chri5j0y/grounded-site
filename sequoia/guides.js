@@ -466,7 +466,7 @@ const LC_TOPICS = [
     "“I love helping you. You did it for me.”",
     "“Your company matters to me.”",
     "“Can I ask your advice on something?”",
-    "“Are you thinking about ending your life?” Asking plainly is safe, and it opens the door."
+    "“How are you, really? What has been the hardest part?” Open questions open the door."
    ],
    "avoid": [
     "“Don't be silly.” It brushes the feeling aside.",
@@ -931,7 +931,7 @@ const LC_TOPICS = [
     "Keep asking, and keep saying their person's name.",
     "Offer to find a grief group or counselor with them, and offer a ride. Let them choose.",
     "Help them bring it up with their doctor, if they'd like you there.",
-    "If you hear a wish to die or to join their person, ask directly and call or text 988 together."
+    "If you hear a wish to die or to join their person, stay with them, listen, and call or text 988 together."
    ],
    "you": "Long grief can wear on the people walking beside it, and their loss may be yours too. Keep your own supports. You don't have to fix it. Staying near is enough."
   },
@@ -2104,7 +2104,7 @@ const LC_TOPICS = [
     "“I've noticed you haven't seemed like yourself. I care about you.”",
     "“You don't have to explain it. I'm here.”",
     "“Would you like me to come with you to the doctor?”",
-    "“Are you thinking about ending your life?” Asking plainly is safe and caring."
+    "“How are you holding up, really?” Then listen, and let them lead."
    ],
    "avoid": [
     "“Snap out of it.” It is an illness, not a choice.",
@@ -3742,17 +3742,17 @@ const LC_TOPICS = [
     "“I believe you.”",
     "“It's not your fault.”",
     "“I'm here, whatever you decide.”",
-    "In private: “Is anyone hurting you, scaring you, or taking from you?”"
+    "In private: “How are things at home for you these days?”"
    ],
    "avoid": [
-    "Asking in front of the person you're worried about.",
+    "Talking about it in front of the person you're worried about.",
     "“Why didn't you tell me sooner?”",
     "Confronting the person you suspect yourself. It can make things more dangerous.",
     "Promising to keep it secret if they're in danger."
    ],
    "help": [
     "Notice signs: unexplained injuries, fear or withdrawal, missing money or new names on accounts, weight loss, missed medicines, unclean living conditions, a helper who won't let you talk alone.",
-    "Find a private moment and ask plainly and gently. Then listen, believe them, and let them lead where you can.",
+    "Find a private moment and ask an open question, gently, like how are things at home for you? Then listen, believe them, and let them lead where you can.",
     "Report it. You don't need proof. In Minnesota, MAARC, 1-844-880-1574, any time; a reporter's identity is kept confidential. In any state, Adult Protective Services. Danger right now: 911.",
     "Keep visiting and calling. Staying close is one of the best protections there is."
    ],

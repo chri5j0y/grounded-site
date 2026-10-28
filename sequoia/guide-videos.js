@@ -417,8 +417,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "mins": 4,
     "blurb": "For anyone beside someone who has lost a role: make room for them to be needed.",
     "sources": [
-     "chochinov",
-     "dazzi"
+     "chochinov"
     ],
     "scenes": [
      {
@@ -486,8 +485,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If they say they're a burden",
-      "body": "Listen first. Ask gently. Stay with the answer.",
-      "say": "If they say they're a burden, take it seriously, and listen before you reassure. Feeling like a burden can weigh heavily in later life. Ask gently and directly. Are you thinking about not wanting to be here? Asking does not plant the idea. Stay with the answer."
+      "body": "Listen first. Ask openly. Stay close.",
+      "say": "If they say they're a burden, take it seriously, and listen before you reassure. Feeling like a burden can weigh heavily in later life. Ask gently, with an open question. What has been weighing on you most? Then listen. Stay close."
      },
      {
       "k": "big",
@@ -1058,9 +1057,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "sideName": "For the Helper",
     "mins": 4,
     "blurb": "For anyone supporting an older adult who feels like a burden.",
-    "sources": [
-     "dazzi"
-    ],
+    "sources": [],
     "scenes": [
      {
       "k": "title",
@@ -1078,13 +1075,13 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "big",
-      "h": "Ask plainly. It is safe to ask.",
-      "sub": "Are you thinking about ending your life?",
-      "say": "Feeling like a burden can be a warning sign. If you hear words like I'm just in the way, or you'd all be better off without me, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+      "h": "Ask open questions. Stay close.",
+      "sub": "How are you, really?",
+      "say": "Feeling like a burden can be a warning sign. If you hear words like I'm just in the way, or you'd all be better off without me, ask open questions, calmly. How are you, really? What has been weighing on you most? Open questions open the door."
      },
      {
       "k": "points",
-      "h": "If the answer is yes",
+      "h": "If they share it",
       "items": [
        [
         "Stay with them",
@@ -1095,7 +1092,7 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Call for help"
        ]
       ],
-      "say": "If the answer is yes, stay with them, and thank them for telling you. Let their doctor know."
+      "say": "If they share thoughts of ending their life, stay with them, and thank them for telling you. Let their doctor know."
      },
      {
       "k": "words",
@@ -1378,7 +1375,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "say": "Watch gently for grief that grows heavier after many months, or keeps them from daily life. You can help them find a grief group or a counselor. If they talk about wanting to join their partner, or not wanting to live, ask plainly whether they are thinking about ending their life."
+      "say": "Watch gently for grief that grows heavier after many months, or keeps them from daily life. You can help them find a grief group or a counselor. If they talk about wanting to join their partner, or not wanting to live, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -1599,7 +1596,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "say": "Watch, gently, for sadness or loneliness that settles in for weeks, or grief that stays as sharp as the first weeks after many months. You can help them talk with their doctor. If they ever say they do not want to be here anymore, ask them plainly about it, and stay with them."
+      "say": "Watch, gently, for sadness or loneliness that settles in for weeks, or grief that stays as sharp as the first weeks after many months. You can help them talk with their doctor. If they ever say they do not want to be here anymore, listen, stay with them, and get help together."
      },
      {
       "k": "big",
@@ -1822,7 +1819,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from eating, sleeping, or seeing people. You can help them talk with their doctor, or find a group for bereaved parents. If they say they want to be with their child, or do not want to live, ask them plainly about it and stay with them."
+      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from eating, sleeping, or seeing people. You can help them talk with their doctor, or find a group for bereaved parents. If they say they want to be with their child, or do not want to live, listen, stay with them, and get help together."
      },
      {
       "k": "big",
@@ -2049,7 +2046,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When to help them reach out",
-      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from daily life. You can help them talk with their doctor or find a grief group. If they ever say they do not want to live, ask them plainly about it, and stay with them."
+      "say": "Watch, gently, for grief that stays as sharp as the first weeks after many months, or keeps them from daily life. You can help them talk with their doctor or find a grief group. If they ever say they do not want to live, listen, stay with them, and get help together."
      },
      {
       "k": "big",
@@ -2173,8 +2170,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "mins": 4,
     "blurb": "For anyone walking beside someone whose grief isn't easing.",
     "sources": [
-     "shear",
-     "dazzi"
+     "shear"
     ],
     "scenes": [
      {
@@ -2277,8 +2273,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you hear a wish to die",
-      "body": "Ask plainly.",
-      "say": "If you hear words like, I just want to be with her, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head."
+      "body": "Stay close. Get help together.",
+      "say": "If you hear words like, I just want to be with her, stay close, and ask an open question, calmly. What has this been like for you? If they share thoughts of ending their life, stay with them and get help together."
      },
      {
       "k": "big",
@@ -5176,8 +5172,7 @@ window.GG_LEARN_GUIDES.sequoia = {
     "blurb": "For anyone walking beside an older adult who seems low or withdrawn: notice, ask, and stay close.",
     "sources": [
      "gds",
-     "cdcsuicide55",
-     "dazzi"
+     "cdcsuicide55"
     ],
     "scenes": [
      {
@@ -5262,8 +5257,8 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If they speak of not wanting to live",
-      "body": "Ask plainly.",
-      "say": "Men seventy five and older have the highest suicide rate of any age group. Listen for words like I'm just in the way, or you'd all be better off. If you hear them, ask plainly and calmly: are you thinking about ending your life? Asking does not put the idea in their head. If the answer is yes, stay with them."
+      "body": "Ask openly. Stay close.",
+      "say": "Men seventy five and older have the highest suicide rate of any age group. Listen for words like I'm just in the way, or you'd all be better off. If you hear them, ask an open question, calmly: how are you, really? Then listen. If they share thoughts of ending their life, stay with them."
      },
      {
       "k": "big",
@@ -7366,7 +7361,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When it is too much",
-      "say": "If the caregiver seems hopeless, or talks about ending their life, ask plainly."
+      "say": "If the caregiver seems hopeless, or talks about ending their life, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -7801,7 +7796,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "When it is too much",
-      "say": "If the grandparent, or a child, seems hopeless, or talks about ending their life, ask plainly."
+      "say": "If the grandparent, or a child, seems hopeless, or talks about ending their life, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -9069,15 +9064,15 @@ window.GG_LEARN_GUIDES.sequoia = {
      },
      {
       "k": "flow",
-      "h": "Asking privately",
+      "h": "Talking privately",
       "steps": [
        [
         "Find a private moment",
         "Away from the person you worry about"
        ],
        [
-        "Ask plainly and gently",
-        "Is anyone hurting or scaring you?"
+        "Ask an open question",
+        "How are things at home?"
        ],
        [
         "Believe them",
@@ -9088,19 +9083,19 @@ window.GG_LEARN_GUIDES.sequoia = {
         "Their pace, where it is safe"
        ]
       ],
-      "say": "Here's how to ask. Find a private moment, away from the person you're worried about. Ask plainly and gently. Then believe them, and thank them for telling you. Let them lead where it's safe. Say, I believe you, and it's not your fault. Set aside, why didn't you tell me sooner."
+      "say": "Here's how to start. Find a private moment, away from the person you're worried about. Ask an open question, gently. Then believe them, and thank them for telling you. Let them lead where it's safe. Say, I believe you, and it's not your fault. Set aside, why didn't you tell me sooner."
      },
      {
       "k": "big",
-      "h": "Practice the private question.",
+      "h": "Practice an open question.",
       "sub": "Soft voice, open door.",
-      "say": "Let's practice. Picture a quiet, private moment with them. Soften your voice, and lean in a little. Now say out loud, gently: is anyone hurting you, scaring you, or taking from you?",
+      "say": "Let's practice. Picture a quiet, private moment with them. Soften your voice, and lean in a little. Now say out loud, gently: how are things at home for you these days?",
       "beats": [
        "Let's practice.",
        "Picture a quiet, private moment with them.",
        "Soften your voice, and lean in a little.",
        {
-        "t": "Now say out loud, gently: is anyone hurting you, scaring you, or taking from you?",
+        "t": "Now say out loud, gently: how are things at home for you these days?",
         "w": 10
        }
       ]
@@ -9828,7 +9823,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "card",
       "title": "If you are worried",
-      "say": "If you hear hopeless words, or talk of not wanting to live, ask plainly, and call together. Families can call too."
+      "say": "If you hear hopeless words, or talk of not wanting to live, stay close, listen, and call together. Families can call too."
      },
      {
       "k": "big",
@@ -10314,7 +10309,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When it grows heavy",
-      "say": "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor. If low mood lasts two weeks or more, encourage a talk with their doctor. If they say they do not want to live, ask them plainly about it, and stay with them."
+      "say": "If guilt, fear, or a sense of being punished weighs on them, offer to find a chaplain or counselor. If low mood lasts two weeks or more, encourage a talk with their doctor. If they say they do not want to live, listen, stay with them, and get help together."
      },
      {
       "k": "big",
@@ -10760,7 +10755,7 @@ window.GG_LEARN_GUIDES.sequoia = {
      {
       "k": "big",
       "h": "When regret turns to despair",
-      "say": "Watch gently for regret that turns into hopelessness, or talk of not deserving to live. Ask them plainly whether they are thinking about ending their life. Asking does not plant the idea. If they say yes, stay with them."
+      "say": "Watch gently for regret that turns into hopelessness, or talk of not deserving to live. Ask an open question, like what has this been like for you? Then listen. If they share thoughts of ending their life, stay with them."
      },
      {
       "k": "big",
