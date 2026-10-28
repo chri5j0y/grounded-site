@@ -659,7 +659,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
-<script src="../shared/gg-sources.js?v=b866"></script>
+<script src="../shared/gg-sources.js?v=b878"></script>
 <script src="../shared/gg-learn.js?v=b862"></script>
 <script src="../shared/gg-print.js?v=b836"></script>
 <script src="../shared/grove-scene.js?v=b862"></script>
@@ -682,7 +682,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="moves.js?v=b862"></script>
 <script src="stage.js?v=b862"></script>
 <script src="coach.js?v=b866"></script>
-<script src="health.js?v=b875"></script>
+<script src="health.js?v=b878"></script>
 <script src="vault.js?v=b852"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -2234,27 +2234,28 @@ function lnTracks(){
 }
 const lnData = () => (DATA.learn = Object.assign({done:{}, at:{}}, DATA.learn || {}));
 function lnFind(id){ for (const t of lnTracks()) for (const l of t.lessons) if (l.id === id) return {t, l}; return null; }
-function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {}), how: Object.assign({}, b.how || {}, a.how || {})}; return o; }
+function learnMerge(a, b){ a = Object.assign({done:{}, at:{}}, a || {}); b = b || {}; const o = {done: Object.assign({}, b.done || {}, a.done || {}), at: Object.assign({}, b.at || {}, a.at || {}), how: Object.assign({}, b.how || {}, a.how || {}), quiz: Object.assign({}, b.quiz || {}, a.quiz || {})}; return o; }
 let LN = null;
 const lnCertable = t => window.GGLearn ? GGLearn.certable(t) : (t.lessons || []).length >= 3;
 function vLearn(){
   if (window.GGLearn) GGLearn.css();
   const tracks = lnTracks(), D = lnData();
   if (V.ln){ const f = lnFind(V.ln); if (f) return vLesson(f.t, f.l); }
+  if (V.lnq && lnQT()) return V.lnq.done ? vLnQuizResult() : vLnQuiz();
   if (V.wfg) return vWFG();
   if (V.sg) return vSG();
   if (V.lgm && lgOpen()) return lgTint(vLGM());
   const intro = ((typeof FLD !== 'undefined' && FLD && FLD.learn) || {}).intro || 'Short animated walkthroughs of everything Grow With Grounded does. Watch them in any order, as often as you like.';
   if (!tracks.length) return `<div class="page-head"><div class="eyebrow">Learn</div><h1>Learn Grow With Grounded</h1></div><div class="card"><p>The lessons arrive with the next library update. Once your Field Guide is updated, they show up here.</p></div>`;
-  const counted = tracks.filter(t => t.kind !== 'setup' && t.kind !== 'walkthrough'), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
+  const counted = tracks.filter(t => t.kind !== 'setup' && t.kind !== 'walkthrough' && !t.path), all = counted.reduce((n, t) => n + t.lessons.length, 0), fin = counted.reduce((n, t) => n + t.lessons.filter(l => D.done[l.id]).length, 0);
   // Learn opens to category cards (BLD 725): Lessons, Support for Guides, and each For Guides series. Each opens to its videos.
-  const lessonCards = () => tracks.filter(t => t.kind !== 'walkthrough').map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
+  const lessonCards = list => (list || tracks.filter(t => t.kind !== 'walkthrough' && !t.path)).map(t => { const n = t.lessons.filter(l => D.done[l.id]).length, ok = n === t.lessons.length && lnCertable(t);
     return `<div class="card ln-track"><div class="spread"><div><h3>${esc(t.title)}</h3><p class="muted">${esc(t.who || '')}</p></div><span class="muted">${n} of ${t.lessons.length}</span></div>
     <div class="ln-list">${t.lessons.map(l => `<button class="ln-item${D.done[l.id] ? ' done' : ''}" data-act="ln-open" data-v="${esc(l.id)}"><span class="ln-n">${D.done[l.id] ? icon('check') : esc(String(l.n || ''))}</span><span class="ln-t"><b>${esc(l.title)}</b><small>About ${esc(String(l.mins || 3))} minutes${D.at[l.id] && !D.done[l.id] ? '. Pick up where you left off.' : ''}</small></span>${icon('play')}</button>`).join('')}</div>
     ${ok ? `<div class="row" style="margin-top:12px"><button class="btn btn-gold btn-sm" data-act="ln-cert" data-v="${esc(t.id)}">${icon('print')} Get Your Certificate</button></div>` : lnCertable(t) ? `<p class="muted" style="margin-top:10px;font-size:14px">Finish every lesson in this series for a Certificate of Completion.</p>` : ''}</div>`; }).join('');
   const back = (act, v, label) => `<button class="linkbtn" data-act="${act}"${v ? ` data-v="${esc(v)}"` : ''}>&larr; ${esc(label)}</button>`;
   const cats = [{k: 'les', eb: 'Lessons', title: 'Learn Step by Step', intro: 'How Grow With Grounded and the Field Guide work, in order. Start with Get Set Up.', n: `${fin} of ${all} lessons finished`, accent: 'var(--gold)'}];
-  cats.unshift(...walkCats()); // the Walkthroughs (GWG BLD 797)
+  cats.unshift(...walkCats(), ...pathCats()); // the Walkthroughs (GWG BLD 797), then The Grounded Way series (BLD 878)
   if (sgOn()) cats.push({k: 'sg', eb: 'For You', title: SGD().title, intro: SGD().intro || '', n: `${sgGroups().reduce((n, g) => n + g.items.length, 0)} videos`, accent: 'var(--sage)'});
   // Guides take Walking with Illness and Disability: Guide Training here, once it is open to them (BLD 759).
   if (lgOpen()){ const g = lgmCardInfo(); cats.push({k: 'lg', eb: 'Guide Training', title: g.title, intro: g.desc, n: g.n, accent: LG_C, act: 'lg-mhome'}); }
@@ -2262,6 +2263,7 @@ function vLearn(){
   const C = LCAT.cat && cats.some(c => c.k === LCAT.cat) ? LCAT.cat : null;
   if (C === 'les') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div class="page-head" style="margin-top:10px"><div class="eyebrow">Lessons</div><h1>Learn Step by Step</h1><p style="margin-top:6px"><b>${fin} of ${all}</b> lessons finished on this device.</p></div>${lessonCards()}</div>`;
   if (C && C.startsWith('walk:')){ const W = walkTracks().find(t => 'walk:' + t.id === C); if (W) return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${walkLearnCard(W)}</div></div>`; }
+  if (C && C.startsWith('path:')){ const P = pathTracks().find(t => 'path:' + t.id === C); if (P) return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px"><div class="eyebrow">The Grounded Way</div>${lessonCards([P])}${lnQuizRow(P)}${lnCardRow(P)}</div></div>`; }
   if (C === 'sg') return `<div class="ggl">${back('lc-home', '', 'Back to Learn')}<div style="margin-top:10px">${sgLearnCard()}</div></div>`;
   if (C && C.startsWith('ser:')){
     const x = C.slice(4), F = WFG(x), R = LCAT.ring ? wfgRings(x).find(r => r.key === LCAT.ring) : null;
@@ -2305,8 +2307,15 @@ function lnMount(t, l){
 function lnStop(){ if (LN && LN.stop) LN.stop(); LN = null; }
 // Every Learn certificate prints through the Certificates list (GWG BLD 797): Walkthroughs and Learn series alike.
 function lnCert(t){ if (t) certPrintId((t.kind === 'walkthrough' ? 'walk:' : 'ln:') + t.id); }
-function lnAct(a, v){
+function lnAct(a, v, el){
   switch (a){
+    case 'ln-card': lnCard(v); return true;
+    case 'ln-qz': { const t = lnTracks().find(x => x.id === v); if (t && t.quiz && (t.quiz.items || []).length){ go('learn', {lnq: lnNewQuiz(t)}); window.scrollTo(0, 0); } return true; }
+    case 'ln-qzpick': { const Q = V.lnq; if (!Q) return true; Q.ans[Q.order[Q.i]] = +v; document.querySelectorAll('.opt').forEach(b => b.setAttribute('aria-pressed', b === el)); const nb = document.querySelector('[data-act=ln-qznext],[data-act=ln-qzfinish]'); if (nb) nb.disabled = false; return true; }
+    case 'ln-qznext': { const Q = V.lnq; if (Q && Q.ans[Q.order[Q.i]] !== undefined){ Q.i++; render(); } return true; }
+    case 'ln-qzprev': { const Q = V.lnq; if (Q && Q.i > 0){ Q.i--; render(); } return true; }
+    case 'ln-qzfinish': lnQuizFinish(); window.scrollTo(0, 0); return true;
+    case 'ln-qzback': { const id = V.lnq && V.lnq.t; LCAT.cat = id && pathTracks().some(t => t.id === id) ? 'path:' + id : null; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
     case 'ln-open': lnStop(); go('learn', {ln: v}); return true;
     case 'lc-home': LCAT.cat = null; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true;
     case 'lc-cat': LCAT.cat = v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true;
@@ -2317,6 +2326,69 @@ function lnAct(a, v){
     case 'ln-cert': lnCert(lnTracks().find(t => t.id === v)); return true;
   }
   return false;
+}
+// ----- The Grounded Way series (GWG BLD 878) -----
+/* A Learn track with path: 'grounded-way' (in the Guide library, so every level reads it: The Grounded Way Walkthrough and
+   Walking Someone Through The Grounded Way) has its own card in Learn and a row in Your Path, and prints a Certificate of
+   Completion. Once every series with the same tool is finished, that tool (The Grounded Way) joins the tiles on the
+   Certified Grounded Guide certificate (pathTools). A series may carry a Quick Card (card: {title, lead, rows, foot}, the
+   For Guides shape) and a practice quiz (quiz: {pass, items: [{id, lesson, s, q, o, a, why}]}, the Guide Training shape).
+   The quiz is practice: the last score is kept in DATA.learn.quiz[track id] and travels in backups. */
+const pathTracks = () => lnTracks().filter(t => t && t.path && Array.isArray(t.lessons) && t.lessons.length);
+const pathCats = () => pathTracks().map(t => { const n = t.lessons.filter(l => lnData().done[l.id]).length;
+  return {k: 'path:' + t.id, eb: 'The Grounded Way', title: t.title, intro: t.who || '', n: `${n} of ${t.lessons.length} videos finished`, accent: 'var(--sage)'}; });
+function pathTools(){
+  const P = pathTracks().filter(t => t.tool), out = [];
+  P.forEach(t => { if (out.some(x => x.tool === t.tool)) return; const all = P.filter(x => x.tool === t.tool);
+    if (all.every(x => walkDone(x))) out.push({tool: t.tool, titles: all.map(x => x.title)}); });
+  return out;
+}
+function lnCardRow(t){
+  const c = t && t.card; if (!c || !Array.isArray(c.rows) || !c.rows.length) return '';
+  return `<div class="card wfg-card" style="margin-top:14px;border-left:4px solid var(--sage)"><div class="spread"><div><div class="eyebrow">Quick Card</div><h3>${esc(c.title)}</h3>${c.lead ? `<p class="muted">${esc(c.lead)}</p>` : ''}</div>
+   <button class="btn btn-gold btn-sm" data-act="ln-card" data-v="${esc(t.id)}">${icon('print')} Print the Quick Card</button></div></div>`;
+}
+function lnCard(id){
+  const t = lnTracks().find(x => x.id === id), c = t && t.card; if (!c || !Array.isArray(c.rows) || !window.ggSheetHTML) return;
+  const m = {eyebrow: (t.tool || 'Learn') + ': Quick Card', title: c.title, sub: c.lead || '', sec: c.rows.map(r => ({h: r[0], p: [r[1]]})),
+    after: [], close: '', foot: (c.foot ? c.foot + ' ' : '') + 'Grounded Field Guide. growwithgrounded.com'};
+  fgSheet(ph('Quick Card') + `<div class="wfg-qc">${ggSheetHTML(m)}</div>`, m.title, {file: 'quick-card ' + c.title, blocks: () => ggSheetBlocks(m)});
+}
+const lnQT = () => { const t = V.lnq && lnTracks().find(x => x.id === V.lnq.t); return t && t.quiz && Array.isArray(t.quiz.items) && t.quiz.items.length ? t : null; };
+const lnNewQuiz = t => ({t: t.id, order: orShuffle(t.quiz.items.map((_, i) => i)), perm: t.quiz.items.map(it => orShuffle(it.o.map((_, i) => i))), i: 0, ans: {}, done: false});
+function lnQuizRow(t){
+  const Q = t && t.quiz; if (!Q || !Array.isArray(Q.items) || !Q.items.length) return '';
+  const last = (lnData().quiz || {})[t.id], n = Q.items.length;
+  return `<div class="card" style="margin-top:14px;border-left:4px solid var(--gold)"><div class="spread"><div><div class="eyebrow">Practice Quiz</div><h3>${n} Real-World Scenarios</h3>
+   <p class="muted">${esc(last ? 'Last try: ' + last.score + ' of ' + n + (last.score >= Q.pass ? '. Well done.' : '. Aim for ' + Q.pass + ' next time.') : 'Aim for ' + Q.pass + ' of ' + n + '. Take it as often as you like.')}</p></div>
+   <button class="btn btn-gold btn-sm" data-act="ln-qz" data-v="${esc(t.id)}">${last ? 'Take It Again' : 'Start the Quiz'}</button></div></div>`;
+}
+function vLnQuiz(){
+  const t = lnQT(), Q = V.lnq, items = t.quiz.items, k = Q.order[Q.i], it = items[k], n = items.length, last = Q.i === n - 1, picked = Q.ans[k];
+  return `<button class="linkbtn" data-act="ln-qzback">&larr; Back to ${esc(t.title)}</button>
+  <div class="page-head" style="margin-top:14px"><div class="eyebrow">Practice Quiz &middot; Scenario ${Q.i + 1} of ${n}</div>${orBar(Q.i + 1, n)}</div>
+  <div class="card"><p class="or-scen">${esc(it.s)}</p><p style="margin-top:12px"><b>${esc(it.q)}</b></p>
+   <div role="group" aria-label="Answers">${Q.perm[k].map(o => `<button class="opt" data-act="ln-qzpick" data-v="${o}" aria-pressed="${picked === o}">${esc(it.o[o])}</button>`).join('')}</div></div>
+  <div class="row" style="margin-top:14px">${Q.i > 0 ? `<button class="btn btn-line" data-act="ln-qzprev">Previous</button>` : ''}
+   <button class="btn btn-gold" data-act="${last ? 'ln-qzfinish' : 'ln-qznext'}"${picked === undefined ? ' disabled' : ''}>${last ? 'See My Results' : 'Next Scenario'}</button></div>`;
+}
+function lnQuizFinish(){
+  const t = lnQT(), Q = V.lnq; if (!t) return; const items = t.quiz.items;
+  if (items.some((_, k) => Q.ans[k] === undefined)) return;
+  const score = items.filter((it, k) => Q.ans[k] === it.a).length, D = lnData();
+  D.quiz = Object.assign({}, D.quiz || {}, {[t.id]: {date: today(), score}}); save();
+  Q.done = true; Q.score = score; render();
+}
+function vLnQuizResult(){
+  const t = lnQT(), Q = V.lnq, items = t.quiz.items, n = items.length, ok = Q.score >= t.quiz.pass;
+  return `<button class="linkbtn" data-act="ln-qzback">&larr; Back to ${esc(t.title)}</button>
+  <div class="card" style="margin-top:14px;border-left:4px solid var(${ok ? '--sage' : '--gold'})"><p class="or-score">${Q.score} of ${n}</p>
+   <h2 style="margin-top:8px">${ok ? 'Well done. You are ready.' : esc('Good practice. Aim for ' + t.quiz.pass + ' of ' + n + ' next time.')}</h2>
+   <div class="row" style="margin-top:14px"><button class="btn btn-gold" data-act="ln-qz" data-v="${esc(t.id)}">Take It Again</button><button class="btn btn-line" data-act="ln-qzback">Back to the Series</button></div></div>
+  <div class="card"><h3>Your Answers</h3><div style="margin-top:12px">${Q.order.map((k, j) => { const it = items[k], right = Q.ans[k] === it.a, L = t.lessons.find(l => l.id === it.lesson);
+    return `<div class="or-rev"><span class="mark ${right ? 'ok' : 'miss'}">${right ? 'Right' : 'Another Look'}</span><p style="margin-top:4px"><b>${j + 1}.</b> ${esc(it.s)}</p>
+      <p style="margin-top:6px"><span class="muted">Your answer:</span> ${esc(it.o[Q.ans[k]])}</p>${right ? '' : `<p style="margin-top:6px"><span class="muted">Best answer:</span> ${esc(it.o[it.a])}</p>`}
+      <p style="margin-top:6px"><i>${esc(it.why)}</i>${L ? ` <span class="muted">(Lesson: ${esc(L.title)})</span>` : ''}</p></div>`; }).join('')}</div></div>`;
 }
 // ---------------- CERTIFICATES (GWG BLD 797, BLD 800) ----------------
 /* The Certificates tab and the Walkthroughs (Chris, October 13, 2026: "we can have certification tab that hold all certs,
@@ -2404,8 +2476,8 @@ function fgCerts(){
     add('fg:' + s + ':' + R.key, 'guide', t, {group: 'For Guides', tree: FGSER[s].tree, date: lastDone(R.guides.map(g => g.id)),
       note: (WFG(s).certLine || 'For watching or reading every For Guides section in {ring}.').replace('{ring}', R.name)}); }); }));
   // Each Learn series
-  safe(() => lnTracks().forEach(t => { if (t.kind === 'walkthrough' || !lnCertable(t) || !t.lessons.length || !walkDone(t)) return; const ti = 'Learn Grow With Grounded: ' + t.title;
-    add('ln:' + t.id, certLibLevel(t), ti, {group: 'Learn', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every lesson in the ' + t.title + ' series.'}); }));
+  safe(() => lnTracks().forEach(t => { if (t.kind === 'walkthrough' || !lnCertable(t) || !t.lessons.length || !walkDone(t)) return; const ti = t.path ? t.title : 'Learn Grow With Grounded: ' + t.title;
+    add('ln:' + t.id, certLibLevel(t), ti, {group: 'Learn', date: lastDone(t.lessons.map(l => l.id)), note: t.certLine || 'For finishing every lesson in the ' + t.title + ' series.'}); }));
   // Each Walkthrough on its own, a Certificate of Completion
   safe(() => walkTracks().forEach(t => { if (!walkDone(t)) return; const lv = walkLevel(t);
     add('walk:' + t.id, lv, t.title, {group: 'Walkthrough', date: lastDone(t.lessons.map(l => l.id)), note: 'For finishing every video in the ' + t.title + ', a tour of every part of the ' + CERT_LV[lv] + ' level.'}); }));
@@ -2427,8 +2499,9 @@ function certCred(lv, list){
       {done: tr.length > 0, label: tr.length ? 'Guide Training: ' + tr.map(c => c.tool.replace(/^The /, '')).join(', ') : 'One Guide Training', next: 'Next: pass one Guide Training (each tree tab, The Grove, or Walking with Illness and Disability holds one)'}];
     earned = steps.every(s => s.done);
     if (earned){
-      tiles = [{label: 'The Grounded Field Guide', art: 'fieldguide'}].concat(tr.map(c => ({label: c.tool, art: c.art || certArt(c.tool)})));
-      more = ['Field Guide Orientation and Agreement', W.title];
+      const gw = safe(pathTools) || []; // The Grounded Way joins once its series are finished (BLD 878)
+      tiles = [{label: 'The Grounded Field Guide', art: 'fieldguide'}].concat(gw.map(x => ({label: x.tool, art: certArt(x.tool)})), tr.map(c => ({label: c.tool, art: c.art || certArt(c.tool)})));
+      more = ['Field Guide Orientation and Agreement', W.title].concat(...gw.map(x => x.titles));
       date = max([O.date, wDate, min(tr.map(c => c.date))]); renew = min([O.renew].concat(tr.map(c => c.renew)));
     }
   } else {
@@ -2549,7 +2622,11 @@ function vPath(){
   const ccard = ({lv, c}) => c.earned ? `<div class="pa-cert ok"><div class="pa-seal">${icon('award')}</div><div class="pa-t"><b>${esc(certHead(lv))}</b><br><small class="muted">${esc([c.cert.date ? 'Completed ' + nice(c.cert.date) : '', c.cert.renew ? 'Renew by ' + nice(c.cert.renew) : ''].filter(Boolean).join('. '))}</small></div><button class="btn btn-gold btn-sm" data-act="cert-print" data-v="${esc(c.cert.id)}">${icon('print')} Save or Print</button></div>`
     : `<div class="pa-cert"><div class="pa-seal">${icon('award')}</div><div class="pa-t"><b>${esc(certHead(lv))}</b><br><small class="muted">${esc(c.steps.filter(x => x.done).length + ' of ' + c.steps.length + ' steps done. ' + ((c.steps.find(x => !x.done) || {}).next || ''))}</small></div></div>`;
   // Keep Growing: Learn series, For Guides rings, Certificates of Completion
-  const LS = safe(() => lnTracks().filter(t => t.kind !== 'walkthrough' && t.lessons.length && lnCertable(t))) || [], lsDone = LS.filter(t => walkDone(t)).length;
+  const LS = safe(() => lnTracks().filter(t => t.kind !== 'walkthrough' && !t.path && t.lessons.length && lnCertable(t))) || [], lsDone = LS.filter(t => walkDone(t)).length;
+  // The Grounded Way series (BLD 878): open at every level, each with its progress and a Certificate of Completion.
+  const GW = safe(pathTracks) || [], gwRow = t => { const n = t.lessons.filter(l => lnData().done[l.id]).length;
+    return row({t: t.title, sub: t.lessons.length + ' videos', done: walkDone(t), prog: n + ' of ' + t.lessons.length + ' videos', act: 'path-gw', v: t.id}); };
+  const gwTool = (GW.find(t => t.tool) || {}).tool;
   let rings = 0, rDone = 0; safe(() => Object.keys(FGSER).forEach(sr => { if (!WFG(sr)) return; wfgRings(sr).forEach(R => { rings++; if (R.guides.every(g => wfgDone(g.id))) rDone++; }); }));
   const step = (n, title, lead, body, state) => `<section class="card pa-step pa-${state}"><div class="pa-num">${state === 'done' ? icon('check') : n}</div><div class="pa-body"><h2>${esc(title)}</h2><p class="muted">${esc(lead)}</p>${body}</div></section>`;
   const st = n => n < stepNow ? 'done' : n === stepNow ? 'now' : 'next';
@@ -2559,6 +2636,7 @@ function vPath(){
   ${step(2, 'Train', 'Each Guide Training has short lessons, a check, and an agreement. Pass one to become Certified; each one you pass adds that tool to your certificate.', T.length ? `<ul class="pa-list">${T.map(trow).join('')}</ul>` : '<p class="muted">Your Guide Trainings appear here as each tree opens to you.</p>', st(2))}
   ${step(3, 'Certified', 'Your certificate lists every training you pass and renews each year with them.', C.map(ccard).join(''), st(3))}
   <h2 style="margin-top:24px">Keep Growing</h2><p class="muted">At your own pace. Each one you finish earns a Certificate of Completion.</p>
+  ${GW.length ? `<section class="card pa-gw" style="margin-top:10px;border-left:4px solid var(--sage)"><div class="eyebrow">Open to Everyone</div><h3>The Grounded Way</h3><p class="muted">${esc('Learn the app, then how to walk someone through it.' + (gwTool ? ' Finish ' + (GW.length === 2 ? 'both' : 'each one') + ' and ' + gwTool + ' joins the tools on your Certified Grounded Guide certificate.' : ''))}</p><ul class="pa-list">${GW.map(gwRow).join('')}</ul></section>` : ''}
   <div class="pa-cards">
     <button class="card pa-card" data-tab="learn"><h3>Learn Series</h3><p class="muted">Short video lessons on presence, listening, grief, and more.</p>${LS.length ? pill(lsDone + ' of ' + LS.length + ' finished', lsDone ? 'ok' : 'soft') : ''}</button>
     <button class="card pa-card" data-tab="learn"><h3>For Guides Rings</h3><p class="muted">Deeper guides for each tree, a ring at a time.</p>${rings ? pill(rDone + ' of ' + rings + ' rings', rDone ? 'ok' : 'soft') : ''}</button>
@@ -2621,6 +2699,7 @@ function certAct(a, v){
     case 'cert-walk': { LCAT.cat = 'walk:' + v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
     case 'cert-orient': go('orient'); return true;
     case 'path-orient': go('orient'); return true;
+    case 'path-gw': { LCAT.cat = 'path:' + v; LCAT.ring = null; go('learn'); window.scrollTo(0, 0); return true; }
     case 'path-train': { const t = pathTrainings().find(x => x.id === v); if (t) t.go(); return true; }
   }
   return false;
