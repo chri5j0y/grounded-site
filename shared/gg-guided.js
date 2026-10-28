@@ -39,6 +39,10 @@
    opts.noClose, opts.quietHtml; plan steps st.anchors, st.say, st.extra, st.label, st.ownLabel, choice text, pills, and anchor (a default time);
    opts.planTotal {max, min, msg}, opts.planWords {label, value}, opts.planTitle, opts.planEmpty, opts.anchors.
    onDone's result adds anchors {part: {name: anchor}} and words when those are used.
+   A note after an answer: q.after (a string, or function (value, option) returning one) or option after; the screen then
+   waits for Next instead of moving on. q.hold: true waits for Next with no note. A first screen for how the person is
+   answering: opts.modes [{v, label, sub}], opts.mode (current), opts.onMode(v), opts.modeText, opts.modeHelp, opts.modeEb,
+   opts.modeSay (spoken, optional), opts.askMode false skips it. The mode shows only on a fresh start, never on resume.
 
    Scripts (shared/guided/<tree>.js): GG_GUIDED[tree] = {voice, tipSkip: [tags], kinds: {<kind>: {open: [lines],
    resume?: [lines], enter?: {part: [lines]}, mid: {every, lines}, tips: {part: [lines]}, close: [lines]},
@@ -360,7 +364,8 @@
 
     function progress(sc) {
       var tot = Q.length + P.length, n = 0, label = '';
-      if (sc.k === 'q') { n = sc.i; label = Q[sc.i].aside ? (Q[sc.i].label || '') : 'Question ' + numOf(sc.i) + ' of ' + NQ; }
+      if (sc.k === 'mode') { n = 0; label = o.modeLabel || ''; }
+      else if (sc.k === 'q') { n = sc.i; label = Q[sc.i].aside ? (Q[sc.i].label || '') : 'Question ' + numOf(sc.i) + ' of ' + NQ; }
       else if (sc.k === 'plan') { n = Q.length + sc.j; label = 'Growth Plan, Part ' + (sc.j + 1) + ' of ' + P.length; }
       else if (sc.k === 'open' || sc.k === 'resume') { n = sc.k === 'resume' ? firstOpen() : 0; label = NQ > 1 ? NQ + ' Questions' : ''; }
       else if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') { n = sc.from + 1; label = Q[sc.from].aside ? (Q[sc.from].label || '') : 'Question ' + numOf(sc.from) + ' of ' + NQ; }
@@ -377,7 +382,7 @@
       S.screen = sc; progress(sc);
       bNext.hidden = true; bNext.disabled = false; bNext.onclick = null;
       bBack.hidden = false; bBack.disabled = !canBack(sc);
-      ({ q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
+      ({ mode: drawMode, q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
       stage.scrollTop = 0;
       var h = stage.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
     }
@@ -420,6 +425,8 @@
         var multi = type === 'multi', cur = multi ? arr(v) : null;
         body = ops.map(function (x, j) { var on = multi ? cur.indexOf(x.v) >= 0 : v === x.v; return '<button type="button" class="ggd-opt ggd-a' + (multi ? ' ggd-multi' : '') + (x.quiet ? ' ggd-q2' : '') + '" data-v="' + j + '" aria-pressed="' + on + '"><span class="ggd-k" aria-hidden="true">' + (multi ? (on ? I.check : '') : j + 1) + '</span><span class="ggd-ot">' + esc(x.label) + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</span></button>'; }).join('');
       }
+      var curOp = ops.filter(function (x) { return x.v === v && v !== undefined; })[0], curNote = '';
+      if (curOp && type !== 'multi') { try { curNote = String(curOp.after || (typeof q.after === 'function' ? q.after(v, curOp) : q.after) || ''); } catch (e) { curNote = ''; } }
       var more = arr(q.more).filter(function (m) { return m && m.text; }).map(function (m) { return '<details class="ggd-more"><summary>' + esc(m.label || 'Why this question?') + '</summary><p>' + esc(m.text) + '</p></details>'; }).join('');
       stage.innerHTML = '<section class="ggd-card' + partCls(q.part) + (type === 'form' ? ' ggd-wide' : '') + '">'
         + (q.part || q.eb ? '<div class="ggd-eb">' + esc(q.eb || partName(q.part)) + '</div>' : '')
@@ -427,7 +434,7 @@
         + (lead ? '<p class="ggd-enter ggd-lead">' + esc(lead) + '</p>' : '')
         + (q.stem ? '<p class="ggd-stem">' + esc(q.stem) + '</p>' : '')
         + '<h2 id="ggd-h">' + esc(q.text) + '</h2>' + (q.help ? '<p class="ggd-help">' + esc(q.help) + '</p>' : '')
-        + '<div class="ggd-ans">' + body + '</div>' + (more ? '<div class="ggd-mores">' + more + '</div>' : '') + '<p class="ggd-msg" aria-live="polite"></p></section>';
+        + '<div class="ggd-ans">' + body + '</div><p class="ggd-note" aria-live="polite"' + (curNote ? '' : ' hidden') + '>' + esc(curNote) + '</p>' + (more ? '<div class="ggd-mores">' + more + '</div>' : '') + '<p class="ggd-msg" aria-live="polite"></p></section>';
       var card = stage.firstChild, msg = card.querySelector('.ggd-msg');
       var multiOk = function () { var n = arr(A[q.id]).length; if (q.min && n < q.min) { msg.textContent = q.minMsg || (q.min === 1 ? 'Choose one to go on.' : 'Choose ' + q.min + ' to go on.'); return false; } return true; };
       if (type === 'form') {
@@ -478,6 +485,11 @@
       var ch = stage.querySelector('.ggd-chosen'); if (ch) ch.textContent = x.label;
       commit(q, x.v, false);
       var tok = S.tok; clearTimeout(S.adv);
+      // A note after the answer (q.after, or the option's own after) holds the screen until Next; so does q.hold.
+      var note = ''; try { note = x.after || (typeof q.after === 'function' ? q.after(x.v, x) : q.after) || ''; } catch (e) { note = ''; }
+      var nb = stage.querySelector('.ggd-note');
+      if (nb) { nb.textContent = note ? String(note) : ''; nb.hidden = !note; }
+      if (note || q.hold) { bNext.hidden = false; bNext.innerHTML = 'Next' + I.next; bNext.onclick = function () { go(after(sc.i)); }; return; }
       S.adv = setTimeout(function () { if (tok === S.tok && S.screen === sc) go(after(sc.i)); }, 700);
     }
     function commit(q, v, move) {
@@ -486,6 +498,22 @@
       if (move) go(after(qIndex(q.id)));
     }
     function go(sc) { if (!sc) return finish(); show(sc); }
+
+    /* the optional first screen: how the person is answering (opts.modes, opts.onMode), for example On My Own or With Someone I Trust */
+    function drawMode() {
+      var cur = S.mode != null ? S.mode : o.mode;
+      stage.innerHTML = '<section class="ggd-card"><div class="ggd-eb">' + esc(o.modeEb || 'Before We Begin') + '</div><h2 id="ggd-h">' + esc(o.modeText || 'How are you answering today?') + '</h2>'
+        + (o.modeHelp ? '<p class="ggd-help">' + esc(o.modeHelp) + '</p>' : '')
+        + '<div class="ggd-ans">' + o.modes.map(function (m, j) { return '<button type="button" class="ggd-opt ggd-a" data-m="' + j + '" aria-pressed="' + (cur === m.v) + '"><span class="ggd-k" aria-hidden="true">' + (j + 1) + '</span><span class="ggd-ot">' + esc(m.label) + (m.sub ? '<small>' + esc(m.sub) + '</small>' : '') + '</span></button>'; }).join('') + '</div></section>';
+      var card = stage.firstChild; card.classList.add('ggd-go'); bBack.hidden = true;
+      card.querySelectorAll('[data-m]').forEach(function (b) { b.addEventListener('click', function () {
+        var m = o.modes[+b.getAttribute('data-m')]; S.mode = m.v;
+        card.querySelectorAll('[data-m]').forEach(function (y) { y.setAttribute('aria-pressed', y === b); });
+        if (typeof o.onMode === 'function') { try { o.onMode(m.v); } catch (e) {} }
+        var tok = S.tok; clearTimeout(S.adv); S.adv = setTimeout(function () { if (tok === S.tok && S.screen && S.screen.k === 'mode') show({ k: 'open' }); }, 450);
+      }); });
+      if (o.modeSay) say([o.modeSay], null, null);
+    }
 
     /* guide moments: open, resume, mid, tip, close, and the plan's open */
     function drawMoment(sc) {
@@ -684,6 +712,7 @@
         return;
       }
       var sc = S.screen, tag = (document.activeElement && document.activeElement.tagName) || '';
+      if (sc && sc.k === 'mode' && /^[1-9]$/.test(e.key)) { var mb = stage.querySelectorAll('[data-m]')[+e.key - 1]; if (mb) { e.preventDefault(); mb.click(); } return; }
       if (sc && sc.k === 'q' && /^[1-9]$/.test(e.key) && tag !== 'TEXTAREA' && !e.metaKey && !e.ctrlKey && !e.altKey) {
         var bs = stage.querySelectorAll('.ggd-ans [data-v]'), b = bs[+e.key - 1]; if (b) { e.preventDefault(); b.click(); }
       }
@@ -700,7 +729,8 @@
 
     /* where to begin: the open, or where the person left off, or the Growth Plan on its own */
     var any = Q.some(answered), at = firstOpen();
-    if (!Q.length && !P.length) show({ k: 'close' });
+    if (Array.isArray(o.modes) && o.modes.length && o.askMode !== false && !any) show({ k: 'mode' });
+    else if (!Q.length && !P.length) show({ k: 'close' });
     else if (!Q.length) show(seq(KP.open).length ? { k: 'popen' } : { k: 'plan', j: 0 });
     else if (any && at < Q.length) show({ k: 'resume' });
     else if (any && at >= Q.length) show(P.length ? { k: 'popen' } : { k: 'close' });
