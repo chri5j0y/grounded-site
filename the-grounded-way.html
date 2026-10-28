@@ -62,6 +62,28 @@
 .gw .cp-two .card p{font-size:17px;color:var(--ink-soft);line-height:1.65;margin:0 0 10px;}
 .gw .cp-two .card p:last-child{margin-bottom:0;}
 .gw .cer-cta-band .btn{margin:6px;}
+.gw-launch{display:inline-block;margin:14px auto 0;padding:6px 16px;border-radius:999px;background:#C9952F;color:#2C1810;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1.4px;text-transform:uppercase;line-height:1.3;}
+.cer-cta-band .gw-launch{margin:0 0 14px;}
+/* BLD 884: How It Works, the four tabs with real pictures of the app (desktop and phone) */
+.gw-tabs{display:flex;flex-direction:column;gap:44px;margin-top:30px;}
+.gw-tab{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.55fr);gap:36px;align-items:center;}
+.gw-tab:nth-child(even) .gw-shot{order:-1;}
+.gw-tab .gw-n{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:2.4px;text-transform:uppercase;color:var(--gold);margin:0 0 4px;}
+.gw-tab h3{font-size:clamp(34px,3.4vw,44px);margin:0 0 10px;line-height:1.05;}
+.gw-tab p{margin:0 0 10px;color:var(--ink-soft);font-size:17.5px;line-height:1.65;}
+.gw-tab p.gw-try{color:var(--ink);border-left:4px solid #C9952F;padding:4px 0 4px 14px;}
+.gw-shot{position:relative;margin:0;padding:0 0 34px;min-width:0;}
+.gw-shot img{display:block;height:auto;background:var(--bg-deep,#F2ECE0);}
+.gw-shot .gw-w{width:86%;aspect-ratio:1200/750;border-radius:18px;border:1px solid var(--line);box-shadow:0 2px 6px rgba(60,40,20,.08),0 22px 48px rgba(60,40,20,.16);}
+.gw-shot .gw-p{position:absolute;right:0;bottom:0;width:27%;aspect-ratio:540/960;border-radius:24px;border:6px solid #2C1810;box-shadow:0 18px 40px rgba(30,20,10,.32);}
+.gw-tab:nth-child(even) .gw-w{margin-left:auto;}
+.gw-tab:nth-child(even) .gw-p{right:auto;left:0;}
+.gw-also{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:20px;margin-top:44px;}
+.gw-also .card{border-top:5px solid var(--k,var(--gold));}
+.gw-also h3{font-size:24px;margin:0 0 6px;}
+.gw-also p{margin:0;color:var(--ink-soft);font-size:17px;line-height:1.6;}
+@media (max-width:860px){.gw-tab{grid-template-columns:1fr;gap:18px;}.gw-tab:nth-child(even) .gw-shot{order:0;}.gw-also{grid-template-columns:1fr;}}
+@media (max-width:620px){.gw-shot{padding:0;}.gw-shot .gw-w{display:none;}.gw-shot .gw-p,.gw-tab:nth-child(even) .gw-p{position:static;width:min(300px,82%);margin:0 auto;}}
 .gw-src{font-size:14px;line-height:1.6;color:var(--ink-soft);max-width:900px;margin:0;}
 .gw-src a{color:inherit;}
 @media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .gw-lv .card b{filter:brightness(1.55);}}
@@ -85,13 +107,14 @@
     <div class="eyebrow">The All-In Path</div>
     <h1>The Grounded Way</h1>
     <p class="cer-sub">Built to thrive in mind, body, spirit, and relationships.</p>
+    <p class="gw-launch">Open to everyone during our launch season</p>
     <div class="card-actions cer-actions gg-watch-acts"><!-- PAGE VIDEO (BLD 866) --><button type="button" class="btn btn-primary gg-watch gg-watch-hero" data-gg-watch="the-grounded-way" hidden>Watch: The Grounded Way</button><!-- /PAGE VIDEO --><a class="btn btn-light" href="/home/">Open The Grounded Way</a></div>
   </div>
 </section>
 
 <section id="what">
   <div class="wrap cp-body">
-    <div class="cp-intro"><p>Grounded&rsquo;s trees are open to everyone, for every age and stage. The Grounded Way is for people who see what Grounded offers and want to go all in: to live it every day, at the table, in their bodies, and with the people they love.</p><p>It brings your tree and Tending together in The Grounded Way app, your own private space. Your tree keeps you growing on the inside. Tending shapes the everyday: what you eat, how you move, how you begin the morning, and how your family grows strong.</p><p>Chris and Kayti have built this way of living for their own family over many years, for all faith traditions and everything in-between.</p></div>
+    <div class="cp-intro"><p>Grounded&rsquo;s trees are open to everyone, for every age and stage. The Grounded Way is for people who see what Grounded offers and want to go all in: to live it every day, at the table, in their bodies, and with the people they love.</p><p>It brings your tree and Tending together in The Grounded Way app, your own private space, with four tabs: Today, Week, Grow, and Library. Your tree keeps you growing on the inside. Tending shapes the everyday: what you eat, how you move, how you begin the morning, and how your family grows strong.</p><p>Chris and Kayti have built this way of living for their own family over many years, for all faith traditions and everything in-between.</p></div>
     <div class="eyebrow">Whole Person Living</div>
     <h2>Four parts of one whole life.</h2>
     <div class="gw-four">
@@ -103,18 +126,41 @@
   </div>
 </section>
 
+<section id="how">
+  <div class="wrap cp-body">
+    <div class="eyebrow">How It Works</div>
+    <h2>Four tabs, one calm day.</h2>
+    <p class="gw-lead">The Grounded Way opens on Today. Four tabs along the bottom hold everything else, and each one is shown here just as it looks in the app.</p>
+    <div class="gw-tabs">
+      <article class="gw-tab" id="tab-today"><div><p class="gw-n">Tab 1</p><h3>Today</h3><p>Your whole day in order, with Right Now at the top: your growth plan practices, meals, workouts, Morning Quiet, and your tree check-in, each with a circle to tap when it is done. Beside the day sit For You Today, A Sacred Pause, Tonight&rsquo;s Question, and your progress.</p><p class="gw-try">Tap the circle on one practice, and watch the day fill.</p></div>
+        <figure class="gw-shot"><img class="gw-w" src="/shared/heroes/way/app/today-wide.webp?v=b884" alt="The Today tab on a computer: a big painted morning with the day and date, Right Now with the next practice, and Living Sober with today&rsquo;s mantra" width="1200" height="750" loading="lazy"><img class="gw-p" src="/shared/heroes/way/app/today-phone.webp?v=b884" alt="The Today tab on a phone: the day and date over a painted oak, the count tended today, and Right Now" width="540" height="960" loading="lazy"></figure></article>
+      <article class="gw-tab" id="tab-week"><div><p class="gw-n">Tab 2</p><h3>Week</h3><p>Seven days at a glance: dinners, workouts, and rest days, with Sunday Together Prep. One tap on the Shop button opens a single shopping list, sized for your table.</p><p class="gw-try">Look over the next few days and pick your shopping day.</p></div>
+        <figure class="gw-shot"><img class="gw-w" src="/shared/heroes/way/app/week-wide.webp?v=b884" alt="The Week tab on a computer: seven days, each with its dinner and workout, beside the button that opens the shopping list" width="1200" height="750" loading="lazy"><img class="gw-p" src="/shared/heroes/way/app/week-phone.webp?v=b884" alt="The Week tab on a phone: the shopping list button at the top, then the days with their dinners" width="540" height="960" loading="lazy"></figure></article>
+      <article class="gw-tab" id="tab-grow"><div><p class="gw-n">Tab 3</p><h3>Grow</h3><p>Your tree, its six parts, and your Growing Edge, with this season, your history, and your Growth Plan. Check-ins open right inside the app, and every practice you choose shows up on Today.</p><p class="gw-try">Open your Growth Plan and choose one practice to begin with.</p></div>
+        <figure class="gw-shot"><img class="gw-w" src="/shared/heroes/way/app/grow-wide.webp?v=b884" alt="The Grow tab on a computer: the tree painting with its six parts, This Season, and Your Growth Plan" width="1200" height="750" loading="lazy"><img class="gw-p" src="/shared/heroes/way/app/grow-phone.webp?v=b884" alt="The Grow tab on a phone: the tree with Roots, Trunk, Bark, Branches, Leaves, and Fruit" width="540" height="960" loading="lazy"></figure></article>
+      <article class="gw-tab" id="tab-library"><div><p class="gw-n">Tab 4</p><h3>Library</h3><p>One search box for everything. Learn, When Life Changes, Grounded Recipes, Workouts, and Quiet and Meditation wait on bright painted shelves, made for your tree and your table.</p><p class="gw-try">Search one word, like sleep or calm, and see what is waiting.</p></div>
+        <figure class="gw-shot"><img class="gw-w" src="/shared/heroes/way/app/library-wide.webp?v=b884" alt="The Library tab on a computer: a search box over painted shelves for Learn, When Life Changes, Grounded Recipes, Workouts, and Quiet and Meditation" width="1200" height="750" loading="lazy"><img class="gw-p" src="/shared/heroes/way/app/library-phone.webp?v=b884" alt="The Library tab on a phone: search, then the Learn and When Life Changes shelves" width="540" height="960" loading="lazy"></figure></article>
+    </div>
+    <div class="gw-also">
+      <div class="card" style="--k:#8B5E1A"><h3>Your Initials</h3><p>Tap your initials, top right, for Numbers, Household, Settings, and Privacy, plus How It Works, a short painted tour of the four tabs. The tour greets you the first time you open The Grounded Way.</p></div>
+      <div class="card" style="--k:#5F7D48"><h3>Your Practices</h3><p>Every practice in your tree&rsquo;s Growth Plan becomes its own card on Today, in the order of your day. A check on Today counts in your tree too, so your progress and seasons keep growing.</p></div>
+      <div class="card" style="--k:#3F6F94"><h3>Living Sober</h3><p>Turn on Living Sober in your tree, and your day count, today&rsquo;s mantra, words of encouragement, and your next medallion shine on Today and Grow. You define your own sobriety.</p></div>
+    </div>
+  </div>
+</section>
+
 <section id="tending">
   <div class="wrap cp-body">
     <div class="eyebrow">What Tending Holds</div>
     <h2>Everything for the everyday, in one place.</h2>
-    <p class="gw-lead">Tending is the heart of The Grounded Way. It lives in The Grounded Way app, right beside your tree.</p>
+    <p class="gw-lead">Tending is the heart of The Grounded Way. It fills Today and Week in The Grounded Way app, right beside your tree in Grow.</p>
     <div class="gw-tend">
       <div class="card gw-tc" id="food"><img src="/shared/heroes/way/tend-body.webp" alt="A sheet pan of roasted salmon and green beans with lemon" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Food for Your Goal</h3><p>Choose one goal or several: Heart and Cholesterol, Steady Energy, A Healthy Weight, Strength, or Simply Eating Well. Tending builds your week from a growing recipe library, honors your food needs and allergies, and writes the shopping list. A calm kitchen voice reads every step aloud.</p></div></div>
       <div class="card gw-tc" id="movement"><img src="/shared/heroes/way/tend-move.webp" alt="Dumbbells, a mat, and a bench in a sunny room" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Movement for Every Level</h3><p>A short start-up check, then the path that fits: Root, Rise, or Thrive, or the Gentle path. Train at home, with light weights, or in a full gym, in 20, 40, or 60 minutes, with a coach&rsquo;s voice for every move.</p></div></div>
       <div class="card gw-tc" id="quiet"><img src="/shared/heroes/way/tend-mind.webp" alt="A soft chair by a sunny window" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Morning Quiet</h3><p>A few unplugged minutes to begin the day: a gentle timer, a painted dawn, and one calm line at a time, with readings one tap away.</p></div></div>
       <div class="card gw-tc" id="labs"><img src="/shared/heroes/way/tend-spirit.webp" alt="An open journal and a candle by a window at sunrise" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Labs and the LDL Path</h3><p>Enter your own numbers and your own goal. Each lab shows its recommended range beside yours. On the LDL Path, each step shows its research-informed effect as a range, with its source, and you choose Do It or Pass.</p></div></div>
       <div class="card gw-tc" id="family"><img src="/shared/heroes/way/tend-people.webp" alt="A family table set with bowls of whole food" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Family Nutrition</h3><p>Track the food, never the body. A grown-up follows each child&rsquo;s food groups, fruit and vegetables, protein, fiber, iron, calcium, water, and added sugar. Kids get a playful view with no numbers: eat a rainbow, move and play, sleep well. Teens track their own nutrients.</p></div></div>
-      <div class="card gw-tc" id="tree"><img src="/shared/heroes/way/tend-fruit.webp" alt="An apple tree heavy with fruit, and a basket of apples" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Your Tree, Right Beside It</h3><p>Your check-in, growth plan, and daily practices sit beside Tending in The Grounded Way app, so inner growth and everyday health grow together.</p></div></div>
+      <div class="card gw-tc" id="tree"><img src="/shared/heroes/way/tend-fruit.webp" alt="An apple tree heavy with fruit, and a basket of apples" width="600" height="600" loading="lazy"><div class="gw-tb"><h3>Your Tree, Right Beside It</h3><p>Your check-in and growth plan live in Grow, and each practice you choose joins your day on Today, so inner growth and everyday health grow together.</p></div></div>
     </div>
   </div>
 </section>
@@ -190,8 +236,9 @@
 
 <section class="cer-cta-band">
   <div class="wrap">
+    <p class="gw-launch">Open to everyone during our launch season</p>
     <h2>Ready to go all in?</h2>
-    <p>Open The Grounded Way: one private app with Today, your tree, and Tending together. Or begin with a tree, open to every age and stage.</p>
+    <p>Open The Grounded Way: one private app with Today, Week, Grow, and Library, your tree and Tending together. Or begin with a tree, open to every age and stage.</p>
     <a class="btn btn-light" href="/home/">Open The Grounded Way</a> <a class="btn btn-light" href="/recipes/">See the Recipes</a> <a class="btn btn-light" href="/tools.html#tools">See the Trees</a>
   </div>
 </section>
@@ -214,6 +261,6 @@
 </div></footer>
 <script src="site.js?v=b779n"></script>
 <script src="nav.js?v=b879" defer></script>
-<!-- PAGE VIDEO (BLD 866) --><script src="/shared/page-videos.js?v=b882" defer></script><!-- /PAGE VIDEO -->
+<!-- PAGE VIDEO (BLD 866) --><script src="/shared/page-videos.js?v=b884" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>
