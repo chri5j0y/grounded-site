@@ -896,7 +896,7 @@ html.hm-sheeted,html.hm-sheeted body{overflow:hidden;}
 html.hm-toured,html.hm-toured body{overflow:hidden;}
 .hm-tourwrap{position:fixed;inset:0;z-index:950;display:flex;align-items:center;justify-content:center;padding:16px;}
 .hm-tour-bg{position:absolute;inset:0;background:rgba(28,18,10,.62);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
-.hm-tour{position:relative;width:100%;max-width:560px;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--card);color:var(--ink);border-radius:26px;box-shadow:0 24px 60px rgba(0,0,0,.35);outline:none;animation:hm-tour-in .32s ease both;}
+.hm-tour{position:relative;width:100%;max-width:560px;padding:0;margin:0;max-height:calc(100vh - 32px);max-height:calc(100dvh - 32px);overflow:auto;background:var(--card);color:var(--ink);border-radius:26px;box-shadow:0 24px 60px rgba(0,0,0,.35);outline:none;animation:hm-tour-in .32s ease both;}
 @keyframes hm-tour-in{from{opacity:0;transform:translateY(14px) scale(.98);}to{opacity:1;transform:none;}}
 @media (prefers-reduced-motion:reduce){.hm-tour{animation:none;}}
 .hm-tour-pic{position:relative;isolation:isolate;aspect-ratio:16/9;overflow:hidden;border-radius:26px 26px 0 0;display:flex;align-items:flex-end;}
