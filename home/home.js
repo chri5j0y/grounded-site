@@ -12,7 +12,8 @@
      GGP.data(id, 'tending')                  Tending, shaped {health: {}, deleted: {health: {}}},
                                               drawn by field-guide/health.js (GGHealth) in public mode
      GGP.data(id, 'home')                     the Home's own choices:
-                                              {who, stage, season, parts: [...], hidden: {tend}, days: {date: {quiet, talk, pray}}, kid: {date: 1}, created}
+                                              {who, stage, season, parts: [...], hidden: {tend}, days: {date: {quiet, talk, pray}}, kid: {date: 1}, created,
+                                               tour: 'b884' once the welcome tour is seen (BLD 884)}
      GGP.list(), GGP.shared(id), GGP.openIds() Your Family: progress only (days tended, rings, season)
 
    Views (the address names each one, so Back works). BLD 881: four tabs for a grown-up profile.
@@ -38,7 +39,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b883';
+  var V = 'b884';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -356,8 +357,9 @@
     if (changed) { S.tendInit = false; S.words = null; S.paintedFor = null; LIB.load = null; }
     S.view = viewOf();
     // Kid profiles keep their Today and My Tree (BLD 869).
-    if (isKid(S.p)) { closeSheet(true); if (location.hash === '#tree') { root.innerHTML = treeTabHtml(); paintNav('kidtree'); return; } root.innerHTML = kidHtml(); paintNav('kid'); return; }
+    if (isKid(S.p)) { closeSheet(true); if (location.hash === '#tree') { root.innerHTML = treeTabHtml(); paintNav('kidtree'); maybeTour(); return; } root.innerHTML = kidHtml(); paintNav('kid'); maybeTour(); return; }
     renderApp(route());
+    maybeTour();
   }
 
   /* Kid profiles: a row of pills on a wide screen, a bar along the bottom on a phone (Today and My Tree). */
@@ -646,6 +648,7 @@
         kidPracHtml() +
         (did ? '<div class="hm-kcard hm-surprise" style="--c:#00B4D8"><svg viewBox="0 0 52 52" aria-hidden="true"><g class="bird"><ellipse cx="26" cy="30" rx="13" ry="10" fill="#00B4D8"/><circle cx="34" cy="22" r="7" fill="#00B4D8"/><circle cx="36" cy="21" r="1.6" fill="#2C1810"/><path d="M40 22l6 2-6 2z" fill="#FF9F1C"/><path d="M16 28c4-6 10-6 14-2-5 1-9 3-14 2z" fill="#0090B0"/></g><path d="M8 44h36" stroke="#8A5A36" stroke-width="4" stroke-linecap="round"/></svg><div><h3 class="hm-kh" style="font-size:20px">A visitor came to your tree!</h3><div style="font-size:15px;font-weight:500">A little bird stopped by because you tended your tree today.</div></div></div>' : '') +
         '<a class="hm-kbtn" href="' + t.href + '" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</a>' +
+        '<button type="button" class="hm-khow" data-hm="tour">' + I('sprout') + 'How It Works</button>' +
       '</div></div></div></div>';
   }
 
@@ -1293,6 +1296,7 @@
     ['household', 'people', 'Household', 'The people at your table and your family'],
     ['settings', 'gear', 'Settings', 'Voice, music, Tending setup, Choose What You Use'],
     ['privacy', 'shield', 'Privacy', 'On this device, locked with your passcode'],
+    ['howto', 'sprout', 'How It Works', 'A short painted tour of Today, Week, Grow, and Library'],
     ['switch', 'swap', 'Switch Profile', 'Open another person on this device']
   ];
   function openSheet(sub) {
@@ -1358,6 +1362,7 @@
     if (t.hasAttribute('data-hm-me')) {
       var ms = t.getAttribute('data-hm-me');
       if (ms === 'switch') { GGP.openDialog().then(function () { leaveSheet(); render(); }); return; }
+      if (ms === 'howto') { howItWorks(); return; }
       if (!ms && S.sheetDepth > 1) { S.sheetDepth--; history.back(); return; }
       S.sheetDepth = (S.sheetDepth || 0) + 1; S.sheetPushed = 1; location.hash = ms ? '#me=' + ms : '#me'; return;
     }
@@ -1402,8 +1407,100 @@
     else if (act === 'lock') { closeSheet(true); GGP.lock().then(function () { goTo('today'); }); }
     else if (act === 'addkid') GGP.createDialog({ reason: 'Add a family member. Kids and teens are set up with you as their grown-up.' }).then(function (ok) { if (ok) goTo('today'); else render(); });
     else if (act === 'addlove') GGP.createDialog({ forOther: true, keepMe: true }).then(function (ok) { if (ok) goTo('today'); else render(); });
+    else if (act === 'tour') howItWorks();
     else if (act === 'kiddid') { var hd = homeRec(); hd.kid[today()] = hd.kid[today()] ? 0 : 1; saveHome(); render(); }
   });
+
+  /* ---------- BLD 884: the welcome tour ----------
+     The first time a profile opens The Grounded Way after BLD 884, a short tour over the app: four painted cards for a
+     grown-up (Today, Week, Grow, Library), two for Maple and Aspen (Today, My Tree) in kid words. Next, Back, dots, Skip
+     anytime, Start on the last card. Remembered per profile in the home record (GGP data 'home', tour: 'b884'), so it rides
+     the locked profile and its backups. Reopens from the initials sheet as How It Works (kids: a How It Works link). */
+  var TOUR_V = 'b884';
+  var TOUR = [
+    { k: 'today', art: 'home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: your practices, meals, movement, and quiet, with Right Now at the top.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
+    { k: 'week', art: 'recipes', ey: 'Tab 2 of 4', t: 'Week', d: 'Seven days at a glance: your meals, your movement, and one shopping list for the week.', tr: 'Look over the next few days and pick your shopping day.' },
+    { k: 'grow', art: 'tend-fruit', ey: 'Tab 3 of 4', t: 'Grow', d: 'Your tree, its six parts, and your growth plan, with each check-in adding to your story.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
+    { k: 'library', art: 'tend-mind', ey: 'Tab 4 of 4', t: 'Library', d: 'Lessons, guides for when life changes, recipes, workouts, and quiet, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
+  ];
+  var KTOUR = [
+    { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
+    { k: 'tree', art: 'tend-fruit', ey: 'Your Tree', t: 'My Tree', d: 'Your tree shows how each part of you is growing, from roots to fruit.', tr: 'Check in with your grown-up and watch your tree light up!' }
+  ];
+  var TOUR_ART = { 'home-morning': [IMG + 'home-morning-wide.webp', IMG + 'home-morning-narrow.webp'], recipes: [IMG + 'recipes-wide.webp', IMG + 'recipes-narrow.webp'], 'tend-fruit': [IMG + 'tend-fruit.webp', IMG + 'tend-fruit.webp'], 'tend-mind': [IMG + 'tend-mind.webp', IMG + 'tend-mind.webp'] };
+  var T = { open: false, i: 0, list: TOUR, asked: {}, tries: 0, back: null };
+  function tourSeen() { var h = homeRec(); return !!h.tour; }
+  function maybeTour() {
+    if (!S.id || T.open || T.asked[S.id] || tourSeen()) return;
+    T.asked[S.id] = 1; T.tries = 0;
+    var id = S.id;
+    (function wait() {
+      if (S.id !== id || T.open) return;
+      var busy = document.querySelector('.ggp-back,.hm-frame,#hm-sheet');
+      if (busy || document.hidden) { if (++T.tries < 120) setTimeout(wait, 700); else T.asked[id] = 0; return; }
+      if (!tourSeen()) openTour();
+    })();
+  }
+  function tourCardHtml() {
+    var c = T.list[T.i], n = T.list.length, last = T.i === n - 1, a = TOUR_ART[c.art] || TOUR_ART['home-morning'];
+    return '<div class="hm-tour-pic"><picture aria-hidden="true"><source media="(max-width:699px)" srcset="' + a[1] + '"><img src="' + a[0] + '" alt="" decoding="async"></picture>' +
+        '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + (T.i === 0 ? '<span class="hm-tour-open">Open to everyone during our launch season</span>' : '') + '</div></div>' +
+      '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') + '</div>' +
+      '<div class="hm-tour-ft">' +
+        (T.i > 0 ? '<button type="button" class="hm-tour-b back" data-hm-tour="back">' + I('back') + '<span>Back</span></button>' : '<span class="hm-tour-sp" aria-hidden="true"></span>') +
+        '<span class="hm-tour-dots" role="img" aria-label="Card ' + (T.i + 1) + ' of ' + n + '">' + T.list.map(function (x, j) { return '<i' + (j === T.i ? ' class="on"' : '') + '></i>'; }).join('') + '</span>' +
+        '<button type="button" class="hm-tour-b next" data-hm-tour="' + (last ? 'start' : 'next') + '"><span>' + (last ? 'Start' : 'Next') + '</span>' + (last ? I('sprout') : I('arrow')) + '</button>' +
+      '</div>';
+  }
+  function openTour() {
+    if (T.open || !S.id) return;
+    T.list = isKid(S.p) ? KTOUR : TOUR; T.i = 0; T.open = true; T.back = document.activeElement;
+    var wrap = document.createElement('div'); wrap.id = 'hm-tour'; wrap.className = 'hm-tourwrap' + (isKid(S.p) ? ' kid' : '');
+    wrap.innerHTML = '<div class="hm-tour-bg" aria-hidden="true"></div><section class="hm-tour" role="dialog" aria-modal="true" aria-labelledby="hm-tour-t" aria-describedby="hm-tour-d" tabindex="-1">' +
+      '<button type="button" class="hm-tour-skip" data-hm-tour="skip">Skip</button><div class="hm-tour-in" id="hm-tour-in">' + tourCardHtml() + '</div></section>';
+    (document.querySelector('main.hm') || document.body).appendChild(wrap);
+    document.documentElement.classList.add('hm-toured');
+    setTimeout(function () { var b = wrap.querySelector('.hm-tour-b.next'); try { (b || wrap.querySelector('.hm-tour')).focus({ preventScroll: true }); } catch (e) {} }, 30);
+  }
+  function tourStep(d) {
+    var nx = Math.max(0, Math.min(T.list.length - 1, T.i + d)); if (nx === T.i) return;
+    T.i = nx; var box = document.getElementById('hm-tour-in'); if (!box) return;
+    box.innerHTML = tourCardHtml();
+    var b = box.querySelector(d > 0 ? '.hm-tour-b.next' : (T.i > 0 ? '.hm-tour-b.back' : '.hm-tour-b.next')); try { b.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function closeTour() {
+    var w = document.getElementById('hm-tour'); if (w) w.remove();
+    document.documentElement.classList.remove('hm-toured');
+    var was = T.open; T.open = false;
+    if (was && S.id && window.GGP && GGP.isOpen && GGP.isOpen(S.id)) { var h = homeRec(); if (h.tour !== TOUR_V) { h.tour = TOUR_V; saveHome(); } }
+    var back = T.back; T.back = null;
+    if (back && back.isConnected && back !== document.body) { try { back.focus({ preventScroll: true }); } catch (e) {} }
+  }
+  /* How It Works, from the initials sheet (or the kid Home): close the sheet, then the tour. */
+  function howItWorks() {
+    if (document.getElementById('hm-sheet')) leaveSheet();
+    setTimeout(openTour, 120);
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-tour]'); if (!t) return;
+    var a = t.getAttribute('data-hm-tour');
+    if (a === 'next') tourStep(1); else if (a === 'back') tourStep(-1); else if (a === 'skip' || a === 'start') closeTour();
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!T.open) return;
+    var w = document.getElementById('hm-tour'); if (!w) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); closeTour(); return; }
+    if (e.key === 'ArrowRight' && !(e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName))) { tourStep(1); return; }
+    if (e.key === 'ArrowLeft' && !(e.target && /^(INPUT|TEXTAREA)$/.test(e.target.tagName))) { tourStep(-1); return; }
+    if (e.key !== 'Tab') return;
+    var f = [].slice.call(w.querySelectorAll('button')).filter(function (b) { return b.offsetParent !== null; }); if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], cur = document.activeElement;
+    if (!w.contains(cur)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && (cur === first || cur === w.querySelector('.hm-tour'))) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
+  }, true);
+  document.addEventListener('focusin', function (e) { if (!T.open) return; var w = document.getElementById('hm-tour'); if (w && !w.contains(e.target)) { var b = w.querySelector('.hm-tour-b.next'); if (b) try { b.focus({ preventScroll: true }); } catch (x) {} } });
+
   function pruneDays(h) { var cut = addDays(today(), -60); Object.keys(h.days).forEach(function (k) { if (k < cut) delete h.days[k]; }); }
 
   /* ---------- start ---------- */
