@@ -2922,9 +2922,9 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "card",
-      "title": "Ask directly about suicide.",
-      "body": "Asking is safe and caring.",
-      "say": "If you are worried, ask directly. Are you having thoughts of hurting yourself, or of not wanting to be alive? Asking is safe, and it shows you care."
+      "title": "Ask open questions.",
+      "body": "Then listen, and stay close.",
+      "say": "If you are worried, ask an open question. How are you, really? Listening without fixing shows you care. If they share thoughts of not wanting to be alive, stay with them and get help together."
      },
      {
       "k": "points",
@@ -7522,7 +7522,7 @@ window.GG_LEARN_GUIDES.grove = {
         "You did the right thing"
        ],
        [
-        "Ask about safety",
+        "Ask what helps",
         "What would help tomorrow?"
        ],
        [
@@ -9407,7 +9407,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and check in with them kindly, with an open question."
      },
      {
       "k": "big",
@@ -9515,7 +9515,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "After a suicide or overdose",
       "body": "No speculation. No shame.",
-      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and ask them directly and kindly."
+      "say": "After a death by suicide or overdose, people may be afraid to speak. Follow the family's lead on what is said. Stick to what's known, and speak of it with respect. Watch for anyone who seems at risk, and check in with them kindly, with an open question."
      },
      {
       "k": "big",
@@ -10796,9 +10796,7 @@ window.GG_LEARN_GUIDES.grove = {
     "sideName": "For the Group",
     "mins": 4,
     "blurb": "For everyone in a community or group when one of us is in crisis.",
-    "sources": [
-     "dazzi"
-    ],
+    "sources": [],
     "scenes": [
      {
       "k": "title",
@@ -11001,7 +10999,6 @@ window.GG_LEARN_GUIDES.grove = {
     "mins": 4,
     "blurb": "For the pastor, group leader, or volunteer responding when a member is in crisis.",
     "sources": [
-     "dazzi",
      "stanley"
     ],
     "scenes": [
@@ -11016,8 +11013,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Caring is enough to start.",
-      "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "sub": "Know who to call. Ask open questions. Protect privacy.",
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask open questions. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -11037,20 +11034,20 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "card",
-      "title": "Ask directly.",
-      "body": "Asking does not put the idea in someone's head.",
-      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, and remove anything dangerous if you safely can."
+      "title": "Ask open questions.",
+      "body": "Then listen, and stay close.",
+      "say": "If you're worried, ask open questions. How are you, really? What has been the hardest part? Many people feel relief when someone finally listens. If they share thoughts of suicide, stay with them, and remove anything dangerous if you safely can."
      },
      {
       "k": "big",
-      "h": "Practice the question.",
+      "h": "Practice an open question.",
       "sub": "Out loud, right now.",
-      "say": "Let's practice, because the words come easier once you've said them. Picture someone you know, sitting across from you, looking down. Say this out loud, calmly and kindly: are you thinking about suicide?",
+      "say": "Let's practice, because the words come easier once you've said them. Picture someone you know, sitting across from you, looking down. Say this out loud, calmly and kindly: how are you, really?",
       "beats": [
        "Let's practice, because the words come easier once you've said them.",
        "Picture someone you know, sitting across from you, looking down.",
        {
-        "t": "Say this out loud, calmly and kindly: are you thinking about suicide?",
+        "t": "Say this out loud, calmly and kindly: how are you, really?",
         "w": 8
        }
       ]
@@ -11116,8 +11113,8 @@ window.GG_LEARN_GUIDES.grove = {
      {
       "k": "big",
       "h": "Caring is enough to start.",
-      "sub": "Know who to call. Ask directly. Protect privacy.",
-      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask directly. And know how to protect the person's privacy while help comes."
+      "sub": "Know who to call. Ask open questions. Protect privacy.",
+      "say": "Caring and calm are enough to start. You need three things. Know who to call. Know how to ask open questions. And know how to protect the person's privacy while help comes."
      },
      {
       "k": "points",
@@ -11137,20 +11134,20 @@ window.GG_LEARN_GUIDES.grove = {
      },
      {
       "k": "card",
-      "title": "Ask directly.",
-      "body": "Asking does not put the idea in someone's head.",
-      "say": "If you're worried about suicide, ask directly. Are you thinking about suicide? Asking does not put the idea in someone's head. Many people feel relief when someone finally asks. If they say yes, stay with them, and remove anything dangerous if you safely can."
+      "title": "Ask open questions.",
+      "body": "Then listen, and stay close.",
+      "say": "If you're worried, ask open questions. How are you, really? What has been the hardest part? Many people feel relief when someone finally listens. If they share thoughts of suicide, stay with them, and remove anything dangerous if you safely can."
      },
      {
       "k": "big",
-      "h": "Practice the question.",
+      "h": "Practice an open question.",
       "sub": "Out loud, right now.",
-      "say": "Let's practice, because the words come easier once you've said them. Picture someone you know, sitting across from you, looking down. Say this out loud, calmly and kindly: are you thinking about suicide?",
+      "say": "Let's practice, because the words come easier once you've said them. Picture someone you know, sitting across from you, looking down. Say this out loud, calmly and kindly: how are you, really?",
       "beats": [
        "Let's practice, because the words come easier once you've said them.",
        "Picture someone you know, sitting across from you, looking down.",
        {
-        "t": "Say this out loud, calmly and kindly: are you thinking about suicide?",
+        "t": "Say this out loud, calmly and kindly: how are you, really?",
         "w": 8
        }
       ]
@@ -15505,7 +15502,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Say where help is, more than once.",
       "body": "EAP, chaplain, peers.",
-      "say": "Share the supports plainly, and more than once. The employee assistance program, the chaplain or spiritual support team, and peer support. Watch for anyone still struggling weeks later, with sleep, mood, or pulling away. If anyone speaks of not wanting to be alive, ask directly."
+      "say": "Share the supports plainly, and more than once. The employee assistance program, the chaplain or spiritual support team, and peer support. Watch for anyone still struggling weeks later, with sleep, mood, or pulling away. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -15760,7 +15757,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "Name the supports.",
       "body": "EAP for leavers and stayers.",
-      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. Two one one for local help with food, housing, and bills. If anyone speaks of not wanting to be alive, ask directly."
+      "say": "Name the supports more than once. The employee assistance program, for those leaving and those staying. Two one one for local help with food, housing, and bills. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -15892,8 +15889,7 @@ window.GG_LEARN_GUIDES.grove = {
     "mins": 4,
     "blurb": "For the manager, supervisor, or team lead after a coworker dies.",
     "sources": [
-     "doka",
-     "dazzi"
+     "doka"
     ],
     "scenes": [
      {
@@ -15963,7 +15959,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "If it was a suicide",
       "body": "Follow the family. No speculation. Watch for risk.",
-      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, ask directly. Asking does not plant the idea."
+      "say": "If the death was by suicide, follow the family's lead on what is said. Stick to what's known, and keep details private. Watch for colleagues who may be at risk, especially close friends. If you're worried about someone, check in with an open question, like how are you holding up? Then listen."
      },
      {
       "k": "big",
@@ -16204,7 +16200,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it is more than tired",
       "body": "Two weeks or more: a doctor or EAP.",
-      "say": "Watch for anyone sliding from burnout into depression, low mood, hopelessness, or pulling away for two weeks or more. Point them to their doctor and the employee assistance program. If anyone speaks of not wanting to be alive, ask directly."
+      "say": "Watch for anyone sliding from burnout into depression, low mood, hopelessness, or pulling away for two weeks or more. Point them to their doctor and the employee assistance program. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -17300,7 +17296,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When grief stays heavy",
       "body": "Months of struggle: EAP or a doctor.",
-      "say": "If months pass and your team member is still struggling to function, sleep, or find any hope, gently point them to the employee assistance program, a grief support group, or their doctor. If they speak of not wanting to be alive, ask directly."
+      "say": "If months pass and your team member is still struggling to function, sleep, or find any hope, gently point them to the employee assistance program, a grief support group, or their doctor. If they speak of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",
@@ -17512,7 +17508,7 @@ window.GG_LEARN_GUIDES.grove = {
       "k": "card",
       "title": "When it goes deeper",
       "body": "Lasting guilt, shame, numbness: more support.",
-      "say": "Sometimes moral distress goes deeper, into lasting guilt, shame, numbness, or despair. Watch for it. Point people to peer support, the employee assistance program, and a professional who understands this work. If anyone speaks of not wanting to be alive, ask directly."
+      "say": "Sometimes moral distress goes deeper, into lasting guilt, shame, numbness, or despair. Watch for it. Point people to peer support, the employee assistance program, and a professional who understands this work. If anyone speaks of not wanting to be alive, stay with them, listen, and get help together."
      },
      {
       "k": "big",

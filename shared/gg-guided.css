@@ -209,3 +209,27 @@ html.ggd-open,html.ggd-open body{overflow:hidden !important;}
 @media print{.ggd{display:none;}}
 .ggd .ggd-sr{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0;}
 .ggd-mo h2.ggd-ln{margin:16px auto 0;max-width:640px;font-size:calc(32px * var(--fs));}
+
+/* phase B (GWG BLD 886): a stem, a lead line, drawers, quiet answers, a page's own form, shared times, our words */
+.ggd-stem{font-family:var(--cond);font-weight:600;letter-spacing:.6px;font-size:16px;color:var(--soft);margin:12px 0 0;}
+.ggd-lead{font-style:normal;}
+.ggd-ot{display:flex;flex-direction:column;gap:3px;min-width:0;overflow-wrap:anywhere;}
+.ggd-ot small{font:400 14.5px/1.35 var(--sans);color:var(--soft);}
+.ggd-opt.ggd-q2{min-height:48px;font-size:17px;border-style:dashed;background:transparent;}
+.ggd-mores{margin-top:16px;display:grid;gap:6px;}
+.ggd-more{border-top:1px solid var(--line);padding-top:8px;}
+.ggd-more summary{cursor:pointer;font:600 15px/1.3 var(--sans);color:var(--gold2);min-height:32px;display:flex;align-items:center;}
+.ggd-more p{margin:6px 0 4px;color:var(--soft);font-size:16px;}
+.ggd-msg{margin:10px 0 0;min-height:1px;font:600 15px/1.4 var(--sans);color:var(--edge);}
+.ggd-msg:empty{margin:0;}
+.ggd-form{min-width:0;overflow-wrap:anywhere;}
+.ggd-form input[type="text"],.ggd-form textarea{max-width:100%;box-sizing:border-box;}
+.ggd-ctext{display:block;font-size:15px;line-height:1.4;color:var(--soft);margin-top:4px;}
+.ggd-anc{display:flex;flex-wrap:wrap;gap:6px;align-items:center;padding:0 14px 14px;}
+.ggd-anl{font-family:var(--cond);font-weight:600;letter-spacing:1px;text-transform:uppercase;font-size:12.5px;color:var(--pc);margin-right:2px;}
+.ggd-ac{appearance:none;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;min-height:44px;padding:0 14px;font:500 15px/1 var(--sans);cursor:pointer;}
+.ggd-ac[aria-pressed="true"]{background:var(--pc);border-color:var(--pc);color:var(--card);}
+.ggd-aown{flex:1 1 160px;min-width:0;min-height:44px;border:1px solid var(--line);background:var(--card);color:var(--ink);border-radius:12px;padding:0 12px;font:400 15px/1 var(--sans);}
+.ggd-words{margin:18px auto 0;max-width:640px;text-align:left;}
+.ggd-words label{display:block;font:600 15px/1.3 var(--sans);color:var(--soft);margin-bottom:6px;}
+.ggd-words .ggd-txt{min-height:72px;}

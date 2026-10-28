@@ -1840,7 +1840,7 @@ window.GG_LEARN_GUIDES.birch = {
      {
       "k": "card",
       "title": "Notice how they are doing",
-      "body": "Sleeping all day, pulling away, or talk of being a burden: ask directly.",
+      "body": "Sleeping all day, pulling away, or talk of being a burden: ask how they are.",
       "say": "Notice how they're doing, not only what they're doing. Sleeping all day, pulling away, or talk of being a burden are signs to ask directly how they are."
      },
      {

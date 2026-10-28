@@ -878,7 +878,8 @@ a.big-btn{text-decoration:none;}
       </div>
 
       <p class="form-error" id="start-error" role="alert"></p>
-      <div class="start-row"><button class="big-btn" onclick="startCheckin()">Start my check-in</button></div>
+      <div class="start-row"><button class="big-btn" onclick="startCheckin()">Start my check-in</button><button class="soft-btn" style="width:100%;margin-top:10px" onclick="startCheckin(true)">Read It All</button>
+        <p class="tip-line">We read each question out loud, one at a time. Read It All shows every question on one page.</p></div>
     </div>
 
     <div class="welcome-side">
@@ -945,10 +946,10 @@ a.big-btn{text-decoration:none;}
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b887"></script>
-<script src="/shared/gg-life.js?v=b851"></script>
+<script src="/shared/gg-profiles.js?v=b888"></script>
+<script src="/shared/gg-life.js?v=b888"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/maple/guides.js?v=b852"></script>
+<script src="/maple/guides.js?v=b888"></script>
 <script src="/maple/checkin.js?v=b887"></script>
 <script src="/maple/life.js?v=b789"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
@@ -1718,7 +1719,7 @@ function renderPeek() {
   const el = $('peek-list'); if (!el || !window.GGTreeArt) return;
   GGTreeArt.howItWorks(el, { app: ART_APP, gentle: true, maxH: 340, parts: artParts(true), label: 'The Maple painting with six glowing parts to tap', hint: 'Tap a glowing part of the tree to see what it holds.' });
 }
-function startCheckin() {
+function startCheckin(classic) {
   const name = $('kid-name').value.trim();
   if (!name) { $('start-error').textContent = 'Type your first name to start.'; $('kid-name').focus(); return; }
   if (!S.grade) { $('start-error').textContent = 'Pick your grade to start.'; return; }
@@ -1730,6 +1731,9 @@ function startCheckin() {
   S.prior = last && last.std === CK.version ? last : null;
   // The wording: a grown-up's choice here, else the child's saved one, else Faith. A Plain lock wins.
   S.wording = plainLocked(kid) ? 'plain' : (S.mode === 'grown' && S.pickW) || (kid ? kidWording(kid) : 'faith');
+  // GWG BLD 886: a guided check-in is the way to start (maple/guided.js); Read It All opens this classic form.
+  if (window.MPGuided) MPGuided.restore();
+  if (!classic && window.MPGuided && MPGuided.checkin()) return;
   go('checkin');
   renderStep(true);
 }
@@ -1977,6 +1981,7 @@ function renderResults(rec, lastKey) {
         <div id="mp-life-offer" class="no-print"></div>
         ${thenNowHTML(S.prior, rec, name)}
         <div class="action-row">
+          ${window.MPGuided ? '<button class="big-btn" onclick="MPGuided.plan(kidId(S.name))">Build My Growth Plan</button>' : ''}
           <button class="soft-btn" onclick="openTree(kidId(S.name), 'tree')">Go to my tree</button>
           ${S.mode === 'grown' ? '<button class="soft-btn" onclick="nextChild()">Start with the next child</button>' : ''}
         </div>
@@ -2386,7 +2391,7 @@ function mpInit(kid) {
     actions: {
       fullCheckin: () => newCheckinFor(S.kid), quickCheckin: () => newCheckinFor(S.kid),
       results: () => { S.seasonSub = 'checkins'; mpTab('season'); }, progress: () => { S.seasonSub = 'grown'; mpTab('season'); },
-      plan: () => mpTab('plan'), about: () => go('guide'), textSize: () => cycleTextSize(),
+      plan: () => (window.MPGuided ? MPGuided.plan(S.kid) : mpTab('plan')), about: () => go('guide'), textSize: () => cycleTextSize(),
       createProfile: () => saveKidProfile(S.kid), openProfile: () => go('home'), lock: () => { if (window.GGP) GGP.lock(); }
     }
   });
@@ -2715,7 +2720,7 @@ function mpRenderPlan() {
       ${x.own.length ? `<ul class="mp-own">${x.own.map((o, i) => `<li><span>${esc(o)}</span> <button class="link-btn" onclick="mpOwnRemove('${k}',${i})">Take off</button></li>`).join('')}</ul>` : ''}
       <div class="mp-own-add"><label class="sr-only" for="mp-own-${k}">Your own idea for ${p.name}</label><input id="mp-own-${k}" class="name-input" maxlength="80" placeholder="Your own idea" onkeydown="if(event.key==='Enter')mpOwnAdd('${k}')"><button class="soft-btn" onclick="mpOwnAdd('${k}')">Add mine</button></div></div>`;
   }).join('');
-  box.innerHTML = `<div class="plan-intro"><h2 class="kid">Pick things to practice</h2>
+  box.innerHTML = `<div class="plan-intro"><h2 class="kid">Pick things to practice</h2>${window.MPGuided ? '<p><button class="big-btn" onclick="MPGuided.plan()">Guided Growth Plan</button></p>' : ''}
       <p class="lead">${sug.length ? 'Start with the parts that had rain or clouds. These will help them grow.' : 'Your tree is strong. Pick fun things to keep it growing!'} About 3 for each part is a good start, and a few more for any part with clouds or rain. There's no limit, and you can add your own ideas.</p></div>
     ${groups}
     <div class="plan-bar"><span class="count">${PARTS.reduce((s, p) => s + MP_PLAN[p.key].selected.length + MP_PLAN[p.key].own.length, 0)} picked</span><button class="big-btn" onclick="mpPlanSave()">Save my plan</button><p class="plan-error" id="mp-plan-error" role="alert"></p></div>`;
@@ -3328,9 +3333,10 @@ window.addEventListener('hashchange', mpNavReadOnce);
 setTimeout(() => mpNavRead(null), 0);
 
 </script>
-<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
+<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b889"><script src="/shared/practice-rhythm.js?v=b889"></script><script src="/shared/gg-guided.js?v=b889"></script><script src="/shared/guided/maple.js?v=b889"></script><script src="/maple/guided.js?v=b889"></script><!-- /GUIDED -->
+<script src="/shared/gg-learn.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b888';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b888';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b888" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

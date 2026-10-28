@@ -1753,7 +1753,7 @@ const TOPICS = [
    "say": [
     "“I'm here, and we'll get through this together.”",
     "“It's okay to struggle. Let's get some help together.”",
-    "“Are you having thoughts of hurting yourself, or of not wanting to be alive?” Asking directly is safe and caring.",
+    "“How are you, really? What has been the hardest part?” Then listen, and let them lead.",
     "To a child: “It's not because of you. You're loved, all the way.”",
     "“Thank you for telling me.”"
    ],
@@ -6253,7 +6253,7 @@ const TOPICS = [
     "A meal train or help schedule, organized by one coordinator.",
     "Short, kind messages that ask for nothing back: “Thinking of you. No need to reply.”",
     "Welcoming the person back without questions, and letting them set the pace.",
-    "Learning the warning signs of suicide, and how to ask directly.",
+    "Learning the warning signs of suicide, and how to ask open questions and listen.",
     "Keeping the person's family in mind: children, a spouse, aging parents."
    ],
    "say": [
@@ -6261,7 +6261,7 @@ const TOPICS = [
     "“We're with you.”",
     "“Your story is yours to tell.”"
    ],
-   "people": "Try, to the person: “I'm glad you told me. I'm here. What would help this week?” If you're worried about suicide: “Are you thinking about suicide?” Asking directly is caring, and it does not put the idea in someone's head. To someone passing along news: “Let's keep this between us and the leaders, to protect her privacy.”"
+   "people": "Try, to the person: “I'm glad you told me. I'm here. What would help this week?” If you're worried: “How are you, really? What has been the hardest part?” Open questions and steady listening are caring. To someone passing along news: “Let's keep this between us and the leaders, to protect her privacy.”"
   },
   "kids": [
    "Children may notice when a grown-up they know is very sick or away. Tell them simply: “Ms. Rosa is having a hard time and is getting help.”",
@@ -6271,9 +6271,9 @@ const TOPICS = [
    "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
   ],
   "leader": {
-   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+   "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask open questions, and how to keep the person's privacy.",
    "say": [
-    "“Are you thinking about suicide?”",
+    "“How are you, really? I'm here, and I want to hear it.”",
     "“I'm glad you told me. Others can walk through this with you.”",
     "“Let's call 988 together right now.”",
     "“What can our community do that would actually help?”",
@@ -6288,7 +6288,7 @@ const TOPICS = [
    ],
    "help": [
     "Know the lines: 988 for mental health crises, 911 for danger right now, MAARC for vulnerable adults at risk, and your county's child protection line for a child at risk.",
-    "Ask directly about suicide if you're worried, and stay with the person while you call or text 988 together.",
+    "If you're worried, ask open questions and listen. If they share thoughts of suicide, stay with the person while you call or text 988 together.",
     "Follow your community's safety and reporting policies, and the law, for abuse or neglect.",
     "Choose one or two people to stay in contact, and one person to coordinate practical help.",
     "Ask the person what they want shared, and protect their privacy in every announcement.",
@@ -6316,9 +6316,9 @@ const TOPICS = [
     "If a child tells you about danger at home, stay calm, thank them, and get help the same day."
    ],
    "leader": {
-    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask directly, and how to keep the person's privacy.",
+    "feel": "You may be the first call, or the one people look to. You may feel responsible, afraid of saying the wrong thing, or unsure what you're allowed to share. You may also be shaken yourself. Caring and calm are enough to start. You need to know who to call, how to ask open questions, and how to keep the person's privacy.",
     "say": [
-     "“Are you thinking about suicide?”",
+     "“How are you, really? I'm here, and I want to hear it.”",
      "“I'm glad you told me. Others can walk through this with you.”",
      "“Let's call 988 together right now.”",
      "“What can our community do that would actually help?”",
@@ -6333,7 +6333,7 @@ const TOPICS = [
     ],
     "help": [
      "Know the lines: 988 for mental health crises, 911 for danger right now, MAARC for vulnerable adults at risk, and your county's child protection line for a child at risk.",
-     "Ask directly about suicide if you're worried, and stay with the person while you call or text 988 together.",
+     "If you're worried, ask open questions and listen. If they share thoughts of suicide, stay with the person while you call or text 988 together.",
      "Follow your community's safety and reporting policies, and the law, for abuse or neglect.",
      "Choose one or two people to stay in contact, and one person to coordinate practical help.",
      "Ask the person what they want shared, and protect their privacy in every announcement.",
@@ -6405,7 +6405,6 @@ const TOPICS = [
    ]
   ],
   "sources": [
-   "dazzi",
    "stanley"
   ]
  },

@@ -32,7 +32,13 @@
      opts.onReadAll(answers)    shows Read It All; the player closes, then this opens the tree's classic form
    GGGuided.lines(opts) returns every sentence the voice can say for that run, in order, each once:
      [{voice, text, clip, url, where}], for the recorder. opts.allKinds: true walks every kind in the script.
-   GGGuided.close() closes the player on screen.
+   GGGuided.close() closes the player on screen. GGGuided.open() is true while it shows.
+   GGGuided.flag() reads ?guided=checkin|quick|plan from the address ('' when absent); GGGuided.clearFlag() takes it out.
+   Phase B additions (GWG BLD 886, patches/bld886/p4-notes.md): q.stem, q.lead, q.say false, q.more, q.aside, q.eb,
+   q.label, multi q.min and q.max, option only, sub, quiet, and reply {eb, lines}; type 'form' {html(), ready(), next};
+   opts.noClose, opts.quietHtml; plan steps st.anchors, st.say, st.extra, st.label, st.ownLabel, choice text and pills;
+   opts.planTotal {max, min, msg}, opts.planWords {label, value}, opts.planTitle, opts.planEmpty, opts.anchors.
+   onDone's result adds anchors {part: {name: anchor}} and words when those are used.
 
    Scripts (shared/guided/<tree>.js): GG_GUIDED[tree] = {voice, tipSkip: [tags], kinds: {<kind>: {open: [lines],
    resume?: [lines], enter?: {part: [lines]}, mid: {every, lines}, tips: {part: [lines]}, close: [lines]},
@@ -52,7 +58,7 @@
 (function () {
   'use strict';
   if (window.GGGuided) return;
-  var V = 'b887';
+  var V = 'b889';
   var ROOT = (function () { try { var s = document.currentScript && document.currentScript.src; if (s) return new URL('..', s).href.replace(/\/$/, ''); } catch (e) {} return location.origin; })();
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
   var TREE_VOICE = { maple: 'jenny', aspen: 'jenny', pine: 'jenny', grove: 'jenny', birch: 'brian', oak: 'brian', sequoia: 'brian', willow: 'brian' };
@@ -123,13 +129,18 @@
     var add = function (text, where) { sentences(text).forEach(function (t) { var k = voice + '|' + t; if (seen[k]) return; seen[k] = 1; out.push({ voice: voice, text: t, clip: clipName(voice, t), url: clipUrl(voice, t), where: where }); }); };
     var steps = o.questions || [], Q = steps.filter(function (q) { return q && q.type !== 'plan'; }), P = steps.filter(function (q) { return q && q.type === 'plan'; });
     var kinds = o.allKinds ? Object.keys((s && s.kinds) || {}) : [o.kind || 'full'];
+    // every other slot a kind holds (faith, who, changes, differ, pass, kidsFirst, edges, anchor, youngest, strength, words)
+    var KNOWN = { open: 1, resume: 1, enter: 1, mid: 1, tips: 1, close: 1, part: 1 };
+    function extras(K, kn) { Object.keys(K || {}).forEach(function (k) { if (!KNOWN[k]) allText(K[k]).forEach(function (t) { add(t, kn + '.' + k); }); }); }
     kinds.forEach(function (kn) {
       var K = kindOf(s, kn);
       if (kn === 'plan') {
         allText(K.open).forEach(function (t) { add(t, 'plan.open'); });
         var parts = P.length ? P.map(function (p) { return p.part; }) : Object.keys(K.part || {});
         parts.forEach(function (p) { allText((K.part || {})[p]).forEach(function (t) { add(t, 'plan.part.' + p); }); });
+        P.forEach(function (p) { allText(p.say).forEach(function (t) { add(t, 'plan.say.' + p.part); }); });
         allText(K.close).forEach(function (t) { add(t, 'plan.close'); });
+        extras(K, kn);
         return;
       }
       allText(K.open).forEach(function (t) { add(t, kn + '.open'); });
@@ -138,16 +149,19 @@
       Q.forEach(function (q) {
         if (q.part !== last && K.enter && K.enter[q.part]) allText(K.enter[q.part]).forEach(function (t) { add(t, kn + '.enter.' + q.part); });
         last = q.part;
-        add(q.say || q.text, 'question.' + q.id);
+        allText(q.lead).forEach(function (t) { add(t, 'lead.' + q.id); });
+        if (q.say !== false) add(q.say || q.text, 'question.' + q.id);
+        (q.options || []).forEach(function (x) { if (x && x.reply) allText(x.reply.lines).forEach(function (t) { add(t, 'reply.' + q.id); }); });
       });
       allText((K.mid || {}).lines).forEach(function (t) { add(t, kn + '.mid'); });
       Object.keys(K.tips || {}).forEach(function (p) { allText(K.tips[p]).forEach(function (t) { add(t, kn + '.tip.' + p); }); });
       allText(K.close).forEach(function (t) { add(t, kn + '.close'); });
+      if (o.allKinds) extras(K, kn);
     });
     if (!o.allKinds && P.length && o.kind !== 'plan') {
       var K = kindOf(s, 'plan');
       allText(K.open).forEach(function (t) { add(t, 'plan.open'); });
-      P.forEach(function (p) { allText((K.part || {})[p.part]).forEach(function (t) { add(t, 'plan.part.' + p.part); }); });
+      P.forEach(function (p) { allText((K.part || {})[p.part]).forEach(function (t) { add(t, 'plan.part.' + p.part); }); allText(p.say).forEach(function (t) { add(t, 'plan.say.' + p.part); }); });
       allText(K.close).forEach(function (t) { add(t, 'plan.close'); });
     }
     return out;
@@ -214,9 +228,12 @@
     var s = scriptOf(o), voice = voiceOf(o, s), kind = o.kind || 'full', K = kindOf(s, kind), KP = kindOf(s, 'plan');
     var steps = (o.questions || []).filter(Boolean), Q = steps.filter(function (q) { return q.type !== 'plan'; });
     var P = steps.filter(function (q) { return q.type === 'plan' && (q.choices || []).length; });
-    var A = {}, PL = {};
+    var A = {}, PL = {}, PA = {}, WORDS = { v: (o.planWords && o.planWords.value) || '' };
     Object.keys(o.answers || {}).forEach(function (k) { A[k] = o.answers[k]; });
     Object.keys(o.plan || {}).forEach(function (k) { PL[k] = arr(o.plan[k]).slice(); });
+    Object.keys(o.anchors || {}).forEach(function (k) { PA[k] = Object.assign({}, o.anchors[k]); });
+    var NQ = Q.filter(function (q) { return !q.aside; }).length;
+    function numOf(i) { var n = 0; for (var j = 0; j <= i && j < Q.length; j++) if (!Q[j].aside) n++; return n; }
     var tipSkip = arr(s.tipSkip);
     var S = { tok: 0, screen: null, voiceOn: lsGet('gg-guided-voice') !== '0', tips: {}, midN: Math.floor(Math.random() * 7), timer: 0, closed: false, lock: null, el: null, pre: null, prevFocus: document.activeElement };
     var insheet = !!o.inSheet || document.documentElement.classList.contains('gg-insheet');
@@ -238,7 +255,7 @@
       + '<div class="ggd-bar" aria-hidden="true"><i></i></div></header>'
       + '<main class="ggd-stage"></main>'
       + '<footer class="ggd-foot"><button type="button" class="ggd-btn" data-g="back">' + I.back + 'Back</button><span class="ggd-sp"></span><button type="button" class="ggd-btn pri" data-g="next" hidden></button></footer>'
-      + (o.quiet === false ? '' : '<p class="ggd-quiet">' + (typeof o.quiet === 'string' ? esc(o.quiet) : esc(o.kid || o.tree === 'maple' || o.tree === 'aspen' ? QUIET.kid : QUIET.grown)) + '</p>');
+      + (o.quiet === false ? '' : '<p class="ggd-quiet">' + (typeof o.quietHtml === 'string' ? o.quietHtml : typeof o.quiet === 'string' ? esc(o.quiet) : esc(o.kid || o.tree === 'maple' || o.tree === 'aspen' ? QUIET.kid : QUIET.grown)) + '</p>');
     document.body.appendChild(el);
     document.documentElement.classList.add('ggd-open');
     S.el = el;
@@ -313,7 +330,7 @@
 
     /* the steps */
     function qIndex(id) { for (var i = 0; i < Q.length; i++) if (Q[i].id === id) return i; return -1; }
-    function answered(q) { var v = A[q.id]; if (q.type === 'text') return typeof v === 'string'; if (v === null && Object.prototype.hasOwnProperty.call(A, q.id)) return (q.options || []).some(function (x) { return x.v === null; }); return v !== undefined && v !== null && !(Array.isArray(v) && !v.length) && v !== ''; }
+    function answered(q) { var v = A[q.id]; if (q.type === 'text') return typeof v === 'string'; if (q.type === 'form') return v === true; if (v === null && Object.prototype.hasOwnProperty.call(A, q.id)) return (q.options || []).some(function (x) { return x.v === null; }); return v !== undefined && v !== null && !(Array.isArray(v) && !v.length) && v !== ''; }
     function firstOpen() { for (var i = 0; i < Q.length; i++) if (!answered(Q[i])) return i; return Q.length; }
     function edge(q, v) {
       if (v === undefined || v === null || v === '') return false;
@@ -330,22 +347,23 @@
     function midEvery() { var m = K.mid || {}; return +m.every > 0 && arr(m.lines).length ? +m.every : 0; }
 
     // What follows question i, once answered: a tip, a mid moment, then the next question or the close.
-    function after(i) {
-      var q = Q[i], nxt = i + 1 < Q.length ? { k: 'q', i: i + 1 } : Q.length ? { k: 'close' } : { k: 'popen' };
+    function after(i, noReply) {
+      var q = Q[i], nxt = i + 1 < Q.length ? { k: 'q', i: i + 1 } : o.noClose ? (P.length ? { k: 'popen' } : null) : Q.length ? { k: 'close' } : { k: 'popen' };
+      if (!noReply) { var ch = (q.options || []).filter(function (x) { return x.v === A[q.id] && x.reply; })[0]; if (ch && seq(ch.reply.lines).length) return { k: 'reply', part: q.part, from: i, eb: ch.reply.eb, lines: ch.reply.lines, then: after(i, true) }; }
       var tips = (K.tips || {})[q.part];
       if (tips && arr(tips).length && !S.tips[q.part] && tipOk(q) && edge(q, A[q.id])) { S.tips[q.part] = 1; return { k: 'tip', part: q.part, from: i, then: nxt }; }
-      var ev = midEvery();
-      if (ev && (i + 1) % ev === 0 && i + 1 < Q.length) return { k: 'mid', from: i, then: nxt };
+      var ev = midEvery(), n = numOf(i);
+      if (ev && !q.aside && n % ev === 0 && n < NQ && i + 1 < Q.length) return { k: 'mid', from: i, then: nxt };
       return nxt;
     }
     function nextAfterClose() { return P.length ? { k: 'popen' } : null; }
 
     function progress(sc) {
       var tot = Q.length + P.length, n = 0, label = '';
-      if (sc.k === 'q') { n = sc.i; label = 'Question ' + (sc.i + 1) + ' of ' + Q.length; }
+      if (sc.k === 'q') { n = sc.i; label = Q[sc.i].aside ? (Q[sc.i].label || '') : 'Question ' + numOf(sc.i) + ' of ' + NQ; }
       else if (sc.k === 'plan') { n = Q.length + sc.j; label = 'Growth Plan, Part ' + (sc.j + 1) + ' of ' + P.length; }
-      else if (sc.k === 'open' || sc.k === 'resume') { n = sc.k === 'resume' ? firstOpen() : 0; label = Q.length ? Q.length + ' Questions' : ''; }
-      else if (sc.k === 'mid' || sc.k === 'tip') { n = sc.from + 1; label = 'Question ' + (sc.from + 1) + ' of ' + Q.length; }
+      else if (sc.k === 'open' || sc.k === 'resume') { n = sc.k === 'resume' ? firstOpen() : 0; label = NQ > 1 ? NQ + ' Questions' : ''; }
+      else if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') { n = sc.from + 1; label = Q[sc.from].aside ? (Q[sc.from].label || '') : 'Question ' + numOf(sc.from) + ' of ' + NQ; }
       else if (sc.k === 'close') { n = Q.length; label = 'Every Question Answered'; }
       else if (sc.k === 'popen') { n = Q.length; label = 'Your Growth Plan'; }
       else if (sc.k === 'sum') { n = tot; label = 'Your Growth Plan'; }
@@ -359,13 +377,13 @@
       S.screen = sc; progress(sc);
       bNext.hidden = true; bNext.disabled = false; bNext.onclick = null;
       bBack.hidden = false; bBack.disabled = !canBack(sc);
-      ({ q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
+      ({ q: drawQ, open: drawMoment, resume: drawMoment, mid: drawMoment, tip: drawMoment, reply: drawMoment, close: drawMoment, popen: drawMoment, plan: drawPlan, sum: drawSum })[sc.k](sc);
       stage.scrollTop = 0;
       var h = stage.querySelector('h2'); if (h) { h.setAttribute('tabindex', '-1'); try { h.focus({ preventScroll: true }); } catch (e) { h.focus(); } }
     }
     function canBack(sc) {
       if (sc.k === 'q') return sc.i > 0;
-      if (sc.k === 'mid' || sc.k === 'tip') return true;
+      if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') return true;
       if (sc.k === 'close') return Q.length > 0;
       if (sc.k === 'popen') return Q.length > 0;
       if (sc.k === 'plan') return true;
@@ -375,7 +393,7 @@
     function back() {
       var sc = S.screen; if (!sc || !canBack(sc)) return;
       if (sc.k === 'q') return show({ k: 'q', i: sc.i - 1 });
-      if (sc.k === 'mid' || sc.k === 'tip') return show({ k: 'q', i: sc.from });
+      if (sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply') return show({ k: 'q', i: sc.from });
       if (sc.k === 'close' || sc.k === 'popen') return Q.length ? show({ k: 'q', i: Q.length - 1 }) : null;
       if (sc.k === 'plan') return sc.j > 0 ? show({ k: 'plan', j: sc.j - 1 }) : Q.length ? show({ k: 'q', i: Q.length - 1 }) : show({ k: 'popen' });
       if (sc.k === 'sum') return show({ k: 'plan', j: P.length - 1 });
@@ -387,6 +405,7 @@
       var q = Q[sc.i], v = A[q.id], type = q.type || 'choice', ops = q.options || [];
       var prevPart = sc.i > 0 ? Q[sc.i - 1].part : null, enterList = (K.enter || {})[q.part];
       var enter = q.part !== prevPart && enterList ? lineText(anyOf(enterList)) : '';
+      var lead = q.lead ? lineText(Array.isArray(q.lead) ? anyOf(q.lead) : q.lead) : '';
       var body = '';
       if (type === 'scale') {
         var many = ops.length > 5;
@@ -394,33 +413,64 @@
           + ops.map(function (x, j) { var on = v === x.v; return '<button type="button" class="ggd-dot" data-v="' + j + '" aria-pressed="' + on + '" aria-label="' + esc(x.label) + '"><span class="ggd-c">' + esc(x.short != null ? x.short : many ? j + 1 : j + 1) + '</span>' + (many ? '' : '<span class="ggd-l">' + esc(x.label) + '</span>') + '</button>'; }).join('')
           + '</div>' + (many ? '<div class="ggd-ends"><span>' + esc(q.low || (ops[0] || {}).label || '') + '</span><span>' + esc(q.high || (ops[ops.length - 1] || {}).label || '') + '</span></div><div class="ggd-chosen" aria-hidden="true">' + esc(ops.filter(function (x) { return x.v === v; }).map(function (x) { return x.label; })[0] || '') + '</div>' : '') + '</div>';
       } else if (type === 'text') {
-        body = '<div class="ggd-a"><label class="ggd-sr" for="ggd-txt">' + esc(q.text) + '</label><textarea id="ggd-txt" class="ggd-txt" rows="4">' + esc(typeof v === 'string' ? v : '') + '</textarea></div>';
+        body = '<div class="ggd-a"><label class="ggd-sr" for="ggd-txt">' + esc(q.text) + '</label><textarea id="ggd-txt" class="ggd-txt" rows="4"' + (q.maxlength ? ' maxlength="' + (+q.maxlength) + '"' : '') + '>' + esc(typeof v === 'string' ? v : '') + '</textarea></div>';
+      } else if (type === 'form') {
+        body = '<div class="ggd-a ggd-form">' + formHtml(q) + '</div>';
       } else {
         var multi = type === 'multi', cur = multi ? arr(v) : null;
-        body = ops.map(function (x, j) { var on = multi ? cur.indexOf(x.v) >= 0 : v === x.v; return '<button type="button" class="ggd-opt ggd-a' + (multi ? ' ggd-multi' : '') + '" data-v="' + j + '" aria-pressed="' + on + '"><span class="ggd-k" aria-hidden="true">' + (multi ? (on ? I.check : '') : j + 1) + '</span><span>' + esc(x.label) + '</span></button>'; }).join('');
+        body = ops.map(function (x, j) { var on = multi ? cur.indexOf(x.v) >= 0 : v === x.v; return '<button type="button" class="ggd-opt ggd-a' + (multi ? ' ggd-multi' : '') + (x.quiet ? ' ggd-q2' : '') + '" data-v="' + j + '" aria-pressed="' + on + '"><span class="ggd-k" aria-hidden="true">' + (multi ? (on ? I.check : '') : j + 1) + '</span><span class="ggd-ot">' + esc(x.label) + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</span></button>'; }).join('');
       }
-      stage.innerHTML = '<section class="ggd-card' + partCls(q.part) + '">'
-        + (q.part ? '<div class="ggd-eb">' + esc(partName(q.part)) + '</div>' : '')
+      var more = arr(q.more).filter(function (m) { return m && m.text; }).map(function (m) { return '<details class="ggd-more"><summary>' + esc(m.label || 'Why this question?') + '</summary><p>' + esc(m.text) + '</p></details>'; }).join('');
+      stage.innerHTML = '<section class="ggd-card' + partCls(q.part) + (type === 'form' ? ' ggd-wide' : '') + '">'
+        + (q.part || q.eb ? '<div class="ggd-eb">' + esc(q.eb || partName(q.part)) + '</div>' : '')
         + (enter ? '<p class="ggd-enter">' + esc(enter) + '</p>' : '')
+        + (lead ? '<p class="ggd-enter ggd-lead">' + esc(lead) + '</p>' : '')
+        + (q.stem ? '<p class="ggd-stem">' + esc(q.stem) + '</p>' : '')
         + '<h2 id="ggd-h">' + esc(q.text) + '</h2>' + (q.help ? '<p class="ggd-help">' + esc(q.help) + '</p>' : '')
-        + '<div class="ggd-ans">' + body + '</div></section>';
-      var card = stage.firstChild;
-      if (type === 'multi' || type === 'text') { bNext.hidden = false; bNext.innerHTML = 'Next' + I.next; bNext.onclick = function () { commit(q, type === 'text' ? (stage.querySelector('textarea').value || '').trim() : arr(A[q.id]).slice(), true); }; }
+        + '<div class="ggd-ans">' + body + '</div>' + (more ? '<div class="ggd-mores">' + more + '</div>' : '') + '<p class="ggd-msg" aria-live="polite"></p></section>';
+      var card = stage.firstChild, msg = card.querySelector('.ggd-msg');
+      var multiOk = function () { var n = arr(A[q.id]).length; if (q.min && n < q.min) { msg.textContent = q.minMsg || (q.min === 1 ? 'Choose one to go on.' : 'Choose ' + q.min + ' to go on.'); return false; } return true; };
+      if (type === 'form') {
+        bNext.hidden = false; bNext.innerHTML = (q.next || 'Next') + I.next;
+        var formNext = function () { var m = typeof q.ready === 'function' ? q.ready() : ''; if (m) { msg.textContent = m; return; } commit(q, true, true); };
+        bNext.onclick = formNext;
+        var fbox = card.querySelector('.ggd-form');
+        fbox.addEventListener('click', function (e) {
+          var t = e.target.closest('button,[data-ggd-next]'); if (!t || !fbox.contains(t)) return;
+          stopVoiceSoon(); msg.textContent = '';
+          if (t.hasAttribute('data-ggd-next')) { e.preventDefault(); formNext(); return; }
+          setTimeout(function () { // the page changed its state in its own handler: draw the form again, keeping the place
+            if (S.screen !== sc || S.closed) return;
+            var all = Array.prototype.slice.call(fbox.querySelectorAll('button,input,textarea,select')), at = all.indexOf(t);
+            fbox.innerHTML = formHtml(q);
+            var again = fbox.querySelectorAll('button,input,textarea,select'); if (at >= 0 && again[Math.min(at, again.length - 1)]) { try { again[Math.min(at, again.length - 1)].focus({ preventScroll: true }); } catch (er) {} }
+          }, 0);
+        });
+      } else if (type === 'multi' || type === 'text') { bNext.hidden = false; bNext.innerHTML = 'Next' + I.next; bNext.onclick = function () { if (type === 'multi' && !multiOk()) return; commit(q, type === 'text' ? (stage.querySelector('textarea').value || '').trim() : arr(A[q.id]).slice(), true); }; }
       else if (answered(q)) { bNext.hidden = false; bNext.innerHTML = 'Next' + I.next; bNext.onclick = function () { go(after(sc.i)); }; }
       if (type === 'multi') card.querySelectorAll('.ggd-opt').forEach(function (b) { b.addEventListener('click', function () {
         var x = ops[+b.getAttribute('data-v')], cur = arr(A[q.id]).slice(), at = cur.indexOf(x.v);
-        if (at >= 0) cur.splice(at, 1); else cur.push(x.v);
-        A[q.id] = cur; b.setAttribute('aria-pressed', at < 0); b.querySelector('.ggd-k').innerHTML = at < 0 ? I.check : '';
+        msg.textContent = '';
+        if (at >= 0) cur.splice(at, 1);
+        else {
+          if (x.only) cur = [];
+          else cur = cur.filter(function (y) { return !ops.some(function (z) { return z.v === y && z.only; }); });
+          if (q.max && cur.length >= q.max) { msg.textContent = q.maxMsg || 'That is ' + q.max + ' chosen. Tap one to change it.'; return; }
+          cur.push(x.v);
+        }
+        A[q.id] = cur;
+        card.querySelectorAll('.ggd-opt').forEach(function (y) { var on = cur.indexOf(ops[+y.getAttribute('data-v')].v) >= 0; y.setAttribute('aria-pressed', on); y.querySelector('.ggd-k').innerHTML = on ? I.check : ''; });
         stopVoiceSoon();
       }); });
-      else if (type !== 'text') card.querySelectorAll('[data-v]').forEach(function (b) { b.addEventListener('click', function () { pick(q, ops[+b.getAttribute('data-v')], b, sc); }); });
+      else if (type !== 'text' && type !== 'form') card.querySelectorAll('[data-v]').forEach(function (b) { b.addEventListener('click', function () { pick(q, ops[+b.getAttribute('data-v')], b, sc); }); });
       var go1 = function () { card.classList.add('ggd-go'); };
-      var spoken = [enter, q.say || q.text].filter(Boolean);
+      var spoken = [enter, lead, q.say === false ? '' : q.say || q.text].filter(Boolean);
       var started = false;
       say(spoken, function (i) { if (i === spoken.length - 1 && !started) { started = true; go1(); } }, function () { go1(); });
-      if (!S.voiceOn) go1();
-      var nx = Q[sc.i + 1]; prefetch(nx ? nx.say || nx.text : '');
+      if (!S.voiceOn || !spoken.length) go1();
+      var nx = Q[sc.i + 1]; prefetch(nx ? (nx.say === false ? lineText(nx.lead) : nx.say || nx.text) : '');
     }
+    function formHtml(q) { try { return typeof q.html === 'function' ? String(q.html() || '') : String(q.html || ''); } catch (e) { return ''; } }
     function stopVoiceSoon() { /* a tap means the person is ready: the voice steps aside */ S.tok++; hush(); clearTimeout(S.timer); }
     function pick(q, x, b, sc) {
       stopVoiceSoon();
@@ -444,6 +494,7 @@
       else if (sc.k === 'resume') { list = seq(arr(K.resume).length ? K.resume : RESUME); eb = 'Welcome Back'; icon = I.sun; }
       else if (sc.k === 'mid') { var ml = arr((K.mid || {}).lines); list = [lineText(ml[S.midN++ % ml.length])].filter(Boolean); eb = 'Keep Going'; }
       else if (sc.k === 'tip') { list = [lineText(anyOf((K.tips || {})[sc.part]))].filter(Boolean); eb = 'A Tip for ' + partName(sc.part); cls = ' ggd-tip'; partC = partCls(sc.part); }
+      else if (sc.k === 'reply') { list = [lineText(anyOf(sc.lines))].filter(Boolean); eb = sc.eb || 'Thank You'; cls = ' ggd-tip'; partC = partCls(sc.part); }
       else if (sc.k === 'close') { list = seq(K.close); eb = 'Well Done'; icon = I.sun; }
       else if (sc.k === 'popen') { list = seq(KP.open); eb = 'Your Growth Plan'; }
       if (!list.length && sc.k !== 'close' && sc.k !== 'popen') return go(sc.k === 'open' || sc.k === 'resume' ? { k: 'q', i: sc.k === 'resume' ? firstOpen() : 0 } : sc.then);
@@ -454,7 +505,7 @@
       var ls = stage.querySelectorAll('.ggd-ln');
       var nextSc = sc.k === 'open' ? (Q.length ? { k: 'q', i: 0 } : P.length ? { k: 'plan', j: 0 } : null)
         : sc.k === 'resume' ? (firstOpen() < Q.length ? { k: 'q', i: firstOpen() } : nextAfterClose() || { k: 'close' })
-        : sc.k === 'mid' || sc.k === 'tip' ? sc.then
+        : sc.k === 'mid' || sc.k === 'tip' || sc.k === 'reply' ? sc.then
         : sc.k === 'popen' ? { k: 'plan', j: 0 }
         : nextAfterClose();
       bNext.hidden = false;
@@ -471,62 +522,101 @@
       if (nextSc && nextSc.k === 'q') { var nq = Q[nextSc.i]; prefetch(nq && (nq.say || nq.text)); }
     }
 
-    /* one Growth Plan step: cards to choose from, up to max */
+    /* one Growth Plan step: cards to choose from, up to max (and, for The Grove, a shared time for each) */
+    var TOT = o.planTotal && +o.planTotal.max > 0 ? o.planTotal : null;
+    function totalChosen() { var n = 0; P.forEach(function (st) { if (!st.extra) n += arr(PL[st.part]).length; }); return n; }
+    function lastMain(j) { for (var k = P.length - 1; k >= 0; k--) if (!P[k].extra) return k === j; return false; }
+    function anchorsHtml(st, c, j) {
+      var cur = (PA[st.part] || {})[c.name] || '', own = cur && st.anchors.indexOf(cur) < 0 ? cur : '';
+      return '<div class="ggd-anc" role="group" aria-label="' + esc('When we do ' + c.name) + '"><span class="ggd-anl">When</span>'
+        + st.anchors.map(function (a2, k) { var on = cur === a2; return '<button type="button" class="ggd-ac" data-a="' + k + '" aria-pressed="' + on + '">' + esc(a2) + '</button>'; }).join('')
+        + '<label class="ggd-sr" for="ggd-own-' + j + '">' + esc((st.ownLabel || 'Or our own time') + ' for ' + c.name) + '</label><input type="text" class="ggd-aown" id="ggd-own-' + j + '" maxlength="60" placeholder="' + esc(st.ownLabel || 'Or our own time') + '" value="' + esc(own) + '"></div>';
+    }
     function drawPlan(sc) {
-      var st = P[sc.j], part = st.part, max = Math.max(1, +st.max || 3), mine = (PL[part] = arr(PL[part]).slice());
-      var why = lineText(anyOf((KP.part || {})[part]));
-      var cards = st.choices.map(function (c, j) {
+      var st = P[sc.j], part = st.part, max = Math.max(1, +st.max || 3), mine = (PL[part] = arr(PL[part]).slice()), anc = Array.isArray(st.anchors) && st.anchors.length;
+      var why = lineText(anyOf((KP.part || {})[part])), more = seq(st.say);
+      if (anc && !PA[part]) PA[part] = {};
+      function card(c, j) {
         var r = rhythmOf(o.tree, part, c), on = mine.indexOf(c.name) >= 0;
+        var pills = anc ? arr(c.pills).map(function (x) { return '<span class="ggd-pill">' + esc(x) + '</span>'; }).join('') : '<span class="ggd-pill r">' + esc(rhythmPill(r)) + '</span>' + (+r.min > 0 ? '<span class="ggd-pill">' + esc(r.min) + ' min</span>' : '') + arr(c.pills).map(function (x) { return '<span class="ggd-pill">' + esc(x) + '</span>'; }).join('');
         return '<div class="ggd-pc' + (on ? ' on' : '') + '" data-j="' + j + '"><button type="button" class="ggd-pick" aria-pressed="' + on + '"><span class="ggd-k" aria-hidden="true">' + I.check + '</span><span><b>' + esc(c.name) + '</b>'
-          + '<span class="ggd-meta"><span class="ggd-pill r">' + esc(rhythmPill(r)) + '</span>' + (+r.min > 0 ? '<span class="ggd-pill">' + esc(r.min) + ' min</span>' : '') + '</span></span></button>'
+          + (c.text ? '<span class="ggd-ctext">' + esc(c.text) + '</span>' : '')
+          + (pills ? '<span class="ggd-meta">' + pills + '</span>' : '') + '</span></button>'
           + (r.how.length ? '<button type="button" class="ggd-how" aria-expanded="false" aria-controls="ggd-how-' + j + '">How</button><ol class="ggd-steps" id="ggd-how-' + j + '" hidden>' + r.how.map(function (h) { return '<li>' + esc(h) + '</li>'; }).join('') + '</ol>' : '')
+          + (anc && on ? anchorsHtml(st, c, j) : '')
           + '</div>';
-      }).join('');
+      }
       stage.innerHTML = '<section class="ggd-card ggd-wide' + partCls(part) + '"><div class="ggd-eb">' + esc(partName(part, st)) + '</div>'
         + '<h2 id="ggd-h">' + esc(st.text || 'Choose up to ' + max + ' practices for ' + partName(part, st) + '.') + '</h2>'
-        + (why ? '<p class="ggd-why">' + esc(why) + '</p>' : '')
-        + '<div class="ggd-count" aria-live="polite"></div><div class="ggd-cards">' + cards + '</div><div class="ggd-full" aria-live="polite"></div></section>';
+        + (why ? '<p class="ggd-why">' + esc(why) + '</p>' : '') + more.map(function (t) { return '<p class="ggd-why">' + esc(t) + '</p>'; }).join('')
+        + '<div class="ggd-count" aria-live="polite"></div><div class="ggd-cards">' + st.choices.map(card).join('') + '</div><div class="ggd-full" aria-live="polite"></div></section>';
+      var useTot = TOT && !st.extra;
       function count() {
-        stage.querySelector('.ggd-count').textContent = mine.length + ' of ' + max + ' Chosen';
-        stage.querySelector('.ggd-full').textContent = mine.length >= max ? 'That’s a full set. Tap a chosen card to swap it for another.' : '';
+        var n = useTot ? totalChosen() : mine.length, m = useTot ? +TOT.max : max;
+        stage.querySelector('.ggd-count').textContent = n + ' of ' + m + ' Chosen' + (useTot && P.filter(function (x) { return !x.extra; }).length > 1 ? ' in All' : '');
+        stage.querySelector('.ggd-full').textContent = n >= m || mine.length >= max ? 'That’s a full set. Tap a chosen card to swap it for another.' : '';
       }
       count();
-      stage.querySelectorAll('.ggd-pc').forEach(function (cd) {
+      function bind(cd) {
         var c = st.choices[+cd.getAttribute('data-j')], pb = cd.querySelector('.ggd-pick'), hb = cd.querySelector('.ggd-how');
         pb.addEventListener('click', function () {
+          stopVoiceSoon();
           var at = mine.indexOf(c.name);
-          if (at >= 0) mine.splice(at, 1);
-          else { if (mine.length >= max) { var full = stage.querySelector('.ggd-full'); full.textContent = 'You’ve chosen ' + max + '. Tap a chosen card first to make room.'; return; } mine.push(c.name); }
-          cd.classList.toggle('on', at < 0); pb.setAttribute('aria-pressed', at < 0); count();
+          if (at >= 0) { mine.splice(at, 1); if (anc) delete PA[part][c.name]; }
+          else {
+            var full = stage.querySelector('.ggd-full');
+            if (mine.length >= max) { full.textContent = 'You’ve chosen ' + max + '. Tap a chosen card first to make room.'; return; }
+            if (useTot && totalChosen() >= +TOT.max) { full.textContent = 'You’ve chosen ' + TOT.max + ' in all. Tap a chosen card first to make room.'; return; }
+            mine.push(c.name);
+          }
+          PL[part] = mine;
+          if (anc) { var nc = document.createElement('div'); nc.innerHTML = card(c, +cd.getAttribute('data-j')); var fresh = nc.firstChild; cd.parentNode.replaceChild(fresh, cd); bind(fresh); var fb = fresh.querySelector('.ggd-pick'); if (fb) fb.focus(); }
+          else { cd.classList.toggle('on', at < 0); pb.setAttribute('aria-pressed', at < 0); }
+          count();
         });
         if (hb) hb.addEventListener('click', function () { var ol = cd.querySelector('.ggd-steps'), open = ol.hidden; ol.hidden = !open; hb.setAttribute('aria-expanded', open); hb.textContent = open ? 'Hide How' : 'How'; });
-      });
+        cd.querySelectorAll('.ggd-ac').forEach(function (b) { b.addEventListener('click', function () {
+          var a2 = st.anchors[+b.getAttribute('data-a')], now = PA[part][c.name] === a2 ? '' : a2;
+          if (now) PA[part][c.name] = now; else delete PA[part][c.name];
+          cd.querySelectorAll('.ggd-ac').forEach(function (y) { y.setAttribute('aria-pressed', y === b && !!now); });
+          var inp = cd.querySelector('.ggd-aown'); if (inp && now) inp.value = '';
+        }); });
+        var inp = cd.querySelector('.ggd-aown');
+        if (inp) inp.addEventListener('input', function () { var t = inp.value.trim(); if (t) { PA[part][c.name] = t; cd.querySelectorAll('.ggd-ac').forEach(function (y) { y.setAttribute('aria-pressed', 'false'); }); } else if (st.anchors.indexOf(PA[part][c.name]) < 0) delete PA[part][c.name]; });
+      }
+      stage.querySelectorAll('.ggd-pc').forEach(bind);
       bNext.hidden = false; bNext.innerHTML = (sc.j + 1 < P.length ? 'Next' : 'See My Plan') + I.next;
       bNext.onclick = function () {
         PL[part] = mine.slice();
-        if (typeof o.onPlan === 'function') { try { o.onPlan(part, PL[part].slice()); } catch (e) {} }
+        if (useTot && lastMain(sc.j) && TOT.min && totalChosen() < +TOT.min) { stage.querySelector('.ggd-full').textContent = TOT.msg || 'Choose ' + TOT.min + ' or more practices in all to go on.'; return; }
+        if (typeof o.onPlan === 'function') { try { o.onPlan(part, PL[part].slice(), anc ? Object.assign({}, PA[part]) : null); } catch (e) {} }
         go(sc.j + 1 < P.length ? { k: 'plan', j: sc.j + 1 } : { k: 'sum' });
       };
-      say(why ? [why] : [], null, null);
+      var sp = (why ? [why] : []).concat(more);
+      say(sp, null, null);
     }
 
     /* the summary: here's what you're tending this season */
     function drawSum() {
-      var head = 'Here\u2019s what you\u2019re tending this season.', norm = function (t) { return String(t).replace(/[\u2018\u2019]/g, "'").trim(); };
+      var head = 'Here’s what you’re tending this season.', norm = function (t) { return String(t).replace(/[‘’]/g, "'").trim(); };
       var spoken = seq(KP.close), lead = spoken.length && norm(spoken[0]) === norm(head) ? 1 : 0, shown = spoken.slice(lead);
+      if (lead === 0 && spoken.length && /^here is what we are tending this season\.?$/i.test(norm(spoken[0]))) { head = spoken[0]; lead = 1; shown = spoken.slice(1); }
       var cards = P.map(function (st, j) {
         var names = arr(PL[st.part]); if (!names.length) return '';
+        var anc = Array.isArray(st.anchors) && st.anchors.length;
         return '<div class="ggd-sp-card' + partCls(st.part) + '"><h3>' + esc(partName(st.part, st)) + '</h3><ul>' + names.map(function (nm) {
-          var c = st.choices.filter(function (x) { return x.name === nm; })[0] || { name: nm }, r = rhythmOf(o.tree, st.part, c);
-          return '<li><b>' + esc(nm) + '</b><small>' + esc(rhythmPill(r)) + (+r.min > 0 ? ', ' + esc(r.min) + ' min' : '') + '</small></li>';
+          var c = st.choices.filter(function (x) { return x.name === nm; })[0] || { name: nm }, r = rhythmOf(o.tree, st.part, c), w = anc ? (PA[st.part] || {})[nm] : '';
+          return '<li><b>' + esc(nm) + '</b><small>' + (anc ? esc(w ? 'When: ' + w : st.anyTime || 'Any time we choose') : esc(rhythmPill(r)) + (+r.min > 0 ? ', ' + esc(r.min) + ' min' : '')) + '</small></li>';
         }).join('') + '</ul><button type="button" class="ggd-chg" data-j="' + j + '" aria-label="Change ' + esc(partName(st.part, st)) + '">Change</button></div>';
       }).join('');
       var chosen = P.some(function (st) { return arr(PL[st.part]).length; });
-      stage.innerHTML = '<section class="ggd-card ggd-wide ggd-mo"><div class="ggd-leaf" aria-hidden="true">' + I.leaf + '</div><div class="ggd-eb">Your Growth Plan</div>'
+      var pw = o.planWords ? '<div class="ggd-words"><label for="ggd-words">' + esc(o.planWords.label || 'Our words, if we like') + '</label><textarea id="ggd-words" class="ggd-txt" rows="2" maxlength="' + (+o.planWords.maxlength || 200) + '">' + esc(WORDS.v) + '</textarea></div>' : '';
+      stage.innerHTML = '<section class="ggd-card ggd-wide ggd-mo"><div class="ggd-leaf" aria-hidden="true">' + I.leaf + '</div><div class="ggd-eb">' + esc(o.planTitle || 'Your Growth Plan') + '</div>'
         + '<h2 id="ggd-h" class="ggd-ln on">' + esc(head) + '</h2>'
         + '<div class="ggd-lines">' + shown.map(function (t) { return '<p class="ggd-ln">' + esc(t) + '</p>'; }).join('') + '</div>'
-        + (chosen ? '<div class="ggd-sum">' + cards + '</div>' : '<p class="ggd-help">Choose a practice or two, and they\u2019ll be ready for you in Today.</p>')
-        + creditLine() + '</section>';
+        + (chosen ? '<div class="ggd-sum">' + cards + '</div>' : '<p class="ggd-help">' + esc(o.planEmpty || 'Choose a practice or two, and they’ll be ready for you in Today.') + '</p>')
+        + pw + creditLine() + '</section>';
+      var wt = stage.querySelector('#ggd-words'); if (wt) wt.addEventListener('input', function () { WORDS.v = wt.value; });
       stage.querySelectorAll('.ggd-chg').forEach(function (b) { b.addEventListener('click', function () { show({ k: 'plan', j: +b.getAttribute('data-j') }); }); });
       var ls = stage.querySelectorAll('.ggd-lines .ggd-ln');
       if (!S.voiceOn) ls.forEach(function (x) { x.classList.add('on'); });
@@ -536,7 +626,12 @@
     function creditLine() { var c = musicOn() ? musicTrack(o).credit : ''; return c ? '<small class="ggd-src">Music: ' + esc(c) + '</small>' : ''; }
 
     /* finishing and closing */
-    function result() { return { answers: Object.assign({}, A), plan: P.length ? (function () { var r = {}; P.forEach(function (st) { r[st.part] = arr(PL[st.part]).slice(); }); return r; })() : null }; }
+    function result() {
+      var r = { answers: Object.assign({}, A), plan: P.length ? (function () { var x = {}; P.forEach(function (st) { x[st.part] = arr(PL[st.part]).slice(); }); return x; })() : null };
+      if (P.some(function (st) { return Array.isArray(st.anchors) && st.anchors.length; })) { r.anchors = {}; P.forEach(function (st) { var m = PA[st.part] || {}, x = {}; arr(PL[st.part]).forEach(function (nm) { if (m[nm]) x[nm] = m[nm]; }); r.anchors[st.part] = x; }); }
+      if (o.planWords) r.words = String(WORDS.v || '').trim();
+      return r;
+    }
     function finish() {
       if (S.closed) return;
       var r = result(); S.finished = true;
@@ -610,5 +705,12 @@
     return api;
   }
 
-  window.GGGuided = { run: run, lines: lines, clipName: clipName, clipUrl: clipUrl, sentences: sentences, close: function () { if (CUR) CUR.close(); }, version: V };
+  /* the guided flag: a tree screen opened with ?guided=checkin, quick, or plan (The Grounded Way's tree sheet, GWG BLD 886) */
+  function flag() {
+    try { var q = new URLSearchParams(location.search); if (!q.has('guided')) return ''; var v = (q.get('guided') || '').toLowerCase(); return v === 'quick' || v === 'plan' ? v : v === '0' || v === 'off' ? '' : 'checkin'; } catch (e) { return ''; }
+  }
+  function clearFlag() {
+    try { var u = new URL(location.href); if (!u.searchParams.has('guided')) return; u.searchParams.delete('guided'); history.replaceState(history.state, '', u.pathname + (u.searchParams.toString() ? '?' + u.searchParams.toString() : '') + u.hash); } catch (e) {}
+  }
+  window.GGGuided = { run: run, lines: lines, clipName: clipName, clipUrl: clipUrl, sentences: sentences, flag: flag, clearFlag: clearFlag, open: function () { return !!CUR; }, close: function () { if (CUR) CUR.close(); }, version: V };
 })();

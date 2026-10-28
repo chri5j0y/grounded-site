@@ -877,6 +877,9 @@ html.ts-2 main{zoom:1.25;}
 
 .sit-with .opt{font-weight:500;text-transform:none;letter-spacing:0;}
 .ck-quiet{color:var(--ink-soft);font-size:15px;line-height:1.5;margin:14px 0 6px;}
+.gd-switch{display:flex;flex-wrap:wrap;align-items:center;gap:8px 12px;margin:4px 0 14px;color:var(--ink-soft);font-size:15px;}
+.gd-plan-start{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:12px 16px;margin:0 0 18px;padding:16px 18px;border:1px solid var(--line);border-radius:14px;background:var(--card, transparent);}
+.gd-plan-start > div{flex:1 1 260px;line-height:1.5;}
 .text-btn{background:none;border:none;padding:0;font:inherit;color:var(--gold);font-weight:600;text-decoration:underline;cursor:pointer;}
 .quick-part{margin-bottom:6px;}
 .quick-label{font-weight:700;font-size:14px;letter-spacing:.5px;text-transform:uppercase;display:flex;align-items:center;gap:6px;margin:10px 0 6px;}
@@ -1147,16 +1150,19 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b887"></script>
-<script src="/shared/gg-life.js?v=b851"></script>
-<script src="/shared/gg-life-kit.js?v=b789"></script>
-<script src="/shared/gg-sober.js?v=b851"></script>
+<script src="/shared/gg-profiles.js?v=b888"></script>
+<script src="/shared/gg-life.js?v=b888"></script>
+<script src="/shared/gg-life-kit.js?v=b888"></script>
+<script src="/shared/gg-sober.js?v=b888"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
 <script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
-<script src="/oak/guides.js?v=b885"></script>
+<script src="/oak/guides.js?v=b888"></script>
 <script src="/oak/practices.js?v=b885"></script>
+<script src="/shared/gg-guided.js?v=b889"></script>
+<script src="/shared/guided/oak.js?v=b889"></script>
+<script src="/shared/practice-rhythm.js?v=b885" defer></script>
 <script>
 // The six parts and the practice library live in oak/practices.js (moved there in GWG BLD 756,
 // every name and line unchanged, so saved plans keep working). Health and Ability tags are in its FLAGS.
@@ -1563,16 +1569,18 @@ function calmKey(e) { if (e.key === 'Escape') closeCalm(); }
 function closeCalm() { const c = document.getElementById('calm-card'); if (c) c.remove(); document.removeEventListener('keydown', calmKey); }
 
 // ---------- quick check-in ----------
-function startQuick(by, forId) {
+// Guided is the default start (GWG BLD 886); how 'classic' opens this form, 'keep' opens it with the answers so far.
+function startQuick(by, forId, how) {
+  if (!how && oakGuidedOk()) { by = typeof by === 'string' ? by : 'self'; oakGuided(by === 'tapped' ? 'together' : 'quick', by, forId, true); return; }
   setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = true; ST_ANS = {};
+  ST_QUICK = true; if (how !== 'keep') ST_ANS = {};
   const container = document.getElementById('step-container');
   container.innerHTML = `${whoLine()}<section class="step-panel active" id="step-quick">
     <div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title">Quick Check-in</h2><div class="step-domain">One question for each part of your tree</div></div></div>
-    <p class="q-stem">${Q_STEM}</p>
+    ${oakGuidedSwitchHtml()}<p class="q-stem">${Q_STEM}</p>
     ${ALL_DOMAINS.map(d => `<div class="quick-part" style="--domain-color:${d.color};"><div class="quick-label" style="color:${d.color};">${partIcon(d, 20)} ${d.part}</div>${questionHtml('quick_' + d.key, 0, QUICK_Q[d.key])}</div>`).join('')}
     ${quietHtml()}
-    <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckin(CK.by, CK.forId)">Take the full check-in instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
+    <div class="btn-row step-nav"><button class="btn btn-secondary" onclick="startCheckin(CK.by, CK.forId, 'classic')">Take the full check-in instead</button><button class="btn btn-primary" onclick="finishQuick()">See My Tree</button></div>
   </section>`;
   document.getElementById('step-progress').innerHTML = '';
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
@@ -1623,7 +1631,7 @@ const visitedSteps = new Set([0]);
 
 function renderCheckin() {
   const container = document.getElementById('step-container');
-  container.innerHTML = whoLine() + ALL_DOMAINS.map((d, i) => {
+  container.innerHTML = whoLine() + oakGuidedSwitchHtml() + ALL_DOMAINS.map((d, i) => {
     const p = PARTS[d.key];
     const next = ALL_DOMAINS[i + 1];
     return `
@@ -1679,13 +1687,130 @@ function scrollToViewTop(id, smooth, always) {
   if (always || window.scrollY > y) window.scrollTo({ top: y, behavior: smooth ? 'smooth' : 'auto' });
 }
 
-function startCheckin(by, forId) {
+function startCheckin(by, forId, how) {
+  if (!how && oakGuidedOk()) { by = typeof by === 'string' ? by : 'self'; oakGuided(by === 'tapped' ? 'together' : oakFullKind(), by, forId, false); return; }
   const was = CK.by + '|' + CK.forId;
   setMode(typeof by === 'string' ? by : 'self', forId);
-  if (ST_QUICK || !document.getElementById('step-0') || was !== CK.by + '|' + CK.forId) { ST_QUICK = false; ST_ANS = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
+  if (how === 'keep') { ST_QUICK = false; renderCheckin(); }
+  else if (ST_QUICK || !document.getElementById('step-0') || was !== CK.by + '|' + CK.forId) { ST_QUICK = false; ST_ANS = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5)); renderCheckin(); }
   showView('client-assess', document.querySelectorAll('#client-nav .nav-btn')[1]);
   goToStep(0);
 }
+
+// =====================================================================
+// GUIDED CHECK-INS AND THE GUIDED GROWTH PLAN (GWG BLD 886)
+// shared/gg-guided.js plays each check-in one question at a time with Brian's voice and the words in
+// shared/guided/oak.js. It is the default start of every kind; Read It All opens the classic form
+// above with the answers so far. Every answer goes through answerQ, and the finish is the classic
+// finish (calculateResults, finishQuick, or tappedResults for a check-in taken together).
+// The weekly check-in saves through GGTend.saveWeekAns; the Growth Plan through oakSavePlan.
+// =====================================================================
+const oakGuidedOk = () => !!(window.GGGuided && window.GG_GUIDED && GG_GUIDED.oak);
+const OAK_GD_TITLE = { start: 'Your First Check-in', full: 'Check-in', season: 'Season Check-in', quick: 'Quick Check-in', week: 'Weekly Check-in', together: 'Check-in Together', plan: 'Your Growth Plan' };
+let OAK_GD = null; // the guided run on screen or last left: {sig, kind, quick}
+function oakFullKind() {
+  const s = PROF && window.GGTend ? GGTend.state() : null;
+  if (s) return !s.start ? 'start' : (GGTend._week ? GGTend._week() : 0) >= 12 ? 'season' : 'full';
+  return (personalHistory || []).some(e => e && e.scores && e.type !== 'quick' && !e.from) ? 'full' : 'start';
+}
+// The stem ("In the past two weeks, how often have you...") shows small above every question. The voice reads it
+// before the first question of each part (the first one of a quick or weekly check-in), then the question alone.
+function oakGdOpts(list) { return (list || Q_OPTS).map(o => ({ v: o[0], label: o[1] })); }
+// A Growing Edge answer: Rarely or Sometimes on a forward question, Often or Almost always on a reverse one.
+function oakGdEdge(q, v) { const o = Q_OPTS.find(x => x[0] === v); if (!o || o[2] === null) return false; return (q.rev ? 3 - o[2] : o[2]) <= 1; }
+function oakGdQuestions(quick) {
+  const out = [];
+  ALL_DOMAINS.forEach(d => {
+    (quick ? [QUESTIONS[d.key][0]] : QUESTIONS[d.key]).forEach((q, i) => {
+      const key = quick ? 'quick_' + d.key : d.key, lead = quick ? !out.length : i === 0;
+      out.push({ id: key + '.' + i, key, i, part: d.key, stem: Q_STEM, text: q.t, say: lead ? Q_STEM + ' ' + q.t : q.t, type: 'choice', options: oakGdOpts(), rev: !!q.r });
+    });
+  });
+  return out;
+}
+function oakGdAnswers(qs) { const a = {}; qs.forEach(q => { const v = (ST_ANS[q.key] || {})[q.i]; if (v) a[q.id] = v; }); return a; }
+function oakGuided(kind, by, forId, quick, keep) {
+  if (!oakGuidedOk()) { if (quick) startQuick(by, forId, 'classic'); else startCheckin(by, forId, 'classic'); return; }
+  setMode(typeof by === 'string' ? by : 'self', forId);
+  const sig = [kind, CK.by, CK.forId, quick ? 'q' : 'f'].join('|');
+  // The same check-in, left part way: pick up where it was. Anything else starts fresh, as the classic form does.
+  if (!keep && !(OAK_GD && OAK_GD.sig === sig)) {
+    ST_ANS = {}; ALL_DOMAINS.forEach(d => setSlider('client', d.key, 5));
+    const box = document.getElementById('step-container'); if (box) box.innerHTML = '';
+  }
+  ST_QUICK = !!quick;
+  OAK_GD = { sig, kind, quick: !!quick };
+  const qs = oakGdQuestions(quick), byId = Object.fromEntries(qs.map(q => [q.id, q]));
+  GGGuided.run({
+    tree: 'oak', kind, voice: 'brian',
+    title: kind === 'together' && quick ? 'Quick Check-in Together' : OAK_GD_TITLE[kind] || 'Check-in',
+    questions: qs, answers: oakGdAnswers(qs), quiet: HELP_LINES.quiet || undefined, isEdge: oakGdEdge,
+    onAnswer: (id, v) => { const q = byId[id]; if (q) answerQ(q.key, q.i, v); },
+    onDone: r => {
+      Object.keys(r.answers || {}).forEach(id => { const q = byId[id]; if (q && r.answers[id]) answerQ(q.key, q.i, r.answers[id]); });
+      OAK_GD = null;
+      if (quick) finishQuick(); else calculateResults('client');
+    },
+    onReadAll: () => { if (quick) startQuick(CK.by, CK.forId, 'keep'); else startCheckin(CK.by, CK.forId, 'keep'); oakGdToFirstOpen(quick); },
+    // Closed part way: the answers wait here for the next start. An emptied form never shows on its own.
+    onClose: () => { const box = document.getElementById('step-container'), v = document.getElementById('client-assess'); if (box && !box.innerHTML.trim() && v && v.classList.contains('active')) showView('client-today'); }
+  });
+}
+// Read It All: the classic form opens on the first part with a question still open.
+function oakGdToFirstOpen(quick) {
+  if (quick) return;
+  const at = ALL_DOMAINS.findIndex(d => QUESTIONS[d.key].some((q, i) => !(ST_ANS[d.key] || {})[i]));
+  if (at > 0) goToStep(at);
+}
+// In the classic form: back to Guided, with the answers so far.
+function oakGuidedSwitchHtml() { return oakGuidedOk() ? '<p class="gd-switch"><button type="button" class="btn btn-secondary btn-sm" onclick="oakGuidedFromForm()">Switch to Guided</button> <span>One question at a time, read aloud.</span></p>' : ''; }
+function oakGuidedFromForm() { const kind = CK.by === 'tapped' ? 'together' : ST_QUICK ? 'quick' : oakFullKind(); oakGuided(kind, CK.by, CK.forId, ST_QUICK, true); }
+
+// The weekly check-in (Week tab), saved exactly as the Save this week button saves it.
+function oakGuidedWeek() {
+  const W = window.GGTend && GGTend.weekQuestions ? GGTend.weekQuestions() : null;
+  if (!oakGuidedOk() || !W || !W.started) { showView('client-week'); return; }
+  const qOf = id => { const [k, st] = String(id).split('.'), L = QUESTIONS[k] || []; return (st ? L.find(q => q.s === st) : L[0]) || {}; };
+  const qs = W.questions.map((q, n) => ({ id: q.id, part: q.key, stem: W.stem, text: q.t, say: n ? q.t : W.stem + ' ' + q.t, type: 'choice', options: oakGdOpts(W.answers), rev: !!qOf(q.id).r }));
+  GGGuided.run({
+    tree: 'oak', kind: 'week', voice: 'brian', title: OAK_GD_TITLE.week, questions: qs, quiet: HELP_LINES.quiet || undefined, isEdge: oakGdEdge,
+    onDone: r => { showView('client-week'); GGTend.saveWeekAns(r.answers || {}, null); },
+    onReadAll: ans => {
+      showView('client-week');
+      if (W.saved && W.saved.ans && GGTend.editWeek) GGTend.editWeek();
+      Object.keys(ans || {}).forEach(id => { const b = Array.from(document.querySelectorAll('#client-week .gt-opts button')).find(x => x.getAttribute('data-q') === id && x.getAttribute('data-a') === ans[id]); if (b) GGTend.pick(b); });
+    }
+  });
+}
+
+// The guided Growth Plan: one part at a time, the Growing Edge first, one to three practices each.
+// Each choice ticks the classic builder's own boxes, so Done saves through oakSavePlan and Today shows it at once.
+function oakGdPick(part, names) {
+  document.querySelectorAll(`input[name="cp-client-${part}"]`).forEach(c => { c.checked = names.indexOf(c.value) >= 0; });
+  oakRotApply('client', part);
+}
+function oakGuidedPlan() {
+  if (HELP || !oakGuidedOk()) { showView('client-growthplan'); return; }
+  if (!window.lastClientScores || !document.querySelector('#client-growthplan-builder [id^="cp-card-client-"]')) oakPlanOpen();
+  else oakPrefillPlan();
+  const sc = window.lastClientScores, un = window.lastClientUnsure || [];
+  if (!sc || !document.querySelector('#client-growthplan-builder [id^="cp-card-client-"]')) { showView('client-growthplan'); return; }
+  const cur = collectGrowthPlan('client');
+  const order = ALL_DOMAINS.slice().sort((a, b) => (un.includes(a.key) ? 1 : 0) - (un.includes(b.key) ? 1 : 0) || sc[a.key] - sc[b.key]);
+  const steps = order.map(d => {
+    const rows = lifeOrder('client', d.key, d.restore), mine = cur[d.key].selected;
+    const pick = rows.filter(r => mine.includes(r[0])).concat(rows.filter(r => !mine.includes(r[0])).slice(0, 8));
+    return { type: 'plan', part: d.key, label: d.part, choices: pick.map(r => ({ name: r[0] })), max: 3 };
+  });
+  const plan = {}; order.forEach(d => { plan[d.key] = cur[d.key].selected.slice(); });
+  GGGuided.run({
+    tree: 'oak', kind: 'plan', voice: 'brian', title: OAK_GD_TITLE.plan, questions: steps, plan, quiet: false,
+    onPlan: (part, names) => oakGdPick(part, names),
+    onDone: r => { Object.keys(r.plan || {}).forEach(p => oakGdPick(p, r.plan[p])); showView('client-growthplan'); oakSavePlan(); },
+    onReadAll: () => showView('client-growthplan')
+  });
+}
+
 
 // =====================================================================
 // GROWTH PLAN
@@ -1700,7 +1825,7 @@ function renderGrowthPlanBuilder(mode) {
   const generateRowId = mode === 'client' ? 'client-growthplan-generate-row' : 'prac-growthplan-generate-row';
   const scores = mode === 'client' ? window.lastClientScores : window.lastSessionScores;
   if (!scores) return;
-  document.getElementById(containerId).innerHTML = ALL_DOMAINS.map(d => `
+  document.getElementById(containerId).innerHTML = (mode === 'client' && !HELP && oakGuidedOk() ? '<div class="gd-plan-start"><div><strong>Build it with us, one part at a time.</strong> We start with your Growing Edge, and you choose one to three practices for each part.</div><button type="button" class="btn btn-primary" onclick="oakGuidedPlan()">Guided Growth Plan</button></div>' : '') + ALL_DOMAINS.map(d => `
     <div class="domain-card" id="cp-card-${mode}-${d.key}" style="--domain-color:${d.color};border-left-color:${d.color};">
       <div class="domain-header">
         <div class="card-head">${partIcon(d, 30)}<div><div class="domain-name" style="color:${d.color};">${d.part}</div><div class="card-sub">${d.name}</div></div></div>
@@ -1837,6 +1962,7 @@ function inviteHtml() {
 
 
 function calculateResults(mode) {
+  if (mode === 'client') OAK_GD = null;   // a finished check-in, guided or classic: the next guided one starts fresh
   const prefix = mode === 'client' ? 'client' : 'prac';
   const isClient = mode === 'client';
   const scores = {}, reflections = {}, unsure = [];
@@ -1869,7 +1995,7 @@ function calculateResults(mode) {
     ${lcSuggestHtml(scores, mode)}
     <div class="reminder-banner"><p>${reminder}</p></div>
     <div class="btn-row">
-      <button class="btn btn-primary" onclick="showView('${prefix}-growthplan', document.querySelectorAll('#${isClient ? 'client' : 'practitioner'}-nav .nav-btn')[3])">Build ${isClient ? 'My' : 'the'} Growth Plan</button>
+      <button class="btn btn-primary" onclick="${isClient && oakGuidedOk() ? 'oakGuidedPlan()' : `showView('${prefix}-growthplan', document.querySelectorAll('#${isClient ? 'client' : 'practitioner'}-nav .nav-btn')[3])`}">Build ${isClient ? 'My' : 'the'} Growth Plan</button>
     </div>
     ${isClient ? '<div id="client-save-box"></div>' + inviteHtml() : ''}`;
 
@@ -2484,6 +2610,15 @@ const TEND_CFG = {
 };
 if (window.GGTend) GGTend.init(TEND_CFG);
 setTimeout(() => { if (window.GGTend) GGTend.render(); }, 0);
+// The Week tab's check-in starts guided too (GWG BLD 886): a Guided button above its questions, each time Week is drawn.
+function oakWeekGuidedBar() {
+  const box = document.getElementById('client-week'), ol = box && box.querySelector('.gt-wq');
+  if (!ol || HELP || !oakGuidedOk() || box.querySelector('.gd-week')) return;
+  const p = document.createElement('p'); p.className = 'gd-switch gd-week';
+  p.innerHTML = '<button type="button" class="btn btn-primary btn-sm" onclick="oakGuidedWeek()">Guided Weekly Check-in</button> <span>One question at a time, read aloud.</span>';
+  const stem = ol.previousElementSibling; ol.parentNode.insertBefore(p, stem && stem.classList.contains('gt-small') ? stem : ol);
+}
+(() => { const box = document.getElementById('client-week'); if (box && window.MutationObserver) new MutationObserver(oakWeekGuidedBar).observe(box, { childList: true }); })();
 
 // ---------- SELF CHECK-IN: SAVE AND LOAD MY FILE ----------
 window.personalHistory = [];
@@ -3315,7 +3450,11 @@ function lcFromHash(e) {
 window.addEventListener('hashchange', lcFromHash);
 window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; lcFromHash(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 /* Deep links: #quick starts the quick check-in, #checkin the full one */
-function checkinFromHash() { const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
+function checkinFromHash() {
+  // The Grounded Way's sheet asks for guided mode with ?guided=checkin, quick, or plan (GWG BLD 886).
+  const g = window.GGGuided && GGGuided.flag ? GGGuided.flag() : '';
+  if (g) { if (GGGuided.clearFlag) GGGuided.clearFlag(); if (g === 'quick') startQuick(); else if (g === 'plan') oakGuidedPlan(); else startCheckin(); return; }
+  const h = location.hash; if (h === '#quick' && typeof startQuick === 'function') startQuick(); else if ((h === '#checkin' || h === '#check' + 'up') && typeof startCheckin === 'function') startCheckin(); }
 setTimeout(checkinFromHash, 60);
 setTimeout(lcFromHash, 0);
 
@@ -3360,9 +3499,9 @@ setTimeout(lcFromHash, 0);
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b888';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b888';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b888" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

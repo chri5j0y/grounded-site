@@ -67,6 +67,8 @@
      GGTend.rest()           Rest Week on, or off early
      GGTend.resting()        true while Rest Week is on
      GGTend.treeSVG(h, parts) a small still picture of the painting (h from GGTend.health())
+     GGTend.weekQuestions()  the weekly check-in as data (GWG BLD 886): stem, answers, questions, reflQ, saved
+     GGTend.saveWeekAns(ans, refl, share)  saves exactly what the Save this week button saves
    ===================================================================== */
 (function () {
   if (window.GGTend) return;
@@ -671,6 +673,14 @@
   function closeLib() { var x = el('gt-lib'); if (x) x.remove(); }
 
   /* ---------- actions ---------- */
+  // One save for the weekly check-in, from the page's buttons (saveWeek) or from a guided week (saveWeekAns).
+  function weekSave(s, ans, refl, share) {
+    if (Object.keys(ans).length < weeklyQs().length) { toast('Answer each question, or choose Not sure.'); return false; }
+    var k = weekKey(s); s.weeks[k] = Object.assign(s.weeks[k] || {}, { date: today(), ans: ans }); if (refl != null) s.weeks[k].refl = String(refl).trim();
+    if (share !== undefined) { if (share) s.weeks[k].share = true; else delete s.weeks[k].share; }
+    persist(); renderWeek(); toast('Saved. See you next week.');
+    return true;
+  }
   function persist() { return save().catch(function () { toast('That did not save. Open your profile and try again.'); }); }
   // A practice tended: a soft glow and a few living touches (none with reduced motion or during Rest Week)
   function perk() { if (window.GGLiving) GGLiving.burst(2); }
@@ -714,10 +724,21 @@
     saveWeek: function () {
       var s = ensure(); if (!s) return; var box = el(C.els.week), ans = {};
       box.querySelectorAll('.gt-opts [aria-checked="true"]').forEach(function (b) { ans[b.getAttribute('data-q')] = b.getAttribute('data-a'); });
-      if (Object.keys(ans).length < weeklyQs().length) { toast('Answer each question, or choose Not sure.'); return; }
-      var k = weekKey(s), refl = (el('gt-refl') || {}).value; s.weeks[k] = Object.assign(s.weeks[k] || {}, { date: today(), ans: ans }); if (refl != null) s.weeks[k].refl = refl.trim(); var sh = el('gt-refl-share'); if (sh) { if (sh.checked) s.weeks[k].share = true; else delete s.weeks[k].share; }
-      persist(); renderWeek(); toast('Saved. See you next week.');
+      var sh = el('gt-refl-share');
+      weekSave(s, ans, (el('gt-refl') || {}).value, sh ? sh.checked : undefined);
     },
+    // GWG BLD 886: the weekly check-in as data, so a guided week can save without the page's buttons.
+    // weekQuestions() gives {stem, answers: [[v, label, score]], questions: [{id, key, label, t}], reflQ, saved: {ans, refl, share} or null}.
+    // saveWeekAns(ans, refl, share) saves exactly what saveWeek() saves: ans {id: v} for every question, refl a string
+    // (null or undefined keeps the saved one), share true or false (undefined keeps it). True when saved.
+    weekQuestions: function () {
+      var s = ensure(); if (!s) return null;
+      var w = weekShown(s), W = (J.WEEKS || [])[w - 1] || {}, rec = (s.weeks || {})[weekKey(s)] || null;
+      if (W.plain && C.plain && C.plain() && W.plain.q) W = { q: W.plain.q };
+      return { stem: C.weekStem || '', answers: (C.answers || []).map(function (a) { return a.slice(); }), questions: weeklyQs(), reflQ: W.q || 'What did you notice this week?', started: !!s.start,
+        saved: rec ? { ans: rec.ans ? Object.assign({}, rec.ans) : null, refl: rec.refl || '', share: !!rec.share } : null };
+    },
+    saveWeekAns: function (ans, refl, share) { var s = ensure(); if (!s) return false; return weekSave(s, Object.assign({}, ans || {}), refl, share); },
     saveRefl: function () { var s = ensure(); if (!s) return; var k = weekKey(s), v = ((el('gt-refl') || {}).value || '').trim(); s.weeks[k] = Object.assign(s.weeks[k] || { date: today() }, { refl: v.slice(0, 4000) }); var sh = el('gt-refl-share'); if (sh) { if (sh.checked) s.weeks[k].share = true; else delete s.weeks[k].share; } persist(); toast(sh && sh.checked ? 'Reflection saved and shared with your grown-up.' : 'Reflection saved.'); },
     month: function (n) { if (!CAL) return; CAL.m += n; if (CAL.m < 0) { CAL.m = 11; CAL.y--; } if (CAL.m > 11) { CAL.m = 0; CAL.y++; } renderWeek(); },
     setLevel: function (v) { var s = ensure(); if (!s) return; s.level = v; persist(); renderToday(); toast('Movement level saved.'); },

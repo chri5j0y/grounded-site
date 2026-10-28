@@ -4,7 +4,8 @@
    disability, more than one, none, or "I'd rather not say"), changeable any
    time. The choice only adds and reorders: guides, practices, and videos
    that fit show first, with a few examples and help lines. Questions,
-   scores, flags, alerts, and crisis lines never change because of it.
+   scores, the quiet line, and crisis lines stay the same with it (since
+   GWG BLD 887 every answer stays on the device, with nothing flagged or sent).
 
    Where it is kept
    - Inside the person's locked vault (gg-profiles.js), at the top beside

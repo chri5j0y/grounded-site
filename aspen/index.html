@@ -496,8 +496,8 @@ details.learn p{margin:0 0 6px;} details.learn ol{margin:0 0 8px;padding-left:20
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b887"></script>
-<script src="/shared/gg-life.js?v=b851"></script>
+<script src="/shared/gg-profiles.js?v=b888"></script>
+<script src="/shared/gg-life.js?v=b888"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="checkin.js?v=b887"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
@@ -1031,7 +1031,7 @@ const PLAIN_PR = {
 };
 
 </script>
-<script src="guides.js?v=b852"></script>
+<script src="guides.js?v=b888"></script>
 <script src="life.js?v=b782"></script>
 <script>
 const $ = id => document.getElementById(id);
@@ -1433,7 +1433,7 @@ function renderDash(){
       <button class="btn ghost small" onclick="showCalm()">Need help now?</button>
     </div>
     ${saveNudge(s)}
-    ${s.draft ? `<div class="panel"><h3 style="margin-top:0">You're partway through a check-in</h3><p class="muted">Pick up right where you left off.</p><button class="btn" onclick="go('checkin')">Continue check-in</button></div>` : ''}
+    ${s.draft ? `<div class="panel"><h3 style="margin-top:0">You're partway through a check-in</h3><p class="muted">Pick up right where you left off.</p><button class="btn" onclick="${window.ASGuided ? 'ASGuided.resume()' : "go('checkin')"}">Continue check-in</button></div>` : ''}
     ${visitCardsHTML(s)}
     <nav class="asp-tabs" role="tablist" aria-label="Your tree">${ASP_TABS.map(t => `<button class="asp-tab" role="tab" aria-selected="${t[0] === tab}" onclick="aspTab('${t[0]}')"><svg viewBox="0 0 24 24" aria-hidden="true">${ASP_TAB_ICONS[t[2]]}</svg><span>${t[1]}</span></button>`).join('')}</nav>
     ${ASP_TABS.map(t => `<div class="asp-pane" id="asp-${t[0]}" role="tabpanel"${t[0] === tab ? '' : ' hidden'}></div>`).join('')}
@@ -1611,7 +1611,8 @@ function renderCheckin(){
         <p style="margin:14px 0 0"><button class="say-btn" aria-pressed="${readOn}" onclick="toggleRead()">Read Aloud: ${readOn?'on':'off'}</button></p><div class="voice-slot"></div>
       </div>
       <p class="muted">Grade ${d.grade} questions. Six parts, ${['zero','one','two','three','four','five','six','seven','eight'][CK.perPart] || CK.perPart} questions each.</p>
-      <button class="btn" onclick="toStep('parts')">Let's go</button>${asQuiet()}`;
+      ${window.ASGuided ? `<p class="muted small">We read each question out loud, one at a time. Read It All shows a whole part on one page.</p>
+      <div class="row"><button class="btn" onclick="ASGuided.checkin()">Let's go</button><button class="btn ghost" onclick="toStep('parts')">Read It All</button></div>` : `<button class="btn" onclick="toStep('parts')">Let's go</button>`}${asQuiet()}`;
     voiceSlots();
     return;
   }
@@ -1669,7 +1670,7 @@ function renderResult(ring, seasonMsg){
     <div class="status-grid">${PARTS.map(p=>statusCell(ring,cmp,p.key,false)).join('')}</div>
     ${strong.length ? `<p class="muted">Growing strong: ${strong.join(', ')}.</p>` : ''}
     <div class="note">Aspen suggests tending <b>${lowestTwo(ring).map(k=>PART[k].name).join(' and ')}</b> first. Your growth plan suggests about 3 practices for each part, and a few more for your Growing Edges.</div>
-    <div class="row"><button class="btn" onclick="aspTab('plan')">Build my growth plan</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="aspTab('today')">Back to my tree</button></div>${asQuiet()}`;
+    <div class="row"><button class="btn" onclick="${window.ASGuided ? 'ASGuided.plan()' : "aspTab('plan')"}">Build my growth plan</button><button class="btn ghost" onclick="go('rings')">See my rings</button><button class="btn ghost" onclick="aspTab('today')">Back to my tree</button></div>${asQuiet()}`;
   toTop(true);
 }
 
@@ -1725,7 +1726,7 @@ function renderPlan(){
     ${inApp ? '' : `<button class="back" onclick="planDraft=null;go('dash')">&larr; Back to my tree</button>`}
     <h2>Your growth plan</h2>
     <p class="lede">Start with about 3 practices for each part of your tree, and a few more for each growing edge. There's no limit, and you can write your own. ${suggested.length ? `Aspen suggests starting with <b>${suggested.map(k => PART[k].name).join(' and ')}</b>.` : ''} Tap <b>Learn more</b> on any practice to see how it works.</p>
-    <div class="row" style="margin-bottom:14px"><button class="btn ghost small" onclick="go('helpplan')">How growth plans work</button><button class="btn ghost small" onclick="showCalm()">Need to talk to someone?</button></div>
+    <div class="row" style="margin-bottom:14px">${window.ASGuided ? '<button class="btn small" onclick="ASGuided.plan()">Guided Growth Plan</button>' : ''}<button class="btn ghost small" onclick="go('helpplan')">How growth plans work</button><button class="btn ghost small" onclick="showCalm()">Need to talk to someone?</button></div>
     ${order.map(k => { const n = inPart(k).length, open = suggested.includes(k) || planOpen[k] || n > 0;
       return `<details class="plan-part" style="border-left:6px solid ${pcolor(k)}" ${open ? 'open' : ''} ontoggle="planOpen['${k}']=this.open">
       <summary><span class="pp-name">${PART[k].name} <span class="muted small">${PART[k].sub}</span></span>${suggested.includes(k) ? '<span class="pill">Suggested this week</span>' : ''}<span class="muted small pp-count">${n} picked, about ${aspSuggest(last, k)} suggested</span></summary>
@@ -2584,8 +2585,8 @@ if (window.GGTend) GGTend.init({
   store: { get: aspTendGet, save: () => { save(); return Promise.resolve(); } },
   profileHtml: aspProfileHtml, extraSettings: aspExtraSettings,
   actions: {
-    fullCheckin: () => { const s = me(); if (s && s.draft) go('checkin'); else startCheckin(); },
-    results: () => go('rings'), progress: () => go('rings'), plan: () => aspTab('plan'),
+    fullCheckin: () => { const s = me(); if (s && s.draft) { if (window.ASGuided) ASGuided.resume(); else go('checkin'); } else startCheckin(); },
+    results: () => go('rings'), progress: () => go('rings'), plan: () => (window.ASGuided ? ASGuided.plan() : aspTab('plan')),
     about: () => go('helpplan'), textSize: () => cycleTextSize(),
     createProfile: () => { const s = me(); if (s) saveStudentProfile(s.id); }, openProfile: () => go('students', { list: true }), lock: () => { if (window.GGP) GGP.lock(); }
   }
@@ -2617,9 +2618,10 @@ window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHis
 window.addEventListener('hashchange', aspNavReadOnce);
 
 </script>
-<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
+<!-- GUIDED CHECK-INS (BLD 886) --><link rel="stylesheet" href="/shared/gg-guided.css?v=b889"><script src="/shared/practice-rhythm.js?v=b889"></script><script src="/shared/gg-guided.js?v=b889"></script><script src="/shared/guided/aspen.js?v=b889"></script><script src="/aspen/guided.js?v=b889"></script><!-- /GUIDED -->
+<script src="/shared/gg-learn.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b888';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b888';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b888" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>

@@ -669,7 +669,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b878"></script>
-<script src="../shared/gg-learn.js?v=b887"></script>
+<script src="../shared/gg-learn.js?v=b888"></script>
 <script src="../shared/gg-print.js?v=b887"></script>
 <script src="../shared/grove-scene.js?v=b862"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
@@ -687,11 +687,11 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b887"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b887"></script>
+<script src="../shared/gg-stories.js?v=b888"></script>
 <script src="moves.js?v=b862"></script>
 <script src="stage.js?v=b862"></script>
 <script src="coach.js?v=b879"></script>
-<script src="health.js?v=b887"></script>
+<script src="health.js?v=b888"></script>
 <script src="vault.js?v=b887"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -9886,7 +9886,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b852', '../aspen/guides.js?v=b852', '../oak/guides.js?v=b885', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b885', '../pine/guides.js?v=b887', '../birch/guides.js?v=b887'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b888', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b888', '../pine/guides.js?v=b888', '../birch/guides.js?v=b888'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;
