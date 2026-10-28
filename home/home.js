@@ -14,9 +14,10 @@
      GGP.data(id, 'home')                     the Home's own choices:
                                               {who, stage, season, parts: [...], hidden: {tend}, days: {date: {quiet, talk, pray}}, kid: {date: 1}, created,
                                                tour: 'b884' once the welcome tour is seen (BLD 884),
-                                               rhythm: {'part|Name': 'd'|'w'|'n'} a practice's rhythm the person chose (BLD 885),
+                                               rhythm: {'part|Name': 'd'|'w'|'n'|'f3'} a practice's rhythm the person chose (BLD 885;
+                                               'f' plus a number 2 to 5 is A Few Times a Week, that many days),
                                                later: {'part|Name': 'YYYY-MM-DD'} a When You're Ready nudge rests until then (BLD 885)}
-     window.GG_RHYTHM (shared/practice-rhythm.js, BLD 885)  {<tree>: {'part|Name': {r: 'd'|'w'|'n', min, how: [steps]}}}
+     window.GG_RHYTHM (shared/practice-rhythm.js, BLD 885)  {<tree>: {'part|Name': {r: 'd'|'f'|'w'|'n', x (times a week, for f), min, how: [steps]}}}
                                               each practice's suggested rhythm, minutes, and steps; read only, guarded
      GGP.list(), GGP.shared(id), GGP.openIds() Your Family: progress only (days tended, rings, season)
 
@@ -626,20 +627,20 @@
      BLD 885: Every day ones first, then This week (done once this week), then Sometimes, each with How and a rhythm chip. */
   function kidLi(x, when) {
     var open = !!S.how[x.key];
-    return '<li class="hm-kp' + (x.done ? ' done' : '') + (open ? ' open' : '') + '" style="--kp:' + KP[x.part] + ';--c:' + KP[x.part] + '" data-hm-card="' + esc(x.key) + '"><div class="hm-kprow"><button type="button" class="hm-kdc" data-hm-done="' + esc(x.key) + '" aria-pressed="' + x.done + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + DONE_SVG + '</button>' +
+    return '<li class="hm-kp' + (x.done ? ' done' : '') + (open ? ' open' : '') + '" style="--kp:' + KP[x.part] + ';--c:' + KP[x.part] + '" data-hm-card="' + esc(x.key) + '"><div class="hm-kprow"><button type="button" class="hm-kdc" data-hm-done="' + esc(x.key) + '" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + DONE_SVG + '</button>' +
       tile(x.image, 'sm') + '<span class="tx"><b>' + esc(x.title) + '</b><small>' + esc(when || x.when) + '</small></span></div>' +
       '<div class="hm-kbar">' + howBtn(x, 'hm-khowb') + rchipHtml(x) + '</div>' + rmenuHtml(x) + howPanel(x) + '</li>';
   }
   function kidPracHtml() {
     var items = planItems(true); if (!items.length) return '';
     items.forEach(function (x, i) { x.i = i; }); items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
-    var day = items.filter(function (x) { return x.r === 'd'; }), wk = items.filter(function (x) { return x.r === 'w'; }), some = items.filter(function (x) { return x.r === 'n'; });
+    var day = items.filter(function (x) { return x.r === 'd'; }), wk = items.filter(function (x) { return x.r === 'w' || x.r === 'f'; }), some = items.filter(function (x) { return x.r === 'n'; });
     var n = day.filter(function (x) { return x.done; }).length;
     var line = !day.length ? 'Your practices for this week and for sometimes are right here.' : n === day.length ? 'You tended every one today. Your tree is glowing!' : n ? n + ' done. Keep growing!' : 'Tap the circle when you do one.';
     wk.sort(function (a, b) { return (a.done ? 1 : 0) - (b.done ? 1 : 0) || a.i - b.i; });
     return '<div class="hm-kcard hm-kpracs" style="--c:#4FA82C"><h2 class="hm-kh">My Practices Today</h2><p class="hm-kline">' + line + '</p>' +
       (day.length ? '<ul class="hm-kpl">' + day.map(function (x) { return kidLi(x); }).join('') + '</ul>' : '') +
-      (wk.length ? '<h3 class="hm-kh hm-ksub">This week</h3><p class="hm-kline">Do each one once this week, any day you like.</p><ul class="hm-kpl">' + wk.map(function (x) { return kidLi(x, x.done ? 'Done this week! ' + (PART[x.part] || { n: '' }).n : 'This week · ' + (PART[x.part] || { n: '' }).n); }).join('') + '</ul>' : '') +
+      (wk.length ? '<h3 class="hm-kh hm-ksub">This week</h3><p class="hm-kline">' + (wk.some(function (x) { return x.r === 'f'; }) ? 'Do each one this week, on any days you like.' : 'Do each one once this week, any day you like.') + '</p><ul class="hm-kpl">' + wk.map(function (x) { return kidLi(x, x.done ? 'Done this week! ' + (PART[x.part] || { n: '' }).n : (x.r === 'f' ? x.cnt + ' of ' + x.x + ' this week' + (x.doneToday ? ', done today!' : '') : 'This week') + ' · ' + (PART[x.part] || { n: '' }).n); }).join('') + '</ul>' : '') +
       (some.length ? '<h3 class="hm-kh hm-ksub">Sometimes</h3><p class="hm-kline">Fun to do now and then, whenever you are ready.</p><ul class="hm-kpl">' + some.map(function (x) { return kidLi(x, (x.doneToday ? 'Done today!' : x.last ? 'Last time: ' + shortDate(x.last) : 'Whenever you are ready') + ' · ' + (PART[x.part] || { n: '' }).n); }).join('') + '</ul>' : '') + '</div>';
   }
 
@@ -953,10 +954,10 @@
       var pi = info[it.pid] || {}, line = plain && pi.pl ? pi.pl : pi.line || '', title = plain && pi.pn ? pi.pn : it.name, sl = slotOf(it.part, it.name, line), P = PART[it.part] || { n: '' };
       var sub = line || (it.kind === 'own' ? 'Your own practice, from your growth plan.' : it.kind === 'lib' ? 'From the practice library, in your growth plan.' : kid ? 'A practice for your ' + P.n + '. Check it off when you do it.' : 'A practice for your ' + P.n + ', from your growth plan.');
       // BLD 885: its rhythm (the person's choice, then practice-rhythm.js, then daily), its steps and minutes, and when it was done.
-      var r = rhythmOf(it.pid, tree), ri = rhythmInfo(tree, it.pid) || {};
+      var rf = rhythmFull(it.pid, tree), r = rf.r, ri = rhythmInfo(tree, it.pid) || {};
       var steps = arr(ri.how).filter(function (z) { return typeof z === 'string' && z.trim(); });
-      var dToday = practiceDone(t, it.pid), dw = r === 'w' ? doneThisWeek(t, it.pid) : '';
-      return { key: 'p:' + it.pid, pid: it.pid, part: it.part, src: 'plan', hour: sl[0], when: sl[1] + ' · ' + P.n, title: title, sub: sub, btn: 'How', tint: it.part, done: r === 'w' ? !!dw : dToday, image: practiceArt(it.part, it.name),
+      var dToday = practiceDone(t, it.pid), dw = r === 'w' || r === 'f' ? doneThisWeek(t, it.pid) : '', cnt = r === 'f' ? weekCount(t, it.pid) : 0, full = r === 'w' ? !!dw : r === 'f' ? cnt >= rf.x : dToday;
+      return { key: 'p:' + it.pid, pid: it.pid, part: it.part, src: 'plan', hour: sl[0], when: sl[1] + ' · ' + P.n, title: title, sub: sub, btn: 'How', tint: it.part, done: full, pressed: full || dToday, x: rf.x, cnt: cnt, image: practiceArt(it.part, it.name),
         r: r, steps: steps, howTxt: steps.length ? '' : (plain && pi.pl ? pi.pl : pi.today || line), min: num(ri.min) || pi.min || null, doneToday: dToday, doneWeek: dw, last: lastDone(t, it.pid), kid: !!kid };
     });
   }
@@ -972,7 +973,10 @@
     var i = x.d.indexOf(pid);
     if (on && i < 0) x.d.push(pid); else if (!on && i >= 0) x.d.splice(i, 1);
     // BLD 885: a weekly practice undone takes away this week's mark, whichever day it was made.
-    if (!on && rhythmOf(pid, tree) === 'w') weekDays().forEach(function (k) { var y = t.days[k]; if (y && Array.isArray(y.d)) { var j = y.d.indexOf(pid); if (j >= 0) y.d.splice(j, 1); } });
+    var rr = rhythmOf(pid, tree);
+    // BLD 885: a few times a week, undone on a day with no mark today: the latest mark this week steps back.
+    if (!on && rr === 'f' && i < 0) { var wd = weekDays().filter(function (k) { return k <= d; }).reverse(); for (var q = 0; q < wd.length; q++) { var z = t.days[wd[q]]; if (z && Array.isArray(z.d) && z.d.indexOf(pid) >= 0) { z.d.splice(z.d.indexOf(pid), 1); break; } } }
+    if (!on && rr === 'w') weekDays().forEach(function (k) { var y = t.days[k]; if (y && Array.isArray(y.d)) { var j = y.d.indexOf(pid); if (j >= 0) y.d.splice(j, 1); } });
     publishTree(S.id, tree, t);
     saveHome();
     return true;
@@ -999,13 +1003,22 @@
      saved in the home record (rhythm), never in the tree's data. The marks are the tree's own (tend.days[date].d), so a
      weekly practice done on any day this week counts as done this week. Until shared/practice-rhythm.js arrives, or for
      a practice it lacks, a practice is daily and How shows its own words from the tree's practice library. */
-  var RH = { d: 'Daily', w: 'Weekly', n: 'Now and Then' }, KRH = { d: 'Every day', w: 'This week', n: 'Sometimes' };
+  var RH = { d: 'Daily', f: 'A Few Times a Week', w: 'Weekly', n: 'Now and Then' }, KRH = { d: 'Every day', f: 'A few times this week', w: 'This week', n: 'Sometimes' };
+  var RORDER = ['d', 'f', 'w', 'n'];
   S.how = {}; S.rmenu = null;
-  function okR(r) { return r === 'd' || r === 'w' || r === 'n'; }
+  function okR(r) { return r === 'd' || r === 'w' || r === 'n' || r === 'f'; }
+  function clampX(v) { var n = parseInt(v, 10); return n >= 2 && n <= 5 ? n : 3; }
+  /* {r, x}: the person's choice (rhythm[pid] is 'd', 'w', 'n', or 'f' with its times a week, like 'f3'), then practice-rhythm.js, then daily. */
+  function rhythmFull(pid, tree) {
+    var info = rhythmInfo(tree || S.tree, pid), own = S.id && window.GGP ? obj(homeRec().rhythm)[pid] : null, m = /^([dwnf])([2-5])?$/.exec(String(own || ''));
+    if (m) return { r: m[1], x: m[1] === 'f' ? (m[2] ? +m[2] : info && info.r === 'f' ? clampX(info.x) : 3) : 1 };
+    if (info && okR(info.r)) return { r: info.r, x: info.r === 'f' ? clampX(info.x) : 1 };
+    return { r: 'd', x: 1 };
+  }
+  function weekCount(t, pid) { var td = today(); return weekDays().filter(function (k) { return k <= td && practiceDone(t, pid, k); }).length; }
   function rhythmInfo(tree, pid) { var R = window.GG_RHYTHM; if (!R || typeof R !== 'object') return null; var x = obj(R[tree])[pid]; return x && typeof x === 'object' ? x : null; }
   function rhythmOf(pid, tree) {
-    var own = S.id && window.GGP ? obj(homeRec().rhythm)[pid] : null; if (okR(own)) return own;
-    var x = rhythmInfo(tree || S.tree, pid); return x && okR(x.r) ? x.r : 'd';
+    return rhythmFull(pid, tree).r;
   }
   function weekDays() { var td = today(), off = (parse(td).getDay() + 6) % 7, st = addDays(td, -off), out = []; for (var i = 0; i < 7; i++) out.push(addDays(st, i)); return out; }
   function doneThisWeek(t, pid) { var td = today(), got = ''; weekDays().forEach(function (k) { if (k <= td && practiceDone(t, pid, k)) got = k; }); return got; }
@@ -1013,8 +1026,8 @@
   function hid(key) { var s = String(key), h = 0; for (var i = 0; i < s.length; i++) h = (h * 31 + s.charCodeAt(i)) | 0; return 'hm-how-' + s.replace(/[^A-Za-z0-9]+/g, '-').slice(0, 40) + '-' + (h >>> 0).toString(36); }
   function minsLine(m) { return m ? '<span class="hm-howmin">' + I('clock') + 'About ' + m + (m === 1 ? ' minute' : ' minutes') + '</span>' : ''; }
   function hDoneBtn(x) {
-    var lb = x.r === 'w' ? (x.done ? 'Done this week' : 'Done for this week') : 'Done';
-    return '<button class="hm-ck" type="button" aria-pressed="' + !!x.done + '" data-hm-hdone="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(lb) + '</span></button>';
+    var lb = x.r === 'w' ? (x.done ? 'Done this week' : 'Done for this week') : x.r === 'f' ? (x.done ? 'Done this week' : x.doneToday ? 'Done today' : 'Done') : 'Done';
+    return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-hdone="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(lb) + '</span></button>';
   }
   /* How, right on the card: the steps (or the practice's own words), about how long, and Done. */
   function howPanel(x) {
@@ -1028,7 +1041,7 @@
   function rmenuHtml(x) {
     var L = x.kid ? KRH : RH, open = S.rmenu === x.key;
     return '<div class="hm-rmenu" id="' + hid(x.key) + '-r" role="group" aria-label="How often for ' + esc(x.title) + '"' + (open ? '' : ' hidden') + '><span class="hm-rk">' + (x.kid ? 'How often?' : 'How Often') + '</span>' +
-      ['d', 'w', 'n'].map(function (r) { return '<button type="button" data-hm-rset="' + esc(x.key) + '|' + r + '" aria-pressed="' + (x.r === r) + '">' + esc(L[r]) + '</button>'; }).join('') + '</div>';
+      RORDER.map(function (r) { return '<button type="button" data-hm-rset="' + esc(x.key) + '|' + r + '" aria-pressed="' + (x.r === r) + '">' + esc(L[r]) + '</button>'; }).join('') + '</div>';
   }
   /* A practice's card (Today, This Week, Week, Grow): the painting, its time, How, Done, and the rhythm chip. */
   function pracCardHtml(x, opt) {
@@ -1043,12 +1056,12 @@
   function dayName(d) { var x = parse(d); return x ? DAYS[x.getDay()] : ''; }
   /* This Week: the weekly practices, open ones first, then the ones done this week. */
   function thisWeekHtml(plan, where) {
-    var wk = plan.filter(function (x) { return x.r === 'w'; }); if (!wk.length) return '';
+    var wk = plan.filter(function (x) { return x.r === 'w' || x.r === 'f'; }); if (!wk.length) return '';
     var open = wk.filter(function (x) { return !x.done; }), dn = wk.filter(function (x) { return x.done; });
     var head = '<div class="hm-grp hm-p-branches"><span class="hm-badge">' + I('sunrise') + '</span><h2 class="hm-h2">' + (where === 'week' ? 'Practices This Week' : 'This Week') + '</h2><span class="sp"></span><span class="hm-time">' + dn.length + ' of ' + wk.length + ' done</span></div>';
-    var line = open.length ? 'Once this week, on any day that suits you.' : 'Every weekly practice is tended. A fresh week begins Monday.';
+    var line = !open.length ? 'Every practice for this week is tended. A fresh week begins Monday.' : open.some(function (x) { return x.r === 'f'; }) ? 'On any days that suit you, Monday to Sunday.' : 'Once this week, on any day that suits you.';
     return '<div class="hm-tweek hm-p-branches" role="region" aria-label="' + (where === 'week' ? 'Practices This Week' : 'This Week') + '">' + head + '<p class="hm-sub hm-twline">' + line + '</p>' +
-      '<div class="hm-list">' + open.map(function (x) { return pracCardHtml(x, { when: 'This Week · ' + partName(x) }); }).join('') +
+      '<div class="hm-list">' + open.map(function (x) { return pracCardHtml(x, { when: (x.r === 'f' ? x.cnt + ' of ' + x.x + ' this week' + (x.doneToday ? ' · Done today' : '') : 'This Week') + ' · ' + partName(x) }); }).join('') +
       dn.map(function (x) { return pracCardHtml(x, { when: 'Done this week · ' + (x.doneWeek === today() ? 'Today' : dayName(x.doneWeek)), cls: 'hm-small', nosub: true }); }).join('') + '</div></div>';
   }
   /* When You're Ready, on Today: one Now and Then practice that has rested 30 days or more (or is new), one at a time. */
@@ -1086,12 +1099,13 @@
       if (m) m.hidden = !on; if (b) b.setAttribute('aria-expanded', String(on));
     });
   }
-  var RMOVED = { d: 'Daily now: it joins your day.', w: 'Weekly now: it moves to This Week.', n: 'Now and Then: it waits in Grow, under When You\'re Ready.' };
-  var KMOVED = { d: 'Every day now!', w: 'Now it is a this week practice!', n: 'Now it is a sometimes practice!' };
+  var RMOVED = { d: 'Daily now: it joins your day.', f: 'A few times a week now: it moves to This Week.', w: 'Weekly now: it moves to This Week.', n: 'Now and Then: it waits in Grow, under When You\'re Ready.' };
+  var KMOVED = { d: 'Every day now!', f: 'Now it is a few times this week!', w: 'Now it is a this week practice!', n: 'Now it is a sometimes practice!' };
   function setRhythm(key, r) {
     if (!okR(r) || !S.id) return;
     var pid = key.replace(/^p:/, ''), h = GGP.data(S.id, 'home'); if (!h) return;
     h.rhythm = obj(h.rhythm); h.rhythm[pid] = r;
+    if (r === 'f') h.rhythm[pid] = 'f' + rhythmFull(pid).x;
     S.rmenu = null; saveHome();
     toast((isKid(S.p) ? KMOVED : RMOVED)[r]);
     var go = function () { var c = document.querySelector('[data-hm-card="' + cssq(key) + '"] [data-hm-rchip]'); if (c) { try { c.focus({ preventScroll: false }); } catch (e) {} } };
@@ -1158,7 +1172,7 @@
   /* BLD 882: each thing in the day wears the pre-881 Home's card: a painting, the time in Barlow Condensed, the name in
      Cormorant, a bold action, and the animated Done check. */
   function doneBtn(x, label) {
-    return '<button class="hm-ck" type="button" aria-pressed="' + !!x.done + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
+    return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
   }
   var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play' };
   function itemHtml(x) {
