@@ -781,12 +781,13 @@ function togetherHtml(days) {
 /* ---------- the quiet line (GWG BLD 887) ----------
    Type only, never read aloud, under every check-in screen and its results. A Family grove in a hard
    season names the hospice 24/7 line first. */
-function quietHtml() {
+function quietInner() {
   const hos = isFamily() && G && G.hard ? (G.line && G.line.phone
     ? `Call ${esc(G.line.name || 'your hospice 24/7 line')} first, day or night: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. `
     : 'Call your hospice\'s 24/7 line first, day or night. ') : '';
-  return `<p class="muted gv-quiet">${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>`;
+  return `${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.`;
 }
+function quietHtml() { return `<p class="muted gv-quiet">${quietInner()}</p>`; }
 /* ---------- help, any time ---------- */
 function helpCardHtml(more, hospice) {
   let first = '';
@@ -1193,11 +1194,15 @@ function runnerHtml() {
 function ciAnswer(k) {
   const ci = S.ci, list = qList(G.kind, ci.quick); ci.ans[list[ci.i].key] = k;
   if (ci.i < list.length - 1) { ci.i++; render(); focusQ(); return; }
-  const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: ci.changes.slice(), ans: Object.assign({}, ci.ans) };
+  ciSave(ci);
+}
+// One save for a check-in, from the classic runner or the guided one (GWG BLD 886).
+function ciSave(ci) {
+  const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: (ci.changes || []).slice(), ans: Object.assign({}, ci.ans) };
   const v = V(); v.checkins.push(rec); v.changes = rec.changes.slice();
-  S.ci = null; S.view = rec.id;
+  S.ci = null; S.view = rec.id; S.tab = 'checkin';
   const gNow = G;
-  sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); });
+  return sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); return rec; });
 }
 function focusQ() { const t = $('#gv-qtext'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
 function resultsHtml(ci) {
@@ -1326,16 +1331,20 @@ function builderHtml() {
   return h;
 }
 function savePlan() {
-  const pd = S.pd, err = $('#gv-pderr');
-  if (!pd.edges.length) { err.textContent = 'Pick at least one Growing Edge.'; return; }
+  const m = planCommit(S.pd); if (m) { const err = $('#gv-pderr'); if (err) err.textContent = m; }
+}
+// One save for a Growth Plan, from the classic builder or the guided one (GWG BLD 886). Returns a message when something is missing.
+function planCommit(pd) {
+  if (!pd.edges.length) return 'Pick at least one Growing Edge.';
   const avail = pd.edges.reduce((n, k) => n + kindPractices(k).length, 0);
-  if (pd.items.length < Math.min(2, avail)) { err.textContent = 'Pick two or three practices.'; return; }
+  if (pd.items.length < Math.min(2, avail)) return 'Pick two or three practices.';
   const v = V(), old = v.plan;
   if (old && !pd.keep) v.plans.push(Object.assign({}, old, { ended: today() }));
   v.plan = { edges: pd.edges.slice(), items: pd.items.map(i => ({ pid: i.pid, anchor: i.anchor || '' })), youngest: pd.youngest || '', strength: pd.strength || '', words: (pd.words || '').trim(), own: (pd.own || '').trim(),
     from: pd.from || '', start: pd.keep && old ? old.start : today(), made: today() };
-  S.pd = null;
+  S.pd = null; S.tab = 'plan';
   sealVault().then(() => { render(); toast(W('plan.done', 'Our plan is saved, locked with the grove.')); });
+  return '';
 }
 function planHtml(p) {
   const K = KW(), wk = planWeek(p), v = V();

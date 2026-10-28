@@ -36,7 +36,7 @@
    GGGuided.flag() reads ?guided=checkin|quick|plan from the address ('' when absent); GGGuided.clearFlag() takes it out.
    Phase B additions (GWG BLD 886, patches/bld886/p4-notes.md): q.stem, q.lead, q.say false, q.more, q.aside, q.eb,
    q.label, multi q.min and q.max, option only, sub, quiet, and reply {eb, lines}; type 'form' {html(), ready(), next};
-   opts.noClose, opts.quietHtml; plan steps st.anchors, st.say, st.extra, st.label, st.ownLabel, choice text and pills;
+   opts.noClose, opts.quietHtml; plan steps st.anchors, st.say, st.extra, st.label, st.ownLabel, choice text, pills, and anchor (a default time);
    opts.planTotal {max, min, msg}, opts.planWords {label, value}, opts.planTitle, opts.planEmpty, opts.anchors.
    onDone's result adds anchors {part: {name: anchor}} and words when those are used.
 
@@ -568,6 +568,7 @@
             if (mine.length >= max) { full.textContent = 'You’ve chosen ' + max + '. Tap a chosen card first to make room.'; return; }
             if (useTot && totalChosen() >= +TOT.max) { full.textContent = 'You’ve chosen ' + TOT.max + ' in all. Tap a chosen card first to make room.'; return; }
             mine.push(c.name);
+            if (anc && c.anchor && !PA[part][c.name]) PA[part][c.name] = c.anchor;
           }
           PL[part] = mine;
           if (anc) { var nc = document.createElement('div'); nc.innerHTML = card(c, +cd.getAttribute('data-j')); var fresh = nc.firstChild; cd.parentNode.replaceChild(fresh, cd); bind(fresh); var fb = fresh.querySelector('.ggd-pick'); if (fb) fb.focus(); }
@@ -692,7 +693,7 @@
     wake();
     muPlay(o);
 
-    var api = { el: el, close: function (quiet) { close(quiet); }, state: function () { return { screen: S.screen ? Object.assign({}, S.screen) : null, answers: Object.assign({}, A), plan: result().plan, voice: voice, voiceOn: S.voiceOn }; } };
+    var api = { el: el, close: function (quiet) { close(quiet); }, state: function () { var r = result(); return { screen: S.screen ? Object.assign({}, S.screen) : null, answers: Object.assign({}, A), plan: r.plan, anchors: r.anchors, words: r.words, voice: voice, voiceOn: S.voiceOn }; } };
     CUR = api;
 
     /* where to begin: the open, or where the person left off, or the Growth Plan on its own */

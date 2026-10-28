@@ -13,7 +13,8 @@
    together is a check-in where a helper taps while the person answers
    (startCheckin('tapped', id)).
    tipSkip names the questions that never get a tip: any question the tree
-   still marks with a flag, questions with a help note, and the optional
+   still marks with a flag, questions with a help note (tagged helpnote by
+   birch/app.js, since the player's help field is the line under a question), and the optional
    question. No safety step (GWG BLD 887), and no help line
    is ever spoken.
    Roots lines name no faith, so they fit Faith and Plain wording alike.
@@ -76,7 +77,7 @@ const TIPS = {
 };
 const G = window.GG_GUIDED.birch = {
   voice: 'brian',
-  tipSkip: ['flag', 'help', 'sens'],
+  tipSkip: ['flag', 'helpnote', 'sens'],
   kinds: {
     start: {
       open: [

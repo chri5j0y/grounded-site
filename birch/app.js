@@ -581,7 +581,7 @@ function gdQuestions() {
     const tip = [q.tip, ln.tip].filter(Boolean).join(' ');
     if (CK_MODE === 'trust' && tip) help.push('To talk about together: ' + tip);
     out.push({ id: sc.key + '-' + sc.i, part: sc.part, text, say: first && !sc.sens ? Q_STEM + ' ' + text : text, help: help.join(' '),
-      type: 'choice', options: opts, rv: !!q.r, sens: !!sc.sens, tags: [sc.sens ? 'sens' : '', q.help ? 'help' : ''].filter(Boolean) });
+      type: 'choice', options: opts, rv: !!q.r, sens: !!sc.sens, tags: [sc.sens ? 'sens' : '', q.help ? 'helpnote' : ''].filter(Boolean) });
   });
   return out;
 }

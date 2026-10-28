@@ -727,7 +727,7 @@ function gStemSay(ck) {
   return C.stems.standard;
 }
 function gFaithQ(ck, K) {
-  return { id: 'faith', type: 'form', aside: true, label: 'Faith', eb: 'Faith, Spirit, or Something Else', part: '', text: 'Faith, spirit, or something else', say: false, lead: K.faith || null,
+  return { id: 'faith', type: 'form', aside: true, label: 'Faith', eb: 'Before the Questions', part: '', text: 'Faith, spirit, or something else', say: false, lead: K.faith || null,
     html: () => faithStep(ck, true), ready: () => (ck.faithEdit && !ck.faith.trad && !ck.faith.own) ? 'Choose one, write your own words, or "I\'d rather not say."' : '' };
 }
 function gPartQs(ck) {
