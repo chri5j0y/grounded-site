@@ -38,7 +38,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b881';
+  var V = 'b882';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b849';
@@ -599,6 +599,17 @@
     return '<div class="hm-treetab"><nav class="hm-tabs" id="hm-tabs" aria-label="The Grounded Way"></nav><iframe class="hm-tree-if" src="' + t.href + '" title="My ' + esc(t.n) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe></div>';
   }
 
+  /* BLD 882: the practices a kid chose in their tree's growth plan, each with a done circle, in their tree's words. */
+  function kidPracHtml() {
+    var items = planItems(true); if (!items.length) return '';
+    items.forEach(function (x, i) { x.i = i; }); items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
+    var n = items.filter(function (x) { return x.done; }).length;
+    return '<div class="hm-kcard hm-kpracs" style="--c:#4FA82C"><h2 class="hm-kh">My Practices Today</h2><p class="hm-kline">' + (n === items.length ? 'You tended every one today. Your tree is glowing!' : n ? n + ' done. Keep growing!' : 'Tap the circle when you do one.') + '</p><ul class="hm-kpl">' + items.map(function (x) {
+      return '<li class="hm-kp' + (x.done ? ' done' : '') + '" style="--kp:' + KP[x.part] + '"><button type="button" class="hm-kdc" data-hm-done="' + esc(x.key) + '" aria-pressed="' + x.done + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + DONE_SVG + '</button>' +
+        tile(x.image, 'sm') + '<span class="tx"><b>' + esc(x.title) + '</b><small>' + esc(x.when) + '</small></span></li>';
+    }).join('') + '</ul></div>';
+  }
+
   /* ---------- Kid Home: Maple and Aspen, playful, no numbers ---------- */
   var KP = { roots: '#FF6B6B', trunk: '#FF9F1C', bark: '#9B5DE5', branches: '#00B4D8', leaves: '#6CCB3A', fruit: '#D62839' };
   function kidHtml() {
@@ -616,6 +627,7 @@
         '<div class="hm-kcard" style="--c:#FF9F1C"><h2 class="hm-kh">Your ' + t.n + ' Is Growing</h2><div class="hm-kparts">' + parts + '</div><p style="margin-top:10px;font-weight:500">' + esc(line) + '</p></div>' +
         '<div class="hm-kcard" style="--c:#9B5DE5"><div class="hm-kprac"><button type="button" class="ill" data-hm-play="' + id + '" aria-label="Play ' + esc(v[0]) + '"><img src="' + IMG + ART[lead] + '.webp" alt=""><span>' + I('play') + '</span></button><div><h3 class="hm-kh">Today: ' + esc(v[0]) + '</h3><p>' + esc(v[2]) + '</p></div></div>' +
           '<button class="hm-kbtn" type="button" style="margin-top:12px" data-hm="kiddid" aria-pressed="' + did + '">' + I('check') + (did ? 'You Did It!' : 'We Did It!') + '</button></div>' +
+        kidPracHtml() +
         (did ? '<div class="hm-kcard hm-surprise" style="--c:#00B4D8"><svg viewBox="0 0 52 52" aria-hidden="true"><g class="bird"><ellipse cx="26" cy="30" rx="13" ry="10" fill="#00B4D8"/><circle cx="34" cy="22" r="7" fill="#00B4D8"/><circle cx="36" cy="21" r="1.6" fill="#2C1810"/><path d="M40 22l6 2-6 2z" fill="#FF9F1C"/><path d="M16 28c4-6 10-6 14-2-5 1-9 3-14 2z" fill="#0090B0"/></g><path d="M8 44h36" stroke="#8A5A36" stroke-width="4" stroke-linecap="round"/></svg><div><h3 class="hm-kh" style="font-size:20px">A visitor came to your tree!</h3><div style="font-size:15px;font-weight:500">A little bird stopped by because you tended your tree today.</div></div></div>' : '') +
         '<a class="hm-kbtn" href="' + t.href + '" style="--c:#4FA82C">' + I('people') + 'Check In With My Grown-up</a>' +
       '</div></div></div></div>';
@@ -802,6 +814,130 @@
   function tendChanged() { var r0 = route(); if (r0.tab === 'today' && r0.sub === 'tending' && S.setupFrom === 'new' && tendIsReady()) { S.setupFrom = null; goTo('today'); return; } var r = route(), tab = r.tab === 'me' ? S.under : r.tab; if ((tab === 'today' || tab === 'week') && !(r.sub && r.tab !== 'me')) { clearTimeout(S.chT); S.chT = setTimeout(refreshPane, 60); } }
   function tendGo() { if (S.quiet) return; var r = route(); if (!(r.sub && r.tab !== 'me') && !(r.tab === 'me' && S.sheet)) goTo('today=tending'); }
 
+  /* ---------- BLD 882: the Growth Plan's practices on Today ----------
+     Chris (October 28, 2026): every practice chosen in the tree's Growth Plan is its own card on Today, so a person
+     rarely needs the tree page except to check in and change practices. Read and written in the tree's own shapes,
+     so the tree page, its progress, its seasons, and Grow all count the same marks.
+       Where the plan lives (the tree's tend record, shared/gg-tend.js):
+         Oak, Birch, Sequoia, Pine   GGP.data(id, <tree>).tend
+         Maple                       GGP.data(id, 'maple').kid.tend
+         Aspen                       GGP.data(id, 'aspen').student.tend
+       tend.plan   {<part>: {selected: [names], custom: 'one name', own: [names], lib: [{k: library key, n: name}]}}
+                   (before a plan is saved there, GGTend reads the latest check-in's growthPlan; so does this)
+       tend.days   {'YYYY-MM-DD': {d: ['<part>|<name>', ...], n: {id: note}, e: [ids done the easier way], a: ['morning', 'evening']}}
+                   GGTend.check(id) adds or takes away '<part>|<name>' in days[today].d; progress, seasons, the scene,
+                   Days Tended, Hardy, and The Grove's shared line all read d. A practice record holds only its part
+                   and name: no time of day, how often, or days of the week, so every practice shows every day
+                   (as on the tree's own Today) and the time of day comes from its name or its part. */
+  var PART_KEYS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
+  var PRAC_ART = { roots: IMG + 'tend-spirit.webp', trunk: '/shared/heroes/page-growth-narrow.webp', bark: IMG + 'tend-mind.webp', branches: IMG + 'tend-people.webp', leaves: IMG + 'tend-move.webp', fruit: IMG + 'tend-fruit.webp' };
+  var PART_SLOT = { roots: [6.9, 'Morning'], leaves: [7.6, 'Morning'], trunk: [11.8, 'Midday'], bark: [13.2, 'Midday'], branches: [18, 'Evening'], fruit: [19.8, 'Evening'] };
+  var PINFO = {};
+  function tendHost(id, tree) {
+    if (!id || !window.GGP || !GGP.isOpen || !GGP.isOpen(id)) return null;
+    var v = GGP.data(id) || {};
+    if (tree === 'maple') { var m = v.maple; return m && m.kid && typeof m.kid === 'object' ? m.kid : null; }
+    if (tree === 'aspen') { var a = v.aspen; return a && a.student && typeof a.student === 'object' ? a.student : null; }
+    return GGP.data(id, tree);
+  }
+  function tendGet(id, tree, make) {
+    var h = tendHost(id, tree); if (!h) return null;
+    if (!h.tend || typeof h.tend !== 'object') { if (!make) return null; h.tend = {}; }
+    return h.tend;
+  }
+  function planSize(p) { var n = 0; Object.keys(obj(p)).forEach(function (k) { var x = obj(p[k]); n += arr(x.selected).length + (x.custom ? 1 : 0) + arr(x.own).length + arr(x.lib).length; }); return n; }
+  /* The plan the tree shows on its Today: tend.plan, or (Oak, Birch, Sequoia, Pine) the latest check-in's growthPlan. */
+  function planOf(id, tree) {
+    var t = tendGet(id, tree);
+    if (t && t.plan && typeof t.plan === 'object') return t.plan;
+    if (tree === 'maple' || tree === 'aspen') return null;
+    var h = obj(tendHost(id, tree)), hist = arr(h.history).filter(function (e) { return e && !e.from && e.kind !== 'observed' && e.growthPlan && planSize(e.growthPlan); });
+    return hist.length ? hist[hist.length - 1].growthPlan : null;
+  }
+  function planList(id, tree) {
+    var p = planOf(id, tree), out = [], seen = {};
+    if (!p) return out;
+    var add = function (part, name, kind) { name = String(name || '').trim(); var pid = part + '|' + name; if (!name || seen[pid]) return; seen[pid] = 1; out.push({ part: part, name: name, pid: pid, kind: kind }); };
+    PART_KEYS.forEach(function (k) {
+      var x = obj(p[k]);
+      arr(x.selected).forEach(function (n) { add(k, n, 'plan'); });
+      if (x.custom) add(k, x.custom, 'own');
+      arr(x.own).forEach(function (n) { add(k, n, 'own'); });
+      arr(x.lib).forEach(function (l) { if (l && l.k) add(k, l.n, 'lib'); });
+    });
+    return out;
+  }
+  function practiceDone(t, pid, d) { var x = t && obj(t.days)[d || today()]; return !!(x && arr(x.d).indexOf(pid) >= 0); }
+  /* The tree's practice library (oak, birch, sequoia, pine practices.js) for one short line on how, in the person's wording. */
+  function pracInfo(tree) {
+    if (PINFO[tree] !== undefined) return PINFO[tree];
+    var src = PRAC[tree]; if (!src) { PINFO[tree] = null; return null; }
+    PINFO[tree] = null;
+    load(src[0]).then(function () {
+      var P = window[src[1]], map = {}; if (!P) return;
+      arr(P.DOMAIN_DEFS).forEach(function (d) {
+        arr(d.restore).concat(arr(obj(P.NEW)[d.key])).forEach(function (r) {
+          var row = Array.isArray(r) ? r : [r && (r.name || r.n), r && (r.text || r.t || '')];
+          if (row[0] && !map[d.key + '|' + row[0]]) map[d.key + '|' + row[0]] = { line: String(row[1] || '') };
+        });
+      });
+      Object.keys(obj(P.PLAIN)).forEach(function (k) { var pl = P.PLAIN[k] || {}; if (map[k]) { map[k].pn = pl.n || pl.name || ''; map[k].pl = pl.d || pl.line || pl.text || ''; } });
+      PINFO[tree] = map;
+      if (S.id && app() && S.tree === tree) { if (isKid(S.p)) render(); else refreshPane(); }
+    });
+    return null;
+  }
+  function plainWording(id, tree) { var h = obj(tendHost(id, tree)); return h.wording === 'plain'; }
+  function slotOf(part, name, line) {
+    var n = String(name || '').toLowerCase(), l = String(line || '').toLowerCase();
+    if (/\b(morning|wake|waking|sunrise|dawn|breakfast)\b/.test(n) || /\b(each|every|this) morning\b|first thing/.test(l)) return [7, 'Morning'];
+    if (/\b(lunch|midday|noon)\b/.test(n)) return [12, 'Midday'];
+    if (/\b(evening|night|bed|bedtime|sleep|wind down|examen|sunset|dinner)\b/.test(n) || /before bed|bedtime|\bat night\b|each night|every night|tonight/.test(l)) return [21, 'Evening'];
+    return PART_SLOT[part] || [12, 'Any time'];
+  }
+  function practiceArt(part, name) {
+    if (part === 'leaves' && /\b(eat|food|meal|water|nourish|cook|vegetable|fruit|plate|kitchen)\b/i.test(name)) return IMG + 'tend-body.webp';
+    return PRAC_ART[part] || IMG + 'tend-mind.webp';
+  }
+  /* Today's cards for the plan, for any tree. kid: Maple and Aspen wording. */
+  function planItems(kid) {
+    var tree = S.tree, list = planList(S.id, tree); if (!list.length) return [];
+    var t = tendGet(S.id, tree), info = pracInfo(tree) || {}, plain = plainWording(S.id, tree);
+    return list.map(function (it) {
+      var pi = info[it.pid] || {}, line = plain && pi.pl ? pi.pl : pi.line || '', title = plain && pi.pn ? pi.pn : it.name, sl = slotOf(it.part, it.name, line), P = PART[it.part] || { n: '' };
+      var sub = line || (it.kind === 'own' ? 'Your own practice, from your growth plan.' : it.kind === 'lib' ? 'From the practice library, in your growth plan.' : kid ? 'A practice for your ' + P.n + '. Check it off when you do it.' : 'A practice for your ' + P.n + ', from your growth plan.');
+      return { key: 'p:' + it.pid, pid: it.pid, part: it.part, src: 'plan', hour: sl[0], when: sl[1] + ' · ' + P.n, title: title, sub: sub, btn: 'How', tint: it.part, done: practiceDone(t, it.pid), image: practiceArt(it.part, it.name) };
+    });
+  }
+  /* A practice checked or unchecked: the same mark GGTend.check makes, saved in the locked profile. */
+  function togglePractice(pid, on) {
+    var tree = S.tree, t = tendGet(S.id, tree, true); if (!t) return false;
+    if (!t.plan) { var p = planOf(S.id, tree); if (p) t.plan = JSON.parse(JSON.stringify(p)); }
+    if (!t.days || typeof t.days !== 'object') t.days = {};
+    var d = today(), x = t.days[d];
+    if (!x || typeof x !== 'object') x = t.days[d] = { d: [], n: {}, e: [], a: [] };
+    ['d', 'e', 'a'].forEach(function (f) { if (!Array.isArray(x[f])) x[f] = []; });
+    if (!x.n || typeof x.n !== 'object') x.n = {};
+    var i = x.d.indexOf(pid);
+    if (on && i < 0) x.d.push(pid); else if (!on && i >= 0) x.d.splice(i, 1);
+    publishTree(S.id, tree, t);
+    saveHome();
+    return true;
+  }
+  /* The big picture the tree shares with family and The Grove (the same line GGTend writes when a practice is checked). */
+  function publishTree(id, tree, t) {
+    try {
+      if (!GGP.setShared || !GGP.shared) return;
+      var old = obj(obj(GGP.shared(id)).tree);
+      if (t.groveShow === false || old.show === false) return;
+      var tended = function (k) { var x = t.days[k]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); };
+      var recent = [], d = today();
+      for (var i = 0; i < 14; i++) { var k = addDays(d, -i), x = t.days[k]; if (!x || !tended(k)) continue; var set = {}; arr(x.d).forEach(function (pk) { set[String(pk).split('|')[0]] = 1; }); recent.push({ d: k, parts: Object.keys(set) }); }
+      var days = Object.keys(t.days).filter(tended).length;
+      GGP.setShared(id, { tree: Object.assign({}, old, { tool: tree, show: true, days: days, rings: typeof old.rings === 'number' ? old.rings : arr(t.rings).length, season: t.season || old.season || 1, recent: recent, updated: d }) });
+    } catch (e) { /* the shared line waits for the tree page */ }
+  }
+
   /* ---------- Today: one list in day order ---------- */
   function treeItem(h, d) {
     var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), did = !!(ck && ck.date === today()) || !!d.tree;
@@ -824,6 +960,8 @@
     if (h.parts.indexOf('still') >= 0 && !hasQuiet) items.push({ key: 'quiet', hour: 6.5, when: 'Morning', title: 'Morning Quiet', sub: 'A few minutes of breath and stillness', btn: 'Begin', tint: 'quiet', done: !!d.quiet, src: 'home' });
     if (h.parts.indexOf('pray') >= 0) items.push({ key: 'pray', hour: 12.5, when: 'Any time', title: 'A Sacred Pause', sub: 'Prayer, a reading, or quiet, in your own way', btn: 'Begin', tint: 'roots', done: !!d.pray, src: 'home' });
     if (h.parts.indexOf('connect') >= 0) items.push({ key: 'talk', hour: 18.5, when: 'At dinner', title: 'Tonight\'s Question', sub: pick(QUESTIONS, dayIndex() + (+d.q || 0)), btn: 'Another', tint: 'branches', done: !!d.talk, src: 'home' });
+    // BLD 882: each practice in the tree's Growth Plan, its own card.
+    planItems(false).forEach(function (x) { items.push(x); });
     items.push(treeItem(h, d));
     items.forEach(function (x, i) { x.i = i; });
     items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
@@ -831,7 +969,7 @@
   }
   var DONE_SVG = '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12.5l4.4 4.4L19 7.4"/></svg>';
   function itemHtml(x) {
-    return '<article class="hm-item ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + '">' +
+    return '<article class="hm-item ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
       '<button type="button" class="hm-dc" data-hm-done="' + esc(x.key) + '" aria-pressed="' + x.done + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + DONE_SVG + '</button>' +
       tile(x.image || artFor(x)) + '<div class="bd"><div class="tx"><span class="ey">' + esc(x.when) + '</span><b>' + esc(x.title) + '</b>' + (x.sub ? '<small>' + esc(x.sub) + '</small>' : '') + '</div>' +
       '<button type="button" class="hm-pill" data-hm-go="' + esc(x.key) + '">' + esc(x.btn) + '</button></div></article>';
@@ -856,22 +994,24 @@
     var x = findItem(key), t = TREES[S.tree] || TREES.oak; if (!x) return;
     if (x.src === 'tend') { if (hasFn('act')) hCall('act', x.hkey); return; }
     if (x.src === 'old') { goTo('today=' + (x.old === 'plate' ? 'log' : 'tending')); if (x.old === 'move') { S.quiet = true; try { window.GGHealth.open('move'); } catch (e) {} S.quiet = false; } return; }
-    if (key === 'tree') { openFrame(new URL(t.href + (t.ck ? '#quick' : ''), location.href)); return; }
+    if (x.src === 'plan') { openTreeSheet('today'); return; }
+    if (key === 'tree') { openTreeSheet(t.ck ? 'quick' : ''); return; }
     if (key === 'quiet') { playVideo('gg-paced-now'); return; }
     if (key === 'pray') { openFrame(new URL('/get-grounded-now.html', location.href)); return; }
     if (key === 'talk') { var r = todayRec(homeRec()); r.q = (+r.q || 0) + 1; saveHome(); refreshPane(); }
   }
   function itemDone(key, btn) {
-    var x = findItem(key); if (!x) return;
+    var x = /^p:/.test(key) ? { src: 'plan', pid: key.slice(2), done: btn ? btn.getAttribute('aria-pressed') === 'true' : false } : findItem(key); if (!x) return;
     var on = !x.done;
-    if (x.src === 'tend') {
+    if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
+    else if (x.src === 'tend') {
       // Tending marks its own items: GGHealth.done(key) when it exists, otherwise act(key, 'done').
       if (hasFn('done')) hCall('done', x.hkey, on); else if (hasFn('toggle')) hCall('toggle', x.hkey); else hCall('act', x.hkey, 'done');
     } else if (x.src === 'old') { itemGo(key); return; }
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome(); }
     if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item'); if (card) card.classList.toggle('done', on); }
     if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
-    setTimeout(refreshPane, on ? 650 : 0);
+    setTimeout(function () { if (isKid(S.p)) render(); else refreshPane(); }, on ? 650 : 0);
   }
 
   /* ---------- Week: Shop, Sunday Together Prep, then the seven days ---------- */
@@ -906,9 +1046,6 @@
     if (what === 'history') return t.href + (S.tree === 'birch' || S.tree === 'pine' ? '#progress' : '#season');
     return t.href;
   }
-  function planCount(plan) {
-    var n = 0; Object.keys(obj(plan)).forEach(function (k) { var x = obj(plan[k]); n += arr(x.selected).length + arr(x.own).length + arr(x.lib).length; }); return n;
-  }
   function treePic() { return '<picture class="hm-gpic" aria-hidden="true"><source media="(max-width:699px)" srcset="' + treeArt(S.tree) + '"><img src="' + treeArt(S.tree, true) + '" alt="" loading="lazy"></picture>'; }
   function growHtml() {
     var t = TREES[S.tree] || TREES.oak, ck = lastCheckin(S.id, S.tree), ed = edgesOf(ck), tend = tendOf(S.id, S.tree), wk = weekNo(tend), sd = soberDate();
@@ -937,7 +1074,7 @@
     var season = '<article class="hm-wcard hm-tn-b">' + tile(ART2.growth) + '<div class="tx"><span class="ey">This Season</span><b>' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</b><small>' +
       (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + esc(trend) + '</small></div>' +
       (ck ? '<button type="button" class="hm-pill" data-hm-tree="history">History</button>' : '') + '</article>';
-    var pc = planCount(tend.plan);
+    var pc = planList(S.id, S.tree).length;
     var plan = '<article class="hm-wcard hm-tn-g">' + tile(ART2.spirit) + '<div class="tx"><span class="ey">Growth Plan</span><b>Your Growth Plan</b><small>' + (pc ? nWord(pc) + (pc === 1 ? ' practice' : ' practices') + ' in your plan. Open it when you change one.' : ck ? 'Choose a few practices for each part. Open it to begin.' : 'Your growth plan grows from your first check-in.') + '</small></div>' +
       '<button type="button" class="hm-pill" data-hm-tree="plan">Open</button></article>';
     var sober = sd ? soberHtml(sd) : (homeRec().parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
@@ -1107,7 +1244,7 @@
     if (t.hasAttribute('data-hm-done')) { itemDone(t.getAttribute('data-hm-done'), t); return; }
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
-    if (t.hasAttribute('data-hm-tree')) { var tr = TREES[S.tree] || TREES.oak; openFrame(new URL(treeHash(tr, t.getAttribute('data-hm-tree')), location.href)); return; }
+    if (t.hasAttribute('data-hm-tree')) { openTreeSheet(t.getAttribute('data-hm-tree')); return; }
     if (t.hasAttribute('data-hm-shelf')) { openShelf(t.getAttribute('data-hm-shelf')); return; }
     if (t.hasAttribute('data-hm-res')) {
       var rs = t.getAttribute('data-hm-res').split('|'), k = rs[0], id = rs.slice(1).join('|'), tt = TREES[S.tree] || TREES.oak;
@@ -1151,7 +1288,7 @@
   function boot() {
     mountIcons();
     if (!window.GGP) { var r = app(); if (r) r.innerHTML = welcomeHtml(); return; }
-    GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); } });
+    GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); } });
     GGP.ready.then(render);
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
@@ -1177,15 +1314,18 @@
     var t = { 'living-sober.html': 'Living Sober', 'get-grounded-now.html': 'Get Grounded Now', 'readings.html': 'Readings Library', 'the-grounded-way.html': 'The Grounded Way', 'recipes': 'Grounded Recipes' }[seg];
     return t || 'Grounded';
   }
-  function openFrame(u, push, onload) {
+  function openFrame(u, push, onload, sheet) {
     closeFrame(true);
-    var wrap = document.createElement('div'); wrap.className = 'hm-frame'; wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-label', frameTitle(u));
-    wrap.innerHTML = '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>Back</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>' +
-      '<iframe class="hm-frame-if" title="' + esc(frameTitle(u)) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>';
+    var wrap = document.createElement('div'); wrap.className = 'hm-frame' + (sheet ? ' hm-fsheet' : ''); wrap.setAttribute('role', 'dialog'); wrap.setAttribute('aria-label', sheet ? sheet.title : frameTitle(u));
+    // BLD 882: a tree screen opens as an in-app sheet: the app's own header (the screen's name and Done) over that one screen.
+    var bar = sheet ? '<header class="hm-fs-hd"><div class="hm-fs-l"><span class="hm-ak">' + esc(sheet.kick) + '</span><h2 class="hm-fs-t">' + esc(sheet.title) + '</h2></div><button type="button" class="hm-frame-home hm-fs-done">Done</button></header>'
+      : '<div class="hm-frame-bar"><button type="button" class="hm-frame-home">' + I('home') + '<span>Back</span></button><b class="hm-frame-t">' + esc(frameTitle(u)) + '</b><span class="hm-frame-sp"></span></div>';
+    wrap.innerHTML = bar + '<iframe class="hm-frame-if' + (sheet ? ' wait' : '') + '" title="' + esc(sheet ? sheet.title : frameTitle(u)) + '" allow="fullscreen; autoplay; clipboard-write" allowfullscreen></iframe>';
     var host = document.querySelector('main.hm') || document.body; host.appendChild(wrap);
     var ifr = wrap.querySelector('iframe'); ifr.src = u.pathname + u.search + u.hash;
-    ifr.addEventListener('load', function () { try { var t = (ifr.contentDocument.title || '').replace(/\s*\|.*$/, ''); if (t) wrap.querySelector('.hm-frame-t').textContent = t; } catch (e) {} if (onload) { try { onload(ifr.contentWindow); } catch (e) {} onload = null; } });
-    wrap.querySelector('.hm-frame-home').addEventListener('click', function () { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); });
+    if (sheet) { wrap._sheet = sheet; sheetMode(ifr, u.pathname); }
+    ifr.addEventListener('load', function () { if (!sheet) { try { var t = (ifr.contentDocument.title || '').replace(/\s*\|.*$/, ''); if (t) wrap.querySelector('.hm-frame-t').textContent = t; } catch (e) {} } else ifr.classList.remove('wait'); if (onload) { try { onload(ifr.contentWindow); } catch (e) {} onload = null; } });
+    wrap.querySelector('.hm-frame-home').addEventListener('click', frameDone);
     document.documentElement.classList.add('hm-framed');
     FRAME = wrap;
     if (push !== false) { try { history.pushState({ hmFrame: u.pathname + u.search + u.hash }, '', location.pathname + location.hash); } catch (e) {} }
@@ -1193,6 +1333,53 @@
   function closeFrame(quiet) {
     if (!FRAME) return; FRAME.remove(); FRAME = null; document.documentElement.classList.remove('hm-framed');
     if (!quiet) render();
+  }
+  function frameDone() { if (!FRAME) return; if (history.state && history.state.hmFrame) history.back(); else closeFrame(); }
+
+  /* ---------- BLD 882: tree screens as in-app sheets ----------
+     The check-in, Quick Check-in, Growth Plan, history, and the tree's practices open over the tab, with the app's
+     header (the screen's name and Done) and only that screen of the tree: the tree page's own hero, part strip,
+     and tab bar step aside inside the sheet (a class and a small style added to the framed page by the Home, so the
+     tree page itself is unchanged everywhere else). Done, or a check-in saved, returns to the tab, redrawn. */
+  var SHEET_SCREENS = { checkin: 'Check-in', quick: 'Quick Check-in', plan: 'Growth Plan', history: 'History', today: 'Your Practices' };
+  var SHEET_CSS = 'html.gg-insheet body>.gg-hero,html.gg-insheet body>.gg-parts,html.gg-insheet body>nav#client-nav,html.gg-insheet body>nav.nav,html.gg-insheet body>nav.tabs,' +
+    'html.gg-insheet .gg-skip,html.gg-insheet .gg-wayline,html.gg-insheet .topbar,html.gg-insheet .site-menu,html.gg-insheet .site-footer{display:none!important;}' +
+    'html.gg-insheet body>main{padding-top:6px;}';
+  function openTreeSheet(what) {
+    var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
+    var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
+    var ck = lastCheckin(S.id, S.tree);
+    openFrame(new URL(t.href + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
+  }
+  function sheetMode(ifr, path) {
+    var tries = 0, done = false;
+    var style = function (d) {
+      if (done || !d || !d.documentElement || d.getElementById('gg-insheet-css')) return;
+      done = true;
+      d.documentElement.classList.add('gg-insheet');
+      var st = d.createElement('style'); st.id = 'gg-insheet-css'; st.textContent = SHEET_CSS; (d.head || d.documentElement).appendChild(st);
+      ifr.classList.remove('wait');
+    };
+    (function tick() {
+      if (!ifr.isConnected) return;
+      var w = null, d = null; try { w = ifr.contentWindow; if (w && w.location.pathname === path) d = ifr.contentDocument; } catch (e) { ifr.classList.remove('wait'); return; }
+      if (d && d.documentElement) {
+        if (d.readyState === 'loading') { w.addEventListener('DOMContentLoaded', function () { style(d); }); d.addEventListener('readystatechange', function () { style(d); }); }
+        else style(d);
+        return;
+      }
+      if (++tries < 400) setTimeout(tick, 20); else ifr.classList.remove('wait');
+    })();
+    // A move to another page inside the sheet shows that page whole.
+    ifr.addEventListener('load', function () { try { var d = ifr.contentDocument; if (d && ifr.contentWindow.location.pathname === path && !d.getElementById('gg-insheet-css')) { done = false; style(d); } } catch (e) {} });
+  }
+  /* A check-in saved in the sheet: the Home hears the vault change, then returns to the tab. */
+  function sheetSaved() {
+    var sh = FRAME && FRAME._sheet; if (!sh || (sh.what !== 'checkin' && sh.what !== 'quick') || sh.closing) return;
+    var ck = lastCheckin(S.id, S.tree), now = ck ? ck.count + ':' + ck.date : '';
+    if (now === sh.ck) return;
+    sh.closing = true; toast('Check-in saved. Your tree is up to date.');
+    setTimeout(function () { if (FRAME && FRAME._sheet === sh) frameDone(); }, 900);
   }
   document.addEventListener('click', function (e) {
     if (e.defaultPrevented || e.button || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return;
@@ -1204,5 +1391,6 @@
     openFrame(u);
   });
   window.addEventListener('popstate', function () { if (FRAME && !(history.state && history.state.hmFrame)) closeFrame(); });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && FRAME && FRAME._sheet) frameDone(); });
   window.addEventListener('message', function (e) { if (e.origin === location.origin && e.data === 'gg-home-close' && FRAME) { if (history.state && history.state.hmFrame) history.back(); else closeFrame(); } });
 })();
