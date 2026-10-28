@@ -60,7 +60,8 @@ const MINE = () => { const ps = PLANS(); if (!ps.length) return null;
   const d = D(), who = d && d.health && d.health.set && d.health.set.who; return ps.find(m => m.who && who === m.who) || ps.find(m => !m.who) || null; };
 const MINE_ANY = () => PLANS()[0] || null;
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[c]));
-const save = () => { if (C.save) C.save(); };
+// BLD 881: C.changed (optional) tells the host something was saved, so The Grounded Way can refresh Today behind a sheet.
+const save = () => { if (C.save) C.save(); if (C.changed){ try { C.changed(); } catch(e){} } };
 const toast = m => { if (C.toast) C.toast(m); };
 const uid = () => Date.now().toString(36) + Math.random().toString(36).slice(2, 7);
 const pad = n => String(n).padStart(2, '0');
@@ -697,10 +698,10 @@ function vOv(){
           ${tm ? `<div class="hj-tm">${running ? `<span class="hj-clock sm" data-hjclock>${clock(o.end - Date.now())}</span><button type="button" class="btn btn-line btn-sm" data-hja="tstop">Stop</button>` : tdone[i] ? `<span class="hj-tdone">Timer done</span>` : `<button type="button" class="btn btn-line btn-sm" data-hja="stime" data-hjv="${i}">Start ${tm} min Timer</button>`}</div>` : ''}</div></li>`; }).join('')}</ol>
       ${x.serve ? `<p class="hj-sub"><b>Serve:</b> ${esc(x.serve)}</p>` : ''}${x.tip ? `<p class="hj-sub"><b>Tip:</b> ${esc(x.tip)}</p>` : ''}${x.kid ? `<p class="hj-sub"><b>For kids:</b> ${esc(x.kid)}</p>` : ''}${x.swaps && typeof x.swaps === 'object' ? Object.entries(x.swaps).filter(([, t]) => t).map(([k, t]) => `<p class="hj-sub"><b>Swap for ${esc((arr((PLIB() || {}).needs).find(z => z.id === k) || {}).name || k.replace(/([A-Z])/g, ' $1').toLowerCase())}:</b> ${esc(t)}</p>`).join('') : ''}${x.keeps ? `<p class="hj-sub"><b>Leftovers:</b> ${esc(x.keeps)}</p>` : ''}${PUB() && x.serves ? `<p class="hj-sub">Serves ${esc(x.serves)}.${hhNote(x.serves)}</p>` : ''}
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
-      <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+      <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   }
   const sc = stCol(stState(o), HOUR());
-  return `<div class="hj-ov hj-st" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'Tending')}"><div class="hj-ovin">${body}</div></div>`;
+  return `<div class="hj-ov hj-st${o.inline ? ' hj-inl' : ''}" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'Tending')}"><div class="hj-ovin">${body}</div></div>`;
 }
 function openKey(key){
   const [k, a, b] = key.split(':');
@@ -710,21 +711,32 @@ function openKey(key){
   if (k === 'pracid') return openOv(buildPractice(a));
   if (k === 'medid') return openOv(buildMed(a));
   if (k === 'med') return openOv({k: 'med', title: 'Meditation', mins: medMins(weekNo(new Date())), left: 0, run: false});
-  if (k === 'shop'){ S.sec = 'shop'; S.shopWk = +a; rerender(false); window.scrollTo(0, 0); return; }
+  if (k === 'shop'){ S.shopWk = +a; S.shopEd = null; if (bareOn() || C.host === 'home') return want('shop'); S.sec = 'shop'; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'quiet') return openQuiet();
-  if (k === 'prepsec'){ S.sec = 'prep'; S.prepWk = +a || null; rerender(false); window.scrollTo(0, 0); return; }
+  if (k === 'prepsec'){ S.prepWk = +a || null; if (bareOn() || C.host === 'home') return want('prep'); S.sec = 'prep'; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'prep') return openPrep(a, +b);
   if (k === 'cook') return openCook(a, b);
+  // BLD 881: a lunch or any idea, the head start for tomorrow, and a workout from any level open their guides too.
+  if (k === 'idea') return openIdea(a, b);
+  if (k === 'head') return openOv(headOv(a));
+  if (k === 'wl') return openOv(buildLevelWork(a, b));
   markDone(key); toast('Marked done. Well done.'); rerender(true);
 }
-function openCook(wk, id){ const w = ((APP() || {}).dinners || {}).weeks || {}, x = arr((w[wk] || {}).dinners).find(z => z.id === id); if (!x) return openOv(null);
-  openOv({k: 'cook', key: 'cook:' + wk + ':' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (x.cost ? ' · about $' + x.cost : ''), data: x}); }
+// BLD 881: each guide is built by its own *Ov function, so GGHealth.render can play one inside a sheet as well as full screen.
+function cookOv(wk, id){ const w = ((APP() || {}).dinners || {}).weeks || {}, x = arr((w[wk] || {}).dinners).find(z => z.id === id); if (!x) return null;
+  return {k: 'cook', key: 'cook:' + wk + ':' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (x.cost ? ' · about $' + x.cost : ''), data: x}; }
+function openCook(wk, id){ openOv(cookOv(wk, id)); }
 // Breakfasts, lunches, and snacks with steps open in Andrew's guide too (BLD 859).
-function openIdea(type, i){ const x = arr(((APP() || {}).dinners || {})[type])[+i]; if (!x || !arr(x.steps).length) return openOv(null);
-  openOv({k: 'cook', idea: true, key: 'idea:' + type + ':' + i, title: x.name, sub: x.mins ? x.mins + ' minutes' : '', data: x}); }
-function openPrep(kind, n){ const p = prepFor(kind, n); if (!p) return openOv(null);
+function ideaOv(type, i){ const x = arr(((APP() || {}).dinners || {})[type])[+i]; if (!x || !arr(x.steps).length) return null;
+  return {k: 'cook', idea: true, key: 'idea:' + type + ':' + i, title: x.name, sub: x.mins ? x.mins + ' minutes' : '', data: x}; }
+function openIdea(type, i){ openOv(ideaOv(type, i)); }
+function prepOv(kind, n){ const p = prepFor(kind, n); if (!p) return null;
   const t = {sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: p.title || 'Freezer Batch', pack: p.title || 'Pack Lunches'}[kind] || p.title || p.name;
-  openOv({k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p}); }
+  return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p}; }
+function openPrep(kind, n){ openOv(prepOv(kind, n)); }
+// The head start for tomorrow (BLD 881): tomorrow's dinner, to look over tonight; finishing it marks tonight's head start.
+function headOv(k){ const d = parseD(k) || day0(new Date()), dn = dinnerFor(addD(d, 1)), o = dn ? cookOv(dn.wk, dn.id) : null; if (!o) return null;
+  return Object.assign(o, {key: 'head:' + ymd(d), peek: true, sub: 'Tomorrow' + (o.sub ? ' · ' + o.sub : '')}); }
 function actTool(a, v){
   const h = H(), o = S.ov;
   if (actCoach(a, v)) return true;
@@ -780,7 +792,7 @@ function actTool(a, v){
     case 'step': { o.dn = o.dn || {}; o.dn[v] = !o.dn[v]; rerender(true); return true; }
     case 'stime': { const s = arr(o.data.steps)[+v], m = +(s && s.min) || 0; if (m) startTimer(o, m * 60, +v); rerender(true); return true; }
     case 'tstop': o.run = false; o.ti = null; rerender(true); return true;
-    case 'cdone': markDone(o.key); toast(o.idea ? 'Done. Enjoy.' : o.k === 'cook' ? 'Dinner done. Enjoy the table together.' : 'Prep done. The week is ready.'); closeOv(); return true;
+    case 'cdone': markDone(o.key); toast(o.peek ? 'Tomorrow is ready.' : o.idea ? 'Done. Enjoy.' : o.k === 'cook' ? 'Dinner done. Enjoy the table together.' : 'Prep done. The week is ready.'); closeOv(); return true;
   }
   return false;
 }
@@ -1146,7 +1158,7 @@ setInterval(() => { const o = S.ov; if (!o || !o.guide || !o.timers || !o.timers
 function vGuide(o, top){
   const steps = kSteps(o), s = steps[o.gi], pct = Math.round(100 * o.gi / Math.max(1, steps.length));
   const rang = o.rang ? `<div class="hj-rang"><b>Timer done:</b> ${esc(o.rang.label)}<button type="button" class="linkbtn" data-hja="kok">Got It</button></div>` : '';
-  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: window.GGStage ? '' : POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.idea ? 'Ready to enjoy.' : o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
+  if (!s) return `${top(o.title, o.sub, 100)}${stagePanel('done', {fig: window.GGStage ? '' : POT, small: true})}${rang}${arr(o.timers).length ? `<div class="hj-ktimers">${arr(o.timers).map(t => `<div><span class="hj-clock sm" data-hjkt="${t.i}">${clock(t.end - Date.now())}</span><small>${esc(t.label.slice(0, 60))}</small></div>`).join('')}</div>` : ''}<div class="hj-ovb"><div class="hj-big2">${o.idea ? 'Ready to enjoy.' : o.k === 'cook' ? 'Dinner is ready.' : 'Prep is done.'}</div>${arr(o.data.yields).length ? `<p class="hj-sub">Ready now: ${arr(o.data.yields).map(esc).join(', ')}</p>` : ''}<button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   const tms = arr(o.timers);
   const t = trans(o, 'cook'), ft = tms.length ? tms.slice().sort((a, b) => a.end - b.end)[0] : null, fs = ft ? arr(o.data.steps)[ft.i] : null, ftot = fs ? (+fs.min || 1) * 60000 : 1;
   return `${top(o.title, 'Step ' + (o.gi + 1) + ' of ' + steps.length, pct)}
@@ -1603,7 +1615,7 @@ const grpHead = (id, title, icn, cls, part) => `<div class="tn-grp ${cls}" id="t
 function secHead(icn, cls, title, sub){ return `<div class="tn-head ${cls}">${TIMG[icn] ? paint(icn, 'big') : badge(icn)}<div><h2>${esc(title)}</h2>${sub ? `<p class="tn-sub">${sub}</p>` : ''}</div></div>`; }
 // A plan card: scene tile, time kicker, title, one line, actions with a check.
 function planCard(o){
-  return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene">${scene(o.scene, o.hour)}</div><div style="min-width:0">
+  return `<article class="tn-card tn-edge tn-lift ${o.cls}${o.done ? ' done' : ''}"><div class="tn-pc"><div class="tn-scene">${o.img ? `<img src="${esc(o.img)}" alt="" loading="lazy" decoding="async">` : scene(o.scene, o.hour)}</div><div style="min-width:0">
     <div class="tn-time">${esc(o.time)}</div><h3>${esc(o.title)}</h3>${o.sub ? `<div class="tn-meta">${esc(o.sub)}</div>` : ''}
     <div class="tn-acts">${o.btn ? `<button type="button" class="tn-btn sm" data-hja="${o.ba || 'go'}" data-hjv="${esc(o.bv)}">${ic(o.bi || 'play')}${esc(o.btn)}</button>` : ''}${o.ck || ''}</div></div></div>${o.more || ''}</article>`;
 }
@@ -1668,7 +1680,7 @@ function vChoose(){
 }
 
 // ---------- Settings: What I Use, Bridges (stored for a later build), Reminders ----------
-function vSettings(){
+function vSettings(bare){
   const h = H(), t = TD(), br = h.set.bridges || {}, kit = KIT(), on = remOn();
   const row = (cls, icn, title, sub, sw) => `<div class="tn-row ${cls}">${icn ? `<span class="ic2">${ic(icn)}</span>` : ''}<div class="tx"><b>${esc(title)}</b><small>${esc(sub)}</small></div>${sw}</div>`;
   const what = kit ? '' : `<div class="tn-card">${'<div class="tn-hd">' + badge('sprout', 'p-leaves') + '<div><div class="tn-k p-leaves">What I Use</div><div class="tn-sub">Turn a part on and it shows on Today.</div></div></div>'}
@@ -1685,14 +1697,16 @@ function vSettings(){
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
   const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Whose phone, your training, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
+  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
     <div class="tn-two"><div class="tn-col">${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
 
 // ---------- Morning Quiet: a gentle timer, a scene, one line at a time ----------
 function quietLine(o){ const L = TD().spirit.lines, el = o.run ? (o.tot - Math.max(0, o.end - Date.now())) : (o.tot ? o.tot - (o.left || o.tot) : 0); return L[(o.l0 + Math.floor(el / 60000)) % L.length] || ''; }
-function openQuiet(m){ const sp = TD().spirit, mins = +m || +H().set.quietMins || sp.minutes[0] || 5, d = new Date();
-  openOv({k: 'quiet', title: sp.h, mins, left: 0, run: false, tot: mins * 60000, l0: (d.getDate() + d.getMonth() * 31) % Math.max(1, sp.lines.length)}); }
+function quietOv(m){ const sp = TD().spirit, mins = +m || +H().set.quietMins || sp.minutes[0] || 5, d = new Date();
+  return {k: 'quiet', title: sp.h, mins, left: 0, run: false, tot: mins * 60000, l0: (d.getDate() + d.getMonth() * 31) % Math.max(1, sp.lines.length)}; }
+function openQuiet(m){ openOv(quietOv(m)); }
 function vQuiet(o, top){
   const sp = TD().spirit, ms = o.run ? o.end - Date.now() : (o.left || o.mins * 60000);
   const sceneBox = `<div class="tn-qscene" aria-hidden="true">${scene('dawn', 6.3, 400, 240)}</div>`;
@@ -1978,7 +1992,7 @@ function view(){
     ${MOVABLE() ? '<div class="row tn-tocard"><button type="button" class="btn btn-line btn-sm" data-hja="tocard">Back to the Card</button></div>' : ''}
     <div class="tn-bar"><div class="tn-brand"><b>${ic('sprout')}</b>${esc(TNAME())}</div>${nav ? navHtml('top') : ''}<span class="sp"></span>${nav ? `<button type="button" class="tn-iconbtn${S.sec === 'settings' ? ' on' : ''}" data-hja="sec" data-hjv="settings" aria-label="Settings">${ic('gear')}</button>` : ''}</div>
     ${KIT() ? '' : askWho + offer}
-    ${body}${nav ? navHtml('bottom') : ''}${vOv()}</div>`;
+    ${body}${nav ? navHtml('bottom') : ''}${S.ovHome === 'host' ? '' : vOv()}</div>`;
 }
 // ---------- BLD 871: Heart Risk (PREVENT scores from the person's doctor) ----------
 // Shows an example for a healthy adult until the person adds their own 10-year and 30-year scores; then theirs, with history.
@@ -2104,10 +2118,16 @@ async function moveHome(){
   } catch (e){ S.moving = false; toast('The Grounded Way stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
 }
 
+// BLD 881: three homes for what health.js draws. The full view (#hj-root, the Field Guide and older links), one bare section
+// inside the host's element (#hj-bare, from GGHealth.render), and, when no full view is showing, the overlays in their own
+// layer on the page (#hj-ov0), so a guide opened from The Grounded Way's Today plays full screen.
+const vis = el => !!(el && el.isConnected && el.getClientRects().length);
 function rerender(keep){
-  const root = document.getElementById('hj-root'); if (!root){ if (C.render) C.render(); return; }
-  const y = window.scrollY, w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild);
-  if (keep) window.scrollTo(0, y);
+  const y = window.scrollY, root = document.getElementById('hj-root');
+  if (bareOn()){ S.ovHome = 'host'; paintBare(); paintOv(); if (keep) window.scrollTo(0, y); return; }
+  if (vis(root)){ S.ovHome = 'full'; paintOv(); const w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild); if (keep) window.scrollTo(0, y); return; }
+  S.ovHome = 'host'; paintOv(); if (S.ov) return;
+  if (C.render) C.render();
 }
 const toForm = () => setTimeout(() => { const f = document.getElementById('hj-form'); if (f && f.scrollIntoView) f.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 30);
 const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], mark: ['date', 'weight', 'waist', 'rhr', 'pushups', 'pullups', 'mile', 'energy', 'sleep', 'joint', 'note']};
@@ -2136,12 +2156,13 @@ function act(a, v){
     case 'movehere': setPreview(true); S.sec = 'today'; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
     case 'tocard': setPreview(false); rerender(false); window.scrollTo(0, 0); return;
     case 'openhome': location.href = '../home/#tending'; return;
-    case 'sec': S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
+    case 'sec': if (bareOn()){ S.form = null; S.setup = false; S.shopWk = null; S.shopEd = null; S.whyEd = false; S.bare.section = v; S.bare.closed = false; rerender(false); return; }
+      S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
     // BLD 862: Choose What You Use, Settings, My Why, Morning Quiet, and the evening and morning supplements in one tap.
     case 'usetg': { const P = S.pick = S.pick || USE().slice(); S.pick = P.includes(v) ? P.filter(x => x !== v) : PART_IDS.filter(x => P.includes(x) || x === v); rerender(true); return; }
     case 'usesave': { const P = PART_IDS.filter(x => (S.pick || USE()).includes(x)); if (!P.length){ toast('Choose at least one part.'); return; }
       if (!h.set.u){ h.set.remOff = true; if (P.some(x => ['food', 'move', 'labs'].includes(x))) h.set.needSetup = 1; }
-      h.set.use = P; h.set.u = Date.now(); S.pick = null; S.sec = 'today'; S.anim = true; save(); toast('Welcome to Tending.'); rerender(false); window.scrollTo(0, 0); return; }
+      h.set.use = P; h.set.u = Date.now(); S.pick = null; S.sec = 'today'; S.anim = true; save(); toast('Welcome to Tending.'); rerender(false); if (!bareOn()) window.scrollTo(0, 0); return; }
     case 'use': { const P = USE(); h.set.use = P.includes(v) ? P.filter(x => x !== v) : PART_IDS.filter(x => P.includes(x) || x === v); h.set.u = Date.now(); save(); rerender(true); return; }
     case 'bridge': { const b = h.set.bridges = Object.assign({offers: true, oak: false, sober: false}, h.set.bridges || {}); b[v] = !b[v]; h.set.u = Date.now(); save(); rerender(true); return; }
     case 'celebrate': h.set.celebrate = h.set.celebrate === false; h.set.u = Date.now(); save(); rerender(true); return;
@@ -2183,7 +2204,11 @@ function act(a, v){
     case 'pdel': { if (!confirm('Remove this lab panel from this device?')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.health = d.deleted.health || {}; d.deleted.health[v] = Date.now();
       h.panels = h.panels.filter(p => p.id !== v); save(); rerender(true); return; }
     case 'lptable': S.lpTable = !S.lpTable; rerender(true); return;
-    case 'setup': S.setup = true; S.set = null; rerender(false); toForm(); return;
+    case 'setup': S.setup = true; S.set = null; if (bareOn()){ toSetup(); return; } rerender(false); toForm(); return;
+    case 'bareagain': if (S.bare && openInline(S.bare)) rerender(false); return;
+    case 'hhadj': { if (PUB()){ const hs = h.set.house = Object.assign({adults: 1, kids: []}, h.set.house || {}); hs.adults = Math.max(1, Math.min(12, (+hs.adults || 1) + (+v || 0))); h.set.household = hs.adults + arr(hs.kids).length; PA = null; clearShop(); }
+      else h.set.household = Math.max(1, Math.min(12, (+h.set.household || 1) + (+v || 0)));
+      h.set.u = Date.now(); save(); rerender(true); return; }
     case 'setup-cancel': S.setup = false; S.set = null; rerender(false); return;
     case 'whoq': h.set.who = v; if (v === 'Kayti' && !h.set.track) h.set.track = 'practice'; h.set.u = Date.now(); save(); toast('Saved.'); rerender(false); return;
     case 'who': if (S.set){ S.set.who = v; if (v === 'Kayti' && !S.set.trackSet) S.set.track = 'practice'; } rerender(true); return;
@@ -2246,6 +2271,14 @@ const pubDays = () => DAYSETS[+H().set.days] || DAYSETS[3];
 function pubSesKey(d){ const dd = pubDays(), k = dd.indexOf(d.getDay()); if (k < 0) return null; const keys = Object.keys(WK().sessions || {}).slice(0, 4); if (!keys.length) return null;
   const n = Math.max(1, weekNo(d)); return keys[((n - 1) * dd.length + k) % keys.length]; }
 let PA = null;
+// Gentle: its own sessions, with the walk growing week by week (shared with BLD 881's every-level Workouts shelf).
+function gentleWo(L, wk){
+  const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
+  const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
+    if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
+    c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
+  return {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)};
+}
 function pubApp(){
   const L = PLIB(), h = H(), P = TP(); if (!L || !h) return null;
   const s = h.set, wk = Math.max(1, weekNo(new Date())), plan = P ? ensurePlan() : null;
@@ -2257,13 +2290,8 @@ function pubApp(){
   if (tg) app.targets = {sf: tg.sf, pro: tg.pro, fib: tg.fib, sol: tg.sol, sug: tg.sug, cal: null, na: tg.na, est: tg.est};
   // Workouts.
   const wo = {meditation: Object.assign({start: 5, end: 12}, (L.app && L.app.workouts && L.app.workouts.meditation) || {}), motivation: arr(L.motivation)};
-  if (lvl === 'gentle'){
-    const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
-    const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
-      if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; }));
-      c.mins = (c.minsByPhase || {})[String(phaseOf(wk))] || c.mins; ses[i < 4 ? 'ABCD'[i] : (x.id || 'G' + i)] = c; });
-    Object.assign(wo, {sessions: ses, warmup: arr(G.warmup), cooldown: arr(G.cooldown)});
-  } else if (P){
+  if (lvl === 'gentle') Object.assign(wo, gentleWo(L, wk));
+  else if (P){
     const b = P.buildSessions(L.moves, L.templates, {level: lvl, place: s.place || 'home', mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown});
     Object.assign(wo, {sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown});
   }
@@ -2364,7 +2392,7 @@ function ckSave(){
   ['ldl', 'hdl', 'total', 'trig'].forEach(k => { const n = num(lab[k]); if (n != null) rec[k] = n; });
   if (Object.keys(rec).length > 3) h.labs.push(rec);
   PA = null; ensurePlan(); save(); S.ck = null; S.setup = false; S.sec = 'today'; S.anim = true;
-  toast(was ? 'Saved. Your plan follows your answers.' : 'Welcome to Tending.'); rerender(false); window.scrollTo(0, 0);
+  toast(was ? 'Saved. Your plan follows your answers.' : 'Welcome to Tending.'); rerender(false); if (!bareOn()) window.scrollTo(0, 0);
 }
 
 // ---------- Today: My Plan from My Team, the start-up check note, the family's food ----------
@@ -2582,7 +2610,7 @@ function pubSettingsCard(){
 function actPub(a, v){
   const h = H();
   switch (a){
-    case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } rerender(false); window.scrollTo(0, 0); return true;
+    case 'setup': S.setup = true; S.ck = null; ckDraft(); if (v){ const i = ckSteps(S.ck.d).indexOf(v); if (i >= 0) S.ck.i = i; } if (bareOn()){ toSetup(); return true; } rerender(false); window.scrollTo(0, 0); return true;
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
       rerender(true); return true; }
@@ -2635,7 +2663,7 @@ function actPub(a, v){
   return false;
 }
 function clearShop(){ const h = H(), n = foodWeek(new Date()); Object.keys(h.shop || {}).forEach(k => { if (+k >= n) delete h.shop[k]; }); }
-document.addEventListener('input', e => { const t = e.target; if (!t.closest || !t.closest('#hj-root') || !t.dataset.hjck || !S.ck) return;
+document.addEventListener('input', e => { const t = e.target; if (!t.closest || !t.closest(ROOTS) || !t.dataset.hjck || !S.ck) return;
   const path = t.dataset.hjck.split('.'); let o = S.ck.d; for (let i = 0; i < path.length - 1; i++){ o = o[path[i]] = o[path[i]] == null ? {} : o[path[i]]; } o[path[path.length - 1]] = t.value; });
 
 // ---------- the Home's summary ----------
@@ -2652,14 +2680,239 @@ function pubSummary(){
     nextLabs: h.set.nextLabs || '', kidsCount: PUB() ? KIDS().length : 0};
 }
 
+// =====================================================================
+// BLD 881: The Grounded Way, top shelf. The contract with home/home.js (host 'home', public Tending or a moved plan):
+//   GGHealth.today(date) -> [{key, when, hour, title, sub, btn, tint, done, kind}] in day order (done from that day's log);
+//     before Tending is set up, one item: {key: 'setup', title: 'Start Tending', kind: 'setup'}.
+//   GGHealth.act(key) opens an item's guide or marks it; GGHealth.toggle(key) flips its done circle.
+//   GGHealth.week(n) -> {label, days: [{day, date, dinner: {title, key}, move: {title, key}}], shopKey, prepKey} (n: weeks from this one).
+//   GGHealth.render(el, section, {bare: true}) draws one section into el: shop, prep, numbers, settings, log, workouts, quiet,
+//     setup, cook:<key>, move:<key>. GGHealth.counts() -> {recipes, workouts, meditations, practices}.
+// Optional host hooks: C.section(name) when an item asks for a section (act also returns {section}), C.changed() after a save.
+// =====================================================================
+const ROOTS = '#hj-root,#hj-bare,#hj-ov0';
+const TINT = {quiet: '#6B4E8C', move: '#3F6F94', meals: '#4E7D4A', cook: '#A9562A'};
+function bareOn(){ const b = S.bare; return !!(b && vis(b.el)); }
+function want(sec){ if (bareOn()){ S.bare.section = sec; S.bare.closed = false; rerender(false); } else if (C.section){ try { C.section(sec); } catch(e){} } return {section: sec}; }
+function toSetup(){ const b = S.bare; if (b.section !== 'setup') b.back = b.section; b.section = 'setup'; b.closed = false; rerender(false); }
+function paintOv(){
+  let host = document.getElementById('hj-ov0'); const need = S.ov && !S.ov.inline && S.ovHome === 'host';
+  if (!need){ if (host) host.remove(); return; }
+  if (!host){ host = document.createElement('div'); host.id = 'hj-ov0'; document.body.appendChild(host); }
+  host.className = 'tn tn-ovl' + (PUB() ? ' tn-pub' : '') + (TEEN() ? ' tn-teen' : '');
+  host.innerHTML = vOv();
+}
+function paintBare(){
+  const b = S.bare; if (!b || !b.el) return;
+  b.el.innerHTML = `<div id="hj-bare" class="tn tn-bare${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}" data-sec="${esc(b.section)}">${bareBody(b)}</div>`;
+}
+const setupNeeded = () => { const h = H(); return !h || (PUB() ? !h.set.pubDone : (!useSet() || !h.set.u || !!h.set.needSetup)); };
+function bareClose(b, why){ if (b.closed) return; b.closed = true; const cb = b.opts && b.opts.onClose; if (typeof cb === 'function') setTimeout(() => { try { cb(why || b.section); } catch(e){} }, 0); }
+function bareBody(b){
+  const lib = FLDH(), h = H(); if (!lib || !h) return '';
+  if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
+  const sec = String(b.section || ''), base = sec.split(':')[0], box = (cls, html) => `<div class="tn-sec ${cls}">${html}</div>`;
+  if (base !== 'setup' && setupNeeded()) return vSetupBare(b);
+  switch (base){
+    case 'shop': return box('a-kitchen', vShop());
+    case 'prep': return box('a-kitchen', vPrep());
+    case 'numbers': return box('a-numbers', (PUB() ? vLabsP() : vNumbers()) + vRisk());
+    case 'journey': return box('a-numbers', vJourney());
+    case 'settings': return vSettings(true);
+    case 'log': return vLog((b.opts || {}).mode);
+    case 'plate': return box('a-plate', vPlate('full') + (PUB() ? pubAims() : aims()));
+    case 'workouts': return vWorkouts();
+    case 'quiet': return vQuietShelf();
+    case 'setup': return vSetupBare(b);
+    case 'week': return box('a-week', vWeek());
+    case 'learn': return box('a-today', vPlan(lib, 'food') + vPlan(lib, 'fitness') + SOBER);
+    case 'team': return PUB() ? vTeam() : '';
+    case 'kids': return PUB() ? vKids() : '';
+    case 'kidview': return PUB() ? vKidView() : '';
+    case 'cook': case 'move': return S.ov && S.ov.inline ? vOv() : (bareClose(b, 'closed'), `<div class="tn-card tn-bclosed"><h3>Well done.</h3><p class="tn-sub">It is here whenever you want it again.</p><button type="button" class="tn-btn sm line" data-hja="bareagain">${ic('play')}Open Again</button></div>`);
+  }
+  return box('a-today', vSettings(true));
+}
+function vSetupBare(b){
+  if (S.setup || setupNeeded()){ if (PUB()) return vCheck(); if (!useSet()) return vChoose(); return `<div class="tn-sec a-numbers">${vSetup()}</div>`; }
+  if (b.back && b.back !== 'setup'){ b.section = b.back; b.back = null; return bareBody(b); }
+  bareClose(b, 'setup');
+  return `<div class="tn-card tn-bclosed"><h3>Tending is ready.</h3><p class="tn-sub">Today shows your plan, one card at a time.</p></div>`;
+}
+// The plate or a note, from Today's green + button.
+function vLog(mode){
+  const h = H(), N = h.notes.slice().sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.u || 0) - (a.u || 0)).slice(0, 3);
+  const plate = mode === 'note' ? '' : vPlate('today');
+  const note = mode === 'plate' && plate ? '' : `<div class="tn-card p-trunk" id="tn-note"><div class="tn-k">A Note for Today</div><p class="tn-sub">What you noticed, what felt strong, what you are growing toward.</p>
+    <label class="hj-fld"><span>My note</span><textarea id="hj-note" rows="4" placeholder="Today I...">${esc(S.draft || '')}</textarea></label><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="note">${ic('check')}Save Note</button></div>
+    ${N.length ? `<div class="tn-notes">${N.map(n => `<div class="hj-entry"><b>${nice(n.date)}</b><p>${esc(n.text).replace(/\n/g, '<br>')}</p></div>`).join('')}</div>` : ''}</div>`;
+  return `<div class="tn-sec a-plate">${plate}${note}</div>`;
+}
+function voiceCard(){ return `<div class="tn-card" id="tn-voice"><div class="tn-hd">${badge('bell', 'a-move')}<div><div class="tn-k a-move">Voice and Music</div><div class="tn-sub">The calm voice, the music, and the beeps for workouts, quiet times, and the kitchen guide.</div></div></div>${toggles(null)}</div>`; }
+function houseCard(){
+  if (KIT()) return ''; const h = H(), s = h.set, pub = PUB(), kids = pub ? KIDS().length : 0, a = pub ? Math.max(1, +((s.house || {}).adults) || 1) : Math.max(1, +s.household || 1);
+  return `<div class="tn-card" id="tn-hh"><div class="tn-hd">${badge('people', 'p-branches')}<div><div class="tn-k p-branches">Household</div><div class="tn-sub">Recipes and the shopping list fit your table.</div></div></div>
+    <div class="tn-hhrow"><span>${pub ? 'Grown-ups' : 'People who eat at home'}</span><div class="hj-stock"><button type="button" class="chip" data-hja="hhadj" data-hjv="-1" aria-label="One fewer">&minus;</button><span><b>${a}</b></span><button type="button" class="chip" data-hja="hhadj" data-hjv="1" aria-label="One more">+</button></div></div>
+    ${pub ? `<p class="tn-sub">${kids ? kids + (kids === 1 ? ' child' : ' children') + ' in Family Food, a table of ' + (a + kids) + '.' : 'A table of ' + a + '.'}</p><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="who">${ic('people')}Change My Household</button></div>` : ''}</div>`;
+}
+// ---------- every workout at every level, with art (BLD 881) ----------
+// Chris, October 28, 2026: "make sure we use our custom images for all cards ... we need to stay on brand". Every card picture is one
+// of Grounded's own paintings (shared/heroes/way, shared/cards); the animated stage stays inside the guided players only.
+const WAY = n => asset(/\//.test(n) ? 'shared/' + n : 'shared/heroes/way/' + n + '.webp');
+const ART_MOVE = ['tend-move', 'home-morning-narrow', 'tend-spirit', 'welcome-wide', 'tend-people', 'home-evening-narrow', 'tend-mind'];
+const ART_QUIET = ['tend-mind', 'tend-spirit', 'cards/meditation.webp', 'home-morning-narrow', 'home-evening-narrow', 'welcome-wide', 'tend-people'];
+const ITEM_ART = {quiet: 'home-morning-narrow', meditation: 'tend-mind', workout: 'tend-move', practice: 'home-morning-narrow', mark: 'tend-people', cook: 'tend-body', meal: 'tend-fruit',
+  headstart: 'home-evening-narrow', shop: 'recipes-narrow', prep: 'tend-people', supplements: 'tend-body', setup: 'welcome-wide'};
+const moveArt = id => WAY(ART_MOVE[Math.max(0, 'ABCDEFGH'.indexOf(String(id || 'A').slice(-1).toUpperCase())) % ART_MOVE.length]);
+const artImg = (i, set) => { const L = set || ART_MOVE; return `<img src="${esc(WAY(L[i % L.length]))}" alt="" loading="lazy" decoding="async" width="600" height="600">`; };
+const artCard = (i, key, kick, title, sub, cls, set) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(i, set)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span>${sub ? `<span class="tn-meta">${esc(sub)}</span>` : ''}</span></button>`;
+let LS = null;
+function levelSets(){
+  const L = PLIB(), P = TP(), w = WK();
+  if (!PUB() || !L){ const ses = w.sessions || {}; return Object.keys(ses).length ? [{id: 'mine', name: 'My Workouts', mine: true, sessions: ses, warmup: w.warmup, cooldown: w.cooldown}] : []; }
+  const s = H().set, wk = Math.max(1, weekNo(new Date())), cur = s.level || 'root', sig = JSON.stringify([s.place, s.mins, cur, wk]);
+  if (LS && LS.L === L && LS.sig === sig) return LS.list;
+  const list = [];
+  LVL.forEach(([id, name]) => {
+    if (id === cur) list.unshift({id, name, mine: true, sessions: w.sessions || {}, warmup: w.warmup, cooldown: w.cooldown});
+    else if (id === 'gentle') list.push(Object.assign({id, name}, gentleWo(L, wk)));
+    else if (P){ const b = P.buildSessions(L.moves, L.templates, {level: id, place: s.place || 'home', mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown}); list.push({id, name, sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown}); }
+  });
+  LS = {L, sig, list}; return list;
+}
+function buildLevelWork(lvl, id){
+  const L = levelSets().find(x => x.id === lvl), ses = L && (L.sessions || {})[id]; if (!ses) return null;
+  if (L.mine) return buildWork(id);
+  const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n), L);
+  let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
+  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count};
+}
+function vWorkouts(){
+  const h = H(), n = Math.max(1, weekNo(new Date())), sets = levelSets(), pr = arr((PR() || {}).sessions); let i = 0;
+  const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
+    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightWk(n) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>`; }).join('');
+  const prac = pr.length ? `<h3 class="tn-h3">Daily Practice</h3><div class="tn-kgrid">${pr.map(x => artCard(i++, 'pracid:' + x.id, x.mins ? x.mins + ' min' : 'Practice', x.title, x.focus || '', 'a-move')).join('')}</div>` : '';
+  const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : '';
+  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : ''}${lv}${prac}${recent}</div>`;
+}
+function vQuietShelf(){
+  const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;
+  return `<div class="tn-sec p-bark">${planCard({cls: 'p-roots', img: WAY(ITEM_ART.quiet), done: !!c.quiet, scene: 'dawn', hour: 6.3, time: 'Morning · ' + qm + ' min', title: t.spirit.h, sub: t.spirit.invite, btn: 'Quiet Timer', ba: 'quiet', bv: '', bi: 'clock', ck: tck('check', 'quiet', c.quiet, 'Done')})}
+    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map(x => artCard(i++, 'medid:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', ART_QUIET)).join('')}</div>` : ''}</div>`;
+}
+// ---------- the guides, built without opening ----------
+function ovFor(key){
+  const [k, a, b] = String(key || '').split(':');
+  if (k === 'work') return buildWork(a);
+  if (k === 'wl') return buildLevelWork(a, b);
+  if (k === 'prac') return buildPractice();
+  if (k === 'pracid') return buildPractice(a);
+  if (k === 'med') return MED() ? buildMed() : null;
+  if (k === 'medid') return MED() ? buildMed(a) : null;
+  if (k === 'quiet') return quietOv();
+  if (k === 'cook') return cookOv(a, b);
+  if (k === 'idea') return ideaOv(a, b);
+  if (k === 'prep') return prepOv(a, +b);
+  if (k === 'head') return headOv(a);
+  return null;
+}
+function endInline(){ const o = S.ov; if (o && o.inline){ o.dead = true; o.skip = true; const V = VO(); if (V){ V.stop(); V.music(null); } S.ov = null; wake(false); } }
+function openInline(b){
+  const sec = String(b.section || ''), cook = /^cook:/.test(sec), key = sec.replace(/^(cook|move):/, '');
+  const o = ovFor(cook ? (/^cook:/.test(key) ? key : 'cook:' + key) : (/^(work|wl|prac|pracid|med|medid|quiet)(:|$)/.test(key) ? key : 'work:' + key));
+  b.closed = false; if (!o) return false; o.inline = true; S.ov = o; wake(true); tick(); return true;
+}
+// ---------- Today, one list in day order ----------
+function dayOf(date){ if (date instanceof Date && !isNaN(date)) return new Date(date); const p = parseD(date); if (p){ const n = new Date(); p.setHours(n.getHours(), n.getMinutes()); return p; } return new Date(); }
+function apiToday(date){
+  const lib = FLDH(), h = H(); if (!lib || !h) return [];
+  const t = TD();
+  if (setupNeeded()) return [{key: 'setup', when: 'Today', hour: 0, title: t.intro.start, sub: t.intro.line, btn: t.intro.start, tint: TINT.meals, done: false, kind: 'setup', image: WAY(ITEM_ART.setup)}];
+  const d = dayOf(date), k = ymd(d), c = (h.days[k] || {}).checks || {}, out = [];
+  const push = o => out.push(Object.assign({when: '', sub: '', btn: 'Open', done: false}, o));
+  if (U('spirit')){ const qm = +h.set.quietMins || t.spirit.minutes[0]; push({key: 'quiet', when: 'Morning', hour: 6, title: t.spirit.h, sub: qm + ' minutes. ' + t.spirit.invite, btn: 'Begin', tint: TINT.quiet, done: !!c.quiet, kind: 'quiet'}); }
+  agenda(d).forEach(x => { const p = partOf(x); if (!p || !U(p)) return; const base = {key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: x.btn, done: isDone(d, x.key)};
+    if (x.k === 'work' || x.k === 'prac') push(Object.assign(base, {tint: TINT.move, kind: x.k === 'work' ? 'workout' : 'practice'}));
+    else if (x.k === 'med') push(Object.assign(base, {btn: 'Begin', tint: TINT.quiet, kind: 'meditation'}));
+    else if (x.k === 'mark') push(Object.assign(base, {tint: TINT.move, kind: 'mark'}));
+    else if (x.k === 'cook'){ const dn = dinnerFor(d); push(Object.assign(base, {when: 'Tonight', btn: dn && dn.leftover ? 'Open' : 'Cook It', tint: TINT.cook, kind: 'cook'})); }
+    else if (x.k === 'shop') push(Object.assign(base, {tint: TINT.cook, kind: 'shop'}));
+    else if (x.k === 'prep') push(Object.assign(base, {when: /^Monthly/.test(x.kick) ? 'Sunday' : x.kick, tint: TINT.cook, kind: 'prep'})); });
+  if (U('food')){
+    const L = arr(((APP() || {}).dinners || {}).lunches);
+    if (L.length){ const i = ((d.getDay() + 6) % 7) % L.length, x = L[i], key = 'idea:lunches:' + i;
+      push({key, when: 'Midday', hour: 12, title: x.name, sub: (x.mins ? x.mins + ' minutes' : 'Lunch') + (nOk(x.nut) ? ', ' + nSf(x.nut) : ''), btn: arr(x.steps).length ? 'Make It' : 'Done', tint: TINT.meals, done: isDone(d, key), kind: 'meal'}); }
+    const dn = dinnerFor(addD(d, 1));
+    if (dn && !dn.leftover){ const key = 'head:' + k, th = dn.thaw && dn.thaw.item;
+      push({key, when: 'Tonight', hour: 20, title: 'Head Start for Tomorrow', sub: th ? 'Move ' + th + ' from the freezer to the fridge for ' + dn.name + '.' : 'Tomorrow is ' + dn.name + '. A quick look tonight makes dinner easy.', btn: 'Look Ahead', tint: TINT.cook, done: isDone(d, key), kind: 'headstart'}); }
+  }
+  if (U('supps')){ const sp = supps(); ['morning', 'evening'].forEach(w => { const L = sp.filter(s => (s.when === 'evening') === (w === 'evening')); if (!L.length) return;
+    push({key: 'supp:' + w, when: w === 'morning' ? 'This morning' : 'This evening', hour: w === 'morning' ? 6.2 : 20.5, title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', tint: TINT.meals, done: L.every(s => c[suppId(s)]), kind: 'supplements'}); }); }
+  out.forEach(x => { x.image = x.kind === 'workout' ? moveArt(x.key) : WAY(ITEM_ART[x.kind] || 'tend-body'); });
+  return out.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
+}
+function apiToggle(key){
+  const h = H(); key = String(key || ''); if (!h || !key || key === 'setup') return null;
+  const t = today(), day = () => { const d = h.days[t] = h.days[t] || {checks: {}}; d.checks = d.checks || {}; return d; };
+  let on;
+  if (key === 'quiet'){ const d = day(); on = d.checks.quiet = !d.checks.quiet; d.u = Date.now(); save(); }
+  else if (/^supp:/.test(key)){ const d = day(), w = key.slice(5), L = supps().filter(s => (s.when === 'evening') === (w === 'evening')); on = !L.every(s => d.checks[suppId(s)]); L.forEach(s => { d.checks[suppId(s)] = on; }); d.u = Date.now(); save(); }
+  else { const l = logOf(new Date()); if (l[key]) delete l[key]; else l[key] = Date.now(); on = !!l[key]; l.u = Date.now();
+    if (on && /^(work|wl):/.test(key)) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
+  rerender(true); return {done: !!on};
+}
+const ITEM_RE = /^(setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem)(:|$)/;
+function apiAct(key){
+  key = String(key || ''); const [k, a, b] = key.split(':'); if (!H() || !FLDH()) return null;
+  if (key === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); if (bareOn()){ toSetup(); return {section: 'setup'}; } return want('setup'); }
+  if (k === 'shop'){ S.shopWk = +a || null; S.shopEd = null; return want('shop'); }
+  if (k === 'prepsec'){ S.prepWk = +a || null; return want('prep'); }
+  if (k === 'supp' || k === 'out' || k === 'y' || k === 'rem') return apiToggle(key);
+  if (k === 'idea' && !ideaOv(a, b)) return apiToggle(key);
+  const o = ovFor(key); if (o){ openOv(o); return {overlay: o.k, key: o.key}; }
+  return apiToggle(key);
+}
+function apiWeek(n){
+  const h = H(); if (!FLDH() || !h || setupNeeded()) return null;
+  const off = Math.round(+n || 0), t0 = day0(new Date()), mon = addD(monOf(t0), off * 7), N = weekNo(mon), track = h.set.track || 'strength';
+  const fw = off === 0 ? foodWeek(t0) : Math.max(1, N);
+  const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
+    const ses = U('move') && track !== 'practice' && wn >= 1 ? sesFor(d) : null, pr = U('move') && track !== 'strength' && !ses ? practiceFor(d) : null;
+    const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
+    return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0),
+      dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(ITEM_ART.cook)} : null,
+      move: ses ? {title: ses.title || 'Session ' + ses.id, key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id)} : pr ? {title: pr.title || 'Daily Practice', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice)} : null}; });
+  const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
+  return {n: Math.max(1, N), label: 'Week ' + Math.max(1, N), start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+    food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
+    shopImage: WAY(ITEM_ART.shop), prepImage: sp ? WAY(ITEM_ART.prep) : null,
+    prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
+    bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, days};
+}
+function apiRender(el, section, opts){
+  if (!el || !FLDH() || !H()) return false;
+  opts = Object.assign({bare: true}, opts || {}); const sec = String(section || 'settings'), base = sec.split(':')[0], arg = sec.slice(base.length + 1);
+  endInline();
+  S.bare = {el, section: sec, opts, closed: false}; S.form = null; S.edit = null; S.shopEd = null; S.whyEd = false; S.sureReset = false;
+  if (base === 'shop') S.shopWk = +arg || +opts.week || S.shopWk || null;
+  if (base === 'prep') S.prepWk = +arg || +opts.week || S.prepWk || null;
+  if (base === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); } else S.setup = false;
+  if (base === 'cook' || base === 'move') openInline(S.bare);
+  S.ovHome = 'host'; paintBare(); paintOv(); return true;
+}
+function apiCounts(){
+  if (!FLDH() || !H()) return {recipes: 0, workouts: 0, meditations: 0, practices: 0};
+  return {recipes: recipesAll().length, workouts: levelSets().reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0), meditations: arr((MED() || {}).sessions).length, practices: arr((PR() || {}).sessions).length};
+}
+
 // ---------- events ----------
 document.addEventListener('click', e => {
-  const t = e.target.closest && e.target.closest('[data-hja]'); if (!t || !D() || !t.closest('#hj-root')) return;
+  const t = e.target.closest && e.target.closest('[data-hja]'); if (!t || !D() || !t.closest(ROOTS)) return;
   e.preventDefault(); S.pop = t.classList.contains('tn-ck') ? t.dataset.hja + '|' + (t.dataset.hjv || '') : null; act(t.dataset.hja, t.dataset.hjv || ''); S.pop = null;
 });
-document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov && document.getElementById('hj-root')) act('ovclose'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-addname') act('shopadd'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-spname') act('spadd'); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && S.ov && document.querySelector(ROOTS)) act('ovclose'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-addname') act('shopadd'); if (e.key === 'Enter' && e.target && e.target.id === 'hj-spname') act('spadd'); });
 document.addEventListener('input', e => {
-  const t = e.target; if (!t.closest || !t.closest('#hj-root')) return;
+  const t = e.target; if (!t.closest || !t.closest(ROOTS)) return;
   if (t.dataset.hjf && S.form) S.form[t.dataset.hjf] = t.value;
   if (t.dataset.hjpv && S.pv){ S.pv[t.dataset.hjpv] = t.value; const o = document.getElementById('hj-pv-out'); if (o) o.innerHTML = pvOut(pvResult(S.pv)); const b = document.querySelector('[data-hja="pvsave"]'); if (b) b.disabled = pvResult(S.pv).r10 == null; }
   if (t.dataset.hjs && S.set) S.set[t.dataset.hjs] = t.value;
@@ -2683,9 +2936,9 @@ document.addEventListener('toggle', e => { const d = e.target; if (d && d.datase
 // ---------- styles ----------
 const CSS = `
 /* BLD 871: My Heart Risk. Status steps from the validated dataviz palette; every band also carries its name. */
-#hj-root{--rk-good:#0ca30c;--rk-warn:#fab219;--rk-ser:#ec835a;--rk-crit:#d03b3b;--rk-ev:#B5452F;--rk-empty:#E3D7C2;}
-:root[data-theme="dark"] #hj-root{--rk-ev:#E0705A;--rk-empty:#3D342B;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--rk-ev:#E0705A;--rk-empty:#3D342B;}}
+:is(#hj-root,#hj-bare,#hj-ov0){--rk-good:#0ca30c;--rk-warn:#fab219;--rk-ser:#ec835a;--rk-crit:#d03b3b;--rk-ev:#B5452F;--rk-empty:#E3D7C2;}
+:root[data-theme="dark"] :is(#hj-root,#hj-bare,#hj-ov0){--rk-ev:#E0705A;--rk-empty:#3D342B;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(#hj-root,#hj-bare,#hj-ov0){--rk-ev:#E0705A;--rk-empty:#3D342B;}}
 .hj-rk-tiles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:10px 0;}
 .hj-rk-tiles>div{border:1px solid var(--line);border-radius:14px;padding:12px 14px;min-width:0;}
 .hj-rk-tiles b{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-size:38px;line-height:1;}
@@ -2709,9 +2962,9 @@ const CSS = `
 .hj-rk-key i{display:inline-block;width:9px;height:9px;border-radius:3px;margin-right:5px;}
 @media (max-width:520px){.hj-rk-tiles,.hj-rk-arr{grid-template-columns:1fr;}}
 
-#hj-root{min-width:0;--hj:#5F7D48;--hjcalm:#6C7FA6;--lpc:#4A8A2C;--lpm:#3D6FCC;}
-:root[data-theme="dark"] #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}}
+:is(#hj-root,#hj-bare,#hj-ov0){min-width:0;--hj:#5F7D48;--hjcalm:#6C7FA6;--lpc:#4A8A2C;--lpm:#3D6FCC;}
+:root[data-theme="dark"] :is(#hj-root,#hj-bare,#hj-ov0){--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(#hj-root,#hj-bare,#hj-ov0){--hj:#8FB073;--hjcalm:#9DB0D6;--lpc:#5E9E3A;--lpm:#5B8BE0;}}
 .hj-hero{position:relative;border-radius:20px;overflow:hidden;margin:0 0 14px;min-height:220px;display:flex;align-items:flex-end;background:#3E5A2E;}
 .hj-hero picture,.hj-hero img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;}
 .hj-hero::after{content:'';position:absolute;inset:0;background:linear-gradient(180deg,rgba(25,35,18,.05) 20%,rgba(25,35,18,.72));}
@@ -2726,7 +2979,7 @@ const CSS = `
 .hj-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px;}@media(max-width:760px){.hj-g2{grid-template-columns:minmax(0,1fr);}}
 .hj-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 12px;}@media(max-width:700px){.hj-g3{grid-template-columns:repeat(2,minmax(0,1fr));}}
 .hj-fld{display:block;min-width:0;margin:6px 0;}.hj-fld span{display:block;font-size:14px;color:var(--ink-soft);margin-bottom:3px;}.hj-fld input{width:100%;min-width:0;}
-#hj-root textarea{width:100%;min-width:0;}
+:is(#hj-root,#hj-bare,#hj-ov0) textarea{width:100%;min-width:0;}
 .hj-sub{color:var(--ink-soft);font-size:15.5px;margin:6px 0 10px;}
 .hj-big{font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:48px;line-height:1;}
 .hj-note{background:var(--bg-deep);border-left:4px solid var(--hj);border-radius:10px;padding:12px 14px;margin:0 0 14px;font-size:15px;}
@@ -2892,9 +3145,9 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){.hj-ovb.hj-in,.hj-breath,.hj-stagebox .hj-steam{animation:none;}.hj-ring{transition:none;}}
 /* BLD 861: Today's Plate. Meter states carry an icon and a word; getting close and past also wear a stripe, so state never rests on color alone.
    State colors checked with the dataviz palette validator on the card surfaces (normal vision separation passes; green and amber lean on the icon, word, and stripe). */
-#hj-root{--mok:#4A8A2C;--mclose:#C2740C;--mpast:#8E5BA6;--mbuild:var(--ink-soft);}
-:root[data-theme="dark"] #hj-root{--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root{--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}}
+:is(#hj-root,#hj-bare,#hj-ov0){--mok:#4A8A2C;--mclose:#C2740C;--mpast:#8E5BA6;--mbuild:var(--ink-soft);}
+:root[data-theme="dark"] :is(#hj-root,#hj-bare,#hj-ov0){--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(#hj-root,#hj-bare,#hj-ov0){--mok:#5E9E3A;--mclose:#C47A1C;--mpast:#A77BC2;}}
 .hj-plate{padding-bottom:12px;}
 .hj-mts0{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.6fr);gap:12px 18px;align-items:start;margin:2px 0 4px;}@media(max-width:700px){.hj-mts0{grid-template-columns:minmax(0,1fr);}}
 .hj-mtg{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px 14px;}@media(max-width:700px){.hj-mtg{grid-template-columns:repeat(2,minmax(0,1fr));}}
@@ -2939,15 +3192,15 @@ const CSS = `
 /* BLD 862: Tending. One accent per section and per tree part (a strong --c and a soft --cs, tuned for light and dark), cards,
    rings, checks, the hero sky, and section navigation (a bottom bar on phones, pills at 1000 and up). Motion turns off under
    prefers-reduced-motion. */
-#hj-root.tn{--t-today:#B87A1C;--t-today-s:#F6E7CC;--t-week:#3F6F94;--t-week-s:#DDE8F0;--t-plate:#4E7D4A;--t-plate-s:#E0ECD8;--t-kitchen:#A9562A;--t-kitchen-s:#F4E0D2;
+:is(#hj-root,#hj-bare,#hj-ov0).tn{--t-today:#B87A1C;--t-today-s:#F6E7CC;--t-week:#3F6F94;--t-week-s:#DDE8F0;--t-plate:#4E7D4A;--t-plate-s:#E0ECD8;--t-kitchen:#A9562A;--t-kitchen-s:#F4E0D2;
   --t-move:#B83C0A;--t-move-s:#F8DFD2;--t-numbers:#6E5A8A;--t-numbers-s:#E9E3F0;--t-roots:#7A4E2D;--t-roots-s:#EFE2D6;--t-trunk:#8B5E1A;--t-trunk-s:#F3E6CC;--t-bark:#7A3FA8;--t-bark-s:#EEE3F6;
   --t-branches:#3F6F94;--t-branches-s:#DDE8F0;--t-leaves:#4E7D4A;--t-leaves-s:#E0ECD8;--t-fruit:#B5452F;--t-fruit-s:#F6DED6;--t-on:#FFFFFF;--t-card2:#FBF5EA;
   --t-shadow:0 1px 2px rgba(60,40,20,.06),0 8px 24px rgba(60,40,20,.08);--t-shadow-up:0 2px 4px rgba(60,40,20,.08),0 18px 40px rgba(60,40,20,.14);--c:var(--t-today);--cs:var(--t-today-s);}
-:root[data-theme="dark"] #hj-root.tn{--t-today:#EDB85E;--t-today-s:#43341B;--t-week:#94BAD8;--t-week-s:#223446;--t-plate:#9CCB8A;--t-plate-s:#26381F;--t-kitchen:#F0A57C;--t-kitchen-s:#47291B;
+:root[data-theme="dark"] :is(#hj-root,#hj-bare,#hj-ov0).tn{--t-today:#EDB85E;--t-today-s:#43341B;--t-week:#94BAD8;--t-week-s:#223446;--t-plate:#9CCB8A;--t-plate-s:#26381F;--t-kitchen:#F0A57C;--t-kitchen-s:#47291B;
   --t-move:#FF9A5C;--t-move-s:#4A2516;--t-numbers:#BCA9DB;--t-numbers-s:#342B42;--t-roots:#D9A982;--t-roots-s:#3E2D20;--t-trunk:#E3B25A;--t-trunk-s:#43341B;--t-bark:#CBA6F2;--t-bark-s:#372747;
   --t-branches:#94BAD8;--t-branches-s:#223446;--t-leaves:#9CCB8A;--t-leaves-s:#26381F;--t-fruit:#F0957C;--t-fruit-s:#47241C;--t-on:#1A1612;--t-card2:#2B2119;
   --t-shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);--t-shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.4);}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root.tn{--t-today:#EDB85E;--t-today-s:#43341B;--t-week:#94BAD8;--t-week-s:#223446;--t-plate:#9CCB8A;--t-plate-s:#26381F;--t-kitchen:#F0A57C;--t-kitchen-s:#47291B;
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(#hj-root,#hj-bare,#hj-ov0).tn{--t-today:#EDB85E;--t-today-s:#43341B;--t-week:#94BAD8;--t-week-s:#223446;--t-plate:#9CCB8A;--t-plate-s:#26381F;--t-kitchen:#F0A57C;--t-kitchen-s:#47291B;
   --t-move:#FF9A5C;--t-move-s:#4A2516;--t-numbers:#BCA9DB;--t-numbers-s:#342B42;--t-roots:#D9A982;--t-roots-s:#3E2D20;--t-trunk:#E3B25A;--t-trunk-s:#43341B;--t-bark:#CBA6F2;--t-bark-s:#372747;
   --t-branches:#94BAD8;--t-branches-s:#223446;--t-leaves:#9CCB8A;--t-leaves-s:#26381F;--t-fruit:#F0957C;--t-fruit-s:#47241C;--t-on:#1A1612;--t-card2:#2B2119;
   --t-shadow:0 1px 2px rgba(0,0,0,.3),0 10px 28px rgba(0,0,0,.28);--t-shadow-up:0 2px 6px rgba(0,0,0,.35),0 20px 44px rgba(0,0,0,.4);}}
@@ -2973,7 +3226,7 @@ const CSS = `
 .tn-bnav button{display:flex;flex-direction:column;align-items:center;gap:3px;width:100%;padding:4px 0;background:none;border:0;cursor:pointer;color:var(--ink-soft);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:12.5px;letter-spacing:.5px;text-transform:uppercase;min-height:52px;}
 .tn-bnav .ic{display:grid;place-items:center;width:46px;height:30px;border-radius:999px;font-size:21px;transition:background .25s ease,color .25s ease;}
 .tn-bnav button[aria-current="page"]{color:var(--c);}.tn-bnav button[aria-current="page"] .ic{background:var(--cs);color:var(--c);}
-@media (max-width:999px){#hj-root.tn{padding-bottom:84px;}body:has(.tn-bnav) .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px));}}
+@media (max-width:999px){:is(#hj-root,#hj-bare,#hj-ov0).tn{padding-bottom:84px;}body:has(.tn-bnav) .toast{bottom:calc(92px + env(safe-area-inset-bottom,0px));}}
 @media (min-width:1000px){.tn-bnav{display:none;}.tn-top{display:flex;flex-wrap:wrap;gap:6px;margin-left:16px;min-width:0;}
   .tn-top button{display:inline-flex;align-items:center;gap:8px;padding:8px 14px;border-radius:999px;border:1px solid transparent;background:none;color:var(--ink-soft);cursor:pointer;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:.8px;text-transform:uppercase;min-height:42px;}
   .tn-top button .tn-i{font-size:19px;color:var(--c);}.tn-top button:hover{border-color:var(--line);color:var(--ink);}
@@ -3202,13 +3455,13 @@ const CSS = `
 .tn-gimg img{display:block;width:100%;height:100%;object-fit:cover;}
 .tn-gimg.big{width:64px;height:64px;border-radius:19px;}
 /* BLD 866: public Tending. Base pieces a public host page may lack, scoped to public Tending only */
-#hj-root.tn-pub section{padding:0;border-top:0;background:none;}
-#hj-root.tn-pub .tn-hero .day{font-size:clamp(44px,19cqw,112px);line-height:.88;margin:10px 0 4px;}
-#hj-root.tn-pub .tn-head h2{font-size:clamp(32px,7vw,42px);}#hj-root.tn-pub .tn-grp h2{font-size:30px;}
-#hj-root.tn-pub .hj-sub{margin:6px 0 10px;}#hj-root.tn-pub .tn-kv h2{font-size:clamp(38px,9vw,60px);}#hj-root.tn-pub .tn-kvc h3{font-size:clamp(28px,6vw,38px);}
-#hj-root.tn-pub{--ok:#3F7F3A;--okb:#CFE5C4;--t-good:#3F8A47;--t-ok:#8DB257;--t-watch:#D69A2D;--t-high:#C4553B;}
-:root[data-theme="dark"] #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}
-@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-root.tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub section{padding:0;border-top:0;background:none;}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .tn-hero .day{font-size:clamp(44px,19cqw,112px);line-height:.88;margin:10px 0 4px;}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .tn-head h2{font-size:clamp(32px,7vw,42px);}:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .tn-grp h2{font-size:30px;}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .hj-sub{margin:6px 0 10px;}:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .tn-kv h2{font-size:clamp(38px,9vw,60px);}:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .tn-kvc h3{font-size:clamp(28px,6vw,38px);}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub{--ok:#3F7F3A;--okb:#CFE5C4;--t-good:#3F8A47;--t-ok:#8DB257;--t-watch:#D69A2D;--t-high:#C4553B;}
+:root[data-theme="dark"] :is(#hj-root,#hj-bare,#hj-ov0).tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) :is(#hj-root,#hj-bare,#hj-ov0).tn-pub{--t-good:#5FAE62;--t-ok:#A8C66E;--t-watch:#E2AE4A;--t-high:#E07A5E;}}
 .tn-pub .btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:16px;letter-spacing:1px;text-transform:uppercase;border-radius:30px;padding:12px 22px;border:1px solid transparent;cursor:pointer;min-height:46px;text-decoration:none;}
 .tn-pub .btn-gold{background:var(--gold);color:#fff;}.tn-pub .btn-line{background:var(--card);border-color:var(--line);color:var(--ink);}.tn-pub .btn-sm{min-height:40px;padding:8px 16px;font-size:14px;}
 .tn-pub .btn[disabled]{opacity:.5;cursor:default;}
@@ -3217,7 +3470,7 @@ const CSS = `
 .tn-pub .linkbtn{background:none;border:0;color:var(--gold);font-weight:600;cursor:pointer;text-decoration:underline;text-underline-offset:3px;font:inherit;min-height:40px;}
 .tn-pub .row{display:flex;gap:10px;flex-wrap:wrap;align-items:center;}.tn-pub .spread{display:flex;gap:10px;justify-content:space-between;align-items:center;flex-wrap:wrap;}
 .tn-pub .chip{border:1px solid var(--line);background:var(--card);border-radius:30px;padding:9px 15px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink-soft);font-family:inherit;}
-#hj-root.tn-pub .chip[aria-pressed="true"],#hj-root.tn-pub .chip.on{background:var(--c,var(--t-leaves));border-color:var(--c,var(--t-leaves));color:var(--t-on);}
+:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .chip[aria-pressed="true"],:is(#hj-root,#hj-bare,#hj-ov0).tn-pub .chip.on{background:var(--c,var(--t-leaves));border-color:var(--c,var(--t-leaves));color:var(--t-on);}
 .tn-pub input,.tn-pub select,.tn-pub textarea{font:inherit;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:10px 12px;min-height:46px;max-width:100%;}
 .tn-pub .chip small{display:block;font-weight:400;font-size:12.5px;}
 /* the start-up check */
@@ -3277,6 +3530,16 @@ const CSS = `
 .tn-rbc.on{border-color:var(--rc,#4C9A4A);background:color-mix(in srgb,var(--rc,#4C9A4A) 30%,var(--card));transform:scale(1.02);}
 .tn-rbc.play{--rc:#2AA8B8;}
 .tn-cheer{font-family:'Cormorant Garamond',Georgia,serif;font-size:30px;font-weight:700;text-align:center;margin:14px 0 0;}
+/* BLD 881: one section inside a sheet (#hj-bare), and the guides' own full-screen layer (#hj-ov0). */
+#hj-bare.tn.tn-bare{padding-bottom:0;min-width:0;}
+#hj-ov0.tn.tn-ovl{padding:0;margin:0;height:0;}
+.tn-bare .tn-sec{margin-top:0;}
+.hj-ov.hj-st.hj-inl{position:relative;inset:auto;z-index:auto;overflow:visible;border-radius:20px;padding:0 16px;}
+.tn-kc.tn-art .ill img,.tn-scene>img{width:100%;height:100%;object-fit:cover;display:block;}
+.tn-mine{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--c);margin-left:8px;}
+.tn-hhrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 4px;}
+.tn-bclosed{text-align:center;}.tn-bclosed .tn-btn{margin-top:10px;}
+.tn-notes{margin-top:12px;}
 `;
 (function(){ const s = document.createElement('style'); s.id = 'hj-css'; s.textContent = CSS; document.head.appendChild(s); })();
 
@@ -3313,7 +3576,10 @@ window.GGHealth = {
     ['plan', 'team', 'kids'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
-  state: S, act, allLines, LN,
+  // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
+  act(a, v){ if (arguments.length < 2 && ITEM_RE.test(String(a || ''))) return apiAct(a); return act(a, v); },
+  today: apiToday, toggle: apiToggle, week: apiWeek, render: apiRender, counts: apiCounts,
+  state: S, allLines, LN,
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
   planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
 };
