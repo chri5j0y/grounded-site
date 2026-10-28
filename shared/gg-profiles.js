@@ -100,7 +100,7 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-10-01', PRIVACY_V = '2026-10-01';
+  var TERMS_V = '2026-10-27', PRIVACY_V = '2026-10-27';
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [

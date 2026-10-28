@@ -728,6 +728,7 @@ function openPrep(kind, n){ const p = prepFor(kind, n); if (!p) return openOv(nu
 function actTool(a, v){
   const h = H(), o = S.ov;
   if (actCoach(a, v)) return true;
+  if (actRecipes(a, v)) return true;
   switch (a){
     case 'go': return openKey(v), true;
     case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:')) checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
@@ -1827,7 +1828,7 @@ function vTodayT(lib){
 }
 
 // ---------- the other sections, in the new frame ----------
-const kitTabs = cur => `<div class="tn-tabs" role="group" aria-label="Kitchen">${[['kitchen', 'Dinners', 'kitchen'], ['shop', 'Shop', 'cart'], ['prep', 'Prep', 'clock']].map(([id, l, i]) => `<button type="button" class="tn-tab${cur === id ? ' on' : ''}" aria-pressed="${cur === id}" data-hja="sec" data-hjv="${id}">${ic(i)}${l}</button>`).join('')}</div>`;
+const kitTabs = cur => `<div class="tn-tabs" role="group" aria-label="Kitchen">${[['kitchen', 'Dinners', 'kitchen'], ['recipes', 'Recipes', 'bowl'], ['shop', 'Shop', 'cart'], ['prep', 'Prep', 'clock']].map(([id, l, i]) => `<button type="button" class="tn-tab${cur === id ? ' on' : ''}" aria-pressed="${cur === id}" data-hja="sec" data-hjv="${id}">${ic(i)}${l}</button>`).join('')}</div>`;
 const numTabs = cur => `<div class="tn-tabs" role="group" aria-label="Numbers">${[['numbers', 'My Numbers', 'numbers'], ['journey', 'My Journey', 'compass']].map(([id, l, i]) => `<button type="button" class="tn-tab${cur === id ? ' on' : ''}" aria-pressed="${cur === id}" data-hja="sec" data-hjv="${id}">${ic(i)}${l}</button>`).join('')}</div>`;
 function vKitchen(){
   const d = new Date(), fw = foodWeek(d), L = letter(fw), din = (APP() || {}).dinners || {}, w = (din.weeks || {})[L] || {}, tn = dinnerFor(d), log = H().log[today()] || {};
@@ -1840,6 +1841,71 @@ function vKitchen(){
     <div class="tn-kgrid">${feat}${rest.map(x => `<button type="button" class="tn-card tn-lift tn-kc" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${scene('bowl', 12, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
     ${w.batch ? `<p class="hj-note"><b>Freezer batch this week:</b> ${esc(String(w.batch).replace(/^Freezer batch:\s*/i, ''))}</p>` : ''}
     ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
+}
+// ---------- BLD 875: Recipes. Every recipe the current library holds, in one list, each one opening Andrew's cook guide ----------
+// Public: GGTendPublic.recipes. The Field Guide, a moved plan, and the Family Kitchen: every week's dinners (one of each)
+// plus the breakfasts, lunches, and snacks that carry steps. A recipe opened here uses an idea key ('idea:recipe:<id>'),
+// so finishing it marks only that recipe; tonight's dinner opens as tonight's dinner.
+const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack']];
+const R_GOALS = [['heart', 'Heart'], ['energy', 'Energy'], ['strength', 'Strength'], ['weight', 'Weight'], ['well', 'Well']];
+const R_FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
+const R_ICO = {
+  breakfast: '<path d="M3 13h18a9 9 0 0 1-18 0z"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="M12 3.5v2M5.8 6.3l1.3 1.3M18.2 6.3l-1.3 1.3"/>',
+  lunch: '<path d="M3 10.5L12 5l9 5.5z"/><path d="M3.5 13.5c2 1.4 3.6-.8 5.6.5s3.6-.8 5.6.5 3.6-.8 5.8.3"/><path d="M3 17h18v2.5H3z"/>',
+  dinner: '<circle cx="12" cy="13" r="5.5"/><circle cx="12" cy="13" r="2.8"/><path d="M3 4v4.5a1.3 1.3 0 0 0 2.6 0V4M4.3 4v16"/><path d="M20.8 4c-1.2 1.4-1.6 3.8-1.6 6h1.6v10"/>',
+  snack: '<path d="M12 7.5c-1.6-1.2-5-1.4-6.4 1.4S5 16.2 7.6 18.6 11 20.2 12 19.6c1 .6 1.9 1.3 4.4-1S20 11.7 18.4 8.9 13.6 6.3 12 7.5z"/><path d="M12 7.5c0-2 .9-3.4 2.4-4"/>'};
+const rIco = m => `<span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${R_ICO[m] || R_ICO.dinner}</svg></span>`;
+function recipesAll(){
+  const out = [], seen = new Set(), add = r => { const k = String(r.name || '').trim().toLowerCase(); if (!r.id || !k || seen.has(r.id) || seen.has('n:' + k)) return; seen.add(r.id); seen.add('n:' + k); out.push(r); };
+  if (PUB()){ arr((PLIB() || {}).recipes).forEach(r => { if (r && arr(r.steps).length) add({id: r.id, meal: r.meal || 'dinner', name: r.name, mins: r.mins, nut: r.nut, ing: arr(r.ingredients), goals: arr(r.goals), fits: arr(r.fits), pub: true}); }); return out; }
+  const din = (APP() || {}).dinners || {}, wks = din.weeks || {};
+  Object.keys(wks).sort().forEach(wk => arr((wks[wk] || {}).dinners).forEach(x => { if (x && arr(x.steps).length) add({id: x.id, meal: 'dinner', name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients), goals: arr(x.goals), fits: arr(x.fits), wk}); }));
+  [['breakfasts', 'breakfast'], ['lunches', 'lunch'], ['snacks', 'snack']].forEach(([ty, m]) => arr(din[ty]).forEach((x, i) => { if (x && arr(x.steps).length) add({id: x.id || ty + '-' + i, meal: m, name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients).concat(arr(x.shop).map(g => g && g.name)), goals: arr(x.goals), fits: arr(x.fits), ty, i}); }));
+  return out;
+}
+function recipesShown(all){
+  const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
+  return all.filter(r => (m === 'all' || r.meal === m) && g.every(x => r.goals.includes(x)) && f.every(x => r.fits.includes(x))
+    && q.every(w => (r.name + ' ' + r.ing.join(' ')).toLowerCase().includes(w)));
+}
+const rNut = n => nOk(n) ? nLine(TEEN() ? Object.assign({}, n, {cal: null}) : n) : '';
+function recipeRows(list){
+  if (!list.length) return `<div class="tn-card tn-rnone"><p class="tn-sub">Clear the filters to see every recipe again.</p><button type="button" class="tn-btn sm line" data-hja="rclear">${ic('leaf')}Show Every Recipe</button></div>`;
+  const ML = Object.fromEntries(R_MEALS);
+  return list.map(r => `<button type="button" class="tn-card tn-lift tn-rc" data-hja="recipe" data-hjv="${esc(r.id)}">${rIco(r.meal)}<span class="tx"><span class="tn-time">${esc(ML[r.meal] || 'Dinner')}${r.mins ? ' · ' + esc(r.mins) + ' min' : ''}</span><span class="h3">${esc(r.name)}</span>${nOk(r.nut) ? `<span class="tn-meta hj-nl">${rNut(r.nut)}</span>` : ''}</span></button>`).join('');
+}
+const rCount = n => n + (n === 1 ? ' recipe' : ' recipes');
+function vRecipes(){
+  const all = recipesAll(), list = recipesShown(all), m = S.rMeal || 'all';
+  const has = k => all.some(r => r[k].length), meals = R_MEALS.filter(([id]) => id === 'all' || all.some(r => r.meal === id));
+  const row = (lbl, a, opts, on) => `<div class="hj-chips tn-rchips" role="group" aria-label="${esc(lbl)}">${opts.map(([id, l]) => { const p = on(id); return `<button type="button" class="chip${p ? ' on' : ''}" aria-pressed="${p}" data-hja="${a}" data-hjv="${id}">${esc(l)}</button>`; }).join('')}</div>`;
+  const goals = has('goals') ? R_GOALS.filter(([id]) => all.some(r => r.goals.includes(id))) : [], fits = has('fits') ? R_FITS.filter(([id]) => all.some(r => r.fits.includes(id))) : [];
+  return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'Every recipe in one place, with ingredients, steps, and Andrew guiding each one.')}${kitTabs('recipes')}
+    <div class="tn-card tn-rfind">${meals.length > 2 ? row('Meal', 'rmeal', meals, id => id === m) : ''}
+      <label class="hj-fld"><span>Search by name or ingredient</span><input id="hj-rq" type="search" placeholder="Lentils, salmon, oats..." autocomplete="off" value="${esc(S.rq || '')}"></label>
+      ${goals.length ? `<div class="tn-k tn-rk">Goals</div>${row('Goals', 'rgoal', goals, id => arr(S.rGoals).includes(id))}` : ''}${fits.length ? `<div class="tn-k tn-rk">Fits</div>${row('Fits', 'rfit', fits, id => arr(S.rFits).includes(id))}` : ''}
+      <p class="tn-sub tn-rcount" id="hj-rcount" aria-live="polite">${rCount(list.length)}</p></div>
+    <div class="tn-rlist" id="hj-rlist">${recipeRows(list)}</div></div>`;
+}
+function rRes(){ const l = recipesShown(recipesAll()), b = document.getElementById('hj-rlist'), c = document.getElementById('hj-rcount'); if (b) b.innerHTML = recipeRows(l); if (c) c.textContent = rCount(l.length); }
+function openRecipeId(id){
+  const r = recipesAll().find(z => z.id === id); if (!r) return false;
+  const tn = dinnerFor(new Date()); if (tn && tn.id === id && r.meal === 'dinner'){ openCook(tn.wk, tn.id); return true; }
+  let x;
+  if (r.pub) x = ideaOf(recOf(id));
+  else if (r.wk) x = arr((((APP() || {}).dinners || {}).weeks || {})[r.wk].dinners).find(z => z.id === id);
+  else x = arr(((APP() || {}).dinners || {})[r.ty])[r.i];
+  if (!x) return false;
+  openOv({k: 'cook', idea: true, key: 'idea:recipe:' + id, title: x.name, sub: (x.mins ? x.mins + ' minutes' : '') + (!PUB() && x.cost ? ' · about $' + x.cost : ''), data: x}); return true;
+}
+function actRecipes(a, v){
+  switch (a){
+    case 'recipe': openRecipeId(v); return true;
+    case 'rmeal': S.rMeal = v; rerender(true); return true;
+    case 'rgoal': case 'rfit': { const k = a === 'rgoal' ? 'rGoals' : 'rFits', l = arr(S[k]).slice(), i = l.indexOf(v); if (i < 0) l.push(v); else l.splice(i, 1); S[k] = l; rerender(true); return true; }
+    case 'rclear': S.rMeal = 'all'; S.rGoals = []; S.rFits = []; S.rq = ''; rerender(true); return true;
+  }
+  return false;
 }
 function vMove(){
   const d = new Date(), h = H(), ses = Object.entries(WK().sessions || {}), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
@@ -1857,7 +1923,7 @@ function vMove(){
 const NAVDEF = {today: ['Today', 'today', 'a-today'], week: ['Week', 'week', 'a-week'], plate: ['Plate', 'plate', 'a-plate'], kitchen: ['Kitchen', 'kitchen', 'a-kitchen'], move: ['Move', 'move', 'a-move'], numbers: ['Numbers', 'numbers', 'a-numbers']};
 function navIds(){ if (KIT()) return ['today', 'week', 'kitchen']; const f = U('food'), m = U('move');
   return ['today'].concat(f || m ? ['week'] : [], f ? ['plate', 'kitchen'] : [], m ? ['move'] : [], U('labs') ? ['numbers'] : []); }
-const navCur = () => ({shop: 'kitchen', prep: 'kitchen', journey: 'numbers', kids: 'today', kidview: 'today', team: 'move'})[S.sec] || S.sec;
+const navCur = () => ({shop: 'kitchen', prep: 'kitchen', recipes: 'kitchen', journey: 'numbers', kids: 'today', kidview: 'today', team: 'move'})[S.sec] || S.sec;
 function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2) return '';
   if (kind === 'top') return `<nav class="tn-top" aria-label="Tending sections">${ids.map(id => { const x = NAVDEF[id]; return `<button type="button" class="${x[2]}" data-hja="sec" data-hjv="${id}"${cur === id ? ' aria-current="page"' : ''}>${ic(x[1])}${x[0]}</button>`; }).join('')}</nav>`;
   return `<nav class="tn-bnav" aria-label="Tending sections"><ul style="grid-template-columns:repeat(${ids.length},minmax(0,1fr))">${ids.map(id => { const x = NAVDEF[id]; return `<li><button type="button" class="${x[2]}" data-hja="sec" data-hjv="${id}"${cur === id ? ' aria-current="page"' : ''}><span class="ic">${ic(x[1])}</span>${x[0]}</button></li>`; }).join('')}</ul></nav>`;
@@ -1871,12 +1937,12 @@ function view(){
   if (!KIT() && !h.set.start && firstMon()){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; save(); }
   // BLD 857c: b857b saved the Monday before a weekend of shopping and prep (one week early); put that one start right, once.
   if (!KIT() && h.set.startFix !== 2){ const d = firstLog(); if (d && h.set.start === ymd(monOf(d)) && h.set.start !== ymd(firstMon())){ h.set.start = ymd(firstMon()); h.set.startAuto = 1; } h.set.startFix = 2; save(); }
-  if (KIT()){ const st = ((C.fld && C.fld()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'settings'].includes(S.sec)) S.sec = 'today'; }
+  if (KIT()){ const st = ((C.fld && C.fld()) || {}).start; if (st && !h.set.kitStart){ h.set.start = st; h.set.kitStart = st; h.set.u = Date.now(); save(); } else if (st && h.set.kitStart !== st){ h.set.start = st; h.set.kitStart = st; save(); } if (!h.set.u){ h.set.u = Date.now(); save(); } if (!['today', 'week', 'shop', 'prep', 'kitchen', 'recipes', 'settings'].includes(S.sec)) S.sec = 'today'; }
   const first = !h.set.u || !!h.set.needSetup, chosen = PUB() ? !!h.set.pubDone : useSet();
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
   const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
   const offer = ready && chosen ? `<div class="hj-blk hj-offer tn-card a-numbers">${kick('Your Starting Numbers Are Ready')}<p class="hj-sub">Your labs, full panels, starting weight, and goals, ready to add to this device in one tap.</p><button type="button" class="btn btn-gold btn-sm" data-hja="mine">Add My Starting Numbers</button></div>` : '';
-  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
+  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'recipes', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
   if (!SECS2.includes(S.sec)) S.sec = 'today';
   let body;
   if (PUB() && (!chosen || S.setup)) body = vCheck();
@@ -1885,6 +1951,7 @@ function view(){
   else if (S.sec === 'week') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'This Week', 'Every day of the plan, the dinners, the sessions, and the notes that keep it rolling.')}${vWeek()}</div>`;
   else if (S.sec === 'plate') body = `<div class="tn-sec a-plate">${secHead('plate', 'a-plate', 'Today\'s Plate', PUB() ? 'Tap what you eat. The rings fill as you go, with aims set by your goals.' : 'Tap what you eat. The rings fill as you go, and each logged day feeds My LDL Path.')}${vPlate('full')}${PUB() ? pubAims() : aims()}</div>`;
   else if (S.sec === 'kitchen') body = vKitchen();
+  else if (S.sec === 'recipes') body = vRecipes();
   else if (S.sec === 'shop') body = `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'The shopping list, on this device.')}${kitTabs('shop')}${vShop()}</div>`;
   else if (S.sec === 'prep') body = `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'This week\'s prep, the batch calendar, and freezer stock.')}${kitTabs('prep')}${vPrep()}</div>`;
   else if (S.sec === 'move') body = vMove();
@@ -2005,7 +2072,7 @@ function vMoved(){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b869'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b874'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving) return; S.moving = true; rerender(true);
@@ -2582,6 +2649,7 @@ document.addEventListener('input', e => {
   if (t.id === 'hj-note') S.draft = t.value;
   if (t.id === 'hj-eatq'){ S.eatQuery = t.value; S.eatPick = null; eatRes(); }
   if (t.id === 'hj-qaq'){ S.qaQuery = t.value; qaRes(); }
+  if (t.id === 'hj-rq'){ S.rq = t.value; rRes(); }
   if (t.id === 'hj-lb' && S.ov){ S.ov.lb = t.value; const id = t.dataset.hjid, v = String(t.value).trim().slice(0, 12); if (id && H()){ if (v) H().lifts[id] = v; else delete H().lifts[id]; clearTimeout(S.lbT); S.lbT = setTimeout(save, 700); } }
 });
 // BLD 860: the My LDL Path crosshair follows the pointer and snaps to whole weeks; arrow keys move it when the chart has focus.
@@ -3044,6 +3112,11 @@ const CSS = `
 @media (min-width:700px){.tn-kgrid{grid-template-columns:repeat(2,minmax(0,1fr));}}
 @media (min-width:1000px){.tn-kgrid{grid-template-columns:repeat(3,minmax(0,1fr));}.tn-kgrid .tn-feature{grid-row:span 2;}}
 .tn-kc{display:grid;grid-template-columns:96px minmax(0,1fr);gap:14px;align-items:center;width:100%;text-align:left;color:var(--ink);font:inherit;cursor:pointer;}
+.tn-rfind{margin-bottom:14px;}.tn-rfind .hj-fld input{width:100%;min-height:46px;}.tn-rk{margin:12px 0 6px;}.tn-rchips{margin:0 0 6px;}.tn-rcount{margin:12px 0 0;font-weight:600;}
+.tn-rlist{display:grid;gap:12px;margin-bottom:14px;}@media (min-width:900px){.tn-rlist{grid-template-columns:repeat(2,minmax(0,1fr));}}
+.tn .tn-card.tn-rc{display:grid;grid-template-columns:52px minmax(0,1fr);gap:14px;align-items:center;width:100%;text-align:left;color:var(--ink);font:inherit;cursor:pointer;padding:14px 16px;}
+.tn-rc .ri{width:52px;height:52px;border-radius:16px;background:var(--cs);color:var(--c);display:grid;place-items:center;}.tn-rc .ri svg{width:30px;height:30px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round;}
+.tn-rc .tx{min-width:0;display:block;}.tn-rc .h3{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:20px;line-height:1.2;overflow-wrap:anywhere;}
 .tn-kc .ill{width:96px;height:96px;border-radius:20px;overflow:hidden;display:block;}.tn-kc .ill svg{display:block;}
 .tn-kc .tx{min-width:0;display:block;}.tn-kc .h3{display:block;font-family:'Cormorant Garamond',Georgia,serif;font-weight:700;font-size:22px;line-height:1.15;overflow-wrap:anywhere;}
 .tn .tn-card.tn-feature{padding:0;overflow:hidden;}.tn-fscene{height:190px;}.tn-fscene svg{display:block;}
@@ -3198,6 +3271,8 @@ window.GGHealth = {
   // BLD 866: what the Home shows. {on, ready, name, today: {checksDone, checksTotal}, plate: {sf, pro, fib, sug, na}, targets,
   // workout: {title, mins, done} or null, nextLabs, kidsCount, use: [parts]}
   summary: () => pubSummary(),
+  // BLD 875: open Recipes with one recipe in Andrew's cook guide (the Home's /home/#recipe-<id>). False when the id is unknown.
+  openRecipe(id){ S.sec = 'recipes'; S.setup = false; S.ov = null; if (C.go) C.go('health'); const ok = openRecipeId(String(id || '')); if (!ok) rerender(false); return ok; },
   // Backups: entries combine; the newest copy of each wins and removed entries stay removed.
   merge(out, inc){
     out.deleted = out.deleted || {clients: {}, sessions: {}}; out.deleted.health = out.deleted.health || {};

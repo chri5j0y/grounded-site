@@ -2,7 +2,7 @@
 (function () {
   if (window.GGP || document.querySelector('script[src*="gg-profiles.js"]')) return;
   var home = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
-  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b869'; s.defer = true;
+  var s = document.createElement('script'); s.src = home + '/shared/gg-profiles.js?v=b874'; s.defer = true;
   (document.head || document.documentElement).appendChild(s);
 })();
 
@@ -38,9 +38,10 @@
       { id: 'grove', title: 'The Grove', desc: 'For families, faith communities, groups, and teams, side by side', href: HOME + '/grove/', icon: ic.grove, bg: '#E3EFD6' },
       { id: 'heartwood', title: 'Heartwood', desc: 'The couples app in The Grounded Marriage. Preview it, then open yours with your code', href: HOME + '/heartwood/', icon: ic.heartwood, bg: '#E3EAF2' }
     ] },
-    // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page.
+    // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page. Grounded Recipes joins in BLD 875.
     { name: 'Healthy Living', items: [
       { id: 'way', title: 'The Grounded Way', desc: 'The app: Today, your tree, and Tending in one private place, plus the all-in path for food, movement, and quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b866" alt="" width="42" height="42">', bg: '#E2EEDB' },
+      { id: 'recipes', title: 'Grounded Recipes', desc: 'Breakfasts, lunches, dinners, and snacks that meet the Grounded Nutritional Standards, with ingredients, steps, and nutrition', href: HOME + '/recipes/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-recipes.webp?v=b875" alt="" width="42" height="42">', bg: '#F3E5CC' },
       { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' }
     ] },
     { name: 'When Someone Dies', items: [
@@ -78,6 +79,7 @@
     if (p.indexOf('/readings') === 0) return 'readings';
     if (p.indexOf('/living-sober') === 0) return 'sober';
     if (p.indexOf('/the-grounded-way') === 0) return 'way'; // GWG BLD 866
+    if (p.indexOf('/recipes') === 0) return 'recipes'; // GWG BLD 875
     if (p.indexOf('/home/') === 0 || p === '/home') return 'home';
     return '';
   }
@@ -412,7 +414,7 @@
     if (window.GGSearch && window.GGSearch.attach) return Promise.resolve(window.GGSearch);
     if (loading) return loading;
     loading = new Promise(function (ok) {
-      var s = document.createElement('script'); s.src = base + '/search.js?v=b869';
+      var s = document.createElement('script'); s.src = base + '/search.js?v=b875';
       s.onload = function () { ok(window.GGSearch); }; s.onerror = function () { loading = null; ok(null); };
       document.body.appendChild(s);
     });
