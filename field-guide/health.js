@@ -1967,15 +1967,14 @@ function view(){
   else if (S.sec === 'journey') body = `<div class="tn-sec a-numbers">${secHead('compass', 'a-numbers', 'My Journey', 'What you noticed, what felt strong, and every milestone.')}${numTabs('journey')}${vJourney()}</div>`;
   else if (S.sec === 'settings') body = vSettings();
   else body = vTodayT(lib);
-  // BLD 867: one Tending, in My Home. The Field Guide offers the move once; after it, this tab points to My Home.
-  if (MOVABLE() && chosen){
-    if (h.set.movedHome && !S.hereOk) body = vMoved();
-    else if (!h.set.movedHome && S.sec === 'today') body = vMoveOffer() + body;
-  }
+  // BLD 879: in the Field Guide, Tending for the guide, staff, and founder tiers is one card; Preview for Guides opens the full view.
+  const card = MOVABLE() && !PREVIEW();
+  if (card) return `<div id="hj-root" class="tn tn-one">${vCard(chosen || !!h.set.u)}${vOv()}</div>`;
   if (chosen && !KIT()) celebrate(milestonesT());
   const askWho = chosen && MINE_ANY() && MINE_ANY().who && h.set.u && !h.set.who && !first ? `<div class="hj-blk hj-offer tn-card">${kick('Whose Phone Is This?')}<p class="hj-sub">Tending keeps each person's plan and numbers on their own phone.</p><div class="hj-chips" style="margin:0">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip" data-hja="whoq" data-hjv="${w}">${w}</button>`).join('')}</div></div>` : '';
   const nav = chosen && !(S.setup || (first && !ready && !KIT() && S.sec === 'today' && !PUB())) && S.sec !== 'kidview';
   return `<div id="hj-root" class="tn${PUB() ? ' tn-pub' : ''}${TEEN() ? ' tn-teen' : ''}${an ? ' tn-anim' : ''}">
+    ${MOVABLE() ? '<div class="row tn-tocard"><button type="button" class="btn btn-line btn-sm" data-hja="tocard">Back to the Card</button></div>' : ''}
     <div class="tn-bar"><div class="tn-brand"><b>${ic('sprout')}</b>${esc(TNAME())}</div>${nav ? navHtml('top') : ''}<span class="sp"></span>${nav ? `<button type="button" class="tn-iconbtn${S.sec === 'settings' ? ' on' : ''}" data-hja="sec" data-hjv="settings" aria-label="Settings">${ic('gear')}</button>` : ''}</div>
     ${KIT() ? '' : askWho + offer}
     ${body}${nav ? navHtml('bottom') : ''}${vOv()}</div>`;
@@ -2063,14 +2062,20 @@ function vRisk(){
 // The Field Guide's own Tending (plan, library copy, and everything logged) moves into the person's My Home vault
 // (GGP.data(id, 'tending')), where /home/ runs it with the same engine. Private: it stays on this device, locked.
 const MOVABLE = () => !PUB() && !KIT() && !(C.host === 'home');
-function vMoveOffer(){
-  return `<div class="hj-blk hj-offer tn-card">${kick('One Tending, in The Grounded Way')}<p class="hj-sub">Bring your plan and everything you have logged into The Grounded Way app, where your tree and Tending live together. One tap, and it stays private on this phone.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Move to The Grounded Way'}</button></div></div>`;
-}
-function vMoved(){
-  return `<div class="hj-blk tn-card">${kick('Your Tending Lives in The Grounded Way')}<h3>Open The Grounded Way</h3>
-    <p class="hj-sub">Your plan, your week, and everything you logged moved to The Grounded Way on ${esc(shortDate(parseD(H().set.movedHome)))}. Open it there, with your tree, so there is one Tending.</p>
-    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button><button type="button" class="btn btn-line btn-sm" data-hja="movehome"${S.moving ? ' disabled' : ''}>${S.moving ? 'Moving...' : 'Bring Over What\'s New'}</button><button type="button" class="linkbtn" data-hja="movehere">Use Tending Here Today</button></div></div>`;
+// BLD 879: Preview for Guides is remembered for this browser session only.
+const PVKEY = 'gg-tend-preview';
+function PREVIEW(){ if (S.hereOk == null){ try { S.hereOk = sessionStorage.getItem(PVKEY) === '1'; } catch (e){ S.hereOk = false; } } return S.hereOk; }
+function setPreview(on){ S.hereOk = on; try { if (on) sessionStorage.setItem(PVKEY, '1'); else sessionStorage.removeItem(PVKEY); } catch (e){} }
+function vCard(hasPlan){
+  const moved = !!H().set.movedHome, busy = S.moving;
+  const move = moved ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Bring Over What\'s New'}</button>`
+    : hasPlan ? `<button type="button" class="btn btn-line btn-sm" data-hja="movehome"${busy ? ' disabled' : ''}>${busy ? 'Moving...' : 'Move My Plan to The Grounded Way'}</button>` : '';
+  const when = moved ? 'After a library update, tap Bring Over What\'s New.' : hasPlan ? 'Move My Plan brings everything you logged here over in one tap, private on this phone.' : '';
+  return `<div class="hj-blk tn-card hj-one">${kick('Tending')}<h3>Your Tending Lives in The Grounded Way</h3>
+    <p class="hj-sub">Your plan, your week, and your tree grow together in The Grounded Way app, private on this phone.</p>
+    <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="openhome">Open The Grounded Way</button>${move}</div>
+    ${when ? `<p class="hj-sub" style="margin-top:10px">${esc(when)}</p>` : ''}
+    <div class="row" style="margin-top:6px"><button type="button" class="linkbtn" data-hja="movehere">Preview for Guides</button></div></div>`;
 }
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
@@ -2094,7 +2099,7 @@ async function moveHome(){
     w.movedOnce = 1;
     await window.GGP.save(a.id);
     const h = H(); h.set.movedHome = h.set.movedHome || today(); h.set.u = Date.now(); save();
-    S.moving = false; S.hereOk = false; toast('Your Tending is in The Grounded Way.'); rerender(false);
+    S.moving = false; toast('Your Tending is in The Grounded Way.'); rerender(false);
   } catch (e){ S.moving = false; toast('The Grounded Way stayed closed. Your Tending is here, ready to move any time.'); rerender(true); }
 }
 
@@ -2127,7 +2132,8 @@ function act(a, v){
       const i = h.risk.findIndex(x => x.id === rec.id); if (i < 0) h.risk.push(rec); else h.risk[i] = rec;
       save(); S.form = null; S.edit = null; toast('Saved on this device.'); rerender(true); return; }
     case 'riskdel': { const i = h.risk.findIndex(x => x.id === v); if (i >= 0){ (D().deleted = D().deleted || {}).health = D().deleted.health || {}; D().deleted.health[v] = Date.now(); h.risk.splice(i, 1); save(); rerender(true); } return; }
-    case 'movehere': S.hereOk = true; rerender(false); return;
+    case 'movehere': setPreview(true); S.sec = 'today'; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
+    case 'tocard': setPreview(false); rerender(false); window.scrollTo(0, 0); return;
     case 'openhome': location.href = '../home/#tending'; return;
     case 'sec': S.sec = v; S.form = null; S.setup = false; S.shopWk = null; S.wkOff = 0; S.shopEd = null; S.whyEd = false; S.anim = true; rerender(false); window.scrollTo(0, 0); return;
     // BLD 862: Choose What You Use, Settings, My Why, Morning Quiet, and the evening and morning supplements in one tap.
