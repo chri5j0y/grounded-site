@@ -9,6 +9,9 @@
    speaks in its kitchen guide (LN.cIntro, each step, LN.tset, LN.tdone, LN.cOut), so every line has a recorded clip;
    with no clip, coach.js speaks with the device voice. The Grounded Way (/home/) opens this page in its frame for public
    recipes, so there is one recipe design. Plain JS, no library.
+   BLD 880: every recipe is written for six. A Serves picker on each recipe (2 to 12) scales the ingredients with
+   shared/gg-scale.js (GGScale); the steps fit every size and nutrition stays per serving. The choice is remembered on this
+   device (localStorage gg-serves), and The Grounded Way opens a recipe at the household's size with /recipes/?serves=N#id.
    ===================================================================== */
 (function () {
   'use strict';
@@ -31,6 +34,21 @@
 
   var PLAY = '<svg class="rc-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
   var st = { meal: 'all', goal: '', fits: [], q: '' };
+  // BLD 880: the table size. ?serves=N (from The Grounded Way) is read once on load; a choice on the picker is remembered.
+  var SIZES = [2, 3, 4, 5, 6, 7, 8, 10, 12];
+  var okSize = function (v) { v = Math.round(+v); return v >= 1 && v <= 30 ? v : 0; };
+  var serves = (function () {
+    var q = 0; try { q = okSize(new URLSearchParams(location.search).get('serves')); } catch (e) {}
+    if (q) return q;
+    try { var m = okSize(localStorage.getItem('gg-serves')); if (m) return m; } catch (e) {}
+    return 6;
+  })();
+  function sized(r) { return window.GGScale && r ? GGScale.recipe(r, serves) : r; }
+  function sizeChips() {
+    var list = SIZES.indexOf(serves) < 0 ? SIZES.concat(serves).sort(function (a, b) { return a - b; }) : SIZES;
+    return list.map(function (n) { return '<button type="button" class="rc-chip rc-sz" data-sz="' + n + '" aria-pressed="' + (n === serves ? 'true' : 'false') + '" aria-label="Serves ' + n + '">' + n + '</button>'; }).join('');
+  }
+  function ingHTML(r) { return (sized(r).ingredients || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
   var fromList = false, lastId = '', listY = 0;
 
   function n1(v) { var x = Math.round(Number(v) * 10) / 10; return String(x); }
@@ -39,7 +57,7 @@
     var n = r.nut || {};
     return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber, ' + n1(n.sf) + ' g saturated fat, ' + n0(n.na) + ' mg sodium';
   }
-  function timeLine(r) { return r.mins + ' min, serves ' + r.serves; }
+  function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? serves : r.serves); }
   function hay(r) { return (r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '')).toLowerCase(); }
   ALL.forEach(function (r) { r._h = hay(r); });
 
@@ -96,9 +114,12 @@
       '<div class="rc-dh"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><div><div class="eyebrow">' + esc(MEAL_NAME[r.meal] || r.meal) + '</div>' +
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
-      '<span class="rc-tag">Serves ' + r.serves + '</span>' + fits + goals + '</div>' +
+      '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? serves : r.serves) + '</span>' + fits + goals + '</div>' +
       '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button><span>A calm voice guides every step, with timers.</span></div>' +
-      '<div class="rc-cols"><div class="card"><h3>Ingredients</h3><ul class="rc-ing">' + (r.ingredients || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>' +
+      '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
+      (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div>' +
+        '<p class="rc-size-note">Amounts scale to your table. The steps fit every size.</p></div>' : '') +
+      '<ul class="rc-ing" id="rc-ing" aria-live="polite">' + ingHTML(r) + '</ul></div>' +
       '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
       '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Keeps', r.keeps) + note('For Kids', r.kid) +
       (swaps.length ? '<div class="card"><h3>Swaps</h3>' + swaps.map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('') + '</div>' : '') + '</div>' +
@@ -135,6 +156,17 @@
         if (c) c.focus({ preventScroll: true });
       }
     }
+  }
+
+  function setServes(n) {
+    n = okSize(n); if (!n) return;
+    serves = n;
+    try { localStorage.setItem('gg-serves', String(n)); } catch (e) {}
+    var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = document.querySelector('.rc-size .rc-row');
+    if (r && ing) ing.innerHTML = ingHTML(r);
+    if (tag) tag.textContent = 'Serves ' + n;
+    if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
+    drawList();
   }
 
   function goBack() {
@@ -310,8 +342,10 @@
       location.hash = c.getAttribute('data-id');
     });
     $('rc-detail').addEventListener('click', function (e) {
+      var sz = e.target.closest('[data-sz]');
+      if (sz) { setServes(+sz.getAttribute('data-sz')); return; }
       if (e.target.closest('#rc-back')) goBack();
-      else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(r, e.target.closest('[data-rc-guide]')); }
+      else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(sized(r), e.target.closest('[data-rc-guide]')); }
     });
     window.addEventListener('hashchange', function () { if (!location.hash) fromList = false; show(); });
     window.addEventListener('popstate', function () { if (G.on() && !(history.state && history.state.rcGuide)) G.close(true); if (!location.hash) fromList = false; });

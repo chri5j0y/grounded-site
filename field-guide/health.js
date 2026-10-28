@@ -609,7 +609,7 @@ function vShop(){
   const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
   return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n - 1}"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Shop for Week ${letter(n)}</b><small>Week ${n}, shop ${esc(shortDate(addD(startMon(), (n - 1) * 7 - 2)))}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="shopwk" data-hjv="${n + 1}">Next</button></div>
-  ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${letter(n)}: dinners, plus your breakfasts, lunches, and snacks. Recipes serve 4.${hhNote(4)}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
+  ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${letter(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
   <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
     <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
   ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(x.amt)}${x.for ? ' · ' + esc(x.for) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
@@ -1892,7 +1892,8 @@ function openRecipeId(id){
   const r = recipesAll().find(z => z.id === id); if (!r) return false;
   // BLD 877: in The Grounded Way (public mode), a public recipe opens on the public Recipes page in the Home's frame, with its
   // step by step guide built in, so there is one recipe design. The Field Guide and a moved plan keep the overlay below.
-  if (r.pub && PUB() && typeof C.openPage === 'function' && C.openPage('/recipes/#' + encodeURIComponent(id))) return true;
+  // BLD 880: the page opens at the household's size (?serves=N), so the ingredients fit the table.
+  if (r.pub && PUB() && typeof C.openPage === 'function' && C.openPage('/recipes/' + (tableOf() ? '?serves=' + tableOf() : '') + '#' + encodeURIComponent(id))) return true;
   const tn = dinnerFor(new Date()); if (tn && tn.id === id && r.meal === 'dinner'){ openCook(tn.wk, tn.id); return true; }
   let x;
   if (r.pub) x = ideaOf(recOf(id));
@@ -2217,7 +2218,12 @@ const BAND_PORTION = {'1-3': 0.5, '4-8': 0.75, '9-13': 1, '14-18': 1};
 const KIDS = () => arr(((H() || {}).set || {}).house && H().set.house.kids);
 const srcOf = id => arr((PLIB() || {}).sources).find(x => x && x.id === id) || null;
 const srcLinks = ids => arr(Array.isArray(ids) ? ids : [ids]).filter(Boolean).map(srcOf).filter(Boolean).map(x => x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>${x.who ? ', ' + esc(x.who) : ''}` : esc(x.t) + (x.who ? ', ' + esc(x.who) : '')).join('; ');
-const hhNote = serves => { const s = H().set, hh = (+((s.house || {}).adults) || 0) + KIDS().length; return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
+// BLD 880: every public recipe is written for six, and its ingredients scale to the household (shared/gg-scale.js, GGScale).
+const pubHH = () => { const s = (H() || {}).set || {}, n = (+((s.house || {}).adults) || 0) + KIDS().length || num(s.household) || 0; return n > 0 && n < 30 ? Math.round(n) : 0; };
+// A table of one cooks for two (one meal now, one for tomorrow): the smallest size on the Recipes page's Serves picker.
+const tableOf = () => { const hh = pubHH(); return hh ? Math.max(2, hh) : 0; };
+const sizeUp = r => { const hh = PUB() ? tableOf() : 0; return r && hh && window.GGScale && arr(r.ingredients).length ? GGScale.recipe(r, hh) : r; };
+const hhNote = serves => { const hh = tableOf(); return hh && serves && hh !== +serves ? ` For your household of ${hh}, make about ${String(Math.round(hh / serves * 4) / 4).replace(/\.25$/, ' 1/4').replace(/\.5$/, ' 1/2').replace(/\.75$/, ' 3/4').replace(/^0 /, '')} times the recipe.` : ''; };
 function planSet(){ const s = H().set; return {needs: arr(s.needs), allergies: s.allergies || '', goals: arr(s.goals).length ? s.goals : ['well'], kids: KIDS().length > 0, leftovers: s.leftovers !== false}; }
 // The saved plan: ids only, so a library update keeps working; a change of needs, allergies, goals, or household builds it again.
 function ensurePlan(force){
@@ -2231,7 +2237,7 @@ function ensurePlan(force){
   h.plan = {seed, ids: pw.ids, meals, sig, n: 0, u: Date.now()}; PA = null; save(); return h.plan;
 }
 const recOf = id => arr((PLIB() || {}).recipes).find(r => r.id === id) || null;
-function ideaOf(r){ if (!r) return null; const P = TP();
+function ideaOf(r){ if (!r) return null; const P = TP(); r = sizeUp(r);
   return {id: r.id, name: r.name, mins: r.mins, how: r.serve || '', nut: r.nut ? Object.assign({per: '1 serving'}, r.nut) : null, steps: arr(r.steps), ingredients: arr(r.ingredients),
     serve: r.serve || '', tip: r.tip || '', keeps: r.keeps || '', kid: r.kid || '', serves: r.serves, swaps: r.swaps || null,
     shop: P ? P.shopList({dinners: [Object.assign({}, r, {leftover: false})]}).map(x => ({name: x.name, amt: x.amt, sec: x.sec})) : []}; }
@@ -2266,7 +2272,9 @@ function pubApp(){
   if (P && plan){
     const weeks = P.weeksFromIds(L.recipes, plan.ids), m = plan.meals || {}, ideas = k => arr(m[k]).map(recOf).map(ideaOf).filter(Boolean);
     app.dinners = {weeks, breakfasts: ideas('breakfasts'), lunches: ideas('lunches'), snacks: ideas('snacks')};
-    const extras = ['breakfasts', 'lunches', 'snacks'].flatMap(k => arr(m[k]).map(recOf)).filter(Boolean).map(r => Object.assign({}, r, {leftover: false}));
+    // BLD 880: the dinners and the shopping list follow the household's size (each recipe is written for six).
+    Object.keys(weeks || {}).forEach(w => { if (weeks[w] && Array.isArray(weeks[w].dinners)) weeks[w] = Object.assign({}, weeks[w], {dinners: weeks[w].dinners.map(d => d && !d.leftover ? sizeUp(d) : d)}); });
+    const extras = ['breakfasts', 'lunches', 'snacks'].flatMap(k => arr(m[k]).map(recOf)).filter(Boolean).map(r => Object.assign({}, sizeUp(r), {leftover: false}));
     app.shop = {weeks: {}}; 'ABCD'.split('').forEach(w => { app.shop.weeks[w] = {shop: P.shopList(weeks, w, extras).map(x => ({name: x.name, amt: x.amt, sec: x.sec, store: 'grocer', for: x.for}))}; });
   }
   PA = {L, sig, app}; return app;
