@@ -1192,7 +1192,7 @@ const LC_TOPICS = [
   },
   "faith": "For many people, faith, prayer, ritual, and a faith community are a deep resource when health news comes. Some find a blessing, an anointing, or the prayers of others brings real comfort. Others carry hard questions, or feel far from what used to steady them, and that belongs too. If you have a faith leader or a chaplain, they can sit with you in this. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "leaves|Medicine",
+   "leaves|My Medicines",
    "bark|Name It",
    "branches|Ask for Help",
    "branches|Support Group",
@@ -1750,7 +1750,7 @@ const LC_TOPICS = [
   "practices": [
    "bark|Slow Exhale",
    "branches|Ask for Help",
-   "leaves|Medicine",
+   "leaves|My Medicines",
    "leaves|Home Safety Walk-Through",
    "leaves|Water Within Reach"
   ],
@@ -4650,7 +4650,7 @@ const LC_TOPICS = [
   "faith": "For some people, faith steadies them when the body feels like a long list of problems: a prayer before appointments, a community that brings meals and rides, a sense of being known as a whole person. For others, many illnesses at once can raise hard questions or make worship hard to reach. Both belong. A chaplain or faith leader can visit, or bring worship home, if you'd like. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
    "leaves|Appointment Prep",
-   "leaves|Medicine",
+   "leaves|My Medicines",
    "leaves|Pacing Your Day",
    "trunk|Values Sort",
    "trunk|Worth Beyond Doing",
@@ -5264,7 +5264,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "branches|One Reach-Out a Day",
    "trunk|Reason to Get Up",
    "leaves|Walk Your Way",
-   "leaves|Wind-Down Hour",
+   "leaves|Evening Wind Down",
    "bark|Name It",
    "fruit|Something to Look Forward To"
   ],
@@ -5369,7 +5369,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   },
   "faith": "For some people, faith steadies them through pain: a prayer before surgery, a community that brings meals, a sense of being held on a hard night. For others, pain and struggle with pills can stir guilt or hard questions. Both belong. If faith is part of your life, a chaplain or faith leader can visit while you heal. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "leaves|Medicine",
+   "leaves|My Medicines",
    "leaves|Appointment Prep",
    "bark|Slow Exhale",
    "bark|Hard-Day Plan",

@@ -283,8 +283,8 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b852', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b852', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b852', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b852', 'PINE_PRACTICES'] };
-  var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Chakras|Medicine|Get Counseling)$/i;
+  var PRAC = { oak: ['/oak/practices.js?v=b885', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b885', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b885', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b885', 'PINE_PRACTICES'] };
+  var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
   var S = { id: null, p: null, tree: 'oak', view: 'home', tendLoad: null, tendInit: false, words: null };
@@ -1399,7 +1399,7 @@
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
   var LEARN_SRC = '/shared/learn-lessons.js?v=b852';
-  var GUIDES = { oak: ['/oak/guides.js?v=b852', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b852', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b852', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b852', 'PINE_GUIDES'] };
+  var GUIDES = { oak: ['/oak/guides.js?v=b885', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b852', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b885', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b852', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   function learnOf(tree) {

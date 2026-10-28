@@ -9894,7 +9894,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b852', '../aspen/guides.js?v=b852', '../oak/guides.js?v=b852', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b852', '../pine/guides.js?v=b852', '../birch/guides.js?v=b852'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b852', '../aspen/guides.js?v=b852', '../oak/guides.js?v=b885', '../willow/guides.js?v=b782', '../sequoia/guides.js?v=b885', '../pine/guides.js?v=b852', '../birch/guides.js?v=b852'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

@@ -498,7 +498,7 @@
       today: "Look at your school's list of clubs and teams, or a community or faith group. Pick one to try.",
       build: "Go three times before you decide. Most groups feel awkward the first time.",
       hard: "Shy? Bring a friend, or talk to one person each time." } },
-  { p: 'branches', n: 'Faith', d: "If you have a faith community, let it be a place where you belong: youth group, service, choir, or a mentor.",
+  { p: 'branches', n: 'Faith Community', d: "If you have a faith community, let it be a place where you belong: youth group, service, choir, or a mentor.",
     m: ['R', 'Weekly', 'S', ''], f: { faith: 1 }, s: ['vanderweele'],
     g: { why: "For many teens, a faith community is a place to belong, serve, and find adults who care. Belonging to a community is linked with better health and well-being.",
       today: "Think of one way to connect with your faith community this week: youth group, a service project, helping with younger kids, or sitting with a friend.",

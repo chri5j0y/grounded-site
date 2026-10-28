@@ -24,8 +24,6 @@
       'trunk|Create Stuff': 'trunk|Create Something',
       'trunk|Journal Often': 'trunk|Journal',
       'branches|Faith': 'branches|Faith Community',
-      'trunk|Expressive Writing': 'bark|Expressive Writing',
-      'fruit|Volunteer': 'trunk|Volunteer',
       'leaves|Medicine': 'leaves|See the Doctor Early'
     },
     sequoia: {
@@ -35,8 +33,7 @@
       'leaves|Medicine': 'leaves|My Medicines'
     },
     pine: {
-      'branches|Faith': 'branches|Faith Community',
-      'trunk|Expressive Writing': 'bark|Expressive Writing'
+      'branches|Faith': 'branches|Faith Community'
     }
   };
   var PARTS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
@@ -46,29 +43,26 @@
   // A plan: {part: {selected: [names], own: [names], custom, lib}}. Old picks move to the new part and name.
   function isPlan(x) { return PARTS.some(function (p) { var v = x[p]; return v && typeof v === 'object' && Array.isArray(v.selected); }); }
   function fixPlan(m, plan) {
-    var moved = false;
+    var moves = [];
     PARTS.forEach(function (p) {
       var x = plan[p]; if (!x || typeof x !== 'object') return;
       ['selected', 'own'].forEach(function (f) {
         if (!Array.isArray(x[f])) return;
         x[f] = x[f].filter(function (n) {
-          var nk = has(m, p + '|' + n) ? m[p + '|' + n] : null; if (!nk) return true;
-          var i = nk.indexOf('|'), np = nk.slice(0, i), nn = nk.slice(i + 1);
-          var t = plan[np] && typeof plan[np] === 'object' ? plan[np] : (plan[np] = { selected: [], custom: '', own: [] });
-          if (!Array.isArray(t.selected)) t.selected = [];
-          if (t.selected.indexOf(nn) < 0) t.selected.push(nn);
-          moved = true; return false;
+          if (!has(m, p + '|' + n)) return true;
+          moves.push(m[p + '|' + n]); return false;
         });
       });
-      if (typeof x.custom === 'string' && has(m, p + '|' + x.custom.trim())) {
-        var nk = m[p + '|' + x.custom.trim()], j = nk.indexOf('|'), q = nk.slice(0, j), qn = nk.slice(j + 1);
-        var t2 = plan[q] && typeof plan[q] === 'object' ? plan[q] : (plan[q] = { selected: [], custom: '', own: [] });
-        if (!Array.isArray(t2.selected)) t2.selected = [];
-        if (t2.selected.indexOf(qn) < 0) t2.selected.push(qn);
-        x.custom = ''; moved = true;
-      }
+      if (typeof x.custom === 'string' && has(m, p + '|' + x.custom.trim())) { moves.push(m[p + '|' + x.custom.trim()]); x.custom = ''; }
     });
-    return moved;
+    // Each old pick lands once under its new part and name, after the lists are filtered.
+    moves.forEach(function (nk) {
+      var j = nk.indexOf('|'), np = nk.slice(0, j), nn = nk.slice(j + 1);
+      var t = plan[np] && typeof plan[np] === 'object' ? plan[np] : (plan[np] = { selected: [], custom: '', own: [] });
+      if (!Array.isArray(t.selected)) t.selected = [];
+      if (t.selected.indexOf(nn) < 0) t.selected.push(nn);
+    });
+    return moves.length > 0;
   }
   // Walks a tree record: plans, day marks ('part|Name' in lists), notes keyed by 'part|Name',
   // and any other string that is exactly an old key.
