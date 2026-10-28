@@ -364,7 +364,7 @@
           + '<div class="ov-row">' + ROW.map(function (x) { return '<div><img src="' + A('/shared/marks/' + x[0] + '.svg') + '" alt=""><b class="serif">' + x[1] + '</b><span>' + x[2] + '</span></div>'; }).join('') + '</div>'
           + partsStrip()
           + '<ul class="ov-pts"><li><b>Check-ins</b> for every age, with a growth plan, daily practices, Learn videos, and Health and Ability for living with a disability, illness, or difference.</li><li><b>When Life Changes:</b> more than 500 guides for life&rsquo;s unexpected conversations, each with two short videos, written for every age.</li><li><b>Private by design:</b> everything stays on your device.</li><li><b>For professionals:</b> the Grounded Field Guide, with a Guide for every tree and For Guides training for chaplains, teachers, and caregivers.</li></ul></div>'
-          + '<div class="grow"></div>' + footer(t, 'Scan to see every tree', 'In crisis? Call or text 988, any time.', SITE + '/tools.html');
+          + '<div class="grow"></div>' + footer(t, 'Scan to see every tree', 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.', SITE + '/tools.html');
         css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;}'
           + '.ov-nm{font-size:38pt;font-weight:600;line-height:1;}.ov-nm sup{font-size:.35em;vertical-align:top;position:relative;top:.3em;}.ov-tag{font-size:16pt;font-style:italic;margin-top:6px;color:#FBEBD0;}'
           + '.ov-lead{font-size:13pt;line-height:1.45;margin:0;}'
@@ -378,7 +378,7 @@
       body = '<div class="top">' + heroImg(tr) + '</div>'
         + '<div class="pad"><div>' + head(tr, x) + (x.eyebrow ? '<div class="ey cond" style="--c:' + x.color + '">' + esc(x.eyebrow.toUpperCase()) + '</div>' : '') + '<div class="tag serif">' + esc(x.tag) + '</div><div class="sub">' + esc(x.sub) + '<br>' + esc(x.who) + '</div></div>'
         + '<ul class="pts">' + x.points.map(function (p) { return '<li style="--c:' + x.color + '">' + esc(p) + '</li>'; }).join('') + '<li style="--c:' + x.color + '">Private by design: no account, and answers stay on your device.</li></ul>'
-        + partsStrip() + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'In crisis? Call or text 988, any time.');
+        + partsStrip() + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.');
       css = SCALE + '\n.pts{list-style:none;margin:calc(0.2in * var(--k)) 0 0;padding:0;}.pts li{position:relative;padding-left:0.24in;font-size:12.5pt;line-height:1.4;margin-bottom:6px;}'
         + '.pts li:before{content:"";position:absolute;left:0;top:0.42em;width:9px;height:9px;border-radius:50%;background:var(--c);}'
         + '.ey{font-size:12pt;letter-spacing:3px;font-weight:700;color:var(--c);margin-top:0.16in;}.ey + .tag{margin-top:0.04in;}';

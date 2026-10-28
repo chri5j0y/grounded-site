@@ -16,16 +16,15 @@
    - Four answers plus "Not sure." Scores run 1 to 10 for every tool.
    - Two reverse worded questions in every part.
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to later life, always with 988 and 911.
-   - Flagged answers (alone, losing hope, not safe at home) are never
-     lost: the person sees help lines, and a guide sees them at goodbye.
+   - Open, curious questions only (GWG BLD 887): no safety step, no
+     flags, and one quiet line of type with 988 and 911 on the screen.
 
    Leaves holds three strands, Move, Rest, and Nourish. One Leaves question
    for each is tagged s: 'move', 'rest', or 'nourish'. The weekly quick
    check-in asks question 1 of every part plus each tagged strand.
 
    Each question: { t, tip, why } plus r: 1 for reverse questions
-   ("Often" is the hard answer), flag: 'alone', 'hope', or 'home', and
+   ("Often" is the hard answer), and
    src: ['id'] where the "why" line rests on a study or measure.
    Question 1 of every part is the quick check-in question, so it is never
    a reverse question.
@@ -38,10 +37,6 @@
    Roots asks about experience, never belief or affiliation. It measures
    whether the sacred is a resource or a stressor. Anyone of
    all faith traditions and everything in-between can score Strong.
-
-   home is a positive question ("felt safe..."), so it flags on Rarely,
-   Sometimes, or Not sure. It covers being hurt, neglected, or having
-   money taken by someone close.
 
    helper: a set for a helper (an adult child, a spouse or partner, a
    friend, a neighbor) answering about themselves as they help the
@@ -128,7 +123,7 @@ const Q = {
   ],
   trunk: [
     { t: 'Felt that your life matters?',
-      tip: 'If they hesitate, ask who would notice if they were gone. Listen for hopelessness and move to safety if it is there.',
+      tip: 'If they hesitate, ask who and what their life touches. Listen with care, and let them lead.',
       why: 'Knowing your life matters is the core of the trunk.' },
     { t: 'Had a reason to get up in the morning?',
       tip: 'Ask them to name it. A person, a pet, a garden, a call, a cause, or simply today all count.',
@@ -154,7 +149,7 @@ const Q = {
       why: 'Losing a role can feel like losing your place. Volunteering and new roles are linked with better well-being in later life.',
       src: ['retire', 'anderson'] },
     { t: 'Felt like a burden to the people around you?', r: 1,
-      tip: 'Let it stand, and listen. Ask what being helped is like for them. Feeling like a burden can travel with hopelessness, so listen closely and move to the safety step if you hear it.',
+      tip: 'Let it stand, and listen. Ask what being helped is like for them. Feeling like a burden can travel with low hope, so listen closely, and follow the Grounded Response Plan if harm comes up on its own.',
       why: 'Many older adults feel this at times. You matter to people, even when it is hard to see.' }
   ],
   bark: [
@@ -205,16 +200,15 @@ const Q = {
     { t: 'Stayed in touch with people who matter to you, in person, by phone, or online?',
       tip: 'Ask what gets in the way: hearing, driving, distance, or energy. One small, regular call can help.',
       why: 'Staying in touch keeps your branches strong as life changes around you.' },
-    { t: 'Felt safe and treated well by the people who live with you or help you, including with your money?', flag: 'home',
-      tip: 'If not, ask privately and calmly whether they are safe right now, and whether anyone is taking money, hurting, or neglecting them. Have MAARC ready (1-844-880-1574), and follow your reporting duties for vulnerable adults.',
-      why: 'Everyone deserves to feel safe at home and with their money. If you don\'t, help is available.',
-      src: ['yon'] },
-    { t: 'Felt lonely, or cut off from others?', r: 1, flag: 'alone',
+    { t: 'Felt at ease and respected by the people who live with you or help you?',
+      tip: 'Ask what helps home and help feel good to them, and listen with care to whatever they share.',
+      why: 'Ease and respect at home, and with the people who help you, let you rest and grow.' },
+    { t: 'Felt lonely, or cut off from others?', r: 1,
       tip: 'Loneliness is common and painful. Ask when it is worst, and who they wish they could talk to. Expecting to be turned away can keep people apart, so listen for that too.',
       why: 'Loneliness hurts body and spirit. What helps most is often working on lonely thoughts, along with adding contact.',
       src: ['murthy', 'masi'] },
     { t: 'Felt pressured or confused about money by a caller, a message, or someone you know?', r: 1,
-      tip: 'No shame: scams fool smart people. Point to the National Elder Fraud Hotline (1-833-372-8311) or the AARP Fraud Watch Helpline (877-908-3360). If the pressure comes from someone close, treat it as safety at home.',
+      tip: 'No shame: scams fool smart people. Point to the National Elder Fraud Hotline (1-833-372-8311) or the AARP Fraud Watch Helpline (877-908-3360). If the pressure comes from someone close, listen with care, and follow the Grounded Response Plan if harm comes up on its own.',
       why: 'Older adults are often targeted by scams. Talking it over with someone you trust helps.',
       src: ['ic3'] }
   ],
@@ -272,9 +266,9 @@ const Q = {
     { t: 'Found a way forward when something got in the way?',
       tip: 'Ask about a time they found another way. Name that strength back to them.',
       why: 'Finding another way when blocked is the working heart of hope.' },
-    { t: 'Felt that things will never get better?', r: 1, flag: 'hope',
-      tip: 'Take this seriously. Ask gently how long they have felt this way, and listen for thoughts of not wanting to be alive. The safety step comes next.',
-      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
+    { t: 'Felt that good days are still ahead for you?',
+      tip: 'Ask what they are looking forward to, even something small. Stay curious about what they share.',
+      why: 'Sensing good days ahead is hope at work. When it runs low, others can help you carry it.' },
     { t: 'Felt like you had nothing to look forward to?', r: 1,
       tip: 'Help them find one small thing in the next few days, together.',
       why: 'Having nothing to look forward to drains hope. Small things count.',
@@ -384,7 +378,7 @@ const HELPER = {
     { t: 'Asked for help from aging services, a doctor, or a faith community when you needed it?',
       tip: 'The Eldercare Locator (1-800-677-1116) and Minnesota Aging Pathways (1-800-333-2433) can point to help nearby.',
       why: 'Help exists for helpers. Asking is a strength.' },
-    { t: 'Felt alone in this, or at odds with family?', r: 1, flag: 'alone',
+    { t: 'Felt alone in this, or at odds with family?', r: 1,
       tip: 'Ask who they wish they could talk to. Family conflict over a parent\'s needs is common.',
       why: 'You shouldn\'t carry this alone. Company in it makes it lighter.' },
     { t: 'Felt short-tempered or harsh with {name} in a way that worried you?', r: 1,
@@ -436,74 +430,47 @@ const HELPER = {
     { t: 'Felt you can keep going at this pace, with the help you have?',
       tip: 'Listen without pushing. If not, ask what help would change it.',
       why: 'A pace you can keep is a sign the load fits.' },
-    { t: 'Felt hopeless, or like you can\'t go on?', r: 1, flag: 'hope',
-      tip: 'Take this seriously. Ask gently whether they have thoughts of not wanting to go on themselves. The helper safety question comes next.',
-      why: 'When hope runs low, you deserve support. Others can help you carry it.' },
+    { t: 'Felt that brighter days are ahead for you, too?',
+      tip: 'Ask what brighter days would look like for them, and what help would bring them closer.',
+      why: 'Helpers need hope of their own. When it runs low, others can help you carry it.' },
     { t: 'Felt trapped by what helping asks of you?', r: 1,
       tip: 'Listen without judging. Feeling trapped is a burnout sign and a reason to bring in more help.',
       why: 'Feeling trapped is a sign you need more support, not a sign you love less.' }
   ]
 };
 
-// What a flagged answer means, and which answers flag it.
-// alone and hope flag on Often or Almost always; Almost always also opens the calm card.
-// home flags on Rarely, Sometimes, or Not sure; Rarely also opens the calm card.
-// helperNote is shown when the flag comes from the helper set.
+// Flags (GWG BLD 887): no question carries a flag any more, and nothing new is ever
+// flagged. These titles stay, read only, so a visit saved earlier that lists a flag
+// still shows its name. on and calm are empty, so nothing ever opens or marks.
 const FLAGS = {
-  alone: { on: ['often', 'always'], calm: ['always'], title: 'Feeling alone',
-    note: 'You said you have felt lonely often. That is worth tending. Reaching out to one person this week can help. Minnesota Aging Pathways (1-800-333-2433) or the Eldercare Locator (1-800-677-1116) can point you to visits, calls, and groups near you. If it feels heavy, call or text 988.',
-    helperNote: 'You said you have felt alone in this. You shouldn\'t carry it alone. Who could you call today? The Eldercare Locator (1-800-677-1116) can point you to support for helpers.',
-    guide: 'They named loneliness or isolation. Talk together about one person they could reach toward, and consider a referral to a senior center, a faith community, a friendly visitor program, or grief support.' },
-  hope: { on: ['often', 'always'], calm: ['always'], title: 'Losing hope',
-    note: 'You said things have felt like they will never get better. You can share that weight. Call or text 988 any time to talk with someone. Veterans, call 988 and press 1.',
-    helperNote: 'You said you have felt hopeless. This is one of the hardest things a person does. Call or text 988 any time to talk with someone.',
-    guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive. Older men are at the highest risk.' },
-  home: { on: ['rarely', 'sometimes', 'unsure'], calm: ['rarely'], title: 'Safety at home',
-    note: 'You said you haven\'t always felt safe or treated well by the people around you. You deserve to be safe, at home and with your money. In Minnesota, the Minnesota Adult Abuse Reporting Center takes calls any time: 1-844-880-1574. Outside Minnesota, the Eldercare Locator (1-800-677-1116) can connect you to Adult Protective Services. If someone is taking your money, the National Elder Fraud Hotline is 1-833-372-8311. In danger now, call 911.',
-    guide: 'They named not feeling safe or treated well at home, which can include someone taking their money. Ask privately whether they are safe right now. Share MAARC (1-844-880-1574) or Adult Protective Services, and follow your reporting duties for vulnerable adults.' }
+  alone: { on: [], calm: [], title: 'Feeling alone', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' },
+  hope: { on: [], calm: [], title: 'Hope', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' },
+  home: { on: [], calm: [], title: 'Home', note: '', guide: 'An earlier check-in named this. Talk together with open questions, and follow the Grounded Response Plan if harm comes up on its own.' }
 };
 
-// The safety step, fitted to later life. Direct wording is the research-informed
-// way to ask; vague questions miss people, and asking does not plant the idea.
-// The opener is answered on the answer scale; the direct question uses directOpts.
-// The app reads opener and direct, as Oak does. The rest fills Sequoia's calm card.
-const SAFETY = {
-  lead: 'Two last questions. They\'re here because we care, and your answers stay on this device.',
-  opener: 'Some seasons bring a lot of loss. In the past two weeks, how often have you felt hopeless, or like a burden to the people around you?',
-  directLead: 'Sometimes, when life has brought a lot of loss, people think about not wanting to be here anymore. Many older adults have had that thought. It is safe to say so here.',
-  direct: 'In the past two weeks, have you wished you could go to sleep and not wake up, or thought about ending your life?',
-  directOpts: [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', 'I\'d rather not say']],
-  yes: 'Thank you for telling me. You matter, and others can help you carry this. Please reach out now. Someone will listen.',
-  means: 'If there are guns or a large supply of medicine at home, ask someone you trust to keep them for now.',
-  burden: 'You matter to people, even when it is hard to see. Many older adults feel like a burden at times. Talking it over can help.',
-  title: 'You matter, and others can help you carry this.',
-  intro: 'If you\'re thinking about suicide, feel unsafe, or someone is hurting you or taking your money, reach out now. Someone will listen.',
-  // Crisis and help lines in the order shown. tel and sms are dialable;
-  // first: 'home' moves a line to the top when the home flag shows.
+// Help Is Close (GWG BLD 887): a quiet list a person opens only by tapping a link.
+// Nothing opens it on its own, and no answer moves a line. quiet is the one line of
+// type shown on the check-in screen and on results, never spoken.
+const HELP_LINES = {
+  quiet: 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.',
+  title: 'Help Is Close',
+  intro: 'Someone will listen, any time, day or night.',
   lines: [
     { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call or text 988', tel: '988', sms: '988', note: 'Any time, day or night.' },
     { id: 'veterans', name: 'Veterans Crisis Line', show: 'Call 988, then press 1', tel: '988', note: 'Or text 838255. For veterans and the people who love them.' },
-    { id: '911', name: 'In immediate danger?', show: 'Call 911', tel: '911' },
-    { id: 'maarc', name: 'Minnesota Adult Abuse Reporting Center (MAARC)', show: '1-844-880-1574', tel: '18448801574', first: 'home', note: 'Any time. For a vulnerable adult being hurt, neglected, or exploited in Minnesota.' },
-    { id: 'fraud', name: 'National Elder Fraud Hotline', show: '1-833-372-8311', tel: '18333728311', first: 'home', note: 'For people 60 and up who have lost money to a scam or to someone they know. Weekdays, 10 to 6 Eastern.' },
+    { id: '911', name: 'In danger now', show: 'Call 911', tel: '911' },
+    { id: 'maarc', name: 'Minnesota Adult Abuse Reporting Center (MAARC)', show: '1-844-880-1574', tel: '18448801574', note: 'Any time. For a vulnerable adult in Minnesota.' },
+    { id: 'fraud', name: 'National Elder Fraud Hotline', show: '1-833-372-8311', tel: '18333728311', note: 'For people 60 and up who have lost money to a scam or to someone they know. Weekdays, 10 to 6 Eastern.' },
     { id: 'eldercare', name: 'Eldercare Locator', show: '1-800-677-1116', tel: '18006771116', sms: '18006771116', note: 'Help near you anywhere in the US, including Adult Protective Services.' },
     { id: 'aging', name: 'Minnesota Aging Pathways', show: '1-800-333-2433', tel: '18003332433', note: 'Formerly the Senior LinkAge Line. Weekdays, 8 to 4:30.' }
-  ],
-  // The helper's own safety question (Willow model).
-  helper: { ask: 'Helping someone you love through a hard season is one of the hardest things a person does. In the past two weeks, have you had thoughts of not wanting to go on yourself?',
-    yes: 'Thank you for telling me. Please reach out now: call or text 988, or call 911 if you are in danger. Veterans, call 988 and press 1.',
-    no: 'Thank you. Here\'s one small thing to do for yourself today.' },
-  // When a helper answers from what they see (answeredBy 'observed').
-  observed: { ask: 'Has {name} said things like wishing they could go to sleep and not wake up, or wanting it all to be over?',
-    help: 'Thank you for noticing. Please talk with {name} gently and directly, and let their doctor know. If you are worried about their safety now, call or text 988, or call 911.' },
-  src: ['asq', 'conwell', 'cdcsuicide55']
+  ]
 };
 
-window.SEQUOIA_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, stems: STEMS, answeredBy: ANSWERED_BY, questions: Q, helper: HELPER, flags: FLAGS, safety: SAFETY };
+window.SEQUOIA_CHECKIN = { version: VERSION, answers: ANSWERS, levels: LEVELS, stems: STEMS, answeredBy: ANSWERED_BY, questions: Q, helper: HELPER, flags: FLAGS, help: HELP_LINES };
 })();
 /* LIFE notes start: Health and Ability notes (GWG BLD 756, HA 1). Like My Season, a note adds only
    ex (an example) and tip, read for the chosen ids. The question, the answers, and the score never change,
-   and no safety or flagged question carries a note. Generated by worker A. */
+   and the reworded open questions of BLD 887 carry none. Generated by worker A. */
 (function () { var C = window.SEQUOIA_CHECKIN; if (!C || !C.questions) return; var N = {"leaves": {"0": {"pain": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "serious": {"ex": "If pain or treatment breaks up your nights, count rest that leaves you a little restored."}, "mind": {"ex": "Mood and some medicines can change sleep. Notice what helps you rest."}}, "1": {"moving": {"ex": "Any way your body moves counts: chair exercises, stretching in bed, rolling, or a walk with your walker."}, "pain": {"ex": "On a hard day, a gentle stretch or a few minutes of movement counts.", "tip": "Ask what movement looks like on good days and on hard days."}, "serious": {"ex": "During treatment or recovery, gentle moves in a chair or bed count fully."}}, "2": {"serious": {"ex": "Small meals, favorite foods, and sips of water through the day count."}, "health": {"ex": "Eating in a way that fits your condition and your doctor's advice counts."}}, "3": {"moving": {"ex": "A cane, a walker, a wheelchair, or a helper's arm all count as getting around."}}, "4": {"hearing": {"ex": "Hearing aids, captions, sign, or a pocket talker all count as ways to join in."}, "seeing": {"ex": "Magnifiers, large print, audio, or a helper reading aloud all count as ways to join in."}}, "5": {"moving": {"ex": "Sitting by a bright window or on a porch counts."}}}, "bark": {"2": {"memory": {"ex": "Like being gentle with yourself when a word or a name will not come."}, "pain": {"ex": "Like being gentle with yourself on a hard body day."}}, "5": {"seeing": {"ex": "Audiobooks, radio, music, or talking books count."}, "memory": {"ex": "Familiar songs, simple puzzles, and old photos count."}}}, "branches": {"1": {"hearing": {"ex": "Talking in a quiet room, with captions, or by text counts."}}, "2": {"hearing": {"ex": "Like a hearing loss group, a captioned service, or friends who sign."}, "moving": {"ex": "Like a group online, or a place you can get into easily."}, "close": {"ex": "Like a group for people caring for someone they love."}}, "4": {"hearing": {"ex": "A captioned call, a video call, a letter, or a text all count."}, "seeing": {"ex": "A phone call or a voice message counts."}, "moving": {"ex": "A call, a letter, or a visit at home all count."}}}, "trunk": {"2": {"moving": {"ex": "Roles that have nothing to do with what your body can do count fully: listener, storyteller, the one who prays."}, "serious": {"ex": "Roles you can fill from a chair or a bed count fully."}}}, "fruit": {"0": {"serious": {"ex": "Like a visit, a favorite meal, or the end of a treatment."}, "pain": {"ex": "Like a call, a favorite show, or a good hour."}}}};
   Object.keys(N).forEach(function (p) { Object.keys(N[p]).forEach(function (i) { var q = (C.questions[p] || [])[+i]; if (q && !q.flag && !q.help) q.life = N[p][i]; }); }); })();
 /* LIFE notes end */

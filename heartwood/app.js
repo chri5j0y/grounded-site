@@ -6,8 +6,8 @@
    for Two, and the First-Year Check-in.
    Everything stays on this device. Each partner's answers, workbook writing, check-ins, and the Money Map are locked
    with that partner's own passcode (PBKDF2, 250,000 rounds, SHA-256, then AES-GCM); the passcode never leaves the
-   device and is never stored. Safety answers are never saved at all: they live only on the screen of the partner
-   who answered, and never go on a card or a printout. Names, faith backgrounds, and the wedding date are kept on
+   device and is never stored. Heartwood asks open questions only (GWG BLD 887): no safety page, and one quiet
+   line of type with 988 and 911 on the answer pages and the results. Names, faith backgrounds, and the wedding date are kept on
    this device unlocked, so the app knows which questions and wording to show.
    Two devices: a card carries one partner's first name, the other's, Faith or Plain, the faith background, and the
    answers as digits, locked with a word only the two of them know, after the # in a link or QR code (heartwood/core.js).
@@ -55,8 +55,9 @@
   if (!C) { var a0 = $('gm-app'); if (a0) a0.innerHTML = '<div class="ff-card"><p>Heartwood could not load. Check the connection and try again.</p></div>'; return; }
 
   /* ---------- the data files ---------- */
-  var Q = window.BTV_Q || { version: 0, areas: [], questions: [], scale: [], safety: {} };
-  var AREAS = Q.areas, QS = Q.questions, SCALE = Q.scale, SAFETY = Q.safety || {};
+  var Q = window.BTV_Q || { version: 0, areas: [], questions: [], scale: [] };
+  var AREAS = Q.areas, QS = Q.questions, SCALE = Q.scale;
+  var QUIET = '<p class="btv-small btv-quiet">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>';
   var F = window.GM_FAITH || null, RS = window.GM_RESULTS || null, WB = window.GM_WB || null, MN = window.GM_MONEY || null, PR = window.GM_PR || null, AF = window.GM_AFTER || null;
   // After the Vows wording and videos (GM_AFTER.atv, GWG BLD 782), with fallbacks for content sealed before it.
   var AV = AF && AF.atv && typeof AF.atv === 'object' ? AF.atv : {};
@@ -113,13 +114,13 @@
   var st = load(); if (!st || st.v !== 2) st = null;
   function fix() { if (!st || !st.s) return; var s = st.s; s.fb = s.fb || { a: '', b: '' }; s.fwp = s.fwp || { a: '', b: '' }; st.p = st.p || {}; }
   fix();
-  var KEYS = {}, DATA = {}, SAFE = {}, PARTNER_IN = null, RAWS = {};
+  var KEYS = {}, DATA = {}, PARTNER_IN = null, RAWS = {};
   var V = { view: 'welcome', side: ATV ? 'after' : 'before', who: null, area: 0 };
   function setup() { return st && st.s; }
   function nm(w) { return setup() ? st.s[w] : ''; }
   function other(w) { return w === 'a' ? 'b' : 'a'; }
   function box(w) { return st && st.p && st.p[w]; }
-  function lockAll() { KEYS = {}; DATA = {}; SAFE = {}; RAWS = {}; }
+  function lockAll() { KEYS = {}; DATA = {}; RAWS = {}; }
   function oneDevice() { return st.s.mode === 'one'; }
   function twoOn() { var s = setup(); return !!(s && TWOQ.length && known(s.fb.a) && known(s.fb.b) && s.fb.a !== s.fb.b); }
   function areasFor() { return twoOn() ? AREAS.concat([TWO_AREA]) : AREAS; }
@@ -527,28 +528,7 @@
         return '<fieldset class="btv-q" data-qid="' + esc(q.id) + '"><legend><span class="btv-qn">' + (k + 1) + '</span>' + esc(t) + '</legend>' + scaleHtml(q, d.ans[q.id]) + '</fieldset>';
       }).join('') : '') +
       '<p class="btv-small">Answer for yourself, as things are today. Skip any you like.</p>' +
-      '<div class="ff-row btv-nav">' + btn('prev', i ? 'Back' : 'Back to the Start', sec()) + btn('next', i < n - 1 ? 'Next Area' : 'Last Page') + btn('away', 'Lock and Step Away', sec()) + '</div></div>';
-  }
-  function vSafety() {
-    var w = V.who;
-    return '<div class="ff-card btv-safe"><div class="btv-prog"><span>' + esc(nm(w)) + ' &middot; Last page</span><span>Just for you</span></div><div class="btv-bar" aria-hidden="true"><i style="width:96%"></i></div>' +
-      '<h2>' + esc(SAFETY.title || 'Just for You') + '</h2><p class="ff-sub">' + esc(SAFETY.lead || '') + '</p>' +
-      (SAFETY.items || []).map(function (it) {
-        return '<fieldset class="btv-q"><legend>' + esc(it.text) + '</legend><div class="btv-scale two" role="group" aria-label="Your answer">' +
-          [['y', 'Yes'], ['n', 'No']].map(function (o) { return '<button type="button" data-act="safe" data-s="' + esc(it.id) + '" data-v="' + o[0] + '" aria-pressed="' + (SAFE[it.id] === o[0]) + '">' + o[1] + '</button>'; }).join('') + '</div></fieldset>';
-      }).join('') +
-      '<div class="ff-row btv-nav">' + btn('prev', 'Back', sec()) + btn('finish', 'Finish') + '</div></div>';
-  }
-  function linesHtml() {
-    return '<ul class="btv-lines">' + (SAFETY.lines || []).map(function (l) {
-      var how = esc(l[1]).replace(/(\d-\d{3}-\d{3}-\d{4})/g, function (m) { return '<a href="tel:' + m.replace(/-/g, '') + '">' + m + '</a>'; }).replace(/\b(988|911)\b(?![^<]*<\/a>)/g, '<a href="tel:$1">$1</a>');
-      return '<li><b>' + esc(l[0]) + '</b><span>' + how + '</span></li>';
-    }).join('') + '</ul>';
-  }
-  function vSafeHelp() {
-    return '<div class="ff-help btv-help" tabindex="-1" id="btv-help"><h2>You Deserve to Feel Safe</h2><p>' + esc(SAFETY.yesLead || '') + '</p>' + linesHtml() +
-      '<p>These answers stay with you. They are not saved on this device, and they never go on a card, a printout, or ' + esc(nm(other(V.who))) + '’s screen. If it helps, write down a number now, somewhere only you will see it.</p>' +
-      '<div class="ff-row">' + btn('safe-done', 'Continue') + '</div></div>';
+      '<div class="ff-row btv-nav">' + btn('prev', i ? 'Back' : 'Back to the Start', sec()) + btn('next', i < n - 1 ? 'Next Area' : 'Finish') + btn('away', 'Lock and Step Away', sec()) + '</div>' + QUIET + '</div>';
   }
   function vHandoff() {
     var w = V.who, o = other(w), od = box(o) && box(o).done;
@@ -618,7 +598,7 @@
     var order = ['strong', 'talk', 'grow'], by = { strong: [], talk: [], grow: [] };
     c.R.forEach(function (r) { var k = sm[r.area.id]; if (k) by[k].push(r); });
     var h = '<div class="ff-card gold"><h2>' + esc(RS.title || 'Strengths and Growing Edges') + '</h2><p class="ff-sub">' + esc(X.name) + ' and ' + esc(Y.name) + '</p>' + (RS.lead ? '<p>' + esc(RS.lead) + '</p>' : '') +
-      '<div class="ff-row">' + btn('talk-open', 'Open Talk About This', { cls: 'btn-primary ff-sm' }) + btn('print-results', 'Save or Print', sec()) + btn('leave-talk', 'Lock and Close', sec()) + '</div></div>';
+      '<div class="ff-row">' + btn('talk-open', 'Open Talk About This', { cls: 'btn-primary ff-sm' }) + btn('print-results', 'Save or Print', sec()) + btn('leave-talk', 'Lock and Close', sec()) + '</div>' + QUIET + '</div>';
     order.forEach(function (k) {
       if (!by[k].length) return;
       var s = S[k] || {};
@@ -1023,15 +1003,15 @@
   }
 
   /* ---------- render ---------- */
-  var BEFORE_VIEWS = { hub: 1, answer: 1, safety: 1, safehelp: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1, week: 1, wcard: 1 };
+  var BEFORE_VIEWS = { hub: 1, answer: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1, week: 1, wcard: 1 };
   function render() {
     var el = $('gm-app'); if (!el) return;
     if (!subtle) { el.innerHTML = '<div class="ff-card"><p>This browser cannot lock answers. Try a current version of Safari, Chrome, Edge, or Firefox.</p></div>'; return; }
     var v = V.view, h;
     // After the Vows (GWG BLD 782): only its own views; Before the Vows views lead back to After the Vows.
-    if (ATV && { hub: 1, answer: 1, safety: 1, safehelp: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1 }[v]) v = V.view = setup() ? 'after' : 'welcome';
+    if (ATV && { hub: 1, answer: 1, handoff: 1, card: 1, talk: 1, results: 1, wb: 1, wbch: 1, wbread: 1, money: 1 }[v]) v = V.view = setup() ? 'after' : 'welcome';
     if (ATV && !setup() && v !== 'welcome' && v !== 'setup' && v !== 'pr' && v !== 'prone') v = V.view = 'welcome';
-    var needOne = { answer: 1, safety: 1, safehelp: 1, wb: 1, wbch: 1, money: 1, round: 1 };
+    var needOne = { answer: 1, wb: 1, wbch: 1, money: 1, round: 1 };
     if (needOne[v] && !DATA[V.who]) v = V.view = setup() ? (V.side === 'after' ? 'after' : 'hub') : 'welcome';
     if (v === 'talk' || v === 'results' || v === 'wbread' || v === 'roundread') {
       try { h = v === 'talk' ? vTalk() : v === 'results' ? vResults() : v === 'wbread' ? vWbRead() : vRoundRead(); } catch (e) { v = V.view = V.side === 'after' ? 'after' : 'hub'; h = null; }
@@ -1042,8 +1022,6 @@
     else if (v === 'setup') h = vSetup();
     else if (v === 'hub') h = vHub();
     else if (v === 'answer') h = vAnswer();
-    else if (v === 'safety') h = vSafety();
-    else if (v === 'safehelp') h = vSafeHelp();
     else if (v === 'handoff') h = vHandoff();
     else if (v === 'card') h = vCard(V.code);
     else if (v === 'wb') h = vWbList();
@@ -1066,7 +1044,7 @@
 
   /* ---------- actions ---------- */
   function finish() {
-    var w = V.who; SAFE = {};
+    var w = V.who;
     st.p[w].done = true;
     return save(w).then(function () { delete KEYS[w]; delete DATA[w]; delete RAWS[w]; go('handoff'); remindOnce('bv', w, 'Thank you, ' + nm(w) + '. Your Before the Vows answers are saved.'); });
   }
@@ -1118,7 +1096,7 @@
       unlock(w).then(function (ok) {
         if (!ok) return; var d = DATA[w], n = areasFor().length;
         if (a === 'answer-two') { st.p[w].done = false; persist(); return go('answer', { who: w, area: AREAS.length }); }
-        var at = Math.max(0, Math.min(+d.at || 0, n)); go(at >= n ? 'safety' : 'answer', { who: w, area: Math.min(at, n - 1) });
+        var at = Math.max(0, Math.min(+d.at || 0, n)); go('answer', { who: w, area: Math.min(at, n - 1) });
       });
     }
     else if (a === 'pick') {
@@ -1132,20 +1110,14 @@
     else if (a === 'next') {
       var d3 = DATA[V.who], n = areasFor().length;
       if (V.area < n - 1) { d3.at = V.area + 1; saveSoon(V.who); go('answer', { area: V.area + 1 }); }
-      else { d3.at = n; saveSoon(V.who); SAFE = {}; go('safety'); }
+      else { d3.at = n; finish(); }
     }
     else if (a === 'prev') {
-      if (V.view === 'safety') { SAFE = {}; go('answer', { area: areasFor().length - 1 }); }
-      else if (V.area > 0) { DATA[V.who].at = V.area - 1; saveSoon(V.who); go('answer', { area: V.area - 1 }); }
+      if (V.area > 0) { DATA[V.who].at = V.area - 1; saveSoon(V.who); go('answer', { area: V.area - 1 }); }
       else { save(V.who); lockAll(); go('hub'); }
     }
     else if (a === 'away') { save(V.who).then(function () { lockAll(); go('hub'); say('Your answers are locked. Come back any time with your passcode.'); }); }
-    else if (a === 'safe') { SAFE[b.getAttribute('data-s')] = b.getAttribute('data-v'); Array.prototype.forEach.call(b.parentNode.children, function (x) { x.setAttribute('aria-pressed', String(x === b)); }); }
-    else if (a === 'finish') {
-      var yes = Object.keys(SAFE).some(function (x) { return SAFE[x] === 'y'; });
-      if (yes) { SAFE = {}; go('safehelp'); } else finish();
-    }
-    else if (a === 'safe-done') finish();
+    else if (a === 'finish') finish();
     else if (a === 'talk') startTalk('talk');
     else if (a === 'results') startTalk('results');
     else if (a === 'results-open') go('results');
@@ -1320,7 +1292,7 @@
     var el = $('gm-learn');
     if (!learnData()) { el.innerHTML = '<div class="ff-card"><p>The lessons are on their way.</p></div>'; return; }
     el.innerHTML = '<div class="ff-card"><p>One moment...</p></div>';
-    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b862', function () { return !!window.GGLearn; }); }).then(function () {
+    need('/read.js?v=b813', function () { return !!window.GGRead; }).then(function () { return need('/shared/gg-learn.js?v=b887', function () { return !!window.GGLearn; }); }).then(function () {
       if (window.GGLearn) learnList(); else el.innerHTML = '<div class="ff-card"><p>The lessons could not load. Check the connection and try again.</p></div>';
     });
   }

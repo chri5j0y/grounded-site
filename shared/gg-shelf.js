@@ -1518,12 +1518,22 @@
 "CM-008",
 "BD-017"
 ],
+"practice:Journal": [
+"DY-012",
+"CM-008",
+"BD-017"
+],
 "practice:Values Sort": [
 "CP-013",
 "CP-008",
 "CM-019"
 ],
 "practice:Create Stuff": [
+"DY-012",
+"CM-008",
+"BD-017"
+],
+"practice:Create Something": [
 "DY-012",
 "CM-008",
 "BD-017"
@@ -1834,6 +1844,11 @@
 "BD-008"
 ],
 "practice:Unplugged Evening": [
+"BD-003",
+"BD-001",
+"BD-008"
+],
+"practice:Evening Wind Down": [
 "BD-003",
 "BD-001",
 "BD-008"
@@ -2813,8 +2828,10 @@
 "practice:Something Bigger": "Something Bigger",
 "practice:Slow Sacred Reading": "Slow Sacred Reading",
 "practice:Journal Often": "Journal Often",
+"practice:Journal": "Journal",
 "practice:Values Sort": "Values Sort",
 "practice:Create Stuff": "Create Stuff",
+"practice:Create Something": "Create Something",
 "practice:Playing": "Playing",
 "practice:Expressive Writing": "Expressive Writing",
 "practice:Purpose Statement": "Purpose Statement",
@@ -2879,6 +2896,7 @@
 "practice:Thank Your Body": "Thank Your Body",
 "practice:Sleep": "Sleep",
 "practice:Unplugged Evening": "Unplugged Evening",
+"practice:Evening Wind Down": "Evening Wind Down",
 "practice:Micro-Rest": "Micro-Rest",
 "practice:Same Wake Time": "Same Wake Time",
 "practice:Wind Down": "Wind Down",

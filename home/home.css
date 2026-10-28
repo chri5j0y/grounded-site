@@ -938,3 +938,74 @@ html.hm-toured,html.hm-toured body{overflow:hidden;}
   .hm-tour-sp{width:88px;}
 }
 @media (max-width:699px) and (max-height:700px){.hm-tour-pic{aspect-ratio:16/9;}}
+
+/* =====================================================================
+   BLD 885: practices with a rhythm. How opens right on the card (steps, minutes, Done), a small chip sets Daily,
+   Weekly, or Now and Then, This Week on Today and the Week tab, When You're Ready on Grow. Every control 44px or more.
+   No dashes in any words here.
+   ===================================================================== */
+.hm-prac .hm-acts{align-items:center;}
+.hm .hm-prac .hm-howbtn{min-height:44px;}
+.hm-howbtn[aria-expanded="true"],.hm-khowb[aria-expanded="true"]{box-shadow:inset 0 0 0 2px color-mix(in srgb,var(--on) 70%,transparent),0 6px 16px color-mix(in srgb,var(--c,var(--gold)) 35%,transparent);}
+.hm-rchip{display:inline-flex;align-items:center;gap:4px;min-height:44px;padding:0 10px 0 14px;margin-left:auto;border-radius:999px;border:1.5px solid color-mix(in srgb,var(--c,var(--gold)) 38%,var(--line));background:var(--card);color:var(--ink-soft);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:.9px;text-transform:uppercase;cursor:pointer;white-space:nowrap;}
+.hm-rchip:hover{color:var(--ink);border-color:var(--c,var(--gold));}
+.hm-rchip .i{width:16px;height:16px;transition:transform .25s ease;}
+.hm-rchip[aria-expanded="true"]{color:var(--ink);border-color:var(--c,var(--gold));}
+.hm-rchip[aria-expanded="true"] .i{transform:rotate(180deg);}
+.hm-rmenu{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:12px;padding:10px 12px;border-radius:16px;background:var(--card-2);border:1px solid var(--line);animation:hm-rm-in .22s ease both;}
+.hm-rmenu[hidden]{display:none;}
+@keyframes hm-rm-in{from{opacity:0;transform:translateY(-4px);}to{opacity:1;transform:none;}}
+.hm-rk{flex:1 0 100%;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.3px;text-transform:uppercase;color:var(--ink-soft);}
+.hm-rmenu button{flex:1 1 auto;min-height:44px;padding:0 14px;border-radius:999px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);font-family:'Barlow',sans-serif;font-weight:600;font-size:15px;cursor:pointer;}
+.hm-rmenu button:hover{border-color:var(--c,var(--gold));}
+.hm-rmenu button[aria-pressed="true"]{background:var(--c,var(--gold));border-color:var(--c,var(--gold));color:var(--on);}
+/* How: a smooth fold, no frame and no new page */
+.hm-how{display:grid;grid-template-rows:0fr;visibility:hidden;transition:grid-template-rows .34s ease,visibility 0s linear .34s;}
+.open>.hm-how{grid-template-rows:1fr;visibility:visible;transition:grid-template-rows .34s ease,visibility 0s linear 0s;}
+.hm-how-in{min-height:0;overflow:hidden;}
+.hm-how-box{margin-top:14px;padding:14px 16px 10px;border-radius:16px;background:color-mix(in srgb,var(--c,var(--gold)) 8%,var(--card-2));border-left:4px solid var(--c,var(--gold));}
+.hm-how-hd{display:flex;align-items:center;flex-wrap:wrap;gap:6px 14px;margin-bottom:6px;}
+.hm-how-k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;color:var(--c,var(--gold));}
+.hm-howmin{display:inline-flex;align-items:center;gap:6px;font-size:14.5px;font-weight:600;color:var(--ink-soft);}
+.hm-howmin .i{width:16px;height:16px;}
+.hm-howl{margin:4px 0 0;padding:0 0 0 22px;display:grid;gap:6px;font-size:16px;line-height:1.45;color:var(--ink);}
+.hm-howl li::marker{font-family:'Barlow Condensed',sans-serif;font-weight:700;color:var(--c,var(--gold));}
+.hm-howp{margin:4px 0 0;font-size:16px;line-height:1.5;color:var(--ink);}
+.hm-how-ft{display:flex;align-items:center;margin-top:8px;}
+.hm-how-ft .hm-ck{min-height:44px;}
+.hm-prac .hm-acts .hm-ck{min-height:44px;}
+/* This Week (Today and Week) and When You're Ready (Grow): a soft panel holding the practice cards */
+.hm-tweek{display:grid;gap:12px;padding:16px;border-radius:26px;background:color-mix(in srgb,var(--c) 6%,var(--card-2));border:1px solid color-mix(in srgb,var(--c) 22%,var(--line));min-width:0;}
+.hm-tweek .hm-grp{margin:0;}
+.hm-twline{margin:-4px 2px 0;}
+.hm-tweek .hm-list{gap:12px;}
+.hm-tmain>.hm-tweek,.hm-tmain>.hm-nudge{margin-bottom:4px;}
+.hm-tside>.hm-tweek,.hm-tside>.hm-nudge{margin-bottom:0;}
+.hm-small .hm-pc .scene{width:64px;height:64px;border-radius:14px;}
+.hm-small .hm-h3{font-size:21px;}
+.hm-small .hm-acts{margin-top:6px;}
+.hm-nudgec{border-top-style:dashed;}
+.hm-nlater{margin-top:8px;}
+.hm-nlater .hm-linkbtn{min-height:44px;}
+.hm-wpracs{margin-bottom:16px;}
+.hm-wgrid .hm-wside>.hm-tweek{margin-bottom:4px;}
+#hm-ready{margin:0;}
+/* kids: How and the rhythm chip under each practice */
+.hm-kp{flex-wrap:wrap;}
+.hm-kprow{display:flex;align-items:center;gap:12px;flex:1 1 100%;min-width:0;}
+.hm-kbar{display:flex;align-items:center;flex-wrap:wrap;gap:8px;flex:1 1 100%;padding-left:60px;}
+.hm-khowb{display:inline-flex;align-items:center;gap:6px;min-height:44px;padding:0 16px;border-radius:999px;border:0;background:var(--kp);color:#fff;font-family:'Fredoka','Barlow',sans-serif;font-weight:600;font-size:16px;cursor:pointer;box-shadow:inset 0 -3px 0 rgba(0,0,0,.14);}
+.hm-khowb .i{width:18px;height:18px;}
+.hm-kp .hm-rchip{margin-left:0;font-family:'Fredoka','Barlow',sans-serif;font-weight:600;font-size:15px;letter-spacing:0;text-transform:none;background:var(--kc);color:var(--ki);border-color:color-mix(in srgb,var(--kp) 55%,transparent);}
+.hm-kp .hm-rmenu,.hm-kp .hm-how{flex:1 1 100%;}
+.hm-kp .hm-rmenu{background:var(--kc);}
+.hm-kp .hm-rmenu button{font-family:'Fredoka','Barlow',sans-serif;}
+.hm-kp .hm-rmenu button[aria-pressed="true"]{background:var(--kp);border-color:var(--kp);color:#fff;}
+.hm-kp .hm-how-box{background:var(--kc);border-left-color:var(--kp);}
+.hm-kp .hm-how-k{font-family:'Fredoka','Barlow',sans-serif;letter-spacing:.3px;text-transform:none;font-size:16px;color:var(--ki);}
+.hm-kp .hm-howl,.hm-kp .hm-howp{font-size:17px;color:var(--ki);}
+.hm-kp .hm-howmin{color:var(--ki);opacity:.85;}
+.hm-kp .hm-ck .box .m{stroke:#fff;}
+.hm-ksub{margin-top:16px !important;font-size:20px !important;}
+@media (max-width:420px){ .hm-kbar{padding-left:0;} .hm-rchip{margin-left:0;} }
+@media (prefers-reduced-motion: reduce){ .hm-how,.open>.hm-how{transition:none;} .hm-rmenu{animation:none;} .hm-rchip .i{transition:none;} }

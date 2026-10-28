@@ -12,8 +12,8 @@
      the grown-up's own passcode.
    - High school: only the teen's passcode opens it. A grown-up can
      clear it (erased, never read) if the teen forgets.
-   - Name, picture, age, and a small "shared" record (progress and
-     safety alerts, never answers) are not encrypted, so a family
+   - Name, picture, age, and a small "shared" record (progress, never
+     answers) are not encrypted, so a family
      view can show them.
 
    For tools
@@ -100,7 +100,7 @@
 (function () {
   if (window.GGP) return;
 
-  var TERMS_V = '2026-10-27', PRIVACY_V = '2026-10-27';
+  var TERMS_V = '2026-10-28', PRIVACY_V = '2026-10-28';
   var LIST = 'gg-profiles-v1', BOX = 'gg-p:', PING_LOCK = 'gg-lock-ping', PING_OPEN = 'gg-open-ping';
   var HOME = /(^|\.)growwithgrounded\.com$|^localhost$|^127\.0\.0\.1$/.test(location.hostname) ? '' : 'https://growwithgrounded.com';
   var AGES = [
@@ -164,7 +164,12 @@
   }
   // The six parts rename (Rebrand Session 4): each tree app's record moves to the new part names.
   // gg-app.js holds the rule (GGParts). The Grove's record is never touched, since its strands are not parts.
-  function renameParts(v) { var P = window.GGParts; if (P && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); }); return v; }
+  function renameParts(v) {
+    var P = window.GGParts; if (P && v && typeof v === 'object') ['maple', 'aspen', 'oak'].forEach(function (t) { if (v[t] && typeof v[t] === 'object') P.fix(v[t]); });
+    // BLD 885: renamed practices carry forward in saved plans and day marks (shared/gg-practice-alias.js).
+    if (window.GGPracticeAlias && v && typeof v === 'object') { try { window.GGPracticeAlias.fixVault(v); } catch (e) {} }
+    return v;
+  }
   function writeVault(id, raw, data) {
     return rawKey(raw).then(function (k) { return seal(k, enc.encode(JSON.stringify(data))); }).then(function (box) { localStorage.setItem(BOX + id, JSON.stringify(box)); });
   }
@@ -477,7 +482,7 @@
         ? '<label class="ggp-l" for="ggp-gid">Grown-up</label><select id="ggp-gid">' + adults().map(function (a) { return '<option value="' + a.id + '">' + esc(a.name) + '</option>'; }).join('') + '</select><label class="ggp-l" for="ggp-gpass">Grown-up\'s passcode</label><input type="password" id="ggp-gpass" autocomplete="current-password">'
         : '');
     var what = age === 'pine'
-      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended, and will be alerted if a safety answer needs attention. Answers and journal entries stay private to the teen, locked with the teen\'s own passcode.</div>'
+      ? '<div class="ggp-note"><b>For both of you:</b> the grown-up will see progress, like which parts are growing and days tended. Answers and journal entries stay private to the teen, locked with the teen\'s own passcode.</div>'
       : '<div class="ggp-note">Grown-ups who agree can open ' + esc(kidName || 'this') + ' profile with their own passcode, so every child has someone beside them when something is hard.</div>';
     return '<hr class="ggp-sep"><p><b>A grown-up needs to agree.</b></p>' + what + who +
       '<label class="ggp-check"><input type="checkbox" id="ggp-agree"> <span>I am ' + esc(kidName || 'this child') + '\'s parent, guardian, or another responsible grown-up. I have read and agree to the ' + TERMS_LINKS + ' on their behalf.</span></label>';

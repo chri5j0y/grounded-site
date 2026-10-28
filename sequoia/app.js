@@ -5,7 +5,7 @@
    fitted to later life.
 
    Where the words live (edit them there, not here)
-     sequoia/checkin.js    the question bank, safety step, and help lines (SEQUOIA_CHECKIN)
+     sequoia/checkin.js    the question bank and help lines (SEQUOIA_CHECKIN)
      sequoia/practices.js  the practice library: parts, practices, how-to guides (SEQUOIA_PRACTICES)
      sequoia/legacy.js     the Legacy Book chapters and prompts (SEQUOIA_LEGACY)
      shared/gg-journey.js  the twelve weeks, anchors, and movement levels (AGES.sequoia)
@@ -22,7 +22,6 @@
    - Add a Helper is off by default. Only the person can turn it on, in Settings.
    - A helper opens the person's Sequoia with their own passcode (GGP.addHelper)
      and sees only what the person shares. Faith answers and notes start private.
-     Safety answers are never shown to a helper.
    - Check-ins a helper takes with the person are marked (answeredBy). A helper
      answering from what they see is kept apart and never adds to the tree.
      A helper's own check-in uses the helper set and is kept in the helper's
@@ -36,8 +35,7 @@
      labeled, set apart, and never count toward a level or a milestone.
    - The legacy thread: the Legacy Book, its own tab.
    - The gentle tree from Oak (missed days rest in soft mist). It never dies or loses rings,
-     and it holds still for two weeks after a check-in flags losing hope or
-     feeling alone.
+     and nothing in a check-in ever pauses it (GWG BLD 887).
    ===================================================================== */
 
 /* ---------- the practice library (sequoia/practices.js) ----------
@@ -311,24 +309,24 @@ function renderAboutParts() {
 // CHECKIN: one question on the screen at a time (GWG BLD 733)
 // The bank is /sequoia/checkin.js, read by Sequoia and Sequoia Guide,
 // on the Grounded tree standard, version 1: 8 per part, a guide tip and a
-// "why" line on each, two reverse questions per part, flags, and the
-// safety step. Question 1 of each part is the quick check-in question.
+// "why" line on each, and reverse questions. Open questions only, no safety
+// step (GWG BLD 887). Question 1 of each part is the quick check-in question.
 // Screens: for each part, a short intro, one screen per question, and an
-// optional "Sit with this". Then the two safety questions, one per screen.
+// optional "Sit with this". Then the finish screen. One quiet line of type sits
+// under every screen.
 // Big answer rows, a clear Back, and progress in words.
 // =====================================================================
 const CKB = window.SEQUOIA_CHECKIN || {};
 const ST_STD = 1;
 const Q_OPTS = CKB.answers || [];
 const MAIN_Q = CKB.questions || {};
-const SAFETY = CKB.safety || {};
-const ST_FLAGS = CKB.flags || {};
+const HELP_LINES = CKB.help || {};
 let QUESTIONS = MAIN_Q;                                   // the helper set for a helper's own check-in
 let Q_STEM = (CKB.stems || {}).standard || 'In the past two weeks, how often have you...';
 const quickQ = key => ((QUESTIONS[key] || [])[0] || {}).t || '';
 const stLevel = sc => sc == null ? 'Not sure yet' : sc >= 8 ? 'Strong' : sc >= 5 ? 'Steady' : 'Growing Edge';
 const stLevelLine = sc => sc == null ? 'Not sure yet' : `${stLevel(sc)}, ${sc} of 10`;
-let ST_ANS = {}, ST_SAFE = {}, ST_QUICK = false;
+let ST_ANS = {}, ST_QUICK = false;
 // Who is answering (Willow model). by: 'self', 'tapped' (they answered, a helper tapped),
 // 'observed' (a helper answering from what they see), or 'helper' (a helper's own check-in).
 let CK = { by: 'self', forId: null, name: '' };
@@ -373,64 +371,34 @@ function answerQ(key, i, val) {
   document.querySelectorAll(`[data-q="${key}-${i}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
   const card = document.querySelector(`[data-q="${key}-${i}"]`);
   if (card) card.classList.add('answered');
-  const q = stQ(key, i), f = q && q.flag && ST_FLAGS[q.flag];
-  if (q && q.flag === 'home' && CK.by !== 'helper') ST_SAFE.home = (f ? f.on : ['rarely', 'sometimes', 'unsure']).includes(val);
-  if (f && (f.calm || []).includes(val) && CK.by !== 'observed') { showCalm(q.flag === 'home' ? 'home' : ''); return; }
   // Move on after a moment, so the choice can be seen. Back always returns.
   const here = currentStep; clearTimeout(ADV);
   ADV = setTimeout(() => { if (currentStep === here && SCREENS[here + 1]) goToStep(here + 1); }, 650);
 }
 
-// ---------- safety ----------
-const SAFE_OPTS = SAFETY.directOpts || [['no', 'No'], ['sometimes', 'Sometimes'], ['often', 'Often'], ['skip', "I'd rather not say"]];
-const YN_OPTS = [['yes', 'Yes'], ['no', 'No'], ['skip', "I'd rather not say"]];
-function optRow(which, opts, cur) {
-  return `<div class="q-opts sq-opts">${opts.map(x => `<button type="button" data-v="${x[0]}" aria-pressed="${cur === x[0]}" onclick="answerSafe('${which}','${x[0]}')"><span class="sq-dot" aria-hidden="true"></span>${x[1]}</button>`).join('')}</div>`;
+// ---------- the quiet line and Help Is Close (GWG BLD 887) ----------
+// No safety step. One quiet line of type under the check-in and on results, never
+// spoken, with a link that opens the help lines only when tapped.
+function quietHtml() {
+  return `<p class="ck-quiet">${escapeHtml(HELP_LINES.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')} <button type="button" class="text-btn" onclick="showCalm()">See help lines</button></p>`;
 }
-function safetyScreenHtml(which) {
-  const cur = ST_SAFE[which] || '', n = escapeHtml(CK.name || 'them');
-  if (which === 'opener') return `<p class="safe-lead">${escapeHtml(SAFETY.lead || 'Two last questions. They\'re here because we care, and your answers stay on this device.')}</p>
-    <div class="q-card sq-one${cur ? ' answered' : ''}" data-s="opener" role="radiogroup" aria-label="Hopeless or a burden"><p class="q-text sq-qtext">${escapeHtml(SAFETY.opener || '')}</p>${optRow('opener', Q_OPTS, cur)}</div>`;
-  if (which === 'direct') return `<p class="safe-lead">${escapeHtml(SAFETY.directLead || '')}</p>
-    <div class="q-card sq-one${cur ? ' answered' : ''}" data-s="direct" role="radiogroup" aria-label="Thoughts of ending your life"><p class="q-text sq-qtext">${escapeHtml(SAFETY.direct || '')}</p>${optRow('direct', SAFE_OPTS, cur)}</div>`;
-  if (which === 'observed') { const O = SAFETY.observed || {};
-    return `<div class="q-card sq-one${cur ? ' answered' : ''}" data-s="observed" role="radiogroup" aria-label="What they have said"><p class="q-text sq-qtext">${escapeHtml((O.ask || '').replace('{name}', CK.name || 'they'))}</p>${optRow('observed', YN_OPTS, cur)}</div>
-    ${cur === 'yes' ? `<p class="sq-flagnote">${escapeHtml((O.help || '').replace(/\{name\}/g, CK.name || 'them'))}</p>${linesHtml(false, true)}` : ''}`; }
-  if (which === 'helper') { const H = SAFETY.helper || {};
-    return `<div class="q-card sq-one${cur ? ' answered' : ''}" data-s="helper" role="radiogroup" aria-label="Your own safety"><p class="q-text sq-qtext">${escapeHtml(H.ask || '')}</p>${optRow('helper', YN_OPTS, cur)}</div>
-    ${cur === 'yes' ? `<p class="sq-flagnote">${escapeHtml(H.yes || '')}</p>${linesHtml(false, true)}` : cur === 'no' ? `<p class="sq-flagnote">${escapeHtml(H.no || '')}</p>` : ''}`; }
-  return '';
-}
-function answerSafe(which, val) {
-  ST_SAFE[which] = val;
-  document.querySelectorAll(`[data-s="${which}"] button`).forEach(b => b.setAttribute('aria-pressed', String(b.dataset.v === val)));
-  const c = document.querySelector(`[data-s="${which}"]`); if (c) c.classList.add('answered');
-  if (which === 'direct' && val !== 'no' && val !== 'skip') { showCalm('direct'); return; }
-  if (which === 'opener' && (val === 'often' || val === 'always')) { showCalm('burden'); return; }
-  if (which === 'observed' || which === 'helper') { const box = document.getElementById('sq-safe-' + which); if (box) box.innerHTML = safetyScreenHtml(which); if (val === 'yes') return; }
-  const here = currentStep; clearTimeout(ADV);
-  ADV = setTimeout(() => { if (currentStep === here && SCREENS[here + 1]) goToStep(here + 1); }, 650);
-}
-// The help lines, from SEQUOIA_CHECKIN.safety.lines. MAARC and the fraud line come first when the home flag shows.
-function linesHtml(home, compact) {
-  const L = (SAFETY.lines && SAFETY.lines.length) ? SAFETY.lines : [
+// The help lines, from SEQUOIA_CHECKIN.help.lines.
+function linesHtml(compact) {
+  const L = (HELP_LINES.lines && HELP_LINES.lines.length) ? HELP_LINES.lines : [
     { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call or text 988', tel: '988', sms: '988', note: 'Any time, day or night.' },
     { id: '911', name: 'In immediate danger?', show: 'Call 911', tel: '911' }];
-  const list = home ? L.filter(x => x.first === 'home').concat(L.filter(x => x.first !== 'home')) : L;
-  return `<ul class="calm-list${compact ? ' sq-lines' : ''}">${list.map(x => `<li${home && x.first === 'home' ? ' class="calm-first"' : ''}><b>${escapeHtml(x.name)}</b><a href="tel:${escapeHtml(x.tel || '')}">${escapeHtml(x.show || x.tel || '')}</a>${x.sms && x.id === '988' ? ` or <a href="sms:${escapeHtml(x.sms)}">text ${escapeHtml(x.sms)}</a>` : ''}${x.note ? `<span class="sq-linenote">${escapeHtml(x.note)}</span>` : ''}</li>`).join('')}</ul>`;
+  return `<ul class="calm-list${compact ? ' sq-lines' : ''}">${L.map(x => `<li><b>${escapeHtml(x.name)}</b><a href="tel:${escapeHtml(x.tel || '')}">${escapeHtml(x.show || x.tel || '')}</a>${x.sms && x.id === '988' ? ` or <a href="sms:${escapeHtml(x.sms)}">text ${escapeHtml(x.sms)}</a>` : ''}${x.note ? `<span class="sq-linenote">${escapeHtml(x.note)}</span>` : ''}</li>`).join('')}</ul>`;
 }
-function showCalm(why) {
+// Help Is Close: opens only when a person taps a help link.
+function showCalm() {
   const old = document.getElementById('calm-card'); if (old) old.remove();
-  const home = why === 'home' || !!ST_SAFE.home;
-  const lead = why === 'direct' ? `<p><b>${escapeHtml(SAFETY.yes || '')}</b></p>${SAFETY.means ? `<p>${escapeHtml(SAFETY.means)}</p>` : ''}`
-    : why === 'burden' ? `<p>${escapeHtml(SAFETY.burden || '')}</p>` : `<p>${escapeHtml(SAFETY.intro || 'If you\'re thinking about suicide or feel unsafe, reach out now. Someone will listen.')}</p>`;
   const wrap = document.createElement('div');
   wrap.id = 'calm-card'; wrap.className = 'calm-back';
   wrap.innerHTML = `<div class="calm-box" role="dialog" aria-modal="true" aria-labelledby="calm-title">
-    <h2 id="calm-title">${escapeHtml(SAFETY.title || 'You matter, and others can help you carry this.')}</h2>
-    ${lead}
-    ${linesHtml(home)}
-    ${why !== 'direct' && why !== 'home' && !home && window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}
+    <h2 id="calm-title">${escapeHtml(HELP_LINES.title || 'Help Is Close')}</h2>
+    <p>${escapeHtml(HELP_LINES.intro || 'Someone will listen, any time, day or night.')}</p>
+    ${linesHtml()}
+    ${window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}
     <div class="calm-row"><button type="button" class="btn btn-primary" onclick="closeCalm()">Close and keep going</button></div>
   </div>`;
   document.body.appendChild(wrap);
@@ -453,9 +421,6 @@ function buildScreens(quick) {
     for (let i = 0; i < n; i++) out.push({ kind: 'q', key: d.key, part: d.key, pi, i, n });
     if (CK.by === 'self' || CK.by === 'tapped') out.push({ kind: 'sit', part: d.key, pi });
   });
-  if (CK.by === 'observed') out.push({ kind: 'safe', which: 'observed' });
-  else if (CK.by === 'helper') out.push({ kind: 'safe', which: 'helper' });
-  else { out.push({ kind: 'safe', which: 'opener' }); out.push({ kind: 'safe', which: 'direct' }); }
   out.push({ kind: 'finish' });
   return out;
 }
@@ -490,10 +455,6 @@ function screenHtml(sc, idx) {
       <div class="sit-with"><div class="step-label">Sit with this <span class="opt">(optional)</span></div><p class="domain-prompt">${d.prompt || 'What is true for you in this part of your life right now?'}</p>
       <textarea class="reflection-area" id="client-${d.key}-notes" aria-label="${d.part} reflection" placeholder="Write here if you'd like, or use your phone's microphone key to speak it. It stays on this device." style="--domain-color:${d.color};"></textarea></div>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">${nextLabel}</button></div></section>`;
-  if (sc.kind === 'safe') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title">${sc.which === 'helper' ? 'For you' : 'Before you see your tree'}</h2></div></div>
-      <div class="safe-wrap" id="sq-safe-${sc.which}">${safetyScreenHtml(sc.which)}</div>
-      <p class="safe-help"><button type="button" class="text-btn" onclick="showCalm()">Need to talk to someone now?</button></p>
-      <div class="btn-row step-nav">${back}<button class="btn btn-secondary" onclick="goToStep(${idx + 1})">Next</button></div></section>`;
   if (sc.kind === 'finish') return `<section class="step-panel" id="step-${idx}"><div class="step-head"><div><div class="step-count">All done</div><h2 class="step-title">Thank you</h2></div></div>
       <p class="lead">${CK.by === 'observed' ? 'These answers are kept apart from ' + escapeHtml(CK.name) + '\'s own, and help the people who care for them notice what is changing.' : CK.by === 'helper' ? 'Your answers stay in your own profile.' : 'Your answers stay on this device. Tap below to see your tree.'}</p>
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="calculateResults('client')">${CK.by === 'self' ? 'See My Tree' : 'See the Results'}</button></div></section>`;
@@ -505,7 +466,7 @@ function nextLabelFor(idx) {
 }
 function renderCheckin() {
   SCREENS = buildScreens(ST_QUICK);
-  document.getElementById('step-container').innerHTML = SCREENS.map(screenHtml).join('');
+  document.getElementById('step-container').innerHTML = SCREENS.map(screenHtml).join('') + quietHtml();
   visitedSteps.clear(); visitedSteps.add(0);
   goToStep(0, true);
 }
@@ -546,14 +507,14 @@ function setMode(by, forId) {
 }
 function startCheckin(by, forId) {
   setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = false; ST_ANS = {}; ST_SAFE = {};
+  ST_QUICK = false; ST_ANS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
 }
 function startQuick(by, forId) {
   setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = true; ST_ANS = {}; ST_SAFE = {};
+  ST_QUICK = true; ST_ANS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
@@ -650,7 +611,6 @@ function generateGrowthPlanDoc(mode) {
         <div class="growth-plan-meta">${nameField ? nameField + ' &middot; ' : ''}${dateStr}</div>
       </div>
       ${domainsHtml}
-      ${planHelpHtml()}
       <div class="growth-plan-next">
         <div class="growth-plan-next-label">Keep growing</div>
         <p><strong>Tend it every day.</strong> Your practices wait in the Today tab in Sequoia, ready to check off with a big checkmark. A short check-in each week and a full check-in every twelve weeks show how your tree is growing. Open Sequoia at growwithgrounded.com/sequoia</p>
@@ -671,12 +631,6 @@ function generateGrowthPlanDoc(mode) {
 }
 
 
-// Help lines on the growth plan when the latest check-in flagged something (never lost).
-function planHelpHtml() {
-  const e = oakLatestEntry(), f = (e && e.flags) || [];
-  if (!f.length && !(e && ['sometimes', 'often'].includes((e.safety || {}).direct))) return '';
-  return `<div class="growth-plan-next sq-planhelp"><div class="growth-plan-next-label">Help Is Close</div>${linesHtml(f.includes('home'), true)}</div>`;
-}
 
 // =====================================================================
 // RESULTS
@@ -725,26 +679,6 @@ function inviteHtml() {
   return `<p class="quiet-sub">New stories from the edge of life arrive every Wednesday. <a class="text-link" href="${SUBSCRIBE_URL}" target="_blank" rel="noopener">Subscribe to Grounded.</a></p>`;
 }
 
-// Flagged answers from this check-in: alone, hope, home. Quick check-ins have none
-// (question 1 of each part is never a flag question).
-
-// Flagged answers from this check-in: alone, hope, home. Quick check-ins have none
-// (question 1 of each part is never a flag question).
-function stFlagsNow() {
-  if (ST_QUICK) return [];
-  const out = [];
-  Object.keys(QUESTIONS).forEach(k => (QUESTIONS[k] || []).forEach((q, i) => {
-    const a = (ST_ANS[k] || {})[i];
-    if (q.flag && a && ST_FLAGS[q.flag] && ST_FLAGS[q.flag].on.includes(a) && !out.includes(q.flag)) out.push(q.flag);
-  }));
-  return out;
-}
-function flagBoxHtml(flags, helperSet) {
-  if (!flags.length) return '';
-  return `<div class="flag-box" role="note"><h3>Worth tending</h3>${flags.map(f => `<p><strong>${escapeHtml(ST_FLAGS[f].title)}.</strong> ${escapeHtml(helperSet && ST_FLAGS[f].helperNote ? ST_FLAGS[f].helperNote : ST_FLAGS[f].note)}</p>`).join('')}
-    ${flags.includes('home') || flags.includes('hope') ? linesHtml(flags.includes('home'), true) : ''}
-    <p><button type="button" class="text-btn" onclick="showCalm('${flags.includes('home') ? 'home' : ''}')">See all help lines</button></p></div>`;
-}
 
 function calculateResults(mode) {
   const prefix = 'client';
@@ -759,7 +693,6 @@ function calculateResults(mode) {
     reflections[d.key] = notes ? notes.value : '';
   });
   const shown = k => unsure.includes(k) ? null : scores[k];
-  const flags = stFlagsNow();
   const by = CK.by, helperName = by === 'self' ? '' : ((window.GGP && GGP.active()) || {}).name || '';
   const self = by === 'self';
   const reminder = self ? 'Come back and take this check-in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'
@@ -775,7 +708,7 @@ function calculateResults(mode) {
       <p class="tree-caption">Each part of the tree shines with how it is doing.${self ? ' Tap a part to work on it in your growth plan.' : ''}</p>
       ${ST_QUICK ? '<p class="tree-caption">A quick check-in asks one question for each part. Quick check-ins are compared only with other quick check-ins.</p>' : ''}
       ${by === 'observed' ? '' : `<div class="interpretation">${interpretResults(scores)}</div>`}
-      ${flagBoxHtml(flags, by === 'helper')}
+      ${quietHtml()}
     </div>
     ${self ? buildPersonalSections(Object.fromEntries(ALL_DOMAINS.map(d => [d.key, scores[d.key]])), true) + lcSuggestHtml(scores, mode) : ''}
     <div class="reminder-banner"><p>${escapeHtml(reminder)}</p></div>
@@ -791,8 +724,7 @@ function calculateResults(mode) {
   };
 
   document.getElementById('client-results-content').innerHTML = html;
-  const safety = by === 'observed' ? { observed: ST_SAFE.observed || 'skipped' } : by === 'helper' ? { helper: ST_SAFE.helper || 'skipped' } : { opener: ST_SAFE.opener || 'skipped', direct: ST_SAFE.direct || 'skipped' };
-  const entry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], std: ST_STD, scores, unsure, reflections, flags, safety, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by, helper: helperName };
+  const entry = { id: Date.now().toString(36), date: new Date().toISOString().split('T')[0], std: ST_STD, scores, unsure, reflections, growthPlan: {}, type: ST_QUICK ? 'quick' : 'full', answers: ST_QUICK ? null : JSON.parse(JSON.stringify(ST_ANS)), by, helper: helperName };
   if (by === 'observed') entry.kind = 'observed';
   if (self) {
     window.lastClientScores = scores;
@@ -901,17 +833,9 @@ function sqCheer(text) {
   el.classList.remove('show'); void el.offsetWidth; el.classList.add('show');
   clearTimeout(sqCheer.t); sqCheer.t = setTimeout(() => el.classList.remove('show'), 3600);
 }
-// The pause: while a check-in in the last two weeks flagged losing hope or feeling alone
-// (or the safety step asked for care), the tree holds as it is. Everything is kept.
-function sqPause() {
-  const cut = new Date(Date.now() - 14 * 86400000).toISOString().slice(0, 10);
-  return (personalHistory || []).some(e => e && !e.from && e.date >= cut && e.kind !== 'observed' && (
-    (e.flags || []).some(f => f === 'hope' || f === 'alone') ||
-    ['sometimes', 'often'].includes((e.safety || {}).direct) || ['often', 'always'].includes((e.safety || {}).opener)));
-}
 function todayKindHtml(s) {
   const n = window.GGTend ? GGTend.partsOn(sgToday()) : 0;
-  const lineA = sqPause() ? 'Your tree is holding still with you this season. Tend it when you can. Everything you\'ve grown stays safe.' : n ? kindWord(n) : 'One practice is enough to start. A big checkmark is waiting.';
+  const lineA = n ? kindWord(n) : 'One practice is enough to start. A big checkmark is waiting.';
   return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>` + (s ? sgLevelHtml(s) : '') + bringOakHtml();
 }
 
@@ -1421,10 +1345,9 @@ function lcSuggestHtml(scores) {
   low.forEach(k => LC_TOPICS.filter(t => (t.parts || []).includes(k)).slice(0, 2).forEach(t => { if (!picks.includes(t)) picks.push(t); }));
   const shown = picks.slice(0, 5);
   if (!shown.length) return '';
-  const crisis = scores.fruit <= 2 ? `<p><b>If you are having thoughts of ending your life, call or text 988 now. Veterans, call 988 and press 1.</b></p>` : '';
   return `<div class="lc-suggest no-print"><h3>When Life Changes</h3>
     <p>Some parts of your tree are carrying a lot right now. These guides may help you find words and next steps.</p>
-    ${crisis}<div class="lc-links">${shown.map(t => `<button type="button" class="sq-chip" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" class="sq-chip" onclick="lcOpen('client',null)">Browse all guides</button></div></div>`;
+    <div class="lc-links">${shown.map(t => `<button type="button" class="sq-chip" onclick="lcOpen('client','${t.id}')">${lcEsc(t.title)}</button>`).join('')}<button type="button" class="sq-chip" onclick="lcOpen('client',null)">Browse all guides</button></div></div>`;
 }
 
 
@@ -1589,8 +1512,6 @@ const TEND_CFG = {
   lockedHtml: () => oakAdults().length ? `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>${oakAdults().length > 1 ? 'Choose your picture above, then enter your passcode.' : 'Open your profile above to see your tree and today\'s practices.'} Each person's tree stays locked in their own profile on this device.</p></div>` : `<div class="gt-card gt-empty"><h2>Your tree grows in your profile</h2><p>Daily tending is saved inside a private Grounded profile on this device, locked with a passcode only you know. It all stays private, right here.</p><div class="btn-row"><button class="btn btn-primary" onclick="profCreateDialog()">Create a profile</button><button class="btn btn-secondary" onclick="startCheckin()">Begin a check-in first</button></div></div>`,
   todayExtra: s => vcTodayHtml() + todayKindHtml(s),
   seasonExtra: s => artGrowthHtml(s) + graphCardHtml() + (s ? sgMilesHtml(s) : ''),
-  pause: () => sqPause(),
-  pauseLine: 'Your tree is holding still with you while you get support. Everything is kept.',
   onCheck: (done, key, s, parts, before) => sgOnCheck(done, s, parts),
   store: {
     get: () => { if (!PROF || !window.GGP) return null; const d = sqNamesForward(GGP.data(PROF.id, 'sequoia')); if (!d.tend || typeof d.tend !== 'object') d.tend = {}; return d.tend; },
@@ -1787,8 +1708,7 @@ async function profResume() {
 // =====================================================================
 // HELPERS (the Willow model). Off unless the person turns on Add a Helper.
 // A helper opens the person's Sequoia with their own passcode and sees only
-// what the person shares. Faith answers and notes start private. Safety
-// answers are never shown to a helper.
+// what the person shares. Faith answers and notes start private.
 // =====================================================================
 const SHARE_DEF = { tree: true, plan: true, legacy: false, faith: false, notes: false };
 const SHARE_ROWS = [
@@ -1804,7 +1724,7 @@ function helperSettingsHtml() {
   if (!PROF || !window.GGP) return '';
   if (HELP) {
     const n = escapeHtml((GGP.get(HELP) || {}).name || 'They');
-    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Sequoia settings. Their safety answers are never shared.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Sequoia</button></div></section>`;
+    return `<section id="gt-set-helpers"><h3>Helping ${n}</h3><p class="gt-small">${n} chooses what helpers see, in their own Sequoia settings.</p><div class="btn-row"><button class="btn btn-secondary btn-sm" onclick="GGTend.closeSettings();helpBack()">Back to My Own Sequoia</button></div></section>`;
   }
   const d = GGP.data(PROF.id, 'sequoia'), on = !!d.helpersOn, sh = shareOf(PROF.id);
   const hs = (GGP.helpers(PROF.id) || []).map(id => GGP.get(id)).filter(Boolean);
@@ -1813,7 +1733,6 @@ function helperSettingsHtml() {
     <p class="gt-small">A helper is someone you trust, like a grown child, a spouse, or a friend. They open your Sequoia with their own passcode, and they can sit with you for a check-in or write in your Legacy Book while you tell. This stays off unless you turn it on, and only you can turn it on.</p>
     <label class="gt-switch"><input type="checkbox" id="sq-helpers-on"${on ? ' checked' : ''} onchange="sqHelpersOn(this.checked)"> Let helpers open my Sequoia</label>
     ${on ? `<h4 class="sq-h4">What Helpers See</h4>${SHARE_ROWS.map(x => `<label class="gt-switch"><input type="checkbox"${sh[x[0]] ? ' checked' : ''} onchange="sqShare('${x[0]}',this.checked)"> <span><b>${escapeHtml(x[1])}</b><br><small>${escapeHtml(x[2])}</small></span></label>`).join('')}
-      <p class="gt-small"><b>Your safety answers are never shared.</b></p>
       <h4 class="sq-h4">Your Helpers</h4>
       ${hs.length ? hs.map(x => `<p class="sq-helper">${GGAv.html(x.avatar, x.name, 32)}<b>${escapeHtml(x.name)}</b><button type="button" class="text-btn" onclick="dropHelper('${x.id}')">Remove</button></p>`).join('') : '<p class="gt-small">No helpers yet.</p>'}
       ${can.length ? `<label class="gt-small" for="sq-hid">Add a helper</label><select id="sq-hid" class="sq-select">${can.map(p => `<option value="${p.id}">${escapeHtml(p.name)}</option>`).join('')}</select>

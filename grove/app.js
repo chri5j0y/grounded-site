@@ -86,8 +86,7 @@ Object.assign(ICON, {
 //
 // What The Grove can see of a person (Family groves): each person's name, picture, age, and, if
 // their "Show my growth on The Grove" switch is on, the big picture of their growth. Never answers,
-// levels, notes, or journals. A grown-up also sees a quiet alert when a teen's check-in asked for
-// a caring conversation, never the answers.
+// levels, notes, or journals. No alert is ever sent from anyone's answers (GWG BLD 887).
 //
 // Saved on this device only (gg-grove-v2). The household grove from before (gg-grove-family-v1)
 // is read forward as a Family grove and left in place, so older backups still load.
@@ -529,7 +528,7 @@ function render() {
   window.GROVE_PLAIN = plainMode();
   const body = !G || S.setup ? ({ how: viewHow, library: viewLibrary, life: viewLife }[S.tab] || viewSetup)()
     : ({ grove: viewGrove, checkin: viewCheckin, plan: viewPlan, together: viewTogether, life: viewLife, wall: viewWall, earlier: viewEarlier, how: viewHow, settings: viewSettings, library: viewLibrary }[S.tab] || viewGrove)();
-  v.innerHTML = (G && !S.setup ? groveBar() : '') + (isFamily() && !S.setup ? hereBar() + alertsHtml() : '') + body;
+  v.innerHTML = (G && !S.setup ? groveBar() : '') + (isFamily() && !S.setup ? hereBar() : '') + body;
   // The Today scene plays a short moment (birds and a soft wind) when it opens, then rests still.
   const key = G && S.tab === 'grove' && !S.setup ? G.id : '';
   if (window.GGLiving && document.getElementById('gl-scene')) GGLiving.mount({ done: GV_DONE, moment: !!key && key !== LAST_SCENE });
@@ -604,12 +603,6 @@ function hereBar() {
 }
 function needHere(reason) { if (me()) return Promise.resolve(true); if (!window.GGP) return Promise.resolve(false); return GGP.openDialog({ reason: reason || "Who's here? Choose your picture." }).then(() => !!me()); }
 
-/* ---------- quiet alerts for grown-ups ---------- */
-function alertsHtml() {
-  const a = me(); if (!a || a.age !== 'adult') return '';
-  const list = people().filter(p => p.age !== 'adult' && (p.grown || []).includes(a.id)).map(p => ({ p, s: (p.shared || {}).safety })).filter(x => x.s && x.s.flag && G.seen[x.p.id] !== x.s.flag);
-  return list.map(({ p, s }) => `<div class="gv-alert" role="note"><h3>Please check in with ${esc(p.name)}</h3><p>Their check-in on ${esc(nice(s.flag))} asked for a caring conversation. You won't see their answers. Find a quiet moment, ask how they're doing, and listen. If anyone is in danger, call or text 988, or call 911.</p><button class="btn btn-line btn-sm" data-act="seen" data-id="${esc(p.id)}">I checked in with them</button></div>`).join('');
-}
 
 /* ---------- Our grove ---------- */
 /* The living Today scene: The Grove's own painting, with light from the day's tending (parts tended in anyone's
@@ -785,6 +778,15 @@ function togetherHtml(days) {
   return h;
 }
 
+/* ---------- the quiet line (GWG BLD 887) ----------
+   Type only, never read aloud, under every check-in screen and its results. A Family grove in a hard
+   season names the hospice 24/7 line first. */
+function quietHtml() {
+  const hos = isFamily() && G && G.hard ? (G.line && G.line.phone
+    ? `Call ${esc(G.line.name || 'your hospice 24/7 line')} first, day or night: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. `
+    : 'Call your hospice\'s 24/7 line first, day or night. ') : '';
+  return `<p class="muted gv-quiet">${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>`;
+}
 /* ---------- help, any time ---------- */
 function helpCardHtml(more, hospice) {
   let first = '';
@@ -1157,7 +1159,7 @@ function viewCheckin() {
   const showing = list.find(c => c.id === S.view) || null;
   let h = `<div class="section-head"><h2>${esc(K.checkin)}</h2><p>${esc(Wk(K.leaderIntro, G.kind) || `Read each question aloud together, talk it over, and settle on one answer for ${K.we}. No one's own answer is ever entered or kept.`)}</p></div>`;
   if (K.privacyLine) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} ${esc(K.privacyLine)}</p>`;
-  if (showing) return h + `<p><button class="btn btn-line btn-sm" data-act="ciback">${icon('back')} All Check-ins</button></p>` + resultsHtml(showing) + helpCardHtml(true);
+  if (showing) return h + `<p><button class="btn btn-line btn-sm" data-act="ciback">${icon('back')} All Check-ins</button></p>` + resultsHtml(showing) + quietHtml();
   h += `<div class="card"><h3>Check In Together</h3><p>Answers in words: Not Yet, Sometimes, Often, Almost Always. When you don't agree, choose We See It Differently, and it becomes a Thing to Talk About. Pass skips a question with nothing lost.</p>
     <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cistart" data-id="full">Full ${esc(K.checkin)}, 24 Questions</button><button class="btn btn-line btn-sm" data-act="cistart" data-id="quick">Quick Check-in, 6 Questions</button></div>
     <p class="muted">The full one takes ${esc(K.time)}. The quick one fits a weekly huddle or the end of a gathering.</p></div>`;
@@ -1166,14 +1168,14 @@ function viewCheckin() {
     h += seasonsHtml();
     h += `<div class="card"><h3>Earlier Check-ins</h3><ul class="gv-fam-list">${list.map(c => `<li><div><b>${esc(longDate(c.date))}</b><span>${c.quick ? 'Quick Check-in' : 'Full Check-in'}</span></div><button class="btn btn-line btn-sm" data-act="ciview" data-id="${esc(c.id)}">Open</button></li>`).join('')}</ul></div>`;
   }
-  return h + helpCardHtml(true) + srcFor('checkin');
+  return h + quietHtml() + srcFor('checkin');
 }
 function runnerHtml() {
   const K = KW(), ci = S.ci;
   if (ci.step === 'changes') {
     return `<div class="section-head"><h2>${esc(K.checkin)}</h2><p>Before the questions: what's changed lately? Tap any that fit. This helps choose practices, and never changes a result.</p></div>
       <div class="card"><h3>What's Changed Lately?</h3><div class="gv-chips">${changesFor(G.kind).map(c => `<button type="button" class="chip${ci.changes.includes(c.id) ? ' on' : ''}" aria-pressed="${ci.changes.includes(c.id)}" data-act="cichange" data-id="${esc(c.id)}">${esc(c.label)}</button>`).join('')}</div>
-      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cinext">Start the Questions</button><button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + helpCardHtml(true);
+      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cinext">Start the Questions</button><button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + quietHtml();
   }
   const list = qList(G.kind, ci.quick), item = list[ci.i], q = item.q, part = PARTS6.find(p => p.key === item.part), cur = ci.ans[item.key];
   const kid = kidsOn() && kidText(q);
@@ -1186,7 +1188,7 @@ function runnerHtml() {
     ${q.tip ? `<p class="gv-tip"><b>Leader tip.</b> ${esc(q.tip)}</p>` : ''}
     <div class="gv-ans" role="group" aria-label="Our shared answer">${ANSWERS.map(([k, l]) => `<button type="button" class="gv-a${cur === k ? ' on' : ''}" aria-pressed="${cur === k}" data-act="cians" data-id="${k}">${l}</button>`).join('')}</div>
     <div class="gv-ans gv-ans2">${ASPECIAL.map(([k, l]) => `<button type="button" class="gv-a gv-a2${cur === k ? ' on' : ''}" aria-pressed="${cur === k}" data-act="cians" data-id="${k}">${l}</button>`).join('')}</div>
-    <div class="tools-row" style="justify-content:space-between">${ci.i > 0 ? `<button class="btn btn-line btn-sm" data-act="ciprev">${icon('back')} Back</button>` : '<span></span>'}<button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + helpCardHtml(true);
+    <div class="tools-row" style="justify-content:space-between">${ci.i > 0 ? `<button class="btn btn-line btn-sm" data-act="ciprev">${icon('back')} Back</button>` : '<span></span>'}<button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + quietHtml();
 }
 function ciAnswer(k) {
   const ci = S.ci, list = qList(G.kind, ci.quick); ci.ans[list[ci.i].key] = k;
@@ -1486,7 +1488,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b836').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b887').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1526,7 +1528,6 @@ function viewHow() {
     <p>In a Family grove: short posts and reactions, so you can cheer each other on. Reactions show who reacted, not running totals. A Classroom has Teacher Notes instead, and other groves can turn a leader's wall on in Settings.</p>
     <h3>What stays private</h3>
     <p>The check-ins, the plan, What's Changed Lately, and Who's in Our Circle are locked with the grove passcode, on by default. The Grove never sees anyone's own answers, levels, notes, or journal from their tree app. In a Family grove it sees names, pictures, and, only if someone's "Show my growth on The Grove" switch is on, the big picture: days tended, rings, and which parts they tended.</p>
-    <p>For kids and teens, the grown-ups who agreed for them get a quiet alert here if a check-in asks for a caring conversation. Never the answers.</p>
     <p>Everything stays private, right here on this device.</p>
     <h3>Share to Family</h3>
     <p>Family on other phones can still grow side by side. Each person opens their own tree app and taps Share to Family, then sends the link or QR code. Open it here, and their tree stands in your grove. In a Faith Community or Small Group grove, members may share their tree the same way, if they choose.</p>
@@ -1656,7 +1657,6 @@ document.addEventListener('click', e => {
   else if (act === 'joinfirst') { G.joinFirst = !G.joinFirst; save(); render(); const f = document.querySelector('[data-act="joinfirst"]'); if (f) f.focus(); toast(G.joinFirst ? 'Ways everyone can join come first.' : 'Back to the usual order.'); }
   else if (act === 'oldnotes') { S.open = S.open === 'oldnotes' ? '' : 'oldnotes'; render(); }
   else if (act === 'famdrop') famDrop(id);
-  else if (act === 'seen') { const p = who(id), s = p && (p.shared || {}).safety; if (s) { G.seen[id] = s.flag; save(); render(); } }
   // groves
   else if (act === 'pick') { S.pick = !S.pick; render(); }
   else if (act === 'go') switchTo(id);

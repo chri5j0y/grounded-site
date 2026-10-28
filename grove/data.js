@@ -200,25 +200,6 @@ const WEEKLY = {
  fruit:["I looked forward to something.","I had something to look forward to.","I felt excited about tomorrow."]
 };
 
-// ---------- SAFETY STEP ----------
-const SAFETY = {
- grown:{
-  lead:"Two last questions. They're here because we care, and your answers stay on this device.",
-  opener:"Some seasons are heavy. In the past two weeks, how often have you felt hopeless, or like a burden to others?",
-  direct:"In the past two weeks, have you had thoughts of ending your life or hurting yourself?"
- },
- teen:{
-  lead:"Two last questions. They're here because we care.",
-  opener:"In the past two weeks, how often have you felt hopeless, or like things won't get better?",
-  direct:"In the past two weeks, have you had thoughts of ending your life or hurting yourself?"
- },
- kid:{
-  lead:"Two last questions. Every answer is welcome.",
-  opener:"Do you feel safe at home and at school?",
-  direct:"Do you ever feel so sad that you want to hurt yourself, or not be alive?"
- }
-};
-
 // ---------- BODY LEVELS (adults and teens) ----------
 const LEVELS = [
  { id:"gentle", name:"Gentle", desc:"Starting slow, recovering, caring around the clock, or moving with limits. Includes seated and in-bed options." },

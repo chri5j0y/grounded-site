@@ -89,7 +89,7 @@ const SVC_PAGES = [
   ['spiritual-guidance', 'Spiritual Guidance', 'page-growth', 'One-on-one guidance for your inner life, whatever shape it is in.', 'Growth'],
   ['meditation-sound-movement', 'Meditation, Sound, and Movement', 'page-growth', 'A quiet place for your body to settle and breathe again.', 'Growth'],
   ['speaking-training', 'Speaking and Training', 'page-speaking', 'Real stories and practical tools for the people who do this work.', 'For Teams'],
-  ['organizations', 'For Organizations', 'page-teams', 'For churches, schools, and hospices: trained Guides, safety built in, and support for your people.', 'For Teams']
+  ['organizations', 'For Organizations', 'page-teams', 'For churches, schools, and hospices: trained Guides, the Grounded Response Plan, and support for your people.', 'For Teams']
 ];
 const SERVICES = SVC_FAM.map(f => Object.assign({svc: 'family', mark: 'favicon.svg', color: GOLD, focus: .5}, f, {hero: 'shared/heroes/' + f.hero + '-wide.webp'})).concat(
   SVC_PAGES.map(([pg, name, hero, tagline, fam]) => ({id: 'svc-' + pg, svc: 'page', name, mark: 'favicon.svg', color: GOLD, hero: 'shared/heroes/' + hero + '-wide.webp', focus: .5, tagline, line: fam + ', with Grow With Grounded\u2122.', url: 'growwithgrounded.com/' + pg + '.html'})));
@@ -116,7 +116,7 @@ const ORG_AUD = [
     lines: ['Pacing and flare days, in plain words', 'Gentler ways of every practice', 'A Rest Week whenever it\'s needed', 'Guides for living with several conditions at once', 'Kept private on each person\'s own device']},
   {id: 'org-parish-nurses', name: 'Parish Nurses', hero: 'sequoia', focus: .22,
     headline: 'Ready for every visit.', tagline: 'Sequoia™ Guide and Oak™ Guide for home visits and congregation visits.',
-    lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 60', 'Guides for living with several conditions at once', 'Crisis steps and reporting guidance in every visit', 'A Certificate of Completion for each person']}
+    lines: ['Sequoia™ Guide for anyone who serves older adults', 'Oak™ Guide for walking with adults 26 to 60', 'Guides for living with several conditions at once', 'The Grounded Response Plan in every visit', 'A Certificate of Completion for each person']}
 ];
 const ORGS = ORG_AUD.map(a => Object.assign({svc: 'org', mark: 'favicon.svg', color: GOLD, line: ORG_LINE, url: ORG_URL, eyebrow: 'For ' + a.name}, a, {hero: 'shared/heroes/' + a.hero + '-wide.webp'}));
 // THE GROVE BY KIND (GWG BLD 776): flyers for congregations, teams, and classrooms, drawn like the audience flyers (a line

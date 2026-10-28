@@ -4,7 +4,7 @@
 // Staff and Founders customize any session guide: edit any field, add, remove, or
 // reorder steps. Their copy shows a Your Version pill, with Reset to Original one tap
 // away. The Session Builder makes a new session from blank or from a copy of any
-// session, in the shape of the library guides; the safety step and the After-Session
+// session, in the shape of the library guides; the open questions step and the After-Session
 // Debrief link are always included. Founders also Save for Everyone, which prepares a
 // Staff library update in Update a Library for them to seal.
 // Data: copies live in DATA.ses.list ({id, base, u, made, g}): encrypted with the
@@ -51,13 +51,15 @@ function keep(g, base){
   C.save();
 }
 
-// ---------- the safety step and the debrief ----------
-// The safety step is the one the Spiritual Guidance first session uses, word for word, with the 988 button.
-const SAFETY_FB = {t: 'Safety check', m: 5, ask: ['How are you doing overall: sleep, eating, work, relationships?', 'Have you had any thoughts of harming yourself?'], do: ['If yes, move to the Crisis Protocol in Safety before continuing.'], tip: 'Asking directly about suicide does not plant the idea. It opens the door.'};
-function safetyStep(){
-  const g = orig('counsel-first'), s = g && (g.steps || []).find(x => /^safety/i.test(x.t || ''));
-  return Object.assign(clone(s || SAFETY_FB), {link: '988', lock: 'safety'});
-}
+// ---------- the open questions step and the debrief ----------
+// BLD 887 (Chris, October 28, 2026): Grounded asks open questions and stays curious, without judgement or expectation,
+// and never asks a leading question about harm. Every new session keeps this one step, written here in the code so no
+// library wording can bring a harm question back, with a button that opens the Grounded Response Plan.
+const PRESENCE = {t: 'Open Questions and Presence', m: 5,
+  ask: ['How are you doing overall: sleep, eating, work, relationships?', 'What feels heaviest right now?', 'What helps you through the hard days?'],
+  do: ['Listen with curiosity, without judgement or expectation.', 'If harm comes up on its own, stay present and follow the Grounded Response Plan.'],
+  tip: 'Open questions invite the whole story. When harm comes up, say what you will do next and follow the Grounded Response Plan.'};
+function safetyStep(){ return Object.assign(clone(PRESENCE), {link: 'rp', lock: 'safety'}); }
 const isSafety = s => !!s && (s.lock === 'safety' || /^safety/i.test(s.t || ''));
 const DEBRIEF = 'Take five minutes for the After-Session Debrief.';
 
@@ -74,16 +76,17 @@ function blank(){
   return {id: 'my-' + uid(), cat: 'counsel', service: 'counsel', title: '', length: '60 minutes', who: '', purpose: '', prep: [], ask: [], words: [], bring: [],
     steps: [{t: 'Welcome', m: 5, say: [], ask: [], do: []}, safetyStep(), {t: 'Closing', m: 5, say: [], ask: [], do: []}], after: [DEBRIEF], debrief: true};
 }
-// Every new session keeps the safety step and the debrief, wherever the steps are moved.
+// Every new session keeps the open questions step and the debrief, wherever the steps are moved. A step copied from
+// an older safety step takes the open questions wording (its minutes stay); a second one is left out.
 function ensureNew(g){
   g.steps = g.steps || [];
   const k = g.steps.findIndex(isSafety);
   if (k < 0) g.steps.splice(Math.max(0, Math.min(2, g.steps.length - 1)), 0, safetyStep());
-  else g.steps[k].lock = 'safety';
+  else { const m = +g.steps[k].m; g.steps[k] = Object.assign(safetyStep(), m > 0 ? {m} : {}); g.steps = g.steps.filter((s, i) => i === k || !isSafety(s)); }
   g.after = g.after || [];
   if (!g.after.some(x => /debrief/i.test(x))) g.after.push(DEBRIEF);
   g.debrief = true;
-  g.links = g.links || []; if (!g.links.includes('988')) g.links.push('988');
+  g.links = (g.links || []).filter(x => x !== '988'); if (!g.links.includes('rp')) g.links.push('rp');
   return g;
 }
 function finish(src, kind){
@@ -156,9 +159,9 @@ function vHome(){
   const own = store().slice().sort((a, b) => (b.u || 0) - (a.u || 0)).map(x => get(x.id)).filter(g => g && g._mine);
   const all = list().filter(g => g.cat !== 'safety');
   return `<div id="ses-root"><button class="linkbtn" data-ses="cards">&larr; Back to Sessions</button>
-  <div class="page-head" style="margin-top:10px"><div class="eyebrow">Grow With Grounded</div><h1>Session Builder</h1><p>Build a session in the shape of the Grounded guides: who it is for, what to ask, the flow, and the follow-up. The safety step and the After-Session Debrief come with every session.</p></div>
+  <div class="page-head" style="margin-top:10px"><div class="eyebrow">Grow With Grounded</div><h1>Session Builder</h1><p>Build a session in the shape of the Grounded guides: who it is for, what to ask, the flow, and the follow-up. Open questions and presence, with the Grounded Response Plan, and the After-Session Debrief come with every session.</p></div>
   <div class="card"><h2 style="margin-bottom:4px">Start a Session</h2><p class="muted">Start from blank, or from a copy of any session.</p>
-    <div class="ses-starts"><button type="button" class="ses-start" data-ses="blank"><b>Start Blank</b><small>A short template with a welcome, the safety step, and a closing.</small></button></div>
+    <div class="ses-starts"><button type="button" class="ses-start" data-ses="blank"><b>Start Blank</b><small>A short template with a welcome, open questions and presence, and a closing.</small></button></div>
     <label class="f" for="ses-from">Start from a copy of</label>
     <div class="row"><select id="ses-from" style="max-width:420px">${all.map(g => `<option value="${esc(g.id)}">${esc(g.title)}${g._mine ? (g._mine === 'new' ? ' (Your Session)' : ' (Your Version)') : ''}</option>`).join('')}</select><button type="button" class="btn btn-gold btn-sm" data-ses="copy">Copy and Edit</button></div></div>
   <div class="card"><h2 style="margin-bottom:4px">Your Sessions</h2>
@@ -173,7 +176,7 @@ function stepEd(s, i, n){
   const mv = `<div class="ses-mv"><button type="button" class="btn btn-line btn-sm" data-ses="up" data-v="${i}" aria-label="Move step ${i + 1} up"${i ? '' : ' disabled'}>&uarr;</button><button type="button" class="btn btn-line btn-sm" data-ses="down" data-v="${i}" aria-label="Move step ${i + 1} down"${i < n - 1 ? '' : ' disabled'}>&darr;</button>${lock ? '' : `<button type="button" class="btn btn-line btn-sm" data-ses="rm" data-v="${i}">Remove</button>`}</div>`;
   const head = `<div class="ses-st"><span class="n">STEP ${i + 1}</span>${lock ? `<b style="flex:1;min-width:140px">${esc(s.t)}</b><span class="ses-pill keep">Always Included</span>` : `<input type="text" class="tt" data-sess="${i}|t" value="${esc(s.t || '')}" aria-label="Step ${i + 1} name" placeholder="Step name">`}
     <input type="number" class="mm" min="0" max="600" inputmode="numeric" data-sess="${i}|m" value="${esc(s.m || '')}" aria-label="Step ${i + 1} minutes" placeholder="min">${mv}</div>`;
-  if (lock) return `<div class="ses-step">${head}<div class="ses-fixed">${STEPL.map(([k, l]) => (s[k] || []).length ? `<b>${l}</b><ul>${s[k].map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '').join('')}${s.tip ? `<p style="margin-top:6px"><i>${esc(s.tip)}</i></p>` : ''}<p class="ses-hint" style="margin-top:6px">The safety step stays in every session, word for word, with the 988 button. Move it or change its minutes.</p></div></div>`;
+  if (lock) return `<div class="ses-step">${head}<div class="ses-fixed">${STEPL.map(([k, l]) => (s[k] || []).length ? `<b>${l}</b><ul>${s[k].map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '').join('')}${s.tip ? `<p style="margin-top:6px"><i>${esc(s.tip)}</i></p>` : ''}<p class="ses-hint" style="margin-top:6px">Open questions and presence stay in every session, word for word, with the Grounded Response Plan a tap away. Move it or change its minutes.</p></div></div>`;
   return `<div class="ses-step">${head}<div class="ses-g2">${STEPL.map(([k, l]) => `<div><label class="f">${l}</label>${ta(`data-sess="${i}|${k}" aria-label="Step ${i + 1}: ${l}"`, s[k], 'One per line')}</div>`).join('')}
     <div><label class="f">Tip</label><textarea data-sess="${i}|tip" aria-label="Step ${i + 1}: Tip" placeholder="A short note for you">${esc(s.tip || '')}</textarea></div></div></div>`;
 }

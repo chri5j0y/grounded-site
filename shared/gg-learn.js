@@ -1064,7 +1064,7 @@
     });
   }
   function lifeFirst() { try { return !!(window.GGLife && (GGLife.has() || GGLife.gentle())); } catch (e) { return false; } }
-  function needPrint() { return script(url('/shared/gg-print.js?v=b836'), function () { return !!window.GGPrint; }); }
+  function needPrint() { return script(url('/shared/gg-print.js?v=b887'), function () { return !!window.GGPrint; }); }
   // Written pages (GWG BLD 787): shared/learn-pages.js, loaded the first time a page or a track with pages shows.
   function needPages() { return script(url('/shared/learn-pages.js?v=' + V), function () { return !!window.GG_LEARN_PAGES; }); }
   function pageOf(app, id) { var P = ((window.GG_LEARN_PAGES || {})[app]) || []; for (var i = 0; i < P.length; i++) if (P[i] && P[i].id === id) return P[i]; return null; }
@@ -1185,7 +1185,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b862'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b887'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

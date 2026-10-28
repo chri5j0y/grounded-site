@@ -200,64 +200,7 @@ window.HW_SAMPLE_DATA = {
     "talk": "Each of you share three dreams for the next ten years. Circle the ones you share and talk about how to honor the rest.",
     "why": "Shared goals give a marriage direction and a sense of being a team."
    }
-  ],
-  "safety": {
-   "title": "Just for You",
-   "lead": "These few questions are only for you. Your answers stay on this device with you, and they never go on the card or to your partner. Answer only if you feel safe doing so right now.",
-   "items": [
-    {
-     "id": "safe1",
-     "text": "At times I feel afraid of my partner."
-    },
-    {
-     "id": "safe2",
-     "text": "My partner pressures me into things I do not want to do, including sex or physical closeness."
-    },
-    {
-     "id": "safe3",
-     "text": "My partner checks up on my phone, money, friends, or where I go in ways that feel controlling."
-    },
-    {
-     "id": "safe4",
-     "text": "My partner puts me down, calls me names, or embarrasses me in front of others."
-    },
-    {
-     "id": "safe5",
-     "text": "My partner has pushed, grabbed, hit, or hurt me, or threatened to."
-    },
-    {
-     "id": "safe6",
-     "text": "There are times I do not feel able to say no to my partner."
-    },
-    {
-     "id": "safe7",
-     "text": "I feel pressured by my partner or my family to go through with this marriage."
-    }
-   ],
-   "yesLead": "Thank you for answering honestly. What you are feeling matters, and you deserve to feel safe and respected. You can talk with someone privately, any time, day or night. If you are in danger right now, call 911.",
-   "lines": [
-    [
-     "Love Is Respect",
-     "Call 1-866-331-9474 or text LOVEIS to 22522"
-    ],
-    [
-     "National Domestic Violence Hotline",
-     "Call 1-800-799-7233 or text START to 88788"
-    ],
-    [
-     "Day One (Minnesota)",
-     "Call 1-866-223-1111"
-    ],
-    [
-     "988 Suicide and Crisis Lifeline",
-     "Call or text 988"
-    ],
-    [
-     "Emergency",
-     "Call 911"
-    ]
-   ]
-  }
+  ]
  },
  "GM_PR": {
   "title": "Practices for Two",
@@ -421,11 +364,11 @@ window.HW_SAMPLE_DATA = {
           "Takes it all away, anytime"
          ],
          [
-          "A few questions stay private",
-          "They never go on the card"
+          "Just yours",
+          "Your answers stay yours until you compare"
          ]
         ],
-        "say": "Your answers stay on your own device, saved locked, and nothing is sent anywhere. Clear takes it all away whenever you like. A few questions ask each of you, alone, about feeling afraid, pressured, controlled, or hurt. Those answers stay with the one who answered, and they never go on the card.",
+        "say": "Your answers stay on your own device, saved locked, and nothing is sent anywhere. Clear takes it all away whenever you like. And your answers stay yours until the two of you compare.",
         "cue": {
          "at": [
           0,
@@ -451,7 +394,7 @@ window.HW_SAMPLE_DATA = {
           "Call 911"
          ]
         ],
-        "say": "If something in your relationship feels frightening, help is always open, day or night. Love Is Respect answers by call, text, or chat. The National Domestic Violence Hotline answers by phone. And in danger right now, call nine one one. These numbers are always in Heartwood, too.",
+        "say": "Help is always open, day or night. The numbers are here on the screen, and always in Heartwood, too.",
         "cue": {
          "at": [
           1,
@@ -487,15 +430,15 @@ window.HW_SAMPLE_DATA = {
        },
        {
         "k": "quiz",
-        "q": "Where do the answers about feeling afraid or pressured go?",
+        "q": "Where do your answers stay?",
         "opts": [
-         "On the shared card",
-         "They stay with the one who answered",
-         "To both partners after you compare"
+         "Sent to Grow With Grounded",
+         "On your own device, saved locked",
+         "Posted to a shared account"
         ],
         "right": 1,
-        "why": "Those few questions are private. The answers stay with the one who answered, with help close by, and never go on the card.",
-        "say": "One question. Where do the answers about feeling afraid or pressured go?"
+        "why": "Your answers stay on your own device, saved locked, and nothing is sent anywhere.",
+        "say": "One question. Where do your answers stay?"
        },
        {
         "k": "breathe",

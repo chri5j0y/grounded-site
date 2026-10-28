@@ -77,7 +77,7 @@ const G = [
       ['dont', `"You're not a burden" (it argues with their feeling). Take it seriously.`],
       ['helps', `Family saying one specific thank-you to them. Letting them still give something: a blessing, advice, a story.`],
       ['you', `If you feel like a burden: it's hard to be on this side of the caring, and that loss is real. When you let people care for you, you give them a way to love you back. You still have much to give: words for each person, a story from your life, your advice, one specific thank-you. If the feeling gets heavy, tell your hospice team.`],
-      ['pro', `Always ask about a wish to hasten death when burden is high.`]
+      ['pro', `When burden is high, listen with open questions and let them lead. Follow the Grounded Response Plan if harm comes up on its own.`]
     ] },
   { id: 'end', ring: 'spirit', title: `"I wish it would end." "I'm ready."`, story: `Total Bliss`,
     keys: `want to die, wish it would end, ready to go, done, tired of living, end it`,
@@ -87,7 +87,7 @@ const G = [
       ['dont', `"Don't talk like that." Stay calm.`],
       ['helps', `Tell the hospice nurse. Treat what can be treated. Make room for readiness as peace.`],
       ['you', `If you're the one feeling it: you can say it, and it deserves to be heard. Ask yourself whether it's closer to ready, tired, or hurting, and tell your hospice nurse; pain, breathlessness, and worry can often be eased. Readiness can be peace. If you're thinking about ending your life yourself, tell your hospice team right away or call or text 988. In danger now, call 911.`],
-      ['pro', `The safety step separates readiness from a plan to end life. Aid in dying is not legal in Minnesota. If asked, stay neutral and loop in the team.`]
+      ['pro', `Let them lead, and stay curious about whether it is readiness, tiredness, or hurting. Follow the Grounded Response Plan if harm comes up on its own. Aid in dying is not legal in Minnesota. If asked, stay neutral and loop in the team.`]
     ] },
   { id: 'notready', ring: 'spirit', title: `"I'm not ready."`, story: ``,
     keys: `not ready, too soon, unfinished, scared, so much left`,

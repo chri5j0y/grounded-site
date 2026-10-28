@@ -15,24 +15,29 @@
    - Three answers plus "I don't know." Scores run 1 to 10 for every tool.
    - At least one reverse worded question in every part (marked 'r').
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to the age, always with 988 and 911.
+   - No safety step (GWG BLD 887): Grounded asks open, curious questions and
+     never a harm question. One quiet line of type (never spoken) sits on the
+     check-in and results: the kids line with 988 and 911.
 
    Faith or Plain (GWG BLD 745, Pine's way): a grown-up sets it at setup,
    and it can change any time in settings. Faith is the default. Every
    spiritual line (a question, its tip, or its "why") has a Plain wording
    in PLAIN and WHY_PLAIN, by grade, part, and place in the list. Plain asks
    the same thing without religious words, keeps the same reverse marks and
-   flags, and so scores compare across the two. Faith follows the kids'
+   marks, and so scores compare across the two. Faith follows the kids'
    faith wording: invite, don't assume; God is one door among several;
    start from family; ask about experience, never belief; God is never
    the judge. questions stays the Faith bank, as Maple Guide reads it.
    getBank(grade, wording) gives the questions with the wording applied,
    and whyOf(grade, part, i, wording) the "why" line.
 
-   Each question: [text, tip] or [text, tip, 'r'] or [text, tip, 'r', flag].
-   'r' means "yes" is the hard answer. flag names a sign a grown-up
-   should hear about when the answer is yes or sometimes:
-   'alone', 'bully', 'hope'.
+   Each question: [text, tip] or [text, tip, 'r'].
+   'r' means "yes" is the hard answer. No question carries a flag (GWG BLD 887).
+   TALK names the three questions a grown-up sees a gentle conversation idea
+   for, on this device only: Roots 4 (feeling alone), Branches 4 (kindness
+   with other kids), Fruit 4 (hope). The Branches and Fruit ones were reworded
+   in BLD 887 as open, forward questions, so "Not really" is now their hard
+   answer, and those two parts may have no reverse question.
    ===================================================================== */
 (function(){
 const VERSION = 1;
@@ -63,9 +68,9 @@ const Q = {
   K: {
     roots: [
       ['Do you feel loved at home?', 'Ask: "How do you know someone loves you?" Listen for the small things.'],
-      ['Do you feel safe when you go to sleep at night?', 'If not, ask what feels scary at night. A night light, a song, or a bedtime prayer can help.'],
+      ['Do you feel calm and cozy when you go to sleep at night?', 'If not, ask what bedtime feels like for them. A night light, a song, or a bedtime prayer can help.'],
       ['Do you have a quiet time, like a prayer or a hug before bed?', 'Share one quiet practice from your own family, like a prayer, a song, or a blessing.'],
-      ['Do you feel all alone inside?', 'If yes, stay close and say: "You have people with you. I am right here." Then ask when it feels that way.', 'r', 'alone']
+      ['Do you feel all alone inside?', 'If yes, stay close and say: "You have people with you. I am right here." Then ask when it feels that way.', 'r']
     ],
     trunk: [
       ['Do you like being you?', 'Tell them one thing you love about who they are.'],
@@ -83,7 +88,7 @@ const Q = {
       ['Do you have a friend to play with?', 'Ask who they like to play with, and why.'],
       ['Is there a grown-up you can go to when you need help?', 'Name their helpers together: at home, at school, and in your community.'],
       ['Are the kids at school kind to you?', 'Ask about recess and lunch. Hard things often happen there.'],
-      ['Is someone being mean to you?', 'If yes, listen first and stay calm. Then talk with their teacher.', 'r', 'bully']
+      ['When you play, do the other kids share and take turns with you?', 'Ask who they played with today and what was fun. If something hard comes up, listen first and stay calm, then talk with their teacher.']
     ],
     leaves: [
       ['Do you sleep well at night?', 'Look at bedtime and screens before bed.'],
@@ -95,16 +100,16 @@ const Q = {
       ['Is something fun coming up soon?', 'Plan one small, fun thing to look forward to.'],
       ['Are you happy when you wake up in the morning?', 'Ask what makes a good morning for them.'],
       ['Do you have a wish for when you grow up?', 'Ask about their wish and take it seriously.'],
-      ['Do you feel like nothing good will happen?', 'If yes, ask gently how they are feeling. If a child ever talks about wanting to die or to be hurt, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you think good things will happen for you?', 'Ask what good thing they hope for, and help them picture it. If the answer is "not really," ask gently how they are feeling and stay close.']
     ]
   },
 
   1: {
     roots: [
       ['Do you know the people in your family love you?', 'Tell them, in plain words, that you love them and why.'],
-      ['Do you feel safe at home?', 'If not, ask what makes home feel unsafe, and listen closely to the answer.'],
+      ['Do you feel happy and cared for at home?', 'Ask what they love most about home, and listen closely to the answer.'],
       ['Do you ever pray, or sit quietly and feel peaceful?', 'Try one minute of quiet or prayer together, in your family\'s own way.'],
-      ['Do you feel lonely, even when people are around?', 'If yes, plan some one on one time this week, just the two of you.', 'r', 'alone']
+      ['Do you feel lonely, even when people are around?', 'If yes, plan some one on one time this week, just the two of you.', 'r']
     ],
     trunk: [
       ['Do you like the way you are?', 'Name something about them that you would never want to change.'],
@@ -122,7 +127,7 @@ const Q = {
       ['Do you have friends at school?', 'Ask them to name a friend and one thing they like about that friend.'],
       ['Do you have grown-ups who listen to you?', 'Put the phone down and give them a few minutes of full attention today.'],
       ['Do you feel like you belong in your class?', 'Ask what makes class feel good or hard for them.'],
-      ['Do other kids leave you out or pick on you?', 'If yes, listen first, then let their teacher know.', 'r', 'bully']
+      ['Do other kids include you and treat you kindly?', 'Ask about recess and lunch. If something hard comes up, listen first, then let their teacher know.']
     ],
     leaves: [
       ['Do you feel rested when you wake up?', 'Check bedtime. Most kids this age need ten to twelve hours of sleep.'],
@@ -134,7 +139,7 @@ const Q = {
       ['Do you have something to look forward to?', 'Put one fun thing on the calendar and count down together.'],
       ['Do you think tomorrow can be a good day?', 'At bedtime, ask: "What is one good thing that could happen tomorrow?"'],
       ['Do you have a dream of something you want to do someday?', 'Ask about their dream and draw it together.'],
-      ['Do you feel sad about what is coming next?', 'If yes, ask what is coming that feels sad. If a child ever talks about wanting to die, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you feel happy about what is coming next?', 'Ask what is coming next and how it feels to them. Listen for any worry, and talk it through together.']
     ]
   },
 
@@ -143,7 +148,7 @@ const Q = {
       ['Do you feel loved by your family, just for being you?', 'Say it out loud: "I love you just for being you, not for what you do."'],
       ['Is there a place where you feel calm and safe?', 'Ask them to describe the place, and help them go there more often.'],
       ['When you are scared, does something help you feel held, like a prayer, a song, or a hug?', 'Ask what helps most on a scary night. Let them know you can be one of those things.'],
-      ['Do you feel like nobody really cares about you?', 'If yes, stay close, and tell them who cares about them by name.', 'r', 'alone']
+      ['Do you feel like nobody really cares about you?', 'If yes, stay close, and tell them who cares about them by name.', 'r']
     ],
     trunk: [
       ['Do you feel good about who you are?', 'Share a story of a time they made you proud.'],
@@ -161,7 +166,7 @@ const Q = {
       ['Do you have a good friend you can count on?', 'Help them plan time with that friend.'],
       ['Do you feel like you belong at school?', 'Ask where they feel most at home at school, and where they don\'t.'],
       ['Do you help other people or do kind things for them?', 'Notice their kindness and name it.'],
-      ['Are kids at school being mean to you or leaving you out?', 'If yes, listen first and stay calm. Then work with the school.', 'r', 'bully']
+      ['Are kids at school kind to you and glad to include you?', 'Ask about recess, lunch, and the bus. If something hard comes up, listen first and stay calm. Then work with the school.']
     ],
     leaves: [
       ['Do you go to bed at about the same time each night?', 'A steady bedtime helps sleep more than almost anything else.'],
@@ -173,7 +178,7 @@ const Q = {
       ['Do you have something fun to look forward to this week?', 'Plan something small and good together.'],
       ['When things go wrong, do you believe they can get better?', 'Tell them about a hard time that got better.'],
       ['Do you have a goal you are working on?', 'Help them break the goal into small steps.'],
-      ['Do you sometimes wish tomorrow would not come?', 'Take this seriously. Ask gently what makes tomorrow feel hard. If a child ever talks about wanting to die, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you feel happy when you think about tomorrow?', 'At bedtime, ask what they are looking forward to tomorrow. If tomorrow feels hard, ask gently what makes it hard, and keep talking.']
     ]
   },
 
@@ -182,7 +187,7 @@ const Q = {
       ['Do you feel loved, even when you make a mistake?', 'After a mistake, say: "I still love you. Let\'s fix it together."'],
       ['Do you ever notice something amazing, like the sky, a song, or an animal?', 'Ask: "What amazed you lately?" Share one of your own.'],
       ['Do you have something holy that helps you, like prayer, faith, or quiet time?', 'Share a prayer, verse, or practice from your own family.'],
-      ['Do you feel all alone with your problems?', 'If yes, say: "You don\'t have to carry this alone." Then ask what is on their mind.', 'r', 'alone']
+      ['Do you feel all alone with your problems?', 'If yes, say: "You don\'t have to carry this alone." Then ask what is on their mind.', 'r']
     ],
     trunk: [
       ['Do you like who you are becoming?', 'Name a way you have seen them grow this year.'],
@@ -200,7 +205,7 @@ const Q = {
       ['Do you have at least one friend who is glad to see you?', 'Ask about that friend and invite them over.'],
       ['Are there grown-ups at school you can talk to?', 'Help them name one trusted grown-up at school.'],
       ['Do you feel included when kids play or work in groups?', 'Ask how groups get picked, and how that feels.'],
-      ['Is someone teasing, bullying, or hurting you?', 'If yes, listen first and thank them for telling. Then work with the school.', 'r', 'bully']
+      ['Do kids treat you kindly, at school and when you play?', 'Ask about the best and hardest parts of their day with other kids. If something hard comes up, listen first and thank them for telling. Then work with the school.']
     ],
     leaves: [
       ['Do you get enough sleep to feel good the next day?', 'Turn screens off an hour before bed.'],
@@ -212,7 +217,7 @@ const Q = {
       ['Do you have something you are excited about?', 'Ask about it and get excited with them.'],
       ['Do you believe you can get better at hard things?', 'Say: "You can\'t do it yet. Yet is the key word."'],
       ['Do you have a dream for when you are older?', 'Ask what they would need to learn to get there.'],
-      ['Do you feel like things will never get better?', 'Take this seriously and keep talking. If a child ever talks about wanting to die or hurting themselves, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you feel like things can get better, even after a hard day?', 'Tell them about a hard day of your own that got better. If the answer is "not really," take it seriously, keep talking, and stay close.']
     ]
   },
 
@@ -221,7 +226,7 @@ const Q = {
       ['Do you feel like you matter, just for being you?', 'If the answer is "not really," say: "You matter to me, just for being you." Then ask what makes it hard to feel that.'],
       ['Do you feel close to God, or to something good and bigger than you?', 'Ask what they think about God or something bigger. Listen without correcting.'],
       ['When life feels wobbly, does something help you feel steady?', 'Ask what helps them feel steady, and help them use it more.'],
-      ['Do you feel empty or alone inside?', 'If yes, spend unhurried time together, and ask gently about it.', 'r', 'alone']
+      ['Do you feel empty or alone inside?', 'If yes, spend unhurried time together, and ask gently about it.', 'r']
     ],
     trunk: [
       ['Do you know what you are good at?', 'Name one strength and when you saw it.'],
@@ -239,7 +244,7 @@ const Q = {
       ['Do you have friends you can be yourself around?', 'Ask what makes a good friend, and who fits.'],
       ['Do you feel like you belong somewhere, like a team, club, class, or faith group?', 'Help them find one place to belong.'],
       ['Do you stand up for other kids when they are treated badly?', 'Praise courage and kindness when you see it.'],
-      ['Is anyone at school or online being mean to you or leaving you out?', 'If yes, listen first and thank them for telling. Then work with the school.', 'r', 'bully']
+      ['Do kids at school and online treat you kindly and include you?', 'Ask how things are going with friends, at school and online. If something hard comes up, listen first and thank them for telling. Then work with the school.']
     ],
     leaves: [
       ['Do you feel rested most mornings?', 'Look at bedtime, screens, and worries at night.'],
@@ -251,7 +256,7 @@ const Q = {
       ['Do you have goals you are working toward?', 'Help them pick one goal and the first step.'],
       ['When something goes wrong, do you believe you can find a way through?', 'Ask how they got through a hard thing before.'],
       ['Are you thankful for good things in your life?', 'Name three good things together at dinner or bedtime.'],
-      ['Do you feel hopeless, like nothing will ever change?', 'Take this seriously and keep talking. If a child ever talks about wanting to die or hurting themselves, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you feel hopeful that good changes can come?', 'Share a time something changed for the better. If the answer is "not really," take it seriously, keep talking, and stay close.']
     ]
   },
 
@@ -260,7 +265,7 @@ const Q = {
       ['Do you feel loved and accepted for who you really are?', 'Tell them you love the real them, including the parts they hide.'],
       ['Do you have big questions about God, life, or what matters, and someone to ask?', 'Welcome their questions. Saying "I wonder too" is a fine answer.'],
       ['Do you have a practice that helps you feel peaceful, like prayer, nature, music, or quiet?', 'Ask about their practice and make time for it.'],
-      ['Do you feel alone with what you are going through?', 'If yes, ask what they are carrying and stay with them while they tell you.', 'r', 'alone']
+      ['Do you feel alone with what you are going through?', 'If yes, ask what they are carrying and stay with them while they tell you.', 'r']
     ],
     trunk: [
       ['Do you have a good sense of who you are?', 'Ask: "What three words describe you?" Then share three words you would use for them.'],
@@ -278,7 +283,7 @@ const Q = {
       ['Do you have friends who treat you well?', 'Talk about what healthy friendships feel like.'],
       ['Is there a grown-up you trust enough to tell anything?', 'Help them name that grown-up. It might be you.'],
       ['Do you feel like you fit in with kids your age?', 'Ask where they feel they fit, and where they don\'t.'],
-      ['Is anyone bullying you, in person or online?', 'If yes, listen first and thank them for telling. Save any messages, then work with the school.', 'r', 'bully']
+      ['Do kids treat you with kindness and respect, in person and online?', 'Ask how kids treat each other, in person and online. If something hard comes up, listen first and thank them for telling. Save any messages, then work with the school.']
     ],
     leaves: [
       ['Do you get enough sleep to feel good and think clearly?', 'Keep phones and tablets out of the bedroom at night.'],
@@ -290,7 +295,7 @@ const Q = {
       ['Are you looking forward to growing up?', 'Ask what they look forward to most about getting older.'],
       ['Do you believe you can make your life good, even when things are hard?', 'Share a time you got through something hard.'],
       ['Do you have people and plans that make the future feel bright?', 'Make one plan together for something good this month.'],
-      ['Do you ever feel like giving up on everything?', 'Take this seriously and keep talking. If a child ever talks about wanting to die or hurting themselves, call their doctor or 988 right away.', 'r', 'hope']
+      ['Do you feel ready to keep going, even when things get hard?', 'Ask what helps them keep going. If the answer is "not really," take it seriously, keep talking, and stay close.']
     ]
   }
 };
@@ -301,7 +306,7 @@ const WHY = {
   K: {
     roots: [
       'Feeling loved at home is the first root a young child grows.',
-      'Feeling safe at bedtime tells you a lot about how safe a young child feels overall.',
+      'Feeling calm at bedtime tells you a lot about how settled a young child feels overall.',
       'Small quiet rituals, like a prayer or a hug, help young children feel held.',
       'Young children can feel alone even in a busy home. This helps you hear it early.'
     ],
@@ -321,7 +326,7 @@ const WHY = {
       'A friend to play with helps young children learn to get along and share.',
       'Knowing who to go to for help is one of the most important safety skills for young children.',
       'Kind classmates help a young child feel safe at school.',
-      'Young children may not say on their own that someone is being mean. Asking gently helps.'
+      'Being included and treated kindly helps a young child enjoy playing with others. Asking gently helps you hear how play is going.'
     ],
     leaves: [
       'Sleep shapes a young child\'s mood, behavior, and growth.',
@@ -333,13 +338,13 @@ const WHY = {
       'Something fun to look forward to helps young children feel hopeful.',
       'Waking up happy is a simple window into how a young child is doing.',
       'Wishes for growing up show that a child can picture a good future.',
-      'A young child who expects nothing good to happen may need extra care and attention.'
+      'Expecting good things is how hope starts. A "Not really" is a gentle invitation to lean in.'
     ]
   },
   '1': {
     roots: [
       'Knowing they are loved helps children feel secure enough to grow.',
-      'Feeling safe at home is the base everything else grows from.',
+      'Feeling happy and cared for at home is the base everything else grows from.',
       'Prayer or quiet time can help children feel peaceful and connected.',
       'Children can feel lonely even when people are around. This question helps you hear it.'
     ],
@@ -359,7 +364,7 @@ const WHY = {
       'Friends at school help children feel happy and safe there.',
       'Grown-ups who listen help children feel valued.',
       'Feeling like they belong in class helps children learn and enjoy school.',
-      'Being left out or picked on is painful, and young children don\'t always say so on their own.'
+      'Being included and treated kindly helps children feel they belong, and young children don\'t always say how it is going on their own.'
     ],
     leaves: [
       'Waking up rested is a good sign that sleep is working.',
@@ -371,7 +376,7 @@ const WHY = {
       'Something to look forward to helps children feel hopeful.',
       'Believing tomorrow can be good helps children bounce back from hard days.',
       'Dreams of what they want to do show a child picturing a good future.',
-      'Sadness about what is coming next can point to a worry worth talking about.'
+      'Feeling good about what is coming next helps children face change. A "Not really" can point to a worry worth talking about.'
     ]
   },
   '2': {
@@ -397,7 +402,7 @@ const WHY = {
       'A friend they can count on helps children feel safe and happy.',
       'Feeling like they belong at school helps children learn and enjoy it.',
       'Helping others builds kindness and a sense of purpose.',
-      'Being treated badly or left out at school is something children need help with.'
+      'Kindness and belonging at school help children learn and enjoy it, and grown-ups who ask hear early how it is going.'
     ],
     leaves: [
       'A steady bedtime helps children sleep better.',
@@ -409,7 +414,7 @@ const WHY = {
       'Something fun this week gives children something to look forward to.',
       'Believing things can get better helps children handle disappointment.',
       'Working on a goal teaches children that they can make things happen.',
-      'Wishing tomorrow would not come can be a sign of real worry or sadness. Take it seriously.'
+      'Looking forward to tomorrow is a simple window into a child\'s hope. A "Not really" is worth a gentle conversation.'
     ]
   },
   '3': {
@@ -435,7 +440,7 @@ const WHY = {
       'A friend who is glad to see them helps a child feel wanted.',
       'Grown-ups at school they can talk to give children another safe place.',
       'Feeling included in groups helps children feel they belong.',
-      'Teasing, bullying, or being hurt is never okay, and children need grown-ups to know.'
+      'Being treated kindly helps children feel wanted and at ease, and grown-ups who ask make it easier to speak up when things are hard.'
     ],
     leaves: [
       'Enough sleep helps children feel and learn their best the next day.',
@@ -447,7 +452,7 @@ const WHY = {
       'Something to be excited about helps children feel hopeful.',
       'Believing they can get better at hard things builds a growth mindset.',
       'Dreams for when they\'re older help children picture a good future.',
-      'Feeling like things will never get better is worth taking seriously.'
+      'Believing things can get better helps children bounce back. A "Not really" is worth taking seriously.'
     ]
   },
   '4': {
@@ -473,7 +478,7 @@ const WHY = {
       'Friends they can be themselves around help children feel accepted.',
       'Belonging to a team, club, class, or faith group gives children support beyond home.',
       'Standing up for others builds courage and kindness.',
-      'Meanness at school or online is never okay, and children need grown-ups to know.'
+      'Kindness at school and online helps children feel accepted, and grown-ups who ask make it easier to speak up.'
     ],
     leaves: [
       'Feeling rested most mornings is a good sign that sleep is working.',
@@ -485,7 +490,7 @@ const WHY = {
       'Working toward goals gives children a sense of direction.',
       'Believing they can find a way through builds resilience.',
       'Gratitude helps children notice the good in their lives.',
-      'Feeling hopeless is serious and worth talking about right away.'
+      'Hope that good changes can come keeps children going. A "Not really" is worth talking about right away.'
     ]
   },
   '5': {
@@ -511,7 +516,7 @@ const WHY = {
       'Friends who treat them well help children through the changes ahead.',
       'A grown-up they trust with anything is one of the strongest protections a child can have.',
       'Feeling they fit in matters a lot at this age.',
-      'Bullying in person or online is never okay, and children need grown-ups to know.'
+      'Kindness and respect, in person and online, help children grow strong friendships, and grown-ups who ask make it easier to speak up.'
     ],
     leaves: [
       'Enough sleep helps children feel good and think clearly.',
@@ -523,7 +528,7 @@ const WHY = {
       'Looking forward to growing up helps children face changes ahead.',
       'Believing they can make life good helps children keep going through hard times.',
       'People and plans that make the future feel bright give children hope.',
-      'Feeling like giving up is serious and worth talking about right away.'
+      'Feeling ready to keep going is hope in action. A "Not really" is worth talking about right away.'
     ]
   }
 };
@@ -532,7 +537,7 @@ const WHY = {
    name faith, prayer, God, or the holy are here; everything else reads the same. */
 const PLAIN = {
   K: { roots: {
-    1: { tip: 'If not, ask what feels scary at night. A night light, a song, or a calm bedtime routine can help.' },
+    1: { tip: 'If not, ask what bedtime feels like for them. A night light, a song, or a calm bedtime routine can help.' },
     2: { t: 'Do you have a quiet time, like a song or a hug before bed?', tip: 'Share one quiet practice from your own family, like a song, a story, or kind words.' }
   } },
   1: { roots: {
@@ -565,7 +570,7 @@ const WHY_PLAIN = {
     branches: { 1: 'Belonging to a team, club, class, or group gives children support beyond home.' } }
 };
 const isPlainW = w => w === 'plain';
-// The questions for one grade, with the wording applied: { part: [[text, tip, r, flag], ...] }.
+// The questions for one grade, with the wording applied: { part: [[text, tip, r], ...] }.
 function getBank(grade, wording) {
   const g = Q[grade] || {}, pl = isPlainW(wording) ? (PLAIN[grade] || {}) : {}, out = {};
   Object.keys(g).forEach(k => {
@@ -578,19 +583,12 @@ function whyOf(grade, part, i, wording) {
   return p || (((WHY[grade] || {})[part]) || [])[i] || '';
 }
 
-// The safety step. Feeling safe for every grade; the gentle direct question for grades 3 to 5 only.
-const SAFETY = {
-  young: [
-    ['Is anyone hurting you, or making you feel scared?', 'safe']
-  ],
-  older: [
-    ['Is anyone hurting you, or making you feel unsafe at home, at school, or online?', 'safe'],
-    ['Sometimes when kids feel really sad, they wish they were not alive, or they think about hurting themselves. Have you felt like that?', 'self']
-  ],
-  answers: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure']],
-  intro: 'Two last questions. These help grown-ups keep kids safe.',
-  introYoung: 'One last question. It helps grown-ups keep kids safe.'
-};
+/* GWG BLD 887: Maple has no safety step. Grounded asks open, curious questions
+   and never a harm question. The quiet line is type only, never spoken. TALK: the
+   questions, by part and place, that give the grown-up a gentle conversation idea
+   when the answer leans hard (the same place in every grade). */
+const QUIET = 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.';
+const TALK = { roots: { 3: 'alone' }, branches: { 3: 'kind' }, fruit: { 3: 'hope' } };
 
 /* The weekly quick check-in (Rebrand Session 4): question 1 of every part
    (Leaves question 1 is sleep, so it counts as Rest), plus the Leaves questions
@@ -601,6 +599,6 @@ const WEEKLY = {
   '3': { move: 1, nourish: 2 }, '4': { move: 1 }, '5': { move: 1, nourish: 2 }
 };
 
-window.MAPLE_CHECKIN = { weekly: WEEKLY, version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, safety: SAFETY,
+window.MAPLE_CHECKIN = { weekly: WEEKLY, version: VERSION, answers: ANSWERS, levels: LEVELS, grades: GRADES, questions: Q, why: WHY, quiet: QUIET, talk: TALK,
   plain: PLAIN, whyPlain: WHY_PLAIN, wordings: [['faith', 'Faith'], ['plain', 'Plain']], getBank: getBank, whyOf: whyOf };
 })();

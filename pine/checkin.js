@@ -16,11 +16,15 @@
      aloud) and a short "why" line a teen can tap to read.
    - Four answers plus "Not sure", asked about the past two weeks.
      Scores run 1 to 10 for every tool.
-   - Two reverse worded questions in every part.
+   - Two reverse worded questions in most parts (see below).
    - Levels: Strong (8 to 10), Steady (5 to 7), Growing Edge (1 to 4).
-   - A safety step fitted to grades 9 to 12, always with 988 and 911.
-   - Flagged answers (alone, losing hope, bullied, someone hurting me)
-     are never lost: the teen sees help lines right away.
+   - No safety step, no flags, and no alerts (GWG BLD 887): Grounded asks
+     open, curious questions and never a harm question. One quiet line of
+     type (never spoken) sits on the check-in and results: QUIET. A help
+     list stays one tap away (HELP), never opened by an answer.
+   - Branches and Fruit each have one reverse question since BLD 887,
+     when their bully and hope questions were reworded as open, forward
+     questions ("Almost always" is now their good answer).
 
    Leaves holds three strands, Move, Rest, and Nourish. One Leaves question
    for each is tagged s: 'move', 'rest', or 'nourish'. The weekly quick
@@ -29,7 +33,6 @@
 
    Each question: { t, tip, why } plus
      r: 1        a reverse question ("Often" is the hard answer)
-     flag        'alone', 'hope', or 'bully' (see FLAGS)
      s           'move', 'rest', or 'nourish' (Leaves strands)
      src: ['id'] where the "why" line rests on a study or measure
      v           band variants: v['9-10'] or v['11-12'] holds any of
@@ -70,37 +73,30 @@
    who they like. Friends, relationships, substances, driving, and
    screens are asked as readiness and pressure questions.
 
-   SENSITIVE: two optional questions, one on pressure to vape, drink, or
-   use drugs to cope (Leaves), one on pressure or control from someone
-   close (Branches). Both are off unless the teen turns them on in
-   settings; only the teen can. They are asked after their part, never
-   count toward a score, never raise the grown-up alert, and are never
-   shared, printed for a grown-up, or sent to The Grove.
+   SENSITIVE: one optional question, on pressure to vape, drink, or use
+   drugs to cope (Leaves). It is off unless the teen turns it on in
+   settings; only the teen can. It is asked after its part, never counts
+   toward a score, and is never shared, printed for a grown-up, or sent
+   to The Grove. (The Branches optional question on control from someone
+   close was removed in GWG BLD 887.)
 
    Who sees what: a grown-up who agreed when the profile was made sees
-   only a quiet "Please check in" alert, never answers, levels, notes,
-   or faith answers. ALERT_KINDS lists what raises it (the safety step,
-   feeling alone, losing hope), written as
-   GGP.setShared(pid, { safety: { flag: date, kinds } }), the same shape
-   as oakTeenAlert. NEVER_ALERT lists what never raises it: when a teen
-   says someone is hurting them, the person may be one of the grown-ups
-   who would get the alert, so the teen sees outside help instead
-   (SAFETY.lines.hurt).
+   no answers, levels, notes, or faith answers, and no alert of any kind
+   (GWG BLD 887). Everything stays on the teen's device.
 
    Questions are written fresh. EPOCH, SWEMWBS, the BMMRS, the Claremont
    Purpose Scale, the PHQ-A, PHQ-2, GAD-2, the three-item loneliness
    scale, the Children's Hope Scale, the CDC Youth Risk Behavior Survey,
-   and the NIMH ASQ are foundations only. None of their items are copied.
+   are foundations only. None of their items are copied.
 
    Sources used (ids for gg-sources.js; the lead merges
    p739/out/checkin-sources.json):
      Roots:    desrosiers, smithdenton, bmmrsteen, exline
      Trunk:    damon03, bronk18, schreier13, yeager18
      Bark:     selfcompteen, bluth16, mnconsent, gad2, uspstfanx, phqa, yrbs23
-     Branches: wyman10, cdcconnect23, steinberg89, murthy, ucla3, cdcbully23
+     Branches: wyman10, cdcconnect23, steinberg89, murthy, ucla3
      Leaves:   aasm16, aapsleep14, recchia23, cdcpa, sgsocial23, mtf24, cdcteendrivers
      Fruit:    snyder, chs97, yrbs23, schleider22
-     Safety:   asq, horowitz12, gould05, dazzi
    ===================================================================== */
 (function(){
 const VERSION = 1;   // the Grounded tree standard
@@ -288,14 +284,13 @@ const Q = {
     { t: 'Known who you could talk to if someone you\'re close to or going out with ever pressured you, controlled you, or made you feel bad about yourself?',
       tip: 'Keep the door open without prying. Say: "You can always tell me, and you won\'t be in trouble for telling." Love Is Respect (call 1-866-331-9474, or text LOVEIS to 22522) helps teens think it through.',
       why: 'Knowing who you would go to makes it much easier to get help fast if a friendship or relationship turns controlling.' },
-    { t: 'Felt lonely, even with people around?', r: 1, flag: 'alone',
+    { t: 'Felt lonely, even with people around?', r: 1,
       tip: 'Plan some one-on-one time this week. Ask when it feels that way most, and listen without fixing.',
       why: 'Young people are among the loneliest groups today. Loneliness is worth sharing with someone you trust.',
       src: ['murthy', 'ucla3'] },
-    { t: 'Had someone bully, threaten, or embarrass you, in person or online?', r: 1, flag: 'bully',
-      tip: 'Listen first and thank them for telling you. Save any messages or pictures, then work with the school. If someone is threatening them with a picture, Take It Down and the CyberTipline can help, and they are not in trouble.',
-      why: 'Bullying, in person or online, is never your fault, and you don\'t have to handle it alone.',
-      src: ['cdcbully23'] }
+    { t: 'Felt respected and treated kindly by people around you, in person and online?',
+      tip: 'Ask how people treat each other at school and online, and listen first. If something hard comes up, thank them for telling you, save any messages or pictures, and work with the school.',
+      why: 'Being treated with respect, in person and online, helps you feel at ease, and you never have to handle a hard situation alone.' }
   ],
   leaves: [
     { t: 'Gotten enough sleep to wake up feeling rested?', s: 'rest',
@@ -353,9 +348,9 @@ const Q = {
     { t: 'Done kind things for others, even when no one was watching?',
       tip: 'Notice and name the kind things they do. Do one together this month.',
       why: 'Kindness that no one sees still grows hope, in you and in others.' },
-    { t: 'Felt like there\'s no point in trying anymore?', r: 1, flag: 'hope',
-      tip: 'Take this seriously and keep talking. Ask gently how long it has felt this way. If they talk about wanting to die or hurting themselves, call or text 988 right away, or call 911 in an emergency. The safety step comes next.',
-      why: 'Many high schoolers go through stretches of feeling hopeless. It can get better, and even one short session of help can lift it.',
+    { t: 'Felt like it\'s worth it to keep trying, even when things get hard?',
+      tip: 'Ask what keeps them going. If the answer is rarely, take it seriously, keep talking, and stay close.',
+      why: 'Many high schoolers go through stretches when hope runs low. Hope can grow again, and even one short session of support can lift it.',
       src: ['yrbs23', 'schleider22'] },
     { t: 'Blamed yourself for everything that goes wrong?', r: 1,
       tip: 'Help them sort what was theirs and what wasn\'t. Share a time you were too hard on yourself.',
@@ -369,70 +364,18 @@ const Q = {
 // comparisons read the right way. Indexes are within each part.
 const WEEKLY = { roots: [0], trunk: [0], bark: [0], branches: [0], leaves: [0, 1, 2], fruit: [0] };
 
-// What a flagged answer means, and which answers flag it.
-// alone and hope flag on Often or Almost always; Almost always also opens the calm card.
-// bully flags on Sometimes, Often, or Almost always.
-// hurt comes from the safety step (someone hurting me), never from a part question.
-// alert: true means the flag raises the quiet grown-up alert (ALERT_KINDS).
-// lines names the help lines (SAFETY.lines.calm and .hurt ids) to show with the note.
-const FLAGS = {
-  alone: { on: ['often', 'always'], calm: ['always'], alert: true, title: 'Feeling alone',
-    note: 'You said you\'ve felt lonely often. That\'s worth tending, and lots of people your age feel it too. Reaching out to one person this week can help: a friend, someone in your family, a coach, or a school counselor. If it feels heavy, call or text 988 any time.',
-    lines: ['988', 'ctl', 'teenline'],
-    guide: 'They named loneliness. Talk together about one person they could reach toward, and one group, team, or club to try. Listen for hopelessness.' },
-  hope: { on: ['often', 'always'], calm: ['always'], alert: true, title: 'Losing hope',
-    note: 'You said it\'s felt like there\'s no point in trying. You don\'t have to carry that alone, and it can get better with help. Call or text 988, or text HOME to 741741, any time, day or night.',
-    lines: ['988', 'ctl', 'teenline', '911'],
-    guide: 'They named low hope. Make sure the safety step was asked. Share 988, and follow your protocol if they speak of not wanting to be alive.' },
-  bully: { on: ['sometimes', 'often', 'always'], calm: [], alert: false, title: 'Bullied or threatened',
-    note: 'You said someone has been bullying, threatening, or embarrassing you. That\'s never your fault. Save any messages or pictures, and tell an adult you trust, like a school counselor, coach, or teacher. If someone is threatening you with a picture, you are not in trouble, and help is below.',
-    lines: ['takeitdown', 'childhelp', '988', '911'],
-    guide: 'They named bullying or threats. Listen first, help them save messages or pictures, and work with the school. If a picture is involved, point to Take It Down and the CyberTipline.' },
-  hurt: { from: 'safety', alert: false, title: 'Someone hurting me',
-    note: 'Thank you for telling me. No one has the right to hurt you, at home, at school, online, or in a relationship. These people are outside your home, and they can help any time. You can also tell a trusted adult at school, like a counselor, coach, or teacher.',
-    lines: ['childhelp', 'dayone', 'loveisrespect', '911', 'school'],
-    guide: 'They said someone is hurting them or making them feel unsafe. This never goes to the family alert. Ask privately whether they are safe right now. Pine Guide visits follow your reporting steps under Minnesota\'s child protection law.' }
-};
-
-// What raises the quiet "Please check in" alert for the grown-ups who
-// agreed. 'safety' is the safety step's self question (SAFETY.on.self);
-// alone and hope are the flags above. The alert never shows an answer.
-const ALERT_KINDS = ['safety', 'alone', 'hope'];
-// What never raises the alert: the hurt answer, bullying, and both
-// optional sensitive questions.
-const NEVER_ALERT = ['hurt', 'bully', 'cope', 'dating'];
-// What Pine tells the teen when an alert is sent.
-const ALERT_TOLD = 'A grown-up you chose will get a quiet note to check in with you. They won\'t see your answers.';
-
-// The safety step, fitted to grades 9 to 12. Aspen's two questions, in
-// Grounded's own words, shaped by the NIMH ASQ's direct approach (never
-// its items). Direct wording is the research-informed way to ask; vague
-// questions miss teens, and asking does not plant the idea.
-// questions: [text, kind], as Aspen reads them. kind 'safe' is someone
-// hurting me (the hurt flag, never the alert); kind 'self' raises the alert.
-// now is asked only after a yes or not sure to the self question; a yes
-// to it opens the calm card at the top.
-const SAFETY = {
-  intro: 'A lot of people your age go through really heavy stretches. These two questions help make sure you\'re okay. Every answer is welcome, and you can skip.',
-  questions: [
-    ['Is anyone hurting you, threatening you, or making you feel unsafe, at home, at school, online, or in a relationship?', 'safe'],
-    ['Over the past few weeks, have you had thoughts of ending your life, or of not wanting to be alive?', 'self']
-  ],
-  selfLead: 'Sometimes, when life gets really heavy, people think about not wanting to be alive. Lots of people your age have had that thought, and it\'s safe to say so here.',
-  now: 'Right now, today, are those thoughts with you?',
-  answers: [['yes', 'Yes'], ['no', 'No'], ['unsure', 'Not sure'], ['skip', 'I\'d rather not say']],
-  // Which answers count. 'skip' is respected and never counts as a yes.
-  on: { safe: ['yes', 'unsure'], self: ['yes', 'unsure'], now: ['yes', 'unsure'] },
-  kinds: { safe: 'hurt', self: 'safety' },
-  yes: 'Thank you for telling me. You matter, and this can get better with help. Please reach out now. Someone will listen, any time.',
-  means: 'If there are guns or a lot of medicine at home, ask a grown-up you trust to lock them up or keep them somewhere else for now.',
-  title: 'You matter, and you don\'t have to carry this alone.',
+// GWG BLD 887: no flags, no alerts, and no safety step. Grounded asks open, curious
+// questions and never a harm question. QUIET is the one line of type on the check-in
+// and results (never spoken). HELP is the help list a teen opens with a quiet link;
+// it never opens on its own after an answer.
+const QUIET = 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.';
+const HELP = {
+  title: 'You have people with you.',
   calmIntro: 'These people want to help, any time. You can also tell a grown-up you trust, like a parent, teacher, school counselor, coach, or someone else in your family.',
-  hurtTitle: 'No one has the right to hurt you.',
+  hurtTitle: 'Help from outside your home',
   hurtIntro: 'These people are outside your home, and they can help any time. Telling a trusted adult at school is a strong step too.',
   // Help lines in the order shown. tel and sms are dialable; smsBody is
-  // the word to text. calm is the calm card (decision 12); hurt is shown
-  // when someone is hurting the teen (decision 6), never sent to the alert.
+  // the word to text. calm is the full list; hurt is help from outside the home.
   lines: {
     calm: [
       { id: '988', name: '988 Suicide and Crisis Lifeline', show: 'Call or text 988', tel: '988', sms: '988', url: 'https://988lifeline.org/chat/', note: 'Private, all day and night. You can also chat at 988lifeline.org.' },
@@ -453,13 +396,12 @@ const SAFETY = {
       { id: 'school', name: 'A trusted adult at school', show: 'Tell a school counselor, coach, or teacher', note: 'They know how to help, and they can help you stay safe.' }
     ]
   },
-  src: ['asq', 'horowitz12', 'gould05', 'dazzi']
 };
 
-// Optional sensitive questions (decision 7). Off unless the teen turns
-// them on in settings; only the teen can. Asked on the answer scale
+// Optional sensitive question (decision 7). Off unless the teen turns
+// it on in settings; only the teen can. Asked on the answer scale
 // right after their part. Readiness and pressure wording only, never
-// use. Never part of a score, never the alert, never shared or printed
+// use. Never part of a score, never shared or printed
 // for a grown-up. on: answers that show the note and lines.
 const SENSITIVE = [
   { id: 'cope', part: 'leaves', r: 1,
@@ -468,14 +410,7 @@ const SENSITIVE = [
     why: 'This one is optional, and only you can turn it on. It never counts toward your score, and it\'s never shared. Noticing pressure early makes it easier to plan your way out.',
     on: ['sometimes', 'often', 'always'],
     note: 'Pressure like that is real, and you can handle it. Plan an easy way out, and talk with someone you trust. The SAMHSA National Helpline is there any time, in English and Spanish: 1-800-662-4357.',
-    lines: ['988', 'ctl'] },
-  { id: 'dating', part: 'branches', r: 1,
-    t: 'Felt pressured, checked up on, or controlled by someone you\'re close to or going out with, like them checking your phone or telling you who you can see?',
-    tip: 'If yes, thank them for telling you and stay calm. Ask how it feels to them, and stay kind about the other person. Love Is Respect can help them think it through.',
-    why: 'This one is optional, and only you can turn it on. It never counts toward your score, and it\'s never shared. Checking your phone or deciding who you see are signs worth noticing.',
-    on: ['sometimes', 'often', 'always'],
-    note: 'You deserve to be trusted and respected. Checking your phone, or telling you who you can see, is not okay. You can talk it through any time, privately.',
-    lines: ['loveisrespect', 'dayone', '911'] }
+    lines: ['988', 'ctl'] }
 ];
 
 // Helpers for the app. bandOf('11') gives '11-12'. getBank(band, wording)
@@ -506,8 +441,7 @@ function weekly(band, wording) {
 function sensitive() { return SENSITIVE.map(q => Object.assign({}, q)); }
 
 window.PINE_CHECKIN = { version: VERSION, bank: BANK, perPart: PER_PART, answers: ANSWERS, levels: LEVELS, stems: STEMS,
-  parts: PARTS, bands: BANDS, grades: GRADES, modes: MODES, questions: Q, weekly: WEEKLY, flags: FLAGS,
-  alertKinds: ALERT_KINDS, ALERT_KINDS: ALERT_KINDS, neverAlert: NEVER_ALERT, alertTold: ALERT_TOLD,
-  safety: SAFETY, sensitive: SENSITIVE, SENSITIVE: SENSITIVE,
+  parts: PARTS, bands: BANDS, grades: GRADES, modes: MODES, questions: Q, weekly: WEEKLY,
+  quiet: QUIET, help: HELP, sensitive: SENSITIVE, SENSITIVE: SENSITIVE,
   bandOf: bandOf, resolve: resolve, getBank: bank, weeklyList: weekly, sensitiveList: sensitive };
 })();

@@ -3,7 +3,7 @@
 <head>
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
-<script src="/shared/gg-shelf.js?v=b862"></script>
+<script src="/shared/gg-shelf.js?v=b885"></script>
 <script src="/shared/gg-sources.js?v=b878"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
@@ -857,6 +857,7 @@ html.ts-2 main{zoom:1.25;}
 .lvl-pill{font-size:14px;font-weight:600;white-space:nowrap;}
 .lvl-tend{flex-basis:100%;margin:2px 0 0;font-size:14px;color:var(--ink-soft);}
 .lvl-row{flex-wrap:wrap;}
+.pn-quiet{max-width:620px;margin:16px auto 0;font-size:14px;line-height:1.45;color:var(--ink-soft);text-align:center;}
 .flag-box{margin:18px auto 0;max-width:620px;text-align:left;border:1.5px solid var(--gold);border-radius:12px;padding:14px 16px;background:var(--card);}
 .flag-box h3{margin:0 0 6px;font-size:18px;}
 .flag-box p{margin:6px 0 0;}
@@ -1162,7 +1163,7 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   <p class="lead">Take a check-in: eight short questions for each part, one on the screen at a time, about the past two weeks. Your answers grow a tree and a growth plan with practices that fit your life now, whether you are in school or training, working, serving, parenting, or between things. Check them off each day in Today, take a quick check-in each week, and a full check-in every twelve weeks adds a ring. Groundwork is your private notebook for who you are becoming, plus Skills I've Got, practical life skills you mark at your own pace. Learn has short videos with tabs and search on top, and Read Aloud, Save or Print, and Share to Family are there whenever you want them. In Settings, Health and Ability opens guides and practices that fit a disability, illness, or difference, and its Living Sober box opens guides for growing sober or loving someone who drinks or uses, each kept private in your profile.</p>
 
   <div class="section-title">Yours, and private</div>
-  <p class="lead">Everything stays on this device, locked in your own profile with a passcode only you know. Nothing is sent to anyone, and no one gets an alert. If you want, you can add a helper, someone you trust who opens your Birch with their own passcode and sees only what you choose to share, never your safety answers or your Groundwork. That stays off unless you turn it on.</p>
+  <p class="lead">Everything stays on this device, locked in your own profile with a passcode only you know. Nothing is sent to anyone, and no one gets an alert. If you want, you can add a helper, someone you trust who opens your Birch with their own passcode and sees only what you choose to share, never your private notes or your Groundwork. That stays off unless you turn it on.</p>
 
   <div class="section-title">One Rule</div>
   <p class="lead">Name each resource in only one part of your tree. If your friends give you hope, they still belong in the Branches, not the Fruit. This shows your true resources in each part, and where you might be leaning on one part of the tree to carry weight it was never meant to hold alone.</p>
@@ -1238,29 +1239,30 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   </nav>
   <p class="foot-local foot-way"><a class="text-link" href="/the-grounded-way.html">Go further with The Grounded Way.</a></p>
   <p class="foot-local">Grow With Grounded is based in St. Cloud, Minnesota. We travel anywhere.<br><span class="foot-contact"><a class="text-link" href="mailto:hello@growwithgrounded.com">hello@growwithgrounded.com</a><span class="foot-sep" aria-hidden="true"> &middot; </span><a class="text-link" href="tel:+13202917393">320-291-7393</a></span></p>
-  <p class="foot-crisis">In crisis or thinking about ending your life? Call or text 988, or text HOME to 741741, any time. In danger right now, call 911.</p>
+  <p class="foot-crisis">If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>
   <p class="footer-privacy">Your answers stay in your browser. Everything you enter here stays private, on this device.</p>
   <p class="footer-copyright">&copy; <span id="copyright-year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC. Grow With Grounded Birch and its content, framework, and practices may not be copied, reproduced, or redistributed without permission.</p>
 </footer>
 <div class="toast" id="toast" role="status" aria-live="polite"></div>
 <script src="/shared/gg-avatars.js?v=b782"></script>
-<script src="/birch/checkin.js?v=b849"></script>
-<script src="/birch/practices.js?v=b852"></script>
+<script src="/birch/checkin.js?v=b887"></script>
+<script src="/birch/practices.js?v=b885"></script>
 <script src="/birch/groundwork.js?v=b788"></script>
 <script src="/shared/gg-growth.js?v=tc1"></script>
 <script src="/shared/gg-pdf.js?v=b803"></script>
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
-<script src="/shared/gg-profiles.js?v=b874"></script>
+<script src="/shared/gg-practice-alias.js?v=b885"></script>
+<script src="/shared/gg-profiles.js?v=b887"></script>
 <script src="/shared/gg-life.js?v=b851"></script>
 <script src="/shared/gg-life-kit.js?v=b789"></script>
 <script src="/shared/gg-sober.js?v=b851"></script>
 <script src="/shared/gg-journey.js?v=b782"></script>
-<script src="/shared/gg-library.js?v=b852"></script>
+<script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-tend.js?v=b782"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
-<script src="/birch/guides.js?v=b852"></script>
-<script src="/birch/app.js?v=b849"></script>
+<script src="/birch/guides.js?v=b887"></script>
+<script src="/birch/app.js?v=b887"></script>
 <script>
 /* Read aloud, built in like Oak and Sequoia */
 (function () {
@@ -1298,9 +1300,9 @@ details.signs-details summary{min-height:44px;padding:10px 0;}
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b862" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b850';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b879" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b879';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b884" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>
