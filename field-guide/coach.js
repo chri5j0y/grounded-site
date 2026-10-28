@@ -29,11 +29,11 @@ async function nameOf(voice, text){
   const sig = new Uint8Array(await crypto.subtle.sign('HMAC', HK, new TextEncoder().encode(voice + '|' + text)));
   return Array.from(sig.slice(0, 16)).map(b => b.toString(16).padStart(2, '0')).join('');
 }
-function fetchClip(voice, text){
+function fetchClip(voice, text, ms){
   const k = voice + '|' + text; if (cache.has(k)) return cache.get(k);
   const p = (async () => {
     if (!(await keys())) return null;
-    const n = await nameOf(voice, text), ctl = new AbortController(), t = setTimeout(() => ctl.abort(), 8000);
+    const n = await nameOf(voice, text), ctl = new AbortController(), t = setTimeout(() => ctl.abort(), ms || 8000);
     try {
       const r = await fetch(BASE + (KEY.round || 's1') + '/' + (KEY.folder || 'g') + '/' + n + '.bin', {signal: ctl.signal});
       if (!r.ok) return null;
@@ -42,6 +42,8 @@ function fetchClip(voice, text){
       return URL.createObjectURL(new Blob([mp3], {type: 'audio/mpeg'}));
     } catch(e){ return null; } finally { clearTimeout(t); }
   })();
+  // BLD 879: a clip that failed to arrive (a slow first connection) is forgotten, so the next try fetches it again.
+  p.then(u => { if (!u && cache.get(k) === p) cache.delete(k); });
   cache.set(k, p); if (cache.size > 300){ const f = cache.keys().next().value; cache.delete(f); }
   return p;
 }
@@ -70,7 +72,8 @@ const V = window.GGVoice = {
   async say(voice, text){
     if (!text || !V.on()) return;
     V.stop();
-    const url = await fetchClip(voice, text);
+    let url = await fetchClip(voice, text);
+    if (!url && V.on()) url = await fetchClip(voice, text, 15000); // BLD 879: one more try, with more time, before the device voice
     if (!V.on()) return;
     if (!url) return device(text);
     if (!el){ el = new Audio(); }

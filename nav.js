@@ -572,16 +572,13 @@
     if (here) a.setAttribute('aria-current', 'page');
     var first = menu.querySelector('a'); if (first && /index\.html$|\/$/.test(first.getAttribute('href') || '') && /home/i.test(first.textContent)) { first.classList.add('gg-home-link'); first.after(a); } else menu.insertBefore(a, menu.firstChild);
     if (here) menu.querySelectorAll('a.current').forEach(function (x) { if (x !== a) { x.classList.remove('current'); x.removeAttribute('aria-current'); } });
-    // BLD 877: Grounded Recipes, right after the pill, so the recipes and their step by step guide are easy to find.
-    var rh = /^\/recipes\//.test(p), r = document.createElement('a'); r.href = '/recipes/'; r.className = 'gg-rec-link' + (rh ? ' current' : ''); r.textContent = 'Recipes';
-    if (rh) { r.setAttribute('aria-current', 'page'); menu.querySelectorAll('a.current').forEach(function (x) { if (x !== r) { x.classList.remove('current'); x.removeAttribute('aria-current'); } }); }
-    a.after(r);
+    // BLD 879: Grounded Recipes lives in the Healthy Living menu group, The Grounded Way, and the front page (Chris: off the top bar).
     var st = document.createElement('style');
     st.textContent = '@media (min-width:981px){.site-menu a.gg-home-link{display:none;}}@media (min-width:981px) and (max-width:1380px){.site-menu a,.site-menu .gn-tools-btn{padding-left:8px!important;padding-right:8px!important;letter-spacing:.6px!important;}}' + '@media (min-width:981px) and (max-width:1120px){.site-menu a,.site-menu .gn-tools-btn{padding-left:5px!important;padding-right:5px!important;font-size:13.5px!important;letter-spacing:.2px!important;}.site-menu a.gg-way-link{padding:7px 10px!important;margin:0 2px;}}' + '@media (min-width:981px){.site-menu a.gg-way-link{background:#8B5E1A;color:#FFF8EA;border-radius:999px;padding:8px 14px!important;margin:0 4px;}.site-menu a.gg-way-link:hover,.site-menu a.gg-way-link.current{background:#6E4A14;color:#FFF8EA;}}' +
       '@media (max-width:980px){.site-menu a.gg-way-link{color:#8B5E1A;}}' +
       '@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .site-menu a.gg-way-link{background:#D9A847;color:#2E2118;}}:root[data-theme="dark"] .site-menu a.gg-way-link{background:#D9A847;color:#2E2118;}' +
       '@media (max-width:980px){:root .site-menu a.gg-way-link{background:transparent!important;color:#C9952F!important;}}' +
-      // BLD 877: room for Recipes on one line from 981 px up: a little less space between the header's parts.
+      // BLD 877: a little less space between the header's parts from 981 px up, so every header fits on one line.
       '@media (min-width:981px) and (max-width:1180px){.topbar-inner{gap:8px!important;}.topbar-inner .brand-name{font-size:.92em;}.topbar-inner > .gg-now{padding:0;width:42px;}.topbar-inner > .gg-now .gg-now-l{display:none;}}' +
       '@media (min-width:1181px) and (max-width:1560px){.topbar-inner{gap:8px!important;}.site-menu a,.site-menu .gn-tools-btn{padding-left:7px!important;padding-right:7px!important;letter-spacing:.6px!important;}.site-menu a.gg-way-link{padding:8px 13px!important;}}' +
       '@media (min-width:1181px) and (max-width:1340px){.site-menu a,.site-menu .gn-tools-btn{padding-left:5px!important;padding-right:5px!important;}}' +
