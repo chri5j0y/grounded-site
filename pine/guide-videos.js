@@ -7844,8 +7844,7 @@ window.GG_LEARN_GUIDES.pine = {
     "mins": 4,
     "blurb": "For the high schooler having thoughts of suicide: you have people with you, help is here now, and a safety plan helps.",
     "sources": [
-     "stanley",
-     "gould05"
+     "stanley"
     ],
     "scenes": [
      {
