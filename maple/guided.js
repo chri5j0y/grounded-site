@@ -209,6 +209,19 @@
     return out;
   }
 
+  /* ---------- ?guided=checkin, quick, or plan (The Grounded Way's tree sheet) ---------- */
+  // One child on this device: their screen opens guided. Otherwise the start screen, where Start is guided too.
+  function fromFlag() {
+    const f = window.GGGuided && GGGuided.flag ? GGGuided.flag() : ''; if (!f) return;
+    GGGuided.clearFlag();
+    const ids = mpKidIds(), id = ids.length === 1 ? ids[0] : null, k = id ? loadKids()[id] : null;
+    if (!k) { go('home'); return; }
+    if (f === 'plan') plan(id);
+    else if (f === 'quick') { openTree(id, 'week'); if (!week()) mpTab('week'); }
+    else { go('home'); $('kid-name').value = k.name; setGrade(k.grade || (k.checkins.length ? k.checkins[k.checkins.length - 1].grade : null)); if (S.grade) startCheckin(); }
+  }
+
   window.MPGuided = { checkin, restore, week, weekForm, plan, recLines, script, watchWeek, ok };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchWeek); else watchWeek();
+  const boot = () => { watchWeek(); const go1 = () => setTimeout(fromFlag, 0); if (window.GGP && GGP.ready) GGP.ready.then(go1, go1); else go1(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();

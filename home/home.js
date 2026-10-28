@@ -1760,8 +1760,10 @@
   function openTreeSheet(what) {
     var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
     var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
+    // BLD 886: the check-in, Quick Check-in, and Growth Plan open guided (?guided=checkin|quick|plan, read by GGGuided.flag() in the tree).
+    var q = what === 'checkin' || what === 'quick' || what === 'plan' ? '?guided=' + what : '';
     var ck = lastCheckin(S.id, S.tree);
-    openFrame(new URL(t.href + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
+    openFrame(new URL(t.href + q + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
   }
   function sheetMode(ifr, path) {
     var tries = 0, done = false;

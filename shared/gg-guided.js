@@ -645,6 +645,8 @@
       if (S.lock) { try { S.lock.release(); } catch (e) {} S.lock = null; }
       document.removeEventListener('keydown', onKey, true); document.removeEventListener('visibilitychange', onVis);
       el.remove(); document.documentElement.classList.remove('ggd-open');
+      // the page can scroll again: let the header fit itself once more (nav.js steps down what no longer fits)
+      setTimeout(function () { try { window.dispatchEvent(new Event('resize')); } catch (e) {} }, 0);
       if (CUR === api) CUR = null;
       try { if (S.prevFocus && S.prevFocus.focus && S.prevFocus.isConnected) S.prevFocus.focus(); } catch (e) {}
       if (!quiet && typeof o.onClose === 'function') { try { o.onClose(); } catch (e) {} }

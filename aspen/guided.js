@@ -203,6 +203,20 @@
     return out;
   }
 
+  /* ---------- ?guided=checkin, quick, or plan (The Grounded Way's tree sheet) ---------- */
+  // The open student (or the only one on this device) gets that screen guided; otherwise the student list.
+  function fromFlag() {
+    const f = window.GGGuided && GGGuided.flag ? GGGuided.flag() : ''; if (!f) return;
+    GGGuided.clearFlag();
+    if (!me() && DB.students.length === 1) openStudent(DB.students[0].id);
+    if (!me()) { go('students'); return; }
+    if (f === 'plan') plan();
+    else if (f === 'quick') { aspTab('week'); week(); }
+    else if (me().draft) resume();
+    else { startCheckin(); checkin(); }
+  }
+
   window.ASGuided = { checkin, resume, week, weekForm, plan, recLines, script, ok };
-  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', watchWeek); else watchWeek();
+  const boot = () => { watchWeek(); const go1 = () => setTimeout(fromFlag, 0); if (window.GGP && GGP.ready) GGP.ready.then(go1, go1); else go1(); };
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot); else boot();
 })();
