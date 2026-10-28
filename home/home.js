@@ -1049,7 +1049,7 @@
     var line = open.length ? 'Once this week, on any day that suits you.' : 'Every weekly practice is tended. A fresh week begins Monday.';
     return '<div class="hm-tweek hm-p-branches" role="region" aria-label="' + (where === 'week' ? 'Practices This Week' : 'This Week') + '">' + head + '<p class="hm-sub hm-twline">' + line + '</p>' +
       '<div class="hm-list">' + open.map(function (x) { return pracCardHtml(x, { when: 'This Week · ' + partName(x) }); }).join('') +
-      dn.map(function (x) { return pracCardHtml(x, { when: 'Done this week · ' + dayName(x.doneWeek), cls: 'hm-small', nosub: true }); }).join('') + '</div></div>';
+      dn.map(function (x) { return pracCardHtml(x, { when: 'Done this week · ' + (x.doneWeek === today() ? 'Today' : dayName(x.doneWeek)), cls: 'hm-small', nosub: true }); }).join('') + '</div></div>';
   }
   /* When You're Ready, on Today: one Now and Then practice that has rested 30 days or more (or is new), one at a time. */
   function nudgeOf(plan) {
