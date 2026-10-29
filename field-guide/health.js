@@ -546,16 +546,23 @@ function sizeBatch(p, N){ const f = N / (+p.serves || 6); if (Math.abs(f - 1) < 
   return Object.assign({}, p, {forN: N, steps: arr(p.steps).map(s => { const t = typeof s === 'string' ? {t: s} : s; return arr(t.sc).length ? Object.assign({}, t, {t: scText(t.t, t.sc, f)}) : t; }),
     ingredients: arr(p.ingredients).map(l => window.GGScale && typeof l === 'string' ? GGScale.line(l, f) : l), yields: arr(p.yields).map(y => scText(y, p.ysc, f))}); }
 function servesRow(o){ const N = o.base.N; return `<div class="hj-serves" role="group" aria-label="Make it for"><span>Make it for <b data-hjserves>${N}</b> ${N === 1 ? 'person' : 'people'}</span><button type="button" class="chip" data-hja="bserve" data-hjv="-1" aria-label="One fewer"${N <= 1 ? ' disabled' : ''}>&minus;</button><button type="button" class="chip" data-hja="bserve" data-hjv="1" aria-label="One more"${N >= 12 ? ' disabled' : ''}>+</button></div>${o.data.keeps ? `<p class="hj-sub"><b>Keeps:</b> ${esc(o.data.keeps)}</p>` : ''}`; }
+// BLD 893, My Grounded Way Plan: set.medFreq ('daily', 'few' for Tuesday, Thursday, and Saturday, 'weekly' for Sunday, 'later')
+// and set.medTime ('morning', 'afternoon', 'evening') place the meditation; unset keeps it every day as before. set.flowDays 'other'
+// keeps Flow to the days without a workout, Monday to Saturday ("Add Flow on other days"); unset keeps Flow every day.
+const MED_FEW = [2, 4, 6];
+function medOn(d){ const f = H().set.medFreq, w = d.getDay(); return !f || f === 'daily' ? true : f === 'few' ? MED_FEW.includes(w) : f === 'weekly' ? w === 0 : false; }
+function medAt(){ const t = H().set.medTime; return t === 'afternoon' ? {hour: 15, kick: 'This afternoon'} : t === 'evening' ? {hour: 20.5, kick: 'This evening'} : t === 'morning' ? {hour: 8, kick: 'Morning'} : {}; }
+const flowRest = (d, hasWork) => H().set.flowDays === 'other' && (!!hasWork || d.getDay() === 0);
 function agenda(d){
   const out = [], dow = d.getDay(), n = weekNo(d), fw = foodWeek(d), ses = n >= 1 || dow !== 0 ? sesFor(d) : null;
   const track = H().set.track || 'strength', pr = practiceFor(d);
-  if (flowDaily() && pr) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Flow', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Flow', did: true});
+  if (flowDaily() && pr && !flowRest(d, ses && n >= 1)) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Flow', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Flow', did: true});
   if (workOn() && ses && n >= 1) out.push({did: true, key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightOn(d) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
   // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Flow track gets it in the evening.
-  if (track === 'practice' && MED()){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
+  if (track === 'practice' && MED() && medOn(d)){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
   const mf = medFor(d);
-  if (track !== 'practice' && MED()) out.push({did: true, key: 'med', k: 'med', hour: 8, kick: dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning', title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
+  if (track !== 'practice' && MED() && medOn(d)) out.push({did: true, key: 'med', k: 'med', hour: medAt().hour || 8, kick: medAt().kick || (dow >= 1 && dow <= 5 ? 'After the shower' : 'Morning'), title: 'Meditation', sub: (mf && mf.title ? mf.title + '. ' : '') + medMins(n) + ' minutes of stillness.', btn: 'Start'});
   if (dow === 6){ const L = shopList(fw), left = L ? L.items.filter(x => !x.done).length : 0; out.push({key: 'shop:' + fw, k: 'shop', v: fw, hour: 9, kick: 'Shopping day', title: 'Shop for Week ' + letter(fw), sub: left ? left + ' items on the list.' : 'Everything is in the cart.', btn: 'Open the List'}); }
   if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + letter(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
@@ -1907,7 +1914,7 @@ function vSettings(bare){
     <div class="${on ? '' : 'dim'}">${row('a-week', 'week', 'Also on This Week', 'Each day\'s notes on the week view', tsw('remwk', '', on && !h.set.remWk, 'Also on This Week'))}
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
-  const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">Whose phone, your training, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
+  const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">${MINE_ANY() && MINE_ANY().who ? 'Whose phone, your training' : 'Your training'}, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
   if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
     <div class="tn-two"><div class="tn-col">${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
@@ -3138,11 +3145,13 @@ function apiWeek(n){
   const off = Math.round(+n || 0), t0 = day0(new Date()), mon = addD(monOf(t0), off * 7), N = weekNo(mon), track = h.set.track || 'strength';
   const fw = off === 0 ? foodWeek(t0) : Math.max(1, N);
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
-    const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses ? practiceFor(d) : null;
+    const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses && !flowRest(d, false) ? practiceFor(d) : null, mf = U('mind') && MED() && H().set.medFreq && medOn(d) ? medFor(d) : null;
     const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
     return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0),
       dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(ITEM_ART.cook)} : null,
-      move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id)} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice)} : null}; });
+      move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id), kind: wkKind(ses.id, ses), id: ses.id} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice), kind: 'flow', id: pr.id, style: pr.style || ''} : null,
+      // BLD 893: the meditation on its days, once a person has chosen how often (My Grounded Way Plan).
+      med: mf ? {title: mf.title || 'Meditation', key: 'medid:' + mf.id, mins: medMins(wn), done: isDone(d, 'med'), kind: 'meditation', id: mf.id, at: medAt().kick || 'Morning'} : null}; });
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
   return {n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
@@ -3160,6 +3169,52 @@ function apiRender(el, section, opts){
   if (base === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); } else S.setup = false;
   if (base === 'cook' || base === 'move') openInline(S.bare);
   S.ovHome = 'host'; paintBare(); paintOv(); return true;
+}
+// ---------- BLD 893: My Grounded Way Plan (home/home.js) ----------
+// The plan is a guided way to set Tending's own settings: no copy of them is kept anywhere else.
+// o: {track: 'strength'|'cardio'|'mixed', gentle: bool, level, cardioDays, days, mins, gear: [ids], flow: bool,
+//     medFreq, medTime, food: bool, household: n, check: {qid: bool}, cleared: bool}
+// A first plan (no start-up check yet) also finishes the start-up check with plain defaults: Me (or Me and My Family when
+// more than one eats at home), the goal Feel Well, no food needs. Any yes on the health check keeps the Gentle path until
+// the person says their doctor or therapist says they can begin, exactly as the start-up check does.
+function apiPlanInfo(){
+  const h = H(), L = PLIB() || {}; if (!h || !FLDH()) return null; const s = h.set;
+  return {pub: PUB(), done: PUB() ? !!s.pubDone : !setupNeeded(), set: JSON.parse(JSON.stringify(s)), use: USE(), check: L.check || null, gear: arr(L.program && L.program.gear), gearNone: (L.program || {}).gearNone || '',
+    cardio: !!PROG() && hasCardio(), levelLines: (L.templates || {}).levelLines || {}, gentle: {lead: (L.gentle || {}).lead || '', mins: arr((L.gentle || {}).sessions).map(x => +x.mins).filter(Boolean)},
+    meds: arr((MED() || {}).sessions).map(x => ({id: x.id, title: x.title || '', day: x.day || ''})), flows: arr((PR() || {}).sessions).filter(x => !x.style || x.style === 'daily').map(x => ({id: x.id, title: x.title || '', style: x.style || 'daily', mins: x.mins || null})),
+    medMins: [medMins(1), medMins(99)], prog: progLabel(new Date()), track: progTrack(), teen: TEEN()};
+}
+function apiPlan(o){
+  const h = H(); if (!h || !FLDH() || !o) return false; o = o || {};
+  const s = h.set, L = PLIB() || {}, was = PUB() ? !!s.pubDone : true, tr0 = progTrack(), gentle0 = s.level === 'gentle';
+  const tr = ['strength', 'cardio', 'mixed'].includes(o.track) ? o.track : 'strength';
+  if (PUB()){
+    if (o.check && typeof o.check === 'object'){ s.check = Object.assign({}, s.check || {}, o.check); s.checkYes = arr((L.check || {}).questions).some(q => s.check[q.id] === true); }
+    if (o.cleared != null) s.cleared = !!o.cleared;
+    const hold = !!s.checkYes && !s.cleared;
+    s.level = hold || o.gentle ? 'gentle' : ['root', 'rise', 'thrive'].includes(o.level) ? o.level : (s.level && s.level !== 'gentle' ? s.level : 'root');
+    if ([2, 3, 4, 5, 6].includes(+o.days)) s.days = +o.days;
+    if ([20, 40, 60].includes(+o.mins)) s.mins = +o.mins;
+    if (Array.isArray(o.gear) && L.program) s.gear = o.gear.filter(g => typeof g === 'string').slice(0, 20);
+    if (+o.household > 0){ const hs = s.house = Object.assign({adults: 1, kids: []}, s.house || {}), k = arr(hs.kids).length; hs.adults = Math.max(1, Math.min(12, Math.round(+o.household) - k)); s.household = hs.adults + k; if (!was) s.who = s.household > 1 ? 'family' : 'me'; }
+  } else if (+o.household > 0) s.household = Math.max(1, Math.min(12, Math.round(+o.household)));
+  if (s.track !== 'practice' || o.track) s.track = tr;
+  s.cardioDays = +o.cardioDays === 2 ? 2 : 1;
+  if (o.flow != null){ s.flow = !!o.flow; if (s.flow) s.flowDays = 'other'; else delete s.flowDays; }
+  if (['daily', 'few', 'weekly', 'later'].includes(o.medFreq)) s.medFreq = o.medFreq;
+  if (['morning', 'afternoon', 'evening'].includes(o.medTime)) s.medTime = o.medTime;
+  if (PUB()){
+    const use = new Set(USE()); use.add('move'); if (s.medFreq !== 'later') use.add('mind'); if (o.food === true) use.add('food'); else if (o.food === false) use.delete('food');
+    if (!was) ['people', 'labs'].forEach(x => use.add(x));
+    s.use = PART_IDS.filter(x => use.has(x));
+    if (!was){ s.goals = arr(s.goals).length ? s.goals : ['well']; s.needs = arr(s.needs); s.house = s.house || {adults: 1, kids: []}; s.household = s.household || (s.house.adults + arr(s.house.kids).length); s.who = s.who || (s.household > 1 ? 'family' : 'me');
+      s.place = s.place || 'home'; s.pubDone = 1; s.start = s.start || ymd(monOf(new Date())); s.remOff = true; markNew(); }
+    else if (L.program && (tr !== tr0 || (gentle0 && s.level !== 'gentle'))) s.progStart = ymd(monOf(new Date()));
+  } else {
+    const use = h.set.use; if (Array.isArray(use)){ const u = new Set(use); u.add('move'); if (s.medFreq !== 'later') u.add('mind'); if (o.food === true) u.add('food'); else if (o.food === false) u.delete('food'); s.use = PART_IDS.filter(x => u.has(x)); }
+    if (tr !== tr0 && PROG()) s.progStart = ymd(monOf(new Date()));
+  }
+  delete s.needSetup; s.u = Date.now(); PA = null; if (PUB()) ensurePlan(); save(); return true;
 }
 function apiCounts(){
   if (!FLDH() || !H()) return {recipes: 0, workouts: 0, meditations: 0, practices: 0};
@@ -3879,6 +3934,8 @@ window.GGHealth = {
   today: apiToday, toggle: apiToggle, week: apiWeek, render: apiRender, counts: apiCounts,
   // BLD 892: fill(key, date) and guided() for one card, two credits on the Home's Today.
   fill: apiFill, guided: apiGuided,
+  // BLD 893: My Grounded Way Plan writes the same settings the start-up check and My Goals write (see apiPlan).
+  applyPlan: o => apiPlan(o), planInfo: () => apiPlanInfo(),
   state: S, allLines, LN,
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
   planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
