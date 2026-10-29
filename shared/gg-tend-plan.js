@@ -278,51 +278,99 @@ function estimate(ses, warmup, cooldown, ph, light){
 // then the finisher, cardio, and mobility blocks; warm-up and cooldown by id from lengths[n]. The player's own clock then
 // trims or adds a set (or a finisher move) until the estimate lands close to the chosen minutes.
 const FALL = {squat: ['lunge', 'hinge'], lunge: ['squat', 'balance'], hinge: ['squat', 'core'], push: ['core', 'carry'], pull: ['hinge', 'core'], core: ['balance', 'mobility'],
-  carry: ['core', 'cardio'], cardio: ['lunge', 'core'], mobility: ['core', 'balance'], balance: ['core', 'mobility']};
+  carry: ['core', 'cardio'], cardio: ['lunge', 'core'], mobility: ['core', 'balance'], balance: ['core', 'mobility'], agility: ['cardio', 'balance']};
 const LEVELS = ['root', 'rise', 'thrive'];
 const placeOk = (m, place) => !arr(m.places).length || arr(m.places).includes(place);
 function lv(m, level){ const L = m.levels || {}; return L[level] || L[LEVELS[Math.max(0, LEVELS.indexOf(level) - 1)]] || L.root || null; }
-function itemFor(m, level, place, sets, rest, restAfter, prefix){
+// BLD 892: the equipment checklist. Gear ids (nothing checked: body weight plus a chair, a wall, and a mat). A move lists the gear it
+// needs (needs: [], or needsAny: [[...], [...]] when either set works). An old saved place maps forward: home to nothing,
+// light to dumbbells and bands, gym to everything.
+const GEAR = ['dumbbells', 'bands', 'bar', 'dip', 'step', 'bench', 'machines', 'cardio'];
+const PLACE_GEAR = {home: [], light: ['dumbbells', 'bands'], gym: GEAR.slice()};
+const gearPlace = g => { g = arr(g); return g.includes('machines') || g.includes('cardio') ? 'gym' : g.includes('dumbbells') || g.includes('bands') ? 'light' : 'home'; };
+const hasNeeds = m => !!m && (Array.isArray(m.needs) || Array.isArray(m.needsAny));
+function gearOk(m, gear){ const g = arr(gear), has = x => g.includes(x);
+  if (Array.isArray(m.needsAny) && m.needsAny.length) return m.needsAny.some(l => arr(l).every(has));
+  return arr(m.needs).every(has); }
+// BLD 892: the 12-week program. Weeks 1 to 4 Foundation, 5 to 8 Build, 9 to 12 Peak (and Peak after 12, until the person starts again).
+const PHASES = ['foundation', 'build', 'peak'], TRACKS = ['strength', 'cardio'];
+const phaseOfWeek = w => { w = Math.max(1, Math.floor(+w || 1)); return w <= 4 ? 'foundation' : w <= 8 ? 'build' : 'peak'; };
+// A Mixed week: which of the workout days (by position, 0 based) are cardio days, spread through the week; at least one strength day.
+function cardioSlots(nDays, cardioDays){
+  const n = Math.max(1, Math.floor(+nDays || 1)), c = Math.max(1, Math.min(n > 1 ? n - 1 : 1, Math.floor(+cardioDays || 1))), out = [];
+  for (let j = 0; j < c; j++){ let k = Math.min(n - 1, Math.floor((j + 0.5) * n / c)); while (out.includes(k) && k < n - 1) k++; if (!out.includes(k)) out.push(k); }
+  return out;
+}
+function itemFor(m, level, place, sets, rest, restAfter, prefix, work){
   const L = lv(m, level) || {}, time = m.kind === 'time' || (L.secs != null && L.reps == null);
-  const reps = time ? String(+L.secs || 30) : String(L.reps || '10');
-  const n = Math.max(1, Math.min(6, sets)), eq = (m.equip || {})[place] || '';
+  const secs = time && +work > 0 ? Math.round(+work) : +L.secs || 30;
+  const reps = time ? String(secs) : String(L.reps || '10');
+  const E = m.equip || {}, LA = m.loadAt || {}, alt = arr(m.places).find(p => p in E);
+  const n = Math.max(1, Math.min(6, sets)), eq = (place in E ? E[place] : alt ? E[alt] : '') || '';
   const it = {id: (prefix ? prefix + '-' : '') + String(m.id).replace(/^m-/, ''), move: m.id, name: m.name, how: m.how || '', cue: m.cue || '', swap: m.swap || '', tips: arr(m.tips).filter(Boolean).slice(0, 2),
     sets: {'1': n, '2': n, '3': n}, reps: {'1': reps, '2': reps, '3': reps}, rest: capRest(rest), restAfter: capRest(restAfter), kind: time ? 'time' : 'reps',
-    load: (m.loadAt || {})[place] || m.load || '', equip: eq, fig: m.fig || '', pattern: m.pattern};
-  if (time) it.secs = +L.secs || 30;
+    load: LA[place] || (alt && LA[alt]) || m.load || '', equip: eq, fig: m.fig || '', pattern: m.pattern};
+  if (time) it.secs = secs;
   if (m.unilateral) it.side = true;
   // BLD 891: numbered steps, an easier and a harder version, and the move's tempo ride along to the player.
   if (arr(m.steps).length) it.steps = arr(m.steps).filter(Boolean);
   ['easier', 'harder', 'tempo'].forEach(k => { if (m[k]) it[k] = m[k]; });
+  if (m.alt === true) it.alt = true;
   return it;
 }
 const byIdList = (list, ids) => { const L = arr(list); if (!Array.isArray(ids)) return null; return ids.map(id => L.find(x => x && x.id === id)).filter(Boolean); };
+// opts: {level, place, mins, warmup, cooldown} as before, plus (BLD 892) track 'strength'|'cardio', phase 'foundation'|'build'|'peak',
+// gear [ids], program (else templates.program). With no track the day templates are the original four (A to D); with no gear the
+// old place filter and order run exactly as before. A template: {title, lead, main: [slot], finisher: [slot], finisherLabel,
+// rest: {level: seconds between moves}, work: {level: seconds for timed cardio and agility moves}, warm: a day letter or warm-up ids}; a slot is a
+// pattern or {p, prefer: [move ids]} (the first preferred move that fits the level and the gear, else the pattern's pool).
 function buildSessions(moves, templates, opts){
   opts = Object.assign({level: 'rise', place: 'home', mins: 40}, opts || {});
-  const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place = ['home', 'light', 'gym'].includes(opts.place) ? opts.place : 'home', mins = +opts.mins || 40;
+  const T = templates || {}, level = LEVELS.includes(opts.level) ? opts.level : 'rise', place0 = ['home', 'light', 'gym'].includes(opts.place) ? opts.place : 'home', mins = +opts.mins || 40;
+  const gearOn = Array.isArray(opts.gear), gear = gearOn ? opts.gear.filter(g => GEAR.includes(g)) : PLACE_GEAR[place0], place = gearOn ? gearPlace(gear) : place0;
   const len = (T.lengths || {})[String(mins)] || (T.lengths || {})[mins] || {main: mins <= 20 ? 4 : mins <= 40 ? 5 : 6, sets: null, finisher: mins <= 20 ? 0 : 2, finisherSets: 2, cardio: mins >= 60 ? 1 : 0, mobility: mins >= 60 ? 1 : 0, restAfter: 45};
-  const restCap = Math.min(REST_MAX, +((T.rest || {})[level]) || REST_MAX), restAfter = Math.min(REST_MAX, len.restAfter != null ? +len.restAfter : REST_MAX);
+  const restCap = Math.min(REST_MAX, +((T.rest || {})[level]) || REST_MAX), restAfter0 = Math.min(REST_MAX, len.restAfter != null ? +len.restAfter : REST_MAX);
   const days = Object.assign({A: 'Full Body Strength', B: 'Lower Body and Core', C: 'Upper Body and Conditioning', D: 'Full Body and Cardio'}, T.days || {});
   const warmup = byIdList(opts.warmup, len.warmup) || arr(opts.warmup).slice(0, mins <= 20 ? 4 : mins <= 40 ? 6 : 9);
   const cooldown = byIdList(opts.cooldown, len.cooldown) || arr(opts.cooldown).slice(0, mins <= 20 ? 3 : mins <= 40 ? 4 : 6);
-  const M = arr(moves).filter(m => m && m.id && m.name && placeOk(m, place) && lv(m, level)), MB = {}; M.forEach(m => { MB[m.id] = m; });
-  const ord = ((T.order || {})[place] || {})[level] || null;
-  const listFor = pat => ord && Array.isArray(ord[pat]) ? ord[pat].map(id => MB[id]).filter(Boolean) : M.filter(m => m.pattern === pat);
+  const fitsLv = m => !Array.isArray(m.fits) || !m.fits.length || m.fits.includes(level);
+  const M = arr(moves).filter(m => m && m.id && m.name && (gearOn && hasNeeds(m) ? gearOk(m, gear) : placeOk(m, place)) && lv(m, level)), MB = {}; M.forEach(m => { MB[m.id] = m; });
+  const ord = gearOn ? null : ((T.order || {})[place] || {})[level] || null, li = LEVELS.indexOf(level);
+  // With the checklist: the moves that fit the level, closest in ease first, a place's first choices next, and moves that use the checked gear a little ahead.
+  const rank = m => Math.abs((+m.ease || 2) - (li + 1)) - (arr(m.main).includes(place) ? 1.5 : 0) - (gearOn && hasNeeds(m) && !gearOk(m, []) ? 1 : 0);
+  // Foundation and the original four days pick only from the moves they had before BLD 892 (baseOnly; new moves carry since).
+  const pools = {}, listFor = (pat, base) => pools[pat + (base ? '|b' : '')] || (pools[pat + (base ? '|b' : '')] = ord && Array.isArray(ord[pat]) ? ord[pat].map(id => MB[id]).filter(Boolean)
+    : gearOn ? M.map((m, i) => [m, i]).filter(([m]) => m.pattern === pat && fitsLv(m) && !(base && m.since)).sort((a, b) => (rank(a[0]) - rank(b[0])) || (a[1] - b[1])).map(x => x[0]) : M.filter(m => m.pattern === pat && !(base && m.since)));
   const [sLo, sHi] = Array.isArray(((len.sets || {})[level])) ? len.sets[level] : [1, 6];
+  // The program's templates for this track and phase, when asked for; otherwise the original four days.
+  const prog = opts.program || T.program || null, track = TRACKS.includes(opts.track) ? opts.track : null, phase = PHASES.includes(opts.phase) ? opts.phase : 'foundation';
+  const tset = track && prog && prog.tracks && prog.tracks[track] && prog.tracks[track][phase] && typeof prog.tracks[track][phase] === 'object' ? prog.tracks[track][phase] : null;
+  const legacy = d => ({title: days[d], lead: (T.leads || {})[d] || '', main: arr((T.slots || {})[d]).length ? T.slots[d] : ['squat', 'push', 'hinge', 'pull', 'core'],
+    finisher: arr((T.finisher || {})[d]).length ? T.finisher[d] : null, finisherLabel: (T.finisherTitle || {})[d] || 'Finisher'});
   const target = mins * 60, sessions = {};
   ['A', 'B', 'C', 'D'].forEach(d => {
-    const used = new Set(), pre = d.toLowerCase();
-    const pick = pat => { for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p).find(x => !used.has(x.id)); if (m){ used.add(m.id); return m; } } return null; };
-    const blocks = [], add = (title, pats, setsf) => { const items = []; pats.forEach(p => { const m = pick(p); if (m) items.push(itemFor(m, level, place, setsf(m), Math.min(+m.rest || REST_MAX, restCap), restAfter, pre)); }); if (items.length) blocks.push({title, items}); };
+    const tp = tset && tset[d] ? tset[d] : legacy(d), used = new Set(), pre = d.toLowerCase(), baseOnly = !(tset && tset[d]) || !!tp.baseOnly;
+    const ra = tp.rest && tp.rest[level] != null && isFinite(+tp.rest[level]) ? Math.min(REST_MAX, +tp.rest[level]) : restAfter0, wk = tp.work && +tp.work[level] > 0 ? +tp.work[level] : 0;
+    // A template's work seconds time only its cardio and agility moves (program.workPatterns); core and balance holds keep their own.
+    const wpat = arr(tp.workPatterns || (prog && prog.workPatterns)).length ? arr(tp.workPatterns || prog.workPatterns) : ['cardio', 'agility'];
+    const take = m => { used.add(m.id); return m; };
+    const pick = slot => { const pat = slot && typeof slot === 'object' ? slot.p : slot;
+      if (slot && typeof slot === 'object') for (const id of arr(slot.prefer)){ const m = MB[id]; if (m && !used.has(id) && fitsLv(m)) return take(m); }
+      for (const p of [pat].concat(FALL[pat] || [])){ const m = listFor(p, baseOnly).find(x => !used.has(x.id)); if (m) return take(m); } return null; };
+    const mk = (m, sets) => itemFor(m, level, place, sets, Math.min(+m.rest || REST_MAX, restCap), ra, pre, wpat.includes(m.pattern) ? wk : 0);
+    const blocks = [], add = (title, pats, setsf) => { const items = []; pats.forEach(p => { const m = pick(p); if (m) items.push(mk(m, setsf(m))); }); if (items.length) blocks.push({title, items}); };
     const base = m => +((lv(m, level) || {}).sets) || 3;
-    const slots = arr((T.slots || {})[d]).length ? T.slots[d] : ['squat', 'push', 'hinge', 'pull', 'core'];
+    const slots = arr(tp.main).length ? tp.main : ['squat', 'push', 'hinge', 'pull', 'core'];
     add((T.blockTitles || {}).main || 'Main', slots.slice(0, +len.main || slots.length), m => Math.max(sLo, Math.min(base(m), sHi)));
-    if (+len.finisher) add((T.finisherTitle || {})[d] || 'Finisher', arr((T.finisher || {})[d]).length ? T.finisher[d].slice(0, +len.finisher) : Array(+len.finisher).fill('core'), m => Math.min(base(m), +len.finisherSets || 2));
+    if (+len.finisher) add(tp.finisherLabel || 'Finisher', arr(tp.finisher).length ? tp.finisher.slice(0, +len.finisher) : Array(+len.finisher).fill('core'), m => Math.min(base(m), +len.finisherSets || 2));
     if (+len.cardio) add((T.blockTitles || {}).cardio || 'Cardio', Array(+len.cardio).fill('cardio'), base);
     if (+len.mobility) add((T.blockTitles || {}).mobility || 'Mobility', Array(+len.mobility).fill('mobility'), base);
-    const ses = {title: days[d], lead: (T.leads || {})[d] || '', blocks};
-    // BLD 891: each day warms up for its own focus (templates.lengths[n].warmByDay), all moving mobility.
-    const wu = byIdList(opts.warmup, (len.warmByDay || {})[d]) || warmup; if (wu !== warmup) ses.warmup = wu;
+    const ses = {title: tp.title || days[d], lead: tp.lead || '', blocks};
+    if (tset){ ses.letter = d; ses.track = track; ses.phase = phase; }
+    // BLD 891: each day warms up for its own focus (templates.lengths[n].warmByDay), all moving mobility. BLD 892: a program
+    // template may name its warm-up (a day letter or ids); a cardio day warms up like Day D (full body and cardio).
+    const wd = tset ? (Array.isArray(tp.warm) ? null : tp.warm || (track === 'cardio' ? 'D' : d)) : d;
+    const wu = (tset && Array.isArray(tp.warm) ? byIdList(opts.warmup, tp.warm) : byIdList(opts.warmup, (len.warmByDay || {})[wd])) || warmup; if (wu !== warmup) ses.warmup = wu;
     const items = () => blocks.flatMap(b => b.items), est = () => estimate(ses, wu, cooldown, '1', false);
     const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
     // Too long: one set less on the move with the most sets (never under 1, Main keeps 2 while it can), then the last finisher move.
@@ -339,10 +387,10 @@ function buildSessions(moves, templates, opts){
       const all = items(), small = all.slice().sort((a, b) => a.sets['1'] - b.sets['1'])[0];
       if (small && small.sets['1'] < Math.max(4, sHi + 1)){ setAll(small, small.sets['1'] + 1); if (est() <= target * 1.05) continue; setAll(small, small.sets['1'] - 1); }
       const m = pick(slots[all.length % slots.length]) || pick('core') || pick('cardio'); if (!m) break;
-      const it = itemFor(m, level, place, 2, Math.min(+m.rest || REST_MAX, restCap), restAfter, pre); blocks[0].items.push(it);
+      const it = mk(m, 2); blocks[0].items.push(it);
       if (est() > target * 1.05){ setAll(it, 1); if (est() > target * 1.05){ blocks[0].items.pop(); break; } }
     }
-    items().forEach(it => { it.restAfter = restAfter; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
+    items().forEach(it => { it.restAfter = ra; }); const all = items(); if (all.length) all[all.length - 1].restAfter = 0;
     ses.est = Math.round(est()); ses.mins = Math.round(ses.est / 60);
     sessions[d] = ses;
   });
@@ -405,7 +453,8 @@ function ldlRange(base, levers, picks, opts){
 }
 
 const API = {needOk, fitsAll, allergyOk, allergyWords, planWeeks, weeksFromIds, weekStats, swapDinner, planMeals, planDay, swapMeal, shopList, parseIng, SECTIONS,
-  buildSessions, estimate, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX};
+  buildSessions, estimate, steps, lineSecs, LN, targets, kidAims, ldlRange, DAYS, WEEKS, LEFT, REST_MAX,
+  GEAR, PLACE_GEAR, gearOk, gearPlace, PHASES, phaseOfWeek, cardioSlots};
 if (typeof module === 'object' && module.exports) module.exports = API;
 if (root) root.GGTendPlan = API;
 })(typeof window !== 'undefined' ? window : (typeof globalThis !== 'undefined' ? globalThis : null));

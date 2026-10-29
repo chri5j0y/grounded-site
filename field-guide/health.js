@@ -417,6 +417,97 @@ const letter = n => 'ABCD'[(Math.max(1, n) - 1) % 4];
 const phaseOf = n => { n = Math.max(1, n); return n <= 12 ? Math.ceil(n / 4) : 2 + Math.floor(((n - 13) % 8) / 4); };
 const lightWk = n => Math.max(1, n) % 4 === 0;
 const foodWeek = d => { const w = d.getDay(); return weekNo(w === 6 ? addD(d, 2) : w === 0 ? addD(d, 1) : d); };
+// ---------- BLD 892: the 12-week program (Chris, October 29, 2026: phases Foundation, Build, Peak; tracks Strength, Cardio, Mixed) ----------
+// The program clock counts from the plan start (set.start), or from set.progStart once a person switches track or starts again.
+// Weeks 1 to 4 Foundation, 5 to 8 Build, 9 to 12 Peak; after week 12 Peak stays until the person taps Start Again (never forced).
+// set.track: 'strength' (or unset), 'cardio', 'mixed' (set.cardioDays 1 or 2), and the older 'practice' (Flow only) and 'both'
+// (Strength plus Flow), still read as before; set.flow adds Flow to the days. A library with no program keeps today's plan exactly.
+const PH_IDS = ['foundation', 'build', 'peak'], PH_NAME = {foundation: 'Foundation', build: 'Build', peak: 'Peak'};
+const PROG = () => { if (PUB()){ const L = PLIB(); return L && L.program && L.program.tracks && L.program.tracks.strength ? L.program : null; } const p = WK().program; return p && p.tracks && p.tracks.strength ? p : null; };
+const progOn = () => !!PROG() && !(PUB() && (H().set.level || 'root') === 'gentle');
+const progStart = () => parseD(H().set.progStart) || startMon();
+const progWeek = d => Math.floor((day0(d || new Date()) - progStart()) / (7 * DAYMS)) + 1;
+const phaseId = w => { w = Math.max(1, w); return w <= 4 ? 'foundation' : w <= 8 ? 'build' : 'peak'; };
+const phName = id => ((arr((PROG() || {}).phases).find(p => p.id === id) || {}).name) || PH_NAME[id] || '';
+const progTrack = () => { const t = H().set.track; return t === 'cardio' || t === 'mixed' ? t : 'strength'; };
+const workOn = () => H().set.track !== 'practice';
+const flowDaily = () => { const t = H().set.track; return t === 'practice' || t === 'both' || !!H().set.flow; };
+const hasCardio = () => { const p = PROG(); return !!(p && p.tracks.cardio && PH_IDS.some(ph => p.tracks.cardio[ph])); };
+// "Week 6 of 12 · Build"; after week 12, "12 Weeks Complete · Peak".
+function progLabel(d){ if (!progOn()) return ''; const w = progWeek(d); if (w < 1) return ''; return (w <= 12 ? 'Week ' + w + ' of 12' : '12 Weeks Complete') + ' · ' + phName(phaseId(w)); }
+// The sets and reps key: the phase (1, 2, 3) with the program; the old rotation without it.
+const phNum = d => progOn() ? String(1 + PH_IDS.indexOf(phaseId(progWeek(d)))) : String(phaseOf(weekNo(d)));
+const lightOn = d => progOn() ? lightWk(Math.max(1, progWeek(d))) : lightWk(Math.max(1, weekNo(d)));
+// Session ids by phase: Strength A to D, E to H, I to L; Cardio R1 to R12 (the same ids in public Tending and the Guide library).
+const STR_IDS = {foundation: ['A', 'B', 'C', 'D'], build: ['E', 'F', 'G', 'H'], peak: ['I', 'J', 'K', 'L']};
+const CAR_IDS = {foundation: ['R1', 'R2', 'R3', 'R4'], build: ['R5', 'R6', 'R7', 'R8'], peak: ['R9', 'R10', 'R11', 'R12']};
+function trackIds(tr, ph){ const p = PROG(); if (!p) return []; if (PUB()) return tr === 'cardio' ? (hasCardio() && p.tracks.cardio[ph] ? CAR_IDS[ph] : []) : STR_IDS[ph];
+  const t = (p.tracks[tr] || {})[ph]; return Array.isArray(t) ? t : t && typeof t === 'object' ? Object.values(t) : []; }
+const idPhase = id => PH_IDS.find(ph => STR_IDS[ph].includes(id) || CAR_IDS[ph].includes(id)) || 'foundation';
+// A Mixed week: the cardio days among the workout days, spread through the week, with at least one strength day.
+function cardioSlots(n, c){ c = Math.max(1, Math.min(n > 1 ? n - 1 : 1, Math.floor(+c || 1))); const out = [];
+  for (let j = 0; j < c; j++){ let k = Math.min(n - 1, Math.floor((j + 0.5) * n / c)); while (out.includes(k) && k < n - 1) k++; if (!out.includes(k)) out.push(k); } return out; }
+// The workout for position k of the n workout days in program week w.
+function progKey(w, k, n){
+  const ph = phaseId(w), tr = progTrack(), S1 = trackIds('strength', ph), C1 = trackIds('cardio', ph), wi = Math.max(1, w) - 1;
+  if (tr === 'cardio' && C1.length) return C1[(wi * n + k) % C1.length];
+  if (tr === 'mixed' && C1.length){ const cs = cardioSlots(n, H().set.cardioDays), j = cs.indexOf(k);
+    if (j >= 0) return C1[(wi * cs.length + j) % C1.length];
+    const sn = n - cs.length, sk = k - cs.filter(x => x < k).length; return S1.length ? S1[(wi * sn + sk) % S1.length] : null; }
+  return S1.length ? S1[(wi * n + k) % S1.length] : null;
+}
+// The Guide library week (Monday A, Tuesday D, Wednesday C, Thursday D, Friday B): Strength keeps each day's letter in the phase;
+// Cardio takes the five days in turn; Mixed makes Thursday (and Tuesday, for two) a cardio day.
+function guideKey(d){
+  const L0 = WMAP[d.getDay()]; if (!L0) return null; const w = Math.max(1, progWeek(d)), ph = phaseId(w), tr = progTrack(), S1 = trackIds('strength', ph), C1 = trackIds('cardio', ph);
+  const pos = d.getDay() - 1, wi = w - 1;
+  if (tr === 'cardio' && C1.length) return C1[(wi * 5 + pos) % C1.length];
+  if (tr === 'mixed' && C1.length){ const cs = +H().set.cardioDays === 2 ? [1, 3] : [3], j = cs.indexOf(pos); if (j >= 0) return C1[(wi * cs.length + j) % C1.length]; }
+  return S1['ABCD'.indexOf(L0)] || L0;
+}
+// What's new in your plan (Chris: "i am currently on this plan and was not expecting changes"): shown once per device, the first time
+// the plan opens after the library's whatsNew version changes; a new plan starts with it seen.
+const NEW_KEY = 'gg-health-new';
+const newSeen = () => { try { return localStorage.getItem(NEW_KEY) || ''; } catch(e){ return ''; } };
+const markNew = () => { const x = newestNew(); if (!x) return; try { localStorage.setItem(NEW_KEY, x.v); } catch(e){} };
+function newestNew(){ const p = PROG(), L = arr(p && p.whatsNew); return L.length ? L[L.length - 1] : null; }
+function whatsNew(){ const x = newestNew(); if (!x || !x.v || newSeen() === x.v || setupNeeded()) return null; return x; }
+function newCard(){ const x = whatsNew(); if (!x) return ''; const pl = progLabel(new Date());
+  return `<div class="tn-card a-move tn-new" id="tn-new"><div class="tn-hd">${badge('star', 'a-move')}<div style="min-width:0;flex:1"><div class="tn-k a-move">${esc(x.title || 'What\'s New in Your Plan')}</div>${pl ? `<div class="tn-sub">You are in ${esc(pl)}.</div>` : ''}</div></div>
+    <ul class="tn-newl">${arr(x.lines).map(l => `<li>${esc(l)}</li>`).join('')}</ul><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="newok">${ic('check')}Got It</button></div></div>`; }
+// After week 12: start again one level up (Root, Rise, Thrive; Thrive starts again at Thrive), or keep going at this level.
+function againCard(){ if (!progOn() || progWeek(new Date()) <= 12) return ''; const lv = H().set.level || 'root', up = PUB() ? {root: 'rise', rise: 'thrive'}[lv] : null;
+  return `<div class="tn-card a-move tn-again"><div class="tn-k a-move">12 Weeks Complete</div><h3>Strong work. Ready for the next round?</h3><p class="tn-sub">Start again at Week 1${up ? ' one level up, at ' + esc(LVL_NAME[up]) : ''}, or keep going at this level. Your Peak workouts stay with you until you choose.</p>
+    <div class="tn-acts">${PUB() ? `<button type="button" class="tn-btn sm" data-hja="progup">${ic('sprout')}Start Again One Level Up</button>` : ''}<button type="button" class="tn-btn sm${PUB() ? ' line' : ''}" data-hja="progkeep">${ic('play')}Keep Going at This Level</button></div></div>`; }
+const LVL_NAME = {root: 'Root', rise: 'Rise', thrive: 'Thrive', gentle: 'Gentle'};
+// "Build 2" or "Cardio · Build 2": a program workout's place, small above its name.
+function sesKick(id){ for (const ph of PH_IDS) for (const tr of ['strength', 'cardio']){ const i = trackIds(tr, ph).indexOf(id); if (i >= 0) return (tr === 'cardio' ? 'Cardio · ' : '') + phName(ph) + ' ' + (i + 1); } return 'Session ' + id; }
+// Flow: the shelf by style (Daily Flow, Yoga Style, Slow Balance, Stretch), each tile with its minutes and, small, "Draws on yoga".
+const FLOW_STYLES = [{id: 'daily', name: 'Daily Flow'}, {id: 'yoga', name: 'Yoga Style'}, {id: 'taichi', name: 'Slow Balance'}, {id: 'stretch', name: 'Stretch'}];
+const flowKick = x => (x.mins ? x.mins + ' min' : 'Flow') + (x.from ? ' · ' + x.from : '');
+function flowShelf(pr, card){
+  if (!arr(pr).length) return ''; const st = arr((PR() || {}).styles).length ? PR().styles : FLOW_STYLES;
+  const groups = st.map(s => [s, pr.filter(x => (x.style || 'daily') === s.id)]).filter(g => g[1].length), seen = new Set(groups.flatMap(g => g[1]));
+  const rest = pr.filter(x => !seen.has(x)); if (rest.length) groups.push([{id: 'more', name: 'More Flow'}, rest]);
+  if (groups.length <= 1) return `<h3 class="tn-h3">Flow</h3><div class="tn-kgrid">${pr.map(card).join('')}</div>`;
+  return `<h3 class="tn-h3">Flow</h3>` + groups.map(([s, L]) => `<p class="tn-fst"><b>${esc(s.name)}</b>${s.line ? ' ' + esc(s.line) : ''}</p><div class="tn-kgrid">${L.map(card).join('')}</div>`).join('');
+}
+// My training (the Field Guide's My Goals): Strength, Cardio, Mixed (with 1 or 2 cardio days), or Flow only, and Flow on the days too.
+function trackChips(s){
+  const t = s.track || 'strength', cur = t === 'both' ? 'strength' : t, flow = t === 'both' || !!s.flow;
+  const chip = (act, v, l, on) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act}" data-hjv="${v}">${esc(l)}</button>`;
+  if (!PROG() || !hasCardio()) return `<div class="hj-chips">${[['strength', 'Strength and Heart, with a coach'], ['practice', 'Flow: movement, breath, and stretch'], ['both', 'Both']].map(([k, l]) => chip('track', k, l, t === k || (k === 'strength' && !s.track))).join('')}</div>`;
+  return `<div class="hj-chips">${[['strength', 'Strength'], ['cardio', 'Cardio'], ['mixed', 'Mixed'], ['practice', 'Flow Only']].map(([k, l]) => chip('track', k, l, cur === k)).join('')}</div>
+    ${cur === 'mixed' ? `<div class="hj-chips">${[1, 2].map(n => chip('cardiodays', n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n)).join('')}</div>` : ''}
+    ${cur !== 'practice' ? `<div class="hj-chips">${chip('flowon', flow ? '0' : '1', flow ? 'Flow on My Days' : 'Add Flow to My Days', flow)}</div>` : ''}
+    <p class="hj-sub">${esc(TRACK_LINE[cur] || '')} Switch anytime; a new track starts at Week 1.</p>`;
+}
+const TRACK_LINE = {strength: 'Strength: twelve workouts over twelve weeks, with core, balance, and agility in every one.', cardio: 'Cardio: low impact intervals and steady work, with light strength, core, and balance.',
+  mixed: 'Mixed: strength on most days and one or two cardio days, spread through your week.', practice: 'Flow only: movement, breath, and stretch each day.'};
+// The program card in the Field Guide's Move: where you are, this phase, and the track.
+function progCard(){ if (!progOn()) return ''; const w = Math.max(1, progWeek(new Date())), ph = phaseId(w), p = arr(PROG().phases).find(x => x.id === ph) || {};
+  return `${newCard()}${againCard()}<div class="tn-card a-move tn-path"><div class="tn-k">My Program</div><h3>${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</h3><p class="tn-sub">${esc((PROG().tracks[progTrack()] || {}).name || {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'}[progTrack()])}${progTrack() === 'mixed' ? ', ' + (+H().set.cardioDays || 1) + ' cardio ' + ((+H().set.cardioDays || 1) === 1 ? 'day' : 'days') : ''}. ${esc(p.note || '')}</p>
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup">${ic('gear')}Change My Track</button></div></div>`; }
 const medMins = n => { const m = WK().meditation || {}, a = +m.start || 10, b = +m.end || 20, k = +m.buildWeeks || 8; return Math.max(a, Math.min(b, Math.round(a + (Math.max(1, n) - 1) * (b - a) / Math.max(1, k - 1)))); };
 const shortDate = d => d.toLocaleDateString(undefined, {weekday: 'short', month: 'short', day: 'numeric'});
 const logOf = d => { const h = H(), k = ymd(d); return h.log[k] = h.log[k] || {}; };
@@ -424,7 +515,15 @@ const isDone = (d, key) => !!(H().log[ymd(d)] || {})[key];
 function markDone(key, d){ const l = logOf(d || new Date()); l[key] = Date.now(); l.u = Date.now(); save(); }
 // Sunday dinner belongs to the coming food week: it is cooked on Sunday prep day, the day after shopping (BLD 846).
 function dinnerFor(d){ const n = d.getDay() === 0 ? foodWeek(d) : weekNo(d), app = APP(); if (n < 1 || !app || !app.dinners) return null; const w = (app.dinners.weeks || {})[letter(n)]; if (!w) return null; const x = arr(w.dinners).find(z => z.day === DOW[d.getDay()]); return x ? Object.assign({wk: letter(n)}, x) : null; }
-function sesFor(d){ const s = PUB() ? pubSesKey(d) : WMAP[d.getDay()], ss = (WK().sessions || {})[s]; return ss ? Object.assign({id: s}, ss) : null; }
+function sesFor(d){ const s = PUB() ? pubSesKey(d) : progOn() ? guideKey(d) : WMAP[d.getDay()], ss = sesById(s); return ss ? Object.assign({id: s}, ss) : null; }
+// BLD 892: a session by id, from this phase's sessions or, in public Tending, built for the phase it belongs to (a later week in Week).
+function sesById(id){ if (!id) return null; const ss = (WK().sessions || {})[id]; if (ss) return ss; return PUB() && progOn() ? pubPhaseSes(idPhase(id))[id] || null : null; }
+// "Build 2: Legs and Balance": a program workout's phase and place in its track, then its name.
+function sesLabel(id, x){ x = x || sesById(id) || {}; const t = x.title || 'Session ' + id; if (!progOn()) return t;
+  for (const ph of PH_IDS) for (const tr of ['strength', 'cardio']){ const i = trackIds(tr, ph).indexOf(id); if (i >= 0) return phName(ph) + ' ' + (i + 1) + ': ' + t; } return t; }
+// This phase's workouts, the person's own track first (Play Any, Move, and the Workouts shelf).
+function phaseSes(){ const all = WK().sessions || {}; if (!progOn()) return Object.entries(all); const ph = phaseId(Math.max(1, progWeek(new Date()))), tr = progTrack();
+  const ids = (tr === 'cardio' ? ['cardio', 'strength'] : ['strength', 'cardio']).flatMap(t => trackIds(t, ph)); return ids.map(id => [id, sesById(id)]).filter(x => x[1]); }
 const BAT = () => (APP() || {}).batches || null;
 function prepFor(kind, n){ if (kind === 'pack') return (BAT() || {}).pack || null; if (kind.indexOf('bulk-') === 0){ const b = arr((BAT() || {}).batches).find(x => x.id === kind.slice(5)); return b ? Object.assign({title: b.name}, b) : null; }
   return prepFor0(kind, n); }
@@ -450,9 +549,9 @@ function servesRow(o){ const N = o.base.N; return `<div class="hj-serves" role="
 function agenda(d){
   const out = [], dow = d.getDay(), n = weekNo(d), fw = foodWeek(d), ses = n >= 1 || dow !== 0 ? sesFor(d) : null;
   const track = H().set.track || 'strength', pr = practiceFor(d);
-  if (track !== 'strength' && pr) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Daily Practice', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Practice', did: true});
-  if (track !== 'practice' && ses && n >= 1) out.push({did: true, key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightWk(n) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
-  // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Daily Practice track gets it in the evening.
+  if (flowDaily() && pr) out.push({key: 'prac', k: 'prac', hour: 14.5, kick: 'After work', title: pr.title || 'Flow', sub: (pr.mins ? pr.mins + ' minutes. ' : '') + (pr.focus || ''), btn: 'Start Flow', did: true});
+  if (workOn() && ses && n >= 1) out.push({did: true, key: 'work:' + ses.id, k: 'work', v: ses.id, hour: 6.5, kick: 'Morning', title: ses.title || ('Session ' + ses.id), sub: (ses.mins ? ses.mins + ' minutes. ' : '') + (lightOn(d) ? 'A lighter week: ease off a little.' : (ses.lead || '')), btn: 'Start Workout'});
+  // Meditation for every track (Chris, October 24, 2026: "and off the meditations to her as well"): the Flow track gets it in the evening.
   if (track === 'practice' && MED()){ const m1 = medFor(d); out.push({did: true, key: 'med', k: 'med', hour: 20.5, kick: 'This evening', title: 'Meditation', sub: (m1 && m1.title ? m1.title + '. ' : '') + medMins(n) + ' minutes with a candle and calm music.', btn: 'Start'}); }
   // Seven days a week (Chris, October 24, 2026: "make them 7 days a week"); weekday mornings after the shower, weekend mornings too.
   const mf = medFor(d);
@@ -548,7 +647,7 @@ function vToday2(lib){
   const card = x => `<div class="hj-now"><div class="hj-kick">${esc(x.kick)}</div><h3>${esc(x.title)}</h3><p>${esc(x.sub || '')}</p>
       <button type="button" class="btn btn-gold hj-go" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.btn)}</button>${x.did ? `<button type="button" class="linkbtn hj-did" data-hja="toggle" data-hjv="${esc(x.key)}">I Did It on My Own</button>` : ''}</div>`;
   return `${hero(lib)}
-  ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n}${KIT() ? '' : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · a lighter week' : '')} · Food Week ${letter(n)}</p>`}
+  ${before ? `<p class="hj-note">Your plan starts ${esc(DOWL[s0.getDay()])}, ${esc(shortDate(s0))}. This weekend: shop Saturday and prep Sunday, and you are ready.</p>` : `<p class="hj-wk">Week ${n}${KIT() ? '' : progOn() ? (progLabel(d) ? ' · ' + esc(progLabel(d)) + (lightOn(d) ? ' · a lighter week' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · a lighter week' : '')} · Food Week ${letter(n)}</p>`}
   ${cur ? card(cur) : `<div class="hj-now done"><div class="hj-kick">Today</div><h3>Everything for today is done.</h3><p>Rest well. Tomorrow keeps growing.</p></div>`}
   ${vPlate()}
   ${remBlock(d)}
@@ -559,11 +658,11 @@ function vToday2(lib){
 }
 // Play anything, anytime (Chris, October 24, 2026: "give me access to the yoga set you made for kayti.. in case i want to incorporate these to my day").
 function playLib(){
-  const ses = Object.entries(WK().sessions || {}), pr = arr((PR() || {}).sessions), md = arr((MED() || {}).sessions);
+  const ses = phaseSes(), pr = arr((PR() || {}).sessions), md = arr((MED() || {}).sessions);
   const row = (key, t, sub) => `<li><button type="button" class="hj-pill move" data-hja="go" data-hjv="${esc(key)}"><b>${esc(t)}</b>${sub ? ` <small>${esc(sub)}</small>` : ''}</button></li>`;
   const block = (title, list) => list.length ? `<details class="hj-doc"><summary><span>${esc(title)}</span></summary><div class="hj-body"><ul class="hj-lib">${list.join('')}</ul></div></details>` : '';
-  return block('Play Any Workout', ses.map(([id, x]) => row('work:' + id, x.title || 'Session ' + id, (x.day || '') + (x.mins ? ', ' + x.mins + ' min' : ''))))
-    + block('Play Any Daily Practice', pr.map(x => row('pracid:' + x.id, x.title, (x.mins ? x.mins + ' min. ' : '') + (x.focus || ''))))
+  return block('Play Any Workout', ses.map(([id, x]) => row('work:' + id, sesLabel(id, x), (progOn() ? '' : x.day || '') + (x.mins ? (progOn() ? '' : ', ') + x.mins + ' min' : ''))))
+    + block('Play Any Flow', pr.map(x => row('pracid:' + x.id, x.title, (x.mins ? x.mins + ' min. ' : '') + (x.from ? x.from + '. ' : '') + (x.focus || ''))))
     + block('Play Any Meditation', md.map(x => row('medid:' + x.id, x.title, (x.day || '') + (x.focus ? '. ' + x.focus : ''))));
 }
 function ideasBlk(t, list, key){ return arr(list).length ? `<details class="hj-doc"${S.open['id:' + key] ? ' open' : ''} data-hjd="id:${key}"><summary><span>${esc(t)}</span></summary><div class="hj-body"><ul class="hj-ideas">${arr(list).map((x, i) => `<li><b>${esc(x.name)}</b>${x.mins ? ` <small>${esc(x.mins)} min</small>` : ''}<br><span>${esc(x.how || '')}</span>${nOk(x.nut) ? `<span class="hj-gi hj-nl">${nLine(x.nut)}${x.nut.per ? ' (' + esc(x.nut.per) + ')' : ''}</span>` : ''}
@@ -572,10 +671,10 @@ function ideasBlk(t, list, key){ return arr(list).length ? `<details class="hj-d
 function vWeek(){
   const d0 = new Date(), n0 = weekNo(d0), n = Math.max(1, n0 + (S.wkOff || 0)), mon = addD(startMon(), (n - 1) * 7), app = APP() || {}, din = app.dinners || {};
   const track = H().set.track || 'strength';
-  const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = dinnerFor(d), ses = track === 'practice' ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
+  const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = dinnerFor(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
     return `<div class="hj-day${isT ? ' t' : ''}"><div class="hj-dl"><b>${esc(DOW[d.getDay()])}</b><small>${esc(short(ymd(d)))}</small></div><div class="hj-dr">
       ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id)}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
-      ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(ses.title || 'Session ' + ses.id)}</button>` : ''}
+      ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(sesLabel(ses.id, ses))}</button>` : ''}
       ${d.getDay() === 3 && prepFor('wednesday', n) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="wednesday|${n}">Mini Prep</button>` : ''}
       ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${letter(n + 1)}</button>` : ''}
       ${d.getDay() === 0 && prepFor('sunday', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="sunday|${n + 1}">Sunday Together Prep</button>` : ''}
@@ -585,8 +684,8 @@ function vWeek(){
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
     </div></div>`; }).join('');
   const w = (din.weeks || {})[letter(n)] || {}, ideas = ideasBlk;
-  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${letter(n)}${KIT() ? '' : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
-  ${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
+  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${letter(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
+  ${newCard()}${againCard()}${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
   <div class="hj-blk hj-days">${rows}</div>
   ${remOn() ? `<div class="row" style="margin:-4px 0 14px"><button type="button" class="btn btn-line btn-sm" data-hja="remics">Add Reminders to My Phone Calendar</button><button type="button" class="linkbtn" data-hja="remwk">${H().set.remWk ? 'Show Reminders on This Week' : 'Keep Reminders on Today Only'}</button></div>` : ''}
   ${wbNote(w)}
@@ -653,8 +752,8 @@ function shopText(n){
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
 function buildWork(s){
-  const w = WK(), ses = (w.sessions || {})[s]; if (!ses) return null;
-  const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n));
+  const ses = sesById(s); if (!ses) return null;
+  const t0 = new Date(), steps = stepsFor(ses, phNum(t0), lightOn(t0));
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
@@ -895,6 +994,13 @@ const COACH_SRC = [
   {t: 'Quantity and Quality of Exercise for Developing and Maintaining Fitness in Healthy Adults (Position Stand, 2011)', who: 'American College of Sports Medicine, Garber and others', url: 'https://pubmed.ncbi.nlm.nih.gov/21694556/'},
   {t: 'Acute Effects of Muscle Stretching on Physical Performance, Range of Motion, and Injury Incidence in Healthy Active Individuals (2016)', who: 'Behm and others, Applied Physiology, Nutrition, and Metabolism', url: 'https://pubmed.ncbi.nlm.nih.gov/26642915/'},
   {t: 'Application of the Repetitions in Reserve Based Rating of Perceived Exertion Scale for Resistance Training (2016)', who: 'Helms and others, Strength and Conditioning Journal', url: 'https://doi.org/10.1519/SSC.0000000000000218'}];
+// BLD 892: a program workout's own credits (program.sources by track and phase) and a Flow session's (session.sources), drawn by
+// shared/gg-sources.js where the page loads it, else from the library's own source list.
+function progSrc(id){ const p = PROG(); if (!p || !p.sources) return []; for (const ph of PH_IDS) for (const tr of ['strength', 'cardio']) if (trackIds(tr, ph).includes(id)){ const x = (p.sources[tr] || {})[ph]; return arr(x); } return []; }
+function srcLine(ids){ ids = arr(ids).filter(Boolean); if (!ids.length) return '';
+  try { if (window.GGSources && GGSources.line){ const h = GGSources.line(ids); if (h) return `<div class="hj-src">${h}</div>`; } } catch(e){}
+  const L = arr((PLIB() || {}).sources), xs = ids.map(i => L.find(x => x && x.id === i)).filter(Boolean); if (!xs.length) return '';
+  return `<p class="hj-src">${xs.length > 1 ? 'Sources' : 'Source'}: ${xs.map(x => `<a href="${esc(x.url || '')}" target="_blank" rel="noopener">${esc(x.t || '')}</a>${x.who ? ', ' + esc(x.who) : ''}`).join('; ')}</p>`; }
 const coachSrc = () => `<p class="hj-src">Sources: ${COACH_SRC.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>, ${esc(x.who)}`).join('; ')}</p>`;
 // Feel it, Easier, Harder: shown on the card and in the rest (BLD 891).
 const modsBlock = (st, only) => { const f = !only || only.includes('feel'), e = !only || only.includes('easier'), h = !only || only.includes('harder');
@@ -939,11 +1045,12 @@ function candle(){ return `<div class="hj-candle" aria-hidden="true"><svg viewBo
   <line x1="60" y1="74" x2="60" y2="84" stroke="#3A2C1E" stroke-width="3" stroke-linecap="round"/><rect x="38" y="84" width="44" height="100" rx="8" fill="#F2ECE0" stroke="#D9CBB2" stroke-width="2"/><rect x="26" y="184" width="68" height="8" rx="4" fill="#B99B6B"/></svg></div>`; }
 // Andrew's kitchen: a simple pot with steam for the stage.
 const POT = `<svg viewBox="0 0 240 240" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M52 118h136v54a28 28 0 0 1-28 28H80a28 28 0 0 1-28-28z"/><path d="M40 118h160M52 132H30M188 132h22"/><path class="hj-steam" d="M92 96c-10-12 10-20 0-34M120 96c-10-12 10-20 0-34M148 96c-10-12 10-20 0-34" opacity=".55"/></g></svg>`;
-function practiceFor(d){ const p = PR(); if (!p || !arr(p.sessions).length) return null; const s = p.sessions[(d.getDay() + 6) % 7 % p.sessions.length]; return s; }
+// BLD 892: the day's Flow rotates through the daily sessions only (p1 to p7, style daily), so the new Flow sessions leave the weekday order as it was.
+function practiceFor(d){ const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
 function buildPractice(s){
   const p = PR(), ss = arr(p && p.sessions).find(x => x.id === s) || practiceFor(new Date()); if (!ss) return null;
-  const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Practice', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
-  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Daily Practice', lead: ss.focus || '', mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, music: '/audio/music/calm-' + (1 + (new Date().getDay() % 7)) + '.mp3', key: 'prac'};
+  const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
+  return {k: 'work', prac: true, s: ss.id, title: ss.title || 'Flow', lead: ss.focus || '', from: ss.from || '', sources: arr(ss.sources), mins: ss.mins, steps, i: 0, set: 1, done: [], stage: 'start', voice: AVA, music: '/audio/music/calm-' + (1 + (new Date().getDay() % 7)) + '.mp3', key: 'prac'};
 }
 // Every line, for recording and for tests.
 function allLines(){
@@ -979,6 +1086,16 @@ function allLinesPub(){
       else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); })); });
   if (P) ['root', 'rise', 'thrive'].forEach(lv => ['home', 'light', 'gym'].forEach(pl => [20, 40, 60].forEach(m => { const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl, mins: m, warmup: L.warmup, cooldown: L.cooldown}); sesLines(b.sessions, b); })));
+  // BLD 892: every track and phase at every level and length, for the old places and the usual equipment sets (a set not listed
+  // here still plays; any line it alone needs uses the device voice). Then every move's own lines, whatever set picks it.
+  if (P && L.program && L.program.tracks){
+    const G = P.GEAR || [], sets = [null, [], ['dumbbells'], ['bands'], ['bar'], ['step'], ['bench'], ['cardio'], ['dumbbells', 'bands'], ['dumbbells', 'bench'], ['dumbbells', 'bands', 'bench'], ['dumbbells', 'bands', 'step'],
+      ['dumbbells', 'bands', 'bar', 'dip', 'bench', 'step'], ['bands', 'bar'], ['dumbbells', 'bar'], G];
+    ['strength', 'cardio'].forEach(tr => PH_IDS.forEach(ph => { if (!L.program.tracks[tr] || !L.program.tracks[tr][ph]) return;
+      ['root', 'rise', 'thrive'].forEach(lv => [20, 40, 60].forEach(m => sets.forEach(g => (g ? [null] : ['home', 'light', 'gym']).forEach(pl => {
+        const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl || 'home', gear: g || undefined, mins: m, warmup: L.warmup, cooldown: L.cooldown, track: tr, phase: ph, program: L.program}); sesLines(b.sessions, b); })))); }));
+    arr(L.moves).forEach(mv => { add(AVA, mv.cue); arr(mv.tips).slice(0, 2).forEach(t => add(AVA, t)); if (mv.easier) add(AVA, LN.hard(mv)); if (mv.harder) add(AVA, LN.easy(mv)); });
+  }
   const G = L.gentle || {}, walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
@@ -1193,16 +1310,17 @@ function vStart(o, top){
   const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
   const kit = !o.med && !o.prac && PUB() ? [...new Set(moves.map(m => m.equip).filter(Boolean))] : o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
   const st0 = o.steps.find(s => s.t === 'ex') || o.steps[0], lt = !o.prac && lightLine('start');
-  return `${top(o.title, o.med ? 'Daily Meditation' : o.prac ? 'Daily Practice' : 'Today\'s Session', null)}${stagePanel(stState(o), {fig: o.med ? candle() : moveFig(st0)})}<div class="hj-ovb">
-    <div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
+  const pl = !o.prac && !o.med && progOn() ? progLabel(new Date()) : '';
+  return `${top(o.title, o.med ? 'Daily Meditation' : o.prac ? 'Flow' : 'Today\'s Session', null)}${stagePanel(stState(o), {fig: o.med ? candle() : moveFig(st0)})}<div class="hj-ovb">
+    ${pl ? `<p class="hj-prog">${esc(pl)}</p>` : ''}${o.prac && o.from ? `<p class="hj-from">${esc(o.from)}</p>` : ''}<div class="hj-big2" style="margin-top:6px">${esc(String(mins))} minutes</div>
     <p class="hj-sub">${o.prac ? esc(o.lead || '') : `${moves.length} moves, with a warm-up and a cooldown, and a rest between moves.`}${kit.length ? ' Have ready: ' + esc(kit.join(', ')) + '.' : ''}</p>
     ${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
     ${toggles(o)}
     ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
-    <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Practice' : 'Session'}</button>
+    <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
-    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.prac || o.med ? '' : coachSrc()}</div></details></div>`;
+    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(progSrc(o.s))}</div></details></div>`;
 }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
   return `${stagePanel('done', {fig: o.med ? candle() : ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
@@ -1211,7 +1329,7 @@ function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.pr
     <button type="button" class="btn btn-gold hj-go" data-hja="wsave">Save</button></div>`; }
 function vAuto(o, top){
   const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
-  if (o.fin || !st) return `${top(o.title, o.prac ? 'Practice complete' : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
+  if (o.fin || !st) return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
   const state = stState(o), left = o.run ? Math.max(0, o.end - Date.now()) : 0, ring = o.run && (o.rest || o.between || o.sw) ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : {};
   const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : null;
   const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
@@ -1485,7 +1603,7 @@ function vPlate(mode){
         <button type="button" class="btn btn-gold btn-sm" data-hja="eatown">Save to My Foods and Add</button></div></details></div>${lite ? '</details>' : ''}
     ${lite ? `<button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="plate" style="margin-top:12px">${ic('plate')}My Plate, Supplements, and 7 Days</button>` : `<div class="hj-eh hj-ckh">Daily Checklist</div>
     ${ckRow('Movement', [cb('move', ses ? ses.title || 'Today\'s workout' : 'Movement today', 'Checks itself when the workout finishes')])}
-    ${ckRow('Stillness', [cb('still', 'Meditation and the Daily Practice', 'Checks itself when one finishes')])}
+    ${ckRow('Stillness', [cb('still', 'Meditation and Flow', 'Checks itself when one finishes')])}
     ${ckRow('Morning', sp.filter(s => s.when !== 'evening').map(s => cb(suppId(s), s.name, s.note)))}
     ${ckRow('Evening', sp.filter(s => s.when === 'evening').map(s => cb(suppId(s), s.name, s.note)))}
     <details class="hj-doc hj-sps"${S.open['supps'] ? ' open' : ''} data-hjd="supps"><summary><span>My Supplements</span></summary><div class="hj-body">
@@ -1532,7 +1650,7 @@ function vSetup(){
   return `<div class="hj-blk" id="hj-form">${kick('My Goals')}<h3>Make this plan your own</h3>
     <p class="hj-sub">A few answers shape what you see. Everything stays on this device.</p>
     ${MINE_ANY() && MINE_ANY().who ? `<p class="hj-sub" style="margin:6px 0"><b>Whose phone is this?</b></p><div class="hj-chips">${['Chris', 'Kayti', 'Someone else'].map(w => `<button type="button" class="chip${(s.who || '') === w ? ' on' : ''}" aria-pressed="${(s.who || '') === w}" data-hja="who" data-hjv="${w}">${w}</button>`).join('')}</div>` : ''}
-    <p class="hj-sub" style="margin:6px 0"><b>My training</b></p><div class="hj-chips">${[['strength', 'Strength and Heart, with a coach'], ['practice', 'Daily Practice: movement, breath, stillness'], ['both', 'Both']].map(([k, l]) => `<button type="button" class="chip${(s.track || 'strength') === k ? ' on' : ''}" aria-pressed="${(s.track || 'strength') === k}" data-hja="track" data-hjv="${k}">${l}</button>`).join('')}</div>
+    <p class="hj-sub" style="margin:6px 0"><b>My training</b></p>${trackChips(s)}
     <label class="hj-fld"><span>My plan starts on (a Monday)</span><input type="date" data-hjs="start" value="${esc(s.start || '')}"></label>
     <label class="hj-fld"><span>People who eat at home</span><input type="number" min="1" max="12" inputmode="numeric" data-hjs="household" value="${esc(s.household)}"></label>
     <p class="hj-sub" style="margin:12px 0 6px"><b>What are you growing toward?</b></p>
@@ -1556,7 +1674,7 @@ const TEND_DEF = {
     private: 'Everything stays on this device. Your tree sees only what you choose to share.'},
   choose: [
     {id: 'food', name: 'Food', line: 'Today\'s Plate, meals, and dinners with a calm voice guiding the kitchen.', part: 'Leaves'},
-    {id: 'move', name: 'Movement', line: 'Workouts and the Daily Practice, with a calm voice coaching.', part: 'Leaves'},
+    {id: 'move', name: 'Movement', line: 'Workouts and Flow, with a calm voice coaching.', part: 'Leaves'},
     {id: 'mind', name: 'Meditation and Mindfulness', line: 'Breath, stillness, and mindful moments through the day.', part: 'Bark'},
     {id: 'spirit', name: 'Prayer or Sacred Practice', line: 'In your own tradition, or quiet reflection. Offered, always your choice.', part: 'Roots'},
     {id: 'supps', name: 'Supplements', line: 'Morning and evening checks for what you take, and when.', part: 'Leaves'},
@@ -2019,14 +2137,14 @@ function actRecipes(a, v){
   return false;
 }
 function vMove(){
-  const d = new Date(), h = H(), ses = Object.entries(WK().sessions || {}), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
+  const d = new Date(), h = H(), ses = phaseSes(), pr = arr((PR() || {}).sessions), md = U('mind') ? arr((MED() || {}).sessions) : [], n = Math.max(1, weekNo(d));
   const ag = agenda(d).filter(x => partOf(x) === 'move').map(x => Object.assign({done: isDone(d, x.key)}, x));
   const tile = (key, sc, kick, title, sub, cls) => `<button type="button" class="tn-card tn-lift tn-kc ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${scene(sc, sc === 'work' ? 7.5 : 16.8, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span><span class="tn-meta">${esc(sub)}</span></span></button>`;
   const lifts = Object.entries(h.lifts || {}).filter(([, v]) => v);
-  return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and the Daily Practice, with a calm voice coaching. Play any of them, any day.')}${PUB() ? pubMoveHead() : ''}
+  return `<div class="tn-sec a-move">${secHead('move', 'a-move', 'Move', 'Workouts and Flow, with a calm voice coaching. Play any of them, any day.')}${PUB() ? pubMoveHead() : progCard()}
     ${ag.length ? `<div class="tn-kgrid">${ag.map(x => planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: 'Today · ' + x.kick, title: x.title, sub: x.sub, btn: x.k === 'mark' ? '' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, x.k === 'mark' ? x.btn : 'Done')})).join('')}</div>` : ''}
-    ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightWk(n) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>` : ''}
-    ${pr.length ? `<h3 class="tn-h3">Daily Practice</h3><div class="tn-kgrid">${pr.map(x => tile('pracid:' + x.id, 'practice', x.mins ? x.mins + ' min' : 'Practice', x.title, x.focus || '', 'a-move')).join('')}</div>` : ''}
+    ${ses.length ? `<h3 class="tn-h3">Workouts</h3><div class="tn-kgrid">${ses.map(([id, x]) => tile('work:' + id, 'work', (progOn() ? sesKick(id) : x.day || 'Session ' + id) + (x.mins ? ' · ' + x.mins + ' min' : ''), x.title || 'Session ' + id, lightOn(d) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>` : ''}
+    ${flowShelf(pr, x => tile('pracid:' + x.id, 'practice', flowKick(x), x.title, x.focus || '', 'a-move'))}
     ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map(x => tile('medid:' + x.id, 'practice', (x.day || '') + ' · ' + medMins(n) + ' min', x.title, x.focus || '', 'p-bark')).join('')}</div>` : ''}
     ${h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 8).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : ''}
     ${lifts.length ? `<div class="hj-blk">${kick('My Weights')}<ul class="hj-ms">${lifts.map(([id, v]) => `<li><b>${esc(String(id).replace(/[-_]/g, ' '))}</b><small>${esc(v)}${/^\d+(\.\d+)?$/.test(String(v)) ? ' lb' : ''}</small></li>`).join('')}</ul></div>` : ''}</div>`;
@@ -2305,10 +2423,21 @@ function act(a, v){
     case 'setup-cancel': S.setup = false; S.set = null; rerender(false); return;
     case 'whoq': h.set.who = v; if (v === 'Kayti' && !h.set.track) h.set.track = 'practice'; h.set.u = Date.now(); save(); toast('Saved.'); rerender(false); return;
     case 'who': if (S.set){ S.set.who = v; if (v === 'Kayti' && !S.set.trackSet) S.set.track = 'practice'; } rerender(true); return;
-    case 'track': if (S.set){ S.set.track = v; S.set.trackSet = true; } rerender(true); return;
+    case 'track': if (S.set){ if (S.set.track === 'both' && v !== 'practice') S.set.flow = true; S.set.track = v; S.set.trackSet = true; } rerender(true); return;
+    case 'cardiodays': if (S.set) S.set.cardioDays = +v === 2 ? 2 : 1; rerender(true); return;
+    case 'flowon': if (S.set){ S.set.flow = v === '1'; if (S.set.track === 'both'){ S.set.track = 'strength'; } } rerender(true); return;
+    case 'newok': markNew(); rerender(true); return;
+    case 'progup': case 'progkeep': { const up = a === 'progup' && PUB() ? {root: 'rise', rise: 'thrive', thrive: 'thrive'}[h.set.level || 'root'] : null;
+      if (up) h.set.level = up; h.set.progStart = ymd(monOf(new Date())); h.set.u = Date.now(); PA = null; save();
+      toast(up ? 'Week 1 of 12 at ' + LVL_NAME[up] + '. Here we grow.' : 'Week 1 of 12. Here we grow.'); rerender(true); return; }
+    case 'ptrack': { const t = ['strength', 'cardio', 'mixed'].includes(v) ? v : 'strength'; if (progTrack() !== t){ h.set.track = t; h.set.progStart = ymd(monOf(new Date())); h.set.u = Date.now(); PA = null; save(); toast('Your ' + {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'}[t] + ' track starts at Week 1.'); } rerender(true); return; }
+    case 'pcdays': h.set.cardioDays = +v === 2 ? 2 : 1; h.set.u = Date.now(); PA = null; save(); rerender(true); return;
     case 'goal': { const s = S.set; if (!s) return; s.goals = arr(s.goals); s.goals = s.goals.includes(v) ? s.goals.filter(x => x !== v) : s.goals.concat(v); rerender(true); return; }
     case 'setup-save': { const s = S.set || {}, hh = num(s.household);
-      const sd = parseD(s.start); h.set = Object.assign({}, h.set, {who: s.who || '', track: s.track || 'strength', start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
+      // BLD 892: the track (Strength, Cardio, Mixed, Flow only), Flow on the days, and the cardio days; a new track starts at Week 1.
+      const sd = parseD(s.start), was = h.set.u, tr0 = progTrack(), track = s.track || 'strength', tr1 = track === 'cardio' || track === 'mixed' ? track : 'strength';
+      h.set = Object.assign({}, h.set, {who: s.who || '', track, flow: track !== 'practice' && !!s.flow, cardioDays: +s.cardioDays === 2 ? 2 : 1, start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
+      if (was && tr1 !== tr0 && PROG()) h.set.progStart = ymd(monOf(new Date())); if (!was) markNew();
       save(); S.setup = false; S.set = null; if (S.sec !== 'numbers') S.sec = 'today'; S.ov = null; toast('Saved. Welcome to Tending.'); rerender(false); return; }
     case 'note': { const t = document.getElementById('hj-note'), text = String(t ? t.value : '').trim(); if (!text){ toast('Write a line first.'); return; }
       h.notes.push({id: uid(), date: today(), text: text.slice(0, 4000), u: Date.now()}); S.draft = ''; save(); toast('Saved to My Journey.'); rerender(true); return; }
@@ -2361,9 +2490,25 @@ function ideaOf(r){ if (!r) return null; const P = TP(); r = sizeUp(r);
     shop: P ? P.shopList({dinners: [Object.assign({}, r, {leftover: false})]}).map(x => ({name: x.name, amt: x.amt, sec: x.sec})) : []}; }
 // Workouts on the chosen days: the sessions rotate A, B, C, D across the weeks.
 const pubDays = () => DAYSETS[+H().set.days] || DAYSETS[3];
-function pubSesKey(d){ const dd = pubDays(), k = dd.indexOf(d.getDay()); if (k < 0) return null; const keys = Object.keys(WK().sessions || {}).slice(0, 4); if (!keys.length) return null;
+function pubSesKey(d){ const dd = pubDays(), k = dd.indexOf(d.getDay()); if (k < 0) return null; if (progOn()) return progKey(Math.max(1, progWeek(d)), k, dd.length); const keys = Object.keys(WK().sessions || {}).slice(0, 4); if (!keys.length) return null;
   const n = Math.max(1, weekNo(d)); return keys[((n - 1) * dd.length + k) % keys.length]; }
 let PA = null;
+// BLD 892: one phase's workouts for a level (Strength A to D, E to H, or I to L; Cardio R1 to R12), built from the checked gear
+// (or the old saved place) for the person's minutes, cached until anything they rest on changes.
+let PPS = null;
+const gearOf = s => Array.isArray(s.gear) ? s.gear : undefined;
+const PLACE_GEAR = {home: [], light: ['dumbbells', 'bands'], gym: ['dumbbells', 'bands', 'bar', 'dip', 'step', 'bench', 'machines', 'cardio']};
+const gearNow = () => { const s = H().set; return Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []; };
+function pubPhaseSes(ph, lvl){
+  const L = PLIB(), P = TP(), s = H().set; if (!L || !P || !L.program) return {}; lvl = lvl || s.level || 'root'; if (lvl === 'gentle') return {};
+  const tr = progTrack(), sig = JSON.stringify([lvl, s.place, s.gear, s.mins, tr, ph]);
+  if (!PPS || PPS.L !== L) PPS = {L, c: {}}; if (PPS.c[sig]) return PPS.c[sig];
+  const out = {};
+  (tr === 'cardio' ? ['cardio', 'strength'] : ['strength', 'cardio']).forEach(t => { if (!trackIds(t, ph).length) return;
+    const b = P.buildSessions(L.moves, L.templates, {level: lvl, place: s.place || 'home', gear: gearOf(s), mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown, track: t, phase: ph, program: L.program});
+    'ABCD'.split('').forEach((d, i) => { const x = b.sessions[d]; if (x) out[(t === 'cardio' ? CAR_IDS : STR_IDS)[ph][i]] = x; }); });
+  return PPS.c[sig] = out;
+}
 // Gentle: its own sessions, with the walk growing week by week (shared with BLD 881's every-level Workouts shelf).
 function gentleWo(L, wk){
   const G = L.gentle || {}, walk = arr(G.walkWeeks), wm = (walk.find(x => +x.week === Math.min(wk, walk.length)) || walk[walk.length - 1] || {}).mins;
@@ -2375,7 +2520,7 @@ function gentleWo(L, wk){
 function pubApp(){
   const L = PLIB(), h = H(), P = TP(); if (!L || !h) return null;
   const s = h.set, wk = Math.max(1, weekNo(new Date())), plan = P ? ensurePlan() : null;
-  const sig = JSON.stringify([s.level, s.place, s.mins, s.days, s.goals, s.weightLb, s.teen, TEEN(), plan && plan.u, plan && plan.n, wk, s.house]);
+  const sig = JSON.stringify([s.level, s.place, s.mins, s.days, s.goals, s.weightLb, s.teen, TEEN(), plan && plan.u, plan && plan.n, wk, s.house, s.gear, s.track, s.cardioDays, s.progStart, progOn() ? phaseId(Math.max(1, progWeek(new Date()))) : '']);
   if (PA && PA.L === L && PA.sig === sig) return PA.app;
   const app = Object.assign({}, L.app || {}), lvl = s.level || 'root';
   // Targets: the strictest of each across the chosen goals; protein by body weight when it is known (never for anyone under 18).
@@ -2384,8 +2529,13 @@ function pubApp(){
   // Workouts.
   const wo = {meditation: Object.assign({start: 5, end: 12}, (L.app && L.app.workouts && L.app.workouts.meditation) || {}), motivation: arr(L.motivation)};
   if (lvl === 'gentle') Object.assign(wo, gentleWo(L, wk));
+  else if (P && L.program && L.program.tracks){
+    // BLD 892: this phase's workouts for the person's track (both tracks, their own first, so Play Any holds them all).
+    const ph = phaseId(Math.max(1, progWeek(new Date()))), b0 = P.buildSessions([], L.templates, {level: lvl, mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown});
+    Object.assign(wo, {sessions: pubPhaseSes(ph, lvl), warmup: b0.warmup, cooldown: b0.cooldown, program: L.program});
+  }
   else if (P){
-    const b = P.buildSessions(L.moves, L.templates, {level: lvl, place: s.place || 'home', mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown});
+    const b = P.buildSessions(L.moves, L.templates, {level: lvl, place: s.place || 'home', gear: gearOf(s), mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown});
     Object.assign(wo, {sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown});
   }
   app.workouts = wo;
@@ -2413,7 +2563,8 @@ function ckDraft(){
   if (S.ck) return S.ck; const s = H().set;
   const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: arr(s.goals).slice(), needs: arr(s.needs).slice(),
     allergies: s.allergies || '', house: JSON.parse(JSON.stringify(s.house || {adults: 1, kids: []})), check: Object.assign({}, s.check || {}), cleared: !!s.cleared,
-    level: s.level || '', place: s.place || 'home', mins: +s.mins || 20, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
+    level: s.level || '', place: s.place || 'home', mins: +s.mins || 20, gear: (Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []).slice(), gearSet: Array.isArray(s.gear),
+    track: s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength', cardioDays: +s.cardioDays === 2 ? 2 : 1, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
     lab: {date: today()}};
   return S.ck = {i: 0, d};
 }
@@ -2452,7 +2603,12 @@ function vCheck(){
     body = `<h3>Your movement path</h3>${yesHold ? `<p class="hj-note">${esc(K.yes || '')} ${esc(K.yesMore || '')}</p>` : ''}
     <p class="hj-sub" style="margin:6px 0"><b>Level</b></p>${chips('level', LVL.filter(([v]) => !yesHold || v === 'gentle').map(([v, l]) => [v, l]))}
     ${d.level ? `<p class="hj-sub">${esc(d.level === 'gentle' ? (L.gentle || {}).lead || '' : (T.levelLines || {})[d.level] || '')}</p>` : ''}
-    ${d.level && d.level !== 'gentle' ? `<p class="hj-sub" style="margin:10px 0 6px"><b>Where you move</b></p>${chips('place', PLACE)}${(T.placeLines || {})[d.place] ? `<p class="hj-sub">${esc(T.placeLines[d.place])}</p>` : ''}
+    ${d.level && d.level !== 'gentle' ? `${L.program && L.program.gear ? `<p class="hj-sub" style="margin:10px 0 6px"><b>My equipment</b></p><p class="hj-sub">Check what you have. Every workout uses just that.</p>
+      <div class="hj-chips tn-gear" role="group" aria-label="My equipment">${arr(L.program.gear).map(g => { const on = arr(d.gear).includes(g.id); return `<button type="button" class="chip tn-ckc${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckgear" data-hjv="${esc(g.id)}">${esc(g.name)}<small>${esc(g.line || '')}</small></button>`; }).join('')}</div>
+      ${arr(d.gear).length ? '' : `<p class="hj-sub">${esc(L.program.gearNone || 'Nothing checked? Every workout uses your body weight, a sturdy chair, a wall, and a mat.')}</p>`}
+      ${hasCardio() ? `<p class="hj-sub" style="margin:10px 0 6px"><b>My track</b></p>${chips('track', [['strength', 'Strength'], ['cardio', 'Cardio'], ['mixed', 'Mixed']])}<p class="hj-sub">${esc(TRACK_LINE[d.track] || '')} Switch anytime.</p>
+        ${d.track === 'mixed' ? chips('cardioDays', [[1, '1 Cardio Day'], [2, '2 Cardio Days']]) : ''}` : ''}`
+      : `<p class="hj-sub" style="margin:10px 0 6px"><b>Where you move</b></p>${chips('place', PLACE)}${(T.placeLines || {})[d.place] ? `<p class="hj-sub">${esc(T.placeLines[d.place])}</p>` : ''}`}
       <p class="hj-sub" style="margin:10px 0 6px"><b>Minutes</b></p>${chips('mins', [[20, '20 Minutes'], [40, '40 Minutes'], [60, '60 Minutes']])}` : ''}
     <p class="hj-sub" style="margin:10px 0 6px"><b>Days a week</b></p>${chips('days', [2, 3, 4, 5, 6].map(n => [n, n + ' Days']))}
     ${yesHold ? `<button type="button" class="btn btn-line btn-sm" data-hja="ckteam">Add My Plan from My Team</button>` : ''}`; }
@@ -2472,15 +2628,19 @@ function vCheck(){
 function ckSave(){
   const h = H(), d = S.ck.d, L = PLIB() || {}, anyYes = arr((L.check || {}).questions).some(q => d.check[q.id] === true);
   const kids = arr(d.house.kids).filter(k => k && k.band).map(k => ({id: k.id || uid(), name: String(k.name || '').trim().slice(0, 40), band: k.band, sex: k.sex || ''}));
-  const was = h.set.pubDone;
+  const was = h.set.pubDone, tr0 = progTrack();
   h.set = Object.assign({}, h.set, {who: d.who, teen: !C.age && d.teen === true, use: PART_IDS.filter(x => arr(d.use).includes(x)), goals: arr(d.goals).length ? d.goals : ['well'], needs: arr(d.needs),
     allergies: String(d.allergies || '').slice(0, 200), house: {adults: Math.max(1, Math.min(12, Math.round(+((d.house || {}).adults) || 1))), kids: d.who === 'family' ? kids : []},
     check: d.check, checkYes: anyYes, cleared: !!d.cleared, level: d.level || (anyYes && !d.cleared ? 'gentle' : 'root'), place: d.place || 'home', mins: +d.mins || 20, days: +d.days || 3,
+    gear: L.program && (d.gearSet || !was) ? arr(d.gear).slice() : h.set.gear, track: d.track || 'strength', cardioDays: +d.cardioDays === 2 ? 2 : 1,
     weightLb: TEEN() || d.teen ? '' : (num(d.weightLb) || ''), goalLdl: num(d.goalLdl) || '', pubDone: 1, u: Date.now()});
   if (anyYes && !d.cleared) h.set.level = 'gentle';
   h.set.household = h.set.house.adults + h.set.house.kids.length;
   if (!h.set.start) h.set.start = ymd(monOf(new Date()));
   if (!was) h.set.remOff = true;
+  // BLD 892: a new track starts the program at Week 1; a new plan starts with What's New already seen.
+  if (was && L.program && (d.track || 'strength') !== tr0) h.set.progStart = ymd(monOf(new Date()));
+  if (h.set.gear === undefined) delete h.set.gear; if (!was) markNew();
   const lab = d.lab || {}, rec = {id: uid(), date: /^\d{4}-\d{2}-\d{2}$/.test(String(lab.date || '')) ? lab.date : today(), u: Date.now()};
   ['ldl', 'hdl', 'total', 'trig'].forEach(k => { const n = num(lab[k]); if (n != null) rec[k] = n; });
   if (Object.keys(rec).length > 3) h.labs.push(rec);
@@ -2510,8 +2670,13 @@ const bandName = id => (arr(((PLIB() || {}).kids || {}).ages).find(a => a.id ===
 // ---------- the Move section head: the path, the Gentle lead, and My Plan from My Team ----------
 function pubMoveHead(){
   const L = PLIB() || {}, s = H().set, T = L.templates || {}, G = L.gentle || {}, lvl = s.level || 'root', K = L.check || {};
-  const path = lvl === 'gentle' ? 'Gentle' : [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], (PLACE.find(x => x[0] === s.place) || [, 'Home'])[1], (+s.mins || 20) + ' Minutes'].join(' · ');
-  return `<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3><p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}</p>
+  const prog = progOn(), tr = progTrack(), TN = {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'};
+  const path = lvl === 'gentle' ? 'Gentle' : prog ? [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], TN[tr], (+s.mins || 20) + ' Minutes'].join(' · ') : [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], (PLACE.find(x => x[0] === s.place) || [, 'Home'])[1], (+s.mins || 20) + ' Minutes'].join(' · ');
+  const w = Math.max(1, progWeek(new Date())), ph = arr((L.program || {}).phases).find(x => x.id === phaseId(w)) || {};
+  const g = gearNow(), gl = g.length ? 'Equipment: ' + g.map(id => (arr((L.program || {}).gear).find(x => x.id === id) || {name: id}).name).join(', ') + '.' : 'Equipment: your body weight, a sturdy chair, a wall, and a mat.';
+  const tchip = (v, l, on, act) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act || 'ptrack'}" data-hjv="${v}">${esc(l)}</button>`;
+  return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}${prog && ph.note ? ' ' + esc(ph.note) : ''}</p>
+    ${prog ? `<p class="tn-sub">${esc(gl)}</p>${hasCardio() ? `<div class="hj-chips" role="group" aria-label="Track">${['strength', 'cardio', 'mixed'].map(v => tchip(v, TN[v], tr === v)).join('')}</div>${tr === 'mixed' ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}` : ''}` : ''}
     ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div>
     ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}</div>`;
@@ -2707,6 +2872,7 @@ function actPub(a, v){
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
       rerender(true); return true; }
+    case 'ckgear': { const d = ckDraft().d; d.gear = arr(d.gear); d.gear = d.gear.includes(v) ? d.gear.filter(x => x !== v) : d.gear.concat(v); d.gearSet = true; rerender(true); return true; }
     case 'ckq': { const [q, val] = v.split('|'), d = ckDraft().d; d.check[q] = val === 'true'; rerender(true); return true; }
     case 'ckkid': { const [j, f, val] = v.split('|'), d = ckDraft().d, K = d.house.kids = arr(d.house.kids);
       if (f === 'add') K.push({id: uid(), name: '', band: '', sex: ''}); else if (f === 'remove') K.splice(+j, 1); else if (K[+j]) K[+j][f] = val; rerender(true); return true; }
@@ -2863,31 +3029,32 @@ const artCard = (i, key, kick, title, sub, cls, set) => `<button type="button" c
 let LS = null;
 function levelSets(){
   const L = PLIB(), P = TP(), w = WK();
-  if (!PUB() || !L){ const ses = w.sessions || {}; return Object.keys(ses).length ? [{id: 'mine', name: 'My Workouts', mine: true, sessions: ses, warmup: w.warmup, cooldown: w.cooldown}] : []; }
-  const s = H().set, wk = Math.max(1, weekNo(new Date())), cur = s.level || 'root', sig = JSON.stringify([s.place, s.mins, cur, wk]);
+  if (!PUB() || !L){ const ses = progOn() ? Object.fromEntries(phaseSes()) : w.sessions || {}; return Object.keys(ses).length ? [{id: 'mine', name: 'My Workouts', mine: true, sessions: ses, warmup: w.warmup, cooldown: w.cooldown}] : []; }
+  const s = H().set, wk = Math.max(1, weekNo(new Date())), cur = s.level || 'root', ph = L.program ? phaseId(Math.max(1, progWeek(new Date()))) : '', sig = JSON.stringify([s.place, s.gear, s.mins, cur, wk, s.track, s.progStart, ph]);
   if (LS && LS.L === L && LS.sig === sig) return LS.list;
   const list = [];
   LVL.forEach(([id, name]) => {
     if (id === cur) list.unshift({id, name, mine: true, sessions: w.sessions || {}, warmup: w.warmup, cooldown: w.cooldown});
     else if (id === 'gentle') list.push(Object.assign({id, name}, gentleWo(L, wk)));
-    else if (P){ const b = P.buildSessions(L.moves, L.templates, {level: id, place: s.place || 'home', mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown}); list.push({id, name, sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown}); }
+    else if (P && L.program && L.program.tracks){ const b0 = P.buildSessions([], L.templates, {level: id, mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown}); list.push({id, name, sessions: pubPhaseSes(ph, id), warmup: b0.warmup, cooldown: b0.cooldown}); }
+    else if (P){ const b = P.buildSessions(L.moves, L.templates, {level: id, place: s.place || 'home', gear: gearOf(s), mins: +s.mins || 20, warmup: L.warmup, cooldown: L.cooldown}); list.push({id, name, sessions: b.sessions, warmup: b.warmup, cooldown: b.cooldown}); }
   });
   LS = {L, sig, list}; return list;
 }
 function buildLevelWork(lvl, id){
   const L = levelSets().find(x => x.id === lvl), ses = L && (L.sessions || {})[id]; if (!ses) return null;
   if (L.mine) return buildWork(id);
-  const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n), L);
+  const t0 = new Date(), steps = stepsFor(ses, phNum(t0), lightOn(t0), L);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 function vWorkouts(){
   const h = H(), n = Math.max(1, weekNo(new Date())), sets = levelSets(), pr = arr((PR() || {}).sessions); let i = 0;
   const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
-    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightWk(n) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>`; }).join('');
-  const prac = pr.length ? `<h3 class="tn-h3">Daily Practice</h3><div class="tn-kgrid">${pr.map(x => artCard(i++, 'pracid:' + x.id, x.mins ? x.mins + ' min' : 'Practice', x.title, x.focus || '', 'a-move')).join('')}</div>` : '';
+    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>`; }).join('');
+  const prac = flowShelf(pr, x => artCard(i++, 'pracid:' + x.id, flowKick(x), x.title, x.focus || '', 'a-move'));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : '';
-  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : ''}${lv}${prac}${recent}</div>`;
+  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${prac}${recent}</div>`;
 }
 function vQuietShelf(){
   const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;
@@ -2971,13 +3138,13 @@ function apiWeek(n){
   const off = Math.round(+n || 0), t0 = day0(new Date()), mon = addD(monOf(t0), off * 7), N = weekNo(mon), track = h.set.track || 'strength';
   const fw = off === 0 ? foodWeek(t0) : Math.max(1, N);
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
-    const ses = U('move') && track !== 'practice' && wn >= 1 ? sesFor(d) : null, pr = U('move') && track !== 'strength' && !ses ? practiceFor(d) : null;
+    const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses ? practiceFor(d) : null;
     const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
     return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0),
       dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(ITEM_ART.cook)} : null,
-      move: ses ? {title: ses.title || 'Session ' + ses.id, key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id)} : pr ? {title: pr.title || 'Daily Practice', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice)} : null}; });
+      move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id)} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice)} : null}; });
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
-  return {n: Math.max(1, N), label: 'Week ' + Math.max(1, N), start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+  return {n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
     shopImage: WAY(ITEM_ART.shop), prepImage: sp ? WAY(ITEM_ART.prep) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
@@ -2997,6 +3164,28 @@ function apiRender(el, section, opts){
 function apiCounts(){
   if (!FLDH() || !H()) return {recipes: 0, workouts: 0, meditations: 0, practices: 0};
   return {recipes: recipesAll().length, workouts: levelSets().reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0), meditations: arr((MED() || {}).sessions).length, practices: arr((PR() || {}).sessions).length};
+}
+// BLD 892, one card, two credits (shared/gg-fills.js): what a Today item plays, and every guided session the Home can offer
+// as Play a Guided One. Each is {key (for act), done (the log key its finish writes), kind, id, title, style, mins}.
+// A workout is cardio when its session says track 'cardio' (or its id is R1 to R12), otherwise strength.
+const wkKind = (id, ses) => (ses && (ses.track === 'cardio' || ses.kind === 'cardio')) || /^R\d+$/i.test(String(id || '')) ? 'cardio' : 'strength';
+const fillMed = (x, key) => x ? {key, done: 'med', kind: 'meditation', id: x.id, title: x.title || '', style: '', mins: x.mins || null} : null;
+const fillPrac = (x, key) => x ? {key, done: 'prac', kind: 'flow', id: x.id, title: x.title || '', style: x.style || '', mins: x.mins || null} : null;
+function apiFill(key, date){
+  if (!FLDH() || !H()) return null; const [k, a, b] = String(key || '').split(':'), d = dayOf(date);
+  if (k === 'med') return fillMed(medFor(d), 'med');
+  if (k === 'medid') return fillMed(arr((MED() || {}).sessions).find(x => x.id === a), key);
+  if (k === 'prac') return fillPrac(practiceFor(d), 'prac');
+  if (k === 'pracid') return fillPrac(arr((PR() || {}).sessions).find(x => x.id === a), key);
+  if (k === 'work'){ const ses = (WK().sessions || {})[a]; return ses ? {key, done: key, kind: wkKind(a, ses), id: a, title: ses.title || 'Session ' + a, style: '', mins: ses.mins || null} : null; }
+  if (k === 'wl'){ const L = levelSets().find(x => x.id === a), ses = L && (L.sessions || {})[b]; return ses ? {key, done: key, kind: wkKind(b, ses), id: b, title: ses.title || 'Session ' + b, style: '', mins: ses.mins || null} : null; }
+  return null;
+}
+function apiGuided(){
+  if (!FLDH() || !H()) return [];
+  const out = arr((MED() || {}).sessions).map(x => fillMed(x, 'medid:' + x.id)).concat(arr((PR() || {}).sessions).map(x => fillPrac(x, 'pracid:' + x.id)));
+  Object.keys(WK().sessions || {}).forEach(id => { const f = apiFill('work:' + id); if (f) out.push(f); });
+  return out.filter(Boolean);
 }
 
 // ---------- events ----------
@@ -3634,6 +3823,13 @@ const CSS = `
 .hj-ov.hj-st.hj-inl{position:relative;inset:auto;z-index:auto;overflow:visible;border-radius:20px;padding:0 16px;}
 .tn-kc.tn-art .ill img,.tn-scene>img{width:100%;height:100%;object-fit:cover;display:block;}
 .tn-mine{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--c);margin-left:8px;}
+/* BLD 892: the program line, What's New, the restart offer, the equipment checklist, and the Flow shelf */
+.hj-prog{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15px;letter-spacing:1.2px;text-transform:uppercase;color:var(--c,#3F6F94);margin:2px 0 6px;}
+.hj-from{font-size:14px;color:var(--ink-soft);margin:-2px 0 6px;}
+.tn-new .tn-newl{margin:8px 0 12px;padding-left:20px;}.tn-new .tn-newl li{margin:4px 0;line-height:1.45;overflow-wrap:anywhere;}
+.tn-again h3{margin:4px 0 6px;font-size:22px;}
+.tn-gear .chip{text-align:left;max-width:100%;white-space:normal;}.tn-gear .chip small{display:block;font-weight:400;opacity:.8;}
+.tn-fst{margin:14px 2px 8px;font-size:15px;line-height:1.4;overflow-wrap:anywhere;}.tn-fst b{display:block;font-size:16px;}
 .tn-hhrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 4px;}
 .tn-bclosed{text-align:center;}.tn-bclosed .tn-btn{margin-top:10px;}
 .tn-notes{margin-top:12px;}
@@ -3643,6 +3839,11 @@ const CSS = `
 window.GGHealth = {
   init(ctx){ C = ctx || {}; keyVoice(); },
   on: () => !!FLDH(),
+  // BLD 892: What's New in Your Plan, once per device: news() -> {v, title, lines, label} or null; newsSeen() marks it seen.
+  news(){ try { if (!FLDH() || !H()) return null; const x = whatsNew(); return x ? {v: x.v, title: x.title || 'What\'s New in Your Plan', lines: arr(x.lines).slice(), label: progLabel(new Date())} : null; } catch(e){ return null; } },
+  newsSeen(){ markNew(); rerender(true); },
+  // BLD 892: the player's own clock for a session (seconds), for the workshop and tests: sessionSecs(id, '1'|'2'|'3', light).
+  sessionSecs(id, ph, light){ const ses = sesById(String(id || '')); return ses ? Math.round(sessSecs(ses, String(ph || phNum(new Date())), !!light)) : null; },
   view,
   open(sec){ S.sec = sec || 'today'; S.setup = false; if (C.go) C.go('health'); if (PUB()) rerender(false); },
   // BLD 866: what the Home shows. {on, ready, name, today: {checksDone, checksTotal}, plate: {sf, pro, fib, sug, na}, targets,
@@ -3676,6 +3877,8 @@ window.GGHealth = {
   // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
   act(a, v){ if (arguments.length < 2 && ITEM_RE.test(String(a || ''))) return apiAct(a); return act(a, v); },
   today: apiToday, toggle: apiToggle, week: apiWeek, render: apiRender, counts: apiCounts,
+  // BLD 892: fill(key, date) and guided() for one card, two credits on the Home's Today.
+  fill: apiFill, guided: apiGuided,
   state: S, allLines, LN,
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
   planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }

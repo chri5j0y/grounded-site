@@ -319,6 +319,145 @@ Object.assign(P, {
     k: [{t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]}, {t: [97, 97], h: 96, rl: [-83, -83, 12], ll: [-83, -83, 12]}]},
   'wall-slide': {v: 'f', bg: G.wall, d: 3.2, k: [{ra: [104, 176], la: [104, 176]}, {ra: [158, 172], la: [158, 172]}]}
 });
+// BLD 892: cardio, agility, and floor figures. A key may give an "at" list of target points
+// ({rA: [x, y, bend, foot], rH: [x, y, bend]}): solve() turns each into joint angles with the two bone
+// reach, so feet land on the floor and hands meet a point. bend is the side of the knee or elbow
+// (1 bends toward the right of the stage for a leg that hangs down). mir() mirrors a front view key.
+const MIR = {ra: 'la', la: 'ra', rl: 'll', ll: 'rl', rA: 'lA', lA: 'rA', rH: 'lH', lH: 'rH'};
+function mir(k){
+  const o = {};
+  for (const n in k){
+    const v = k[n];
+    if (n === 'at'){ o.at = {}; for (const e in v){ const q = v[e]; o.at[MIR[e]] = [240 - q[0], q[1], -q[2]].concat(q.length > 3 ? [-q[3]] : []); } }
+    else if (MIR[n]) o[MIR[n]] = Array.isArray(v) ? v.map(a => -a) : -v;
+    else if (n === 't') o.t = v.map(a => 360 - a);
+    else if (n === 'h') o.h = 360 - v;
+    else if (n === 'ax') o.ax = 240 - v;
+    else o[n] = v;
+  }
+  return o;
+}
+function solve(M){
+  M.k = M.k.map(k => {
+    if (!k.at) return k;
+    const o = Object.assign({}, k), at = o.at; delete o.at;
+    const J = place(M, poses(Object.assign({}, M, {k: [o]}))[0], null);
+    for (const e in at){
+      const q = typeof at[e] === 'function' ? at[e](J) : at[e], lb = LIMB[e], r = reach(J[lb[0]], [q[0], q[1]], lb[2], lb[3], q[2]);
+      const a = [ang(J[lb[0]], r[0]), ang(r[0], r[1])].map(r1), nm = e[0] + (e[1] === 'H' ? 'a' : 'l');
+      if (e[1] === 'A') a.push(q.length > 3 ? q[3] : M.v !== 's' && e[0] === 'l' && M.nm ? -90 : 90);
+      o[nm] = M.v !== 's' && !M.nm && e[0] === 'l' ? a.map(x => -x) : a;
+    }
+    return o;
+  });
+  return M;
+}
+// A stationary bike: saddle, frame, flywheel, crank, and handlebar, drawn as gear.
+G.bike = `<g ${GS}><rect x="84" y="128" width="32" height="7" rx="3.5" fill="currentColor" stroke="none"/>` +
+  '<path d="M102 134L124 182L170 190M166 192L158 104M150 102L170 100M124 182L106 210M170 190L180 210M94 210H118M166 210H194" stroke-width="6"/>' +
+  '<circle cx="172" cy="186" r="18" stroke-width="5"/><circle cx="128" cy="182" r="5" fill="currentColor" stroke="none"/></g>';
+const BIKE = {c: [128, 182], r: 15};
+const pedal = a => [r1(BIKE.c[0] + BIKE.r * Math.sin(a * RAD)), r1(BIKE.c[1] - BIKE.r * Math.cos(a * RAD))];
+const WO = {hand: [146, 205]};
+const woStand = {ax: 100, ay: 126};
+const woSquat = {ax: 88, ay: 172, t: [112, 108], h: 100, at: {rA: [100, 206, 1, 90], lA: [100, 206, 1, 90], rH: WO.hand.concat(-1), lH: WO.hand.concat(-1)}};
+const woOne = (b, f) => ({ax: 112, ay: 162, t: [106, 106], h: 100, at: {[b + 'A']: [56, 200, 1, 24], [f + 'A']: [100, 206, 1, 90], rH: WO.hand.concat(-1), lH: WO.hand.concat(-1)}});
+const woPlank = y => ({ax: 113, ay: y, t: [113, 113], h: 106, at: {rA: [40, 198, 1, 12], lA: [40, 198, 1, 12], rH: WO.hand.concat(-1), lH: WO.hand.concat(-1)}});
+// Front view travel helpers: hip x, then right and left ankle x, at a hip height y.
+const ft = (hx, y, rx, lx, ry, ly, rf, lf) => ({ax: hx, ay: y, at: {rA: [rx, ry || 206, 1, rf == null ? 90 : rf], lA: [lx, ly || 206, -1, lf == null ? -90 : lf]}});
+const READY = {ra: [24, 4], la: [-24, -4]};
+const skA = {ax: 140, ay: 140, t: [178, 172], h: 170, ra: [64, 36], at: {rA: [152, 206, 1, 90], lA: [168, 202, -1, 10], lH: [150, 176, 1]}};
+const gv = [ft(92, 128, 100, 84), ft(104, 128, 124, 84), ft(116, 129, 122, 134, 206, 202, 90, -20), ft(132, 128, 148, 130, 206, 204)];
+const GVA = [{ra: [14, 8], la: [-26, -16]}, {ra: [26, 16], la: [-14, -8]}];
+const BX = (hx, hy, rx, ry, lx, ly, rf, lf, sw) => ({ax: hx, ay: hy, ra: [-14 * sw, -2 * sw], la: [14 * sw, 30 * sw], at: {rA: [rx, ry, 1, rf || 90], lA: [lx, ly, 1, lf || 90]}});
+const IO = (hx, rx, lx) => Object.assign(ft(hx, 136, rx, lx), {s: 0.96}, READY);
+const HT = (hx, rx, ry, lx, ly, rf, lf) => ({ax: hx, ay: 127, ra: [52, 62], la: [44, 54], at: {rA: [rx, ry, 1, rf || 90], lA: [lx, ly, 1, lf || 90]}});
+const CC = {stand: {h: 178, at: {rH: [110, 60, -1], lH: [108, 61, -1]}}, crunch: (n, f) => ({t: [164, 128], h: 120, [n + 'l']: [118, 20, 100], at: {[f + 'H']: [150, 86, -1], [n + 'H']: [146, 78, 1]}})};
+const BC = (n, f) => Object.assign({t: [-98, -116], h: -122, [n + 'a']: [150, -69], [f + 'a']: [-160, -36], [n + 'l']: [104, 104, 170], [f + 'l']: [168, 64, 150]});
+Object.assign(P, {
+  skater: {v: 'f', nm: true, an: ['hip', 120, 128], d: 2.4, sp: 1,
+    k: [Object.assign(ft(120, 128, 128, 112), {ra: [16, 8], la: [-16, -8]}), skA, Object.assign(ft(120, 128, 128, 112), {ra: [16, 8], la: [-16, -8]}), mir(skA)]},
+  punch: {v: 's', an: ['hip', 116, 131], d: 1.8, sp: 1,
+    k: [{ra: [28, 164], la: [24, 160], at: {rA: [96, 206, 1, 70], lA: [132, 206, 1, 90]}},
+      {ax: 118, t: [168, 166], h: 172, ra: [90, 90], la: [24, 160], at: {rA: [96, 206, 1, 64], lA: [132, 206, 1, 90]}},
+      {ra: [28, 164], la: [24, 160], at: {rA: [96, 206, 1, 70], lA: [132, 206, 1, 90]}},
+      {ax: 118, t: [170, 168], h: 172, ra: [28, 164], la: [90, 90], at: {rA: [96, 206, 1, 70], lA: [132, 206, 1, 90]}}]},
+  'knee-drive': {v: 's', an: ['hip', 118, 126], d: 2, sp: 1,
+    k: [{ra: [166, 172], la: [162, 170]}, {t: [172, 164], h: 168, rl: [100, 4, 90], at: {rH: [150, 124, -1], lH: [146, 124, -1]}},
+      {ra: [166, 172], la: [162, 170]}, {t: [172, 164], h: 168, ll: [100, 4, 90], at: {rH: [150, 124, -1], lH: [146, 124, -1]}}]},
+  'walk-out': {v: 's', an: ['hip', 100, 126], bg: G.mat, d: 6.4, sp: 3,
+    k: [Object.assign({ra: [4, 8], la: [-4, 4]}, woStand), woSquat, woOne('r', 'l'), woPlank(166), woPlank(165), woOne('l', 'r'), woSquat, Object.assign({ra: [176, 180], la: [172, 178]}, woStand)]},
+  bike: {v: 's', an: ['hip', 100, 124], bg: G.bike, e: 'lin', d: 1.8, sp: 0, pin: {rH: [164, 101, -1], lH: [164, 101, -1]},
+    k: [0, 45, 90, 135, 180, 225, 270, 315].map(a => ({t: [150, 146], h: 140, at: {rA: pedal(a).concat(1, 104), lA: pedal(a + 180).concat(1, 104)}}))},
+  shuffle: {v: 'f', nm: true, an: ['hip', 120, 144], d: 1.6, sp: 1,
+    k: [ft(104, 144, 128, 80), ft(120, 144, 154, 80), ft(136, 144, 154, 116), ft(120, 144, 154, 80)].map(k => Object.assign(k, {s: 0.95, h: 180}, READY))},
+  grapevine: {v: 'f', nm: true, an: ['hip', 120, 128], d: 4, sp: 2,
+    k: gv.concat([mir(gv[0])], gv.slice(1).map(mir)).map((k, i) => Object.assign(k, GVA[i % 2]))},
+  'box-step': {v: 's', an: ['hip', 104, 126], d: 3.2, sp: 2,
+    k: [BX(104, 126, 104, 206, 104, 206, 0, 0, 1), BX(112, 127, 128, 196, 104, 206, 80, 0, -1), BX(118, 128, 134, 206, 104, 206, 0, 0, -1), BX(128, 127, 134, 206, 122, 196, 0, 80, 1),
+      BX(134, 126, 134, 206, 134, 206, 0, 0, 1), BX(126, 127, 116, 198, 134, 206, 70, 0, -1), BX(120, 128, 104, 206, 134, 206, 0, 0, -1), BX(110, 127, 104, 206, 118, 198, 0, 70, 1)]},
+  'in-out': {v: 'f', nm: true, an: ['hip', 120, 136], d: 1.8, sp: 2,
+    k: [IO(120, 130, 110), IO(128, 164, 110), IO(120, 164, 76), IO(112, 130, 76)]},
+  'cross-crunch': {v: 's', an: ['hip', 118, 126], d: 2.6, sp: 1,
+    k: [CC.stand, CC.crunch('r', 'l'), CC.stand, CC.crunch('l', 'r')]},
+  climber: {v: 's', an: ['hip', 125, 148], bg: G.bench(146, 176, 64), d: 3, sp: 1, pin: {rH: [169, 175, -1], lH: [169, 175, -1]},
+    k: [{t: [130, 130], h: 120, at: {rA: [64, 200, 1, 40], lA: [64, 200, 1, 40]}}, {t: [130, 130], h: 120, rl: [60, -40, 40], at: {lA: [64, 200, 1, 40]}},
+      {t: [130, 130], h: 120, at: {rA: [64, 200, 1, 40], lA: [64, 200, 1, 40]}}, {t: [130, 130], h: 120, ll: [60, -40, 40], at: {rA: [64, 200, 1, 40]}}]},
+  bicycle: {v: 's', an: ['hip', 128, 203], bg: G.mat, d: 3.2, sp: 0, k: [BC('r', 'l'), BC('l', 'r')]},
+  'wood-chop': {v: 'f', nm: true, an: ['hip', 120, 128], d: 2.4, sp: 0,
+    k: [{ax: 120, ay: 128, sw: 11, t: [180, 172], h: 172, at: {rA: [146, 206, 1, 90], lA: [94, 206, -1, -90], rH: [170, 30, 1], lH: [168, 32, -1]}},
+      {ax: 116, ay: 142, sw: 11, t: [186, 200], h: 206, at: {rA: [146, 206, 1, 60], lA: [94, 206, -1, -90], rH: [70, 170, -1], lH: [72, 168, 1]}}]},
+  'knee-hold': {v: 's', an: ['lA', 124, 206], d: 3.4, sp: 1,
+    k: [{ll: [56, -8, 90], ra: [-20, 10], la: [20, 30], at: {rA: [80, 204, 1, 40]}},
+      {rl: [100, 4, 90], ll: [2, 0, 90], ra: [30, 60], la: [24, 50]}, {t: [182, 180], rl: [102, 6, 90], ll: [2, 0, 90], ra: [34, 64], la: [28, 54]}]},
+  'heel-toe': {v: 's', an: ['hip', 118, 127], d: 3.6, sp: 0,
+    k: [HT(118, 125, 206, 112, 206), HT(118, 118, 206, 122, 200, 0, 76), HT(118, 112, 206, 125, 206), HT(118, 122, 200, 118, 206, 76, 0)]},
+  'down-dog': {v: 's', an: ['hip', 108, 132], bg: G.mat, d: 3, sp: 0, pin: {rH: [0], lH: [0]},
+    k: [{t: [44, 44], h: 14, ra: [44, 44], la: [44, 44], rl: [-28, -28, 50], ll: [-28, -28, 50]},
+      {ax: 106, ay: 130, t: [46, 46], h: 16, rl: [-27, -27, 58], ll: [-27, -27, 58]}]}
+});
+// BLD 892 strength figures. A band runs from its anchor to the hands (band: [x, y]); a dowel is a stick
+// drawn from a few joints each frame (stick: J => [[x, y], [x, y]]).
+const BACK = J => { const u = [J.neck[0] - J.hip[0], J.neck[1] - J.hip[1]], l = Math.hypot(u[0], u[1]) || 1; return {u: [u[0] / l, u[1] / l], n: [u[1] / l, -u[0] / l]}; };
+const along = (p, b, n, u) => [p[0] + b.n[0] * n + b.u[0] * u, p[1] + b.n[1] * n + b.u[1] * u];
+const kn = (hands, t, h) => Object.assign({t: t, h: h, at: {rH: hands[0], lH: hands[1]}}, HALF);
+const qf = (hx, rx, lx, ry, ly) => Object.assign(ft(hx, 138, rx, lx, ry, ly, ry < 206 ? 40 : 90, ly < 206 ? -40 : -90), {s: 0.96, ra: [26, 30], la: [-26, -30]});
+const SQP = {up: {ra: [24, 166], la: [20, 162]}, low: {t: [146, 150], rl: [80, -30, 90], ll: [80, -30, 90], ra: [30, 172], la: [26, 168]}};
+const PLANK = {t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]};
+const tap = n => Object.assign({}, PLANK, {t: [112, 112], at: {[n + 'H']: J => [J.rS[0] + 3, J.rS[1] + 9, -1]}});
+Object.assign(P, {
+  'half-kneel-chop': {v: 's', an: ['rK', 100, 204], bg: G.mat, band: [222, 22], d: 2.8, sp: 0,
+    k: [kn([[164, 58, 1], [162, 60, 1]], [178, 174], 174), kn([[116, 168, 1], [114, 166, 1]], [176, 178], 172)]},
+  'half-kneel-lift': {v: 's', an: ['rK', 100, 204], bg: G.mat, band: [224, 206], d: 2.8, sp: 0,
+    k: [kn([[150, 182, 1], [148, 180, 1]], [174, 176], 170), kn([[90, 60, -1], [92, 58, -1]], [180, 182], 184)]},
+  'quick-feet': {v: 'f', nm: true, an: ['hip', 120, 138], d: 1.6, sp: 0,
+    k: [qf(120, 156, 84), qf(122, 140, 84, 196), qf(124, 132, 84), qf(122, 132, 100, 206, 196), qf(120, 132, 108), qf(118, 140, 108, 196), qf(122, 156, 108),
+      qf(120, 156, 96, 206, 196)]},
+  'w-raise': {v: 's', an: ['hip', 100, 203], bg: G.mat, d: 3, sp: 1,
+    k: [{t: [91, 94], h: 100, ra: [-82, 84], la: [-80, 86], rl: [-90, -90, -150], ll: [-90, -90, -150]},
+      {t: [96, 108], h: 116, ra: [-134, 108], la: [-130, 110], rl: [-90, -90, -150], ll: [-90, -90, -150]}]},
+  'face-pull': {v: 's', an: ['rA', 120, 206], band: [228, 60], d: 2.6, sp: 1,
+    k: [{ll: [10, 4, 90], rl: [-8, -4, 80], ra: [108, 108], la: [104, 104]}, {ll: [10, 4, 90], rl: [-8, -4, 80], ra: [-140, 96], la: [-136, 100]}]},
+  'pull-down': {v: 's', an: ['rK', 108, 204], bg: G.mat, band: [168, 10], d: 2.8, sp: 1,
+    k: [{rl: [0, -90, -90], ll: [0, -90, -90], ra: [152, 152], la: [150, 150]}, {rl: [0, -90, -90], ll: [0, -90, -90], t: [178, 176], ra: [-10, 150], la: [-6, 146]}]},
+  'overhead-carry': {v: 's', an: ['hip', 118, 126], db: 'r', e: 'lin', d: 2.2, k: walk(126, 0.6).map(k => Object.assign(k, {ra: [178, 180]}))},
+  airplane: {v: 'f', nm: true, an: ['rA', 128, 206], d: 3.4, sp: 0,
+    k: [{s: 0.3, h: 180, kz: [1, 1, 0.12, 0.12], rl: [0, 0, 90], ll: [90, 90, 90], ra: [92, 92], la: [-92, -92]},
+      {s: 0.32, t: [180, 172], h: 172, kz: [1, 1, 0.12, 0.12], rl: [0, 0, 90], ll: [90, 90, 90], ra: [166, 170], la: [-14, -10]}]},
+  'dowel-hinge': {v: 's', an: ['rA', 108, 206], d: 3.2, sp: 1,
+    stick: J => { const b = BACK(J); return [along(J.hip, b, 9, -10), along(J.neck, b, 9, 30)]; },
+    k: [{ra: [0, 0], la: [0, 0], at: {rH: J => along(J.neck, BACK(J), 10, 2).concat(1), lH: J => along(J.hip, BACK(J), 10, 4).concat(-1)}},
+      {t: [100, 98], h: 104, rl: [18, -6, 90], ll: [18, -6, 90], at: {rH: J => along(J.neck, BACK(J), 10, 2).concat(1), lH: J => along(J.hip, BACK(J), 10, 4).concat(-1)}}]},
+  'pass-through': {v: 's', d: 3.6, sp: 1, stick: J => [[J.rH[0] - 9, J.rH[1] + 5], [J.rH[0] + 9, J.rH[1] - 5]],
+    k: [{ra: [26, 26], la: [24, 24]}, {ra: [180, 180], la: [178, 178]}, {ra: [-148, -148], la: [-150, -150]}, {ra: [180, 180], la: [178, 178]}]},
+  'squat-press': {v: 's', an: ['rA', 124, 206], db: 'rl', d: 3, sp: 2,
+    k: [Object.assign({}, SQP.up), Object.assign({}, SQP.low), {ra: [176, 180], la: [174, 178]}]},
+  'shoulder-tap': {v: 's', an: ['rT', 30, 208], bg: G.mat, d: 2.4, sp: 1, k: [PLANK, tap('r'), PLANK, tap('l')]}
+});
+
+['skater', 'punch', 'knee-drive', 'walk-out', 'bike', 'shuffle', 'grapevine', 'box-step', 'in-out', 'cross-crunch', 'climber', 'wood-chop', 'knee-hold', 'heel-toe', 'down-dog',
+  'half-kneel-chop', 'half-kneel-lift', 'quick-feet', 'dowel-hinge', 'shoulder-tap'].forEach(id => solve(P[id]));
+
 // The far leg of a crossed seat is drawn mirrored by hand where the view keeps absolute angles.
 P.twist.k.forEach(k => { k.rl = [76, -97, -90]; k.ll = [-76, 97, 90]; });
 P.twist.pin = null;
@@ -326,6 +465,15 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 
 // Keywords, in order: the first that matches wins.
 const KW = [
+  // BLD 892 figures first, so a plainer word below them gives way.
+  [/skater/, 'skater'], [/shadow ?box|punch|\bjabs?\b/, 'punch'], [/^(?!.*lunge).*knee drive/, 'knee-drive'], [/walk.?outs?\b|inchworm/, 'walk-out'],
+  [/bicycle/, 'bicycle'], [/\bbike|cycling|stationary cycle/, 'bike'], [/shuffle/, 'shuffle'], [/grapevine/, 'grapevine'], [/box step(?!.?up)/, 'box-step'],
+  [/\bin.?(and.?)?out step|\bin out\b/, 'in-out'], [/cross.?crunch|elbow to (opposite )?knee/, 'cross-crunch'], [/climber/, 'climber'],
+  [/kneel.*chop/, 'half-kneel-chop'], [/kneel.*lift/, 'half-kneel-lift'], [/wood ?chop/, 'wood-chop'], [/knee hold|step.?back balance/, 'knee-hold'],
+  [/heel.?to.?toe (walk|step)|tandem walk/, 'heel-toe'], [/down(ward)? dog/, 'down-dog'], [/quick feet|ladder/, 'quick-feet'], [/\bw raise|floor w\b/, 'w-raise'],
+  [/face pull/, 'face-pull'], [/pull.?down|lat pull/, 'pull-down'], [/overhead carry|waiter.?s? (carry|walk)/, 'overhead-carry'], [/airplane/, 'airplane'],
+  [/dowel (hip )?hinge|hinge with (a )?dowel/, 'dowel-hinge'], [/pass.?through|dowel pass/, 'pass-through'], [/squat (to |and )?press|thruster/, 'squat-press'],
+  [/shoulder taps?/, 'shoulder-tap'],
   [/cat ?cow/, 'cat-cow'], [/child/, 'child-pose'], [/couch|hip flexor/, 'hip-flexor'], [/figure ?(4|four)|pigeon/, 'figure-4'],
   [/90\/90|hip switch|windshield/, 'hip-switch'], [/hanging (knee|leg)|knee raise|knees? to chest/, 'knee-raise'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
   [/hollow/, 'hollow'], [/reverse crunch/, 'reverse-crunch'], [/leg raise/, 'leg-raise'], [/dead ?bugs?|crunch/, 'dead-bug'],
@@ -370,14 +518,20 @@ function svg(pattern, opts){
   // A soft shadow on the floor follows the hips, so the figure stands on the ground of a stage.
   const sx = J => r1(J.hip[0]), srx = J => r1(Math.max(16, 30 - Math.max(0, 150 - J.hip[1]) * 0.12));
   const shadow = `<ellipse cx="${sx(F[0])}" cy="213" rx="${srx(F[0])}" ry="4.5" fill="currentColor" stroke="none" style="color:var(--ggm-shadow,currentColor);opacity:var(--ggm-shadow-op,0)">${anim(F, 'cx', sx, dur)}${anim(F, 'rx', srx, dur)}</ellipse>`;
+  // A band from its anchor to the hands, and a dowel, both moving with the figure.
+  const seg = (f, k) => `<polyline points="${f(F[0])}">${anim(F, 'points', f, dur)}</polyline>`;
+  const hands = J => [(J.rH[0] + J.lH[0]) / 2, (J.rH[1] + J.lH[1]) / 2];
+  const band = M.band ? `<g style="color:var(--ggm-db,currentColor)"><g stroke-width="3">${seg(J => r1(M.band[0]) + ',' + r1(M.band[1]) + ' ' + hands(J).map(r1).join(','))}</g>` +
+    `<circle cx="${M.band[0]}" cy="${M.band[1]}" r="5" fill="currentColor" stroke="none"/></g>` : '';
+  const stick = M.stick ? `<g stroke-width="5" style="color:var(--ggm-steel,currentColor)">${seg(J => M.stick(J).map(q => q.map(r1).join(',')).join(' '))}</g>` : '';
   let body;
-  if (side) body = line('la', '.42') + db('lH') + line('ll', '.42') + line('sp') + line('rl') + line('ra') + db('rH') + head;
-  else body = line('ll') + line('rl') + line('hpb') + line('sp') + line('shb') + line('la') + line('ra') + db('lH') + db('rH') + head;
+  if (side) body = line('la', '.42') + db('lH') + line('ll', '.42') + stick + line('sp') + line('rl') + line('ra') + db('rH') + head;
+  else body = line('ll') + line('rl') + line('hpb') + line('sp') + line('shb') + stick + line('la') + line('ra') + db('lH') + db('rH') + head;
   const label = escA(opts.label || id.replace(/-/g, ' '));
   const flip = opts.flip ? ' transform="translate(240 0) scale(-1 1)"' : '';
   return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}">` +
     `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"${flip}>` +
-    `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
+    `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}${band}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
 }
 
 // For a step that names a pattern itself (the Daily Practice), keep a specific pattern, and let a plain
