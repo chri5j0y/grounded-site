@@ -12,7 +12,9 @@
      start     the very first check-in for the person (role person, said by self)
      full      a later full check-in, the person answering for themselves
      quick     the quick check-in (question 1 of each part)
-     tapped    the person answers out loud and a helper taps (full or quick)
+     tapped    the person answers out loud and a helper taps (full or quick); the voice speaks to the person
+   start, full, quick, and tapped open by saying the check-in is just for the person in hospice care (GWG BLD 890);
+   helper opens by saying it is the caregiver's own check-in.
      observed  a helper answering from what they see (full or quick)
      helper    a helper's own check-in, about themselves (full or quick)
    Slots: open, enter {part: lines} (one line as each part begins, full style
@@ -159,6 +161,12 @@
     fruit: ['Fruit: hope, and picturing yourself on the other side of this.']
   };
 
+  // Who Is Answering (a helper opened someone else's tree): the guide speaks kindly to whoever holds the device.
+  // No names here, so every line is one recorded clip.
+  var WHO = [
+    'Welcome. Whoever is holding this today, we are glad you are with us.'
+  ];
+
   var FAITH_PERSON = [
     'Next, a few words about faith, spirit, or whatever has mattered to you. Every answer is welcome here, including none.',
     'Before the questions, we ask what grounds you. Faith, spirit, or something else. Take your time.'
@@ -170,9 +178,11 @@
     tipSkip: ['flag'],
     kinds: {
       start: {
+        // The person's own check-in (GWG BLD 890, Chris: a check-in that speaks to the person in hospice): the first line says so.
         open: [
-          'Welcome to Willow. We are glad you are here. Take all the time you need.',
-          'We will go one question at a time. Answer as things are lately, and Not Sure is always a fine answer.',
+          'This check-in is just for you, the one in hospice care. Welcome to Willow, and we are glad you are here.',
+          'Wherever you are on this part of the path, we will go slowly, one question at a time.',
+          'Answer as things are lately, in your own way. Not Sure is always a fine answer.',
           'Some questions may touch tender places. You can pause, rest, or come back later. Your answers stay on this device.',
           'Let your breath settle for a moment. When you are ready, we will begin.'
         ],
@@ -187,17 +197,17 @@
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
         close: [
-          'Thank you. That was a gift of honesty, and your tree is planted.',
-          'Your tree has its first ring now. What you see next are gentle words, simply listening to you.',
+          'Thank you. That was a gift of honesty, and your own tree is planted.',
+          'Your tree has its first ring now, grown from your own words. What you see next are gentle words, simply listening to you.',
           'Today has one small practice waiting for you. One is plenty, and rest is welcome too.',
           'Whenever you like, the people you love can help you write down what matters most.'
         ]
       },
       full: {
         open: [
-          'Welcome back. We are glad to sit with you again.',
-          'Same gentle questions as before. Answer as things are lately, and Not Sure is always welcome.',
-          'Take all the time you need. We will go slowly, one question at a time.',
+          'Welcome back. This check-in is just for you, the one in hospice care.',
+          'We are glad to sit with you again. Same gentle questions as before, one at a time.',
+          'Answer as things are lately. Not Sure is always welcome, and there is plenty of time.',
           'Let your shoulders soften. When you are ready, here is the first one.'
         ],
         faith: [
@@ -214,7 +224,7 @@
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
         close: [
-          'Thank you. Your tree has a new ring.',
+          'Thank you for this time, just for you. Your tree has a new ring, in your own words.',
           'Every part of a tree has seasons. What you shared today helps the people beside you know how to be present.',
           'Today leans toward one gentle practice. Try it if you like, and rest if you need to.',
           'We are glad you took this time for yourself.'
@@ -222,9 +232,9 @@
       },
       quick: {
         open: [
-          'A quick check-in today. One question for each part of your tree.',
-          'About two minutes, at your own pace. Not Sure is always welcome.',
-          'Just six questions. Let them be easy.'
+          'This quick check-in is just for you, the one in hospice care.',
+          'One gentle question for each part of your tree, about two minutes, at your own pace.',
+          'Not Sure is always welcome. Let these be easy.'
         ],
         faith: FAITH_PERSON,
         mid: { every: 3, lines: [
@@ -234,37 +244,34 @@
         ] },
         tips: PERSON_TIPS,
         close: [
-          'Thank you. That is a gentle snapshot of today.',
+          'Thank you. That is a gentle snapshot of how you are today.',
           'Your tree is ready to see. Today has one small practice waiting, whenever you like.',
           'Thank you for checking in. Rest well.'
         ]
       },
       tapped: {
         open: [
-          'Welcome. We will read each question aloud, slowly.',
-          'Answer out loud in your own words, and your helper will tap the answer closest to what you said.',
+          'This check-in is just for you, the one in hospice care. We will read each question aloud, slowly.',
+          'Answer out loud in your own words, and the one beside you will tap the answer closest to what you said.',
           'Not Sure is always welcome. You can rest between questions whenever you like.'
         ],
-        who: [
-          'Who is answering today? This keeps their own voice clear.',
-          'First, tell us who is answering. Every answer remembers who gave it.'
-        ],
+        who: WHO,
         faith: [
-          'Now a few words about faith, spirit, or what has mattered. Each person answers for themselves, so ask them, and tap what they say.',
-          'Here we ask what grounds them, in their own words. Every answer is welcome, including none.'
+          'Now a few words about faith, spirit, or what has mattered to you. Every answer is welcome, including none.',
+          'Here we ask what grounds you, in your own words. The one beside you will tap just what you say.'
         ],
         mid: { every: 6, lines: [
           'Thank you both. Take a breath before the next one.',
           'Slow is good. There is plenty of time.',
-          'If they are tired, it is fine to rest and come back.',
+          'If you are tired, rest is welcome, and we can come back.',
           'You are doing this together, and that matters.'
         ] },
         enter: ENTER_PERSON,
         tips: PERSON_TIPS,
         close: [
-          'Thank you both. Their tree has a new ring, in their own words.',
-          'What they shared helps everyone beside them know how to be present.',
-          'Today has one gentle practice waiting. It can be done lying down, with a helper.'
+          'Thank you both. Your tree has a new ring, in your own words.',
+          'What you shared helps everyone beside you know how to be present.',
+          'Today has one gentle practice waiting for you. It can be done lying down, with a helper.'
         ]
       },
       observed: {
@@ -273,10 +280,7 @@
           'Answer from what you have seen and heard lately. This is kept apart from their own answers, so their rings hold their own words.',
           'Not Sure is always welcome. Your noticing helps their hospice team.'
         ],
-        who: [
-          'First, choose who is answering today.',
-          'Every answer remembers who gave it, so their own voice stays clear.'
-        ],
+        who: WHO,
         mid: { every: 6, lines: [
           'Thank you. What you notice matters.',
           'A pause here, for you too.',
@@ -293,9 +297,10 @@
       },
       helper: {
         open: [
-          'This one is for you. You are carrying this too.',
-          'These questions ask how you are doing, as you care for someone you love. Answer as things are lately.',
-          'Not Sure is always welcome. Your answers stay locked in your own profile.'
+          // The caregiver's own check-in (GWG BLD 890): the first line says plainly it is theirs, never the person's.
+          'This one is for you, the one giving care. It is your own caregiver check-in.',
+          'You are carrying this too. These questions ask how you are doing, as you care for someone you love.',
+          'Answer as things are lately. Not Sure is always welcome, and your answers stay locked in your own profile.'
         ],
         mid: { every: 6, lines: [
           'Thank you for taking this time for yourself.',

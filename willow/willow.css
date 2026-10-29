@@ -38,7 +38,14 @@ html,body{overflow-x:clip;}
 .w-choice b{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.15;}
 .w-choice span{font-size:15.5px;color:var(--ink-soft);line-height:1.45;}
 .w-choice:hover,.w-choice[aria-pressed="true"]{border-color:var(--gold);background:var(--w-sage-soft);}
-@media (max-width:640px){.w-choices{grid-template-columns:1fr;}.w-head h2{font-size:32px;}}
+/* the first choice on the welcome card (GWG BLD 890): big and clear, the person first */
+.w-choices-big .w-choice{padding:20px 22px;gap:6px;}
+.w-choices-big .w-choice b{font-size:30px;}
+.w-choices-big .w-choice span{font-size:16.5px;}
+/* a caregiver's own guided check-in: the person's check-in, one tap away (inside the guided player) */
+.w-ggd-swap{position:relative;z-index:2;margin:0 auto;padding:0 20px 6px;max-width:1100px;width:100%;box-sizing:border-box;font-size:15px;line-height:1.45;color:var(--soft);}
+.w-ggd-swap .text-btn{font-size:15px;margin-right:10px;}
+@media (max-width:640px){.w-choices{grid-template-columns:1fr;}.w-head h2{font-size:32px;}.w-choices-big .w-choice b{font-size:26px;}.w-ggd-swap{padding:0 16px 6px;}}
 
 /* the 24/7 line */
 .w-line{display:flex;gap:12px;align-items:flex-start;background:var(--w-sage-soft);border:1px solid var(--line);border-radius:14px;padding:12px 16px;margin:0 0 16px;color:var(--ink);}
