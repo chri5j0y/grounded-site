@@ -132,7 +132,7 @@ const minsFor = (c, s) => (c.log || []).filter(x => String(x.n) === skey(s)).red
 // ../heartwood/core.js (window.GMCore, code); the questions (window.BTV_Q), results words (window.GM_RESULTS), and
 // faith backgrounds (window.GM_FAITH) come from lib-heartwood.js, opened with the Staff library's Heartwood key
 // (GGHw.content in heartwood.js). Before Seal Heartwood, or without the key, they stay away and the tab says so.
-const MV = 'b772';
+const MV = 'b890'; // GWG BLD 890: core.js reads cards with several faith backgrounds
 let ML = 'idle', MLS = '';
 function needM(){
   if (ML === 'none' && window.GGHw && GGHw.stamp() !== MLS) ML = 'idle'; // a new seal or key on this device: try again
@@ -177,12 +177,20 @@ function cardOf(c, w){
   const pos = w === 'p1' ? k.a : k.b;
   return pos && nm(pos.n) !== other ? pos : (ps.find(p => nm(p.n) !== other) || null);
 }
+// GWG BLD 890 (Chris: "we should always be able to select more than one religion on all checkins"): each partner may
+// have several backgrounds. c.fb[w] is a list of ids (a couple saved before holds one id as a string, read as a one-item
+// list); a Heartwood card's fb carries them joined with commas. Rather not say and No Faith stand alone.
+const FB_ALONE = ['rather-not-say', 'plain'];
+const fbList = v => (Array.isArray(v) ? v : String(v || '').split(',')).map(x => String(x || '').trim()).filter(x => /^[a-z0-9-]{1,40}$/.test(x)).filter((x, i, A) => A.indexOf(x) === i);
+const andList = a => a.length < 2 ? (a[0] || '') : a.length === 2 ? a[0] + ' and ' + a[1] : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1];
 function faithOf(c, w){
-  const pick = (c.fb || {})[w], card = cardOf(c, w), cf = card && card.fb ? card.fb : '';
-  return pick ? {id: pick, from: 'pick'} : cf ? {id: cf, from: 'card'} : {id: '', from: ''};
+  const pick = fbList((c.fb || {})[w]), card = cardOf(c, w), cf = fbList(card && card.fb);
+  const f = pick.length ? {ids: pick, from: 'pick'} : cf.length ? {ids: cf, from: 'card'} : {ids: [], from: ''};
+  f.id = f.ids[0] || ''; return f;
 }
 const faithItem = id => { const F = FA(); return (F && (F.list || []).find(x => x.id === id)) || null; };
 const faithName = id => { const f = faithItem(id); return f ? f.name : id; };
+const faithNames = ids => andList(fbList(ids).map(faithName));
 const named = id => id && id !== 'rather-not-say';
 function readingText(x){
   const br = t => esc(t).replace(/\n/g, '<br>');
@@ -194,7 +202,7 @@ function readingText(x){
 }
 function faithLines(c){
   return ['p1', 'p2'].map(w => { const f = faithOf(c, w), nm = c[w].name || (w === 'p1' ? 'First partner' : 'Second partner');
-    return `<li><b>${esc(nm)}</b>: ${f.id ? esc(faithName(f.id)) + (f.from === 'card' ? ' <small class="muted">(from their card)</small>' : '') : '<span class="muted">Not named yet</span>'}</li>`; }).join('');
+    return `<li><b>${esc(nm)}</b>: ${f.id ? esc(faithNames(f.ids)) + (f.from === 'card' ? ' <small class="muted">(from their card)</small>' : '') : '<span class="muted">Not named yet</span>'}</li>`; }).join('');
 }
 // The two-tradition questions ride on a card after the main questions (GMCore.answersOf reads them).
 function twoDiff(c, id){
@@ -202,14 +210,15 @@ function twoDiff(c, id){
   try { const x = +G.answersOf(k.a.a)[id] || 0, y = +G.answersOf(k.b.a)[id] || 0; return !!(x && y && G.differs(x, y)); } catch (e){ return false; }
 }
 function faithBlock(c){
-  const P = pmc(c).faith, F = FA(), a = faithOf(c, 'p1').id, b = faithOf(c, 'p2').id;
+  const P = pmc(c).faith, F = FA(), A1 = faithOf(c, 'p1').ids.filter(named), B1 = faithOf(c, 'p2').ids.filter(named);
   let h = `<div class="card pm-faith"><h3>${esc(P.title || 'Built to Their Faith')}</h3>${P.lead ? `<p>${esc(P.lead)}</p>` : ''}<ul class="pm-ul">${faithLines(c)}</ul>`;
   if (!F){ needM(); return h + loadingNote('the faith notes') + '</div>'; }
-  const ids = [a, b].filter(named);
+  const ids = A1.concat(B1).filter((x, i, A) => A.indexOf(x) === i);
   if (!ids.length) h += `<p class="pm-note">${esc(P.none || '')}</p>`;
   else {
-    const two = ids.length === 2 && ids[0] !== ids[1];
-    h += `<p class="pm-note">${esc(two ? (P.two || '') : (ids.length === 2 ? (P.one || '') : ''))}</p>`.replace('<p class="pm-note"></p>', '');
+    // Two traditions: both partners named theirs, and the two lists differ.
+    const both = A1.length && B1.length, two = !!(both && (A1.length !== B1.length || A1.some(x => !B1.includes(x))));
+    h += `<p class="pm-note">${esc(two ? (P.two || '') : (both ? (P.one || '') : ''))}</p>`.replace('<p class="pm-note"></p>', '');
     const gs = []; ids.forEach(id => { const it = faithItem(id), g = it && it.group; if (g && !gs.includes(g)) gs.push(g); });
     gs.forEach(g => { const G = (F.groups || {})[g]; if (!G) return; const who = ids.filter(id => (faithItem(id) || {}).group === g).filter((x, i, A) => A.indexOf(x) === i).map(faithName).join(' and ');
       h += `<div class="pm-fg"><h4>${esc(G.name || who)}${G.name && who && G.name !== who ? ` <small class="muted">(${esc(who)})</small>` : ''}</h4>
@@ -223,7 +232,7 @@ function faithBlock(c){
   }
   if (P.ask) h += `<p class="muted" style="font-size:15px">${esc(P.ask)}</p>`;
   // GWG BLD 798: wedding readings for both traditions in the Readings Library (shared/gg-readings.js), to read together.
-  const libT = window.GGReadings ? [a, b].filter(named).find(id => GGReadings.labels.trad[id] && id !== 'christian') : null;
+  const libT = window.GGReadings ? ids.find(id => GGReadings.labels.trad[id] && id !== 'christian') : null;
   return h + `<div class="row" style="margin-top:10px"><button type="button" class="btn btn-line btn-sm" data-pm="go" data-v="about">Change Faith Backgrounds</button>${window.GGReadings ? `<button type="button" class="btn btn-line btn-sm" data-pm="lib" data-v="${esc(libT || '')}">Wedding Readings in the Library</button>` : ''}</div></div>`;
 }
 
@@ -434,7 +443,7 @@ function cardOk(o){
   const nm = x => typeof x === 'string' && x && x.length <= 40 && x === x.trim() && !/[<>&"`\\\u0000-\u001F\u007F]/.test(x);
   if (!nm(o.n) || !nm(o.to) || (o.fw !== 'f' && o.fw !== 'p') || typeof o.a !== 'string' || !/^[0-5]{1,300}$/.test(o.a)) return null;
   const r = {v: o.v, q: o.q, n: o.n, to: o.to, fw: o.fw, a: o.a};
-  if (o.v === 2) r.fb = (typeof o.fb === 'string' && /^[a-z0-9-]{0,40}$/.test(o.fb)) ? o.fb : '';
+  if (o.v === 2) r.fb = (typeof o.fb === 'string' && /^[a-z0-9,-]{0,800}$/.test(o.fb)) ? fbList(o.fb).join(',') : ''; // GWG BLD 890: one id, or several joined with commas
   return r;
 }
 async function ownRead(code, word){
@@ -473,7 +482,7 @@ function vCard(c){
   if (have.length){
     const tl = talkList(k), A = ansOf(k.a), B = ansOf(k.b), na = k.a ? k.a.n : '', nb = k.b ? k.b.n : '';
     const old = Bq && have.some(p => p.q !== Bq.version);
-    const fbs = have.filter(p => p.fb).map(p => esc(p.n) + ': ' + esc(faithName(p.fb)));
+    const fbs = have.filter(p => p.fb).map(p => esc(p.n) + ': ' + esc(faithNames(p.fb)));
     body = `<div class="card"><div class="spread"><h2>Their Cards</h2><span class="pill sage">Read Only</span></div>
       <p>${have.map(p => esc(p.n) + '\'s card').join(' and ')}${have.length < 2 ? '. Add the other partner\'s card to see Talk About This.' : '.'} ${plainOf(k) ? 'Plain wording.' : 'Faith wording.'}</p>
       ${fbs.length ? `<p>Faith backgrounds from their cards: ${fbs.join('; ')}.</p>` : ''}
@@ -783,10 +792,12 @@ function printCert(c){
 function vAbout(c){
   const f = (k, l, v, t, ph) => `<div><label class="f" for="pm-c-${k}">${l}</label><input type="${t || 'text'}" id="pm-c-${k}" data-pmc="${k}" value="${esc(v || '')}" autocomplete="off"${ph ? ` placeholder="${esc(ph)}"` : ''}></div>`;
   const F = FA(); needM();
-  const sel = w => { const card = cardOf(c, w), cf = card && card.fb ? card.fb : '', pick = (c.fb || {})[w] || '';
-    const first = cf ? 'From their card: ' + faithName(cf) : 'Not named yet';
-    return `<div><label class="f" for="pm-fb-${w}">${esc((c[w].name || (w === 'p1' ? 'First Partner' : 'Second Partner')) + '\'s Faith Background')}</label>
-      <select id="pm-fb-${w}" data-pmf="${w}"><option value=""${pick ? '' : ' selected'}>${esc(first)}</option>${F ? (F.list || []).map(x => `<option value="${esc(x.id)}"${pick === x.id ? ' selected' : ''}>${esc(x.name)}</option>`).join('') : ''}</select></div>`; };
+  // GWG BLD 890: tap as many backgrounds as fit; none tapped uses their card's.
+  const sel = w => { const card = cardOf(c, w), cf = fbList(card && card.fb), pick = fbList((c.fb || {})[w]);
+    const first = cf.length ? 'From their card: ' + faithNames(cf) : 'Not named yet';
+    return `<div><span class="f" id="pm-fbl-${w}">${esc((c[w].name || (w === 'p1' ? 'First Partner' : 'Second Partner')) + '\'s Faith Background')}</span>
+      <p class="muted" style="font-size:14px;margin:0 0 6px">${pick.length ? 'Chosen here: ' + esc(faithNames(pick)) : esc(first)}. Choose as many as fit.</p>
+      <div class="pm-fbchips" id="pm-fb-${w}" role="group" aria-labelledby="pm-fbl-${w}">${F ? (F.list || []).map(x => `<button type="button" class="chip" data-pm="fb" data-v="${w}|${esc(x.id)}" aria-pressed="${pick.includes(x.id)}">${esc(x.name)}</button>`).join('') : ''}</div></div>`; };
   return `${head(c, 'The Couple')}
   <div class="card"><div class="pm-g2">${f('p1.name', 'First Partner', c.p1.name)}${f('p1.full', 'First Partner\'s Full Legal Name', c.p1.full)}${f('p2.name', 'Second Partner', c.p2.name)}${f('p2.full', 'Second Partner\'s Full Legal Name', c.p2.full)}${f('wedding', 'Wedding Date', c.wedding, 'date')}${f('email', 'Email or Phone', c.email)}${f('leaders', 'Leaders\' Names', c.leaders, 'text', me() || 'Your name from Settings')}</div>
     <label class="f" for="pm-c-notes">Notes</label><textarea id="pm-c-notes" data-pmc="notes">${esc(c.notes || '')}</textarea></div>
@@ -900,6 +911,9 @@ function act(k, v){
     case 'home': S.id = null; goView('home'); return;
     case 'add': { const a = val('pm-a').trim(), b = val('pm-b').trim(); if (!a || !b){ toast('Add both first names.'); return; } const x = newCouple(a, b, val('pm-w'), val('pm-p') || 'full'); list().push(x); keep(x); S.id = x.id; toast('Couple added.'); goView('sessions'); return; }
     case 'open': S.id = v; goView('sessions'); return;
+    case 'fb': { if (!c) return; const [w, id] = v.split('|'); if (w !== 'p1' && w !== 'p2' || !faithItem(id)) return; c.fb = c.fb || {};
+      const L = fbList(c.fb[w]), next = L.includes(id) ? L.filter(x => x !== id) : FB_ALONE.includes(id) ? [id] : L.filter(x => !FB_ALONE.includes(x)).concat(id);
+      if (next.length) c.fb[w] = next; else delete c.fb[w]; keep(c); rerender(true); return; }
     case 'del': { const x = list().find(y => y.id === v); if (!x || !confirm('Delete ' + names(x) + '? This removes their sessions, log, and card from this device.')) return; const d = D(); d.deleted = d.deleted || {clients: {}, sessions: {}}; d.deleted.pm = d.deleted.pm || {}; d.deleted.pm[x.id] = Date.now(); d.pm.couples = list().filter(y => y !== x); CTX.save(); toast('Deleted.'); rerender(true); return; }
     case 'avin': avIn(); return;
     case 'avx': S.av = null; S.avErr = ''; rerender(true); return;
@@ -944,7 +958,6 @@ document.addEventListener('change', e => {
   const t = e.target; if (!t.closest || !t.closest('#pm-root')) return; const c = cur(); if (!c) return;
   if (t.dataset.pmck != null){ const st = sess(c, S.n); if (t.checked) st.ck[t.dataset.pmck] = Date.now(); else delete st.ck[t.dataset.pmck]; keep(c); return; }
   if (t.dataset.pmpre != null){ c.pre = c.pre || {}; if (t.checked) c.pre[t.dataset.pmpre] = Date.now(); else delete c.pre[t.dataset.pmpre]; keep(c); rerender(true); return; }
-  if (t.dataset.pmf){ c.fb = c.fb || {}; if (t.value) c.fb[t.dataset.pmf] = t.value; else delete c.fb[t.dataset.pmf]; keep(c); return; }
   if (t.dataset.pml){ setLog(c, t.dataset.pml, t.value); rerender(true); return; }
   if (t.dataset.pmc === 'wedding'){ c.wedding = t.value; keep(c); return; }
   if (t.dataset.pmprog){
@@ -970,6 +983,7 @@ document.addEventListener('input', e => {
 const CSS = `
 #pm-root .card{min-width:0;}
 .pm-g2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 14px;}
+.pm-fbchips{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:10px;}.pm-fbchips .chip{padding:7px 12px;min-height:40px;}
 .pm-g3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:0 14px;}
 .pm-g4{display:grid;grid-template-columns:1fr .7fr .9fr 1.6fr;gap:0 12px;}
 @media (max-width:760px){.pm-g2,.pm-g3,.pm-g4{grid-template-columns:minmax(0,1fr);}}

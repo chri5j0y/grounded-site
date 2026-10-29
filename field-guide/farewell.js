@@ -367,9 +367,10 @@ const hasSvc = p => { const c = cerBind(); return !!(c && p.svc && c.get(p.svc))
 const svcTotal = p => hasSvc(p) ? CER().total(p.svc) : 0;
 function cerFaith(p){
   const f = faithOf(p); if (f === 'plain') return 'plain'; if (f === 'blend') return 'mixed'; if (f !== 'faith') return null;
-  const fs = CER().faiths(), lab = picked(p, 'tradition').map(x => x.toLowerCase());
-  for (const l of lab){ const m = fs.find(x => x.name.toLowerCase() === l) || fs.find(x => x.name.toLowerCase().includes(l) || l.includes(x.name.toLowerCase())); if (m) return m.id; }
-  return null;
+  // GWG BLD 890: every tradition they chose goes to the Service Builder, not only the first.
+  const fs = CER().faiths(), lab = picked(p, 'tradition').map(x => x.toLowerCase()), out = [];
+  for (const l of lab){ const m = fs.find(x => x.name.toLowerCase() === l) || fs.find(x => x.name.toLowerCase().includes(l) || l.includes(x.name.toLowerCase())); if (m && !out.includes(m.id)) out.push(m.id); }
+  return out.length ? out : null;
 }
 function svcSync(p){
   const c = cerBind(); if (!c) return {};

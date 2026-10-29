@@ -10,6 +10,7 @@ const INTAKE = {
   who: `What should we know about you as a person, so we can care for you well?`,
   ask: `Faith, spirit, or something else. What has mattered to you?`,
   welcome: `Every answer is welcome here, including none.`,
+  many: `Choose as many as fit.`, // GWG BLD 890: more than one tradition
   groups: [
     ['christian', `Christian`, ['catholic', 'lutheran', 'methodist', 'presbyterian', 'episcopal', 'baptist', 'nondenom', 'pentecostal', 'anabaptist', 'orthodox', 'lds', 'jw', 'adventist', 'quaker', 'cs', 'christian-other']],
     ['faiths', `Other faiths`, ['jewish', 'muslim', 'hindu', 'buddhist', 'sikh', 'bahai', 'uu']],
