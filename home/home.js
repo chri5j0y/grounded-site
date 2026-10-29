@@ -44,7 +44,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b891';
+  var V = 'b892';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b888';
@@ -962,8 +962,8 @@
     });
   }
   /* A practice checked or unchecked: the same mark GGTend.check makes, saved in the locked profile. */
-  function togglePractice(pid, on) {
-    var tree = S.tree, t = tendGet(S.id, tree, true); if (!t) return false;
+  function togglePractice(pid, on, inTree) {
+    var tree = inTree || S.tree, t = tendGet(S.id, tree, true); if (!t) return false;
     if (!t.plan) { var p = planOf(S.id, tree); if (p) t.plan = JSON.parse(JSON.stringify(p)); }
     if (!t.days || typeof t.days !== 'object') t.days = {};
     var d = today(), x = t.days[d];
@@ -978,7 +978,7 @@
     if (!on && rr === 'f' && i < 0) { var wd = weekDays().filter(function (k) { return k <= d; }).reverse(); for (var q = 0; q < wd.length; q++) { var z = t.days[wd[q]]; if (z && Array.isArray(z.d) && z.d.indexOf(pid) >= 0) { z.d.splice(z.d.indexOf(pid), 1); break; } } }
     if (!on && rr === 'w') weekDays().forEach(function (k) { var y = t.days[k]; if (y && Array.isArray(y.d)) { var j = y.d.indexOf(pid); if (j >= 0) y.d.splice(j, 1); } });
     publishTree(S.id, tree, t);
-    saveHome();
+    if (!S.quietSave) saveHome();
     return true;
   }
   /* The big picture the tree shares with family and The Grove (the same line GGTend writes when a practice is checked). */
@@ -994,6 +994,104 @@
       GGP.setShared(id, { tree: Object.assign({}, old, { tool: tree, show: true, days: days, rings: typeof old.rings === 'number' ? old.rings : arr(t.rings).length, season: t.season || old.season || 1, recent: recent, updated: d }) });
     } catch (e) { /* the shared line waits for the tree page */ }
   }
+
+  /* ---------- BLD 892: one card, two credits (shared/gg-fills.js) ----------
+     Chris (October 29, 2026): "we will not see Meditation twice, but this Meditation practice will become the main and
+     fulfill the checkin practices from the tree's growth plan". A growth plan practice and a planned Tending session
+     that fills it become one card: the session's title, "For your Oak growth plan" under it, and Play. Done credits
+     both: the tree's day mark (the same mark GGTend.check makes, so Days Tended, Hardy, and The Grove's shared line
+     count it) and the Tending log. The same practice in the person's other grown-up trees is credited too. A practice
+     with no matching session today keeps its own card with Play a Guided One, which plays a session that fills it and
+     credits the practice when the session finishes. The practice's rhythm still decides when it shows: a weekly or a
+     few times a week practice joins the card until its week is full; a Now and Then practice stays in Grow.
+     A session finished anywhere in Tending credits its practices once a day (home days[date].fill remembers each
+     'tree:part|Name' credited, so a mark taken away on the tree page stays away). Kids' trees keep their own cards. */
+  var FILL_TREES = ['oak', 'birch', 'sequoia', 'pine'];
+  S.fillWait = null;
+  function fillsOn() { return !!(window.GGFills && hasFn('fill') && hasFn('guided')) && !isKid(S.p) && FILL_TREES.indexOf(S.tree) >= 0; }
+  function fillRule(x) { return GGFills.fillsFor(x.pid, null, S.tree); }
+  function tendLogged(key) { var w = S.id ? tendWrap(S.id) : null, l = obj(obj(obj(w && w.health).log)[today()]); return +l[key] || 0; }
+  /* The same practice in the person's other grown-up trees, for one card that credits each. */
+  function otherFills(s) {
+    var out = [], all = obj(window.GGP && GGP.data(S.id));
+    // Read only the trees this profile already has (GGP.data(id, tree) would make an empty record for the others).
+    FILL_TREES.forEach(function (tr) { if (tr === S.tree || !all[tr] || typeof all[tr] !== 'object') return; planList(S.id, tr).forEach(function (it) { if (GGFills.fills(it.pid, s, tr)) out.push({ tree: tr, pid: it.pid }); }); });
+    return out;
+  }
+  function fillLine(others) {
+    var L = [S.tree]; arr(others).forEach(function (o) { if (L.indexOf(o.tree) < 0) L.push(o.tree); });
+    L = L.map(function (t) { return (TREES[t] || { n: t }).n; });
+    return 'For your ' + (L.length > 1 ? L.slice(0, -1).join(', ') + ' and ' + L[L.length - 1] + ' growth plans' : L[0] + ' growth plan');
+  }
+  /* Pair today's Tending sessions with the plan practices they fill; a paired practice rides inside its session's card. */
+  function mergeFills(items, plan) {
+    if (!fillsOn() || !plan.length) return;
+    var tend = items.filter(function (x) { return x.src === 'tend' && x.hkey; });
+    tend.forEach(function (x) { x.fill = hCall('fill', x.hkey, today()) || null; });
+    tend = tend.filter(function (x) { return x.fill; });
+    plan.forEach(function (p) {
+      if (p.r === 'n' || (p.done && !p.doneToday) || !fillRule(p)) return;
+      var it = GGFills.match(p, tend, S.tree); if (!it) return;
+      p.filledBy = it.key; (it.pairs = it.pairs || []).push(p);
+    });
+    tend.forEach(function (x) {
+      if (!x.pairs) return;
+      x.others = otherFills(x.fill); x.btn = 'Play'; x.ftitle = x.fill.title || x.title; x.forLine = fillLine(x.others); x.tendDone = x.done;
+      x.done = x.done || x.pairs.every(function (p) { return p.doneToday; });
+    });
+  }
+  function fillCredits(x) { return x.pairs.map(function (p) { return { tree: S.tree, pid: p.pid }; }).concat(arr(x.others)); }
+  /* A session finished in Tending (or through Play a Guided One) credits its practices, once a day each. */
+  function syncFills(items) {
+    if (!S.id || !fillsOn()) return;
+    var h = homeRec(), ch = false;
+    var mark = function (L) { var rec = todayRec(h), got = false; rec.fill = obj(rec.fill); L.forEach(function (o) { var k = o.tree + ':' + o.pid; if (rec.fill[k]) return; rec.fill[k] = 1; if (togglePracticeQuiet(o.pid, true, o.tree)) got = true; }); return got; };
+    items.forEach(function (x) { if (x.pairs && x.tendDone && mark(fillCredits(x))) { ch = true; x.done = true; x.pairs.forEach(function (p) { p.doneToday = true; }); } });
+    var w = S.fillWait;
+    if (w && w.date !== today()) S.fillWait = w = null;
+    if (w && tendLogged(w.done) >= w.since) { S.fillWait = null; if (mark(w.list)) { ch = true; toast('Your growth plan practice is tended too.'); } }
+    if (ch) { pruneDays(h); saveHome(); }
+  }
+  /* togglePractice without its own save (syncFills saves once). */
+  function togglePracticeQuiet(pid, on, tree) { var was = S.quietSave; S.quietSave = true; try { return togglePractice(pid, on, tree); } finally { S.quietSave = was; } }
+  /* Done on a paired card: the Tending log and every practice it fills, together. */
+  function fillDone(x, on) {
+    if (!!x.tendDone !== on) tendMark(x, on);
+    var h = homeRec(), rec = todayRec(h); rec.fill = obj(rec.fill);
+    fillCredits(x).forEach(function (o) { togglePracticeQuiet(o.pid, on, o.tree); var k = o.tree + ':' + o.pid; if (on) rec.fill[k] = 1; else delete rec.fill[k]; });
+    pruneDays(h); saveHome();
+  }
+  /* Tending marks its own items: GGHealth.done(key) when it exists, otherwise toggle(key), otherwise act(key, 'done'). */
+  function tendMark(x, on) { if (hasFn('done')) hCall('done', x.hkey, on); else if (hasFn('toggle')) hCall('toggle', x.hkey); else hCall('act', x.hkey, 'done'); }
+  /* Play a Guided One on a practice with no session today: the best session that fills it (GGFills.pick). */
+  function guideFor(plan) {
+    if (!fillsOn()) return;
+    var list = null;
+    plan.forEach(function (p) {
+      if (p.filledBy || p.done || !fillRule(p)) return;
+      if (!list) list = arr(hCall('guided'));
+      var g = GGFills.pick(p.pid, list, S.tree); if (g) p.guide = g;
+    });
+  }
+  function guideBtn(x) { return x.guide && !x.done ? '<button type="button" class="hm-btn sm hm-pill hm-gplay" data-hm-fplay="' + esc(x.key) + '" aria-label="Play a Guided One: ' + esc(x.guide.title) + '">' + I('play') + 'Play a Guided One</button>' : ''; }
+  function playGuided(key) {
+    var x = (todayItems().plan || []).filter(function (p) { return p.key === key; })[0], g = x && x.guide; if (!g) return;
+    S.fillWait = { list: [{ tree: S.tree, pid: x.pid }].concat(otherFills(g)), done: g.done, since: Date.now(), date: today() };
+    hCall('act', g.key);
+  }
+  function fillCardHtml(x) {
+    var sub = String(x.sub || ''), t = String(x.ftitle || x.title);
+    if (sub.indexOf(t + '. ') === 0) sub = sub.slice(t.length + 2);
+    return '<article class="hm-titem hm-card edge lift hm-fill ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + '" data-hm-card="' + esc(x.key) + '">' +
+      '<div class="hm-pc"><div class="scene"><img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
+      '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(t) + '</b>' +
+      '<span class="hm-fillfor">' + I('tree') + esc(x.forLine) + '</span>' + (sub ? '<small class="hm-meta">' + esc(sub) + '</small>' : '') +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-go="' + esc(x.key) + '">' + I('play') + 'Play</button>' + doneBtn(x) + '</div></div></div></article>';
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-fplay]'); if (!t || !t.closest('.hm')) return;
+    playGuided(t.getAttribute('data-hm-fplay'));
+  });
 
   /* ---------- BLD 885: practices with a rhythm ----------
      Chris (October 28, 2026): How opens right on the card (no new page, no searching), and each practice sits where its
@@ -1050,7 +1148,7 @@
     return '<article class="hm-titem hm-card edge lift hm-prac ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (open ? ' open' : '') + (opt.cls ? ' ' + opt.cls : '') + '" data-hm-card="' + esc(x.key) + '">' +
       '<div class="hm-pc"><div class="scene"><img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
       '<span class="hm-time ey">' + esc(opt.when || x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub && !opt.nosub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') +
-      '<div class="hm-acts tight">' + howBtn(x) + doneBtn(x, opt.doneLabel) + rchipHtml(x) + '</div>' + (opt.extra || '') + '</div></div>' + rmenuHtml(x) + howPanel(x) + '</article>';
+      '<div class="hm-acts tight">' + howBtn(x) + doneBtn(x, opt.doneLabel) + rchipHtml(x) + guideBtn(x) + '</div>' + (opt.extra || '') + '</div></div>' + rmenuHtml(x) + howPanel(x) + '</article>';
   }
   function partName(x) { return (PART[x.part] || { n: '' }).n; }
   function dayName(d) { var x = parse(d); return x ? DAYS[x.getDay()] : ''; }
@@ -1162,7 +1260,10 @@
     // BLD 882: each practice in the tree's Growth Plan, its own card. BLD 885: daily ones in the day; a weekly or now and
     // then practice done today adds to today's count.
     var plan = planItems(false), extra = 0;
-    plan.forEach(function (x, i) { x.i = i; if (x.r === 'd') items.push(x); else if (x.doneToday) extra++; });
+    // BLD 892: a practice a planned session fills rides inside that session's card (one card, two credits).
+    mergeFills(items, plan); syncFills(items); guideFor(plan);
+    plan.forEach(function (x, i) { x.i = i; if (x.filledBy) return; if (x.r === 'd') items.push(x); else if (x.doneToday) extra++; });
+    plan = plan.filter(function (x) { return !x.filledBy; });
     items.push(treeItem(h, d));
     items.forEach(function (x, i) { x.i = i; });
     items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
@@ -1177,6 +1278,7 @@
   var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play' };
   function itemHtml(x) {
     if (x.src === 'plan') return pracCardHtml(x);
+    if (x.pairs) return fillCardHtml(x);
     return '<article class="hm-titem hm-card edge lift ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
       '<div class="hm-pc"><div class="scene">' + '<img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
       '<span class="hm-time ey">' + esc(x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') +
@@ -1260,10 +1362,8 @@
     var x = /^p:/.test(key) ? { src: 'plan', pid: key.slice(2), done: btn ? btn.getAttribute('aria-pressed') === 'true' : false } : findItem(key); if (!x) return;
     var on = !x.done;
     if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
-    else if (x.src === 'tend') {
-      // Tending marks its own items: GGHealth.done(key) when it exists, otherwise act(key, 'done').
-      if (hasFn('done')) hCall('done', x.hkey, on); else if (hasFn('toggle')) hCall('toggle', x.hkey); else hCall('act', x.hkey, 'done');
-    } else if (x.src === 'old') { itemGo(key); return; }
+    else if (x.src === 'tend' && x.pairs) fillDone(x, on);
+    else if (x.src === 'tend') tendMark(x, on); else if (x.src === 'old') { itemGo(key); return; }
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome(); }
     if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item,.hm-card,.hm-kp'); if (card) { card.classList.toggle('done', on); card.querySelectorAll('[data-hm-done],[data-hm-hdone]').forEach(function (b2) { if (b2 !== btn) b2.setAttribute('aria-pressed', String(on)); }); } }
     if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
@@ -1299,7 +1399,10 @@
         (!din.title && !mv.title ? '<span class="hm-wnone">A day to rest</span>' : '') +
         '</div></div>';
     }).join('');
-    return '<div class="hm-wgrid"><div class="hm-col hm-wside">' + shop + prep + '</div><div class="hm-col hm-wmain"><h2 class="hm-label">This Week</h2><div class="hm-wlist">' + rows + '</div></div></div>';
+    /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
+    var nw = hasFn('news') ? hCall('news') : null;
+    var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-k">' + esc(nw.title) + '</div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
+    return '<div class="hm-wgrid"><div class="hm-col hm-wside">' + shop + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + '<div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
   /* ---------- Grow: the tree, the six parts, this season, the Growth Plan, history ---------- */
@@ -1425,7 +1528,7 @@
       { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: HERO + 'library-phone.webp' },
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
-      { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every level', line: 'Strength, walks, stretch, and gentle sessions, with a coach.', cls: 'hm-sh-work', art: IMG + 'tend-move.webp' },
+      { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every level', line: 'Strength, cardio, Flow, and gentle sessions, with a coach.', cls: 'hm-sh-work', art: IMG + 'tend-move.webp' },
       { id: 'quiet', name: 'Quiet and Meditation', count: cnt(num(c.meditations), 'practice', 'practices'), plain: 'Morning and evening', line: 'Breath and stillness, and a sacred practice when you choose it.', cls: 'hm-sh-quiet', art: '/shared/cards/meditation.webp' }
     ];
   }
@@ -1549,7 +1652,7 @@
 
   /* ---------- clicks ---------- */
   document.addEventListener('click', function (e) {
-    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share]');
+    var t = e.target.closest && e.target.closest('[data-hm],[data-hm-who],[data-hm-stage],[data-hm-part],[data-hm-setpart],[data-hm-ck],[data-hm-play],[data-hm-nav],[data-hm-tab],[data-hm-me],[data-hm-done],[data-hm-go],[data-hm-wk],[data-hm-tree],[data-hm-shelf],[data-hm-res],[data-hm-share],[data-hm-new]');
     if (!t || !t.closest('.hm')) return;
     if (t.hasAttribute('data-hm-nav')) { var nv = t.getAttribute('data-hm-nav'); e.preventDefault(); goTo(nv === 'tree' ? 'tree' : 'today'); return; }
     if (t.hasAttribute('data-hm-tab')) { e.preventDefault(); var tb = t.getAttribute('data-hm-tab'); if (document.getElementById('hm-sheet')) { S.sheetPushed = 0; closeSheet(true); } goTo(tb); return; }
@@ -1562,6 +1665,7 @@
     }
     if (t.hasAttribute('data-hm-done')) { itemDone(t.getAttribute('data-hm-done'), t); return; }
     if (t.hasAttribute('data-hm-go')) { itemGo(t.getAttribute('data-hm-go')); return; }
+    if (t.hasAttribute('data-hm-new')) { if (hasFn('newsSeen')) hCall('newsSeen'); refreshPane(); return; }
     if (t.hasAttribute('data-hm-wk')) { var wk = t.getAttribute('data-hm-wk'); if (wk && hasFn('act')) hCall('act', wk); return; }
     if (t.hasAttribute('data-hm-tree')) { openTreeSheet(t.getAttribute('data-hm-tree')); return; }
     if (t.hasAttribute('data-hm-share')) { shareCard(t.getAttribute('data-hm-share')); return; }
