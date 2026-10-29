@@ -278,11 +278,11 @@ function welcomeHtml() {
   const a = me();
   return `<div class="w-card w-welcome">
     <p class="w-eyebrow">Welcome</p>
-    <h2>Who is Willow for today?</h2>
+    <h2>Is Willow for you, or for someone you love?</h2>
     <p class="lead">Willow keeps what matters in one gentle place: how the spirit is doing, what the person wants, the stories they want kept, and what helped today. Everything stays on this device, locked with a passcode.</p>
-    <div class="w-choices">
-      <button type="button" class="w-choice" onclick="W.setup('me')"><b>For me</b><span>I'm in hospice, or facing the end of my life.</span></button>
-      <button type="button" class="w-choice" onclick="W.setup('love')"><b>For someone I love</b><span>I'm caring for a parent, a partner, a friend, or family.</span></button>
+    <div class="w-choices w-choices-big">
+      <button type="button" class="w-choice" data-w-for="me" onclick="W.setup('me')"><b>This is for me</b><span>I am in hospice care, or facing the end of life. Willow and its check-ins speak to me.</span></button>
+      <button type="button" class="w-choice" data-w-for="helper" onclick="W.setup('helper')"><b>I'm caring for someone I love</b><span>A parent, a partner, a friend, or family. I set up their tree, and my own caregiver tree grows here too.</span></button>
     </div>
     ${a && a.age !== 'adult' ? `<p class="w-small">Willow is written for grown-ups. Kids and middle schoolers have their own trees in <a class="text-link" href="/maple/">Maple</a> and <a class="text-link" href="/aspen/">Aspen</a>, and the guides and readings here are open to everyone.</p>` : ''}
     <p class="w-small">You don't need a profile to read the guides, the readings, or the bedside list. They're in the tabs above${window.innerWidth <= 700 ? ' and below' : ''}.</p>
@@ -536,6 +536,15 @@ function theyify(t) {
   const cut = t.indexOf('? Like '), head = cut > -1 ? t.slice(0, cut) : t, tail = cut > -1 ? t.slice(cut) : '';
   return head.replace(/\byourself\b/g, 'themselves').replace(/\byour\b/g, 'their').replace(/\byou (need|know|hold|want)\b/g, 'they $1').replace(/\byou\b/g, 'them') + tail;
 }
+/* Who Is Answering (GWG BLD 890): the person in hospice comes first, answering for themselves. The saved values stay
+   self, tapped, observed (C.answeredBy, read by the Field Guide too); only the words on these buttons change, with the name. */
+function whoLabel(v, n) { return v === 'self' ? `It's me, ${n}` : v === 'tapped' ? `${n} talks, I tap` : 'I\'m answering from what I see'; }
+function whoSub(v, n) {
+  return v === 'self' ? 'I am answering for myself. The questions speak to me.'
+    : v === 'tapped' ? `${n} answers out loud. You read each question and tap.`
+    : `When ${n} is resting, you answer from what you see and hear. This is kept apart from their own rings.`;
+}
+function whoHelp(n) { return `Every answer remembers who gave it, so ${n}'s own voice stays clear.`; }
 function ckSteps(ck) {
   const s = [];
   if (ck.askWho) s.push('who');
@@ -600,8 +609,8 @@ VIEWS.checkin = () => {
   let body = '';
   if (st === 'who') {
     body = `<div class="step-head"><div><div class="step-count">${ck.quick ? 'Quick Check-in' : 'Full Check-in'} for ${n}</div><h2 class="step-title" style="--domain-color:var(--gold)">Who is answering?</h2></div></div>
-      <p class="lead">Every answer keeps track of who gave it, so ${n}'s own voice is never mixed up with anyone else's.</p>
-      <div class="w-choices w-choices-3">${C.answeredBy.map(b => `<button type="button" class="w-choice" aria-pressed="${ck.by === b[0]}" onclick="W.who('${b[0]}')"><b>${esc(b[1])}</b><span>${b[0] === 'self' ? n + ' reads and answers on their own.' : b[0] === 'tapped' ? n + ' answers out loud. You read each question and tap.' : n + ' can\'t answer now. You answer from what you see and hear. This never adds to their rings.'}</span></button>`).join('')}</div>`;
+      <p class="lead">${esc(whoHelp(nameOf(ck.pid)))}</p>
+      <div class="w-choices w-choices-3">${C.answeredBy.map(b => `<button type="button" class="w-choice" aria-pressed="${ck.by === b[0]}" onclick="W.who('${b[0]}')"><b>${esc(whoLabel(b[0], nameOf(ck.pid)))}</b><span>${esc(whoSub(b[0], nameOf(ck.pid)))}</span></button>`).join('')}</div>`;
   } else if (st === 'faith') body = faithStep(ck);
   else if (st === 'quick') {
     body = `<div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title" style="--domain-color:var(--gold)">Quick Check-in</h2><div class="step-domain">One question for each part of the tree</div></div></div>
@@ -711,7 +720,7 @@ function gKind(ck) {
 function gTitle(ck) {
   const k = gKind(ck), n = nameOf(ck.pid);
   if (k === 'start') return 'Your First Check-in';
-  if (k === 'helper') return ck.quick ? 'Your Quick Check-in' : 'Your Own Check-in';
+  if (k === 'helper') return 'Your Caregiver Check-in'; // GWG BLD 890: never mistaken for the person's own check-in
   if (k === 'tapped' || k === 'observed') return (ck.quick ? 'Quick Check-in' : 'Full Check-in') + ' for ' + n;
   return ck.quick ? 'Quick Check-in' : 'Full Check-in';
 }
@@ -773,13 +782,12 @@ function guided() {
 function gClassic(ck, sc, Q) { if (S.ck !== ck) return; ck.i = gStepOf(ck, sc, Q); render(); scrollTop(true); }
 function gWho(ck) {
   const n = nameOf(ck.pid), T = ((GG_GUIDED.willow.kinds || {}).tapped || {}).who;
-  const subs = { self: n + ' reads and answers on their own.', tapped: n + ' answers out loud. You read each question and tap.', observed: n + ' can\'t answer now. You answer from what you see and hear. This never adds to their rings.' };
   let done = false;
   GH = GGGuided.run({ tree: 'willow', kind: 'who', voice: 'brian', title: (ck.quick ? 'Quick Check-in' : 'Full Check-in') + ' for ' + n,
     script: { voice: 'brian', open: [], close: [] }, noClose: true, quietHtml: quietInner(),
     questions: [{ id: 'who', type: 'choice', aside: true, label: 'Who Is Answering', eb: 'Who Is Answering', text: 'Who is answering?', lead: T || null, noTip: true,
-      help: `Every answer keeps track of who gave it, so ${n}'s own voice is never mixed up with anyone else's.`,
-      options: C.answeredBy.map(b => ({ v: b[0], label: b[1], sub: subs[b[0]] })) }],
+      help: whoHelp(n),
+      options: C.answeredBy.map(b => ({ v: b[0], label: whoLabel(b[0], n), sub: whoSub(b[0], n) })) }],
     onAnswer: (id, v) => { if (S.ck === ck) ck.by = v; },
     onDone: () => { done = true; if (S.ck !== ck) return; if (!ck.by) { render(); return; } setTimeout(() => gMain(ck), 30); },
     onReadAll: () => { done = true; render(); scrollTop(true); },
@@ -808,6 +816,21 @@ function gMain(ck) {
     onReadAll: () => { done = true; gClassic(ck, H && H.state().screen, Q); },
     onClose: () => { if (GH === H) GH = null; if (!done) setTimeout(() => { if (!done) gClassic(ck, H && H.state().screen, Q); }, 0); }
   });
+  // GWG BLD 890: a caregiver's own check-in offers the person's check-in right there, so the two are never mixed up.
+  if (kind === 'helper' && H && H.el) {
+    const ppl = helped().filter(p => !remembered(p.id));
+    if (ppl.length) {
+      const bar = document.createElement('p'); bar.className = 'w-ggd-swap';
+      bar.innerHTML = 'This check-in is about you. ' + ppl.map(p => `<button type="button" class="text-btn" data-w-swap="${esc(p.id)}">Check in with ${esc(p.name)} instead</button>`).join(' ');
+      bar.addEventListener('click', e => {
+        const b = e.target.closest('[data-w-swap]'); if (!b) return;
+        done = true; const id = b.getAttribute('data-w-swap'), quick = ck.quick;
+        if (window.GGGuided && GGGuided.close) GGGuided.close();
+        setTimeout(() => { view(id); startCheckin(quick); }, 30);
+      });
+      const top = H.el.querySelector('.ggd-top'); if (top && top.parentNode) top.parentNode.insertBefore(bar, top.nextSibling); else H.el.appendChild(bar);
+    }
+  }
 }
 // Every sentence Brian can say in Willow's guided check-ins, for the recorder (each kind, each way of answering).
 function guidedLines() {
