@@ -1016,3 +1016,103 @@ html.hm-toured,html.hm-toured body{overflow:hidden;}
 .hm-fillfor{display:flex;align-items:center;gap:6px;margin-top:4px;font-size:14.5px;font-weight:600;color:var(--c,var(--gold));min-width:0;overflow-wrap:anywhere;}
 .hm-fillfor .i{width:16px;height:16px;flex:none;}
 .hm-acts .hm-gplay{white-space:normal;}
+
+/* =====================================================================
+   BLD 893: My Grounded Way Plan. Ten screens over the app, from the approved mockup (patches/bld893/mockup/my-plan.html):
+   a bar with Back, the screen's name, dots, and Close; the screen; a footer with the next step. A centered panel on a wide
+   screen, the whole screen on a phone. Every control 44px or more. No dashes in any words here.
+   ===================================================================== */
+html.hm-planned,html.hm-planned body{overflow:hidden;}
+.hm-wpwrap{position:fixed;inset:0;z-index:850;display:flex;align-items:center;justify-content:center;padding:24px;}
+.hm-wp-bg{position:absolute;inset:0;background:rgba(28,18,10,.6);backdrop-filter:blur(3px);-webkit-backdrop-filter:blur(3px);}
+.hm-wp{position:relative;width:100%;max-width:580px;padding:0;margin:0;height:min(860px,calc(100vh - 48px));height:min(860px,calc(100dvh - 48px));display:flex;flex-direction:column;background:var(--bg);color:var(--ink);border-radius:28px;box-shadow:0 24px 60px rgba(0,0,0,.35);overflow:hidden;outline:none;animation:hm-tour-in .3s ease both;}
+@media (prefers-reduced-motion:reduce){.hm-wp{animation:none;}}
+.hm-wp-bar{display:flex;align-items:center;gap:10px;padding:12px 14px 10px 16px;border-bottom:1px solid var(--line);background:var(--card);}
+.hm-wp-back,.hm-wp-x{flex:none;width:44px;height:44px;border-radius:50%;border:1px solid var(--line);background:var(--card);color:var(--ink);display:grid;place-items:center;cursor:pointer;}
+.hm-wp-back .i,.hm-wp-x .i{width:20px;height:20px;}
+.hm-wp-x .i{transform:rotate(45deg);}
+.hm-wp-back[disabled]{opacity:.35;cursor:default;}
+.hm-wp-t{flex:1;min-width:0;font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:1px;text-transform:uppercase;font-size:15px;color:var(--ink-soft);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.hm-wp-dots{display:flex;gap:5px;flex:none;}
+.hm-wp-dots i{width:7px;height:7px;border-radius:50%;background:var(--line);}
+.hm-wp-dots i.on{background:var(--gold);}
+.hm-wp-body{flex:1;overflow-y:auto;overscroll-behavior:contain;padding:20px 20px 12px;display:flex;flex-direction:column;gap:16px;}
+.hm-wp-foot{display:flex;gap:10px;padding:12px 18px calc(16px + env(safe-area-inset-bottom,0px));border-top:1px solid var(--line);background:var(--card);}
+.hm-wp-btn{flex:1;min-height:52px;border-radius:999px;border:0;background:var(--gold);color:var(--on);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.9px;text-transform:uppercase;cursor:pointer;padding:0 14px;}
+.hm-wp-btn.ghost{background:transparent;color:var(--gold);border:1.5px solid var(--gold);}
+.hm-wp :focus-visible{outline:3px solid var(--gold-bright);outline-offset:2px;}
+.hm-wp-h2{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:32px;line-height:1.08;margin:0;text-wrap:balance;outline:none;}
+.hm-wp-lead{color:var(--ink-soft);margin:0;font-size:16.5px;}
+.hm-wp-lead.sm{font-size:15px;}
+.hm-wp-small{display:block;color:var(--ink-soft);font-size:14px;margin-top:6px;}
+.hm-wp-k{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13.5px;letter-spacing:1.3px;text-transform:uppercase;color:var(--c,var(--gold));}
+.hm-wp-lbl{font-family:'Barlow Condensed',sans-serif;font-weight:700;letter-spacing:.8px;text-transform:uppercase;font-size:15px;margin:0 0 8px;}
+.hm-wp-card{background:var(--card);border:1px solid var(--line);border-radius:18px;padding:14px 16px;}
+.hm-wp-chips{display:flex;flex-wrap:wrap;gap:8px;}
+.hm-wp-chip{min-height:44px;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:8px 16px;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:15.5px;letter-spacing:.5px;text-transform:uppercase;cursor:pointer;}
+.hm-wp-chip[aria-pressed="true"]{background:var(--c,var(--gold));border-color:var(--c,var(--gold));color:var(--on);}
+.hm-wp-chip[aria-disabled="true"]{opacity:.4;cursor:not-allowed;}
+.hm-wp-tiles{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+.hm-wp-list{display:grid;gap:8px;}
+.hm-wp-tile{text-align:left;border:1.5px solid var(--line);background:var(--card);color:var(--ink);border-radius:16px;padding:12px 14px;min-height:44px;cursor:pointer;font:inherit;display:flex;flex-direction:column;gap:3px;min-width:0;}
+.hm-wp-tile b{font-family:'Barlow Condensed',sans-serif;font-size:17px;letter-spacing:.4px;text-transform:uppercase;}
+.hm-wp-tile small{color:var(--ink-soft);font-size:14px;line-height:1.35;}
+.hm-wp-tile[aria-pressed="true"]{border-color:var(--c,var(--gold));background:var(--cs,var(--today-s));}
+.hm-wp-tile[aria-pressed="true"] b::after{content:"  \2713";color:var(--c,var(--gold));}
+.hm-wp-tile .covered,.hm-wp-tile .inplan{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--strong);}
+.hm-wp-tile .inplan{color:var(--ink-soft);}
+.hm-wp-parts{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+.hm-wp-part{border-radius:14px;padding:10px 12px;background:var(--cs);border:1px solid color-mix(in srgb,var(--c) 30%,transparent);min-width:0;}
+.hm-wp-part b{display:block;font-family:'Barlow Condensed',sans-serif;letter-spacing:.5px;text-transform:uppercase;color:var(--c);}
+.hm-wp-part span{display:block;font-size:14px;color:var(--ink-soft);}
+.hm-wp-part em{font-style:normal;font-weight:600;font-size:14px;color:var(--c);}
+.hm-wp-part.edge{outline:2px solid var(--c);outline-offset:1px;}
+.hm-wp-row{display:flex;gap:10px;align-items:flex-start;padding:4px 0;}
+.hm-wp-row .dot{width:10px;height:10px;border-radius:50%;background:var(--c);margin-top:8px;flex:none;}
+.hm-wp-row .tx{min-width:0;flex:1;}
+.hm-wp-row .tx b{display:block;}
+.hm-wp-row .tx small{color:var(--ink-soft);font-size:14.5px;}
+.hm-wp-row .hm-wp-chip{flex:none;}
+.hm-wp-nudge{background:var(--today-s);border:1px solid color-mix(in srgb,var(--gold) 35%,transparent);border-radius:16px;padding:12px 14px;font-size:15.5px;}
+.hm-wp-q{padding:10px 0;border-top:1px solid var(--line);}
+.hm-wp-q p{margin:0 0 8px;font-weight:500;}
+.hm-wp-q small{display:block;color:var(--ink-soft);margin-top:6px;}
+.hm-wp-week{display:grid;gap:8px;}
+.hm-wp-day{display:grid;grid-template-columns:44px minmax(0,1fr) auto;gap:10px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:9px 12px;}
+.hm-wp-day.today{border-color:var(--gold);}
+.hm-wp-day .d{font-family:'Barlow Condensed',sans-serif;font-weight:700;text-transform:uppercase;letter-spacing:.8px;color:var(--ink-soft);}
+.hm-wp-day .pills{display:flex;flex-wrap:wrap;gap:5px;min-width:0;}
+.hm-wp-pill,.hm-wpill{font-size:13px;padding:3px 9px;border-radius:999px;background:var(--cs);color:var(--c);font-weight:600;max-width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+.hm-wp-rest{font-size:14px;color:var(--ink-soft);}
+.hm-wp-day .m{font-variant-numeric:tabular-nums;color:var(--ink-soft);font-size:13.5px;white-space:nowrap;}
+.hm-wp-today{display:grid;gap:10px;}
+.hm-wp-tc{display:grid;grid-template-columns:auto minmax(0,1fr);gap:12px;align-items:center;background:var(--card);border:1px solid var(--line);border-radius:18px;padding:12px 14px;}
+.hm-wp-tc .circle{width:28px;height:28px;border-radius:50%;border:2px solid var(--c,var(--gold));}
+.hm-wp-tc.done .circle{background:var(--c,var(--gold));}
+.hm-wp-tc .when{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--c,var(--gold));}
+.hm-wp-tc b{display:block;line-height:1.25;}
+.hm-wp-tc small{display:block;color:var(--ink-soft);font-size:14px;}
+.hm-wp-tc .for{display:block;font-size:13.5px;color:var(--strong);font-weight:600;}
+@media (prefers-reduced-motion:no-preference){.hm-wp-body>*{animation:hm-wp-in .22s ease both;}@keyframes hm-wp-in{from{opacity:.4;transform:translateY(4px);}to{opacity:1;transform:none;}}}
+@media (max-width:699px){
+  .hm-wpwrap{padding:0;}
+  .hm-wp{max-width:none;height:100%;border-radius:0;}
+  .hm-wp-bar{padding-top:calc(10px + env(safe-area-inset-top,0px));padding-left:max(12px,env(safe-area-inset-left,0px));padding-right:max(12px,env(safe-area-inset-right,0px));}
+  .hm-wp-body{padding:16px 16px 10px;}
+  .hm-wp-foot{padding-left:16px;padding-right:16px;}
+  .hm-wp-dots{gap:4px;}.hm-wp-dots i{width:6px;height:6px;}
+  .hm-wp-h2{font-size:29px;}
+  .hm-wp-btn{font-size:16px;}
+}
+@media (max-width:359px){.hm-wp-tiles,.hm-wp-parts{grid-template-columns:1fr;}}
+/* The doors: Grow's card, Week's bar, the tour's last card; and Week's meditation and spirit lines, Today's week 3 note. */
+.hm-wplan{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--card);border:1px solid var(--line);border-left:5px solid var(--leaves);border-radius:18px;padding:12px 14px;margin:0 0 14px;}
+.hm-wplan .tx{flex:1;min-width:12em;}
+.hm-wplan .tx b{display:block;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.1;}
+.hm-wplan .tx small{color:var(--ink-soft);font-size:14.5px;}
+.hm-wplan .hm-pill{min-height:44px;}
+.hm-wsp{display:flex;flex-wrap:wrap;gap:5px;margin-top:4px;}
+.hm-wmed{display:block;}
+.hm-tour-plan{display:flex;align-items:center;justify-content:center;gap:8px;width:100%;min-height:48px;margin-top:14px;border-radius:999px;border:1.5px solid var(--gold);background:var(--today-s);color:var(--gold);font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:17px;letter-spacing:.9px;text-transform:uppercase;cursor:pointer;}
+.hm-tour-plan .i{width:18px;height:18px;}
+.hm-waynote{margin-bottom:12px;}

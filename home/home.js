@@ -16,7 +16,8 @@
                                                tour: 'b884' once the welcome tour is seen (BLD 884),
                                                rhythm: {'part|Name': 'd'|'w'|'n'|'f3'} a practice's rhythm the person chose (BLD 885;
                                                'f' plus a number 2 to 5 is A Few Times a Week, that many days),
-                                               later: {'part|Name': 'YYYY-MM-DD'} a When You're Ready nudge rests until then (BLD 885)}
+                                               later: {'part|Name': 'YYYY-MM-DD'} a When You're Ready nudge rests until then (BLD 885),
+                                               way: My Grounded Way Plan's own choices (BLD 893, see that section)}
      window.GG_RHYTHM (shared/practice-rhythm.js, BLD 885)  {<tree>: {'part|Name': {r: 'd'|'f'|'w'|'n', x (times a week, for f), min, how: [steps]}}}
                                               each practice's suggested rhythm, minutes, and steps; read only, guarded
      GGP.list(), GGP.shared(id), GGP.openIds() Your Family: progress only (days tended, rings, season)
@@ -44,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b892';
+  var V = 'b893';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b888';
@@ -364,8 +365,12 @@
     S.view = viewOf();
     // Kid profiles keep their Today and My Tree (BLD 869).
     if (isKid(S.p)) { closeSheet(true); if (location.hash === '#tree') { root.innerHTML = treeTabHtml(); paintNav('kidtree'); maybeTour(); return; } var kf = focusKey(); root.innerHTML = kidHtml(); paintNav('kid'); focusBack(kf); maybeTour(); return; }
+    var wantPlan = location.hash === '#plan';
+    if (wantPlan) { try { history.replaceState(null, '', location.pathname + '#today'); } catch (e) {} }
     renderApp(route());
     maybeTour();
+    // BLD 893: /home/#plan opens My Grounded Way Plan; an open plan redraws with anything new (a check-in).
+    if (wantPlan) openPlan(); else if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); }
   }
 
   /* Kid profiles: a row of pills on a wide screen, a bar along the bottom on a phone (Today and My Tree). */
@@ -759,7 +764,7 @@
     if (location.hash !== hash) location.hash = hash; else render();
     window.scrollTo(0, 0);
   }
-  window.addEventListener('hashchange', function () { if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
+  window.addEventListener('hashchange', function () { if (location.hash === '#plan' && S.id) { render(); return; } if (viewOf() === S.view) return; var was = S.view; render(); if (!/^me/.test(S.view) && !/^me/.test(was || '')) window.scrollTo(0, 0); });
 
   /* ---------- the shell: header, the tab's own page, the tab bar ---------- */
   function headingOf(tab) {
@@ -1148,7 +1153,7 @@
     return '<article class="hm-titem hm-card edge lift hm-prac ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (open ? ' open' : '') + (opt.cls ? ' ' + opt.cls : '') + '" data-hm-card="' + esc(x.key) + '">' +
       '<div class="hm-pc"><div class="scene"><img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
       '<span class="hm-time ey">' + esc(opt.when || x.when) + '</span><b class="hm-h3">' + esc(x.title) + '</b>' + (x.sub && !opt.nosub ? '<small class="hm-meta">' + esc(x.sub) + '</small>' : '') +
-      '<div class="hm-acts tight">' + howBtn(x) + doneBtn(x, opt.doneLabel) + rchipHtml(x) + guideBtn(x) + '</div>' + (opt.extra || '') + '</div></div>' + rmenuHtml(x) + howPanel(x) + '</article>';
+      '<div class="hm-acts tight">' + howBtn(x) + doneBtn(x, opt.doneLabel) + (opt.plain ? '' : rchipHtml(x) + guideBtn(x)) + '</div>' + (opt.extra || '') + '</div></div>' + (opt.plain ? '' : rmenuHtml(x)) + howPanel(x) + '</article>';
   }
   function partName(x) { return (PART[x.part] || { n: '' }).n; }
   function dayName(d) { var x = parse(d); return x ? DAYS[x.getDay()] : ''; }
@@ -1241,6 +1246,7 @@
     return { key: 'tree', hour: 20.5, when: 'Evening', title: t.n + ' Check-in', sub: ck ? 'A short check-in to close the day' : 'Your first check-in plants your tree', btn: 'Check In', tint: 'gold', done: did, src: 'home' };
   }
   function todayItems() {
+    wayJoin();
     var h = homeRec(), d = h.days[today()] || {}, items = [], tendItems = null, sm = null, ready = false;
     if (tendReady()) {
       sm = summary(); ready = !!(sm && sm.ready !== false);
@@ -1264,6 +1270,8 @@
     mergeFills(items, plan); syncFills(items); guideFor(plan);
     plan.forEach(function (x, i) { x.i = i; if (x.filledBy) return; if (x.r === 'd') items.push(x); else if (x.doneToday) extra++; });
     plan = plan.filter(function (x) { return !x.filledBy; });
+    // BLD 893: the spirit items My Grounded Way Plan chose for today.
+    spiritItems().forEach(function (x) { items.push(x); });
     items.push(treeItem(h, d));
     items.forEach(function (x, i) { x.i = i; });
     items.sort(function (a, b) { return a.hour - b.hour || a.i - b.i; });
@@ -1278,6 +1286,7 @@
   var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play' };
   function itemHtml(x) {
     if (x.src === 'plan') return pracCardHtml(x);
+    if (x.src === 'spirit') return pracCardHtml(x, { plain: true });
     if (x.pairs) return fillCardHtml(x);
     return '<article class="hm-titem hm-card edge lift ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + (x.src === 'plan' ? ' hm-prac' : '') + '">' +
       '<div class="hm-pc"><div class="scene">' + '<img src="' + esc(x.image || artFor(x)) + '" alt="" loading="lazy" decoding="async"></div><div class="bd tx">' +
@@ -1333,6 +1342,7 @@
       lead = '<article class="hm-startc hm-card edge lift hm-p-leaves"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'tend-body.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-k">Tending</div><h3 class="hm-h3">' + (tendStarted() ? 'Your Tending Plan' : 'Begin Your Tending') + '</h3><p class="hm-sub" style="margin-top:4px">' + (tendStarted() ? 'Finish a short start-up check and your meals, movement, and quiet fill your day.' : 'A short start-up check shapes it to you: your goals, the people at your table, and movement for your level.') + '</p>' +
         '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="today=tending">' + I('sprout') + (tendStarted() ? 'Continue' : 'Start Tending') + '</button><button type="button" class="hm-linkbtn" data-hm="hidetend">Hide this card</button></div></div></div></article>';
     }
+    lead = wayNoteHtml() + lead;
     var list = items.filter(function (x) { return !x.side; });
     var head = '<div class="hm-grp hm-p-leaves"><span class="hm-badge">' + I('sprout') + '</span><h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
     var fab = T.ready ? '<button type="button" class="hm-fab" data-hm-tab="today=log" aria-label="Log a plate or a note">' + I('plus') + '</button>' : '';
@@ -1348,7 +1358,7 @@
     if (b) { try { b.focus({ preventScroll: true }); } catch (e) {} }
   }
   function itemGo(key) {
-    if (/^p:/.test(key)) { openHowFromNow(key); return; }
+    if (/^[ps]:/.test(key)) { openHowFromNow(key); return; }
     var x = findItem(key), t = TREES[S.tree] || TREES.oak; if (!x) return;
     if (x.src === 'tend') { if (hasFn('act')) hCall('act', x.hkey); return; }
     if (x.src === 'old') { goTo('today=' + (x.old === 'plate' ? 'log' : 'tending')); if (x.old === 'move') { S.quiet = true; try { window.GGHealth.open('move'); } catch (e) {} S.quiet = false; } return; }
@@ -1364,7 +1374,10 @@
     if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
     else if (x.src === 'tend' && x.pairs) fillDone(x, on);
     else if (x.src === 'tend') tendMark(x, on); else if (x.src === 'old') { itemGo(key); return; }
-    else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome(); }
+    else if (x.src === 'spirit') spiritMark(x.pid, on);
+    else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome();
+      // BLD 893: a Sacred Pause chosen in My Grounded Way Plan grows Roots too.
+      if (key === 'pray' && planOK() && obj(wayRec().spirit).pause && waySaved()) spiritMark(spiritPid('pause', S.tree), on); }
     if (btn) { btn.setAttribute('aria-pressed', String(on)); var card = btn.closest('.hm-item,.hm-card,.hm-kp'); if (card) { card.classList.toggle('done', on); card.querySelectorAll('[data-hm-done],[data-hm-hdone]').forEach(function (b2) { if (b2 !== btn) b2.setAttribute('aria-pressed', String(on)); }); } }
     if (on && btn && !matchMedia('(prefers-reduced-motion: reduce)').matches) { var burst = document.createElement('span'); burst.className = 'hm-burst'; for (var j = 0; j < 8; j++) { var a = j / 8 * Math.PI * 2, dd = 22 + (j % 2) * 8, dot = document.createElement('i'); dot.style.setProperty('--x', Math.cos(a) * dd + 'px'); dot.style.setProperty('--y', Math.sin(a) * dd + 'px'); burst.appendChild(dot); } btn.appendChild(burst); setTimeout(function () { burst.remove(); }, 800); }
     setTimeout(function () { if (isKid(S.p)) render(); else refreshPane(); }, on ? 650 : 0);
@@ -1374,9 +1387,9 @@
   function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week'); return w && Array.isArray(w.days) ? w : null; }
   /* BLD 885: the weekly practices lead the Week tab, beside the shopping list on a wide screen. */
   function weekHtml() {
-    var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = weekBody();
+    var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = planDoorWeek() + weekBody();
     if (!wp) return body;
-    if (body.indexOf('<div class="hm-wgrid"><div class="hm-col hm-wside">') === 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
+    if (body.indexOf('<div class="hm-wgrid"><div class="hm-col hm-wside">') >= 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
     return '<div class="hm-wpracs">' + wp + '</div>' + body;
   }
   function weekBody() {
@@ -1396,7 +1409,8 @@
       return '<div class="hm-wday' + (isT ? ' today' : '') + '"' + (isT ? ' aria-current="date"' : '') + '><span class="dn">' + esc(String(d.day || '').slice(0, 3)) + '<small>' + esc(shortDate(d.date)) + '</small></span>' + tile(din.title ? FOOD_ROT[di % FOOD_ROT.length] : mv.title ? (mv.image || ART2.move) : ART2.quiet, 'sm') + '<div class="tx">' +
         (din.title ? '<button type="button" class="hm-wdin" data-hm-wk="' + esc(din.key || '') + '"' + (din.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ' dinner: ' + din.title + (din.key ? ', open to cook' : '')) + '">' + esc(din.title) + mark(din) + '</button>' : '') +
         (mv.title ? '<button type="button" class="hm-wmove" data-hm-wk="' + esc(mv.key || '') + '"' + (mv.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ': ' + mv.title + (mv.key ? ', start it' : '')) + '">' + esc(mv.title) + mark(mv) + '</button>' : '') +
-        (!din.title && !mv.title ? '<span class="hm-wnone">A day to rest</span>' : '') +
+        weekExtra(d) +
+        (!din.title && !mv.title && !obj(d.med).title ? '<span class="hm-wnone">A day to rest</span>' : '') +
         '</div></div>';
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
@@ -1497,7 +1511,7 @@
     var ready = readyHtml(planItems(false));
     var sober = sd ? soberHtml(sd) : (h.parts.indexOf('sober') >= 0 ? soberInviteHtml() : '');
     var fruit = tendReady() && tendIsReady() && hasFn('render') ? '<div id="hm-fruit" class="hm-sec"></div>' : '';
-    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + treeCardHtml(ck, ed, t) + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + season + plan + ready + sober + fruit + (h.hidden.tend || tendStarted() ? '' : offerHtml(h)) + '</div></div>';
+    return '<div class="hm-grow"><div class="hm-gcol hm-col">' + treeCardHtml(ck, ed, t) + familyHtml(h) + '</div><div class="hm-gcol hm-col">' + season + plan + planDoorGrow() + ready + sober + fruit + (h.hidden.tend || tendStarted() ? '' : offerHtml(h)) + '</div></div>';
   }
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
@@ -1734,7 +1748,7 @@
     var id = S.id;
     (function wait() {
       if (S.id !== id || T.open) return;
-      var busy = document.querySelector('.ggp-back,.hm-frame,#hm-sheet');
+      var busy = document.querySelector('.ggp-back,.hm-frame,#hm-sheet,#hm-plan');
       if (busy || document.hidden) { if (++T.tries < 120) setTimeout(wait, 700); else T.asked[id] = 0; return; }
       if (!tourSeen()) openTour();
     })();
@@ -1743,7 +1757,9 @@
     var c = T.list[T.i], n = T.list.length, last = T.i === n - 1, a = TOUR_ART[c.art] || TOUR_ART['home-morning'];
     return '<div class="hm-tour-pic"><picture aria-hidden="true"><source media="(max-width:699px)" srcset="' + a[1] + '"><img src="' + a[0] + '" alt="" decoding="async"></picture>' +
         '<div class="hm-tour-hd"><span class="hm-tour-ey">' + esc(c.ey) + '</span><h2 class="hm-tour-t" id="hm-tour-t">' + esc(c.t) + '</h2>' + (T.i === 0 ? '<span class="hm-tour-open">Open to everyone during our launch season</span>' : '') + '</div></div>' +
-      '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') + '</div>' +
+      '<div class="hm-tour-body" id="hm-tour-d"><p class="hm-tour-d">' + esc(c.d) + '</p><p class="hm-tour-try"><b>Try this:</b> ' + esc(c.tr) + '</p>' + (c.note ? '<p class="hm-tour-note">' + esc(c.note) + '</p>' : '') +
+        // BLD 893: the last card opens My Grounded Way Plan.
+        (last && !isKid(S.p) && planOK() ? '<button type="button" class="hm-tour-plan" data-hm-tour="plan">' + I('sprout') + '<span>' + (waySaved() ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</span></button>' : '') + '</div>' +
       '<div class="hm-tour-ft">' +
         (T.i > 0 ? '<button type="button" class="hm-tour-b back" data-hm-tour="back">' + I('back') + '<span>Back</span></button>' : '<span class="hm-tour-sp" aria-hidden="true"></span>') +
         '<span class="hm-tour-dots" role="img" aria-label="Card ' + (T.i + 1) + ' of ' + n + '">' + T.list.map(function (x, j) { return '<i' + (j === T.i ? ' class="on"' : '') + '></i>'; }).join('') + '</span>' +
@@ -1783,6 +1799,7 @@
     var t = e.target.closest && e.target.closest('[data-hm-tour]'); if (!t) return;
     var a = t.getAttribute('data-hm-tour');
     if (a === 'next') tourStep(1); else if (a === 'back') tourStep(-1); else if (a === 'skip' || a === 'start') closeTour();
+    else if (a === 'plan') { closeTour(); setTimeout(function () { openPlan(); }, 60); }
   });
   document.addEventListener('keydown', function (e) {
     if (!T.open) return;
@@ -1801,11 +1818,536 @@
 
   function pruneDays(h) { var cut = addDays(today(), -60); Object.keys(h.days).forEach(function (k) { if (k < cut) delete h.days[k]; }); }
 
+  /* =====================================================================
+     BLD 893: My Grounded Way Plan (Chris, October 29, 2026: "1", the approved mockup patches/bld893/mockup/my-plan.html).
+     Ten screens over the app: Welcome, Growing Edges, Body, Mind, Spirit, Table, Practices, Start Small, Your Week, Today.
+     The plan is a guided way to set the stores that already exist; it keeps no copy of them:
+       Body, Mind, Table   Tending's own settings through GGHealth.applyPlan (set.track, level, cardioDays, days, mins, gear,
+                           flow and flowDays, medFreq, medTime, use, house), the same fields the start-up check writes
+       Sacred Pause        the home record's parts ('pray'), the A Sacred Pause card already on Today
+       Practices           the lead tree's growth plan (tend.plan[part].selected), the same way the tree page saves picks
+       Lead tree           the profile's own tree (GGP.setTree), so Today, Week, and Grow follow it
+     and one small record of its own choices in the home record (GGP data 'home'):
+       way: {v: 1, saved: 'YYYY-MM-DD', lead, spirit: {gratitude, kindness, nature, quiet, pause, prayer: 1},
+             prac: ['part|Name'] picked here, pend: ['part|Name'] waiting for week 3 (Start Lighter), light: 1,
+             join: 'YYYY-MM-DD' (week 3 begins), joined: 'YYYY-MM-DD', note: 1 (the one-time note on Today), draft: 1}
+     Start Small applies the choices as a draft, so Your Week and Today read the real stores; Save My Plan keeps them, and
+     closing before Save My Plan puts every store back as it was. Spirit items are Today cards on their own days, marked in the
+     tree's day record (tend.days[date].d, the tree's own name when its library has one), so they grow their part of the tree.
+     Prayer is offered only as a choice, never preselected. Kids' trees (Maple, Aspen) keep their own plans.
+     ===================================================================== */
+  var WP_SCREENS = ['Welcome', 'Growing Edges', 'Body', 'Mind', 'Spirit', 'Table', 'Practices', 'Start Small', 'Your Week', 'Today'];
+  var WP_ALL = [0, 1, 2, 3, 4, 5, 6];
+  var WP_SPIRIT = [
+    { id: 'gratitude', n: 'Gratitude', line: 'Three good things, morning or night', today: 'Three good things from your day.', part: 'fruit', days: WP_ALL, hour: 21, when: 'Evening', min: 3,
+      how: ['Find a quiet minute, in the morning or before sleep.', 'Name three good things from the last day. Small ones count.', 'For each one, notice what helped it happen.'] },
+    { id: 'kindness', n: 'Kindness', line: 'Warm wishes and one kind act', today: 'Warm wishes and one kind act.', part: 'branches', days: [3, 6], hour: 12.5, when: 'Any time', min: 5,
+      how: ['Picture someone you care about and wish them well: may you be well, may you be at peace.', 'Widen the circle to someone you know a little, and then to yourself.', 'Choose one kind act for today, and do it.'] },
+    { id: 'nature', n: 'Time Outside', line: 'A walk among trees, a sky to look at', today: 'A slow walk among trees, or a sky to look at.', part: 'roots', days: [6, 0], hour: 15, when: 'Afternoon', min: 30,
+      how: ['Step outside to a park, a tree lined street, or your own yard.', 'Walk or sit slowly, with your phone in your pocket.', 'Take it in one sense at a time: the light, the sounds, the air, the ground under you.'] },
+    { id: 'quiet', n: 'Quiet Reflection', line: 'Ten still minutes with a question', today: 'Ten still minutes with one question.', part: 'bark', days: [1, 4], hour: 20, when: 'Evening', min: 10,
+      how: ['Sit somewhere quiet for about ten minutes.', 'Hold one question, like: what mattered most today?', 'Let your thoughts settle, and write one line if you like.'] },
+    { id: 'pause', n: 'Sacred Pause', line: 'A breath before meals or at noon', part: 'roots', days: WP_ALL, hour: 12.5, when: 'Any time', min: 1, home: 'pray' },
+    { id: 'prayer', n: 'Prayer in My Tradition', title: 'Prayer', line: 'Only when you choose it, in your own words', today: 'In your own words, in the way of your own tradition.', part: 'roots', days: WP_ALL, hour: 7, when: 'Morning', min: 5,
+      how: ['Find a quiet moment, in the way of your own tradition.', 'Pray in your own words, or with words you know by heart.', 'Close with a slow breath, and carry it into your day.'] }
+  ];
+  var WP_SP = {}; WP_SPIRIT.forEach(function (x) { WP_SP[x.id] = x; });
+  /* The tree's own practice record where its library has one, so a spirit item and the tree's practice are one record. */
+  var SP_REC = { gratitude: 'fruit|Three Good Things', kindness: 'branches|Kindness', nature: 'roots|A Walk Among Trees', quiet: 'bark|Quiet Reflection', pause: 'roots|Sacred Pause', prayer: 'roots|Prayer' };
+  function spiritPid(id, tree) { return id === 'nature' && tree === 'pine' ? 'roots|Time Outside' : SP_REC[id]; }
+  var WP_DAYSETS = { 2: [1, 4], 3: [1, 3, 5], 4: [1, 2, 4, 5], 5: [1, 2, 3, 4, 5], 6: [1, 2, 3, 4, 5, 6] };
+  var WP_DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], WP_ORDER = [1, 2, 3, 4, 5, 6, 0];
+  var WP_PLACE = { home: [], light: ['dumbbells', 'bands'], gym: ['dumbbells', 'bands', 'bar', 'dip', 'step', 'bench', 'machines', 'cardio'] };
+  var WP_TRACK = { strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed', gentle: 'Gentle' };
+  var WP_MED = { daily: 'Every Day', few: 'A Few Times a Week', weekly: 'Once a Week', later: 'Later' };
+  var WP_WORDS = { roots: 'What grounds you', trunk: 'Purpose and goals', bark: 'Mind and calm', branches: 'People and connection', leaves: 'Body and energy', fruit: 'Joy and progress' };
+  var WP_LONG = { roots: 'what grounds you', trunk: 'purpose and goals', bark: 'calm and a steady mind', branches: 'people and connection', leaves: 'movement and energy', fruit: 'joy and progress' };
+  /* Suggestions stay plain and general: faith practices wait for a person to choose them in the tree, and practices written
+     for one season of life (Living Sober, health and ability, loss) stay in the tree, where they show as Fits You. */
+  var WP_SKIP = /^(Prayer|Worship|Tithe|Scripture|Ritual|Teach|Faith|Faith Community|Centering Prayer|Examen|Breath Prayer|Lament|Sabbath Hour|Spiritual Direction|Mealtime Blessing|Sacred Music|Prayers You Know by Heart|Hold Someone in Light|Find Your People for Faith|Talk with a Faith Mentor|Carry Your Questions|Bring Your Questions|What Holds Me Up|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist|My Safety Plan|Support Group|Sober Week|Tell a Safe Adult|Name Your Trusted Adult|Pacing Your Day|Rest Before You're Spent|Appointment Prep|Hard-Day Plan|Body Kindness Scan|Quiet the Senses|Say What You Need|A Break for the Helper|Worth Beyond Doing|Fall Confidence|Home Safety Walk-Through|Grief Time|Letter to Someone Gone|Make Your Wishes Known|Comfort Within Reach|Worth Living|Caregiver Pause|Shift Worker's Rest Plan)$/i;
+  var WP = { open: false, i: 0, d: null, snap: null, back: null, sug: null };
+
+  function wayRec() { var h = S.id && window.GGP ? GGP.data(S.id, 'home') : null; return obj(h && h.way); }
+  function waySaved() { return !!wayRec().saved; }
+  function planOK() { return !!(S.id && S.p && !isKid(S.p) && FILL_TREES.indexOf(S.tree) >= 0); }
+  /* The grown-up trees this profile has used (a check-in or a tend record), for the lead tree chips. */
+  function wpTrees() {
+    if (S.tree === 'pine') return ['pine'];
+    var all = obj(GGP.data(S.id)), out = ['oak', 'birch', 'sequoia'].filter(function (tr) { return tr === S.tree || (all[tr] && typeof all[tr] === 'object' && (lastCheckin(S.id, tr) || obj(all[tr].tend).plan)); });
+    return out.length ? out : [S.tree];
+  }
+  /* The spirit items on a day (the person's choices, their days, and Start Lighter's wait until week 3). */
+  function spiritOn(date, w) {
+    w = w || wayRec(); if (!w.saved && !w.draft) return [];
+    if (w.light && w.join && date < w.join) return [];
+    var dow = parse(date).getDay(), sp = obj(w.spirit);
+    return WP_SPIRIT.filter(function (x) { return sp[x.id] && x.days.indexOf(dow) >= 0; });
+  }
+  /* Today's spirit cards. Sacred Pause is the A Sacred Pause card already on Today; a spirit item already in the growth plan
+     is that practice's own card. */
+  function spiritItems() {
+    if (!planOK()) return [];
+    var tree = S.tree, t = tendGet(S.id, tree), inPlan = {};
+    planList(S.id, tree).forEach(function (x) { inPlan[x.pid] = 1; });
+    return spiritOn(today()).filter(function (x) { return !x.home; }).map(function (x) {
+      var pid = spiritPid(x.id, tree); if (inPlan[pid]) return null;
+      var dn = practiceDone(t, pid), P = PART[x.part];
+      return { key: 's:' + x.id, src: 'spirit', sid: x.id, pid: pid, part: x.part, hour: x.hour, when: x.when + ' · ' + P.n, title: x.title || x.n, sub: x.today || x.line + '.', btn: 'How', tint: x.part, done: dn, pressed: dn, image: PRAC_ART[x.part], steps: x.how, min: x.min, r: 'd', doneToday: dn };
+    }).filter(Boolean);
+  }
+  /* A spirit item done or undone: the tree's own day mark, the same mark GGTend.check makes. */
+  function spiritMark(pid, on) {
+    var tree = S.tree, t = tendGet(S.id, tree, true); if (!t) return false;
+    if (!t.days || typeof t.days !== 'object') t.days = {};
+    var d = today(), x = t.days[d];
+    if (!x || typeof x !== 'object') x = t.days[d] = { d: [], n: {}, e: [], a: [] };
+    if (!Array.isArray(x.d)) x.d = [];
+    var i = x.d.indexOf(pid); if (on && i < 0) x.d.push(pid); else if (!on && i >= 0) x.d.splice(i, 1);
+    publishTree(S.id, tree, t); saveHome(); return true;
+  }
+  /* Start Lighter: on the first day of week 3 the waiting practices join the growth plan, and Today shows one note. */
+  function wayJoin() {
+    if (!planOK()) return;
+    var h = GGP.data(S.id, 'home'); if (!h || !h.way || !h.way.saved || !h.way.light || !h.way.join || h.way.joined || today() < h.way.join) return;
+    var w = h.way; w.joined = today(); w.note = 1;
+    if (arr(w.pend).length) { addPicks(w.lead || S.tree, w.pend, []); w.prac = arr(w.prac).concat(w.pend); w.pend = []; }
+    saveHome();
+  }
+  function wayNoteHtml() {
+    var w = wayRec(); if (!w.note) return '';
+    return '<article class="hm-card hm-p-leaves hm-waynote" role="status"><div class="hm-k">Week 3 · Your Plan Grows</div><h3 class="hm-h3">Spirit and practices join your day</h3>' +
+      '<p class="hm-sub">Two good weeks of movement, meditation, and dinner. Today the rest of your plan joins in: your spirit choices and the practices for your Growing Edges.</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-wpnote="1">Got It</button></div></article>';
+  }
+  /* Add (and take away) names in a tree's growth plan, as the tree page does: tend.plan[part].selected. */
+  function addPicks(tree, add, remove) {
+    var t = tendGet(S.id, tree, true); if (!t) return;
+    if (!t.plan || typeof t.plan !== 'object') { var p0 = planOf(S.id, tree); t.plan = p0 ? JSON.parse(JSON.stringify(p0)) : {}; }
+    arr(add).forEach(function (pid) {
+      var c = pid.indexOf('|'), part = pid.slice(0, c), name = pid.slice(c + 1); if (PART_KEYS.indexOf(part) < 0 || !name) return;
+      var x = t.plan[part] = obj(t.plan[part]); if (!Array.isArray(x.selected)) x.selected = [];
+      var has = x.selected.indexOf(name) >= 0 || x.custom === name || arr(x.own).indexOf(name) >= 0 || arr(x.lib).some(function (l) { return l && l.n === name; });
+      if (!has) x.selected.push(name);
+    });
+    arr(remove).forEach(function (pid) {
+      var c = pid.indexOf('|'), part = pid.slice(0, c), name = pid.slice(c + 1), x = t.plan[part]; if (!x) return;
+      if (Array.isArray(x.selected)) { var j = x.selected.indexOf(name); if (j >= 0) x.selected.splice(j, 1); }
+    });
+  }
+
+  /* ---------- the draft: every screen starts from the saved choices ---------- */
+  function wpInfo() { return hCall('planInfo') || null; }
+  function wpDraft() {
+    var info = wpInfo() || {}, s = obj(info.set || tendSet()), w = wayRec(), h = homeRec(), gentle = s.level === 'gentle';
+    var house = obj(s.house), n = ((+house.adults || 0) + arr(house.kids).length) || num(s.household) || 0;
+    var trees = wpTrees();
+    return {
+      lead: w.lead && trees.indexOf(w.lead) >= 0 ? w.lead : S.tree,
+      track: gentle ? 'gentle' : (s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength'),
+      cardioDays: +s.cardioDays === 2 ? 2 : 1, days: WP_DAYSETS[+s.days] ? +s.days : 3, mins: [20, 40, 60].indexOf(+s.mins) >= 0 ? +s.mins : 20,
+      level: s.level && s.level !== 'gentle' ? s.level : 'root', gear: Array.isArray(s.gear) ? s.gear.slice() : (WP_PLACE[s.place] || []).slice(),
+      flow: !!s.flow || s.track === 'both', check: Object.assign({}, obj(s.check)), cleared: !!s.cleared,
+      med: WP_MED[s.medFreq] ? s.medFreq : 'daily', medTime: /^(morning|afternoon|evening)$/.test(s.medTime || '') ? s.medTime : 'morning',
+      spirit: w.spirit ? Object.assign({}, w.spirit) : (h.parts.indexOf('pray') >= 0 ? { pause: 1 } : {}),
+      food: info.done && arr(info.use).indexOf('food') < 0 ? 'later' : 'yes', household: n > 0 && n < 30 ? Math.round(n) : 2,
+      prac: null, prac0: null, light: !!w.light
+    };
+  }
+  function wpNeedCheck(info) { info = info || wpInfo() || {}; return !!(info.pub && !info.done && info.check && arr(info.check.questions).length); }
+  function wpHold(info) {
+    info = info || wpInfo() || {}; var d = WP.d;
+    if (wpNeedCheck(info)) return arr(info.check.questions).some(function (q) { return d.check[q.id] === true; }) && !d.cleared;
+    var s = obj(info.set); return !!(s.checkYes && !s.cleared);
+  }
+
+  /* ---------- the week a set of choices makes (before saving, for Practices and Start Small) ---------- */
+  function wpCardioSlots(n, c) { c = Math.max(1, Math.min(n > 1 ? n - 1 : 1, Math.floor(+c || 1))); var out = []; for (var j = 0; j < c; j++) { var k = Math.min(n - 1, Math.floor((j + 0.5) * n / c)); while (out.indexOf(k) >= 0 && k < n - 1) k++; if (out.indexOf(k) < 0) out.push(k); } return out; }
+  function wpMedOn(f, dow) { return f === 'daily' ? true : f === 'few' ? [2, 4, 6].indexOf(dow) >= 0 : f === 'weekly' ? dow === 0 : false; }
+  function wpSessions(d) {
+    var info = wpInfo() || {}, wd = WP_DAYSETS[d.days] || WP_DAYSETS[3], cs = d.track === 'mixed' ? wpCardioSlots(wd.length, d.cardioDays) : [], out = [];
+    var flows = arr(info.flows), meds = arr(info.meds);
+    for (var dow = 0; dow < 7; dow++) {
+      var L = [], k = wd.indexOf(dow);
+      if (k >= 0) { var kind = d.track === 'cardio' || cs.indexOf(k) >= 0 ? 'cardio' : 'strength'; L.push({ kind: kind, id: '', title: d.track === 'gentle' ? 'Gentle' : kind === 'cardio' ? 'Cardio' : 'Strength', t: 'move' }); }
+      else if (d.flow && dow !== 0) { var f = flows.length ? flows[((dow + 6) % 7) % flows.length] : { id: '', title: 'Flow', style: 'daily' }; L.push({ kind: 'flow', id: f.id, title: f.title || 'Flow', style: f.style || 'daily', t: 'flow' }); }
+      if (wpMedOn(d.med, dow)) { var m = meds.filter(function (x) { return x.day === WP_DOW[dow]; })[0] || meds[0] || { id: '', title: 'Meditation' }; L.push({ kind: 'meditation', id: m.id, title: m.title || 'Meditation', t: 'med' }); }
+      out.push(L);
+    }
+    return out;
+  }
+  /* What fills a practice in this week: the days and the first session, for "Filled by ..." */
+  function wpFill(pid, d, ses) {
+    if (!window.GGFills) return null;
+    ses = ses || wpSessions(d); var days = [], first = null;
+    ses.forEach(function (L, dow) { L.forEach(function (s) { if (GGFills.fills(pid, s, d.lead)) { if (days.indexOf(dow) < 0) days.push(dow); if (!first) first = s; } }); });
+    if (!first) return null;
+    var rule = GGFills.fillsFor(pid, null, d.lead) || {};
+    var label = first.kind === 'meditation' ? (rule.only ? 'Filled by ' + first.title : 'Filled by your meditations') : first.kind === 'flow' ? 'Filled by Flow' : 'Filled by your ' + (d.track === 'gentle' ? 'Gentle' : first.kind === 'cardio' ? 'Cardio' : 'Strength') + ' workouts';
+    return { days: days, label: label };
+  }
+  function wpPicks() { var d = WP.d; return d && d.prac ? Object.keys(d.prac).filter(function (k) { return d.prac[k]; }) : []; }
+  function wpRhythm(pid, tree) { return rhythmFull(pid, tree).r; }
+  /* Each day of the week the choices make: its items, dinner aside (Start Small counts these). */
+  function wpProject(d) {
+    var ses = wpSessions(d), picks = wpPicks(), out = [];
+    WP_ORDER.forEach(function (dow) {
+      var it = [];
+      ses[dow].forEach(function (s) { it.push({ t: s.t === 'med' ? 'Meditation' : s.title, c: s.t === 'med' ? 'bark' : s.t === 'flow' ? 'leaves' : 'move', core: 1 }); });
+      WP_SPIRIT.forEach(function (x) { if (d.spirit[x.id] && x.days.indexOf(dow) >= 0) it.push({ t: x.title || x.n, c: x.part }); });
+      picks.forEach(function (pid) {
+        if (wpRhythm(pid, d.lead) !== 'd') return;
+        if (ses[dow].some(function (s) { return window.GGFills && GGFills.fills(pid, s, d.lead); })) return;
+        it.push({ t: pid.split('|')[1], c: pid.split('|')[0] });
+      });
+      if (d.food === 'yes' && dow === 0) it.push({ t: 'Sunday Together Prep', c: 'plate', core: 1 });
+      out.push({ dow: dow, it: it });
+    });
+    return out;
+  }
+  function wpMaxDay(d) { return Math.max.apply(null, wpProject(d).map(function (x) { return x.it.length; })); }
+
+  /* ---------- suggestions for the Growing Edges, from the lead tree's own practice library ---------- */
+  function wpLib(tree) { var src = PRAC[tree]; return src ? window[src[1]] || null : null; }
+  function wpSuggest() {
+    var d = WP.d, tree = d.lead, ck = lastCheckin(S.id, tree), P = wpLib(tree); if (!ck || !P) return [];
+    var ed = edgesOf(ck), parts = ed.edges.slice(0, 2); if (!parts.length && ed.lead) parts = [ed.lead];
+    var ses = wpSessions(d), out = [], RW = { d: 'daily', w: 'weekly', f: 'a few times a week', n: 'now and then' };
+    parts.forEach(function (part) {
+      var def = arr(P.DOMAIN_DEFS).filter(function (x) { return x.key === part; })[0]; if (!def) return;
+      var seen = {}, list = [];
+      arr(def.restore).concat(arr(obj(P.NEW)[part])).forEach(function (r, i) {
+        var name = Array.isArray(r) ? r[0] : r && (r.name || r.n), pid = part + '|' + name;
+        if (!name || seen[name] || WP_SKIP.test(name) || PRAC_SKIP.test(name) || arr(obj(obj(P.FLAGS)[pid]).life).indexOf('sober') >= 0) return; seen[name] = 1;
+        var f = wpFill(pid, d, ses), r0 = wpRhythm(pid, tree);
+        list.push({ pid: pid, part: part, n: name, fill: f ? f.label : '', why: PART[part].n + ' ' + (ed.edges.indexOf(part) >= 0 ? 'Growing Edge' : 'Steady') + (r0 !== 'd' ? ' · ' + RW[r0] : ''), i: i, rank: (f ? 0 : 2) + (r0 === 'n' ? 1 : 0) });
+      });
+      // A mix: up to two the plan already fills, then ones with a card of their own (daily and weekly before now and then).
+      var n = parts.length > 1 ? 3 : 6, filled = list.filter(function (x) { return x.fill; }).slice(0, Math.min(2, n - 1)), own = list.filter(function (x) { return !x.fill; }).sort(function (a, b) { return a.rank - b.rank || a.i - b.i; });
+      out = out.concat(filled.concat(own).slice(0, n).concat(list.filter(function (x) { return x.fill && filled.indexOf(x) < 0; })).slice(0, n));
+    });
+    return out;
+  }
+  /* The first time, the picks start with the ones the plan already fills (they add nothing to Today), up to three. */
+  function wpInitPicks() {
+    var d = WP.d; if (d.prac) return;
+    var sug = WP.sug || [], w = wayRec(), inPlan = {}, picks = {};
+    planList(S.id, d.lead).forEach(function (x) { inPlan[x.pid] = 1; });
+    sug.forEach(function (x) { if (inPlan[x.pid]) picks[x.pid] = 1; });
+    if (w.saved) arr(w.prac).concat(arr(w.pend)).forEach(function (pid) { if (sug.some(function (x) { return x.pid === pid; })) picks[pid] = 1; });
+    else {
+      // One filled practice for each Growing Edge first (they add nothing to Today), then a second, up to three.
+      var n = Object.keys(picks).length, byPart = {};
+      sug.forEach(function (x) { if (n < 3 && x.fill && !picks[x.pid] && !byPart[x.part]) { picks[x.pid] = 1; byPart[x.part] = 1; n++; } });
+      if (!n && sug[0]) picks[sug[0].pid] = 1;
+    }
+    d.prac = picks; d.prac0 = Object.assign({}, picks);
+  }
+
+  /* ---------- draft, save, and put back ---------- */
+  function wpSnapshot() {
+    var w = tendWrap(S.id), hs = obj(w && w.health), h = homeRec(), all = obj(GGP.data(S.id)), trees = {};
+    FILL_TREES.forEach(function (tr) { if (all[tr] && typeof all[tr] === 'object') { var t = all[tr].tend; trees[tr] = t && t.plan ? JSON.stringify(t.plan) : null; } });
+    return { set: JSON.stringify(obj(hs.set)), plan: hs.plan ? JSON.stringify(hs.plan) : null, parts: h.parts.slice(), way: h.way ? JSON.stringify(h.way) : null, trees: trees, ptree: S.tree };
+  }
+  function wpRestore(sn) {
+    var w = tendWrap(S.id); if (w) { w.health.set = JSON.parse(sn.set); if (sn.plan) w.health.plan = JSON.parse(sn.plan); else delete w.health.plan; }
+    var h = GGP.data(S.id, 'home'); if (h) { h.parts = sn.parts.slice(); if (sn.way) h.way = JSON.parse(sn.way); else delete h.way; }
+    var all = obj(GGP.data(S.id));
+    Object.keys(sn.trees).forEach(function (tr) { var host = all[tr]; if (!host || typeof host !== 'object') return; if (sn.trees[tr]) { host.tend = obj(host.tend); host.tend.plan = JSON.parse(sn.trees[tr]); } else if (host.tend) delete host.tend.plan; });
+    if (sn.ptree !== S.tree && S.p && S.p.age === 'adult' && GGP.setTree) { GGP.setTree(S.id, sn.ptree); S.tree = sn.ptree; }
+  }
+  /* Start Small's choice: apply every choice to the real stores (from the state before the plan opened). */
+  function wpApply(light) {
+    var d = WP.d, info = wpInfo() || {};
+    if (!WP.snap) WP.snap = wpSnapshot(); else wpRestore(WP.snap);
+    var hold = wpHold(info), s0 = obj(info.set);
+    hCall('applyPlan', {
+      track: d.track === 'gentle' ? (s0.track === 'cardio' || s0.track === 'mixed' ? s0.track : 'strength') : d.track, gentle: d.track === 'gentle' || hold, level: d.level,
+      cardioDays: d.cardioDays, days: d.days, mins: d.mins, gear: d.gear.slice(), flow: d.flow, medFreq: d.med, medTime: d.medTime,
+      food: d.food === 'yes', household: d.household, check: wpNeedCheck(info) ? Object.assign({}, d.check) : undefined, cleared: wpNeedCheck(info) ? d.cleared : undefined
+    });
+    var h = GGP.data(S.id, 'home'); h.parts = arr(h.parts);
+    var pi = h.parts.indexOf('pray'); if (d.spirit.pause && pi < 0) h.parts.push('pray'); else if (!d.spirit.pause && pi >= 0) h.parts.splice(pi, 1);
+    // The lead tree leads the profile, so Today, Week, and Grow follow it.
+    if (d.lead !== S.tree && S.p && S.p.age === 'adult' && GGP.setTree) { GGP.setTree(S.id, d.lead); S.tree = d.lead; }
+    var picks = wpPicks(), was = {}, ses = wpSessions(d);
+    planList(S.id, d.lead).forEach(function (x) { was[x.pid] = 1; });
+    var add = picks.filter(function (p) { return !was[p]; });
+    var wait = light ? add.filter(function (p) { return !wpFill(p, d, ses); }) : [];
+    var now0 = add.filter(function (p) { return wait.indexOf(p) < 0; });
+    var drop = Object.keys(obj(d.prac0)).filter(function (p) { return d.prac0[p] && !d.prac[p] && was[p]; });
+    addPicks(d.lead, now0, drop);
+    var mon = addDays(today(), -((parse(today()).getDay() + 6) % 7));
+    var hasLater = wait.length || WP_SPIRIT.some(function (x) { return d.spirit[x.id]; });
+    h.way = { v: 1, lead: d.lead, spirit: Object.assign({}, d.spirit), prac: picks.filter(function (p) { return wait.indexOf(p) < 0; }), pend: wait,
+      light: light && hasLater ? 1 : 0, join: light && hasLater ? addDays(mon, 14) : '', joined: '', note: 0, saved: obj(WP.snap.way ? JSON.parse(WP.snap.way) : null).saved || '', draft: 1, u: Date.now() };
+    saveHome();
+  }
+  function wpSave() {
+    var h = GGP.data(S.id, 'home'); if (!h || !h.way) return;
+    h.way.saved = today(); delete h.way.draft; h.way.u = Date.now(); WP.snap = null; saveHome();
+    toast('Your plan is saved, locked on this device.');
+  }
+
+  /* ---------- the screens ---------- */
+  function wpChip(act, label, on, c, dis) { return '<button type="button" class="hm-wp-chip" data-hm-wp="' + esc(act) + '" aria-pressed="' + !!on + '"' + (c ? ' style="--c:var(--' + c + ')"' : '') + (dis ? ' aria-disabled="true"' : '') + '>' + esc(label) + '</button>'; }
+  function wpLbl(t) { return '<div class="hm-wp-lbl">' + esc(t) + '</div>'; }
+  function wpRow(c, b, s) { return '<div class="hm-wp-row"><span class="dot" style="--c:var(--' + c + ')"></span><div class="tx"><b>' + esc(b) + '</b><small>' + esc(s) + '</small></div></div>'; }
+  function wpK(t, c) { return '<div class="hm-wp-k"' + (c ? ' style="--c:var(--' + c + ')"' : '') + '>' + esc(t) + '</div>'; }
+  function wpH(t) { return '<h2 class="hm-wp-h2" id="hm-wp-h" tabindex="-1">' + esc(t) + '</h2>'; }
+  function wpBtn(act, label, ghost) { return '<button type="button" class="hm-wp-btn' + (ghost ? ' ghost' : '') + '" data-hm-wp="' + act + '">' + esc(label) + '</button>'; }
+  function wpScreen() {
+    var i = WP.i, d = WP.d, info = wpInfo() || {}, b = '', f = '', t = TREES[d.lead] || TREES.oak;
+    if (i === 0) {
+      b = wpK('Grow') + wpH('Build one plan for your whole self') + '<p class="hm-wp-lead">Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes, and every choice can change anytime.</p>' +
+        '<div class="hm-wp-card">' + wpK('What you will choose', 'leaves') + '<div style="margin-top:6px"></div>' + wpRow('move', 'Body', 'Strength, Cardio, Mixed, or Gentle') + wpRow('bark', 'Mind', 'Meditation, how often and when') +
+        wpRow('roots', 'Spirit', 'Gratitude, kindness, quiet, and more') + wpRow('plate', 'Table', 'Weekly dinners and Sunday Together Prep') + wpRow('leaves', 'Practices', 'A few for your Growing Edges') + '</div>' +
+        '<p class="hm-wp-lead sm">Everything stays on this device, inside your locked profile.</p>';
+      f = wpBtn('next', 'Start My Plan');
+    } else if (i === 1) {
+      var trees = wpTrees(), ck = lastCheckin(S.id, d.lead), ed = edgesOf(ck);
+      var chips = trees.length > 1 ? '<div>' + wpLbl('Which tree leads your plan?') + '<div class="hm-wp-chips">' + trees.map(function (tr) { return wpChip('lead:' + tr, TREES[tr].n, d.lead === tr, 'leaves'); }).join('') + '</div></div>' : '';
+      if (!ck) {
+        b = wpK('Your ' + t.n) + wpH('Start with a check-in') + chips + '<p class="hm-wp-lead">Your plan starts where you are growing. A short guided check-in shows how each part of your tree is doing, and your plan picks up right here after.</p>' +
+          '<div class="hm-wp-nudge"><b>About two minutes.</b> Six parts, one question each, at your own pace.</div>';
+        f = wpBtn('later', 'Later', true) + wpBtn('checkin', 'Take My Check-in');
+      } else {
+        var LVW = { strong: 'Strong', steady: 'Steady', edge: 'Growing Edge', unsure: 'Not sure yet' };
+        var parts = '<div class="hm-wp-parts">' + PARTS.map(function (p) { var l = ed.lv[p.k]; return '<div class="hm-wp-part' + (l === 'edge' ? ' edge' : '') + '" style="--c:var(--' + p.k + ');--cs:var(--' + p.k + '-s)"><b>' + p.n + '</b><span>' + WP_WORDS[p.k] + '</span><em class="lv-' + l + '">' + LVW[l] + '</em></div>'; }).join('') + '</div>';
+        var first = ed.edges.length ? ed.edges.slice(0, 2) : ed.lead ? [ed.lead] : [];
+        var nudge = ed.edges.length ? '<b>' + esc(first.map(function (k) { return PART[k].n; }).join(' and ')) + '</b> get' + (first.length === 1 ? 's' : '') + ' your first suggestions: ' + esc(first.map(function (k) { return WP_LONG[k]; }).join(', ')) + '.'
+          : first.length ? 'Every part is Steady or Strong. Your first suggestions lean toward <b>' + esc(PART[first[0]].n) + '</b>, ' + esc(WP_LONG[first[0]]) + '.' : 'Every part keeps its good rhythm.';
+        b = wpK('From your ' + t.n + ' check-in · ' + niceDate(ck.date), 'leaves') + wpH('Your Growing Edges') + chips + '<p class="hm-wp-lead">Your plan starts where you are growing. Strong parts keep their good rhythm.</p>' + parts + '<div class="hm-wp-nudge">' + nudge + '</div>';
+        f = wpBtn('checkin', 'Check In Again', true) + wpBtn('next', 'Use This');
+      }
+    } else if (i === 2) {
+      var hold = wpHold(info), pub = info.pub !== false, need = wpNeedCheck(info), K = obj(info.check), gentle = d.track === 'gentle';
+      var progs = ['strength'].concat(info.cardio ? ['cardio', 'mixed'] : []).concat(pub ? ['gentle'] : []);
+      var ckc = need ? '<div class="hm-wp-card hm-wp-check">' + wpK('A quick health check', 'move') + '<p class="hm-wp-lead sm">' + esc(K.lead || '') + '</p>' + arr(K.questions).map(function (q) {
+        return '<div class="hm-wp-q"><p>' + esc(q.q) + '</p><div class="hm-wp-chips">' + wpChip('ck:' + q.id + ':1', 'Yes', d.check[q.id] === true, 'move') + wpChip('ck:' + q.id + ':0', 'No', d.check[q.id] === false, 'move') + '</div>' + (q.why && d.check[q.id] === true ? '<small>' + esc(q.why) + '</small>' : '') + '</div>';
+      }).join('') + (arr(K.questions).some(function (q) { return d.check[q.id] === true; }) ? '<div class="hm-wp-nudge"><b>' + esc(K.yes || '') + '</b> ' + esc(K.yesMore || '') + '<div class="hm-wp-chips" style="margin-top:8px">' + wpChip('cleared', (arr(K.continue).filter(function (x) { return x.id === 'cleared'; })[0] || {}).label || 'My doctor or therapist says I can begin', d.cleared, 'leaves') + '</div></div>' : '') + '</div>' : '';
+      if (hold && !need) ckc = '<div class="hm-wp-nudge">' + esc(obj(info.check).yes || 'Your health check keeps the Gentle path for now.') + '</div>';
+      b = wpK('Body · grows Leaves', 'move') + wpH('How do you like to move?') + ckc +
+        '<div>' + wpLbl('Program') + '<div class="hm-wp-chips">' + progs.map(function (tr) { return wpChip('set:track:' + tr, WP_TRACK[tr], (hold ? 'gentle' : d.track) === tr, 'move', hold && tr !== 'gentle'); }).join('') + '</div>' +
+        (d.track === 'mixed' && !hold ? '<div class="hm-wp-chips" style="margin-top:8px">' + [1, 2].map(function (n) { return wpChip('set:cardioDays:' + n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), d.cardioDays === n, 'move'); }).join('') + '</div>' : '') + '</div>';
+      if (pub) {
+        b += '<div>' + wpLbl('Days a week') + '<div class="hm-wp-chips">' + [2, 3, 4, 5, 6].map(function (n) { return wpChip('set:days:' + n, n + ' days', d.days === n, 'move'); }).join('') + '</div></div>';
+        if (gentle || hold) { var gm = arr(obj(info.gentle).mins); b += '<p class="hm-wp-lead sm">' + esc(obj(info.gentle).lead || 'Gentle: chair strength, supported balance, easy range of motion, breathing, and short walks.') + (gm.length ? ' About ' + Math.min.apply(null, gm) + ' to ' + Math.max.apply(null, gm) + ' minutes.' : '') + '</p>'; }
+        else {
+          b += '<div>' + wpLbl('Minutes') + '<div class="hm-wp-chips">' + [20, 40, 60].map(function (n) { return wpChip('set:mins:' + n, n + ' min', d.mins === n, 'move'); }).join('') + '</div></div>' +
+            '<div>' + wpLbl('Level') + '<div class="hm-wp-chips">' + [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive']].map(function (l) { return wpChip('set:level:' + l[0], l[1], d.level === l[0], 'move'); }).join('') + '</div>' + (obj(info.levelLines)[d.level] ? '<small class="hm-wp-small">' + esc(info.levelLines[d.level]) + '</small>' : '') + '</div>';
+          if (arr(info.gear).length) b += '<div>' + wpLbl('What you have') + '<div class="hm-wp-chips">' + info.gear.map(function (g) { return wpChip('gear:' + g.id, g.name, d.gear.indexOf(g.id) >= 0, 'trunk'); }).join('') + '</div><small class="hm-wp-small">' + (d.gear.length ? 'Every workout uses just what you check.' : esc(info.gearNone || 'Nothing checked: your body weight, a chair, a wall, and a mat.')) + '</small></div>';
+        }
+      } else b += '<p class="hm-wp-lead sm">Your Guide plan keeps its own days, minutes, and equipment.</p>';
+      b += '<div class="hm-wp-card"><div class="hm-wp-row"><div class="tx"><b>Add Flow on other days</b><small>Yoga style, tai chi style, and stretch sessions, about 20 minutes</small></div>' + wpChip('flow', d.flow ? 'On' : 'Off', d.flow, 'leaves') + '</div></div>';
+      var keep = info.done && info.prog && !gentle && !hold && d.track === (info.track || 'strength');
+      b += '<p class="hm-wp-lead sm">' + (gentle || hold ? 'The Gentle walk grows a little each week.' : keep ? 'You are in ' + esc(info.prog) + '. Your place in the program stays.' : 'Week 1 of 12 · Foundation. Build starts week 5 and Peak week 9.') + '</p>';
+      f = wpBtn('next', 'Next');
+    } else if (i === 3) {
+      var mm = arr(info.medMins), meds = arr(info.meds);
+      b = wpK('Mind · grows Bark', 'bark') + wpH('A quiet place in your day') + '<p class="hm-wp-lead">Seven guided meditations, a new one each day of the week' + (mm.length === 2 ? ', about ' + mm[0] + ' minutes to start, growing to ' + mm[1] : '') + '.</p>' +
+        '<div>' + wpLbl('How often') + '<div class="hm-wp-chips">' + Object.keys(WP_MED).map(function (k) { return wpChip('set:med:' + k, WP_MED[k], d.med === k, 'bark'); }).join('') + '</div></div>' +
+        (d.med !== 'later' ? '<div>' + wpLbl('When') + '<div class="hm-wp-chips">' + [['morning', 'Morning'], ['afternoon', 'Afternoon'], ['evening', 'Evening']].map(function (x) { return wpChip('set:medTime:' + x[0], x[1], d.medTime === x[0], 'bark'); }).join('') + '</div></div>' : '<p class="hm-wp-lead sm">Meditation waits in the Library, under Quiet and Meditation, whenever you like.</p>') +
+        (meds.length && d.med !== 'later' ? '<div class="hm-wp-card">' + wpK(d.med === 'daily' ? 'This week' : d.med === 'few' ? 'Tuesday, Thursday, and Saturday' : 'Sunday', 'bark') + '<small class="hm-wp-small">' + esc(meds.filter(function (m) { return wpMedOn(d.med, WP_DOW.indexOf(m.day)); }).map(function (m) { return m.title; }).join(', ')) + '</small></div>' : '');
+      f = wpBtn('next', 'Next');
+    } else if (i === 4) {
+      b = wpK('Spirit · grows Roots, Branches, and Fruit', 'roots') + wpH('What feeds your spirit?') + '<p class="hm-wp-lead">Choose any that feel like you. Each one is short.</p>' +
+        '<div class="hm-wp-tiles">' + WP_SPIRIT.map(function (x) { return '<button type="button" class="hm-wp-tile" data-hm-wp="sp:' + x.id + '" aria-pressed="' + !!d.spirit[x.id] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.line) + '</small></button>'; }).join('') + '</div>';
+      f = wpBtn('skip', 'Skip for Now', true) + wpBtn('next', 'Next');
+    } else if (i === 5) {
+      var hhs = [1, 2, 3, 4, 5, 6, 8]; if (hhs.indexOf(d.household) < 0) { hhs.push(d.household); hhs.sort(function (a, b2) { return a - b2; }); }
+      b = wpK('Table · grows Leaves and Branches', 'plate') + wpH('Meals in your plan?') + '<p class="hm-wp-lead">Weekly dinners, Sunday Together Prep, and one shopping list sized to your table.</p>' +
+        '<div class="hm-wp-chips">' + wpChip('set:food:yes', 'Yes, Add Meals', d.food === 'yes', 'plate') + wpChip('set:food:later', 'Later', d.food === 'later', 'plate') + '</div>' +
+        (d.food === 'yes' ? '<div>' + wpLbl('Around the table') + '<div class="hm-wp-chips">' + hhs.map(function (n) { return wpChip('set:household:' + n, n + (n === 1 ? ' person' : ' people'), d.household === n, 'plate'); }).join('') + '</div></div>' : '') +
+        '<p class="hm-wp-lead sm">' + (info.done ? 'Your food needs, allergies, and goals carry over from Tending.' : 'Food needs, allergies, and goals live in Tending Setup, ready whenever you like.') + '</p>';
+      f = wpBtn('next', 'Next');
+    } else if (i === 6) {
+      if (!WP.sug) WP.sug = wpSuggest();
+      wpInitPicks();
+      var sug = WP.sug, picks = wpPicks().length, inPlan = {};
+      planList(S.id, d.lead).forEach(function (x) { inPlan[x.pid] = 1; });
+      b = wpK('Practices · for your Growing Edges', 'leaves') + wpH('A few to tend');
+      if (!sug.length) b += '<p class="hm-wp-lead">' + (lastCheckin(S.id, d.lead) ? 'Your ' + esc(t.n) + ' practices are a tap away in your growth plan, anytime.' : 'Your first check-in brings suggestions for your Growing Edges. Every practice in your ' + esc(t.n) + ' stays a tap away in your growth plan.') + '</p>';
+      else b += '<p class="hm-wp-lead">Pick up to three. Some are already part of your plan, so they count without adding a thing.</p><div class="hm-wp-list">' + sug.map(function (x) {
+        return '<button type="button" class="hm-wp-tile" data-hm-wp="pr:' + esc(x.pid) + '" aria-pressed="' + !!d.prac[x.pid] + '" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)"><b>' + esc(x.n) + '</b><small>' + esc(x.why) + '</small>' + (x.fill ? '<span class="covered">' + esc(x.fill) + '</span>' : '') + (inPlan[x.pid] ? '<span class="inplan">In your growth plan</span>' : '') + '</button>';
+      }).join('') + '</div><p class="hm-wp-lead sm">' + picks + ' of 3 chosen. Every practice in your tree stays a tap away.</p>';
+      f = wpBtn('next', 'Next');
+    } else if (i === 7) {
+      if (!d.prac) { WP.sug = WP.sug || wpSuggest(); wpInitPicks(); }
+      var m = wpMaxDay(d), big = m > 4, sps = WP_SPIRIT.filter(function (x) { return d.spirit[x.id]; }).map(function (x) { return x.title || x.n; });
+      b = wpK('Start small') + wpH(big ? 'A full plan. Start lighter?' : 'A good size to start') +
+        (big ? '<p class="hm-wp-lead">Your busiest day holds ' + m + ' items. Habits stick best a few at a time, so many people begin with the core of the plan and add the rest after two good weeks.</p><div class="hm-wp-nudge"><b>Start lighter:</b> movement, meditation, and dinner first. Spirit and practices join on week 3, and the plan reminds you.</div>'
+          : '<p class="hm-wp-lead">Your busiest day holds ' + m + (m === 1 ? ' item' : ' items') + '. That is a steady, doable start.</p>') +
+        '<div class="hm-wp-card">' + wpRow('move', (wpHold(info) ? 'Gentle' : WP_TRACK[d.track]) + ', ' + d.days + ' days' + (d.track === 'gentle' || wpHold(info) ? '' : ', ' + d.mins + ' min'), d.track === 'gentle' || wpHold(info) ? 'Gentle path' + (d.flow ? ', Flow on other days' : '') : '12-week program' + (d.flow ? ', Flow on other days' : '')) +
+        wpRow('bark', 'Meditation', d.med === 'later' ? 'Later' : WP_MED[d.med].charAt(0) + WP_MED[d.med].slice(1).toLowerCase() + ', ' + d.medTime) +
+        wpRow('roots', 'Spirit', sps.length ? sps.join(', ') : 'Later') + wpRow('plate', 'Table', d.food === 'yes' ? 'Dinners for ' + d.household : 'Later') +
+        wpRow('leaves', 'Practices', wpPicks().length ? wpPicks().map(function (p) { return p.split('|')[1]; }).join(', ') : 'From your growth plan, anytime') + '</div>';
+      f = big ? wpBtn('keep', 'Keep It All', true) + wpBtn('trim', 'Start Lighter') : wpBtn('keep', 'See My Week');
+    } else if (i === 8) {
+      var w = wayRec(), wd = weekData();
+      b = wpK(wd && wd.prog ? wd.prog : 'This week') + wpH('Your week') + (w.light && w.join && today() < w.join ? '<p class="hm-wp-lead">Starting lighter. Spirit and practices join on week 3, ' + esc(niceDay(w.join)) + '.</p>' : '') + wpWeekHtml();
+      f = wpBtn('save', 'Save My Plan');
+    } else {
+      var T = todayItems(), items = T.items.filter(function (x) { return x.key !== 'talk'; }), mins = 0;
+      items.forEach(function (x) { mins += wpMins(x); });
+      b = wpK('Today · ' + DAYS[now().getDay()]) + wpH(greetWord()) + '<p class="hm-wp-lead">' + items.length + (items.length === 1 ? ' thing' : ' things') + ' today' + (mins ? ', about ' + mins + ' minutes' : '') + '. Each one grows a part of your tree.</p>' +
+        '<div class="hm-wp-today">' + items.map(function (x) {
+          return '<div class="hm-wp-tc ' + tintClass(x.tint, x.kind) + (x.done ? ' done' : '') + '"><span class="circle" aria-hidden="true"></span><div><span class="when">' + esc(String(x.when || '').split(' · ')[0]) + '</span><b>' + esc(x.ftitle || x.title) + '</b>' + (x.sub ? '<small>' + esc(String(x.sub).slice(0, 110)) + '</small>' : '') + (x.forLine ? '<span class="for">' + esc(x.forLine) + '</span>' : '') + '</div></div>';
+        }).join('') + '</div>';
+      f = wpBtn('restart', 'Start Over', true) + wpBtn('done', 'Done');
+    }
+    return { b: b, f: f };
+  }
+  function wpMins(x) {
+    if (x.min) return +x.min || 0;
+    if (x.fill && x.fill.mins) return +x.fill.mins || 0;
+    var m = /(\d+)\s*min/.exec(String(x.sub || '')); return m ? +m[1] : 0;
+  }
+  /* Your Week, from the real stores: Tending's week (movement, meditation, dinner, Sunday Together Prep), the spirit days, and
+     the growth plan's daily practices that no session fills that day. Weekly ones sit under This Week. */
+  function wpWeekHtml() {
+    var w = weekData(), td = today(), plan = planItems(false), way = wayRec();
+    var days = w ? w.days : weekDays().map(function (k) { return { date: k, day: DAYS[parse(k).getDay()].slice(0, 3) }; });
+    var prepMin = w && w.prepSub ? (+(/(\d+)\s*minutes/.exec(w.prepSub) || [0, 0])[1]) : 0;
+    var rows = days.map(function (dd) {
+      var date = String(dd.date || '').slice(0, 10), dow = parse(date).getDay(), pills = [], mins = 0, mv = dd.move, md = dd.med;
+      var pill = function (t, c) { pills.push('<span class="hm-wp-pill" style="--c:var(--' + c + ');--cs:var(--' + c + '-s)">' + esc(t) + '</span>'); };
+      if (mv) { pill(mv.title, mv.kind === 'flow' ? 'leaves' : 'move'); mins += +mv.mins || 0; }
+      if (md) { pill('Meditation', 'bark'); mins += +md.mins || 0; }
+      spiritOn(date, way).forEach(function (x) { pill(x.title || x.n, x.part); mins += x.min; });
+      plan.forEach(function (p) {
+        if (p.r !== 'd') return;
+        if (window.GGFills && ((mv && GGFills.fills(p.pid, mv, S.tree)) || (md && GGFills.fills(p.pid, md, S.tree)))) return;
+        pill(p.title, p.part); mins += +p.min || 0;
+      });
+      if (dow === 0 && w && w.prepKey) { pill('Sunday Together Prep', 'plate'); mins += prepMin; }
+      if (dd.dinner) pill('Dinner', 'plate');
+      return '<div class="hm-wp-day' + (date === td ? ' today' : '') + '"><span class="d">' + esc(String(dd.day || '').slice(0, 3)) + '</span><div class="pills">' + (pills.join('') || '<span class="hm-wp-rest">A day to rest</span>') + '</div><span class="m">' + (mins ? mins + ' min' : '') + '</span></div>';
+    }).join('');
+    var wk = plan.filter(function (p) { return p.r === 'w' || p.r === 'f'; });
+    return '<div class="hm-wp-week">' + rows + '</div>' + (wk.length ? '<p class="hm-wp-lead sm"><b>This week, any day:</b> ' + esc(wk.map(function (p) { return p.title; }).join(', ')) + '.</p>' : '') +
+      (!w ? '<p class="hm-wp-lead sm">Tending fills in movement and meals once it opens.</p>' : '');
+  }
+
+  /* ---------- the overlay ---------- */
+  function paintPlan(keepScroll) {
+    var wrap = document.getElementById('hm-plan'); if (!wrap || !WP.d) return;
+    var i = WP.i, sc = wpScreen(), body = wrap.querySelector('.hm-wp-body'), top = keepScroll && body ? body.scrollTop : 0;
+    wrap.querySelector('.hm-wp-t').textContent = i === 0 ? 'My Grounded Way Plan' : WP_SCREENS[i];
+    wrap.querySelector('[data-hm-wp="back"]').disabled = i === 0;
+    wrap.querySelector('.hm-wp-dots').innerHTML = WP_SCREENS.map(function (_, j) { return '<i class="' + (j <= i ? 'on' : '') + '"></i>'; }).join('');
+    wrap.querySelector('.hm-wp-dots').setAttribute('aria-label', 'Screen ' + (i + 1) + ' of ' + WP_SCREENS.length);
+    body.innerHTML = sc.b; wrap.querySelector('.hm-wp-foot').innerHTML = sc.f; body.scrollTop = top;
+    wrap.setAttribute('data-screen', String(i));
+  }
+  function wpGo(i) {
+    WP.i = Math.max(0, Math.min(WP_SCREENS.length - 1, i)); paintPlan();
+    var h = document.getElementById('hm-wp-h'); if (h) try { h.focus({ preventScroll: true }); } catch (e) {}
+  }
+  function openPlan(at) {
+    if (!planOK() || WP.open) return;
+    WP.open = true; WP.i = at || 0; WP.snap = null; WP.sug = null; WP.back = document.activeElement;
+    var wrap = document.createElement('div'); wrap.id = 'hm-plan'; wrap.className = 'hm-wpwrap';
+    wrap.innerHTML = '<div class="hm-wp-bg" aria-hidden="true"></div><section class="hm-wp" role="dialog" aria-modal="true" aria-labelledby="hm-wp-tt">' +
+      '<header class="hm-wp-bar"><button type="button" class="hm-wp-back" data-hm-wp="back" aria-label="Back">' + I('back') + '</button><div class="hm-wp-t" id="hm-wp-tt">My Grounded Way Plan</div><div class="hm-wp-dots" role="img"></div>' +
+      '<button type="button" class="hm-wp-x" data-hm-wp="close" aria-label="Close">' + I('plus') + '</button></header>' +
+      '<div class="hm-wp-body"><p class="hm-loading">Opening your plan…</p></div><footer class="hm-wp-foot"></footer></section>';
+    (document.querySelector('main.hm') || document.body).appendChild(wrap);
+    document.documentElement.classList.add('hm-planned');
+    try { history.pushState({ hmPlan: 1 }, '', location.pathname + location.hash); } catch (e) {}
+    var src = PRAC[S.tree];
+    Promise.all([loadTending(), src ? load(src[0]) : Promise.resolve(), Promise.all(wpTrees().map(function (tr) { return PRAC[tr] ? load(PRAC[tr][0]) : null; }))]).then(function () {
+      if (!WP.open) return;
+      if (S.tendInit !== S.id) initTending();
+      WP.d = wpDraft(); paintPlan();
+      var b = wrap.querySelector('.hm-wp-foot .hm-wp-btn:last-child'); try { (b || wrap.querySelector('.hm-wp')).focus({ preventScroll: true }); } catch (e) {}
+    });
+  }
+  function closePlan(fromPop, then) {
+    var wrap = document.getElementById('hm-plan'); if (!WP.open) return;
+    WP.open = false;
+    if (WP.snap) { wpRestore(WP.snap); WP.snap = null; saveHome(); toast('Nothing changed. Your plan is just as it was.'); }
+    if (wrap) wrap.remove();
+    document.documentElement.classList.remove('hm-planned');
+    if (!fromPop && history.state && history.state.hmPlan) { WP.popping = then || true; history.back(); }
+    else if (then) then();
+    if (S.id && app()) refreshPane();
+    var back = WP.back; WP.back = null; if (back && back.isConnected) try { back.focus({ preventScroll: true }); } catch (e) {}
+  }
+  window.addEventListener('popstate', function () {
+    if (WP.popping) { var then = WP.popping; WP.popping = false; if (typeof then === 'function') then(); return; }
+    if (WP.open && !(history.state && (history.state.hmPlan || history.state.hmFrame)) && !FRAME) closePlan(true);
+  });
+  function wpAct(a) {
+    var d = WP.d; if (!d && a !== 'close') return;
+    var info = wpInfo() || {};
+    if (a === 'close') { closePlan(); return; }
+    if (a === 'back') { wpGo(WP.i === 8 ? 7 : WP.i - 1); return; }
+    if (a === 'next') {
+      if (WP.i === 2 && wpNeedCheck(info) && arr(info.check.questions).some(function (q) { return d.check[q.id] == null; })) { toast('Answer each question with Yes or No.'); return; }
+      wpGo(WP.i + 1); return;
+    }
+    if (a === 'later') { wpGo(2); return; }
+    if (a === 'skip') { d.spirit = {}; wpGo(5); return; }
+    if (a === 'checkin') { openTreeSheet('quick'); return; }
+    if (a === 'trim' || a === 'keep') { d.light = a === 'trim'; wpApply(d.light); wpGo(8); return; }
+    if (a === 'save') { wpSave(); wpGo(9); return; }
+    if (a === 'restart') { if (!WP.snap) { WP.d = wpDraft(); WP.sug = null; } wpGo(0); return; }
+    if (a === 'done') { closePlan(false, function () { goTo('today'); }); return; }
+    var p = a.split(':'), k = p[0];
+    if (k === 'lead') { if (d.lead !== p[1]) { d.lead = p[1]; d.prac = null; WP.sug = null; } paintPlan(true); return; }
+    if (k === 'set') { var v = /^\d+$/.test(p[2]) ? +p[2] : p[2]; if (p[1] === 'track' && wpHold(info) && v !== 'gentle') return; d[p[1]] = v; if (p[1] === 'track' || p[1] === 'med' || p[1] === 'days' || p[1] === 'cardioDays') WP.sug = null; paintPlan(true); return; }
+    if (k === 'gear') { var gi = d.gear.indexOf(p[1]); if (gi >= 0) d.gear.splice(gi, 1); else d.gear.push(p[1]); paintPlan(true); return; }
+    if (k === 'flow') { d.flow = !d.flow; WP.sug = null; paintPlan(true); return; }
+    if (k === 'ck') { d.check[p[1]] = p[2] === '1'; if (wpHold(info)) d.track = 'gentle'; paintPlan(true); return; }
+    if (k === 'cleared') { d.cleared = !d.cleared; paintPlan(true); return; }
+    if (k === 'sp') { d.spirit[p[1]] = d.spirit[p[1]] ? 0 : 1; if (!d.spirit[p[1]]) delete d.spirit[p[1]]; paintPlan(true); return; }
+    if (k === 'pr') { var pid = a.slice(3); if (d.prac[pid]) d.prac[pid] = 0; else if (wpPicks().length >= 3) { toast('Up to three to start. Every practice in your tree stays a tap away.'); return; } else d.prac[pid] = 1; paintPlan(true); return; }
+  }
+  document.addEventListener('click', function (e) {
+    var t = e.target.closest && e.target.closest('[data-hm-wp],[data-hm-wpopen],[data-hm-wpnote]'); if (!t) return;
+    if (t.hasAttribute('data-hm-wpopen')) { e.preventDefault(); if (document.getElementById('hm-sheet')) leaveSheet(); openPlan(); return; }
+    if (t.hasAttribute('data-hm-wpnote')) { var h = GGP.data(S.id, 'home'); if (h && h.way) { h.way.note = 0; saveHome(); } refreshPane(); return; }
+    if (t.getAttribute('aria-disabled') === 'true') return;
+    wpAct(t.getAttribute('data-hm-wp'));
+  });
+  document.addEventListener('keydown', function (e) {
+    if (!WP.open || FRAME) return;
+    var w = document.getElementById('hm-plan'); if (!w) return;
+    if (e.key === 'Escape') { e.preventDefault(); e.stopImmediatePropagation(); closePlan(); return; }
+    if (e.key !== 'Tab') return;
+    var f = [].slice.call(w.querySelectorAll('button:not([disabled])')).filter(function (b) { return b.offsetParent !== null; }); if (!f.length) return;
+    var first = f[0], last = f[f.length - 1], cur = document.activeElement;
+    if (!w.contains(cur)) { e.preventDefault(); first.focus(); return; }
+    if (e.shiftKey && cur === first) { e.preventDefault(); last.focus(); } else if (!e.shiftKey && cur === last) { e.preventDefault(); first.focus(); }
+  }, true);
+  /* The doors: Grow's card, Week's Change My Plan, and the welcome tour's last card. */
+  function planDoorGrow() {
+    if (!planOK()) return '';
+    var w = wayRec(), s = w.saved;
+    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'welcome-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My Grounded Way Plan</div>' +
+      '<h3 class="hm-h3">' + (s ? 'Your Plan' : 'One Plan for Your Whole Self') + '</h3><p class="hm-sub">' + (s ? 'Body, mind, spirit, and your table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes.') + '</p>' +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div></div></div></article>';
+  }
+  function planDoorWeek() {
+    if (!planOK()) return '';
+    var s = waySaved();
+    return '<div class="hm-wplan"><span class="tx"><b>My Grounded Way Plan</b><small>' + (s ? 'Movement, meditation, spirit, and meals, on their days.' : 'Build one plan for body, mind, spirit, and your table.') + '</small></span><button type="button" class="hm-pill" data-hm-wpopen="1">' + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div>';
+  }
+  /* Week's day rows: the meditation and the spirit items on that day. */
+  function weekExtra(d) {
+    var out = '', md = obj(d.med);
+    if (md.title) out += '<button type="button" class="hm-wmove hm-wmed" data-hm-wk="' + esc(md.key || '') + '" aria-label="' + esc((d.dayName || d.day || '') + ' meditation: ' + md.title + ', start it') + '">' + esc(md.title) + (md.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>';
+    var sp = planOK() ? spiritOn(String(d.date || '').slice(0, 10)) : [];
+    if (sp.length) out += '<span class="hm-wsp">' + sp.map(function (x) { return '<span class="hm-wpill" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)">' + esc(x.title || x.n) + '</span>'; }).join('') + '</span>';
+    return out;
+  }
+
   /* ---------- start ---------- */
   function boot() {
     mountIcons();
     if (!window.GGP) { var r = app(); if (r) r.innerHTML = welcomeHtml(); return; }
-    GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); } });
+    GGP.on(function (type) { if (type === 'change' || type === 'ready') render(); else if (type === 'data' && S.id) { if (isKid(S.p)) render(); else refreshPane(); sheetSaved(); if (WP.open && WP.d) { WP.sug = null; if (WP.i <= 1) WP.d.prac = null; paintPlan(true); } } });
     GGP.ready.then(render);
   }
   window.GGHome = { render: render, lastCheckin: lastCheckin, summary: summary, v: V };
