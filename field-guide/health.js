@@ -656,7 +656,7 @@ function buildWork(s){
   const w = WK(), ses = (w.sessions || {})[s]; if (!ses) return null;
   const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n));
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count};
+  return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 // BLD 883: hand the recorded voice its key before any guide plays, wherever it was opened from (Today in The Grounded Way opens guides directly).
 function keyVoice(){ if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio); }
@@ -692,7 +692,7 @@ function vOv(){
       const pct = Math.round(100 * o.i / o.steps.length), lb = H().lifts[st.id], state = stState(o), ring = o.run && (o.rest || o.between) ? {pct: Math.max(0, o.end - Date.now()) / (o.tot || 1), secs: Math.ceil(Math.max(0, o.end - Date.now()) / 1000)} : {};
       const t = trans(o, state), wrap = x => `${stagePanel(state, Object.assign({fig: moveFig(st, false, o.rest || o.between)}, ring))}<div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}">${x}</div>`;
       if (st.t === 'time'){ const ms = o.run ? o.end - Date.now() : (o.left || st.secs * 1000);
-        body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<h2 class="hj-exn">${esc(st.name)}</h2><p class="hj-how">${esc(st.how || '')}</p>
+        body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<h2 class="hj-exn">${esc(st.name)}</h2>${howBlock(st)}${modsBlock(st)}
           <div class="hj-clock" data-hjclock>${clock(ms)}</div>
           <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="${o.run ? 'pause' : 'tstart'}">${o.run ? 'Pause' : (o.left && o.left < st.secs * 1000 ? 'Keep Going' : 'Start Timer')}</button><button type="button" class="btn btn-gold" data-hja="next">Next</button></div>`)}`; }
       else if (o.between){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Rest, then next up</div><h2 class="hj-exn">${esc(st.name)}</h2><div class="hj-clock" data-hjclock>${clock(Math.max(0, o.end - Date.now()))}</div>
@@ -701,9 +701,9 @@ function vOv(){
       else if (o.rest){ body = `${top(o.title, 'Rest', pct)}${wrap(`<div class="hj-kick hj-stk">Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}</div><h2 class="hj-exn">${esc(st.name)}</h2>${dots(o.set + 1, st.sets)}<div class="hj-clock" data-hjclock>${clock(o.end - Date.now())}</div><p class="hj-mot">${esc((MOT()[(o.i + o.set) % Math.max(1, MOT().length)]) || 'Breathe slow. Sip water.')}</p>
           <div class="hj-ovbtns"><button type="button" class="btn btn-gold" data-hja="skiprest">Ready Now</button></div>`)}`; }
       else { body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<div class="hj-kick hj-stk">${o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`}</div><h2 class="hj-exn">${esc(o.swap ? (st.swap || st.name) : st.name)}</h2>${dots(o.set, st.sets)}
-          <div class="hj-reps">${esc(repTxt(st))}${esc(unitOf(st))}${st.side ? ' each side' : ''}</div>
-          ${st.side ? `<p class="hj-cue">Left side first, then the right.</p>` : ''}
-          ${o.swap ? `<p class="hj-how">Swap for ${esc(st.name)}. Same sets and reps.</p>` : `<p class="hj-how">${esc(st.how || '')}</p>${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}`}
+          <div class="hj-reps">${esc(repLine(st))}</div>
+          ${st.side ? `<p class="hj-cue">Left side first, then the right.</p>` : st.alt ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}
+          ${o.swap ? `<p class="hj-how">Swap for ${esc(st.name)}. Same sets and reps.</p>` : `${howBlock(st)}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${modsBlock(st)}`}
           ${st.kind === 'reps' ? `${weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}<label class="hj-fld hj-lb"><span>Weight (lb), saved for next time</span><input id="hj-lb" inputmode="decimal" value="${esc(o.lb != null ? o.lb : (lb || ''))}" placeholder="Bodyweight"></label>` : ''}
           <div class="hj-ovbtns">${st.swap ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Back to the Plan Move' : 'Joint-Friendly Swap'}</button>` : ''}<button type="button" class="btn btn-gold" data-hja="setdone">${o.set < st.sets ? 'Set Done' : 'Done, Next Move'}</button></div>
           <button type="button" class="linkbtn hj-skip" data-hja="next">Skip this move</button>`)}`; }
@@ -839,6 +839,22 @@ const NUMW = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Ei
 const REPS_RE = /^\s*(\d+)(\s*to\s*\d+)?\s*(reps?|seconds?|per side|each side|total|each)?\s*$/i;
 const repWords = st => !REPS_RE.test(String(st.reps));
 const repTxt = st => String(st.reps).replace(/\s*(per side|each side)\s*$/i, '').trim();
+// BLD 891 (Chris, October 29, 2026, mid workout: "Dead bugs and bird dogs tell you to do left side first then right side but
+// aren't these exercises both left right left right back and forth?"): moves done alternating rep by rep run as one flow,
+// with no Left side, Switch sides, or Right side stages. Matched by id or by name, so the public moves (m-dead-bug), the
+// Guide library's sessions (c-dead-bugs, d-bird-dogs, b-pull-through), and its warm-up all follow it with no library patch.
+// True one-side-at-a-time moves (split squats, single-leg bridges, side planks, one-arm rows, carries) keep each side in turn.
+const ALT_IDS = ['m-dead-bug', 'm-bird-dog', 'm-plank-pull-through', 'g-seated-knee-lift', 'w-dead-bugs', 'b-bird-dog', 'b-pull-through', 'c-dead-bugs', 'd-dead-bugs', 'd-bird-dogs', 'd-pull-through'];
+const ALT_RE = /^\s*(dead bugs?|bird dogs?|plank pull-throughs?|seated knee lifts?)\b/i;
+const altMove = x => !!x && (x.alt === true || ALT_IDS.includes(x.id) || ALT_IDS.includes(x.move) || ALT_RE.test(x.name || ''));
+const ALT_CUE = 'Alternate sides: left, then right, back and forth.';
+// BLD 891 (Chris: "Plank pull thru needs more instruction"): a move may carry steps, shown as a numbered list in place of its how line.
+const howBlock = st => arr(st.steps).length ? `<ol class="hj-hsteps">${st.steps.map(x => `<li>${esc(x)}</li>`).join('')}</ol>` : `<p class="hj-how">${esc(st.how || '')}</p>`;
+// The count on the card: an alternating move whose reps count per side reads "8 each side (16 in all)" (a range doubles both
+// ends); reps written as words or as a total read as written.
+const repLine = st => { const r = repTxt(st), u = st.kind === 'time' ? ' seconds' : '';
+  if (st.alt && st.per && !repWords(st) && !/total/i.test(r)) return r + u + ' each side (' + r.replace(/\d+/g, n => String(2 * n)) + u + ' in all)';
+  return r + unitOf(st) + (st.side || st.per ? ' each side' : ''); };
 const unitOf = st => repWords(st) ? '' : st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : (/total$/i.test(repTxt(st)) ? '' : ' reps');
 const secsOf = st => parseInt(String(st.reps), 10) || 30;
 // BLD 866: a long timed item (3 minutes or more, whole minutes, like the Gentle walks) is said in minutes.
@@ -846,12 +862,16 @@ const amtTxt = st => { const n = +repTxt(st); if (st.kind === 'time' && !repWord
 const LN = {
   ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.',
   time: st => (st.name + '. ' + (st.how || '')).trim(),
-  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + amtTxt(st) + (st.side ? ' each side' : '') + '.',
+  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + amtTxt(st) + (st.side || st.per ? ' each side' : '') + '.',
   set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.',
   go: 'Go.', rest: s => 'Rest ' + s + ' seconds.', ten: 'Ten seconds.', nextSet: 'Next set.',
   next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.', out: 'That is the session. Strong work today.',
   nextRest: (s, n) => 'Rest ' + s + ' seconds. Next up: ' + n + '.',
   left: 'Left side.', right: 'Right side.', sw: 'Switch sides.', tap: 'Tap Set Done when you finish.',
+  alt: 'Alternate sides, left then right, back and forth.',
+  half: ['Halfway. Smooth and steady.', 'Halfway. Keep breathing.', 'Halfway. Nice control.'], last: 'Last few.', done: 'Set done.',
+  hard: st => 'Too hard? ' + st.easier, easy: st => 'Too easy? ' + st.harder,
+  weight: ['Pick a weight where the last two reps feel hard and your form stays clean.', 'If you could do five more reps, go a little heavier next set.', 'If your form slips, go a little lighter. Clean reps come first.'],
   count: k => NUMW[k] + '.',
   pIntro: (t, m) => t + '. About ' + m + ' minutes. Settle in, and we begin.', pOut: 'Your practice is complete. Carry this calm with you.',
   mIntro: t => 'Today\'s meditation: ' + t + '. Find a comfortable seat, and let the day pause.', mOut: 'Your meditation is complete. Carry this stillness into your day.',
@@ -859,21 +879,43 @@ const LN = {
   tset: m => 'Timer set for ' + m + ' minute' + (m === 1 ? '' : 's') + '.', tdone: 'That timer is done.',
   cOut: 'All done. Enjoy the table together.', prepOut: 'Prep is done. Your week is ready.'
 };
-const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10); return n > 0 && n <= 20 ? n : 0; };
+// An alternating move counts every rep, both sides together (8 each side counts to Sixteen); past Twenty it is I Tap Done.
+const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10) * (st.alt && st.per && !/total/i.test(String(st.reps)) ? 2 : 1); return n > 0 && n <= 20 ? n : 0; };
+const workSecs = st => secsOf(st) * (st.alt && st.per ? 2 : 1);
+// BLD 891, Auto Flow (Chris, October 29, 2026: "any ways to keep it hands free.. no one wants to have to tap or touch screen during
+// workouts"): every rep runs at the move's tempo (seconds per rep, from the move; 3 when it has none), counted aloud or timed
+// quietly; reps written as words ("2 to 3 short of your best") run about 8 reps. Pause and Set Done stay there, never required.
+const tempoOf = st => Math.max(1, +st.tempo || REP_SECS), WORD_REPS = 8;
+const handsOn = () => { try { return localStorage.getItem('gg-health-hands') !== '0'; } catch(e){ return true; } };
+// A move that uses a weight gets Ava's weight advice now and then (a body weight move never does).
+const loaded = st => !!st && st.t === 'ex' && st.kind !== 'time' && /dumbbell|kettlebell|barbell|machine|cable|plate|weight/i.test([st.name, st.load, st.equip].join(' ').replace(/your body ?weight\.?/ig, ''));
+// The coaching behind these lines, credited on the workout's start screen (and in shared/gg-sources.js).
+const COACH_SRC = [
+  {t: 'Progression Models in Resistance Training for Healthy Adults (Position Stand, 2009)', who: 'American College of Sports Medicine', url: 'https://pubmed.ncbi.nlm.nih.gov/19204579/'},
+  {t: 'Quantity and Quality of Exercise for Developing and Maintaining Fitness in Healthy Adults (Position Stand, 2011)', who: 'American College of Sports Medicine, Garber and others', url: 'https://pubmed.ncbi.nlm.nih.gov/21694556/'},
+  {t: 'Acute Effects of Muscle Stretching on Physical Performance, Range of Motion, and Injury Incidence in Healthy Active Individuals (2016)', who: 'Behm and others, Applied Physiology, Nutrition, and Metabolism', url: 'https://pubmed.ncbi.nlm.nih.gov/26642915/'},
+  {t: 'Application of the Repetitions in Reserve Based Rating of Perceived Exertion Scale for Resistance Training (2016)', who: 'Helms and others, Strength and Conditioning Journal', url: 'https://doi.org/10.1519/SSC.0000000000000218'}];
+const coachSrc = () => `<p class="hj-src">Sources: ${COACH_SRC.map(x => `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t)}</a>, ${esc(x.who)}`).join('; ')}</p>`;
+// Feel it, Easier, Harder: shown on the card and in the rest (BLD 891).
+const modsBlock = (st, only) => { const f = !only || only.includes('feel'), e = !only || only.includes('easier'), h = !only || only.includes('harder');
+  const x = (f && st.feel ? `<p><b>Feel it:</b> ${esc(st.feel)}</p>` : '') + (e && st.easier ? `<p><b>Easier:</b> ${esc(st.easier)}</p>` : '') + (h && st.harder ? `<p><b>Harder:</b> ${esc(st.harder)}</p>` : '');
+  return x ? `<div class="hj-mods">${x}</div>` : ''; };
 const AVA = 'ava', ANDREW = 'andrew';
 const REST_MAX = 60, GET_READY = 30, SWITCH = 5, REP_SECS = 3, TAP_EST = 35;
 const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
 // A warm-up or cooldown hold done on each side (Couch Stretch, Figure-4): Ava says Switch sides at the halfway point.
-const halfSide = x => /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
+// An alternating warm-up (Dead Bugs, 6 per side) flows side to side with no Switch sides (BLD 891).
+const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
 function stepsFor(ses, ph, light, w0){
   const w = w0 || WK(), out = [];
-  arr(w.warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', fig: x.name, half: halfSide(x)}));
-  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
+  // BLD 891: a session may carry its own warm-up for its focus (public Tending by day; the Guide library per session).
+  arr((ses && ses.warmup) || w.warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part: 'Warm-up', fig: x.name, half: halfSide(x)}));
+  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x);
     out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
-      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: !!x.side || /per side|each side/i.test(reps), tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || ''}); }));
+      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || ''}); }));
   // The last move flows straight into the cooldown.
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
-  arr(w.cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', fig: x.name, half: halfSide(x)}));
+  arr((ses && ses.cooldown) || w.cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part: 'Cooldown', fig: x.name, half: halfSide(x)}));
   return out;
 }
 const PR = () => (APP() || {}).practice || null;
@@ -911,11 +953,11 @@ function allLines(){
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light); S2.forEach((st, i) => {
       const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, LN.time(st)); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
-      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t));
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); }
     }); })); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap, LN.alt, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
@@ -934,7 +976,7 @@ function allLinesPub(){
     [ses.mins].concat(Object.values(ses.minsByPhase || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
       if (st.t === 'time'){ add(AVA, LN.time(st)); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
-      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t));
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); })); });
   if (P) ['root', 'rise', 'thrive'].forEach(lv => ['home', 'light', 'gym'].forEach(pl => [20, 40, 60].forEach(m => { const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl, mins: m, warmup: L.warmup, cooldown: L.cooldown}); sesLines(b.sessions, b); })));
   const G = L.gentle || {}, walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
@@ -942,7 +984,7 @@ function allLinesPub(){
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
     sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap, LN.alt].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
@@ -961,9 +1003,9 @@ function planSecs(steps, i0, set0, o){
       if (!st.lines && st.part === 'Cooldown' && steps[i - 1] && steps[i - 1].part !== 'Cooldown' && !(o && o.prac)) s += lineSecs(LN.cool);
       if (nx && nx.t === 'ex') s += GET_READY; return; }
     const first = i === at ? (set0 || 1) : 1, left = Math.max(0, st.sets - first + 1), sides = st.side ? 2 : 1;
-    const work = st.kind === 'time' ? secsOf(st) : repN(st) ? repN(st) * REP_SECS : TAP_EST;
+    const work = st.kind === 'time' ? workSecs(st) : repN(st) ? repN(st) * tempoOf(st) : o && o.hands === false ? TAP_EST : WORD_REPS * tempoOf(st);
     const perSet = lineSecs(LN.go) + sides * work + (st.side ? 2 * lineSecs(LN.left) + lineSecs(LN.sw) + SWITCH : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
-    s += (first === 1 ? lineSecs(LN.ex(st)) + (st.cue ? lineSecs(st.cue) : 0) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
+    s += (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue ? lineSecs(st.cue) : 0) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
@@ -980,7 +1022,7 @@ async function hold(o){ while (o.paused && !o.dead && !o.skip) await sleep(120);
 const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.set, side: o.side || ''}, e)); };
 // A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on longer rests; drains the ring.
 // kind: '' for work, 'rest' between sets, 'between' between moves, 'switch' between sides.
-async function runTimer(o, ms, kind, half){
+async function runTimer(o, ms, kind, half, onTick){
   o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99; rerender(true);
   while (!o.dead && !o.skip){
     if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
@@ -988,6 +1030,7 @@ async function runTimer(o, ms, kind, half){
     const s = Math.ceil(left / 1000);
     if ((kind === 'rest' || kind === 'between') && s === 10 && !said10 && ms > 15000){ said10 = true; if (!o.spk) speak(o, LN.ten); }
     if (half && !saidHalf && left <= o.tot / 2){ saidHalf = true; o.side = 'R'; speak(o, LN.sw); rerender(true); }
+    if (onTick) onTick(left);
     if (s <= 3 && s !== last){ last = s; VO() && VO().tick(); }
     document.querySelectorAll('[data-hjclock]').forEach(e => e.textContent = clock(left));
     stageUpd(Math.max(0, Math.min(1, left / (o.tot || ms))), s);
@@ -1005,20 +1048,39 @@ async function doSet(o, st){
     o.side = sides[k]; rerender(true);
     if (o.side) await speak(o, o.side === 'L' ? LN.left : LN.right);
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
-    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); await runTimer(o, secsOf(st) * 1000, ''); }
+    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); await runTimer(o, workSecs(st) * 1000, ''); }
     else if (o.count && repN(st)){ await speak(o, LN.go); o.rep = 0; rerender(true);
-      for (let r = 1; r <= repN(st) && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r; document.querySelectorAll('[data-hjrep]').forEach(e => e.textContent = r); const t0 = Date.now(); await speak(o, LN.count(r)); const wt = REP_SECS * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
+      for (let r = 1; r <= repN(st) && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r; document.querySelectorAll('[data-hjrep]').forEach(e => e.textContent = r); const t0 = Date.now(); await speak(o, LN.count(r)); const wt = tempoOf(st) * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
       o.rep = 0; }
+    else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1);
     else { await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
     if (o.skip && k < sides.length - 1 && !o.skipMove) o.skip = false;
   }
   o.side = ''; o.rep = 0;
 }
+// Auto Flow (BLD 891): a set of reps timed at the move's tempo. Ava says Go, a halfway line, Last few, and Set done; the ring
+// drains and the last three seconds tick. Set Done ends it early; Pause holds it.
+async function hfSet(o, st, lastSide){
+  const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
+  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs});
+  await runTimer(o, secs * 1000, '', false, left => { const s2 = left / 1000;
+    if (!saidHalf && secs >= 16 && s2 <= secs / 2 && s2 > lastAt + 2){ saidHalf = true; if (!o.spk) speak(o, LN.half[(o.hi = (o.hi || 0) + 1) % LN.half.length]); }
+    if (!saidLast && n >= 6 && s2 <= lastAt){ saidLast = true; if (!o.spk) speak(o, LN.last); } });
+  o.hf = false; if (!o.dead && lastSide) await speak(o, LN.done);
+}
+// What Ava says in a rest between sets, here and there (BLD 891): after the first set the easier and harder versions, after the
+// second a weight line for a move with a weight, otherwise a motivation line.
+function restLines(o, st){
+  if (o.set === 1 && (st.easier || st.harder)) return [st.easier ? LN.hard(st) : '', st.harder ? LN.easy(st) : ''].filter(Boolean);
+  if (o.set === 2 && loaded(st)) return [LN.weight[(o.wi = (o.wi == null ? 0 : o.wi + 1)) % LN.weight.length]];
+  const m = motLine(o); return m ? [m] : [];
+}
 // The rest before a move: Next up, its tips, its weight line, and a draining ring.
 async function between(o, nx, secs){
   if (!secs){ await speak(o, LN.next(nx.name)); return; }
   o.between = true; lg(o, {e: 'between', secs});
-  (async () => { await speak(o, LN.nextRest(secs, nx.name)); for (const t of arr(nx.tips)){ if (o.dead || !o.between) break; await speak(o, t); } })();
+  const wl = loaded(nx) && !o.wfirst ? (o.wfirst = true, LN.weight[0]) : '';
+  (async () => { await speak(o, LN.nextRest(secs, nx.name)); for (const t of arr(nx.tips).concat(wl ? [wl] : [])){ if (o.dead || !o.between) break; await speak(o, t); } })();
   await runTimer(o, secs * 1000, 'between');
   o.between = false; o.skip = false;
 }
@@ -1046,14 +1108,14 @@ async function runSession(o){
       const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, GET_READY);
       continue;
     }
-    if (o.set === 1){ await speak(o, LN.ex(st)); if (st.cue) await speak(o, st.cue); } else await speak(o, LN.set(o.set, st.sets));
+    if (o.set === 1){ await speak(o, LN.ex(st)); if (st.alt) await speak(o, LN.alt); if (st.cue) await speak(o, st.cue); } else await speak(o, LN.set(o.set, st.sets));
     await hold(o); if (o.dead) break;
     await doSet(o, st);
     if (o.dead) break;
     lg(o, {e: 'set'});
     const skipMove = o.skipMove; o.skip = false; o.skipMove = false;
-    if (!skipMove && o.set < st.sets){ const r = st.rest; lg(o, {e: 'rest', secs: r}); o.mline = motLine(o);
-      (async () => { await speak(o, LN.rest(r)); if (o.rest && o.mline) await speak(o, o.mline); })();
+    if (!skipMove && o.set < st.sets){ const r = st.rest, rl = restLines(o, st); lg(o, {e: 'rest', secs: r}); o.mline = rl.join(' '); o.mcoach = /^Too (hard|easy)\?/.test(rl[0] || '');
+      (async () => { await speak(o, LN.rest(r)); for (const l of rl){ if (!o.rest || o.dead) break; await speak(o, l); } })();
       await runTimer(o, r * 1000, 'rest'); if (o.dead) break; o.skip = false; o.set++; continue; }
     o.done.push(o.i); o.i++; o.set = 1; o.mline = '';
     const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, st.restAfter);
@@ -1125,7 +1187,7 @@ function toggles(o){
     <button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="tvoice">${on ? 'Voice On' : 'Voice Off'}</button>
     <button type="button" class="chip${mu ? ' on' : ''}" aria-pressed="${mu}" data-hja="tmusic">${mu ? 'Music On' : 'Music Off'}</button>
     <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Beeps On' : 'Beeps Off'}</button>
-    ${o && !o.prac ? `<button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : 'I Tap Done'}</button>` : ''}</div>`;
+    ${o && !o.prac ? `<button type="button" class="chip${o.hands !== false ? ' on' : ''}" aria-pressed="${o.hands !== false}" data-hja="thands">${o.hands !== false ? 'Auto Flow On' : 'Auto Flow Off'}</button><button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : o.hands !== false ? 'Quiet Timed Reps' : 'I Tap Done'}</button>` : ''}</div>`;
 }
 function vStart(o, top){
   const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
@@ -1137,9 +1199,10 @@ function vStart(o, top){
     ${lt ? `<p class="hj-light">${esc(lt)}</p>` : ''}
     ${o.prac && (PR() || {}).safety ? `<p class="hj-note" style="text-align:left">${esc(PR().safety)}</p>` : ''}
     ${toggles(o)}
+    ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Practice' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
-    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + s.reps)}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol></div></details></div>`;
+    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.prac || o.med ? '' : coachSrc()}</div></details></div>`;
 }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
   return `${stagePanel('done', {fig: o.med ? candle() : ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
@@ -1153,15 +1216,15 @@ function vAuto(o, top){
   const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : null;
   const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, o.rest || o.between), side: o.side || '', label: pill, inhale: br && br[0], exhale: br && br[1]}, ring);
-  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>` : st.t === 'ex' ? `<div class="hj-reps">${esc(repTxt(st))}${esc(unitOf(st))}${st.side ? ' each side' : ''}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
+  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? ' · Left side' : o.side === 'R' ? ' · Right side' : '';
   const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
   if (o.between) detail = `${arr(st.tips).length ? `<ul class="hj-tips">${st.tips.map(t => `<li>${esc(t)}</li>`).join('')}</ul>` : `<p class="hj-how">${esc(st.how || '')}</p>`}${weightBox(st)}`;
-  else if (o.rest) detail = `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>${weightBox(st)}`;
+  else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${weightBox(st)}`;
   else if (o.sw) detail = `<p class="hj-how">Switch to your right side.</p>`;
   else if (st.lines) detail = `<p class="hj-how hj-mline">${esc(o.line || (o.run ? 'Rest in the quiet.' : ''))}</p>`;
-  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}<p class="hj-how">${esc(st.how || '')}</p>${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'ex' && weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}`;
+  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}${howBlock(st)}${st.alt && st.t === 'ex' ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'time' ? modsBlock(st, ['feel', 'easier']) : ''}${st.t === 'ex' && weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}`;
   const t = trans(o, state);
   return `${top(o.title, (o.i + 1) + ' of ' + o.steps.length, pct)}
   <div class="hj-sess"><span data-hjsess>${esc(clock(o.active || 0))}</span><span data-hjleft>about ${Math.max(1, Math.round(estLeft(o) / 60000))} min left</span></div>
@@ -1169,7 +1232,7 @@ function vAuto(o, top){
   <div class="hj-ovb${t.cls}" style="${t.style}" data-hjstate="${state}"><div class="hj-kick hj-stk">${esc(label)}</div><h2 class="hj-exn">${esc(o.swap && st.swap ? st.swap : st.name)}</h2>${st.t === 'ex' && !o.between ? dots(o.rest ? o.set + 1 : o.set, st.sets) : ''}${big}
     ${detail}
     ${o.wait ? `<button type="button" class="btn btn-gold hj-go" data-hja="tapdone">${o.side === 'L' ? 'Left Side Done' : 'Set Done'}</button>` : ''}
-    <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>
+    <div class="hj-ovbtns hj-ctl"><button type="button" class="btn btn-gold" data-hja="apause">${o.paused ? 'Resume' : 'Pause'}</button><button type="button" class="btn btn-line" data-hja="askip">${o.between ? 'Start Now' : o.rest || o.sw ? 'Ready Now' : o.hf ? 'Set Done' : 'Skip'}</button>${o.run ? `<button type="button" class="btn btn-line" data-hja="amore">+15 sec</button>` : ''}${st.swap && !o.rest && !o.between ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Plan Move' : 'Swap'}</button>` : ''}</div>
     ${st.t === 'ex' && !o.between ? `<button type="button" class="linkbtn hj-skip" data-hja="askipmove">Skip This Move</button>` : ''}
     ${toggles(o)}</div>`;
 }
@@ -1206,6 +1269,7 @@ function actCoach(a, v){
     case 'tvoice': if (V){ V.setOn(!V.on()); } rerender(true); return true;
     case 'tmusic': if (V){ V.setMusic(!V.musicOn()); if (V.musicOn() && o && o.mode === 'auto' && !o.fin && !o.paused) V.music(o.music || '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3'); } rerender(true); return true;
     case 'tchime': if (V) V.setChime(!V.chimeOn()); rerender(true); return true;
+    case 'thands': if (o){ o.hands = o.hands === false; try { localStorage.setItem('gg-health-hands', o.hands ? '1' : '0'); } catch(e){} } rerender(true); return true;
     case 'tcount': if (o){ o.count = !o.count; try { localStorage.setItem('gg-health-count', o.count ? '1' : '0'); } catch(e){} } rerender(true); return true;
     case 'play': if (o) runSession(o); return true;
     case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
@@ -2815,7 +2879,7 @@ function buildLevelWork(lvl, id){
   if (L.mine) return buildWork(id);
   const n = Math.max(1, weekNo(new Date())), steps = stepsFor(ses, String(phaseOf(n)), lightWk(n), L);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
-  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count};
+  return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 function vWorkouts(){
   const h = H(), n = Math.max(1, weekNo(new Date())), sets = levelSets(), pr = arr((PR() || {}).sessions); let i = 0;
@@ -3119,6 +3183,8 @@ const CSS = `
 .hj-skip{margin-top:14px;}
 .hj-big2{font-family:'Cormorant Garamond',Georgia,serif;font-size:44px;font-weight:700;margin:18px 0 6px;}
 .hj-guide{text-align:left;max-width:46ch;margin:10px auto;color:var(--ink-soft);}
+.hj-mods{text-align:left;max-width:46ch;margin:4px auto 10px;font-size:14px;color:var(--ink-soft);}.hj-mods p{margin:3px 0;overflow-wrap:anywhere;}.hj-st .hj-mods{color:var(--stfg,var(--ink-soft));}.hj-hfnote{text-align:left;}
+.hj-hsteps{text-align:left;color:var(--ink-soft);margin:4px auto 10px;padding-left:22px;max-width:46ch;line-height:1.45;}.hj-st .hj-hsteps{color:var(--stfg,var(--ink-soft));}.hj-hsteps li{margin:4px 0;overflow-wrap:anywhere;}
 .hj-steps{list-style:none;padding:0;margin:8px 0 14px;}.hj-steps li{display:flex;gap:12px;padding:10px 0;border-top:1px solid var(--line);}.hj-steps li:first-child{border-top:0;}
 .hj-steps li.on>div{opacity:.55;}.hj-steps li>div{flex:1;min-width:0;padding-top:5px;}
 .hj-at{font-weight:700;color:var(--gold);font-variant-numeric:tabular-nums;}

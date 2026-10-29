@@ -233,20 +233,25 @@ const repWords = st => !REPS_RE.test(String(st.reps));
 const repTxt = st => String(st.reps).replace(/\s*(per side|each side)\s*$/i, '').trim();
 const unitOf = st => repWords(st) ? '' : st.kind === 'time' ? ' seconds' : st.kind === 'distance' ? '' : (/total$/i.test(repTxt(st)) ? '' : ' reps');
 const secsOf = st => parseInt(String(st.reps), 10) || 30;
-const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10); return n > 0 && n <= 20 ? n : 0; };
+// BLD 891: the same as field-guide/health.js: alternating moves (Dead Bug, Bird Dog, Plank Pull-Through, Seated Knee Lift) run as one
+// flow and count both sides together; every rep runs at the move's tempo (seconds per rep), and reps written as words run about 8.
+const ALT_IDS = ['m-dead-bug', 'm-bird-dog', 'm-plank-pull-through', 'g-seated-knee-lift'], ALT_RE = /^\s*(dead bugs?|bird dogs?|plank pull-throughs?|seated knee lifts?)\b/i;
+const altMove = x => !!x && (x.alt === true || ALT_IDS.includes(x.id) || ALT_IDS.includes(x.move) || ALT_RE.test(x.name || ''));
+const repN = st => { if (repWords(st)) return 0; const n = parseInt(String(st.reps), 10) * (st.alt && st.per && !/total/i.test(String(st.reps)) ? 2 : 1); return n > 0 && n <= 20 ? n : 0; };
+const tempoOf = st => Math.max(1, +st.tempo || REP_SECS), WORD_REPS = 8;
 const REST_MAX = 60, GET_READY = 30, SWITCH = 5, REP_SECS = 3, TAP_EST = 35;
 const capRest = v => Math.max(0, Math.min(REST_MAX, Math.round(v)));
-const halfSide = x => /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
+const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.name || '') + ' ' + (x.how || ''));
 const LN = {ses: (t, m) => t + '. About ' + m + ' minutes. We begin with the warm-up.', time: st => (st.name + '. ' + (st.how || '')).trim(),
-  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + repTxt(st) + unitOf(st) + (st.side ? ' each side' : '') + '.',
+  ex: st => st.name + '. ' + st.sets + ' set' + (st.sets === 1 ? '' : 's') + ' of ' + repTxt(st) + unitOf(st) + (st.side || st.per ? ' each side' : '') + '.', alt: 'Alternate sides, left then right, back and forth.',
   set: (n, m) => n === m ? 'Last set.' : 'Set ' + n + ' of ' + m + '.', go: 'Go.', next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.',
   out: 'That is the session. Strong work today.', left: 'Left side.', sw: 'Switch sides.'};
 function steps(ses, warmup, cooldown, ph, light){
   const out = [];
   arr(warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Warm-up', half: halfSide(x)}));
-  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || '');
-    out.push({t: 'ex', name: x.name, cue: x.cue, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main',
-      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: !!x.side || /per side|each side/i.test(reps)}); }));
+  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x);
+    out.push({t: 'ex', name: x.name, cue: x.cue, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', tempo: x.tempo,
+      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per}); }));
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
   arr(cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, secs: +x.secs || 45, part: 'Cooldown', half: halfSide(x)}));
   return out;
@@ -257,9 +262,9 @@ function planSecs(S){
     if (st.t === 'time'){ s += st.secs + lineSecs(LN.time(st)) + (st.half ? lineSecs(LN.sw) : 0);
       if (st.part === 'Cooldown' && S[i - 1] && S[i - 1].part !== 'Cooldown') s += lineSecs(LN.cool);
       if (nx && nx.t === 'ex') s += GET_READY; return; }
-    const left = Math.max(0, st.sets), sides = st.side ? 2 : 1, work = st.kind === 'time' ? secsOf(st) : repN(st) ? repN(st) * REP_SECS : TAP_EST;
+    const left = Math.max(0, st.sets), sides = st.side ? 2 : 1, work = st.kind === 'time' ? secsOf(st) * (st.alt && st.per ? 2 : 1) : (repN(st) || WORD_REPS) * tempoOf(st);
     const perSet = lineSecs(LN.go) + sides * work + (st.side ? 2 * lineSecs(LN.left) + lineSecs(LN.sw) + SWITCH : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
-    s += lineSecs(LN.ex(st)) + (st.cue ? lineSecs(st.cue) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
+    s += lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue ? lineSecs(st.cue) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
@@ -286,6 +291,9 @@ function itemFor(m, level, place, sets, rest, restAfter, prefix){
     load: (m.loadAt || {})[place] || m.load || '', equip: eq, fig: m.fig || '', pattern: m.pattern};
   if (time) it.secs = +L.secs || 30;
   if (m.unilateral) it.side = true;
+  // BLD 891: numbered steps, an easier and a harder version, and the move's tempo ride along to the player.
+  if (arr(m.steps).length) it.steps = arr(m.steps).filter(Boolean);
+  ['easier', 'harder', 'tempo'].forEach(k => { if (m[k]) it[k] = m[k]; });
   return it;
 }
 const byIdList = (list, ids) => { const L = arr(list); if (!Array.isArray(ids)) return null; return ids.map(id => L.find(x => x && x.id === id)).filter(Boolean); };
@@ -313,7 +321,9 @@ function buildSessions(moves, templates, opts){
     if (+len.cardio) add((T.blockTitles || {}).cardio || 'Cardio', Array(+len.cardio).fill('cardio'), base);
     if (+len.mobility) add((T.blockTitles || {}).mobility || 'Mobility', Array(+len.mobility).fill('mobility'), base);
     const ses = {title: days[d], lead: (T.leads || {})[d] || '', blocks};
-    const items = () => blocks.flatMap(b => b.items), est = () => estimate(ses, warmup, cooldown, '1', false);
+    // BLD 891: each day warms up for its own focus (templates.lengths[n].warmByDay), all moving mobility.
+    const wu = byIdList(opts.warmup, (len.warmByDay || {})[d]) || warmup; if (wu !== warmup) ses.warmup = wu;
+    const items = () => blocks.flatMap(b => b.items), est = () => estimate(ses, wu, cooldown, '1', false);
     const setAll = (it, n) => { it.sets = {'1': n, '2': n, '3': n}; };
     // Too long: one set less on the move with the most sets (never under 1, Main keeps 2 while it can), then the last finisher move.
     for (let g = 0; g < 60 && est() > target * 1.05; g++){
