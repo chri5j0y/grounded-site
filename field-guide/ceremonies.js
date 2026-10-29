@@ -184,6 +184,12 @@ function faithMatch(tag, f){
   const fo = (cer().setup.faiths || []).find(x => String(x.id).toLowerCase() === f);
   return !!(fo && [fo.group, fo.family, fo.kind].some(g => g && String(g).toLowerCase() === tag));
 }
+// GWG BLD 890 (Chris: "we should always be able to select more than one religion on all checkins"): setup.faith holds
+// a list of tradition ids. A service saved before holds one id as a string, and arr() reads it as a one-item list.
+// No Faith (plain, or none in the fallback list) stands alone: choosing it clears the others, and another clears it.
+const FAITH_ALONE = ['plain', 'none'];
+const faithsOf = st => arr((st || {}).faith).map(String).filter(Boolean);
+const faithFits = (tag, st) => faithsOf(st).some(f => faithMatch(tag, f));
 function ruleOn(r, s){
   if (r === true || r === 'always') return true;
   if (!r || typeof r !== 'object') return false;
@@ -210,7 +216,7 @@ function keep(s){ if (!s) return; s.u = Date.now(); if (!S.draft || s !== S.draf
 function newSvc(type){
   const C = cer(), lens = (C.setup.lengths || [30]).map(Number);
   return {id: uid(), u: Date.now(), made: Date.now(), type, status: 'session', who: {pron: 'they'}, p1: {}, p2: {}, date: '', time: '', place: '',
-    setup: {faith: '', tone: '', age: '', length: lens.includes(30) ? 30 : lens[0], setting: '', honors: [], speakers: []},
+    setup: {faith: [], tone: '', age: '', length: lens.includes(30) ? 30 : lens[0], setting: '', honors: [], speakers: []},
     template: '', parts: [], bible: (C.bible && C.bible.default) || 'kjv', obit: {a: {}, d: {}}, lic: {}, prog: {obit: true}};
 }
 function names(s){
@@ -382,7 +388,7 @@ function rScore(r, s){
   let n = sug ? 3 : 0;
   if (arr(t.types).includes(s.type)) n += 3; else if (!arr(t.types).length) n += 1;
   const fs = arr(t.faith);
-  if (st.faith && fs.length){ if (fs.some(x => faithMatch(x, st.faith) && x !== 'any' && x !== 'all')) n += 3; else if (fs.some(x => x === 'any' || x === 'all')) n += 1; else n -= 5; }
+  if (faithsOf(st).length && fs.length){ if (fs.some(x => faithFits(x, st) && x !== 'any' && x !== 'all')) n += 3; else if (fs.some(x => x === 'any' || x === 'all')) n += 1; else n -= 5; }
   if (st.tone && arr(t.tone).includes(st.tone)) n += 1;
   return n;
 }
@@ -563,9 +569,9 @@ function vHome(){
 function vSetup(s){
   const C = cer(), fam = famOf(s.type), st = s.setup, SU = C.setup;
   const L = (list, f) => (list || []).filter(x => !f || !x.family || x.family === f || x.family === 'both').map(x => [x.id, x.name]);
-  const faiths = SU.faiths || [], fo = faiths.find(x => x.id === st.faith);
+  const faiths = SU.faiths || [], mine = faithsOf(st), fos = mine.map(id => faiths.find(x => x.id === id)).filter(Boolean);
   const tmpls = C.templates.filter(t => arr(t.type).includes(s.type));
-  const tScore = t => (st.faith && arr(t.faith).some(f => faithMatch(f, st.faith))) ? 2 : (!arr(t.faith).length || arr(t.faith).some(f => f === 'any' || f === 'all')) ? 1 : 0;
+  const tScore = t => (mine.length && arr(t.faith).some(f => faithFits(f, st))) ? 2 : (!arr(t.faith).length || arr(t.faith).some(f => f === 'any' || f === 'all')) ? 1 : 0;
   const tm = tmpls.slice().sort((a, b) => tScore(b) - tScore(a));
   const hasScripture = C.readings.some(r => r.versions);
   const who = whoOf(s.type), inp = (id, f, l, ph) => `<div><label class="f" for="${id}">${l}</label><input type="text" id="${id}" data-cerf="${f}" value="${esc(f.split('.').reduce((o, k) => (o || {})[k], s) || '')}"${ph ? ` placeholder="${esc(ph)}"` : ''} autocomplete="off"></div>`;
@@ -588,9 +594,9 @@ function vSetup(s){
     <div class="cer-g3"><div><label class="f" for="cer-dt">Date</label><input type="date" id="cer-dt" data-cerf="date" value="${esc(s.date || '')}"></div>
       <div><label class="f" for="cer-tm">Time</label><input type="text" id="cer-tm" data-cerf="time" value="${esc(s.time || '')}" placeholder="11:00 a.m." autocomplete="off"></div>
       <div><label class="f" for="cer-pl">Place</label><input type="text" id="cer-pl" data-cerf="place" value="${esc(s.place || '')}" autocomplete="off"></div></div></div>
-  <div class="card"><label class="f" for="cer-faith" style="margin-top:0">Faith</label>
-    <select id="cer-faith" data-cers="faith"><option value="">Choose a tradition</option>${faiths.map(f => `<option value="${esc(f.id)}"${f.id === st.faith ? ' selected' : ''}>${esc(f.name)}</option>`).join('')}</select>
-    ${fo && fo.note ? `<p class="muted" style="font-size:15px;margin-top:6px">${esc(fo.note)}</p>` : ''}
+  <div class="card"><label class="f" style="margin-top:0">Faith</label><p class="muted" style="font-size:15px;margin:0 0 6px">Choose as many traditions as fit.</p>
+    <div id="cer-faith">${chips('faith', faiths.map(f => [f.id, f.name]), mine, true)}</div>
+    ${fos.filter(f => f.note).map(f => `<p class="muted" style="font-size:15px;margin-top:6px">${fos.length > 1 ? `<b style="font-weight:600">${esc(f.name)}:</b> ` : ''}${esc(f.note)}</p>`).join('')}
     <label class="f">Tone</label>${chips('tone', L(SU.tones), st.tone)}
     <label class="f">Age Group</label>${chips('age', L(SU.ages), st.age)}
     <label class="f">Length</label>${chips('length', (SU.lengths || []).map(n => [n, n + ' Minutes']), st.length)}
@@ -1087,6 +1093,7 @@ function act(k, v, el){
     case 'pron': s.who.pron = v; keep(s); rerender(true); return;
     case 'tone': case 'age': case 'setting': s.setup[k] = s.setup[k] === v ? '' : v; keep(s); rerender(true); return;
     case 'length': s.setup.length = +v; keep(s); rerender(true); return;
+    case 'faith': { const a = faithsOf(s.setup); s.setup.faith = a.includes(v) ? a.filter(x => x !== v) : FAITH_ALONE.includes(v) ? [v] : a.filter(x => !FAITH_ALONE.includes(x)).concat(v); keep(s); rerender(true); return; }
     case 'honors': case 'speakers': { const a = arr(s.setup[k]).map(String); s.setup[k] = a.includes(v) ? a.filter(x => x !== v) : a.concat(v); keep(s); rerender(true); return; }
     case 'bible': s.bible = v; keep(s); rerender(true); return;
     case 'tmpl': { if (s._tmpl == null) s._tmpl = s.template; s.template = v; const T = cer().templates.find(t => t.id === v); if (T && T.length) s.setup.length = +T.length; keep(s); rerender(true); return; }

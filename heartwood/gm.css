@@ -273,3 +273,16 @@ body.gm-denim main{background:var(--bg);color:var(--ink);}
   .gm-hero-in>*{max-width:430px;margin-left:0;margin-right:0;}
   .gm-lock{justify-content:flex-start;}
 }
+/* GWG BLD 890: faith backgrounds, as many as fit */
+.gm-fbf{min-width:0;}
+.gm-fbhint{display:block;margin:2px 0 6px;}
+.gm-fbchips{display:flex;flex-wrap:wrap;gap:6px;}
+.gm-fbchips button{font:600 14px/1.25 'Barlow',sans-serif;color:var(--ink);background:var(--bg);border:1.5px solid var(--line);border-radius:18px;padding:7px 12px;cursor:pointer;min-height:40px;overflow-wrap:anywhere;max-width:100%;text-align:left;}
+.gm-fbchips button:hover{border-color:var(--gold);}
+.gm-fbchips button:focus-visible{outline:2px solid var(--gold);outline-offset:2px;}
+.gm-fbchips button[aria-pressed="true"]{background:var(--gold);border-color:var(--gold);color:#FFF8EC;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gm-fbchips button[aria-pressed="true"]{color:#1F1A14;}}
+:root[data-theme="dark"] .gm-fbchips button[aria-pressed="true"]{color:#1F1A14;}
+.gm-denim .gm-fbchips button[aria-pressed="true"]{color:#fff;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .gm-denim .gm-fbchips button[aria-pressed="true"]{color:#141A22;}}
+:root[data-theme="dark"] .gm-denim .gm-fbchips button[aria-pressed="true"]{color:#141A22;}

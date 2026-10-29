@@ -15,7 +15,7 @@
      read(code, word) -> Promise of the card, or null when it is not a card this app can read
      codeOf(text) -> the code inside a link (/heartwood/#btv=, or the older /marriage/#btv= and /before-the-vows/#btv=), or ''
      link(code) -> https://growwithgrounded.com/heartwood/#btv=<code> (this site's own address when served)
-     Card v2: {v: 2, q, n, to, fw: 'f' or 'p', a: '<digits>', fb: '<faith id or empty>'}. Card v1 has no fb.
+     Card v2: {v: 2, q, n, to, fw: 'f' or 'p', a: '<digits>', fb: '<faith id, several joined with commas (GWG BLD 890), or empty>'}. Card v1 has no fb.
      a: one digit (0 to 5, 0 is skipped) for each question in BTV_Q.questions, in order; when the app has
      faith.js, the digits for GM_FAITH.two.questions follow. Readers ignore digits past what they know.
    GMCore.answersOf(a) -> {id: v} from a card's digits (the two-tradition digits included when faith.js is here).
@@ -79,7 +79,7 @@
     if (o.fw !== 'f' && o.fw !== 'p') return null;
     if (typeof o.a !== 'string' || !/^[0-5]{1,300}$/.test(o.a)) return null;
     var fb = o.v === 2 ? o.fb : '';
-    if (typeof fb !== 'string' || !/^[a-z0-9-]{0,40}$/.test(fb)) return null;
+    if (typeof fb !== 'string' || !/^[a-z0-9,-]{0,800}$/.test(fb)) return null; // GWG BLD 890: one id, or several joined with commas
     return { v: o.v, q: o.q, n: o.n, to: o.to, fw: o.fw, a: o.a, fb: fb };
   }
   function make(dataObj, word) {

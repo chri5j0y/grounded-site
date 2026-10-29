@@ -569,7 +569,19 @@ function ckStem(ck) {
   if (ck.by === 'observed') return `From what you've seen and heard, lately how often has ${esc(nameOf(ck.pid))}...`;
   return C.stems.standard;
 }
-const faithNone = ck => ck.faith && (ck.faith.trad === 'private' || ck.faith.matters === 'none');
+// GWG BLD 890 (Chris: "we should always be able to select more than one religion on all checkins"): a person may
+// choose several traditions. f.trads is the list; f.trad keeps the first one, so older records and readers still work.
+// A record saved before holds only f.trad, and reads as a one-item list. "I'd rather not say" stands alone.
+const FAITH_ALONE = ['private'];
+const tradsOf = f => !f ? [] : Array.isArray(f.trads) ? f.trads.filter(x => x && typeof x === 'string') : (f.trad ? [f.trad] : []);
+function setTrads(f, L) { f.trads = L.slice(); f.trad = L[0] || ''; }
+function toggleTrad(f, v) {
+  const L = tradsOf(f);
+  setTrads(f, L.includes(v) ? L.filter(x => x !== v) : FAITH_ALONE.includes(v) ? [v] : L.filter(x => !FAITH_ALONE.includes(x)).concat(v));
+}
+const andList = a => a.length < 2 ? (a[0] || '') : a.length === 2 ? a[0] + ' and ' + a[1] : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1];
+const FAITH_ASK = 'Choose any that fit, write your own words, or "I\'d rather not say."';
+const faithNone = ck => ck.faith && (tradsOf(ck.faith).includes('private') || ck.faith.matters === 'none');
 function qText(ck, q) { let t = faithNone(ck) && q.none ? q.none : q.t; if (ck.by === 'observed') t = theyify(t); return t; }
 function flagOn(ck, q, a) { const f = q.flag && C.flags[q.flag]; return !!(f && f.on.includes(a) && f.who === (ck.role === 'helper' ? 'helper' : 'person')); }
 function qHtml(ck, key, i) {
@@ -596,7 +608,7 @@ function step(d) {
   const ck = S.ck; if (!ck) return;
   const steps = ckSteps(ck), cur = steps[ck.i];
   if (d > 0 && cur === 'who' && !ck.by) { toast('Choose who is answering first.'); return; }
-  if (d > 0 && cur === 'faith' && ck.faithEdit && !ck.faith.trad && !ck.faith.own) { toast('Choose one, write your own words, or "I\'d rather not say."'); return; }
+  if (d > 0 && cur === 'faith' && ck.faithEdit && !tradsOf(ck.faith).length && !ck.faith.own) { toast(FAITH_ASK); return; }
   ck.i = Math.max(0, Math.min(steps.length - 1, ck.i + d));
   if (window.GGRead && GGRead.stop) GGRead.stop();
   render(); scrollTop(true);
@@ -634,7 +646,7 @@ function faithSummary(f) {
   if (!f) return '';
   const I = F.intake, opt = (k, v) => { const row = I.follow.find(x => x[0] === k); const o = row && row[2].find(x => x[0] === v); return o ? o[1] : ''; };
   const bits = [];
-  if (f.trad) bits.push(faithName(f.trad));
+  const ts = tradsOf(f); if (ts.length) bits.push(andList(ts.map(faithName)));
   if (f.own) bits.push('"' + f.own + '"');
   if (f.matters) bits.push('Matters now: ' + opt('matters', f.matters).toLowerCase());
   if ((f.lives || []).length) bits.push('Lived through ' + f.lives.map(v => opt('lives', v).toLowerCase()).join(', '));
@@ -650,11 +662,12 @@ function faithStep(ck, inGuided) {
       <p class="lead">Is that still true${self ? ' for you' : ' for ' + n}?</p>
       <div class="btn-row"><button type="button" class="btn btn-primary" ${inGuided ? 'data-ggd-next' : 'onclick="W.step(1)"'}>Yes, still true</button><button type="button" class="btn btn-secondary" onclick="W.S.ck.faithEdit=true;W.render()">Something has changed</button></div>`;
   }
-  const chip = id => `<button type="button" class="w-tchip" aria-pressed="${f.trad === id}" onclick="W.faith('trad','${id}')">${esc(faithName(id))}</button>`;
+  const mine = tradsOf(f), chip = id => `<button type="button" class="w-tchip" aria-pressed="${mine.includes(id)}" onclick="W.faith('trad','${id}')">${esc(faithName(id))}</button>`;
   const single = row => `<fieldset class="w-fs"><legend>${esc(row[1])}</legend><div class="w-tchips">${row[2].map(o => `<button type="button" class="w-tchip" aria-pressed="${f[row[0]] === o[0]}" onclick="W.faith('${row[0]}','${o[0]}')">${esc(o[1])}</button>`).join('')}</div></fieldset>`;
   const multi = row => `<fieldset class="w-fs"><legend>${esc(row[1])}</legend><div class="w-tchips">${row[2].map(o => `<button type="button" class="w-tchip" aria-pressed="${(f.lives || []).includes(o[0])}" onclick="W.faith('lives','${o[0]}')">${esc(o[1])}</button>`).join('')}</div></fieldset>`;
   return head + `<p class="lead">${esc(I.ask)} ${esc(I.welcome)}</p>
     ${self ? '' : `<p class="w-small">Each person answers for themselves. Ask ${n}, and tap what they say.</p>`}
+    <p class="w-small">${esc(I.many || 'Choose as many as fit.')}</p>
     ${I.groups.map(g => `<fieldset class="w-fs"><legend>${esc(g[1])}</legend><div class="w-tchips">${g[2].map(chip).join('')}</div></fieldset>`).join('')}
     <label class="w-l" for="w-fown">${esc(I.own)}</label><input type="text" id="w-fown" maxlength="120" value="${esc(f.own || '')}" oninput="W.S.ck.faith.own=this.value">
     ${single(I.follow[0])}${multi(I.follow[1])}${single(I.follow[2])}
@@ -665,6 +678,7 @@ function faithStep(ck, inGuided) {
 function faith(k, v) {
   const f = S.ck && S.ck.faith; if (!f) return;
   if (k === 'lives') { f.lives = f.lives || []; f.lives = f.lives.includes(v) ? f.lives.filter(x => x !== v) : f.lives.concat(v); }
+  else if (k === 'trad') toggleTrad(f, v);
   else f[k] = f[k] === v ? '' : v;
   const y = window.scrollY; render(); window.scrollTo(0, y);
 }
@@ -695,7 +709,7 @@ function finish() {
   if (!Object.keys(lv).length) { toast('Answer at least one question first. "Not sure" counts.'); return; }
   const by = ck.by || 'self';
   const e = { id: uid(), date: today(), by, helper: by === 'self' ? '' : a.name, quick: ck.quick, role: ck.role, answers: JSON.parse(JSON.stringify(ck.ans)), levels: lv, sc, flags: ckFlags(ck), note: ck.note || '', v: C.version };
-  if (by !== 'observed' && (ck.faithEdit || !r.faith) && (ck.faith.trad || ck.faith.own)) { r.faith = Object.assign({}, ck.faith, { date: today(), by: by === 'tapped' ? 'tapped' : 'self' }); }
+  if (by !== 'observed' && (ck.faithEdit || !r.faith) && (tradsOf(ck.faith).length || ck.faith.own)) { r.faith = Object.assign({}, ck.faith, { date: today(), by: by === 'tapped' ? 'tapped' : 'self' }); setTrads(r.faith, tradsOf(ck.faith)); }
   if (by !== 'observed' && r.faith && r.faith.never && !(r.matters || {}).never) { r.matters = r.matters || {}; r.matters.never = r.faith.never; }
   r.checkins.push(e);
   ck.done = true; ck.entry = e;
@@ -737,7 +751,7 @@ function gStemSay(ck) {
 }
 function gFaithQ(ck, K) {
   return { id: 'faith', type: 'form', aside: true, label: 'Faith', eb: 'Before the Questions', part: '', text: 'Faith, spirit, or something else', say: false, lead: K.faith || null,
-    html: () => faithStep(ck, true), ready: () => (ck.faithEdit && !ck.faith.trad && !ck.faith.own) ? 'Choose one, write your own words, or "I\'d rather not say."' : '' };
+    html: () => faithStep(ck, true), ready: () => (ck.faithEdit && !tradsOf(ck.faith).length && !ck.faith.own) ? FAITH_ASK : '' };
 }
 function gPartQs(ck) {
   const out = [], bk = bank(ck.role), stem = gStem(ck), sayStem = gStemSay(ck);
@@ -1023,10 +1037,11 @@ VIEWS.bedside = () => {
   const person = r && r.started && roleOf(t) === 'person';
   let h = `<div class="w-head"><p class="w-eyebrow">At the bedside</p><h2>What to do when you don't know what to do</h2><p class="lead">A simple, kind word is enough. You only have to stay. These are small, real things families and helpers can do, with how well each one is backed.</p></div>`;
   h += lineHtml();
-  if (person && r.faith && (r.faith.trad || r.faith.never) && sees('faith')) {
+  if (person && r.faith && (tradsOf(r.faith).length || r.faith.never) && sees('faith')) {
     h += `<h3 class="section-title">${a && t === a.id ? 'Your' : n + '\'s'} faith</h3>`;
     if (r.faith.never) h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.faith.never)}</p></div>`;
-    if (r.faith.trad && F.cards[r.faith.trad]) h += cardHtml(r.faith.trad, (a && t === a.id ? 'Your' : n + '\'s') + ' tradition');
+    const ts = tradsOf(r.faith).filter(id => F.cards[id]); // GWG BLD 890: a card for each tradition they chose
+    ts.forEach(id => { h += cardHtml(id, (a && t === a.id ? 'Your' : n + '\'s') + ' tradition'); });
   } else if (person && r.matters && r.matters.never && sees('matters')) {
     h += `<div class="w-card w-never"><p class="w-eyebrow">Please Keep in Mind</p><p>${esc(r.matters.never)}</p></div>`;
   }
@@ -1170,7 +1185,7 @@ function printGuide(id) {
 const RIGHTS = { pd: 'Public domain', grounded: 'Written for Willow', plain: 'In plain English' };
 function myTrads() {
   const r = target() ? rec(target()) : null, f = r && r.faith, out = ['all'];
-  if (f && f.trad && sees('faith')) { out.push(f.trad); if (CHRISTIAN.includes(f.trad)) out.push('christian'); }
+  if (f && sees('faith')) tradsOf(f).forEach(t => { if (!out.includes(t)) out.push(t); if (CHRISTIAN.includes(t) && !out.includes('christian')) out.push('christian'); });
   return out;
 }
 function readFilt(trad, q, mine) { return x => (trad === 'every' || (trad === 'mine' ? x.trad.some(t => mine.includes(t)) : x.trad.includes(trad) || (trad !== 'all' && CHRISTIAN.includes(trad) && x.trad.includes('christian')))) && (!q || (x.title + ' ' + x.by + ' ' + x.lines.join(' ')).toLowerCase().includes(q.toLowerCase())); }
@@ -1374,7 +1389,7 @@ function shareMake() {
     if (SHARE_PICK.notes && sees('answers') && c.note) o.note = String(c.note).slice(0, 600);
     return o;
   });
-  if (SHARE_PICK.faith && sees('faith') && r.faith) d.f = { trad: r.faith.trad || '', own: r.faith.own || '', matters: r.faith.matters || '', lives: r.faith.lives || [], changed: r.faith.changed || '', call: r.faith.call || '', never: r.faith.never || '', date: r.faith.date || '' };
+  if (SHARE_PICK.faith && sees('faith') && r.faith) d.f = { trad: tradsOf(r.faith)[0] || '', trads: tradsOf(r.faith), own: r.faith.own || '', matters: r.faith.matters || '', lives: r.faith.lives || [], changed: r.faith.changed || '', call: r.faith.call || '', never: r.faith.never || '', date: r.faith.date || '' };
   if (SHARE_PICK.matters && sees('matters')) {
     const m = r.matters || {}, out = {}, vg = {};
     ['who', 'good', 'joy', 'hope', 'worry', 'close', 'comfort', 'never'].forEach(k => { if (m[k]) out[k] = String(m[k]).slice(0, 400); });

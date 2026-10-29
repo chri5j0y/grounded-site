@@ -677,11 +677,11 @@ body.cd-noscroll{overflow:hidden;}
 <script src="share.js?v=b887"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
 <script src="../shared/gg-readings.js?v=b862"></script>
-<script src="ceremonies.js?v=b862"></script>
+<script src="ceremonies.js?v=b890"></script>
 <script src="sessions.js?v=b887"></script>
-<script src="farewell.js?v=b862"></script>
-<script src="wedding.js?v=b862"></script>
-<script src="premarital.js?v=b887"></script>
+<script src="farewell.js?v=b890"></script>
+<script src="wedding.js?v=b890"></script>
+<script src="premarital.js?v=b890"></script>
 <script src="clients.js?v=b836"></script>
 <script src="books.js?v=b788"></script>
 <script src="runner.js?v=b836"></script>
@@ -8588,7 +8588,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b788', '../willow/practices.js?v=b862'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b890', '../willow/practices.js?v=b862'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -8640,7 +8640,16 @@ function wlTheyify(t){
   const cut = t.indexOf('? Like '), head = cut > -1 ? t.slice(0, cut) : t, tail = cut > -1 ? t.slice(cut) : '';
   return head.replace(/\byourself\b/g, 'themselves').replace(/\byour\b/g, 'their').replace(/\byou (need|know|hold|want)\b/g, 'they $1').replace(/\byou\b/g, 'them') + tail;
 }
-const wlFaithNone = f => !!f && (f.trad === 'private' || f.matters === 'none');
+// GWG BLD 890 (Chris: "we should always be able to select more than one religion on all checkins"): several traditions.
+// f.trads is the list; f.trad keeps the first, so records saved before (f.trad only) read as a one-item list.
+// "I'd rather not say" stands alone: choosing it clears the others, and choosing another clears it.
+const WL_ALONE = ['private'];
+const wlTrads = f => !f ? [] : Array.isArray(f.trads) ? f.trads.filter(x => x && typeof x === 'string') : (f.trad ? [f.trad] : []);
+function wlSetTrads(f, L){ f.trads = L.slice(); f.trad = L[0] || ''; }
+const wlAnd = a => a.length < 2 ? (a[0] || '') : a.length === 2 ? a[0] + ' and ' + a[1] : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1];
+const wlTradNames = f => wlAnd(wlTrads(f).map(wlFaithName));
+const wlCardsHTML = f => wlTrads(f).map(wlCardHTML).join('');
+const wlFaithNone = f => !!f && (wlTrads(f).includes('private') || f.matters === 'none');
 function wlQText(r, q){ let t = wlFaithNone(r.faith) && q.none ? q.none : q.t; if (r.by === 'observed') t = wlTheyify(t); return t; }
 function wlStem(r, c){
   if (r.role === 'helper') return WC.C.stems.helper.replace('{name}', (c && c.wl && c.wl.forName) || 'them');
@@ -8653,7 +8662,7 @@ function wlFaithText(f){
   if (!f || !WC) return '';
   const I = WC.F.intake, opt = (k, v) => { const row = I.follow.find(x => x[0] === k); const o = row && row[2].find(x => x[0] === v); return o ? o[1] : ''; };
   const bits = [];
-  if (f.trad) bits.push(wlFaithName(f.trad));
+  if (wlTrads(f).length) bits.push(wlTradNames(f));
   if (f.own) bits.push('"' + f.own + '"');
   if (f.matters) bits.push('Matters now: ' + opt('matters', f.matters).toLowerCase());
   if ((f.lives || []).length) bits.push('Lives it out through ' + f.lives.map(v => opt('lives', v).toLowerCase()).join(', '));
@@ -9255,7 +9264,7 @@ function vWLPerson(c){
     ${p.changed ? `<p><span class="muted">${esc(S.plan.changed)}:</span> ${esc(p.changed)}</p>` : ''}</div>`).join('') : `<p class="muted" style="margin-top:8px">${esc(S.plan.empty)}</p>`}
    ${V.wlpe && V.wlpe.c === c.id ? wlPlanForm(c) : ''}</div>
   <div class="grid g2" style="margin-top:14px">
-   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${w.faith.trad ? wlCardHTML(w.faith.trad) : ''}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
+   <div class="card"><h3>Faith, spirit, or something else</h3>${w.faith ? `<p style="margin-top:6px">${esc(wlFaithText(w.faith))}</p>${w.faith.call ? `<p style="margin-top:6px"><b>Call:</b> ${esc(w.faith.call)}</p>` : ''}${w.faith.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(w.faith.never)}</p>` : ''}<p class="muted" style="font-size:14px;margin-top:6px">${w.faith.date ? 'Asked ' + nice(w.faith.date) : ''}${w.faith.src === 'willow' ? ', from their Willow' : ''}</p>${wlCardsHTML(w.faith)}` : '<p class="muted" style="margin-top:8px">Not asked yet. Every visit begins with faith.</p>'}</div>
    <div class="card"><h3>${esc(S.hope.title)}</h3><p class="muted" style="font-size:14px">${esc(S.hope.lead)}</p>
     ${S.hope.fields.map(f => `<label class="f" for="wl-h-${f[0]}">${esc(f[1])}</label><textarea id="wl-h-${f[0]}" data-wlh="${f[0]}" style="min-height:60px" placeholder="${esc(f[2])}">${esc(h[f[0]] || '')}</textarea>`).join('')}
     <p class="muted" style="font-size:13px;margin-top:6px">${h.date ? 'Last changed ' + nice(h.date) + '. ' : ''}${esc(S.hope.source)}</p></div></div>
@@ -9357,7 +9366,7 @@ function wlNote(s, c){
     L.push(wlVisitWord(s.setting) + ' (Willow Guide, ' + wlVisitName(s.visit).toLowerCase() + '), ' + nice(s.date) + (s.minutes ? ', ' + mins(s.minutes) : ''));
     L.push('Visit by: ' + (DATA.settings.name || '') + ', ' + wlRoleName(s.setting).toLowerCase());
     L.push((c ? c.name : '') + ', ' + wlTypeName(s.role === 'helper' ? 'family' : 'person').toLowerCase() + '. Their yes: yes.' + (s.by && s.role !== 'helper' ? ' Answered: ' + wlByNote(s.by) + '.' : ''));
-    if (s.faith && (s.faith.trad || s.faith.own)) L.push('Faith: ' + (s.faith.trad ? wlFaithName(s.faith.trad) : 'in their own words') + (s.faithCheck === 'same' ? ' (still true)' : s.faithCheck === 'changed' ? ' (updated today)' : ''));
+    if (s.faith && (wlTrads(s.faith).length || s.faith.own)) L.push('Faith: ' + (wlTrads(s.faith).length ? wlTradNames(s.faith) : 'in their own words') + (s.faithCheck === 'same' ? ' (still true)' : s.faithCheck === 'changed' ? ' (updated today)' : ''));
   }
   if (s.lv && Object.keys(s.lv).length){
     L.push('', 'Six parts' + (s.by === 'observed' ? ' (family\'s view, not the person\'s own answers)' : '') + ':');
@@ -9481,7 +9490,7 @@ function wlImpSave(){
   const fw = c.wl.fromWillow = Object.assign({}, c.wl.fromWillow || {}, {date:d.d || today(), by:d.by || ''});
   const notes = (d.ck || []).filter(k => k && k.note).map(k => ({d:k.d, t:String(k.note).slice(0, 800)}));
   if (notes.length) fw.notes = notes.concat(fw.notes || []).filter((n, i, a) => a.findIndex(x => x.d === n.d && x.t === n.t) === i).slice(0, 12);
-  if (d.f && (d.f.trad || d.f.own)){ fw.faith = d.f; if (!c.wl.faith || c.wl.faith.src === 'willow' || (d.f.date && (!c.wl.faith.date || d.f.date > c.wl.faith.date))) c.wl.faith = Object.assign({}, d.f, {src:'willow', date:d.f.date || d.d}); }
+  if (d.f && (wlTrads(d.f).length || d.f.own)){ if (Array.isArray(d.f.trads)) d.f.trads = d.f.trads.filter(x => typeof x === 'string' && /^[a-z0-9-]{1,40}$/.test(x)).slice(0, 40); fw.faith = d.f; if (!c.wl.faith || c.wl.faith.src === 'willow' || (d.f.date && (!c.wl.faith.date || d.f.date > c.wl.faith.date))) c.wl.faith = Object.assign({}, d.f, {src:'willow', date:d.f.date || d.d}); }
   if (d.m){ fw.matters = true; c.wl.matters = c.wl.matters || {}; WL_MATTERS().forEach(f => { if (d.m[f[0]] && !c.wl.matters[f[0]]) c.wl.matters[f[0]] = String(d.m[f[0]]).slice(0, 2000); }); }
   if (d.v){ fw.vigil = {}; Object.entries(d.v).forEach(([k, v]) => { if (/^v\d$/.test(k)) fw.vigil[k] = String(v).slice(0, 2000); }); c.wl.vigil = c.wl.vigil || {}; Object.entries(fw.vigil).forEach(([k, v]) => { if (v && !c.wl.vigil[k]) c.wl.vigil[k] = v; }); }
   touch(c); if (!c.last || (d.d && d.d > c.last)) c.last = d.d || today();
@@ -9526,20 +9535,20 @@ function wlFaithStep(c){
     h += `<div class="card"><p>Last time${cur.date ? ', ' + nice(cur.date) : ''}: ${esc(wlFaithText(cur))}</p>${cur.never ? `<p style="margin-top:6px"><b>Please Keep in Mind:</b> ${esc(cur.never)}</p>` : ''}
       <p style="margin-top:10px"><b>Ask: "Is that still true for you?"</b></p>
       <div class="st-opts">${stChip('wl-fcheck', 'data-v="same"', RUN.faithCheck === 'same', 'Yes, still true')}${stChip('wl-fcheck', 'data-v="changed"', RUN.faithCheck === 'changed', 'Something has changed')}${stChip('wl-fcheck', 'data-v="skip"', RUN.faithCheck === 'skip', 'Not today')}</div></div>
-      ${cur.trad ? wlCardHTML(cur.trad) : ''}`;
+      ${wlCardsHTML(cur)}`;
     return h;
   }
-  const chip = id => stChip('wl-ftrad', `data-v="${id}"`, f.trad === id, wlFaithName(id));
+  const mine = wlTrads(f), chip = id => stChip('wl-ftrad', `data-v="${id}"`, mine.includes(id), wlFaithName(id));
   const single = row => `<h4 style="margin-top:14px">${esc(row[1])}</h4><div class="st-opts">${row[2].map(o => stChip('wl-fset', `data-k="${row[0]}" data-v="${o[0]}"`, f[row[0]] === o[0], o[1])).join('')}</div>`;
   const multi = row => `<h4 style="margin-top:14px">${esc(row[1])}</h4><div class="st-opts">${row[2].map(o => stChip('wl-flive', `data-v="${o[0]}"`, (f.lives || []).includes(o[0]), o[1])).join('')}</div>`;
-  h += `<p class="muted">${esc(I.welcome)} ${RUN.role === 'helper' ? 'This is their own faith, as a caregiver.' : ''}</p>
+  h += `<p class="muted">${esc(I.welcome)} ${esc(I.many || 'Choose as many as fit.')} ${RUN.role === 'helper' ? 'This is their own faith, as a caregiver.' : ''}</p>
    ${I.groups.map(g => `<h4 style="margin-top:14px">${esc(g[1])}</h4><div class="st-opts">${g[2].map(chip).join('')}</div>`).join('')}
    <label class="f" for="wl-fown">${esc(I.own)}</label><input type="text" id="wl-fown" data-wlff="own" maxlength="120" value="${esc(f.own || '')}">
    ${single(I.follow[0])}${multi(I.follow[1])}${single(I.follow[2])}
    <label class="f" for="wl-fcall">${esc(I.call)}</label><input type="text" id="wl-fcall" data-wlff="call" maxlength="160" value="${esc(f.call || '')}" placeholder="A name, a church, a temple, a phone number">
    <label class="f" for="wl-fnever">${esc(I.never)}</label><input type="text" id="wl-fnever" data-wlff="never" maxlength="200" value="${esc(f.never || '')}" placeholder='${esc(I.neverEx)}'>
    <p class="muted" style="font-size:14px;margin-top:8px">${esc(I.universal)}</p>
-   ${f.trad ? wlCardHTML(f.trad) : ''}`;
+   ${wlCardsHTML(f)}`;
   return h;
 }
 function wlSafetyStep(){
@@ -9649,7 +9658,7 @@ function wlNext(){
   }
   if (st === 'faith'){
     if (!RUN.faithEdit && !RUN.faithCheck) return alert('Ask if their faith answer is still true, and mark it.');
-    if (RUN.faithEdit && !RUN.faith.trad && !RUN.faith.own) return alert('Choose one, write their own words, or "I\'d rather not say."');
+    if (RUN.faithEdit && !wlTrads(RUN.faith).length && !RUN.faith.own) return alert('Choose any that fit, write their own words, or "I\'d rather not say."');
   }
   RUN.step++; wlKeep(); wlDraw();
 }
@@ -9672,7 +9681,7 @@ function wlSaveRun(){
   RUN = null; clearInterval(runTimer); $('#runner').classList.add('hide'); $('#runner').innerHTML = '';
   if (r.demo){ s.person = c; s.planList = newPlans; V = {tab:'willow', wlv:'demo', wlDemo:s}; render(); toast('Demo finished. It was a practice run, and your records stay as they were.'); return; }
   const w = c.wl;
-  if (useFaith && (r.faith.trad || r.faith.own)) w.faith = Object.assign({}, r.faith, {date:today(), src:'guide'});
+  if (useFaith && (wlTrads(r.faith).length || r.faith.own)){ w.faith = Object.assign({}, r.faith, {date:today(), src:'guide'}); wlSetTrads(w.faith, wlTrads(r.faith)); }
   else if (w.faith && r.faithCheck === 'same') w.faith.date = today();
   if (S.hope.fields.some(f => (r.hope[f[0]] || '') !== ((w.hope || {})[f[0]] || ''))) w.hope = Object.assign({}, r.hope, {date:today()});
   if (r.visit === 'vigil') w.vigil = Object.assign({}, r.vigil, {date:today()});
@@ -9697,7 +9706,7 @@ function wlToggle(t){
   if (a === 'wl-yes'){ RUN.yes = v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-by'){ RUN.by = v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-fcheck'){ RUN.faithCheck = v; if (v === 'changed'){ RUN.faithEdit = true; } wlKeep(); return wlRedraw(); }
-  if (a === 'wl-ftrad'){ RUN.faith.trad = RUN.faith.trad === v ? '' : v; wlKeep(); return wlRedraw(); }
+  if (a === 'wl-ftrad'){ const L = wlTrads(RUN.faith); wlSetTrads(RUN.faith, L.includes(v) ? L.filter(x => x !== v) : WL_ALONE.includes(v) ? [v] : L.filter(x => !WL_ALONE.includes(x)).concat(v)); wlKeep(); return wlRedraw(); }
   if (a === 'wl-fset'){ RUN.faith[k] = RUN.faith[k] === v ? '' : v; wlKeep(); return wlRedraw(); }
   if (a === 'wl-flive'){ const L = RUN.faith.lives = RUN.faith.lives || []; if (L.includes(v)) L.splice(L.indexOf(v), 1); else L.push(v); t.setAttribute('aria-pressed', !!L.includes(v)); return wlKeep(); }
   if (a === 'wl-safe'){ (RUN.safety = RUN.safety || {})[k] = v; wlKeep(); return wlRedraw(); }

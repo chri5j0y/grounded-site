@@ -72,6 +72,17 @@
   function faithItem(id) { if (!F || !id) return null; for (var i = 0; i < F.list.length; i++) if (F.list[i].id === id) return F.list[i]; return null; }
   function faithGroup(id) { var it = faithItem(id); return it && F.groups && F.groups[it.group] ? F.groups[it.group] : null; }
   function known(id) { return !!faithItem(id) && id !== 'rather-not-say'; }
+  // GWG BLD 890 (Chris: "we should always be able to select more than one religion on all checkins"): each partner may
+  // name several backgrounds. setup.fb[w] is a list of ids; a setup saved before holds one id as a string, read as a
+  // one-item list. A card carries them joined with commas. Rather not say and No Faith stand alone.
+  var FB_ALONE = ['rather-not-say', 'plain'];
+  function fbList(v) {
+    var L = (Array.isArray(v) ? v : String(v || '').split(',')).map(function (x) { return String(x || '').trim(); });
+    return L.filter(function (x, i) { return /^[a-z0-9-]{1,40}$/.test(x) && L.indexOf(x) === i && (!F || faithItem(x)); });
+  }
+  function fbKnown(v) { return fbList(v).filter(known); }
+  function andList(a) { return a.length < 2 ? (a[0] || '') : a.length === 2 ? a[0] + ' and ' + a[1] : a.slice(0, -1).join(', ') + ', and ' + a[a.length - 1]; }
+  function fbGroups(v) { var out = []; fbKnown(v).forEach(function (id) { var it = faithItem(id); if (it && F.groups && F.groups[it.group] && out.indexOf(it.group) < 0) out.push(it.group); }); return out; }
 
   /* ---------- small helpers ---------- */
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }
@@ -104,7 +115,7 @@
 
   /* ---------- state ----------
      st (saved, on this device): {v: 2, s: setup, p: {a: box, b: box}, inCard, inM}
-     setup: {a, b, mode: 'one' or 'two', me: 'a' or 'b', fb: {a, b} (faith ids, optional), fwp: {a, b} (Faith or Plain,
+     setup: {a, b, mode: 'one' or 'two', me: 'a' or 'b', fb: {a, b} (lists of faith ids, optional; one id as a string before BLD 890), fwp: {a, b} (Faith or Plain,
        mirrored from each partner's own choice so practices can show the right line), wd (wedding date), wed (1 after
        "We're Married"), mk (whose passcode keeps the Money Map)}
      box: {salt, iv, ct, done, got}. Inside a box (only with its passcode): {ans: {id: 1 to 5}, fw, at, partner,
@@ -122,7 +133,11 @@
   function box(w) { return st && st.p && st.p[w]; }
   function lockAll() { KEYS = {}; DATA = {}; RAWS = {}; }
   function oneDevice() { return st.s.mode === 'one'; }
-  function twoOn() { var s = setup(); return !!(s && TWOQ.length && known(s.fb.a) && known(s.fb.b) && s.fb.a !== s.fb.b); }
+  function twoOn() {
+    var s = setup(); if (!s || !TWOQ.length) return false;
+    var A = fbKnown(s.fb.a), B = fbKnown(s.fb.b);
+    return !!(A.length && B.length && (A.length !== B.length || A.some(function (x) { return B.indexOf(x) < 0; })));
+  }
   function areasFor() { return twoOn() ? AREAS.concat([TWO_AREA]) : AREAS; }
   function extra() { return twoOn() ? [{ area: TWO_AREA, qs: TWOQ }] : []; }
   function afterOpen() { var s = setup(); return !!(s && (ATV || s.wed || (s.wd && today() >= s.wd))); }
@@ -308,7 +323,7 @@
   /* ---------- the card (two devices) ---------- */
   function cardData(w) {
     var d = DATA[w], fb = st.s.fb[w];
-    return { v: 2, q: Q.version || 0, n: nm(w), to: nm(other(w)), fw: d.fw === 'faith' ? 'f' : 'p', a: C.digits(d.ans), fb: faithItem(fb) ? fb : '' };
+    return { v: 2, q: Q.version || 0, n: nm(w), to: nm(other(w)), fw: d.fw === 'faith' ? 'f' : 'p', a: C.digits(d.ans), fb: fbList(fb).join(',') };
   }
   function takeHash() {
     var h = location.hash || '', c = C.card.codeOf(h), m = mcodeOf(h); if (!c && !m) return false;
@@ -319,7 +334,7 @@
   function pendingCard() { var c = ''; try { c = sessionStorage.getItem(PEND) || ''; } catch (e) {} return c || (st && st.inCard) || ''; }
   function dropPending() { try { sessionStorage.removeItem(PEND); } catch (e) {} if (st && st.inCard) { delete st.inCard; persist(); } }
   function partnerFrom(got) {
-    if (got.fb && faithItem(got.fb)) { st.s.fb[other(st.s.me)] = got.fb; }
+    var L = fbList(got.fb); if (L.length) { st.s.fb[other(st.s.me)] = L; }
     st.s.fwp[other(st.s.me)] = got.fw === 'f' ? 'faith' : 'plain';
   }
   function openCard(code) {
@@ -428,10 +443,23 @@
       '<p class="btv-small">Root Words are 12 plain words for each of you, made with your passcode. If a passcode is ever forgotten, they open those answers again. Only the person who knows the passcode sees them.</p>' +
       (rw ? '<div class="ff-row">' + rw + '</div>' : '<p class="btv-small">Root Words come with each passcode, when you start your answers.</p>') + '</div>';
   }
+  // GWG BLD 890: tap as many as fit (the choice saves with Save and Continue).
   function faithSelect(w, val) {
     if (!F || !Array.isArray(F.list)) return '';
-    return '<label class="ff-f"><span class="l" id="gm-fl-' + w + '">' + esc(nm(w) || (w === 'a' ? 'First partner' : 'Second partner')) + '’s faith background</span><select id="gm-fb-' + w + '"><option value="">Choose if you like</option>' +
-      F.list.map(function (f) { return '<option value="' + esc(f.id) + '"' + (f.id === val ? ' selected' : '') + '>' + esc(f.name) + '</option>'; }).join('') + '</select></label>';
+    var mine = fbList(val);
+    return '<div class="ff-f gm-fbf"><span class="l" id="gm-fl-' + w + '">' + esc(nm(w) || (w === 'a' ? 'First partner' : 'Second partner')) + '’s faith background</span><span class="btv-small gm-fbhint">Choose as many as fit, or none.</span>' +
+      '<div class="gm-fbchips" id="gm-fb-' + w + '" role="group" aria-labelledby="gm-fl-' + w + '">' +
+      F.list.map(function (f) { return '<button type="button" data-act="fb-pick" data-v="' + esc(f.id) + '" aria-pressed="' + (mine.indexOf(f.id) >= 0) + '">' + esc(f.name) + '</button>'; }).join('') + '</div></div>';
+  }
+  function fbPicked(w) { var g = $('gm-fb-' + w); return g ? Array.prototype.map.call(g.querySelectorAll('[aria-pressed="true"]'), function (b) { return b.getAttribute('data-v'); }) : []; }
+  function fbTap(b) {
+    var g = b.closest('.gm-fbchips'); if (!g) return;
+    var v = b.getAttribute('data-v'), on = b.getAttribute('aria-pressed') !== 'true';
+    Array.prototype.forEach.call(g.querySelectorAll('[data-act="fb-pick"]'), function (x) {
+      var id = x.getAttribute('data-v');
+      if (x === b) x.setAttribute('aria-pressed', on ? 'true' : 'false');
+      else if (on && (FB_ALONE.indexOf(v) >= 0 || FB_ALONE.indexOf(id) >= 0)) x.setAttribute('aria-pressed', 'false');
+    });
   }
   function vSetup() {
     var s = setup() || { a: '', b: '', mode: 'one', me: 'a', fb: { a: '', b: '' } }, locked = !!(st && st.p && (st.p.a || st.p.b));
@@ -510,9 +538,13 @@
     }).join('') + '</div>';
   }
   function examplesHtml(w) {
-    var g = faithGroup(st.s.fb[w]); if (!g || !Array.isArray(g.examples) || !g.examples.length) return '';
-    var it = faithItem(st.s.fb[w]);
-    return '<div class="btv-note gm-ex"><p><b>Examples that may fit you</b>' + (known(st.s.fb[w]) ? '<br><span class="btv-small">From your faith background: ' + esc(it.name) + '</span>' : '') + '</p><ul class="ff-tips">' + g.examples.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
+    // GWG BLD 890: the examples of each tradition's group they named (a background saved before reads as one).
+    var ids = fbList(st.s.fb[w]), gs = fbGroups(ids), ex = [];
+    if (!gs.length && ids.length) { var g0 = faithGroup(ids[0]); if (g0) gs = [faithItem(ids[0]).group]; }
+    gs.forEach(function (k) { var g = F.groups[k]; (g && Array.isArray(g.examples) ? g.examples : []).forEach(function (x) { if (ex.indexOf(x) < 0) ex.push(x); }); });
+    if (!ex.length) return '';
+    var names = fbKnown(ids).map(function (id) { return faithItem(id).name; });
+    return '<div class="btv-note gm-ex"><p><b>Examples that may fit you</b>' + (names.length ? '<br><span class="btv-small">From your faith background: ' + esc(andList(names)) + '</span>' : '') + '</p><ul class="ff-tips">' + ex.map(function (x) { return '<li>' + esc(x) + '</li>'; }).join('') + '</ul></div>';
   }
   function vAnswer() {
     var w = V.who, d = DATA[w], AR = areasFor(), i = V.area, ar = AR[i], qs = qsIn(ar.id), n = AR.length;
@@ -781,7 +813,7 @@
   // The general Faith line, or each partner's own tradition's line when that partner chose Faith wording and a background.
   function faithLines(p) {
     var lines = [], s = setup();
-    if (s && F) ['a', 'b'].forEach(function (w) { var g = faithGroup(s.fb[w]); if (s.fwp[w] === 'faith' && known(s.fb[w]) && g && g.practiceLine && lines.indexOf(g.practiceLine) < 0) lines.push(g.practiceLine); });
+    if (s && F) ['a', 'b'].forEach(function (w) { if (s.fwp[w] !== 'faith') return; fbGroups(s.fb[w]).forEach(function (k) { var g = F.groups[k]; if (g && g.practiceLine && lines.indexOf(g.practiceLine) < 0) lines.push(g.practiceLine); }); });
     return lines.length ? lines : (p.faith ? [p.faith] : []);
   }
   function vPr() {
@@ -874,7 +906,7 @@
   function coupleFw() {
     var s = setup(); if (!s) return { faith: false, plain: true, groups: [] };
     var ws = ['a', 'b'], f = ws.filter(function (w) { return s.fwp[w] === 'faith'; });
-    var groups = []; f.forEach(function (w) { var it = faithItem(s.fb[w]); if (it && known(s.fb[w]) && groups.indexOf(it.group) < 0) groups.push(it.group); });
+    var groups = []; f.forEach(function (w) { fbKnown(s.fb[w]).forEach(function (id) { var it = faithItem(id); if (it && groups.indexOf(it.group) < 0) groups.push(it.group); }); });
     return { faith: f.length > 0, plain: f.length < 2, groups: groups };
   }
   // A practice's Faith line: each partner's own tradition's line (faithBy, keyed by the faith.js group) when that
@@ -1065,7 +1097,7 @@
   }
   function saveSetup() {
     var locked = st && st.p && (st.p.a || st.p.b), msg = $('btv-st');
-    var fa = $('gm-fb-a') ? $('gm-fb-a').value : '', fbb = $('gm-fb-b') ? $('gm-fb-b').value : '';
+    var fa = fbPicked('a'), fbb = fbPicked('b');
     var wd = $('gm-wd') ? $('gm-wd').value : '', wed = $('gm-wed') && $('gm-wed').checked ? 1 : 0;
     if (wd && !/^\d{4}-\d{2}-\d{2}$/.test(wd)) wd = '';
     if (!locked) {
@@ -1075,7 +1107,7 @@
       var keep = st && st.inCard, keepM = st && st.inM, fwp = (st && st.s && st.s.fwp) || { a: '', b: '' };
       st = { v: 2, s: { a: na, b: nb, mode: mode, me: mode === 'two' ? me : 'a', fb: { a: '', b: '' }, fwp: fwp }, p: {} }; if (keep) st.inCard = keep; if (keepM) st.inM = keepM;
     }
-    st.s.fb = { a: faithItem(fa) ? fa : '', b: faithItem(fbb) ? fbb : '' };
+    st.s.fb = { a: fbList(fa), b: fbList(fbb) };
     st.s.wd = wd; st.s.wed = wed;
     if (ATV) ['a', 'b'].forEach(function (w) { var r = document.querySelector('input[name="gm-fwp-' + w + '"]:checked'); if (r) st.s.fwp[w] = r.value === 'faith' ? 'faith' : 'plain'; });
     persist(); go(ATV ? 'after' : 'hub');
@@ -1091,6 +1123,7 @@
     else if (a === 'hub') { saveAll().then(function () { lockAll(); go('hub'); }); }
     else if (a === 'after') { saveAll().then(function () { lockAll(); go('after'); }); }
     else if (a === 'setup-save') saveSetup();
+    else if (a === 'fb-pick') fbTap(b);
     else if (a === 'answer' || a === 'answer-two') {
       lockAll();
       unlock(w).then(function (ok) {
