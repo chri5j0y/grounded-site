@@ -501,7 +501,12 @@
     var anchor = theme || size || menuBtn, menu = document.getElementById('site-menu');
     // Steps down to what fits: the leaf and "Get Grounded", then the leaf alone, then (the tree apps on phones, where
     // the header is full) the first link in the menu. The page never scrolls sideways.
-    function wide() { return document.documentElement.scrollWidth > document.documentElement.clientWidth + 1; }
+    // BLD 889: the header's own edges count too, since a guided player open (html and body overflow hidden) hides the scroll width
+    function wide() {
+      var r = document.documentElement.clientWidth + 1, inner = document.querySelector('.topbar-inner'), kids = inner ? inner.querySelectorAll('.topbar-inner > *, .site-menu > *') : [];
+      for (var i = 0; i < kids.length; i++) { var b = kids[i].getBoundingClientRect(); if (b.width && b.right > r) return true; }
+      return document.documentElement.scrollWidth > document.documentElement.clientWidth + 1;
+    }
     function place() {
       if (a.parentNode) a.parentNode.removeChild(a);
       a.classList.remove('gg-now-ic', 'gg-now-mi');
