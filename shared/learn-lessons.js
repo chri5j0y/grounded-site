@@ -360,22 +360,22 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Staying safe",
+       "h": "Telling is brave",
        "items": [
         [
-         "Almost done",
-         "One or two last questions"
+         "Every answer is welcome",
+         "Answer what is true"
         ],
         [
          "Yes, No, or Not sure",
-         "Answer what is true"
+         "Any answer is okay"
         ],
         [
          "Tell a grown-up",
          "Someone you trust can help"
         ]
        ],
-       "say": "At the end comes Staying safe. It asks whether anyone is hurting you or making you feel scared. Older kids get one more gentle question about very sad feelings. If you answer yes, or not sure, Maple thanks you for telling, and asks you to show a grown-up you trust today, like a parent, a teacher, or a school counselor. You are not in trouble. Telling is brave."
+       "say": "Every answer in Maple is welcome. Just answer what is true, with Yes, No, or Not sure. Any answer is okay. And if you ever feel unsafe, or someone is hurting you, tell a grown-up you trust right away, like a parent, a teacher, or a school counselor. You are not in trouble. Telling is brave."
       },
       {
        "k": "points",
@@ -1133,11 +1133,11 @@ window.GG_LEARN = {
          "Any part can be skipped"
         ],
         [
-         "A short safety step",
-         "Help is shown right away"
+         "Open, gentle questions",
+         "Every answer stays on this device"
         ]
        ],
-       "say": "Next, how a check-in works. A child picks On my own, or With a grown-up. With a grown-up adds a short tip under every question. Each grade has its own questions. Each part has four short questions, and any part can be skipped. At the end there's a short safety step. If a child answers yes or not sure, Maple shows them a calm card with help, and shows you what to do next."
+       "say": "Next, how a check-in works. A child picks On my own, or With a grown-up. With a grown-up adds a short tip under every question. Each grade has its own questions. Each part has four short questions, and any part can be skipped. Every question is open and gentle, and every answer stays on this device. If an answer leans hard, the For Grown-ups box gives you a gentle way to start talking."
       },
       {
        "k": "points",
@@ -1381,7 +1381,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown",
-         "If you need help, so they can help"
+         "A few answers, so they can help"
         ],
         [
          "The big picture",
@@ -1392,7 +1392,7 @@ window.GG_LEARN = {
          "The weekly thoughts you write"
         ]
        ],
-       "say": "Tap the picture at the top of a tree to open Settings. There, kids can read what their grown-up can see. Always shown: if you say someone is hurting you or scaring you, that someone is being mean to you, that you feel alone inside, or that you don't want tomorrow to come, your grown-up sees it so they can help. The big picture: your check-ins, your tree, and the days you tended it. And just yours: the weekly thoughts you write. You can share one with your grown-up anytime."
+       "say": "Tap the picture at the top of a tree to open Settings. There, kids can read what their grown-up can see. Always shown: if you say you feel alone inside, that other kids are unkind to you, or that good things feel far away, your grown-up sees it so they can help. The big picture: your check-ins, your tree, and the days you tended it. And just yours: the weekly thoughts you write. You can share one with your grown-up anytime."
       },
       {
        "k": "big",
@@ -2018,7 +2018,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Someone being mean? Tell a grown-up.",
        "sub": "Telling is brave. You are not in trouble.",
-       "say": "Sometimes branches have a hard day. Maybe you feel left out. Maybe someone is being mean to you. Here is what to do. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor. Telling is brave, and you are not in trouble. If you tell Maple that someone is being mean to you, your grown-up sees it, so they can help."
+       "say": "Sometimes branches have a hard day. Maybe you feel left out. Maybe someone is being mean to you. Here is what to do. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor. Telling is brave, and you are not in trouble. If you tell Maple that other kids have been unkind, your grown-up sees it, so they can help."
       },
       {
        "k": "points",
@@ -2590,7 +2590,7 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Sometimes a child shares something heavy. Stay calm, find a quiet moment, and listen more than you talk. Thank them for telling you. Promise to help, rather than promising to keep a secret. Every Maple check-in ends with a short safety step, and if an answer needs a closer look, the For grown-ups box tells you what to do next. If a child talks about wanting to die or to hurt themselves, call their doctor."
+       "say": "Sometimes a child shares something heavy. Stay calm, find a quiet moment, and listen more than you talk. Thank them for telling you. Promise to help, rather than promising to keep a secret. Maple asks open, gentle questions, and if an answer leans hard, the For Grown-ups box gives you a gentle way to start talking. If a child talks about wanting to die or to hurt themselves, stay close, and call their doctor today."
       },
       {
        "k": "big",
@@ -3010,9 +3010,8 @@ window.GG_LEARN = {
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
-     "blurb": "The signs that call for more help, how to ask about safety, and who to call.",
+     "blurb": "The signs that call for more help, how to ask open questions, and who to call.",
      "sources": [
-      "dazzi",
       [
        "988 Suicide and Crisis Lifeline",
        "https://988lifeline.org"
@@ -3033,7 +3032,7 @@ window.GG_LEARN = {
        "eyebrow": "For Grown-ups, Lesson 4",
        "h": "When to Worry, and Who to Call",
        "sub": "Calm, ready, and close by.",
-       "say": "Most rainy days pass with time, closeness, and patience. This lesson is about the days that need more. What to watch for, how to ask, and who to call."
+       "say": "Most rainy days pass with time, closeness, and patience. This lesson is about the days that need more. What to watch for, how to ask open questions, and who to call."
       },
       {
        "k": "big",
@@ -3085,43 +3084,43 @@ window.GG_LEARN = {
       },
       {
        "k": "card",
-       "title": "Staying safe",
-       "body": "Is anyone hurting you, or making you feel scared?",
+       "title": "Every answer is welcome",
+       "body": "Maple asks open, gentle questions about every part of the tree.",
        "fields": [
         [
-         "",
-         "Yes"
+         "Ask",
+         "Open and gentle"
         ],
         [
-         "",
-         "No"
+         "Saved",
+         "On this device only"
         ],
         [
-         "",
-         "Not sure"
+         "At the bottom",
+         "One quiet line of type"
         ]
        ],
        "btns": [
         "See my tree"
        ],
        "tap": 0,
-       "say": "Every Maple check-in ends with a short safety step. Every grade answers one question. Is anyone hurting you, or making you feel scared? Grades three to five also answer one gentle question about wishing they were not alive. A yes or a not sure shows your child a calm card, and shows you what to do next."
+       "say": "Maple asks open, gentle questions, and every answer is welcome. It asks nothing about harm, and everything stays on this device. One quiet line of type sits at the bottom of the check-in, pointing your child to a trusted grown-up. If an answer about feeling alone, kindness from other kids, or hope leans hard, the For Grown-ups box gives you a gentle way to start talking. So your noticing, and your open questions, matter most."
       },
       {
        "k": "big",
-       "h": "Asking does not put the idea in their head.",
-       "sub": "It opens a door.",
-       "say": "Many grown-ups worry that asking about dying will give a child the idea. Research says it does not. Asking opens a door, and it tells your child that nothing is too big to bring to you."
+       "h": "Open questions open a door.",
+       "sub": "Curious, calm, and close by.",
+       "say": "Many grown-ups wonder how to start. Open, curious questions work best, ones that need more than yes or no. They tell your child that nothing is too big to bring to you."
       },
       {
        "k": "words",
        "h": "Ask in their words",
        "items": [
-        "Sometimes when kids feel really sad, they wish they were not alive. Have you felt like that?",
-        "Are you thinking about hurting yourself?",
-        "I am really glad you told me. Can you tell me more?"
+        "How is your heart today?",
+        "What was the hardest part of your day?",
+        "Can you tell me more about that?"
        ],
-       "say": "Ask in words your child can hold. Maple's own question is a good one. Sometimes when kids feel really sad, they wish they were not alive. Have you felt like that? If the answer is yes, ask plainly. Are you thinking about hurting yourself? Then listen. I am really glad you told me. Can you tell me more?"
+       "say": "Ask in words your child can hold, and stay curious. How is your heart today? What was the hardest part of your day? Then listen, and follow their lead. Can you tell me more about that?"
       },
       {
        "k": "big",
@@ -3139,22 +3138,26 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "If your child says yes",
+       "h": "If your child shares something hard",
        "items": [
         [
          "Stay close and stay calm",
          "Your face tells them it was safe to tell"
         ],
         [
-         "In danger right now?",
-         "Call for help"
+         "Get help together",
+         "The help lines and their doctor"
+        ],
+        [
+         "Make home safer for now",
+         "Medicines put away or locked"
         ],
         [
          "Keep it with helpers",
          "Never promise to keep it a secret"
         ]
        ],
-       "say": "If your child talks about wanting to die or to hurt themselves, take it seriously, every time, even from a very young child. Stay close, and stay calm. Call their doctor right away. And never promise to keep it a secret. Tell them, kindly, that you will bring in people whose job is to help kids."
+       "say": "If your child ever talks about wanting to die or to hurt themselves, take it seriously, every time, even from a very young child. Stay close, and stay calm. Get help together right away, with the help lines under this video and their doctor. For now, make home safer, with medicines and anything that could cause harm put away or locked. And never promise to keep it a secret. Tell them, kindly, that you will bring in people whose job is to help kids."
       },
       {
        "k": "points",
@@ -3417,14 +3420,14 @@ window.GG_LEARN = {
         ],
         [
          "Always shown to you",
-         "If someone is hurting or scaring them"
+         "A few answers, with an idea for a talk"
         ],
         [
          "Just theirs",
          "The weekly thoughts they write"
         ]
        ],
-       "say": "Here is what you can see. The big picture, which means their check-ins, their tree, how many days they tended it, and which parts they are tending. If your child says someone is hurting or scaring them, or that they don’t want tomorrow to come, you always see it, so you can help. The weekly thoughts they write are theirs, and they can share one with you anytime. Everything stays on this device."
+       "say": "Here is what you can see. The big picture, which means their check-ins, their tree, how many days they tended it, and which parts they are tending. If your child says they feel alone inside, that other kids are unkind, or that good things feel far away, you always see it, with a gentle idea for a talk, so you can help. The weekly thoughts they write are theirs, and they can share one with you anytime. Everything stays on this device."
       },
       {
        "k": "big",
@@ -5361,14 +5364,14 @@ window.GG_LEARN = {
         ],
         [
          "Your grown-up sees the big picture",
-         "Plus a few safety answers"
+         "Plus a few answers, so they can help"
         ],
         [
          "Need help now?",
          "One tap, any time"
         ]
        ],
-       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few safety answers, so they can help. And the Need help now button is always one tap away."
+       "say": "Aspen is yours. Your tree stays right here, on this device. Your grown-up sees the big picture of your tree, plus a few answers about friends and hope, so they can help. And the Need help now button is always one tap away."
       },
       {
        "k": "points",
@@ -5472,15 +5475,15 @@ window.GG_LEARN = {
          "Written for your grade"
         ],
         [
-         "Then two safety questions",
-         "You can skip them"
+         "Every answer is welcome",
+         "Answer what is true"
         ],
         [
          "Pause anytime",
          "Aspen keeps your place"
         ]
        ],
-       "say": "The check-in has thirty six questions, six for each part, written for your grade. Then come two short safety questions, and you can skip them if you want. Tap Pause anytime, and Aspen keeps your place."
+       "say": "The check-in has thirty six questions, six for each part, written for your grade. Every answer is welcome, so just answer what is true. Tap Pause anytime, and Aspen keeps your place."
       },
       {
        "k": "screen",
@@ -5567,22 +5570,22 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Two last questions",
+       "h": "Help is always close",
        "items": [
         [
-         "Asked gently",
-         "To help keep you safe"
+         "A quiet line",
+         "At the bottom of every check-in"
         ],
         [
-         "Your grown-up sees these",
-         "So they can help"
+         "Tell a trusted grown-up",
+         "Right away, whenever you feel unsafe"
         ],
         [
-         "Help is right there",
-         ""
+         "Need help now?",
+         "People you can reach, any time"
         ]
        ],
-       "say": "At the end come two safety questions. They ask whether anyone is hurting you, and whether you have had thoughts of hurting yourself. Your grown-up always sees these answers, so they can help. If you need help, a calm card opens with people you can reach any time."
+       "say": "At the bottom of every check-in sits one quiet line. It reminds you to tell a trusted grown-up right away, any time you feel unsafe. Your answers stay on this device, and nothing is sent anywhere. And Need help now, next to your name, shows people you can reach any time."
       },
       {
        "k": "big",
@@ -6271,7 +6274,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "Some moments can't wait for a guide. Tell a safe grown-up, today. And the See the calm card button, at the bottom of When Life Changes, shows all of these in one place."
+       "say": "Some moments can't wait for a guide. Tell a safe grown-up, today. And the Find help now button, at the bottom of When Life Changes, shows all of these in one place."
       },
       {
        "k": "big",
@@ -6393,7 +6396,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown to you",
-         "Safety, lonely, bullied, giving up",
+         "Lonely, how people treat them, hopeful",
          "#B8612F"
         ],
         [
@@ -6407,7 +6410,7 @@ window.GG_LEARN = {
          "#5F7D48"
         ]
        ],
-       "say": "Aspen gives students privacy in three layers, and tells them so plainly before they start. Always shown to you: the two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The big picture: each part's level, how the tree looks today, how many days they tended it, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
+       "say": "Aspen gives students privacy in three layers, and tells them so plainly before they start. Always shown to you: the questions about feeling lonely or left out, how people treat them, and feeling hopeful. The big picture: each part's level, how the tree looks today, how many days they tended it, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
       },
       {
        "k": "screen",
@@ -6421,7 +6424,7 @@ window.GG_LEARN = {
          "#B8612F"
         ],
         [
-         "Worth a check-in",
+         "Worth a conversation",
          "What they said",
          "#B8612F"
         ],
@@ -6430,13 +6433,13 @@ window.GG_LEARN = {
          ""
         ],
         [
-         "How to start the check-in",
+         "How to start the conversation",
          ""
         ]
        ],
        "tap": 1,
        "panel": {
-        "h": "How to start the check-in",
+        "h": "How to start the conversation",
         "sub": "Pick a calm, private moment.",
         "items": [
          "Say what you noticed, calmly",
@@ -6444,7 +6447,7 @@ window.GG_LEARN = {
          "Thank them for being honest"
         ]
        },
-       "say": "Tap a student to see their rings. When an answer is worrying, that ring shows a Worth a check-in marker, with exactly what they said and what to do next. Then How to start the check-in walks you through it. Pick a calm, private moment. Say what you noticed without alarm. Listen more than you talk. And thank them for being honest."
+       "say": "Tap a student to see their rings. When an answer leans hard, that ring shows a Worth a conversation marker, with exactly what they said and a gentle way to start talking. Then How to start the conversation walks you through it. Pick a calm, private moment. Say what you noticed without alarm. Listen more than you talk. And thank them for being honest."
       },
       {
        "k": "big",
@@ -6477,7 +6480,7 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Aspen points the way, and you are the follow-up. If a student talks about wanting to die or hurting themselves, stay with them. Teachers follow their school's reporting and crisis steps. And See the calm card shows you what the student sees, with people they can call or text on their own."
+       "say": "Aspen points the way, and you are the follow-up. If a student talks about wanting to die or hurting themselves, stay with them, and get help together right away. Teachers follow their school's reporting and crisis steps. And See the help list shows you what the student sees, with people they can call or text on their own."
       },
       {
        "k": "points",
@@ -6531,7 +6534,7 @@ window.GG_LEARN = {
        "q": "Which answers are always shown to a grown-up?",
        "opts": [
         "Every answer, every time",
-        "Safety answers, plus lonely, bullied, and giving up",
+        "Lonely, how people treat them, and hopeful",
         "None of them"
        ],
        "right": 1,
@@ -6621,7 +6624,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown",
-         "Being hurt, bullied, alone, or giving up",
+         "Lonely, how people treat you, hopeful",
          "#B8612F"
         ],
         [
@@ -6635,7 +6638,7 @@ window.GG_LEARN = {
          "#5F7D48"
         ]
        ],
-       "say": "Here is exactly what your grown-up sees in Aspen. Always shown: if you answer that someone is hurting you, that you have thought about hurting yourself, that you are being bullied, that you feel lonely or left out, or that you feel like giving up. Your grown-up sees that answer so they can help. The big picture: how each part is doing, how your tree looks today, how many days you tended it, and which parts you are tending. And just yours: the rest of your answers, the practices you check off, your notes, and your weekly reflections."
+       "say": "Here is exactly what your grown-up sees in Aspen. Always shown: your answers to the questions about feeling lonely or left out, how people treat you, and feeling hopeful. Your grown-up sees those answers so they can help. The big picture: how each part is doing, how your tree looks today, how many days you tended it, and which parts you are tending. And just yours: the rest of your answers, the practices you check off, your notes, and your weekly reflections."
       },
       {
        "k": "big",
@@ -6736,7 +6739,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "If you ever need help right away, tap Need help now, next to your name, to see the calm card. And if a friend tells you they want to hurt themselves or die, always tell a grown-up, even if your friend asks you not to. You are not in trouble. You are being a good friend."
+       "say": "If you ever need help right away, tap Need help now, next to your name, to see people you can reach any time. And if a friend tells you they want to hurt themselves or die, always tell a grown-up, even if your friend asks you not to. You are not in trouble. You are being a good friend."
       },
       {
        "k": "big",
@@ -7346,15 +7349,15 @@ window.GG_LEARN = {
          "Someone you could tell almost anything"
         ],
         [
-         "Feeling left out",
-         "Lonely, even around other kids"
+         "Being treated kindly",
+         "In person, in group chats, and online"
         ],
         [
-         "Bullying",
-         "In person, in group chats, or online"
+         "Feeling left out",
+         "Lonely, even around other kids"
         ]
        ],
-       "say": "In a check-in, Aspen asks six Branches questions, written for your grade. Do you have friends who treat you well? Is there a grown-up you trust? A few are turned around on purpose, like whether you feel lonely or left out, or whether anyone is bullying you, in person, in group chats, or online. For those, Not really is the strong answer."
+       "say": "In a check-in, Aspen asks six Branches questions, written for your grade. Do you have friends who treat you well? Is there a grown-up you trust? Do people treat you kindly, in person, in group chats, and online? One is turned around on purpose, whether you feel lonely or left out, and for that one, Not really is the strong answer."
       },
       {
        "k": "points",
@@ -7380,9 +7383,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Lonely or bullied? Your grown-up gets to help.",
+       "h": "Lonely, or treated unkindly? Your grown-up gets to help.",
        "sub": "Bullying is never your fault.",
-       "say": "Here is something good to know before you check in. If you say you feel lonely, or someone is bullying you, your grown-up sees that answer, so they can help. Bullying is never your fault, and you deserve help with it. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor."
+       "say": "Here is something good to know before you check in. If you say you feel lonely, or that people are unkind to you, your grown-up sees that answer, so they can help. Bullying is never your fault, and you deserve help with it. Tell a safe grown-up, like a parent, a grandparent, a teacher, or a school counselor."
       },
       {
        "k": "words",
@@ -7670,11 +7673,11 @@ window.GG_LEARN = {
          "Doing kind things for others?"
         ],
         [
-         "Giving up",
-         "Ever feel there is no point?"
+         "Keeping going",
+         "Even when things get hard?"
         ]
        ],
-       "say": "In a check-in, Aspen asks six Fruit questions, written for your grade. Do you have something to look forward to? Do you believe things can get better, even when they are hard? Do you do kind things for other people? A few are turned around on purpose, like whether one bad moment ruins your whole day, or whether you ever feel like giving up."
+       "say": "In a check-in, Aspen asks six Fruit questions, written for your grade. Do you have something to look forward to? Do you believe things can get better, even when they are hard? Do you do kind things for other people? Do you feel ready to keep going, even when things get hard? A few are turned around on purpose, like whether one bad moment ruins your whole day."
       },
       {
        "k": "points",
@@ -7742,7 +7745,7 @@ window.GG_LEARN = {
        "items": [
         "Tell a safe grown-up today."
        ],
-       "say": "If you ever feel like giving up, or it is hard to see anything good ahead, you deserve help with that. Tell a safe grown-up today, like a parent, a grandparent, a teacher, or a school counselor. If you answer that way in a check-in, Aspen shows a calm card with people to call or text, and your grown-up sees that answer so they can help."
+       "say": "If you ever feel like giving up, or it is hard to see anything good ahead, you deserve help with that. Tell a safe grown-up today, like a parent, a grandparent, a teacher, or a school counselor. Your grown-up sees your answers about hope, so they can help, and Need help now shows people you can reach any time."
       },
       {
        "k": "big",
@@ -7908,7 +7911,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown to you",
-         "Safety answers, so you can help"
+         "A few answers, so you can help"
         ],
         [
          "The big picture",
@@ -7919,7 +7922,7 @@ window.GG_LEARN = {
          "Most answers, notes, and reflections"
         ]
        ],
-       "say": "Trust also grows when kids have a little privacy. Aspen tells students plainly, before they start, what you can see. Safety answers are always shown to you. You see the big picture of their tree. The rest of their answers, their notes, and their reflections are theirs, unless they choose to share. Kids answer more honestly when they know up front."
+       "say": "Trust also grows when kids have a little privacy. Aspen tells students plainly, before they start, what you can see. A few answers, about feeling alone, how people treat them, and hope, are always shown to you. You see the big picture of their tree. The rest of their answers, their notes, and their reflections are theirs, unless they choose to share. Kids answer more honestly when they know up front."
       },
       {
        "k": "points",
@@ -8113,10 +8116,10 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown to you",
-         "Answers about bullying or feeling left out"
+         "Answers about kindness or feeling left out"
         ],
         [
-         "Worth a check-in",
+         "Worth a conversation",
          "A marker on that ring"
         ],
         [
@@ -8124,7 +8127,7 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Aspen also keeps you in the loop on what matters most. If your student answers that they are being bullied, or feel lonely or left out, you always see that answer, with a Worth a check-in marker and what to do next. If anyone ever threatens them with a picture, they are not in trouble, and the guide on online pressure and pictures walks you through the steps. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them."
+       "say": "Aspen also keeps you in the loop on what matters most. If your student answers that people are unkind to them, or that they feel lonely or left out, you always see that answer, with a Worth a conversation marker and a gentle way to start talking. If anyone ever threatens them with a picture, they are not in trouble, and the guide on online pressure and pictures walks you through the steps. And if anything points to someone hurting them, or thoughts of not wanting to be alive, stay with them."
       },
       {
        "k": "big",
@@ -8324,10 +8327,7 @@ window.GG_LEARN = {
      "n": 4,
      "title": "When to Worry, and Who to Call",
      "mins": 6,
-     "blurb": "Signs that need more help, the plain words to ask, and who to call.",
-     "sources": [
-      "dazzi"
-     ],
+     "blurb": "Signs that need more help, open questions to ask, and who to call.",
      "scenes": [
       {
        "k": "title",
@@ -8335,7 +8335,7 @@ window.GG_LEARN = {
        "eyebrow": "For Grown-ups, Lesson 4",
        "h": "When to Worry, and Who to Call",
        "sub": "Know the signs. Know the words. Know the numbers.",
-       "say": "Most hard days in middle school pass on their own. Some signs mean a student needs more help, and soon. This lesson walks through those signs, the plain words to use, and who to call."
+       "say": "Most hard days in middle school pass on their own. Some signs mean a student needs more help, and soon. This lesson walks through those signs, the open questions to ask, and who to call."
       },
       {
        "k": "big",
@@ -8368,12 +8368,12 @@ window.GG_LEARN = {
       },
       {
        "k": "card",
-       "title": "Worth a check-in",
-       "body": "You see what they answered, and what to do next.",
+       "title": "Worth a conversation",
+       "body": "You see what they answered, and a gentle way to start talking.",
        "fields": [
         [
-         "Safety question",
-         "Not sure"
+         "Feeling hopeful",
+         "Not really"
         ],
         [
          "Next step",
@@ -8381,42 +8381,43 @@ window.GG_LEARN = {
         ]
        ],
        "btns": [
-        "See the calm card"
+        "See the help list"
        ],
        "tap": 0,
-       "say": "Aspen helps you notice too. Every check-in ends with two direct safety questions. When a student answers one in a worrying way, you see a marker on that ring that says Worth a check-in, with what they said and what to do next. Your student sees a calm card right away, with people to talk to. Aspen cannot follow up on its own. That part is yours."
+       "say": "Aspen helps you notice too. Every question is open and curious, and Aspen asks nothing about harm. When an answer about feeling lonely, how people treat them, or feeling hopeful leans hard, you see a marker on that ring that says Worth a conversation, with what they said and a gentle way to start. Aspen sends nothing anywhere, and it cannot follow up on its own. That part is yours."
       },
       {
        "k": "big",
-       "h": "Asking directly about suicide is safe.",
-       "sub": "It does not put the idea in their head. It opens the door.",
-       "say": "If you see these signs, ask directly. Asking a young person about suicide is safe. It does not put the idea in their head. It tells them you can handle the answer, and that you will help them carry it."
+       "h": "Open questions open the door.",
+       "sub": "Curious, calm, and close by.",
+       "say": "If you see these signs, start with open, curious questions, ones that need more than yes or no. Stay calm, and let them lead. An open question tells them you can handle whatever they share, and that you will help them carry it."
       },
       {
        "k": "words",
-       "h": "Say it in plain words",
+       "h": "Say it in open words",
        "items": [
         "I have noticed you seem really down lately.",
-        "Are you thinking about killing yourself?"
+        "How are you, really?",
+        "What has been the hardest part?"
        ],
        "sub": "Say it once out loud. It gets easier.",
        "beats": [
-        "Plain words work best.",
+        "Open words work best.",
         "Start with what you noticed.",
         "I have noticed you seem really down lately.",
-        "Then ask the question plainly.",
-        "Are you thinking about killing yourself?",
-        "Saying it out loud the first time is the hardest part.",
+        "Then ask an open question.",
+        "How are you, really?",
+        "What has been the hardest part?",
         {
-         "t": "So say that question now, out loud, one time, right where you are.",
+         "t": "So say one of those questions now, out loud, one time, right where you are.",
          "w": 10
         }
        ],
-       "say": "Plain words work best. Start with what you noticed. I have noticed you seem really down lately. Then ask the question plainly. Are you thinking about killing yourself? Saying it out loud the first time is the hardest part. So say that question now, out loud, one time, right where you are."
+       "say": "Open words work best. Start with what you noticed. I have noticed you seem really down lately. Then ask an open question. How are you, really? What has been the hardest part? So say one of those questions now, out loud, one time, right where you are."
       },
       {
        "k": "points",
-       "h": "If they say yes, or not sure",
+       "h": "If they share something hard",
        "items": [
         [
          "Stay calm, and stay with them",
@@ -8431,11 +8432,15 @@ window.GG_LEARN = {
          "I love you too much to keep this quiet"
         ],
         [
-         "Get help together, today",
-         ""
+         "Get help together, right away",
+         "The help lines under this video"
+        ],
+        [
+         "Make home safer for now",
+         "Medicines put away or locked"
         ]
        ],
-       "say": "If they say yes, or not sure, stay calm and stay with them. Thank them for telling you. They are not in trouble. Promise help, not secrecy. You can say, I love you too much to keep this quiet. Then get help together, today."
+       "say": "If they share thoughts of suicide or of hurting themselves, stay calm and stay with them. Thank them for telling you. They are not in trouble. Promise help, not secrecy. You can say, I love you too much to keep this quiet. Then get help together, right away, with the help lines under this video. For now, make home safer, with medicines and anything that could cause harm put away or locked."
       },
       {
        "k": "points",
@@ -8465,29 +8470,29 @@ window.GG_LEARN = {
          "When your child carries a friend’s secret"
         ],
         [
-         "See the calm card",
+         "See the help list",
          "Helplines a student can reach alone"
         ]
        ],
-       "say": "Aspen has more for you. In When Life Changes, the Safety group has two guides. Self-harm and cutting walks you through what to say and what to do. When a friend is hurting helps when your child is carrying a friend’s secret. Teach them this: telling a grown-up is being a good friend, even if the friend asked them not to, and they are never in trouble for telling. And in the Grown-ups tab, See the calm card shows the helplines a student can reach on their own."
+       "say": "Aspen has more for you. In When Life Changes, the Safety group has two guides. Self-harm and cutting walks you through what to say and what to do. When a friend is hurting helps when your child is carrying a friend’s secret. Teach them this: telling a grown-up is being a good friend, even if the friend asked them not to, and they are never in trouble for telling. And in the Grown-ups tab, See the help list shows the helplines a student can reach on their own."
       },
       {
        "k": "big",
        "h": "Your presence matters more than expertise.",
-       "sub": "Ask plainly. Stay close. Call for help.",
-       "say": "Your presence matters more than expertise. Ask plainly, stay close, and call for help. Getting help early is a strong and loving thing to do."
+       "sub": "Ask openly. Stay close. Get help together.",
+       "say": "Your presence matters more than expertise. Ask open questions, stay close, and get help together. Getting help early is a strong and loving thing to do."
       },
       {
        "k": "quiz",
-       "q": "What is the best way to ask about suicide?",
+       "q": "What is the best way to start a talk when you are worried?",
        "opts": [
-        "Hint at it, so you do not scare them",
-        "Ask directly, in plain words",
+        "Lecture them about what you noticed",
+        "Ask an open question, and listen",
         "Wait for them to bring it up"
        ],
        "right": 1,
-       "why": "Asking directly is safe, and it shows you can handle the answer.",
-       "say": "Quick question. What is the best way to ask about suicide?"
+       "why": "An open question shows you can handle whatever they share.",
+       "say": "Quick question. What is the best way to start a talk when you are worried?"
       }
      ]
     },
@@ -8554,7 +8559,7 @@ window.GG_LEARN = {
        "items": [
         [
          "Always shown to you",
-         "Safety answers, and a few key questions"
+         "A few key questions"
         ],
         [
          "The big picture",
@@ -8565,7 +8570,7 @@ window.GG_LEARN = {
          "Other answers, notes, and reflections"
         ]
        ],
-       "say": "Aspen gives students privacy in three layers, and tells them so before they start. Always shown to you: the two safety questions, and the questions about feeling lonely or left out, being bullied, and feeling like giving up. The big picture: how each part is doing, how many days they tended their tree, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
+       "say": "Aspen gives students privacy in three layers, and tells them so before they start. Always shown to you: the questions about feeling lonely or left out, how people treat them, and feeling hopeful. The big picture: how each part is doing, how many days they tended their tree, and which parts they are tending. And just theirs: the rest of their answers, the practices they check off, their notes, and their weekly reflections, unless they choose to share one with you."
       },
       {
        "k": "big",
@@ -8657,11 +8662,11 @@ window.GG_LEARN = {
        "q": "After a check-in done On my own, what can you see?",
        "opts": [
         "Every answer",
-        "Safety answers and the big picture",
+        "A few key answers and the big picture",
         "Nothing at all"
        ],
        "right": 1,
-       "why": "Safety answers always show, plus how each part is doing. The rest is theirs.",
+       "why": "A few key answers always show, plus how each part is doing. The rest is theirs.",
        "say": "Quick question. After a check-in your student did on their own, what can you see?"
       }
      ]
@@ -10176,7 +10181,7 @@ window.GG_LEARN = {
           { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
-          { k: 'points', h: 'A few gentle safety questions', items: [['Asked with care', 'Near the end of the check-in'], ['Kept apart from every score', 'They are only there to help'], ['One more question', 'Right now, today?'], ['Help is right there', '']], cue: { at: [0, 1, 2, 3] }, say: 'Near the end, Oak asks a few gentle safety questions, like whether you have felt hopeless. They are never part of a score. If you answer Sometimes or Often to the direct question, Oak asks one more: Right now, today, are those thoughts with you? The calm card also offers one more step: if there are guns or a lot of medicine where you live, ask someone you trust to hold them for now.' },
+          { k: 'points', h: 'Open questions, and help close by', items: [['Open questions', 'About every part of your tree'], ['Stays on this device', 'Nothing is sent anywhere'], ['A quiet line', 'At the bottom of the check-in'], ['Help Is Close', 'One tap, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time.' },
           { k: 'points', h: 'To take it well', items: [['Find a quiet moment', 'Fifteen minutes, if you can'], ['Go with your first honest answer', 'Go with your first thought'], ['Take a break anytime', 'Oak keeps your place']], cue: { w: { 5: 8 } }, say: 'A few tips. Find a quiet moment. Go with your first honest answer. And take a break whenever you need one. Oak keeps your place. Think now of one quiet moment this week when you could take your check-in.' },
           { k: 'quiz', q: 'What does Not sure mean in a check-in?', opts: ['You did it wrong', 'An honest answer that is always okay', 'Your score goes down'], right: 1, why: 'Not sure is an honest answer, and it never counts against you.', say: 'Quick question. What does Not sure mean in a check-in?' }
         ] },
@@ -10228,7 +10233,7 @@ window.GG_LEARN = {
           { k: 'card', title: 'Who’s tending today?', body: 'Each adult has their own private profile and passcode.', fields: [['', 'Sam'], ['', 'Jordan']], btns: ['Add a Person', 'Switch Person'], tap: 0, say: 'When Oak opens, it asks who is tending today. Each adult has their own private profile and passcode, so nobody sees anyone else’s answers. High schoolers have their own tree, Pine.' },
           { k: 'points', h: 'One file for everything', items: [['Back up everything', 'Every profile, still locked'], ['Keep the file somewhere safe', 'Email it to yourself, or save it to a drive'], ['Load a backup', 'On a new phone, or after a reset']], cue: { w: { 4: 8 } }, say: 'Back up everything saves one file with every profile on this device, each one still locked, plus The Grove and your settings. Keep that file somewhere safe. On a new phone, tap Load a backup, and everything comes back. Save to a File, and the practitioner backup, save locked files too, with a passcode you choose. Think now of the safe place where you will keep your backup file.' },
           { k: 'points', h: 'The Grove', items: [['Your tree is yours', 'Answers always stay private'], ['The grove is ours', 'Your family’s trees, side by side'], ['You choose', 'Show my growth on The Grove, on or off']], say: 'If your family uses The Grove, your tree can stand there beside theirs. Only your growth shows, never your answers. And it is your choice, with a switch in settings.' },
-          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose, and safety answers stay yours'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. Your safety answers stay yours alone. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
+          { k: 'points', h: 'Settings that fit you', items: [['Add a Helper', 'Off unless you turn it on'], ['What Helpers See', 'You choose what is shared'], ['Your Birthday (Optional)', 'On your 60th birthday, a gentle step into Sequoia'], ['Reminders and display', 'Movement, voice, and text size']], cue: { at: [1, 3, 5, 7] }, say: 'Finally, settings help Oak fit you. Add a Helper stays off unless you turn it on, and only you can turn it on. A helper is someone you trust, who opens your Oak with their own passcode. Under What Helpers See, your tree and your plan are shared, and your Roots part and your notes stay private unless you turn them on. Only you choose what is shared. Your birthday is optional, and on your 60th birthday, Oak offers a gentle card: Move My Tree to Sequoia, or Stay in Oak. If you move, your rings go along, labeled From Oak, and Oak keeps its own copy. And set a daily reminder, your movement level, and your voice and text size.' },
           { k: 'big', h: 'You know Oak now. Go tend your tree.', say: 'That is the whole tour. You know Oak now. Go tend your tree, a little at a time.' },
           { k: 'quiz', q: 'What does Back up everything save?', opts: ['Only your answers, unlocked', 'One file with every profile, still locked', 'Nothing, it sends your data online'], right: 1, why: 'One file holds every profile on the device, each still locked.', say: 'Last question. What does Back up everything save?' }
         ] }
@@ -10344,15 +10349,15 @@ window.GG_LEARN = {
           { k: 'quiz', q: 'What is a better swap for "At least..."?', opts: ['Look on the bright side', 'This is really hard', 'It could be worse'], right: 1, why: 'Naming that it is hard helps people feel understood.', say: 'Quick question. What is a better swap for at least?' }
         ] },
 
-        { id: 'ok-s-struggle', crisis: ['988: call or text, any time', '911: emergency'], n: 4, title: 'When Someone Is Struggling', mins: 5, blurb: 'Noticing, asking directly, and getting help together.', scenes: [
-          { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 4', h: 'When Someone Is Struggling', sub: 'Notice. Ask. Stay. Connect.', say: 'Sometimes someone we love is struggling more than they say. This lesson is about noticing, asking, and getting help together.' },
+        { id: 'ok-s-struggle', crisis: ['988: call or text, any time', '911: emergency'], n: 4, title: 'When Someone Is Struggling', mins: 5, blurb: 'Noticing, asking open questions, and getting help together.', scenes: [
+          { k: 'title', hero: 'oak', eyebrow: 'Shelter for Others, Lesson 4', h: 'When Someone Is Struggling', sub: 'Notice. Ask. Stay. Connect.', say: 'Sometimes someone we love is struggling more than they say. This lesson is about noticing, asking open questions, and getting help together.' },
           { k: 'points', h: 'Signs to notice', items: [['Pulling away', 'From people and things they love'], ['Big changes', 'Sleep, eating, drinking, mood'], ['Hopeless talk', 'What’s the point? You’d be better off without me.'], ['Giving things away', 'Or saying goodbye in odd ways']], say: 'Here are signs to notice. Pulling away from people and things they love. Big changes in sleep, eating, drinking, or mood. Hopeless talk, like, what is the point, or, you would be better off without me. And giving things away, or saying goodbye in unusual ways.' },
-          { k: 'flow', h: 'Four steps', steps: [['Notice', 'Trust what you see'], ['Ask', 'Directly and kindly'], ['Stay', 'Listen without judging'], ['Connect', 'To help, together']], say: 'If you notice signs like these, follow four steps. Notice, and trust what you see. Ask, directly and kindly. Stay, and listen without judging. And connect them to help, together.' },
-          { k: 'big', h: 'It is okay to ask: Are you thinking about suicide?', sub: 'Asking directly does not put the idea in someone’s head. It opens the door.', say: 'If you are worried, it is okay to ask directly. Are you thinking about suicide? Research shows that asking does not put the idea in someone’s head. It opens the door, and often brings relief.' },
-          { k: 'words', h: 'Words you can use', items: ['I’ve noticed you seem down. I care about you.', 'Are you thinking about suicide?', 'Thank you for telling me.'], cue: { w: { "4": 10 } }, say: 'Here are words you can use. I have noticed you seem down, and I care about you. Are you thinking about suicide? And if they say yes, thank you for telling me. Try saying them softly now, so they come easier when you need them.' },
-          { k: 'points', h: 'Getting help together', items: [['Stay with them', 'And help keep them safe']], say: 'Stay with them, and help them stay safe. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
-          { k: 'big', h: 'Caring enough to ask can save a life.', sub: 'And you deserve support too.', say: 'Caring enough to ask can save a life. And you deserve support too. After a hard conversation like this, talk with someone you trust.' },
-          { k: 'quiz', q: 'Does asking someone directly about suicide put the idea in their head?', opts: ['Yes, so avoid the word', 'No. Asking opens the door to help.', 'Only if they are young'], right: 1, why: 'Asking directly opens the door, and often brings relief.', say: 'Quick question. Does asking someone directly about suicide put the idea in their head?' }
+          { k: 'flow', h: 'Four steps', steps: [['Notice', 'Trust what you see'], ['Ask', 'Openly and kindly'], ['Stay', 'Listen without judging'], ['Connect', 'To help, together']], say: 'If you notice signs like these, follow four steps. Notice, and trust what you see. Ask, openly and kindly. Stay, and listen without judging. And connect them to help, together.' },
+          { k: 'big', h: 'Open questions open the door.', sub: 'How are you holding up, really?', say: 'If you are worried, start with an open question. How are you holding up, really? Then stay curious, and let them lead. An open question leaves room for anything, and it often brings relief.' },
+          { k: 'words', h: 'Words you can use', items: ['I’ve noticed you seem down. I care about you.', 'How are you, really?', 'Can you tell me more about that?'], cue: { w: { "4": 10 } }, say: 'Here are words you can use. I have noticed you seem down, and I care about you. How are you, really? And when they share, can you tell me more about that? Try saying them softly now, so they come easier when you need them.' },
+          { k: 'points', h: 'If they share thoughts of suicide', items: [['Stay with them', 'And thank them for telling you'], ['Call or text 988 together', 'Or call 911 in danger'], ['Make home safer for now', 'Talk it through with 988']], say: 'If they share thoughts of suicide, stay with them, and thank them for telling you. Call or text 988 together, or call 911 if they are in danger right now. Talk with 988 about making home safer for now, with medicines and anything that could cause harm put away, locked, or held by someone they trust. When Life Changes in Oak has a full guide for this, called, when someone else is thinking about suicide.' },
+          { k: 'big', h: 'Caring enough to stay close can save a life.', sub: 'And you deserve support too.', say: 'Caring enough to stay close can save a life. And you deserve support too. After a hard conversation like this, talk with someone you trust.' },
+          { k: 'quiz', q: 'Someone you love seems down and pulls away. What is a good way to start?', opts: ['Tell them to cheer up', 'Ask an open question, like how are you, really?', 'Wait until they bring it up'], right: 1, why: 'An open question opens the door, and staying close keeps it open.', say: 'Quick question. Someone you love seems down and pulls away. What is a good way to start?' }
         ] },
 
         { id: 'ok-s-differ', n: 5, title: 'Love Across Differences', mins: 5, blurb: 'Caring for people whose faith, politics, or ways differ from yours.', scenes: [
@@ -14520,7 +14525,7 @@ window.GG_LEARN = {
         "Three questions for each part"
        ]
       ],
-      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. If an answer shows someone may need help, Willow shows the hospice line first."
+      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. And under every check-in, Willow shows the hospice line first."
      },
      {
       "k": "points",
@@ -17072,8 +17077,8 @@ window.GG_LEARN = {
         "Readiness grows a little at a time"
        ],
        [
-        "Hopeless, or wishing it would end?",
-        "Turned around, and asked with care"
+        "Something good in each day?",
+        "Asked gently, with room for anything"
        ]
       ],
       "cue": {
@@ -17083,7 +17088,7 @@ window.GG_LEARN = {
         6
        ]
       },
-      "say": "Willow asks three questions for Fruit. The first is the quick check-in question. Have you felt hopeful about something, even something small? The second asks whether you have felt ready, or getting ready, for what is ahead. Readiness grows a little at a time. The third is turned around on purpose. Have you felt hopeless, or wished it would all end soon?"
+      "say": "Willow asks three questions for Fruit. The first is the quick check-in question. Have you felt hopeful about something, even something small? The second asks whether you have felt ready, or getting ready, for what is ahead. Readiness grows a little at a time. The third is asked gently, with room for anything. Have you felt that each day still holds something good for you?"
      },
      {
       "k": "points",
@@ -17139,41 +17144,37 @@ window.GG_LEARN = {
       "k": "screen",
       "app": "willow",
       "app_name": "Willow",
-      "title": "One More Gentle Question",
+      "title": "The Third Question",
       "rows": [
        [
-        "Which is closest for you right now?",
+        "Felt that each day still holds something good for you?",
         ""
        ],
        [
-        "I'm not ready yet.",
+        "Rarely",
         ""
        ],
        [
-        "I'm ready when it comes.",
+        "Sometimes",
         ""
        ],
        [
-        "I wish it would come sooner.",
+        "Often",
         ""
        ],
        [
-        "I've thought about ending my life myself.",
-        ""
-       ],
-       [
-        "I'd rather not say.",
+        "Almost always",
         ""
        ]
       ],
       "tap": 2,
-      "say": "The third question names something many people near the end feel. You can say it out loud here. When the answer is sometimes or more, Willow asks one more gentle question. When you think about dying, which is closest for you right now? Being ready for death is different from wanting to end your life, and this question helps tell them apart. Every answer is met with kindness, and I'd rather not say is always there."
+      "say": "The third question leaves room for whatever is true. Many people near the end have days that feel heavy, and you can say so here. Every answer is met with kindness. If you are helping, stay calm and curious. Ask what makes a day good now, and what is making days hard, and let them lead."
      },
      {
       "k": "big",
       "h": "Help is always right there.",
       "sub": "Hospice 24/7 line first.",
-      "say": "If someone wishes it would come sooner, their hospice team should know, so they can help with whatever is making it hard. If someone has thought about ending their own life, tell someone right now. Call your hospice's twenty four hour line."
+      "say": "If someone wishes it would come sooner, their hospice team should know, so they can help with whatever is making it hard. If someone speaks of ending their own life, stay with them, and tell someone right now. Call your hospice's twenty four hour line."
      },
      {
       "k": "points",
@@ -17482,7 +17483,7 @@ window.GG_LEARN = {
         "In Willow Settings"
        ]
       ],
-      "say": "If someone helps you with Willow, they open it with their own passcode, and they see only what you switch on. Your faith answers and the notes from your check-ins start private. Your safety answers about home are never shared. You can change the rest anytime, in Willow Settings."
+      "say": "If someone helps you with Willow, they open it with their own passcode, and they see only what you switch on. Your faith answers and the notes from your check-ins start private. Only you choose what is shared. You can change it anytime, in Willow Settings."
      },
      {
       "k": "words",
@@ -18842,15 +18843,11 @@ window.GG_LEARN = {
         "Faith answers and check-in notes"
        ],
        [
-        "Always private",
-        "Their answer about safety at home"
-       ],
-       [
         "Theirs to change",
         "Anytime, in Willow Settings"
        ]
       ],
-      "say": "What you can see is their choice. Their tree words, What Matters, Cuttings, and What Helped Today start out shared. Faith answers and notes from check-ins start private, until they share them. Their answer about feeling safe at home always stays private. And they can change any of it, anytime, in Willow Settings."
+      "say": "What you can see is their choice. Their tree words, What Matters, Cuttings, and What Helped Today start out shared. Faith answers and notes from check-ins start private, until they share them. And they can change any of it, anytime, in Willow Settings."
      },
      {
       "k": "points",
@@ -20405,32 +20402,32 @@ window.GG_LEARN = {
        "h": "Before you see your tree",
        "items": [
         [
-         "Two last questions",
-         "Asked because we care"
+         "A quiet line",
+         "At the bottom of the page"
         ],
         [
-         "Answer, or I’d rather not say",
-         "Kept apart from every score"
+         "Every answer is welcome",
+         "Nothing is sent anywhere"
         ],
         [
-         "Need to talk to someone now?",
-         "Help lines, one tap away"
+         "See help lines",
+         "One tap, any time"
         ]
        ],
-       "say": "At the end come two last questions, before you see your tree. They ask gently about feeling hopeless, or like a burden, and about thoughts of not wanting to be here. Many older adults have had those thoughts, and it is safe to say so. You can always choose I would rather not say. These answers are never part of a score, and they are never shown to a helper."
+       "say": "Before you see your tree, there is one quiet line of type at the bottom of the page. Every answer is welcome, and Sequoia asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. And See help lines opens Help Is Close, any time you want it."
       },
       {
        "k": "screen",
        "app": "sequoia",
        "app_name": "Sequoia",
-       "title": "Help lines",
+       "title": "Help Is Close",
        "rows": [
         [
          "In immediate danger?",
          "Call for help"
         ]
        ],
-       "say": "If your answers show you are carrying a lot, a card opens with help lines. The card also lists lines for when someone is hurting you or taking your money, and for finding help near you. Tap Close and keep going whenever you are ready. And Need to talk to someone now is on those last pages, any time."
+       "say": "Help Is Close opens when you tap See help lines. It lists lines for when you are carrying a lot, for when someone is hurting you or taking your money, and for finding help near you. Tap Close and keep going whenever you are ready."
       },
       {
        "k": "flow",
@@ -20568,22 +20565,22 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Worth tending",
+       "h": "Help Is Close",
        "items": [
         [
-         "Feeling alone",
-         "Ways to find company nearby"
+         "A quiet line",
+         "On your results too"
         ],
         [
-         "Losing hope",
-         "Someone to talk with, any time"
+         "See help lines",
+         "One tap, any time"
         ],
         [
-         "Safety at home",
-         "Lines for safety and money"
+         "Your growth plan",
+         "Practices for any Growing Edge"
         ]
        ],
-       "say": "Sometimes a box called Worth tending appears. It comes up when your answers say you have felt alone, or you are losing hope, or you have not always felt safe at home. It shows the right help, and it is there because you matter."
+       "say": "Your results carry the same quiet line of type at the bottom. See help lines opens Help Is Close whenever you want it. And your growth plan suggests practices for any Growing Edge, because you matter."
       },
       {
        "k": "big",
@@ -21222,9 +21219,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Your safety answers stay private.",
-       "sub": "With anyone, ever.",
-       "say": "And one thing is firm. Your safety answers stay private from helpers."
+       "h": "Shared only by your choice.",
+       "sub": "One switch at a time.",
+       "say": "And one thing is firm. Helpers see only what you switch on."
       },
       {
        "k": "big",
@@ -21343,15 +21340,15 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "What does a helper never see?",
+       "q": "What does a helper see?",
        "opts": [
-        "Your safety answers",
-        "The level of each part",
-        "Your growth plan, when you share it"
+        "Everything, always",
+        "Only what you switch on",
+        "Nothing, ever"
        ],
-       "right": 0,
-       "why": "Your safety answers stay private from helpers.",
-       "say": "Quick question. What does a helper never see?"
+       "right": 1,
+       "why": "Helpers see only what you switch on, one switch at a time.",
+       "say": "Quick question. What does a helper see?"
       }
      ]
     },
@@ -22637,8 +22634,7 @@ window.GG_LEARN = {
      "blurb": "How to ask an older parent or partner how they really are, and how to listen to the answer.",
      "sources": [
       "gds",
-      "phq2",
-      "dazzi"
+      "phq2"
      ],
      "scenes": [
       {
@@ -22749,9 +22745,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "Sometimes you will hear something that worries you. What's the point. I'm just in the way. It is okay to ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
+       "h": "If you hear hopelessness, stay close.",
+       "sub": "Open questions open the door.",
+       "say": "Sometimes you will hear something that worries you. What's the point. I'm just in the way. Take it seriously, and stay close. Ask an open question, calmly. What has been weighing on you most? Then listen, and let them lead. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -22770,11 +22766,11 @@ window.GG_LEARN = {
          "Some answers start private"
         ],
         [
-         "Safety answers stay theirs",
-         "Never shared"
+         "Nothing is sent",
+         "Everything stays on their device"
         ]
        ],
-       "say": "If they use Sequoia, here is how helpers work. Helpers are optional, and off unless the person adds one. Only they can add a helper, in Settings. They choose what each helper sees, and some answers start private. Their answers to the safety questions are never shared with anyone. Whether or not they add you, everything in this series is yours to use."
+       "say": "If they use Sequoia, here is how helpers work. Helpers are optional, and off unless the person adds one. Only they can add a helper, in Settings. They choose what each helper sees, and some answers start private. Sequoia asks nothing about harm, and nothing is sent anywhere. Whether or not they add you, everything in this series is yours to use."
       },
       {
        "k": "flow",
@@ -23188,8 +23184,7 @@ window.GG_LEARN = {
       "cdcfalls",
       "ic3",
       "yon",
-      "cdcsuicide55",
-      "dazzi"
+      "cdcsuicide55"
      ],
      "scenes": [
       {
@@ -23317,28 +23312,32 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "If they speak of not wanting to live, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "Fifth, and most important. Men seventy five and older have the highest suicide rate of any group in the country. Listen for words like I'm just in the way, or everyone would be better off. If you do, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+       "h": "If they speak of not wanting to live, stay close.",
+       "sub": "Your calm presence opens the door.",
+       "say": "Fifth, and most important. Men seventy five and older have the highest suicide rate of any group in the country. Listen for words like I'm just in the way, or everyone would be better off. If you hear them, stay close, and ask an open question, calmly. Can you tell me more about that? Listen, and let them lead. Your calm presence opens the door."
       },
       {
        "k": "points",
-       "h": "If the answer is yes",
+       "h": "If they share thoughts of ending their life",
        "items": [
         [
          "Stay with them",
          "Thank them for telling you"
         ],
         [
-         "Danger right now?",
-         "Call for help"
+         "Get help together",
+         "The lines under this video"
+        ],
+        [
+         "Make home safer for now",
+         "Medicines put away or locked"
         ],
         [
          "Let their doctor know",
          "And keep checking in"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. Then let their doctor know, and keep checking in."
+       "say": "If they share thoughts of ending their life, stay with them, and thank them for telling you. Call or text the help line under this video together, or call for help right away if they are in danger. Talk together about making home safer for now, with medicines and anything that could cause harm put away, locked, or held by someone they trust. Then let their doctor know, and keep checking in."
       },
       {
        "k": "big",
@@ -23357,19 +23356,19 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "You are part of the safety net.",
-       "sub": "Their safety answers stay private. Your noticing matters.",
-       "say": "Sequoia shows these same lines in its safety step, and the check-in asks gentle safety questions. Their answers to those stay private, even from helpers they have added. So your noticing and your asking matter. You are part of the safety net."
+       "sub": "Your noticing matters.",
+       "say": "Sequoia asks open questions, and it asks nothing about harm. One quiet line of type, and See help lines, sit at the bottom of every check-in. So your noticing, your open questions, and your staying close matter most. You are part of the safety net."
       },
       {
        "k": "quiz",
        "q": "They seem withdrawn and say they're just in the way. What do you do?",
        "opts": [
         "Wait and see if it passes",
-        "Ask plainly whether they are thinking of ending their life",
+        "Stay close, ask an open question, and listen",
         "Change the subject to something cheerful"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door.",
+       "why": "Stay close, and ask openly. If they share thoughts of ending their life, get help together.",
        "say": "Quick question. They seem withdrawn, and they say they're just in the way. What do you do?"
       }
      ]
@@ -27309,7 +27308,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. If an answer shows you might not be safe, Pine shows you help right away, and a grown-up you chose gets a quiet note to check in with you. That is all they see."
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. Your grown-up never sees your answers, your levels, your notes, or your Next Steps. Pine sends nothing anywhere. And help lines are always close, on your growth plan, any time you want them."
       },
       {
        "k": "tabs",
@@ -27359,11 +27358,11 @@ window.GG_LEARN = {
        "q": "What does your grown-up see from your Pine check-in?",
        "opts": [
         "Every answer you give",
-        "Only a quiet note to check in, if you might not be safe",
+        "None of your answers. They stay yours.",
         "Your levels and your notes"
        ],
        "right": 1,
-       "why": "Your answers, levels, notes, and Next Steps stay yours. A grown-up you chose only gets a quiet note to check in.",
+       "why": "Your answers, levels, notes, and Next Steps stay yours, on this device.",
        "say": "Quick question. What does your grown-up see from your Pine check-in?"
       }
      ]
@@ -27383,7 +27382,7 @@ window.GG_LEARN = {
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
-     "blurb": "Seven questions for each part, the past two weeks, Not sure, the safety step, and help that shows up right away.",
+     "blurb": "Seven questions for each part, the past two weeks, Not sure, the quiet line, and help lines close by.",
      "scenes": [
       {
        "k": "title",
@@ -27508,41 +27507,37 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Help shows up right away",
+       "h": "Help is close",
        "items": [
         [
-         "Feeling alone",
-         "Ways to reach one person this week"
+         "A quiet line",
+         "At the bottom of the check-in"
         ],
         [
-         "Losing hope",
-         "Someone to talk with, any time"
+         "Help lines",
+         "On your growth plan, any time"
         ],
         [
-         "Bullied or threatened",
-         "Never your fault, and help is close"
+         "Stays on this device",
+         "Nothing is sent anywhere"
         ]
        ],
-       "say": "Good. Some answers matter enough that Pine responds right away. If you say you have felt lonely often, or like there is no point in trying, or that someone is bullying or threatening you, a short note opens with people who can help. Your answer is never lost."
+       "say": "Good. Pine asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay on this device, and nothing is sent anywhere."
       },
       {
        "k": "points",
        "h": "Before you see your tree",
        "items": [
         [
-         "Two last questions",
-         "Asked because you matter"
+         "Every answer is welcome",
+         "There are no wrong answers"
         ],
         [
-         "Yes, No, Not sure",
-         "Or I’d rather not say"
-        ],
-        [
-         "Need to talk to someone now?",
-         "Help lines, one tap away"
+         "Not sure",
+         "Always an honest answer"
         ]
        ],
-       "say": "At the end come two last questions. One asks if anyone is hurting you or making you feel unsafe. The other asks about thoughts of not wanting to be alive. Lots of people your age have had that thought, and it is safe to say so. You can always choose, I would rather not say."
+       "say": "Before you see your tree, remember this. Every answer is welcome, and there are no wrong answers. Not sure is always an honest answer too."
       },
       {
        "k": "screen",
@@ -27555,7 +27550,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "If you need support, a calm card opens. And if someone is hurting you, that answer never goes to your family. Pine shows you help from outside your home, like a trusted adult at school."
+       "say": "Help lines are there whenever you want them, on your growth plan. And if someone is hurting you, you can reach help outside your home too, like a trusted adult at school."
       },
       {
        "k": "big",
@@ -27661,11 +27656,11 @@ window.GG_LEARN = {
          "Small first steps"
         ],
         [
-         "Worth tending",
-         "Help, when an answer needs it"
+         "Help lines",
+         "Close by, any time"
         ]
        ],
-       "say": "Below your levels, Pine writes a few words just for you. It names your strongest parts, and how to lean on them. It names where to start tending, with small first steps. And if an answer said you felt alone, or that you were losing hope, the help lines are right there too."
+       "say": "Below your levels, Pine writes a few words just for you. It names your strongest parts, and how to lean on them. It names where to start tending, with small first steps. And help lines are always close, on your growth plan."
       },
       {
        "k": "big",
@@ -28127,27 +28122,25 @@ window.GG_LEARN = {
        "say": "Here is exactly what your grown-up never sees. Your answers, and your levels. Your notes and your reflections. Your faith answers, in either wording. And your Next Steps notebook. All of that is yours."
       },
       {
-       "k": "screen",
-       "app": "grove",
-       "app_name": "The Grove",
-       "title": "A quiet note",
-       "rows": [
+       "k": "points",
+       "items": [
         [
-         "Please check in with Jordan.",
-         ""
+         "Stays on this device",
+         "Locked with your passcode"
         ],
         [
-         "You won’t see their answers.",
-         ""
+         "You choose who to tell",
+         "Or check in with someone you trust"
         ]
        ],
-       "say": "There is one thing a grown-up you chose can see. If your check-in says you have had thoughts of not wanting to be alive, or you are losing hope, or feeling alone, they get a quiet note in The Grove. It says, please check in. It never says what you answered. Pine tells you when a note is sent."
+       "h": "Your check-in stays with you",
+       "say": "Your check-in stays with you, on this device. Pine sends nothing anywhere. If you want a grown-up to know how you are doing, you choose when to tell them, or you can do a check-in together with someone you trust."
       },
       {
        "k": "big",
-       "h": "Someone hurting you? That stays with you.",
-       "sub": "Pine shows you help from outside your home.",
-       "say": "If you say someone is hurting you, that answer never goes to your family, because the person could be someone close to you. Pine shows you help from outside your home instead. And a trusted adult at school."
+       "h": "Someone hurting you? Help is outside your home too.",
+       "sub": "A trusted adult at school can help.",
+       "say": "If someone is hurting you, you can reach help outside your home, because the person could be someone close to you. The help lines in Pine are there any time. And a trusted adult at school can help too."
       },
       {
        "k": "big",
@@ -28204,15 +28197,15 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "If Pine sends your grown-up a note, what does it say?",
+       "q": "What does Pine send to your grown-up?",
        "opts": [
         "Every answer you gave",
-        "Please check in, without your answers",
+        "Nothing. Your check-in stays with you.",
         "Your levels for each part"
        ],
        "right": 1,
-       "why": "The note only asks them to check in with you. Your answers stay yours.",
-       "say": "Quick question. If Pine sends your grown-up a note, what does it say?"
+       "why": "Pine sends nothing anywhere. Your answers stay yours.",
+       "say": "Quick question. What does Pine send to your grown-up?"
       }
      ]
     },
@@ -28222,7 +28215,7 @@ window.GG_LEARN = {
      "n": 6,
      "title": "Make Pine Yours",
      "mins": 4,
-     "blurb": "Faith or Plain wording, the optional questions, your grade, reading and display, and moving on after high school.",
+     "blurb": "Faith or Plain wording, the optional question, your grade, reading and display, and moving on after high school.",
      "scenes": [
       {
        "k": "title",
@@ -28230,7 +28223,7 @@ window.GG_LEARN = {
        "eyebrow": "Using Pine, Lesson 6",
        "h": "Make Pine Yours",
        "sub": "Settings that fit your life.",
-       "say": "This last lesson is about making Pine fit you. Your wording, the optional questions, your grade, how Pine looks and sounds, and what happens after high school."
+       "say": "This last lesson is about making Pine fit you. Your wording, the optional question, your grade, how Pine looks and sounds, and what happens after high school."
       },
       {
        "k": "points",
@@ -28253,28 +28246,24 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Two optional questions",
+       "h": "One optional question",
        "items": [
         [
          "Pressure to vape, drink, or use",
          "Asked with Leaves"
         ],
         [
-         "Pressure from someone close",
-         "Asked with Branches"
-        ],
-        [
-         "Off unless you turn them on",
+         "Off unless you turn it on",
          "Only you can"
         ]
        ],
-       "say": "Pine has two optional questions. One asks about pressure to vape, drink, or use drugs to cope. The other asks about pressure or control from someone you are close to or going out with. They ask about pressure, never about what you have done. Both stay off unless you turn them on in Settings, and only you can."
+       "say": "Pine has one optional question. It asks about pressure to vape, drink, or use drugs to cope. It asks about pressure, never about what you have done. It stays off unless you turn it on in Settings, and only you can."
       },
       {
        "k": "big",
-       "h": "Optional answers stay with you.",
+       "h": "Your optional answer stays with you.",
        "sub": "Private, apart from every score, and yours alone.",
-       "say": "If you turn them on, those answers never count toward a score, and they are never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help."
+       "say": "If you turn it on, that answer never counts toward a score, and it is never shared or sent to your grown-up. If an answer shows pressure, Pine shows you a note and people who can help."
       },
       {
        "k": "points",
@@ -28324,14 +28313,14 @@ window.GG_LEARN = {
        "sub": "One thing to change after this video.",
        "beats": [
         "Let's make it real.",
-        "Think about the settings you just heard: your wording, the optional questions, your grade, text size, read aloud, Steady or Hardy.",
+        "Think about the settings you just heard: your wording, the optional question, your grade, text size, read aloud, Steady or Hardy.",
         "Pick the one you most want to check.",
         {
          "t": "Say it out loud: After this video, I will check this setting.",
          "w": 10
         }
        ],
-       "say": "Let's make it real. Think about the settings you just heard: your wording, the optional questions, your grade, text size, read aloud, Steady or Hardy. Pick the one you most want to check. Say it out loud: After this video, I will check this setting."
+       "say": "Let's make it real. Think about the settings you just heard: your wording, the optional question, your grade, text size, read aloud, Steady or Hardy. Pick the one you most want to check. Say it out loud: After this video, I will check this setting."
       },
       {
        "k": "flow",
@@ -28360,15 +28349,15 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "Who can turn on Pine’s optional questions?",
+       "q": "Who can turn on Pine’s optional question?",
        "opts": [
         "Only you",
         "Your grown-up",
         "Your school"
        ],
        "right": 0,
-       "why": "Both optional questions stay off unless you turn them on, and only you can.",
-       "say": "Last question. Who can turn on Pine's optional questions?"
+       "why": "The optional question stays off unless you turn it on, and only you can.",
+       "say": "Last question. Who can turn on Pine's optional question?"
       }
      ]
     }
@@ -29417,9 +29406,7 @@ window.GG_LEARN = {
      "sources": [
       "steinberg89",
       "yeager18",
-      "kerrstattin",
-      "gould05",
-      "dazzi"
+      "kerrstattin"
      ],
      "scenes": [
       {
@@ -29536,9 +29523,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "Sometimes you will hear something that worries you. What's the point. Nobody would even notice if I was gone. Take it seriously, and ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
+       "h": "If you hear hopelessness, stay close.",
+       "sub": "Open questions open the door.",
+       "say": "Sometimes you will hear something that worries you. What's the point. Nobody would even notice if I was gone. Take it seriously, and stay close. Ask an open question, calmly. What has been weighing on you most? Then listen, and let them lead. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -29549,15 +29536,15 @@ window.GG_LEARN = {
          "Behind their own passcode"
         ],
         [
-         "You get a quiet alert only",
-         "Never their answers"
+         "Nothing is sent",
+         "Their answers stay on their device"
         ],
         [
          "They can invite you in",
          "With someone I trust"
         ]
        ],
-       "say": "If your teen uses Pine, here is how it fits. Pine belongs to your teen. They answer the check-in on their own, behind their own passcode, and you never see their answers. If something they say means they may need support, you get a quiet note to check in. Lesson two explains it all. And your teen can invite you in. Pine has a way to do a check-in together, called With someone I trust, that gives the adult a conversation prompt after each answer."
+       "say": "If your teen uses Pine, here is how it fits. Pine belongs to your teen. They answer the check-in on their own, behind their own passcode, and you never see their answers. Pine sends nothing anywhere, so your noticing and your open questions matter. Lesson two explains it all. And your teen can invite you in. Pine has a way to do a check-in together, called With someone I trust, that gives the adult a conversation prompt after each answer."
       },
       {
        "k": "big",
@@ -29585,12 +29572,11 @@ window.GG_LEARN = {
      "n": 2,
      "title": "Privacy That Builds Trust",
      "mins": 6,
-     "blurb": "What a grown-up sees in Pine and why, the quiet alert, and what to do when it comes.",
+     "blurb": "What a grown-up sees in Pine and why, and how to stay close when you are worried.",
      "sources": [
       "delosreyes15",
       "sam04",
       "mnconsent",
-      "gould05",
       "grossman05"
      ],
      "scenes": [
@@ -29600,7 +29586,7 @@ window.GG_LEARN = {
        "eyebrow": "For the Grown-up, Lesson 2",
        "h": "Privacy That Builds Trust",
        "sub": "What you see, and why.",
-       "say": "This lesson is about privacy. What you see in Pine, what you don't, and why it is built this way, to help keep your teen safer and your relationship stronger. It also walks through what to do if a quiet alert ever comes."
+       "say": "This lesson is about privacy. What you see in Pine, what you don't, and why it is built this way, to help keep your teen safer and your relationship stronger. It also walks through how to stay close when you are worried."
       },
       {
        "k": "big",
@@ -29625,36 +29611,36 @@ window.GG_LEARN = {
          "Never shared"
         ],
         [
-         "Optional questions",
-         "Only they can turn them on"
+         "An optional question",
+         "Only they can turn it on"
         ]
        ],
-       "say": "Here is what stays theirs. Every answer and every level, locked with their own passcode. Their journal, and Next Steps, their notebook for life after high school. Their faith answers. And two optional questions, about pressure to vape, drink, or use drugs, and pressure in a relationship. Those are off unless your teen turns them on, and they are never shared."
+       "say": "Here is what stays theirs. Every answer and every level, locked with their own passcode. Their journal, and Next Steps, their notebook for life after high school. Their faith answers. And one optional question, about pressure to vape, drink, or use drugs. It is off unless your teen turns it on, and it is never shared."
       },
       {
        "k": "flow",
-       "h": "What sends you a quiet alert",
+       "h": "What Pine asks, and what it sends",
        "steps": [
         [
-         "The safety question",
-         "Thoughts of not wanting to live"
+         "Open questions",
+         "About every part of their tree"
         ],
         [
-         "Losing hope",
-         "No point in trying"
+         "A quiet line",
+         "At the bottom of every check-in"
         ],
         [
-         "Feeling alone",
-         "Lonely, often"
+         "Nothing sent",
+         "Everything stays on their device"
         ]
        ],
-       "say": "Three kinds of answers send a quiet alert. An answer to the safety question about thoughts of not wanting to be alive. Feeling there is no point in trying. And feeling lonely often. The alert shows up for you in The Grove, Grounded's family app, as a note that says, Please check in. It never shows what they answered. Your teen is told on the screen that a grown-up they chose will get a note, and Pine shows them help lines right away, day or night."
+       "say": "Pine asks open, curious questions, and it asks nothing about harm. One quiet line of type sits at the bottom of every check-in, and help lines are always on their growth plan. Pine sends nothing anywhere, not to you, and not to The Grove. Their answers stay on their own device. So the next step always starts with you. Your own noticing, and your open questions, are what keep you close. That is the heart of this lesson."
       },
       {
        "k": "big",
-       "h": "Some answers go straight to outside help.",
+       "h": "Help outside the family is close too.",
        "sub": "So every teen can reach help, whatever is happening.",
-       "say": "One kind of answer works differently. When a teen says someone is hurting them, at home, at school, online, or in a relationship, Pine shows them help outside the family right away. A trusted adult at school. It does not send the family alert. That way every teen can reach help, whatever is happening in their life."
+       "say": "Sometimes the person hurting a teen is someone close to them. So the help lines in Pine include help outside the family, and Pine points every teen to a trusted adult at school too. Pine shows those lines to everyone, the same way. Nothing about them is sent home. That way every teen can reach help, whatever is happening in their life."
       },
       {
        "k": "points",
@@ -29682,28 +29668,28 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "Try it now: what you'll say",
-       "sub": "I'm not asking what you answered. How are you, really?",
+       "sub": "I've been thinking about you. How are you, really?",
        "beats": [
-        "Let's practice what you would say if an alert came.",
-        "Picture it showing up on an ordinary evening.",
+        "Let's practice what you would say when you are worried.",
+        "Picture an ordinary evening, a quiet moment with your teen.",
         "Take one slow breath, and let your shoulders drop.",
         {
-         "t": "Now say out loud, warmly: I got a note to check in with you. I'm not asking what you answered. How are you, really?",
+         "t": "Now say out loud, warmly: I've been thinking about you. How are you, really?",
          "w": 10
         }
        ],
-       "say": "Let's practice what you would say if an alert came. Picture it showing up on an ordinary evening. Take one slow breath, and let your shoulders drop. Now say out loud, warmly: I got a note to check in with you. I'm not asking what you answered. How are you, really?"
+       "say": "Let's practice what you would say when you are worried. Picture an ordinary evening, a quiet moment with your teen. Take one slow breath, and let your shoulders drop. Now say out loud, warmly: I've been thinking about you. How are you, really?"
       },
       {
        "k": "points",
-       "h": "When the alert comes",
+       "h": "When you are worried",
        "items": [
         [
          "Check in soon, in person",
          "Today, if you can"
         ],
         [
-         "Don't ask what they answered",
+         "Don't ask to see the app",
          "Ask how they are doing"
         ],
         [
@@ -29711,35 +29697,35 @@ window.GG_LEARN = {
          "Thank them for anything they share"
         ],
         [
-         "If you are worried, ask plainly",
-         ""
+         "If they share thoughts of suicide",
+         "Stay with them, and get help together"
         ]
        ],
-       "say": "When the alert comes, check in soon, in person if you can, today. Don't ask what they answered, and don't ask to see the app. Ask how they are doing. Listen, stay calm, and thank them for anything they share. If you are worried, ask plainly whether they are thinking about ending their life."
+       "say": "When you are worried, check in soon, in person if you can, today. Don't ask what they answered, and don't ask to see the app. Ask an open question, like how are you, really? Listen, stay calm, and thank them for anything they share. If they share thoughts of suicide, stay with them, and get help together right away, with the help lines under this video."
       },
       {
        "k": "big",
        "h": "Make home safer for now.",
        "sub": "Guns locked and unloaded. Medicines locked up.",
-       "say": "One more step matters a great deal. If there are guns in your home, keep them locked and unloaded, with ammunition locked separately, or store them somewhere else for now. Research finds safe storage goes with lower risk for teens. Lock up medicines too. Then let their doctor or school counselor know, and keep checking in over the next few days."
+       "say": "If your teen ever shares thoughts of suicide, one more step matters a great deal. If there are guns in your home, keep them locked and unloaded, with ammunition locked separately, or store them somewhere else for now. Research finds safe storage goes with lower risk for teens. Lock up medicines too. Then let their doctor or school counselor know, and keep checking in over the next few days."
       },
       {
        "k": "big",
        "h": "Privacy and safety work together.",
-       "sub": "Trust keeps them talking. The alert keeps you close.",
-       "say": "Privacy and safety work together here. Privacy keeps your teen honest with Pine, and the quiet alert keeps you close when it counts. Your calm response is what teaches them it is safe to tell you more."
+       "sub": "Trust keeps them talking. Your noticing keeps you close.",
+       "say": "Privacy and safety work together here. Privacy keeps your teen honest with Pine, and your noticing and open questions keep you close when it counts. Your calm response is what teaches them it is safe to tell you more."
       },
       {
        "k": "quiz",
-       "q": "A quiet alert comes. What is the best first step?",
+       "q": "You are worried about your teen. What is the best first step?",
        "opts": [
         "Ask to see their answers in Pine",
         "Check in soon, ask how they are really doing, and listen",
         "Wait for them to bring it up"
        ],
        "right": 1,
-       "why": "The alert never shows answers. Check in soon and listen calmly. If you are worried, ask plainly.",
-       "say": "Quick question. A quiet alert comes. What is the best first step?"
+       "why": "Their answers stay theirs. Check in soon, ask an open question, and listen calmly.",
+       "say": "Quick question. You are worried about your teen. What is the best first step?"
       }
      ]
     },
@@ -29928,10 +29914,7 @@ window.GG_LEARN = {
       "yrbs23",
       "phqa",
       "uspstfanx",
-      "mtf24",
-      "gould05",
-      "dazzi",
-      "asq"
+      "mtf24"
      ],
      "scenes": [
       {
@@ -30049,17 +30032,17 @@ window.GG_LEARN = {
          ""
         ]
        ],
-       "say": "Here is who to call. Pine shows your teen these same lines."
+       "say": "Here is who to call. Pine shows your teen help lines on their growth plan too."
       },
       {
        "k": "big",
-       "h": "If they speak of not wanting to live, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "Most important of all. Listen for words like I just want it all to stop, or everyone would be better off without me. Pay close attention after a breakup, a loss, bullying, or a threat online. If you are worried, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+       "h": "If they speak of not wanting to live, stay close.",
+       "sub": "Your calm presence opens the door.",
+       "say": "Most important of all. Listen for words like I just want it all to stop, or everyone would be better off without me. Pay close attention after a breakup, a loss, bullying, or a threat online. If you hear them, stay close, and ask an open question, calmly. Can you tell me more about that? Listen, and let them lead. Your calm presence opens the door."
       },
       {
        "k": "points",
-       "h": "If the answer is yes",
+       "h": "If they share thoughts of suicide",
        "items": [
         [
          "Stay with them",
@@ -30070,11 +30053,15 @@ window.GG_LEARN = {
          "**CRISIS (274747) from a cell"
         ],
         [
+         "Make home safer for now",
+         "Guns and medicines locked or elsewhere"
+        ],
+        [
          "Danger right now?",
          "Call for help"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. Lock up guns and medicines, or keep them somewhere else for now. Then let their doctor know, and keep checking in."
+       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. In Minnesota, you can also call star star CRISIS from a cell phone to reach your county crisis team. Make home safer for now: lock up guns and medicines, or keep them somewhere else. Then let their doctor know, and keep checking in."
       },
       {
        "k": "big",
@@ -30094,18 +30081,18 @@ window.GG_LEARN = {
        "k": "big",
        "h": "You are part of the safety net.",
        "sub": "Their answers stay private. Your noticing matters.",
-       "say": "Pine shows your teen these lines right away, and their answers stay private. So your noticing and your asking matter. You are part of the safety net."
+       "say": "Pine asks open questions, and it asks nothing about harm. Their answers stay private, and nothing is sent anywhere. So your noticing, your open questions, and your staying close matter. You are part of the safety net."
       },
       {
        "k": "quiz",
        "q": "Your teen has been withdrawn for weeks and says, what's the point. What do you do?",
        "opts": [
         "Give them space and wait for it to pass",
-        "Ask plainly whether they are thinking of ending their life",
+        "Stay close, ask an open question, and listen",
         "Tell them how much they have to live for"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door.",
+       "why": "Stay close, and ask openly. If they share thoughts of suicide, get help together.",
        "say": "Quick question. Your teen has been withdrawn for weeks and says, what's the point. What do you do?"
       }
      ]
@@ -32676,7 +32663,7 @@ window.GG_LEARN = {
        "k": "big",
        "h": "Your answers are yours.",
        "sub": "Locked on this device with your own passcode.",
-       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. If an answer shows you might not be safe, Birch shows you help right away, just for you."
+       "say": "Your privacy matters here. Everything stays on this device, locked in your own profile with a passcode only you know. It is yours alone. If you want someone to walk with you, you can add a helper, and you choose what they see. And help lines are always close, on your growth plan."
       },
       {
        "k": "tabs",
@@ -32750,7 +32737,7 @@ window.GG_LEARN = {
      "n": 1,
      "title": "Your First Check-in",
      "mins": 5,
-     "blurb": "Eight questions for each part, Not sure, the optional question, the safety step, and help that shows up right away.",
+     "blurb": "Eight questions for each part, Not sure, the optional question, the quiet line, and help lines close by.",
      "scenes": [
       {
        "k": "title",
@@ -32875,41 +32862,41 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "Help shows up right away",
+       "h": "Help is close",
        "items": [
         [
-         "Feeling alone",
-         "Ways to reach one person this week"
+         "A quiet line",
+         "At the bottom of the check-in"
         ],
         [
-         "Losing hope",
-         "Someone to talk with, any time"
+         "Help lines",
+         "On your growth plan, any time"
         ],
         [
-         "Someone hurting you",
-         "Never your fault, and help is close"
+         "Stays on this device",
+         "Nothing is sent anywhere"
         ]
        ],
-       "say": "Good. Some answers matter enough that Birch responds right away. If you say you have felt lonely often, or like there is no point in trying, or that someone close to you is controlling, threatening, or hurting you, a short note opens with people who can help. Your answer is never lost, and nothing is sent to anyone."
+       "say": "Good. Birch asks open questions, and every answer is welcome. One quiet line of type sits at the bottom of the check-in. Your growth plan always has help lines, any time you want them. Your answers stay on this device, and nothing is sent to anyone."
       },
       {
        "k": "points",
        "h": "Before you see your tree",
        "items": [
         [
-         "Two last questions",
-         "Asked because you matter"
+         "Every answer is welcome",
+         "There are no wrong answers"
         ],
         [
-         "Yes, No, Not sure",
-         "Or I’d rather not say"
+         "Not sure",
+         "Always an honest answer"
         ],
         [
-         "Kept apart from every score",
-         "Only there to help"
+         "Yours alone",
+         "Behind your own passcode"
         ]
        ],
-       "say": "At the end come two last questions. One asks if anyone is hurting you, threatening you, or making you feel unsafe, at home, at work, online, or in a relationship. The other asks about thoughts of ending your life. Lots of people your age have had that thought, and it is safe to say so. You can also choose, I would rather not say. These answers are never part of a score, and a helper never sees them."
+       "say": "Before you see your tree, remember this. Every answer is welcome, and there are no wrong answers. Not sure is always an honest answer too. And your answers stay yours alone, behind your own passcode."
       },
       {
        "k": "screen",
@@ -32926,7 +32913,7 @@ window.GG_LEARN = {
          "Call for help"
         ]
        ],
-       "say": "If you need support, a calm card opens."
+       "say": "Help lines are there whenever you want them, on your growth plan."
       },
       {
        "k": "big",
@@ -33036,7 +33023,7 @@ window.GG_LEARN = {
          "One or two parts at a time"
         ]
        ],
-       "say": "Below your levels, Birch writes a few words just for you, and names help if an answer needs it. Read it all with kindness. Look for patterns. When money stress climbs, sleep often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with."
+       "say": "Below your levels, Birch writes a few words just for you. Read it all with kindness. Look for patterns. When money stress climbs, sleep often feels it too. Notice your strengths. A strong part can carry you while another one grows. And pick one part to start with."
       },
       {
        "k": "big",
@@ -33492,7 +33479,7 @@ window.GG_LEARN = {
         "Maybe Later"
        ],
        "tap": 0,
-       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. There is no alert to anyone."
+       "say": "Birch lives in your own adult profile, on this device. You choose a passcode, and only your passcode opens your answers and your Groundwork. It is yours alone. Nothing is sent to anyone."
       },
       {
        "k": "big",
@@ -33521,21 +33508,21 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Your safety answers stay yours alone.",
+       "h": "Your answers stay yours alone.",
        "sub": "And nothing you keep private.",
-       "say": "Here is what a helper never sees. Your safety answers, ever. Your answers to each question. Your optional question. And anything you have not chosen to share. You can change what helpers see, or remove a helper, any time."
+       "say": "Here is what a helper never sees. Your answers to each question. Your optional question. Your Groundwork. And anything you have not chosen to share. You can change what helpers see, or remove a helper, any time."
       },
       {
        "k": "big",
        "h": "Someone hurting you? Help is close.",
-       "say": "If you say someone close to you is hurting you, Birch keeps that answer with you and shows you help made for it."
+       "say": "If someone close to you is hurting you, the help lines in Birch include help made for that, any time."
       },
       {
        "k": "big",
        "h": "Who could you reach out to?",
        "sub": "Two people, if something were wrong.",
        "beats": [
-        "Birch never sends an alert, so reaching out is up to you, and that takes a plan.",
+        "Birch sends nothing to anyone, so reaching out is up to you, and that takes a plan.",
         "Think of one person you could call if something were wrong.",
         "Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor.",
         {
@@ -33543,7 +33530,7 @@ window.GG_LEARN = {
          "w": 10
         }
        ],
-       "say": "Birch never sends an alert, so reaching out is up to you, and that takes a plan. Think of one person you could call if something were wrong. Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor. Say both names, out loud or in your head."
+       "say": "Birch sends nothing to anyone, so reaching out is up to you, and that takes a plan. Think of one person you could call if something were wrong. Now think of one more, maybe someone outside your family, like a friend, a mentor, a coworker, or a counselor. Say both names, out loud or in your head."
       },
       {
        "k": "points",
@@ -33559,10 +33546,10 @@ window.GG_LEARN = {
         ],
         [
          "Never shared",
-         "Answers, notes, Groundwork, safety"
+         "Answers, notes, Groundwork"
         ]
        ],
-       "say": "Good. Some sharing is your choice. Show my growth on The Grove lets your tree stand beside your family's or friends' trees. Only the big picture shows: days tended, rings, and which parts you tended. Share to Family sends a link with that same big picture, only when you send it. Your answers, notes, Groundwork, and safety answers are never part of it."
+       "say": "Good. Some sharing is your choice. Show my growth on The Grove lets your tree stand beside your family's or friends' trees. Only the big picture shows: days tended, rings, and which parts you tended. Share to Family sends a link with that same big picture, only when you send it. Your answers, notes, and Groundwork are never part of it."
       },
       {
        "k": "points",
@@ -33587,12 +33574,12 @@ window.GG_LEARN = {
        "k": "quiz",
        "q": "What can a helper see?",
        "opts": [
-        "Everything, including safety answers",
-        "Only what you choose to share; safety answers stay private",
+        "Everything, always",
+        "Only what you choose to share",
         "Nothing, ever"
        ],
        "right": 1,
-       "why": "Helpers are off unless you turn them on. They see only what you share, and never your safety answers.",
+       "why": "Helpers are off unless you turn them on. They see only what you choose to share.",
        "say": "Quick question. What can a helper see?"
       }
      ]
@@ -34683,8 +34670,7 @@ window.GG_LEARN = {
      "sources": [
       "arnett",
       "pewparents",
-      "nsduh24",
-      "dazzi"
+      "nsduh24"
      ],
      "scenes": [
       {
@@ -34801,9 +34787,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "If you hear hopelessness, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "One more thing matters a great deal. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. So if you hear something like, what's the point, or, everyone would be better off without me, take it seriously. Ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It tells them they can talk to you. Lesson four walks through this, step by step."
+       "h": "If you hear hopelessness, stay close.",
+       "sub": "Open questions open the door.",
+       "say": "One more thing matters a great deal. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. So if you hear something like, what's the point, or, everyone would be better off without me, take it seriously, and stay close. Ask an open question, calmly. What has been weighing on you most? Then listen, and let them lead. Your calm presence tells them they can talk to you. Lesson four walks through this, step by step."
       },
       {
        "k": "points",
@@ -34819,14 +34805,14 @@ window.GG_LEARN = {
         ],
         [
          "You see only what they share",
-         "Their safety answers stay private"
+         "By their choice"
         ],
         [
-         "No alerts to anyone",
+         "Nothing is sent",
          "So their answers stay honest"
         ]
        ],
-       "say": "If they use Birch, here is how it fits. Birch belongs to them, behind their own passcode. They can add helpers if they choose, and a helper sees only what they decide to share, never their safety answers. Birch never sends an alert to anyone, so they can answer honestly. Lesson two explains it all."
+       "say": "If they use Birch, here is how it fits. Birch belongs to them, behind their own passcode. They can add helpers if they choose, and a helper sees only what they decide to share. Birch sends nothing to anyone, so they can answer honestly. Lesson two explains it all."
       },
       {
        "k": "big",
@@ -34889,15 +34875,15 @@ window.GG_LEARN = {
          "Private from helpers"
         ],
         [
-         "Safety answers",
-         "Kept private"
+         "Their notes",
+         "Shared only by choice"
         ],
         [
-         "No alerts",
+         "Nothing is sent",
          "Everything stays on this device"
         ]
        ],
-       "say": "Here is what stays theirs. Every check-in answer and every level, locked with their own passcode and kept on their own device. Groundwork, their private notebook for building a life, is never shown to a helper. Their safety answers and flags are never shown to anyone. And Birch never sends an alert to anyone, not to a parent, a partner, or a helper."
+       "say": "Here is what stays theirs. Every check-in answer and every level, locked with their own passcode and kept on their own device. Groundwork, their private notebook for building a life, is never shown to a helper. Their notes are shared only if they choose. And Birch sends nothing to anyone, not to a parent, a partner, or a helper."
       },
       {
        "k": "flow",
@@ -34988,7 +34974,7 @@ window.GG_LEARN = {
       {
        "k": "big",
        "h": "When safety is at stake, act.",
-       "say": "There is one place where respect means stepping closer. If you are worried they are thinking about ending their life, ask them plainly. Privacy never means you have to stand back from a crisis. Lesson four walks through this."
+       "say": "There is one place where respect means stepping closer. If you are worried about them, stay close, and ask an open question, like how are you, really? Privacy never means you have to stand back from a crisis. Lesson four walks through this."
       },
       {
        "k": "big",
@@ -34998,15 +34984,15 @@ window.GG_LEARN = {
       },
       {
        "k": "quiz",
-       "q": "You're a helper in their Birch, and you notice you can't see their safety answers. What does that mean?",
+       "q": "You are a helper in their Birch, and you notice you can see only a few things. What does that mean?",
        "opts": [
         "Something is wrong with the app",
-        "It is by design: safety answers stay private",
+        "It is by design: they choose what you see",
         "You should ask them to share their passcode"
        ],
        "right": 1,
-       "why": "Safety answers stay private so they can answer honestly. If you are worried, ask them plainly.",
-       "say": "Quick question. You're a helper in their Birch, and you notice you can't see their safety answers. What does that mean?"
+       "why": "They choose what you see, so they can answer honestly. If you are worried, stay close and ask an open question.",
+       "say": "Quick question. You are a helper in their Birch, and you notice you can see only a few things. What does that mean?"
       }
      ]
     },
@@ -35193,8 +35179,7 @@ window.GG_LEARN = {
       "kessler05",
       "nsduh24",
       "mtfpanel24",
-      "nisvs",
-      "dazzi"
+      "nisvs"
      ],
      "scenes": [
       {
@@ -35266,13 +35251,13 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "If they speak of not wanting to live, ask plainly.",
-       "sub": "Asking opens the door.",
-       "say": "Most important of all. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. Listen for words like, I just want it all to stop, or, everyone would be better off without me. Pay close attention after a breakup, a job loss, money trouble, a move away from everyone, or leaving the military. If you are worried, ask plainly and calmly. Are you thinking about ending your life? Asking does not put the idea in their head. It opens the door."
+       "h": "If they speak of not wanting to live, stay close.",
+       "sub": "Your calm presence opens the door.",
+       "say": "Most important of all. Serious thoughts of suicide are more common from eighteen to twenty five than at any other adult age. Listen for words like, I just want it all to stop, or, everyone would be better off without me. Pay close attention after a breakup, a job loss, money trouble, a move away from everyone, or leaving the military. If you hear them, stay close, and ask an open question, calmly. Can you tell me more about that? Listen, and let them lead. Your calm presence opens the door."
       },
       {
        "k": "points",
-       "h": "If the answer is yes",
+       "h": "If they share thoughts of suicide",
        "items": [
         [
          "Stay with them",
@@ -35283,11 +35268,15 @@ window.GG_LEARN = {
          ""
         ],
         [
+         "Make home safer for now",
+         "Someone they trust holds guns or medicine"
+        ],
+        [
          "Danger right now?",
          "Call for help"
         ]
        ],
-       "say": "If the answer is yes, stay with them, and thank them for telling you. In Minnesota, star star CRISIS from a cell phone reaches the county crisis team. And if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them for now."
+       "say": "If they share thoughts of suicide, stay with them, and thank them for telling you. Get help together right away, with the help lines under this video. In Minnesota, star star CRISIS from a cell phone reaches the county crisis team. And to make home safer for now, if there are guns or a lot of medicine where they live, ask whether someone they trust can hold them."
       },
       {
        "k": "big",
@@ -35307,18 +35296,18 @@ window.GG_LEARN = {
        "k": "big",
        "h": "They are adults. You can still walk beside them.",
        "sub": "Offer to go with them. Keep checking in.",
-       "say": "They are adults, and the choice to get help is theirs. You can still make it easier. Offer to help find a doctor or counselor, sit with them while they call, or drive them to the first visit. Birch shows them these same lines, and their answers stay private. So your noticing and your asking matter. Keep checking in."
+       "say": "They are adults, and the choice to get help is theirs. You can still make it easier. Offer to help find a doctor or counselor, sit with them while they call, or drive them to the first visit. Birch asks nothing about harm, and their answers stay private. So your noticing, your open questions, and your staying close matter. Keep checking in."
       },
       {
        "k": "quiz",
        "q": "They've been withdrawn for weeks and say, what's the point. What do you do?",
        "opts": [
         "Give them space and wait for it to pass",
-        "Ask plainly whether they are thinking of ending their life",
+        "Stay close, ask an open question, and listen",
         "Tell them how much they have to live for"
        ],
        "right": 1,
-       "why": "Asking plainly opens the door.",
+       "why": "Stay close, and ask openly. If they share thoughts of suicide, get help together.",
        "say": "Quick question. They've been withdrawn for weeks and say, what's the point. What do you do?"
       }
      ]
@@ -39383,7 +39372,7 @@ window.GG_LEARN = {
          0
         ]
        },
-       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Their grown-ups still get a quiet alert if a check-in asks for a caring conversation."
+       "say": "For kids and middle schoolers, a grown-up who agreed can open their profile with the grown-up’s own passcode, so no child is ever alone with something hard. For high schoolers, only their own passcode opens their answers and journal. Every check-in stays on this device, and nothing is sent anywhere."
       },
       {
        "k": "trees",
@@ -39885,22 +39874,22 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "What the check-in never does",
+       "h": "What the check-in always does",
        "items": [
         [
-         "Never about one person",
-         "Always about we"
+         "Always about we",
+         "Never about one person"
         ],
         [
-         "No questions about harm",
-         "Those stay in each person’s own tree"
+         "Open questions",
+         "Nothing about harm, in any tree"
         ],
         [
          "Help lines on every screen",
          ""
         ]
        ],
-       "say": "The check-in is always about we, never about one person. It never asks about harm or danger in front of the group. Those questions belong in each person’s own tree app, where they stay private. And the help lines are on every check-in screen."
+       "say": "The check-in is always about we, never about one person. It asks open questions, and nothing about harm or danger. Every Grounded check-in works that way, in every tree. And the help lines are on every check-in screen."
       },
       {
        "k": "big",
@@ -41301,18 +41290,18 @@ window.GG_LEARN = {
       },
       {
        "k": "points",
-       "h": "A quiet alert for grown-ups",
+       "h": "If Someone Needs Help Now",
        "items": [
         [
-         "Please check in with...",
-         "When a check-in asks for a talk"
+         "If Someone Needs Help Now",
+         "A card on the grove page"
         ],
         [
-         "A nudge, not the answers",
-         "Find a quiet moment and listen"
+         "Ask, and listen",
+         "Find a quiet moment together"
         ]
        ],
-       "say": "There is one more thing to know. If a kid’s or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet note here. It says, please check in with them. It shows no answers. It asks the grown-up to find a quiet moment and listen. That help is always on the grove page too, in a card called If Someone Needs Help Now."
+       "say": "There is one more thing to know. The grove page always has a card called If Someone Needs Help Now, with lines to call or text, any time. Every check-in stays on its own device, and nothing is sent anywhere. If someone in your family seems to be carrying something heavy, find a quiet moment, ask how they are, really, and listen. And kids, you can always go to a trusted grown-up right away. Help is always close."
       },
       {
        "k": "big",
@@ -43169,9 +43158,9 @@ window.GG_LEARN = {
       },
       {
        "k": "big",
-       "h": "Grown-ups may see a quiet alert.",
-       "sub": "Please check in. The answers stay private.",
-       "say": "A note for grown-ups. When a kid or teen’s check-in asks for a caring conversation, the grown-ups who agreed for them see a quiet alert in The Grove. It never shows their answers. Find a quiet moment, ask how they are doing, and listen. And kids, you can always go to a grown-up yourself, any time."
+       "h": "Grown-ups, stay curious.",
+       "sub": "How are you, really? Then listen.",
+       "say": "A note for grown-ups. When someone in the family seems to be carrying something heavy, you are often the one who notices. Find a quiet moment, ask how they are doing, really, and listen. Every check-in stays on its own device, and nothing is sent anywhere. And kids, you can always go to a trusted grown-up yourself, any time."
       },
       {
        "k": "big",

@@ -1362,7 +1362,7 @@ const LC_TOPICS = [
     "“That sounds frustrating. What do you want to happen?”",
     "“Do you want ideas, or do you just need to vent?”",
     "“What would you say to them if you knew it would go okay?”",
-    "“Do you feel safe there?”"
+    "“How does it feel to be at home these days?”"
    ],
    "avoid": [
     "Calling the roommate, or their parents, yourself.",
@@ -1740,7 +1740,7 @@ const LC_TOPICS = [
    "feel": "They may feel ashamed, scared, and worn out, and they may not tell you the whole story at first. Many young adults in a housing crisis don't use the word homeless, and they may be couch surfing or sleeping in a car while still going to work or class. They are an adult in a hard spot, and they need practical help and dignity more than advice.",
    "say": [
     "“Thank you for telling me. Let's figure out the next step together.”",
-    "“Are you safe tonight? Do you have somewhere to sleep?”",
+    "“Where will you sleep tonight? What do you need most right now?”",
     "“Here's what I can offer. Take what helps.”",
     "“This doesn't change how I see you.”"
    ],
@@ -2155,7 +2155,7 @@ const LC_TOPICS = [
     "Offer practical help if they want it: a truck for the move, a spare room for a few nights, help sorting a lease.",
     "Watch for two weeks or more of low mood, pulling away from everyone, sleep or eating changes, or heavier drinking or use. If you see that, encourage a doctor or counselor.",
     "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the guide on controlling or abusive relationships.",
-    "If they talk about not wanting to be alive, ask directly, stay with them, and call or text 988 together."
+    "If they share thoughts of not wanting to be alive, stay with them, listen, and call or text 988 together."
    ],
    "you": "Watching someone you love hurt is hard, and you can't speed it up. Your part is to take it seriously, keep them company, and help with the practical pieces when asked. Your steady presence is a reminder that love can be safe and lasting."
   },
@@ -2234,7 +2234,7 @@ const LC_TOPICS = [
     "“I deserve to feel safe, all the time.”",
     "“Asking for help is strong.”"
    ],
-   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” If you tell your Birch check-in that someone is hurting you, Birch shows you outside help right away, like Love Is Respect, the National Domestic Violence Hotline, Day One, and 911. Your answers stay on your device behind your own passcode. Birch sends nothing to anyone, and a helper never sees your private notes, so you stay in charge of who you tell."
+   "people": "To someone you trust: “Something's been going on in my relationship, and I'm scared. Can you help me think it through?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” Love Is Respect, the National Domestic Violence Hotline, Day One, and 911 are there any time. Your Birch answers stay on your device behind your own passcode. Birch sends nothing to anyone, and a helper never sees your private notes, so you stay in charge of who you tell."
   },
   "helper": {
    "feel": "They may feel confused, ashamed, scared, or loyal to the person hurting them. Many don't call it abuse. They may defend the partner, play down what happened, or go back after leaving. Leaving often takes more than one try. Control often works by cutting a person off from the people who love them, so pulling away from you may be part of the pattern, not a rejection of you. They're an adult, and the decisions are theirs, which can be hard to watch.",
@@ -2458,7 +2458,7 @@ const LC_TOPICS = [
     "Let them set some of the rhythm: how often you talk, when they visit, what they share.",
     "Notice and name what they're doing well. Young adults often hear far more about what's left to do.",
     "When values differ, stay curious. Ask what led them there, and share what matters to you without pressure.",
-    "If you're worried about their safety or mood, say so plainly and kindly, and share 988 (call, text, or chat). Helpers in Birch see only what the young adult chooses to share, and never private notes, so asking directly matters."
+    "If you're worried about their safety or mood, say so plainly and kindly, and share 988 (call, text, or chat). Helpers in Birch see only what the young adult chooses to share, and never private notes, so a warm, open question matters."
    ],
    "you": "Letting a grown child steer their own life is a real loss and a real gift at the same time. It's okay to grieve the old closeness while you build a new one. Find your own people to talk with: a friend, your partner, a support group, or a counselor."
   },
@@ -3152,7 +3152,7 @@ const LC_TOPICS = [
     "“I've noticed you haven't seemed like yourself. I care about you, and I'm here.”",
     "“You don't have to explain it all. What's it been like?”",
     "“Would it help if I sat with you while you call a doctor?”",
-    "“Are you having thoughts of ending your life?” Asking plainly is safe, and it doesn't put the idea in their head."
+    "“How are you, really? What has been the hardest part?” Then listen, and let them lead."
    ],
    "avoid": [
     "“Look on the bright side,” or “Others have it worse.”",
@@ -3165,7 +3165,7 @@ const LC_TOPICS = [
     "Help with one practical thing: groceries, a ride, a form, a phone call they've been dreading.",
     "Offer to help them find a doctor or counselor, and follow up kindly. Let them lead the visit.",
     "If they mention guns or a lot of medicine where they live, ask whether someone they trust could hold them for now.",
-    "If you're worried they may be thinking about suicide, ask directly, stay with them, and call or text 988 together."
+    "If they share thoughts of suicide, stay with them, thank them for telling you, and call or text 988 together."
    ],
    "you": "Supporting someone who is depressed is tiring, and their mood can pull on yours. Keep your own sleep, walks, and people, and share the load with others who love them. If they use Birch, they choose what you see; private notes are never shown to a helper, and nothing is sent to anyone, so your own checking in matters."
   },
@@ -3605,7 +3605,7 @@ const LC_TOPICS = [
    "If you're thinking about suicide, reach out now: call or text 988, or text HOME to 741741. Veterans and service members: 988, then press 1. In danger right now: call 911.",
    "Thoughts of suicide are a sign of deep pain, not weakness and not a plan you have to follow. Serious thoughts of suicide are most common between 18 and 25, and many people find their way through with help.",
    "These thoughts usually come in waves. A safety plan, written on an okay day, helps you get through the hardest hours.",
-   "Telling one person is one of the strongest things you can do. Asking about suicide doesn't put the idea in anyone's head."
+   "Telling one person is one of the strongest things you can do. The people who care about you want to know."
   ],
   "feel": "Maybe the pain feels like it will never end, and you can't see a way out. A breakup, a job or a class that fell apart, money trouble, a move away from everyone, or a long stretch of feeling empty can pile up until it feels like too much. You might feel like a burden, like people would be better off without you, or just so tired of trying. You might feel scared of these thoughts, ashamed of them, or strangely calm. That belief that nothing will change is the pain talking. The pain is real, and so is the chance that it gets better.",
   "self": {
@@ -3632,9 +3632,9 @@ const LC_TOPICS = [
    "people": "Try: “I'm not okay. I'm having thoughts of ending my life, and I need help.” If saying it is too hard, text it, write it down, or show someone this guide. If the first person doesn't respond well, tell another. If a friend tells you they're thinking about suicide, see the guide When a Friend Is Thinking About Suicide."
   },
   "helper": {
-   "feel": "They may feel hopeless, ashamed, or like a burden to you. Many young adults hide it because they don't want to worry anyone, or because they're afraid of losing their independence, their job, their place in school, or your respect. Some are relieved the moment someone finally asks.",
+   "feel": "They may feel hopeless, ashamed, or like a burden to you. Many young adults hide it because they don't want to worry anyone, or because they're afraid of losing their independence, their job, their place in school, or your respect. Some are relieved the moment someone finally listens.",
    "say": [
-    "“Are you thinking about killing yourself?” Ask plainly and calmly. Asking is safe, and it doesn't put the idea in their head.",
+    "“How are you, really? I'm here, and I want to hear all of it.” Then listen, calmly.",
     "“Thank you for telling me. I'm glad you did, and I'm staying with you.”",
     "“You matter to me, and this can get better with help.”",
     "“Can we make a plan for the hard moments, together?”"
@@ -3708,7 +3708,7 @@ const LC_TOPICS = [
   ],
   "quick": [
    "If your friend may act on it now, stay with them if it's safe and call 911. Any time, call or text 988 together, or call 988 yourself for guidance on how to help.",
-   "Ask directly: “Are you thinking about killing yourself?” Asking doesn't put the idea in their head, and it often brings relief.",
+   "Ask open questions and listen: “How are you, really?” or “What has been the hardest part?” A warm question often brings relief.",
    "Listen more than you talk, and connect them with help today. You're a bridge to help, not their only lifeline.",
    "A friend's safety comes before a promise to keep a secret. And carrying this is heavy, so bring in support for yourself, too."
   ],
@@ -3717,7 +3717,7 @@ const LC_TOPICS = [
    "first": [
     "If they may act on it right now, stay with them if it's safe, and call 911. If they're somewhere else, call 911 and say where they are.",
     "Call or text 988 yourself any time for guidance on what to do. They help people who are worried about someone, too.",
-    "Ask plainly: “Are you thinking about killing yourself?” Then listen."
+    "Ask an open question, like “How are you, really? Can you tell me more?” Then listen. If they share thoughts of suicide, stay with them and call or text 988 together."
    ],
    "helps": [
     "Knowing the warning signs: talk of being a burden or of wanting to die, pulling away from people, giving things away, saying goodbye, heavier drinking or drug use, or a sudden calm after a hard stretch.",
@@ -3752,7 +3752,7 @@ const LC_TOPICS = [
     "If the friend may be in danger now, help call 911 or 988 right away.",
     "Help them think through who else can be part of the friend's support: the friend's family, a counselor, a resident advisor, or a supervisor.",
     "Check on them in the days after, and notice their own sleep, mood, and drinking. Carrying a friend's crisis can bring on hard feelings of their own.",
-    "Ask them plainly, too, if you're worried: “Are you having any thoughts like that yourself?”",
+    "Ask them, too, with an open question: “How is all of this sitting with you?” Then listen.",
     "Call or text 988 together for guidance if you're both unsure."
    ],
    "you": "Watching someone you love carry a friend's crisis is hard. You may feel protective, or wish they didn't have to. Get support for yourself, too, and remember that steady presence is most of what helps."
@@ -3843,7 +3843,7 @@ const LC_TOPICS = [
     "“Thank you for telling me. I'm not going anywhere.”",
     "“I'm not upset with you. I want to understand.”",
     "“What was happening right before?”",
-    "“Are you thinking about killing yourself?” Asking plainly is safe, and it doesn't put the idea in their head."
+    "“What would help you most right now?” Then listen, and let them lead."
    ],
    "avoid": [
     "Panic, anger, ultimatums, or a shocked face. Breathe first.",
@@ -3983,7 +3983,7 @@ const LC_TOPICS = [
    "If it was someone you're dating or with: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time. Or the National Domestic Violence Hotline, 1-800-799-7233, or text START to 88788.",
    "If intimate images were taken or shared: StopNCII (stopncii.org) for adults, or Take It Down (takeitdown.ncmec.org) for images from before you were 18.",
    "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
-   "In Birch, if you answer that someone is hurting you, Birch shows you outside help right away. Everything stays on your device, and that answer stays just for you, even with a helper."
+   "In Birch, everything you write stays on your device, just for you, even with a helper."
   ],
   "more": [
    [
@@ -4453,7 +4453,7 @@ const LC_TOPICS = [
     "Show up with something concrete: food, a ride, help with a task, a walk.",
     "Say the name of the person who died. Most grieving people want to hear it.",
     "Remember hard dates: the birthday, the anniversary, the first holidays.",
-    "Watch for signs of deeper trouble: drinking more, not eating or sleeping, or talk of not wanting to be here. Ask directly and kindly. Asking about suicide does not put the idea in someone's head.",
+    "Watch for signs of deeper trouble: drinking more, not eating or sleeping, or talk of not wanting to be here. Ask open questions, kindly, and listen. If they share thoughts of not wanting to be alive, stay with them and call or text 988 together.",
     "If they talk about not wanting to be here, stay with them and call, text, or chat 988 together."
    ],
    "you": "If you knew the person too, you're grieving as well. Let yourself. Being beside someone's grief can stir your own losses; find someone of your own to talk with."

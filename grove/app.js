@@ -781,12 +781,13 @@ function togetherHtml(days) {
 /* ---------- the quiet line (GWG BLD 887) ----------
    Type only, never read aloud, under every check-in screen and its results. A Family grove in a hard
    season names the hospice 24/7 line first. */
-function quietHtml() {
+function quietInner() {
   const hos = isFamily() && G && G.hard ? (G.line && G.line.phone
     ? `Call ${esc(G.line.name || 'your hospice 24/7 line')} first, day or night: <a class="text-link" href="tel:${esc(String(G.line.phone).replace(/[^0-9+]/g, ''))}">${esc(G.line.phone)}</a>. `
     : 'Call your hospice\'s 24/7 line first, day or night. ') : '';
-  return `<p class="muted gv-quiet">${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.</p>`;
+  return `${hos}If you ever feel like hurting yourself, call or text 988. In danger now, call 911.`;
 }
+function quietHtml() { return `<p class="muted gv-quiet">${quietInner()}</p>`; }
 /* ---------- help, any time ---------- */
 function helpCardHtml(more, hospice) {
   let first = '';
@@ -892,7 +893,7 @@ function viewTogether() {
    Our Circle, and a Hard Season. Nothing is hidden. Deep links: #life, #life=<id>. */
 const GGD = window.GROVE_GUIDES || { rings: [], topics: [], practices: [] };
 const LC_RINGS = GGD.rings || [], LC = GGD.topics || [];
-const GV_SRC = '/grove/guide-videos.js?v=b852';
+const GV_SRC = '/grove/guide-videos.js?v=b888';
 const KIND_NAME = { family: 'Family', classroom: 'Classroom', faith: 'Faith Community', group: 'Small Group', team: 'Team' };
 const TREE_LINK = { maple: ['Maple', '/maple/#talk=', 'for grown-ups of kids, K to 5'], aspen: ['Aspen', '/aspen/#talk=', 'for grown-ups of middle schoolers'], pine: ['Pine', '/pine/#life=', 'for grades 9 to 12'], birch: ['Birch', '/birch/#life=', 'for ages 18 to 26'], oak: ['Oak', '/oak/#life=', 'for grown-ups'], sequoia: ['Sequoia', '/sequoia/#life=', 'for older adults'], willow: ['Willow', '/willow/#guide=', 'for hospice families'] };
 const HOSPICE_FIRST = ['hospice', 'hard-death'];
@@ -1175,7 +1176,7 @@ function runnerHtml() {
   if (ci.step === 'changes') {
     return `<div class="section-head"><h2>${esc(K.checkin)}</h2><p>Before the questions: what's changed lately? Tap any that fit. This helps choose practices, and never changes a result.</p></div>
       <div class="card"><h3>What's Changed Lately?</h3><div class="gv-chips">${changesFor(G.kind).map(c => `<button type="button" class="chip${ci.changes.includes(c.id) ? ' on' : ''}" aria-pressed="${ci.changes.includes(c.id)}" data-act="cichange" data-id="${esc(c.id)}">${esc(c.label)}</button>`).join('')}</div>
-      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cinext">Start the Questions</button><button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + quietHtml();
+      <div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="cinext">Start the Questions</button>${GROVE_GUIDED() ? '<button class="btn btn-line btn-sm" data-act="ciguided">Guided Check-in</button>' : ''}<button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + quietHtml();
   }
   const list = qList(G.kind, ci.quick), item = list[ci.i], q = item.q, part = PARTS6.find(p => p.key === item.part), cur = ci.ans[item.key];
   const kid = kidsOn() && kidText(q);
@@ -1188,16 +1189,20 @@ function runnerHtml() {
     ${q.tip ? `<p class="gv-tip"><b>Leader tip.</b> ${esc(q.tip)}</p>` : ''}
     <div class="gv-ans" role="group" aria-label="Our shared answer">${ANSWERS.map(([k, l]) => `<button type="button" class="gv-a${cur === k ? ' on' : ''}" aria-pressed="${cur === k}" data-act="cians" data-id="${k}">${l}</button>`).join('')}</div>
     <div class="gv-ans gv-ans2">${ASPECIAL.map(([k, l]) => `<button type="button" class="gv-a gv-a2${cur === k ? ' on' : ''}" aria-pressed="${cur === k}" data-act="cians" data-id="${k}">${l}</button>`).join('')}</div>
-    <div class="tools-row" style="justify-content:space-between">${ci.i > 0 ? `<button class="btn btn-line btn-sm" data-act="ciprev">${icon('back')} Back</button>` : '<span></span>'}<button class="btn btn-line btn-sm" data-act="cistop">Stop</button></div></div>` + quietHtml();
+    <div class="tools-row" style="justify-content:space-between">${ci.i > 0 ? `<button class="btn btn-line btn-sm" data-act="ciprev">${icon('back')} Back</button>` : '<span></span>'}<span>${GROVE_GUIDED() ? '<button class="btn btn-line btn-sm" data-act="ciguided">Guided Check-in</button> ' : ''}<button class="btn btn-line btn-sm" data-act="cistop">Stop</button></span></div></div>` + quietHtml();
 }
 function ciAnswer(k) {
   const ci = S.ci, list = qList(G.kind, ci.quick); ci.ans[list[ci.i].key] = k;
   if (ci.i < list.length - 1) { ci.i++; render(); focusQ(); return; }
-  const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: ci.changes.slice(), ans: Object.assign({}, ci.ans) };
+  ciSave(ci);
+}
+// One save for a check-in, from the classic runner or the guided one (GWG BLD 886).
+function ciSave(ci) {
+  const rec = { id: uid(), date: today(), at: new Date().toISOString(), quick: !!ci.quick, changes: (ci.changes || []).slice(), ans: Object.assign({}, ci.ans) };
   const v = V(); v.checkins.push(rec); v.changes = rec.changes.slice();
-  S.ci = null; S.view = rec.id;
+  S.ci = null; S.view = rec.id; S.tab = 'checkin';
   const gNow = G;
-  sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); });
+  return sealVault().then(() => { render(); toast('Check-in saved, locked with the grove.'); window.scrollTo({ top: $('#app').offsetTop - 10 }); keepSafeNote(gNow); return rec; });
 }
 function focusQ() { const t = $('#gv-qtext'); if (t) { t.setAttribute('tabindex', '-1'); t.focus({ preventScroll: true }); } }
 function resultsHtml(ci) {
@@ -1322,20 +1327,24 @@ function builderHtml() {
   h += `<label class="lbl" for="gv-pdo">${esc(W('plan.ownPracticePrompt', 'Our own tradition or practice to add'))}</label><input id="gv-pdo" class="gv-input" maxlength="120" data-pd="own" value="${esc(pd.own)}">`;
   h += step(n++, 'Our Rhythm', '');
   h += `<p>${esc(W('plan.rhythm', 'Twelve weeks together, with a quick check-in at weeks 4 and 8 and a full check-in at week 12.'))}</p>`;
-  h += `<p class="gv-err" id="gv-pderr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="pdsave">Save Our Plan</button><button class="btn btn-line btn-sm" data-act="pdcancel">Cancel</button></div></div>`;
+  h += `<p class="gv-err" id="gv-pderr" role="alert"></p><div class="tools-row" style="justify-content:flex-start"><button class="btn btn-gold btn-sm" data-act="pdsave">Save Our Plan</button>${GROVE_GUIDED() ? '<button class="btn btn-line btn-sm" data-act="pdguided">Guided Plan</button>' : ''}<button class="btn btn-line btn-sm" data-act="pdcancel">Cancel</button></div></div>`;
   return h;
 }
 function savePlan() {
-  const pd = S.pd, err = $('#gv-pderr');
-  if (!pd.edges.length) { err.textContent = 'Pick at least one Growing Edge.'; return; }
+  const m = planCommit(S.pd); if (m) { const err = $('#gv-pderr'); if (err) err.textContent = m; }
+}
+// One save for a Growth Plan, from the classic builder or the guided one (GWG BLD 886). Returns a message when something is missing.
+function planCommit(pd) {
+  if (!pd.edges.length) return 'Pick at least one Growing Edge.';
   const avail = pd.edges.reduce((n, k) => n + kindPractices(k).length, 0);
-  if (pd.items.length < Math.min(2, avail)) { err.textContent = 'Pick two or three practices.'; return; }
+  if (pd.items.length < Math.min(2, avail)) return 'Pick two or three practices.';
   const v = V(), old = v.plan;
   if (old && !pd.keep) v.plans.push(Object.assign({}, old, { ended: today() }));
   v.plan = { edges: pd.edges.slice(), items: pd.items.map(i => ({ pid: i.pid, anchor: i.anchor || '' })), youngest: pd.youngest || '', strength: pd.strength || '', words: (pd.words || '').trim(), own: (pd.own || '').trim(),
     from: pd.from || '', start: pd.keep && old ? old.start : today(), made: today() };
-  S.pd = null;
+  S.pd = null; S.tab = 'plan';
   sealVault().then(() => { render(); toast(W('plan.done', 'Our plan is saved, locked with the grove.')); });
+  return '';
 }
 function planHtml(p) {
   const K = KW(), wk = planWeek(p), v = V();
@@ -1671,7 +1680,8 @@ document.addEventListener('click', e => {
   else if (act === 'unlock') withVault('', render);
   else if (act === 'glock') { lockNow(); render(); toast('Locked.'); }
   // check-in
-  else if (act === 'cistart') withVault('', () => { S.ci = { quick: id === 'quick', step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); $('#app').scrollIntoView(); });
+  else if (act === 'cistart') withVault('', () => { if (b.dataset.classic !== '1' && gvCheckin(id === 'quick')) return; S.ci = { quick: id === 'quick', step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); $('#app').scrollIntoView(); });
+  else if (act === 'ciguided') { const c = S.ci; if (c) gvCheckin(c.quick, c); }
   else if (act === 'cichange') { const c = S.ci.changes, i = c.indexOf(id); if (i >= 0) c.splice(i, 1); else { if (id === 'none') c.length = 0; else { const k = c.indexOf('none'); if (k >= 0) c.splice(k, 1); } c.push(id); } render(); }
   else if (act === 'cinext') { S.ci.step = 'q'; render(); focusQ(); }
   else if (act === 'cians') ciAnswer(id);
@@ -1681,15 +1691,16 @@ document.addEventListener('click', e => {
   else if (act === 'ciview') { S.view = id; render(); }
   else if (act === 'ciback') { S.view = ''; render(); }
   // plan
-  else if (act === 'startplan') withVault('', () => startPlan());
-  else if (act === 'editplan') { const p = V().plan; startPlan({ edges: p.edges.slice(), items: p.items.map(i => Object.assign({}, i)), youngest: p.youngest, strength: p.strength, words: p.words, own: p.own, from: p.from, keep: true }); }
+  else if (act === 'startplan') withVault('', () => { if (!gvPlan()) startPlan(); });
+  else if (act === 'pdguided') { const pd = S.pd; if (pd) { S.pd = null; gvPlan({ edges: pd.edges.slice(), items: pd.items.map(i => Object.assign({}, i)), youngest: pd.youngest, strength: pd.strength, words: pd.words, own: pd.own, from: pd.from, keep: pd.keep }); } }
+  else if (act === 'editplan') { const p = V().plan; (GROVE_GUIDED() ? gvPlan : startPlan)({ edges: p.edges.slice(), items: p.items.map(i => Object.assign({}, i)), youngest: p.youngest, strength: p.strength, words: p.words, own: p.own, from: p.from, keep: true }); }
   else if (act === 'pdcancel') { S.pd = null; render(); }
   else if (act === 'pdedge') { const e2 = S.pd.edges, i = e2.indexOf(id); if (i >= 0) { e2.splice(i, 1); S.pd.items = S.pd.items.filter(x => TP[x.pid] && e2.includes(TP[x.pid].part)); } else { if (e2.length >= 2) { toast('Pick one or two Growing Edges.'); return; } e2.push(id); } render(); }
   else if (act === 'pdprac') { const it = S.pd.items, i = it.findIndex(x => x.pid === id); if (i >= 0) it.splice(i, 1); else { if (it.length >= 3) { toast('Two or three practices is plenty.'); return; } it.push({ pid: id, anchor: TP[id].anchor || '' }); } render(); }
   else if (act === 'pdanchor') { const it = S.pd.items[+b.dataset.n]; if (it) { it.anchor = it.anchor === id ? '' : id; render(); } }
   else if (act === 'pdstrength') { S.pd.strength = S.pd.strength === id ? '' : id; render(); }
   else if (act === 'pdsave') savePlan();
-  else if (act === 'newseason') { if (!confirm('Start a new season? This plan is kept with your earlier plans, and a new season begins with a full check-in.')) return; const v = V(); v.plans.push(Object.assign({}, v.plan, { ended: today() })); v.plan = null; sealVault().then(() => { S.ci = { quick: false, step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); }); }
+  else if (act === 'newseason') { if (!confirm('Start a new season? This plan is kept with your earlier plans, and a new season begins with a full check-in.')) return; const v = V(); v.plans.push(Object.assign({}, v.plan, { ended: today() })); v.plan = null; sealVault().then(() => { if (gvCheckin(false)) return; S.ci = { quick: false, step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); }); }
   else if (act === 'cert') printCert();
   else if (act === 'print') { if (['summary', 'plan', 'card'].includes(id) && !vaultOpen()) { withVault('', render); return; } printWhat(id, b.dataset.ci); }
   else if (act === 'closeclass') closeClass();
@@ -1807,6 +1818,135 @@ function gvAdd(d, sealed) {
     go();
   });
 }
+/* ---------- the guided check-in and the guided Growth Plan (GWG BLD 886) ----------
+   Guided is the way into every check-in and the Growth Plan: one question at a time, read aloud in Jenny's voice
+   (shared/gg-guided.js, the guide's words in shared/guided/grove.js), talked over, one shared answer. The answers
+   save through ciSave and planCommit, the same saves the classic runner and builder use, so results, levels,
+   Things to Talk About, seasons, and the plan are exactly the same. Read It All opens the classic form with the
+   answers carried over. The quiet line shows as type only. window.GroveGuided is the small bridge the player
+   and the tests use. Open with ?guided=checkin, ?guided=quick, or ?guided=plan. */
+const GROVE_GUIDED = () => !!(window.GGGuided && GGGuided.run && window.GG_GUIDED && GG_GUIDED.grove);
+const gvK = kind => { const s = GG_GUIDED.grove, k = (s.kinds || {}); return k[kind] || k.full || {}; };
+function gvQuestions(quick) {
+  const K = gvK(quick ? 'quick' : 'full');
+  return qList(G.kind, quick).map(item => {
+    const q = item.q, part = PARTS6.find(p => p.key === item.part) || {}, kid = kidsOn() && kidText(q);
+    const why = q.why || Wk(W('results.why.' + item.part), G.kind) || 'It helps ' + KW().we + ' notice ' + String(part.sub || '').toLowerCase() + ' together.';
+    return { id: item.key, part: item.part, text: qText(q), help: kid ? 'For children: ' + kid : '', rev: !!q.rev, type: 'choice',
+      options: ANSWERS.map(([v, l]) => ({ v, label: l })).concat(ASPECIAL.map(([v, l]) => ({ v, label: l, quiet: true, reply: { eb: v === 'd' ? 'A Thing to Talk About' : 'Passing Is Fine', lines: K[v === 'd' ? 'differ' : 'pass'] } }))),
+      more: [{ label: 'Why this question?', text: why }].concat(q.tip ? [{ label: 'Leader tip', text: q.tip }] : []) };
+  });
+}
+function gvChangesQ(K, cur) {
+  return { id: 'changes', type: 'multi', aside: true, label: 'What’s Changed Lately', eb: 'Before the Questions', part: '', text: 'What’s changed lately?', say: false, lead: K.changes || null,
+    help: 'Tap any that fit. This helps choose practices, and never changes a result.', options: changesFor(G.kind).map(c => ({ v: c.id, label: c.label, only: c.id === 'none' })) };
+}
+function gvCheckin(quick, from) {
+  if (!GROVE_GUIDED() || !G || !vaultOpen()) return false;
+  const kind = !quick && !V().checkins.length ? 'start' : quick ? 'quick' : 'full', K = gvK(kind);
+  const Q = [gvChangesQ(K)].concat(gvQuestions(quick));
+  if (G.kidsFirst && kidsOn() && Q[1]) Q[1] = Object.assign({}, Q[1], { lead: K.kidsFirst || null });
+  const st = { quick: !!quick, ans: Object.assign({}, (from && from.ans) || {}), changes: ((from && from.changes) || []).slice(), changesSeen: !!(from && (from.step === 'q' || (from.changes || []).length)) };
+  const answers = Object.assign({}, st.ans); if (st.changesSeen) answers.changes = st.changes.slice();
+  S.ci = null; S.tab = 'checkin'; render();
+  let done = false, H = null;
+  const toClassic = () => { const list = qList(G.kind, st.quick); let i = list.findIndex(x => !st.ans[x.key]); if (i < 0) i = list.length - 1;
+    S.ci = { quick: st.quick, step: st.changesSeen ? 'q' : 'changes', i, ans: Object.assign({}, st.ans), changes: st.changes.slice() }; S.tab = 'checkin'; render(); const a = $('#app'); if (a) a.scrollIntoView(); };
+  H = GGGuided.run({ tree: 'grove', kind, voice: 'jenny', title: (quick ? 'Quick Check-in' : KW().checkin), script: GG_GUIDED.grove, questions: Q, answers, quietHtml: quietInner(),
+    isEdge: (q, v) => q.rev ? (v === 'o' || v === 'a') : v === 'n',
+    onAnswer: (id, v) => { if (id === 'changes') { st.changes = (v || []).slice(); st.changesSeen = true; } else st.ans[id] = v; },
+    onDone: () => { done = true; ciSave({ quick: st.quick, changes: st.changes, ans: st.ans }); },
+    onReadAll: () => { done = true; toClassic(); },
+    onClose: () => { if (!done) setTimeout(() => { if (!done && Object.keys(st.ans).length) toClassic(); else if (!done) render(); }, 0); }
+  });
+  return true;
+}
+// The guided Growth Plan: first the Growing Edges (one or two), then two or three practices across them, each tied
+// to a time the grove already shares, then the youngest's choice and a Shared Strength when they apply, then our words.
+function gvPractice(x) { const y = pv(x), L2 = LEVERS(); return { name: y.name, id: x.id, text: y.text, how: String(y.steps || '').split('|').filter(Boolean), anchor: x.anchor || '', pills: [x.lever ? L2[x.lever] : '', fitsCircle(x) ? 'Fits Our Circle' : ''].filter(Boolean) }; }
+function gvPlan(from) {
+  if (!GROVE_GUIDED() || !G || !vaultOpen()) return false;
+  startPlan(from); // S.pd: suggested edges and strong parts from the latest check-in, as the classic builder starts
+  const pd = S.pd, KP = gvK('plan'), inPlan = from ? pd.edges.slice() : [];
+  const edgesQ = { id: 'edges', type: 'multi', aside: true, label: 'Growing Edges', eb: 'Step 1', part: '', text: 'Pick one or two Growing Edges.', say: false, lead: KP.edges || null, min: 1, max: 2,
+    minMsg: 'Pick one Growing Edge to go on.', maxMsg: 'One or two is plenty. Tap one to change it.',
+    help: pd.suggest.length ? 'Suggested from our check-in: ' + pd.suggest.map(k => PNAME[k]).join(', ') + '. Any part can be chosen.' : 'Any part can be chosen.',
+    options: PARTS6.map(p => ({ v: p.key, label: p.name + (pd.suggest.includes(p.key) ? ' (Suggested)' : inPlan.includes(p.key) ? ' (In Our Plan)' : ''), sub: p.sub })) };
+  let done = false;
+  const toClassic = (edges, r) => { if (S.pd !== pd) return; if (edges) { pd.edges = edges.slice(0, 2); pd.items = pd.items.filter(x => TP[x.pid] && pd.edges.includes(TP[x.pid].part)); } if (r) applyPlan(pd, r); S.tab = 'plan'; render(); const a = $('#app'); if (a) a.scrollIntoView(); };
+  // stage one: the edges (the plan's open lines lead in)
+  const H1 = GGGuided.run({ tree: 'grove', kind: 'plan', voice: 'jenny', title: KW().plan, script: GG_GUIDED.grove, questions: [edgesQ], noClose: true, quietHtml: quietInner(),
+    onDone: r => { done = true; const e = ((r && r.answers && r.answers.edges) || []).slice(0, 2); if (!e.length) { toClassic(); return; } pd.edges = e; pd.items = pd.items.filter(x => TP[x.pid] && e.includes(TP[x.pid].part)); setTimeout(() => gvPlanSteps(pd), 30); },
+    onReadAll: a => { done = true; toClassic(a && a.edges); },
+    onClose: () => { if (!done) setTimeout(() => { if (!done) toClassic(); }, 0); }
+  });
+  return !!H1;
+}
+// The engine's plan result back into S.pd (names to practice ids, anchors, the youngest, a strength, our words).
+function applyPlan(pd, r) {
+  const P = gvPlanSteps.steps || [], byName = {};
+  P.forEach(st => { byName[st.part] = {}; st.choices.forEach(c => { byName[st.part][c.name] = c; }); });
+  const items = [];
+  pd.edges.forEach(k => ((r.plan || {})[k] || []).forEach(nm => { const c = (byName[k] || {})[nm]; if (c) items.push({ pid: c.id, anchor: ((r.anchors || {})[k] || {})[nm] || c.anchor || '' }); }));
+  pd.items = items.slice(0, 3);
+  const one = k => { const nm = ((r.plan || {})[k] || [])[0], c = nm && (byName[k] || {})[nm]; return c ? c.id : ''; };
+  if (byName.youngest) pd.youngest = one('youngest');
+  if (byName.strength) pd.strength = one('strength');
+  if (typeof r.words === 'string') pd.words = r.words;
+}
+function gvPlanSteps(pd) {
+  const KP = gvK('plan'), anchors = W('plan.anchors.' + G.kind, null) || ANCHORS_DEF[G.kind] || [];
+  const steps = pd.edges.map((k, j) => ({ type: 'plan', part: k, text: 'Choose practices for ' + PNAME[k] + '.', max: 3, anchors, ownLabel: 'Or our own time', say: j === 0 ? KP.anchor || null : null,
+    choices: joinOrder(kindPractices(k)).map(gvPractice) }));
+  if (isFamily() && kidsOn()) steps.push({ type: 'plan', part: 'youngest', label: 'One Choice From the Youngest', extra: true, max: 1, text: 'Let the youngest pick one practice.', say: KP.youngest || null,
+    choices: kindPractices().filter(x => x.kid).map(gvPractice) });
+  if (pd.strong.length) steps.push({ type: 'plan', part: 'strength', label: 'Keep a Shared Strength Going', extra: true, max: 1, text: 'Choose one practice we already enjoy.', say: KP.strength || null,
+    choices: pd.strong.flatMap(k => joinOrder(kindPractices(k)).slice(0, 4)).map(gvPractice) });
+  gvPlanSteps.steps = steps;
+  const plan = {}, anc = {};
+  steps.forEach(st => { plan[st.part] = []; anc[st.part] = {}; });
+  pd.items.forEach(it => { const x = TP[it.pid]; if (!x || !plan[x.part]) return; const nm = pv(x).name; plan[x.part].push(nm); if (it.anchor) anc[x.part][nm] = it.anchor; });
+  if (pd.youngest && TP[pd.youngest] && plan.youngest) plan.youngest = [pv(TP[pd.youngest]).name];
+  if (pd.strength && TP[pd.strength] && plan.strength) plan.strength = [pv(TP[pd.strength]).name];
+  const avail = pd.edges.reduce((n, k) => n + kindPractices(k).length, 0);
+  const script = Object.assign({}, GG_GUIDED.grove, { kinds: Object.assign({}, GG_GUIDED.grove.kinds, { plan: Object.assign({}, KP, { open: [] }) }) }); // the open lines were said with the edges
+  let done = false, H = null;
+  H = GGGuided.run({ tree: 'grove', kind: 'plan', voice: 'jenny', title: KW().plan, planTitle: KW().plan, script, questions: steps, plan, anchors: anc, quietHtml: quietInner(),
+    planTotal: { max: 3, min: Math.min(2, avail), msg: 'Choose two or three practices in all to go on.' },
+    planWords: { label: W('plan.wordsPrompt', 'What this plan means to us, in a line') + ' (optional)', value: pd.words || '', maxlength: 200 },
+    planEmpty: 'Choose a practice or two for our plan.',
+    onDone: r => { done = true; if (S.pd !== pd) return; applyPlan(pd, r); const m = planCommit(pd); if (m) { toast(m); S.tab = 'plan'; render(); } },
+    onReadAll: () => { done = true; if (S.pd !== pd) return; applyPlan(pd, H.state()); S.tab = 'plan'; render(); const a = $('#app'); if (a) a.scrollIntoView(); },
+    onClose: () => { if (!done) setTimeout(() => { if (!done && S.pd === pd) { applyPlan(pd, H.state()); S.tab = 'plan'; render(); } }, 0); }
+  });
+}
+window.GroveGuided = {
+  ready: () => !!(G && vaultOpen()),
+  questions: quick => G ? qList(G.kind, !!quick).map(x => ({ key: x.key, part: x.part, text: qText(x.q), kid: kidsOn() ? kidText(x.q) || '' : '', rev: !!x.q.rev })) : [],
+  guidedQuestions: quick => G ? gvQuestions(!!quick) : [],
+  changes: () => G ? changesFor(G.kind) : [],
+  answers: () => ANSWERS.concat(ASPECIAL),
+  save: (ans, changes, quick) => ciSave({ quick: !!quick, changes: changes || [], ans: ans || {} }),
+  planSave: pd => planCommit(Object.assign({ edges: [], items: [], youngest: '', strength: '', words: '', own: '', from: '' }, pd)),
+  words: () => KW(),
+  last: () => { const c = vaultOpen() ? latestCheckin() : null; return c ? JSON.parse(JSON.stringify(c)) : null; },
+  savedPlan: () => { const v = vaultOpen() ? V() : null; return v && v.plan ? JSON.parse(JSON.stringify(v.plan)) : null; },
+  checkin: quick => withVault('', () => { if (!gvCheckin(!!quick)) { S.ci = { quick: !!quick, step: 'changes', i: 0, ans: {}, changes: [] }; S.tab = 'checkin'; render(); } }),
+  plan: () => withVault('', () => { if (!gvPlan()) startPlan(); }),
+  // Every sentence Jenny can say in The Grove's guided check-ins and plan, for the recorder: each kind of grove, Faith and Plain words, kid lines read as type only.
+  lines: () => {
+    if (!GROVE_GUIDED() || !G) return [];
+    const keep = { kind: G.kind, faith: G.faith, school: G.school }, out = [], seen = {};
+    const add = l => l.forEach(x => { if (!seen[x.text]) { seen[x.text] = 1; out.push(x); } });
+    try {
+      KIND_IDS.forEach(k => ['faith', 'plain'].forEach(f => {
+        G.kind = k; G.faith = f; G.school = 'faith';
+        add(GGGuided.lines({ tree: 'grove', voice: 'jenny', allKinds: true, script: GG_GUIDED.grove, questions: [gvChangesQ(gvK('full'))].concat(gvQuestions(false)) }));
+      }));
+    } finally { Object.assign(G, keep); }
+    return out;
+  }
+};
 /* ---------- boot ---------- */
 function setScale() { const sc = ROOT.scale || 1; document.documentElement.style.setProperty('--scale', sc); const b = $('#size-btn'); if (b) { b.textContent = sc > 1.2 ? 'A' : 'A+'; b.setAttribute('aria-label', 'Text size, now ' + (sc === 1 ? 'normal' : sc < 1.2 ? 'larger' : 'largest')); } }
 function fromHash() {
@@ -1839,6 +1979,9 @@ $('#size-btn').addEventListener('click', () => { const sc = ROOT.scale || 1; ROO
 $('#menu-btn').addEventListener('click', () => { const open = $('#site-menu').classList.toggle('open'); $('#menu-btn').setAttribute('aria-expanded', open); });
 $('#hero-cta').addEventListener('click', () => { S.tab = 'grove'; render(); pushHash(); $('#app').scrollIntoView({ behavior: 'smooth' }); });
 setScale(); render(); fromHash(); HASH_SEEN = location.hash;
+// GWG BLD 886: ?guided=checkin, quick, or plan (The Grounded Way's sheet and links) opens that screen guided, after the grove passcode.
+(function () { const f = window.GGGuided && GGGuided.flag ? GGGuided.flag() : ''; if (!f) return; GGGuided.clearFlag(); if (!G) return;
+  setTimeout(() => { if (f === 'plan') GroveGuided.plan(); else GroveGuided.checkin(f === 'quick'); }, 60); })();
 window.addEventListener('popstate', function (e) { if (window.GGHistOwn && GGHistOwn(e)) return; onPop(e); }); // Learn and page videos keep their own history entries (GWG BLD 780)
 window.addEventListener('hashchange', () => { if (!location.hash || location.hash === HASH_SEEN) return; HASH_SEEN = location.hash; fromHash(); });
 window.addEventListener('gg-fam', famIntake);

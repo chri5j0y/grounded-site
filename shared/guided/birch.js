@@ -2,7 +2,8 @@
    Read by shared/gg-guided.js. The questions are read live from birch/checkin.js
    (BIRCH_CHECKIN.getBank, weeklyList, optionalList), never copied here.
    GG_GUIDED.birch = {voice, tipSkip, kinds: {start, full, quick, together, plan}}
-     open    a few warm lines before question 1 (the engine picks one or two)
+     open    warm lines before question 1, said in order; a line that is
+             itself a list is a set of choices (the engine says one)
      enter   one line as each part begins (optional for the engine)
      mid     {every, lines}: encouragement every N questions
      tips    {part: [lines]}: one small thing to try, after an answer that
@@ -12,7 +13,8 @@
    together is a check-in where a helper taps while the person answers
    (startCheckin('tapped', id)).
    tipSkip names the questions that never get a tip: any question the tree
-   still marks with a flag, questions with a help note, and the optional
+   still marks with a flag, questions with a help note (tagged helpnote by
+   birch/app.js, since the player's help field is the line under a question), and the optional
    question. No safety step (GWG BLD 887), and no help line
    is ever spoken.
    Roots lines name no faith, so they fit Faith and Plain wording alike.
@@ -75,7 +77,7 @@ const TIPS = {
 };
 const G = window.GG_GUIDED.birch = {
   voice: 'brian',
-  tipSkip: ['flag', 'help', 'sens'],
+  tipSkip: ['flag', 'helpnote', 'sens'],
   kinds: {
     start: {
       open: [
@@ -106,8 +108,7 @@ const G = window.GG_GUIDED.birch = {
     },
     full: {
       open: [
-        'Welcome back. Let\'s see how your tree is growing.',
-        'Good to see you. Time for a full check-in.',
+        ['Welcome back. Let\'s see how your tree is growing.', 'Good to see you. Time for a full check-in.'],
         'Six parts, one question at a time. Think about the past two weeks.',
         'Pick what fits best. Every answer is welcome.',
         'Settle in. This time is for you.'
@@ -124,8 +125,7 @@ const G = window.GG_GUIDED.birch = {
       ] },
       tips: TIPS,
       close: [
-        'All done. Nice work.',
-        'You made time for yourself today, and that matters.',
+        ['All done. Nice work.', 'You made time for yourself today, and that matters.'],
         'Your tree is ready. Let\'s take a look.',
         'Next, check your Growth Plan, and give your Growing Edge a practice or two.',
         'Your practices will be waiting in Today.',
@@ -134,8 +134,7 @@ const G = window.GG_GUIDED.birch = {
     },
     quick: {
       open: [
-        'Quick Check-in time. Six questions, about two minutes.',
-        'Welcome back. Let\'s do a quick one.',
+        ['Quick Check-in time. Six questions, about two minutes.', 'Welcome back. Let\'s do a quick one. Six questions, about two minutes.'],
         'One question for each part. Think about the past two weeks.',
         'Pick what fits best, and we\'ll keep it moving.'
       ],
@@ -170,7 +169,6 @@ const G = window.GG_GUIDED.birch = {
       close: [
         'All done. Thank you both.',
         'This check-in saves to the tree it belongs to, marked as taken together.',
-        'The last few questions wait for the next check-in on your own.',
         'Let\'s take a look at the tree.'
       ]
     },

@@ -544,7 +544,7 @@ function ckSteps(ck) {
   s.push('close');
   return s;
 }
-function startCheckin(quick) {
+function startCheckin(quick, classic) {
   const a = me();
   if (!a) { setup('me'); return; }
   const t = target(), r = rec(t); if (!r) return;
@@ -553,6 +553,7 @@ function startCheckin(quick) {
   const self = t === a.id;
   S.ck = { pid: t, role: roleOf(t), self, by: self ? 'self' : '', askWho: !self, quick: !!quick, i: 0, ans: {}, faith: r.faith ? JSON.parse(JSON.stringify(r.faith)) : { lives: [] }, faithEdit: !r.faith, note: '', done: false };
   S.tab = 'checkin'; render(); scrollTop(true);
+  if (!classic && GUIDED()) guided(); // GWG BLD 886: Guided is the way in; Read It All shows this classic form
 }
 function ckStem(ck) {
   if (ck.role === 'helper') { const h = helped()[0]; return C.stems.helper.replace('{name}', h ? h.name : 'them'); }
@@ -614,7 +615,8 @@ VIEWS.checkin = () => {
       <p class="q-stem">${ckStem(ck)}</p>${bank(ck.role)[st].map((q, i) => qHtml(ck, st, i)).join('')}`;
   } else body = closeStep(ck);
   const nextP = PART[steps[ck.i + 1]];
-  return `<div class="w-ck" data-read="Read this aloud">${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}${quietHtml()}`;
+  const back = GUIDED() ? `<div class="btn-row w-guided-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.guided()">Guided Check-in</button></div>` : '';
+  return `<div class="w-ck" data-read="Read this aloud">${back}${dots}${body}</div>${ckNav(ck, steps, nextP ? 'Next: ' + nextP.part : 'Next')}${quietHtml()}`;
 };
 function who(v) { const ck = S.ck; if (!ck) return; ck.by = v; render(); }
 
@@ -630,14 +632,14 @@ function faithSummary(f) {
   if (f.changed) bits.push(opt('changed', f.changed));
   return bits.map(esc).join('. ') + '.';
 }
-function faithStep(ck) {
+function faithStep(ck, inGuided) {
   const I = F.intake, f = ck.faith, r = rec(ck.pid), self = ck.self, n = esc(nameOf(ck.pid));
-  const head = `<div class="step-head"><div><div class="step-count">${self ? '' : 'Asked of ' + n + ', in their own words'}</div><h2 class="step-title" style="--domain-color:var(--p-roots)">Faith, spirit, or something else</h2></div></div>`;
+  const head = inGuided ? (self ? '' : `<p class="w-small">Asked of ${n}, in their own words.</p>`) : `<div class="step-head"><div><div class="step-count">${self ? '' : 'Asked of ' + n + ', in their own words'}</div><h2 class="step-title" style="--domain-color:var(--p-roots)">Faith, spirit, or something else</h2></div></div>`;
   if (r.faith && !ck.faithEdit) {
     return head + `<p class="lead">Last time${r.faith.date ? ', on ' + nice(r.faith.date) : ''}: ${faithSummary(r.faith)}</p>
       ${r.faith.never ? `<p class="w-small"><b>Please Keep in Mind:</b> ${esc(r.faith.never)}</p>` : ''}
       <p class="lead">Is that still true${self ? ' for you' : ' for ' + n}?</p>
-      <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.step(1)">Yes, still true</button><button type="button" class="btn btn-secondary" onclick="W.S.ck.faithEdit=true;W.render()">Something has changed</button></div>`;
+      <div class="btn-row"><button type="button" class="btn btn-primary" ${inGuided ? 'data-ggd-next' : 'onclick="W.step(1)"'}>Yes, still true</button><button type="button" class="btn btn-secondary" onclick="W.S.ck.faithEdit=true;W.render()">Something has changed</button></div>`;
   }
   const chip = id => `<button type="button" class="w-tchip" aria-pressed="${f.trad === id}" onclick="W.faith('trad','${id}')">${esc(faithName(id))}</button>`;
   const single = row => `<fieldset class="w-fs"><legend>${esc(row[1])}</legend><div class="w-tchips">${row[2].map(o => `<button type="button" class="w-tchip" aria-pressed="${f[row[0]] === o[0]}" onclick="W.faith('${row[0]}','${o[0]}')">${esc(o[1])}</button>`).join('')}</div></fieldset>`;
@@ -665,11 +667,12 @@ function ckFlags(ck) {
   return out;
 }
 // The quiet line: the hospice's 24/7 line first, then 988 and 911. Type only, never read aloud.
-function quietHtml() {
+function quietInner() {
   const L = line(), H = C.help || {};
   const hos = L ? `Call ${esc(L.name || H.hospice || 'your hospice\'s 24/7 line')} first, day or night: <a class="text-link" href="${telHref(L.phone)}">${esc(L.phone)}</a>.` : esc(H.hospiceFirst || 'Call your hospice\'s 24/7 line first, day or night.');
-  return `<p class="w-small w-quiet" style="margin-top:14px">${hos} ${esc(H.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')}</p>`;
+  return `${hos} ${esc(H.quiet || 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.')}`;
 }
+function quietHtml() { return `<p class="w-small w-quiet" style="margin-top:14px">${quietInner()}</p>`; }
 function closeStep(ck) {
   let h = `<div class="step-head"><div><div class="step-count">Almost done</div><h2 class="step-title" style="--domain-color:var(--gold)">Before you see the tree</h2></div></div>`;
   h += `<label class="w-l" for="w-cknote">${ck.by === 'observed' ? 'Anything you noticed today (optional)' : 'Anything to remember about today? (optional)'}</label><textarea id="w-cknote" rows="3" maxlength="800" oninput="W.S.ck.note=this.value">${esc(ck.note)}</textarea>`;
@@ -688,6 +691,135 @@ function finish() {
   r.checkins.push(e);
   ck.done = true; ck.entry = e;
   persist(ck.pid).then(() => { publish(ck.pid); S.tab = 'results'; render(); scrollTop(true); });
+}
+/* ---------- the guided check-in (GWG BLD 886) ----------
+   Guided is the way into every check-in kind: one question at a time, read aloud in Brian's voice
+   (shared/gg-guided.js, the guide's words in shared/guided/willow.js). Answers go straight into S.ck, the same
+   state the classic form uses, and Done calls finish(), so Willow's own scoring, flags, save, and results run as
+   they always have. Read It All shows the classic form with every answer carried over. Who Is Answering comes
+   first as its own short step (it decides the questions and the guide's words). Faith is Willow's own form inside
+   the player. The hospice line and the quiet line show as type only. Willow has no Growth Plan builder yet, so
+   the plan kind waits. Open with ?guided=checkin or ?guided=quick (The Grounded Way's sheet and links). */
+const GUIDED = () => !!(window.GGGuided && GGGuided.run && window.GG_GUIDED && GG_GUIDED.willow);
+let GH = null; // the player while it shows
+function gKind(ck) {
+  if (ck.role === 'helper') return 'helper';
+  if (ck.by === 'tapped') return 'tapped';
+  if (ck.by === 'observed') return 'observed';
+  return ownCheckins(rec(ck.pid)).length ? (ck.quick ? 'quick' : 'full') : 'start';
+}
+function gTitle(ck) {
+  const k = gKind(ck), n = nameOf(ck.pid);
+  if (k === 'start') return 'Your First Check-in';
+  if (k === 'helper') return ck.quick ? 'Your Quick Check-in' : 'Your Own Check-in';
+  if (k === 'tapped' || k === 'observed') return (ck.quick ? 'Quick Check-in' : 'Full Check-in') + ' for ' + n;
+  return ck.quick ? 'Quick Check-in' : 'Full Check-in';
+}
+// The stem shows with each question (with the name), and the voice reads it before each one (no names, so it is a recorded clip).
+function gStem(ck) {
+  if (ck.role === 'helper') { const h = helped()[0]; return C.stems.helper.replace('{name}', h ? h.name : 'them'); }
+  if (ck.by === 'observed') return `From what you've seen and heard, lately how often has ${nameOf(ck.pid)}...`;
+  return C.stems.standard;
+}
+function gStemSay(ck) {
+  if (ck.role === 'helper') return C.stems.helper.replace('{name}', 'them');
+  if (ck.by === 'observed') return 'From what you\'ve seen and heard, lately how often have they...';
+  return C.stems.standard;
+}
+function gFaithQ(ck, K) {
+  return { id: 'faith', type: 'form', aside: true, label: 'Faith', eb: 'Before the Questions', part: '', text: 'Faith, spirit, or something else', say: false, lead: K.faith || null,
+    html: () => faithStep(ck, true), ready: () => (ck.faithEdit && !ck.faith.trad && !ck.faith.own) ? 'Choose one, write your own words, or "I\'d rather not say."' : '' };
+}
+function gPartQs(ck) {
+  const out = [], bk = bank(ck.role), stem = gStem(ck), sayStem = gStemSay(ck);
+  PARTS.forEach(p => (ck.quick ? [0] : [0, 1, 2]).forEach(i => {
+    const q = (bk[p.key] || [])[i]; if (!q) return;
+    const text = qText(ck, q);
+    out.push({ id: p.key + '.' + i, part: p.key, i, text, stem, say: sayStem + ' ' + text, type: 'choice', r: !!q.r, noTip: !!q.flag, wq: q,
+      options: C.answers.map(a => ({ v: a[0], label: a[1] })),
+      more: q.why && ck.role === 'person' ? [{ label: 'Why this question?', text: q.why }] : null });
+  }));
+  return out;
+}
+function gNoteQ(ck) {
+  return { id: 'note', type: 'text', aside: true, label: 'Almost Done', eb: 'Before You See the Tree', part: '', maxlength: 800,
+    text: ck.by === 'observed' ? 'Anything you noticed today?' : 'Anything to remember about today?', help: 'This one is optional. A word or two, or nothing at all.' };
+}
+function gQuestions(ck, K) {
+  const out = [];
+  if (ck.by !== 'observed') out.push(gFaithQ(ck, K || {}));
+  return out.concat(gPartQs(ck), [gNoteQ(ck)]);
+}
+// The step of the classic form that holds a guided screen, so Read It All opens right there.
+function gStepOf(ck, sc, Q) {
+  const steps = ckSteps(ck); let key = 'close';
+  const q = sc && Q && Q[sc.k === 'q' ? sc.i : sc.from];
+  if (sc && sc.k === 'open') key = steps[0];
+  else if (q) key = q.id === 'faith' ? 'faith' : q.id === 'note' ? 'close' : ck.quick ? 'quick' : q.part;
+  const at = steps.indexOf(key); return at >= 0 ? at : 0;
+}
+function gAnswersOf(ck) {
+  const a = {};
+  Object.keys(ck.ans || {}).forEach(k => (ck.ans[k] || []).forEach((v, i) => { if (v != null) a[k + '.' + i] = v; }));
+  if (ck.gFaith) a.faith = true;
+  if (ck.gNote) a.note = ck.note || '';
+  return a;
+}
+function guided() {
+  const ck = S.ck; if (!ck || !GUIDED()) return;
+  if (ck.askWho && !ck.by) return gWho(ck);
+  gMain(ck);
+}
+function gClassic(ck, sc, Q) { if (S.ck !== ck) return; ck.i = gStepOf(ck, sc, Q); render(); scrollTop(true); }
+function gWho(ck) {
+  const n = nameOf(ck.pid), T = ((GG_GUIDED.willow.kinds || {}).tapped || {}).who;
+  const subs = { self: n + ' reads and answers on their own.', tapped: n + ' answers out loud. You read each question and tap.', observed: n + ' can\'t answer now. You answer from what you see and hear. This never adds to their rings.' };
+  let done = false;
+  GH = GGGuided.run({ tree: 'willow', kind: 'who', voice: 'brian', title: (ck.quick ? 'Quick Check-in' : 'Full Check-in') + ' for ' + n,
+    script: { voice: 'brian', open: [], close: [] }, noClose: true, quietHtml: quietInner(),
+    questions: [{ id: 'who', type: 'choice', aside: true, label: 'Who Is Answering', eb: 'Who Is Answering', text: 'Who is answering?', lead: T || null, noTip: true,
+      help: `Every answer keeps track of who gave it, so ${n}'s own voice is never mixed up with anyone else's.`,
+      options: C.answeredBy.map(b => ({ v: b[0], label: b[1], sub: subs[b[0]] })) }],
+    onAnswer: (id, v) => { if (S.ck === ck) ck.by = v; },
+    onDone: () => { done = true; if (S.ck !== ck) return; if (!ck.by) { render(); return; } setTimeout(() => gMain(ck), 30); },
+    onReadAll: () => { done = true; render(); scrollTop(true); },
+    onClose: () => { GH = null; if (!done) setTimeout(() => { if (!done && S.ck === ck) render(); }, 0); }
+  });
+}
+function gMain(ck) {
+  const base = GG_GUIDED.willow, kind = gKind(ck), kinds = Object.assign({}, base.kinds || {}), K = Object.assign({}, kinds[kind] || kinds.full || {});
+  if (ck.quick) K.enter = null; // the quick check-in: one question for each part, no part openers
+  kinds[kind] = K;
+  const script = Object.assign({}, base, { kinds });
+  const Q = gQuestions(ck, K);
+  // Faith answered as none or private: Roots asks its "none" wording (the same rule as qText), from here on.
+  const refresh = () => Q.forEach(q => { if (q.wq) { q.text = qText(ck, q.wq); q.say = gStemSay(ck) + ' ' + q.text; } });
+  let done = false, H = null;
+  H = GH = GGGuided.run({ tree: 'willow', kind, voice: 'brian', title: gTitle(ck), script, questions: Q, answers: gAnswersOf(ck), quietHtml: quietInner(),
+    isEdge: (q, v) => q.r ? (v === 'often' || v === 'always') : v === 'rarely',
+    onAnswer: (id, v) => {
+      if (S.ck !== ck) return;
+      if (id === 'faith') { ck.gFaith = true; refresh(); return; }
+      if (id === 'note') { ck.note = String(v || ''); ck.gNote = true; return; }
+      const m = /^(\w+)\.(\d)$/.exec(id); if (!m) return;
+      ck.ans[m[1]] = ck.ans[m[1]] || []; ck.ans[m[1]][+m[2]] = v;
+    },
+    onDone: () => { done = true; if (S.ck !== ck) return; ck.i = ckSteps(ck).length - 1; finish(); },
+    onReadAll: () => { done = true; gClassic(ck, H && H.state().screen, Q); },
+    onClose: () => { if (GH === H) GH = null; if (!done) setTimeout(() => { if (!done) gClassic(ck, H && H.state().screen, Q); }, 0); }
+  });
+}
+// Every sentence Brian can say in Willow's guided check-ins, for the recorder (each kind, each way of answering).
+function guidedLines() {
+  if (!GUIDED()) return [];
+  const all = [], seen = {}, base = { pid: '', role: 'person', self: true, by: 'self', quick: false, ans: {}, faith: { lives: [] }, faithEdit: true, note: '' };
+  const add = list => list.forEach(x => { if (!seen[x.text]) { seen[x.text] = 1; all.push(x); } });
+  [['person', 'self', ''], ['person', 'self', 'none'], ['person', 'observed', ''], ['person', 'observed', 'none'], ['helper', 'self', ''], ['helper', 'self', 'none']].forEach(([role, by, none]) => {
+    const ck = Object.assign({}, base, { role, by, faith: none ? { matters: 'none', lives: [] } : { lives: [] } });
+    add(GGGuided.lines({ tree: 'willow', voice: 'brian', allKinds: true, script: GG_GUIDED.willow, questions: gQuestions(ck, {}) }));
+  });
+  add(GGGuided.lines({ tree: 'willow', voice: 'brian', script: { voice: 'brian', open: [], close: [] }, questions: [{ id: 'who', text: 'Who is answering?', lead: ((GG_GUIDED.willow.kinds || {}).tapped || {}).who }] }));
+  return all;
 }
 const GUIDE_FOR_FLAG = { end: 'end', burden: 'burden', struggle: 'punish', regret: 'forgive', guilt: 'notthere', alone: 'conflict', hope: 'relief' };
 VIEWS.results = () => {
@@ -1362,7 +1494,7 @@ window.addEventListener('gg-bridge', e => { if (e.detail && e.detail.dest === 'w
 window.W = window.W || {};
 Object.assign(window.W, {
   S, go, render, begin, setup, newPerson, existing, view, open: openProfile, lock, top: () => scrollTop(true),
-  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog,
+  checkin: startCheckin, step, who, answer, faith, finish, did, another, addLog, guided, guidedLines, classic: quick => startCheckin(quick, true),
   saveMatters, readMatters, printMatters, newCut, cutKind, saveCut, delCut, printCut,
   guide: openGuide, closeGuide, closeReading, lib: openLib, watch: watchGuide, gList, gFind, gRing, rTrad, printGuide, reading: openReading, printReading, bibleVer: setVer,
   settings: openSettings, closeSettings, saveLine, share, addHelper: addHelperNow, dropHelper, remember, unremember,
@@ -1372,7 +1504,11 @@ Object.assign(window.W, {
 const yr = $('#copyright-year'); if (yr) yr.textContent = new Date().getFullYear();
 document.querySelectorAll('#client-nav .nav-btn[data-icon]').forEach(b => { if (!b.querySelector('.nav-ico')) b.insertAdjacentHTML('afterbegin', `<span class="nav-ico">${icon(b.dataset.icon, 22)}</span>`); });
 applyTS();
-if (!fromHash()) render();
+// GWG BLD 886: ?guided=checkin or ?guided=quick (The Grounded Way's sheet) starts that check-in, guided. Willow has no Growth Plan yet.
+const GFLAG = window.GGGuided && GGGuided.flag ? GGGuided.flag() : '';
+if (GFLAG) GGGuided.clearFlag();
+if (GFLAG === 'checkin' || GFLAG === 'quick') { if (/^#(checkin|quick)$/.test(location.hash)) { try { history.replaceState(null, '', location.pathname + location.search); } catch (e) {} } render(); setTimeout(() => startCheckin(GFLAG === 'quick'), 50); }
+else if (!fromHash()) render();
 HASH_SEEN = location.hash;
 if (GP()) {
   GGP.on(type => { if (type === 'change' || type === 'data' || type === 'ready') { if (S.tab !== 'checkin') render(); else renderBar(); } });

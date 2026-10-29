@@ -947,21 +947,7 @@ window.GG_LEARN_GUIDES.maple = {
 "title": "Sadness That Lingers",
 "sideName": "For the Grown-up",
 "mins": 4,
-"sources": [
-"dazzi",
-[
-"Child Mind Institute",
-"https://childmind.org"
-],
-[
-"HealthyChildren.org (American Academy of Pediatrics)",
-"https://www.healthychildren.org"
-],
-[
-"988 Suicide and Crisis Lifeline",
-"https://988lifeline.org"
-]
-],
+"sources": [["Child Mind Institute", "https://childmind.org"], ["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"], ["988 Suicide and Crisis Lifeline", "https://988lifeline.org"]],
 "scenes": [
 {
 "k": "title",
@@ -1015,9 +1001,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Ask directly.",
-"body": "Asking does not plant the idea. It opens a door.",
-"say": "If your child seems very low, ask directly, in words they understand. Sometimes when kids feel really sad, they wish they weren't alive. Do you ever feel that way? Asking does not plant the idea. It opens a door. If they talk about being better off gone, wanting to die, or hurting themselves, call their doctor right away. Maple's guide When a Child Talks About Wanting to Die has the next steps."
+"title": "Ask open questions.",
+"body": "Listen, and stay close.",
+"say": "If your child seems very low, ask open questions, in words they understand. How are you, really? What has been the hardest part? Then listen, without fixing. If they talk about being better off gone, wanting to die, or hurting themselves, stay close, and call their doctor right away. Maple's guide When a Child Talks About Wanting to Die has the next steps."
 },
 {
 "k": "flow",
@@ -2479,21 +2465,7 @@ window.GG_LEARN_GUIDES.maple = {
 "title": "Someone Died by Suicide",
 "sideName": "For the Grown-up",
 "mins": 4,
-"sources": [
-"dazzi",
-[
-"The Dougy Center for Grieving Children and Families",
-"https://www.dougy.org"
-],
-[
-"American Foundation for Suicide Prevention",
-"https://afsp.org"
-],
-[
-"988 Suicide and Crisis Lifeline",
-"https://988lifeline.org"
-]
-],
+"sources": [["The Dougy Center for Grieving Children and Families", "https://www.dougy.org"], ["American Foundation for Suicide Prevention", "https://afsp.org"], ["988 Suicide and Crisis Lifeline", "https://988lifeline.org"]],
 "scenes": [
 {
 "k": "title",
@@ -2573,9 +2545,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "card",
-"title": "Ask plainly.",
-"body": "\"Are you thinking about hurting yourself or killing yourself?\"",
-"say": "Watch for lingering sadness, or talk of wanting to die, and act on it. Ask plainly, in a calm voice. Are you thinking about hurting yourself or killing yourself? Asking is safe. It does not put the idea in their head. If they say yes, stay with them, and call or text 988 together."
+"title": "Keep the door open.",
+"body": "\"How are you, really? What has been the hardest part?\"",
+"say": "Watch for lingering sadness, or talk of wanting to die, and act on it. Keep the door open with open questions, in a calm voice. How are you, really? What has been the hardest part? Then listen, without fixing. If they share thoughts of suicide or of hurting themselves, stay with them, and call or text 988 together."
 },
 {
 "k": "points",
@@ -14064,21 +14036,7 @@ window.GG_LEARN_GUIDES.maple = {
 "title": "When a Child Talks About Wanting to Die",
 "sideName": "For the Grown-up",
 "mins": 5,
-"sources": [
-"dazzi",
-[
-"988 Suicide and Crisis Lifeline",
-"https://988lifeline.org"
-],
-[
-"American Foundation for Suicide Prevention",
-"https://afsp.org"
-],
-[
-"HealthyChildren.org (American Academy of Pediatrics)",
-"https://www.healthychildren.org"
-]
-],
+"sources": [["988 Suicide and Crisis Lifeline", "https://988lifeline.org"], ["American Foundation for Suicide Prevention", "https://afsp.org"], ["HealthyChildren.org (American Academy of Pediatrics)", "https://www.healthychildren.org"]],
 "scenes": [
 {
 "k": "title",
@@ -14137,18 +14095,14 @@ window.GG_LEARN_GUIDES.maple = {
 {
 "k": "words",
 "h": "Words that help",
-"items": [
-"I'm really glad you told me.",
-"Can you tell me more?",
-"Are you thinking about killing yourself?"
-],
-"say": "Start here. I heard you say you want to die. I'm really glad you told me. Can you tell me more? Then ask plainly, in a calm voice. Are you thinking about hurting yourself or killing yourself?"
+"items": ["I'm really glad you told me.", "Can you tell me more?", "What has been the hardest part?"],
+"say": "Start here. I heard you say you want to die. I'm really glad you told me. Can you tell me more? Then keep your questions open, in a calm voice. What has been the hardest part?"
 },
 {
 "k": "big",
-"h": "Asking is safe.",
-"sub": "It does not put the idea in their head.",
-"say": "Asking directly is safe. It does not put the idea in their head. It tells your child you can hear the hardest thing. If they say yes, stay with them, and call or text 988 together, right then. Call 911 if they are in danger."
+"h": "Listening helps.",
+"sub": "Stay with them, and get help together.",
+"say": "Listening calmly tells your child you can hear the hardest thing. Let them finish, and thank them for telling you. Then stay with them, and call or text 988 together, right then. Call 911 if they are in danger."
 },
 {
 "k": "points",
@@ -14934,21 +14888,7 @@ window.GG_LEARN_GUIDES.maple = {
 "title": "Self-Harm: When a Child Hurts Themselves",
 "sideName": "For the Grown-up",
 "mins": 5,
-"sources": [
-"dazzi",
-[
-"Child Mind Institute",
-"https://childmind.org"
-],
-[
-"988 Suicide and Crisis Lifeline",
-"https://988lifeline.org"
-],
-[
-"Cornell Self-Injury and Recovery Resources",
-"https://selfinjury.bctr.cornell.edu"
-]
-],
+"sources": [["Child Mind Institute", "https://childmind.org"], ["988 Suicide and Crisis Lifeline", "https://988lifeline.org"], ["Cornell Self-Injury and Recovery Resources", "https://selfinjury.bctr.cornell.edu"]],
 "scenes": [
 {
 "k": "title",
@@ -15017,9 +14957,9 @@ window.GG_LEARN_GUIDES.maple = {
 },
 {
 "k": "big",
-"h": "Ask about dying too.",
-"sub": "Are you thinking about killing yourself?",
-"say": "Hurting themselves is not the same as wanting to die, but the two can overlap. That's why you ask, gently and plainly. Are you thinking about killing yourself? Asking is safe. It does not put the idea in their head. If they say yes, stay with them, and call or text 988 together, right then."
+"h": "Stay close, and keep listening.",
+"sub": "What was happening right before?",
+"say": "Hurting themselves is not the same as wanting to die, but the two can overlap. That's why you stay close and keep the door open. Ask gently, what was happening right before? Then listen. If they share thoughts of dying, stay with them, and call or text 988 together, right then."
 },
 {
 "k": "points",

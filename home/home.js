@@ -44,10 +44,10 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b885';
+  var V = 'b889';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
-  var GGN_SRC = '/shared/ggn.js?v=b849';
+  var GGN_SRC = '/shared/ggn.js?v=b888';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -283,7 +283,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b885', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b885', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b885', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b885', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b885', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b888', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b885', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b888', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -1287,7 +1287,8 @@
     var hh = tableOf(), td = today();
     var shop = w.shopKey === null ? '' : '<button type="button" class="hm-shop" data-hm-tab="week=shop"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'recipes-narrow.webp"><img src="' + IMG + 'recipes-wide.webp" alt="" loading="lazy"></picture><span class="tx"><b>' + esc(w.shopLabel || 'Shop for ' + weekLabel(w.label)) + '</b><small>One list for the whole week' + (hh ? ', sized for ' + hh : '') + '</small></span><span class="go" aria-hidden="true">' + I('arrow') + '</span></button>';
     var prep = w.prepKey ? '<article class="hm-wcard hm-tn-k">' + tile(w.prepImage || ART2.prep) + '<div class="tx"><span class="ey">Sunday</span><b>' + esc(w.prepLabel || 'Sunday Together Prep') + '</b><small>' + esc(w.prepSub || 'Cook and Helper, side by side: the week\'s head start in one afternoon.') + '</small></div><button type="button" class="hm-pill" data-hm-tab="week=prep">Open</button></article>' : '';
-    if (w.bulkKey) prep += '<article class="hm-wcard hm-tn-k">' + tile(ART2.cook) + '<div class="tx"><span class="ey">This Month</span><b>Monthly Bulk Together</b><small>A bigger batch for the freezer, step by step.</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(w.bulkKey) + '">Open</button></article>';
+    /* BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (it was Monthly Bulk Together). */
+    if (w.bulkKey) prep += '<article class="hm-wcard hm-tn-k">' + tile(ART2.cook) + '<div class="tx"><span class="ey">Sunday, after prep</span><b>' + esc(w.bulkLabel || 'Weekly Batch') + '</b><small>' + esc(w.bulkSub || 'Burritos and one more for the week, Cook and Helper, side by side.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(w.bulkKey) + '">Open</button></article>';
     if (w.starts) prep = '<p class="hm-sub" style="margin:0 4px 12px">Your plan begins ' + esc(niceDay(w.starts)) + '. Here is a look at the week ahead.</p>' + prep;
     var mark = function (x) { return x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : ''; };
     var rows = w.days.map(function (d, di) {
@@ -1398,8 +1399,8 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b852';
-  var GUIDES = { oak: ['/oak/guides.js?v=b885', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b887', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b885', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b887', 'PINE_GUIDES'] };
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b888';
+  var GUIDES = { oak: ['/oak/guides.js?v=b888', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b888', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b888', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b888', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   function learnOf(tree) {
@@ -1760,8 +1761,10 @@
   function openTreeSheet(what) {
     var t = TREES[S.tree] || TREES.oak, title = SHEET_SCREENS[what] || t.n;
     var hash = what === 'today' ? '#today' : what ? treeHash(t, what).slice(t.href.length) : '';
+    // BLD 886: the check-in, Quick Check-in, and Growth Plan open guided (?guided=checkin|quick|plan, read by GGGuided.flag() in the tree).
+    var q = what === 'checkin' || what === 'quick' || what === 'plan' ? '?guided=' + what : '';
     var ck = lastCheckin(S.id, S.tree);
-    openFrame(new URL(t.href + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
+    openFrame(new URL(t.href + q + hash, location.href), true, null, { what: what, title: title, kick: 'My ' + t.n, ck: ck ? ck.count + ':' + ck.date : '' });
   }
   function sheetMode(ifr, path) {
     var tries = 0, done = false;

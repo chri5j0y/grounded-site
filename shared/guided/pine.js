@@ -2,7 +2,8 @@
    Read by shared/gg-guided.js. The questions are read live from pine/checkin.js
    (PINE_CHECKIN.getBank, weeklyList, sensitiveList), never copied here.
    GG_GUIDED.pine = {voice, tipSkip, kinds: {start, full, quick, plan}}
-     open    a few warm lines before question 1 (the engine picks one or two)
+     open    warm lines before question 1, said in order; a line that is
+             itself a list is a set of choices (the engine says one)
      enter   one line as each part begins (optional for the engine)
      mid     {every, lines}: encouragement every N questions
      tips    {part: [lines]}: one small thing to try, after an answer that
@@ -56,8 +57,7 @@ const G = window.GG_GUIDED.pine = {
     },
     full: {
       open: [
-        'Welcome back. Let\'s see how your tree is growing.',
-        'Good to see you. Time for a full check-in.',
+        ['Welcome back. Let\'s see how your tree is growing.', 'Good to see you. Time for a full check-in.'],
         'Six parts, one question at a time. Think about the past two weeks.',
         'Pick what fits best. Every answer is welcome.',
         'Get comfy. This is your time.'
@@ -125,8 +125,7 @@ const G = window.GG_GUIDED.pine = {
         ]
       },
       close: [
-        'All done. Nice work.',
-        'You showed up for yourself today, and that matters.',
+        ['All done. Nice work.', 'You showed up for yourself today, and that matters.'],
         'Your tree is ready. Let\'s take a look.',
         'Next, check your Growth Plan. Pick a practice or two for the part that\'s growing most.',
         'Your practices will be waiting in Today.',
@@ -135,8 +134,7 @@ const G = window.GG_GUIDED.pine = {
     },
     quick: {
       open: [
-        'Quick Check-in time. Six questions, about two minutes.',
-        'Hey, welcome back. Let\'s do a quick one.',
+        ['Quick Check-in time. Six questions, about two minutes.', 'Hey, welcome back. Let\'s do a quick one. Six questions, about two minutes.'],
         'One question for each part. Think about the past two weeks.',
         'Pick what fits best, and we\'ll keep it moving.'
       ],
@@ -146,8 +144,7 @@ const G = window.GG_GUIDED.pine = {
         'Keep going. You\'re doing great.'
       ] },
       close: [
-        'Done. That was quick.',
-        'Nice work checking in with yourself.',
+        ['Done. That was quick.', 'Nice work checking in with yourself.'],
         'Your tree is ready to see.',
         'Keep tending your practices in Today, a little at a time.',
         'A full check-in every few months shows how much you\'ve grown.'

@@ -443,7 +443,7 @@ function screenHtml(sc, idx) {
       ${signsHtml(d)}
       <div class="btn-row step-nav">${back}<button class="btn btn-primary" onclick="goToStep(${idx + 1})">Begin ${d.part}</button></div></section>`;
   if (sc.kind === 'q') {
-    const text = sc.key.indexOf('quick_') === 0 ? quickQ(sc.part) : ((QUESTIONS[sc.key] || [])[sc.i] || {}).t || '';
+    const text = (sc.key.indexOf('quick_') === 0 ? quickQ(sc.part) : ((QUESTIONS[sc.key] || [])[sc.i] || {}).t || '').replace(/\{name\}/g, CK.name || 'them');
     const count = ST_QUICK ? `Question ${sc.pi + 1} of 6` : `Question ${sc.i + 1} of ${sc.n}`;
     return `<section class="step-panel" id="step-${idx}" style="--domain-color:${d.color};">${ST_QUICK ? `<div class="step-head"><div class="step-icon">${partIcon(d, 40)}</div><div><div class="step-count">Quick Check-in</div><h2 class="step-title">${d.part}</h2><div class="step-domain">${d.name}</div></div></div>` : head}
       <p class="sq-count">${count}</p>
@@ -466,7 +466,7 @@ function nextLabelFor(idx) {
 }
 function renderCheckin() {
   SCREENS = buildScreens(ST_QUICK);
-  document.getElementById('step-container').innerHTML = SCREENS.map(screenHtml).join('') + quietHtml();
+  document.getElementById('step-container').innerHTML = sqGuidedSwitchHtml() + SCREENS.map(screenHtml).join('') + quietHtml();
   visitedSteps.clear(); visitedSteps.add(0);
   goToStep(0, true);
 }
@@ -505,20 +505,147 @@ function setMode(by, forId) {
   CK = { by: by || 'self', forId: forId || null, name: p ? p.name : '' };
   QUESTIONS = CK.by === 'helper' && CKB.helper ? CKB.helper : MAIN_Q;
 }
-function startCheckin(by, forId) {
-  setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = false; ST_ANS = {};
+// Guided is the default start (GWG BLD 886); how 'classic' opens these screens, 'keep' opens them with the answers so far.
+function startCheckin(by, forId, how) {
+  by = typeof by === 'string' ? by : 'self';
+  if (!how && sqGuidedOk()) { sqGuided(sqKindFor(by, false), by, forId, false); return; }
+  setMode(by, forId);
+  ST_QUICK = false; if (how !== 'keep') ST_ANS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
 }
-function startQuick(by, forId) {
-  setMode(typeof by === 'string' ? by : 'self', forId);
-  ST_QUICK = true; ST_ANS = {};
+function startQuick(by, forId, how) {
+  by = typeof by === 'string' ? by : 'self';
+  if (!how && sqGuidedOk()) { sqGuided(sqKindFor(by, true), by, forId, true); return; }
+  setMode(by, forId);
+  ST_QUICK = true; if (how !== 'keep') ST_ANS = {};
   renderCheckin();
   showView('client-assess');
   goToStep(0);
 }
+// =====================================================================
+// GUIDED CHECK-INS AND THE GUIDED GROWTH PLAN (GWG BLD 886)
+// shared/gg-guided.js plays each check-in one question at a time with Brian's voice and the words in
+// shared/guided/sequoia.js. It is the default start of every kind (self, together, observed, a helper's own);
+// Read It All opens the classic screens above with the answers so far. Answers are written to ST_ANS the
+// way answerQ writes them, and the finish is the classic finish, calculateResults('client'), which saves
+// for self, together, observed, and helper exactly as the classic form does. The weekly check-in saves
+// through GGTend.saveWeekAns; the Growth Plan through oakSavePlan.
+// =====================================================================
+const sqGuidedOk = () => !!(window.GGGuided && window.GG_GUIDED && GG_GUIDED.sequoia);
+const SQ_GD_TITLE = { start: 'Your First Check-in', full: 'Check-in', season: 'Season Check-in', quick: 'Quick Check-in', week: 'Weekly Check-in', together: 'Check-in Together', observed: 'What I See', helper: 'My Own Check-in', plan: 'Your Growth Plan' };
+// What the voice reads for a stem or question that names the person: recorded once for everyone, so "them" and "their".
+const SQ_SAY_STEM = { helper: 'In the past two weeks, as you help them, how often have you...', observed: 'In the past two weeks, from what you have seen, how often have they...' };
+const sqSayName = t => String(t).replace(/\{name\}'s/g, 'their').replace(/\{name\}/g, 'them');
+let SQ_GD = null; // the guided run on screen or last left: {sig}
+function sqFullKind() {
+  const s = PROF && window.GGTend ? GGTend.state() : null;
+  if (s) return !s.start ? 'start' : (GGTend._week ? GGTend._week() : 0) >= 12 ? 'season' : 'full';
+  return (personalHistory || []).some(e => e && e.scores && e.type !== 'quick' && e.kind !== 'observed' && !e.from) ? 'full' : 'start';
+}
+function sqKindFor(by, quick) { return by === 'tapped' ? 'together' : by === 'observed' ? 'observed' : by === 'helper' ? 'helper' : quick ? 'quick' : sqFullKind(); }
+function sqGdOpts(list) { return (list || Q_OPTS).map(o => ({ v: o[0], label: o[1] })); }
+// A Growing Edge answer: Rarely or Sometimes on a forward question, Often or Almost always on a reverse one.
+function sqGdEdge(q, v) { const o = Q_OPTS.find(x => x[0] === v); if (!o || o[2] === null) return false; return (q.rev ? 3 - o[2] : o[2]) <= 1; }
+// The stem shows small above every question; the voice reads it before the first question of each part
+// (the first one of a quick or weekly check-in), then the question alone.
+function sqGdQuestions(quick) {
+  const out = [], stem = stemNow(), sayStem = SQ_SAY_STEM[CK.by] || stem, nm = CK.name || 'them';
+  ALL_DOMAINS.forEach(d => {
+    const list = QUESTIONS[d.key] || [];
+    (quick ? list.slice(0, 1) : list).forEach((q, i) => {
+      const key = quick ? 'quick_' + d.key : d.key, lead = quick ? !out.length : i === 0, said = sqSayName(q.t);
+      out.push({ id: key + '.' + i, key, i, part: d.key, stem, text: q.t.replace(/\{name\}/g, nm), say: lead ? sayStem + ' ' + said : said, type: 'choice', options: sqGdOpts(), rev: !!q.r });
+    });
+  });
+  return out;
+}
+function sqGdSet(q, v) { ST_ANS[q.key] = ST_ANS[q.key] || {}; ST_ANS[q.key][q.i] = v; }
+function sqGuided(kind, by, forId, quick, keep) {
+  if (!sqGuidedOk()) { if (quick) startQuick(by, forId, 'classic'); else startCheckin(by, forId, 'classic'); return; }
+  setMode(typeof by === 'string' ? by : 'self', forId);
+  const sig = [kind, CK.by, CK.forId, quick ? 'q' : 'f'].join('|');
+  // The same check-in, left part way: pick up where it was. Anything else starts fresh, as the classic form does.
+  if (!keep && !(SQ_GD && SQ_GD.sig === sig)) { ST_ANS = {}; const box = document.getElementById('step-container'); if (box) box.innerHTML = ''; SCREENS = []; }
+  ST_QUICK = !!quick;
+  SQ_GD = { sig };
+  const qs = sqGdQuestions(quick), byId = Object.fromEntries(qs.map(q => [q.id, q])), answers = {};
+  qs.forEach(q => { const v = (ST_ANS[q.key] || {})[q.i]; if (v) answers[q.id] = v; });
+  GGGuided.run({
+    tree: 'sequoia', kind, voice: 'brian',
+    title: kind === 'together' && quick ? 'Quick Check-in Together' : SQ_GD_TITLE[kind] || 'Check-in',
+    questions: qs, answers, quiet: HELP_LINES.quiet || undefined, isEdge: sqGdEdge,
+    onAnswer: (id, v) => { if (byId[id]) sqGdSet(byId[id], v); },
+    onDone: r => { Object.keys(r.answers || {}).forEach(id => { if (byId[id] && r.answers[id]) sqGdSet(byId[id], r.answers[id]); }); SQ_GD = null; calculateResults('client'); },
+    onReadAll: () => {
+      if (quick) startQuick(CK.by, CK.forId, 'keep'); else startCheckin(CK.by, CK.forId, 'keep');
+      const at = SCREENS.findIndex(sc => sc.kind === 'q' && !(ST_ANS[sc.key] || {})[sc.i]);
+      goToStep(at >= 0 ? at : SCREENS.length - 1);
+    },
+    // Closed part way: the answers wait here for the next start. An emptied form never shows on its own.
+    onClose: () => { const box = document.getElementById('step-container'), v = document.getElementById('client-assess'); if (box && !box.innerHTML.trim() && v && v.classList.contains('active')) showView('client-today'); }
+  });
+}
+// In the classic screens: back to Guided, with the answers so far.
+function sqGuidedSwitchHtml() { return sqGuidedOk() ? '<p class="gd-switch"><button type="button" class="btn btn-secondary btn-sm" onclick="sqGuidedFromForm()">Switch to Guided</button> <span>One question at a time, read aloud.</span></p>' : ''; }
+function sqGuidedFromForm() { sqGuided(sqKindFor(CK.by, ST_QUICK), CK.by, CK.forId, ST_QUICK, true); }
+
+// The weekly check-in (Week tab), saved exactly as the Save this week button saves it.
+function sqGuidedWeek() {
+  const W = window.GGTend && GGTend.weekQuestions ? GGTend.weekQuestions() : null;
+  if (!sqGuidedOk() || !W || !W.started) { showView('client-week'); return; }
+  const qOf = id => { const [k, st] = String(id).split('.'), L = MAIN_Q[k] || []; return (st ? L.find(q => q.s === st) : L[0]) || {}; };
+  const qs = W.questions.map((q, n) => ({ id: q.id, part: q.key, stem: W.stem, text: q.t, say: n ? q.t : W.stem + ' ' + q.t, type: 'choice', options: sqGdOpts(W.answers), rev: !!qOf(q.id).r }));
+  GGGuided.run({
+    tree: 'sequoia', kind: 'week', voice: 'brian', title: SQ_GD_TITLE.week, questions: qs, quiet: HELP_LINES.quiet || undefined, isEdge: sqGdEdge,
+    onDone: r => { showView('client-week'); GGTend.saveWeekAns(r.answers || {}, null); },
+    onReadAll: ans => {
+      showView('client-week');
+      if (W.saved && W.saved.ans && GGTend.editWeek) GGTend.editWeek();
+      Object.keys(ans || {}).forEach(id => { const b = Array.from(document.querySelectorAll('#client-week .gt-opts button')).find(x => x.getAttribute('data-q') === id && x.getAttribute('data-a') === ans[id]); if (b) GGTend.pick(b); });
+    }
+  });
+}
+// The Week tab's check-in starts guided too: a Guided button above its questions, each time Week is drawn.
+function sqWeekGuidedBar() {
+  const box = document.getElementById('client-week'), ol = box && box.querySelector('.gt-wq');
+  if (!ol || HELP || !sqGuidedOk() || box.querySelector('.gd-week')) return;
+  const p = document.createElement('p'); p.className = 'gd-switch gd-week';
+  p.innerHTML = '<button type="button" class="btn btn-primary btn-sm" onclick="sqGuidedWeek()">Guided Weekly Check-in</button> <span>One question at a time, read aloud.</span>';
+  const stem = ol.previousElementSibling; ol.parentNode.insertBefore(p, stem && stem.classList.contains('gt-small') ? stem : ol);
+}
+(() => { const box = document.getElementById('client-week'); if (box && window.MutationObserver) new MutationObserver(sqWeekGuidedBar).observe(box, { childList: true }); })();
+
+// The guided Growth Plan: one part at a time, the Growing Edge first, one to three practices each.
+// Each choice ticks the classic builder's own boxes, so Done saves through oakSavePlan and Today shows it at once.
+function sqGdPick(part, names) {
+  document.querySelectorAll(`input[name="cp-client-${part}"]`).forEach(c => { c.checked = names.indexOf(c.value) >= 0; });
+  oakRotApply('client', part);
+}
+function sqGuidedPlan() {
+  if (HELP || !sqGuidedOk()) { showView('client-growthplan'); return; }
+  const built = () => !!document.querySelector('#client-growthplan-builder [id^="cp-card-client-"]');
+  if (!window.lastClientScores || !built()) { oakPlanOpen(); if (window.lastClientScores && !built()) { renderGrowthPlanBuilder('client'); oakPrefillPlan(); } }
+  else oakPrefillPlan();
+  const sc = window.lastClientScores, un = window.lastClientUnsure || [];
+  if (!sc || !built()) { showView('client-growthplan'); return; }
+  const cur = collectGrowthPlan('client');
+  const order = ALL_DOMAINS.slice().sort((a, b) => (un.includes(a.key) ? 1 : 0) - (un.includes(b.key) ? 1 : 0) || sc[a.key] - sc[b.key]);
+  const steps = order.map(d => {
+    const rows = lifeOrder('client', d.key, d.restore), mine = cur[d.key].selected;
+    const pick = rows.filter(r => mine.includes(r[0])).concat(rows.filter(r => !mine.includes(r[0])).slice(0, 8));
+    return { type: 'plan', part: d.key, label: d.part, choices: pick.map(r => ({ name: r[0] })), max: 3 };
+  });
+  const plan = {}; order.forEach(d => { plan[d.key] = cur[d.key].selected.slice(); });
+  GGGuided.run({
+    tree: 'sequoia', kind: 'plan', voice: 'brian', title: SQ_GD_TITLE.plan, questions: steps, plan, quiet: false,
+    onPlan: (part, names) => sqGdPick(part, names),
+    onDone: r => { Object.keys(r.plan || {}).forEach(p => sqGdPick(p, r.plan[p])); showView('client-growthplan'); oakSavePlan(); },
+    onReadAll: () => showView('client-growthplan')
+  });
+}
+
 function signsHtml(d) {
   const p = PARTS[d.key];
   return `<details class="signs-details"><summary>Signs of health and signs of stress</summary><div class="signs">
@@ -542,7 +669,7 @@ function renderGrowthPlanBuilder(mode) {
   const generateRowId = mode === 'client' ? 'client-growthplan-generate-row' : 'prac-growthplan-generate-row';
   const scores = mode === 'client' ? window.lastClientScores : window.lastSessionScores;
   if (!scores) return;
-  document.getElementById(containerId).innerHTML = ALL_DOMAINS.map(d => `
+  document.getElementById(containerId).innerHTML = (mode === 'client' && !HELP && sqGuidedOk() ? '<div class="gd-plan-start"><div><strong>Build it with us, one part at a time.</strong> We start with your Growing Edge, and you choose one to three practices for each part.</div><button type="button" class="btn btn-primary" onclick="sqGuidedPlan()">Guided Growth Plan</button></div>' : '') + ALL_DOMAINS.map(d => `
     <div class="domain-card" id="cp-card-${mode}-${d.key}" style="--domain-color:${d.color};border-left-color:${d.color};">
       <div class="domain-header">
         <div class="card-head">${partIcon(d, 30)}<div><div class="domain-name" style="color:${d.color};">${d.part}</div><div class="card-sub">${d.name}</div></div></div>
@@ -681,6 +808,7 @@ function inviteHtml() {
 
 
 function calculateResults(mode) {
+  SQ_GD = null;   // a finished check-in, guided or classic: the next guided one starts fresh
   const prefix = 'client';
   const scores = {}, reflections = {}, unsure = [];
   ALL_DOMAINS.forEach(d => {
@@ -713,7 +841,7 @@ function calculateResults(mode) {
     ${self ? buildPersonalSections(Object.fromEntries(ALL_DOMAINS.map(d => [d.key, scores[d.key]])), true) + lcSuggestHtml(scores, mode) : ''}
     <div class="reminder-banner"><p>${escapeHtml(reminder)}</p></div>
     <div class="btn-row">
-      ${self ? `<button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button>` : `<button class="btn btn-primary" onclick="${by === 'helper' ? "helpBack()" : "showView('client-today')"}">${by === 'helper' ? 'Back to My Own Sequoia' : 'Back to ' + escapeHtml(CK.name) + '\'s Tree'}</button>`}
+      ${self ? `<button class="btn btn-primary" onclick="${sqGuidedOk() ? 'sqGuidedPlan()' : "showView('client-growthplan')"}">Build My Growth Plan</button>` : `<button class="btn btn-primary" onclick="${by === 'helper' ? "helpBack()" : "showView('client-today')"}">${by === 'helper' ? 'Back to My Own Sequoia' : 'Back to ' + escapeHtml(CK.name) + '\'s Tree'}</button>`}
     </div>
     ${self ? '<div id="client-save-box"></div>' + inviteHtml() : ''}`;
 
@@ -2120,6 +2248,9 @@ renderProgress();
 function fromHash(e) {
   if (e && location.href === NAV_LAST) return;
   NAV_LAST = location.href;
+  // The Grounded Way's sheet asks for guided mode with ?guided=checkin, quick, or plan (GWG BLD 886).
+  const gd = !e && window.GGGuided && GGGuided.flag ? GGGuided.flag() : '';
+  if (gd) { if (GGGuided.clearFlag) GGGuided.clearFlag(); NAV_LAST = location.href; if (gd === 'quick') startQuick(); else if (gd === 'plan') { showView('client-growthplan'); sqGuidedPlan(); } else startCheckin(); return; }
   const h = decodeURIComponent(location.hash || ''), back = !!(e && e.type === 'popstate');
   let view = null, top = null;
   if (h.startsWith('#life')) {

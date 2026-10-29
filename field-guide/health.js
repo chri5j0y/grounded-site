@@ -329,7 +329,7 @@ function lpHover(svg, wkv){
 const lpWeekAt = (svg, cx) => { const L = S.lp, rc = svg.getBoundingClientRect(); if (!L || !rc.width) return null; const px = (cx - rc.left) * L.W / rc.width; return (px - L.pl) / L.pw * L.maxW; };
 function vPlan(lib, key){
   const mine = MINE(), hh = num(H().set.household);
-  const scale = key === 'food' && hh && hh !== 6 && !PUB() ? `<p class="hj-note">Costs and amounts are for a household of six. For ${hh}, multiply by about ${(hh / 6).toFixed(2).replace(/0$/, '')}. Freezer batches keep well, so smaller households can make the full batch and freeze more.</p>` : '';
+  const scale = key === 'food' && hh && hh !== 6 && !PUB() ? `<p class="hj-note">Costs and amounts are for a household of six. For ${hh}, multiply by about ${(hh / 6).toFixed(2).replace(/0$/, '')}. The Weekly Batch sizes its own steps for ${hh}.</p>` : '';
   return `${scale}${mine && arr(mine[key]).length ? `<div class="hj-blk">${kick(mine.title || 'My Plan')}<p class="hj-sub">${esc(mine.lead || 'Your own plan, written for you.')}</p>${docBlocks(mine[key], 'mine-' + key)}</div>${kick('The Grounded Plan')}` : ''}${docBlocks(lib[key], key)}`;
 }
 function vNumbers(){
@@ -429,6 +429,24 @@ const BAT = () => (APP() || {}).batches || null;
 function prepFor(kind, n){ if (kind === 'pack') return (BAT() || {}).pack || null; if (kind.indexOf('bulk-') === 0){ const b = arr((BAT() || {}).batches).find(x => x.id === kind.slice(5)); return b ? Object.assign({title: b.name}, b) : null; }
   return prepFor0(kind, n); }
 function prepFor0(kind, n){ const sp = (APP() || {}).shop || {}, w = (sp.weeks || {})[letter(n)]; return w && w[kind] ? w[kind] : null; }
+// ---------- BLD 889: the Weekly Batch (Chris, October 28, 2026: "we dont have room for a month.. i think weekly is good for most things") ----------
+// Every Sunday, right after Sunday Together Prep: burritos and homemade sausage, plus the week's rotating item. Written for six
+// (serves: 6); each step lists the amounts it names (sc), and those scale to the household with shared/gg-scale.js. At six the text
+// is the recorded line; other sizes read the scaled text with the device voice.
+const batchFor = () => { const hh = PUB() ? tableOf() : num((H() || {set: {}}).set.household); return hh > 0 && hh < 30 ? Math.round(hh) : 6; };
+const batchSub = b => (b.mins ? 'About ' + b.mins + ' minutes, ' : '') + 'Cook and Helper, side by side' + (b.serves && batchFor() !== +b.serves ? ', sized for ' + batchFor() : '') + '.';
+const wbNote = w => w && w.batch ? `<p class="hj-note"><b>Weekly Batch:</b> ${esc(String(w.batch).replace(/^(Freezer batch|Weekly Batch):\s*/i, ''))}${batchFor() !== 6 ? ' The guide sizes it for ' + batchFor() + '.' : ''}</p>` : '';
+const CNT = /^(\d+)(\s+)(paper liners|muffin cups|energy bites|burritos|muffins|patties|pancakes|bites|liners)\b/i, ONE = {burritos: 'burrito', muffins: 'muffin', patties: 'patty', pancakes: 'pancake', bites: 'bite', 'energy bites': 'energy bite', liners: 'liner', 'paper liners': 'paper liner', 'muffin cups': 'muffin cup'};
+function scAmt(q, f){ const m = CNT.exec(q); if (m){ const v = Math.max(1, Math.round(+m[1] * f)); return v + m[2] + (v === 1 ? ONE[m[3].toLowerCase()] || m[3] : m[3]) + q.slice(m[0].length); }
+  return window.GGScale ? GGScale.line(q, f) : q; }
+// Replace each listed amount where it stands on its own (so "1/2 tsp salt" never matches inside "1 1/2 tsp salt").
+function scText(t, sc, f){ let out = String(t || ''); const done = []; arr(sc).slice().sort((a, b) => b.length - a.length).forEach(q => { let i = 0, k;
+    while ((k = out.indexOf(q, i)) >= 0){ const pre = out.slice(Math.max(0, k - 2), k); if (/\d\s$|[\d\/]$/.test(pre) || done.some(([a, b]) => k < b && k + q.length > a)){ i = k + 1; continue; }
+      const r = scAmt(q, f); out = out.slice(0, k) + r + out.slice(k + q.length); done.forEach(x => { if (x[0] > k){ x[0] += r.length - q.length; x[1] += r.length - q.length; } }); done.push([k, k + r.length]); i = k + r.length; } }); return out; }
+function sizeBatch(p, N){ const f = N / (+p.serves || 6); if (Math.abs(f - 1) < 1e-9) return p;
+  return Object.assign({}, p, {forN: N, steps: arr(p.steps).map(s => { const t = typeof s === 'string' ? {t: s} : s; return arr(t.sc).length ? Object.assign({}, t, {t: scText(t.t, t.sc, f)}) : t; }),
+    ingredients: arr(p.ingredients).map(l => window.GGScale && typeof l === 'string' ? GGScale.line(l, f) : l), yields: arr(p.yields).map(y => scText(y, p.ysc, f))}); }
+function servesRow(o){ const N = o.base.N; return `<div class="hj-serves" role="group" aria-label="Make it for"><span>Make it for <b data-hjserves>${N}</b> ${N === 1 ? 'person' : 'people'}</span><button type="button" class="chip" data-hja="bserve" data-hjv="-1" aria-label="One fewer"${N <= 1 ? ' disabled' : ''}>&minus;</button><button type="button" class="chip" data-hja="bserve" data-hjv="1" aria-label="One more"${N >= 12 ? ' disabled' : ''}>+</button></div>${o.data.keeps ? `<p class="hj-sub"><b>Keeps:</b> ${esc(o.data.keeps)}</p>` : ''}`; }
 function agenda(d){
   const out = [], dow = d.getDay(), n = weekNo(d), fw = foodWeek(d), ses = n >= 1 || dow !== 0 ? sesFor(d) : null;
   const track = H().set.track || 'strength', pr = practiceFor(d);
@@ -443,7 +461,8 @@ function agenda(d){
   if (dow === 6 && !KIT() && !PUB()) out.push({key: 'out', k: 'mark', hour: 11, kick: 'Together', title: 'Family hike or the Y', sub: 'Outside when the weather is good, the Y when it is wild.', btn: 'We Did It'});
   if (dow === 0){ const p = prepFor('sunday', fw); if (p) out.push({key: 'prep:sunday:' + fw, k: 'prep', v: 'sunday|' + fw, hour: 13, kick: 'Sunday prep', title: 'Prep for Week ' + letter(fw), sub: (p.mins || 90) + ' minutes, step by step with timers.', btn: 'Start Prep'});
     const pk = prepFor('pack', fw); if (pk) out.push({key: 'prep:pack:' + fw, k: 'prep', v: 'pack|' + fw, hour: 18, kick: 'Sunday evening', title: pk.title || 'Pack Lunches', sub: (pk.mins || 20) + ' minutes for the week ahead.', btn: 'Start'});
-    const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 15, kick: 'Monthly Bulk Together', title: b.title || 'Monthly Bulk Together', sub: (b.mins || 40) + ' minutes. Best for two, side by side.', btn: 'Start'}); }
+    // BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (the key stays prep:batch:<week>, so old saved days still read).
+    const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 14, kick: 'After Sunday prep', title: b.title || 'Weekly Batch', sub: batchSub(b), btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
   if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
   const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
@@ -488,7 +507,7 @@ function remindersFor(d, opt){
   if (dow === 5) push('fri:' + n, 19, 'Tonight', 'Tonight: look over tomorrow\'s shopping list', 'Week ' + letter(n + 1) + '\'s list is ready. Copy it for a text if someone else is shopping.', 'shop:' + (n + 1), 1, 'fri');
   if (dow === 6){ const p = prepFor('sunday', fw); if (p) push('sunprep:' + fw, 20, 'Tonight', 'Tonight: get ready for Sunday prep (about ' + (p.mins || 90) + ' min)', 'Clear a fridge shelf and the counter, and set out the slow cooker, Instant Pot, and containers.', 'prep:sunday:' + fw, 1, 'sunprep'); }
   if (dow === 2 && n >= 1){ const p = prepFor('wednesday', n); if (p) push('wedprep:' + n, 20, 'Tonight', 'Tomorrow after work: Wednesday mini prep (about ' + (p.mins || 20) + ' min)', 'A short prep for Thursday and Friday dinners, guided step by step.', 'prep:wednesday:' + n, 1, 'wedprep'); }
-  if (dow >= 1 && dow <= 4 && (BAT() || {}).pack) push('gg:' + ymd(d), 20.5, 'Tonight', 'Tonight: pack tomorrow\'s lunches and snacks', 'Set out the lunch bags, put the ice packs in the freezer, and move tomorrow\'s frozen breakfast (burritos, muffins, or pancakes) to the fridge.', '', 1, 'gg:' + dow);
+  if (dow >= 1 && dow <= 4 && (BAT() || {}).pack) push('gg:' + ymd(d), 20.5, 'Tonight', 'Tonight: pack tomorrow\'s lunches and snacks', 'Set out the lunch bags, put the ice packs in the freezer, and move tomorrow\'s frozen breakfast from the Weekly Batch (burritos, muffins, or pancakes) to the fridge.', '', 1, 'gg:' + dow);
   // Freezer stock: once counts are kept on the Prep tab, a nudge Thursday to Saturday when a batch runs low.
   if (h.stockU && dow >= 4 && !all){ const low = arr((BAT() || {}).batches).filter(b => b.where === 'freezer' && b.low != null && (h.stock || {})[b.id] != null && +h.stock[b.id] <= +b.low);
     if (low.length) push('low:' + n, 18, at(18), 'Make more this Sunday: ' + low.map(b => b.name).join(', '), low.map(b => { const c = +((h.stock || {})[b.id] || 0); return b.name + ': ' + c + (b.unit && c !== 1 ? ' ' + b.unit : '') + ' left'; }).join('. ') + '. Tap Open for the Prep tab.', 'prepsec:' + fw); }
@@ -560,6 +579,7 @@ function vWeek(){
       ${d.getDay() === 3 && prepFor('wednesday', n) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="wednesday|${n}">Mini Prep</button>` : ''}
       ${d.getDay() === 6 ? `<button type="button" class="hj-pill prep" data-hja="shopwk" data-hjv="${n + 1}">Shop for Week ${letter(n + 1)}</button>` : ''}
       ${d.getDay() === 0 && prepFor('sunday', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="sunday|${n + 1}">Sunday Together Prep</button>` : ''}
+      ${d.getDay() === 0 && prepFor('batch', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="batch|${n + 1}">${esc(prepFor('batch', n + 1).title || 'Weekly Batch')}</button>` : ''}
       ${mf ? `<button type="button" class="hj-pill calm" data-hja="go" data-hjv="medid:${esc(mf.id)}">${esc(mf.title)} <small>${esc(medMins(n))} min meditation${track === 'practice' ? ', evening' : ''}</small></button>` : ''}
       ${remOn() && !H().set.remWk ? remindersFor(d, 'all').map(r => `<button type="button" class="hj-pill rem${S.remOpen === r.id ? ' on' : ''}" data-hja="remshow" data-hjv="${esc(r.id)}" aria-expanded="${S.remOpen === r.id}">${esc(r.title)}</button>`).join('') : ''}
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
@@ -569,7 +589,7 @@ function vWeek(){
   ${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
   <div class="hj-blk hj-days">${rows}</div>
   ${remOn() ? `<div class="row" style="margin:-4px 0 14px"><button type="button" class="btn btn-line btn-sm" data-hja="remics">Add Reminders to My Phone Calendar</button><button type="button" class="linkbtn" data-hja="remwk">${H().set.remWk ? 'Show Reminders on This Week' : 'Keep Reminders on Today Only'}</button></div>` : ''}
-  ${w.batch ? `<p class="hj-note"><b>Freezer batch this week:</b> ${esc(String(w.batch).replace(/^Freezer batch:\s*/i, ''))}</p>` : ''}
+  ${wbNote(w)}
   ${aims()}${ideas('Grab and Go Lunches', din.lunches, 'lunches')}${ideas('Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideas('Snacks', din.snacks, 'snacks')}
   ${playLib()}`;
 }
@@ -592,7 +612,7 @@ const STORES = {costco: 'Costco', grocer: 'Coborn\'s'}; // Coborn's, the local g
 const SECS_P = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Frozen', 'Pantry', 'Spices', 'Grab and Go', 'Other'];
 const SECX = () => PUB() ? SECS_P : SECS;
 function shopList(n){
-  const h = H(), key = String(Math.max(1, n)); if (h.shop[key]) return h.shop[key];
+  const h = H(), key = String(Math.max(1, n)); if (h.shop[key]) return wbMerge(h.shop[key], n);
   const sp = (APP() || {}).shop, w = sp && sp.weeks && sp.weeks[letter(n)]; if (!w) return null;
   const mine = MINE(), add = letter(n) === 'A' ? arr(mine && mine.addons) : [];
   return {seed: true, items: arr(w.shop).concat(add).map((x, i) => ({id: 's' + i, store: x.store === 'grocer' ? 'grocer' : 'costco', sec: x.gg ? 'Grab and Go' : SECX().includes(x.sec) ? x.sec : (x.sec && !PUB() ? 'Add-ons' : 'Other'), name: x.name, amt: x.amt || '', price: +x.price || 0, for: x.for || '', nut: nOk(x.nut) ? x.nut : undefined, done: false, n: i}))};
@@ -601,6 +621,11 @@ function shopList(n){
 function nutOf(x, n){ if (nOk(x.nut)) return x.nut; const k = String(x.name || '').toLowerCase(), app = APP() || {}, w = ((app.shop || {}).weeks || {})[letter(n)] || {}, din = app.dinners || {};
   const all = arr(w.shop).concat(arr((app.shop || {}).staples), ...['breakfasts', 'lunches', 'snacks'].map(t => arr(din[t]).flatMap(i => arr(i.shop))));
   const f = all.find(i => String(i.name || '').toLowerCase() === k && nOk(i.nut)); return f ? f.nut : null; }
+// BLD 889: a list saved before the Weekly Batch picks up its batch buys once (by name), and keeps everything already on it.
+function wbMerge(L, n){ if (!L || L.wb889 || PUB()) return L; const sp = (APP() || {}).shop, w = sp && sp.weeks && sp.weeks[letter(n)]; if (!w || !w.batch) return L;
+  arr(w.shop).forEach((x, i) => { if (!/Weekly Batch/.test(x.for || '') || L.items.some(y => String(y.name).toLowerCase() === String(x.name).toLowerCase())) return;
+    L.items.push({id: 'w' + i, store: x.store === 'grocer' ? 'grocer' : 'costco', sec: x.gg ? 'Grab and Go' : SECX().includes(x.sec) ? x.sec : 'Other', name: x.name, amt: x.amt || '', price: +x.price || 0, for: x.for || '', nut: nOk(x.nut) ? x.nut : undefined, done: false, n: 400 + i}); });
+  L.wb889 = 1; return L; }
 function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[String(Math.max(1, n))] = L; save(); }
 function vShop(){
   const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = num(h.set.household);
@@ -692,7 +717,7 @@ function vOv(){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
     body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
-      ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}
+      ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}${o.base ? servesRow(o) : ''}
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
       <ol class="hj-steps">${steps.map((s, i) => { const t = typeof s === 'string' ? {t: s} : s, on = !!dn[i], tm = +t.min || 0, running = o.run && o.ti === i;
@@ -732,9 +757,10 @@ function openCook(wk, id){ openOv(cookOv(wk, id)); }
 function ideaOv(type, i){ const x = arr(((APP() || {}).dinners || {})[type])[+i]; if (!x || !arr(x.steps).length) return null;
   return {k: 'cook', idea: true, key: 'idea:' + type + ':' + i, title: x.name, sub: x.mins ? x.mins + ' minutes' : '', data: x}; }
 function openIdea(type, i){ openOv(ideaOv(type, i)); }
-function prepOv(kind, n){ const p = prepFor(kind, n); if (!p) return null;
-  const t = {sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: p.title || 'Freezer Batch', pack: p.title || 'Pack Lunches'}[kind] || p.title || p.name;
-  return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p}; }
+function prepOv(kind, n, forN){ const p0 = prepFor(kind, n); if (!p0) return null;
+  const t = {sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: p0.title || 'Weekly Batch', pack: p0.title || 'Pack Lunches'}[kind] || p0.title || p0.name;
+  const N = p0.serves ? (forN || batchFor()) : 0, p = N ? sizeBatch(p0, N) : p0;
+  return {k: 'prep', key: 'prep:' + kind + ':' + n, title: t, sub: 'Week ' + letter(n) + (N ? ' · for ' + N : '') + (p.mins ? ' · about ' + p.mins + ' minutes' : ''), data: p, base: N ? {kind, n, N} : null}; }
 function openPrep(kind, n){ openOv(prepOv(kind, n)); }
 // The head start for tomorrow (BLD 881): tomorrow's dinner, to look over tonight; finishing it marks tonight's head start.
 function headOv(k){ const d = parseD(k) || day0(new Date()), dn = dinnerFor(addD(d, 1)), o = dn ? cookOv(dn.wk, dn.id) : null; if (!o) return null;
@@ -750,6 +776,7 @@ function actTool(a, v){
     case 'cook': { const [w, id] = v.split('|'); openCook(w, id); return true; }
     case 'idea': { const [ty, ix] = v.split('|'); openIdea(ty, ix); return true; }
     case 'prep': { const [k, n] = v.split('|'); openPrep(k, +n); return true; }
+    case 'bserve': { if (!o || !o.base) return true; const N = Math.max(1, Math.min(12, o.base.N + (+v || 0))), x = prepOv(o.base.kind, o.base.n, N); if (x){ x.dn = o.dn; x.inline = o.inline; Object.keys(o).forEach(k => delete o[k]); Object.assign(o, x); } rerender(true); return true; }
     case 'wk': S.wkOff = (S.wkOff || 0) + (+v); rerender(true); return true;
     case 'shopwk': S.sec = 'shop'; S.shopWk = Math.max(1, +v); S.shopEd = null; rerender(false); return true;
     case 'prepwk': S.prepWk = Math.max(1, +v); rerender(true); return true;
@@ -1855,7 +1882,7 @@ function vKitchen(){
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(L)}. Dinners guided step by step.`)}${kitTabs('kitchen')}
     <div class="tn-kgrid">${feat}${rest.map(x => `<button type="button" class="tn-card tn-lift tn-kc" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${scene('bowl', 12, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
-    ${w.batch ? `<p class="hj-note"><b>Freezer batch this week:</b> ${esc(String(w.batch).replace(/^Freezer batch:\s*/i, ''))}</p>` : ''}
+    ${wbNote(w)}
     ${PUB() ? pubPlanEdit(L) + pubAims() : aims()}${ideasBlk(PUB() ? 'Lunches' : 'Grab and Go Lunches', din.lunches, 'lunches')}${ideasBlk(PUB() ? 'Breakfasts' : 'Grab and Go Breakfasts', din.breakfasts, 'breakfasts')}${ideasBlk('Snacks', din.snacks, 'snacks')}</div>`;
 }
 // ---------- BLD 875: Recipes. Every recipe the current library holds, in one list, each one opening the kitchen guide ----------
@@ -2097,7 +2124,7 @@ function vCard(hasPlan){
 const clone = x => x == null ? x : JSON.parse(JSON.stringify(x));
 function loadGGP(){
   if (window.GGP) return Promise.resolve();
-  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b887'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
+  return new Promise((res, rej) => { const sc = document.createElement('script'); sc.src = '../shared/gg-profiles.js?v=b888'; sc.onload = () => res(); sc.onerror = () => rej(new Error('profiles')); document.head.appendChild(sc); });
 }
 async function moveHome(){
   if (S.moving) return; S.moving = true; rerender(true);
@@ -2890,7 +2917,7 @@ function apiWeek(n){
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
     shopImage: WAY(ITEM_ART.shop), prepImage: sp ? WAY(ITEM_ART.prep) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
-    bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, days};
+    bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, bulkLabel: bt ? bt.title || 'Weekly Batch' : null, bulkSub: bt ? batchSub(bt) : null, days};
 }
 function apiRender(el, section, opts){
   if (!el || !FLDH() || !H()) return false;
@@ -3113,6 +3140,7 @@ const CSS = `
 .hj-mline{font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;font-style:italic;min-height:3em;}
 .hj-gi{display:block;font-size:14px;color:var(--ink-soft);margin-top:3px;}.hj-ggadd{margin-top:6px;}
 .hj-pc{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 0;border-top:1px solid var(--line);}.hj-pc:first-of-type{border-top:0;}.hj-pc>div:first-child{flex:1 1 180px;}.hj-pc small{display:block;color:var(--ink-soft);font-size:13.5px;}
+.hj-serves{display:flex;align-items:center;flex-wrap:wrap;gap:8px;margin:0 0 10px;}.hj-serves span{flex:1 1 auto;min-width:0;}.hj-serves .chip{min-height:38px;min-width:40px;}
 .hj-stock{display:flex;align-items:center;gap:6px;}.hj-stock span{text-align:center;min-width:52px;}.hj-stock small{display:block;font-size:12px;color:var(--ink-soft);}.hj-stock .chip{min-height:38px;min-width:40px;}
 .hj-entry{border-top:1px solid var(--line);padding:10px 0;}.hj-entry:first-of-type{border-top:0;}.hj-entry p{margin:4px 0 0;}
 /* BLD 857: color and the stage. Each player wears its state color (--st); the stage panel holds the scene from GGStage. */

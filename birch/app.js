@@ -545,8 +545,115 @@ function beginCheck(quick) {
   showView('client-assess');
   goToStep(0);
 }
-function startCheckin(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); beginCheck(false); }
-function startQuick(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); beginCheck(true); }
+function startCheckin(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); gdBegin(false); }
+function startQuick(by, forId) { setMode(typeof by === 'string' ? by : 'self', forId); gdBegin(true); }
+
+// =====================================================================
+// GUIDED CHECK-INS AND THE GUIDED GROWTH PLAN (GWG BLD 886)
+// shared/gg-guided.js plays a check-in one question at a time, read aloud in the Birch voice
+// (Brian), with short guide moments from shared/guided/birch.js. Guided is the default start
+// of every check-in (on your own, quick, and together, when a helper taps) and of the Growth
+// Plan; Read It All opens the classic form, every answer kept. Answers go into the same state
+// the classic form fills (ST_ANS, ST_SENS) after the same resets beginCheck does, and Done runs
+// the same calculateResults, so scores, results, history (or the tapped person's tree), the
+// season ring (GGTend.onFullCheckin), and the Growth Plan builder match the classic form exactly.
+// The question words are read live from birch/checkin.js. No question asks about harm (GWG BLD
+// 887); the quiet line shows as type under the player, never spoken.
+// =====================================================================
+const GD_OK = () => !!(window.GGGuided && GGGuided.run);
+const GD_TITLE = { start: 'Your First Check-in', full: 'Your Check-in', quick: 'Quick Check-in', together: 'Check-in Together' };
+const GD_SENS = 'You turned this question on. It never counts toward a score, and it is never shared.';
+function gdKind(quick) { return CK.by === 'tapped' ? 'together' : quick ? 'quick' : (personalHistory || []).some(e => e && !e.from && e.type !== 'quick' && e.scores) ? 'full' : 'start'; }
+// The classic screens, as guided steps, in the same order (id is the classic key and place).
+function gdQuestions() {
+  const opts = Q_OPTS.map(o => ({ v: o[0], label: o[1] })), out = [];
+  SCREENS.forEach(sc => {
+    if (sc.kind !== 'q') return;
+    const q = stQ(sc.key, sc.i) || {}, text = sc.key.indexOf('quick_') === 0 ? quickQ(sc.part) : q.t || '';
+    if (!text) return;
+    const first = !out.length || (!ST_QUICK && !sc.sens && out[out.length - 1].part !== sc.part);
+    const ln = lifeNote(q), help = [];
+    if (CK.by === 'tapped' && !out.length) help.push(CK.name + ' answers, and you tap.');
+    help.push(sc.sens ? GD_SENS : Q_STEM);
+    if (q.ex && q.ex.length) help.push(q.ex.join(' '));
+    if (ln.ex.length) help.push(ln.ex.join(' '));
+    // With someone I trust: the tip shows as type on the question, and the screen waits for a tap.
+    const tip = [q.tip, ln.tip].filter(Boolean).join(' ');
+    if (CK_MODE === 'trust' && tip) help.push('To talk about together: ' + tip);
+    out.push({ id: sc.key + '-' + sc.i, part: sc.part, text, say: first && !sc.sens ? Q_STEM + ' ' + text : text, help: help.join(' '),
+      type: 'choice', options: opts, rv: !!q.r, sens: !!sc.sens, tags: [sc.sens ? 'sens' : '', q.help ? 'helpnote' : ''].filter(Boolean) });
+  });
+  return out;
+}
+function gdSet(id, v) {
+  const at = id.lastIndexOf('-'), key = id.slice(0, at), i = +id.slice(at + 1);
+  if (key.indexOf('sens_') === 0) ST_SENS[key.slice(5)] = v;
+  else { ST_ANS[key] = ST_ANS[key] || {}; ST_ANS[key][i] = v; }
+}
+// A Growing Edge answer (worth 0 points) brings the part's tip, once per part.
+function gdEdge(q, v) { const o = Q_OPTS.find(x => x[0] === v); return !!o && o[2] !== null && (q.rv ? 3 - o[2] : o[2]) === 0; }
+function gdBegin(quick) {
+  if (!GD_OK()) { beginCheck(quick); return; }
+  loadBank(); CK_SENS = !quick && CK.by === 'self' && sensOn();
+  ST_QUICK = !!quick; ST_ANS = {}; ST_SENS = {};
+  renderCheckin();   // the classic form waits behind the player, fresh, for Read It All
+  const kind = gdKind(quick);
+  GGGuided.run({ tree: 'birch', kind, title: kind === 'together' && quick ? 'Quick Check-in Together' : GD_TITLE[kind], voice: 'brian', questions: gdQuestions(), quiet: CKB.quiet || undefined,
+    isEdge: gdEdge, onAnswer: gdSet, onDone: () => calculateResults(), onReadAll: gdReadAll });
+}
+// Read It All: the classic form, with every guided answer already chosen, at the first open question.
+function gdReadAll() {
+  renderCheckin();
+  showView('client-assess');
+  const has = sc => sc.sens ? !!ST_SENS[sc.key.slice(5)] : !!(ST_ANS[sc.key] || {})[sc.i];
+  const at = SCREENS.findIndex(sc => sc.kind === 'q' && !has(sc));
+  goToStep(at >= 0 ? at : SCREENS.length - 1);
+}
+// The guided Growth Plan: one part at a time, the Growing Edge first, the builder's own choices
+// in the builder's own order (My Season and Health and Ability fits first; chosen first, then six
+// more), rhythm and How from shared/practice-rhythm.js. Done checks the same boxes in the builder
+// and saves through oakSavePlan, so Today shows it at once. A helper viewing keeps the classic builder.
+function gdRhythm(then) {
+  if (window.GG_RHYTHM) { then(); return; }
+  let done = false; const go = () => { if (!done) { done = true; then(); } };
+  const s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b885'; s.onload = go; s.onerror = go; document.head.appendChild(s);
+}
+function startGuidedPlan() {
+  showView('client-growthplan');   // builds and fills the classic builder behind the player
+  if (!GD_OK() || HELP) return;
+  if (!window.lastClientScores || !document.querySelector('#client-growthplan-builder .domain-card')) { showToast('Take a check-in first, and your Growth Plan grows from it.'); return; }
+  gdRhythm(gdPlanRun);
+}
+function gdPlanRun() {
+  const scores = window.lastClientScores || {}, unsure = window.lastClientUnsure || [], saved = (window.GGTend && GGTend.plan()) || {};
+  const R = (window.GG_RHYTHM || {}).birch || {}, back = {}, start = {};
+  const lvl = k => unsure.includes(k) ? 5.5 : (+scores[k] || 5);
+  const steps = ALL_DOMAINS.slice().sort((a, b) => lvl(a.key) - lvl(b.key)).map(d => {
+    const k = d.key, rows = lifeOrder(k, seasonOrder(k, d.restore));
+    const had = ((saved[k] || {}).selected || []).filter(n => rows.some(r => r[0] === n));
+    const pick = rows.filter(r => had.includes(r[0])).concat(rows.filter(r => !had.includes(r[0])).slice(0, OAK_ROT_N));
+    back[k] = {}; start[k] = had.map(n => shownName(k, n));
+    return { type: 'plan', part: k, max: Math.max(3, had.length), choices: pick.map(r => {
+      const nm = shownName(k, r[0]), x = R[k + '|' + r[0]] || {}; back[k][nm] = r[0];
+      return { name: nm, how: x.how, r: x.r || 'd', x: x.x, min: x.min };
+    }) };
+  });
+  const h = GGGuided.run({ tree: 'birch', kind: 'plan', title: 'Your Growth Plan', voice: 'brian', questions: steps, plan: start, quiet: CKB.quiet || undefined,
+    onDone: res => gdPlanSave(res.plan || {}, back, true),
+    onReadAll: () => { gdPlanSave((h && h.state().plan) || {}, back, false); scrollToViewTop('client-growthplan', true, true); } });
+}
+function gdPlanSave(plan, back, save) {
+  Object.keys(plan).forEach(k => {
+    const names = (plan[k] || []).map(n => (back[k] || {})[n] || n);
+    document.querySelectorAll(`input[name="cp-client-${k}"]`).forEach(c => { c.checked = names.includes(c.value); });
+    oakRotApply('client', k);
+  });
+  if (!save) return;
+  const p = collectGrowthPlan('client');
+  if (!ALL_DOMAINS.some(d => p[d.key].selected.length || p[d.key].custom)) { showToast('Choose at least one practice first.'); return; }
+  oakSavePlan();
+  if (PROF && window.GGTend) showView('client-today');
+}
 
 // =====================================================================
 // GROWTH PLAN
@@ -759,7 +866,7 @@ function calculateResults() {
     </div>
     ${tapped ? '' : buildPersonalSections(scores, unsure) + lcSuggestHtml(scores, unsure)}
     <div class="reminder-banner"><p>${tapped ? 'Saved to ' + escapeHtml(CK.name) + '\'s tree, marked as taken together.' : 'Check in again in a few weeks. Trees grow slowly, and growth is easiest to see over time.'}</p></div>
-    <div class="btn-row">${tapped ? `<button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button>` : `<button class="btn btn-primary" onclick="showView('client-growthplan')">Build My Growth Plan</button>`}</div>
+    <div class="btn-row">${tapped ? `<button class="btn btn-primary" onclick="showView('client-today')">Back to ${escapeHtml(CK.name)}'s Tree</button>` : `<button class="btn btn-primary" onclick="startGuidedPlan()">Build My Growth Plan</button>`}</div>
     ${quietHtml()}
     ${tapped ? '' : '<div id="client-save-box"></div>'}`;
   document.getElementById('client-results-content').innerHTML = html;
@@ -1479,7 +1586,7 @@ const TEND_CFG = {
   actions: {
     fullCheckin: () => startCheckin(), quickCheckin: () => startQuick(),
     results: () => showView('client-results'), progress: () => showView('client-progress'),
-    plan: () => showView('client-growthplan'), about: () => showView('client-intro'),
+    plan: () => startGuidedPlan(), about: () => showView('client-intro'),
     createProfile: () => profCreateDialog(), openProfile: () => bcOpenAny(),
     lock: () => profLock(), textSize: () => cycleTextSize()
   }

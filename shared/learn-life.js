@@ -126,7 +126,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "Your child’s choice stays locked inside their profile, on this device. The check-in questions and scores stay exactly the same, and so do the safety questions. Your child sees only the help it adds. And Clear My Choices erases it, any time.",
+          "say": "Your child’s choice stays locked inside their profile, on this device. The check-in questions and scores stay exactly the same. Your child sees only the help it adds. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -134,7 +134,7 @@
            ],
            [
             "Questions and scores stay the same",
-            "Safety questions too"
+            "Every part, every grade"
            ],
            [
             "Only the effects show",
@@ -1514,7 +1514,7 @@
          {
           "k": "points",
           "h": "Yours alone",
-          "say": "Only you set it, and only your passcode opens it. It stays yours alone, and alerts leave it out. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
+          "say": "Only you set it, and only your passcode opens it. It stays yours alone, and nothing is sent anywhere. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Only you set it",
@@ -1522,11 +1522,11 @@
            ],
            [
             "It stays yours alone",
-            "Alerts leave it out"
+            "Nothing is sent anywhere"
            ],
            [
             "Questions and scores stay the same",
-            "Safety questions too"
+            "Every part, every time"
            ],
            [
             "Clear My Choices",
@@ -2242,7 +2242,7 @@
          {
           "k": "points",
           "h": "Yours to share, if you choose",
-          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -2254,7 +2254,7 @@
            ],
            [
             "Questions and scores stay the same",
-            "Safety questions too"
+            "Every part, every time"
            ],
            [
             "Clear My Choices",
@@ -2970,7 +2970,7 @@
          {
           "k": "points",
           "h": "Good to know",
-          "say": "It stays locked in your profile, on this device, and nothing about it ever leaves. Visit cards, The Grove, and printed plans never carry it. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile, on this device, and nothing about it ever leaves. Visit cards, The Grove, and printed plans never carry it. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -2982,7 +2982,7 @@
            ],
            [
             "Questions and scores stay the same",
-            "Safety questions too"
+            "Every part, every time"
            ],
            [
             "Clear My Choices",
@@ -3698,7 +3698,7 @@
          {
           "k": "points",
           "h": "Yours to share, if you choose",
-          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same, safety questions too. And Clear My Choices erases it, any time.",
+          "say": "It stays locked in your profile, on this device. Helpers never see it, unless you turn on Share My Health and Ability with my helpers. Your questions and scores stay the same. And Clear My Choices erases it, any time.",
           "items": [
            [
             "Locked on this device",
@@ -3710,7 +3710,7 @@
            ],
            [
             "Questions and scores stay the same",
-            "Safety questions too"
+            "Every part, every time"
            ],
            [
             "Clear My Choices",

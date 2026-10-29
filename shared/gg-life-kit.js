@@ -3,8 +3,8 @@
    Small shared pieces that Birch, Oak, and Sequoia use on top of
    shared/gg-life.js (the choice itself). Nothing here reads or saves a
    person's choice on its own: it asks GGLife, which keeps the choice
-   locked in the person's vault. Nothing here ever changes a question,
-   a score, a flag, an alert, or a crisis line.
+   locked in the person's vault. Questions, scores, the quiet line, and
+   crisis lines stay exactly as each tree has them (GWG BLD 888).
 
    For tools
      GGLifeKit.RING            {key: 'life', name: 'Health and Ability', color, blurb}

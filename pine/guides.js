@@ -860,7 +860,7 @@ const LC_TOPICS = [
     "“Others can help me handle this.”",
     "“I'm more than what they say about me.”"
    ],
-   "people": "To an adult: “Something's been happening at school and online, and I need help with it. Here's what I've saved.” If you're worried about your phone: “I'm telling you because I need help, not so I'll lose my phone.” If a private picture of you was shared, you are not in trouble: tell a trusted adult, and use Take It Down to help get it removed. If you're answering your Pine check-in and say someone is hurting you, Pine shows you outside help right away. It doesn't send an alert to your family."
+   "people": "To an adult: “Something's been happening at school and online, and I need help with it. Here's what I've saved.” If you're worried about your phone: “I'm telling you because I need help, not so I'll lose my phone.” If a private picture of you was shared, you are not in trouble: tell a trusted adult, and use Take It Down to help get it removed."
   },
   "helper": {
    "feel": "They may have waited a long time to tell you, or they may not tell you at all. Many teens fear that telling will make it worse, that adults will overreact or do nothing, or that they'll lose their phone. They may feel humiliated, and some feel they deserve it. You might notice them dreading school, avoiding the bus or a certain class, flinching at their phone, losing sleep, or pulling away from things they used to love.",
@@ -987,7 +987,7 @@ const LC_TOPICS = [
     "Make a ride plan: they can text you a code word anytime and you'll come, no lecture that night.",
     "Be clear that any adult or much older person pursuing a teen romantically, or asking for pictures, is never okay, and they should tell you right away.",
     "If you see warning signs of control or abuse, stay calm and close. See the dating abuse guide.",
-    "Pine never shows you your teen's answers. If they tell their check-in that someone is hurting them, Pine shows them outside help. Being a calm, safe adult makes it more likely they'll come to you too."
+    "Pine keeps your teen's answers private to them. Being a calm, safe adult makes it more likely they'll come to you."
    ],
    "you": "You don't need to know who they like or whether they're dating. Your part is to be the calm, warm adult they can come to, with clear values and no drama. Warmth plus room to grow is what helps teens most."
   },
@@ -1087,7 +1087,7 @@ const LC_TOPICS = [
     "Keep routines gently going: sleep, meals, school, practice. Allow a few soft days, then lean back toward normal.",
     "Watch for two weeks or more of low mood, pulling away from everyone, sleep or eating changes, or talk of hopelessness. If you see that, bring in a counselor or doctor.",
     "If the ex is harassing, threatening, or sharing pictures, or was controlling during the relationship, see the dating abuse guide.",
-    "If they talk about not wanting to be here, ask directly, stay with them, and call, text, or chat 988 together."
+    "If they talk about not wanting to be here, stay with them, and call, text, or chat 988 together."
    ],
    "you": "Watching your teen hurt is hard, and you can't speed it up. Your part is to take it seriously, keep them company, and keep the everyday rhythms gently going. Your steady presence is proof that love can be safe and lasting."
   },
@@ -1165,7 +1165,7 @@ const LC_TOPICS = [
     "“I deserve to feel safe, all the time.”",
     "“Asking for help is strong.”"
    ],
-   "people": "To a trusted adult: “Something's been going on in my relationship, and I'm scared. Can you help me figure out what to do?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” If you tell your Pine check-in that someone is hurting you, Pine shows you outside help right away, like Love Is Respect, Childhelp, Day One, and 911. It doesn't send an alert to your family, so you stay in charge of who you tell."
+   "people": "To a trusted adult: “Something's been going on in my relationship, and I'm scared. Can you help me figure out what to do?” For a friend you're worried about: “I've noticed some things, and I care about you. I'm here, no matter what you decide.” You stay in charge of who you tell, and the help in this guide is there any time."
   },
   "helper": {
    "feel": "They may feel confused, ashamed, scared, or loyal to the person hurting them. Many teens don't call it abuse. They may defend the partner, minimize what happened, or go back after a breakup. They may be afraid you'll overreact, forbid the relationship, or blame them. Control often works by cutting a teen off from the adults who love them, so pulling away from you may be part of the pattern, not a rejection of you.",
@@ -1308,7 +1308,7 @@ const LC_TOPICS = [
   "reach": [
    "Low mood, trouble sleeping, or losing interest in things you used to enjoy, lasting two weeks or more: tell a parent, school counselor, or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
    "Feeling like you can't go on, or thinking about not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Fighting at home that turns physical, or anyone hurting you: Childhelp, call or text 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911. In Pine, this help goes to you directly, not to a family alert.",
+   "Fighting at home that turns physical, or anyone hurting you: Childhelp, call or text 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings.",
    "In Minnesota, a mental health crisis: call **CRISIS (274747) from a cell phone, any time."
   ],
@@ -1405,7 +1405,7 @@ const LC_TOPICS = [
   "reach": [
    "Feeling low, left out, or angry most days for two weeks or more: talk with a school counselor or another adult you trust.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "Anyone in the home who makes you feel unsafe, touches you in a way that isn't okay, or hurts you: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911. Tell an adult outside your home, like a school counselor, coach, or teacher. In Pine, this help goes to you directly, not to a family alert.",
+   "Anyone in the home who makes you feel unsafe, touches you in a way that isn't okay, or hurts you: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911. Tell an adult outside your home, like a school counselor, coach, or teacher.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
   ],
   "more": [
@@ -1593,7 +1593,7 @@ const LC_TOPICS = [
    "Worry, low mood, or trouble sleeping that lasts two weeks or more: tell a counselor, a doctor, or another adult you trust.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "Danger right now: call 911.",
-   "If anyone at home is hurting you: call or text Childhelp, 1-800-422-4453, any time. In Pine, this help goes to you directly, not to a family alert.",
+   "If anyone at home is hurting you: call or text Childhelp, 1-800-422-4453, any time.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings."
   ],
   "more": [
@@ -1694,7 +1694,7 @@ const LC_TOPICS = [
   ],
   "reach": [
    "Someone can't wake up, isn't breathing well, or there is danger right now: call 911.",
-   "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. In Pine, this help goes to you directly, not to a family alert.",
+   "Anyone hurting you, or you're being left without food, safety, or a way to get help: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
    "SAMHSA National Helpline: 1-800-662-4357, any time, for treatment and support for the person using, or for your family.",
    "NACoA: Just for Teens, with words and help for teens who love someone who drinks or uses.",
@@ -1793,7 +1793,7 @@ const LC_TOPICS = [
   "reach": [
    "Feeling low, angry, or alone most days for two weeks or more: talk with a school counselor or doctor. In Minnesota, at 16 you can ask for counseling yourself.",
    "Thoughts of not wanting to be alive: call or text 988, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741).",
-   "If anyone is hurting you, at home or anywhere: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911. In Pine, this help goes to you directly, not to a family alert.",
+   "If anyone is hurting you, at home or anywhere: call or text Childhelp, 1-800-422-4453, any time. In Minnesota: Day One, 1-866-223-1111. Danger right now: call 911.",
    "Want to talk with another teen? Teen Line: call 800-852-8336 or text TEEN to 839863, evenings.",
    "Visiting a Minnesota state prison: the Department of Corrections explains how to apply and schedule visits. Applications can take weeks, so start early."
   ],
@@ -2157,7 +2157,7 @@ const LC_TOPICS = [
     "“I heard about Jordan. I'm so sorry. How are you doing with it?”",
     "“Tell me about him.”",
     "“Whatever you're feeling, sad, angry, numb, it all makes sense.”",
-    "If you're worried: “Are you thinking about suicide?” Asking directly doesn't put the idea in their head."
+    "If you're worried: “How are you really doing, with all of this?” Then listen, and stay close."
    ],
    "avoid": [
     "“You didn't even know her that well.”",
@@ -2170,7 +2170,7 @@ const LC_TOPICS = [
     "Tell them what happened in plain words, before rumors do, and answer what you can.",
     "Let them go to the funeral, memorial, or vigil if they want to, and go with them.",
     "Help them limit time with the posts, rumors, and pictures, without taking away the friends who are grieving with them.",
-    "Watch for warning signs: pulling away, talk of not wanting to be alive or of joining their friend, giving things away, sudden calm after being very low, more drinking or drugs, or reckless driving. Ask directly, and call or text 988 together.",
+    "Watch for warning signs: pulling away, talk of not wanting to be alive or of joining their friend, giving things away, sudden calm after being very low, more drinking or drugs, or reckless driving. If you notice them, stay close, and call or text 988 together.",
     "If there are guns or a lot of medicine at home, lock them up or keep them somewhere else for now.",
     "Pine keeps a teen's check-in private. Checking in warmly yourself is what helps."
    ],
@@ -3225,7 +3225,7 @@ const LC_TOPICS = [
     "“I've noticed you haven't seemed like yourself. I'm not upset. I'm here.”",
     "“You don't have to explain it all. What's it been like?”",
     "“Let's talk with your doctor together. You're not in trouble.”",
-    "“Are you thinking about killing yourself?” Asking plainly is safe, and it doesn't put the idea in their head."
+    "“What has been the hardest part?” Then listen, without fixing."
    ],
    "avoid": [
     "“Snap out of it,” or “You have nothing to be sad about.”",
@@ -3323,7 +3323,7 @@ const LC_TOPICS = [
     "“I'm not mad. I'm here, and I want to understand.”",
     "“What was happening right before?”",
     "“I'll help you stop. We'll get help together.”",
-    "“Are you thinking about killing yourself?” Asking plainly is safe, and it doesn't put the idea in their head."
+    "“How are you, really?” Then listen, and stay close."
    ],
    "avoid": [
     "Yelling, punishing, or a shocked face. Breathe first.",
@@ -3392,7 +3392,7 @@ const LC_TOPICS = [
    "If you're thinking about suicide, reach out now: call or text 988, or text HOME to 741741. In danger right now: call 911.",
    "Thoughts of suicide are a sign of pain, not weakness. Many people have had them and found their way through with help.",
    "These thoughts usually come in waves. A safety plan, made on an okay day, helps you get through the hardest moments.",
-   "Telling someone is one of the strongest things you can do. Asking about suicide doesn't put the idea in anyone's head."
+   "Telling someone is one of the strongest things you can do. Talking about it is how help begins."
   ],
   "feel": "Maybe the pain feels like it will never end, and you can't see a way out. You might feel like a burden, like everyone would be better off without you, or just so tired of feeling this way. The thoughts can come and go, or crowd in at night. You might feel scared of them, ashamed of them, or strangely calm. Whatever you're feeling, you deserve someone in it with you. The pain is real, and so is the chance that it gets better.",
   "self": {
@@ -3417,9 +3417,9 @@ const LC_TOPICS = [
    "people": "Try: “I've been having thoughts of suicide, and I need help.” If saying it is too hard, text it, write it down, or show someone this guide. If a friend tells you they're thinking about suicide, don't keep it secret, even if they ask. Stay with them, and tell a trusted adult right away."
   },
   "helper": {
-   "feel": "They may feel like a burden, trapped, or too tired to keep going. Many are afraid to tell, because they worry about scaring you, getting in trouble, or being locked up. Some are relieved the moment someone finally asks.",
+   "feel": "They may feel like a burden, trapped, or too tired to keep going. Many are afraid to tell, because they worry about scaring you, getting in trouble, or being locked up. Some are relieved the moment someone finally listens.",
    "say": [
-    "“Are you thinking about killing yourself?” Ask plainly and calmly. Asking is safe, and it doesn't put the idea in their head.",
+    "“How are you, really? Can you tell me more about that?” Ask calmly, and listen without fixing.",
     "“Thank you for telling me. I'm glad you did.”",
     "“You matter to me, and this can get better with help. We'll get it together.”",
     "“Let's make a plan for the hard moments, together.”"
@@ -4007,7 +4007,7 @@ const LC_TOPICS = [
     "If you bet, think about what your teen sees at home, and keep your accounts and cards secure.",
     "Watch for signs of trouble: missing money, borrowing, selling things, lying about where money went, or mood swings tied to results.",
     "If you see signs, call the Minnesota Problem Gambling Helpline together: 1-800-333-4673, or text HOPE to 53342.",
-    "Ask directly about mood and safety. If they talk about not wanting to be alive, call or text 988 together."
+    "Ask open questions about how they're feeling. If they talk about not wanting to be alive, call or text 988 together."
    ],
    "you": "Finding out a teen has lost money gambling can bring up anger, fear, and even guilt about your own habits. Get support for yourself too: the Minnesota helpline is there for families. Your calm matters more than having every answer."
   },
@@ -4119,8 +4119,7 @@ const LC_TOPICS = [
    "If an adult in your life (a family member, caregiver, coach, or anyone older) is hurting you: Childhelp, call or text 1-800-422-4453, any time. You can also tell a trusted adult outside your home, like a school counselor or teacher.",
    "If it was someone you're dating: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522.",
    "If pictures were taken or shared: Take It Down (takeitdown.ncmec.org) and the CyberTipline (1-800-843-5678). You are not in trouble.",
-   "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time.",
-   "In Pine, if you answer that someone is hurting you, Pine shows you outside help right away. That answer never goes to your family alert."
+   "If you feel so low you don't want to be alive: call or text 988, or text HOME to 741741 (in Minnesota, text MN to 741741), any time."
   ],
   "more": [
    [

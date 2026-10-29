@@ -4,7 +4,7 @@
 <script>(function(){try{var m=document.cookie.match(/(?:^|; )gg_theme=(light|dark)/);var t=m?m[1]:localStorage.getItem("gg_theme");if(t==="light"||t==="dark"){document.documentElement.setAttribute("data-theme",t);document.documentElement.style.colorScheme=t;}}catch(e){}})();</script>
 <script src="/shared/gg-app.js?v=b782"></script>
 <script src="/shared/gg-shelf.js?v=b885"></script>
-<script src="/shared/gg-sources.js?v=b878"></script>
+<script src="/shared/gg-sources.js?v=b888"></script>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="color-scheme" content="light dark">
@@ -92,7 +92,10 @@ h3{font-size:calc(28px * var(--scale));}
 .site-nav a[aria-current="page"]{color:var(--gold);}
 .size-btn,.menu-btn{font-family:'Barlow',sans-serif;border:1px solid var(--line);background:var(--card);border-radius:10px;height:40px;min-width:44px;cursor:pointer;font-weight:600;font-size:15px;color:var(--ink);}
 .menu-btn{display:none;align-items:center;justify-content:center;}
-@media (max-width:1360px){
+/* GWG BLD 886: the full bar (search, menu, profile, Get Grounded Now, theme, text size) needs about 1370px, so it
+   widens to fit and folds into the menu button below 1400px, and the page never scrolls sideways. */
+@media (min-width:1400px){ .topbar-in{max-width:1440px;} .site-nav a{padding:10px 7px;} }
+@media (max-width:1399px){
   .menu-btn{display:inline-flex;margin-left:auto;}
   .site-nav{display:none;position:absolute;top:100%;left:0;right:0;flex-direction:column;align-items:stretch;background:var(--bg);border-bottom:1px solid var(--line);padding:8px 16px 16px;box-shadow:var(--shadow);}
   .site-nav.open{display:flex;}
@@ -714,21 +717,23 @@ select.gv-input{min-height:44px;}
 </footer>
 
 <script src="/grove/data.js?v=b887"></script>
-<script src="/grove/library.js?v=b852"></script>
+<script src="/grove/library.js?v=b888"></script>
 <script src="/shared/grove-scene.js?v=b862"></script>
 <script src="/shared/gg-grove-row.js?v=b770"></script>
 <script src="/shared/gg-living.js?v=b770"></script>
 <script src="/shared/gg-avatars.js?v=b782"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b887"></script>
+<script src="/shared/gg-profiles.js?v=b888"></script>
 <script src="/grove/together.js?v=b787"></script>
 <script src="/grove/kinds.js?v=b788"></script>
-<script src="/grove/guides.js?v=b852"></script>
+<script src="/grove/guides.js?v=b888"></script>
 <script src="/shared/gg-library.js?v=b887"></script>
 <script src="/shared/gg-treeart.js?v=b780"></script>
 <script src="/shared/gg-treeart-kids.js?v=b780"></script>
 <script src="/shared/gg-pdf.js?v=b803"></script>
-<script src="/grove/app.js?v=b887"></script>
+<script src="/shared/gg-guided.js?v=b889"></script>
+<script src="/shared/guided/grove.js?v=b889"></script>
+<script src="/grove/app.js?v=b889"></script>
 <script>
 /* Read aloud, built in like Maple */
 (function () {
@@ -752,9 +757,9 @@ select.gv-input{min-height:44px;}
   });
 })();
 </script>
-<script src="/shared/gg-learn.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b887';document.head.appendChild(s)"></script>
+<script src="/shared/gg-learn.js?v=b888" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/shared/gg-learn.js?v=b888';document.head.appendChild(s)"></script>
 <script src="/read.js?v=b813" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/read.js?v=b813';document.head.appendChild(s)"></script>
-<script src="/nav.js?v=b887" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b887';document.head.appendChild(s)"></script>
-<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b887" defer></script><!-- /PAGE VIDEO -->
+<script src="/nav.js?v=b889" defer onerror="var s=document.createElement('script');s.src='https://growwithgrounded.com/nav.js?v=b889';document.head.appendChild(s)"></script>
+<!-- PAGE VIDEO (BLD 780) --><script src="/shared/page-videos.js?v=b888" defer></script><!-- /PAGE VIDEO -->
 </body>
 </html>
