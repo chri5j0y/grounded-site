@@ -438,6 +438,11 @@ function progLabel(d){ if (!progOn()) return ''; const w = progWeek(d); if (w < 
 // The sets and reps key: the phase (1, 2, 3) with the program; the old rotation without it.
 const phNum = d => progOn() ? String(1 + PH_IDS.indexOf(phaseId(progWeek(d)))) : String(phaseOf(weekNo(d)));
 const lightOn = d => progOn() ? lightWk(Math.max(1, progWeek(d))) : lightWk(Math.max(1, weekNo(d)));
+// BLD 896 (Every Workout): a program workout plays with its own phase's sets and reps (a Build workout in week 1 plays as Build);
+// the lighter week applies only to the phase the person is in. Any other workout keeps today's key.
+const sesPh = id => { id = String(id || ''); if (!PROG() || !/^([A-L]|R\d+)$/.test(id)) return ''; return PH_IDS.find(ph => trackIds('strength', ph).includes(id) || trackIds('cardio', ph).includes(id)) || idPhase(id); };
+function phKeyFor(id, d){ const own = sesPh(id); if (!own || !PROG()) return {ph: phNum(d), light: lightOn(d)};
+  const cur = phaseId(Math.max(1, progWeek(d))); return {ph: String(1 + PH_IDS.indexOf(own)), light: own === cur && progOn() ? lightOn(d) : false}; }
 // Session ids by phase: Strength A to D, E to H, I to L; Cardio R1 to R12 (the same ids in public Tending and the Guide library).
 const STR_IDS = {foundation: ['A', 'B', 'C', 'D'], build: ['E', 'F', 'G', 'H'], peak: ['I', 'J', 'K', 'L']};
 const CAR_IDS = {foundation: ['R1', 'R2', 'R3', 'R4'], build: ['R5', 'R6', 'R7', 'R8'], peak: ['R9', 'R10', 'R11', 'R12']};
@@ -603,6 +608,7 @@ function agenda(d){
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
   if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
   const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
+  holAgenda(d).forEach(x => out.push(x)); // BLD 896: a set up holiday's shopping day and prep days
   return out.sort((a, b) => a.hour - b.hour);
 }
 // ---------- BLD 846: Keep It Rolling. Reminders from the plan: thaw, freeze, shop, prep, grab and go, freezer stock ----------
@@ -660,7 +666,8 @@ function icsText(){
     const hh = Math.floor(r.hour), mm = Math.round((r.hour - hh) * 60), when = d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()) + 'T' + z(hh) + z(mm) + '00';
     ev.push(['BEGIN:VEVENT', 'UID:mh-' + r.base.replace(/[^a-z0-9-]/gi, '-') + '-' + when + '@growwithgrounded.com', 'DTSTAMP:' + st, 'DTSTART:' + when, 'DURATION:PT15M',
       'RRULE:FREQ=WEEKLY;INTERVAL=' + r.rep + ';COUNT=' + (r.rep === 4 ? 7 : 26), 'SUMMARY:' + e('Tending: ' + r.title.replace(/^(Tonight|This morning|After shopping|Tomorrow after work): /, m => /Tomorrow/.test(m) ? m : '')), 'DESCRIPTION:' + e(r.sub), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + e(r.title), 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT'].map(fold).join('\r\n')); }); }
-  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Grow With Grounded//Tending//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Tending'].concat(ev, ['END:VCALENDAR']).join('\r\n') + '\r\n';
+  holIcs(st, e, fold).forEach(x => ev.push(x)); // BLD 896: set up holidays, once each
+  return ['BEGIN:VCALENDAR', 'VERSION:2.0', 'PRODID:-//Grow With Grounded//Tending//EN', 'CALSCALE:GREGORIAN', 'X-WR-CALNAME:Tending'].concat(ev, ownIcs(st, e, fold), ['END:VCALENDAR']).join('\r\n') + '\r\n';
 }
 function remBlock(d){
   if (!remOn()) return `<p class="hj-sub" style="margin:0 0 14px"><button type="button" class="linkbtn" data-hja="remoff">Show Reminders</button></p>`;
@@ -707,6 +714,7 @@ function ideasBlk(t, list, key){ return arr(list).length ? `<details class="hj-d
     ${arr(x.shop).length ? `<span class="hj-gi">Buy: ${arr(x.shop).map(g => esc(g.name) + (g.amt ? ' (' + esc(g.amt) + ')' : '')).join(', ')}</span>` : ''}${x.from ? `<span class="hj-gi">From prep: ${esc(x.from)}</span>` : ''}${x.pack ? `<span class="hj-gi">Pack it: ${esc(x.pack)}</span>` : ''}${arr(x.steps).length ? `<button type="button" class="btn btn-line btn-sm hj-ideago" data-hja="idea" data-hjv="${key}|${i}">Guide Me</button>` : ''}
     ${arr(x.shop).length ? `<button type="button" class="btn btn-line btn-sm hj-ggadd" data-hja="ggadd" data-hjv="${key}|${i}">Add to Shopping List</button>` : ''}</li>`).join('')}</ul></div></details>` : ''; }
 function vWeek(){
+  if (S.wkView === 'month') return ownViewTabs('month') + vMonth();   // BLD 896: the Month beside the Week
   const d0 = new Date(), n0 = weekNo(d0), n = Math.max(1, n0 + (S.wkOff || 0)), mon = addD(startMon(), (n - 1) * 7), app = APP() || {}, din = app.dinners || {};
   const track = H().set.track || 'strength';
   const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = dinnerFor(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
@@ -718,12 +726,14 @@ function vWeek(){
       ${d.getDay() === 0 && prepFor('sunday', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="sunday|${n + 1}">Sunday Together Prep</button>` : ''}
       ${d.getDay() === 0 && prepFor('batch', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="batch|${n + 1}">${esc(prepFor('batch', n + 1).title || 'Weekly Batch')}</button>` : ''}
       ${mf ? `<button type="button" class="hj-pill calm" data-hja="go" data-hjv="medid:${esc(mf.id)}">${esc(mf.title)} <small>${esc(medMins(n))} min meditation${track === 'practice' ? ', evening' : ''}</small></button>` : ''}
+      ${ownPills(d)}
+      ${holWeekDay(d).map(x => `<button type="button" class="hj-pill prep" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)}</button>`).join('')}
       ${remOn() && !H().set.remWk ? remindersFor(d, 'all').map(r => `<button type="button" class="hj-pill rem${S.remOpen === r.id ? ' on' : ''}" data-hja="remshow" data-hjv="${esc(r.id)}" aria-expanded="${S.remOpen === r.id}">${esc(r.title)}</button>`).join('') : ''}
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
     </div></div>`; }).join('');
   const w = (din.weeks || {})[letter(n)] || {}, ideas = ideasBlk;
-  return `<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${letter(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
-  ${newCard()}${againCard()}${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
+  return `${ownViewTabs('week')}${ownWeekLine(mon)}<div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="-1"${n <= 1 ? ' disabled' : ''}>Back</button><div><b>Week ${n}</b><small>Food Week ${letter(n)}${KIT() ? '' : progOn() ? (progLabel(mon) ? ' · ' + esc(progLabel(mon)) + (lightOn(mon) ? ' · lighter' : '') : '') : ' · Phase ' + phaseOf(n) + (lightWk(n) ? ' · lighter' : '')}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="wk" data-hjv="1">Next</button></div>
+  ${newCard()}${againCard()}${holCardsHtml()}${n0 < 1 && !S.wkOff ? `<p class="hj-note">Your plan starts ${esc(shortDate(startMon()))}. Here is your first week.</p>` : ''}
   <div class="hj-blk hj-days">${rows}</div>
   ${remOn() ? `<div class="row" style="margin:-4px 0 14px"><button type="button" class="btn btn-line btn-sm" data-hja="remics">Add Reminders to My Phone Calendar</button><button type="button" class="linkbtn" data-hja="remwk">${H().set.remWk ? 'Show Reminders on This Week' : 'Keep Reminders on Today Only'}</button></div>` : ''}
   ${wbNote(w)}
@@ -748,7 +758,10 @@ const SECS = ['Grab and Go', 'Produce', 'Meat and Fish', 'Eggs, Dairy, and Milks
 const STORES = {costco: 'Costco', grocer: 'Coborn\'s'}; // Coborn's, the local grocer (Chris, October 24, 2026: Cub is 24 miles away)
 const SECS_P = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Frozen', 'Pantry', 'Spices', 'Grab and Go', 'Other'];
 const SECX = () => PUB() ? SECS_P : SECS;
-function shopList(n){
+// BLD 896: My Own Shopping Items join each week's list (ownShop).
+// BLD 896: a set up holiday's shopping joins the list for the week of its buy day (holMerge).
+function shopList(n){ return holMerge(ownShop(shopList0(n), n), Math.max(1, n)); }
+function shopList0(n){
   const h = H(), key = String(Math.max(1, n)); if (h.shop[key]) return wbMerge(h.shop[key], n);
   const sp = (APP() || {}).shop, w = sp && sp.weeks && sp.weeks[letter(n)]; if (!w) return null;
   const mine = MINE(), add = letter(n) === 'A' ? arr(mine && mine.addons) : [];
@@ -767,7 +780,7 @@ function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[
 function vShop(){
   const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = num(h.set.household);
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
-  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st), left = vis.filter(x => !x.done);
+  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
   const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
@@ -778,6 +791,7 @@ function vShop(){
   ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(x.amt)}${x.for ? ' · ' + esc(x.for) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="shopsave" data-hjv="${esc(x.id)}">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="shopclose">Close</button><button type="button" class="linkbtn" data-hja="shopdel" data-hjv="${esc(x.id)}">Remove</button></div></div>` : '')).join(''); }).join('')}
   <div class="hj-add"><input id="hj-addname" placeholder="Add an item" autocomplete="off"><button type="button" class="btn btn-gold btn-sm" data-hja="shopadd">Add</button></div>
+  ${ownShopPanel(n)}
   <div class="row" style="margin-top:12px"><button type="button" class="btn btn-gold btn-sm" data-hja="shopcopy">Copy for a Text</button><button type="button" class="btn btn-line btn-sm" data-hja="shopreset">${S.sureReset ? 'Tap Again to Clear the Checks' : 'Start Over'}</button></div>
   <textarea id="hj-copy" class="hj-copy" readonly hidden></textarea>
   <p class="hj-note">Prices are estimates. Tap any item to change it. This list lives on this device.</p>`;
@@ -791,7 +805,7 @@ function shopText(n){
 // ---------- overlays: workout, cook, prep, meditation ----------
 function buildWork(s){
   const ses = sesById(s); if (!ses) return null;
-  const t0 = new Date(), steps = stepsFor(ses, phNum(t0), lightOn(t0));
+  const t0 = new Date(), pk = phKeyFor(s, t0), steps = stepsFor(ses, pk.ph, pk.light);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s, key: 'work:' + s, title: ses.title || 'Session ' + s, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
@@ -878,8 +892,9 @@ function ovArtName(o){
   if (o.med || o.k === 'med'){ const m = MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : 'quiet-meditation'; }
   if (o.prac) return flowArtName(arr((PR() || {}).sessions).find(z => z.id === o.s)).replace(/-sq$/, '');
   if (o.k === 'work'){ const p = String(o.key || '').split(':'), lvl = p[0] === 'wl' ? p[1] : '';
-    const ses = lvl ? (((levelSets().find(L => L.id === lvl) || {}).sessions) || {})[o.s] : sesById(o.s); return moveArtName(o.s, ses, lvl).replace(/-sq$/, ''); }
+    const ses = lvl ? (levelSes(lvl, o.s) || {}).ses : sesById(o.s); return moveArtName(o.s, ses, lvl).replace(/-sq$/, ''); }
   if (o.k === 'prep') return /^prep:batch:/.test(o.key || '') ? ART_KITCHEN.batch : ART_KITCHEN.prep;
+  if (o.hol) return (o.data && o.data.art) || ART_KITCHEN.dinner; // BLD 896: Today's Plate, or the Weekly Batch table on a make-ahead day
   if (o.k === 'cook'){ if (o.peek) return ART_KITCHEN.head; const k = String(o.key || ''), x = o.data || {}, meal = /^idea:/.test(k) && !/^idea:recipe:/.test(k) ? k.split(':')[1] : String(x.meal || 'dinner').toLowerCase();
     if (/^lunch/.test(meal)) return ART_KITCHEN.lunch; if (/^breakfast/.test(meal)) return ART_KITCHEN.breakfast; if (/^snack/.test(meal)) return ART_KITCHEN.snack;
     return (dinnerArtName(x) || '').replace(/-sq$/, '') || ART_KITCHEN.dinner; }
@@ -907,6 +922,7 @@ function openKey(key){
   if (k === 'idea') return openIdea(a, b);
   if (k === 'head') return openOv(headOv(a));
   if (k === 'wl') return openOv(buildLevelWork(a, b));
+  if (/^hol(set|rec)?$/.test(k) && holAct(key)) return;
   markDone(key); toast('Marked done. Well done.'); rerender(true);
 }
 // BLD 881: each guide is built by its own *Ov function, so GGHealth.render can play one inside a sheet as well as full screen.
@@ -929,6 +945,7 @@ function actTool(a, v){
   const h = H(), o = S.ov;
   if (actCoach(a, v)) return true;
   if (actRecipes(a, v)) return true;
+  if (actHol(a, v)) return true;
   switch (a){
     case 'go': return openKey(v), true;
     case 'toggle': { const l = logOf(new Date()); if (l[v]) delete l[v]; else l[v] = Date.now(); if (l[v]){ if (v.startsWith('work:')) checkOn('move'); if (v === 'prac' || v === 'med') checkOn('still'); } save(); rerender(true); return true; }
@@ -951,6 +968,7 @@ function actTool(a, v){
       keepShop(n, L); toast(added ? 'Added to Week ' + letter(n) + '\'s list.' : 'Already on the list.'); return true; }
     case 'store': S.store = v; S.shopEd = null; rerender(true); return true;
     case 'hide': S.hideDone = !S.hideDone; rerender(true); return true;
+    case 'ewlvl': S.ewLvl = v; S.ewOpen = 'strength'; rerender(true); return true;
     case 'buy': { const n = S.shopWk || foodWeek(new Date()), L = shopList(n), x = L.items.find(y => y.id === v); if (!x) return true; x.done = !x.done; keepShop(n, L); rerender(true); return true; }
     case 'shoped': S.shopEd = S.shopEd === v ? null : v; rerender(true); return true;
     case 'shopclose': S.shopEd = null; rerender(true); return true;
@@ -1027,7 +1045,7 @@ const LN = {
   go: 'Go.', rest: s => 'Rest ' + s + ' seconds.', ten: 'Ten seconds.', nextSet: 'Next set.',
   next: n => 'Next up: ' + n + '.', cool: 'Cooldown time. Nice work.', out: 'That is the session. Strong work today.',
   nextRest: (s, n) => 'Rest ' + s + ' seconds. Next up: ' + n + '.',
-  left: 'Left side.', right: 'Right side.', sw: 'Switch sides.', tap: 'Tap Set Done when you finish.',
+  left: 'Left side.', right: 'Right side.', sw: 'Switch sides.', way: 'Now the other way.', tap: 'Tap Set Done when you finish.',
   alt: 'Alternate sides, left then right, back and forth.',
   half: ['Halfway. Smooth and steady.', 'Halfway. Keep breathing.', 'Halfway. Nice control.'], last: 'Last few.', done: 'Set done.',
   hard: st => 'Too hard? ' + st.easier, easy: st => 'Too easy? ' + st.harder,
@@ -1076,15 +1094,31 @@ const halfSide = x => !altMove(x) && /per side|each side|switch sides/i.test((x.
 function stepsFor(ses, ph, light, w0){
   const w = w0 || WK(), out = [];
   // BLD 891: a session may carry its own warm-up for its focus (public Tending by day; the Guide library per session).
-  arr((ses && ses.warmup) || w.warmup).forEach(x => out.push({t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part: 'Warm-up', fig: x.name, half: halfSide(x)}));
-  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x);
+  arr((ses && ses.warmup) || w.warmup).forEach(x => out.push(wuStep(x, 'Warm-up', ph)));
+  arr(ses.blocks).forEach(b => arr(b.items).forEach(x => { const sets = +((x.sets || {})[ph] || (x.sets || {})['1'] || 1), reps = String((x.reps || {})[ph] || (x.reps || {})['1'] || ''), per = !!x.side || /per side|each side/i.test(reps), alt = altMove(x), mv = pubMove(x);
     out.push({t: 'ex', id: x.id || x.name, name: x.name, how: x.how, cue: x.cue, swap: x.swap, sets: light ? Math.max(1, sets - 1) : sets, reps, kind: x.kind || 'reps', part: b.title || 'Main', fig: x.fig || x.name,
-      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || ''}); }));
+      rest: capRest(+x.rest || REST_MAX), restAfter: x.restAfter != null ? capRest(+x.restAfter || 0) : REST_MAX, side: per && !alt, alt, per, steps: arr(x.steps).filter(Boolean), easier: x.easier || '', harder: x.harder || '', tempo: +x.tempo || 0, tips: arr(x.tips).filter(Boolean).slice(0, 2), load: x.load || '', equip: x.equip || '',
+      form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath)}); }));
   // The last move flows straight into the cooldown.
   for (let i = out.length - 1; i >= 0; i--) if (out[i].t === 'ex'){ out[i].restAfter = 0; break; }
-  arr((ses && ses.cooldown) || w.cooldown).forEach(x => out.push({t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part: 'Cooldown', fig: x.name, half: halfSide(x)}));
+  arr((ses && ses.cooldown) || w.cooldown).forEach(x => out.push(wuStep(x, 'Cooldown', ph)));
   return out;
 }
+// BLD 896 (Chris's Friday notes 2 to 4): a warm-up or cooldown item may carry reps and a tempo (seconds per rep); with Voice Counts
+// Reps on, Ava counts it like a set, and a per side item ("10 each side") or a two way item ("5 each way") turns at the half with
+// Switch sides or Now the other way. Without reps it keeps its timer, exactly as before. A move's form line (spoken after Go on set 1)
+// and breath line (spoken on rep 1 of set 1) ride along from the item, or in public Tending from its move.
+const sayLine = v => typeof v === 'string' && v.trim() && !BREATH[v] ? v.trim() : '';
+const pubMove = x => { const id = x && x.move; if (!id || !PUB()) return {}; const L = PLIB(); return arr(L && L.moves).find(m => m && m.id === id) || {}; };
+function wuStep(x, part, ph){
+  const r0 = x.reps && typeof x.reps === 'object' ? (x.reps[ph] || x.reps['1'] || '') : x.reps, rs = String(r0 == null ? '' : r0), n = parseInt(rs, 10) || 0;
+  const way = !!n && (x.way === true || (x.side !== true && /each way|each direction|both ways/i.test(rs))), side = !way && !!n && (x.side === true || x.per === true || /each side|per side/i.test(rs)), alt = altMove(x), mv = pubMove(x);
+  return {t: 'time', name: x.name, how: x.how, steps: arr(x.steps).filter(Boolean), feel: x.feel || '', easier: x.easier || '', secs: +x.secs || 45, part, fig: x.fig || x.name, half: halfSide(x),
+    wreps: n > 0 ? n : 0, wbreath: x.unit === 'breaths', tempo: +x.tempo || +mv.tempo || 0, wturn: side && !alt ? 'side' : way ? 'way' : '', walt: alt && (side || /each side|per side/i.test(rs)),
+    form: sayLine(x.form) || sayLine(mv.form), breathLine: sayLine(x.breath) || sayLine(mv.breath)};
+}
+// How many counts a warm-up item takes per turn (0: it keeps its timer). Counted only with Voice Counts Reps on and a tempo.
+const wuN = (st, o) => { if (!st || st.t !== 'time' || st.lines || !st.wreps || !(st.tempo > 0) || (o && (!o.count || o.prac))) return 0; const n = st.wreps * (st.walt ? 2 : 1); return n <= 20 ? n : 0; };
 const PR = () => (APP() || {}).practice || null;
 const MED = () => { const m = (APP() || {}).meditations; return m && arr(m.sessions).length ? m : null; };
 const BRIAN = 'brian';
@@ -1140,12 +1174,12 @@ function allLines(){
   Object.entries(w.sessions || {}).forEach(([id, ses]) => { add(AVA, LN.ses(ses.title || 'Session ' + id, ses.mins || 50));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light); S2.forEach((st, i) => {
       const nx = S2[i + 1];
-      if (st.t === 'time'){ add(AVA, LN.time(st)); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
-      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
+      if (st.t === 'time'){ add(AVA, LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); }
     }); })); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap, LN.alt, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt, lightLine('start'), lightLine('end')].forEach(t => add(AVA, t));
   MOT().forEach(t => add(AVA, t));
   const md = app.meditations; arr(md && md.sessions).forEach(s => { add(BRIAN, LN.mIntro(s.title)); arr(s.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const p = app.practice; arr(p && p.sessions).forEach(s => { add(AVA, LN.pIntro(s.title, s.mins)); arr(s.steps).forEach(x => add(AVA, LN.time({name: x.name, how: x.how}))); });
@@ -1163,8 +1197,8 @@ function allLinesPub(){
   const sesLines = (sessions, w0) => Object.entries(sessions || {}).forEach(([id, ses]) => {
     [ses.mins].concat(Object.values(ses.minsByPhase || {})).filter(Boolean).forEach(m => add(AVA, LN.ses(ses.title || 'Session ' + id, m)));
     ['1', '2', '3'].forEach(ph => [false, true].forEach(light => { const S2 = stepsFor(ses, ph, light, w0); S2.forEach((st, i) => { const nx = S2[i + 1];
-      if (st.t === 'time'){ add(AVA, LN.time(st)); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
-      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
+      if (st.t === 'time'){ add(AVA, LN.time(st)); add(AVA, st.form); add(AVA, st.breathLine); if (nx && nx.t === 'ex') add(AVA, LN.nextRest(GET_READY, nx.name)); }
+      else { add(AVA, LN.ex(st)); add(AVA, st.cue); add(AVA, st.form); add(AVA, st.breathLine); add(AVA, LN.rest(st.rest)); for (let n = 2; n <= st.sets; n++) add(AVA, LN.set(n, st.sets)); st.tips.forEach(t => add(AVA, t)); if (st.sets > 1){ if (st.easier) add(AVA, LN.hard(st)); if (st.harder) add(AVA, LN.easy(st)); }
         if (nx && nx.t === 'ex') add(AVA, st.restAfter ? LN.nextRest(st.restAfter, nx.name) : LN.next(nx.name)); } }); })); });
   if (P) ['root', 'rise', 'thrive'].forEach(lv => ['home', 'light', 'gym'].forEach(pl => [20, 40, 60].forEach(m => { const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl, mins: m, warmup: L.warmup, cooldown: L.cooldown}); sesLines(b.sessions, b); })));
   // BLD 892: every track and phase at every level and length, for the old places and the usual equipment sets (a set not listed
@@ -1175,14 +1209,14 @@ function allLinesPub(){
     ['strength', 'cardio'].forEach(tr => PH_IDS.forEach(ph => { if (!L.program.tracks[tr] || !L.program.tracks[tr][ph]) return;
       ['root', 'rise', 'thrive'].forEach(lv => [20, 40, 60].forEach(m => sets.forEach(g => (g ? [null] : ['home', 'light', 'gym']).forEach(pl => {
         const b = P.buildSessions(L.moves, L.templates, {level: lv, place: pl || 'home', gear: g || undefined, mins: m, warmup: L.warmup, cooldown: L.cooldown, track: tr, phase: ph, program: L.program}); sesLines(b.sessions, b); })))); }));
-    arr(L.moves).forEach(mv => { add(AVA, mv.cue); arr(mv.tips).slice(0, 2).forEach(t => add(AVA, t)); if (mv.easier) add(AVA, LN.hard(mv)); if (mv.harder) add(AVA, LN.easy(mv)); });
+    arr(L.moves).forEach(mv => { add(AVA, mv.cue); add(AVA, sayLine(mv.form)); add(AVA, sayLine(mv.breath)); arr(mv.tips).slice(0, 2).forEach(t => add(AVA, t)); if (mv.easier) add(AVA, LN.hard(mv)); if (mv.harder) add(AVA, LN.easy(mv)); });
   }
   const G = L.gentle || {}, walks = [...new Set(arr(G.walkWeeks).map(x => +x.mins).filter(Boolean))];
   (walks.length ? walks : [0]).forEach(wm => { const ses = {}; arr(G.sessions).forEach((x, i) => { const c = JSON.parse(JSON.stringify(x));
     if (wm) arr(c.blocks).forEach(b => arr(b.items).forEach(it => { if (/steady walk/i.test(it.name || '')) it.reps = {'1': String(wm * 60), '2': String(wm * 60), '3': String(wm * 60)}; })); ses[x.id || 'G' + i] = c; });
     sesLines(ses, {warmup: arr(G.warmup), cooldown: arr(G.cooldown)}); });
   for (let k = 1; k <= 20; k++) add(AVA, LN.count(k));
-  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.tap, LN.alt].forEach(t => add(AVA, t));
+  [...LN.half, ...LN.weight, LN.last, LN.done, LN.go, LN.ten, LN.nextSet, LN.cool, LN.out, LN.pOut, LN.left, LN.right, LN.sw, LN.way, LN.tap, LN.alt].forEach(t => add(AVA, t));
   arr(L.motivation).forEach(t => add(AVA, t));
   const app = L.app || {}, md = app.meditations; arr(md && md.sessions).forEach(x => { add(BRIAN, LN.mIntro(x.title)); arr(x.segments).forEach(g => arr(g.lines).forEach(l => add(BRIAN, l))); }); add(BRIAN, LN.mOut);
   const pr = app.practice; arr(pr && pr.sessions).forEach(x => { add(AVA, LN.pIntro(x.title, x.mins)); arr(x.steps).forEach(y => add(AVA, LN.time({name: y.name, how: y.how}))); });
@@ -1197,13 +1231,14 @@ function allLinesPub(){
 function planSecs(steps, i0, set0, o){
   let s = 0; const at = i0 || 0;
   steps.forEach((st, i) => { if (i < at) return; const nx = steps[i + 1];
-    if (st.t === 'time'){ s += st.secs + (st.lines ? arr(st.lines).reduce((a, l) => a + lineSecs(l) + 0.8, 0) : lineSecs(LN.time(st))) + (st.half ? lineSecs(LN.sw) : 0);
+    if (st.t === 'time'){ const wn = wuN(st, o), turns = st.wturn ? 2 : 1;
+      s += (wn ? wn * st.tempo * turns + lineSecs(LN.go) + (st.wturn ? lineSecs(LN.sw) + 1 : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine ? lineSecs(st.breathLine) : 0) : st.secs) + (st.lines ? arr(st.lines).reduce((a, l) => a + lineSecs(l) + 0.8, 0) : lineSecs(LN.time(st))) + (st.half && !wn ? lineSecs(LN.sw) : 0);
       if (!st.lines && st.part === 'Cooldown' && steps[i - 1] && steps[i - 1].part !== 'Cooldown' && !(o && o.prac)) s += lineSecs(LN.cool);
       if (nx && nx.t === 'ex') s += GET_READY; return; }
     const first = i === at ? (set0 || 1) : 1, left = Math.max(0, st.sets - first + 1), sides = st.side ? 2 : 1;
     const work = st.kind === 'time' ? workSecs(st) : repN(st) ? repN(st) * tempoOf(st) : o && o.hands === false ? TAP_EST : WORD_REPS * tempoOf(st);
     const perSet = lineSecs(LN.go) + sides * work + (st.side ? 2 * lineSecs(LN.left) + lineSecs(LN.sw) + SWITCH : 0) + (repN(st) || st.kind === 'time' ? 0 : 2);
-    s += (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue ? lineSecs(st.cue) : 0) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
+    s += (first === 1 ? lineSecs(LN.ex(st)) + (st.alt ? lineSecs(LN.alt) : 0) + (st.cue ? lineSecs(st.cue) : 0) + (st.form ? lineSecs(st.form) : 0) + (st.breathLine && repN(st) && o && o.count ? lineSecs(st.breathLine) : 0) : 0) + left * perSet + Math.max(0, left - 1) * (st.rest + lineSecs(LN.set(2, 3)));
     if (nx && nx.t === 'ex') s += st.restAfter || lineSecs(LN.next(nx.name)); });
   return s;
 }
@@ -1246,25 +1281,52 @@ async function doSet(o, st){
     o.side = sides[k]; rerender(true);
     if (o.side) await speak(o, o.side === 'L' ? LN.left : LN.right);
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
-    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); await runTimer(o, workSecs(st) * 1000, ''); }
-    else if (o.count && repN(st)){ await speak(o, LN.go); o.rep = 0; rerender(true);
-      for (let r = 1; r <= repN(st) && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r; document.querySelectorAll('[data-hjrep]').forEach(e => e.textContent = r); const t0 = Date.now(); await speak(o, LN.count(r)); const wt = tempoOf(st) * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
-      o.rep = 0; }
-    else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1);
-    else { await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
+    const lead = o.set === 1 && k === 0;
+    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); if (lead && st.form) speak(o, st.form); await runTimer(o, workSecs(st) * 1000, ''); }
+    else if (o.count && repN(st)){ await speak(o, LN.go); if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } o.rep = 0; o.ring = lead; rerender(true);
+      for (let r = 1; r <= repN(st) && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r;
+        if (o.ring && (r === 1 || r > RING_REPS)){ if (r > RING_REPS) o.ring = false; rerender(true); } else repShow(r);
+        figRep(st, r); const t0 = Date.now(); await speak(o, LN.count(r)); if (lead && r === 1 && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+        const wt = tempoOf(st) * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
+      o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
+    else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
+    else { await speak(o, LN.go); if (lead && st.form) await speak(o, st.form); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
     if (o.skip && k < sides.length - 1 && !o.skipMove) o.skip = false;
   }
   o.side = ''; o.rep = 0;
 }
 // Auto Flow (BLD 891): a set of reps timed at the move's tempo. Ava says Go, a halfway line, Last few, and Set done; the ring
 // drains and the last three seconds tick. Set Done ends it early; Pause holds it.
-async function hfSet(o, st, lastSide){
+async function hfSet(o, st, lastSide, lead){
   const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
-  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs});
+  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = !!lead;
+  if (lead && (st.form || st.breathLine)) (async () => { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && o.hf && !o.dead){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } })();
   await runTimer(o, secs * 1000, '', false, left => { const s2 = left / 1000;
+    if (o.ring && secs - s2 >= RING_REPS * t){ o.ring = false; rerender(true); }
     if (!saidHalf && secs >= 16 && s2 <= secs / 2 && s2 > lastAt + 2){ saidHalf = true; if (!o.spk) speak(o, LN.half[(o.hi = (o.hi || 0) + 1) % LN.half.length]); }
     if (!saidLast && n >= 6 && s2 <= lastAt){ saidLast = true; if (!o.spk) speak(o, LN.last); } });
-  o.hf = false; if (!o.dead && lastSide) await speak(o, LN.done);
+  o.hf = false; o.ring = false; if (!o.dead && lastSide) await speak(o, LN.done);
+}
+// BLD 896 (note 6): the breath ring on the first three reps of set 1, timed from the tempo: breathe in on the lowering (about
+// six tenths of the rep), out on the push. A quick move (under 2 seconds a rep) takes one breath over two reps.
+const RING_REPS = 3;
+function repBreath(st){ const t = tempoOf(st), per = t < 2 ? t * 2 : t; if (per <= 2) return [1, 1]; const i = Math.round(per * 6) / 10; return [i, Math.round((per - i) * 10) / 10]; }
+const repShow = r => { const els = document.querySelectorAll('[data-hjrep]'); if (els.length) els.forEach(e => e.textContent = r); else rerender(true); };
+// BLD 896 (note 9): the figure starts its loop again on each counted rep, so it moves with Ava's count. GGMoves.restart (FIG) when
+// the page has it; else the figure's own clock goes back to the start (an alternating move every other rep, its loop is two reps).
+function figRep(st, r){ const M = window.GGMoves, two = !!(st && (st.alt || st.walt));
+  document.querySelectorAll('.hj-stagebox svg.gg-move').forEach(el => { try { if (M && typeof M.restart === 'function') M.restart(el, {rep: r, alt: two, tempo: tempoOf(st)}); else if (el.setCurrentTime && (!two || r % 2 === 1)) el.setCurrentTime(0); } catch(e){} }); }
+// A counted warm-up or cooldown item: Go, its form line, then each rep counted at its tempo; a per side or two way item turns at the half.
+async function wuCount(o, st){
+  const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = !!st.wbreath;
+  for (let k = 0; k < turns && !o.dead && !o.skip; k++){
+    if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
+    else { await speak(o, LN.go); if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } }
+    for (let r = 1; r <= n && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r; if (r === 1) rerender(true); else repShow(r); figRep(st, r);
+      const t0 = Date.now(); await speak(o, LN.count(r)); if (r === 1 && !k && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+      const wt = st.tempo * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
+  }
+  o.rep = 0; o.side = ''; o.ring = false;
 }
 // What Ava says in a rest between sets, here and there (BLD 891): after the first set the easier and harder versions, after the
 // second a weight line for a move with a weight, otherwise a motivation line.
@@ -1301,7 +1363,7 @@ async function runSession(o){
       if (st.lines){ for (const ln of st.lines){ if (o.dead || o.skip) break; o.line = ln; rerender(true); await hold(o); await speak(o, ln); if (!(VO() && VO().on())) await snooze(o, Math.min(4000, lineSecs(ln) * 1000)); await snooze(o, 800); } o.line = ''; }
       else await speak(o, LN.time(st));
       await hold(o); if (o.dead) break;
-      if (!o.skip) await runTimer(o, st.secs * 1000, '', st.half);
+      if (!o.skip){ if (wuN(st, o)) await wuCount(o, st); else await runTimer(o, st.secs * 1000, '', st.half); }
       o.done.push(o.i); o.i++; o.set = 1; o.skip = false;
       const nx = o.steps[o.i]; if (nx && nx.t === 'ex' && !o.dead) await between(o, nx, GET_READY);
       continue;
@@ -1334,7 +1396,8 @@ function stCol(state, hour){
   const a = STC[state] || STC.work, k = hour < 12 ? 0 : hour < 18 ? 1 : 2; return {bg: '', fg: '', accent: a[k]};
 }
 let FLIP_OK = null;
-function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (st.fig && arr(M.patterns).includes(st.fig) ? st.fig : M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (st.fig && arr(M.patterns).includes(st.fig) ? (M.refine ? M.refine(st.fig, st.name) : st.fig) : M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+  if (!st.figKey && (+st.tempo > 0 || (st.t === 'ex' && st.kind !== 'time'))){ op.tempo = tempoOf(st); op.alt = !!(st.alt || st.walt); }
   if (!flip) return M.svg(pat, op); if (FLIP_OK == null) FLIP_OK = M.svg('standing', {flip: true, still: true}) !== M.svg('standing', {still: true});
   return FLIP_OK ? M.svg(pat, Object.assign(op, {flip: true})) : `<div style="transform:scaleX(-1)">${M.svg(pat, op)}</div>`; } catch(e){ return ''; } }
 function figOf(st, flip){ if (st && st.candle) return candle(); const f = moveFig(st, flip); return f ? `<div class="hj-fig" aria-hidden="true">${f}</div>` : ''; }
@@ -1360,7 +1423,8 @@ function stState(o){
   const st = o.steps && o.steps[o.i]; if (!st) return 'done';
   if (o.between) return 'next';
   if (o.rest || o.sw) return 'rest';
-  if (o.prac) return st.breath ? 'breathe' : 'practice';
+  // BLD 896: most Flow steps now carry a breath key for the ring; the breathe color stays for steps whose main work is breathing.
+  if (o.prac) return st.breath && /breath|breathing|pranayama/i.test(st.name || '') ? 'breathe' : 'practice';
   if (st.t === 'time') return st.part === 'Cooldown' ? 'breathe' : 'work';
   return o.set >= st.sets && st.sets > 1 ? 'last' : 'work';
 }
@@ -1387,6 +1451,15 @@ function toggles(o){
     <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Beeps On' : 'Beeps Off'}</button>
     ${o && !o.prac ? `<button type="button" class="chip${o.hands !== false ? ' on' : ''}" aria-pressed="${o.hands !== false}" data-hja="thands">${o.hands !== false ? 'Auto Flow On' : 'Auto Flow Off'}</button><button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : o.hands !== false ? 'Quiet Timed Reps' : 'I Tap Done'}</button>` : ''}</div>`;
 }
+// BLD 896 (Chris's Friday note 4): the Move Well card on a workout's start screen, shown only (folded until opened): the library's
+// principles at workouts.moveWell (the Guide library) or program.moveWell (public Tending). A list of lines, or {lead, items},
+// each item a line or {name, line}.
+function moveWell(){
+  const w = WK(), mw = w.moveWell || (w.program || {}).moveWell || ((PLIB() || {}).program || {}).moveWell; if (!mw) return '';
+  const items = Array.isArray(mw) ? mw : arr(mw.items || mw.points || mw.principles), lead = Array.isArray(mw) ? '' : mw.lead || mw.line || ''; if (!items.length) return '';
+  const li = x => typeof x === 'string' ? esc(x) : `${x.name || x.title ? `<b>${esc(x.name || x.title)}.</b> ` : ''}${esc(x.line || x.text || x.how || '')}`;
+  return `<details class="hj-doc hj-mw" data-hjmw style="text-align:left;margin-top:16px"><summary><span>Move Well</span></summary><div class="hj-body">${lead ? `<p class="hj-mwl">${esc(lead)}</p>` : ''}<ol>${items.map(x => `<li>${li(x)}</li>`).join('')}</ol></div></details>`;
+}
 function vStart(o, top){
   const moves = o.steps.filter(s => s.t === 'ex'), mins = o.prac || o.med ? (o.mins || Math.round(estLeft(o) / 60000)) : Math.max(1, Math.round(estLeft(o) / 60000 + (lineSecs(LN.ses(o.title, 50)) + lineSecs(LN.out)) / 60));
   const kit = !o.med && !o.prac && PUB() ? [...new Set(moves.map(m => m.equip).filter(Boolean))] : o.med ? ['a comfortable seat'] : !o.prac ? ['dumbbells', 'bench', 'pull-up bar', 'dip bar', 'mat'].filter(k => moves.some(m => new RegExp(k.split(' ')[0].replace('dumbbells', 'dumbbell'), 'i').test((m.name || '') + ' ' + (m.how || '')))) : ['a mat or a cushion', 'water'];
@@ -1401,6 +1474,7 @@ function vStart(o, top){
     ${!o.prac && o.hands !== false ? `<p class="hj-note hj-hfnote">Auto Flow: the session moves on its own, start to finish, with every set counted or timed for you. Need more time? Tap Pause anytime.</p>` : ''}
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
+    ${!o.prac && !o.med ? moveWell() : ''}
     <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(progSrc(o.s))}</div></details></div>`;
 }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
@@ -1412,10 +1486,10 @@ function vAuto(o, top){
   const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
   if (o.fin || !st) return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
   const state = stState(o), left = o.run ? Math.max(0, o.end - Date.now()) : 0, ring = o.run && (o.rest || o.between || o.sw) ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : {};
-  const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : null;
+  const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : o.ring && st.t === 'ex' && !o.rest && !o.between && !o.sw ? repBreath(st) : o.ring && st.wbreath ? [Math.round(st.tempo * 4) / 10, Math.round(st.tempo * 6) / 10] : null;
   const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
   const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, o.rest || o.between), side: o.side || '', label: pill, inhale: br && br[0], exhale: br && br[1]}, ring);
-  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
+  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? ' · Left side' : o.side === 'R' ? ' · Right side' : '';
   const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
@@ -1478,8 +1552,8 @@ function actCoach(a, v){
     case 'askipmove': if (o){ o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'amore': if (o && o.run){ o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
     case 'tapdone': if (o) o.wait = false; return true;
-    case 'guide': if (o){ o.guide = true; o.gi = 0; o.timers = []; if (V){ V.unlock(); V.music(null); } kSay(o, o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title)).then(() => { if (S.ov === o && o.guide && o.gi === 0) kEnter(o); }); } rerender(true); return true;
-    case 'knext': if (o){ const n = kSteps(o).length; if (V) V.stop(); o.dn = o.dn || {}; o.dn[o.gi] = true; o.gi = Math.min(n, o.gi + 1); rerender(true); if (o.gi < n) kEnter(o); else kSay(o, o.k === 'cook' ? LN.cOut : LN.prepOut); } return true;
+    case 'guide': if (o){ o.guide = true; o.gi = 0; o.timers = []; if (V){ V.unlock(); V.music(null); } kSay(o, o.intro || (o.k === 'cook' ? LN.cIntro(o.title) : LN.prepIntro(o.title))).then(() => { if (S.ov === o && o.guide && o.gi === 0) kEnter(o); }); } rerender(true); return true;
+    case 'knext': if (o){ const n = kSteps(o).length; if (V) V.stop(); o.dn = o.dn || {}; o.dn[o.gi] = true; o.gi = Math.min(n, o.gi + 1); rerender(true); if (o.gi < n) kEnter(o); else kSay(o, o.outro || (o.k === 'cook' ? LN.cOut : LN.prepOut)); } return true;
     case 'kback': if (o && o.gi > 0){ if (V) V.stop(); o.gi--; rerender(true); kEnter(o); } return true;
     case 'krepeat': if (o){ if (V) V.stop(); kEnter(o); } return true;
     case 'ktimer': if (o) kStartTimer(o, +v); return true;
@@ -1917,11 +1991,12 @@ const isDay = k => /^\d{4}-\d{2}-\d{2}$/.test(k);
 function dayInfo(k){
   const h = H(), d = h.days[k] || {}, c = d.checks || {}, l = h.log[k] || {}, lk = Object.keys(l).filter(x => x !== 'u' && l[x]), on = new Set(), ck = id => !!c[id];
   if (lk.some(x => /^(work:|prac|out$|y$)/.test(x)) || ck('move') || ck('walk')) on.add('move');
-  if (arr(d.eat).length || lk.some(x => /^(cook|prep|shop|idea|rem):/.test(x)) || ['fiber', 'plants', 'water', 'nuts'].some(ck)) on.add('food');
+  if (arr(d.eat).length || lk.some(x => /^(cook|prep|shop|idea|rem|hol|holrec):/.test(x)) || ['fiber', 'plants', 'water', 'nuts'].some(ck)) on.add('food');
   if (Object.keys(c).some(x => c[x] && (/^sp:/.test(x) || x === 'psyllium' || x === 'sterols'))) on.add('supps');
   if (l.med || ck('mindful') || ck('still')) on.add('mind');
   if (ck('quiet')) on.add('spirit');
   if (ck('together') || ck('unplugged')) on.add('people');
+  lk.forEach(x => { if (/^own:/.test(x)){ const it = OWN().items.find(i => ownKey(i) === x), tp = it && OWN_TP[it.part]; if (tp) on.add(tp); } });   // BLD 896
   const n = Object.values(c).filter(Boolean).length + lk.length + (arr(d.eat).length ? 1 : 0);
   return {on, n, eat: arr(d.eat).length, c, l, lk};
 }
@@ -1989,9 +2064,9 @@ function vSettings(bare){
     <div class="tn-row a-today"><span class="ic2">${ic('clock')}</span><div class="tx"><b>My Phone Calendar</b><small>Steady reminders in your phone's own calendar, with an alert at each time.</small></div><button type="button" class="tn-btn sm line" data-hja="remics"${on ? '' : ' disabled'}>Add</button></div></div>
     ${kit ? '' : row('p-fruit', 'star', 'Celebrate Milestones', 'A small note when you reach one. Days you skip stay quiet.', tsw('celebrate', '', h.set.celebrate !== false, 'Celebrate Milestones'))}</div></div>`;
   const plan = kit ? '' : PUB() ? pubSettingsCard() : `<div class="tn-card"><div class="tn-hd">${badge('compass', 'a-numbers')}<div><div class="tn-k a-numbers">My Plan</div><div class="tn-sub">${MINE_ANY() && MINE_ANY().who ? 'Whose phone, your training' : 'Your training'}, the start date, your household, and your goals.</div></div></div><button type="button" class="tn-btn sm line a-numbers" data-hja="setup">My Goals</button></div>`;
-  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+  if (bare) return `<div class="tn-sec a-today"><div class="tn-two"><div class="tn-col">${voiceCard()}${houseCard()}${what}${why}</div><div class="tn-col">${plan}${holSetCard()}${rem}${bridges}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
   return `<div class="tn-sec a-today">${secHead('gear', 'a-today', 'Settings', 'What you use, how Tending connects, and reminders. Every bridge and reminder starts from your choice.')}
-    <div class="tn-two"><div class="tn-col">${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
+    <div class="tn-two"><div class="tn-col">${what}${why}</div><div class="tn-col">${bridges}${rem}${plan}${holSetCard()}<div class="tn-note">${ic('shield')}<div>${esc(TD().intro.private)}</div></div></div></div></div>`;
 }
 
 // ---------- Morning Quiet: a gentle timer, a scene, one line at a time ----------
@@ -2054,7 +2129,7 @@ function fruitCards(){
 }
 
 // ---------- Today ----------
-const partOf = x => x.k === 'work' || x.k === 'prac' || x.k === 'mark' ? 'move' : x.k === 'med' ? 'mind' : ['cook', 'shop', 'prep'].includes(x.k) ? 'food' : '';
+const partOf = x => x.k === 'work' || x.k === 'prac' || x.k === 'mark' ? 'move' : x.k === 'med' ? 'mind' : ['cook', 'shop', 'prep', 'hol'].includes(x.k) ? 'food' : '';
 const ACC = {work: 'a-move', prac: 'a-move', mark: 'a-move', med: 'p-bark', cook: 'a-kitchen', shop: 'a-kitchen', prep: 'a-kitchen', quiet: 'p-roots', supp: 'a-today'};
 const SCN = {work: 'work', prac: 'practice', mark: 'work', med: 'practice', cook: 'cook', shop: 'bowl', prep: 'cook', quiet: 'dawn', supp: 'night'};
 function habitList(){
@@ -2072,6 +2147,7 @@ function vTodayT(lib){
   const nowList = ag.slice();
   if (U('spirit') && !kit) nowList.push({key: 'quiet', k: 'quiet', hour: 6, kick: 'Morning', title: t.spirit.h, sub: t.spirit.invite, btn: 'Quiet Timer', done: !!c.quiet});
   ['morning', 'evening'].forEach(w => { const L = spOf(w); if (L.length) nowList.push({key: 'supp:' + w, k: 'supp', v: w, hour: w === 'morning' ? 6.2 : 20.5, kick: w === 'morning' ? 'This morning' : 'This evening', title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', done: allOn(L)}); });
+  if (!kit) ownNow(d).forEach(x => nowList.push(x));   // BLD 896: My Own Items
   nowList.sort((a, b) => a.hour - b.hour);
   const open = nowList.filter(x => !x.done), due = open.filter(x => x.hour <= hr + 0.25), cur = due.length ? due[due.length - 1] : open[0];
   const nm = PUB() ? (() => { try { return C.name ? String(C.name() || '').trim().split(/\s+/)[0] : ''; } catch(e){ return ''; } })() : '';
@@ -2111,6 +2187,7 @@ function vTodayT(lib){
     tally('people', c.together); tally('people', c.unplugged);
     people.push(`<article class="tn-card tn-edge p-branches"><div class="tn-k">Family Meals and Connection</div><div class="tn-list">${tck('check', 'together', c.together, 'Dinner Together', dn ? dn.name + ', at the table' : 'Around the table, together')}${tck('check', 'unplugged', c.unplugged, 'Unplugged Table', 'Phones rest away from the table')}</div>
       <div class="tn-note">${ic('star')}<div><div class="tn-k">Tonight's Question</div><div class="tn-q">${esc(q)}</div></div></div></article>`); }
+  if (!kit) ownTodayCards(d, tally, {body, mind, spirit, people});   // BLD 896: My Own Items, in the part each tends
   // Today's Rhythm: things tended today.
   const dn0 = tl.filter(x => x.done).length; S.tally = {done: dn0, total: tl.length}; const parts = USE().filter(p => p !== 'labs' && (!kit || p === 'food'));
   const rhythm = tl.length ? `<div class="tn-card a-today tn-rhythm"><div class="tn-prog">${ring(dn0, tl.length, 104, 11, `<b>${dn0}</b><small>of ${tl.length}</small>`)}<div style="min-width:0"><div class="tn-k">Today's Rhythm</div><div class="tn-big">${dn0} thing${dn0 === 1 ? '' : 's'} tended</div><div class="tn-sub">${esc(t.intro.quiet)}</div></div></div>
@@ -2186,7 +2263,7 @@ function vRecipes(){
   const has = k => all.some(r => r[k].length), meals = R_MEALS.filter(([id]) => id === 'all' || all.some(r => r.meal === id));
   const row = (lbl, a, opts, on) => `<div class="hj-chips tn-rchips" role="group" aria-label="${esc(lbl)}">${opts.map(([id, l]) => { const p = on(id); return `<button type="button" class="chip${p ? ' on' : ''}" aria-pressed="${p}" data-hja="${a}" data-hjv="${id}">${esc(l)}</button>`; }).join('')}</div>`;
   const goals = has('goals') ? R_GOALS.filter(([id]) => all.some(r => r.goals.includes(id))) : [], fits = has('fits') ? R_FITS.filter(([id]) => all.some(r => r.fits.includes(id))) : [];
-  return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'Every recipe in one place, with ingredients, steps, and a calm voice guiding each one.')}${kitTabs('recipes')}
+  return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', 'Every recipe in one place, with ingredients, steps, and a calm voice guiding each one.')}${kitTabs('recipes')}${holShelf()}
     <div class="tn-card tn-rfind">${meals.length > 2 ? row('Meal', 'rmeal', meals, id => id === m) : ''}
       <label class="hj-fld"><span>Search by name or ingredient</span><input id="hj-rq" type="search" placeholder="Lentils, salmon, oats..." autocomplete="off" value="${esc(S.rq || '')}"></label>
       ${goals.length ? `<div class="tn-k tn-rk">Goals</div>${row('Goals', 'rgoal', goals, id => arr(S.rGoals).includes(id))}` : ''}${fits.length ? `<div class="tn-k tn-rk">Fits</div>${row('Fits', 'rfit', fits, id => arr(S.rFits).includes(id))}` : ''}
@@ -2252,12 +2329,13 @@ function view(){
   // A Founder's own starting numbers wait in the Founder library: offer them first, on every section, until added (BLD 840b).
   const ready = mine && mine.start && (arr(mine.start.labs).length || arr(mine.start.panels).length) && !h.labs.length && !h.panels.length;
   const offer = ready && chosen ? `<div class="hj-blk hj-offer tn-card a-numbers">${kick('Your Starting Numbers Are Ready')}<p class="hj-sub">Your labs, full panels, starting weight, and goals, ready to add to this device in one tap.</p><button type="button" class="btn btn-gold btn-sm" data-hja="mine">Add My Starting Numbers</button></div>` : '';
-  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'recipes', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
+  const SECS2 = ['today', 'week', 'plate', 'kitchen', 'recipes', 'shop', 'prep', 'move', 'numbers', 'journey', 'learn', 'settings', 'own', 'holidays'].concat(PUB() ? ['kids', 'kidview', 'team'] : []);
   if (!SECS2.includes(S.sec)) S.sec = 'today';
   let body;
   if (PUB() && (!chosen || S.setup)) body = vCheck();
   else if (!chosen) body = vChoose();
   else if (!KIT() && (S.setup || (first && !ready && S.sec === 'today'))) body = `<div class="tn-sec a-numbers">${vSetup()}</div>`;
+  else if (S.sec === 'own') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'My Own Items', 'Your own rhythms beside your plan, kept on this device.')}${vOwn()}</div>`;
   else if (S.sec === 'week') body = `<div class="tn-sec a-week">${secHead('week', 'a-week', 'This Week', 'Every day of the plan, the dinners, the sessions, and the notes that keep it rolling.')}${vWeek()}</div>`;
   else if (S.sec === 'plate') body = `<div class="tn-sec a-plate">${secHead('plate', 'a-plate', 'Today\'s Plate', PUB() ? 'Tap what you eat. The rings fill as you go, with aims set by your goals.' : 'Tap what you eat. The rings fill as you go, and each logged day feeds My LDL Path.')}${vPlate('full')}${PUB() ? pubAims() : aims()}</div>`;
   else if (S.sec === 'kitchen') body = vKitchen();
@@ -2273,6 +2351,7 @@ function view(){
   else if (S.sec === 'team') body = vTeam();
   else if (S.sec === 'journey') body = `<div class="tn-sec a-numbers">${secHead('compass', 'a-numbers', 'My Journey', 'What you noticed, what felt strong, and every milestone.')}${numTabs('journey')}${vJourney()}</div>`;
   else if (S.sec === 'settings') body = vSettings();
+  else if (S.sec === 'holidays') body = vHol();
   else body = vTodayT(lib);
   // BLD 879: in the Field Guide, Tending for the guide, staff, and founder tiers is one card; Preview for Guides opens the full view.
   const card = MOVABLE() && !PREVIEW();
@@ -2426,6 +2505,7 @@ const FIELDS = {lab: ['date', 'ldl', 'total', 'hdl', 'trig', 'apob', 'note'], ma
 
 function act(a, v){
   const h = H(); if (!h) return;
+  if (actOwn(a, v)) return;   // BLD 896: My Own Items and the Month
   if (PUB() && actPub(a, v)) return;
   if (actTool(a, v)) return;
   if (actPlate(a, v)) return;
@@ -2673,7 +2753,7 @@ function vCheck(){
     <div class="tn-ckg">${arr(L.goals).map(g => { const on = arr(d.goals).includes(g.id); return `<button type="button" class="tn-ckcard${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckset" data-hjv="goals|${esc(g.id)}|1"><b>${esc(g.name)}</b><small>${esc(g.line || '')}</small></button>`; }).join('')}</div>`;
   else if (step === 'food') body = `<h3>Food needs</h3><p class="hj-sub">Every recipe in your plan fits each need you choose.</p>${chips('needs', arr(L.needs).map(n => [n.id, n.name]), true)}
     ${arr(L.needs).filter(n => arr(d.needs).includes(n.id) && n.line).map(n => `<p class="hj-sub"><b>${esc(n.name)}:</b> ${esc(n.line)}</p>`).join('')}
-    <label class="hj-fld" style="margin-top:12px"><span>Allergies (optional)</span><input type="text" data-hjck="allergies" value="${esc(d.allergies)}" placeholder="sesame, shellfish" autocomplete="off"></label><p class="hj-sub">${esc(L.allergyLine || '')}</p>`;
+    <label class="hj-fld" style="margin-top:12px"><span>Allergies (optional)</span><input type="text" data-hjck="allergies" value="${esc(d.allergies)}" placeholder="sesame, shellfish" autocomplete="off"></label><p class="hj-sub">${esc(L.allergyLine || '')}</p>${holPick()}`;
   else if (step === 'house') body = `<h3>Your household</h3><p class="hj-sub">${esc((L.kids || {}).lead || 'Track the food, never the body.')}</p>${inp('house.adults', 'Grown-ups who eat at home')}
     ${arr(d.house.kids).map((k, j) => `<div class="tn-kidrow"><label class="hj-fld"><span>Child's first name or nickname (optional)</span><input type="text" data-hjck="house.kids.${j}.name" value="${esc(k.name || '')}" autocomplete="off"></label>
       <div class="hj-chips">${arr((L.kids || {}).ages).map(a => `<button type="button" class="chip${k.band === a.id ? ' on' : ''}" aria-pressed="${k.band === a.id}" data-hja="ckkid" data-hjv="${j}|band|${esc(a.id)}">${esc(a.name)}</button>`).join('')}</div>
@@ -3030,6 +3110,309 @@ function pubSummary(){
 }
 
 // =====================================================================
+// BLD 896: My Own Items, My Own Shopping Items, and the Month (Chris, October 30, 2026: "maybe they want to add their meds,
+// or a weekly racquetball.. or daily check in w grandma"; "regular item.. weekly, bi-weekly, monthly etc.. with specifics to
+// add"; "we could have a monthly calendar avail"). Everything stays in DATA.health on this device, locked with the rest:
+//   own: {items: [{id, name, freq: 'd'|'days'|'w'|'m', days: [0 to 6], dom: 1 to 31, time: 'HH:MM' or '', part: a tree part or '',
+//          paused, from: 'YYYY-MM-DD', u}],
+//         shop: [{id, name, amt, sec, store, brand, note, freq: 'once'|'w'|'2w'|'m', start: shopping week number, paused, u}], u}
+// An item done on a day is the log key 'own:<id>' on that day, the same mark every Today item makes. Once a Week (any day)
+// shows on Today until it is done that week. Once a Month falls on its day (the last day of a shorter month). Simple
+// reminders only: a name and a time. A regular shopping item joins the list on its weeks (every week, every 2 weeks, or the
+// first shopping day of each month) from its start week; Once is that one week's list. The Month shows a mark for each kind
+// of thing on each day, the program week on each row, and the holiday sets planned (GGHolidays.planned, helper HOLC).
+// =====================================================================
+const OWN_PARTS = [['roots', 'Roots'], ['trunk', 'Trunk'], ['bark', 'Bark'], ['branches', 'Branches'], ['leaves', 'Leaves'], ['fruit', 'Fruit']];
+const OWN_PN = {roots: 'Roots', trunk: 'Trunk', bark: 'Bark', branches: 'Branches', leaves: 'Leaves', fruit: 'Fruit'};
+// Tending's own parts for Today's Rhythm, from the tree part an item tends.
+const OWN_TP = {roots: 'spirit', bark: 'mind', branches: 'people', leaves: 'move', fruit: 'labs'};
+const OWN_SLOT = {roots: 6.9, leaves: 7.6, trunk: 11.8, bark: 13.2, branches: 18, fruit: 19.8};
+const OWN_ART = {roots: 'tend-spirit', trunk: 'tend-fruit', bark: 'tend-mind', branches: 'tend-people', leaves: 'tend-move', fruit: 'tend-fruit'};
+const OWN_FREQ = [['d', 'Every Day'], ['days', 'Chosen Days'], ['w', 'Once a Week'], ['m', 'Once a Month']];
+const OWN_SFREQ = [['once', 'Once'], ['w', 'Every Week'], ['2w', 'Every 2 Weeks'], ['m', 'Every Month']];
+const OWN_WK = [1, 2, 3, 4, 5, 6, 0];
+function OWN(){ const h = H(); if (!h) return {items: [], shop: []}; const o = h.own = h.own && typeof h.own === 'object' && !Array.isArray(h.own) ? h.own : {};
+  o.items = arr(o.items).filter(x => x && x.id); o.shop = arr(o.shop).filter(x => x && x.id); return o; }
+const ownSave = () => { OWN().u = Date.now(); save(); };
+const ownKey = x => 'own:' + x.id;
+const lastDom = d => new Date(d.getFullYear(), d.getMonth() + 1, 0).getDate();
+const andList = L => L.length < 3 ? L.join(' and ') : L.slice(0, -1).join(', ') + ', and ' + L[L.length - 1];
+const ordinal = n => n + (n % 100 >= 11 && n % 100 <= 13 ? 'th' : ({1: 'st', 2: 'nd', 3: 'rd'})[n % 10] || 'th');
+function ownClock(t){ const m = /^(\d{1,2}):(\d{2})/.exec(String(t || '')); if (!m) return ''; const h = +m[1]; return (h % 12 || 12) + ':' + m[2] + (h < 12 ? ' AM' : ' PM'); }
+const ownHour = x => { const m = /^(\d{1,2}):(\d{2})/.exec(String(x.time || '')); return m ? +m[1] + +m[2] / 60 : (OWN_SLOT[x.part] || 12); };
+function ownHow(x){ const f = x.freq || 'd', t = ownClock(x.time), ds = OWN_WK.filter(w => arr(x.days).map(Number).includes(w));
+  const base = f === 'days' ? (ds.length === 7 ? 'Every day' : 'Every ' + andList(ds.map(w => DOWL[w]))) : f === 'w' ? 'Once a week, any day' : f === 'm' ? 'Once a month, on the ' + ordinal(Math.max(1, Math.min(31, +x.dom || 1))) : 'Every day';
+  return base + (t ? ' at ' + t : ''); }
+function ownOnDay(x, d){ if (!x || x.paused || (x.from && ymd(d) < x.from)) return false;
+  if (x.freq === 'days') return arr(x.days).map(Number).includes(d.getDay());
+  if (x.freq === 'm') return d.getDate() === Math.min(Math.max(1, +x.dom || 1), lastDom(d));
+  return x.freq !== 'w'; }
+// The day in this week a Once a Week item was done, or ''.
+function ownWeekDone(x, d){ const m = monOf(d), h = H(); for (let i = 0; i < 7; i++){ const k = ymd(addD(m, i)); if ((h.log[k] || {})[ownKey(x)]) return k; } return ''; }
+// A day's own items. mode 'today': a Once a Week item shows until it is done that week; 'week': only on the day it was done.
+function ownDay(d, mode){ const h = H(); if (!h) return []; const k = ymd(d), log = h.log[k] || {};
+  return OWN().items.filter(x => { if (x.paused || (x.from && k < x.from)) return false; if (x.freq === 'w'){ const dw = ownWeekDone(x, d); return mode === 'today' ? (!dw || dw === k) : dw === k; } return ownOnDay(x, d); })
+    .map(x => ({id: x.id, key: ownKey(x), title: x.name, hour: ownHour(x), when: ownClock(x.time) || (x.freq === 'w' ? 'This week' : 'Any time'), part: x.part || '', done: !!log[ownKey(x)], weekly: x.freq === 'w'}))
+    .sort((a, b) => a.hour - b.hour); }
+const ownSub = x => (x.weekly ? 'Once this week, any day' : 'My Own Item') + (x.part ? ' · ' + OWN_PN[x.part] : '');
+// The Grounded Way's Today: one card each, checked off like the plan's own items.
+function ownToday(d){ return ownDay(d, 'today').map(x => ({key: x.key, when: x.when, hour: x.hour, title: x.title, sub: ownSub(x), btn: 'Done', tint: x.part || 'week', done: x.done, kind: 'own', part: x.part, image: WAY(OWN_ART[x.part] || 'tend-body')})); }
+// The Field Guide's Today: Right Now, and a My Own Items card in the part each item tends.
+function ownNow(d){ return ownDay(d, 'today').map(x => ({key: x.key, k: 'own', hour: x.hour, kick: x.when, title: x.title, sub: ownSub(x), btn: 'Done', done: x.done})); }
+function ownTodayCards(d, tally, G){
+  const L = ownDay(d, 'today'), grp = p => p === 'bark' ? 'mind' : p === 'roots' ? 'spirit' : p === 'branches' ? 'people' : 'body', cls = {body: 'p-leaves', mind: 'p-bark', spirit: 'p-roots', people: 'p-branches'};
+  if (!L.length){ if (!OWN().items.length) G.body.push(`<div class="tn-card a-week" id="tn-own-add"><div class="tn-hd">${badge('sprout')}<div><div class="tn-k">My Own Items</div><div class="tn-sub">Add your own rhythms to your days: a call to Grandma, a weekly game, your morning meds.</div></div></div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="own">${ic('plus')}Add an Item</button></div></div>`); return; }
+  L.forEach(x => tally(OWN_TP[x.part], x.done));
+  ['body', 'mind', 'spirit', 'people'].forEach(g => { const M = L.filter(x => grp(x.part) === g); if (!M.length) return;
+    G[g].push(`<article class="tn-card ${cls[g]}" id="tn-own-${g}"><div class="tn-hd">${badge('sprout')}<div><div class="tn-k">My Own Items</div><div class="tn-sub">Your own rhythms, beside your plan</div></div></div><div class="tn-list">${M.map(x => tck('toggle', x.key, x.done, x.title, x.when + (x.part ? ' · ' + OWN_PN[x.part] : ''))).join('')}</div><div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="own">${ic('gear')}My Own Items</button></div></article>`); }); }
+// The Field Guide's Week: each day's own items, and the Once a Week ones above the days.
+function ownPills(d){ return ownDay(d, 'week').map(x => `<button type="button" class="hj-pill own" data-hja="ownedit" data-hjv="${esc(x.id)}">${esc(x.title)} <small>${esc(x.when)}${x.done ? ', done' : ''}</small></button>`).join(''); }
+function ownWeekList(mon){ return OWN().items.filter(x => x.freq === 'w' && !x.paused).map(x => ({id: x.id, title: x.name, done: !!ownWeekDone(x, mon)})); }
+function ownWeekLine(mon){ const L = ownWeekList(mon); return L.length ? `<p class="hj-note hj-ownwk"><b>Once this week:</b> ${L.map(x => esc(x.title) + (x.done ? ' (done)' : '')).join(', ')}</p>` : ''; }
+const ownViewTabs = cur => `<div class="tn-tabs hj-wtabs" role="group" aria-label="Week or Month">${[['week', 'Week'], ['month', 'Month']].map(([id, l]) => `<button type="button" class="tn-tab${cur === id ? ' on' : ''}" aria-pressed="${cur === id}" data-hja="wkview" data-hjv="${id}">${ic(id === 'week' ? 'week' : 'clock')}${l}</button>`).join('')}<button type="button" class="tn-tab" data-hja="sec" data-hjv="own">${ic('sprout')}My Own Items</button></div>`;
+
+// ---------- the phone calendar file: each active item repeats on its own rhythm ----------
+function ownIcs(stamp, e, fold){
+  const z = n => String(n).padStart(2, '0'), out = [], t0 = day0(new Date()), BY = ['SU', 'MO', 'TU', 'WE', 'TH', 'FR', 'SA'];
+  OWN().items.filter(x => !x.paused && x.name).forEach(x => {
+    let d = t0, rule = 'FREQ=DAILY';
+    if (x.freq === 'days'){ const ds = arr(x.days).map(Number).filter(w => w >= 0 && w <= 6); if (!ds.length) return; for (let i = 0; i < 7; i++){ if (ds.includes(addD(t0, i).getDay())){ d = addD(t0, i); break; } } rule = 'FREQ=WEEKLY;BYDAY=' + OWN_WK.filter(w => ds.includes(w)).map(w => BY[w]).join(','); }
+    else if (x.freq === 'w'){ d = monOf(t0); rule = 'FREQ=WEEKLY;BYDAY=MO'; }
+    else if (x.freq === 'm'){ const dm = Math.max(1, Math.min(31, +x.dom || 1)); for (let i = 0; i < 62; i++){ const c = addD(t0, i); if (c.getDate() === Math.min(dm, lastDom(c))){ d = c; break; } } rule = 'FREQ=MONTHLY;BYMONTHDAY=' + (dm >= 29 ? -1 : dm); }
+    const m = /^(\d{1,2}):(\d{2})/.exec(String(x.time || '')), day = d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate());
+    const start = m ? 'DTSTART:' + day + 'T' + z(+m[1]) + z(+m[2]) + '00' : 'DTSTART;VALUE=DATE:' + day;
+    out.push(['BEGIN:VEVENT', 'UID:own-' + String(x.id).replace(/[^a-z0-9-]/gi, '-') + '@growwithgrounded.com', 'DTSTAMP:' + stamp, start, m ? 'DURATION:PT15M' : 'DURATION:P1D', 'RRULE:' + rule,
+      'SUMMARY:' + e(x.name), 'DESCRIPTION:' + e(ownHow(x) + (x.freq === 'w' ? '. Any day this week.' : '.')), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + e(x.name), 'TRIGGER:' + (m ? 'PT0M' : 'PT9H'), 'END:VALARM', 'END:VEVENT'].map(fold).join('\r\n'));
+  });
+  return out;
+}
+
+// ---------- My Own Items: the list, Add an Item, Edit, Pause, Remove ----------
+function ownForm(f){
+  const ch = (k, v, l, on, al) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${!!on}" data-hja="ownf" data-hjv="${k}|${v}"${al ? ` aria-label="${esc(al)}"` : ''}>${esc(l)}</button>`;
+  const days = arr(f.days).map(Number);
+  return `<div class="hj-ownf" id="hj-ownform"><h3>${S.ownEd ? 'Edit an Item' : 'Add an Item'}</h3>
+    <label class="hj-fld"><span>Name</span><input id="hj-ownname" data-hjoi="name" maxlength="80" value="${esc(f.name || '')}" placeholder="Call Grandma" autocomplete="off"></label>
+    <div class="hj-ownq" id="hj-ownq1">How often</div><div class="hj-chips" role="group" aria-labelledby="hj-ownq1">${OWN_FREQ.map(([v, l]) => ch('freq', v, l, (f.freq || 'd') === v)).join('')}</div>
+    ${f.freq === 'days' ? `<div class="hj-ownq" id="hj-ownq2">Which days</div><div class="hj-chips hj-owndays" role="group" aria-labelledby="hj-ownq2">${OWN_WK.map(w => ch('day', w, DOW[w], days.includes(w), DOWL[w])).join('')}</div>` : ''}
+    ${f.freq === 'm' ? `<label class="hj-fld"><span>Day of the month</span><select data-hjoi="dom">${Array.from({length: 31}, (x, i) => `<option value="${i + 1}"${(+f.dom || 1) === i + 1 ? ' selected' : ''}>${ordinal(i + 1)}</option>`).join('')}</select></label>` : ''}
+    <label class="hj-fld"><span>Time (optional)</span><input type="time" data-hjoi="time" value="${esc(f.time || '')}"></label>
+    <div class="hj-ownq" id="hj-ownq3">The part of your tree it tends (optional)</div><div class="hj-chips" role="group" aria-labelledby="hj-ownq3">${ch('part', '', 'None', !f.part)}${OWN_PARTS.map(([v, l]) => ch('part', v, l, f.part === v)).join('')}</div>
+    <p class="tn-sub hj-ownmed">For a medicine, a name and a time make a simple reminder. Your doctor and pharmacist guide the rest.</p>
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="ownsave">${ic('check')}Save</button><button type="button" class="tn-btn sm line" data-hja="ownclose">Close</button></div></div>`;
+}
+function vOwn(){
+  const o = OWN(), f = S.ownF;
+  const row = x => `<div class="hj-own${x.paused ? ' paused' : ''}"><div class="tx"><b>${esc(x.name)}</b><small>${esc(ownHow(x))}${x.part ? ' · ' + OWN_PN[x.part] : ''}${x.paused ? ' · Paused' : ''}</small></div>
+    <div class="acts"><button type="button" class="tn-btn sm line" data-hja="ownedit" data-hjv="${esc(x.id)}" aria-label="Edit ${esc(x.name)}">Edit</button><button type="button" class="tn-btn sm line" data-hja="ownpause" data-hjv="${esc(x.id)}" aria-label="${x.paused ? 'Resume' : 'Pause'} ${esc(x.name)}">${x.paused ? 'Resume' : 'Pause'}</button><button type="button" class="linkbtn" data-hja="owndel" data-hjv="${esc(x.id)}" aria-label="Remove ${esc(x.name)}">${S.ownSure === x.id ? 'Tap Again to Remove' : 'Remove'}</button></div></div>`;
+  return `<div class="tn-card a-week hj-ownc" id="hj-own"><div class="tn-hd">${badge('sprout')}<div><div class="tn-k">My Own Items</div><div class="tn-sub">Your own rhythms beside your plan: a call to Grandma, a weekly game, your morning meds. They show on Today and in your Week, and they stay on this device.</div></div></div>
+    ${o.items.length ? `<div class="hj-ownl">${o.items.map(row).join('')}</div>` : '<p class="tn-sub" style="margin:10px 0 0">Add the first one, and it joins your days.</p>'}
+    ${f ? ownForm(f) : `<div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="ownadd">${ic('plus')}Add an Item</button>${o.items.length ? `<button type="button" class="tn-btn sm line" data-hja="remics">${ic('clock')}Add to My Phone Calendar</button>` : ''}</div>`}</div>`;
+}
+
+// ---------- My Own Shopping Items ----------
+const shopDate = n => addD(startMon(), (Math.max(1, n) - 1) * 7 - 2);
+function ownShopDue(x, n){ if (!x || x.paused) return false; const s = Math.max(1, +x.start || 1); if (n < s) return false;
+  if (x.freq === 'once') return n === s; if (x.freq === '2w') return (n - s) % 2 === 0; if (x.freq === 'm') return n === s || shopDate(n).getDate() <= 7; return true; }
+const ownShopFor = x => [x.brand, x.store, x.note].map(t => String(t || '').trim()).filter(Boolean).join(' · ');
+// The plan's list for week n plus the own items due that week; an own item's check rides the saved list (by its id).
+function ownShop(L, n){
+  if (!L || !Array.isArray(L.items)) return L; const due = OWN().shop.filter(x => ownShopDue(x, n)), had = {};
+  L.items.forEach(x => { if (x && x.own) had[x.id] = !!x.done; });
+  L.items = L.items.filter(x => !(x && x.own)).concat(due.map((x, i) => ({id: 'own-' + x.id, own: x.id, store: /coborn|grocer/i.test(x.store || '') ? 'grocer' : 'costco', sec: SECX().includes(x.sec) ? x.sec : 'Other',
+    name: x.name, amt: x.amt || '', price: 0, for: ownShopFor(x), done: !!had['own-' + x.id], n: 800 + i})));
+  return L;
+}
+const ownSFreqLine = x => { const s = Math.max(1, +x.start || 1), wd = shortDate(shopDate(s)); return x.freq === 'once' ? 'Once, on the list to shop ' + wd : x.freq === '2w' ? 'Every 2 weeks from ' + wd : x.freq === 'm' ? 'Every month, the first shopping day, from ' + wd : 'Every week from ' + wd; };
+function ownShopForm(f, n){
+  const ch = (k, v, l, on) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${!!on}" data-hja="osf" data-hjv="${k}|${v}">${esc(l)}</button>`;
+  const fld = (k, l, ph) => `<label class="hj-fld"><span>${esc(l)}</span><input data-hjos="${k}" value="${esc(f[k] || '')}" maxlength="80" placeholder="${esc(ph || '')}" autocomplete="off"${k === 'name' ? ' id="hj-osname"' : ''}></label>`;
+  const n0 = Math.max(1, Math.min(n, foodWeek(new Date()))), opts = Array.from({length: 12}, (x, i) => n0 + i);
+  return `<div class="hj-ownf" id="hj-osform"><h3>${S.ownSEd ? 'Edit a Shopping Item' : 'Add a Shopping Item'}</h3>
+    <div class="hj-g2o">${fld('name', 'Item', 'Paper towels')}${fld('amt', 'Amount (optional)', '1 pack of 12')}
+    <label class="hj-fld"><span>Store or aisle</span><select data-hjos="sec">${SECX().map(s => `<option${(f.sec || 'Other') === s ? ' selected' : ''}>${esc(s)}</option>`).join('')}</select></label>
+    ${fld('store', 'Store (optional)', 'Any store')}${fld('brand', 'Brand (optional)', 'Your favorite')}${fld('note', 'Note (optional)', 'The big rolls')}</div>
+    <div class="hj-ownq" id="hj-osq1">How often</div><div class="hj-chips" role="group" aria-labelledby="hj-osq1">${OWN_SFREQ.map(([v, l]) => ch('freq', v, l, (f.freq || 'once') === v)).join('')}</div>
+    <label class="hj-fld"><span>${(f.freq || 'once') === 'once' ? 'Which shopping day' : 'Starting'}</span><select data-hjos="start">${opts.map(k => `<option value="${k}"${(+f.start || n) === k ? ' selected' : ''}>${esc(DOWL[shopDate(k).getDay()] + ', ' + shortDate(shopDate(k)) + ' · Week ' + letter(k))}</option>`).join('')}</select></label>
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="ossave">${ic('check')}Save</button><button type="button" class="tn-btn sm line" data-hja="osclose">Close</button></div></div>`;
+}
+function ownShopPanel(n){
+  const o = OWN(), f = S.ownSF;
+  const row = x => `<div class="hj-own${x.paused ? ' paused' : ''}"><div class="tx"><b>${esc(x.name)}</b><small>${esc([x.amt, ownShopFor(x), x.sec].filter(Boolean).join(' · '))}<br>${esc(ownSFreqLine(x))}${x.paused ? ' · Paused' : ownShopDue(x, n) ? ' · On this list' : ''}</small></div>
+    <div class="acts"><button type="button" class="tn-btn sm line" data-hja="osedit" data-hjv="${esc(x.id)}" aria-label="Edit ${esc(x.name)}">Edit</button>${x.freq === 'once' ? '' : `<button type="button" class="tn-btn sm line" data-hja="ospause" data-hjv="${esc(x.id)}" aria-label="${x.paused ? 'Resume' : 'Pause'} ${esc(x.name)}">${x.paused ? 'Resume' : 'Pause'}</button>`}<button type="button" class="linkbtn" data-hja="osdel" data-hjv="${esc(x.id)}" aria-label="Remove ${esc(x.name)}">${S.ownSure === x.id ? 'Tap Again to Remove' : 'Remove'}</button></div></div>`;
+  return `<div class="tn-card a-kitchen hj-ownc" id="hj-osp"><div class="tn-k">My Own Shopping Items</div><p class="tn-sub">What your household buys beyond the plan, with the specifics: once for one list, or a regular item that joins the list on its weeks.</p>
+    ${o.shop.length ? `<div class="hj-ownl">${o.shop.map(row).join('')}</div>` : ''}
+    ${f ? ownShopForm(f, n) : `<div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="osadd">${ic('plus')}Add a Shopping Item</button></div>`}</div>`;
+}
+
+// ---------- the Month: a mark for each kind of thing on each day; tap a day to open it ----------
+function holPlanned(){ try { return window.GGHolidays && typeof window.GGHolidays.planned === 'function' ? arr(window.GGHolidays.planned()).filter(x => x && x.id) : []; } catch(e){ return []; } }
+const holDate = x => typeof x === 'string' ? x : x && typeof x === 'object' ? String(x.date || '') : '';
+function monthDay(d, hols){
+  const k = ymd(d), wn = weekNo(d), dow = d.getDay(), out = {date: k, move: null, dinner: null, prep: [], shop: null, own: ownDay(d, 'week').concat(k === today() ? ownDay(d, 'today').filter(x => x.weekly && !x.done) : []), hol: []};
+  if (wn >= 1 || (dow === 0 && foodWeek(d) >= 1) || (dow === 6 && foodWeek(d) >= 1)){
+    const fw = foodWeek(d);
+    try { const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses && wn >= 1 && !flowRest(d, false) ? practiceFor(d) : null;
+      if (ses) out.move = {title: sesLabel(ses.id, ses), key: 'work:' + ses.id, done: isDone(d, 'work:' + ses.id)};
+      else if (pr) out.move = {title: pr.title || 'Flow', key: 'pracid:' + pr.id, done: isDone(d, 'prac')};
+      const mf = U('mind') && MED() && wn >= 1 && H().set.medFreq && medOn(d) ? medFor(d) : null; if (mf) out.med = {title: mf.title || 'Meditation', key: 'medid:' + mf.id, done: isDone(d, 'med')};
+      if (U('food')){ const dn = dinnerFor(d); if (dn) out.dinner = {title: dn.name, key: 'cook:' + dn.wk + ':' + dn.id, done: isDone(d, 'cook:' + dn.wk + ':' + dn.id)};
+        if (dow === 0){ const p = prepFor('sunday', fw), b = prepFor('batch', fw); if (p) out.prep.push({title: 'Sunday Together Prep', key: 'prep:sunday:' + fw}); if (b) out.prep.push({title: b.title || 'Weekly Batch', key: 'prep:batch:' + fw}); }
+        if (dow === 3 && wn >= 1){ const p = prepFor('wednesday', wn); if (p) out.prep.push({title: 'Wednesday Mini Prep', key: 'prep:wednesday:' + wn}); }
+        if (dow === 6){ const L = shopList(fw); if (L){ const own = arr(L.items).filter(x => x.own).length; out.shop = {title: 'Shop for Week ' + letter(fw), key: 'shop:' + fw, n: arr(L.items).length, own}; } } }
+    } catch(e){}
+  }
+  hols.forEach(x => {
+    if (x.date === k) out.hol.push({title: x.name || 'Holiday', key: 'holset:' + x.id, day: true});
+    const sh = holDate(x.shop) || (window.GGHolidays && typeof GGHolidays.buyDate === 'function' && x.date ? (() => { try { return String(GGHolidays.buyDate(x.id, x.date) || ''); } catch(e){ return ''; } })() : '');
+    if (sh && sh === k) out.hol.push({title: 'Shop for ' + (x.name || 'the holiday'), key: 'hol:' + x.id + ':shop'});
+    arr(x.tasks).forEach(t => { if (t && t.date === k && t.date !== x.date) out.hol.push({title: t.title || 'Holiday prep', key: t.key || 'holset:' + x.id, prep: true}); });
+  });
+  return out;
+}
+const M_MARKS = [['move', 'Workout or Flow'], ['food', 'Dinner'], ['prep', 'Prep'], ['own', 'My Own Items'], ['shop', 'Shopping'], ['hol', 'Holiday']];
+function monthMarks(x){ return {move: !!(x.move || x.med), food: !!x.dinner, prep: x.prep.length > 0 || x.hol.some(h => h.prep), own: x.own.length > 0, shop: !!x.shop || x.hol.some(h => /:shop$/.test(h.key)), hol: x.hol.some(h => h.day)}; }
+function monthLabel(x, d){
+  const L = [];
+  if (x.hol.some(h => h.day)) L.push(x.hol.filter(h => h.day).map(h => h.title).join(', '));
+  if (x.move) L.push('workout'); if (x.med) L.push('meditation'); if (x.dinner) L.push('dinner'); if (x.prep.length || x.hol.some(h => h.prep)) L.push('prep');
+  if (x.shop || x.hol.some(h => /:shop$/.test(h.key))) L.push('shopping'); if (x.own.length) L.push(x.own.length + (x.own.length === 1 ? ' of my own items' : ' of my own items'));
+  return DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + (ymd(d) === today() ? ', today' : '') + (L.length ? ': ' + L.join(', ') : '');
+}
+function vMonth(){
+  const t0 = day0(new Date()), off = S.mOff || 0, first = new Date(t0.getFullYear(), t0.getMonth() + off, 1), y = first.getFullYear(), mo = first.getMonth(), last = new Date(y, mo + 1, 0);
+  const hols = holPlanned(), rows = []; for (let w = monOf(first); w <= last; w = addD(w, 7)) rows.push(w);
+  const inM = d => d.getMonth() === mo, sel = S.mSel && parseD(S.mSel) && inM(parseD(S.mSel)) ? S.mSel : (off === 0 ? ymd(t0) : ymd(first));
+  const pw = d => progOn() ? progWeek(d) : weekNo(d), phs = new Set(); let w1 = 0, w2 = 0;
+  const grid = rows.map(w => { const n = pw(addD(w, 3)), ph = progOn() && n >= 1 ? phaseId(Math.min(12, n)) : '';
+    if (n >= 1){ if (!w1) w1 = n; w2 = n; if (ph) phs.add(phName(ph)); }
+    const lab = n >= 1 ? `<span class="hj-mwk${ph ? ' ph-' + ph : ''}" title="${esc((progOn() ? (n <= 12 ? 'Program week ' + n + ' of 12' : '12 Weeks Complete') : 'Week ' + n) + (ph ? ', ' + phName(ph) : ''))}"><span class="sr">${progOn() ? 'Program week ' : 'Week '}</span>${n <= 99 ? n : ''}${ph ? `<span class="sr">, ${esc(phName(ph))}</span>` : ''}</span>` : '<span class="hj-mwk" aria-hidden="true"></span>';
+    return lab + [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(w, i), k = ymd(d), x = monthDay(d, hols), mk = monthMarks(x), on = k === sel;
+      return `<button type="button" class="hj-mday${inM(d) ? '' : ' out'}${k === ymd(t0) ? ' t' : ''}${on ? ' on' : ''}${mk.hol ? ' hol' : ''}" data-hja="mday" data-hjv="${k}" aria-pressed="${on}" aria-label="${esc(monthLabel(x, d))}"><span class="n">${d.getDate()}</span><span class="dots" aria-hidden="true">${M_MARKS.filter(([m]) => mk[m]).map(([m]) => `<i class="m-${m}"></i>`).join('')}</span></button>`; }).join(''); }).join('');
+  const prog = w1 ? (progOn() ? (w1 > 12 ? '12 Weeks Complete' : 'Week ' + w1 + (w2 > w1 ? ' to ' + Math.min(12, w2) : '') + ' of 12') : 'Week ' + w1 + (w2 > w1 ? ' to ' + w2 : '')) + (phs.size ? ' · ' + andList([...phs]) : '') : 'Your plan begins ' + shortDate(startMon());
+  const soon = hols.filter(x => x.date >= ymd(t0)).slice(0, 3).map(x => `<button type="button" class="chip hj-mhol" data-hja="mday" data-hjv="${esc(x.date)}">${esc(x.name || 'Holiday')} <small>${esc(window.GGHolidays && GGHolidays.away ? GGHolidays.away(x.date) : shortDate(parseD(x.date) || t0))}</small></button>`).join('');
+  const sd = parseD(sel), sx = monthDay(sd, hols), isT = sel === ymd(t0);
+  const go = (key, label) => `<button type="button" class="tn-btn sm line" data-hja="mgo" data-hjv="${esc(key)}">${esc(label)}</button>`;
+  const line = (cls, kick, title, btn) => `<div class="hj-mrow ${cls}"><div class="tx"><small>${esc(kick)}</small><b>${esc(title)}</b></div>${btn || ''}</div>`;
+  const det = [];
+  sx.hol.filter(h => h.day).forEach(h => det.push(line('m-hol', 'Holiday', h.title, go(h.key, 'Open the Set'))));
+  if (sx.move) det.push(line('m-move', 'Move', sx.move.title + (sx.move.done ? ', done' : ''), go(sx.move.key, 'Start')));
+  if (sx.med) det.push(line('m-move', 'Meditation', sx.med.title + (sx.med.done ? ', done' : ''), go(sx.med.key, 'Begin')));
+  if (sx.dinner) det.push(line('m-food', 'Dinner', sx.dinner.title + (sx.dinner.done ? ', cooked' : ''), go(sx.dinner.key, 'Cook It')));
+  sx.prep.forEach(p => det.push(line('m-prep', 'Prep', p.title, go(p.key, 'Open'))));
+  sx.hol.filter(h => h.prep).forEach(h => det.push(line('m-prep', 'Holiday prep', h.title, go(h.key, 'Open'))));
+  if (sx.shop) det.push(line('m-shop', 'Shopping', sx.shop.title + ' · ' + sx.shop.n + (sx.shop.n === 1 ? ' item' : ' items') + (sx.shop.own ? ', ' + sx.shop.own + ' of your own' : ''), go(sx.shop.key, 'Open the List')));
+  sx.hol.filter(h => /:shop$/.test(h.key)).forEach(h => det.push(line('m-shop', 'Shopping', h.title, go(h.key, 'Open the List'))));
+  sx.own.forEach(o => det.push(isT ? `<div class="hj-mrow m-own">${tck('toggle', o.key, o.done, o.title, o.when + (o.part ? ' · ' + OWN_PN[o.part] : ''))}</div>` : line('m-own', o.when + (o.part ? ' · ' + OWN_PN[o.part] : ''), o.title, `<button type="button" class="tn-btn sm line" data-hja="ownedit" data-hjv="${esc(o.id)}" aria-label="Edit ${esc(o.title)}">Edit</button>`)));
+  return `<div class="hj-month">
+    <div class="hj-wkbar"><button type="button" class="btn btn-line btn-sm" data-hja="mon" data-hjv="-1" aria-label="Previous month">Back</button><div><b>${MONTHS[mo]} ${y}</b><small>${esc(prog)}</small></div><button type="button" class="btn btn-line btn-sm" data-hja="mon" data-hjv="1" aria-label="Next month">Next</button></div>
+    ${soon ? `<div class="hj-chips hj-msoon" aria-label="Holiday sets ahead">${soon}</div>` : ''}
+    <div class="hj-mgrid" role="group" aria-label="${MONTHS[mo]} ${y}"><span class="hj-mwk hd" aria-hidden="true">Wk</span>${OWN_WK.map(w => `<span class="hj-mhd" aria-hidden="true">${DOW[w]}</span>`).join('')}${grid}</div>
+    <div class="hj-mkey" aria-hidden="true">${M_MARKS.map(([m, l]) => `<span><i class="m-${m}"></i>${esc(l)}</span>`).join('')}</div>
+    <div class="tn-card a-week hj-mdet" id="hj-mdet" tabindex="-1" aria-live="polite"><div class="tn-k">${esc(DOWL[sd.getDay()] + ', ' + MONTHS[sd.getMonth()] + ' ' + sd.getDate())}${isT ? ' · Today' : ''}</div>
+      ${det.length ? det.join('') : '<p class="tn-sub">A day to rest and enjoy.</p>'}
+      <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="own">${ic('plus')}Add an Item</button></div></div></div>`;
+}
+
+// ---------- actions ----------
+function ownGoSec(sec){ if (bareOn() && C.section && C.host === 'home'){ try { C.section(sec); } catch(e){} return; } if (bareOn()){ S.bare.section = sec; S.bare.closed = false; rerender(false); return; } S.sec = sec; S.setup = false; rerender(false); }
+const ownFocus = id => setTimeout(() => { const e = document.getElementById(id); if (e){ try { e.focus({preventScroll: true}); } catch(x){} if (e.scrollIntoView) e.scrollIntoView({block: 'center', behavior: 'smooth'}); } }, 40);
+function actOwn(a, v){
+  const o = OWN(), it = id => o.items.find(x => x.id === id), si = id => o.shop.find(x => x.id === id);
+  const sure = id => { if (S.ownSure === id) return true; S.ownSure = id; rerender(true); setTimeout(() => { if (S.ownSure === id){ S.ownSure = null; rerender(true); } }, 3500); return false; };
+  switch (a){
+    case 'go': if (!/^own:/.test(String(v))) return false; actTool('toggle', v); return true;
+    case 'sec': if (v !== 'own' || !bareOn() || C.host !== 'home' || !C.section) return false; S.ownF = null; S.ownEd = null; ownGoSec('own'); return true;
+    case 'wkview': S.wkView = v === 'month' ? 'month' : 'week'; S.mOff = 0; S.mSel = null; rerender(true); return true;
+    case 'mon': S.mOff = (S.mOff || 0) + (+v || 0); S.mSel = null; rerender(true); return true;
+    case 'mday': { const d = parseD(v); if (!d) return true; const t = day0(new Date()); S.mOff = (d.getFullYear() - t.getFullYear()) * 12 + d.getMonth() - t.getMonth(); S.mSel = v; rerender(true); ownFocus('hj-mdet'); return true; }
+    case 'mgo': { v = String(v || ''); if (/^shop:/.test(v)){ S.shopWk = +v.split(':')[1] || null; S.shopEd = null; ownGoSec('shop'); return true; }
+      if (window.GGHealth && GGHealth.act) GGHealth.act(v); else apiAct(v); return true; }
+    case 'ownadd': S.ownF = {name: '', freq: 'd', days: [], dom: new Date().getDate(), time: '', part: ''}; S.ownEd = null; rerender(true); ownFocus('hj-ownname'); return true;
+    case 'ownedit': { const x = it(v); if (!x) return true; S.ownF = JSON.parse(JSON.stringify(x)); S.ownEd = x.id;
+      const here = bareOn() ? S.bare.section === 'own' : S.sec === 'own'; if (here) rerender(true); else ownGoSec('own'); ownFocus('hj-ownname'); return true; }
+    case 'ownf': { const f = S.ownF; if (!f) return true; const [k, val] = String(v).split('|');
+      if (k === 'day'){ const w = +val, L = arr(f.days).map(Number); f.days = L.includes(w) ? L.filter(z => z !== w) : L.concat(w); }
+      else if (k === 'freq'){ f.freq = val; if (val === 'days' && !arr(f.days).length) f.days = [new Date().getDay()]; }
+      else f[k] = val; rerender(true); return true; }
+    case 'ownclose': S.ownF = null; S.ownEd = null; rerender(true); return true;
+    case 'ownsave': { const f = S.ownF; if (!f) return true; const name = String(f.name || '').trim().slice(0, 80);
+      if (!name){ toast('Add a name.'); ownFocus('hj-ownname'); return true; }
+      if (f.freq === 'days' && !arr(f.days).length){ toast('Choose at least one day.'); return true; }
+      const rec = {id: S.ownEd || 'o' + uid(), name, freq: ['d', 'days', 'w', 'm'].includes(f.freq) ? f.freq : 'd', days: f.freq === 'days' ? arr(f.days).map(Number).filter(w => w >= 0 && w <= 6) : [],
+        dom: f.freq === 'm' ? Math.max(1, Math.min(31, +f.dom || 1)) : null, time: /^\d{1,2}:\d{2}$/.test(String(f.time || '')) ? String(f.time) : '', part: OWN_PN[f.part] ? f.part : '',
+        paused: !!f.paused, from: f.from || ymd(monOf(new Date())), u: Date.now()};
+      const i = o.items.findIndex(x => x.id === rec.id); if (i < 0) o.items.push(rec); else o.items[i] = rec;
+      S.ownF = null; S.ownEd = null; ownSave(); toast(i < 0 ? 'Added. It joins your days.' : 'Saved.'); rerender(true); return true; }
+    case 'ownpause': { const x = it(v); if (!x) return true; x.paused = !x.paused; x.u = Date.now(); ownSave(); toast(x.paused ? 'Paused. Resume it anytime.' : 'Back in your days.'); rerender(true); return true; }
+    case 'owndel': { if (!sure(v)) return true; S.ownSure = null; o.items = o.items.filter(x => x.id !== v); if (S.ownEd === v){ S.ownF = null; S.ownEd = null; } ownSave(); toast('Removed.'); rerender(true); return true; }
+    case 'shoped': { if (!/^own-/.test(String(v))) return false; const x = si(String(v).slice(4)); if (!x) return true; S.ownSF = JSON.parse(JSON.stringify(x)); S.ownSEd = x.id; rerender(true); ownFocus('hj-osname'); return true; }
+    case 'osadd': S.ownSF = {name: '', amt: '', sec: 'Other', store: '', brand: '', note: '', freq: 'once', start: S.shopWk || foodWeek(new Date())}; S.ownSEd = null; rerender(true); ownFocus('hj-osname'); return true;
+    case 'osedit': { const x = si(v); if (!x) return true; S.ownSF = JSON.parse(JSON.stringify(x)); S.ownSEd = x.id; rerender(true); ownFocus('hj-osname'); return true; }
+    case 'osf': { const f = S.ownSF; if (!f) return true; const [k, val] = String(v).split('|'); f[k] = val; rerender(true); return true; }
+    case 'osclose': S.ownSF = null; S.ownSEd = null; rerender(true); return true;
+    case 'ossave': { const f = S.ownSF; if (!f) return true; const name = String(f.name || '').trim().slice(0, 80); if (!name){ toast('Add a name.'); ownFocus('hj-osname'); return true; }
+      const t = k => String(f[k] || '').trim().slice(0, 80);
+      const rec = {id: S.ownSEd || 's' + uid(), name, amt: t('amt'), sec: SECX().includes(f.sec) ? f.sec : 'Other', store: t('store'), brand: t('brand'), note: t('note'),
+        freq: ['once', 'w', '2w', 'm'].includes(f.freq) ? f.freq : 'once', start: Math.max(1, Math.round(+f.start || foodWeek(new Date()))), paused: !!f.paused, u: Date.now()};
+      const i = o.shop.findIndex(x => x.id === rec.id); if (i < 0) o.shop.push(rec); else o.shop[i] = rec;
+      S.ownSF = null; S.ownSEd = null; ownSave(); toast(i < 0 ? (rec.freq === 'once' ? 'Added to that list.' : 'Added. It joins the list on its weeks.') : 'Saved.'); rerender(true); return true; }
+    case 'ospause': { const x = si(v); if (!x) return true; x.paused = !x.paused; x.u = Date.now(); ownSave(); rerender(true); return true; }
+    case 'osdel': { if (!sure(v)) return true; S.ownSure = null; o.shop = o.shop.filter(x => x.id !== v); if (S.ownSEd === v){ S.ownSF = null; S.ownSEd = null; } ownSave(); toast('Removed.'); rerender(true); return true; }
+  }
+  return false;
+}
+document.addEventListener('input', e => { const t = e.target; if (!t || !t.closest || !t.closest(ROOTS)) return;
+  if (t.dataset.hjoi && S.ownF) S.ownF[t.dataset.hjoi] = t.value; if (t.dataset.hjos && S.ownSF) S.ownSF[t.dataset.hjos] = t.value; });
+document.addEventListener('change', e => { const t = e.target; if (!t || !t.closest || !t.closest(ROOTS)) return;
+  if (t.dataset.hjoi && S.ownF) S.ownF[t.dataset.hjoi] = t.value; if (t.dataset.hjos && S.ownSF){ S.ownSF[t.dataset.hjos] = t.value; } });
+document.addEventListener('keydown', e => { const t = e.target; if (e.key !== 'Enter' || !t || !t.dataset) return; if (t.dataset.hjoi === 'name' && S.ownF){ e.preventDefault(); act('ownsave'); } if (t.dataset.hjos && t.tagName === 'INPUT' && S.ownSF){ e.preventDefault(); act('ossave'); } });
+(function(){ const s = document.createElement('style'); s.id = 'hj-own-css'; s.textContent = `
+.hj-ownl{display:grid;gap:8px;margin:12px 0 4px;}
+.hj-own{display:flex;align-items:center;gap:10px;flex-wrap:wrap;border:1px solid var(--line);border-radius:14px;padding:10px 12px;background:var(--t-card2,var(--card));}
+.hj-own .tx{flex:1 1 200px;min-width:0;}.hj-own .tx b{display:block;font-size:17px;overflow-wrap:anywhere;}.hj-own .tx small{color:var(--ink-soft);font-size:14px;line-height:1.4;overflow-wrap:anywhere;}
+.hj-own .acts{display:flex;flex-wrap:wrap;align-items:center;gap:8px;}.hj-own .acts .tn-btn{margin-top:0;}
+.hj-own.paused{opacity:.7;}
+.hj-ownf{margin-top:14px;padding-top:12px;border-top:1px solid var(--line);}.hj-ownf h3{margin:0 0 6px;font-size:20px;}
+.hj-ownf input,.hj-ownf select{width:100%;min-width:0;min-height:44px;box-sizing:border-box;}
+.hj-ownq{font-weight:700;font-size:15px;margin:12px 0 6px;}
+.hj-ownf .hj-chips{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 6px;}.hj-ownf .chip{min-height:44px;}
+.hj-owndays .chip{min-width:52px;justify-content:center;}
+.hj-ownmed{font-size:14px;margin-top:8px;}
+.hj-g2o{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:0 12px;}
+.hj-pill.own{border-left:4px solid var(--t-week,var(--gold));}
+.hj-ownwk{margin:0 0 12px;}
+.hj-wtabs{margin-bottom:12px;}
+.hj-month .hj-wkbar small{display:block;}
+.hj-msoon{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 10px;}.hj-mhol small{opacity:.8;margin-left:4px;}
+.hj-mgrid{display:grid;grid-template-columns:26px repeat(7,minmax(0,1fr));gap:4px;align-items:stretch;}
+.hj-mhd{text-align:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:.8px;text-transform:uppercase;color:var(--ink-soft);padding:2px 0;}
+.hj-mwk{display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;color:var(--ink-soft);border-radius:8px;}
+.hj-mwk.hd{font-size:11px;}
+.hj-mwk.ph-foundation{color:var(--t-leaves,#4E7D4A);}.hj-mwk.ph-build{color:var(--t-move,#3F6F94);}.hj-mwk.ph-peak{color:var(--t-kitchen,#A9562A);}
+.hj-mday{position:relative;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:3px;min-height:52px;min-width:0;padding:5px 2px 6px;border:1.5px solid var(--line);border-radius:12px;background:var(--card,var(--bg));color:var(--ink);font:inherit;cursor:pointer;}
+.hj-mday .n{font-weight:700;font-size:15px;line-height:1;}
+.hj-mday.out{opacity:.45;}
+.hj-mday.t{border-color:var(--c,var(--t-week));}.hj-mday.t .n{color:var(--c,var(--t-week));}
+.hj-mday.on{background:var(--c,var(--t-week));border-color:var(--c,var(--t-week));color:var(--t-on,#fff);}.hj-mday.on .n{color:inherit;}
+.hj-mday.hol{box-shadow:inset 0 0 0 2px var(--t-fruit,#D62839);}
+.hj-mday .dots{display:flex;flex-wrap:wrap;justify-content:center;gap:2px;max-width:100%;}
+.hj-mgrid i,.hj-mkey i{display:inline-block;width:7px;height:7px;border-radius:50%;flex:none;}
+.hj-mday.on i{outline:1.5px solid var(--t-on,#fff);}
+.m-move{background:var(--t-move,#3F6F94);}.m-food{background:var(--t-kitchen,#A9562A);}.m-prep{background:var(--t-trunk,#8B5E1A);}.m-own{background:var(--t-week,#6B4E8C);}.m-shop{background:var(--t-leaves,#4E7D4A);}.m-hol{background:var(--t-fruit,#D62839);}
+.hj-mkey{display:flex;flex-wrap:wrap;gap:6px 14px;margin:10px 2px 14px;font-size:13.5px;color:var(--ink-soft);}.hj-mkey span{display:inline-flex;align-items:center;gap:6px;}
+.hj-mdet{outline:none;}
+.hj-mrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:8px 0;border-top:1px solid var(--line);}
+.hj-mrow:first-of-type{border-top:0;}
+.hj-mrow .tx{flex:1 1 160px;min-width:0;}.hj-mrow .tx small{display:block;font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--ink-soft);}
+.hj-mrow .tx b{display:block;font-size:16px;overflow-wrap:anywhere;}.hj-mrow .tn-btn{margin-top:0;}.hj-mrow .tn-ck{flex:1 1 auto;}
+.hj-mrow.m-move,.hj-mrow.m-food,.hj-mrow.m-prep,.hj-mrow.m-own,.hj-mrow.m-shop,.hj-mrow.m-hol{background:none;border-left:4px solid transparent;padding-left:10px;}
+.hj-mrow.m-move{border-left-color:var(--t-move,#3F6F94);}.hj-mrow.m-food{border-left-color:var(--t-kitchen,#A9562A);}.hj-mrow.m-prep{border-left-color:var(--t-trunk,#8B5E1A);}.hj-mrow.m-own{border-left-color:var(--t-week,#6B4E8C);}.hj-mrow.m-shop{border-left-color:var(--t-leaves,#4E7D4A);}.hj-mrow.m-hol{border-left-color:var(--t-fruit,#D62839);}
+:is(#hj-root,#hj-bare) .sr{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0;}
+@media (max-width:420px){.hj-mgrid{grid-template-columns:20px repeat(7,minmax(0,1fr));gap:3px;}.hj-mday{min-height:48px;border-radius:10px;}.hj-mday .n{font-size:14px;}.hj-mgrid i{width:6px;height:6px;}}
+`; document.head.appendChild(s); })();
+
+// =====================================================================
 // BLD 881: The Grounded Way, top shelf. The contract with home/home.js (host 'home', public Tending or a moved plan):
 //   GGHealth.today(date) -> [{key, when, hour, title, sub, btn, tint, done, kind}] in day order (done from that day's log);
 //     before Tending is set up, one item: {key: 'setup', title: 'Start Tending', kind: 'setup'}.
@@ -3061,6 +3444,7 @@ function bareBody(b){
   const lib = FLDH(), h = H(); if (!lib || !h) return '';
   if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
   const sec = String(b.section || ''), base = sec.split(':')[0], box = (cls, html) => `<div class="tn-sec ${cls}">${html}</div>`;
+  if (base === 'holidays'){ if (sec.length > 9) S.holId = sec.slice(9); return vHol(); } // BLD 896: open to anyone
   if (base !== 'setup' && setupNeeded()) return vSetupBare(b);
   switch (base){
     case 'shop': return box('a-kitchen', vShop());
@@ -3073,6 +3457,8 @@ function bareBody(b){
     case 'workouts': return vWorkouts();
     case 'quiet': return vQuietShelf();
     case 'setup': return vSetupBare(b);
+    case 'own': return box('a-week', vOwn());   // BLD 896
+    case 'month': return box('a-week', vMonth());
     case 'week': return box('a-week', vWeek());
     case 'fruit': return KIT() ? '' : box('p-fruit', fruitCards());   // BLD 882: milestones, the last 7 days, and the LDL path, for the Home's Grow tab
     case 'learn': return box('a-today', vPlan(lib, 'food') + vPlan(lib, 'fitness') + SOBER);
@@ -3156,20 +3542,61 @@ function levelSets(){
   });
   LS = {L, sig, list}; return list;
 }
+// BLD 896: a level's workout by id, from any phase (public Tending builds the phase it belongs to at that level).
+function levelSes(lvl, id){
+  const L = levelSets().find(x => x.id === lvl), ph = lvl === 'gentle' ? '' : sesPh(id);
+  if (!ph || !PUB()){ const ses = L && (L.sessions || {})[id]; return ses ? {ses, w0: L, mine: !!L.mine} : null; }
+  const ses = pubPhaseSes(ph, lvl)[id]; if (!ses) return null;
+  if (L && L.mine) return {ses, w0: L, mine: true};
+  return {ses, w0: L || WK(), mine: false};
+}
 function buildLevelWork(lvl, id){
-  const L = levelSets().find(x => x.id === lvl), ses = L && (L.sessions || {})[id]; if (!ses) return null;
-  if (L.mine) return buildWork(id);
-  const t0 = new Date(), steps = stepsFor(ses, phNum(t0), lightOn(t0), L);
+  const X = levelSes(lvl, id); if (!X) return null; const ses = X.ses;
+  if (X.mine) return buildWork(id);
+  const t0 = new Date(), pk = phKeyFor(id, t0), steps = stepsFor(ses, pk.ph, pk.light, X.w0);
   let count = true; try { count = localStorage.getItem('gg-health-count') !== '0'; } catch(e){}
   return {k: 'work', s: id, key: 'wl:' + lvl + ':' + id, title: ses.title || 'Session ' + id, mins: ses.mins, steps, i: 0, set: 1, done: [], end: 0, left: 0, run: false, rest: false, stage: 'start', voice: AVA, count, hands: handsOn()};
 }
 function vWorkouts(){
-  const h = H(), n = Math.max(1, weekNo(new Date())), sets = levelSets(), pr = arr((PR() || {}).sessions); let i = 0;
+  const h = H(), sets = levelSets().filter(L => L.mine); let i = 0;
   const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
-    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
-  const prac = flowShelf(pr, x => artCard(i++, 'pracid:' + x.id, flowKick(x), x.title, x.focus || '', 'a-move', flowArtName(x)));
+    return `<h3 class="tn-h3">${progOn() ? 'This Week' : esc(L.name)}${progOn() ? ` <small class="tn-mine">${esc(phName(phaseId(Math.max(1, progWeek(new Date())))))}</small>` : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
+  const every = everyHtml((key, kick, title, sub, art) => artCard(i++, key, kick, title, sub, 'a-move', art));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : '';
-  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${prac}${recent}</div>`;
+  return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${every}${recent}</div>`;
+}
+// BLD 896 (Chris, October 30, 2026): the Every Workout shelf. This Week (the phase the person is in) stays on top; then every workout
+// by category: Strength, Cardio, Flow, Yoga, Balance, Stretch, and in public Tending Gentle; Strength and Cardio by phase (Foundation,
+// Build, Peak), each tile with its place, like "Build 2 · 56 min". A workout from another phase plays with that phase's sets and reps.
+// Public Tending shows the person's level first, with Root, Rise, and Thrive chips to look at the others.
+const EW_CATS = {strength: 'Strength', cardio: 'Cardio', daily: 'Flow', yoga: 'Yoga', taichi: 'Balance', stretch: 'Stretch', gentle: 'Gentle'};
+const EW_LVLS = [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive']];
+const curLvl = () => PUB() ? (H().set.level || 'root') : '';
+function everyLvl(){ if (!PUB()) return ''; const v = S.ewLvl || curLvl(); return EW_LVLS.some(x => x[0] === v) ? v : 'root'; }
+function everyGroups(lvl){
+  const out = [], pr = arr((PR() || {}).sessions), cur = curLvl();
+  if (PROG()) ['strength', 'cardio'].forEach(tr => { const g = PH_IDS.map(ph => { const ids = trackIds(tr, ph); if (!ids.length) return null;
+      const src = PUB() ? pubPhaseSes(ph, lvl) : WK().sessions || {}, list = ids.map(id => [id, src[id]]).filter(x => x[1]); return list.length ? {name: phName(ph), list} : null; }).filter(Boolean);
+    if (g.length) out.push({cat: tr, groups: g}); });
+  else if (!PUB()){ const all = Object.entries(WK().sessions || {}); if (all.length) out.push({cat: 'strength', groups: [{name: '', list: all}]}); }
+  FLOW_IDS.forEach(st => { const L = pr.filter(x => (x.style || 'daily') === st || (st === 'daily' && !FLOW_IDS.includes(x.style || 'daily'))); if (L.length) out.push({cat: st, groups: [{name: '', list: L.map(x => [x.id, x])}]}); });
+  if (PUB() && PLIB()){ const g = cur === 'gentle' ? WK().sessions || {} : gentleWo(PLIB(), Math.max(1, weekNo(new Date()))).sessions || {}, list = Object.entries(g); if (list.length) out.push({cat: 'gentle', groups: [{name: '', list}]}); }
+  return out;
+}
+function everyHtml(card){
+  const lvl = everyLvl(), cur = curLvl(), G = everyGroups(lvl); if (!G.length) return '';
+  const chips = PUB() && PROG() ? `<div class="hj-chips tn-ewl" role="group" aria-label="Level">${EW_LVLS.map(([v, l]) => `<button type="button" class="chip${lvl === v ? ' on' : ''}" aria-pressed="${lvl === v}" data-hja="ewlvl" data-hjv="${v}">${esc(l)}${v === cur ? ' <small>My Level</small>' : ''}</button>`).join('')}</div>` : '';
+  const tiles = (c, g) => g.list.map(([id, x], j) => c === 'strength' || c === 'cardio' ? card(PUB() && lvl !== cur ? 'wl:' + lvl + ':' + id : 'work:' + id, (g.name ? g.name + ' ' + (j + 1) + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, PUB() ? lvl : ''))
+    : c === 'gentle' ? card(cur === 'gentle' ? 'work:' + id : 'wl:gentle:' + id, (x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Gentle'), x.title || 'Session ' + id, x.lead || '', moveArtName(id, x, 'gentle'))
+    : card('pracid:' + x.id, flowKick(x), x.title || 'Flow', x.focus || '', flowArtName(x))).join('');
+  return `<h3 class="tn-h3" id="tn-every">Every Workout</h3><p class="tn-ews">Every workout we have built, by category.${PROG() ? ' A workout from another phase plays with that phase\'s sets and reps.' : ''}</p>${chips}` +
+    G.map((c, k) => { const n = c.groups.reduce((a, g) => a + g.list.length, 0); return `<details class="tn-ew" data-ew="${esc(c.cat)}"${k === 0 || S.ewOpen === c.cat ? ' open' : ''}><summary><b>${esc(EW_CATS[c.cat] || c.cat)}</b><small>${n} ${n === 1 ? 'workout' : 'workouts'}</small></summary>${c.groups.map(g => `${g.name ? `<p class="tn-fst"><b>${esc(g.name)}</b></p>` : ''}<div class="tn-kgrid">${tiles(c.cat, g)}</div>`).join('')}</details>`; }).join('');
+}
+// The Library's count: every playable workout (public Tending: each level's Strength and Cardio, plus Gentle and the Flow family).
+function everyCount(){
+  const pr = arr((PR() || {}).sessions).length, tc = src => ['strength', 'cardio'].reduce((n, tr) => n + PH_IDS.reduce((m, ph) => m + trackIds(tr, ph).filter(src).length, 0), 0);
+  if (!PUB()){ const all = WK().sessions || {}; return (PROG() ? tc(id => !!all[id]) : Object.keys(all).length) + pr; }
+  const gn = arr(((PLIB() || {}).gentle || {}).sessions).length; return (PROG() ? EW_LVLS.length * tc(() => true) : levelSets().filter(L => L.id !== 'gentle').reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0)) + gn + pr;
 }
 function vQuietShelf(){
   const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;
@@ -3213,6 +3640,7 @@ function apiToday(date){
     else if (x.k === 'mark') push(Object.assign(base, {tint: TINT.move, kind: 'mark'}));
     else if (x.k === 'cook'){ const dn = dinnerFor(d); push(Object.assign(base, {when: 'Tonight', btn: dn && dn.leftover ? 'Open' : 'Cook It', tint: TINT.cook, kind: 'cook'})); }
     else if (x.k === 'shop') push(Object.assign(base, {tint: TINT.cook, kind: 'shop'}));
+    else if (x.k === 'hol') push(Object.assign(base, {tint: TINT.cook, kind: 'holiday'}));
     else if (x.k === 'prep') push(Object.assign(base, {when: /^Monthly/.test(x.kick) ? 'Sunday' : x.kick, tint: TINT.cook, kind: 'prep'})); });
   if (U('food')){
     const L = arr(((APP() || {}).dinners || {}).lunches);
@@ -3227,6 +3655,7 @@ function apiToday(date){
   out.forEach(x => { x.image = x.kind === 'workout' ? moveArt(x.key) : x.kind === 'practice' ? WAY(flowArtName(practiceFor(d))) : x.kind === 'meditation' ? WAY(medArtFor(d))
     : x.kind === 'prep' && /^prep:batch:/.test(x.key) ? WAY(ITEM_ART.batch) : x.kind === 'cook' && dinnerArtName(dinnerFor(d)) ? WAY(dinnerArtName(dinnerFor(d)))
     : WAY(ITEM_ART[x.kind] || 'tend-body'); });
+  ownToday(d).forEach(x => out.push(x));   // BLD 896: My Own Items
   return out.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
 }
 function apiToggle(key){
@@ -3239,14 +3668,18 @@ function apiToggle(key){
     if (on && /^(work|wl):/.test(key)) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
   rerender(true); return {done: !!on};
 }
-const ITEM_RE = /^(setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem)(:|$)/;
+const ITEM_RE = /^(own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|hol|holset|holrec)(:|$)/;
 function apiAct(key){
   key = String(key || ''); const [k, a, b] = key.split(':'); if (!H() || !FLDH()) return null;
   if (key === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); if (bareOn()){ toSetup(); return {section: 'setup'}; } return want('setup'); }
   if (k === 'shop'){ S.shopWk = +a || null; S.shopEd = null; return want('shop'); }
   if (k === 'prepsec'){ S.prepWk = +a || null; return want('prep'); }
+  // BLD 896: 'own' opens My Own Items, 'own:<id>' checks one off today, 'ownedit:<id>' opens it to edit.
+  if (k === 'own'){ if (a) return apiToggle(key); S.ownF = null; S.ownEd = null; return want('own'); }
+  if (k === 'ownedit'){ const x = OWN().items.find(i => i.id === a); S.ownF = x ? JSON.parse(JSON.stringify(x)) : null; S.ownEd = x ? x.id : null; return want('own'); }
   if (k === 'supp' || k === 'out' || k === 'y' || k === 'rem') return apiToggle(key);
   if (k === 'idea' && !ideaOv(a, b)) return apiToggle(key);
+  if (/^hol(set|rec)?$/.test(k)){ const r = holAct(key); if (r) return r; }
   const o = ovFor(key); if (o){ openOv(o); return {overlay: o.k, key: o.key}; }
   return apiToggle(key);
 }
@@ -3257,7 +3690,7 @@ function apiWeek(n){
   const days = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = U('food') ? dinnerFor(d) : null, wn = weekNo(d);
     const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses && !flowRest(d, false) ? practiceFor(d) : null, mf = U('mind') && MED() && H().set.medFreq && medOn(d) ? medFor(d) : null;
     const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
-    return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0),
+    return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0), hol: holWeekDay(d), own: ownDay(d, 'week'),
       dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(dinnerArtName(dn) || ITEM_ART.cook), night: dinnerArtName(dn) ? WAY(dinnerArtName(dn)) : null} : null,
       move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id, ses), kind: wkKind(ses.id, ses), id: ses.id} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(flowArtName(pr)), kind: 'flow', id: pr.id, style: pr.style || ''} : null,
       // BLD 893: the meditation on its days, once a person has chosen how often (My Grounded Way Plan).
@@ -3265,7 +3698,7 @@ function apiWeek(n){
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
   // BLD 894: the Week tab's Shopping List card reads the real list ("Week B · 42 items").
   const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
-  return {shopWeek: letter(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+  return {hol: holCards(), ownWeek: ownWeekList(mon), shopWeek: letter(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
     shopImage: WAY('shop-wide'), prepImage: sp ? WAY('prep-together') : null, bulkImage: bt ? WAY(ITEM_ART.batch) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
@@ -3333,7 +3766,7 @@ function apiPlan(o){
 }
 function apiCounts(){
   if (!FLDH() || !H()) return {recipes: 0, workouts: 0, meditations: 0, practices: 0};
-  return {recipes: recipesAll().length, workouts: levelSets().reduce((n, L) => n + Object.keys(L.sessions || {}).length, 0), meditations: arr((MED() || {}).sessions).length, practices: arr((PR() || {}).sessions).length};
+  return {recipes: recipesAll().length, workouts: everyCount(), meditations: arr((MED() || {}).sessions).length, practices: arr((PR() || {}).sessions).length};
 }
 // BLD 892, one card, two credits (shared/gg-fills.js): what a Today item plays, and every guided session the Home can offer
 // as Play a Guided One. Each is {key (for act), done (the log key its finish writes), kind, id, title, style, mins}.
@@ -3347,8 +3780,8 @@ function apiFill(key, date){
   if (k === 'medid') return fillMed(arr((MED() || {}).sessions).find(x => x.id === a), key);
   if (k === 'prac') return fillPrac(practiceFor(d), 'prac');
   if (k === 'pracid') return fillPrac(arr((PR() || {}).sessions).find(x => x.id === a), key);
-  if (k === 'work'){ const ses = (WK().sessions || {})[a]; return ses ? {key, done: key, kind: wkKind(a, ses), id: a, title: ses.title || 'Session ' + a, style: '', mins: ses.mins || null} : null; }
-  if (k === 'wl'){ const L = levelSets().find(x => x.id === a), ses = L && (L.sessions || {})[b]; return ses ? {key, done: key, kind: wkKind(b, ses), id: b, title: ses.title || 'Session ' + b, style: '', mins: ses.mins || null} : null; }
+  if (k === 'work'){ const ses = sesById(a); return ses ? {key, done: key, kind: wkKind(a, ses), id: a, title: ses.title || 'Session ' + a, style: '', mins: ses.mins || null} : null; }
+  if (k === 'wl'){ const ses = (levelSes(a, b) || {}).ses; return ses ? {key, done: key, kind: wkKind(b, ses), id: b, title: ses.title || 'Session ' + b, style: '', mins: ses.mins || null} : null; }
   return null;
 }
 function apiGuided(){
@@ -4013,6 +4446,18 @@ const CSS = `
 .tn-gear .chip{text-align:left;max-width:100%;white-space:normal;}.tn-gear .chip small{display:block;font-weight:400;opacity:.8;}
 .tn-fst{margin:14px 2px 8px;font-size:15px;line-height:1.4;overflow-wrap:anywhere;}.tn-fst b{display:block;font-size:16px;}
 .tn-hhrow{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:10px 0 4px;}
+/* BLD 896: the Every Workout shelf and the Move Well card */
+.tn-ews{margin:-4px 2px 10px;font-size:15px;line-height:1.45;color:var(--ink-soft);overflow-wrap:anywhere;}
+.tn-ewl{margin:0 0 12px;}.tn-ewl .chip small{font-weight:400;opacity:.8;margin-left:4px;}
+.tn-ew{background:var(--card);border:1px solid var(--line);border-radius:14px;margin:0 0 12px;padding:0 12px;min-width:0;}
+.tn-ew>summary{cursor:pointer;list-style:none;display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding:14px 4px;font-family:'Cormorant Garamond',Georgia,serif;font-size:22px;}
+.tn-ew>summary::-webkit-details-marker{display:none;}.tn-ew>summary small{font-family:'Barlow',sans-serif;font-size:14px;color:var(--ink-soft);}
+.tn-ew>summary::after{content:'Show';font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--gold);margin-left:auto;}.tn-ew[open]>summary::after{content:'Hide';}
+.tn-ew[open]{padding-bottom:4px;}
+/* The breath ring beside a figure sits a little lower and smaller, so its Breathe In and Breathe Out words stay inside the panel on a phone. */
+.hj-stagebox .ggs-breath.wf{width:min(260px,58vw,calc(var(--H) * .8));transform:translate(-50%,-46%);}
+.hj-repsof{font-size:16px;opacity:.75;margin-top:-4px;}
+.hj-mw ol{margin:4px 0 6px;padding-left:22px;}.hj-mw li{margin:6px 0;line-height:1.45;overflow-wrap:anywhere;}.hj-mw .hj-mwl{margin:0 0 6px;}
 .tn-bclosed{text-align:center;}.tn-bclosed .tn-btn{margin-top:10px;}
 .tn-notes{margin-top:12px;}
 `;
@@ -4053,7 +4498,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
-    ['plan', 'team', 'kids'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
+    ['plan', 'team', 'kids', 'own'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
   // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
@@ -4067,4 +4512,207 @@ window.GGHealth = {
   // BLD 857: the honest estimate, for tests and for setting each session's minutes: seconds for a session id, phase '1' to '3', light week.
   planSecs: (id, ph, light) => { const ses = (WK().sessions || {})[id]; return ses ? Math.round(sessSecs(ses, String(ph || '1'), !!light)) : 0; }
 };
+// ---------- BLD 896, Holiday Sets ----------
+// Chris, October 30, 2026: "a special set for holidays and special occasions.. so you can select thanksgiving dinner, and it will
+// add the items to shopping list ahead of time, and put all the prep on calendar, and build step by step guides to do all the
+// cooking and prep", then "maybe when you set up food choices.. you can decide to include holidays you want to have.. and then
+// they will all be avail in our recipe library". The sets are public data: window.GGHolidays (shared/gg-holidays.js).
+// The person's own choices live in DATA.health.set.hol: {on: [ids] (My Holidays), plans: {id: {date, guests, u}}, skip: {id: date}, u}.
+// A ticked holiday brings a countdown card about three weeks ahead ("Thanksgiving is in 3 weeks. Set it up?"). Set It Up puts
+// the set's shopping on the Shopping List for the week of its buy day (each item marked with the set's name), its prep timeline
+// on the days before (Today, Week, and the phone calendar file), and every recipe in the kitchen guide with the calm voice.
+// Keys: hol:<id>:<i> a timeline task, hol:<id>:shop the shopping day, holset:<id> the set, holrec:<id>:<menu id> one recipe.
+const HOL_LEAD = 24;
+const HOL_OUT = 'Nicely done. That part is ready, and the big day just got easier.';
+const HOL_ART = {ahead: 'weekly-batch', day: 'todays-plate'};
+function holUse(){ const G = window.GGHolidays || null; if (G && G.use && G._hc !== holSt){ G.use(() => { try { return C.data && D() ? holSt() : null; } catch(e){ return null; } }); G._hc = holSt; } return G; }
+function holSt(){ const h = H(); if (!h) return {on: [], plans: {}, skip: {}}; const x = h.set.hol = h.set.hol && typeof h.set.hol === 'object' ? h.set.hol : {};
+  x.on = arr(x.on); x.plans = x.plans && typeof x.plans === 'object' ? x.plans : {}; x.skip = x.skip && typeof x.skip === 'object' ? x.skip : {}; return x; }
+function holKeep(){ const h = H(), x = holSt(); x.u = Date.now(); if (h.set.u) h.set.u = Date.now(); save(); }
+const holGet = id => { const G = holUse(); return G ? G.get(id) : null; };
+const holSay = s => String((s && (s.spoken || s.name)) || '').replace(/\s*\/\s*/g, ' or ').replace(/\s*\(([^)]*)\)/g, '').trim();
+const holLc = t => String(t || '').replace(/^[A-Z](?=[a-z])/, c => c.toLowerCase());
+const holDay = s => { const d = parseD(s); return d ? DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() : ''; };
+const holShort = s => { const d = parseD(s); return d ? DOW[d.getDay()] + ', ' + MONTHS[d.getMonth()].slice(0, 3) + ' ' + d.getDate() : ''; };
+const holDays = (a, b) => { const x = parseD(a), y = parseD(b); return x && y ? Math.round((y - x) / DAYMS) : 0; };
+function holPlan(id){ const p = holSt().plans[id]; return p && p.date ? p : null; }
+function holNext(id){ const G = holUse(), p = holPlan(id); if (p && p.date >= today()) return p.date; return G ? G.next(id, today()) : null; }
+function holGuests(id){ const p = holPlan(id), s = holGet(id); return Math.max(1, Math.round(+(p && p.guests) || (s && +s.serves) || 6)); }
+// The Shopping List for food week n is shopped the Saturday before that week; a set's buy day lands on the list shopped on or before it.
+const holWeek = date => Math.max(1, Math.floor((day0(parseD(date)) - addD(startMon(), -2)) / (7 * DAYMS)) + 1);
+const holSec = a => { if (SECX().includes(a)) return a; const m = {Proteins: 'Meat and Fish', 'Dairy and Eggs': 'Eggs, Dairy, and Milks', 'Grains and Beans': 'Pantry', Spices: 'Pantry'}[a]; return SECX().includes(m) ? m : 'Other'; };
+function holShopItems(n){
+  const G = holUse(), out = [], st = holSt(); if (!G || !H()) return out;
+  Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date || holWeek(G.buyDate(id, p.date)) !== n) return;
+    G.shop(id, p.guests, p.pick).forEach((x, i) => out.push({id: 'h:' + id + ':' + i, store: 'grocer', sec: holSec(x.aisle), name: x.item, amt: x.amt || '', hamt: x.amt || '', price: 0, for: s.name, hol: id, done: false, n: 500 + out.length})); });
+  return out;
+}
+// Merges a set's items into the week's list, keeps what was checked or edited, and takes off the items of a set that was cleared.
+function holMerge(L, n){
+  const want = holShopItems(n), has = L && arr(L.items).some(x => /^h:/.test(String(x.id || ''))); if (!want.length && !has) return L;
+  L = L || {seed: true, items: []}; const ids = new Set(want.map(x => x.id));
+  L.items = arr(L.items).filter(x => !/^h:/.test(String(x.id || '')) || ids.has(x.id));
+  want.forEach(x => { const ex = L.items.find(y => y.id === x.id); if (!ex) L.items.push(x); else if (ex.amt === ex.hamt){ ex.amt = x.amt; ex.hamt = x.amt; ex.for = x.for; } });
+  return L;
+}
+// Today and Week: the shopping day and each timeline task on its own day.
+function holAgenda(d){
+  const G = holUse(), out = []; if (!G || !H()) return out; const st = holSt(), k = ymd(d);
+  Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date) return;
+    if (G.buyDate(id, p.date) === k) out.push({key: 'hol:' + id + ':shop', k: 'hol', v: id, hour: 9.5, kick: 'Shopping day', title: 'Shop for ' + s.name, sub: 'Everything for ' + s.name + ' is on your Shopping List, marked ' + s.name + '.', btn: 'Open the List', hol: id});
+    G.tasks(id, p.date, p.pick).forEach(t => { if (t.date !== k) return;
+      out.push({key: 'hol:' + id + ':' + t.i, k: 'hol', v: id, hour: t.daysBefore ? 16 : 9 + t.i / 100, kick: t.daysBefore ? s.name + ' prep' : s.name, title: t.title,
+        sub: (t.mins ? 'About ' + t.mins + ' minutes. ' : '') + (t.steps.length ? 'A calm voice guides each step.' : ''), btn: t.steps.length ? 'Guide Me' : 'Done', hol: id}); }); });
+  return out;
+}
+function holWeekDay(d){ return holAgenda(d).map(x => ({key: x.key, title: x.title, set: (holGet(x.v) || {}).name || '', shop: /:shop$/.test(x.key), done: isDone(d, x.key)})); }
+// The countdown cards: a ticked holiday about three weeks out, and every set up holiday until its day.
+function holCards(){
+  const G = holUse(); if (!G || !H()) return []; const st = holSt(), t = today(), out = [], seen = new Set();
+  st.on.concat(Object.keys(st.plans)).forEach(id => { if (seen.has(id)) return; seen.add(id); const s = G.get(id); if (!s) return;
+    const p = holPlan(id), planned = !!(p && p.date >= t), date = planned ? p.date : G.next(id, t); if (!date) return;
+    const n = holDays(t, date); if (n < 0 || (!planned && (n > HOL_LEAD || st.skip[id] === date || !st.on.includes(id)))) return;
+    const away = G.away(date, t), when = away === 'today' ? s.name + ' is today.' : s.name + ' is ' + away + '.';
+    out.push({id, name: s.name, date, away, planned, days: n, guests: planned ? holGuests(id) : null, kick: planned ? 'Set for ' + holDay(date) : holDay(date),
+      line: planned ? when + ' Your list and prep are on the calendar.' : when + ' Set it up?', btn: planned ? 'Open' : 'Set It Up', key: 'holset:' + id}); });
+  return out.sort((a, b) => a.days - b.days);
+}
+function holCardsHtml(){
+  return holCards().map(c => `<div class="tn-card a-kitchen hj-holc"><div class="tn-pc"><div class="tn-scene"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async"></div><div style="min-width:0">
+    <div class="tn-time">${esc(c.kick)}</div><h3>${esc(c.line)}</h3>${c.planned ? `<div class="tn-meta">For ${c.guests}. Shopping, prep, and every recipe, step by step.</div>` : `<div class="tn-meta">The shopping on your list, the prep on your calendar, and a calm voice for every recipe.</div>`}
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(c.key)}">${ic(c.planned ? 'arrow' : 'plus')}${esc(c.btn)}</button>${c.planned ? '' : `<button type="button" class="linkbtn" data-hja="holskip" data-hjv="${esc(c.id + '|' + c.date)}">Skip This Year</button>`}</div></div></div></div>`).join('');
+}
+// The kitchen guide for one timeline task (the steps it names, from each recipe) or one recipe.
+function holTaskOv(id, i){
+  const G = holUse(), s = G && G.get(id); if (!s) return null; const p = holPlan(id), date = (p && p.date) || holNext(id) || today(), t = G.tasks(id, date, p && p.pick).find(x => x.i === +i); if (!t) return null;
+  if (!t.steps.length) return null; const N = holGuests(id), ings = [], base = +s.serves || N;
+  t.menus.forEach(m => { const r = G.recipe(id, m, N); if (r) r.ingredients.forEach(g => ings.push(t.menus.length > 1 ? g + ' (' + r.name + ')' : g)); });
+  return {k: 'cook', idea: true, hol: id, key: 'hol:' + id + ':' + t.i, title: t.title, sub: s.name + ' · ' + holShort(t.date) + (t.mins ? ' · about ' + t.mins + ' min' : ''),
+    intro: t.daysBefore ? 'Getting ready for ' + holSay(s) + ': ' + holLc(t.title).replace(/[.!?]?$/, '.') : 'The day is here. We take it one step at a time.', outro: t.daysBefore ? HOL_OUT : '',
+    data: {name: t.title, meal: 'holiday', art: t.daysBefore ? HOL_ART.ahead : HOL_ART.day, steps: t.steps.map(x => ({t: x.t, min: x.min, at: x.at || ''})), ingredients: ings,
+      tip: N !== base && ings.length ? 'The ingredients are sized for ' + N + '. The steps name the amounts for ' + base + '.' : ''}};
+}
+function holRecOv(id, mid){
+  const G = holUse(), s = G && G.get(id), r = G && G.recipe(id, mid, holGuests(id)); if (!r) return null;
+  return {k: 'cook', idea: true, hol: id, key: 'holrec:' + id + ':' + mid, title: r.name, sub: s.name + (r.mins ? ' · ' + r.mins + ' minutes' : '') + ' · for ' + r.serves,
+    data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min})), ingredients: r.ingredients, serves: r.serves,
+      tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients are sized for ' + r.serves + '. The steps name the amounts for ' + r.baseServes + '.' : ''].filter(Boolean).join(' ')}};
+}
+// Every hol key, from Today, Week, the cards, and the Home (GGHealth.act).
+function holAct(key){
+  const [k, id, b] = String(key || '').split(':'); if (!holGet(id)) return null;
+  if (k === 'holset' || (k === 'hol' && b === 'shop' && !holPlan(id))){ S.holId = id; S.holEd = null; return holGo(); }
+  if (k === 'hol' && b === 'shop'){ S.shopWk = holWeek(holUse().buyDate(id, holPlan(id).date)); S.shopEd = null; if (bareOn() || C.host === 'home') return want('shop'); S.sec = 'shop'; rerender(false); window.scrollTo(0, 0); return {section: 'shop'}; }
+  const o = k === 'holrec' ? holRecOv(id, b) : holTaskOv(id, b); if (!o) return null; openOv(o); return {overlay: o.k, key: o.key};
+}
+function holGo(){ if (bareOn() || C.host === 'home') return want('holidays'); S.sec = 'holidays'; S.setup = false; rerender(false); window.scrollTo(0, 0); return {section: 'holidays'}; }
+function holToggle(id){ const st = holSt(), i = st.on.indexOf(id); if (i >= 0) st.on.splice(i, 1); else if (holGet(id)) st.on.push(id); holKeep(); return st.on.includes(id); }
+// My Holidays: one chip per set (the start-up Food step, Settings, and the Holidays section).
+function holChips(){ const G = holUse(); if (!G) return ''; const on = holSt().on;
+  return `<div class="hj-chips hj-holchips" role="group" aria-label="My Holidays">${G.sets.map(s => { const p = on.includes(s.id); return `<button type="button" class="chip${p ? ' on' : ''}" aria-pressed="${p}" data-hja="holtog" data-hjv="${esc(s.id)}">${esc(s.name)}</button>`; }).join('')}</div>`; }
+function holPick(){ return holUse() ? `<h3 style="margin-top:20px">My Holidays</h3><p class="hj-sub">Choose the days you celebrate. About three weeks before each one, a card offers to set it up: the shopping on your list, the prep on your calendar, and every recipe guided step by step. Every set stays in the recipe library too.</p>${holChips()}` : ''; }
+function holShelf(){ const G = holUse(); if (!G || KIT()) return ''; return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen hj-holshelf" data-hja="holall"><span class="ill"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${G.sets.length} sets</span><span class="h3">Holidays and Gatherings</span><span class="tn-meta">Thanksgiving to a backyard gathering: whole food menus, the shopping, the prep, and every recipe step by step.</span></span></button>`; }
+function holSetCard(){ if (KIT() || !holUse()) return ''; const n = holSt().on.length;
+  return `<div class="tn-card a-kitchen" id="tn-hol"><div class="tn-hd">${badge('star', 'a-kitchen')}<div><div class="tn-k a-kitchen">My Holidays</div><div class="tn-sub">${n ? n + ' chosen. ' : ''}A card about three weeks before each one offers to set it up.</div></div></div>${holChips()}
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holall">${ic('arrow')}Every Holiday Set</button></div></div>`; }
+// The Holidays section: My Holidays, what is coming up, and every set; one set opens with its Set Up, timeline, and recipes.
+function vHol(){
+  const G = holUse(); if (!G) return `<div class="tn-sec a-kitchen"><p class="hj-note">The holiday sets are on their way. Open this page again in a moment.</p></div>`;
+  const id = S.holId && G.get(S.holId) ? S.holId : '';
+  const head = secHead('kitchen', 'a-kitchen', 'Holidays and Gatherings', 'Whole food menus for the big days, with the shopping, the prep, and a calm voice guiding every recipe.');
+  if (id) return `<div class="tn-sec a-kitchen hj-hol">${head}${vHolSet(G, G.get(id))}</div>`;
+  const cards = holCardsHtml();
+  return `<div class="tn-sec a-kitchen hj-hol">${head}${cards ? `<div class="hj-holup">${cards}</div>` : ''}
+    <div class="tn-card a-kitchen"><div class="tn-k">My Holidays</div><p class="tn-sub">Choose the days you celebrate. About three weeks before each one, a card on your Week offers to set it up.</p>${holChips()}</div>
+    <div class="tn-kgrid hj-holgrid">${G.sets.map(s => { const p = holPlan(s.id), nx = holNext(s.id);
+      return `<button type="button" class="tn-card tn-lift tn-kc tn-art a-kitchen" data-hja="go" data-hjv="holset:${esc(s.id)}"><span class="ill"><img src="${esc(WAY(HOL_ART.day + '-sq'))}" alt="" loading="lazy" decoding="async" width="600" height="600"></span><span class="tx"><span class="tn-time">${esc(p && p.date >= today() ? 'Set for ' + holShort(p.date) : nx ? holShort(nx) : G.whenText(s.id))}</span><span class="h3">${esc(s.name)}</span><span class="tn-meta">${esc(s.menu.length + ' recipes · ' + s.lead)}</span></span></button>`; }).join('')}</div></div>`;
+}
+function vHolSet(G, s){
+  const id = s.id, p = holPlan(id), planned = !!(p && p.date >= today()), ready = !setupNeeded() && (U('food') || PUB()), ed = S.holEd && S.holEd.id === id ? S.holEd : null;
+  const sug = G.suggestions ? G.suggestions(id, today()) : [], pick = (s.when || {}).rule === 'pick';
+  const dateIn = ed ? ed.date : (planned ? p.date : holNext(id) || ''), N = ed ? ed.guests : holGuests(id), pk = (ed && ed.pick) || (p && p.pick) || (s.choose ? s.menu[0].id : '');
+  const form = `<div class="tn-card a-kitchen hj-holform"><div class="tn-k">${planned ? 'Change the Day or Guests' : 'Set It Up'}</div>
+    ${pick && !dateIn ? '<p class="tn-sub">Choose the day.</p>' : ''}${sug.length ? `<div class="hj-chips">${sug.map(x => `<button type="button" class="chip${dateIn === x.date ? ' on' : ''}" aria-pressed="${dateIn === x.date}" data-hja="holdate" data-hjv="${esc(x.date)}">${esc(x.name + ', ' + holShort(x.date))}</button>`).join('')}</div>` : ''}
+    ${s.choose ? `<p class="tn-sub">Choose the dish you bring.</p><div class="hj-chips">${s.menu.map(m => { const on = pk === m.id; return `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="holpick" data-hjv="${esc(m.id)}">${esc(m.name)}</button>`; }).join('')}</div>` : ''}
+    <label class="hj-fld"><span>The day</span><input type="date" data-hjhol="date" value="${esc(dateIn)}" min="${esc(today())}"></label>
+    <div class="tn-hhrow"><span>Guests at the table</span><div class="hj-stock"><button type="button" class="chip" data-hja="holg" data-hjv="-1" aria-label="One fewer"${N <= 1 ? ' disabled' : ''}>&minus;</button><span><b data-hjholn>${N}</b></span><button type="button" class="chip" data-hja="holg" data-hjv="1" aria-label="One more"${N >= 40 ? ' disabled' : ''}>+</button></div></div>
+    <p class="tn-sub">The menu is written for ${esc(s.serves)}. The shopping list sizes every amount for your guests.</p>
+    <div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="holsave" data-hjv="${esc(id)}">${ic('check')}${planned ? 'Save the Change' : 'Set It Up'}</button>${ed ? `<button type="button" class="linkbtn" data-hja="holcancel">Close</button>` : ''}</div></div>`;
+  const tasks = planned ? G.tasks(id, p.date, p.pick) : [], buy = planned ? G.buyDate(id, p.date) : '';
+  const plan = planned ? `<div class="tn-card a-kitchen hj-holplan"><div class="tn-k">Set for ${esc(holDay(p.date))} · for ${N}${s.choose && p.pick ? ' · ' + esc((s.menu.find(m => m.id === p.pick) || {}).name || '') : ''}</div><p class="tn-sub">${esc(s.name + ' is ' + G.away(p.date, today()) + '.')}</p>
+    <ol class="hj-holtl">${[{date: buy, i: -1}].concat(tasks).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : x.i - y.i).map(t => t.i < 0 ? `<li><b>${esc(holShort(buy))}</b><span>Shop: ${G.shop(id, p.guests, p.pick).length} items join Shop for Week ${letter(holWeek(buy))}, marked ${esc(s.name)}.</span><button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:shop">Open the List</button></li>`
+      : `<li><b>${esc(holShort(t.date))}</b><span>${esc(t.title)}${t.mins ? ' · about ' + t.mins + ' min' : ''}</span>${t.steps.length ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:${t.i}">Guide Me</button>` : ''}</li>`).join('')}</ol>
+    <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holedit" data-hjv="${esc(id)}">${ic('clock')}Change the Day or Guests</button><button type="button" class="linkbtn" data-hja="holclear" data-hjv="${esc(id)}">${S.holSure === id ? 'Tap Again to Take It Off My Calendar' : 'Take It Off My Calendar'}</button></div></div>` : '';
+  const menu = `<div class="tn-card a-kitchen"><div class="tn-k">The Menu</div><div class="hj-holmenu">${s.menu.map(m => { const r = G.recipe(id, m.id, N);
+    return `<details class="hj-doc"${S.open['hol:' + id + ':' + m.id] ? ' open' : ''} data-hjd="hol:${esc(id)}:${esc(m.id)}"><summary><span>${esc(m.name)}<small>${esc([m.course ? m.course[0].toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></span></summary><div class="hj-body">
+      ${m.makeAhead ? `<p class="hj-sub"><b>Make ahead:</b> ${esc(m.makeAhead)}</p>` : ''}${m.card ? `<div class="hj-holcard"><b>Reheat Card</b><p>${esc(m.card)}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-hja="holcard" data-hjv="${esc(id + '|' + m.id)}">Share the Card</button><button type="button" class="btn btn-line btn-sm" data-hja="holcardprint" data-hjv="${esc(id + '|' + m.id)}">Print the Card</button></div></div>` : ''}${m.note ? `<p class="hj-sub">${esc(m.note)}</p>` : ''}<ul class="hj-ing">${arr(r && r.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul>
+      <ol class="hj-steps hj-holsteps">${arr(m.steps).map(x => `<li><div>${esc(x.say)}</div></li>`).join('')}</ol></div></details>
+      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Guide Me: ${esc(m.name)}</button></div>`; }).join('')}</div></div>`;
+  const tips = arr(s.tips).length ? `<div class="tn-card"><div class="tn-k">For a Calm, Healthy Day</div><ul class="hj-ing">${s.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
+  return `<div class="row" style="margin:0 0 12px"><button type="button" class="btn btn-line btn-sm" data-hja="holall">Every Holiday Set</button></div>
+    <div class="tn-card a-kitchen hj-holtop"><div class="tn-k">${esc(G.whenText(id))}</div><h3>${esc(s.name)}</h3><p class="tn-sub">${esc(s.lead)}</p>${s.note ? `<p class="tn-sub">${esc(s.note)}</p>` : ''}</div>
+    ${ready ? (planned && !ed ? plan : form) : `<div class="tn-card a-kitchen"><p class="tn-sub">Start Tending, and this set can put its shopping on your list and its prep on your calendar. Every recipe below plays now.</p></div>`}
+    ${menu}${tips}${holSrc(s.sources)}`;
+}
+// Sources: ids in shared/gg-sources.js, or {t, who, url} written in the set.
+function holSrc(L){ L = arr(L).filter(Boolean); if (!L.length) return ''; if (L.every(x => typeof x === 'string')) return srcLine(L);
+  const xs = L.filter(x => x && typeof x === 'object' && (x.t || x.title)); if (!xs.length) return '';
+  return `<p class="hj-src">${xs.length > 1 ? 'Sources' : 'Source'}: ${xs.map(x => (x.url ? `<a href="${esc(x.url)}" target="_blank" rel="noopener">${esc(x.t || x.title)}</a>` : esc(x.t || x.title)) + (x.who ? ', ' + esc(x.who) : '')).join('; ')}</p>`; }
+function actHol(a, v){
+  switch (a){
+    case 'holtog': holToggle(v); rerender(true); return true;
+    case 'holall': S.holId = null; S.holEd = null; holGo(); return true;
+    case 'holskip': { const [id, d] = String(v).split('|'); holSt().skip[id] = d; holKeep(); rerender(true); return true; }
+    case 'holedit': { const p = holPlan(v); S.holEd = {id: v, date: p ? p.date : holNext(v) || '', guests: holGuests(v)}; rerender(true); return true; }
+    case 'holpick': { const id = S.holId; S.holEd = S.holEd && S.holEd.id === id ? S.holEd : {id, date: (holPlan(id) || {}).date || holNext(id) || '', guests: holGuests(id)}; S.holEd.pick = v; rerender(true); return true; }
+    case 'holcard': { const [id, mid] = String(v).split('|'), r = holUse() && holUse().recipe(id, mid, holGuests(id)); if (!r || !r.card) return true; const txt = r.name + '\n\n' + r.card;
+      try { if (navigator.share){ navigator.share({title: r.name, text: txt}).catch(() => {}); return true; } } catch(e){}
+      try { navigator.clipboard.writeText(txt).then(() => toast('The card is copied. Paste it into a note or a text.'), () => toast('Select the card text to copy it.')); } catch(e){ toast('Select the card text to copy it.'); } return true; }
+    case 'holcardprint': { const [id, mid] = String(v).split('|'), r = holUse() && holUse().recipe(id, mid, holGuests(id)); if (!r || !r.card) return true; const w = window.open('', '_blank'); if (!w) return true;
+      w.document.write('<!doctype html><meta charset="utf-8"><title>' + esc(r.name) + '</title><body style="font:18px/1.5 Georgia,serif;max-width:34em;margin:40px auto;padding:0 16px"><h1 style="font-size:26px">' + esc(r.name) + '</h1><p style="white-space:pre-wrap">' + esc(r.card) + '</p></body>'); w.document.close(); try { w.focus(); w.print(); } catch(e){} return true; }
+    case 'holcancel': S.holEd = null; rerender(true); return true;
+    case 'holdate': { const id = S.holId; S.holEd = S.holEd && S.holEd.id === id ? S.holEd : {id, date: '', guests: holGuests(id)}; S.holEd.date = v; rerender(true); return true; }
+    case 'holg': { const id = S.holId; S.holEd = S.holEd && S.holEd.id === id ? S.holEd : {id, date: (holPlan(id) || {}).date || holNext(id) || '', guests: holGuests(id)};
+      S.holEd.guests = Math.max(1, Math.min(40, S.holEd.guests + (+v || 0))); rerender(true); return true; }
+    case 'holsave': { const id = v, s = holGet(id); if (!s) return true; const ed = S.holEd && S.holEd.id === id ? S.holEd : {date: (holPlan(id) || {}).date || holNext(id) || '', guests: holGuests(id)};
+      if (!parseD(ed.date) || ed.date < today()){ toast('Choose the day first.'); return true; }
+      const st = holSt(), pk0 = s.choose ? ed.pick || (holPlan(id) || {}).pick || s.menu[0].id : null; st.plans[id] = {date: ed.date, guests: Math.max(1, +ed.guests || +s.serves || 6), u: Date.now()}; if (pk0) st.plans[id].pick = pk0; if (!st.on.includes(id)) st.on.push(id); delete st.skip[id];
+      S.holEd = null; S.holSure = null; holKeep(); const G = holUse(), wk = holWeek(G.buyDate(id, ed.date));
+      toast(s.name + ' is set: the shopping is on the list for Week ' + letter(wk) + ', and the prep is on your calendar.'); rerender(true); return true; }
+    case 'holclear': if (S.holSure !== v){ S.holSure = v; rerender(true); return true; } delete holSt().plans[v]; S.holSure = null; S.holEd = null; holKeep(); toast('Taken off your calendar. The set stays here whenever you want it.'); rerender(true); return true;
+  }
+  return false;
+}
+// The phone calendar file: the shopping day and each prep day of every set up holiday, once each.
+function holIcs(stamp, e, fold){
+  const G = holUse(), out = []; if (!G || !H()) return out; const st = holSt(), z = n => String(n).padStart(2, '0'), t = today();
+  const ev = (uidKey, date, hour, title, desc) => { const d = parseD(date); if (!d) return; const hh = Math.floor(hour), mm = Math.round((hour - hh) * 60), when = d.getFullYear() + z(d.getMonth() + 1) + z(d.getDate()) + 'T' + z(hh) + z(mm) + '00';
+    out.push(['BEGIN:VEVENT', 'UID:mh-hol-' + uidKey.replace(/[^a-z0-9-]/gi, '-') + '-' + when + '@growwithgrounded.com', 'DTSTAMP:' + stamp, 'DTSTART:' + when, 'DURATION:PT30M', 'SUMMARY:' + e('Tending: ' + title), 'DESCRIPTION:' + e(desc), 'BEGIN:VALARM', 'ACTION:DISPLAY', 'DESCRIPTION:' + e(title), 'TRIGGER:PT0M', 'END:VALARM', 'END:VEVENT'].map(fold).join('\r\n')); };
+  Object.keys(st.plans).forEach(id => { const p = st.plans[id], s = G.get(id); if (!s || !p || !p.date || p.date < t) return;
+    ev(id + '-shop', G.buyDate(id, p.date), 9.5, 'Shop for ' + s.name, 'Everything for ' + s.name + ' is on your Shopping List.');
+    G.tasks(id, p.date, p.pick).forEach(x => ev(id + '-' + x.i, x.date, x.daysBefore ? 16 : 9, x.title + (x.daysBefore ? ' (' + s.name + ')' : ''), s.name + (x.mins ? ', about ' + x.mins + ' minutes' : '') + '. Open Tending for the step by step guide.')); });
+  return out;
+}
+ACC.hol = 'a-kitchen'; SCN.hol = 'cook'; ITEM_ART.holiday = HOL_ART.day + '-sq';
+document.addEventListener('input', e => { const t = e.target; if (!t || !t.dataset || !t.dataset.hjhol || !t.closest || !t.closest(ROOTS)) return; const id = S.holId; if (!id) return;
+  S.holEd = S.holEd && S.holEd.id === id ? S.holEd : {id, date: (holPlan(id) || {}).date || holNext(id) || '', guests: holGuests(id)}; S.holEd[t.dataset.hjhol] = t.value; });
+(function(){ const s = document.createElement('style'); s.id = 'hj-hol-css'; s.textContent = `
+.hj-holchips{margin:8px 0 4px;}
+.hj-holgrid{margin-top:14px;}
+.hj-holtl{list-style:none;margin:10px 0 6px;padding:0;display:grid;gap:8px;}
+.hj-holtl li{display:grid;grid-template-columns:minmax(92px,auto) minmax(0,1fr) auto;gap:10px;align-items:baseline;padding:8px 0;border-top:1px solid var(--line);}
+.hj-holtl li b{font-weight:700;white-space:nowrap;}.hj-holtl li span{min-width:0;overflow-wrap:anywhere;}
+.hj-holmenu details summary small{display:block;color:var(--ink-soft);font-size:13px;font-weight:400;margin-top:2px;}
+.hj-holgo{margin:-4px 0 14px;}.hj-holgo .tn-btn{max-width:100%;white-space:normal;text-align:left;}
+.hj-holup{display:grid;gap:12px;margin-bottom:14px;}
+.hj-holcard{border:1px dashed var(--line);border-radius:12px;padding:10px 12px;margin:8px 0;}.hj-holcard p{white-space:pre-wrap;margin:6px 0 10px;}
+@media (max-width:520px){.hj-holtl li{grid-template-columns:1fr;gap:2px;}}
+`; document.head.appendChild(s); })();
+holUse();
+Object.assign(window.GGHealth, {
+  // BLD 896: Holiday Sets for hosts. holidays() -> {on, cards: [{id, name, date, away, planned, days, guests, kick, line, btn, key}]}.
+  holidays(){ try { if (!H()) return null; holUse(); return {on: holSt().on.slice(), cards: holCards()}; } catch(e){ return null; } },
+  holToggle(id){ if (!H()) return false; const r = holToggle(String(id || '')); rerender(true); return r; },
+  holOpen(id){ S.holId = id && holGet(id) ? id : null; S.holEd = null; }
+});
 })();

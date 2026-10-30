@@ -5,7 +5,13 @@
 //   GGMoves.svg(pattern, opts): an inline SVG string, 240 by 240, looping with SMIL.
 //     opts: {size: px (default 160), still: true for one held pose, pose: a key pose number to hold,
 //       flip: true to mirror the figure and its gear (the left side), label: the spoken name, speed: 1 is the
-//       pattern's own pace, 2 twice as fast}.
+//       pattern's own pace, 2 twice as fast; BLD 896: tempo: seconds of one counted rep, so the loop matches the
+//       voice count (one rep, or two for a pattern that works one side then the other), per: reps in one loop to set
+//       that outright, hold: the share of each rep held at the top pose (0.4 by default where a pattern has one)}.
+//   GGMoves.fig: the same as svg. GGMoves.loop(pattern, opts): {id, rep, per, dur, hold} for a tempo, or null.
+//   GGMoves.sync(root, rep): restart every tempo figure in root (an svg, an element, or the document) on a counted rep.
+//   GGMoves.restart(svgElement, {rep, alt}): the same for one figure (the player calls it on each counted rep).
+//   GGMoves.refine(fig, name): a general fig gives way to a named BLD 896 figure (Leg Swings, Push-Up on Handles).
 //     Colors come from CSS custom properties, each falling back to currentColor, so a plain page shows one
 //     theme color and GGStage (stage.js) dresses the figure: --ggm-ink (body), --ggm-far (far limbs opacity),
 //     --ggm-gear and --ggm-gear-op (bench, bar, step), --ggm-db and --ggm-steel (dumbbell plates and handle),
@@ -121,18 +127,34 @@ function poses(P){
   return K;
 }
 
-function frames(P, still, pose){
+function frames(P, still, pose, hold){
   const K = poses(P), pins = pinsOf(P, P.pr ? Object.assign({}, BASE[P.v], P.pr) : K[0]);
   if (pose != null) return [place(P, K[Math.max(0, Math.min(K.length - 1, pose | 0))], pins)];
   if (still){
     const p = P.sp != null ? (Number.isInteger(P.sp) ? K[P.sp] : blend(K[0], K[1], P.sp)) : blend(K[0], K[1 % K.length], 0.5);
     return [place(P, p, pins)];
   }
+  if (hold > 0 && P.top) return held(P, K, pins, hold);
   // Dense frames (about 48 a loop) with an eased curve give a smooth, lively motion; each key pose holds a beat.
   const n = K.length, per = Math.max(12, Math.round(48 / n)), F = [];
   for (let i = 0; i < n; i++) for (let j = 0; j < per; j++){
     const u = j / per, v = P.e === 'lin' ? u : ease(Math.min(1, u * 1.12));
     F.push(place(P, blend(K[i], K[(i + 1) % n], v, P.raw), pins));
+  }
+  F.push(F[0]);
+  return F;
+}
+
+// BLD 896: frames that follow a counted rep. Each move eases from one key to the next, then holds that key: a top pose
+// shares the hold fraction (about 40 percent of each rep), the other keys rest a short beat, and the moves share the rest.
+function held(P, K, pins, hold){
+  const n = K.length, N = Math.max(48, 24 * n), top = P.top, rest = 0.04, F = [];
+  const hw = K.map((k, i) => top.includes((i + 1) % n) ? Math.min(0.8, hold) / top.length : rest);
+  const mw = Math.max(0.1, 1 - hw.reduce((a, b) => a + b, 0)) / n;
+  for (let i = 0; i < n; i++){
+    const m = Math.max(4, Math.round(mw * N)), h = Math.round(hw[i] * N), to = place(P, K[(i + 1) % n], pins);
+    for (let j = 0; j < m; j++) F.push(place(P, blend(K[i], K[(i + 1) % n], ease(j / m), P.raw), pins));
+    for (let j = 0; j < h; j++) F.push(to);
   }
   F.push(F[0]);
   return F;
@@ -231,8 +253,8 @@ const P = {
     k: [{t: [136, 80], h: 26, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [82, 132], h: 150, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}]},
   'child-pose': {v: 's', an: ['rK', 126, 204], bg: G.mat, d: 3, sp: 0,
     k: [{t: [84, 78], h: 70, rl: [60, -90, -90], ll: [60, -90, -90], ra: [78, 78], la: [78, 78]}, {t: [90, 80], h: 72, rl: [60, -90, -90], ll: [60, -90, -90], ra: [76, 76], la: [76, 76]}]},
-  'hip-flexor': {v: 's', an: ['rK', 98, 204], bg: G.couch, d: 3, pin: {lA: [0]},
-    k: [{rl: [-10, -150, 180], ll: [88, 0, 90], ra: [36, 44], la: [36, 44]}, {rl: [-34, -150, 180], ll: [88, 0, 90], ra: [42, 50], la: [42, 50]}]},
+  'hip-flexor': {v: 's', an: ['rK', 98, 204], bg: G.bench(22, 168, 58), d: 3, pin: {lA: [0]},
+    k: [{rl: [-10, -150, -92], ll: [88, 0, 90], ra: [36, 44], la: [36, 44]}, {rl: [-34, -150, -92], ll: [88, 0, 90], ra: [42, 50], la: [42, 50]}]},
   'figure-4': {v: 's', an: ['hip', 128, 204], bg: G.mat, d: 3, pin: {lA: ['rK', 3, -7, -1], rH: ['rK', -8, 9, 1], lH: ['rK', -8, 9, 1]},
     k: [Object.assign({rl: [146, 92, 180], ll: [104, 60, 150]}, SUP), Object.assign({rl: [174, 118, 200], ll: [128, 70, 160]}, SUP)]},
   'hip-switch': {v: 'f', nm: true, an: ['hip', 120, 202], d: 3,
@@ -454,9 +476,51 @@ Object.assign(P, {
     k: [Object.assign({}, SQP.up), Object.assign({}, SQP.low), {ra: [176, 180], la: [174, 178]}]},
   'shoulder-tap': {v: 's', an: ['rT', 30, 208], bg: G.mat, d: 2.4, sp: 1, k: [PLANK, tap('r'), PLANK, tap('l')]}
 });
+// BLD 896: warm-up, cooldown, and hold figures. A key list may name its top poses (top: [key numbers]) for the
+// held top of a rep when the figure follows a tempo, and alt: true marks a pattern whose loop is two counted reps
+// (one each side). hb: true draws a band between the hands; fg: J => svg draws gear placed from the first frame.
+G.post = (x, y) => `<g ${GS}><path d="M${x} ${y}V211" stroke-width="5"/><path d="M${x - 10} 211H${x + 10}" stroke-width="4"/></g>`;
+const HANDLE = x => `<path d="M${x - 12} 211L${x - 7} 202H${x + 7}L${x + 12} 211" stroke-width="4"/><path d="M${x - 6} 201H${x + 6}" stroke-width="5"/>`;
+const HC = (a, R) => ({ax: r1(120 + Math.cos(a * RAD) * R), ay: r1(126 + Math.sin(a * RAD) * 3), t: [r1(180 + Math.cos(a * RAD) * 7), r1(180 + Math.cos(a * RAD) * 2)], h: 180});
+const PUH = {hang: {ra: [164, 180], la: [164, 180], rl: [2, 2, 30], ll: [2, 2, 30]}, top: {ay: 42, rl: [4, 4, 30], ll: [4, 4, 30]}};
+const DIP0 = {t: [168, 174], h: 176, ra: [0, 0], la: [0, 0], rl: [2, -96, -150], ll: [8, -90, -150]};
+const SLR = {mid: ft(120, 134, 160, 80), hands: {ra: [16, -124], la: [16, -124]}};
+const OB = {t: [90, 90], h: 92, sw: 9, hw: 8, ra: [64, 80], rl: [-30, -90, -150], ll: [-34, -92, -150], kz: [0.55, 1, 0.55, 1], fl: 0.8};
+Object.assign(P, {
+  'leg-swing': {v: 's', an: ['lA', 116, 206], bg: G.wall, d: 2.2, sp: 0,
+    k: [{t: [184, 182], h: 180, ll: [0, 0, 90], rl: [60, 40, 112], ra: [-24, -10], la: [44, 70]}, {t: [176, 178], h: 178, ll: [0, 0, 90], rl: [-38, -54, 40], ra: [22, 30], la: [40, 66]}]},
+  'leg-raise-bent': {v: 's', an: ['hip', 126, 164], bg: G.bench(56, 170, 128), top: [1],
+    k: [Object.assign({rl: [100, 56, 146], ll: [100, 56, 146], ra: [-104, -70], la: [-104, -70]}, SUP), Object.assign({rl: [182, 104, 196], ll: [182, 104, 196], ra: [-104, -70], la: [-104, -70]}, SUP)]},
+  'hip-circles': {v: 'f', nm: true, d: 3.2, e: 'lin', sp: 0, pin: {rA: [0], lA: [0], rH: ['rP', 7, -6, 1], lH: ['lP', -7, -6, -1]}, pr: {rl: [5, 0, 90], ll: [-5, 0, -90]},
+    k: [0, 45, 90, 135, 180, 225, 270, 315].map(a => Object.assign(HC(a, 9), {rl: [5, 0, 90], ll: [-5, 0, -90]}))},
+  'open-book': {v: 'f', nm: true, an: ['hip', 92, 191], bg: G.mat, d: 3.4, sp: 2, top: [2],
+    k: [Object.assign({la: [76, 86]}, OB), Object.assign({h: 102, la: [178, 182]}, OB), Object.assign({h: 112, so: 4, la: [212, 218]}, OB), Object.assign({h: 104, la: [180, 182]}, OB)]},
+  'hug-open': {v: 'f', d: 2.6, sp: 1,
+    k: [{ra: [94, 94], la: [94, 94]}, {ra: [44, -104], la: [52, -98]}]},
+  'pull-apart': {v: 'f', d: 2.6, sp: 1, hb: true, top: [1],
+    k: [{ra: [12, -122], la: [12, -122]}, {so: 3, ra: [92, 92], la: [92, 92]}]},
+  pallof: {v: 's', an: ['rA', 122, 206], bg: G.post(116, 94), band: [116, 94], d: 2.8, sp: 1, top: [1],
+    k: [{ll: [8, 2, 90], rl: [-6, -2, 86], ra: [-12, 150], la: [-8, 152]}, {ll: [8, 2, 90], rl: [-6, -2, 86], ra: [90, 90], la: [88, 88]}]},
+  'ankle-pumps': {v: 's', an: ['hip', 92, 166], bg: G.chair, d: 2.4, sp: 1,
+    k: [{rl: [90, 24, 30], ll: [90, 24, 34], ra: [12, 76], la: [12, 76]}, {rl: [90, 24, 132], ll: [90, 24, 128], ra: [12, 76], la: [12, 76]}]},
+  'weighted-bridge': {v: 's', an: ['rA', 174, 206], db: 'r', bg: G.mat, top: [1], pin: {rH: ['hip', 2, -8, 1], lH: ['hip', 2, -8, 1]},
+    k: [Object.assign({rl: [140, 40, 90], ll: [140, 40, 90]}, SUP), {t: [-53, -53], h: -96, rl: [100, 14, 90], ll: [100, 14, 90]}]},
+  'side-lunge-rock': {v: 'f', nm: true, an: ['hip', 120, 134], d: 3.2, sp: 1, alt: true, top: [1, 3],
+    k: [Object.assign({}, SLR.mid, SLR.hands), Object.assign(ft(140, 150, 160, 80), SLR.hands, {t: [176, 178]}), Object.assign({}, SLR.mid, SLR.hands), Object.assign(ft(100, 150, 160, 80), SLR.hands, {t: [184, 182]})]},
+  'dip-hold': {v: 's', an: ['neck', 126, 62], bg: G.dipbar, d: 3, sp: 0, pin: {rH: [-1], lH: [-1]},
+    k: [DIP0, Object.assign({}, DIP0, {ay: 63, s: 1.02, h: 178})]},
+  'pull-up-hold': {v: 'f', an: ['neck', 120, 66], bg: G.bar, d: 3, sp: 0, pin: {rH: [0], lH: [0]}, pr: PUH.hang,
+    k: [PUH.top, Object.assign({}, PUH.top, {ay: 43, s: 1.02})]},
+  'handle-push-up': {v: 's', an: ['rT', 30, 208], bg: G.mat, pin: {rH: [-1], lH: [-1]}, fg: J => `<g ${GS}>${HANDLE(r1(J.rH[0]))}</g>`,
+    k: [{t: [113, 113], h: 106, rl: [-67, -67, 12], ll: [-67, -67, 12], ra: [0, 0], la: [0, 0]}, {t: [97, 97], h: 96, rl: [-83, -83, 12], ll: [-83, -83, 12]}]}
+});
+// The top of each rep, and the patterns whose loop is two counted reps, one each side.
+Object.assign(P['bird-dog'], {alt: true, top: [1, 3]}); Object.assign(P['dead-bug'], {alt: true, top: [1, 3]});
+P['hip-thrust'].top = [1]; P.bridge.top = [1];
+['bridge-march', 'pull-through', 'shoulder-tap', 'cross-crunch', 'knee-drive', 'punch', 'climber', 'march', 'skater', 'bicycle', 'hip-switch', 'heel-toe'].forEach(id => { P[id].alt = true; });
 
 ['skater', 'punch', 'knee-drive', 'walk-out', 'bike', 'shuffle', 'grapevine', 'box-step', 'in-out', 'cross-crunch', 'climber', 'wood-chop', 'knee-hold', 'heel-toe', 'down-dog',
-  'half-kneel-chop', 'half-kneel-lift', 'quick-feet', 'dowel-hinge', 'shoulder-tap'].forEach(id => solve(P[id]));
+  'half-kneel-chop', 'half-kneel-lift', 'quick-feet', 'dowel-hinge', 'shoulder-tap', 'side-lunge-rock'].forEach(id => solve(P[id]));
 
 // The far leg of a crossed seat is drawn mirrored by hand where the view keeps absolute angles.
 P.twist.k.forEach(k => { k.rl = [76, -97, -90]; k.ll = [-76, 97, 90]; });
@@ -465,6 +529,15 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 
 // Keywords, in order: the first that matches wins.
 const KW = [
+  // BLD 896 figures first: Leg Swings before the dumbbell swing, the holds before dips and pull-ups, and so on.
+  [/leg swings?|swing (your|the|one) leg/, 'leg-swing'], [/^(?!.*seated).*hip (circles?|rotations?)/, 'hip-circles'], [/open ?book|book opener/, 'open-book'],
+  [/hug (and|n|&) open|open (and|&) hug/, 'hug-open'], [/pull.?aparts?/, 'pull-apart'], [/pallof|anti.?rotation press/, 'pallof'],
+  [/ankle pumps?|foot pumps?|point and flex/, 'ankle-pumps'], [/(weighted|dumbbell|\bdb|loaded) (glute )?bridge/, 'weighted-bridge'],
+  [/side lunge rock|lunge rock|adductor|groin rock|side to side lunge/, 'side-lunge-rock'],
+  [/dips? (top )?hold|top hold.*\bdips?\b|support hold|straight.?arm (support|hold)/, 'dip-hold'],
+  [/(pull ?ups?|chin ?ups?).*(top )?hold|top hold|flexed.?arm hang|chin over (the )?bar/, 'pull-up-hold'],
+  [/push.?ups? on (the )?handles|handle push.?ups?|push.?up handles/, 'handle-push-up'],
+  [/bench leg raise|(bent.?knee|knees? bent|tucked?) leg raise|leg raise.*(bent|tuck)/, 'leg-raise-bent'], [/hip opener|kneeling hip/, 'hip-flexor'],
   // BLD 892 figures first, so a plainer word below them gives way.
   [/skater/, 'skater'], [/shadow ?box|punch|\bjabs?\b/, 'punch'], [/^(?!.*lunge).*knee drive/, 'knee-drive'], [/walk.?outs?\b|inchworm/, 'walk-out'],
   [/bicycle/, 'bicycle'], [/\bbike|cycling|stationary cycle/, 'bike'], [/shuffle/, 'shuffle'], [/grapevine/, 'grapevine'], [/box step(?!.?up)/, 'box-step'],
@@ -509,8 +582,9 @@ const escA = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;'
 
 function svg(pattern, opts){
   opts = opts || {};
-  const id = P[pattern] ? pattern : of(pattern), M = P[id], dur = r1((M.d || 2.6) / (+opts.speed > 0 ? +opts.speed : 1)), size = opts.size || 160;
-  const F = frames(M, !!opts.still || reduced(), opts.pose), side = M.v === 's';
+  const id = P[pattern] ? pattern : of(pattern), M = P[id], size = opts.size || 160, lp = loop(id, opts);
+  const dur = lp ? lp.dur : r1((M.d || 2.6) / (+opts.speed > 0 ? +opts.speed : 1));
+  const F = frames(M, !!opts.still || reduced(), opts.pose, lp ? lp.hold : 0), side = M.v === 's';
   const far = op => op ? ` style="opacity:var(--ggm-far,${op})"` : '';
   const line = (k, op) => `<polyline points="${pts(F[0], SEG[k])}"${far(op)}>${anim(F, 'points', J => pts(J, SEG[k]), dur)}</polyline>`;
   const db = k => M.db && M.db.includes(k[0]) ? dumbbell(F, k, dur, side && k[0] === 'l' ? '.42' : '') : '';
@@ -524,14 +598,17 @@ function svg(pattern, opts){
   const band = M.band ? `<g style="color:var(--ggm-db,currentColor)"><g stroke-width="3">${seg(J => r1(M.band[0]) + ',' + r1(M.band[1]) + ' ' + hands(J).map(r1).join(','))}</g>` +
     `<circle cx="${M.band[0]}" cy="${M.band[1]}" r="5" fill="currentColor" stroke="none"/></g>` : '';
   const stick = M.stick ? `<g stroke-width="5" style="color:var(--ggm-steel,currentColor)">${seg(J => M.stick(J).map(q => q.map(r1).join(',')).join(' '))}</g>` : '';
+  const hb = M.hb ? `<g stroke-width="3" style="color:var(--ggm-db,currentColor)">${seg(J => pts(J, ['rH', 'lH']))}</g>` : '';
+  const fg = M.fg ? M.fg(F[0]) : '';
   let body;
   if (side) body = line('la', '.42') + db('lH') + line('ll', '.42') + stick + line('sp') + line('rl') + line('ra') + db('rH') + head;
   else body = line('ll') + line('rl') + line('hpb') + line('sp') + line('shb') + stick + line('la') + line('ra') + db('lH') + db('rH') + head;
+  body += hb;
   const label = escA(opts.label || id.replace(/-/g, ' '));
   const flip = opts.flip ? ' transform="translate(240 0) scale(-1 1)"' : '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}">` +
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}"${lp && F.length > 1 ? ` data-rep="${lp.rep}" data-per="${lp.per}"` : ''}>` +
     `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"${flip}>` +
-    `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}${band}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
+    `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}${fg}${band}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
 }
 
 // For a step that names a pattern itself (the Daily Practice), keep a specific pattern, and let a plain
@@ -539,8 +616,44 @@ function svg(pattern, opts){
 function pick(fig, name){
   const f = fig && P[fig] ? fig : null, n = name ? of(name) : 'standing';
   if (!f) return n;
-  return (f === 'standing' || f === 'seat') && n !== 'standing' && n !== 'seat' ? n : f;
+  return (f === 'standing' || f === 'seat') && n !== 'standing' && n !== 'seat' ? n : refine(f, name);
+}
+// BLD 896: a move that names a general pattern (fig) gives way to its own BLD 896 figure when its name asks for one
+// (Leg Swings set as balance, Push-Up on Handles set as push-up), and a plain "standing" gives way to any better match.
+const REFINE = {balance: ['leg-swing'], swing: ['leg-swing'], 'push-up': ['handle-push-up'], 'leg-raise': ['leg-raise-bent'], bridge: ['weighted-bridge'],
+  dip: ['dip-hold'], 'pull-up': ['pull-up-hold'], hang: ['pull-up-hold'], 'yt-raise': ['pull-apart'], lunge: ['side-lunge-rock'], 'cross-seat': [], 'ankle-rock': ['ankle-pumps']};
+function refine(fig, name){
+  const f = fig && P[fig] ? fig : null, n = name ? of(name) : 'standing';
+  if (!f) return n;
+  if (f === 'standing') return n;
+  return (REFINE[f] || []).includes(n) ? n : f;
+}
+// BLD 896: a figure that follows the voice count. tempo is the seconds of one counted rep; a pattern marked alt (one rep
+// each side) loops over two reps, others over one (per sets it outright; the player's alt flag leaves it to the pattern,
+// since a two key figure shows one side whichever side is counted); a pattern with top poses holds them for hold (0.4) of each rep.
+// Walking, running, carries, and the bike keep their own pace.
+const GAIT = ['walk', 'run', 'carry', 'suitcase', 'overhead-carry', 'bike'];
+function loop(pattern, opts){
+  opts = opts || {}; const id = P[pattern] ? pattern : of(pattern), M = P[id], t = +opts.tempo;
+  if (!(t > 0) || GAIT.includes(id)) return null;
+  const per = +opts.per > 0 ? Math.round(+opts.per) : M.alt ? 2 : 1, rep = Math.round(t * 100) / 100;
+  return {id, rep, per, dur: Math.round(rep * per * 100) / 100, hold: M.top ? (opts.hold != null ? Math.max(0, +opts.hold || 0) : 0.4) : 0};
+}
+// Restart a figure on each counted rep (rep 1, 2, 3 ...): an alternating figure starts its second half on even reps.
+// root is an svg made with a tempo, or any element (or the document) holding them.
+function sync(root, rep){
+  const r = Math.max(1, rep | 0), list = root && root.getAttribute && root.getAttribute('data-rep') ? [root] : Array.from((root || document).querySelectorAll('svg.gg-move[data-rep]'));
+  list.forEach(s => { const t = +s.getAttribute('data-rep'), n = +s.getAttribute('data-per') || 1; try { if (s.setCurrentTime) s.setCurrentTime(((r - 1) % n) * t); } catch (e){} });
+  return list.length;
 }
 
-window.GGMoves = {svg, of, pick, patterns: Object.keys(P)};
+// The same for one figure (the player's call): o.rep is the counted rep. A figure made without a tempo starts again
+// on each rep, or every other rep when o.alt says the count alternates sides.
+function restart(el, o){
+  o = o || {}; const r = Math.max(1, (o.rep | 0) || 1);
+  if (!el || !el.setCurrentTime) return false;
+  try { if (+el.getAttribute('data-rep') > 0) sync(el, r); else if (!o.alt || r % 2 === 1) el.setCurrentTime(0); return true; } catch (e){ return false; }
+}
+
+window.GGMoves = {svg, fig: svg, of, pick, refine, loop, sync, restart, patterns: Object.keys(P)};
 })();

@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b895';
+  var V = 'b896';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b894';
@@ -331,7 +331,7 @@
       // BLD 881: Tending saved something (a guide finished, a plate logged): Today and Week redraw behind it.
       changed: function () { tendChanged(); },
       // BLD 881: Tending asks for one of its sections (the shopping list, prep, setup): the Home opens it in its tab.
-      section: function (sec) { var to = { shop: 'week=shop', prep: 'week=prep', setup: 'today=tending', numbers: 'me=numbers', settings: 'me=settings', log: 'today=log', plate: 'today=log', workouts: 'library=workouts' }[sec]; if (to && !S.quiet) goTo(to); },
+      section: function (sec) { var to = { holidays: route().tab === 'library' ? 'library=holidays' : 'week=holidays', shop: 'week=shop', prep: 'week=prep', setup: 'today=tending', numbers: 'me=numbers', settings: 'me=settings', log: 'today=log', plate: 'today=log', workouts: 'library=workouts', own: 'week=own' }[sec]; if (to && !S.quiet) goTo(to); },
       go: function (t) { if (t === 'health') tendGo(); },
       // BLD 877: a public recipe opens the public Recipes page (/recipes/#<id>) in the frame, so there is one recipe design.
       openPage: function (path) { var u; try { u = new URL(path, location.href); } catch (e) { return false; } if (u.origin !== location.origin) return false; openFrame(u); return true; },
@@ -684,8 +684,8 @@
   var TABS = [['today', 'Today'], ['week', 'Week'], ['grow', 'Grow'], ['library', 'Library']];
   var SUBS = {
     today: { log: 'Log a Plate or a Note', tending: 'Tending' },
-    week: { shop: 'Shopping List', prep: 'Sunday Together Prep' },
-    library: { workouts: 'Workouts' },
+    week: { holidays: 'Holidays and Gatherings', shop: 'Shopping List', prep: 'Sunday Together Prep', own: 'My Own Items' },
+    library: { holidays: 'Holidays and Gatherings', workouts: 'Workouts' },
     me: { numbers: 'Numbers', household: 'Household', settings: 'Settings', privacy: 'Privacy' }
   };
   // The old section names, for the fallback while GGHealth.render is missing.
@@ -820,7 +820,7 @@
     if (tab === 'today') { paintRings(app()); fillAlso(); fillWords(); fillMantra(); }
     else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); fillFruit(); }
     else if (tab === 'library') fillLibrary();
-    else if (tab === 'week') { var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); }
+    else if (tab === 'week') { var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); var mb = document.querySelector('#hm-pane #hm-tend[data-sec="month"]'); if (mb) paintSection(mb, 'month'); }
   }
   /* Redraw just the page under the header (after Tending loads, or after a change), keeping the sheet. */
   function refreshPane() {
@@ -1258,7 +1258,7 @@
       if (ready && hasFn('today')) tendItems = hCall('today', today());
     }
     if (Array.isArray(tendItems)) {
-      tendItems.forEach(function (x) { if (!x || !x.key) return; items.push({ key: 't:' + x.key, hkey: x.key, hour: num(x.hour) != null ? +x.hour : 12, when: x.when || '', title: x.title || '', sub: x.sub || '', btn: x.btn || 'Open', tint: x.tint || '', done: !!x.done, kind: x.kind || '', image: x.image || '', src: 'tend' }); });
+      tendItems.forEach(function (x) { if (!x || !x.key) return; items.push({ key: 't:' + x.key, hkey: x.key, hour: num(x.hour) != null ? +x.hour : 12, when: x.when || '', title: x.title || '', sub: x.sub || '', btn: x.btn || 'Open', tint: x.tint || '', done: !!x.done, kind: x.kind || '', image: x.image || '', src: 'tend', opart: x.kind === 'own' ? (x.part || '') : '' }); });
     } else if (ready && sm) {
       // Fallback (before GGHealth.today): the workout and Today's Plate from the summary.
       if (sm.workout) items.push({ key: 'o:move', hour: 7, when: 'Morning', title: sm.workout.title || 'Today\'s Workout', sub: sm.workout.mins ? 'About ' + sm.workout.mins + ' minutes, your level' : 'Your level, with a coach', btn: sm.workout.done ? 'Open' : 'Start', tint: 'move', done: !!sm.workout.done, src: 'old', old: 'move' });
@@ -1288,7 +1288,7 @@
   function doneBtn(x, label) {
     return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
   }
-  var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play' };
+  var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play', Done: 'check' };
   function itemHtml(x) {
     if (x.src === 'plan') return pracCardHtml(x);
     if (x.src === 'spirit') return pracCardHtml(x, { plain: true });
@@ -1338,7 +1338,7 @@
     return out.join('');
   }
   /* BLD 894 (Chris could not find My Plate): Today's Plate near the top of Today, for people who chose food in Tending.
-     Three rings from Tending's own numbers (GGHealth.summary plate and targets) and one button to log. The green + stays. */
+     Three rings from Tending's own numbers (GGHealth.summary plate and targets) and one button to log. */
   function plateCardHtml() {
     var sm = summary(); if (!sm || arr(sm.use).indexOf('food') < 0) return '';
     var pl = obj(sm.plate), tg = obj(sm.targets), n = +pl.logged || 0, sz = innerWidth < 700 ? 66 : 78;
@@ -1365,8 +1365,11 @@
     lead = wayNoteHtml() + lead;
     var list = items.filter(function (x) { return !x.side; });
     var head = '<div class="hm-grp hm-p-leaves"><span class="hm-badge">' + I('sprout') + '</span><h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
-    var fab = T.ready ? '<button type="button" class="hm-fab" data-hm-tab="today=log" aria-label="Log a plate or a note">' + I('plus') + '</button>' : '';
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + (T.ready ? plateCardHtml() : '') + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div></div>' +
+    /* BLD 896 (Chris, note E: "not sure why we have the random green +"): the Plate card's + Log a Plate button is the one way in.
+       With no Plate card, a labeled Log a Note button stands in its place, never a bare plus. */
+    var plate = T.ready ? plateCardHtml() : '';
+    var fab = T.ready && !plate ? '<button type="button" class="hm-fab lab" data-hm-tab="today=log">' + I('plus') + '<span>Log a Note</span></button>' : '';
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + plate + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div>' + (T.ready ? ownLinkHtml() : '') + '</div>' +
       '<div class="hm-col hm-tside">' + (wide ? wkb : '') + sideHtml(items, ed) + '</div></div>' + fab;
   }
   function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
@@ -1380,6 +1383,7 @@
   function itemGo(key) {
     if (/^[ps]:/.test(key)) { openHowFromNow(key); return; }
     var x = findItem(key), t = TREES[S.tree] || TREES.oak; if (!x) return;
+    if (x.src === 'tend' && x.kind === 'own') { itemDone(key); return; }   // BLD 896: My Own Items check off (and credit their part)
     if (x.src === 'tend') { if (hasFn('act')) hCall('act', x.hkey); return; }
     if (x.src === 'old') { goTo('today=' + (x.old === 'plate' ? 'log' : 'tending')); if (x.old === 'move') { S.quiet = true; try { window.GGHealth.open('move'); } catch (e) {} S.quiet = false; } return; }
     if (x.src === 'plan') { openHowFromNow(key); return; }
@@ -1393,7 +1397,7 @@
     var on = !x.done;
     if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
     else if (x.src === 'tend' && x.pairs) fillDone(x, on);
-    else if (x.src === 'tend') tendMark(x, on); else if (x.src === 'old') { itemGo(key); return; }
+    else if (x.src === 'tend') { tendMark(x, on); if (x.opart && PART[x.opart] && !isKid(S.p)) togglePractice(x.opart + '|' + x.title, on); }   // BLD 896: an own item credits the tree part it tends else if (x.src === 'old') { itemGo(key); return; }
     else if (x.src === 'spirit') spiritMark(x.pid, on);
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome();
       // BLD 893: a Sacred Pause chosen in My Grounded Way Plan grows Roots too.
@@ -1410,7 +1414,9 @@
   }
   function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week'); return w && Array.isArray(w.days) ? w : null; }
   /* BLD 885: the weekly practices lead the Week tab, beside the shopping list on a wide screen. */
-  function weekHtml() {
+  /* BLD 896: Week or Month (Chris: "we could have a monthly calendar avail"); the Month is Tending's own, drawn into the Week tab. */
+  function weekHtml() { var on = tendReady() && tendIsReady() && hasFn('render'); return (on ? wkTogHtml() : '') + (on && S.wkv === 'month' ? '<div id="hm-tend" class="hm-sec hm-month" data-sec="month"><p class="hm-loading">Opening your month…</p></div>' : weekHtml0()); }
+  function weekHtml0() {
     var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = weekBody(planDoorWeek());
     if (!wp) return body;
     if (body.indexOf('<div class="hm-wgrid"><div class="hm-col hm-wside">') >= 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
@@ -1433,6 +1439,8 @@
     var prep = '';
     /* BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (it was Monthly Bulk Together). */
     if (w.bulkKey) prep += '<article class="hm-wcard hm-tn-k">' + tile(w.bulkImage || ART2.batch) + '<div class="tx"><span class="ey">Sunday, after prep</span><b>' + esc(w.bulkLabel || 'Weekly Batch') + '</b><small>' + esc(w.bulkSub || 'Burritos and one more for the week, Cook and Helper, side by side.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(w.bulkKey) + '">Open</button></article>';
+    /* BLD 896: Holiday Sets. A ticked holiday about three weeks out ("Thanksgiving is in 3 weeks. Set it up?") and each set up one until its day. */
+    arr(w.hol).forEach(function (c) { prep = '<article class="hm-wcard hm-tn-k hm-whc">' + tile(IMG + 'todays-plate-sq.webp') + '<div class="tx"><span class="ey">' + esc(c.kick) + '</span><b>' + esc(c.line) + '</b><small>' + (c.planned ? 'For ' + esc(c.guests) + '. Shopping, prep, and every recipe, step by step.' : 'The shopping on your list, the prep on your calendar, and a calm voice for every recipe.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(c.key) + '">' + esc(c.btn) + '</button></article>' + prep; });
     if (w.starts) find = '<p class="hm-sub" style="margin:0 4px 12px">Your plan begins ' + esc(niceDay(w.starts)) + '. Here is a look at the week ahead.</p>' + find;
     var mark = function (x) { return x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : ''; };
     var rows = w.days.map(function (d, di) {
@@ -1441,13 +1449,13 @@
         (din.title ? '<button type="button" class="hm-wdin" data-hm-wk="' + esc(din.key || '') + '"' + (din.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ' dinner: ' + din.title + (din.key ? ', open to cook' : '')) + '">' + esc(din.title) + mark(din) + '</button>' : '') +
         (mv.title ? '<button type="button" class="hm-wmove" data-hm-wk="' + esc(mv.key || '') + '"' + (mv.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ': ' + mv.title + (mv.key ? ', start it' : '')) + '">' + esc(mv.title) + mark(mv) + '</button>' : '') +
         weekExtra(d) +
-        (!din.title && !mv.title && !obj(d.med).title ? '<span class="hm-wnone">A day to rest</span>' : '') +
+        (!din.title && !mv.title && !obj(d.med).title && !arr(d.own).length ? '<span class="hm-wnone">A day to rest</span>' : '') +
         '</div></div>';
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
     var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-k">' + esc(nw.title) + '</div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
-    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + '<div class="hm-wlist">' + rows + '</div></div></div>';
+    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + ownWeekHtml(w) + '<div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
   /* ---------- Grow: the tree, the six parts, this season, the Growth Plan, history ---------- */
@@ -1573,7 +1581,8 @@
       { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'library-learn.webp' },
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
       { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
-      { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every level', line: 'Strength, cardio, Flow, and gentle sessions, with a coach.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' },
+      { id: 'holidays', name: 'Holidays and Gatherings', count: window.GGHolidays ? cnt(arr(window.GGHolidays.sets).length, 'set', 'sets') : '', plain: 'The big days', line: 'Whole food menus for the big days, with the shopping, the prep, and every recipe guided.', cls: 'hm-sh-rec', art: IMG + 'todays-plate.webp' },
+      { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout we have built, by category, with a coach.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' },
       { id: 'quiet', name: 'Quiet and Meditation', count: cnt(num(c.meditations), 'practice', 'practices'), plain: 'Morning and evening', line: 'Breath and stillness, and a sacred practice when you choose it.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
     ];
   }
@@ -1626,6 +1635,7 @@
     if (id === 'learn') openLearn();
     else if (id === 'life') openFrame(new URL(t.href + '#life', location.href));
     else if (id === 'recipes') openRecipe('');
+    else if (id === 'holidays') { hCall('holOpen', ''); goTo('library=holidays'); }
     else if (id === 'workouts') goTo('library=workouts');
     else if (id === 'quiet') { if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
   }
@@ -2215,6 +2225,7 @@
       b = wpK('Table · grows Leaves and Branches', 'plate') + wpH('Meals in your plan?') + '<p class="hm-wp-lead">Weekly dinners, Sunday Together Prep, and one shopping list sized to your table.</p>' +
         '<div class="hm-wp-chips">' + wpChip('set:food:yes', 'Yes, Add Meals', d.food === 'yes', 'plate') + wpChip('set:food:later', 'Later', d.food === 'later', 'plate') + '</div>' +
         (d.food === 'yes' ? '<div>' + wpLbl('Around the table') + '<div class="hm-wp-chips">' + hhs.map(function (n) { return wpChip('set:household:' + n, n + (n === 1 ? ' person' : ' people'), d.household === n, 'plate'); }).join('') + '</div></div>' : '') +
+        (window.GGHolidays && hasFn('holidays') ? '<div>' + wpLbl('My Holidays') + '<div class="hm-wp-chips">' + arr(window.GGHolidays.sets).map(function (x) { return wpChip('hol:' + x.id, x.name, arr(obj(hCall('holidays')).on).indexOf(x.id) >= 0, 'plate'); }).join('') + '</div><small class="hm-wp-small">About three weeks before each one, a card on your Week offers to set it up: the shopping, the prep, and every recipe guided. Every set stays in the Library too.</small></div>' : '') +
         '<p class="hm-wp-lead sm">' + (info.done ? 'Your food needs, allergies, and goals carry over from Tending.' : 'Food needs, allergies, and goals live in Tending Setup, ready whenever you like.') + '</p>';
       f = wpBtn('next', 'Next');
     } else if (i === 6) {
@@ -2353,6 +2364,7 @@
     var p = a.split(':'), k = p[0];
     if (k === 'lead') { if (d.lead !== p[1]) { d.lead = p[1]; d.prac = null; WP.sug = null; } paintPlan(true); return; }
     if (k === 'set') { var v = /^\d+$/.test(p[2]) ? +p[2] : p[2]; if (p[1] === 'level' && wpHold(info) && v !== 'gentle') return; d[p[1]] = v; if (p[1] === 'level' || p[1] === 'med' || p[1] === 'days' || p[1] === 'cardioDays') WP.sug = null; paintPlan(true); return; }
+    if (k === 'hol') { hCall('holToggle', p[1]); paintPlan(true); return; }
     if (k === 'gear') { var gi = d.gear.indexOf(p[1]); if (gi >= 0) d.gear.splice(gi, 1); else d.gear.push(p[1]); paintPlan(true); return; }
     if (k === 'mv') { var mi = d.moves.indexOf(p[1]); if (mi >= 0 && d.moves.length === 1) { toast('Choose at least one.'); return; } if (mi >= 0) d.moves.splice(mi, 1); else d.moves.push(p[1]); d.moves = WP_MOVES.map(function (x) { return x[0]; }).filter(function (x) { return d.moves.indexOf(x) >= 0; }); wpSync(d); WP.sug = null; paintPlan(true); return; }
     if (k === 'ck') { d.check[p[1]] = p[2] === '1'; if (wpHold(info)) d.level = 'gentle'; paintPlan(true); return; }
@@ -2393,11 +2405,30 @@
   /* Week's day rows: the meditation and the spirit items on that day. */
   function weekExtra(d) {
     var out = '', md = obj(d.med);
+    /* BLD 896: a set up holiday's shopping day and prep tasks on their days. */
+    arr(d.hol).forEach(function (x) { out += '<button type="button" class="hm-wmove hm-whol" data-hm-wk="' + esc(x.key) + '" aria-label="' + esc((d.dayName || d.day || '') + ': ' + x.title + (x.set ? ', ' + x.set : '')) + '">' + esc(x.title) + (x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>'; });
+    // BLD 896: My Own Items on their days (tap to edit).
+    arr(d.own).forEach(function (o) { out += '<button type="button" class="hm-wmove hm-wown" data-hm-wk="ownedit:' + esc(o.id) + '" aria-label="' + esc((d.dayName || d.day || '') + ': ' + o.title + ', ' + o.when + (o.done ? ', done' : '') + '. Edit it') + '">' + esc(o.title) + ' <small>' + esc(o.when) + '</small>' + (o.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>'; });
     if (md.title) out += '<button type="button" class="hm-wmove hm-wmed" data-hm-wk="' + esc(md.key || '') + '" aria-label="' + esc((d.dayName || d.day || '') + ' meditation: ' + md.title + ', start it') + '">' + esc(md.title) + (md.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>';
     var sp = planOK() ? spiritOn(String(d.date || '').slice(0, 10)) : [];
     if (sp.length) out += '<span class="hm-wsp">' + sp.map(function (x) { return '<span class="hm-wpill" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)">' + esc(x.title || x.n) + '</span>'; }).join('') + '</span>';
     return out;
   }
+
+  /* ---------- BLD 896: My Own Items and the Month on the Week tab ---------- */
+  S.wkv = (function () { try { return localStorage.getItem('gg-home-wkview') === 'month' ? 'month' : 'week'; } catch (e) { return 'week'; } })();
+  function wkTogHtml() {
+    var b = function (v, l, ic) { return '<button type="button" class="hm-wtb' + (S.wkv === v ? ' on' : '') + '" data-hm-wkv="' + v + '" aria-pressed="' + (S.wkv === v) + '">' + I(ic) + l + '</button>'; };
+    return '<div class="hm-wtog"><div class="hm-wseg" role="group" aria-label="Week or Month">' + b('week', 'Week', 'grid') + b('month', 'Month', 'clock') + '</div><button type="button" class="hm-pill hm-wownb" data-hm-tab="week=own">' + I('sprout') + 'My Own Items</button></div>';
+  }
+  function ownWeekHtml(w) { var L = arr(w && w.ownWeek); return L.length ? '<p class="hm-sub hm-ownwk"><b>Once this week:</b> ' + L.map(function (x) { return esc(x.title) + (x.done ? ' (done)' : ''); }).join(', ') + '</p>' : ''; }
+  function ownLinkHtml() { return '<div class="hm-ownlink"><span>My Own Items</span><button type="button" class="hm-btn sm line" data-hm-tab="week=own">' + I('plus') + 'Add an Item</button></div>'; }
+  document.addEventListener('click', function (e) {
+    var b = e.target.closest && e.target.closest('[data-hm-wkv]'); if (!b) return;
+    e.preventDefault(); S.wkv = b.getAttribute('data-hm-wkv') === 'month' ? 'month' : 'week';
+    try { localStorage.setItem('gg-home-wkview', S.wkv); } catch (x) {}
+    refreshPane(); var nb = document.querySelector('[data-hm-wkv="' + S.wkv + '"]'); if (nb) try { nb.focus({ preventScroll: true }); } catch (x) {}
+  });
 
   /* ---------- start ---------- */
   function boot() {
