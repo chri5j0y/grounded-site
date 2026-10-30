@@ -314,7 +314,8 @@ function itemFor(m, level, place, sets, rest, restAfter, prefix, work){
   if (m.unilateral) it.side = true;
   // BLD 891: numbered steps, an easier and a harder version, and the move's tempo ride along to the player.
   if (arr(m.steps).length) it.steps = arr(m.steps).filter(Boolean);
-  ['easier', 'harder', 'tempo'].forEach(k => { if (m[k]) it[k] = m[k]; });
+  // BLD 896: the move's spoken form line and breath line ride along too (said after Go and on rep 1 of set 1).
+  ['easier', 'harder', 'tempo', 'form', 'breath'].forEach(k => { if (m[k]) it[k] = m[k]; });
   if (m.alt === true) it.alt = true;
   return it;
 }

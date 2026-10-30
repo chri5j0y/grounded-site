@@ -131,9 +131,59 @@
       '</article>';
   }
 
+
+  /* ---------- BLD 896: Holidays and Gatherings (shared/gg-holidays.js, GGHolidays) ----------
+     A shelf above the recipe tools: every set opens at /recipes/#hol-<set id> with its menu, each recipe sized by the
+     Serves picker, its steps, and Guide Me, Step by Step in the same kitchen guide (the guide speaks 'We are making <name>.'
+     and each step's line, the lines field-guide/health.js speaks for a holiday recipe). Setting a set up on the calendar
+     lives in The Grounded Way; this page is open to anyone. */
+  var HOL = window.GGHolidays || null;
+  function holShelf() {
+    if (!HOL || !(HOL.sets || []).length) return '';
+    return '<h2 class="rc-hh">Holidays and Gatherings</h2><p class="rc-hl">Whole food menus for the big days, with sober drinks and better-choice sweets. Open a set to play any recipe step by step.</p>' +
+      '<div class="rc-grid rc-hgrid">' + HOL.sets.map(function (x) {
+        var nx = HOL.next(x.id);
+        return '<button type="button" class="rc-card rc-hcard" data-hol="' + esc(x.id) + '"><span class="rc-cb"><span class="rc-m">' + esc(nx ? new Date(nx + 'T12:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : HOL.whenText(x.id)) + '</span><b>' + esc(x.name) + '</b><span class="rc-t">' + esc(x.menu.length + ' recipes') + '</span><span class="rc-n">' + esc(x.lead) + '</span></span></button>';
+      }).join('') + '</div>';
+  }
+  function holRecipe(id, mid) {
+    var r = HOL && HOL.recipe(id, mid, serves); if (!r) return null;
+    return { id: 'hol-' + id, name: r.name, meal: 'holiday', steps: r.steps, serves: r.serves, serve: 'Serves ' + r.serves + '.', keeps: '' };
+  }
+  function holDetail(id) {
+    var x = HOL && HOL.get(id); if (!x) return '';
+    var menu = x.menu.map(function (m) {
+      var r = HOL.recipe(id, m.id, serves);
+      return '<div class="card rc-hrec"><h3>' + esc(m.name) + '</h3><p class="rc-t">' + esc([m.course ? m.course.charAt(0).toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : '', 'serves ' + r.serves].filter(Boolean).join(' · ')) + '</p>' +
+        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Guide Me, Step by Step</button></div>' +
+        (m.makeAhead ? '<p><b>Make ahead:</b> ' + esc(m.makeAhead) + '</p>' : '') + (m.note ? '<p>' + esc(m.note) + '</p>' : '') +
+        '<ul class="rc-ing">' + r.ingredients.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul>' +
+        '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
+        (m.card ? '<div class="rc-hcardtxt"><b>Reheat Card</b><p>' + esc(m.card) + '</p></div>' : '') + '</div>';
+    }).join('');
+    var src = (x.sources || []).filter(function (s) { return s && typeof s === 'object' && s.url; });
+    return '<button type="button" class="rc-back" id="rc-back"><span aria-hidden="true">&larr;</span> All Recipes</button>' +
+      '<article aria-labelledby="rc-dname"><div class="rc-dh"><div><div class="eyebrow">' + esc(HOL.whenText(id)) + '</div><h2 id="rc-dname" tabindex="-1">' + esc(x.name) + '</h2></div></div>' +
+      '<p class="rc-hl">' + esc(x.lead) + '</p>' + (x.note ? '<p class="rc-hl">' + esc(x.note) + '</p>' : '') +
+      '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div><p class="rc-size-note">Amounts scale to your table. The steps name the amounts for ' + esc(x.serves) + '.</p></div>' +
+      '<div class="rc-hmenu">' + menu + '</div>' +
+      ((x.tips || []).length ? '<div class="card"><h3>For a Calm, Healthy Day</h3><ul>' + x.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' : '') +
+      '<div class="card rc-cook"><h3>Put It on Your Calendar</h3><p>In The Grounded Way, Tending sets this up for your date and guests: the shopping on your list, the prep on the days before, and every recipe guided step by step, private on your device.</p><a class="btn btn-primary" href="/home/#week">Open The Grounded Way</a></div>' +
+      (src.length ? '<p class="rc-src">Sources: ' + src.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.t || s.title || s.url) + '</a>'; }).join('; ') + '</p>' : '') +
+      '</article>';
+  }
   var baseTitle = document.title;
   function show() {
     var id = decodeURIComponent((location.hash || '').replace(/^#/, ''));
+    if (/^hol-/.test(id) && HOL && HOL.get(id.slice(4))) {
+      var hl = $('rc-list'), hd = $('rc-detail');
+      if (G.on() && G.id() !== id) G.close(true);
+      if (!hl.hidden) listY = window.scrollY;
+      hd.innerHTML = holDetail(id.slice(4)); hl.hidden = true; hd.hidden = false; lastId = id;
+      document.title = HOL.get(id.slice(4)).name + ' | Grounded Recipes | Grow With Grounded';
+      window.scrollTo(0, Math.max(0, $('recipes').getBoundingClientRect().top + window.scrollY - 70));
+      var hh = $('rc-dname'); if (hh) hh.focus({ preventScroll: true }); return;
+    }
     var r = id ? byId(id) : null;
     var list = $('rc-list'), det = $('rc-detail');
     if (G.on() && (!r || r.id !== G.id())) G.close(true);
@@ -162,6 +212,7 @@
     n = okSize(n); if (!n) return;
     serves = n;
     try { localStorage.setItem('gg-serves', String(n)); } catch (e) {}
+    if (/^hol-/.test(lastId) && HOL) { var hd0 = $('rc-detail'); if (hd0 && !hd0.hidden) { hd0.innerHTML = holDetail(lastId.slice(4)); var b0 = hd0.querySelector('[data-sz="' + n + '"]'); if (b0) b0.focus({ preventScroll: true }); } drawList(); return; }
     var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = document.querySelector('.rc-size .rc-row');
     if (r && ing) ing.innerHTML = ingHTML(r);
     if (tag) tag.textContent = 'Serves ' + n;
@@ -340,6 +391,8 @@
     if (!ALL.length) { $('rc-empty').hidden = false; $('rc-empty').textContent = 'The recipes are on their way. Refresh the page in a moment.'; return; }
     $('rc-tools').hidden = false;
     drawChips(); drawList();
+    var hs = holShelf(); if (hs) { var hb = document.createElement('div'); hb.id = 'rc-hol'; hb.innerHTML = hs; $('rc-tools').parentNode.insertBefore(hb, $('rc-tools'));
+      hb.addEventListener('click', function (e) { var c = e.target.closest('[data-hol]'); if (!c) return; fromList = true; location.hash = 'hol-' + c.getAttribute('data-hol'); }); }
     $('rc-tools').addEventListener('click', function (e) {
       var b = e.target.closest('.rc-chip'); if (!b) return;
       var g = b.getAttribute('data-g'), k = b.getAttribute('data-k');
@@ -360,6 +413,7 @@
       var sz = e.target.closest('[data-sz]');
       if (sz) { setServes(+sz.getAttribute('data-sz')); return; }
       if (e.target.closest('#rc-back')) goBack();
+      else if (e.target.closest('[data-rc-hguide]')) { var hv = e.target.closest('[data-rc-hguide]').getAttribute('data-rc-hguide').split('|'), hr = holRecipe(hv[0], hv[1]); if (hr) G.open(hr, e.target.closest('[data-rc-hguide]')); }
       else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(sized(r), e.target.closest('[data-rc-guide]')); }
     });
     window.addEventListener('hashchange', function () { if (!location.hash) fromList = false; show(); });
