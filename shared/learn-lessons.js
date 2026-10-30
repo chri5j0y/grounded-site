@@ -14277,15 +14277,18 @@ window.GG_LEARN = {
       "h": "Built for two",
       "steps": [
        [
-        "For me",
-        "I'm in hospice, or facing the end of my life"
+        "This is for me",
+        "I'm in hospice care, or facing the end of life"
        ],
        [
-        "For someone I love",
+        "I'm caring for someone I love",
         "A parent, a partner, a friend, or family"
        ]
       ],
-      "say": "Willow is built for two. When you begin, it asks who Willow is for today. For me, or for someone I love. Helpers open the person's tree with their own passcode, and see only what the person chooses to share."
+      "cue": {
+       "at": [2, 3]
+      },
+      "say": "Willow is built for two. When you begin, it asks, is Willow for you, or for someone you love? This is for me, if you are in hospice care. Or I'm caring for someone I love, if you are caring for a parent, a partner, a friend, or family. Helpers open the person's tree with their own passcode, and see only what the person chooses to share."
      },
      {
       "k": "six",
@@ -14532,11 +14535,11 @@ window.GG_LEARN = {
       "h": "Who is answering?",
       "items": [
        [
-        "They answered",
-        "On their own"
+        "It's me, Rose",
+        "They answer for themselves"
        ],
        [
-        "They answered, I tapped",
+        "Rose talks, I tap",
         "They talk, a helper taps"
        ],
        [
@@ -14544,7 +14547,10 @@ window.GG_LEARN = {
         "Kept apart, never adds a ring"
        ]
       ],
-      "say": "When a helper opens the person's tree, Willow first asks, who is answering? They answered. They answered, I tapped, when the person talks and you tap. Or I'm answering from what I see, for when they can no longer say. That last kind is kept apart, and never speaks for their own tree."
+      "cue": {
+       "at": [1, 2, 3]
+      },
+      "say": "When a helper opens the person's tree, Willow first asks, who is answering? The person comes first, by name, like It's me, Rose, when they answer for themselves. Rose talks, I tap, when the person talks and you tap. Or I'm answering from what I see, for when they can no longer say. That last kind is kept apart, and never speaks for their own tree."
      },
      {
       "k": "big",
@@ -15786,14 +15792,14 @@ window.GG_LEARN = {
      },
      {
       "k": "card",
-      "title": "Who is Willow for today?",
+      "title": "Is Willow for you, or for someone you love?",
       "body": "Everything stays on this device, locked with a passcode.",
       "btns": [
-       "For me",
-       "For someone I love"
+       "This is for me",
+       "I'm caring for someone I love"
       ],
       "tap": 0,
-      "say": "When you begin, Willow asks who it is for today. For me, if you are in hospice or facing the end of your life. For someone I love, if you are caring for them. Either way, each person gets their own profile, with a passcode only they know."
+      "say": "When you begin, Willow asks, is Willow for you, or for someone you love? This is for me, if you are in hospice care or facing the end of your life, and then Willow and its check-ins speak to you. I'm caring for someone I love, if you are caring for a parent, a partner, a friend, or family. Either way, each person gets their own profile, with a passcode only they know."
      },
      {
       "k": "points",
@@ -15887,11 +15893,11 @@ window.GG_LEARN = {
       "h": "Every answer says who answered",
       "items": [
        [
-        "They answered",
+        "It's me, Rose",
         "In their own words"
        ],
        [
-        "They answered, I tapped",
+        "Rose talks, I tap",
         "Their words, a helper's hands"
        ],
        [
@@ -15899,7 +15905,10 @@ window.GG_LEARN = {
         "Kept apart, never adds a ring"
        ]
       ],
-      "say": "Every check-in keeps track of who answered, so the person's own voice is never mixed up with anyone else's. They answered. They answered, I tapped, when the person speaks and a helper taps. Or, I'm answering from what I see, when the person can no longer say. That last kind is kept apart. It never adds a ring, and never speaks for the person."
+      "cue": {
+       "at": [1, 2, 3]
+      },
+      "say": "Every check-in keeps track of who answered, so the person's own voice is never mixed up with anyone else's. The person comes first, by name, like It's me, Rose, when they answer for themselves. Rose talks, I tap, when the person speaks and a helper taps. Or, I'm answering from what I see, when the person can no longer say. That last kind is kept apart. It never adds a ring, and never speaks for the person."
      },
      {
       "k": "points",
@@ -17387,7 +17396,10 @@ window.GG_LEARN = {
         "Three questions for each part"
        ]
       ],
-      "say": "When you want to, you can check in. The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three. Check in whenever it helps."
+      "cue": {
+       "at": [2, 3]
+      },
+      "say": "When you want to, you can check in. Each one opens with the words, this check-in is just for you, the one in hospice care. The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three. Check in whenever it helps."
      },
      {
       "k": "points",
@@ -18707,36 +18719,36 @@ window.GG_LEARN = {
         "With your own passcode"
        ]
       ],
-      "say": "Here is how it starts. On Willow, choose For someone I love. First you make your own profile, locked with your own passcode. Then choose Make a profile for them, together if you can. Their tree lives in their own locked profile, and you open it as their helper, with your own passcode. If they already have a profile, open it with their passcode, and add yourself as a helper in Willow Settings."
+      "say": "Here is how it starts. On Willow, choose I'm caring for someone I love. First you make your own profile, locked with your own passcode. Then choose Make a profile for them, together if you can. Their tree lives in their own locked profile, and you open it as their helper, with your own passcode. If they already have a profile, open it with their passcode, and add yourself as a helper in Willow Settings."
      },
      {
       "k": "card",
       "title": "Who is answering?",
-      "body": "Every answer keeps track of who gave it, so their own voice is never mixed up with anyone else's.",
+      "body": "Every answer remembers who gave it, so their own voice stays clear.",
       "fields": [
        [
         "",
-        "Quick Check-in for Mom"
+        "Quick Check-in for Rose"
        ]
       ],
       "btns": [
-       "They answered",
-       "They answered, I tapped",
+       "It's me, Rose",
+       "Rose talks, I tap",
        "I'm answering from what I see"
       ],
       "tap": 1,
-      "say": "When you start a check-in for them, Willow first asks, who is answering? Every answer keeps track of who gave it, so their own voice is never mixed up with anyone else's."
+      "say": "When you start a check-in for them, Willow first asks, who is answering? The person comes first, by name, answering for themselves. Every answer remembers who gave it, so their own voice stays clear."
      },
      {
       "k": "points",
       "h": "Three ways to answer",
       "items": [
        [
-        "They answered",
-        "They read and answer on their own"
+        "It's me, Rose",
+        "They answer for themselves"
        ],
        [
-        "They answered, I tapped",
+        "Rose talks, I tap",
         "They answer out loud, you tap"
        ],
        [
@@ -18744,7 +18756,10 @@ window.GG_LEARN = {
         "When they can no longer say"
        ]
       ],
-      "say": "There are three ways. They answered, reading on their own. They answered, I tapped, when they talk and you tap for them. Both of those grow a ring on their tree. And, I'm answering from what I see, when they can no longer say. Those answers are kept apart. They never add to their rings, and never speak for their own tree."
+      "cue": {
+       "at": [1, 2, 4]
+      },
+      "say": "There are three ways, and the person comes first. It's me, Rose, when they read and answer for themselves. Rose talks, I tap, when they talk and you tap for them. Both of those grow a ring on their tree. And, I'm answering from what I see, when they can no longer say. Those answers are kept apart. They never add to their rings, and never speak for their own tree."
      },
      {
       "k": "words",
@@ -19668,14 +19683,14 @@ window.GG_LEARN = {
       "tap": 1,
       "panel": {
        "h": "Lately, as you care for Mom",
-       "sub": "Your own check-in.",
+       "sub": "Your Caregiver Check-in.",
        "items": [
         "Had someone to lean on?",
         "Taken a break without guilt?",
         "Let yourself feel what you feel?"
        ]
       },
-      "say": "Willow gives you a tree of your own, because caregivers carry this as well. When you open your own tree, Today says, Today, for you. Your check-in asks about you. Have you had someone to lean on? Taken a break without guilt? Let yourself feel what you feel? You see gentle words, never a score."
+      "say": "Willow gives you a tree of your own, because caregivers carry this as well. When you open your own tree, Today says, Today, for you. Your Caregiver Check-in asks about you, and a link right there lets you check in with Mom instead. Have you had someone to lean on? Taken a break without guilt? Let yourself feel what you feel? You see gentle words, never a score."
      },
      {
       "k": "tabs",

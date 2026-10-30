@@ -482,8 +482,8 @@ function againCard(){ if (!progOn() || progWeek(new Date()) <= 12) return ''; co
 const LVL_NAME = {root: 'Root', rise: 'Rise', thrive: 'Thrive', gentle: 'Gentle'};
 // "Build 2" or "Cardio · Build 2": a program workout's place, small above its name.
 function sesKick(id){ for (const ph of PH_IDS) for (const tr of ['strength', 'cardio']){ const i = trackIds(tr, ph).indexOf(id); if (i >= 0) return (tr === 'cardio' ? 'Cardio · ' : '') + phName(ph) + ' ' + (i + 1); } return 'Session ' + id; }
-// Flow: the shelf by style (Daily Flow, Yoga Style, Slow Balance, Stretch), each tile with its minutes and, small, "Draws on yoga".
-const FLOW_STYLES = [{id: 'daily', name: 'Daily Flow'}, {id: 'yoga', name: 'Yoga Style'}, {id: 'taichi', name: 'Slow Balance'}, {id: 'stretch', name: 'Stretch'}];
+// Flow: the shelf by style (Flow, Yoga, Balance, Stretch; BLD 894 names), each tile with its minutes and, small, "Draws on tai chi" on Balance.
+const FLOW_STYLES = [{id: 'daily', name: 'Flow'}, {id: 'yoga', name: 'Yoga'}, {id: 'taichi', name: 'Balance'}, {id: 'stretch', name: 'Stretch'}];
 const flowKick = x => (x.mins ? x.mins + ' min' : 'Flow') + (x.from ? ' · ' + x.from : '');
 function flowShelf(pr, card){
   if (!arr(pr).length) return ''; const st = arr((PR() || {}).styles).length ? PR().styles : FLOW_STYLES;
@@ -492,18 +492,48 @@ function flowShelf(pr, card){
   if (groups.length <= 1) return `<h3 class="tn-h3">Flow</h3><div class="tn-kgrid">${pr.map(card).join('')}</div>`;
   return `<h3 class="tn-h3">Flow</h3>` + groups.map(([s, L]) => `<p class="tn-fst"><b>${esc(s.name)}</b>${s.line ? ' ' + esc(s.line) : ''}</p><div class="tn-kgrid">${L.map(card).join('')}</div>`).join('');
 }
-// My training (the Field Guide's My Goals): Strength, Cardio, Mixed (with 1 or 2 cardio days), or Flow only, and Flow on the days too.
+// My training (the Field Guide's My Goals). BLD 894 (Chris, October 29, 2026: "i want these 6 categories exactly"): Strength,
+// Cardio, Flow, Yoga, Balance, Stretch, any mix; Strength and Cardio together work as Mixed, with 1 or 2 cardio days.
 function trackChips(s){
-  const t = s.track || 'strength', cur = t === 'both' ? 'strength' : t, flow = t === 'both' || !!s.flow;
   const chip = (act, v, l, on) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act}" data-hjv="${v}">${esc(l)}</button>`;
-  if (!PROG() || !hasCardio()) return `<div class="hj-chips">${[['strength', 'Strength and Heart, with a coach'], ['practice', 'Flow: movement, breath, and stretch'], ['both', 'Both']].map(([k, l]) => chip('track', k, l, t === k || (k === 'strength' && !s.track))).join('')}</div>`;
-  return `<div class="hj-chips">${[['strength', 'Strength'], ['cardio', 'Cardio'], ['mixed', 'Mixed'], ['practice', 'Flow Only']].map(([k, l]) => chip('track', k, l, cur === k)).join('')}</div>
-    ${cur === 'mixed' ? `<div class="hj-chips">${[1, 2].map(n => chip('cardiodays', n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n)).join('')}</div>` : ''}
-    ${cur !== 'practice' ? `<div class="hj-chips">${chip('flowon', flow ? '0' : '1', flow ? 'Flow on My Days' : 'Add Flow to My Days', flow)}</div>` : ''}
-    <p class="hj-sub">${esc(TRACK_LINE[cur] || '')} Switch anytime; a new track starts at Week 1.</p>`;
+  const mv = movesOf(s);
+  return `<div class="hj-chips" role="group" aria-label="My movement">${moveChips(mv, 'mvset')}</div>
+    ${mv.includes('strength') && mv.includes('cardio') ? `<div class="hj-chips">${[1, 2].map(n => chip('cardiodays', n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n)).join('')}</div>` : ''}
+    <p class="hj-sub">${esc(movesLine(mv))} Switch anytime; a new Strength or Cardio choice starts at Week 1.</p>`;
 }
-const TRACK_LINE = {strength: 'Strength: twelve workouts over twelve weeks, with core, balance, and agility in every one.', cardio: 'Cardio: low impact intervals and steady work, with light strength, core, and balance.',
-  mixed: 'Mixed: strength on most days and one or two cardio days, spread through your week.', practice: 'Flow only: movement, breath, and stretch each day.'};
+// ---------- BLD 894: six movement categories (Chris, October 29, 2026: "i want these 6 categories exactly.. not the 3") ----------
+// set.moves lists the chosen categories, any mix: strength, cardio (the 12-week program; both together work as Mixed, with
+// set.cardioDays 1 or 2), flow (the daily sessions p1 to p7), yoga (f1 to f6), balance (tai chi-style, f7 to f10), stretch (f11 to f14).
+// set.track and set.flowStyles are kept in step, so everything downstream reads them as before: strength, cardio, mixed, or
+// 'practice' when no Strength or Cardio is chosen (then the Flow-type categories fill the days a week). Workout days hold
+// Strength or Cardio; the other days, Monday to Saturday, take the chosen Flow-type categories in turn. With no set.moves,
+// movesOf reads the old track and Flow setting, and nothing about the day changes.
+const MOVE_IDS = ['strength', 'cardio', 'flow', 'yoga', 'balance', 'stretch'];
+const MOVE_NAME = {strength: 'Strength', cardio: 'Cardio', flow: 'Flow', yoga: 'Yoga', balance: 'Balance', stretch: 'Stretch'};
+const MOVE_STYLE = {flow: 'daily', yoga: 'yoga', balance: 'taichi', stretch: 'stretch'};
+const MOVE_LINE = {strength: 'Strength: workouts with a coach, with core, balance, and agility in every one.', cardio: 'Cardio: low impact intervals and steady work, with light strength.',
+  flow: 'Flow: movement, breath, and quiet focus, a different one each day.', yoga: 'Yoga: slow, flowing moves for strength, balance, and an easy back.',
+  balance: 'Balance: soft, slow steps for steady balance, one a week for four weeks.', stretch: 'Stretch: easy movement, then short, steady holds.'};
+function movesOf(s){
+  s = s || {};
+  if (Array.isArray(s.moves) && s.moves.length) return MOVE_IDS.filter(x => s.moves.includes(x));
+  const t = s.track, out = [];
+  if (t === 'mixed') out.push('strength', 'cardio'); else if (t === 'cardio') out.push('cardio'); else if (t !== 'practice') out.push('strength');
+  (Array.isArray(s.flowStyles) ? s.flowStyles : (s.flow || t === 'both' || t === 'practice') ? ['daily'] : []).forEach(st => { const m = Object.keys(MOVE_STYLE).find(k => MOVE_STYLE[k] === st); if (m) out.push(m); });
+  return MOVE_IDS.filter(x => out.includes(x));
+}
+function setMoves(s, moves){
+  const m = MOVE_IDS.filter(x => arr(moves).includes(x)); if (!m.length) return false;
+  const st = m.includes('strength'), ca = m.includes('cardio');
+  s.moves = m; s.track = st && ca ? 'mixed' : ca ? 'cardio' : st ? 'strength' : 'practice';
+  s.flowStyles = m.filter(x => MOVE_STYLE[x]).map(x => MOVE_STYLE[x]); s.flow = s.flowStyles.length > 0;
+  if (s.flow) s.flowDays = 'other'; else delete s.flowDays;
+  return true;
+}
+const movesLine = mv => mv.map(x => MOVE_LINE[x]).join(' ');
+function moveChips(on, act){ return MOVE_IDS.filter(x => (x !== 'cardio' || hasCardio()) && (!MOVE_STYLE[x] || !arr((PR() || {}).sessions).length || arr((PR() || {}).sessions).some(y => (y.style || 'daily') === MOVE_STYLE[x])))
+  .map(x => `<button type="button" class="chip${on.includes(x) ? ' on' : ''}" aria-pressed="${on.includes(x)}" data-hja="${act}" data-hjv="${x}">${esc(MOVE_NAME[x])}</button>`).join(''); }
+const moveToggle = (cur, id) => { const L = cur.slice(), i = L.indexOf(id); if (i >= 0) L.splice(i, 1); else if (MOVE_IDS.includes(id)) L.push(id); return MOVE_IDS.filter(x => L.includes(x)); };
 // The program card in the Field Guide's Move: where you are, this phase, and the track.
 function progCard(){ if (!progOn()) return ''; const w = Math.max(1, progWeek(new Date())), ph = phaseId(w), p = arr(PROG().phases).find(x => x.id === ph) || {};
   return `${newCard()}${againCard()}<div class="tn-card a-move tn-path"><div class="tn-k">My Program</div><h3>${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</h3><p class="tn-sub">${esc((PROG().tracks[progTrack()] || {}).name || {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'}[progTrack()])}${progTrack() === 'mixed' ? ', ' + (+H().set.cardioDays || 1) + ' cardio ' + ((+H().set.cardioDays || 1) === 1 ? 'day' : 'days') : ''}. ${esc(p.note || '')}</p>
@@ -548,11 +578,12 @@ function sizeBatch(p, N){ const f = N / (+p.serves || 6); if (Math.abs(f - 1) < 
 function servesRow(o){ const N = o.base.N; return `<div class="hj-serves" role="group" aria-label="Make it for"><span>Make it for <b data-hjserves>${N}</b> ${N === 1 ? 'person' : 'people'}</span><button type="button" class="chip" data-hja="bserve" data-hjv="-1" aria-label="One fewer"${N <= 1 ? ' disabled' : ''}>&minus;</button><button type="button" class="chip" data-hja="bserve" data-hjv="1" aria-label="One more"${N >= 12 ? ' disabled' : ''}>+</button></div>${o.data.keeps ? `<p class="hj-sub"><b>Keeps:</b> ${esc(o.data.keeps)}</p>` : ''}`; }
 // BLD 893, My Grounded Way Plan: set.medFreq ('daily', 'few' for Tuesday, Thursday, and Saturday, 'weekly' for Sunday, 'later')
 // and set.medTime ('morning', 'afternoon', 'evening') place the meditation; unset keeps it every day as before. set.flowDays 'other'
-// keeps Flow to the days without a workout, Monday to Saturday ("Add Flow on other days"); unset keeps Flow every day.
+// keeps Flow to the days without a workout, Monday to Saturday (the plan's Flow, Yoga, Balance, and Stretch); unset keeps Flow every day.
 const MED_FEW = [2, 4, 6];
 function medOn(d){ const f = H().set.medFreq, w = d.getDay(); return !f || f === 'daily' ? true : f === 'few' ? MED_FEW.includes(w) : f === 'weekly' ? w === 0 : false; }
 function medAt(){ const t = H().set.medTime; return t === 'afternoon' ? {hour: 15, kick: 'This afternoon'} : t === 'evening' ? {hour: 20.5, kick: 'This evening'} : t === 'morning' ? {hour: 8, kick: 'Morning'} : {}; }
-const flowRest = (d, hasWork) => H().set.flowDays === 'other' && (!!hasWork || d.getDay() === 0);
+// BLD 894: with no Strength or Cardio chosen, public Tending's Flow, Yoga, Balance, and Stretch fill the chosen days a week (the Guide plan keeps Monday to Saturday).
+const flowRest = (d, hasWork) => { const s = H().set; if (PUB() && s.track === 'practice' && Array.isArray(s.moves) && s.moves.length) return !pubDays().includes(d.getDay()); return s.flowDays === 'other' && (!!hasWork || d.getDay() === 0); };
 function agenda(d){
   const out = [], dow = d.getDay(), n = weekNo(d), fw = foodWeek(d), ses = n >= 1 || dow !== 0 ? sesFor(d) : null;
   const track = H().set.track || 'strength', pr = practiceFor(d);
@@ -1053,7 +1084,27 @@ function candle(){ return `<div class="hj-candle" aria-hidden="true"><svg viewBo
 // Andrew's kitchen: a simple pot with steam for the stage.
 const POT = `<svg viewBox="0 0 240 240" aria-hidden="true"><g fill="none" stroke="currentColor" stroke-width="8" stroke-linecap="round" stroke-linejoin="round"><path d="M52 118h136v54a28 28 0 0 1-28 28H80a28 28 0 0 1-28-28z"/><path d="M40 118h160M52 132H30M188 132h22"/><path class="hj-steam" d="M92 96c-10-12 10-20 0-34M120 96c-10-12 10-20 0-34M148 96c-10-12 10-20 0-34" opacity=".55"/></g></svg>`;
 // BLD 892: the day's Flow rotates through the daily sessions only (p1 to p7, style daily), so the new Flow sessions leave the weekday order as it was.
-function practiceFor(d){ const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
+// BLD 894 (Chris, October 29, 2026: "a person who wants the tai chi and stretch can choose those.. strength and yoga.. ok.. all of
+// them"): set.flowStyles lists the Flow-type categories a person chose (daily, yoga, taichi, stretch: Flow, Yoga, Balance, Stretch;
+// BLD 894 keeps it in step with set.moves), any mix. The Flow days of each week take the chosen styles in turn; within a style, Flow keeps
+// its weekday session, Balance goes f7 to f10 in order week to week, and Yoga and Stretch cycle through their sessions. The same date always gives
+// the same session. With no set.flowStyles, the day's Flow is the daily rotation p1 to p7, exactly as before.
+const FLOW_IDS = ['daily', 'yoga', 'taichi', 'stretch'];
+const flowStyles = () => { const L = (H() || {set: {}}).set.flowStyles; return Array.isArray(L) ? FLOW_IDS.filter(x => L.includes(x)) : null; };
+const FLOW_EPOCH = new Date(2026, 0, 5, 12);
+function flowDayOn(d){ const n = weekNo(d), work = workOn() && n >= 1 && !!sesFor(d); return !flowRest(d, work); }
+function flowPick(d){
+  const st = flowStyles(), p = PR(); if (!st || !st.length || !p || !arr(p.sessions).length) return null;
+  const mon = monOf(d), days = []; for (let i = 0; i < 7; i++){ const x = addD(mon, i); if (flowDayOn(x)) days.push(ymd(x)); }
+  const k = Math.max(0, days.indexOf(ymd(d))), n = Math.max(1, days.length), w = Math.round((day0(mon) - day0(FLOW_EPOCH)) / (7 * DAYMS)), seq = w * n + k, md = (a, b) => ((a % b) + b) % b;
+  const style = st[md(seq, st.length)], L = p.sessions.filter(x => (x.style || 'daily') === style); if (!L.length) return null;
+  if (style === 'daily') return L[(d.getDay() + 6) % 7 % L.length];
+  if (style === 'taichi') return L[md(w, L.length)];
+  return L[md(Math.floor(seq / st.length), L.length)];
+}
+const flowStyleList = () => { const pr = arr((PR() || {}).sessions), st = arr((PR() || {}).styles).length ? PR().styles : FLOW_STYLES; return st.filter(x => FLOW_IDS.includes(x.id) && pr.some(y => (y.style || 'daily') === x.id)).map(x => ({id: x.id, name: x.name, line: x.line || '', n: pr.filter(y => (y.style || 'daily') === x.id).length})); };
+const flowOnOf = s => Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowStyles.includes(x)) : (s.flow || s.track === 'both') ? ['daily'] : [];
+function practiceFor(d){ const fp = flowPick(d); if (fp) return fp; const p = PR(); if (!p || !arr(p.sessions).length) return null; const L = p.sessions.filter(x => !x.style || x.style === 'daily'), D0 = L.length ? L : p.sessions; return D0[(d.getDay() + 6) % 7 % D0.length]; }
 function buildPractice(s){
   const p = PR(), ss = arr(p && p.sessions).find(x => x.id === s) || practiceFor(new Date()); if (!ss) return null;
   const steps = arr(ss.steps).map(x => ({t: 'time', name: x.name, how: x.how, secs: +x.secs || 60, part: 'Flow', fig: x.fig || 'seat', figKey: true, ease: x.ease, breath: x.breath}));
@@ -2433,6 +2484,9 @@ function act(a, v){
     case 'track': if (S.set){ if (S.set.track === 'both' && v !== 'practice') S.set.flow = true; S.set.track = v; S.set.trackSet = true; } rerender(true); return;
     case 'cardiodays': if (S.set) S.set.cardioDays = +v === 2 ? 2 : 1; rerender(true); return;
     case 'flowon': if (S.set){ S.set.flow = v === '1'; if (S.set.track === 'both'){ S.set.track = 'strength'; } } rerender(true); return;
+    case 'mvset': if (S.set){ const nx = moveToggle(movesOf(S.set), v); if (!nx.length){ toast('Choose at least one.'); return true; } S.set.moves = nx; S.set.track = nx.includes('strength') && nx.includes('cardio') ? 'mixed' : nx.includes('cardio') ? 'cardio' : nx.includes('strength') ? 'strength' : 'practice'; S.set.trackSet = true; } rerender(true); return;
+    // BLD 894: My Path's six categories (public Tending) change right away; a new Strength or Cardio choice starts at Week 1.
+    case 'pmove': { const nx = moveToggle(movesOf(h.set), v); if (!nx.length){ toast('Choose at least one.'); return true; } const t0 = progTrack(), w0 = workOn(); setMoves(h.set, nx); if (PROG() && workOn() && (progTrack() !== t0 || !w0)) h.set.progStart = ymd(monOf(new Date())); h.set.u = Date.now(); PA = null; save(); rerender(true); return; }
     case 'newok': markNew(); rerender(true); return;
     case 'progup': case 'progkeep': { const up = a === 'progup' && PUB() ? {root: 'rise', rise: 'thrive', thrive: 'thrive'}[h.set.level || 'root'] : null;
       if (up) h.set.level = up; h.set.progStart = ymd(monOf(new Date())); h.set.u = Date.now(); PA = null; save();
@@ -2443,7 +2497,8 @@ function act(a, v){
     case 'setup-save': { const s = S.set || {}, hh = num(s.household);
       // BLD 892: the track (Strength, Cardio, Mixed, Flow only), Flow on the days, and the cardio days; a new track starts at Week 1.
       const sd = parseD(s.start), was = h.set.u, tr0 = progTrack(), track = s.track || 'strength', tr1 = track === 'cardio' || track === 'mixed' ? track : 'strength';
-      h.set = Object.assign({}, h.set, {who: s.who || '', track, flow: track !== 'practice' && !!s.flow, cardioDays: +s.cardioDays === 2 ? 2 : 1, start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
+      h.set = Object.assign({}, h.set, {who: s.who || '', track, flow: track !== 'practice' && (Array.isArray(s.flowStyles) ? s.flowStyles.length > 0 : !!s.flow), flowStyles: Array.isArray(s.flowStyles) ? FLOW_IDS.filter(x => s.flowStyles.includes(x)) : h.set.flowStyles, cardioDays: +s.cardioDays === 2 ? 2 : 1, start: sd ? ymd(addD(sd, -((sd.getDay() + 6) % 7))) : ymd(nextMon()), household: hh && hh > 0 && hh < 30 ? Math.round(hh) : '', goals: arr(s.goals), goalLdl: num(s.goalLdl) || '', nextLabs: /^\d{4}-\d{2}-\d{2}$/.test(String(s.nextLabs || '')) ? s.nextLabs : '', u: Date.now()}); delete h.set.needSetup;
+      if (Array.isArray(s.moves) && s.moves.length) setMoves(h.set, s.moves);
       if (was && tr1 !== tr0 && PROG()) h.set.progStart = ymd(monOf(new Date())); if (!was) markNew();
       save(); S.setup = false; S.set = null; if (S.sec !== 'numbers') S.sec = 'today'; S.ov = null; toast('Saved. Welcome to Tending.'); rerender(false); return; }
     case 'note': { const t = document.getElementById('hj-note'), text = String(t ? t.value : '').trim(); if (!text){ toast('Write a line first.'); return; }
@@ -2571,7 +2626,7 @@ function ckDraft(){
   const d = {who: s.who === 'family' ? 'family' : 'me', teen: !!s.teen, use: Array.isArray(s.use) ? s.use.slice() : ['food', 'move', 'mind', 'people', 'labs'], goals: arr(s.goals).slice(), needs: arr(s.needs).slice(),
     allergies: s.allergies || '', house: JSON.parse(JSON.stringify(s.house || {adults: 1, kids: []})), check: Object.assign({}, s.check || {}), cleared: !!s.cleared,
     level: s.level || '', place: s.place || 'home', mins: +s.mins || 20, gear: (Array.isArray(s.gear) ? s.gear : PLACE_GEAR[s.place] || []).slice(), gearSet: Array.isArray(s.gear),
-    track: s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength', cardioDays: +s.cardioDays === 2 ? 2 : 1, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
+    track: s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength', moves: movesOf(s), cardioDays: +s.cardioDays === 2 ? 2 : 1, days: +s.days || 3, weightLb: s.weightLb || '', sex: s.sex || '', goalLdl: s.goalLdl || '',
     lab: {date: today()}};
   return S.ck = {i: 0, d};
 }
@@ -2613,10 +2668,11 @@ function vCheck(){
     ${d.level && d.level !== 'gentle' ? `${L.program && L.program.gear ? `<p class="hj-sub" style="margin:10px 0 6px"><b>My equipment</b></p><p class="hj-sub">Check what you have. Every workout uses just that.</p>
       <div class="hj-chips tn-gear" role="group" aria-label="My equipment">${arr(L.program.gear).map(g => { const on = arr(d.gear).includes(g.id); return `<button type="button" class="chip tn-ckc${on ? ' on' : ''}" aria-pressed="${on}" data-hja="ckgear" data-hjv="${esc(g.id)}">${esc(g.name)}<small>${esc(g.line || '')}</small></button>`; }).join('')}</div>
       ${arr(d.gear).length ? '' : `<p class="hj-sub">${esc(L.program.gearNone || 'Nothing checked? Every workout uses your body weight, a sturdy chair, a wall, and a mat.')}</p>`}
-      ${hasCardio() ? `<p class="hj-sub" style="margin:10px 0 6px"><b>My track</b></p>${chips('track', [['strength', 'Strength'], ['cardio', 'Cardio'], ['mixed', 'Mixed']])}<p class="hj-sub">${esc(TRACK_LINE[d.track] || '')} Switch anytime.</p>
-        ${d.track === 'mixed' ? chips('cardioDays', [[1, '1 Cardio Day'], [2, '2 Cardio Days']]) : ''}` : ''}`
+`
       : `<p class="hj-sub" style="margin:10px 0 6px"><b>Where you move</b></p>${chips('place', PLACE)}${(T.placeLines || {})[d.place] ? `<p class="hj-sub">${esc(T.placeLines[d.place])}</p>` : ''}`}
       <p class="hj-sub" style="margin:10px 0 6px"><b>Minutes</b></p>${chips('mins', [[20, '20 Minutes'], [40, '40 Minutes'], [60, '60 Minutes']])}` : ''}
+    <p class="hj-sub" style="margin:10px 0 6px"><b>My movement</b> (choose any, or all)</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(arr(d.moves), 'ckmove')}</div>
+    ${arr(d.moves).includes('strength') && arr(d.moves).includes('cardio') ? chips('cardioDays', [[1, '1 Cardio Day'], [2, '2 Cardio Days']]) : ''}<p class="hj-sub">${esc(movesLine(arr(d.moves)))} Switch anytime.</p>
     <p class="hj-sub" style="margin:10px 0 6px"><b>Days a week</b></p>${chips('days', [2, 3, 4, 5, 6].map(n => [n, n + ' Days']))}
     ${yesHold ? `<button type="button" class="btn btn-line btn-sm" data-hja="ckteam">Add My Plan from My Team</button>` : ''}`; }
   else if (step === 'body') body = `<h3>Your protein aim (optional)</h3><p class="hj-sub">Your weight sets your daily protein aim. It stays on this device, and you can skip it.</p>${inp('weightLb', 'Weight (lb)')}`;
@@ -2635,7 +2691,7 @@ function vCheck(){
 function ckSave(){
   const h = H(), d = S.ck.d, L = PLIB() || {}, anyYes = arr((L.check || {}).questions).some(q => d.check[q.id] === true);
   const kids = arr(d.house.kids).filter(k => k && k.band).map(k => ({id: k.id || uid(), name: String(k.name || '').trim().slice(0, 40), band: k.band, sex: k.sex || ''}));
-  const was = h.set.pubDone, tr0 = progTrack();
+  const was = h.set.pubDone, tr0 = progTrack(), w0 = workOn();
   h.set = Object.assign({}, h.set, {who: d.who, teen: !C.age && d.teen === true, use: PART_IDS.filter(x => arr(d.use).includes(x)), goals: arr(d.goals).length ? d.goals : ['well'], needs: arr(d.needs),
     allergies: String(d.allergies || '').slice(0, 200), house: {adults: Math.max(1, Math.min(12, Math.round(+((d.house || {}).adults) || 1))), kids: d.who === 'family' ? kids : []},
     check: d.check, checkYes: anyYes, cleared: !!d.cleared, level: d.level || (anyYes && !d.cleared ? 'gentle' : 'root'), place: d.place || 'home', mins: +d.mins || 20, days: +d.days || 3,
@@ -2643,10 +2699,12 @@ function ckSave(){
     weightLb: TEEN() || d.teen ? '' : (num(d.weightLb) || ''), goalLdl: num(d.goalLdl) || '', pubDone: 1, u: Date.now()});
   if (anyYes && !d.cleared) h.set.level = 'gentle';
   h.set.household = h.set.house.adults + h.set.house.kids.length;
+  // BLD 894: the start-up check's six categories set set.moves, set.track, and set.flowStyles together.
+  if (arr(d.moves).length) setMoves(h.set, d.moves);
   if (!h.set.start) h.set.start = ymd(monOf(new Date()));
   if (!was) h.set.remOff = true;
   // BLD 892: a new track starts the program at Week 1; a new plan starts with What's New already seen.
-  if (was && L.program && (d.track || 'strength') !== tr0) h.set.progStart = ymd(monOf(new Date()));
+  if (was && L.program && workOn() && (progTrack() !== tr0 || !w0)) h.set.progStart = ymd(monOf(new Date()));
   if (h.set.gear === undefined) delete h.set.gear; if (!was) markNew();
   const lab = d.lab || {}, rec = {id: uid(), date: /^\d{4}-\d{2}-\d{2}$/.test(String(lab.date || '')) ? lab.date : today(), u: Date.now()};
   ['ldl', 'hdl', 'total', 'trig'].forEach(k => { const n = num(lab[k]); if (n != null) rec[k] = n; });
@@ -2677,13 +2735,14 @@ const bandName = id => (arr(((PLIB() || {}).kids || {}).ages).find(a => a.id ===
 // ---------- the Move section head: the path, the Gentle lead, and My Plan from My Team ----------
 function pubMoveHead(){
   const L = PLIB() || {}, s = H().set, T = L.templates || {}, G = L.gentle || {}, lvl = s.level || 'root', K = L.check || {};
-  const prog = progOn(), tr = progTrack(), TN = {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'};
-  const path = lvl === 'gentle' ? 'Gentle' : prog ? [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], TN[tr], (+s.mins || 20) + ' Minutes'].join(' · ') : [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], (PLACE.find(x => x[0] === s.place) || [, 'Home'])[1], (+s.mins || 20) + ' Minutes'].join(' · ');
+  const work = workOn(), prog = progOn() && work, tr = progTrack(), TN = {strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed'};
+  // BLD 894: with no Strength or Cardio chosen, the path names the chosen categories.
+  const path = !work ? movesOf(s).map(x => MOVE_NAME[x]).join(' · ') : lvl === 'gentle' ? 'Gentle' : prog ? [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], TN[tr], (+s.mins || 20) + ' Minutes'].join(' · ') : [(LVL.find(x => x[0] === lvl) || [, 'Root'])[1], (PLACE.find(x => x[0] === s.place) || [, 'Home'])[1], (+s.mins || 20) + ' Minutes'].join(' · ');
   const w = Math.max(1, progWeek(new Date())), ph = arr((L.program || {}).phases).find(x => x.id === phaseId(w)) || {};
   const g = gearNow(), gl = g.length ? 'Equipment: ' + g.map(id => (arr((L.program || {}).gear).find(x => x.id === id) || {name: id}).name).join(', ') + '.' : 'Equipment: your body weight, a sturdy chair, a wall, and a mat.';
   const tchip = (v, l, on, act) => `<button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="${act || 'ptrack'}" data-hjv="${v}">${esc(l)}</button>`;
-  return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}${prog && ph.note ? ' ' + esc(ph.note) : ''}</p>
-    ${prog ? `<p class="tn-sub">${esc(gl)}</p>${hasCardio() ? `<div class="hj-chips" role="group" aria-label="Track">${['strength', 'cardio', 'mixed'].map(v => tchip(v, TN[v], tr === v)).join('')}</div>${tr === 'mixed' ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}` : ''}` : ''}
+  return `${prog ? newCard() + againCard() : ''}<div class="tn-card a-move tn-path"><div class="tn-k">My Path</div><h3>${esc(path)}</h3>${prog ? `<p class="hj-prog">${esc(progLabel(new Date()) || 'Week 1 of 12 · Foundation')}</p>` : ''}<p class="tn-sub">${esc((+s.days || 3) + ' days a week. ')}${esc(!work ? movesLine(movesOf(s)) : lvl === 'gentle' ? G.lead || '' : (T.levelLines || {})[lvl] || '')}${prog && ph.note ? ' ' + esc(ph.note) : ''}</p>
+    ${prog ? `<p class="tn-sub">${esc(gl)}</p>` : ''}<p class="tn-sub" style="margin-top:8px"><b>My movement:</b> choose any, or all.</p><div class="hj-chips" role="group" aria-label="My movement">${moveChips(movesOf(s), 'pmove')}</div>${movesOf(s).includes('strength') && movesOf(s).includes('cardio') ? `<div class="hj-chips" role="group" aria-label="Cardio days">${[1, 2].map(n => tchip(n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), (+s.cardioDays || 1) === n, 'pcdays')).join('')}</div>` : ''}
     ${lvl === 'gentle' && G.safety ? `<p class="hj-note">${esc(G.safety)}</p>` : ''}${s.checkYes && !s.cleared ? `<p class="hj-note">${esc(K.yes || '')}</p>` : ''}
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="setup" data-hjv="level">${ic('gear')}Change My Path</button><button type="button" class="tn-btn sm line" data-hja="sec" data-hjv="team">${ic('compass')}My Plan from My Team</button></div>
     ${L.disclaimers && L.disclaimers.workouts ? `<p class="tn-sub" style="margin-top:10px">${esc(L.disclaimers.workouts)}</p>` : ''}</div>`;
@@ -2879,6 +2938,7 @@ function actPub(a, v){
     case 'ckset': { const [f, val, multi] = v.split('|'), d = ckDraft().d, x = /^\d+$/.test(val) && f !== 'goalLdl' ? +val : f === 'goalLdl' ? +val : val === 'true' ? true : val === 'false' ? false : val;
       if (multi === '1'){ d[f] = arr(d[f]); d[f] = d[f].includes(x) ? d[f].filter(y => y !== x) : d[f].concat(x); } else d[f] = f === 'cleared' && d[f] === true ? false : x;
       rerender(true); return true; }
+    case 'ckmove': { const d = ckDraft().d, nx = moveToggle(arr(d.moves), v); if (!nx.length){ toast('Choose at least one.'); return true; } d.moves = nx; d.track = nx.includes('strength') && nx.includes('cardio') ? 'mixed' : nx.includes('cardio') ? 'cardio' : 'strength'; rerender(true); return true; }
     case 'ckgear': { const d = ckDraft().d; d.gear = arr(d.gear); d.gear = d.gear.includes(v) ? d.gear.filter(x => x !== v) : d.gear.concat(v); d.gearSet = true; rerender(true); return true; }
     case 'ckq': { const [q, val] = v.split('|'), d = ckDraft().d; d.check[q] = val === 'true'; rerender(true); return true; }
     case 'ckkid': { const [j, f, val] = v.split('|'), d = ckDraft().d, K = d.house.kids = arr(d.house.kids);
@@ -2951,7 +3011,7 @@ function pubSummary(){
 //   GGHealth.today(date) -> [{key, when, hour, title, sub, btn, tint, done, kind}] in day order (done from that day's log);
 //     before Tending is set up, one item: {key: 'setup', title: 'Start Tending', kind: 'setup'}.
 //   GGHealth.act(key) opens an item's guide or marks it; GGHealth.toggle(key) flips its done circle.
-//   GGHealth.week(n) -> {label, days: [{day, date, dinner: {title, key}, move: {title, key}}], shopKey, prepKey} (n: weeks from this one).
+//   GGHealth.week(n) -> {label, days: [{day, date, dinner: {title, key}, move: {title, key}}], shopKey, prepKey, shopWeek, shopCount, shopLeft} (n: weeks from this one).
 //   GGHealth.render(el, section, {bare: true}) draws one section into el: shop, prep, numbers, settings, log, workouts, quiet,
 //     setup, cook:<key>, move:<key>. GGHealth.counts() -> {recipes, workouts, meditations, practices}.
 // Optional host hooks: C.section(name) when an item asks for a section (act also returns {section}), C.changed() after a save.
@@ -3153,7 +3213,9 @@ function apiWeek(n){
       // BLD 893: the meditation on its days, once a person has chosen how often (My Grounded Way Plan).
       med: mf ? {title: mf.title || 'Meditation', key: 'medid:' + mf.id, mins: medMins(wn), done: isDone(d, 'med'), kind: 'meditation', id: mf.id, at: medAt().kick || 'Morning'} : null}; });
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
-  return {n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
+  // BLD 894: the Week tab's Shopping List card reads the real list ("Week B · 42 items").
+  const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
+  return {shopWeek: letter(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
     shopImage: WAY(ITEM_ART.shop), prepImage: sp ? WAY(ITEM_ART.prep) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
@@ -3172,7 +3234,7 @@ function apiRender(el, section, opts){
 }
 // ---------- BLD 893: My Grounded Way Plan (home/home.js) ----------
 // The plan is a guided way to set Tending's own settings: no copy of them is kept anywhere else.
-// o: {track: 'strength'|'cardio'|'mixed', gentle: bool, level, cardioDays, days, mins, gear: [ids], flow: bool,
+// o: {moves: [strength, cardio, flow, yoga, balance, stretch] (BLD 894; sets track and flowStyles), track: 'strength'|'cardio'|'mixed', gentle: bool, level, cardioDays, days, mins, gear: [ids], flowStyles: [daily, yoga, taichi, stretch] (BLD 894; or flow: bool),
 //     medFreq, medTime, food: bool, household: n, check: {qid: bool}, cleared: bool}
 // A first plan (no start-up check yet) also finishes the start-up check with plain defaults: Me (or Me and My Family when
 // more than one eats at home), the goal Feel Well, no food needs. Any yes on the health check keeps the Gentle path until
@@ -3182,11 +3244,12 @@ function apiPlanInfo(){
   return {pub: PUB(), done: PUB() ? !!s.pubDone : !setupNeeded(), set: JSON.parse(JSON.stringify(s)), use: USE(), check: L.check || null, gear: arr(L.program && L.program.gear), gearNone: (L.program || {}).gearNone || '',
     cardio: !!PROG() && hasCardio(), levelLines: (L.templates || {}).levelLines || {}, gentle: {lead: (L.gentle || {}).lead || '', mins: arr((L.gentle || {}).sessions).map(x => +x.mins).filter(Boolean)},
     meds: arr((MED() || {}).sessions).map(x => ({id: x.id, title: x.title || '', day: x.day || ''})), flows: arr((PR() || {}).sessions).filter(x => !x.style || x.style === 'daily').map(x => ({id: x.id, title: x.title || '', style: x.style || 'daily', mins: x.mins || null})),
+    flowAll: arr((PR() || {}).sessions).map(x => ({id: x.id, title: x.title || '', style: x.style || 'daily', mins: x.mins || null})), flowStyles: flowStyleList(), flowOn: flowOnOf(s), moves: movesOf(s), moveNames: MOVE_NAME,
     medMins: [medMins(1), medMins(99)], prog: progLabel(new Date()), track: progTrack(), teen: TEEN()};
 }
 function apiPlan(o){
   const h = H(); if (!h || !FLDH() || !o) return false; o = o || {};
-  const s = h.set, L = PLIB() || {}, was = PUB() ? !!s.pubDone : true, tr0 = progTrack(), gentle0 = s.level === 'gentle';
+  const s = h.set, L = PLIB() || {}, was = PUB() ? !!s.pubDone : true, tr0 = progTrack(), gentle0 = s.level === 'gentle', w0 = workOn();
   const tr = ['strength', 'cardio', 'mixed'].includes(o.track) ? o.track : 'strength';
   if (PUB()){
     if (o.check && typeof o.check === 'object'){ s.check = Object.assign({}, s.check || {}, o.check); s.checkYes = arr((L.check || {}).questions).some(q => s.check[q.id] === true); }
@@ -3198,9 +3261,11 @@ function apiPlan(o){
     if (Array.isArray(o.gear) && L.program) s.gear = o.gear.filter(g => typeof g === 'string').slice(0, 20);
     if (+o.household > 0){ const hs = s.house = Object.assign({adults: 1, kids: []}, s.house || {}), k = arr(hs.kids).length; hs.adults = Math.max(1, Math.min(12, Math.round(+o.household) - k)); s.household = hs.adults + k; if (!was) s.who = s.household > 1 ? 'family' : 'me'; }
   } else if (+o.household > 0) s.household = Math.max(1, Math.min(12, Math.round(+o.household)));
-  if (s.track !== 'practice' || o.track) s.track = tr;
+  if (Array.isArray(o.moves) && o.moves.length) setMoves(s, o.moves); else if (s.track !== 'practice' || o.track) s.track = tr;
   s.cardioDays = +o.cardioDays === 2 ? 2 : 1;
-  if (o.flow != null){ s.flow = !!o.flow; if (s.flow) s.flowDays = 'other'; else delete s.flowDays; }
+  if (Array.isArray(o.moves) && o.moves.length){ /* set.moves set the Flow-type categories */ }
+  else if (Array.isArray(o.flowStyles)){ s.flowStyles = FLOW_IDS.filter(x => o.flowStyles.includes(x)); s.flow = s.flowStyles.length > 0; if (s.flow) s.flowDays = 'other'; else delete s.flowDays; }
+  else if (o.flow != null){ s.flow = !!o.flow; if (s.flow) s.flowDays = 'other'; else delete s.flowDays; }
   if (['daily', 'few', 'weekly', 'later'].includes(o.medFreq)) s.medFreq = o.medFreq;
   if (['morning', 'afternoon', 'evening'].includes(o.medTime)) s.medTime = o.medTime;
   if (PUB()){
@@ -3209,10 +3274,10 @@ function apiPlan(o){
     s.use = PART_IDS.filter(x => use.has(x));
     if (!was){ s.goals = arr(s.goals).length ? s.goals : ['well']; s.needs = arr(s.needs); s.house = s.house || {adults: 1, kids: []}; s.household = s.household || (s.house.adults + arr(s.house.kids).length); s.who = s.who || (s.household > 1 ? 'family' : 'me');
       s.place = s.place || 'home'; s.pubDone = 1; s.start = s.start || ymd(monOf(new Date())); s.remOff = true; markNew(); }
-    else if (L.program && (tr !== tr0 || (gentle0 && s.level !== 'gentle'))) s.progStart = ymd(monOf(new Date()));
+    else if (L.program && s.track !== 'practice' && (progTrack() !== tr0 || !w0 || (gentle0 && s.level !== 'gentle'))) s.progStart = ymd(monOf(new Date()));
   } else {
     const use = h.set.use; if (Array.isArray(use)){ const u = new Set(use); u.add('move'); if (s.medFreq !== 'later') u.add('mind'); if (o.food === true) u.add('food'); else if (o.food === false) u.delete('food'); s.use = PART_IDS.filter(x => u.has(x)); }
-    if (tr !== tr0 && PROG()) s.progStart = ymd(monOf(new Date()));
+    if ((progTrack() !== tr0 || !w0) && PROG() && s.track !== 'practice') s.progStart = ymd(monOf(new Date()));
   }
   delete s.needSetup; s.u = Date.now(); PA = null; if (PUB()) ensurePlan(); save(); return true;
 }

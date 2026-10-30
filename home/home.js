@@ -45,10 +45,10 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b893';
+  var V = 'b894';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
-  var GGN_SRC = '/shared/ggn.js?v=b888';
+  var GGN_SRC = '/shared/ggn.js?v=b894';
   var IMG = '/shared/heroes/way/';
 
   /* ---------- small helpers ---------- */
@@ -97,6 +97,7 @@
     arrow: '<path d="M5 12h14M13 6l6 6-6 6"/>',
     back: '<path d="M19 12H5M11 6l-6 6 6 6"/>',
     plus: '<path d="M12 5v14M5 12h14"/>',
+    cart: '<path d="M2.5 4h2.6l2.3 10.6a1.6 1.6 0 0 0 1.6 1.3h8.2a1.6 1.6 0 0 0 1.6-1.2L20.5 8H6.2"/><circle cx="9.5" cy="19.6" r="1.4"/><circle cx="17" cy="19.6" r="1.4"/>',
     sprout: '<path d="M12 21v-8"/><path d="M12 13c0-4.4-3-7-7.5-7 0 4.4 3 7 7.5 7z"/><path d="M12 11c0-3.6 2.6-6 6.8-6 0 3.6-2.6 6-6.8 6z"/><path d="M7.5 21h9"/>',
     flame: '<path d="M12 3c.6 3.2 4.5 5 4.5 9.6A4.5 4.5 0 0 1 12 17a4.5 4.5 0 0 1-4.5-4.4c0-2.2 1.2-3.4 2.2-4.4.3 1.6 1 2.4 1.8 2.6-.4-2.6.2-5.6.5-7.8z"/><path d="M8 21h8M10 17v4M14 17v4"/>',
     people: '<circle cx="8.5" cy="8" r="3"/><circle cx="16.5" cy="9" r="2.5"/><path d="M3 19.5c.4-3.4 2.6-5.5 5.5-5.5s5.1 2.1 5.5 5.5M14.2 14.3c.7-.3 1.4-.5 2.3-.5 2.4 0 4.1 1.8 4.5 4.7"/>',
@@ -1332,6 +1333,21 @@
     out.push(progressHtml(h, lastCheckin(S.id, S.tree), tendOf(S.id, S.tree)));
     return out.join('');
   }
+  /* BLD 894 (Chris could not find My Plate): Today's Plate near the top of Today, for people who chose food in Tending.
+     Three rings from Tending's own numbers (GGHealth.summary plate and targets) and one button to log. The green + stays. */
+  function plateCardHtml() {
+    var sm = summary(); if (!sm || arr(sm.use).indexOf('food') < 0) return '';
+    var pl = obj(sm.plate), tg = obj(sm.targets), n = +pl.logged || 0, sz = innerWidth < 700 ? 66 : 78;
+    var R = [['pro', 'Protein', 'of ', 'var(--tn-m)'], ['fib', 'Fiber', 'of ', 'var(--tn-p)'], ['sf', 'Saturated Fat', 'under ', 'var(--tn-k)']];
+    var rings = R.map(function (r) {
+      var v = Math.round(+pl[r[0]] || 0), t = Math.round(+tg[r[0]] || 0); if (!t) return '';
+      return '<div class="hm-prg" data-hm-pk="' + r[0] + '">' + ring(sz, 7, Math.min(v, t), t, '<b>' + v + '</b><small>' + r[2] + t + ' g</small>', r[3]) + '<span>' + r[1] + '</span></div>';
+    }).join('');
+    var line = n ? n + (n === 1 ? ' food' : ' foods') + ' logged today. Tap again as you eat.' : 'Tap what you eat, and the rings fill.';
+    return '<article class="hm-card edge hm-p-leaves hm-plate" id="hm-plate"><div class="hm-hd"><span class="hm-badge">' + I('plate') + '</span><div style="min-width:0"><div class="hm-k">Today\'s Plate</div><div class="hm-sub">' + esc(line) + '</div></div></div>' +
+      (rings ? '<div class="hm-prings">' + rings + '</div>' : '') +
+      '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tab="today=log">' + I('plus') + 'Log a Plate</button><button type="button" class="hm-linkbtn" data-hm-tab="today=log">Add a Note</button></div></article>';
+  }
   function todayHtml() {
     var T = todayItems(), h = homeRec(), items = T.items, done = items.filter(function (x) { return x.done; }).length + T.extra, n = items.length + T.extra, ed = edgesOf(lastCheckin(S.id, S.tree));
     // BLD 885: This Week and the When You're Ready card: beside the day on a wide screen, right after Right Now on a phone.
@@ -1346,7 +1362,7 @@
     var list = items.filter(function (x) { return !x.side; });
     var head = '<div class="hm-grp hm-p-leaves"><span class="hm-badge">' + I('sprout') + '</span><h2 class="hm-h2">Today\'s Tending</h2><span class="sp"></span><span class="hm-time">' + esc(done + ' of ' + n + ' tended') + '</span></div>';
     var fab = T.ready ? '<button type="button" class="hm-fab" data-hm-tab="today=log" aria-label="Log a plate or a note">' + I('plus') + '</button>' : '';
-    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div></div>' +
+    return todayHero(done, n) + '<div class="hm-tgrid"><div class="hm-col hm-tmain">' + nowHtml(items) + (T.ready ? plateCardHtml() : '') + (wide ? '' : wkb) + head + lead + '<div class="hm-list" id="hm-today">' + list.map(itemHtml).join('') + '</div></div>' +
       '<div class="hm-col hm-tside">' + (wide ? wkb : '') + sideHtml(items, ed) + '</div></div>' + fab;
   }
   function findItem(key) { var T = todayItems(); return T.items.filter(function (x) { return x.key === key; })[0] || null; }
@@ -1384,25 +1400,36 @@
   }
 
   /* ---------- Week: Shop, Sunday Together Prep, then the seven days ---------- */
+  function bigCard(cls, tab, art, icon, ey, title, line, go) {
+    return '<button type="button" class="hm-wbig ' + cls + '" data-hm-tab="' + tab + '"><span class="pic" aria-hidden="true"><img src="' + esc(art) + '" alt="" loading="lazy" decoding="async"><span class="ic">' + I(icon) + '</span></span>' +
+      '<span class="tx"><span class="ey">' + esc(ey) + '</span><b>' + esc(title) + '</b><small>' + esc(line) + '</small></span><span class="go">' + esc(go) + I('arrow') + '</span></button>';
+  }
   function weekData() { if (!tendReady() || !tendIsReady() || !hasFn('week')) return null; var w = hCall('week'); return w && Array.isArray(w.days) ? w : null; }
   /* BLD 885: the weekly practices lead the Week tab, beside the shopping list on a wide screen. */
   function weekHtml() {
-    var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = planDoorWeek() + weekBody();
+    var wp = S.id ? thisWeekHtml(planItems(false), 'week') : '', body = weekBody(planDoorWeek());
     if (!wp) return body;
     if (body.indexOf('<div class="hm-wgrid"><div class="hm-col hm-wside">') >= 0) return body.replace('<div class="hm-col hm-wside">', '<div class="hm-col hm-wside">' + wp);
     return '<div class="hm-wpracs">' + wp + '</div>' + body;
   }
-  function weekBody() {
-    if (!tendReady()) return S.tendLoadDone ? tendSoonHtml() : '<p class="hm-loading">Opening your week…</p>';
-    if (!tendIsReady()) return '<article class="hm-start">' + tile(ART2.shop, 'wide') + '<div class="tx"><span class="ey">Tending</span><b>Start Tending</b><small>Your week fills in here: dinners to cook, workouts for your level, one shopping list, and Sunday Together Prep.</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="today=tending">Start</button></div></article>';
+  function weekBody(door) {
+    door = door || '';
+    if (!tendReady()) return door + (S.tendLoadDone ? tendSoonHtml() : '<p class="hm-loading">Opening your week…</p>');
+    if (!tendIsReady()) return door + '<article class="hm-start">' + tile(ART2.shop, 'wide') + '<div class="tx"><span class="ey">Tending</span><b>Start Tending</b><small>Your week fills in here: dinners to cook, workouts for your level, one shopping list, and Sunday Together Prep.</small></div><div class="hm-acts tight"><button type="button" class="hm-pill hm-tn-p" data-hm-tab="today=tending">Start</button></div></article>';
     var w = weekData();
-    if (!w) return '<div id="hm-tend" class="hm-sec" data-sec="week"></div>';
+    if (!w) return door + '<div id="hm-tend" class="hm-sec" data-sec="week"></div>';
     var hh = tableOf(), td = today();
-    var shop = w.shopKey === null ? '' : '<button type="button" class="hm-shop" data-hm-tab="week=shop"><picture class="bg" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'recipes-narrow.webp"><img src="' + IMG + 'recipes-wide.webp" alt="" loading="lazy"></picture><span class="tx"><b>' + esc(w.shopLabel || 'Shop for ' + weekLabel(w.label)) + '</b><small>One list for the whole week' + (hh ? ', sized for ' + hh : '') + '</small></span><span class="go" aria-hidden="true">' + I('arrow') + '</span></button>';
-    var prep = w.prepKey ? '<article class="hm-wcard hm-tn-k">' + tile(w.prepImage || ART2.prep) + '<div class="tx"><span class="ey">Sunday</span><b>' + esc(w.prepLabel || 'Sunday Together Prep') + '</b><small>' + esc(w.prepSub || 'Cook and Helper, side by side: the week\'s head start in one afternoon.') + '</small></div><button type="button" class="hm-pill" data-hm-tab="week=prep">Open</button></article>' : '';
+    /* BLD 894 (Chris: "Didn't even realize Shopping was a button"): two large cards lead the Week, the Shopping List and
+       Sunday Together Prep, side by side on a wide screen and stacked on a phone. Each opens the same section as before. */
+    var cnt = num(w.shopCount), left = num(w.shopLeft);
+    var shopLine = (w.shopWeek ? 'Week ' + w.shopWeek : weekLabel(w.label)) + (cnt ? ' · ' + cnt + (cnt === 1 ? ' item' : ' items') + (left != null && left < cnt ? (left ? ', ' + left + ' to go' : ', all in the cart') : '') : '') + (hh ? ' · sized for ' + hh : '');
+    var shop = w.shopKey === null ? '' : bigCard('hm-wshop hm-tn-g', 'week=shop', ART2.shop, 'cart', w.shopLabel || 'Shop for ' + weekLabel(w.label), 'Shopping List', shopLine, 'Open the List');
+    var prepC = w.prepKey ? bigCard('hm-wprep hm-tn-k', 'week=prep', w.prepImage || ART2.prep, 'people', 'Sunday', w.prepLabel || 'Sunday Together Prep', w.prepSub || 'Cook and Helper, side by side: the week\'s head start in one afternoon.', 'Open Prep') : '';
+    var find = shop || prepC ? '<div class="hm-wfind' + (shop && prepC ? '' : ' one') + '">' + shop + prepC + '</div>' : '';
+    var prep = '';
     /* BLD 889: the Weekly Batch every Sunday, right after Sunday Together Prep (it was Monthly Bulk Together). */
     if (w.bulkKey) prep += '<article class="hm-wcard hm-tn-k">' + tile(ART2.cook) + '<div class="tx"><span class="ey">Sunday, after prep</span><b>' + esc(w.bulkLabel || 'Weekly Batch') + '</b><small>' + esc(w.bulkSub || 'Burritos and one more for the week, Cook and Helper, side by side.') + '</small></div><button type="button" class="hm-pill" data-hm-wk="' + esc(w.bulkKey) + '">Open</button></article>';
-    if (w.starts) prep = '<p class="hm-sub" style="margin:0 4px 12px">Your plan begins ' + esc(niceDay(w.starts)) + '. Here is a look at the week ahead.</p>' + prep;
+    if (w.starts) find = '<p class="hm-sub" style="margin:0 4px 12px">Your plan begins ' + esc(niceDay(w.starts)) + '. Here is a look at the week ahead.</p>' + find;
     var mark = function (x) { return x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : ''; };
     var rows = w.days.map(function (d, di) {
       var isT = d.today === true || String(d.date || '').slice(0, 10) === td, din = obj(d.dinner), mv = obj(d.move);
@@ -1416,7 +1443,7 @@
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
     var nw = hasFn('news') ? hCall('news') : null;
     var news = nw ? '<article class="hm-card hm-p-leaves hm-new"><div class="hm-k">' + esc(nw.title) + '</div>' + (nw.label ? '<p class="hm-sub">You are in ' + esc(nw.label) + '.</p>' : '') + '<ul class="hm-newl">' + arr(nw.lines).map(function (l) { return '<li>' + esc(l) + '</li>'; }).join('') + '</ul><div class="hm-acts tight"><button type="button" class="hm-pill" data-hm-new="1">Got It</button></div></article>' : '';
-    return '<div class="hm-wgrid"><div class="hm-col hm-wside">' + shop + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + '<div class="hm-wlist">' + rows + '</div></div></div>';
+    return find + door + '<div class="hm-wgrid"><div class="hm-col hm-wside">' + prep + '</div><div class="hm-col hm-wmain">' + news + '<h2 class="hm-label">This Week</h2>' + (w.prog ? '<p class="hm-sub hm-wprog">' + esc(w.prog) + '</p>' : '') + '<div class="hm-wlist">' + rows + '</div></div></div>';
   }
 
   /* ---------- Grow: the tree, the six parts, this season, the Growth Plan, history ---------- */
@@ -1516,7 +1543,7 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b888';
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b894';
   var GUIDES = { oak: ['/oak/guides.js?v=b888', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b888', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b888', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b888', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
@@ -1855,10 +1882,31 @@
   /* The tree's own practice record where its library has one, so a spirit item and the tree's practice are one record. */
   var SP_REC = { gratitude: 'fruit|Three Good Things', kindness: 'branches|Kindness', nature: 'roots|A Walk Among Trees', quiet: 'bark|Quiet Reflection', pause: 'roots|Sacred Pause', prayer: 'roots|Prayer' };
   function spiritPid(id, tree) { return id === 'nature' && tree === 'pine' ? 'roots|Time Outside' : SP_REC[id]; }
+  var FLOW_NAME = { daily: 'Flow', yoga: 'Yoga', taichi: 'Balance', stretch: 'Stretch' };
+  /* BLD 894 (Chris, October 29, 2026: "i want these 6 categories exactly.. not the 3"): Body is one choice of six, any mix. */
+  var WP_MOVES = [['strength', 'Strength', 'The 12-week program, with core, balance, and agility', 'move'], ['cardio', 'Cardio', 'Low impact intervals and steady work', 'move'],
+    ['flow', 'Flow', 'Movement, breath, and quiet focus', 'leaves'], ['yoga', 'Yoga', 'Slow, flowing moves and an easy back', 'leaves'],
+    ['balance', 'Balance', 'Soft, slow steps for steady balance', 'leaves'], ['stretch', 'Stretch', 'Easy movement, then steady holds', 'leaves']];
+  var WP_MSTYLE = { flow: 'daily', yoga: 'yoga', balance: 'taichi', stretch: 'stretch' };
+  /* The draft's track and Flow styles follow its moves, the same way Tending keeps set.track and set.flowStyles in step. */
+  function wpSync(d) {
+    var m = d.moves, st = m.indexOf('strength') >= 0, ca = m.indexOf('cardio') >= 0;
+    d.track = st && ca ? 'mixed' : ca ? 'cardio' : st ? 'strength' : 'practice';
+    d.flowStyles = m.filter(function (x) { return WP_MSTYLE[x]; }).map(function (x) { return WP_MSTYLE[x]; });
+    return d;
+  }
+  function wpWork(d) { return d.track !== 'practice'; }
+  function wpList(L) { return L.length < 3 ? L.join(' and ') : L.slice(0, -1).join(', ') + ', and ' + L[L.length - 1]; }
+  /* The line under Days a week: where the workouts land and how the other categories take turns. */
+  function wpDaysLine(d) {
+    var work = d.moves.filter(function (x) { return !WP_MSTYLE[x]; }).map(function (x) { return x === 'cardio' ? 'Cardio' : 'Strength'; });
+    var rest = d.moves.filter(function (x) { return WP_MSTYLE[x]; }).map(function (x) { return FLOW_NAME[WP_MSTYLE[x]]; });
+    if (!work.length) return wpList(rest) + (rest.length > 1 ? ' take turns on these days' : ' on these days') + ', about 20 minutes each.';
+    return wpList(work) + ' on these days.' + (rest.length ? ' ' + wpList(rest) + (rest.length > 1 ? ' take turns' : ' comes') + ' on the other days, Monday to Saturday, about 20 minutes each.' : '');
+  }
   var WP_DAYSETS = { 2: [1, 4], 3: [1, 3, 5], 4: [1, 2, 4, 5], 5: [1, 2, 3, 4, 5], 6: [1, 2, 3, 4, 5, 6] };
   var WP_DOW = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'], WP_ORDER = [1, 2, 3, 4, 5, 6, 0];
   var WP_PLACE = { home: [], light: ['dumbbells', 'bands'], gym: ['dumbbells', 'bands', 'bar', 'dip', 'step', 'bench', 'machines', 'cardio'] };
-  var WP_TRACK = { strength: 'Strength', cardio: 'Cardio', mixed: 'Mixed', gentle: 'Gentle' };
   var WP_MED = { daily: 'Every Day', few: 'A Few Times a Week', weekly: 'Once a Week', later: 'Later' };
   var WP_WORDS = { roots: 'What grounds you', trunk: 'Purpose and goals', bark: 'Mind and calm', branches: 'People and connection', leaves: 'Body and energy', fruit: 'Joy and progress' };
   var WP_LONG = { roots: 'what grounds you', trunk: 'purpose and goals', bark: 'calm and a steady mind', branches: 'people and connection', leaves: 'movement and energy', fruit: 'joy and progress' };
@@ -1941,18 +1989,17 @@
     var info = wpInfo() || {}, s = obj(info.set || tendSet()), w = wayRec(), h = homeRec(), gentle = s.level === 'gentle';
     var house = obj(s.house), n = ((+house.adults || 0) + arr(house.kids).length) || num(s.household) || 0;
     var trees = wpTrees();
-    return {
+    return wpSync({
       lead: w.lead && trees.indexOf(w.lead) >= 0 ? w.lead : S.tree,
-      track: gentle ? 'gentle' : (s.track === 'cardio' || s.track === 'mixed' ? s.track : 'strength'),
+      moves: arr(info.moves).length ? info.moves.slice() : ['strength'],
       cardioDays: +s.cardioDays === 2 ? 2 : 1, days: WP_DAYSETS[+s.days] ? +s.days : 3, mins: [20, 40, 60].indexOf(+s.mins) >= 0 ? +s.mins : 20,
-      level: s.level && s.level !== 'gentle' ? s.level : 'root', gear: Array.isArray(s.gear) ? s.gear.slice() : (WP_PLACE[s.place] || []).slice(),
-      flow: !!s.flow || s.track === 'both', check: Object.assign({}, obj(s.check)), cleared: !!s.cleared,
+      level: s.level || 'root', gear: Array.isArray(s.gear) ? s.gear.slice() : (WP_PLACE[s.place] || []).slice(),
+      check: Object.assign({}, obj(s.check)), cleared: !!s.cleared,
       med: WP_MED[s.medFreq] ? s.medFreq : 'daily', medTime: /^(morning|afternoon|evening)$/.test(s.medTime || '') ? s.medTime : 'morning',
       spirit: w.spirit ? Object.assign({}, w.spirit) : (h.parts.indexOf('pray') >= 0 ? { pause: 1 } : {}),
       food: info.done && arr(info.use).indexOf('food') < 0 ? 'later' : 'yes', household: n > 0 && n < 30 ? Math.round(n) : 2,
       prac: null, prac0: null, light: !!w.light
-    };
-  }
+    }); }
   function wpNeedCheck(info) { info = info || wpInfo() || {}; return !!(info.pub && !info.done && info.check && arr(info.check.questions).length); }
   function wpHold(info) {
     info = info || wpInfo() || {}; var d = WP.d;
@@ -1965,13 +2012,13 @@
   function wpMedOn(f, dow) { return f === 'daily' ? true : f === 'few' ? [2, 4, 6].indexOf(dow) >= 0 : f === 'weekly' ? dow === 0 : false; }
   function wpSessions(d) {
     var info = wpInfo() || {}, wd = WP_DAYSETS[d.days] || WP_DAYSETS[3], cs = d.track === 'mixed' ? wpCardioSlots(wd.length, d.cardioDays) : [], out = [];
-    var flows = arr(info.flows), meds = arr(info.meds);
-    for (var dow = 0; dow < 7; dow++) {
+    var flows = arr(info.flows), meds = arr(info.meds), all = arr(info.flowAll), fk = 0, fn = {};
+    for (var di = 0; di < 7; di++) { var dow = WP_ORDER[di];
       var L = [], k = wd.indexOf(dow);
-      if (k >= 0) { var kind = d.track === 'cardio' || cs.indexOf(k) >= 0 ? 'cardio' : 'strength'; L.push({ kind: kind, id: '', title: d.track === 'gentle' ? 'Gentle' : kind === 'cardio' ? 'Cardio' : 'Strength', t: 'move' }); }
-      else if (d.flow && dow !== 0) { var f = flows.length ? flows[((dow + 6) % 7) % flows.length] : { id: '', title: 'Flow', style: 'daily' }; L.push({ kind: 'flow', id: f.id, title: f.title || 'Flow', style: f.style || 'daily', t: 'flow' }); }
+      if (k >= 0 && wpWork(d)) { var kind = d.track === 'cardio' || cs.indexOf(k) >= 0 ? 'cardio' : 'strength'; L.push({ kind: kind, id: '', title: d.level === 'gentle' ? 'Gentle' : kind === 'cardio' ? 'Cardio' : 'Strength', t: 'move' }); }
+      else if (d.flowStyles.length && (wpWork(d) ? dow !== 0 : k >= 0)) { var st = d.flowStyles[fk++ % d.flowStyles.length], sl = all.filter(function (x) { return x.style === st; }), sn = fn[st] = (fn[st] || 0) + 1, f = st === 'daily' ? (flows.length ? flows[((dow + 6) % 7) % flows.length] : null) : st === 'taichi' ? sl[0] : sl[(sn - 1) % (sl.length || 1)]; f = f || { id: '', title: 'Flow', style: st }; L.push({ kind: 'flow', id: f.id, title: f.title || 'Flow', style: f.style || st, t: 'flow' }); }
       if (wpMedOn(d.med, dow)) { var m = meds.filter(function (x) { return x.day === WP_DOW[dow]; })[0] || meds[0] || { id: '', title: 'Meditation' }; L.push({ kind: 'meditation', id: m.id, title: m.title || 'Meditation', t: 'med' }); }
-      out.push(L);
+      out[dow] = L;
     }
     return out;
   }
@@ -1980,9 +2027,11 @@
     if (!window.GGFills) return null;
     ses = ses || wpSessions(d); var days = [], first = null;
     ses.forEach(function (L, dow) { L.forEach(function (s) { if (GGFills.fills(pid, s, d.lead)) { if (days.indexOf(dow) < 0) days.push(dow); if (!first) first = s; } }); });
+    // A chosen Flow program fills on its turn, some weeks on a day this projection gives another style.
+    if (!first && d.flowStyles.length) d.flowStyles.forEach(function (st) { var s = { kind: 'flow', id: '', title: 'Flow', style: st }; if (!first && GGFills.fills(pid, s, d.lead)) first = s; });
     if (!first) return null;
     var rule = GGFills.fillsFor(pid, null, d.lead) || {};
-    var label = first.kind === 'meditation' ? (rule.only ? 'Filled by ' + first.title : 'Filled by your meditations') : first.kind === 'flow' ? 'Filled by Flow' : 'Filled by your ' + (d.track === 'gentle' ? 'Gentle' : first.kind === 'cardio' ? 'Cardio' : 'Strength') + ' workouts';
+    var label = first.kind === 'meditation' ? (rule.only ? 'Filled by ' + first.title : 'Filled by your meditations') : first.kind === 'flow' ? 'Filled by ' + (FLOW_NAME[first.style] && first.style !== 'daily' ? FLOW_NAME[first.style] : 'Flow') : 'Filled by your ' + (d.level === 'gentle' ? 'Gentle' : first.kind === 'cardio' ? 'Cardio' : 'Strength') + ' workouts';
     return { days: days, label: label };
   }
   function wpPicks() { var d = WP.d; return d && d.prac ? Object.keys(d.prac).filter(function (k) { return d.prac[k]; }) : []; }
@@ -2062,8 +2111,8 @@
     if (!WP.snap) WP.snap = wpSnapshot(); else wpRestore(WP.snap);
     var hold = wpHold(info), s0 = obj(info.set);
     hCall('applyPlan', {
-      track: d.track === 'gentle' ? (s0.track === 'cardio' || s0.track === 'mixed' ? s0.track : 'strength') : d.track, gentle: d.track === 'gentle' || hold, level: d.level,
-      cardioDays: d.cardioDays, days: d.days, mins: d.mins, gear: d.gear.slice(), flow: d.flow, medFreq: d.med, medTime: d.medTime,
+      moves: d.moves.slice(), gentle: d.level === 'gentle' || hold, level: d.level,
+      cardioDays: d.cardioDays, days: d.days, mins: d.mins, gear: d.gear.slice(), medFreq: d.med, medTime: d.medTime,
       food: d.food === 'yes', household: d.household, check: wpNeedCheck(info) ? Object.assign({}, d.check) : undefined, cleared: wpNeedCheck(info) ? d.cleared : undefined
     });
     var h = GGP.data(S.id, 'home'); h.parts = arr(h.parts);
@@ -2100,7 +2149,7 @@
     var i = WP.i, d = WP.d, info = wpInfo() || {}, b = '', f = '', t = TREES[d.lead] || TREES.oak;
     if (i === 0) {
       b = wpK('Grow') + wpH('Build one plan for your whole self') + '<p class="hm-wp-lead">Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes, and every choice can change anytime.</p>' +
-        '<div class="hm-wp-card">' + wpK('What you will choose', 'leaves') + '<div style="margin-top:6px"></div>' + wpRow('move', 'Body', 'Strength, Cardio, Mixed, or Gentle') + wpRow('bark', 'Mind', 'Meditation, how often and when') +
+        '<div class="hm-wp-card">' + wpK('What you will choose', 'leaves') + '<div style="margin-top:6px"></div>' + wpRow('move', 'Body', 'Strength, Cardio, Flow, Yoga, Balance, Stretch') + wpRow('bark', 'Mind', 'Meditation, how often and when') +
         wpRow('roots', 'Spirit', 'Gratitude, kindness, quiet, and more') + wpRow('plate', 'Table', 'Weekly dinners and Sunday Together Prep') + wpRow('leaves', 'Practices', 'A few for your Growing Edges') + '</div>' +
         '<p class="hm-wp-lead sm">Everything stays on this device, inside your locked profile.</p>';
       f = wpBtn('next', 'Start My Plan');
@@ -2121,27 +2170,30 @@
         f = wpBtn('checkin', 'Check In Again', true) + wpBtn('next', 'Use This');
       }
     } else if (i === 2) {
-      var hold = wpHold(info), pub = info.pub !== false, need = wpNeedCheck(info), K = obj(info.check), gentle = d.track === 'gentle';
-      var progs = ['strength'].concat(info.cardio ? ['cardio', 'mixed'] : []).concat(pub ? ['gentle'] : []);
+      var hold = wpHold(info), pub = info.pub !== false, need = wpNeedCheck(info), K = obj(info.check), gentle = d.level === 'gentle' || hold, work = wpWork(d);
+      var mvs = WP_MOVES.filter(function (x) { return x[0] !== 'cardio' || info.cardio; }), sty = arr(info.flowStyles).map(function (x) { return x.id; });
+      if (sty.length) mvs = mvs.filter(function (x) { return !WP_MSTYLE[x[0]] || sty.indexOf(WP_MSTYLE[x[0]]) >= 0; });
       var ckc = need ? '<div class="hm-wp-card hm-wp-check">' + wpK('A quick health check', 'move') + '<p class="hm-wp-lead sm">' + esc(K.lead || '') + '</p>' + arr(K.questions).map(function (q) {
         return '<div class="hm-wp-q"><p>' + esc(q.q) + '</p><div class="hm-wp-chips">' + wpChip('ck:' + q.id + ':1', 'Yes', d.check[q.id] === true, 'move') + wpChip('ck:' + q.id + ':0', 'No', d.check[q.id] === false, 'move') + '</div>' + (q.why && d.check[q.id] === true ? '<small>' + esc(q.why) + '</small>' : '') + '</div>';
       }).join('') + (arr(K.questions).some(function (q) { return d.check[q.id] === true; }) ? '<div class="hm-wp-nudge"><b>' + esc(K.yes || '') + '</b> ' + esc(K.yesMore || '') + '<div class="hm-wp-chips" style="margin-top:8px">' + wpChip('cleared', (arr(K.continue).filter(function (x) { return x.id === 'cleared'; })[0] || {}).label || 'My doctor or therapist says I can begin', d.cleared, 'leaves') + '</div></div>' : '') + '</div>' : '';
       if (hold && !need) ckc = '<div class="hm-wp-nudge">' + esc(obj(info.check).yes || 'Your health check keeps the Gentle path for now.') + '</div>';
       b = wpK('Body · grows Leaves', 'move') + wpH('How do you like to move?') + ckc +
-        '<div>' + wpLbl('Program') + '<div class="hm-wp-chips">' + progs.map(function (tr) { return wpChip('set:track:' + tr, WP_TRACK[tr], (hold ? 'gentle' : d.track) === tr, 'move', hold && tr !== 'gentle'); }).join('') + '</div>' +
-        (d.track === 'mixed' && !hold ? '<div class="hm-wp-chips" style="margin-top:8px">' + [1, 2].map(function (n) { return wpChip('set:cardioDays:' + n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), d.cardioDays === n, 'move'); }).join('') + '</div>' : '') + '</div>';
+        '<div>' + wpLbl('Choose any, or all') + '<div class="hm-wp-tiles hm-wp-moves">' + mvs.map(function (x) { return '<button type="button" class="hm-wp-tile" data-hm-wp="mv:' + x[0] + '" aria-pressed="' + (d.moves.indexOf(x[0]) >= 0) + '" style="--c:var(--' + x[3] + ');--cs:var(--' + x[3] + '-s)"><b>' + esc(x[1]) + '</b><small>' + esc(x[2]) + '</small></button>'; }).join('') + '</div>' +
+        (d.track === 'mixed' ? '<div style="margin-top:10px">' + wpLbl('Cardio days') + '<div class="hm-wp-chips">' + [1, 2].map(function (n) { return wpChip('set:cardioDays:' + n, n + (n === 1 ? ' Cardio Day' : ' Cardio Days'), d.cardioDays === n, 'move'); }).join('') + '</div></div>' : '') + '</div>';
       if (pub) {
-        b += '<div>' + wpLbl('Days a week') + '<div class="hm-wp-chips">' + [2, 3, 4, 5, 6].map(function (n) { return wpChip('set:days:' + n, n + ' days', d.days === n, 'move'); }).join('') + '</div></div>';
-        if (gentle || hold) { var gm = arr(obj(info.gentle).mins); b += '<p class="hm-wp-lead sm">' + esc(obj(info.gentle).lead || 'Gentle: chair strength, supported balance, easy range of motion, breathing, and short walks.') + (gm.length ? ' About ' + Math.min.apply(null, gm) + ' to ' + Math.max.apply(null, gm) + ' minutes.' : '') + '</p>'; }
-        else {
-          b += '<div>' + wpLbl('Minutes') + '<div class="hm-wp-chips">' + [20, 40, 60].map(function (n) { return wpChip('set:mins:' + n, n + ' min', d.mins === n, 'move'); }).join('') + '</div></div>' +
-            '<div>' + wpLbl('Level') + '<div class="hm-wp-chips">' + [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive']].map(function (l) { return wpChip('set:level:' + l[0], l[1], d.level === l[0], 'move'); }).join('') + '</div>' + (obj(info.levelLines)[d.level] ? '<small class="hm-wp-small">' + esc(info.levelLines[d.level]) + '</small>' : '') + '</div>';
-          if (arr(info.gear).length) b += '<div>' + wpLbl('What you have') + '<div class="hm-wp-chips">' + info.gear.map(function (g) { return wpChip('gear:' + g.id, g.name, d.gear.indexOf(g.id) >= 0, 'trunk'); }).join('') + '</div><small class="hm-wp-small">' + (d.gear.length ? 'Every workout uses just what you check.' : esc(info.gearNone || 'Nothing checked: your body weight, a chair, a wall, and a mat.')) + '</small></div>';
+        b += '<div>' + wpLbl('Days a week') + '<div class="hm-wp-chips">' + [2, 3, 4, 5, 6].map(function (n) { return wpChip('set:days:' + n, n + ' days', d.days === n, 'move'); }).join('') + '</div>' +
+          '<small class="hm-wp-small">' + esc(wpDaysLine(d)) + '</small></div>';
+        if (work) {
+          b += '<div>' + wpLbl('Level') + '<div class="hm-wp-chips">' + [['root', 'Root'], ['rise', 'Rise'], ['thrive', 'Thrive'], ['gentle', 'Gentle']].map(function (l) { return wpChip('set:level:' + l[0], l[1], (hold ? 'gentle' : d.level) === l[0], 'move', hold && l[0] !== 'gentle'); }).join('') + '</div>' +
+            (gentle ? '<small class="hm-wp-small">' + esc(obj(info.gentle).lead || 'Gentle: chair strength, supported balance, easy range of motion, breathing, and short walks.') + (arr(obj(info.gentle).mins).length ? ' About ' + Math.min.apply(null, info.gentle.mins) + ' to ' + Math.max.apply(null, info.gentle.mins) + ' minutes.' : '') + '</small>' : obj(info.levelLines)[d.level] ? '<small class="hm-wp-small">' + esc(info.levelLines[d.level]) + '</small>' : '') + '</div>';
+          if (!gentle) {
+            b += '<div>' + wpLbl('Minutes') + '<div class="hm-wp-chips">' + [20, 40, 60].map(function (n) { return wpChip('set:mins:' + n, n + ' min', d.mins === n, 'move'); }).join('') + '</div></div>';
+            if (arr(info.gear).length) b += '<div>' + wpLbl('What you have') + '<div class="hm-wp-chips">' + info.gear.map(function (g) { return wpChip('gear:' + g.id, g.name, d.gear.indexOf(g.id) >= 0, 'trunk'); }).join('') + '</div><small class="hm-wp-small">' + (d.gear.length ? 'Every workout uses just what you check.' : esc(info.gearNone || 'Nothing checked: your body weight, a chair, a wall, and a mat.')) + '</small></div>';
+          }
         }
       } else b += '<p class="hm-wp-lead sm">Your Guide plan keeps its own days, minutes, and equipment.</p>';
-      b += '<div class="hm-wp-card"><div class="hm-wp-row"><div class="tx"><b>Add Flow on other days</b><small>Yoga style, tai chi style, and stretch sessions, about 20 minutes</small></div>' + wpChip('flow', d.flow ? 'On' : 'Off', d.flow, 'leaves') + '</div></div>';
-      var keep = info.done && info.prog && !gentle && !hold && d.track === (info.track || 'strength');
-      b += '<p class="hm-wp-lead sm">' + (gentle || hold ? 'The Gentle walk grows a little each week.' : keep ? 'You are in ' + esc(info.prog) + '. Your place in the program stays.' : 'Week 1 of 12 · Foundation. Build starts week 5 and Peak week 9.') + '</p>';
+      var keep = info.done && info.prog && !gentle && work && d.track === (info.track || 'strength');
+      if (work) b += '<p class="hm-wp-lead sm">' + (gentle ? 'The Gentle walk grows a little each week.' : keep ? 'You are in ' + esc(info.prog) + '. Your place in the program stays.' : 'Week 1 of 12 · Foundation. Build starts week 5 and Peak week 9.') + '</p>';
       f = wpBtn('next', 'Next');
     } else if (i === 3) {
       var mm = arr(info.medMins), meds = arr(info.meds);
@@ -2178,7 +2230,7 @@
       b = wpK('Start small') + wpH(big ? 'A full plan. Start lighter?' : 'A good size to start') +
         (big ? '<p class="hm-wp-lead">Your busiest day holds ' + m + ' items. Habits stick best a few at a time, so many people begin with the core of the plan and add the rest after two good weeks.</p><div class="hm-wp-nudge"><b>Start lighter:</b> movement, meditation, and dinner first. Spirit and practices join on week 3, and the plan reminds you.</div>'
           : '<p class="hm-wp-lead">Your busiest day holds ' + m + (m === 1 ? ' item' : ' items') + '. That is a steady, doable start.</p>') +
-        '<div class="hm-wp-card">' + wpRow('move', (wpHold(info) ? 'Gentle' : WP_TRACK[d.track]) + ', ' + d.days + ' days' + (d.track === 'gentle' || wpHold(info) ? '' : ', ' + d.mins + ' min'), d.track === 'gentle' || wpHold(info) ? 'Gentle path' + (d.flow ? ', Flow on other days' : '') : '12-week program' + (d.flow ? ', Flow on other days' : '')) +
+        '<div class="hm-wp-card">' + wpRow('move', d.moves.map(function (x) { return x === 'strength' ? 'Strength' : x === 'cardio' ? 'Cardio' : FLOW_NAME[WP_MSTYLE[x]]; }).join(', ') + ', ' + d.days + ' days', wpWork(d) ? (d.level === 'gentle' || wpHold(info) ? 'Gentle level' : '12-week program, ' + d.mins + ' min') + (d.flowStyles.length ? ', the rest on other days' : '') : 'About 20 minutes each, taking turns') +
         wpRow('bark', 'Meditation', d.med === 'later' ? 'Later' : WP_MED[d.med].charAt(0) + WP_MED[d.med].slice(1).toLowerCase() + ', ' + d.medTime) +
         wpRow('roots', 'Spirit', sps.length ? sps.join(', ') : 'Later') + wpRow('plate', 'Table', d.food === 'yes' ? 'Dinners for ' + d.household : 'Later') +
         wpRow('leaves', 'Practices', wpPicks().length ? wpPicks().map(function (p) { return p.split('|')[1]; }).join(', ') : 'From your growth plan, anytime') + '</div>';
@@ -2296,10 +2348,10 @@
     if (a === 'done') { closePlan(false, function () { goTo('today'); }); return; }
     var p = a.split(':'), k = p[0];
     if (k === 'lead') { if (d.lead !== p[1]) { d.lead = p[1]; d.prac = null; WP.sug = null; } paintPlan(true); return; }
-    if (k === 'set') { var v = /^\d+$/.test(p[2]) ? +p[2] : p[2]; if (p[1] === 'track' && wpHold(info) && v !== 'gentle') return; d[p[1]] = v; if (p[1] === 'track' || p[1] === 'med' || p[1] === 'days' || p[1] === 'cardioDays') WP.sug = null; paintPlan(true); return; }
+    if (k === 'set') { var v = /^\d+$/.test(p[2]) ? +p[2] : p[2]; if (p[1] === 'level' && wpHold(info) && v !== 'gentle') return; d[p[1]] = v; if (p[1] === 'level' || p[1] === 'med' || p[1] === 'days' || p[1] === 'cardioDays') WP.sug = null; paintPlan(true); return; }
     if (k === 'gear') { var gi = d.gear.indexOf(p[1]); if (gi >= 0) d.gear.splice(gi, 1); else d.gear.push(p[1]); paintPlan(true); return; }
-    if (k === 'flow') { d.flow = !d.flow; WP.sug = null; paintPlan(true); return; }
-    if (k === 'ck') { d.check[p[1]] = p[2] === '1'; if (wpHold(info)) d.track = 'gentle'; paintPlan(true); return; }
+    if (k === 'mv') { var mi = d.moves.indexOf(p[1]); if (mi >= 0 && d.moves.length === 1) { toast('Choose at least one.'); return; } if (mi >= 0) d.moves.splice(mi, 1); else d.moves.push(p[1]); d.moves = WP_MOVES.map(function (x) { return x[0]; }).filter(function (x) { return d.moves.indexOf(x) >= 0; }); wpSync(d); WP.sug = null; paintPlan(true); return; }
+    if (k === 'ck') { d.check[p[1]] = p[2] === '1'; if (wpHold(info)) d.level = 'gentle'; paintPlan(true); return; }
     if (k === 'cleared') { d.cleared = !d.cleared; paintPlan(true); return; }
     if (k === 'sp') { d.spirit[p[1]] = d.spirit[p[1]] ? 0 : 1; if (!d.spirit[p[1]]) delete d.spirit[p[1]]; paintPlan(true); return; }
     if (k === 'pr') { var pid = a.slice(3); if (d.prac[pid]) d.prac[pid] = 0; else if (wpPicks().length >= 3) { toast('Up to three to start. Every practice in your tree stays a tap away.'); return; } else d.prac[pid] = 1; paintPlan(true); return; }

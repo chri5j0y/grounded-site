@@ -14,7 +14,7 @@
 (function () {
   'use strict';
   if (window.GGFieldGuidePage) return;
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b888', LESSONS = '/shared/learn-lessons.js?v=b888', GUIDES = '/oak/guide-videos.js?v=b888';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b894', LESSONS = '/shared/learn-lessons.js?v=b894', GUIDES = '/oak/guide-videos.js?v=b888';
   var ACC = '#6E4A14';
   var SAMPLES = [
     { id: 'ok-s-listen', kind: 'lesson', track: 'oak-shelter', eyebrow: 'From Oak Learn', title: 'Listening Beneath the Words' },
