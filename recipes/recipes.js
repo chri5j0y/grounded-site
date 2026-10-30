@@ -292,13 +292,28 @@
       if (!f.length) return; var a = f[0], z = f[f.length - 1];
       if (e.shiftKey && document.activeElement === a) { e.preventDefault(); z.focus(); } else if (!e.shiftKey && document.activeElement === z) { e.preventDefault(); a.focus(); }
     }
+    /* BLD 895 (Chris: "food pics ride w guides too!"): the guide plays over a food painting, softened under a scrim in the page's
+       own colors. Dinners by night (install895.py in the workshop rewrites DINNER_ART with the paintings present); other dinners
+       show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
+    var DINNER_ART = ['fish', 'chili'];
+    var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
+    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate' };
+    function artName(r) {
+      var m = String(r.meal || 'dinner').toLowerCase();
+      if (m === 'dinner') { var t = String(r.name || ''), hit = DIN_RE.filter(function (x) { return x[1].test(t); })[0]; if (hit && DINNER_ART.indexOf(hit[0]) >= 0) return 'dinner-' + hit[0]; }
+      return MEAL_ART[m] || MEAL_ART.dinner;
+    }
+    function paint(r) {
+      var n = artName(r), W = '/shared/heroes/way/';
+      return '<div class="rg-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + n + '-sq.webp"><img src="' + W + n + '.webp" alt="" decoding="async"></picture></div>';
+    }
     function open(r, btn) {
       if (o) close(true);
       setKey();
       var vo = V(); if (vo) vo.unlock();
       o = { r: r, gi: 0, timers: [], rang: null, fin: false, btn: btn || null };
       el = document.createElement('div'); el.className = 'rg-ov'; el.setAttribute('role', 'dialog'); el.setAttribute('aria-modal', 'true'); el.setAttribute('aria-labelledby', 'rg-title');
-      el.innerHTML = '<div class="rg-in"></div>';
+      el.classList.add('rg-hasart'); el.innerHTML = paint(r) + '<div class="rg-in"></div>';
       el.addEventListener('click', function (e) { var b = e.target.closest('[data-rg]'); if (b && !b.disabled) act(b.getAttribute('data-rg'), b.getAttribute('data-v')); });
       document.body.appendChild(el); document.documentElement.classList.add('rg-lock');
       document.addEventListener('keydown', trap);

@@ -864,8 +864,31 @@ function vOv(){
       ${arr(x.yields).length ? `<p class="hj-sub"><b>Ready after:</b> ${arr(x.yields).map(esc).join(', ')}</p>` : ''}
       <button type="button" class="btn btn-gold hj-go" data-hja="cdone">${o.peek ? 'Ready for Tomorrow' : o.idea ? 'All Done' : o.k === 'cook' ? 'Dinner Is Done' : 'Prep Is Done'}</button></div>`;
   }
-  const sc = stCol(stState(o), HOUR());
-  return `<div class="hj-ov hj-st${o.inline ? ' hj-inl' : ''}" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'Tending')}"><div class="hj-ovin">${body}</div></div>`;
+  const sc = stCol(stState(o), HOUR()), art = ovArt(o);
+  return `<div class="hj-ov hj-st${o.inline ? ' hj-inl' : ''}${art ? ' hj-hasart' : ''}" data-hjst="${esc(stState(o))}" style="--st:${esc(sc.accent)};${sc.bg ? `--stbg:${esc(sc.bg)};` : ''}${sc.fg ? `--stfg:${esc(sc.fg)};` : ''}" role="dialog" aria-modal="true" aria-label="${esc(o.title || 'Tending')}">${art}<div class="hj-ovin">${body}</div></div>`;
+}
+// BLD 895 (Chris, October 30, 2026: "try to bring the image into the video as background"; "food pics ride w guides too!"):
+// every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
+// The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
+// crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
+const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate'};
+function ovArtName(o){
+  if (!o) return '';
+  if (o.k === 'quiet') return 'quiet-morning';
+  if (o.med || o.k === 'med'){ const m = MED(), j = m ? arr(m.sessions).findIndex(x => x.id === o.s) : -1; return MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : 'quiet-meditation'; }
+  if (o.prac) return flowArtName(arr((PR() || {}).sessions).find(z => z.id === o.s)).replace(/-sq$/, '');
+  if (o.k === 'work'){ const p = String(o.key || '').split(':'), lvl = p[0] === 'wl' ? p[1] : '';
+    const ses = lvl ? (((levelSets().find(L => L.id === lvl) || {}).sessions) || {})[o.s] : sesById(o.s); return moveArtName(o.s, ses, lvl).replace(/-sq$/, ''); }
+  if (o.k === 'prep') return /^prep:batch:/.test(o.key || '') ? ART_KITCHEN.batch : ART_KITCHEN.prep;
+  if (o.k === 'cook'){ if (o.peek) return ART_KITCHEN.head; const k = String(o.key || ''), x = o.data || {}, meal = /^idea:/.test(k) && !/^idea:recipe:/.test(k) ? k.split(':')[1] : String(x.meal || 'dinner').toLowerCase();
+    if (/^lunch/.test(meal)) return ART_KITCHEN.lunch; if (/^breakfast/.test(meal)) return ART_KITCHEN.breakfast; if (/^snack/.test(meal)) return ART_KITCHEN.snack;
+    return (dinnerArtName(x) || '').replace(/-sq$/, '') || ART_KITCHEN.dinner; }
+  return '';
+}
+function ovArt(o){
+  const n = ovArtName(o); if (!n) return ''; if (!o.artT) o.artT = Date.now();
+  const med = /^med-m\d$/.test(n), wide = WAY(med ? n + '-lg' : n), sq = WAY(med ? n : n + '-sq'), d = -((Date.now() - o.artT) / 1000).toFixed(1);
+  return `<div class="hj-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="${esc(sq)}"><img src="${esc(wide)}" alt="" decoding="async" style="animation-delay:${d}s"></picture></div>`;
 }
 function openKey(key){
   const [k, a, b] = key.split(':');
@@ -3088,10 +3111,35 @@ function houseCard(){
 const WAY = n => asset(/\//.test(n) ? 'shared/' + n : 'shared/heroes/way/' + n + '.webp');
 const ART_MOVE = ['tend-move', 'home-morning-narrow', 'tend-spirit', 'welcome-wide', 'tend-people', 'home-evening-narrow', 'tend-mind'];
 const ART_QUIET = ['tend-mind', 'tend-spirit', 'cards/meditation.webp', 'home-morning-narrow', 'home-evening-narrow', 'welcome-wide', 'tend-people'];
-const ITEM_ART = {quiet: 'home-morning-narrow', meditation: 'tend-mind', workout: 'tend-move', practice: 'home-morning-narrow', mark: 'tend-people', cook: 'tend-body', meal: 'tend-fruit',
-  headstart: 'home-evening-narrow', shop: 'recipes-narrow', prep: 'tend-people', supplements: 'tend-body', setup: 'welcome-wide'};
-const moveArt = id => WAY(ART_MOVE[Math.max(0, 'ABCDEFGH'.indexOf(String(id || 'A').slice(-1).toUpperCase())) % ART_MOVE.length]);
-const artImg = (i, set) => { const L = set || ART_MOVE; return `<img src="${esc(WAY(L[i % L.length]))}" alt="" loading="lazy" decoding="async" width="600" height="600">`; };
+// BLD 895 (Chris's Grok paintings, October 30, 2026): each card shows its own painting, square crops (-sq) for the small tiles.
+const ITEM_ART = {quiet: 'quiet-morning-sq', meditation: 'quiet-meditation-sq', workout: 'move-strength-sq', practice: 'move-flow-sq', mark: 'progress-sq', cook: 'tend-body', meal: 'meal-lunch-sq',
+  headstart: 'kitchen-headstart-sq', shop: 'shop-sq', prep: 'prep-together-sq', batch: 'weekly-batch-sq', supplements: 'supplements-sq', setup: 'tending-sq'};
+// BLD 895: every workout by its kind: Strength by phase (Foundation, Build, Peak), Cardio, Walk, Gentle, and each Flow style.
+const MOVE_ART = {foundation: 'move-strength-sq', build: 'move-build-sq', peak: 'move-peak-sq', cardio: 'move-cardio-sq', walk: 'move-walk-sq', gentle: 'move-gentle-sq',
+  daily: 'move-flow-sq', yoga: 'move-yoga-sq', taichi: 'move-balance-sq', stretch: 'move-stretch-sq'};
+// The meditation tiles Chris has made so far (m1 Monday to m7 Sunday, by position); install895.py rewrites this line. The rest keep ART_QUIET.
+const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
+// Dinner nights by recipe type (fish, chili and soup, lentil and bean, stir fry and bowl); install895.py rewrites this line with the
+// paintings present. A dinner with no night painting yet keeps the rotation (home.js FOOD_ROT, ITEM_ART.cook).
+const DINNER_ART = ['fish', 'chili'];
+const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
+const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([, re]) => re.test(t)); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
+function moveKind(id, ses, lvl){
+  id = String(id || ''); const t = String((ses && ses.title) || '');
+  if ((lvl || (PUB() ? H().set.level || 'root' : '')) === 'gentle') return /walk/i.test(t) ? 'walk' : /balance/i.test(t) ? 'taichi' : 'gentle';
+  if ((ses && (ses.track === 'cardio' || ses.kind === 'cardio')) || /^R\d+$/i.test(id)) return 'cardio';
+  if (/walk/i.test(t)) return 'walk';
+  if (!progOn()) return 'foundation';
+  for (const ph of PH_IDS) if (trackIds('strength', ph).includes(id)) return ph;
+  return STR_IDS.build.includes(id) ? 'build' : STR_IDS.peak.includes(id) ? 'peak' : 'foundation';
+}
+const moveArtName = (id, ses, lvl) => MOVE_ART[moveKind(id, ses, lvl)] || ITEM_ART.workout;
+const moveArt = (id, ses, lvl) => { id = String(id || '').split(':').pop(); return WAY(moveArtName(id, ses || sesById(id), lvl)); };
+const flowArtName = x => MOVE_ART[(x && x.style) || 'daily'] || ITEM_ART.practice;
+const medArtName = j => j >= 0 && MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : ART_QUIET[Math.max(0, j) % ART_QUIET.length];
+const medArtFor = d => { const m = MED(), x = m && medFor(d), j = x ? arr(m.sessions).indexOf(x) : -1; return MED_ART.includes('m' + (j + 1)) ? 'med-m' + (j + 1) : ITEM_ART.meditation; };
+// set: a rotation (an array) or one painting's name (a string).
+const artImg = (i, set) => { const L = set || ART_MOVE, n = typeof L === 'string' ? L : L[i % L.length]; return `<img src="${esc(WAY(n))}" alt="" loading="lazy" decoding="async" width="600" height="600">`; };
 const artCard = (i, key, kick, title, sub, cls, set) => `<button type="button" class="tn-card tn-lift tn-kc tn-art ${cls}" data-hja="go" data-hjv="${esc(key)}"><span class="ill">${artImg(i, set)}</span><span class="tx"><span class="tn-time">${esc(kick)}</span><span class="h3">${esc(title)}</span>${sub ? `<span class="tn-meta">${esc(sub)}</span>` : ''}</span></button>`;
 let LS = null;
 function levelSets(){
@@ -3118,15 +3166,15 @@ function buildLevelWork(lvl, id){
 function vWorkouts(){
   const h = H(), n = Math.max(1, weekNo(new Date())), sets = levelSets(), pr = arr((PR() || {}).sessions); let i = 0;
   const lv = sets.map(L => { const ses = Object.entries(L.sessions || {}); if (!ses.length) return '';
-    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move')).join('')}</div>`; }).join('');
-  const prac = flowShelf(pr, x => artCard(i++, 'pracid:' + x.id, flowKick(x), x.title, x.focus || '', 'a-move'));
+    return `<h3 class="tn-h3">${esc(L.name)}${L.mine && sets.length > 1 ? ' <small class="tn-mine">My Path</small>' : ''}</h3><div class="tn-kgrid">${ses.map(([id, x]) => artCard(i++, L.mine ? 'work:' + id : 'wl:' + L.id + ':' + id, (progOn() && L.id !== 'gentle' && /^([A-L]|R\d+)$/.test(id) ? sesKick(id) + ' · ' : x.day ? x.day + ' · ' : '') + (x.mins ? x.mins + ' min' : 'Session ' + id), x.title || 'Session ' + id, L.mine && lightOn(new Date()) ? 'A lighter week: ease off a little.' : (x.lead || ''), 'a-move', moveArtName(id, x, L.mine ? '' : L.id))).join('')}</div>`; }).join('');
+  const prac = flowShelf(pr, x => artCard(i++, 'pracid:' + x.id, flowKick(x), x.title, x.focus || '', 'a-move', flowArtName(x)));
   const recent = h.wlog.length ? `<div class="hj-blk">${kick('Recent Workouts')}${h.wlog.slice().reverse().slice(0, 6).map(w => `<div class="hj-entry"><b>${nice(w.date)}</b> · ${esc(w.title || 'Session ' + w.s)}${w.mins ? ` <small>${esc(w.mins)} min</small>` : ''}${w.note ? `<p>${esc(w.note)}</p>` : ''}</div>`).join('')}</div>` : '';
   return `<div class="tn-sec a-move">${PUB() ? pubMoveHead() : progCard()}${lv}${prac}${recent}</div>`;
 }
 function vQuietShelf(){
   const t = TD(), h = H(), c = (h.days[today()] || {}).checks || {}, md = arr((MED() || {}).sessions), n = Math.max(1, weekNo(new Date())), qm = +h.set.quietMins || t.spirit.minutes[0]; let i = 0;
   return `<div class="tn-sec p-bark">${planCard({cls: 'p-roots', img: WAY(ITEM_ART.quiet), done: !!c.quiet, scene: 'dawn', hour: 6.3, time: 'Morning · ' + qm + ' min', title: t.spirit.h, sub: t.spirit.invite, btn: 'Quiet Timer', ba: 'quiet', bv: '', bi: 'clock', ck: tck('check', 'quiet', c.quiet, 'Done')})}
-    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map(x => artCard(i++, 'medid:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', ART_QUIET)).join('')}</div>` : ''}</div>`;
+    ${md.length ? `<h3 class="tn-h3">Meditation</h3><div class="tn-kgrid">${md.map((x, j) => artCard(i++, 'medid:' + x.id, (x.day ? x.day + ' · ' : '') + medMins(n) + ' min', x.title, x.focus || '', 'p-bark', medArtName(j))).join('')}</div>` : ''}</div>`;
 }
 // ---------- the guides, built without opening ----------
 function ovFor(key){
@@ -3176,7 +3224,9 @@ function apiToday(date){
   }
   if (U('supps')){ const sp = supps(); ['morning', 'evening'].forEach(w => { const L = sp.filter(s => (s.when === 'evening') === (w === 'evening')); if (!L.length) return;
     push({key: 'supp:' + w, when: w === 'morning' ? 'This morning' : 'This evening', hour: w === 'morning' ? 6.2 : 20.5, title: (w === 'morning' ? 'Morning' : 'Evening') + ' Supplements', sub: L.map(s => s.name).join(', ') + '.', btn: 'All Taken', tint: TINT.meals, done: L.every(s => c[suppId(s)]), kind: 'supplements'}); }); }
-  out.forEach(x => { x.image = x.kind === 'workout' ? moveArt(x.key) : WAY(ITEM_ART[x.kind] || 'tend-body'); });
+  out.forEach(x => { x.image = x.kind === 'workout' ? moveArt(x.key) : x.kind === 'practice' ? WAY(flowArtName(practiceFor(d))) : x.kind === 'meditation' ? WAY(medArtFor(d))
+    : x.kind === 'prep' && /^prep:batch:/.test(x.key) ? WAY(ITEM_ART.batch) : x.kind === 'cook' && dinnerArtName(dinnerFor(d)) ? WAY(dinnerArtName(dinnerFor(d)))
+    : WAY(ITEM_ART[x.kind] || 'tend-body'); });
   return out.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
 }
 function apiToggle(key){
@@ -3208,16 +3258,16 @@ function apiWeek(n){
     const ses = U('move') && workOn() && wn >= 1 ? sesFor(d) : null, pr = U('move') && flowDaily() && !ses && !flowRest(d, false) ? practiceFor(d) : null, mf = U('mind') && MED() && H().set.medFreq && medOn(d) ? medFor(d) : null;
     const dk = dn ? 'cook:' + dn.wk + ':' + dn.id : null, mk = ses ? 'work:' + ses.id : pr ? 'pracid:' + pr.id : null;
     return {day: DOW[d.getDay()], dayName: DOWL[d.getDay()], date: ymd(d), today: ymd(d) === ymd(t0),
-      dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(ITEM_ART.cook)} : null,
-      move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id), kind: wkKind(ses.id, ses), id: ses.id} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(ITEM_ART.practice), kind: 'flow', id: pr.id, style: pr.style || ''} : null,
+      dinner: dn ? {title: dn.name, key: dk, mins: dn.mins || null, leftover: !!dn.leftover, done: isDone(d, dk), image: WAY(dinnerArtName(dn) || ITEM_ART.cook), night: dinnerArtName(dn) ? WAY(dinnerArtName(dn)) : null} : null,
+      move: ses ? {title: sesLabel(ses.id, ses), key: mk, mins: ses.mins || null, done: isDone(d, mk), image: moveArt(ses.id, ses), kind: wkKind(ses.id, ses), id: ses.id} : pr ? {title: pr.title || 'Flow', key: mk, mins: pr.mins || null, done: isDone(d, 'prac'), image: WAY(flowArtName(pr)), kind: 'flow', id: pr.id, style: pr.style || ''} : null,
       // BLD 893: the meditation on its days, once a person has chosen how often (My Grounded Way Plan).
-      med: mf ? {title: mf.title || 'Meditation', key: 'medid:' + mf.id, mins: medMins(wn), done: isDone(d, 'med'), kind: 'meditation', id: mf.id, at: medAt().kick || 'Morning'} : null}; });
+      med: mf ? {title: mf.title || 'Meditation', key: 'medid:' + mf.id, mins: medMins(wn), done: isDone(d, 'med'), kind: 'meditation', image: WAY(medArtFor(d)), id: mf.id, at: medAt().kick || 'Morning'} : null}; });
   const sp = prepFor('sunday', fw), bt = prepFor('batch', fw);
   // BLD 894: the Week tab's Shopping List card reads the real list ("Week B · 42 items").
   const SL = U('food') ? shopList(fw) : null, sItems = SL ? arr(SL.items) : [];
   return {shopWeek: letter(fw), shopCount: sItems.length, shopLeft: sItems.filter(x => !x.done).length, n: Math.max(1, N), label: 'Week ' + Math.max(1, N), prog: U('move') && workOn() ? progLabel(mon) : '', start: ymd(mon), end: ymd(addD(mon, 6)), starts: N < 1 ? ymd(startMon()) : null,
     food: U('food') ? 'Food Week ' + letter(fw) : null, shopKey: U('food') && shopList(fw) ? 'shop:' + fw : null, shopLabel: 'Shop for Week ' + letter(fw),
-    shopImage: WAY(ITEM_ART.shop), prepImage: sp ? WAY(ITEM_ART.prep) : null,
+    shopImage: WAY('shop-wide'), prepImage: sp ? WAY('prep-together') : null, bulkImage: bt ? WAY(ITEM_ART.batch) : null,
     prepKey: U('food') && sp ? 'prep:sunday:' + fw : null, prepLabel: sp ? 'Sunday Together Prep' : null, prepSub: sp ? 'About ' + (sp.mins || 90) + ' minutes, step by step with timers.' : null,
     bulkKey: U('food') && bt ? 'prep:batch:' + fw : null, bulkLabel: bt ? bt.title || 'Weekly Batch' : null, bulkSub: bt ? batchSub(bt) : null, days};
 }
@@ -3941,6 +3991,18 @@ const CSS = `
 #hj-ov0.tn.tn-ovl{padding:0;margin:0;height:0;}
 .tn-bare .tn-sec{margin-top:0;}
 .hj-ov.hj-st.hj-inl{position:relative;inset:auto;z-index:auto;overflow:visible;border-radius:20px;padding:0 16px;}
+/* BLD 895: the player's painting, behind everything, under a scrim in the page's own background color (light or dark). */
+.hj-ov.hj-hasart{background:var(--bg);isolation:isolate;}
+.hj-paint{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg);}
+.hj-ov.hj-inl .hj-paint{position:absolute;border-radius:20px;}
+.hj-paint picture,.hj-paint img{display:block;width:100%;height:100%;}
+.hj-paint img{object-fit:cover;filter:blur(3px) saturate(1.05);transform:scale(1.06);}
+.hj-paint::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 42%,transparent) 0%,color-mix(in srgb,var(--bg) 58%,transparent) 38%,color-mix(in srgb,var(--bg) 80%,transparent) 100%);}
+@media (prefers-reduced-motion: no-preference){ .hj-paint img{animation:hjkb 48s ease-in-out infinite alternate;} }
+@keyframes hjkb{from{transform:scale(1.06) translate(0,0);}to{transform:scale(1.14) translate(-1.5%,-1%);}}
+.hj-hasart .hj-ovtop{padding:8px 12px;border-radius:16px;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.hj-hasart .hj-ovb{margin-top:12px;padding:16px 16px 18px;border-radius:22px;background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.12);}
+.hj-hasart .hj-stagebox{box-shadow:0 8px 28px rgba(0,0,0,.18);border-radius:22px;}
 .tn-kc.tn-art .ill img,.tn-scene>img{width:100%;height:100%;object-fit:cover;display:block;}
 .tn-mine{font-family:'Barlow Condensed',sans-serif;font-weight:700;font-size:13px;letter-spacing:1.2px;text-transform:uppercase;color:var(--c);margin-left:8px;}
 /* BLD 892: the program line, What's New, the restart offer, the equipment checklist, and the Flow shelf */

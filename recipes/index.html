@@ -106,6 +106,17 @@
 html.rg-lock,html.rg-lock body{overflow:hidden;}
 .rg-ov{position:fixed;inset:0;z-index:2000;overflow:auto;-webkit-overflow-scrolling:touch;background:var(--bg);background:color-mix(in srgb,var(--rg-ac,#C9772B) 9%,var(--bg));color:var(--ink);padding:env(safe-area-inset-top,0px) max(16px,env(safe-area-inset-right,0px)) env(safe-area-inset-bottom,0px) max(16px,env(safe-area-inset-left,0px));}
 .rg-in{max-width:660px;margin:0 auto;padding:14px 0 40px;}
+/* BLD 895: the guide's food painting, behind everything, under a scrim in the page's own background color (light or dark). */
+.rg-ov.rg-hasart{background:var(--bg);isolation:isolate;}
+.rg-paint{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg);}
+.rg-paint picture,.rg-paint img{display:block;width:100%;height:100%;}
+.rg-paint img{object-fit:cover;filter:blur(3px) saturate(1.05);transform:scale(1.06);}
+.rg-paint::after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,color-mix(in srgb,var(--bg) 42%,transparent) 0%,color-mix(in srgb,var(--bg) 58%,transparent) 38%,color-mix(in srgb,var(--bg) 80%,transparent) 100%);}
+@media (prefers-reduced-motion: no-preference){ .rg-paint img{animation:rgkb 48s ease-in-out infinite alternate;} }
+@keyframes rgkb{from{transform:scale(1.06) translate(0,0);}to{transform:scale(1.14) translate(-1.5%,-1%);}}
+.rg-hasart .rg-top{padding:8px 12px;border-radius:16px;background:color-mix(in srgb,var(--bg) 78%,transparent);-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);}
+.rg-hasart .rg-body{margin-top:12px;padding:16px 16px 18px;border-radius:22px;background:color-mix(in srgb,var(--bg) 84%,transparent);-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px);box-shadow:0 6px 24px rgba(0,0,0,.12);}
+.rg-hasart .rg-stage{box-shadow:0 8px 28px rgba(0,0,0,.18);}
 .rg-top{display:flex;justify-content:space-between;align-items:center;gap:12px;}
 .rg-tt{min-width:0;}
 .rg-tt b{display:block;font-size:17px;line-height:1.3;overflow-wrap:anywhere;}
@@ -216,11 +227,11 @@ html.rg-lock,html.rg-lock body{overflow:hidden;}
   <p class="copyright">&copy; <span class="year"></span> Grow With Grounded LLC. All rights reserved. Grow With Grounded&trade; is a trademark of Grow With Grounded LLC.</p>
 </div></footer>
 <script src="/site.js?v=b779n"></script>
-<script src="/nav.js?v=b889" defer></script>
-<script src="/shared/tending-public.js?v=b894"></script>
+<script src="/nav.js?v=b895" defer></script>
+<script src="/shared/tending-public.js?v=b895"></script>
 <script src="/field-guide/stage.js?v=b877" defer></script>
 <script src="/field-guide/coach.js?v=b879" defer></script>
 <script src="/shared/gg-scale.js?v=b880"></script>
-<script src="/recipes/recipes.js?v=b880"></script>
+<script src="/recipes/recipes.js?v=b895"></script>
 </body>
 </html>
