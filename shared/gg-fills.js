@@ -19,6 +19,10 @@
    share the ids m1 to m7 and p1 to p7). only: the session must be one of ids. style: a Flow
    session with a style fills only when its style matches (or it is in ids); a Flow session with
    no style fills any Flow practice.
+   BLD 894 (Chris, October 29, 2026: "i want these 6 categories exactly"): Strength fills Movement and Strength Training,
+   Cardio fills Walk or Jog and Walk Your Way, Flow (style daily, p1 to p7) fills Breathe, Yoga (style yoga, f1 to f6)
+   fills Yoga, Balance (style taichi, f7 to f10) fills Tai Chi, and Stretch (style stretch, f11 to f14) fills Stretch
+   Break, Chair Stretch, and In-Bed Movement. The Guide and public libraries share the ids f1 to f14.
    Kids' trees (Maple, Aspen) and Willow keep their own cards: their practices are written for a
    child with a grown-up or for the bedside, and none share these names.
    Stay their own cards on purpose: Breath Prayer, Gratitude Letter, Kind Voice Letter, Awe Walk,
@@ -41,12 +45,12 @@
     'leaves|Strength Training': { kind: 'strength', ids: [] },
     'leaves|Walk or Jog': { kind: 'cardio', ids: [] },
     'leaves|Walk Your Way': { kind: 'cardio', ids: [] },
-    'leaves|Yoga': { kind: 'flow', style: 'yoga', ids: ['Morning Flow'] },
-    'leaves|Tai Chi': { kind: 'flow', style: 'taichi', ids: ['Slow Balance 1'] },
-    'leaves|Stretch Break': { kind: 'flow', style: 'stretch', ids: ['Desk and Neck'] },
-    'leaves|Chair Stretch': { kind: 'flow', style: 'stretch', ids: ['Chair Flow', 'Desk and Neck'] },
-    'leaves|In-Bed Movement': { kind: 'flow', style: 'stretch', ids: ['p7', 'Evening Unwind', 'Full Body Stretch'] },
-    'leaves|Breathe': { kind: 'flow', ids: ['p6', 'Breath and Focus'] }
+    'leaves|Yoga': { kind: 'flow', style: 'yoga', ids: ['f1', 'Sunrise'] },
+    'leaves|Tai Chi': { kind: 'flow', style: 'taichi', ids: ['f7', 'Soft Stance'] },
+    'leaves|Stretch Break': { kind: 'flow', style: 'stretch', ids: ['f12', 'Desk and Neck'] },
+    'leaves|Chair Stretch': { kind: 'flow', style: 'stretch', ids: ['f5', 'Stay Seated', 'f12', 'Desk and Neck'] },
+    'leaves|In-Bed Movement': { kind: 'flow', style: 'stretch', ids: ['p7', 'Evening Unwind', 'Renew for the Week', 'f14', 'Head to Toe'] },
+    'leaves|Breathe': { kind: 'flow', style: 'daily', ids: ['p6', 'Breath and Focus', 'Bright and Awake'] }
   };
   var TREE = { maple: null, aspen: null, willow: null };
   var KINDS = { meditation: 1, flow: 1, strength: 1, cardio: 1 };
@@ -94,7 +98,7 @@
     return best;
   }
   function fillsOf(s, tree) { return Object.keys(MAP).filter(function (pid) { return fills(pid, s, tree); }); }
-  var api = { MAP: MAP, TREE: TREE, fillsFor: fillsFor, fills: fills, match: match, pick: pick, fillsOf: fillsOf, v: 'b892' };
+  var api = { MAP: MAP, TREE: TREE, fillsFor: fillsFor, fills: fills, match: match, pick: pick, fillsOf: fillsOf, v: 'b894' };
   if (root && !root.GGFills) root.GGFills = api;
   if (typeof module === 'object' && module.exports) module.exports = api;
 })(typeof window !== 'undefined' ? window : null);
