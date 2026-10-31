@@ -854,7 +854,7 @@ function vOv(){
       else { body = `${top(o.title, st.part + ' · ' + (o.i + 1) + ' of ' + o.steps.length, pct)}${wrap(`<div class="hj-kick hj-stk">${o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`}</div><h2 class="hj-exn">${esc(o.swap ? (st.swap || st.name) : st.name)}</h2>${dots(o.set, st.sets)}
           <div class="hj-reps">${esc(repLine(st))}</div>
           ${st.side ? `<p class="hj-cue">Left side first, then the right.</p>` : st.alt ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}
-          ${o.swap ? `<p class="hj-how">Swap for ${esc(st.name)}. Same sets and reps.</p>` : `${howBlock(st)}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${modsBlock(st)}`}
+          ${o.swap ? `<p class="hj-how">Swap for ${esc(st.name)}. Same sets and reps.</p>` : `${formLine(st)}${howBlock(st)}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${modsBlock(st)}`}
           ${st.kind === 'reps' ? `${weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}<label class="hj-fld hj-lb"><span>Weight (lb), saved for next time</span><input id="hj-lb" inputmode="decimal" value="${esc(o.lb != null ? o.lb : (lb || ''))}" placeholder="Bodyweight"></label>` : ''}
           <div class="hj-ovbtns">${st.swap ? `<button type="button" class="btn btn-line" data-hja="swap">${o.swap ? 'Back to the Plan Move' : 'Joint-Friendly Swap'}</button>` : ''}<button type="button" class="btn btn-gold" data-hja="setdone">${o.set < st.sets ? 'Set Done' : 'Done, Next Move'}</button></div>
           <button type="button" class="linkbtn hj-skip" data-hja="next">Skip this move</button>`)}`; }
@@ -1256,7 +1256,9 @@ const lg = (o, e) => { (o.log = o.log || []).push(Object.assign({i: o.i, set: o.
 // A timer that honors Pause, Skip, and +15 seconds; ticks the last 3 seconds; says Ten seconds on longer rests; drains the ring.
 // kind: '' for work, 'rest' between sets, 'between' between moves, 'switch' between sides.
 async function runTimer(o, ms, kind, half, onTick){
-  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99; rerender(true);
+  o.end = Date.now() + ms; o.tot = ms; o.run = true; o.rest = kind === 'rest'; o.sw = kind === 'switch'; let said10 = false, saidHalf = false, last = 99;
+  // BLD 897: a hold done on each side shows the Left Side chip (and the figure on its left side) until the half, then the right.
+  if (half) o.side = 'L'; rerender(true);
   while (!o.dead && !o.skip){
     if (o.paused){ const left = o.end - Date.now(); await hold(o); o.end = Date.now() + left; continue; }
     const left = o.end - Date.now(); if (left <= 0) break;
@@ -1282,11 +1284,11 @@ async function doSet(o, st){
     if (o.side) await speak(o, o.side === 'L' ? LN.left : LN.right);
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
-    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); if (lead && st.form) speak(o, st.form); await runTimer(o, workSecs(st) * 1000, ''); }
+    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); if (lead && st.form) speak(o, st.form); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
     else if (o.count && repN(st)){ await speak(o, LN.go); if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); }
       // BLD 898: the breath line comes before One, so every count lands on its beat.
       if (lead && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
-      o.rep = 0; o.ring = lead; await beats(o, repN(st), tempoOf(st));
+      o.rep = 0; o.ring = true; await beats(o, repN(st), tempoOf(st));
       o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
     else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
     else { await speak(o, LN.go); if (lead && st.form) await speak(o, st.form); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
@@ -1298,7 +1300,7 @@ async function doSet(o, st){
 // drains and the last three seconds tick. Set Done ends it early; Pause holds it.
 async function hfSet(o, st, lastSide, lead){
   const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
-  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = !!lead;
+  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = true;
   if (lead && (st.form || st.breathLine)) (async () => { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && o.hf && !o.dead){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } })();
   await runTimer(o, secs * 1000, '', false, left => { const s2 = left / 1000;
     if (o.ring && secs - s2 >= RING_REPS * t){ o.ring = false; rerender(true); }
@@ -1308,9 +1310,11 @@ async function hfSet(o, st, lastSide, lead){
 }
 // BLD 896 (note 6): the breath ring on the first three reps of set 1, timed from the tempo: breathe in on the lowering (about
 // six tenths of the rep), out on the push. A quick move (under 2 seconds a rep) takes one breath over two reps.
-const RING_REPS = 3;
+// BLD 897 (breath first, Grounded's niche): the tree breath guide shows on every rep of every set, so RING_REPS no longer ends it.
+const RING_REPS = Infinity;
 function repBreath(st){ const t = tempoOf(st), per = t < 2 ? t * 2 : t; if (per <= 2) return [1, 1]; const i = Math.round(per * 6) / 10; return [i, Math.round((per - i) * 10) / 10]; }
-const repShow = r => { const els = document.querySelectorAll('[data-hjrep]'); if (els.length) els.forEach(e => e.textContent = r); else rerender(true); };
+const repShow = r => { const els = document.querySelectorAll('[data-hjrep]'); if (!els.length) return rerender(true); els.forEach(e => e.textContent = r);
+  const g = document.querySelector('.hj-stagebox [data-ggstage]'); if (g && window.GGStage && GGStage.update){ try { GGStage.update(g, {rep: r}); } catch(e){} } };
 // BLD 896 (note 9): the figure starts its loop again on each counted rep, so it moves with Ava's count. GGMoves.restart (FIG) when
 // the page has it; else the figure's own clock goes back to the start (an alternating move every other rep, its loop is two reps).
 function figRep(st, r){ const M = window.GGMoves, two = !!(st && (st.alt || st.walt));
@@ -1354,7 +1358,7 @@ async function beats(o, n, t, keep){
 }
 // A counted warm-up or cooldown item: Go, its form line, then each rep counted at its tempo; a per side or two way item turns at the half.
 async function wuCount(o, st){
-  const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = !!st.wbreath;
+  const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = true; if (st.wturn === 'side') o.side = 'L';
   for (let k = 0; k < turns && !o.dead && !o.skip; k++){
     if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
     else { await speak(o, LN.go); if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } }
@@ -1457,6 +1461,33 @@ function stagePanel(state, op){ op = Object.assign({hour: HOUR()}, op || {}); le
 function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'); if (!el) return;
   if (window.GGStage && GGStage.update){ try { GGStage.update(el, {pct, secs}); } catch(e){} return; }
   const r = el.querySelector('.hj-ring'); if (r){ r.style.setProperty('--p', pct.toFixed(3)); const b = r.querySelector('b'); if (b && secs != null) b.textContent = secs; } }
+// ---------- BLD 897: the 3D stage (shared/fig3d/gg-fig3d.js) ----------
+// Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
+// on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
+// the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b897';
+function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
+function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
+  const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
+  return {art, kind: 'move', category: cat, workout: o.s || '', name: (o.swap && st.swap) || st.name || '', side: o.stage === 'start' ? '' : o.side || ''}; }
+function fig3d(){
+  const o = S.ov, G = window.GGFig3D;
+  if (!o || !document.querySelector('.hj-stagebox svg.gg-move')){ if (G) G.detach(); return; }
+  if (G){ G.profileBody = fig3dBody; G.sync(fig3dCtx(o)); return; }
+  if (fig3d.p || /[?&]fig=svg\b/.test(location.search)) return;
+  try { if (localStorage.getItem('gg-fig3d') === 'off') return; } catch(e){}
+  fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true; el.onload = () => { res(); if (window.GGFig3D){ fig3d(); rerenderSoon(); } }; el.onerror = res; document.head.appendChild(el); });
+}
+// The figure chips (3D or simple, the man or the woman) appear once the 3D stage knows this device can draw it.
+// They join the open player's chips in place (no redraw, so the painting and the figure carry on undisturbed).
+function rerenderSoon(){ const tg = document.querySelector('.hj-ov .hj-tg'); if (!S.ov || !tg || tg.querySelector('[data-hja="tfig3d"]')) return; const h = figChips(); if (h) tg.insertAdjacentHTML('beforeend', h); }
+function figChips(){
+  const G = window.GGFig3D; if (!G || !(G.able ? G.able() : G.ok())) return '';
+  const off = !G.ok();
+  const b = G.body();
+  return `<button type="button" class="chip${off ? '' : ' on'}" aria-pressed="${!off}" data-hja="tfig3d">${off ? 'Simple Figure' : '3D Figure'}</button>` +
+    (off ? '' : `<button type="button" class="chip on" aria-pressed="true" data-hja="tfigbody">${b === 'woman' ? 'Figure: Woman' : 'Figure: Man'}</button>`);
+}
 // Which state the open player is in.
 function stState(o){
   if (!o) return 'work';
@@ -1494,11 +1525,13 @@ function toggles(o){
     <button type="button" class="chip${on ? ' on' : ''}" aria-pressed="${on}" data-hja="tvoice">${on ? 'Voice On' : 'Voice Off'}</button>
     <button type="button" class="chip${mu ? ' on' : ''}" aria-pressed="${mu}" data-hja="tmusic">${mu ? 'Music On' : 'Music Off'}</button>
     <button type="button" class="chip${ch ? ' on' : ''}" aria-pressed="${ch}" data-hja="tchime">${ch ? 'Beeps On' : 'Beeps Off'}</button>
-    ${o && !o.prac ? `<button type="button" class="chip${o.hands !== false ? ' on' : ''}" aria-pressed="${o.hands !== false}" data-hja="thands">${o.hands !== false ? 'Auto Flow On' : 'Auto Flow Off'}</button><button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : o.hands !== false ? 'Quiet Timed Reps' : 'I Tap Done'}</button>` : ''}</div>`;
+    ${o && !o.prac ? `<button type="button" class="chip${o.hands !== false ? ' on' : ''}" aria-pressed="${o.hands !== false}" data-hja="thands">${o.hands !== false ? 'Auto Flow On' : 'Auto Flow Off'}</button><button type="button" class="chip${o.count ? ' on' : ''}" aria-pressed="${!!o.count}" data-hja="tcount">${o.count ? 'Voice Counts Reps' : o.hands !== false ? 'Quiet Timed Reps' : 'I Tap Done'}</button>` : ''}${o ? figChips() : ''}</div>`;
 }
 // BLD 896 (Chris's Friday note 4): the Move Well card on a workout's start screen, shown only (folded until opened): the library's
 // principles at workouts.moveWell (the Guide library) or program.moveWell (public Tending). A list of lines, or {lead, items},
 // each item a line or {name, line}.
+// BLD 897: the form line (each move's injury protection line) shows on the panel the whole time the move plays.
+const formLine = st => st && st.form ? `<p class="hj-form"><span>Form</span>${esc(st.form)}</p>` : '';
 function moveWell(){
   const w = WK(), mw = w.moveWell || (w.program || {}).moveWell || ((PLIB() || {}).program || {}).moveWell; if (!mw) return '';
   const items = Array.isArray(mw) ? mw : arr(mw.items || mw.points || mw.principles), lead = Array.isArray(mw) ? '' : mw.lead || mw.line || ''; if (!items.length) return '';
@@ -1520,7 +1553,7 @@ function vStart(o, top){
     <button type="button" class="btn btn-gold hj-go" data-hja="play">Play ${o.med ? 'Meditation' : o.prac ? 'Flow' : 'Session'}</button>
     <div class="hj-ovbtns"><button type="button" class="btn btn-line" data-hja="manual">Step Through</button><button type="button" class="btn btn-line" data-hja="didit">I Did It</button></div>
     ${!o.prac && !o.med ? moveWell() : ''}
-    <details class="hj-doc" style="text-align:left;margin-top:16px"><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(progSrc(o.s))}</div></details></div>`;
+    <details class="hj-doc hj-mlist" style="text-align:left;margin-top:16px"${o.steps.length <= 16 ? ' open' : ''}><summary><span>What is in it</span></summary><div class="hj-body"><ol>${o.steps.map(s => `<li>${esc(s.name)}${s.t === 'ex' ? ` <small>${esc(s.sets + ' x ' + repLine(s))}</small>` : ` <small>${Math.round(s.secs / 6) / 10} min</small>`}</li>`).join('')}</ol>${o.med ? '' : o.prac ? srcLine(o.sources) : coachSrc() + srcLine(progSrc(o.s))}</div></details></div>`;
 }
 function doneBlock(o, title){ const lt = !o.prac && lightLine('end'), wr = !o.prac && weightRule();
   return `${stagePanel('done', {fig: o.med ? candle() : ''})}<div class="hj-ovb"><div class="hj-big2">${esc(title)}</div><p class="hj-sub">Time: ${esc(clock(o.active || 0))}.</p>
@@ -1534,15 +1567,17 @@ function vAuto(o, top){
   // BLD 898: one timeline. The figure's moves set the breath ring's phases (GGMoves.plan): a Flow step's breath key paces the
   // figure, a counted or timed rep paces both, and the clock (clkSync) starts them together on each count.
   const still = !!(o.rest || o.between), ringNow = !!(o.ring && !o.rest && !o.between && !o.sw);
-  let br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : ringNow && st.wbreath ? [Math.round(st.tempo * 4) / 10, Math.round(st.tempo * 6) / 10] : null;
+  let br = st.breath ? BREATH[st.breath] || BREATH.long : o.prac && st.t === 'time' && !st.lines && !st.candle && !still ? BREATH.slow : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : ringNow && st.wbreath ? [Math.round(st.tempo * 4) / 10, Math.round(st.tempo * 6) / 10] : null;
   const fex = br && !still && !st.candle ? (st.breath === 'fire' ? {pose: 1} : {breath: br}) : null, pl = st.candle ? null : figPlan(st, fex);
   let phases = null;
   if (pl && br && fex && fex.breath) phases = pl.phases;
-  else if (ringNow && st.t === 'ex'){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
+  else if (ringNow && (st.t === 'ex' || (o.rep && +st.tempo > 0))){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
   if (pl && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
   const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
-  const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, still, fex), side: o.side || '', label: pill, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined}, ring);
-  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
+  // BLD 897: the count is the ink numeral on the stage (top right), with the progress line under the figure.
+  const cntOf = o.rep && !o.run ? (st.t === 'ex' ? repN(st) : wuN(st, o)) || 0 : 0;
+  const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, still, fex), side: o.side || '', label: pill, count: cntOf ? {n: o.rep, of: cntOf} : undefined, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined}, ring);
+  const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep && cntOf ? (st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : '') : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? ' · Left side' : o.side === 'R' ? ' · Right side' : '';
   const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
   let detail;
@@ -1550,7 +1585,7 @@ function vAuto(o, top){
   else if (o.rest) detail = `${o.mcoach ? modsBlock(st, ['easier', 'harder']) : `<p class="hj-mot">${esc(o.mline || 'Breathe slow. Sip water.')}</p>`}${weightBox(st)}`;
   else if (o.sw) detail = `<p class="hj-how">Switch to your right side.</p>`;
   else if (st.lines) detail = `<p class="hj-how hj-mline">${esc(o.line || (o.run ? 'Rest in the quiet.' : ''))}</p>`;
-  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}${howBlock(st)}${st.alt && st.t === 'ex' ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'time' ? modsBlock(st, ['feel', 'easier']) : ''}${st.t === 'ex' && weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}`;
+  else detail = `${o.mline && o.i === 0 ? `<p class="hj-light">${esc(o.mline)}</p>` : ''}${formLine(st)}${howBlock(st)}${st.alt && st.t === 'ex' ? `<p class="hj-cue">${ALT_CUE}</p>` : ''}${st.cue ? `<p class="hj-cue">${esc(st.cue)}</p>` : ''}${st.ease ? `<p class="hj-note" style="text-align:left">${esc(st.ease)}</p>` : ''}${st.t === 'time' ? modsBlock(st, ['feel', 'easier']) : ''}${st.t === 'ex' && weightTip(st) ? `<p class="hj-wtl"><b>Weight:</b> ${esc(weightTip(st))}</p>` : ''}`;
   const t = trans(o, state);
   return `${top(o.title, (o.i + 1) + ' of ' + o.steps.length, pct)}
   <div class="hj-sess"><span data-hjsess>${esc(clock(o.active || 0))}</span><span data-hjleft>about ${Math.max(1, Math.round(estLeft(o) / 60000))} min left</span></div>
@@ -1595,6 +1630,8 @@ function actCoach(a, v){
     case 'tvoice': if (V){ V.setOn(!V.on()); } rerender(true); return true;
     case 'tmusic': if (V){ V.setMusic(!V.musicOn()); if (V.musicOn() && o && o.mode === 'auto' && !o.fin && !o.paused) V.music(o.music || '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3'); } rerender(true); return true;
     case 'tchime': if (V) V.setChime(!V.chimeOn()); rerender(true); return true;
+    case 'tfig3d': { const on = !!(window.GGFig3D && GGFig3D.ok()); try { localStorage.setItem('gg-fig3d', on ? 'off' : 'on'); } catch(e){} rerender(true); return true; }
+    case 'tfigbody': if (window.GGFig3D) GGFig3D.setBody(GGFig3D.body() === 'woman' ? 'man' : 'woman'); rerender(true); return true;
     case 'thands': if (o){ o.hands = o.hands === false; try { localStorage.setItem('gg-health-hands', o.hands ? '1' : '0'); } catch(e){} } rerender(true); return true;
     case 'tcount': if (o){ o.count = !o.count; try { localStorage.setItem('gg-health-count', o.count ? '1' : '0'); } catch(e){} } rerender(true); return true;
     case 'play': if (o) runSession(o); return true;
@@ -2547,7 +2584,7 @@ async function moveHome(){
 // layer on the page (#hj-ov0), so a guide opened from The Grounded Way's Today plays full screen.
 const vis = el => !!(el && el.isConnected && el.getClientRects().length);
 function rerender(keep){
-  const y = window.scrollY, root = document.getElementById('hj-root'), sync = () => { if (S.ov && S.ov.clk) clkSync(S.ov); };
+  const y = window.scrollY, root = document.getElementById('hj-root'), sync = () => { if (S.ov && S.ov.clk) clkSync(S.ov); fig3d(); };
   if (bareOn()){ S.ovHome = 'host'; paintBare(); paintOv(); sync(); if (keep) window.scrollTo(0, y); return; }
   if (vis(root)){ S.ovHome = 'full'; paintOv(); const w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild); sync(); if (keep) window.scrollTo(0, y); return; }
   S.ovHome = 'host'; paintOv(); sync(); if (S.ov) return;
@@ -4507,9 +4544,15 @@ const CSS = `
 .tn-ew>summary::-webkit-details-marker{display:none;}.tn-ew>summary small{font-family:'Barlow',sans-serif;font-size:14px;color:var(--ink-soft);}
 .tn-ew>summary::after{content:'Show';font-family:'Barlow',sans-serif;font-size:13px;font-weight:600;color:var(--gold);margin-left:auto;}.tn-ew[open]>summary::after{content:'Hide';}
 .tn-ew[open]{padding-bottom:4px;}
-/* The breath ring beside a figure sits a little lower and smaller, so its Breathe In and Breathe Out words stay inside the panel on a phone. */
-.hj-stagebox .ggs-breath.wf{width:min(260px,58vw,calc(var(--H) * .8));transform:translate(-50%,-46%);}
 .hj-repsof{font-size:16px;opacity:.75;margin-top:-4px;}
+/* BLD 897: the form line, the Move Well card, and the start list in the warm ink and paper of the new player */
+.hj-form{margin:10px 0;padding:10px 12px;border-left:3px solid #C98A2C;background:rgba(243,200,103,.14);border-radius:0 12px 12px 0;text-align:left;line-height:1.45;overflow-wrap:anywhere;}
+.hj-form span{display:block;font:700 11px/1 'Barlow',sans-serif;letter-spacing:.16em;text-transform:uppercase;color:#8A5A12;margin-bottom:4px;}
+:root[data-theme="dark"] .hj-form span{color:#F0B850;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) .hj-form span{color:#F0B850;}}
+.hj-ov .hj-exn{font-family:'Cormorant Garamond',Georgia,serif;}
+.hj-mlist ol{padding-left:22px;}.hj-mlist li{padding:5px 0;border-bottom:1px dashed var(--line);overflow-wrap:anywhere;}.hj-mlist li small{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-size:15px;opacity:.85;margin-left:4px;}
+.hj-ov .hj-clock[data-hjclock]{font-family:'Cormorant Garamond',Georgia,serif;font-variant-numeric:lining-nums tabular-nums;}
 .hj-mw ol{margin:4px 0 6px;padding-left:22px;}.hj-mw li{margin:6px 0;line-height:1.45;overflow-wrap:anywhere;}.hj-mw .hj-mwl{margin:0 0 6px;}
 .tn-bclosed{text-align:center;}.tn-bclosed .tn-btn{margin-top:10px;}
 .tn-notes{margin-top:12px;}
