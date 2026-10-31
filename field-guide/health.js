@@ -1491,7 +1491,11 @@ function fig3d(){
   if (o === fig3d.late){ if (G){ G.detach(); G.load(); } return; }
   if (document.querySelector('.hj-stagebox.g3-wait')) fig3dTimer(o);
   if (G){ G.profileBody = fig3dBody; G.sync(fig3dCtx(o)); return; }
-  if (!fig3dLikely()){ fig3dUnwait(); return; }
+  if (/[?&]fig=svg\b/.test(location.search)) return;
+  // 3D off for this device: the simple figure shows at once; the small adapter still loads (never the engine) so the
+  // player can offer the 3D Figure setting wherever WebGL exists.
+  try { if (localStorage.getItem('gg-fig3d') === 'off') return; } catch(e){}
+  if (!fig3dLikely()) fig3dUnwait();
   fig3dScript();
 }
 // BLD 900 (Chris, live test, Full Body Strength: "very first screen ... shows the old stick figure for about 1 sec"). The 3D
@@ -1503,7 +1507,7 @@ const FIG3D_WAIT = 6000;
 function fig3dScript(){
   if (fig3d.p) return fig3d.p;
   return (fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true;
-    el.onload = () => { res(); if (window.GGFig3D){ if (S.ov) { fig3d(); rerenderSoon(); } else GGFig3D.load(); } else fig3dUnwait(); };
+    el.onload = () => { res(); if (window.GGFig3D){ if (S.ov) { fig3d(); rerenderSoon(); } else if (GGFig3D.ok()) GGFig3D.load(); } else fig3dUnwait(); };
     el.onerror = () => { res(); fig3d.failed = true; fig3dUnwait(); }; document.head.appendChild(el); }));
 }
 let GLP = null;
@@ -1528,7 +1532,7 @@ function fig3dWait(){ return !!S.ov && S.ov !== fig3d.late && fig3dLikely(); }
 function fig3dUnwait(){ document.querySelectorAll('.hj-stagebox.g3-wait').forEach(b => b.classList.remove('g3-wait')); }
 function fig3dTimer(o){
   if (fig3d.tov === o) return; fig3d.tov = o;
-  setTimeout(() => { if (S.ov !== o || document.querySelector('.hj-stagebox.g3-on')) return;
+  setTimeout(() => { if (S.ov !== o || document.querySelector('.hj-stagebox.g3-on') || (window.GGFig3D && GGFig3D.state().ready)) return;
     fig3d.late = o; if (window.GGFig3D) GGFig3D.detach(); fig3dUnwait(); }, FIG3D_WAIT);
 }
 function fig3dWarm(){

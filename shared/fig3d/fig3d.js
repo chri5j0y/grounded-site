@@ -4082,7 +4082,7 @@ G.define('calf-raise', {name: 'Heel Raises', tempo: 3, base: 'stand', top: [1], 
 // Counter heel raise: stand facing a counter, hands resting flat on its top; on the rise the palms lift a little and the
 // fingertips stay on the counter.
 var CTR0 = {x: .2, y: .935, z: .2, f: 'flat', pole: [.6, -1, -.5]}, CTR1 = {x: .2, y: .975, z: .2, f: 62, pole: [.6, -1, -.5]};
-G.define('counter-calf-raise', {name: 'Counter Heel Raise', tempo: 3, base: 'stand', top: [1], glow: {calves: [1, 1]}, cam: {yaw: 14, el: 4, zoom: 1},
+G.define('counter-calf-raise', {name: 'Counter Heel Raise', tempo: 3, base: 'stand', top: [1], glow: {calves: [1, 1]}, cam: {yaw: -18, el: 6, zoom: 1},
   props: [{id: 'counter', z: .14}],
   form: [{when: 'hold', plumb: ['head', 'toe1-1.R'], say: 'tall, over the big toes', at: 'neck01', side: 1}],
   k: [
@@ -4090,14 +4090,14 @@ G.define('counter-calf-raise', {name: 'Counter Heel Raise', tempo: 3, base: 'sta
     {br: 'in', on: 'tR tL', p: [1.006, -.04], t: [181, 181], n: 182, ra: CTR1, la: CTR1, rl: HEEL1(.11), ll: HEEL1(.11), hR: 'flat', hL: 'flat', pnR: 'down', pnL: 'down', lift: 0, e: 1}
   ]});
 // Single-leg heel raise: stand on the right foot (the player mirrors the picture for the left side), the left foot
-// resting lifted behind, a fingertip on the wall; rise high onto the ball of the foot, lower slowly.
-var SLW = {x: .5, y: 1.22, z: .06, pole: [0, -1, -.4], f: 150};
-G.define('sl-calf-raise', {name: 'Single-Leg Heel Raise', tempo: 3, base: 'stand', top: [1], glow: {calves: [0, 1]}, cam: {yaw: 14, el: 4, zoom: 1},
-  props: [{id: 'wall', at: 'left'}],
+// resting lifted behind, the left fingertips on a counter ahead (the words: a fingertip on a wall or counter); rise high
+// onto the ball of the foot, lower slowly. The fingertips stay on the counter as the palm lifts.
+G.define('sl-calf-raise', {name: 'Single-Leg Heel Raise', tempo: 3, base: 'stand', top: [1], glow: {calves: [0, 1]}, cam: {yaw: -18, el: 6, zoom: 1},
+  props: [{id: 'counter', z: .14}],
   form: [{when: 'hold', plumb: ['head', 'toe1-1.R'], say: 'tall, over the big toe', at: 'neck01', side: 1}],
   k: [
-    {br: 'out', on: 'tR hL', p: [.925, -.062], px: -.03, t: [181, 181], n: 182, ra: [4, 10], la: SLW, rl: HEEL0(.1), ll: [4, -42, 40], hR: 'relax', hL: 'flat', pnR: 'in', pnL: 'wall', lift: 0, e: .2},
-    {br: 'in', on: 'tR hL', p: [1.006, -.008], px: -.03, t: [181, 181], n: 182, ra: [4, 10], la: SLW, rl: HEEL1(.1), ll: [4, -42, 40], hR: 'relax', hL: 'flat', pnR: 'in', pnL: 'wall', lift: 0, e: 1}
+    {br: 'out', on: 'tR', p: [.925, -.07], px: -.03, t: [181, 181], n: 182, ra: [4, 10], la: CTR0, rl: HEEL0(.1), ll: [4, -42, 40], hR: 'relax', hL: 'flat', pnR: 'in', pnL: 'down', lift: 0, e: .2},
+    {br: 'in', on: 'tR', p: [1.006, -.04], px: -.03, t: [181, 181], n: 182, ra: [4, 10], la: CTR1, rl: HEEL1(.1), ll: [4, -42, 40], hR: 'relax', hL: 'flat', pnR: 'in', pnL: 'down', lift: 0, e: 1}
   ]});
 // Calf raises on a step: the balls of the feet on the step's back edge, a hand on the wall; the heels sink slowly
 // below the step, rise high onto the big toes, then lower slowly. The step's back edge sits at z .13.
