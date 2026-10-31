@@ -18,6 +18,7 @@
    Fits share one row of chips; each recipe card carries its meal's color band, a bigger icon, time and serves as pills, and
    a short nutrition line. Holidays and Gatherings is its own section inside the page (soonest first), reached by its meal
    card or /recipes/#holidays (The Grounded Way Library keeps holidays inside its Grounded Recipes shelf).
+   BLD 900: Add to My Menu on every recipe and every holiday recipe (see menuGo).
    ===================================================================== */
 (function () {
   'use strict';
@@ -157,7 +158,7 @@
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
       '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? serves : r.serves) + '</span>' + fits + goals + '</div>' +
-      '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button><span>A calm voice guides every step, with timers.</span></div>' +
+      '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('r:' + r.id) + '<span>A calm voice guides every step, with timers.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
       '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
       (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div>' +
         '<p class="rc-size-note">Amounts scale to your table. The steps fit every size.</p></div>' : '') +
@@ -225,7 +226,7 @@
     var menu = x.menu.map(function (m) {
       var r = HOL.recipe(id, m.id, serves);
       return '<div class="card rc-hrec"><h3>' + esc(m.name) + '</h3><p class="rc-t">' + esc([m.course ? m.course.charAt(0).toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : '', 'serves ' + r.serves].filter(Boolean).join(' · ')) + '</p>' +
-        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Guide Me, Step by Step</button></div>' +
+        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('h:' + id + ':' + m.id) + '</div><div class="rc-mnote" data-rc-mnote="' + esc('h:' + id + ':' + m.id) + '" hidden></div>' +
         (m.makeAhead ? '<p><b>Make ahead:</b> ' + esc(m.makeAhead) + '</p>' : '') + (m.note ? '<p>' + esc(m.note) + '</p>' : '') +
         '<ul class="rc-ing">' + r.ingredients.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul>' +
         '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
@@ -241,6 +242,23 @@
       '<div class="card rc-cook"><h3>Put It on Your Calendar</h3><p>In The Grounded Way, Tending sets this up for your date and guests: the shopping on your list, the prep on the days before, and every recipe guided step by step, private on your device.</p><a class="btn btn-primary" href="/home/#week">Open The Grounded Way</a></div>' +
       (src.length ? '<p class="rc-src">Sources: ' + src.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.t || s.title || s.url) + '</a>'; }).join('; ') + '</p>' : '') +
       '</article>';
+  }
+  /* ---------- BLD 900: Add to My Menu ----------
+     Inside The Grounded Way's frame, the add goes to the Home itself (GGHealth.menuOpen in the parent page, same site): a sheet to
+     choose the day, the meal, and the servings, and the ingredients join the Shopping List. Everything stays on this device. On its
+     own, the page shows a gentle line and opens this recipe inside The Grounded Way (/home/#recipe-<id>), where the menu lives. */
+  var MENU_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><rect x="4" y="5" width="16" height="15" rx="2.5"/><path d="M8 3v4M16 3v4M4 10h16M12 13v5M9.5 15.5h5"/></svg>';
+  function menuBtn(ref) { return '<button type="button" class="btn btn-secondary rc-menu-btn" data-rc-menu="' + esc(ref) + '">' + MENU_ICON + 'Add to My Menu</button>'; }
+  function homeHealth() { try { var P = window.parent; if (P && P !== window && P.GGHealth && typeof P.GGHealth.menuOpen === 'function') return P.GGHealth; } catch (e) {} return null; }
+  function hasProfile() { try { var j = JSON.parse(localStorage.getItem('gg-profiles-v1') || 'null'); return !!(j && Array.isArray(j.list) && j.list.length); } catch (e) { return false; } }
+  function menuGo(ref) {
+    var P = homeHealth(), r = P ? P.menuOpen(ref, { serves: serves }) : null;
+    if (r === true) return;
+    var box = null; document.querySelectorAll('[data-rc-mnote]').forEach(function (b) { if (b.getAttribute('data-rc-mnote') === ref) box = b; }); if (!box) return;
+    var deep = '/home/#recipe-' + encodeURIComponent(/^h:/.test(ref) ? 'hol-' + ref.split(':')[1] : ref.slice(2));
+    box.innerHTML = P ? '<p>Start Tending in The Grounded Way, and My Menu holds this recipe for any day you choose, with its ingredients on your Shopping List.</p><a class="btn btn-primary" href="/home/#today=tending" target="_top">Start Tending</a>'
+      : '<p>My Menu lives in The Grounded Way, private on this device: choose a day and a meal, the ingredients join your Shopping List, and Guide Me waits on Today.</p><a class="btn btn-primary" href="' + (hasProfile() ? deep : '/home/') + '">' + (hasProfile() ? 'Open It in The Grounded Way' : 'Open The Grounded Way') + '</a>';
+    box.hidden = false;
   }
   var baseTitle = document.title;
   function show() {
@@ -494,6 +512,7 @@
       var sz = e.target.closest('[data-sz]');
       if (sz) { setServes(+sz.getAttribute('data-sz')); return; }
       if (e.target.closest('#rc-back')) goBack();
+      else if (e.target.closest('[data-rc-menu]')) menuGo(e.target.closest('[data-rc-menu]').getAttribute('data-rc-menu'));
       else if (e.target.closest('[data-rc-hguide]')) { var hv = e.target.closest('[data-rc-hguide]').getAttribute('data-rc-hguide').split('|'), hr = holRecipe(hv[0], hv[1]); if (hr) G.open(hr, e.target.closest('[data-rc-hguide]')); }
       else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(sized(r), e.target.closest('[data-rc-guide]')); }
     });

@@ -320,6 +320,7 @@ function placeArt(){
     const b = G.box, m = 8, lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
     dx = lim(W / 2 - (b[0] + b[2]) / 2, m - b[0], W - m - b[2]);
     const fx = G.fx + dx, k = Math.max(1, fx / (fo * pw || 1e-6), (W - fx) / ((1 - fo) * pw || 1e-6));
+    L.pw0 = pw; L.fxs = fx / W;
     if (k > 1){ pw *= k; ph *= k; }
     ox = fx - fo * pw;
     // Up and down as before: the painting's floor line meets the feet; what the painting cannot do, the figure does.
@@ -334,7 +335,7 @@ function placeArt(){
   const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
   L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
     box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy),
-    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((G.box[0] + G.box[2]) / 2 + dx) / W, grow: L.grow || 1};
+    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((G.box[0] + G.box[2]) / 2 + dx) / W, grow: L.grow || 1, vw: W / (L.pw0 || pw), fxs: L.fxs || .5};
 }
 
 // ---------- each frame ----------

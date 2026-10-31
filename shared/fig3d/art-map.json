@@ -103,7 +103,8 @@
      0.84
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the concrete floor inside the open garage door"
+   "room": "BLD 900: no room for a centered figure (the dumbbells, bench, and open door sit beside the mat); stage: move-strength (the card keeps the garage)",
+   "stage": "move-strength"
   },
   "move-peak": {
    "src": "move-peak.webp",
@@ -121,7 +122,7 @@
    "scale": 0.34,
    "open": [
     0.56,
-    0.79,
+    0.76,
     0.86,
     1
    ],
@@ -145,7 +146,7 @@
      0.84
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the floor right of the power tower"
+   "room": "fits with floor, scale, and focal set: the floor right of the power tower; BLD 900: open floor from the wall line (0.76) so the whole mat lies on the boards"
   },
   "move-cardio": {
    "src": "move-cardio.webp",
@@ -159,8 +160,8 @@
     0.82
    ],
    "tone": 0.5,
-   "stage": "meadow-path",
-   "room": "stage painting: meadow-path (the card is a close-up still life of shoes and a bottle)"
+   "stage": "move-walk",
+   "room": "stage painting: move-walk (BLD 900: the open meadow path holds a centered figure; the card is a close-up still life of shoes and a bottle)"
   },
   "move-walk": {
    "src": "move-walk.webp",
@@ -228,7 +229,11 @@
     1
    ],
    "avoid": [],
-   "room": "fits with floor, scale, and focal set: on the empty mat on the stone patio"
+   "room": "fits with floor, scale, and focal set: on the empty mat on the stone patio; BLD 900: yoga-studio takes the stage once its file is on the site",
+   "stage": [
+    "yoga-studio",
+    "move-flow"
+   ]
   },
   "move-yoga": {
    "src": "move-yoga.webp",
@@ -243,8 +248,11 @@
    ],
    "tone": 0.5,
    "mat": true,
-   "stage": "quiet-meditation",
-   "room": "stage painting: quiet-meditation (the card has a lake at the deck edge and a block and strap on the mat)"
+   "stage": [
+    "yoga-studio",
+    "move-strength"
+   ],
+   "room": "stage painting: yoga-studio when its file is on the site, else move-strength (BLD 900, Chris: \"mat is on the wall.. choose a nice open space like home studio\")"
   },
   "move-balance": {
    "src": "move-balance.webp",
@@ -274,8 +282,11 @@
    ],
    "tone": 0.5,
    "mat": true,
-   "stage": "move-flow",
-   "room": "stage painting: move-flow (the card has a blanket and a rolled mat on its mat, curtains at both sides)"
+   "stage": [
+    "yoga-studio",
+    "move-flow"
+   ],
+   "room": "stage painting: yoga-studio when its file is on the site, else move-flow"
   },
   "quiet-morning": {
    "src": "quiet-morning.webp",
@@ -332,7 +343,8 @@
      0.76
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the open wood floor left of the cushion"
+   "room": "BLD 900: no room for a centered figure (the cushion sits mid floor); stage: move-strength (no player with a figure uses it now)",
+   "stage": "move-strength"
   },
   "rest-day": {
    "src": "rest-day.webp",
@@ -392,7 +404,8 @@
      0.9
     ]
    ],
-   "room": "fits with floor, scale, and focal set: in the meadow beside the path (stage only)"
+   "room": "BLD 900: no room for a centered figure (a sprout in front of the path); stage: move-walk",
+   "stage": "move-walk"
   },
   "hilltop": {
    "src": "home-morning-wide.webp",
@@ -410,12 +423,35 @@
    "mat": false,
    "open": [
     0.2,
-    0.73,
+    0.7,
     1,
     1
    ],
    "avoid": [],
-   "room": "fits with floor, scale, and focal set: the open grass on the hilltop, left of the oak (stage only)"
+   "room": "fits with floor, scale, and focal set: the open grass on the hilltop, left of the oak (stage only); BLD 900: open grass from 0.70 (the crest of the hill)"
+  },
+  "yoga-studio": {
+   "src": "yoga-studio.webp",
+   "focal": [
+    0.5,
+    0.78
+   ],
+   "floor": 0.8,
+   "light": [
+    -0.3,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.5,
+   "open": [
+    0.1,
+    0.72,
+    0.9,
+    1
+   ],
+   "avoid": [],
+   "room": "BLD 900: waiting for the painting (an open home studio, big empty floor, no objects). Until shared/heroes/way/yoga-studio.webp is on the site, each stage list skips it. When it arrives, set floor, scale, focal, open, and avoid from the painting and run room899.mjs."
   }
  },
  "workouts": {},
