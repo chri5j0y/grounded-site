@@ -171,7 +171,26 @@ function ringHTML(o, show){
     `<circle cx="50" cy="50" r="44" class="ggs-rp" data-ggsarc stroke-dasharray="${r1(C)}" stroke-dashoffset="${r1(C * (1 - pct))}" transform="rotate(-90 50 50)"/></svg>` +
     (o.secs != null ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
 }
+// BLD 898: o.phases ([{k: 'in' | 'out' | 'hold', d: seconds}], from GGMoves.plan) times the ring to the figure's own moves:
+// it grows on in, shrinks on out, stays on hold, and shows Breathe In, Breathe Out, or Hold for each phase. Its loop is the
+// figure's loop (data-dur), so the player restarts both together.
+function phaseHTML(o, red){
+  const P = o.phases.filter(p => p && +p.d > 0), T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000;
+  const lo = 26, hi = 46, r0 = P[0].k === 'out' ? hi : lo; let cur = r0, t = 0; const vs = [r0], kt = [0], st = [];
+  P.forEach(p => { st.push(t / T); t += +p.d; cur = p.k === 'in' ? hi : p.k === 'out' ? lo : cur; vs.push(cur); kt.push(Math.min(1, t / T)); });
+  const k4 = x => Math.round(x * 10000) / 10000, sp = kt.slice(1).map(() => '.45 0 .55 1').join(';');
+  const an = red ? '' : `<animate attributeName="r" dur="${w}s" repeatCount="indefinite" values="${vs.join(';')}" keyTimes="${kt.map(k4).join(';')}" calcMode="spline" keySplines="${sp}"/>`;
+  const has = k => P.some(p => p.k === k), first = P[0].k;
+  const word = (t2, k) => !has(k) ? '' : `<g class="ggs-bwg" data-ggsbw="${k}"${red && k !== first ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${w}s" repeatCount="indefinite" values="${P.map(p => p.k === k ? 1 : 0).join(';')}" keyTimes="${st.map(k4).join(';')}" calcMode="discrete"/>`}` +
+    `<rect x="22" y="${o.fig ? -9 : 43}" width="56" height="14" rx="7" class="ggs-bwp"/><text x="50" y="${o.fig ? 1.6 : 53.6}" text-anchor="middle" class="ggs-bw">${t2}</text></g>`;
+  const rr = red ? 38 : r0;
+  return `<div class="ggs-breath${o.fig ? ' wf' : ''}"><svg viewBox="0 0 100 100" aria-hidden="true" class="ggs-brs" data-ggsbr data-dur="${w}" data-ph="${P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ')}">` +
+    `<circle cx="50" cy="50" r="${rr}" class="ggs-bf">${an}</circle><circle cx="50" cy="50" r="${rr}" class="ggs-bs">${an}</circle>` +
+    (o.secs != null && !o.fig ? '' : word('Breathe In', 'in') + word('Hold', 'hold') + word('Breathe Out', 'out')) + '</svg>' +
+    (o.secs != null && !o.fig ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
+}
 function breathHTML(o, red){
+  if (Array.isArray(o.phases) && o.phases.some(p => p && +p.d > 0)) return phaseHTML(o, red);
   const i = Math.max(1, +o.inhale || 4), e = Math.max(1, +o.exhale || +o.inhale || 6), T = i + e, f = r1(i / T * 1000) / 1000;
   const an = (attr, a, b) => red ? '' : `<animate attributeName="${attr}" dur="${T}s" repeatCount="indefinite" values="${a};${b};${a}" keyTimes="0;${f};1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>`;
   const word = (t, on) => `<g class="ggs-bwg"${red && !on ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" values="${on ? '1;0' : '0;1'}" keyTimes="0;${f}" calcMode="discrete"/>`}` +
@@ -191,7 +210,7 @@ function scene(state, opts){
   else if (s === 'practice'){ const k = {top: mix(sky.top, SUNRISE.top, 0.45), hor: mix(sky.hor, SUNRISE.hor, 0.45), sun: sky.sun || '#FFC79C', h: sky.sun ? h : 6.4}; set = outdoors(id, k, lightA, s); deck = 'meadow'; }
   else set = outdoors(id, sky, lightA, s);
   const tod = h >= 5 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'day' : h >= 17 && h < 21 ? 'evening' : 'night';
-  const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null;
+  const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null || (Array.isArray(o.phases) && o.phases.length > 0);
   const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
   const label = o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
