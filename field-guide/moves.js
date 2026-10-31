@@ -168,13 +168,13 @@ const SEG = {
 
 function anim(F, attr, f, dur){
   if (F.length === 1) return '';
-  return `<animate attributeName="${attr}" dur="${dur}s" repeatCount="indefinite" values="${F.map(f).join(';')}"/>`;
+  return `<animate attributeName="${attr}" dur="${dur}s" repeatCount="indefinite" values="${F.map(f).join(';')}"${F.kt ? ` keyTimes="${F.kt.join(';')}"` : ''}/>`;
 }
 
 // A dumbbell: a steel handle and two colored plates, carried at a hand.
 function dumbbell(F, k, dur, op){
   const at = J => r1(J[k][0]) + ' ' + r1(J[k][1]);
-  const mv = F.length === 1 ? '' : `<animateTransform attributeName="transform" type="translate" dur="${dur}s" repeatCount="indefinite" values="${F.map(at).join(';')}"/>`;
+  const mv = F.length === 1 ? '' : `<animateTransform attributeName="transform" type="translate" dur="${dur}s" repeatCount="indefinite" values="${F.map(at).join(';')}"${F.kt ? ` keyTimes="${F.kt.join(';')}"` : ''}/>`;
   return `<g transform="translate(${at(F[0])})"${op ? ' style="opacity:var(--ggm-far,' + op + ')"' : ''}><path d="M-10 0H10" stroke-width="4" style="stroke:var(--ggm-steel,currentColor)"/>` +
     `<g style="color:var(--ggm-db,currentColor)"><rect x="-16" y="-9" width="8" height="18" rx="3" fill="currentColor" stroke="none"/><rect x="8" y="-9" width="8" height="18" rx="3" fill="currentColor" stroke="none"/></g>${mv}</g>`;
 }
@@ -523,6 +523,39 @@ P['hip-thrust'].top = [1]; P.bridge.top = [1];
   'half-kneel-chop', 'half-kneel-lift', 'quick-feet', 'dowel-hinge', 'shoulder-tap', 'side-lunge-rock'].forEach(id => solve(P[id]));
 
 // The far leg of a crossed seat is drawn mirrored by hand where the view keeps absolute angles.
+// BLD 898 (Chris: "one balance vid it says to stand but the body is sitting"): standing forms of the seated breath, twist,
+// shrug, and neck figures, for steps whose words say stand.
+Object.assign(P, {
+  'stand-breath': {v: 'f', d: 3, k: [{}, {s: 1.05, sw: 18, ra: [13, 8], la: [13, 8]}]},
+  'stand-twist': {v: 'f', nm: true, d: 3, sp: 0, k: [{t: [180, 184], h: 192, sw: 11, ra: [36, 14], la: [36, 52]}, {t: [180, 176], h: 168, sw: 11, ra: [-36, -52], la: [-36, -14]}]},
+  'stand-shrug': {v: 'f', d: 2.4, k: [{}, {so: -4}]},
+  'stand-neck': {v: 'f', d: 3, k: [{h: 150}, {h: 210}]},
+  // Seated forms on a chair (side view) or the floor (front view), for steps that say sit.
+  'seat-march': {v: 's', an: ['hip', 92, 166], bg: G.chair, d: 2.6, alt: true,
+    k: [{rl: [90, 0, 90], ll: [90, 0, 90], ra: [-14, 50], la: [14, 70]}, {rl: [116, 26, 100], ll: [90, 0, 90], ra: [14, 70], la: [-14, 50]},
+      {rl: [90, 0, 90], ll: [90, 0, 90], ra: [-14, 50], la: [14, 70]}, {rl: [90, 0, 90], ll: [116, 26, 100], ra: [-14, 50], la: [14, 70]}]},
+  'seat-arm-circles': {v: 's', an: ['hip', 92, 166], bg: G.chair, e: 'lin', d: 2.4,
+    k: [{ra: [0, 0], la: [180, 180]}, {ra: [90, 90], la: [270, 270]}, {ra: [180, 180], la: [0, 0]}, {ra: [270, 270], la: [90, 90]}].map(k => Object.assign({rl: [90, 0, 90], ll: [90, 0, 90]}, k))},
+  'seat-side-bend': {v: 'x', nm: true, raw: true, pin: null, d: 3.2,
+    k: [{t: [178, 196], h: 204, ra: [172, 216], la: [28, 34]}, {t: [182, 164], h: 156, ra: [28, 34], la: [-172, -216]}]},
+  'seat-arms-up': {v: 'x', pin: null, d: 3, k: [{ra: [28, 34], la: [28, 34]}, {ra: [168, 176], la: [168, 176]}]},
+  'seat-press': {v: 's', an: ['hip', 92, 166], bg: G.chair, db: 'rl', d: 2.6,
+    k: [{rl: [90, 0, 90], ll: [90, 0, 90], ra: [40, 172], la: [36, 168]}, {rl: [90, 0, 90], ll: [90, 0, 90], ra: [176, 178], la: [172, 176]}]},
+  'seat-fold': {v: 's', an: ['hip', 92, 166], bg: G.chair, d: 3, sp: 1,
+    k: [{rl: [90, 0, 90], ll: [90, 0, 90], ra: [12, 76], la: [12, 76]}, {t: [128, 116], h: 108, rl: [90, 0, 90], ll: [90, 0, 90], ra: [14, 14], la: [14, 14]}]},
+  'seat-pulldown': {v: 's', an: ['hip', 92, 166], bg: G.chair, band: [100, 12], d: 2.8, sp: 1,
+    k: [{rl: [90, 0, 90], ll: [90, 0, 90], ra: [168, 168], la: [166, 166]}, {rl: [90, 0, 90], ll: [90, 0, 90], t: [178, 176], ra: [-14, 152], la: [-10, 148]}]},
+  'seat-row': {v: 's', an: ['hip', 58, 202], bg: G.mat, band: [226, 186], d: 2.8, sp: 1,
+    k: [{t: [172, 174], rl: [90, 90, 180], ll: [90, 90, 180], ra: [84, 88], la: [84, 88]}, {t: [184, 182], rl: [90, 90, 180], ll: [90, 90, 180], ra: [-40, 82], la: [-40, 82]}]},
+  'leg-press': {v: 's', an: ['hip', 96, 168], bg: `<g ${GS}><path d="M58 180L128 172M60 180L44 122" stroke-width="8"/><path d="M80 178V211M118 174V211" stroke-width="5"/></g>`, d: 3, sp: 1,
+    k: [{t: [-136, -136], h: -140, rl: [146, 44, 140], ll: [146, 44, 140], ra: [20, 40], la: [20, 40]}, {t: [-136, -136], h: -140, rl: [116, 106, 196], ll: [116, 106, 196], ra: [20, 40], la: [20, 40]}]},
+  'thread-needle': {v: 's', an: ['hip', 82, 164], bg: G.mat, d: 3, sp: 1, pin: {lH: [-1]}, pr: {t: [108, 108], ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]},
+    k: [{t: [108, 108], h: 100, ra: [0, 0], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}, {t: [96, 92], h: 120, ra: [-84, -88], la: [0, 0], rl: [0, -90, -90], ll: [0, -90, -90]}]},
+  'wall-push-up': {v: 's', an: ['rT', 72, 208], bg: `<g ${GS}><path d="M186 26V211" stroke-width="7"/></g>`, d: 2.6, pin: {rH: [180, 96, -1], lH: [180, 96, -1]},
+    k: [{t: [154, 154], h: 154, rl: [-26, -26, 62], ll: [-26, -26, 62]}, {t: [140, 140], h: 140, rl: [-40, -40, 50], ll: [-40, -40, 50]}]},
+  'stand-ankle-rock': {v: 's', an: ['rA', 128, 206], bg: `<g ${GS}><path d="M190 26V211" stroke-width="7"/></g>`, d: 2.8, pin: {rH: [184, 100, -1], lH: [184, 100, -1]},
+    k: [{rl: [2, 0, 90], ll: [-22, -26, 60]}, {t: [172, 174], rl: [34, -24, 90], ll: [-14, -40, 50]}]}
+});
 P.twist.k.forEach(k => { k.rl = [76, -97, -90]; k.ll = [-76, 97, 90]; });
 P.twist.pin = null;
 P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
@@ -544,15 +577,15 @@ const KW = [
   [/\bin.?(and.?)?out step|\bin out\b/, 'in-out'], [/cross.?crunch|elbow to (opposite )?knee/, 'cross-crunch'], [/climber/, 'climber'],
   [/kneel.*chop/, 'half-kneel-chop'], [/kneel.*lift/, 'half-kneel-lift'], [/wood ?chop/, 'wood-chop'], [/knee hold|step.?back balance/, 'knee-hold'],
   [/heel.?to.?toe (walk|step)|tandem walk/, 'heel-toe'], [/down(ward)? dog/, 'down-dog'], [/quick feet|ladder/, 'quick-feet'], [/\bw raise|floor w\b/, 'w-raise'],
-  [/face pull/, 'face-pull'], [/pull.?down|lat pull/, 'pull-down'], [/overhead carry|waiter.?s? (carry|walk)/, 'overhead-carry'], [/airplane/, 'airplane'],
+  [/face pull/, 'face-pull'], [/leg press/, 'leg-press'], [/seated (cable )?row|cable row/, 'seat-row'], [/seated march/, 'seat-march'], [/pull.?down|lat pull/, 'pull-down'], [/overhead carry|waiter.?s? (carry|walk)/, 'overhead-carry'], [/airplane/, 'airplane'],
   [/dowel (hip )?hinge|hinge with (a )?dowel/, 'dowel-hinge'], [/pass.?through|dowel pass/, 'pass-through'], [/squat (to |and )?press|thruster/, 'squat-press'],
   [/shoulder taps?/, 'shoulder-tap'],
   [/cat ?cow/, 'cat-cow'], [/child/, 'child-pose'], [/couch|hip flexor/, 'hip-flexor'], [/figure ?(4|four)|pigeon/, 'figure-4'],
   [/90\/90|hip switch|windshield/, 'hip-switch'], [/hanging (knee|leg)|knee raise|knees? to chest/, 'knee-raise'], [/dead ?hang|\bhang/, 'hang'], [/pull ?ups?|chin ?ups?|pullups|chinups/, 'pull-up'],
   [/hollow/, 'hollow'], [/reverse crunch/, 'reverse-crunch'], [/leg raise/, 'leg-raise'], [/dead ?bugs?|crunch/, 'dead-bug'],
   [/y.?t raise|reverse fly|rear delt/, 'yt-raise'], [/chest.?supported/, 'chest-row'], [/bird ?dogs?/, 'bird-dog'],
-  [/side plank.*reach|reach.?through|thread the needle/, 'reach-through'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
-  [/fast push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
+  [/thread the needle/, 'thread-needle'], [/side plank.*reach|reach.?through/, 'reach-through'], [/side plank/, 'side-plank'], [/pull.?through/, 'pull-through'], [/plank/, 'plank'],
+  [/wall push/, 'wall-push-up'], [/fast push|plyo push|explosive push/, 'fast-push-up'], [/push ?ups?|pushups|press ?ups?/, 'push-up'], [/push press/, 'push-press'],
   [/incline (dumbbell |db )?press|incline bench/, 'incline-press'], [/bench press|chest press|floor press/, 'bench-press'], [/kneeling.*press|half.?kneel/, 'kneel-press'],
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
@@ -583,8 +616,10 @@ const escA = s => String(s).replace(/[&<>"']/g, c => ({'&': '&amp;', '<': '&lt;'
 function svg(pattern, opts){
   opts = opts || {};
   const id = P[pattern] ? pattern : of(pattern), M = P[id], size = opts.size || 160, lp = loop(id, opts);
-  const dur = lp ? lp.dur : r1((M.d || 2.6) / (+opts.speed > 0 ? +opts.speed : 1));
-  const F = frames(M, !!opts.still || reduced(), opts.pose, lp ? lp.hold : 0), side = M.v === 's';
+  // BLD 898: a tempo or a breath ({breath: [in, out]}) lays the frames on the shared timeline (plan), with exact keyTimes.
+  const pl = !opts.still && !reduced() && opts.pose == null && (lp || opts.breath) ? plan(id, opts) : null;
+  const dur = pl ? pl.dur : lp ? lp.dur : r1((M.d || 2.6) / (+opts.speed > 0 ? +opts.speed : 1));
+  const F = pl ? planFrames(M, pl) : frames(M, !!opts.still || reduced(), opts.pose, lp ? lp.hold : 0), side = M.v === 's';
   const far = op => op ? ` style="opacity:var(--ggm-far,${op})"` : '';
   const line = (k, op) => `<polyline points="${pts(F[0], SEG[k])}"${far(op)}>${anim(F, 'points', J => pts(J, SEG[k]), dur)}</polyline>`;
   const db = k => M.db && M.db.includes(k[0]) ? dumbbell(F, k, dur, side && k[0] === 'l' ? '.42' : '') : '';
@@ -606,27 +641,64 @@ function svg(pattern, opts){
   body += hb;
   const label = escA(opts.label || id.replace(/-/g, ' '));
   const flip = opts.flip ? ' transform="translate(240 0) scale(-1 1)"' : '';
-  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}"${lp && F.length > 1 ? ` data-rep="${lp.rep}" data-per="${lp.per}"` : ''}>` +
+  return `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="${size}" height="${size}" role="img" aria-label="${label}" class="gg-move${opts.flip ? ' gg-flip' : ''}" data-move="${id}"${pl && F.length > 1 ? ` data-rep="${pl.rep}" data-per="${pl.per}" data-dur="${pl.dur}" data-ph="${pl.phases.map(x => x.k + ':' + x.d).join(' ')}"` : lp && F.length > 1 ? ` data-rep="${lp.rep}" data-per="${lp.per}"` : ''}>` +
     `<g fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round"${flip}>` +
     `<path d="M14 212H226" stroke-width="3" style="opacity:var(--ggm-ground-op,.22)"/>${shadow}${M.bg || ''}${fg}${band}<g stroke-width="9" style="color:var(--ggm-ink,currentColor)">${body}</g></g></svg>`;
 }
 
 // For a step that names a pattern itself (the Daily Practice), keep a specific pattern, and let a plain
 // "standing" or "seat" give way to a better match for the step's name.
-function pick(fig, name){
+// BLD 898: with the step's how text, the figure also takes the posture its words name (stand, sit, kneel, lie).
+function pick(fig, name, how){
   const f = fig && P[fig] ? fig : null, n = name ? of(name) : 'standing';
-  if (!f) return n;
-  return (f === 'standing' || f === 'seat') && n !== 'standing' && n !== 'seat' ? n : refine(f, name);
+  if (!f) return fit(n, name, how);
+  return fit((f === 'standing' || f === 'seat') && n !== 'standing' && n !== 'seat' ? n : refine(f, name), name, how);
 }
 // BLD 896: a move that names a general pattern (fig) gives way to its own BLD 896 figure when its name asks for one
 // (Leg Swings set as balance, Push-Up on Handles set as push-up), and a plain "standing" gives way to any better match.
 const REFINE = {balance: ['leg-swing'], swing: ['leg-swing'], 'push-up': ['handle-push-up'], 'leg-raise': ['leg-raise-bent'], bridge: ['weighted-bridge'],
-  dip: ['dip-hold'], 'pull-up': ['pull-up-hold'], hang: ['pull-up-hold'], 'yt-raise': ['pull-apart'], lunge: ['side-lunge-rock'], 'cross-seat': [], 'ankle-rock': ['ankle-pumps']};
-function refine(fig, name){
+  dip: ['dip-hold'], 'pull-up': ['pull-up-hold'], hang: ['pull-up-hold'], 'yt-raise': ['pull-apart'], lunge: ['side-lunge-rock'], 'cross-seat': [], 'ankle-rock': ['ankle-pumps'], 'reach-through': ['thread-needle']};
+function refine(fig, name, how){
   const f = fig && P[fig] ? fig : null, n = name ? of(name) : 'standing';
-  if (!f) return n;
-  if (f === 'standing') return n;
-  return (REFINE[f] || []).includes(n) ? n : f;
+  if (!f) return how != null ? fit(n, name, how) : n;
+  const r = f === 'standing' ? n : (REFINE[f] || []).includes(n) ? n : f;
+  return how != null ? fit(r, name, how) : r;
+}
+// BLD 898: the posture of every figure, and the posture a step's words name, so the body matches the words.
+const POSE = {};
+[['stand', 'squat goblet-squat lunge step-up hinge sl-hinge press curl triceps calf-raise carry swing walk run march balance stretch arm-circles arms-up forward-fold side-bend standing bench-squat reverse-lunge push-press suitcase wall-slide skater punch knee-drive shuffle grapevine box-step in-out cross-crunch wood-chop knee-hold heel-toe quick-feet face-pull overhead-carry airplane dowel-hinge pass-through squat-press leg-swing hip-circles hug-open pull-apart pallof side-lunge-rock row stand-breath stand-twist stand-shrug stand-neck wall-push-up stand-ankle-rock'],
+  ['seat', 'seat spinal-flex twist cross-seat breath shrug neck ankle-pumps bike hip-switch life-nerve seat-arms-up seat-march seat-arm-circles seat-side-bend seat-press seat-fold seat-pulldown seat-row leg-press'],
+  ['kneel', 'hip-flexor half-kneel-chop half-kneel-lift kneel-press pull-down ankle-rock child-pose'],
+  ['fours', 'bird-dog cat-cow thread-needle'],
+  ['lie', 'bridge dead-bug figure-4 lie reverse-crunch hollow bicycle w-raise bench-press leg-raise leg-raise-bent bridge-march hip-thrust weighted-bridge open-book incline-press chest-row yt-raise'],
+  ['stand plank', 'walk-out'], ['plank', 'plank side-plank push-up fast-push-up handle-push-up shoulder-tap pull-through reach-through climber down-dog'],
+  ['hang', 'pull-up hang knee-raise pull-up-hold'], ['support', 'dip dip-hold']].forEach(([k, ids]) => ids.split(' ').forEach(id => { POSE[id] = k; }));
+const pose = id => POSE[P[id] ? id : of(id)] || '';
+const SAYS = [['fours', /(?<!from )(hands and knees|all fours|table ?top)/], ['kneel', /\bkneel(ing)?\b|(come|get|be|rest) (up )?on(to)? (your|both) knees|half.?kneel/],
+  ['lie', /\blie\b|\blying\b|on your (back|side|belly|stomach)|face down|savasana|corpse/], ['plank', /\bplank\b|push.?up position/], ['hang', /\bhang\b(?! heavy| loose| easy| soft)|from the bar/],
+  ['seat', /\bsit\b(?! (back|down|the hips|your hips|into|between|deep|low|or stand))|\bsitting\b|\bseated\b|cross.?legged|easy pose/],
+  ['stand', /\bstand(ing)?\b|keep your feet (steady|planted)|on your feet|feet (hip|shoulder) width|shift your weight|weight shift|rock your weight|(hold|holding) the back of a chair|hands? on (the|a) wall/]];
+// Words that name both postures (Sit to Stand, "Sit or stand tall") leave the figure as it is.
+const BOTH = /sit.?to.?stand|chair stand|wall sit|sit or stand|stand or sit|stand (all the way )?up.*sit|sit.*then stand/;
+function says(name, how){
+  for (const t of [name, how]){ const s = String(t || '').toLowerCase(); if (BOTH.test(s)) return ''; if (/then lie (back|down)/.test(s)) return 'lie'; let best = '', at = 1e9;
+    for (const [k, re] of SAYS){ const m = s.match(re); if (m && m.index < at){ at = m.index; best = k; } }
+    if (best) return best; }
+  return '';
+}
+const FITS = {stand: ['stand'], seat: ['seat'], kneel: ['kneel', 'fours'], fours: ['fours'], lie: ['lie'], plank: ['plank'], hang: ['hang']};
+// A figure in another posture than the words gives way to its form in that posture, else to the best match for the name.
+const TO = {stand: {breath: 'stand-breath', 'cross-seat': 'standing', seat: 'standing', twist: 'stand-twist', shrug: 'stand-shrug', neck: 'stand-neck', 'spinal-flex': 'forward-fold', 'life-nerve': 'forward-fold',
+    'ankle-rock': 'stand-ankle-rock', 'push-up': 'wall-push-up'},
+  seat: {'stand-breath': 'breath', standing: 'seat', 'stand-twist': 'twist', 'stand-shrug': 'shrug', 'stand-neck': 'neck', march: 'seat-march', 'arm-circles': 'seat-arm-circles', 'side-bend': 'seat-side-bend',
+    press: 'seat-press', 'figure-4': 'seat-fold', 'forward-fold': 'seat-fold', 'pull-up': 'seat-pulldown', 'pull-down': 'seat-pulldown', row: 'seat-row', squat: 'leg-press', 'arms-up': 'seat-arms-up', balance: 'seat'},
+  lie: {standing: 'lie', seat: 'lie', breath: 'lie', 'cross-seat': 'lie', 'stand-breath': 'lie'}, kneel: {standing: 'child-pose', seat: 'child-pose'}, fours: {'reach-through': 'thread-needle', 'child-pose': 'cat-cow'}};
+function fit(id, name, how){
+  if (how == null || !P[id]) return id; const w = says(name, how), p = POSE[id];
+  if (!w || !p || p.split(' ').some(x => (FITS[w] || [w]).includes(x))) return id;
+  let t = (TO[w] || {})[id]; if (t === 'seat-fold' && /legs? (extended|long|straight|out)/.test(String(how).toLowerCase())) t = 'life-nerve'; if (t && P[t]) return t;
+  const n = of(name); if (String(POSE[n] || '').split(' ').some(x => (FITS[w] || [w]).includes(x))) return n;
+  return id;
 }
 // BLD 896: a figure that follows the voice count. tempo is the seconds of one counted rep; a pattern marked alt (one rep
 // each side) loops over two reps, others over one (per sets it outright; the player's alt flag leaves it to the pattern,
@@ -639,6 +711,52 @@ function loop(pattern, opts){
   const per = +opts.per > 0 ? Math.round(+opts.per) : M.alt ? 2 : 1, rep = Math.round(t * 100) / 100;
   return {id, rep, per, dur: Math.round(rep * per * 100) / 100, hold: M.top ? (opts.hold != null ? Math.max(0, +opts.hold || 0) : 0.4) : 0};
 }
+// BLD 898 (Chris: "the count, the breath and the movements were way out of sync"): one timeline drives the figure, the breath
+// ring, and the count. plan(pattern, {tempo} or {breath: [in, out]}) lays out the loop as moves and holds, each with its breath:
+// in on the lowering or opening, out on the effort or the fold, hold on a held top pose. The figure's frames carry exact
+// keyTimes from it, and the player builds the breath ring from the same phases, so both turn at the same instant.
+// A pattern's first move (key 0 to key 1) breathes in, or out for the patterns listed here.
+const OUT_FIRST = new Set(('press push-press bench-press incline-press seat-press pull-up row chest-row yt-raise face-pull pull-down seat-pulldown seat-row curl calf-raise ' +
+  'bridge hip-thrust weighted-bridge bridge-march step-up swing cat-cow forward-fold seat-fold life-nerve spinal-flex leg-raise leg-raise-bent knee-raise reverse-crunch ' +
+  'pull-apart pallof dead-bug bird-dog leg-press kneel-press hollow').split(' '));
+function plan(pattern, opts){
+  opts = opts || {}; const id = P[pattern] ? pattern : of(pattern), M = P[id], br = opts.breath;
+  const bm = Array.isArray(br) && +br[0] > 0 && +br[1] > 0, lp = bm ? null : loop(id, opts);
+  if (!lp && !bm) return null;
+  const K = M.k.length, n = K % 2 && !lp ? K * 2 : K, first = OUT_FIRST.has(id) ? 'out' : 'in', other = first === 'in' ? 'out' : 'in', segs = [];
+  if (bm){
+    const d = {in: +br[0], out: +br[1]};
+    for (let i = 0; i < n; i++){ const k = i % 2 ? other : first; segs.push({a: i % K, b: (i + 1) % K, d: d[k], k}); }
+  } else {
+    const dur = lp.dur, per = lp.per, mv = K / per, top = lp.hold > 0 && M.top ? M.top : [];
+    if (top.length){
+      const hw = M.k.map((x, i) => top.includes((i + 1) % K) ? Math.min(0.8, lp.hold) / top.length : 0.04), mw = Math.max(0.1, 1 - hw.reduce((a, b) => a + b, 0)) / K;
+      for (let i = 0; i < K; i++){ const k = (i % mv) % 2 ? other : first;
+        if (hw[i] >= 0.1){ segs.push({a: i, b: (i + 1) % K, d: mw * dur, k}); segs.push({a: (i + 1) % K, b: (i + 1) % K, d: hw[i] * dur, k: 'hold'}); }
+        else segs.push({a: i, b: (i + 1) % K, d: (mw + hw[i]) * dur, k}); }
+    } else {
+      // Two moves a rep: the lowering (breathe in) takes six tenths, the effort (breathe out) four. Other counts share evenly.
+      for (let i = 0; i < K; i++){ const j = i % mv, k = j % 2 ? other : first, w = mv === 2 ? (k === 'in' ? 0.6 : 0.4) : 1 / mv; segs.push({a: i, b: (i + 1) % K, d: w * lp.rep, k}); }
+    }
+  }
+  const r3 = x => Math.round(x * 1000) / 1000, dur = r3(segs.reduce((a, s) => a + s.d, 0)), phases = [];
+  segs.forEach(s => { const l = phases[phases.length - 1]; if (l && l.k === s.k) l.d += s.d; else phases.push({k: s.k, d: s.d}); });
+  phases.forEach(p => { p.d = r3(p.d); });
+  return {id, dur, rep: lp ? lp.rep : r3(+br[0] + +br[1]), per: lp ? lp.per : Math.max(1, Math.round(n / 2)), first, segs, phases};
+}
+// Frames at exact times from a plan: each move eases from key to key, each hold stays on its key. F.kt are the keyTimes.
+function planFrames(M, pl){
+  const K = poses(M), pins = pinsOf(M, M.pr ? Object.assign({}, BASE[M.v], M.pr) : K[0]), F = [], kt = [], N = Math.max(96, Math.round(pl.dur * 16));
+  let t = 0;
+  pl.segs.forEach(s => {
+    if (s.a === s.b){ F.push(place(M, K[s.b], pins)); kt.push(t / pl.dur); t += s.d; return; }
+    const m = Math.max(6, Math.round(s.d / pl.dur * N));
+    for (let j = 0; j < m; j++){ const u = j / m; F.push(place(M, blend(K[s.a], K[s.b], M.e === 'lin' ? u : ease(u), M.raw), pins)); kt.push((t + s.d * u) / pl.dur); }
+    t += s.d;
+  });
+  F.push(F[0]); kt.push(1); F.kt = kt.map(x => Math.round(Math.min(1, x) * 10000) / 10000); return F;
+}
+
 // Restart a figure on each counted rep (rep 1, 2, 3 ...): an alternating figure starts its second half on even reps.
 // root is an svg made with a tempo, or any element (or the document) holding them.
 function sync(root, rep){
@@ -655,5 +773,5 @@ function restart(el, o){
   try { if (+el.getAttribute('data-rep') > 0) sync(el, r); else if (!o.alt || r % 2 === 1) el.setCurrentTime(0); return true; } catch (e){ return false; }
 }
 
-window.GGMoves = {svg, fig: svg, of, pick, refine, loop, sync, restart, patterns: Object.keys(P)};
+window.GGMoves = {svg, fig: svg, of, pick, refine, loop, plan, sync, restart, pose, says, fit, patterns: Object.keys(P)};
 })();

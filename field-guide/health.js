@@ -1283,11 +1283,10 @@ async function doSet(o, st){
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
     if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); if (lead && st.form) speak(o, st.form); await runTimer(o, workSecs(st) * 1000, ''); }
-    else if (o.count && repN(st)){ await speak(o, LN.go); if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } o.rep = 0; o.ring = lead; rerender(true);
-      for (let r = 1; r <= repN(st) && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r;
-        if (o.ring && (r === 1 || r > RING_REPS)){ if (r > RING_REPS) o.ring = false; rerender(true); } else repShow(r);
-        figRep(st, r); const t0 = Date.now(); await speak(o, LN.count(r)); if (lead && r === 1 && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
-        const wt = tempoOf(st) * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
+    else if (o.count && repN(st)){ await speak(o, LN.go); if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); }
+      // BLD 898: the breath line comes before One, so every count lands on its beat.
+      if (lead && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+      o.rep = 0; o.ring = lead; await beats(o, repN(st), tempoOf(st));
       o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
     else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
     else { await speak(o, LN.go); if (lead && st.form) await speak(o, st.form); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
@@ -1316,15 +1315,51 @@ const repShow = r => { const els = document.querySelectorAll('[data-hjrep]'); if
 // the page has it; else the figure's own clock goes back to the start (an alternating move every other rep, its loop is two reps).
 function figRep(st, r){ const M = window.GGMoves, two = !!(st && (st.alt || st.walt));
   document.querySelectorAll('.hj-stagebox svg.gg-move').forEach(el => { try { if (M && typeof M.restart === 'function') M.restart(el, {rep: r, alt: two, tempo: tempoOf(st)}); else if (el.setCurrentTime && (!two || r % 2 === 1)) el.setCurrentTime(0); } catch(e){} }); }
+// ---------- BLD 898: one clock for the figure, the breath ring, and the count ----------
+// (Chris, October 31, 2026: "the count, the breath and the movements were way out of sync".) o.clk.t0 is when the loop began
+// (Date.now() time). Every planned figure and breath ring on the stage (svg[data-dur]) is held to it: clkSync seeks any that
+// drift past 40 ms (after a redraw, a pause, a slow tab), holds them while paused, and slides t0 forward by the pause.
+const clkKey = o => [o.i, o.set, o.side || '', o.rest ? 1 : 0, o.between ? 1 : 0, o.sw ? 1 : 0, o.run ? 1 : 0, o.bk || 0].join('|');
+function clkOn(o, t0){ o.clk = {key: clkKey(o), t0: t0 == null ? Date.now() : t0, p: null, beat: false}; return o.clk; }
+function clkSync(o){
+  if (!o || !o.clk) return; const c = o.clk, now = Date.now();
+  if (o.paused && c.p == null) c.p = now; else if (!o.paused && c.p != null){ c.t0 += now - c.p; c.p = null; }
+  const el = ((c.p != null ? c.p : now) - c.t0) / 1000, hold = c.p != null || el < 0; c.s = now; c.el = el; c.tl = document.timeline ? document.timeline.currentTime : null;
+  document.querySelectorAll('.hj-stagebox svg[data-dur]').forEach(s => { const d = +s.getAttribute('data-dur'); if (!(d > 0) || !s.setCurrentTime) return;
+    try { const want = el <= 0 ? 0 : el % d, x = (((s.getCurrentTime() - want) % d) + d) % d; if (Math.min(x, d - x) > 0.04) s.setCurrentTime(want);
+      if (hold && !s.animationsPaused()) s.pauseAnimations(); else if (!hold && s.animationsPaused()) s.unpauseAnimations(); } catch(e){} });
+}
+setInterval(() => { const o = S.ov; if (o && o.clk && o.mode === 'auto' && !o.fin) clkSync(o); }, 100);
+// Count n reps of t seconds on that clock. The first beat comes a moment after the call (BEAT_LEAD), so Ava's One can be
+// scheduled exactly. Before each beat the count is handed to the voice for that instant (GGVoice.at: a decoded clip starts
+// past its lead in silence; a clip still downloading is left out rather than said late); at the beat the number shows.
+// A paused set holds the clock and goes on from the same place; Skip ends it.
+const BEAT_LEAD = 400;
+async function beats(o, n, t, keep){
+  const V = VO(), vo = o.voice || AVA; o.bk = (o.bk || 0) + 1; o.rep = 0;
+  if (V && V.prime) V.prime(vo, Array.from({length: n}, (x, k) => LN.count(k + 1)));
+  const c = clkOn(o, Date.now() + BEAT_LEAD); c.beat = true; rerender(true); lg(o, {e: 'beats', n, t, t0: c.t0});
+  const at = r => c.t0 + (r - 1) * t * 1000, wake = async (ms, early) => { while (!o.dead && !o.skip){ await hold(o); clkSync(o); const left = ms() - Date.now() - early; if (left <= 0) return true; await sleep(Math.min(100, left)); } return false; };
+  for (let r = 1; r <= n; r++){
+    if (!(await wake(() => at(r), 150))) break;
+    const when = at(r), txt = LN.count(r); lg(o, {e: 'count', r, when});
+    if (V && V.at) V.at(vo, txt, when); else if (V) speak(o, txt);
+    const w = when - Date.now(); if (w > 0) await sleep(w);
+    if (o.dead || o.skip) break; o.rep = r;
+    if (o.ring && !keep && (r === 1 || r > RING_REPS)){ if (r > RING_REPS) o.ring = false; rerender(true); } else if (r === 1) rerender(true); else repShow(r);
+    figRep(o.steps[o.i], r);   // the same place the clock gives (BLD 896 FIG's restart on each count)
+  }
+  if (!o.dead && !o.skip) await wake(() => at(n + 1), 0);
+  c.beat = false;
+}
 // A counted warm-up or cooldown item: Go, its form line, then each rep counted at its tempo; a per side or two way item turns at the half.
 async function wuCount(o, st){
   const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = !!st.wbreath;
   for (let k = 0; k < turns && !o.dead && !o.skip; k++){
     if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
     else { await speak(o, LN.go); if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } }
-    for (let r = 1; r <= n && !o.dead && !o.skip; r++){ await hold(o); if (o.skip) break; o.rep = r; if (r === 1) rerender(true); else repShow(r); figRep(st, r);
-      const t0 = Date.now(); await speak(o, LN.count(r)); if (r === 1 && !k && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
-      const wt = st.tempo * 1000 - (Date.now() - t0); if (wt > 0) await snooze(o, wt); }
+    if (!k && st.breathLine && !o.dead && !o.skip){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+    await beats(o, n, st.tempo, !!st.wbreath);
   }
   o.rep = 0; o.side = ''; o.ring = false;
 }
@@ -1351,6 +1386,8 @@ async function moveMusic(){ if (MOVE_OK == null){ try { const c = new AbortContr
 async function runSession(o){
   const V = VO(); o.mode = 'auto'; o.stage = 'run'; o.t0 = Date.now(); o.active = 0; o.dead = false; o.lastT = Date.now(); o.log = [];
   if (V) V.unlock();
+  // BLD 898: Ava's counts download and decode now, so every count is ready for its beat.
+  if (V && V.prime && !o.prac) V.prime(o.voice || AVA, Array.from({length: 20}, (x, k) => LN.count(k + 1)));
   if (!o.music && !o.prac) o.music = (await moveMusic()) ? '/audio/music/move-' + (1 + (new Date().getDay() + o.title.length) % 7) + '.mp3' : '/audio/music/learning-' + (1 + (o.title.length % 7)) + '.mp3';
   if (V) V.music(o.music);
   rerender(true);
@@ -1396,8 +1433,16 @@ function stCol(state, hour){
   const a = STC[state] || STC.work, k = hour < 12 ? 0 : hour < 18 ? 1 : 2; return {bg: '', fg: '', accent: a[k]};
 }
 let FLIP_OK = null;
-function moveFig(st, flip, still){ const M = window.GGMoves; if (!M || !st) return ''; try { const pat = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (st.fig && arr(M.patterns).includes(st.fig) ? (M.refine ? M.refine(st.fig, st.name) : st.fig) : M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+// BLD 898: the pattern and options a step's figure is drawn with; ex adds {breath: [in, out]} (a Flow step's breath key) or
+// {pose} (a held pose). The body takes the posture the step's words name (a standing breath stands, a seated march sits).
+function figSpec(st, still, ex){ const M = window.GGMoves; if (!M || !st) return null;
+  const p0 = st.figKey ? (M.pick ? M.pick(st.fig, st.name) : st.fig) : (st.fig && arr(M.patterns).includes(st.fig) ? (M.refine ? M.refine(st.fig, st.name) : st.fig) : M.of ? M.of(st.fig || st.name) : 'standing'), op = {size: 214, still: !!still};
+  const pat = M.fit ? M.fit(p0, st.name, st.how || '') : p0;
   if (!st.figKey && (+st.tempo > 0 || (st.t === 'ex' && st.kind !== 'time'))){ op.tempo = tempoOf(st); op.alt = !!(st.alt || st.walt); }
+  if (ex && !still) Object.assign(op, ex);
+  return {M, pat, op}; }
+function figPlan(st, ex){ try { const f = figSpec(st, false, ex); return f && f.M.plan && !f.op.still && f.op.pose == null && !(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches) ? f.M.plan(f.pat, f.op) : null; } catch(e){ return null; } }
+function moveFig(st, flip, still, ex){ const f = figSpec(st, still, ex); if (!f) return ''; try { const M = f.M, pat = f.pat, op = f.op;
   if (!flip) return M.svg(pat, op); if (FLIP_OK == null) FLIP_OK = M.svg('standing', {flip: true, still: true}) !== M.svg('standing', {still: true});
   return FLIP_OK ? M.svg(pat, Object.assign(op, {flip: true})) : `<div style="transform:scaleX(-1)">${M.svg(pat, op)}</div>`; } catch(e){ return ''; } }
 function figOf(st, flip){ if (st && st.candle) return candle(); const f = moveFig(st, flip); return f ? `<div class="hj-fig" aria-hidden="true">${f}</div>` : ''; }
@@ -1486,9 +1531,17 @@ function vAuto(o, top){
   const st = o.steps[o.i], pct = Math.round(100 * o.i / o.steps.length);
   if (o.fin || !st) return `${top(o.title, o.prac ? (o.med ? 'Meditation complete' : 'Flow complete') : 'Session complete', 100)}${doneBlock(o, o.prac ? 'Well done.' : 'Strong work.')}`;
   const state = stState(o), left = o.run ? Math.max(0, o.end - Date.now()) : 0, ring = o.run && (o.rest || o.between || o.sw) ? {pct: left / (o.tot || 1), secs: Math.ceil(left / 1000)} : {};
-  const br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : o.ring && st.t === 'ex' && !o.rest && !o.between && !o.sw ? repBreath(st) : o.ring && st.wbreath ? [Math.round(st.tempo * 4) / 10, Math.round(st.tempo * 6) / 10] : null;
+  // BLD 898: one timeline. The figure's moves set the breath ring's phases (GGMoves.plan): a Flow step's breath key paces the
+  // figure, a counted or timed rep paces both, and the clock (clkSync) starts them together on each count.
+  const still = !!(o.rest || o.between), ringNow = !!(o.ring && !o.rest && !o.between && !o.sw);
+  let br = st.breath ? BREATH[st.breath] || BREATH.long : state === 'breathe' && /breath/i.test(st.name) ? BREATH.slow : ringNow && st.wbreath ? [Math.round(st.tempo * 4) / 10, Math.round(st.tempo * 6) / 10] : null;
+  const fex = br && !still && !st.candle ? (st.breath === 'fire' ? {pose: 1} : {breath: br}) : null, pl = st.candle ? null : figPlan(st, fex);
+  let phases = null;
+  if (pl && br && fex && fex.breath) phases = pl.phases;
+  else if (ringNow && st.t === 'ex'){ const t = tempoOf(st); if (pl && t >= 2) phases = pl.phases; else if (pl) phases = [{k: 'in', d: t}, {k: 'out', d: t}]; else br = repBreath(st); }
+  if (pl && (!o.clk || (o.clk.key !== clkKey(o) && !o.clk.beat))) clkOn(o);
   const flip = o.side === 'L', pill = st.t === 'ex' ? (o.between ? 'Next Up' : o.rest ? (o.set + 1 === st.sets ? 'Last Set Next' : 'Set ' + (o.set + 1) + ' Next') : o.set === st.sets && st.sets > 1 ? 'Last Set' : 'Set ' + o.set + ' of ' + st.sets) : '';
-  const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, o.rest || o.between), side: o.side || '', label: pill, inhale: br && br[0], exhale: br && br[1]}, ring);
+  const sop = Object.assign({fig: st.candle ? candle() : moveFig(st, flip, still, fex), side: o.side || '', label: pill, inhale: phases ? phases.filter(x => x.k !== 'out').reduce((a, x) => a + x.d, 0) : br ? br[0] : undefined, exhale: phases ? phases.filter(x => x.k === 'out').reduce((a, x) => a + x.d, 0) : br ? br[1] : undefined, phases: phases || undefined}, ring);
   const big = o.run ? `<div class="hj-clock" data-hjclock>${clock(left)}</div>` : o.rep ? `<div class="hj-clock" data-hjrep>${o.rep}</div>${st.t === 'ex' ? `<div class="hj-reps hj-repsof">${esc(repLine(st))}</div>` : ''}` : st.t === 'ex' ? `<div class="hj-reps">${esc(repLine(st))}</div>` : `<div class="hj-clock" data-hjclock>${clock(st.secs * 1000)}</div>`;
   const sideTxt = o.side === 'L' ? ' · Left side' : o.side === 'R' ? ' · Right side' : '';
   const label = o.between ? 'Rest, then next up' : o.sw ? 'Switch sides' : o.rest ? `Rest, then ${o.set + 1 === st.sets ? 'the last set' : 'set ' + (o.set + 1) + ' of ' + st.sets}` : st.t === 'ex' ? (o.set === st.sets && st.sets > 1 ? 'Last set' : `Set ${o.set} of ${st.sets}`) + sideTxt : st.part + sideTxt;
@@ -1547,7 +1600,7 @@ function actCoach(a, v){
     case 'play': if (o) runSession(o); return true;
     case 'manual': if (o){ o.stage = 'run'; o.mode = 'manual'; if (V) V.unlock(); } rerender(true); return true;
     case 'didit': if (o){ markDone(o.key || ('work:' + o.s)); checkOn(o.prac ? 'still' : 'move'); toast('Marked done. Well done.'); closeOv(); } return true;
-    case 'apause': if (o){ o.paused = !o.paused; if (V){ o.paused ? V.pause() : V.resume(); } } rerender(true); return true;
+    case 'apause': if (o){ o.paused = !o.paused; if (V){ o.paused ? V.pause() : V.resume(); } clkSync(o); } rerender(true); return true;
     case 'askip': if (o){ o.skip = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'askipmove': if (o){ o.skip = true; o.skipMove = true; o.wait = false; o.paused = false; if (V) V.stop(); } return true;
     case 'amore': if (o && o.run){ o.end += 15000; o.tot = (o.tot || 0) + 15000; } return true;
@@ -2494,10 +2547,10 @@ async function moveHome(){
 // layer on the page (#hj-ov0), so a guide opened from The Grounded Way's Today plays full screen.
 const vis = el => !!(el && el.isConnected && el.getClientRects().length);
 function rerender(keep){
-  const y = window.scrollY, root = document.getElementById('hj-root');
-  if (bareOn()){ S.ovHome = 'host'; paintBare(); paintOv(); if (keep) window.scrollTo(0, y); return; }
-  if (vis(root)){ S.ovHome = 'full'; paintOv(); const w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild); if (keep) window.scrollTo(0, y); return; }
-  S.ovHome = 'host'; paintOv(); if (S.ov) return;
+  const y = window.scrollY, root = document.getElementById('hj-root'), sync = () => { if (S.ov && S.ov.clk) clkSync(S.ov); };
+  if (bareOn()){ S.ovHome = 'host'; paintBare(); paintOv(); sync(); if (keep) window.scrollTo(0, y); return; }
+  if (vis(root)){ S.ovHome = 'full'; paintOv(); const w = document.createElement('div'); w.innerHTML = view(); root.replaceWith(w.firstElementChild); sync(); if (keep) window.scrollTo(0, y); return; }
+  S.ovHome = 'host'; paintOv(); sync(); if (S.ov) return;
   if (C.render) C.render();
 }
 const toForm = () => setTimeout(() => { const f = document.getElementById('hj-form'); if (f && f.scrollIntoView) f.scrollIntoView({block: 'start', behavior: 'smooth'}); }, 30);

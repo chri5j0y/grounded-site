@@ -719,7 +719,7 @@
       if (last) bgStop(2500);
       else if (P.playing) bgPlay(cfg);
       if (last) $('.ln-link', host).innerHTML = srcLine(l) + musicCredit(cfg) + '<small class="ln-copyline">&copy; ' + new Date().getFullYear() + ' Grow With Grounded LLC. All rights reserved. To share or reuse these videos, words, or stories, ask us first.</small>';
-      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now();
+      var B = beatsOf(sc); P.B = B; P.sc = sc; P.last = last; P.b = 0; P.ph = 'say'; P.t0 = Date.now(); P.brLock = false; P.brDone = -1; P.brT0 = Date.now();
       $('.ln-cap', host).innerHTML = B.map(function (x) { return '<span class="w">' + esc(x.t) + '</span>'; }).join(' ');
       Array.prototype.forEach.call($('.ln-prog', host).children, function (b, k) { b.classList.toggle('on', k <= P.i); });
       $('.ggl-cn', host).textContent = last ? 'Finished' : 'Scene ' + (P.i + 1) + ' of ' + (N - 1);
@@ -732,7 +732,7 @@
       var sel = REV[sc.k], items = sel ? Array.prototype.slice.call(cv.querySelectorAll(sel)) : [];
       P.items = items; P.map = revealMap(sc, items, B);
       if (P.playing || last) items.forEach(function (el) { el.classList.add('hold'); var pv = el.previousElementSibling; if (sc.k === 'flow' && pv && pv.classList.contains('ln-arr')) pv.classList.add('hold'); });
-      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); }); });
+      requestAnimationFrame(function () { requestAnimationFrame(function () { st.classList.add('go'); P.brT0 = Date.now(); }); });
       // The closing scene always speaks once, even when the lesson was stepped through by hand.
       if (!P.playing && !last) return;
       run(t);
@@ -774,6 +774,7 @@
         if (t !== P.tok) return;
         var i = P.b;
         if (i >= B.length) return done();
+        var bw = brWait(i); if (bw > 0) { P.nx = setTimeout(function () { if (t === P.tok) step(); }, bw); return; }
         reveal(i); capOn(i); P.ph = 'say';
         var b = B[i], ended = false, began = Date.now(), seen = false;
         var fin = function () { if (ended || t !== P.tok) return; ended = true; clearInterval(P.tick); after(i); };
@@ -819,6 +820,29 @@
       }
       if (P.ph === 'wait' && B[P.b] && B[P.b].w) { var i0 = P.b; reveal(i0); return waitRing(B[i0].w, t, function () { P.ph = 'say'; P.b = i0 + 1; step(); }); }
       step();
+    }
+    // GWG BLD 898 (Chris: "we just need to ensure all these things sync in all vids"): in a breathe scene, a sentence that
+    // says breathe in starts as the circle begins to grow, and one that says breathe out as it begins to shrink. The first
+    // such sentence sets the circle's cycle (in 4 seconds, out 6); each later one waits for its turn in the cycle.
+    var BR_CYC = 10000, BR_OUT = 4000;
+    function brKind(x) {
+      var s = String(x || '').toLowerCase(), a = s.search(/\b(breathe in|breath in|inhale|in through|smell the flower|fill (it|the|your))|^(and |once more, |again, )?in\b/),
+        b = s.search(/\b(breathe out|breath out|breathe all the way out|exhale|and out|out through|blow|whoosh|float down|let it float)\b/);
+      if (a < 0 && b < 0) return ''; if (a < 0) return 'out'; if (b < 0) return 'in'; return a < b ? 'in' : 'out';
+    }
+    function brReduced() { try { return window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) { return false; } }
+    function brWait(i) {
+      var sc = P.sc; if (!sc || sc.k !== 'breathe' || P.brDone === i || brReduced()) return 0;
+      var k = brKind(P.B[i] && P.B[i].t); if (!k) { P.brDone = i; return 0; }
+      if (!st.classList.contains('go')) return 40;
+      P.brDone = i;
+      if (!P.brLock) {
+        P.brLock = true; var off = k === 'out' ? BR_OUT : 0;
+        Array.prototype.forEach.call(cv.querySelectorAll('.ln-brc, .ln-brt i'), function (e) { e.style.animationName = 'none'; void e.offsetWidth; e.style.animationName = ''; e.style.animationDelay = (-off / 1000) + 's'; });
+        P.brT0 = Date.now() - off; return 0;
+      }
+      var el = (Date.now() - P.brT0) % BR_CYC, d = ((k === 'in' ? 0 : BR_OUT) - el + BR_CYC) % BR_CYC;
+      return d > BR_CYC - 120 ? 0 : d;
     }
     // One audio element per player, unlocked by the Play tap and reused for every sentence, so Safari and iPhone keep
     // playing without a tap per sentence (BLD 777). A guard moves on if a clip or the device voice fallback never ends.
@@ -1185,7 +1209,7 @@
   // Early Days: 30 Days (GWG BLD 837, shared/sober-30.js): a Learn track in Birch, Oak, and Sequoia, listed for anyone who chose
   // Living Sober (lowkey 'sober30'). It still opens by a lesson id, so the Living Sober card can start any day.
   var DECLARED = ['birch', 'oak', 'sequoia'];
-  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b894'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
+  function need30(app) { return DECLARED.indexOf(app) >= 0 ? script(url('/shared/sober-30.js?v=b898'), function () { return !!window.GGSober30; }) : Promise.resolve(); }
   function sober30(app) {
     var S = window.GGSober30; if (DECLARED.indexOf(app) < 0 || !S || !S.track || !Array.isArray(S.track.lessons) || !S.track.lessons.length) return [];
     return [Object.assign({}, S.track, { lowkey: 'sober30' })];

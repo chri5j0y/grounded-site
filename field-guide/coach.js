@@ -47,6 +47,21 @@ function fetchClip(voice, text, ms){
   cache.set(k, p); if (cache.size > 300){ const f = cache.keys().next().value; cache.delete(f); }
   return p;
 }
+// BLD 898: decoded short lines for words on the beat, with the silence before the voice measured once.
+const BUF = new Map(), SCH = [];
+function decoded(voice, text){
+  const k = voice + '|' + text; if (BUF.has(k)) return BUF.get(k);
+  const e = {done: false, v: null}; BUF.set(k, e);
+  (async () => {
+    try {
+      const c = V._c, url = await fetchClip(voice, text); if (!url || !c || !c.decodeAudioData) return;
+      const ab = await (await fetch(url)).arrayBuffer(), buf = await new Promise((ok, no) => { const p = c.decodeAudioData(ab, ok, no); if (p && p.then) p.then(ok, no); });
+      const d = buf.getChannelData(0), n = d.length; let i = 0; while (i < n && Math.abs(d[i]) < 0.01) i++;
+      e.v = {buf, lead: Math.max(0, i / buf.sampleRate - 0.01)};
+    } catch(x){} finally { e.done = true; if (!e.v){ BUF.delete(k); if (BUF.size > 80) BUF.delete(BUF.keys().next().value); } }
+  })();
+  return e;
+}
 function device(text){
   return new Promise(res => {
     try { if (!window.speechSynthesis){ res(); return; } const u = new SpeechSynthesisUtterance(text); u.rate = 1; u.onend = u.onerror = () => res(); speechSynthesis.speak(u); cur = {stop(){ try { speechSynthesis.cancel(); } catch(e){} res(); }}; setTimeout(res, 1500 + text.length * 90); }
@@ -65,8 +80,8 @@ const V = window.GGVoice = {
   nameOf: async (voice, text) => (await keys()) ? nameOf(voice, text) : null,
   unlock(){ if (!el){ el = new Audio(); el.preload = 'auto'; } try { el.src = silent(); const p = el.play(); if (p) p.catch(() => {}); } catch(e){} try { const A = window.AudioContext || window.webkitAudioContext; V._c = V._c || new A(); V._c.resume && V._c.resume(); } catch(e){} },
   prefetch(voice, text){ if (V.on() && text) fetchClip(voice, text); },
-  stop(){ if (cur){ const c = cur; cur = null; c.stop(); } },
-  pause(){ try { el && el.pause(); musicEl && musicEl.pause(); window.speechSynthesis && speechSynthesis.pause(); } catch(e){} },
+  stop(){ if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } if (cur){ const c = cur; cur = null; c.stop(); } },
+  pause(){ if (SCH.length){ SCH.forEach(x => { try { x.stop(); } catch(e){} }); SCH.length = 0; } try { el && el.pause(); musicEl && musicEl.pause(); window.speechSynthesis && speechSynthesis.pause(); } catch(e){} },
   resume(){ try { if (el && el.src && !el.ended && el.currentTime > 0) el.play().catch(() => {}); musicEl && V.musicOn() && musicEl.play().catch(() => {}); window.speechSynthesis && speechSynthesis.resume(); } catch(e){} },
   // Speak one line; resolves when it ends (or right away with Voice Off).
   async say(voice, text){
@@ -86,6 +101,25 @@ const V = window.GGVoice = {
       el.onloadedmetadata = () => { clearTimeout(g); setTimeout(fin, (el.duration || 20) * 1000 + 3000); };
     });
     cur = null;
+  },
+  // BLD 898: words on the beat. prime() downloads and decodes short lines (the counts) ahead of time and measures the
+  // silence each recording carries before the voice (about 0.08 to 0.14 seconds). at(voice, text, when) then starts the
+  // line so its first word sounds at `when` (a Date.now() time): Web Audio starts it at that instant, past its lead in.
+  // A line still on its way is left out (a late count would pull the rep off the beat); a line with no recording is
+  // spoken by the device voice at the beat. Returns how it went: 'clip', 'device', 'drop', or 'off'.
+  prime(voice, texts){ if (!V.on()) return; (texts || []).forEach(t => { if (t) decoded(voice, t); }); },
+  at(voice, text, when){
+    if (!text || !V.on()) return 'off';
+    const k = voice + '|' + text, b = BUF.get(k), self = this && this.say ? this : V, wait = Math.max(0, (+when || Date.now()) - Date.now());
+    const c = V._c, ok = b && b.v && c && c.state === 'running' && c.createBufferSource;
+    if (ok){
+      try { const s = c.createBufferSource(); s.buffer = b.v.buf; s.connect(c.destination); const at = c.currentTime + wait / 1000;
+        if (SCH.length){ SCH.forEach(x => { try { x.stop(at); } catch(e){} }); SCH.length = 0; }
+        s.start(at, b.v.lead); SCH.push(s); if (V.trace) V.trace.push({text, when: +when, how: 'clip', lead: b.v.lead}); return 'clip'; } catch(e){}
+    }
+    if (b && !b.done && V._c){ decoded(voice, text); if (V.trace) V.trace.push({text, when: +when, how: 'drop'}); return 'drop'; }
+    setTimeout(() => { if (V.on()) self.say(voice, text); }, wait);
+    if (V.trace) V.trace.push({text, when: +when, how: 'device'}); return 'device';
   },
   // Soft music under the voice; null stops it.
   music(src){
