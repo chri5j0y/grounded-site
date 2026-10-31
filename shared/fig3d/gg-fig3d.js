@@ -173,6 +173,9 @@ function warp(P, Q, tau, dur){
   const q = Q[(i + rot) % n], u = q.u0 + x * (q.u1 - q.u0);
   return {u: ((u % 1) + 1) % 1, phase: P[i].k, x, i};
 }
+// Own pace: a pattern marked own (walking, carries, stepping) keeps its own loop when the SVG figure is not on a counted
+// plan (no data-dur), and the walking gaits always do, whatever the plan.
+function ownPace(id, svg){ const d = moveDef(id); if (!d || !d.own) return false; return !!d.gait || !svg.hasAttribute('data-dur'); }
 // The key pose shown when the figure holds still (reduced motion, a rest): the middle of a held top, else the end of
 // the first move (the bottom of a squat or a push-up, the reach of a bird dog).
 function keyU(Q){ if (!Q) return 0; const h = Q.find(q => q.k === 'hold'); return h ? (((h.u0 + h.u1) / 2) % 1 + 1) % 1 : ((Q[0].u1 - .02) % 1 + 1) % 1; }
@@ -288,7 +291,17 @@ function frame(){
   let dur = +svg.getAttribute('data-dur') || 0, tau = 0, w;
   L.still = !anim;
   if (!anim){ w = {u: keyU(Q), phase: 'hold', x: 0}; dur = 0; }
-  else {
+  else if (ownPace(id, svg)){
+    // BLD 899 (Chris: "he is walking way too fast"): a walk, a carry, or another move with its own pace keeps its own
+    // natural loop (the pattern's tempo times its reps), never the SVG figure's loop or the workout tempo. Its time
+    // runs while the SVG figure runs and holds while it is paused.
+    const d = moveDef(id), loop = d ? (+d.tempo || 3) * (d.reps || (d.alt ? 2 : 1)) : 4, now = performance.now();
+    let held = false; try { held = svg.animationsPaused(); } catch(e){}
+    if (L.ownId !== id){ L.ownId = id; L.ownT = 0; L.ownAt = now; }
+    if (!held) L.ownT += Math.min(.25, Math.max(0, (now - L.ownAt) / 1000));
+    L.ownAt = now; dur = loop; tau = L.ownT;
+    w = {u: (L.ownT / loop) % 1, phase: '', x: 0};
+  } else {
     if (!dur) dur = parseFloat(anim.getAttribute('dur')) || 2.6;
     try { tau = svg.getCurrentTime(); } catch(e){ tau = 0; }
     w = warp(parsePh(svg.getAttribute('data-ph')), Q, tau, dur);
