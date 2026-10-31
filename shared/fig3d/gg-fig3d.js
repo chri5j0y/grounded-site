@@ -102,7 +102,7 @@ function layer(){
   if (L.el) return L.el;
   const el = document.createElement('div'); el.className = 'g3'; el.setAttribute('aria-hidden', 'true');
   el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
-  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; if (L.stage) kick(); else placeArt(); }).observe(el); } catch(e){}
+  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; L.gr = null; if (L.stage) kick(); else placeArt(); }).observe(el); } catch(e){}
   L.el = el; L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
   return el;
 }
@@ -219,17 +219,26 @@ function label(g, p, t, k, side, w){
 }
 function guideOf(id){ const d = moveDef(id); return d && Array.isArray(d.form) && d.form.length ? null : GUIDES[id] || null; }
 // The move's own form guides (its form list, eased in and out by the engine at their moments), mirrored with the figure.
+// BLD 900 (phone speed): the canvas box and the boxes the words keep clear of are read every 30 frames (and after a
+// resize or a new stage), not every frame, and a frame with no guide showing, after one with none, draws nothing.
 function drawForms(){
-  const c = L.gc, g = c.getContext('2d'), r = c.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
-  const w = Math.round(r.width * d), h = Math.round(r.height * d);
-  if (c.width !== w || c.height !== h){ c.width = w; c.height = h; }
-  g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, r.width, r.height);
+  const c = L.gc, g = c.getContext('2d'), d = Math.min(2, window.devicePixelRatio || 1);
   let list = []; try { list = (reduced() && L.stage.formsAll ? L.stage.formsAll() : L.stage.forms()) || []; } catch(e){}
+  if (!list.length && !L.gDrawn) return false;
+  if (!L.gr || L.gn-- <= 0 || L.gr.box !== L.box){
+    const r = c.getBoundingClientRect(), avoid = [];
+    // The words keep clear of the tree, the count and its chips, the side chip, and the progress line.
+    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
+    L.gr = {w: r.width, h: r.height, avoid, box: L.box}; L.gn = 30;
+  }
+  const R = L.gr, w = Math.round(R.w * d), h = Math.round(R.h * d);
+  if (c.width !== w || c.height !== h){ c.width = w; c.height = h; }
+  g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, R.w, R.h);
+  L.gDrawn = list.length > 0;
+  if (!list.length) return false;
   if (reduced()) list.forEach(f => { f.k = 1; });
-  if (L.mir){ const m = p => p ? [r.width - p[0], p[1]] : p; list = list.map(f => Object.assign({}, f, {pts: f.pts.map(m), tick: m(f.tick), at: m(f.at), side: -(f.side || 1)})); }
-  // The words keep clear of the tree, the count and its chips, the side chip, and the progress line.
-  const avoid = []; if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
-  try { E().drawForms(g, list, {dark: isDark(), avoid, w: r.width, h: r.height}); } catch(e){}
+  if (L.mir){ const m = p => p ? [R.w - p[0], p[1]] : p; list = list.map(f => Object.assign({}, f, {pts: f.pts.map(m), tick: m(f.tick), at: m(f.at), side: -(f.side || 1)})); }
+  try { E().drawForms(g, list, {dark: isDark(), avoid: R.avoid, w: R.w, h: R.h}); } catch(e){}
   return list.some(f => f.k > .5);
 }
 function guideOn(G, ph, x){
@@ -421,7 +430,7 @@ function sync(ctx){
   frame();
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
-addEventListener('resize', () => { L.dirty = true; L.place = 0; kick(); });
+addEventListener('resize', () => { L.dirty = true; L.place = 0; L.gr = null; kick(); });
 
 // ---------- the stylesheet ----------
 const D1 = ':root[data-theme="dark"]', D2 = ':root:not([data-theme="light"])';
@@ -443,6 +452,15 @@ const CSS = `
 .hj-stagebox.g3-on .ggs::after,.hj-stagebox.g3-pre .ggs::after{box-shadow:none;}
 .hj-stagebox:not(.g3-on) .g3-fig,.hj-stagebox:not(.g3-on) .g3-guides{opacity:0;}
 .g3-fig,.g3-guides{transition:opacity .45s ease;}
+/* BLD 900 (phone speed): while the 3D figure moves, the page around it uses plain fills in place of live blurs and filters
+   (each blur over a moving canvas is redrawn every frame). The painting behind the player holds still. */
+@media (max-width: 700px), (pointer: coarse){
+.hj-ov:has(.hj-stagebox.g3-on) .hj-paint img{animation:none;filter:none;}
+.hj-ov:has(.hj-stagebox.g3-on) .hj-ovtop{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 92%,transparent);}
+.hj-ov:has(.hj-stagebox.g3-on) .hj-ovb{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 94%,transparent);}
+.hj-stagebox.g3-on .ggs-breath{-webkit-backdrop-filter:none;backdrop-filter:none;}
+.hj-stagebox.g3-on .g3-paint{filter:none;}
+}
 .g3.g3-settle .g3-paint{transition:opacity .5s,background-size .7s ease,background-position .7s ease;}
 @media (prefers-reduced-motion: reduce){.g3-fig,.g3-guides,.g3-paint,.g3.g3-settle .g3-paint{transition:none;}}
 .hj-stagebox.g3-on .ggs-rest .g3-fig,.hj-stagebox.g3-on .ggs-next .g3-fig{opacity:.62;}
