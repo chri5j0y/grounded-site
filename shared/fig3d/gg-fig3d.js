@@ -61,13 +61,17 @@ function artFor(ref){
   if (!MAP) return null; ref = ref || {};
   // BLD 899: a painting may name a different painting for the stage (stage: id), when its own scene has no room for a
   // person to work out (a close-up still life, water at the floor line, clutter). Cards keep their own painting.
-  const A = MAP.art || {}, one = id => id && A[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null,
-    pick = id => { let a = one(id), n = 0; while (a && a.stage && A[a.stage] && n++ < 4) a = Object.assign(one(a.stage), {card: a.card || a.id}); return a; };
+  // BLD 900: stage may also be a list, the first painting whose file is on the site wins (a painting not yet delivered,
+  // like yoga-studio, is skipped once its file fails to load); a list may name the painting itself to stand in its own room.
+  const A = MAP.art || {}, one = id => id && A[id] && !MISS[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null,
+    next = a => { const l = Array.isArray(a.stage) ? a.stage : [a.stage]; for (const id of l){ if (id === a.id) return null; if (one(id)) return id; } return null; },
+    pick = id => { let a = one(id), n = 0, to; while (a && a.stage && (to = next(a)) && n++ < 4) a = Object.assign(one(to), {card: a.card || a.id}); return a; };
+  if (ref.exact) return one(ref.art);
   return pick(ref.art) || pick((MAP.workouts || {})[ref.workout]) || pick(ref.workout) || pick((MAP.categories || {})[ref.category]) ||
     pick((MAP.fallback || {})[ref.kind || 'move']) || pick(MAP.default);
 }
 const artUrl = a => new URL((MAP.base || '') + a.src + (/\?/.test(a.src) ? '' : '?v=' + V), new URL('art-map.json', BASE)).href;
-const LUM = {};
+const LUM = {}, MISS = {};
 function lum(img){
   try { const c = document.createElement('canvas'); c.width = 48; c.height = 27; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 48, 27);
     const d = g.getImageData(0, 0, 48, 27).data; let L = 0; for (let i = 0; i < d.length; i += 4) L += (.2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]) / 255; return L / (d.length / 4); } catch(e){ return .6; }
@@ -262,6 +266,7 @@ function setArt(){
     L.art = a; const img = new Image(); img.decoding = 'async'; L.artImg = null;
     img.onload = () => { if (L.art !== a) return; L.artImg = img; if (LUM[a.id] == null) LUM[a.id] = lum(img); L.paint.style.backgroundImage = `url("${img.src}")`; L.el.classList.add('g3-art'); tone(); L.dirty = true; L.place = 0;
       if (!L.stage && L.box){ L.box.classList.add('g3-pre'); placeArt(); } };
+    img.onerror = () => { if (L.art !== a) return; MISS[a.id] = true; L.art = null; setArt(); };
     img.src = artUrl(a);
   }
   if (L.stage && L.lit !== a.id){ L.lit = a.id;
@@ -284,7 +289,7 @@ function tone(){
 // and a plain painted floor band under the figure, for a painting with no room for a person.
 // The placement for the move shown, read once per move, body, and stage size (the floor under the hips at the start).
 function figGeom(W, H){
-  const st = L.stage, c = st.camera, key = [L.move, st.current(), W, H, L.mir ? 1 : 0, c.position.x.toFixed(2), c.position.y.toFixed(2), c.position.z.toFixed(2)].join('|'); if (L.geo && L.geo.key === key) return L.geo;
+  const st = L.stage, c = st.camera, key = [L.move, L.art && L.art.id, st.current(), W, H, L.mir ? 1 : 0, c.position.x.toFixed(2), c.position.y.toFixed(2), c.position.z.toFixed(2)].join('|'); if (L.geo && L.geo.key === key) return L.geo;
   const Vc = c.position.constructor, f = st.figs[st.current()], s = f.rig.scale;
   const pr = v => { const p = v.clone().project(c); const x = (p.x * .5 + .5) * W; return [L.mir ? W - x : x, (.5 - p.y * .5) * H]; };
   const r = f.bones.root.getWorldPosition(new Vc()), g = pr(new Vc(r.x, 0, r.z)), t = pr(new Vc(r.x, 1.73 * s, r.z));
@@ -292,7 +297,12 @@ function figGeom(W, H){
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const floor = [];
   try { for (let i = 0; i < 12; i++){ const T = st.track(i / 12); for (const k in T){ const p = pr(new Vc(T[k][0], T[k][1], T[k][2]));
     x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); if (T[k][1] < .03 * s) floor.push(pr(new Vc(T[k][0], 0, T[k][2]))); } } } catch(e){ x0 = g[0] - 60; x1 = g[0] + 60; y0 = t[1]; y1 = g[1]; }
-  return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor});
+  // The drawn mat (when shown): its four corners on the floor, for the room check (the whole mat on open floor).
+  let mat = null;
+  try { const sc = st.floor && st.floor.parent; if (sc) sc.traverse(o => { const gp = o.geometry && o.geometry.parameters; if (mat || !o.isMesh || !gp || o.geometry.type !== 'BoxGeometry' || Math.abs(gp.height - .012) > .002 || Math.abs(gp.width - .62) > .01) return;
+    let vis = true; for (let q = o; q; q = q.parent) if (q.visible === false) vis = false; if (!vis) return;
+    o.updateWorldMatrix(true, false); mat = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([i, j]) => { const v = new Vc(i * gp.width / 2, 0, j * gp.depth / 2).applyMatrix4(o.matrixWorld); v.y = 0; return pr(v); }); }); } catch(e){ mat = null; }
+  return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor, mat});
 }
 function placeArt(){
   const img = L.artImg, a = L.art; if (!img || !a || !L.box) return;
@@ -302,20 +312,29 @@ function placeArt(){
   let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W * .45, fy: H * .835, hp: H * .72, box: [W * .3, H * .12, W * .6, H * .84], floor: []}; }
   const cover = Math.max(W / iw, H / ih) * ih * 1.02, fl = a.floor != null ? a.floor : .8, fo = (a.focal || [.5])[0];
   let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, G.hp / a.scale), pw = ph * iw / ih;
-  let ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)), oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)), dx = 0, dy = 0;
+  let ox, oy, dx = 0, dy = 0;
   if (!study){
-    // What the painting could not do, the figure does, keeping the whole move on the stage (8 px margin).
+    // BLD 900 (Chris: "on cardio videos he is often standing to the side.. how come he is not standing in the center?"): the
+    // figure always stands in the middle of the stage (its move's box centered across). The painting slides so its focal
+    // point sits under the figure; when it cannot slide far enough and still cover the stage, it grows a little instead.
     const b = G.box, m = 8, lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
-    dx = lim(ox + fo * pw - G.fx, m - b[0], W - m - b[2]); dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
-    // The floor line meets the feet exactly: the painting takes any part the figure could not.
-    oy = G.fy + dy - fl * ph; ox = Math.min(0, Math.max(W - pw, G.fx + dx - fo * pw));
-  } else { oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; }
+    dx = lim(W / 2 - (b[0] + b[2]) / 2, m - b[0], W - m - b[2]);
+    const fx = G.fx + dx, k = Math.max(1, fx / (fo * pw || 1e-6), (W - fx) / ((1 - fo) * pw || 1e-6));
+    if (k > 1){ pw *= k; ph *= k; }
+    ox = fx - fo * pw;
+    // Up and down as before: the painting's floor line meets the feet; what the painting cannot do, the figure does.
+    oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph));
+    dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
+    oy = G.fy + dy - fl * ph;
+    L.grow = k;
+  } else { ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)); oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; L.grow = 1; }
   const st = L.paint.style; st.backgroundSize = `${pw.toFixed(0)}px ${ph.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
   const tf = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
   // For the room check (tests): the painting's box, the figure's move box, and its floor points, in painting units (0 to 1).
   const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
   L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
-    box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy)};
+    box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy),
+    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((G.box[0] + G.box[2]) / 2 + dx) / W, grow: L.grow || 1};
 }
 
 // ---------- each frame ----------
@@ -434,6 +453,6 @@ window.GGFig3D = {sync, detach, ok, able, load, artFor, has: id => F.ready && L.
   body: bodyPref, setBody(b){ if (b === 'man' || b === 'woman'){ ls.set('gg-fig-body', b); L.dirty = true; kick(); } },
   state(){ return Object.assign({ready: F.ready, failed: F.failed, frames: L.frames, lite: L.stage && L.stage.mode ? L.stage.mode().lite : null}, L.st, {fit: L.fit || null}); },
   // For tests (the room check): show this 3D pattern and this painting whatever the step is; null to go back.
-  probe(id, art){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },
+  probe(id, art, exact){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined, exact: !!(art && exact)}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },
   profileBody: null, version: V};
 })();

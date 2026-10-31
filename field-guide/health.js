@@ -4155,6 +4155,9 @@ const CSS = `
 .hj-stagebox.g3-wait .ggs{--H:clamp(300px,92vw,440px);}
 .hj-stagebox.g3-wait:not(.g3-on) .ggs-fig{opacity:0;}
 .hj-stagebox.g3-wait:not(.g3-on)::after{content:"";position:absolute;left:50%;bottom:9%;width:min(46%,260px);height:16%;transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(closest-side,rgba(255,232,180,.55),rgba(255,232,180,.18) 60%,rgba(255,232,180,0));animation:hjg3w 4.4s ease-in-out infinite;}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on):not(.g3-pre) :is(.ggs-sky,.ggs-deck,.ggs-tint,.ggs-scrim){visibility:hidden;}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on):not(.g3-pre) .ggs{background:color-mix(in srgb,var(--bg) 18%,transparent);-webkit-backdrop-filter:blur(1px) saturate(1.05);backdrop-filter:blur(1px) saturate(1.05);}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on) .ggs::after{box-shadow:none;}
 @keyframes hjg3w{0%,100%{opacity:.45;transform:translateX(-50%) scale(.92);}50%{opacity:.9;transform:translateX(-50%) scale(1.04);}}
 @media (prefers-reduced-motion: reduce){.hj-stagebox.g3-wait:not(.g3-on)::after{animation:none;opacity:.7;}}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
 .hj-stagebox.fb{height:clamp(170px,32vh,290px);border-radius:22px;overflow:hidden;background:var(--st);}
