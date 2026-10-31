@@ -590,7 +590,7 @@ const KW = [
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
   [/romanian|\brdl|deadlift|hinge|good morning/, 'hinge'], [/bridge march|marching bridge/, 'bridge-march'], [/hip thrust/, 'hip-thrust'], [/bridge/, 'bridge'], [/swing/, 'swing'],
-  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/ankle rock|knee to wall/, 'ankle-rock'], [/reverse lunge|back lunge|step back/, 'reverse-lunge'],
+  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/ankle rock|knee to wall/, 'ankle-rock'], [/^lunge and reach\b/, 'stretch'], [/reverse lunge|back lunge|step back/, 'reverse-lunge'],
   [/lunge|split squat/, 'lunge'], [/squats? to (the )?(bench|box|chair)|box squat|bench squat/, 'bench-squat'],
   [/squat|sit to stand|chair stand/, 'squat'], [/\brows?\b/, 'row'], [/\bdips?\b/, 'dip'], [/wall slide|wall angel/, 'wall-slide'], [/arms? up|reach up|sun salut/, 'arms-up'],
   [/press|overhead|jerk/, 'press'], [/suitcase|one.?arm carry|single.?arm carry/, 'suitcase'], [/carry|farmer/, 'carry'], [/march|jacks?\b|high knee/, 'march'],
