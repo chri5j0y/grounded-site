@@ -40,8 +40,8 @@
     ] },
     // Healthy Living (BLD 868): The Grounded Way (with Tending) and Living Sober, matching the Tools page. Grounded Recipes joins in BLD 875.
     { name: 'Healthy Living', items: [
-      { id: 'way', title: 'The Grounded Way', desc: 'The app: Today, your tree, and Tending in one private place, plus the all-in path for food, movement, and quiet', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">', bg: '#E2EEDB' },
-      { id: 'recipes', title: 'Grounded Recipes', desc: 'Breakfasts, lunches, dinners, and snacks that meet the Grounded Nutritional Standards, with ingredients, steps, and nutrition', href: HOME + '/recipes/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-recipes.webp?v=b875" alt="" width="42" height="42">', bg: '#F3E5CC' },
+      { id: 'way', title: 'The Grounded Way', desc: 'The app: Today, Week, Grow, and Library, with your plan, your tree, and Tending in one private place', href: HOME + '/the-grounded-way.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-grounded.webp?v=b895" alt="" width="42" height="42">', bg: '#E2EEDB' },
+      { id: 'recipes', title: 'Grounded Recipes', desc: 'Every meal and the big days, sized for your table, with ingredients, steps, and a calm voice to guide you', href: HOME + '/recipes/', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-recipes.webp?v=b875" alt="" width="42" height="42">', bg: '#F3E5CC' },
       { id: 'sober', title: 'Living Sober', desc: 'For anyone growing sober and the people who love them: words for every day, short videos, and 90 days to begin', href: HOME + '/living-sober.html', icon: '<img class="gn-mark" src="' + HOME + '/shared/cards/way-sober.webp?v=b870" alt="" width="42" height="42">', bg: '#DCE8E1' }
     ] },
     { name: 'When Someone Dies', items: [
@@ -527,8 +527,8 @@
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', function () { setTimeout(mount, 0); }); else setTimeout(mount, 0);
 })();
 
-/* BLD 867: inside My Home's frame (a tree or tool opened from /home/), the site's own top bar, menu, and footer step
-   aside so My Home's bar leads; links back to My Home close the frame. */
+/* BLD 867: inside The Grounded Way's frame (a tree or tool opened from /home/), the site's own top bar, menu, and footer step
+   aside so The Grounded Way's bar leads; links back to /home/ close the frame. */
 (function () {
   var inHome = false;
   try { inHome = window.self !== window.top && /^\/home\//.test(window.top.location.pathname); } catch (e) {}
