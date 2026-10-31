@@ -4196,24 +4196,28 @@ G.define('heel-toe', {name: 'Heel-to-Toe Walk', own: true, steps: 2, tempo: 3, g
   ]});
 
 // ---- In place cardio -------------------------------------------------
-// March in place: knee up toward hip height, the opposite arm swings forward, tall chest. One rep each side.
-G.define('march', {name: 'March in Place', tempo: 1.2, alt: true, base: 'stand', glow: {flexors: [.8, .8], quads: [.3, .3], calves: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
+// March in place (BLD 899, Chris: "very robotic, needs to be smoother"): one flowing loop with no stops at the keys.
+// The knee eases up toward hip height and the foot sets down softly on the same spot (no slide); the opposite arm
+// swings forward as the knee rises, the weight glides a little over the standing foot, and the chest turns a touch
+// against the lifted knee. One rep each side, on the count.
+var MUP = {x: .12, y: .36, z: .32, f: 62, pole: [.1, 0, 1]};
+G.define('march', {name: 'March in Place', tempo: 1.2, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], quads: [.3, .3], calves: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
   form: [{when: 'always', plumb: ['head', 'root'], say: 'tall chest', at: 'neck01', side: 1}],
   k: [
-    {br: 'in', on: 'fR fL', p: [.93, -.062], ra: [-6, 14], la: [-6, 14], ao: 6},
-    {br: 'in', on: 'fL', p: [.93, -.062], rl: [70, -6, 64], ra: [-22, 18], la: [28, 84], ao: 6, e: 1, gl: [0, 1]},
-    {br: 'out', on: 'fR fL', p: [.93, -.062], ra: [-6, 14], la: [-6, 14], ao: 6},
-    {br: 'out', on: 'fR', p: [.93, -.062], ll: [70, -6, 64], la: [-22, 18], ra: [28, 84], ao: 6, e: 1, gl: [1, 0]}
+    {br: 'in', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
+    {br: 'in', via: true, on: 'fL', p: [.93, -.062], px: .028, tw: -5, hy: 2, rl: MUP, ra: [-20, 18], la: [30, 78], ao: 6, e: 1, gl: [0, 1], lift: 0},
+    {br: 'out', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
+    {br: 'out', via: true, on: 'fR', p: [.93, -.062], px: -.028, tw: 5, hy: -2, ll: MUP, la: [-20, 18], ra: [30, 78], ao: 6, e: 1, gl: [1, 0], lift: 0}
   ], sideGlow: 'flexors'});
 
 // Knee drive: reach both arms up tall, then drive one knee up as the arms pull down to meet it. Out on the drive.
-G.define('knee-drive', {name: 'Knee Drives', tempo: 1.4, alt: true, base: 'stand', glow: {flexors: [.8, .8], abs: [.6, .6], lats: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
+G.define('knee-drive', {name: 'Knee Drives', tempo: 1.4, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], abs: [.6, .6], lats: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
   form: [{when: [.2, .4], plumb: ['head', 'foot.L'], say: 'tall standing leg', at: 'neck01', side: -1}],
   k: [
-    {br: 'out', on: 'fR fL', p: [.93, -.062], t: [181, 182], n: 182, ra: [168, 172], la: [168, 172], ao: 12, hR: 'relax', hL: 'relax', e: .3},
-    {br: 'in', on: 'fL', p: [.925, -.06], t: [174, 164], n: 160, rl: [98, 2, 70], ra: {x: .2, y: 1.06, z: .34, pole: [.3, -.2, -1]}, la: {x: .0, y: 1.08, z: .34, pole: [.3, -.2, -1]}, ao: 8, hR: 'relax', hL: 'relax', e: 1},
-    {br: 'out', on: 'fR fL', p: [.93, -.062], t: [181, 182], n: 182, ra: [168, 172], la: [168, 172], ao: 12, hR: 'relax', hL: 'relax', e: .3},
-    {br: 'in', on: 'fR', p: [.925, -.06], t: [174, 164], n: 160, ll: [98, 2, 70], la: {x: .2, y: 1.06, z: .34, pole: [.3, -.2, -1]}, ra: {x: .0, y: 1.08, z: .34, pole: [.3, -.2, -1]}, ao: 8, hR: 'relax', hL: 'relax', e: 1}
+    {br: 'out', via: true, on: 'fR fL', p: [.93, -.062], t: [181, 182], n: 182, ra: [168, 172], la: [168, 172], ao: 12, hR: 'relax', hL: 'relax', e: .3},
+    {br: 'in', via: true, on: 'fL', p: [.925, -.06], t: [174, 164], n: 160, rl: [98, 2, 70], ra: {x: .2, y: 1.06, z: .34, pole: [.3, -.2, -1]}, la: {x: .0, y: 1.08, z: .34, pole: [.3, -.2, -1]}, ao: 8, hR: 'relax', hL: 'relax', e: 1},
+    {br: 'out', via: true, on: 'fR fL', p: [.93, -.062], t: [181, 182], n: 182, ra: [168, 172], la: [168, 172], ao: 12, hR: 'relax', hL: 'relax', e: .3},
+    {br: 'in', via: true, on: 'fR', p: [.925, -.06], t: [174, 164], n: 160, ll: [98, 2, 70], la: {x: .2, y: 1.06, z: .34, pole: [.3, -.2, -1]}, ra: {x: .0, y: 1.08, z: .34, pole: [.3, -.2, -1]}, ao: 8, hR: 'relax', hL: 'relax', e: 1}
   ]});
 
 // Fast feet: a low athletic stance (hips back, chest forward, knees soft), tiny quick steps on the balls of the
@@ -5192,11 +5196,14 @@ G.define('side-bend', A(SLOW2, {name: 'Side Reach', glow: {obliques: [.7, .7], l
     K(ST, SBU(1), {br: 'out', hR: 'reach', pnR: 'fwd', e: .5})
   ]}));
 // Turn and Let the Arms Follow: the chest turns gently right and left from the waist, feet steady, arms loose.
-G.define('stand-twist', A(SLOW, {name: 'Standing Twist', glow: {obliques: [.6, .6], back: [.3, .3]}, cam: {yaw: 50, el: 10, zoom: 1},
-  form: [{when: 'in out', level: ['upperleg01.L', 'upperleg01.R'], say: 'hips steady, chest turns', at: 'root', side: 1}],
+// BLD 899 (Chris: "he does not really turn or do much.. hard to follow"): a full, easy turn of the chest each way with the
+// head following, the arms swinging loosely round the body (the front arm wraps across, the back arm trails behind),
+// knees soft, feet steady; seen from three quarters so the turn reads on a phone.
+G.define('stand-twist', A(SLOW, {name: 'Standing Twist', glow: {obliques: [.6, .6], back: [.3, .3]}, cam: {yaw: 28, el: 12, zoom: 1},
+  form: [{when: 'in out', level: ['upperleg01.L', 'upperleg01.R'], say: 'feet steady, chest turns', at: 'root', side: 1}],
   k: [
-    K(ST, {br: 'in', tw: -38, hy: -18, ra: [-14, 4], la: [22, 70], raO: 20, laO: -14, e: .6}),
-    K(ST, {br: 'out', tw: 38, hy: 18, la: [-14, 4], ra: [22, 70], laO: 20, raO: -14, e: .6})
+    K(ST, {br: 'in', p: [.905, -.062], tw: -58, hy: -32, lb: 2, ra: [-34, -18, -10], la: [52, 74, 80], raO: [34, 20, 10], laO: [-34, -20, -10], hR: 'relax', hL: 'relax', e: .6}),
+    K(ST, {br: 'out', p: [.905, -.062], tw: 58, hy: 32, lb: -2, la: [-34, -18, -10], ra: [52, 74, 80], laO: [34, 20, 10], raO: [-34, -20, -10], hR: 'relax', hL: 'relax', e: .6})
   ]}));
 // Shoulder Rolls: shoulders rise toward the ears on the in breath and drop easy on the out breath.
 G.define('stand-shrug', A(SLOW, {name: 'Shoulder Rolls', glow: {neck: [.4, .4], upper: [.4, .4]}, cam: {yaw: 30, el: 6, zoom: 1},
@@ -5299,13 +5306,13 @@ G.define('ankle-pumps', {name: 'Ankle Pumps', tempo: 2, base: 'seat', glow: {cal
   form: [{when: 'always', say: 'heels stay down', at: 'foot.R', side: 1}],
   k: [{br: 'in', rl: APF(52), ll: APF(52), e: .9}, {br: 'out', rl: APF(118), ll: APF(118), e: .4}]});
 // Seated March: one knee lifts, then the other; the arms swing easy.
-G.define('seat-march', {name: 'Seated March', tempo: 2.6, alt: true, base: 'seat', glow: {flexors: [.7, .7], abs: [.3, .3]}, sideGlow: 'flexors', cam: {yaw: 34, el: 8, zoom: 1},
+G.define('seat-march', {name: 'Seated March', tempo: 2.6, alt: true, rest: 0, base: 'seat', glow: {flexors: [.7, .7], abs: [.3, .3]}, sideGlow: 'flexors', cam: {yaw: 34, el: 8, zoom: 1},
   form: [{when: 'always', plumb: ['head', 'root'], say: 'sit tall', at: 'spine01', side: 1}],
   k: [
-    {br: 'out', ra: [-12, 60], la: [14, 76], e: .3, gl: [0, 0], on: 'p fR fL'},
-    {br: 'in', rl: [112, 20, 96], ra: [16, 82], la: [-14, 56], e: 1, gl: [0, 1], on: 'p fL'},
-    {br: 'out', ra: [-12, 60], la: [14, 76], e: .3, gl: [0, 0], on: 'p fR fL'},
-    {br: 'in', ll: [112, 20, 96], ra: [-14, 56], la: [16, 82], e: 1, gl: [1, 0], on: 'p fR'}
+    {br: 'out', via: true, ra: [-12, 60], la: [14, 76], e: .3, gl: [0, 0], on: 'p fR fL'},
+    {br: 'in', via: true, tw: -4, rl: [112, 20, 96], ra: [16, 82], la: [-14, 56], e: 1, gl: [0, 1], on: 'p fL'},
+    {br: 'out', via: true, ra: [-12, 60], la: [14, 76], e: .3, gl: [0, 0], on: 'p fR fL'},
+    {br: 'in', via: true, tw: 4, ll: [112, 20, 96], ra: [-14, 56], la: [16, 82], e: 1, gl: [1, 0], on: 'p fR'}
   ]});
 // Seated Arm Circles: the same small circles, seated tall.
 G.define('seat-arm-circles', {name: 'Seated Arm Circles', props: ['chair'], tempo: 2.4, rest: 0, glow: {delts: [.8, .8], rotator: [.5, .5]}, cam: {view: 'front', turn: -20, el: 8, zoom: 1},
@@ -5454,21 +5461,21 @@ TWO('open-book', {name: 'Open Book', props: ['mat'], tempo: 12, bp: [4, 2, 6], d
 var STW = A(ST, {p: [.91, -.062], rl: FOOT(.16, 0), ll: FOOT(.16, 0), ra: [10, 16], la: [10, 16], lo: 6});
 G.define('weight-shift-side', A(SLOW, {name: 'Side to Side Weight Shift', glow: {glutes: [.4, .4], adductors: [.3, .3]}, cam: {view: 'front', turn: -24, el: 6, zoom: 1},
   form: [{when: 'in out', plumb: ['head', 'root'], say: 'tall and soft, glide slowly', at: 'spine01', side: 1}],
-  k: [K(STW, {br: 'in', px: -.07, e: .5}), K(STW, {br: 'out', px: .07, e: .5})]}));
+  k: [K(STW, {br: 'in', p: [.89, -.062], px: -.1, lb: 3, ht: 2, ra: [12, 18], la: [8, 14], e: .5}), K(STW, {br: 'out', p: [.89, -.062], px: .1, lb: -3, ht: -2, ra: [8, 14], la: [12, 18], e: .5})]}));
 G.define('floating-arms', A(SLOW, {name: 'Floating Arms Side to Side', glow: {delts: [.4, .4], obliques: [.4, .4]}, cam: {view: 'front', turn: -24, el: 6, zoom: 1},
   form: [{when: 'in out', say: 'arms float, eyes follow', at: 'neck01', side: 1}],
-  k: [K(STW, {br: 'in', px: -.07, tw: -24, hy: -18, ra: [84, 88, 88], la: [80, 86, 86], raO: [8, 8, 8], laO: [-6, -6, -6], hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', e: .5}),
-    K(STW, {br: 'out', px: .07, tw: 24, hy: 18, ra: [80, 86, 86], la: [84, 88, 88], raO: [-6, -6, -6], laO: [8, 8, 8], hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', e: .5})]}));
+  k: [K(STW, {br: 'in', px: -.1, tw: -42, hy: -30, ra: [84, 88, 88], la: [80, 86, 86], raO: [8, 8, 8], laO: [-6, -6, -6], hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', e: .5}),
+    K(STW, {br: 'out', px: .1, tw: 42, hy: 30, ra: [80, 86, 86], la: [84, 88, 88], raO: [-6, -6, -6], laO: [8, 8, 8], hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', e: .5})]}));
 // One foot a half step forward (the right): the weight rocks forward and back, then the other foot leads.
 var STF = A(ST, {rl: FOOT(.12, .18), ll: FOOT(.12, -.14), ra: [10, 16], la: [10, 16]});
 var STFP = function(z){ return [.88, z]; };
 TWO('weight-shift-front', A(SLOW, {name: 'Front and Back Weight Shift', glow: {quads: [.3, .3], calves: [.3, .3]}, cam: {yaw: 10, el: 6, zoom: 1},
   form: [{when: 'in out', plumb: ['head', 'root'], say: 'tall spine, glide slowly', at: 'spine01', side: 1}],
-  k: [K(STF, {br: 'in', p: [.88, -.12], e: .4}), K(STF, {br: 'out', p: [.88, .04], e: .5})]}));
+  k: [K(STF, {br: 'in', p: [.88, -.15], n: 182, e: .4}), K(STF, {br: 'out', p: [.875, .07], t: [178, 177], n: 178, e: .5})]}));
 TWO('reach-draw', A(SLOW, {name: 'Slow Reach and Draw Back', glow: {delts: [.4, .4], quads: [.3, .3]}, cam: {yaw: 14, el: 6, zoom: 1},
   form: [{when: 'in', say: 'reach long, shoulders soft', at: 'neck01', side: 1}],
-  k: [K(STF, {br: 'in', p: [.88, -.12], ra: [22, 104, 110], la: [22, 104, 110], ao: 10, hR: 'relax', hL: 'relax', pnR: 'in', pnL: 'in', e: .3}),
-    K(STF, {br: 'out', p: [.88, .04], ra: [86, 88, 90], la: [86, 88, 90], ao: 10, hR: 'reach', hL: 'reach', pnR: 'down', pnL: 'down', e: .6})]}));
+  k: [K(STF, {br: 'in', p: [.88, -.15], ra: [24, 112, 116], la: [22, 104, 110], ao: 10, hR: 'relax', hL: 'relax', pnR: 'in', pnL: 'in', e: .3}),
+    K(STF, {br: 'out', p: [.875, .07], t: [178, 176], ra: [90, 90, 92], la: [90, 90, 92], ao: 10, hR: 'reach', hL: 'reach', pnR: 'down', pnL: 'down', e: .6})]}));
 // Slow Step Forward: the weight settles on the left foot, the right heel reaches forward and rolls down, the weight
 // glides onto it and back, and the foot returns. Each change rides one breath.
 var SSF = function(arms){ var up = arms ? {ra: [80, 86, 88], la: [80, 86, 88], pnR: 'down', pnL: 'down'} : {};
@@ -5483,10 +5490,19 @@ TWO('slow-step-forward-arms', A(SLOW2, {name: 'Slow Step Forward with Floating A
 // Slow Step to the Side: weight onto the left foot, the right foot steps out, the weight glides across and back.
 TWO('slow-step-side', A(SLOW2, {name: 'Slow Step to the Side', glow: {glutes: [.4, .4], adductors: [.3, .3]}, cam: {view: 'front', turn: -20, el: 6, zoom: 1},
   form: [{when: 'in out', plumb: ['head', 'root'], say: 'tall and soft, glide slowly', at: 'spine01', side: 1}],
-  k: [K(ST, {br: 'in', on: 'fL', p: [.88, -.062], ra: [10, 16], la: [10, 16], e: .2}),
-    K(ST, {br: 'out', p: [.88, -.062], px: .06, rl: FOOT(.26, 0), ra: [10, 16], la: [10, 16], e: .4}),
-    K(ST, {br: 'in', px: -.08, p: [.88, -.062], rl: FOOT(.26, 0), ra: [10, 16], la: [10, 16], e: .5}),
-    K(ST, {br: 'out', on: 'fL', p: [.88, -.062], px: .06, rl: FOOT(.26, 0), ra: [10, 16], la: [10, 16], e: .4})]}));
+  k: [K(ST, {br: 'in', on: 'fL', p: [.885, -.062], px: .07, ra: [10, 16], la: [10, 16], lift: .07, e: .2}),
+    K(ST, {br: 'out', p: [.875, -.062], px: .04, rl: FOOT(.32, 0), ra: [16, 22], la: [12, 18], e: .4}),
+    K(ST, {br: 'in', px: -.13, lb: 3, p: [.87, -.062], rl: FOOT(.32, 0), ra: [12, 18], la: [16, 22], e: .5}),
+    K(ST, {br: 'out', on: 'fL', p: [.885, -.062], px: .07, rl: FOOT(.32, 0), ra: [10, 16], la: [10, 16], lift: .07, e: .4})]}));
+// Slow Step and Turn (BLD 899): the right foot turns out a quarter turn and the body turns with it, the weight glides
+// onto it as the hands float up to chest height toward the turn, eyes following; back to center, then the left.
+// One breath each way: in as the body turns, out as it returns.
+var TURN = function(sd){ var r = sd === 'R', g = r ? -1 : 1, f = {}; f[r ? 'rl' : 'll'] = FOOT(.17, .05); f[r ? 'll' : 'rl'] = FOOT(.1, -.03);
+  return K(ST, f, {br: 'out', p: [.895, -.05], yaw: 46 * g, tw: 14 * g, hy: 18 * g, px: .075 * g, ra: [70, 84, 86], la: [70, 84, 86], raO: [6 - 10 * g, 4, 0], laO: [6 + 10 * g, 4, 0], hR: 'relax', hL: 'relax', pnR: 'down', pnL: 'down', e: .5}); };
+G.define('slow-step-turn', A(SLOW2, {name: 'Slow Step and Turn', glow: {glutes: [.4, .4], obliques: [.3, .3], adductors: [.3, .3]}, cam: {view: 'front', turn: -8, el: 10, zoom: 1},
+  form: [{when: 'out', plumb: ['head', 'root'], say: 'turn slowly, eyes follow', at: 'spine01', side: 1}],
+  k: [K(ST, {br: 'in', p: [.9, -.062], rl: FOOT(.12, 0), ll: FOOT(.12, 0), ra: [10, 16], la: [10, 16], e: .2}), TURN('R'),
+    K(ST, {br: 'in', p: [.9, -.062], rl: FOOT(.12, 0), ll: FOOT(.12, 0), ra: [10, 16], la: [10, 16], e: .2}), TURN('L')]}));
 // Hands Behind, Chest Open: hands clasp behind the back and the chest lifts gently.
 G.define('hands-behind', A(SLOW, {name: 'Hands Behind, Chest Open', glow: {chest: [.7, .7], delts: [.5, .5]}, cam: {yaw: 40, el: 6, zoom: 1},
   form: [{when: 'in', say: 'chest lifts, shoulders soft', at: 'neck01', side: 1}],
@@ -5636,7 +5652,9 @@ GG3D.names = (GG3D.names || []).concat([
   [/^seated reach$/i, 'chair-arms-up'],
   [/\bslow step forward with floating arms\b/i, 'slow-step-forward-arms'],
   [/\bslow step forward\b/i, 'slow-step-forward'],
-  [/\bslow step (to the side|and turn)\b/i, 'slow-step-side'],
+  [/\bslow step and turn\b/i, 'slow-step-turn'],
+  [/\bturn and let the arms follow\b|\bturn and reach\b/i, 'stand-twist'],
+  [/\bslow step to the side\b/i, 'slow-step-side'],
   [/\bfloating arms side to side\b/i, 'floating-arms'],
   [/\bside to side weight shift\b/i, 'weight-shift-side'],
   [/\bfront and back weight shift\b/i, 'weight-shift-front'],

@@ -12,6 +12,12 @@
    BLD 880: every recipe is written for six. A Serves picker on each recipe (2 to 12) scales the ingredients with
    shared/gg-scale.js (GGScale); the steps fit every size and nutrition stays per serving. The choice is remembered on this
    device (localStorage gg-serves), and The Grounded Way opens a recipe at the household's size with /recipes/?serves=N#id.
+   BLD 899 (Chris: "clean it up w cards to organize better add some color and energy"): painted meal cards near the top
+   (Breakfast, Lunch, Dinner, Snacks, Holidays and Gatherings, each with a count) filter the list; the list groups by meal
+   with a heading and count when no filter or search is on, and shows one flat grid while filtering or searching; Goals and
+   Fits share one row of chips; each recipe card carries its meal's color band, a bigger icon, time and serves as pills, and
+   a short nutrition line. Holidays and Gatherings is its own section inside the page (soonest first), reached by its meal
+   card or /recipes/#holidays (The Grounded Way Library keeps holidays inside its Grounded Recipes shelf).
    ===================================================================== */
 (function () {
   'use strict';
@@ -20,7 +26,12 @@
   var $ = function (id) { return document.getElementById(id); };
   var esc = function (s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
 
-  var MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack']];
+  // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
+  var W = '/shared/heroes/way/';
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'] };
+  var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
+  var PEOPLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6"/></svg>';
   var GOALS = [['heart', 'Heart', 'Heart and Cholesterol'], ['energy', 'Energy', 'Steady Energy'], ['strength', 'Strength', 'Strength'], ['weight', 'Weight', 'A Healthy Weight'], ['well', 'Well', 'Simply Eating Well']];
   var FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
   var MEAL_NAME = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack' };
@@ -58,6 +69,8 @@
     return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber, ' + n1(n.sf) + ' g saturated fat, ' + n0(n.na) + ' mg sodium';
   }
   function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? serves : r.serves); }
+  function shortNut(r) { var n = r.nut || {}; return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber per serving'; }
+  function filtering() { return st.meal !== 'all' || !!st.goal || st.fits.length > 0 || !!st.q; }
   function hay(r) { return (r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '')).toLowerCase(); }
   ALL.forEach(function (r) { r._h = hay(r); });
 
@@ -74,22 +87,45 @@
     return '<button type="button" class="rc-chip" data-g="' + group + '" data-k="' + key + '" aria-pressed="' + (on ? 'true' : 'false') + '"' + (title && title !== label ? ' title="' + esc(title) + '"' : '') + '>' + esc(label) + '</button>';
   }
   function drawChips() {
-    $('rc-meal').innerHTML = MEALS.map(function (m) { return chip('meal', m[0], m[1], st.meal === m[0]); }).join('');
     $('rc-goal').innerHTML = GOALS.map(function (g) { return chip('goal', g[0], g[1], st.goal === g[0], g[2]); }).join('');
-    $('rc-fit').innerHTML = FITS.map(function (f) { return chip('fit', f[0], f[1], st.fits.indexOf(f[0]) >= 0); }).join('');
+    $('rc-fit').innerHTML = FITS.map(function (f) { return chip('fit', f[0], f[1], st.fits.indexOf(f[0]) >= 0).replace('class="rc-chip"', 'class="rc-chip rc-fitc"'); }).join('');
+    drawCats();
+  }
+  function mealCount(m) { return ALL.filter(function (r) { return r.meal === m; }).length; }
+  function drawCats() {
+    var box = $('rc-cats'); if (!box) return;
+    box.innerHTML = CATS.map(function (c) {
+      var hol = c[0] === 'holidays';
+      if (hol && !(HOL && (HOL.sets || []).length)) return '';
+      var n = hol ? HOL.sets.length : mealCount(c[0]), nx = hol ? holOrder()[0] : null;
+      var cnt = n + (hol ? (n === 1 ? ' set' : ' sets') : (n === 1 ? ' recipe' : ' recipes'));
+      var extra = hol && nx && nx.date ? '<span class="rc-cx">Next: ' + esc(HOL.get(nx.id).name) + ', ' + esc(soonText(nx.date)) + '</span>' : '';
+      return '<button type="button" class="rc-cat rc-k-' + c[0] + '" data-cat="' + c[0] + '"' + (hol ? '' : ' aria-pressed="' + (st.meal === c[0] ? 'true' : 'false') + '"') +
+        ' aria-label="' + esc(c[1] + ', ' + cnt + (hol ? '' : (st.meal === c[0] ? ', showing now' : ''))) + '"><img src="' + W + c[2] + '.webp" alt="" decoding="async">' +
+        '<span class="rc-cat-in"><b>' + esc(c[1]) + '</b><span class="rc-cn">' + esc(cnt) + '</span>' + extra + '</span></button>';
+    }).join('');
   }
 
   function card(r) {
     return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
-      '<span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span>' +
-      '<span class="rc-cb"><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span><b>' + esc(r.name) + '</b>' +
-      '<span class="rc-t">' + esc(timeLine(r)) + '</span><span class="rc-n">' + esc(nutLine(r)) + '</span></span></button>';
+      '<span class="rc-band"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
+      '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
+      '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? serves : r.serves)) + '</span></span>' +
+      '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
+  }
+  function section(c, list) {
+    if (!list.length) return '';
+    return '<section class="rc-sec rc-k-' + c[0] + '" data-meal="' + c[0] + '" aria-labelledby="rc-s-' + c[0] + '"><div class="rc-sh"><img src="' + W + c[2] + '.webp" alt="" loading="lazy" decoding="async">' +
+      '<h2 id="rc-s-' + c[0] + '">' + esc(c[1]) + '</h2><span class="rc-shn">' + list.length + (list.length === 1 ? ' recipe' : ' recipes') + '</span></div>' +
+      '<div class="rc-grid">' + list.map(card).join('') + '</div></section>';
   }
 
   function drawList() {
     var list = ALL.filter(matches);
-    $('rc-grid').innerHTML = list.map(card).join('');
-    $('rc-count').textContent = list.length === 1 ? '1 recipe' : list.length + ' recipes';
+    if (filtering()) $('rc-grid').innerHTML = list.length ? '<div class="rc-grid">' + list.map(card).join('') + '</div>' : '';
+    else $('rc-grid').innerHTML = CATS.filter(function (c) { return c[0] !== 'holidays'; }).map(function (c) { return section(c, list.filter(function (r) { return r.meal === c[0]; })); }).join('');
+    var cn = list.length === 1 ? '1 recipe' : list.length + ' recipes';
+    $('rc-count').innerHTML = st.meal !== 'all' ? '<b>' + esc(CATS.filter(function (c) { return c[0] === st.meal; })[0][1]) + ':</b> ' + cn : cn;
     $('rc-empty').hidden = list.length > 0;
     $('rc-clear').hidden = !(st.meal !== 'all' || st.goal || st.fits.length || st.q);
   }
@@ -98,6 +134,12 @@
 
   function note(title, body) { return body ? '<div class="card"><h3>' + esc(title) + '</h3><p>' + esc(body) + '</p></div>' : ''; }
 
+  // BLD 899: the recipe opens on its meal's painting (a dinner by its main: fish, chili and stews, or Today's Plate).
+  function bandHTML(r) {
+    var b = BAND[r.meal] || BAND.dinner, wide = b[0], sq = b[1];
+    if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } }
+    return '<div class="rc-dhero" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + sq + '.webp"><img src="' + W + wide + '.webp" alt="" decoding="async"></picture></div>';
+  }
   function detailHTML(r) {
     var n = r.nut || {};
     var goals = GOALS.filter(function (g) { return (r.goals || []).indexOf(g[0]) >= 0; }).map(function (g) { return '<span class="rc-tag rc-g">' + esc(g[2]) + '</span>'; }).join('');
@@ -110,7 +152,7 @@
       return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>';
     }).join('');
     return '<button type="button" class="rc-back" id="rc-back"><span aria-hidden="true">&larr;</span> All Recipes</button>' +
-      '<article class="rc-k-' + esc(r.meal) + '" aria-labelledby="rc-dname">' +
+      '<article class="rc-k-' + esc(r.meal) + '" aria-labelledby="rc-dname">' + bandHTML(r) +
       '<div class="rc-dh"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><div><div class="eyebrow">' + esc(MEAL_NAME[r.meal] || r.meal) + '</div>' +
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
@@ -138,13 +180,41 @@
      and each step's line, the lines field-guide/health.js speaks for a holiday recipe). Setting a set up on the calendar
      lives in The Grounded Way; this page is open to anyone. */
   var HOL = window.GGHolidays || null;
+  var MON = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+  function today() { var d = new Date(); return d.getFullYear() + '-' + (d.getMonth() < 9 ? '0' : '') + (d.getMonth() + 1) + '-' + (d.getDate() < 10 ? '0' : '') + d.getDate(); }
+  function daysTo(ymd) { return Math.round((new Date(ymd + 'T12:00') - new Date(today() + 'T12:00')) / 86400000); }
+  function soonText(ymd) {
+    var d = daysTo(ymd);
+    if (d <= 0) return 'today'; if (d === 1) return 'tomorrow'; if (d <= 60) return 'in ' + d + ' days';
+    return new Date(ymd + 'T12:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric' });
+  }
+  // Soonest first; the sets for a day you choose follow in their own order.
+  function holOrder() {
+    if (!HOL) return [];
+    return HOL.sets.map(function (x, i) { return { id: x.id, i: i, date: HOL.next(x.id) || '' }; })
+      .sort(function (a, b) { return a.date && b.date ? (a.date < b.date ? -1 : a.date > b.date ? 1 : a.i - b.i) : a.date ? -1 : b.date ? 1 : a.i - b.i; });
+  }
   function holShelf() {
     if (!HOL || !(HOL.sets || []).length) return '';
-    return '<h2 class="rc-hh">Holidays and Gatherings</h2><p class="rc-hl">Whole food menus for the big days, with sober drinks and better-choice sweets. Open a set to play any recipe step by step.</p>' +
-      '<div class="rc-grid rc-hgrid">' + HOL.sets.map(function (x) {
-        var nx = HOL.next(x.id);
-        return '<button type="button" class="rc-card rc-hcard" data-hol="' + esc(x.id) + '"><span class="rc-cb"><span class="rc-m">' + esc(nx ? new Date(nx + 'T12:00').toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : HOL.whenText(x.id)) + '</span><b>' + esc(x.name) + '</b><span class="rc-t">' + esc(x.menu.length + ' recipes') + '</span><span class="rc-n">' + esc(x.lead) + '</span></span></button>';
+    return '<div class="rc-sh"><img src="' + W + 'dinner-chili-sq.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-holidays">Holidays and Gatherings</h2><span class="rc-shn">' + HOL.sets.length + ' sets</span></div>' +
+      '<p class="rc-hl">Whole food menus for the big days, with sober drinks and better-choice sweets. Open a set to play any recipe step by step.</p>' +
+      '<div class="rc-hgrid">' + holOrder().map(function (o, k) {
+        var x = HOL.get(o.id), d = o.date ? new Date(o.date + 'T12:00') : null;
+        var tile = d ? '<span class="rc-date" aria-hidden="true"><i>' + MON[d.getMonth()] + '</i><span>' + d.getDate() + '</span></span>' : '<span class="rc-date" aria-hidden="true"><i>Your</i><span class="rc-yd">Day</span></span>';
+        var when = d ? (daysTo(o.date) <= 60 ? soonText(o.date).charAt(0).toUpperCase() + soonText(o.date).slice(1) + ', ' : '') + d.toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' }) : HOL.whenText(x.id);
+        return '<button type="button" class="rc-hcard rc-hk' + (k % 5) + '" data-hol="' + esc(x.id) + '">' + tile + '<span class="rc-cb"><span class="rc-m">' + esc(when) + '</span><b>' + esc(x.name) + '</b><span class="rc-t">' + esc(x.menu.length + ' recipes') + '</span><span class="rc-n">' + esc(x.lead) + '</span></span></button>';
       }).join('') + '</div>';
+  }
+  function toHolidays(smooth) {
+    var h = $('rc-hol'); if (!h || h.hidden) return;
+    var y = h.getBoundingClientRect().top + window.scrollY - 70;
+    try { window.scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'instant' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); }
+  }
+  // On a /recipes/#holidays load, aim again once the fonts and paintings settle (the page above can change height as they arrive).
+  function settleHolidays() {
+    var again = function () { if (location.hash === '#holidays' && !$('rc-list').hidden) toHolidays(false); };
+    try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(again); } catch (e) {}
+    if (document.readyState === 'complete') setTimeout(again, 60); else window.addEventListener('load', function () { setTimeout(again, 60); }, { once: true });
   }
   function holRecipe(id, mid) {
     var r = HOL && HOL.recipe(id, mid, serves); if (!r) return null;
@@ -184,7 +254,7 @@
       window.scrollTo(0, Math.max(0, $('recipes').getBoundingClientRect().top + window.scrollY - 70));
       var hh = $('rc-dname'); if (hh) hh.focus({ preventScroll: true }); return;
     }
-    var r = id ? byId(id) : null;
+    var r = id && id !== 'holidays' ? byId(id) : null;
     var list = $('rc-list'), det = $('rc-detail');
     if (G.on() && (!r || r.id !== G.id())) G.close(true);
     if (r) {
@@ -202,9 +272,10 @@
       document.title = baseTitle;
       if (wasDetail && lastId) {
         window.scrollTo(0, listY);
-        var c = document.querySelector('.rc-card[data-id="' + (window.CSS && CSS.escape ? CSS.escape(lastId) : lastId) + '"]');
+        var ek = window.CSS && CSS.escape ? CSS.escape : function (x) { return x; };
+        var c = /^hol-/.test(lastId) ? document.querySelector('.rc-hcard[data-hol="' + ek(lastId.slice(4)) + '"]') : document.querySelector('.rc-card[data-id="' + ek(lastId) + '"]');
         if (c) c.focus({ preventScroll: true });
-      }
+      } else if (id === 'holidays') toHolidays(false);
     }
   }
 
@@ -389,10 +460,20 @@
   function init() {
     var d = document.querySelector('[data-rc-doctor]'); if (d && T.doctor) d.textContent = T.doctor;
     if (!ALL.length) { $('rc-empty').hidden = false; $('rc-empty').textContent = 'The recipes are on their way. Refresh the page in a moment.'; return; }
-    $('rc-tools').hidden = false;
+    $('rc-tools').hidden = false; $('rc-cats').hidden = false; $('rc-l-cats').hidden = false;
     drawChips(); drawList();
-    var hs = holShelf(); if (hs) { var hb = document.createElement('div'); hb.id = 'rc-hol'; hb.innerHTML = hs; $('rc-tools').parentNode.insertBefore(hb, $('rc-tools'));
+    var hs = holShelf(), hb = $('rc-hol'); if (hs && hb) { hb.innerHTML = hs; hb.hidden = false; hb.setAttribute('aria-labelledby', 'rc-s-holidays'); hb.setAttribute('role', 'region');
       hb.addEventListener('click', function (e) { var c = e.target.closest('[data-hol]'); if (!c) return; fromList = true; location.hash = 'hol-' + c.getAttribute('data-hol'); }); }
+    $('rc-cats').addEventListener('click', function (e) {
+      var c = e.target.closest('[data-cat]'); if (!c) return;
+      var k = c.getAttribute('data-cat');
+      if (k === 'holidays') { if (location.hash === '#holidays') toHolidays(true); else { try { history.pushState(null, '', location.pathname + location.search + '#holidays'); } catch (x) {} toHolidays(true); } return; }
+      st.meal = st.meal === k ? 'all' : k;
+      drawChips(); drawList();
+      var again = document.querySelector('.rc-cat[data-cat="' + k + '"]'); if (again) again.focus({ preventScroll: true });
+      var tl = $('rc-tools'), y = tl.getBoundingClientRect().top + window.scrollY - 80;
+      if (st.meal !== 'all' && tl.getBoundingClientRect().top > 160) { try { window.scrollTo({ top: y, behavior: 'smooth' }); } catch (x) { window.scrollTo(0, y); } }
+    });
     $('rc-tools').addEventListener('click', function (e) {
       var b = e.target.closest('.rc-chip'); if (!b) return;
       var g = b.getAttribute('data-g'), k = b.getAttribute('data-k');
@@ -419,6 +500,7 @@
     window.addEventListener('hashchange', function () { if (!location.hash) fromList = false; show(); });
     window.addEventListener('popstate', function () { if (G.on() && !(history.state && history.state.rcGuide)) G.close(true); if (!location.hash) fromList = false; });
     if (location.hash) show();
+    if (location.hash === '#holidays') settleHolidays();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

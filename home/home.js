@@ -1580,8 +1580,8 @@
     return [
       { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'library-learn.webp' },
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
-      { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
-      { id: 'holidays', name: 'Holidays and Gatherings', count: window.GGHolidays ? cnt(arr(window.GGHolidays.sets).length, 'set', 'sets') : '', plain: 'The big days', line: 'Whole food menus for the big days, with the shopping, the prep, and every recipe guided.', cls: 'hm-sh-rec', art: IMG + 'todays-plate.webp' },
+      // BLD 899 (Chris: "holiday gatherings [needs no] card in library just put this in the recipes"): Holidays and Gatherings lives inside Grounded Recipes.
+      { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
       { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout we have built, by category, with a coach.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' },
       { id: 'quiet', name: 'Quiet and Meditation', count: cnt(num(c.meditations), 'practice', 'practices'), plain: 'Morning and evening', line: 'Breath and stillness, and a sacred practice when you choose it.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
     ];
@@ -1635,7 +1635,7 @@
     if (id === 'learn') openLearn();
     else if (id === 'life') openFrame(new URL(t.href + '#life', location.href));
     else if (id === 'recipes') openRecipe('');
-    else if (id === 'holidays') { hCall('holOpen', ''); goTo('library=holidays'); }
+    else if (id === 'holidays') { var hh = tableOf(); openFrame(new URL('/recipes/' + (hh ? '?serves=' + hh : '') + '#holidays', location.href)); }
     else if (id === 'workouts') goTo('library=workouts');
     else if (id === 'quiet') { if (hasFn('render') && hasFn('counts') && num((hCall('counts') || {}).meditations)) goTo('library=quiet'); else openFrame(new URL('/get-grounded-now.html', location.href)); }
   }
