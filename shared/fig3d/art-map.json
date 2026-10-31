@@ -1,30 +1,438 @@
 {
-  "version": 1,
-  "about": "BLD 897: the paintings behind the 3D figure. Lookup: art id, workouts[id], a painting named by the workout id, categories[category], fallback[kind], default. Per painting: src (under base), focal [x, y] kept behind the figure, floor (0 to 1 down) met by the feet, light [x right, y up] for the figure, tone (0 to 1) toward Grounded's sepia, mat (true when the painting shows its own mat: the figure then uses it and the drawn mat is hidden). New paintings need only a line here.",
-  "base": "../heroes/way/",
-  "default": "move-strength",
-  "fallback": {"move": "move-strength", "quiet": "quiet-morning", "kitchen": "kitchen-headstart"},
-  "defaults": {"focal": [0.5, 0.62], "floor": 0.8, "light": [-0.5, 0.78], "tone": 0.5},
-  "art": {
-    "move-strength": {"src": "move-strength.webp", "focal": [0.44, 0.66], "floor": 0.74, "light": [0.62, 0.7], "tone": 0.45, "mat": true},
-    "move-build": {"src": "move-build.webp", "focal": [0.36, 0.72], "floor": 0.82, "light": [-0.55, 0.75], "tone": 0.45, "mat": true},
-    "move-peak": {"src": "move-peak.webp", "focal": [0.64, 0.76], "floor": 0.86, "light": [0.6, 0.72], "tone": 0.45, "mat": true},
-    "move-cardio": {"src": "move-cardio.webp", "focal": [0.52, 0.66], "floor": 0.84, "light": [0.3, 0.82], "tone": 0.5},
-    "move-walk": {"src": "move-walk.webp", "focal": [0.5, 0.68], "floor": 0.86, "light": [0.45, 0.8], "tone": 0.5},
-    "move-gentle": {"src": "move-gentle.webp", "focal": [0.62, 0.7], "floor": 0.9, "light": [0.5, 0.72], "tone": 0.5},
-    "move-flow": {"src": "move-flow.webp", "focal": [0.5, 0.72], "floor": 0.8, "light": [0.25, 0.85], "tone": 0.55, "mat": true},
-    "move-yoga": {"src": "move-yoga.webp", "focal": [0.5, 0.75], "floor": 0.82, "light": [-0.3, 0.8], "tone": 0.5, "mat": true},
-    "move-balance": {"src": "move-balance.webp", "focal": [0.45, 0.7], "floor": 0.84, "light": [-0.45, 0.8], "tone": 0.6},
-    "move-stretch": {"src": "move-stretch.webp", "focal": [0.5, 0.7], "floor": 0.8, "light": [-0.4, 0.75], "tone": 0.5, "mat": true},
-    "quiet-morning": {"src": "quiet-morning.webp", "focal": [0.45, 0.65], "floor": 0.86, "light": [-0.7, 0.6], "tone": 0.5},
-    "quiet-meditation": {"src": "quiet-meditation.webp", "focal": [0.6, 0.72], "floor": 0.84, "light": [0.3, 0.7], "tone": 0.5},
-    "rest-day": {"src": "rest-day.webp", "focal": [0.5, 0.7], "floor": 0.84, "light": [-0.4, 0.75], "tone": 0.5},
-    "kitchen-headstart": {"src": "kitchen-headstart.webp", "focal": [0.55, 0.62], "floor": 0.7, "light": [0.4, 0.8], "tone": 0.4}
+ "version": 2,
+ "about": "BLD 897, BLD 899: the paintings behind the 3D figure. Lookup: art id, workouts[id], a painting named by the workout id, categories[category], fallback[kind], default; then a painting's stage (another painting id) when its own scene has no room for a person (cards keep their own painting). Per painting: src (under base), floor (0 to 1 down) where the feet stand, scale (a 1.73 m person's height at that floor line, as a share of the painting's height), focal [x, y] (x kept under the figure), light [x right, y up], tone (0 to 1) toward Grounded's sepia, mat (true when the figure uses the painting's own mat), mode ('study': a soft backdrop with a plain floor band, for a painting with no room), open [x0, y0, x1, y1] (the open, dry, level floor), avoid [[x0, y0, x1, y1], ...] (objects, furniture, and water the body must keep clear of when they stand in front of it), room (the fit grade). See ART.md.",
+ "base": "../heroes/way/",
+ "default": "move-strength",
+ "fallback": {
+  "move": "move-strength",
+  "quiet": "quiet-morning",
+  "kitchen": "kitchen-headstart"
+ },
+ "defaults": {
+  "focal": [
+   0.5,
+   0.62
+  ],
+  "floor": 0.8,
+  "light": [
+   -0.5,
+   0.78
+  ],
+  "tone": 0.5
+ },
+ "art": {
+  "move-strength": {
+   "src": "move-strength.webp",
+   "focal": [
+    0.46,
+    0.64
+   ],
+   "floor": 0.645,
+   "light": [
+    0.62,
+    0.7
+   ],
+   "tone": 0.45,
+   "mat": false,
+   "scale": 0.21,
+   "open": [
+    0.17,
+    0.585,
+    0.95,
+    0.7
+   ],
+   "avoid": [
+    [
+     0.02,
+     0.38,
+     0.16,
+     0.73
+    ],
+    [
+     0.745,
+     0.6,
+     0.8,
+     0.8
+    ],
+    [
+     0.29,
+     0.7,
+     0.64,
+     0.86
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: the open floor in front of the back wall, behind the mat"
   },
-  "workouts": {},
-  "categories": {
-    "strength": "move-strength", "build": "move-build", "peak": "move-peak", "cardio": "move-cardio", "walk": "move-walk",
-    "flow": "move-flow", "daily": "move-flow", "yoga": "move-yoga", "balance": "move-balance", "taichi": "move-balance",
-    "stretch": "move-stretch", "warm-up": "move-flow", "cooldown": "move-stretch", "gentle": "move-gentle"
+  "move-build": {
+   "src": "move-build.webp",
+   "focal": [
+    0.25,
+    0.66
+   ],
+   "floor": 0.7,
+   "light": [
+    -0.55,
+    0.75
+   ],
+   "tone": 0.45,
+   "mat": false,
+   "scale": 0.55,
+   "open": [
+    0,
+    0.63,
+    0.6,
+    1
+   ],
+   "avoid": [
+    [
+     0.42,
+     0.62,
+     0.57,
+     0.74
+    ],
+    [
+     0.6,
+     0.72,
+     0.68,
+     0.94
+    ],
+    [
+     0.5,
+     0.47,
+     0.83,
+     0.84
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: the concrete floor inside the open garage door"
+  },
+  "move-peak": {
+   "src": "move-peak.webp",
+   "focal": [
+    0.69,
+    0.8
+   ],
+   "floor": 0.84,
+   "light": [
+    0.6,
+    0.72
+   ],
+   "tone": 0.45,
+   "mat": false,
+   "scale": 0.34,
+   "open": [
+    0.56,
+    0.79,
+    0.86,
+    1
+   ],
+   "avoid": [
+    [
+     0.08,
+     0.6,
+     0.34,
+     0.85
+    ],
+    [
+     0.86,
+     0.38,
+     1,
+     0.87
+    ],
+    [
+     0.35,
+     0,
+     0.565,
+     0.84
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: the floor right of the power tower"
+  },
+  "move-cardio": {
+   "src": "move-cardio.webp",
+   "focal": [
+    0.52,
+    0.66
+   ],
+   "floor": 0.84,
+   "light": [
+    0.3,
+    0.82
+   ],
+   "tone": 0.5,
+   "stage": "meadow-path",
+   "room": "stage painting: meadow-path (the card is a close-up still life of shoes and a bottle)"
+  },
+  "move-walk": {
+   "src": "move-walk.webp",
+   "focal": [
+    0.6,
+    0.6
+   ],
+   "floor": 0.6,
+   "light": [
+    0.45,
+    0.8
+   ],
+   "tone": 0.5,
+   "scale": 0.45,
+   "mat": false,
+   "open": [
+    0,
+    0.5,
+    1,
+    1
+   ],
+   "avoid": [
+    [
+     0.3,
+     0.62,
+     0.45,
+     0.77
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: on the path behind the boots"
+  },
+  "move-gentle": {
+   "src": "move-gentle.webp",
+   "focal": [
+    0.62,
+    0.7
+   ],
+   "floor": 0.9,
+   "light": [
+    0.5,
+    0.72
+   ],
+   "tone": 0.5,
+   "stage": "move-strength",
+   "room": "stage painting: move-strength (the card is a close-up of a chair and a table)"
+  },
+  "move-flow": {
+   "src": "move-flow.webp",
+   "focal": [
+    0.48,
+    0.8
+   ],
+   "floor": 0.81,
+   "light": [
+    0.25,
+    0.85
+   ],
+   "tone": 0.55,
+   "mat": true,
+   "scale": 0.62,
+   "open": [
+    0.02,
+    0.69,
+    0.98,
+    1
+   ],
+   "avoid": [],
+   "room": "fits with floor, scale, and focal set: on the empty mat on the stone patio"
+  },
+  "move-yoga": {
+   "src": "move-yoga.webp",
+   "focal": [
+    0.5,
+    0.75
+   ],
+   "floor": 0.82,
+   "light": [
+    -0.3,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": true,
+   "stage": "quiet-meditation",
+   "room": "stage painting: quiet-meditation (the card has a lake at the deck edge and a block and strap on the mat)"
+  },
+  "move-balance": {
+   "src": "move-balance.webp",
+   "focal": [
+    0.45,
+    0.7
+   ],
+   "floor": 0.84,
+   "light": [
+    -0.45,
+    0.8
+   ],
+   "tone": 0.6,
+   "stage": "hilltop",
+   "room": "stage painting: hilltop (the card is a creek with stepping stones)"
+  },
+  "move-stretch": {
+   "src": "move-stretch.webp",
+   "focal": [
+    0.5,
+    0.7
+   ],
+   "floor": 0.8,
+   "light": [
+    -0.4,
+    0.75
+   ],
+   "tone": 0.5,
+   "mat": true,
+   "stage": "move-flow",
+   "room": "stage painting: move-flow (the card has a blanket and a rolled mat on its mat, curtains at both sides)"
+  },
+  "quiet-morning": {
+   "src": "quiet-morning.webp",
+   "focal": [
+    0.45,
+    0.65
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.7,
+    0.6
+   ],
+   "tone": 0.5,
+   "stage": "quiet-meditation",
+   "room": "stage painting: quiet-meditation (the card is an armchair corner)"
+  },
+  "quiet-meditation": {
+   "src": "quiet-meditation.webp",
+   "focal": [
+    0.2,
+    0.68
+   ],
+   "floor": 0.68,
+   "light": [
+    0.3,
+    0.7
+   ],
+   "tone": 0.5,
+   "scale": 0.62,
+   "mat": false,
+   "open": [
+    0.02,
+    0.61,
+    0.98,
+    1
+   ],
+   "avoid": [
+    [
+     0.345,
+     0.62,
+     0.625,
+     0.89
+    ],
+    [
+     0.655,
+     0.74,
+     0.745,
+     0.86
+    ],
+    [
+     0.84,
+     0.58,
+     1,
+     0.76
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: the open wood floor left of the cushion"
+  },
+  "rest-day": {
+   "src": "rest-day.webp",
+   "focal": [
+    0.5,
+    0.7
+   ],
+   "floor": 0.84,
+   "light": [
+    -0.4,
+    0.75
+   ],
+   "tone": 0.5,
+   "stage": "hilltop",
+   "room": "stage painting: hilltop (the card is a hammock between two trees)"
+  },
+  "kitchen-headstart": {
+   "src": "kitchen-headstart.webp",
+   "focal": [
+    0.55,
+    0.62
+   ],
+   "floor": 0.7,
+   "light": [
+    0.4,
+    0.8
+   ],
+   "tone": 0.4,
+   "mode": "study",
+   "room": "study: a close-up still life on a counter; no room for a person (gap)"
+  },
+  "meadow-path": {
+   "src": "welcome-wide.webp",
+   "focal": [
+    0.6,
+    0.6
+   ],
+   "floor": 0.6,
+   "scale": 0.6,
+   "light": [
+    -0.4,
+    0.75
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "open": [
+    0,
+    0.47,
+    1,
+    1
+   ],
+   "avoid": [
+    [
+     0.39,
+     0.55,
+     0.52,
+     0.9
+    ]
+   ],
+   "room": "fits with floor, scale, and focal set: on the path through the meadow (stage only)"
+  },
+  "hilltop": {
+   "src": "home-morning-wide.webp",
+   "focal": [
+    0.36,
+    0.78
+   ],
+   "floor": 0.8,
+   "scale": 0.5,
+   "light": [
+    -0.55,
+    0.6
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "open": [
+    0.2,
+    0.73,
+    1,
+    1
+   ],
+   "avoid": [],
+   "room": "fits with floor, scale, and focal set: the open grass on the hilltop, left of the oak (stage only)"
   }
+ },
+ "workouts": {},
+ "categories": {
+  "strength": "move-strength",
+  "build": "move-build",
+  "peak": "move-peak",
+  "cardio": "move-cardio",
+  "walk": "move-walk",
+  "flow": "move-flow",
+  "daily": "move-flow",
+  "yoga": "move-yoga",
+  "balance": "move-balance",
+  "taichi": "move-balance",
+  "stretch": "move-stretch",
+  "warm-up": "move-flow",
+  "cooldown": "move-stretch",
+  "gentle": "move-gentle"
+ }
 }
