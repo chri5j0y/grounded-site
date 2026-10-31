@@ -11,16 +11,19 @@
 //       hour: 0 to 23 (decimals welcome; default the clock now),
 //       pct: 0 to 1, the rest left: a ring that drains (shown in 'rest', or in any state when given),
 //       secs: whole seconds left, shown in the ring (60 and up shows as m:ss),
-//       inhale, exhale: seconds; a breathing ring that grows on the inhale and shrinks on the exhale
-//         (shown in 'breathe', or in any state when inhale is given), with Breathe In and Breathe Out,
+//       inhale, exhale: seconds; the breath guide, a small tree whose canopy fills with golden light on the inhale and
+//         lets it flow down to glowing roots on the exhale (BLD 897; shown in 'breathe', or in any state when inhale is
+//         given), with Breathe In and Breathe Out; phases: the same timed by the figure's plan (BLD 898),
 //       fig: an HTML string placed center on the deck (a GGMoves svg, the candle, or nothing),
 //       side: 'L' or 'R', a clear side badge in the top corner,
-//       label: a short word or two shown in a pill in the top corner opposite the side badge,
+//       label: a short word or two shown in a chip in the top corner (with the count, under it),
+//       count: {n, of} (BLD 897): the rep numeral on an ink chip, top right, with an ink progress line along the bottom
+//         that has a mark for each rep (data-hjrep on the numeral, so the player's count updates it in place),
 //       fill: true to make the panel a backdrop that fills its positioned parent (position absolute, inset 0);
 //         the player's content then sits above it with position relative and z-index 1.
 //     }
 //   GGStage.update(el, opts): in place and cheap (safe every 100 ms): opts.pct moves the ring, opts.secs
-//     sets its number, opts.side changes the badge. el is the panel or any element holding one.
+//     sets its number, opts.side changes the badge, opts.rep sets the count and its progress line (BLD 897). el is the panel or any element holding one.
 //   GGStage.colors(state, hour): {bg, fg, accent} for the current theme (light or dark): bg is a soft page
 //     color for the player around the panel, fg the text color on bg, accent the state color for big
 //     numbers, bars, and buttons (accent on bg reads at 4.5 to 1 or better).
@@ -171,34 +174,43 @@ function ringHTML(o, show){
     `<circle cx="50" cy="50" r="44" class="ggs-rp" data-ggsarc stroke-dasharray="${r1(C)}" stroke-dashoffset="${r1(C * (1 - pct))}" transform="rotate(-90 50 50)"/></svg>` +
     (o.secs != null ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
 }
-// BLD 898: o.phases ([{k: 'in' | 'out' | 'hold', d: seconds}], from GGMoves.plan) times the ring to the figure's own moves:
-// it grows on in, shrinks on out, stays on hold, and shows Breathe In, Breathe Out, or Hold for each phase. Its loop is the
-// figure's loop (data-dur), so the player restarts both together.
-function phaseHTML(o, red){
-  const P = o.phases.filter(p => p && +p.d > 0), T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000;
-  const lo = 26, hi = 46, r0 = P[0].k === 'out' ? hi : lo; let cur = r0, t = 0; const vs = [r0], kt = [0], st = [];
-  P.forEach(p => { st.push(t / T); t += +p.d; cur = p.k === 'in' ? hi : p.k === 'out' ? lo : cur; vs.push(cur); kt.push(Math.min(1, t / T)); });
-  const k4 = x => Math.round(x * 10000) / 10000, sp = kt.slice(1).map(() => '.45 0 .55 1').join(';');
-  const an = red ? '' : `<animate attributeName="r" dur="${w}s" repeatCount="indefinite" values="${vs.join(';')}" keyTimes="${kt.map(k4).join(';')}" calcMode="spline" keySplines="${sp}"/>`;
-  const has = k => P.some(p => p.k === k), first = P[0].k;
-  const word = (t2, k) => !has(k) ? '' : `<g class="ggs-bwg" data-ggsbw="${k}"${red && k !== first ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${w}s" repeatCount="indefinite" values="${P.map(p => p.k === k ? 1 : 0).join(';')}" keyTimes="${st.map(k4).join(';')}" calcMode="discrete"/>`}` +
-    `<rect x="22" y="${o.fig ? -9 : 43}" width="56" height="14" rx="7" class="ggs-bwp"/><text x="50" y="${o.fig ? 1.6 : 53.6}" text-anchor="middle" class="ggs-bw">${t2}</text></g>`;
-  const rr = red ? 38 : r0;
-  return `<div class="ggs-breath${o.fig ? ' wf' : ''}"><svg viewBox="0 0 100 100" aria-hidden="true" class="ggs-brs" data-ggsbr data-dur="${w}" data-ph="${P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ')}">` +
-    `<circle cx="50" cy="50" r="${rr}" class="ggs-bf">${an}</circle><circle cx="50" cy="50" r="${rr}" class="ggs-bs">${an}</circle>` +
-    (o.secs != null && !o.fig ? '' : word('Breathe In', 'in') + word('Hold', 'hold') + word('Breathe Out', 'out')) + '</svg>' +
-    (o.secs != null && !o.fig ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
+// BLD 897 (Chris, October 31, 2026, the breath guide "1": the tree): the breath guide is a small tree. On the in breath its canopy
+// fills with golden light and rises; on the out breath the light flows down the trunk to glowing roots; on a hold it rests.
+// The lettering under it says Breathe In, Breathe Out, or Hold. o.phases ([{k: 'in' | 'out' | 'hold', d: seconds}], from
+// GGMoves.plan, BLD 898) times it to the figure's own moves; its loop is the figure's loop (data-dur), so the player's one clock
+// holds both together. The canopy's light (a circle whose radius grows on in) carries the timing the tests read.
+// With a figure it sits top left on a frosted chip; without one (a breathing step) it stands larger in the middle.
+// Reduced motion shows the tree still with the word only.
+function treeHTML(o, red, P, mark){
+  P = P.filter(p => p && +p.d > 0);
+  const T = P.reduce((a, p) => a + +p.d, 0), w = r1(T * 1000) / 1000, id = 'ggt' + (++N);
+  // The breath level at each turn (0 empty, 1 full): in fills, out empties, hold keeps.
+  let lv = P[0].k === 'out' ? 1 : P[0].k === 'in' ? 0 : 1, t = 0; const L = [lv], kt = [0], st = [];
+  P.forEach(p => { st.push(t / T); t += +p.d; lv = p.k === 'in' ? 1 : p.k === 'out' ? 0 : lv; L.push(lv); kt.push(Math.min(1, t / T)); });
+  const k4 = x => Math.round(x * 10000) / 10000, sp = kt.slice(1).map(() => '.45 0 .55 1').join(';'), KT = kt.map(k4).join(';');
+  const an = (attr, f, extra) => red ? '' : `<animate attributeName="${attr}" dur="${w}s" repeatCount="indefinite" values="${L.map(f).join(';')}" keyTimes="${KT}" calcMode="spline" keySplines="${sp}"${extra || ''}/>`;
+  const L0 = red ? 1 : L[0], R = l => r1(24 + 16 * l), RISE = l => '0 ' + r1(-4 * l), ROOT = l => r1(.18 + .82 * (1 - l) * (1 - l)), FLOW = l => r1(1 - l);
+  const has = k => P.some(p => p.k === k), first = P[0].k, label = !(o.secs != null && !o.fig);
+  const word = (txt, k) => !has(k) ? '' : `<g class="ggs-bwg" data-ggsbw="${k}"${red && k !== first ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${w}s" repeatCount="indefinite" values="${P.map(p => p.k === k ? 1 : 0).join(';')}" keyTimes="${st.map(k4).join(';')}" calcMode="discrete"/>`}` +
+    `<text x="60" y="141" text-anchor="middle" class="ggs-bw">${txt}</text></g>`;
+  return `<div class="ggs-breath ggs-tree${o.fig ? ' wf' : ''}"><svg viewBox="0 0 120 ${label ? 148 : 112}" aria-hidden="true" class="ggs-brs"${mark ? ` data-ggsbr data-dur="${w}" data-ph="${P.map(p => p.k + ':' + r1(+p.d * 100) / 100).join(' ')}"` : ''}>` +
+    `<defs><radialGradient id="${id}c" cx="50%" cy="46%" r="58%"><stop offset="0" stop-color="#FFEBB0"/><stop offset=".62" stop-color="#F3C867"/><stop offset="1" stop-color="#D9A441" stop-opacity="0"/></radialGradient>` +
+    `<linearGradient id="${id}t" x1="0" y1="0" x2="0" y2="1"><stop offset="0" class="ggs-tink"/><stop offset="${FLOW(L0)}" stop-color="#F6C96A">${an('offset', FLOW)}</stop><stop offset="1" class="ggs-tink"/></linearGradient></defs>` +
+    `<g class="ggs-troots"><path d="M60 92c-6 6-14 9-24 10M60 92c5 7 13 10 22 11M60 92c-1 8-4 13-8 17M60 92c2 7 5 12 10 15"/></g>` +
+    `<g class="ggs-trootg" opacity="${ROOT(L0)}">${an('opacity', ROOT)}<path d="M60 92c-6 6-14 9-24 10M60 92c5 7 13 10 22 11M60 92c-1 8-4 13-8 17M60 92c2 7 5 12 10 15"/></g>` +
+    `<path class="ggs-ttrunk" d="M56 94c2-12 1-24-2-34M64 94c-2-12-1-24 2-34" stroke="url(#${id}t)"/>` +
+    `<g class="ggs-tcan">${red ? '' : `<animateTransform attributeName="transform" type="translate" dur="${w}s" repeatCount="indefinite" values="${L.map(RISE).join(';')}" keyTimes="${KT}" calcMode="spline" keySplines="${sp}"/>`}` +
+    `<circle cx="60" cy="45" r="${R(L0)}" fill="url(#${id}c)" class="ggs-bf">${an('r', R)}</circle>` +
+    `<path class="ggs-tcrown" d="M24 52c-6-16 8-28 20-26 2-12 22-18 32-8 12-4 26 6 22 20 10 6 6 24-8 24-6 10-22 10-30 4-10 6-26 2-30-8-8 0-10-4-6-6z"/></g>` +
+    `<path class="ggs-tground" d="M18 95c18-3 66-3 84 0"/>` +
+    (label ? word('Breathe In', 'in') + word('Hold', 'hold') + word('Breathe Out', 'out') : '') + '</svg>' +
+    (label ? '' : `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>`) + '</div>';
 }
+function phaseHTML(o, red){ return treeHTML(o, red, o.phases, true); }
 function breathHTML(o, red){
   if (Array.isArray(o.phases) && o.phases.some(p => p && +p.d > 0)) return phaseHTML(o, red);
-  const i = Math.max(1, +o.inhale || 4), e = Math.max(1, +o.exhale || +o.inhale || 6), T = i + e, f = r1(i / T * 1000) / 1000;
-  const an = (attr, a, b) => red ? '' : `<animate attributeName="${attr}" dur="${T}s" repeatCount="indefinite" values="${a};${b};${a}" keyTimes="0;${f};1" calcMode="spline" keySplines=".45 0 .55 1;.45 0 .55 1"/>`;
-  const word = (t, on) => `<g class="ggs-bwg"${red && !on ? ' opacity="0"' : ''}>${red ? '' : `<animate attributeName="opacity" dur="${T}s" repeatCount="indefinite" values="${on ? '1;0' : '0;1'}" keyTimes="0;${f}" calcMode="discrete"/>`}` +
-    `<rect x="22" y="${o.fig ? -9 : 43}" width="56" height="14" rx="7" class="ggs-bwp"/><text x="50" y="${o.fig ? 1.6 : 53.6}" text-anchor="middle" class="ggs-bw">${t}</text></g>`;
-  return `<div class="ggs-breath${o.fig ? ' wf' : ''}"><svg viewBox="0 0 100 100" aria-hidden="true">` +
-    `<circle cx="50" cy="50" r="${red ? 38 : 26}" class="ggs-bf">${an('r', 26, 46)}</circle><circle cx="50" cy="50" r="${red ? 38 : 26}" class="ggs-bs">${an('r', 26, 46)}</circle>` +
-    (o.secs != null && !o.fig ? '' : word('Breathe In', true) + word('Breathe Out', false)) + '</svg>' +
-    (o.secs != null && !o.fig ? `<div class="ggs-secs" data-ggssecs>${esc(fmt(o.secs))}</div>` : '') + '</div>';
+  const i = Math.max(1, +o.inhale || 4), e = Math.max(1, +o.exhale || +o.inhale || 6);
+  return treeHTML(o, red, [{k: 'in', d: i}, {k: 'out', d: e}], false);
 }
 
 function scene(state, opts){
@@ -212,7 +224,10 @@ function scene(state, opts){
   const tod = h >= 5 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'day' : h >= 17 && h < 21 ? 'evening' : 'night';
   const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null || (Array.isArray(o.phases) && o.phases.length > 0);
   const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
-  const label = o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : '';
+  const cn = o.count && +o.count.of > 0 ? o.count : null, cr = cn ? Math.max(0, Math.min(+cn.of, +cn.n || 0)) : 0;
+  const count = cn ? `<div class="ggs-count"><b data-hjrep data-ggsrep>${cr || ''}</b><span>of ${+cn.of}</span></div>` : '';
+  const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
+  const label = o.label || cn ? `<div class="ggs-hud">${count}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
   const mid = (showBreath ? breathHTML(o, red) : '') + (s === 'done' && !o.fig ? MEDAL : '');
   const ring = showRing ? ringHTML(o, true) : '';
@@ -220,7 +235,7 @@ function scene(state, opts){
   return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
     `<svg class="ggs-sky" viewBox="0 0 400 200" preserveAspectRatio="xMidYMax slice">${set}</svg>` +
     `<div class="ggs-deck"></div><div class="ggs-tint"></div><div class="ggs-scrim"></div>` +
-    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}</div>`;
+    `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${prog}</div>`;
 }
 
 function update(el, opts){
@@ -230,6 +245,9 @@ function update(el, opts){
   const c = root.__ggs || (root.__ggs = {arc: root.querySelector('[data-ggsarc]'), secs: root.querySelector('[data-ggssecs]'), side: root.querySelector('[data-ggsside]'), p: null, s: null, sd: null});
   if (o.pct != null && c.arc){ const v = r1(C * (1 - Math.max(0, Math.min(1, +o.pct)))); if (v !== c.p){ c.p = v; c.arc.setAttribute('stroke-dashoffset', v); } }
   if (o.secs != null && c.secs){ const t = fmt(o.secs); if (t !== c.s){ c.s = t; c.secs.textContent = t; } }
+  if (o.rep != null){ const b = root.querySelector('[data-ggsrep]'), pg = root.querySelector('[data-ggsprog]');
+    if (b && b.textContent !== String(o.rep || '')) b.textContent = o.rep || '';
+    if (pg){ const n = +pg.getAttribute('data-of') || 1, i = pg.querySelector('i'); if (i) i.style.width = r1(Math.max(0, Math.min(1, (+o.rep || 0) / n)) * 100) + '%'; } }
   if (o.side !== undefined && c.side && o.side !== c.sd){ c.sd = o.side;
     if (o.side === 'L' || o.side === 'R'){ c.side.hidden = false; c.side.innerHTML = `<b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span>`; } else c.side.hidden = true; }
 }
@@ -278,23 +296,31 @@ const CSS = `
 .ggs-rest .ggs-mid.hasfig .ggs-ring{width:min(190px,50vw,calc(var(--H) * .7));left:50%;top:50%;right:auto;bottom:auto;transform:translate(-50%,-56%);}
 .ggs-rest .ggs-fig.small{bottom:calc(var(--dk) * .3 - var(--fs) * .118);left:auto;right:6px;transform:none;}
 .ggs-ring svg{width:100%;height:100%;display:block;}
-.ggs-rt{fill:rgba(255,255,255,.82);stroke:rgba(255,255,255,.55);stroke-width:8;}
-.ggs-rp{fill:none;stroke:var(--ggs-a);stroke-width:8;stroke-linecap:round;transition:stroke-dashoffset .12s linear;}
-.ggs-secs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Barlow Condensed','Barlow',sans-serif;font-weight:700;font-size:clamp(34px,11vw,58px);color:#13202C;font-variant-numeric:tabular-nums;line-height:1;}
+.ggs-rt{fill:rgba(255,248,232,.88);stroke:rgba(90,60,30,.18);stroke-width:5;}
+.ggs-rp{fill:none;stroke:#C98A2C;stroke-width:4;stroke-linecap:round;transition:stroke-dashoffset .12s linear;}
+.ggs-secs{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',Georgia,serif;font-weight:600;font-size:clamp(36px,12vw,62px);color:#3A2414;font-variant-numeric:tabular-nums;line-height:1;}
 .ggs-mid.hasfig:not(.ggs-rest *) .ggs-secs{font-size:clamp(22px,6vw,30px);}
-.ggs-breath{position:absolute;left:50%;top:50%;width:min(210px,56vw,calc(var(--H) * .78));aspect-ratio:1;transform:translate(-50%,-56%);z-index:1;}
-.ggs-breath.wf{width:min(260px,68vw,calc(var(--H) * .95));transform:translate(-50%,-52%);}
-.ggs-breath svg{width:100%;height:100%;display:block;overflow:visible;}
-.ggs-bf{fill:#FFFFFF;opacity:.5;}.ggs-bs{fill:none;stroke:var(--ggs-a);stroke-width:3;opacity:.9;}
-.ggs-breath.wf .ggs-bf{opacity:.38;}
-.ggs-bw{font-family:'Barlow',sans-serif;font-weight:700;font-size:7.6px;fill:#13202C;letter-spacing:.02em;}
-.ggs-bwp{fill:rgba(255,255,255,.92);}
-.ggs-breath.wf .ggs-bwg{transform:translateY(2px);}
-.ggs-breath .ggs-secs{color:#13202C;}
-.ggs-side{position:absolute;top:12px;left:12px;display:flex;align-items:center;gap:8px;padding:5px 12px 5px 5px;border-radius:999px;background:rgba(255,255,255,.92);color:#13202C;font:700 15px/1 'Barlow',sans-serif;z-index:4;box-shadow:0 2px 8px rgba(0,0,0,.12);}
+.ggs-breath{position:absolute;left:50%;top:50%;width:min(172px,46vw,calc(var(--H) * .62));transform:translate(-50%,-52%);z-index:3;padding:8px 8px 4px;border-radius:20px;background:rgba(255,248,232,.84);box-shadow:0 4px 14px rgba(60,35,10,.14);-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px);}
+.ggs-breath.wf{left:10px;top:10px;width:min(112px,28vw,calc(var(--H) * .38));transform:none;padding:6px 5px 2px;border-radius:16px;}
+.ggs-breath svg{width:100%;height:auto;display:block;overflow:visible;}
+.ggs-tcrown,.ggs-ttrunk,.ggs-tground,.ggs-troots path,.ggs-trootg path{fill:none;stroke:#3A2414;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round;}
+.ggs-ttrunk{stroke-width:3.4;}.ggs-tground{stroke-width:1.4;opacity:.6;}.ggs-troots{opacity:.5;}
+.ggs-trootg path{stroke:#E7B04E;stroke-width:2.8;}
+.ggs-tink{stop-color:#3A2414;}
+.ggs-bw{font-family:'Cormorant Garamond',Georgia,serif;font-style:italic;font-weight:700;font-size:21px;fill:#3A2414;}
+.ggs-bwg[data-ggsbw="out"] .ggs-bw{fill:#8A5A12;}
+.ggs-breath .ggs-secs{position:static;display:block;text-align:center;color:#3A2414;font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(26px,8vw,40px);padding-bottom:4px;}
+.ggs-side{position:absolute;bottom:22px;left:12px;display:flex;align-items:center;gap:8px;padding:4px 12px 4px 4px;border-radius:999px;background:#E7B04E;color:#2A1A08;font:700 14px/1 'Barlow',sans-serif;letter-spacing:.04em;z-index:4;box-shadow:0 2px 8px rgba(60,35,10,.18);}
 .ggs-side[hidden]{display:none;}
-.ggs-side b{display:inline-flex;align-items:center;justify-content:center;width:34px;height:34px;border-radius:50%;background:var(--ggs-a);color:#fff;font-size:20px;}
-.ggs-lab{position:absolute;top:12px;right:12px;padding:7px 12px;border-radius:999px;background:var(--ggs-a);color:#fff;font:700 14px/1 'Barlow',sans-serif;letter-spacing:.02em;z-index:4;max-width:46%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.ggs-side b{display:inline-flex;align-items:center;justify-content:center;width:28px;height:28px;border-radius:50%;background:rgba(255,248,232,.9);color:#3A2414;font:700 17px/1 'Cormorant Garamond',Georgia,serif;}
+.ggs-hud{position:absolute;top:10px;right:10px;display:grid;justify-items:end;gap:6px;z-index:4;max-width:52%;}
+.ggs-lab{padding:7px 12px;border-radius:999px;background:rgba(255,248,232,.88);color:#2F2216;border:1px solid rgba(90,60,30,.22);font:700 13px/1 'Barlow',sans-serif;letter-spacing:.05em;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;box-shadow:0 2px 8px rgba(60,35,10,.12);}
+.ggs-count{display:flex;align-items:baseline;gap:5px;padding:2px 12px 4px;border-radius:16px;background:rgba(255,248,232,.88);box-shadow:0 4px 14px rgba(60,35,10,.14);}
+.ggs-count b{font:600 clamp(34px,10vw,54px)/1 'Cormorant Garamond',Georgia,serif;color:#3A2414;font-variant-numeric:lining-nums;min-width:.6em;text-align:right;}
+.ggs-count span{font:italic 15px 'Cormorant Garamond',Georgia,serif;color:#6D5640;}
+.ggs-prog{position:absolute;left:16px;right:16px;bottom:10px;height:3px;border-radius:2px;background:rgba(90,60,30,.22);z-index:4;}
+.ggs-prog i{position:absolute;left:0;top:-1px;bottom:-1px;border-radius:3px;background:#C98A2C;transition:width .25s ease-out;}
+.ggs-prog b{position:absolute;top:-3px;width:1px;height:9px;background:#3A2414;opacity:.35;}
 .ggs-rays{animation:ggsspin 90s linear infinite;}
 .ggs-sun{animation:ggssun 5s ease-in-out infinite;transform-box:fill-box;transform-origin:center;}
 .ggs-cloud{animation:ggscloud 38s ease-in-out infinite alternate;}
@@ -317,14 +343,16 @@ const CSS = `
 @media (prefers-reduced-motion: reduce){.ggs *,.ggs .ggs-deck::after{animation:none!important;transition:none!important;}}
 ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DEE6;--ggm-db:var(--ggs-ad);--ggm-mat:var(--ggs-ad);--ggm-mat-op:.5;--ggm-shadow:#000;--ggm-shadow-op:.4;box-shadow:0 12px 30px rgba(0,0,0,.4);}
 & .ggs-scrim{opacity:var(--ggs-scrim);}& .ggs.ggs-fill{background:var(--ggs-bgd);}
-& .ggs-rt{fill:rgba(14,18,26,.8);stroke:rgba(255,255,255,.18);}
-& .ggs-rp{stroke:var(--ggs-ad);}
-& .ggs-secs,& .ggs-breath .ggs-secs{color:#FFF6E8;}
-& .ggs-bf{fill:#0E121A;}& .ggs-bs{stroke:var(--ggs-ad);}
-& .ggs-bw{fill:#FFF6E8;}& .ggs-bwp{fill:rgba(14,18,26,.88);}
-& .ggs-side{background:rgba(14,18,26,.88);color:#FFF6E8;}
-& .ggs-side b{background:var(--ggs-ad);color:#14100C;}
-& .ggs-lab{background:var(--ggs-ad);color:#14100C;}
+& .ggs-rt{fill:rgba(36,27,20,.86);stroke:rgba(242,220,180,.18);}
+& .ggs-rp{stroke:#E7B04E;}
+& .ggs-secs,& .ggs-breath .ggs-secs{color:#F4E8D4;}
+& .ggs-breath{background:rgba(36,27,20,.84);box-shadow:0 4px 14px rgba(0,0,0,.35);}
+& .ggs-tcrown,& .ggs-ttrunk,& .ggs-tground,& .ggs-troots path{stroke:#F2DCB4;}& .ggs-tink{stop-color:#F2DCB4;}
+& .ggs-bw{fill:#F4E8D4;}& .ggs-bwg[data-ggsbw="out"] .ggs-bw{fill:#F0B850;}
+& .ggs-side{background:#E7B04E;color:#1E140A;}
+& .ggs-side b{background:rgba(36,27,20,.9);color:#F2DCB4;}
+& .ggs-lab,& .ggs-count{background:rgba(36,27,20,.84);color:#F4E8D4;border-color:rgba(242,220,180,.2);}
+& .ggs-count b{color:#F2DCB4;}& .ggs-count span{color:#CCB593;}& .ggs-prog{background:rgba(242,220,180,.2);}& .ggs-prog i{background:#E7B04E;}& .ggs-prog b{background:#F2DCB4;}
 & .ggs-deck::after{background:var(--ggs-ad);}
 & .ggs::after{box-shadow:inset 0 0 0 4px var(--ggs-ad);}& .ggs-last::after{box-shadow:inset 0 0 0 6px var(--ggs-ad);}
 & .ggs-tint{background:linear-gradient(180deg,transparent 30%,var(--ggs-ad) 170%);opacity:.4;}`)}

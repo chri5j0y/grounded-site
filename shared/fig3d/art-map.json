@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "about": "BLD 897: the paintings behind the 3D figure. Lookup: art id, workouts[id], a painting named by the workout id, categories[category], fallback[kind], default. Per painting: src (under base), focal [x, y] kept behind the figure, floor (0 to 1 down) met by the feet, light [x right, y up] for the figure, tone (0 to 1) toward Grounded's sepia, mat (true when the painting shows its own mat: the figure then uses it and the drawn mat is hidden). New paintings need only a line here.",
+  "base": "../heroes/way/",
+  "default": "move-strength",
+  "fallback": {"move": "move-strength", "quiet": "quiet-morning", "kitchen": "kitchen-headstart"},
+  "defaults": {"focal": [0.5, 0.62], "floor": 0.8, "light": [-0.5, 0.78], "tone": 0.5},
+  "art": {
+    "move-strength": {"src": "move-strength.webp", "focal": [0.44, 0.66], "floor": 0.74, "light": [0.62, 0.7], "tone": 0.45, "mat": true},
+    "move-build": {"src": "move-build.webp", "focal": [0.36, 0.72], "floor": 0.82, "light": [-0.55, 0.75], "tone": 0.45, "mat": true},
+    "move-peak": {"src": "move-peak.webp", "focal": [0.64, 0.76], "floor": 0.86, "light": [0.6, 0.72], "tone": 0.45, "mat": true},
+    "move-cardio": {"src": "move-cardio.webp", "focal": [0.52, 0.66], "floor": 0.84, "light": [0.3, 0.82], "tone": 0.5},
+    "move-walk": {"src": "move-walk.webp", "focal": [0.5, 0.68], "floor": 0.86, "light": [0.45, 0.8], "tone": 0.5},
+    "move-gentle": {"src": "move-gentle.webp", "focal": [0.62, 0.7], "floor": 0.9, "light": [0.5, 0.72], "tone": 0.5},
+    "move-flow": {"src": "move-flow.webp", "focal": [0.5, 0.72], "floor": 0.8, "light": [0.25, 0.85], "tone": 0.55, "mat": true},
+    "move-yoga": {"src": "move-yoga.webp", "focal": [0.5, 0.75], "floor": 0.82, "light": [-0.3, 0.8], "tone": 0.5, "mat": true},
+    "move-balance": {"src": "move-balance.webp", "focal": [0.45, 0.7], "floor": 0.84, "light": [-0.45, 0.8], "tone": 0.6},
+    "move-stretch": {"src": "move-stretch.webp", "focal": [0.5, 0.7], "floor": 0.8, "light": [-0.4, 0.75], "tone": 0.5, "mat": true},
+    "quiet-morning": {"src": "quiet-morning.webp", "focal": [0.45, 0.65], "floor": 0.86, "light": [-0.7, 0.6], "tone": 0.5},
+    "quiet-meditation": {"src": "quiet-meditation.webp", "focal": [0.6, 0.72], "floor": 0.84, "light": [0.3, 0.7], "tone": 0.5},
+    "rest-day": {"src": "rest-day.webp", "focal": [0.5, 0.7], "floor": 0.84, "light": [-0.4, 0.75], "tone": 0.5},
+    "kitchen-headstart": {"src": "kitchen-headstart.webp", "focal": [0.55, 0.62], "floor": 0.7, "light": [0.4, 0.8], "tone": 0.4}
+  },
+  "workouts": {},
+  "categories": {
+    "strength": "move-strength", "build": "move-build", "peak": "move-peak", "cardio": "move-cardio", "walk": "move-walk",
+    "flow": "move-flow", "daily": "move-flow", "yoga": "move-yoga", "balance": "move-balance", "taichi": "move-balance",
+    "stretch": "move-stretch", "warm-up": "move-flow", "cooldown": "move-stretch", "gentle": "move-gentle"
+  }
+}
