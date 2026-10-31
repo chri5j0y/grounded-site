@@ -259,7 +259,7 @@ window.GG_LEARN = {
          "On to the next part"
         ]
        ],
-       "say": "Your check-in goes one part at a time, from roots to fruit. For each part, you learn what it does for a tree, and what it does for you. Then you answer four short questions. Then you tap Next."
+       "say": "Your check-in goes one part at a time, from roots to fruit. For each part, you learn what it does for a tree, and what it does for you. Then you answer four short questions. Then you tap Next. A friendly voice reads each question to you, one at a time, with big buttons to tap. A grown-up can tap Read It All to see the whole check-in at once."
       },
       {
        "k": "screen",
@@ -647,7 +647,7 @@ window.GG_LEARN = {
         "h": "Growth Plan",
         "p": "Pick things to practice for each part of your tree."
        },
-       "say": "Start with Growth Plan. This is where you pick things to practice for each part of your tree. Parts with rain or clouds come first, marked Suggested for you."
+       "say": "Start with Growth Plan. This is where you pick things to practice for each part of your tree. Parts with rain or clouds come first, marked Suggested for you. After a check-in, a friendly voice walks you through it, one part at a time."
       },
       {
        "k": "screen",
@@ -5483,7 +5483,7 @@ window.GG_LEARN = {
          "Aspen keeps your place"
         ]
        ],
-       "say": "The check-in has thirty six questions, six for each part, written for your grade. Every answer is welcome, so just answer what is true. Tap Pause anytime, and Aspen keeps your place."
+       "say": "The check-in has thirty six questions, six for each part, written for your grade. Every answer is welcome, so just answer what is true. Tap Pause anytime, and Aspen keeps your place. The check-in opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept."
       },
       {
        "k": "screen",
@@ -5915,7 +5915,7 @@ window.GG_LEARN = {
         "h": "Growth Plan",
         "p": "Pick small practices for each part."
        },
-       "say": "Start with Growth Plan. After a check-in, tap Build my growth plan. Each part of your tree has practices to pick from, written for your grade."
+       "say": "Start with Growth Plan. After a check-in, tap Build my growth plan. Each part of your tree has practices to pick from, written for your grade. The plan opens guided, one part at a time, and Read It All shows every practice at once."
       },
       {
        "k": "points",
@@ -10165,7 +10165,7 @@ window.GG_LEARN = {
           { k: 'parts', say: 'You are made of six parts. Roots, what grounds you. Trunk, your purpose. Bark, your mind and feelings. Branches, your relationships. Leaves, your body. And Fruit, your hope.' },
           { k: 'big', h: 'Being whole means noticing and tending all six.', sub: 'Strength in one part can carry another for a while.', say: 'Being whole means noticing and tending all six. Strength in one part can carry another for a while, and the part that needs tending deserves your attention too.' },
           { k: 'levels', say: 'Each part shows a level after a check-in. Strong, Steady, or Growing Edge. A Growing Edge is simply a part to tend.' },
-          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', 'Guides for more than 80 of life\'s hardest seasons'], ['A tree that grows', 'From Acorn to Heritage Oak'], ['Health and Ability', 'Oak fits your body and your life']], cue: { at: [1, 3, 4, 5, 6] }, say: 'Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life\'s hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life.' },
+          { k: 'points', h: 'What Oak gives you', items: [['A check-in', 'Full, or a quick two minutes'], ['A growth plan', 'Practices for each part'], ['When Life Changes', 'Guides for more than 80 of life\'s hardest seasons'], ['A tree that grows', 'From Acorn to Heritage Oak'], ['Health and Ability', 'Oak fits your body and your life']], cue: { at: [1, 3, 4, 5, 6] }, say: 'Here is what Oak gives you. A check-in, full or quick. The Full Check-in asks eight questions for each part, and the Quick Check-in takes about two minutes. A growth plan, with practices for each part, and a few more for each Growing Edge. When Life Changes, with guides for more than eighty of life\'s hardest seasons. And a tree that grows as you tend it, from Acorn all the way to Heritage Oak. Health and Ability, in Settings, with a private Living Sober choice, helps Oak fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app.' },
           { k: 'big', h: 'Your answers are yours.', sub: 'Locked on this device with your own passcode.', say: 'Your privacy matters here. Your profile is locked with a passcode on this device, and everything you enter stays right here with you.' },
           { k: 'tabs', app: 'oak', app_name: 'Oak', tabs: ['Today', 'Week', 'Season', 'Growth Plan', 'When Life Changes', 'Learn'], tap: 0, note: { h: 'Where to begin', p: 'Start a check-in. Your tree and your practices grow from there.' }, say: 'Oak has six tabs. Today, Week, Season, Growth Plan, When Life Changes, and Learn. Today holds your practices, a little each day. The best place to begin is a check-in. Tap Start a check-in at the top of the page, and your tree grows from there.' },
           { k: 'big', h: 'One part, one small step.', sub: 'One breath, and one way to tend a part today.', beats: ['Let us try a small practice now.', 'Sit however is comfortable.', 'Take one slow breath, in and out.', 'Think of one part of your life that has been carrying a lot lately.', { t: 'Now name one small thing that would tend it today.', w: 10 }], say: 'Let us try a small practice now. Sit however is comfortable. Take one slow breath, in and out. Think of one part of your life that has been carrying a lot lately. Now name one small thing that would tend it today.' },
@@ -10178,7 +10178,7 @@ window.GG_LEARN = {
         { id: 'ok-u-checkin', crisis: ['988: call or text, any time', '911: emergency'], n: 1, title: 'Your First Check-in', mins: 4, blurb: 'How the check-in works, and how to take it well.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 1', h: 'Your First Check-in', sub: 'An honest look at all six parts.', say: 'Everything in Oak starts with a check-in. This lesson walks you through your first one, so you know what to expect.' },
           { k: 'card', title: 'Your Private Profile', body: 'Your tree, practices, and check-ins stay on this device, locked with a passcode only you know.', fields: [['Your name', 'Sam'], ['Passcode', '••••••']], btns: ['Create My Profile', 'Maybe Later'], tap: 0, say: 'First, Oak asks you to make a private profile. Your tree, your practices, and your check-ins stay on this device, locked with a passcode only you know. They are yours alone. When you set your passcode, Oak also shows your twelve Root Words, once. Keep them safe, because they open your profile if you ever forget your passcode.' },
-          { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day.' },
+          { k: 'flow', h: 'Two kinds of check-in', steps: [['Full Check-in', 'Eight questions for each part'], ['Quick Check-in', 'One question for each part']], say: 'There are two kinds of check-in. The Full Check-in asks eight questions for each part, forty eight in all, and takes about fifteen minutes. The Quick Check-in asks one question for each part, for a fast look on a busy day. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Check-in: Roots', rows: [['I have something that grounds me when life is hard.', ''], ['Often', ''], ['Sometimes', ''], ['Rarely', ''], ['Not sure', '']], tap: 2, say: 'Each question has a few answers, plus Not sure. Answer with what is true lately, not what you wish were true. And Not sure is always an honest answer.' },
           { k: 'points', h: 'Some questions are turned around', items: [['Most ask about what is going well', 'Yes counts up'], ['A few ask about what is hard', 'Yes counts down'], ['Answer each one plainly', 'Oak does the math']], say: 'A few questions are turned around on purpose. Most ask about what is going well. A few ask about what is hard. Just answer each one plainly. Oak does the math.' },
           { k: 'points', h: 'Open questions, and help close by', items: [['Open questions', 'About every part of your tree'], ['Stays on this device', 'Nothing is sent anywhere'], ['A quiet line', 'At the bottom of the check-in'], ['Help Is Close', 'One tap, any time']], cue: { at: [0, 1, 2, 3] }, say: 'Every Oak question is open and curious, and Oak asks nothing about harm. Your answers stay on this device, and nothing is sent anywhere. One quiet line of type sits at the bottom of the check-in. And See help lines opens Help Is Close, with people you can reach any time.' },
@@ -10199,7 +10199,7 @@ window.GG_LEARN = {
 
         { id: 'ok-u-plan', n: 3, title: 'Building Your Growth Plan', mins: 4, blurb: 'Choosing practices that fit your life.', scenes: [
           { k: 'title', hero: 'oak', eyebrow: 'Using Oak, Lesson 3', h: 'Building Your Growth Plan', sub: 'Small practices for each part.', say: 'Your growth plan is a short list of practices for each part of your tree. This lesson shows you how to build one that fits your life.' },
-          { k: 'points', h: 'Suggestions, with room to grow', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like.' },
+          { k: 'points', h: 'Suggestions, with room to grow', items: [['Strong: about 3', 'To keep it strong', '#5F7D48'], ['Steady: about 4', 'To help it grow', '#8B5E1A'], ['Growing Edge: about 5', 'More ways to tend it', '#B8612F']], say: 'Oak suggests a few practices for each part, based on its level. About three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once.' },
           { k: 'screen', app: 'oak', app_name: 'Oak', title: 'Growth Plan: Bark', rows: [['Slow Exhale', 'Chosen', '#5F7D48'], ['Name It', 'Chosen', '#5F7D48'], ['Worry Window', ''], ['Leaves on a Stream', ''], ['How to do this', '']], tap: 2, say: 'Tap any practice to choose it. Tap How to do this to see why it helps, the steps, and what to try if it is hard.' },
           { k: 'card', title: 'Find more practices', body: 'Browse by part, or search: sleep, calm, friends, prayer.', fields: [['Search', 'sleep']], btns: ['Add to my practices', 'Show me how'], tap: 0, say: 'At the bottom of Today, Find more practices opens the whole Grow With Grounded library. Browse by part, or search for a word like sleep, calm, or friends. Practices written for young adults are tagged For Young Adults. Then add what fits.' },
           { k: 'points', h: 'Practices born from stories', items: [['From the Bedside', 'Practices that grew out of real visits'], ['Linked to their story', 'Watch the lesson or read the story'], ['In the library', 'Ready to add to your plan']], say: 'Some practices are marked From the Bedside. They grew out of real stories from Chris’s work as a chaplain, like Lion’s Breath and One Woodpecker. Each one links to its story.' },
@@ -14528,7 +14528,7 @@ window.GG_LEARN = {
         "Three questions for each part"
        ]
       ],
-      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. And under every check-in, Willow shows the hospice line first."
+      "say": "The Quick Check-in asks one question for each part, and takes about two minutes. The Full Check-in asks three for each part. Both open guided, with one question on the screen at a time, read aloud by a calm voice, and Read It All shows the whole form, with your answers kept. Both ask about faith on the second screen, every time, because a chaplain always asks. Each answer is Rarely, Sometimes, Often, Almost always, or Not sure. Not sure is always okay. And under every check-in, Willow shows the hospice line first."
      },
      {
       "k": "points",
@@ -20197,7 +20197,7 @@ window.GG_LEARN = {
          "For the stories you want to pass on"
         ]
        ],
-       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide. Health and Ability, in Settings, with a private Living Sober choice, helps Sequoia fit your life."
+       "say": "Sequoia is made for later life. The text starts larger, and it can go larger still. The check-in shows one question on the screen at a time, and you can take all the time you need. The practices work seated, standing, or in bed. And the Legacy Book keeps the stories you want to pass on. Read aloud is there too, in every check-in and guide. Health and Ability, in Settings, with a private Living Sober choice, helps Sequoia fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app."
       },
       {
        "k": "big",
@@ -20293,7 +20293,7 @@ window.GG_LEARN = {
          "One question for each part, 2 minutes"
         ]
        ],
-       "say": "There are two ways to check in. The full check-in asks eight short questions for each part. Tap Start a check-in at the top of the page, or Begin my check-in on Today. The Quick Check-in asks one question for each part, six in all, and takes about two minutes."
+       "say": "There are two ways to check in. The full check-in asks eight short questions for each part. Tap Start a check-in at the top of the page, or Begin my check-in on Today. The Quick Check-in asks one question for each part, six in all, and takes about two minutes. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept."
       },
       {
        "k": "points",
@@ -20734,7 +20734,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like."
+       "say": "Your growth plan is a short list of practices for each part of your tree. Sequoia suggests about three for a strong part, four for a steady one, and five for a growing edge. These are suggestions, with room for more. Choose as many or as few as you like. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once."
       },
       {
        "k": "screen",
@@ -27420,7 +27420,7 @@ window.GG_LEARN = {
          "One question for each part, about 2 minutes"
         ]
        ],
-       "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve.",
+       "say": "There are two ways to check in. The full check-in asks seven questions for each part, forty two in all, and takes about ten minutes. The Quick Check-in asks one question for each part, and takes about two. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept. The first time, Pine asks your grade once. A few questions fit grades nine and ten, and a few fit grades eleven and twelve.",
        "cue": {
         "at": [
          1,
@@ -27787,7 +27787,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for each part. Pine suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -32672,7 +32672,7 @@ window.GG_LEARN = {
          "Levels, milestones, and rings"
         ]
        ],
-       "say": "Here is what Birch gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life."
+       "say": "Here is what Birch gives you. A check-in, an honest look at all six parts. A growth plan, small practices that fit your real life. Groundwork, a private notebook for who you are becoming, plus Skills I've Got, checklists for the practical stuff. When Life Changes, guides for the changes these years bring, each with two short videos. And a tree that grows as you tend it, with levels, milestones, and a new ring every season. Health and Ability, in Settings, with a private Living Sober choice, helps Birch fit your life. And when you want to go all in, The Grounded Way brings your tree, your meals, your movement, and your quiet together in one private app."
       },
       {
        "k": "big",
@@ -32775,7 +32775,7 @@ window.GG_LEARN = {
          "One question for each part, a few minutes"
         ]
        ],
-       "say": "There are two ways to check in. The full check-in asks eight questions for each part, forty eight in all, and takes about ten to twelve minutes. The Quick Check-in asks one question for each part, for a fast look on a busy week.",
+       "say": "There are two ways to check in. The full check-in asks eight questions for each part, forty eight in all, and takes about ten to twelve minutes. The Quick Check-in asks one question for each part, for a fast look on a busy week. Either one opens guided, with one question on the screen at a time, read aloud by a calm voice. Tap Read It All any time to see the whole form, with your answers kept.",
        "cue": {
         "at": [
          1,
@@ -33149,7 +33149,7 @@ window.GG_LEARN = {
          "#B8612F"
         ]
        ],
-       "say": "Your growth plan is a short list of practices for each part. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
+       "say": "Your growth plan is a short list of practices for each part. Birch suggests about three for a strong part, four for a steady one, and five for a growing edge. Those are suggestions, with room for more. Your growth plan opens guided too, one part at a time, starting with your Growing Edge. Read It All shows every practice at once. Tap How to do this on any practice for why it helps and how to start. Show Me Others brings more choices, and you can write your own."
       },
       {
        "k": "tabs",
@@ -39803,7 +39803,7 @@ window.GG_LEARN = {
         "Read Aloud",
         "Why this question?"
        ],
-       "say": "Then the questions come, one at a time, in large type. Tap Read Aloud, and the question is read to the whole room. Tap Why this question? to see what it is about. Some questions also have a tip for the leader."
+       "say": "Then the questions come, one at a time, in large type, read aloud to the whole room by a calm voice. Read It All shows the whole form at once, with Read Aloud on each question. Tap Why this question? to see what it is about. Some questions also have a tip for the leader."
       },
       {
        "k": "points",
