@@ -66,7 +66,7 @@
   "move-build": {
    "src": "move-build.webp",
    "focal": [
-    0.23,
+    0.21,
     0.66
    ],
    "floor": 0.7,
@@ -295,7 +295,7 @@
   "quiet-meditation": {
    "src": "quiet-meditation.webp",
    "focal": [
-    0.175,
+    0.16,
     0.68
    ],
    "floor": 0.68,
@@ -304,7 +304,7 @@
     0.7
    ],
    "tone": 0.5,
-   "scale": 0.55,
+   "scale": 0.5,
    "mat": false,
    "open": [
     0.02,
@@ -367,7 +367,7 @@
   "meadow-path": {
    "src": "welcome-wide.webp",
    "focal": [
-    0.7,
+    0.75,
     0.6
    ],
    "floor": 0.6,
