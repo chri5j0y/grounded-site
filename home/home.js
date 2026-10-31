@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b899';
+  var V = 'b900';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b898';
@@ -1397,7 +1397,8 @@
     var on = !x.done;
     if (x.src === 'plan') { if (!togglePractice(x.pid, on)) return; }
     else if (x.src === 'tend' && x.pairs) fillDone(x, on);
-    else if (x.src === 'tend') { tendMark(x, on); if (x.opart && PART[x.opart] && !isKid(S.p)) togglePractice(x.opart + '|' + x.title, on); }   // BLD 896: an own item credits the tree part it tends else if (x.src === 'old') { itemGo(key); return; }
+    else if (x.src === 'tend') { tendMark(x, on); if (x.opart && PART[x.opart] && !isKid(S.p)) togglePractice(x.opart + '|' + x.title, on); }   // BLD 896: an own item credits the tree part it tends
+    else if (x.src === 'old') { itemGo(key); return; }
     else if (x.src === 'spirit') spiritMark(x.pid, on);
     else { var hk = homeRec(), rec = todayRec(hk); rec[key] = on ? 1 : 0; pruneDays(hk); saveHome();
       // BLD 893: a Sacred Pause chosen in My Grounded Way Plan grows Roots too.
@@ -1449,7 +1450,7 @@
         (din.title ? '<button type="button" class="hm-wdin" data-hm-wk="' + esc(din.key || '') + '"' + (din.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ' dinner: ' + din.title + (din.key ? ', open to cook' : '')) + '">' + esc(din.title) + mark(din) + '</button>' : '') +
         (mv.title ? '<button type="button" class="hm-wmove" data-hm-wk="' + esc(mv.key || '') + '"' + (mv.key ? '' : ' disabled') + ' aria-label="' + esc((d.dayName || d.day || '') + ': ' + mv.title + (mv.key ? ', start it' : '')) + '">' + esc(mv.title) + mark(mv) + '</button>' : '') +
         weekExtra(d) +
-        (!din.title && !mv.title && !obj(d.med).title && !arr(d.own).length ? '<span class="hm-wnone">A day to rest</span>' : '') +
+        (!din.title && !mv.title && !obj(d.med).title && !arr(d.own).length && !arr(d.menu).length ? '<span class="hm-wnone">A day to rest</span>' : '') +
         '</div></div>';
     }).join('');
     /* BLD 892: the program week ("Week 6 of 12 · Build") and, once, What's New in Your Plan. */
@@ -2409,6 +2410,8 @@
     arr(d.hol).forEach(function (x) { out += '<button type="button" class="hm-wmove hm-whol" data-hm-wk="' + esc(x.key) + '" aria-label="' + esc((d.dayName || d.day || '') + ': ' + x.title + (x.set ? ', ' + x.set : '')) + '">' + esc(x.title) + (x.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>'; });
     // BLD 896: My Own Items on their days (tap to edit).
     arr(d.own).forEach(function (o) { out += '<button type="button" class="hm-wmove hm-wown" data-hm-wk="ownedit:' + esc(o.id) + '" aria-label="' + esc((d.dayName || d.day || '') + ': ' + o.title + ', ' + o.when + (o.done ? ', done' : '') + '. Edit it') + '">' + esc(o.title) + ' <small>' + esc(o.when) + '</small>' + (o.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>'; });
+    // BLD 900: My Menu, each added recipe on its day (tap to open its kitchen guide, with Swap and Remove).
+    arr(d.menu).forEach(function (m) { out += '<button type="button" class="hm-wmove hm-wmenu" data-hm-wk="' + esc(m.key) + '" aria-label="' + esc((d.dayName || d.day || '') + ' ' + m.meal + ': ' + m.title + (m.done ? ', done' : '') + ', open the guide') + '">' + esc(m.title) + ' <small>' + esc(m.meal) + '</small>' + (m.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>'; });
     if (md.title) out += '<button type="button" class="hm-wmove hm-wmed" data-hm-wk="' + esc(md.key || '') + '" aria-label="' + esc((d.dayName || d.day || '') + ' meditation: ' + md.title + ', start it') + '">' + esc(md.title) + (md.done ? ' <span class="hm-wdone">' + I('check') + '<span class="sr">done</span></span>' : '') + '</button>';
     var sp = planOK() ? spiritOn(String(d.date || '').slice(0, 10)) : [];
     if (sp.length) out += '<span class="hm-wsp">' + sp.map(function (x) { return '<span class="hm-wpill" style="--c:var(--' + x.part + ');--cs:var(--' + x.part + '-s)">' + esc(x.title || x.n) + '</span>'; }).join('') + '</span>';

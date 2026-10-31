@@ -607,8 +607,9 @@ function agenda(d){
     const b = prepFor('batch', fw); if (b) out.push({key: 'prep:batch:' + fw, k: 'prep', v: 'batch|' + fw, hour: 14, kick: 'After Sunday prep', title: b.title || 'Weekly Batch', sub: batchSub(b), btn: 'Start'}); }
   if (dow === 3 && n >= 1){ const p = prepFor('wednesday', n); if (p) out.push({key: 'prep:wednesday:' + n, k: 'prep', v: 'wednesday|' + n, hour: 16, kick: 'Midweek', title: 'Wednesday Mini Prep', sub: (p.mins || 20) + ' minutes.', btn: 'Start Prep'}); }
   if ((dow === 2 || dow === 4) && !KIT() && !PUB()){ const ev = arr(WK().evenings), e = ev.find(x => (dow === 2 ? /zone 2/i : /^interval/i).test(x.title || '')) || (ev.length ? ev[(Math.max(1, n) * 2 + dow) % ev.length] : null); out.push({key: 'y', k: 'mark', hour: 18.5, kick: 'Evening', title: 'The Y together', sub: (e ? e.title + (e.how ? ': ' + e.how : '') : 'Swim, sauna, or a class, together.') + (MINE() && MINE().yNote ? ' ' + MINE().yNote : ''), btn: 'We Did It'}); }
-  const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
+  const dn = mmDinner(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, k: 'cook', v: dn.wk + '|' + dn.id, hour: 17, kick: 'Tonight', title: dn.name, sub: (dn.mins ? dn.mins + ' minutes' : '') + (nOk(dn.nut) ? ', ' + (nOk(dn.nutHeart) && !KIT() ? nSf(dn.nutHeart) + ' on the heart-health plate' : nSf(dn.nut) + ' a serving') : '') + (dn.prepped ? '. ' + dn.prepped : ''), btn: 'Cook It'});
   holAgenda(d).forEach(x => out.push(x)); // BLD 896: a set up holiday's shopping day and prep days
+  mmAgenda(d).forEach(x => out.push(x)); // BLD 900: My Menu, each added meal on its day (a swapped dinner steps aside above)
   return out.sort((a, b) => a.hour - b.hour);
 }
 // ---------- BLD 846: Keep It Rolling. Reminders from the plan: thaw, freeze, shop, prep, grab and go, freezer stock ----------
@@ -717,7 +718,7 @@ function vWeek(){
   if (S.wkView === 'month') return ownViewTabs('month') + vMonth();   // BLD 896: the Month beside the Week
   const d0 = new Date(), n0 = weekNo(d0), n = Math.max(1, n0 + (S.wkOff || 0)), mon = addD(startMon(), (n - 1) * 7), app = APP() || {}, din = app.dinners || {};
   const track = H().set.track || 'strength';
-  const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = dinnerFor(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
+  const rows = [0, 1, 2, 3, 4, 5, 6].map(i => { const d = addD(mon, i), dn = mmDinner(d), ses = !workOn() ? null : sesFor(d), isT = ymd(d) === today(), mf = medFor(d);
     return `<div class="hj-day${isT ? ' t' : ''}"><div class="hj-dl"><b>${esc(DOW[d.getDay()])}</b><small>${esc(short(ymd(d)))}</small></div><div class="hj-dr">
       ${dn ? `<button type="button" class="hj-pill food" data-hja="cook" data-hjv="${esc(dn.wk + '|' + dn.id)}">${esc(dn.name)}${dn.mins || nOk(dn.nut) ? ` <small>${[dn.mins ? esc(dn.mins) + ' min' : '', nSf(nOk(dn.nutHeart) && !KIT() ? dn.nutHeart : dn.nut)].filter(Boolean).join(', ')}</small>` : ''}</button>` : ''}
       ${ses ? `<button type="button" class="hj-pill move" data-hja="work" data-hjv="${esc(ses.id)}">${esc(sesLabel(ses.id, ses))}</button>` : ''}
@@ -727,6 +728,7 @@ function vWeek(){
       ${d.getDay() === 0 && prepFor('batch', n + 1) ? `<button type="button" class="hj-pill prep" data-hja="prep" data-hjv="batch|${n + 1}">${esc(prepFor('batch', n + 1).title || 'Weekly Batch')}</button>` : ''}
       ${mf ? `<button type="button" class="hj-pill calm" data-hja="go" data-hjv="medid:${esc(mf.id)}">${esc(mf.title)} <small>${esc(medMins(n))} min meditation${track === 'practice' ? ', evening' : ''}</small></button>` : ''}
       ${ownPills(d)}
+      ${mmPills(d)}
       ${holWeekDay(d).map(x => `<button type="button" class="hj-pill prep" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)}</button>`).join('')}
       ${remOn() && !H().set.remWk ? remindersFor(d, 'all').map(r => `<button type="button" class="hj-pill rem${S.remOpen === r.id ? ' on' : ''}" data-hja="remshow" data-hjv="${esc(r.id)}" aria-expanded="${S.remOpen === r.id}">${esc(r.title)}</button>`).join('') : ''}
       ${remOn() && !H().set.remWk ? (rr => rr ? `<div class="hj-remd"><span>${esc(rr.sub)}</span>${rr.go ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="${esc(rr.go)}">Open</button>` : ''}</div>` : '')(remindersFor(d, 'all').find(r => r.id === S.remOpen)) : ''}
@@ -760,7 +762,8 @@ const SECS_P = ['Produce', 'Proteins', 'Grains and Beans', 'Dairy and Eggs', 'Fr
 const SECX = () => PUB() ? SECS_P : SECS;
 // BLD 896: My Own Shopping Items join each week's list (ownShop).
 // BLD 896: a set up holiday's shopping joins the list for the week of its buy day (holMerge).
-function shopList(n){ return holMerge(ownShop(shopList0(n), n), Math.max(1, n)); }
+// BLD 900: My Menu's added recipes join the list, and a swapped meal's items step aside (mmMerge).
+function shopList(n){ return mmMerge(holMerge(ownShop(shopList0(n), n), Math.max(1, n)), Math.max(1, n)); }
 function shopList0(n){
   const h = H(), key = String(Math.max(1, n)); if (h.shop[key]) return wbMerge(h.shop[key], n);
   const sp = (APP() || {}).shop, w = sp && sp.weeks && sp.weeks[letter(n)]; if (!w) return null;
@@ -780,7 +783,7 @@ function keepShop(n, L){ const h = H(); delete L.seed; L.u = Date.now(); h.shop[
 function vShop(){
   const d = new Date(), n = S.shopWk || foodWeek(d), L = shopList(n), h = H(), hh = num(h.set.household);
   if (!L) return `<p class="hj-note">The shopping lists arrive with the next library update.</p>`;
-  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own), left = vis.filter(x => !x.done);
+  const st = PUB() ? 'all' : S.store || 'costco', vis = L.items.filter(x => st === 'all' || x.store === st || x.own || x.mm), left = vis.filter(x => !x.done);
   const tot = vis.reduce((a, x) => a + (+x.price || 0), 0), cart = vis.filter(x => x.done).reduce((a, x) => a + (+x.price || 0), 0);
   const groups = SECX().map(s => [s, vis.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === s).sort((a, b) => (a.done - b.done) || (a.n - b.n))]).filter(g => g[1].length);
   const ed = S.shopEd;
@@ -788,7 +791,7 @@ function vShop(){
   ${PUB() ? `<p class="hj-note">This list follows your plan for Food Week ${letter(n)}: dinners, plus your breakfasts, lunches, and snacks. ${pubHH() > 1 ? `Amounts fit your household of ${pubHH()}.` : pubHH() ? 'Amounts fit a table of two: one meal now and one for tomorrow.' : 'Amounts fit a table of six.'}</p>` : hh && hh !== 6 ? `<p class="hj-note">Amounts are for six. For ${hh}, buy about ${Math.round(hh / 6 * 100)}% of each.</p>` : ''}
   <div class="hj-shopbar"><div class="hj-chips" style="margin:0">${(PUB() ? [] : ['costco', 'grocer', 'all']).map(s => `<button type="button" class="chip${st === s ? ' on' : ''}" aria-pressed="${st === s}" data-hja="store" data-hjv="${s}">${s === 'all' ? 'Both' : STORES[s]}</button>`).join('')}<button type="button" class="chip${S.hideDone ? ' on' : ''}" aria-pressed="${!!S.hideDone}" data-hja="hide">Hide In Cart</button></div>
     <div class="hj-tot"><span><b>${left.length}</b> of ${vis.length} left</span>${PUB() && !tot ? '' : `<span>In cart <b>$${cart.toFixed(2)}</b> of about $${tot.toFixed(2)}</span>`}</div><div class="hj-prog"><span style="width:${vis.length ? 100 * (vis.length - left.length) / vis.length : 0}%"></span></div></div>
-  ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(x.amt)}${x.for ? ' · ' + esc(x.for) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
+  ${groups.map(([s, g]) => { const shown = S.hideDone ? g.filter(x => !x.done) : g; if (!shown.length) return ''; return `<h4 class="hj-sec">${esc(s)}<small>${g.filter(x => !x.done).length} left</small></h4>` + shown.map(x => `<div class="hj-it${x.done ? ' done' : ''}"><button type="button" class="hj-agck" data-hja="buy" data-hjv="${esc(x.id)}" aria-pressed="${!!x.done}" aria-label="In cart: ${esc(x.name)}">${x.done ? '&#10003;' : ''}</button><button type="button" class="hj-itt" data-hja="shoped" data-hjv="${esc(x.id)}"><b>${esc(x.name)}</b><small>${st === 'all' && !PUB() ? esc(STORES[x.store]) + ' · ' : ''}${esc(mmAmt(x))}${mmFor(x) ? ' · ' + esc(mmFor(x)) : ''}${(q => q ? ' · ' + esc(q.sf) + ' g sat fat' + (q.per ? ' per ' + esc(q.per) : '') : '')(nutOf(x, n))}</small></button><span class="hj-pr">${x.price ? '$' + (+x.price).toFixed(2) : ''}</span></div>` + (ed === x.id ? `<div class="hj-ed">${(q => q ? `<p class="hj-sub hj-nl">${q.per ? 'Per ' + esc(q.per) + ': ' : ''}${nLine(q)}</p>` : '')(nutOf(x, n))}<label class="hj-fld"><span>Item</span><input data-hjsh="name" value="${esc(x.name)}"></label><div class="hj-g3"><label class="hj-fld"><span>Amount</span><input data-hjsh="amt" value="${esc(x.amt)}"></label><label class="hj-fld"><span>Price</span><input data-hjsh="price" inputmode="decimal" value="${esc(x.price || '')}"></label>${PUB() ? '' : `<label class="hj-fld"><span>Store</span><select data-hjsh="store"><option value="costco"${x.store === 'costco' ? ' selected' : ''}>Costco</option><option value="grocer"${x.store === 'grocer' ? ' selected' : ''}>Your Grocer</option></select></label>`}</div>
       <div class="row"><button type="button" class="btn btn-gold btn-sm" data-hja="shopsave" data-hjv="${esc(x.id)}">Save</button><button type="button" class="btn btn-line btn-sm" data-hja="shopclose">Close</button><button type="button" class="linkbtn" data-hja="shopdel" data-hjv="${esc(x.id)}">Remove</button></div></div>` : '')).join(''); }).join('')}
   <div class="hj-add"><input id="hj-addname" placeholder="Add an item" autocomplete="off"><button type="button" class="btn btn-gold btn-sm" data-hja="shopadd">Add</button></div>
   ${ownShopPanel(n)}
@@ -799,7 +802,7 @@ function vShop(){
 function shopText(n){
   const L = shopList(n), st = PUB() ? 'all' : S.store || 'costco', out = [];
   (PUB() ? [''] : st === 'all' ? ['costco', 'grocer'] : [st]).forEach(s => { const g = L.items.filter(x => (!s || x.store === s) && !x.done); if (!g.length) return; if (s) out.push(STORES[s].toUpperCase());
-    SECX().forEach(sec => { const r = g.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === sec); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (x.amt ? ' (' + x.amt + ')' : ''))); }); out.push(''); });
+    SECX().forEach(sec => { const r = g.filter(x => (SECX().includes(x.sec) ? x.sec : 'Other') === sec); if (!r.length) return; out.push('', sec + ':'); r.forEach(x => out.push('[ ] ' + x.name + (mmAmt(x) ? ' (' + mmAmt(x) + ')' : ''))); }); out.push(''); });
   return out.join('\n').trim() || 'Everything is in the cart.';
 }
 // ---------- overlays: workout, cook, prep, meditation ----------
@@ -867,7 +870,7 @@ function vOv(){
   } else if (o.k === 'cook' || o.k === 'prep'){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
-    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>
+    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>${mmOvBtns(o)}
       ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}${o.base ? servesRow(o) : ''}
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
@@ -918,6 +921,7 @@ function openKey(key){
   if (k === 'prepsec'){ S.prepWk = +a || null; if (bareOn() || C.host === 'home') return want('prep'); S.sec = 'prep'; rerender(false); window.scrollTo(0, 0); return; }
   if (k === 'prep') return openPrep(a, +b);
   if (k === 'cook') return openCook(a, b);
+  if (k === 'menu') return openOv(mmOv(a));   // BLD 900: a meal added to My Menu
   // BLD 881: a lunch or any idea, the head start for tomorrow, and a workout from any level open their guides too.
   if (k === 'idea') return openIdea(a, b);
   if (k === 'head') return openOv(headOv(a));
@@ -1465,7 +1469,9 @@ function stageFallback(state, op){ const c = stCol(state, op.hour);
 function stagePanel(state, op){ op = Object.assign({hour: HOUR()}, op || {}); let inner = '';
   if (window.GGStage && GGStage.scene){ try { inner = GGStage.scene(state, op) || ''; } catch(e){ inner = ''; } }
   const fb = !inner; if (fb) inner = stageFallback(state, op);
-  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}" aria-hidden="true">${inner}</div>`; }
+  // BLD 900: a figure that the 3D stage will draw waits on the painting with a calm placeholder (no simple figure first).
+  const wait = !fb && /gg-move/.test(String(op.fig || '')) && fig3dWait();
+  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}${wait ? ' g3-wait' : ''}" aria-hidden="true">${inner}</div>`; }
 function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'); if (!el) return;
   if (window.GGStage && GGStage.update){ try { GGStage.update(el, {pct, secs}); } catch(e){} return; }
   const r = el.querySelector('.hj-ring'); if (r){ r.style.setProperty('--p', pct.toFixed(3)); const b = r.querySelector('b'); if (b && secs != null) b.textContent = secs; } }
@@ -1473,7 +1479,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b899';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b900';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
@@ -1481,10 +1487,57 @@ function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 
 function fig3d(){
   const o = S.ov, G = window.GGFig3D;
   if (!o || !document.querySelector('.hj-stagebox svg.gg-move')){ if (G) G.detach(); return; }
+  // BLD 900: a player that waited past about 6 s keeps the simple figure to its end (the bundle keeps loading for the next one).
+  if (o === fig3d.late){ if (G){ G.detach(); G.load(); } return; }
+  if (document.querySelector('.hj-stagebox.g3-wait')) fig3dTimer(o);
   if (G){ G.profileBody = fig3dBody; G.sync(fig3dCtx(o)); return; }
-  if (fig3d.p || /[?&]fig=svg\b/.test(location.search)) return;
+  if (/[?&]fig=svg\b/.test(location.search)) return;
+  // 3D off for this device: the simple figure shows at once; the small adapter still loads (never the engine) so the
+  // player can offer the 3D Figure setting wherever WebGL exists.
   try { if (localStorage.getItem('gg-fig3d') === 'off') return; } catch(e){}
-  fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true; el.onload = () => { res(); if (window.GGFig3D){ fig3d(); rerenderSoon(); } }; el.onerror = res; document.head.appendChild(el); });
+  if (!fig3dLikely()) fig3dUnwait();
+  fig3dScript();
+}
+// BLD 900 (Chris, live test, Full Body Strength: "very first screen ... shows the old stick figure for about 1 sec"). The 3D
+// stage starts loading as soon as a player's start screen opens, and earlier, quietly, once the My Health view or the Home's
+// Today shows (warm). Until the 3D stage is ready, the stage shows its painting with a calm placeholder: no figure, a soft
+// light breathing on the floor. The simple figure shows only when 3D is off for this device (no WebGL, software drawing
+// without the setting, Save Data, the Simple Figure setting), when the bundle fails, or when it takes over about 6 s.
+const FIG3D_WAIT = 6000;
+function fig3dScript(){
+  if (fig3d.p) return fig3d.p;
+  return (fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true;
+    el.onload = () => { res(); if (window.GGFig3D){ if (S.ov) { fig3d(); rerenderSoon(); } else if (GGFig3D.ok()) GGFig3D.load(); } else fig3dUnwait(); };
+    el.onerror = () => { res(); fig3d.failed = true; fig3dUnwait(); }; document.head.appendChild(el); }));
+}
+let GLP = null;
+function glProbe(){
+  if (GLP) return GLP; GLP = {gl: false, soft: false};
+  try { const c = document.createElement('canvas'), g = c.getContext('webgl2') || c.getContext('webgl');
+    if (g){ GLP.gl = true; const x = g.getExtension('WEBGL_debug_renderer_info'), r = String(x ? g.getParameter(x.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER) || '');
+      GLP.soft = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r); const lc = g.getExtension('WEBGL_lose_context'); if (lc) lc.loseContext(); } } catch(e){}
+  return GLP;
+}
+// The same choice gg-fig3d.js makes (ok()), before it has loaded.
+function fig3dLikely(){
+  const G = window.GGFig3D; if (G) return G.ok();
+  if (fig3d.failed || /[?&]fig=svg\b/.test(location.search)) return false;
+  let pf = null; try { pf = localStorage.getItem('gg-fig3d'); } catch(e){}
+  if (pf === 'off') return false;
+  try { if (navigator.connection && navigator.connection.saveData) return false; } catch(e){}
+  try { if (window.matchMedia && matchMedia('(prefers-reduced-data: reduce)').matches) return false; } catch(e){}
+  const w = glProbe(); return w.gl && (!w.soft || pf === 'on');
+}
+function fig3dWait(){ return !!S.ov && S.ov !== fig3d.late && fig3dLikely(); }
+function fig3dUnwait(){ document.querySelectorAll('.hj-stagebox.g3-wait').forEach(b => b.classList.remove('g3-wait')); }
+function fig3dTimer(o){
+  if (fig3d.tov === o) return; fig3d.tov = o;
+  setTimeout(() => { if (S.ov !== o || document.querySelector('.hj-stagebox.g3-on') || (window.GGFig3D && GGFig3D.state().ready)) return;
+    fig3d.late = o; if (window.GGFig3D) GGFig3D.detach(); fig3dUnwait(); }, FIG3D_WAIT);
+}
+function fig3dWarm(){
+  if (fig3d.p || fig3d.warm) return; fig3d.warm = 1;
+  setTimeout(() => { const go = () => { if (!fig3d.p && fig3dLikely()) fig3dScript(); }; if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else go(); }, 1200);
 }
 // The figure chips (3D or simple, the man or the woman) appear once the 3D stage knows this device can draw it.
 // They join the open player's chips in place (no redraw, so the painting and the figure carry on undisturbed).
@@ -2227,7 +2280,7 @@ function fruitCards(){
 }
 
 // ---------- Today ----------
-const partOf = x => x.k === 'work' || x.k === 'prac' || x.k === 'mark' ? 'move' : x.k === 'med' ? 'mind' : ['cook', 'shop', 'prep', 'hol'].includes(x.k) ? 'food' : '';
+const partOf = x => x.k === 'work' || x.k === 'prac' || x.k === 'mark' ? 'move' : x.k === 'med' ? 'mind' : ['cook', 'shop', 'prep', 'hol', 'menu'].includes(x.k) ? 'food' : '';
 const ACC = {work: 'a-move', prac: 'a-move', mark: 'a-move', med: 'p-bark', cook: 'a-kitchen', shop: 'a-kitchen', prep: 'a-kitchen', quiet: 'p-roots', supp: 'a-today'};
 const SCN = {work: 'work', prac: 'practice', mark: 'work', med: 'practice', cook: 'cook', shop: 'bowl', prep: 'cook', quiet: 'dawn', supp: 'night'};
 function habitList(){
@@ -2416,6 +2469,7 @@ function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2
 
 function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
+  if (workOn()) fig3dWarm();
   if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
   const h = H(), mine = MINE(), an = S.anim; S.anim = false;
   // Keep the start date once the plan is running, so it never drifts (BLD 857b).
@@ -3354,7 +3408,7 @@ function monthDay(d, hols){
       if (ses) out.move = {title: sesLabel(ses.id, ses), key: 'work:' + ses.id, done: isDone(d, 'work:' + ses.id)};
       else if (pr) out.move = {title: pr.title || 'Flow', key: 'pracid:' + pr.id, done: isDone(d, 'prac')};
       const mf = U('mind') && MED() && wn >= 1 && H().set.medFreq && medOn(d) ? medFor(d) : null; if (mf) out.med = {title: mf.title || 'Meditation', key: 'medid:' + mf.id, done: isDone(d, 'med')};
-      if (U('food')){ const dn = dinnerFor(d); if (dn) out.dinner = {title: dn.name, key: 'cook:' + dn.wk + ':' + dn.id, done: isDone(d, 'cook:' + dn.wk + ':' + dn.id)};
+      if (U('food')){ const dn = mmDinner(d); if (dn) out.dinner = {title: dn.name, key: 'cook:' + dn.wk + ':' + dn.id, done: isDone(d, 'cook:' + dn.wk + ':' + dn.id)};
         if (dow === 0){ const p = prepFor('sunday', fw), b = prepFor('batch', fw); if (p) out.prep.push({title: 'Sunday Together Prep', key: 'prep:sunday:' + fw}); if (b) out.prep.push({title: b.title || 'Weekly Batch', key: 'prep:batch:' + fw}); }
         if (dow === 3 && wn >= 1){ const p = prepFor('wednesday', wn); if (p) out.prep.push({title: 'Wednesday Mini Prep', key: 'prep:wednesday:' + wn}); }
         if (dow === 6){ const L = shopList(fw); if (L){ const own = arr(L.items).filter(x => x.own).length; out.shop = {title: 'Shop for Week ' + letter(fw), key: 'shop:' + fw, n: arr(L.items).length, own}; } } }
@@ -3366,14 +3420,15 @@ function monthDay(d, hols){
     if (sh && sh === k) out.hol.push({title: 'Shop for ' + (x.name || 'the holiday'), key: 'hol:' + x.id + ':shop'});
     arr(x.tasks).forEach(t => { if (t && t.date === k && t.date !== x.date) out.hol.push({title: t.title || 'Holiday prep', key: t.key || 'holset:' + x.id, prep: true}); });
   });
+  out.menu = U('food') ? mmDayList(d) : [];   // BLD 900: My Menu
   return out;
 }
 const M_MARKS = [['move', 'Workout or Flow'], ['food', 'Dinner'], ['prep', 'Prep'], ['own', 'My Own Items'], ['shop', 'Shopping'], ['hol', 'Holiday']];
-function monthMarks(x){ return {move: !!(x.move || x.med), food: !!x.dinner, prep: x.prep.length > 0 || x.hol.some(h => h.prep), own: x.own.length > 0, shop: !!x.shop || x.hol.some(h => /:shop$/.test(h.key)), hol: x.hol.some(h => h.day)}; }
+function monthMarks(x){ return {move: !!(x.move || x.med), food: !!x.dinner || arr(x.menu).length > 0, prep: x.prep.length > 0 || x.hol.some(h => h.prep), own: x.own.length > 0, shop: !!x.shop || x.hol.some(h => /:shop$/.test(h.key)), hol: x.hol.some(h => h.day)}; }
 function monthLabel(x, d){
   const L = [];
   if (x.hol.some(h => h.day)) L.push(x.hol.filter(h => h.day).map(h => h.title).join(', '));
-  if (x.move) L.push('workout'); if (x.med) L.push('meditation'); if (x.dinner) L.push('dinner'); if (x.prep.length || x.hol.some(h => h.prep)) L.push('prep');
+  if (x.move) L.push('workout'); if (x.med) L.push('meditation'); if (x.dinner) L.push('dinner'); if (arr(x.menu).length) L.push(x.menu.map(m => m.title).join(', ')); if (x.prep.length || x.hol.some(h => h.prep)) L.push('prep');
   if (x.shop || x.hol.some(h => /:shop$/.test(h.key))) L.push('shopping'); if (x.own.length) L.push(x.own.length + (x.own.length === 1 ? ' of my own items' : ' of my own items'));
   return DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() + (ymd(d) === today() ? ', today' : '') + (L.length ? ': ' + L.join(', ') : '');
 }
@@ -3397,6 +3452,7 @@ function vMonth(){
   if (sx.move) det.push(line('m-move', 'Move', sx.move.title + (sx.move.done ? ', done' : ''), go(sx.move.key, 'Start')));
   if (sx.med) det.push(line('m-move', 'Meditation', sx.med.title + (sx.med.done ? ', done' : ''), go(sx.med.key, 'Begin')));
   if (sx.dinner) det.push(line('m-food', 'Dinner', sx.dinner.title + (sx.dinner.done ? ', cooked' : ''), go(sx.dinner.key, 'Cook It')));
+  arr(sx.menu).forEach(m => det.push(line('m-food', m.meal + ' · My Menu', m.title + (m.done ? ', done' : ''), go(m.key, 'Guide Me'))));
   sx.prep.forEach(p => det.push(line('m-prep', 'Prep', p.title, go(p.key, 'Open'))));
   sx.hol.filter(h => h.prep).forEach(h => det.push(line('m-prep', 'Holiday prep', h.title, go(h.key, 'Open'))));
   if (sx.shop) det.push(line('m-shop', 'Shopping', sx.shop.title + ' · ' + sx.shop.n + (sx.shop.n === 1 ? ' item' : ' items') + (sx.shop.own ? ', ' + sx.shop.own + ' of your own' : ''), go(sx.shop.key, 'Open the List')));
@@ -3712,6 +3768,7 @@ function ovFor(key){
   if (k === 'medid') return MED() ? buildMed(a) : null;
   if (k === 'quiet') return quietOv();
   if (k === 'cook') return cookOv(a, b);
+  if (k === 'menu') return mmOv(a);
   if (k === 'idea') return ideaOv(a, b);
   if (k === 'prep') return prepOv(a, +b);
   if (k === 'head') return headOv(a);
@@ -3727,6 +3784,7 @@ function openInline(b){
 function dayOf(date){ if (date instanceof Date && !isNaN(date)) return new Date(date); const p = parseD(date); if (p){ const n = new Date(); p.setHours(n.getHours(), n.getMinutes()); return p; } return new Date(); }
 function apiToday(date){
   const lib = FLDH(), h = H(); if (!lib || !h) return [];
+  if (workOn()) fig3dWarm();
   const t = TD();
   if (setupNeeded()) return [{key: 'setup', when: 'Today', hour: 0, title: t.intro.start, sub: t.intro.line, btn: t.intro.start, tint: TINT.meals, done: false, kind: 'setup', image: WAY(ITEM_ART.setup)}];
   const d = dayOf(date), k = ymd(d), c = (h.days[k] || {}).checks || {}, out = [];
@@ -3766,7 +3824,7 @@ function apiToggle(key){
     if (on && /^(work|wl):/.test(key)) checkOn('move'); if (on && (key === 'prac' || key === 'med' || /^(pracid|medid):/.test(key))) checkOn('still'); save(); }
   rerender(true); return {done: !!on};
 }
-const ITEM_RE = /^(own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|hol|holset|holrec)(:|$)/;
+const ITEM_RE = /^(menu|own|ownedit|setup|quiet|med|prac|work|wl|pracid|medid|cook|prep|prepsec|shop|idea|head|supp|out|y|rem|hol|holset|holrec)(:|$)/;
 function apiAct(key){
   key = String(key || ''); const [k, a, b] = key.split(':'); if (!H() || !FLDH()) return null;
   if (key === 'setup'){ S.setup = true; S.ck = null; S.set = null; if (PUB()) ckDraft(); if (bareOn()){ toSetup(); return {section: 'setup'}; } return want('setup'); }
@@ -4104,7 +4162,15 @@ const CSS = `
 .hj-st .hj-clock{color:var(--stfg,var(--ink));}.hj-st .hj-how{color:var(--stfg,var(--ink-soft));opacity:.85;}
 .hj-st .hj-prog span{background:var(--st);}.hj-st .hj-reps{color:var(--st);}.hj-st .hj-stk{color:var(--st);}
 .hj-st .hj-ovtop .hj-kick{color:var(--st);}
-.hj-stagebox{position:relative;margin:10px 0 0;}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
+.hj-stagebox{position:relative;margin:10px 0 0;}
+.hj-stagebox.g3-wait .ggs{--H:clamp(300px,92vw,440px);}
+.hj-stagebox.g3-wait:not(.g3-on) .ggs-fig{opacity:0;}
+.hj-stagebox.g3-wait:not(.g3-on)::after{content:"";position:absolute;left:50%;bottom:9%;width:min(46%,260px);height:16%;transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(closest-side,rgba(255,232,180,.55),rgba(255,232,180,.18) 60%,rgba(255,232,180,0));animation:hjg3w 4.4s ease-in-out infinite;}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on):not(.g3-pre) :is(.ggs-sky,.ggs-deck,.ggs-tint,.ggs-scrim){visibility:hidden;}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on):not(.g3-pre) .ggs{background:color-mix(in srgb,var(--bg) 18%,transparent);-webkit-backdrop-filter:blur(1px) saturate(1.05);backdrop-filter:blur(1px) saturate(1.05);}
+.hj-hasart .hj-stagebox.g3-wait:not(.g3-on) .ggs::after{box-shadow:none;}
+@keyframes hjg3w{0%,100%{opacity:.45;transform:translateX(-50%) scale(.92);}50%{opacity:.9;transform:translateX(-50%) scale(1.04);}}
+@media (prefers-reduced-motion: reduce){.hj-stagebox.g3-wait:not(.g3-on)::after{animation:none;opacity:.7;}}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
 .hj-stagebox.fb{height:clamp(170px,32vh,290px);border-radius:22px;overflow:hidden;background:var(--st);}
 .hj-stagebox.fb.sm{height:clamp(96px,16vh,130px);}
 .hj-stagebox.fb>*{position:absolute;inset:0;}
@@ -4602,7 +4668,7 @@ window.GGHealth = {
     if (Array.isArray(i.quick) && (!Array.isArray(o.quick) || (i.quickU || 0) > (o.quickU || 0))){ o.quick = i.quick.slice(); o.quickU = i.quickU || 0; }
     o.eatUse = o.eatUse && typeof o.eatUse === 'object' ? o.eatUse : {}; Object.entries(i.eatUse || {}).forEach(([k, x]) => { const y = o.eatUse[k]; if (x && (!y || (x.t || 0) > (y.t || 0))) o.eatUse[k] = x; });
     if (i.stock && (!o.stock || (i.stockU || 0) > (o.stockU || 0))){ o.stock = i.stock; o.stockU = i.stockU; }
-    ['plan', 'team', 'kids', 'own'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
+    ['plan', 'team', 'kids', 'own', 'menu'].forEach(k => { if (i[k] && typeof i[k] === 'object' && (!o[k] || (i[k].u || 0) > (o[k].u || 0))) o[k] = i[k]; });
     return {added, updated};
   },
   // BLD 881: act(key) with one item key (from today() or week()) opens or marks that item; act(action, value) is the engine's own.
@@ -4751,7 +4817,7 @@ function vHolSet(G, s){
     return `<details class="hj-doc"${S.open['hol:' + id + ':' + m.id] ? ' open' : ''} data-hjd="hol:${esc(id)}:${esc(m.id)}"><summary><span>${esc(m.name)}<small>${esc([m.course ? m.course[0].toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></span></summary><div class="hj-body">
       ${m.makeAhead ? `<p class="hj-sub"><b>Make ahead:</b> ${esc(m.makeAhead)}</p>` : ''}${m.card ? `<div class="hj-holcard"><b>Reheat Card</b><p>${esc(m.card)}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-hja="holcard" data-hjv="${esc(id + '|' + m.id)}">Share the Card</button><button type="button" class="btn btn-line btn-sm" data-hja="holcardprint" data-hjv="${esc(id + '|' + m.id)}">Print the Card</button></div></div>` : ''}${m.note ? `<p class="hj-sub">${esc(m.note)}</p>` : ''}<ul class="hj-ing">${arr(r && r.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul>
       <ol class="hj-steps hj-holsteps">${arr(m.steps).map(x => `<li><div>${esc(x.say)}</div></li>`).join('')}</ol></div></details>
-      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Guide Me: ${esc(m.name)}</button></div>`; }).join('')}</div></div>`;
+      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Guide Me: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}</div>`; }).join('')}</div></div>`;
   const tips = arr(s.tips).length ? `<div class="tn-card"><div class="tn-k">For a Calm, Healthy Day</div><ul class="hj-ing">${s.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
   return `<div class="row" style="margin:0 0 12px"><button type="button" class="btn btn-line btn-sm" data-hja="holall">Every Holiday Set</button></div>
     <div class="tn-card a-kitchen hj-holtop"><div class="tn-k">${esc(G.whenText(id))}</div><h3>${esc(s.name)}</h3><p class="tn-sub">${esc(s.lead)}</p>${s.note ? `<p class="tn-sub">${esc(s.note)}</p>` : ''}</div>
@@ -4818,5 +4884,334 @@ Object.assign(window.GGHealth, {
   holidays(){ try { if (!H()) return null; holUse(); return {on: holSt().on.slice(), cards: holCards()}; } catch(e){ return null; } },
   holToggle(id){ if (!H()) return false; const r = holToggle(String(id || '')); rerender(true); return r; },
   holOpen(id){ S.holId = id && holGet(id) ? id : null; S.holEd = null; }
+});
+// ---------- BLD 900, My Menu: add and swap recipes ----------
+// Chris, October 31, 2026: "if you chose a recipe.. you can add it to your calendar menu and add it to shopping list.. for ex i want to
+// make apple nachos for halloween.. add it to menu for today and shopping list.. so when i go to store later i get all ingredients and
+// then i see the guide on Today for easy access later.. also could be good to be able to substitute other meals too.. this way we can
+// customize menu and try new recipes". Every recipe view offers Add to My Menu: a day (Today first, the next 14 days, or any day on
+// the calendar), a meal (Breakfast, Lunch, Dinner, Snack, or Extra), and servings for the table. Each planned meal offers Swap (for that
+// day), and an added one offers Remove from My Menu, with Undo right after. Everything lives in DATA.health.menu on this device, in
+// the same locked record as the rest of Tending (merged by GGHealth.merge with the newest copy winning):
+//   {items: [{id, date, meal, ref, name, mins, serves, wk, swap, u}], u}
+// ref names the recipe: 'r:<id>' a public recipe, 'h:<set>:<menu id>' a holiday recipe, 'g:<id>' a Guide library dinner, and
+// 'i:<type>:<index>' a Guide library breakfast, lunch, or snack. wk is the Shopping List the ingredients join, set when the meal is
+// added: the list shopped on the shop day before the meal, or the list shopped today when that day is today or already past.
+// swap is the planned item the meal stands in for on its day ('cook:<week>:<id>' a dinner, 'idea:lunches:<i>' a lunch).
+// The lists stay computed (mmMerge, after the holiday sets): an added recipe's ingredients join its list, merged by name and marked
+// with the recipe's name; a swapped meal's own items step aside (kept in L.mmHold) unless another planned meal that week still uses
+// them, or they are already in the cart. Today, Week, and the Month show each added meal on its day with Guide Me (the kitchen guide).
+const MM_MEALS = [['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['extra', 'Extra']];
+const MM_NAME = Object.fromEntries(MM_MEALS);
+const MM_HOUR = {breakfast: 7.5, lunch: 12, snack: 15, extra: 15.5, dinner: 17};
+const MM = {sheet: null, undo: null};
+function MENU(){ const h = H(); if (!h) return {items: []}; const m = h.menu = h.menu && typeof h.menu === 'object' && !Array.isArray(h.menu) ? h.menu : {};
+  m.items = arr(m.items).filter(x => x && x.id && parseD(x.date)); return m; }
+const mmSave = () => { MENU().u = Date.now(); save(); };
+const mmReady = () => !!(H() && FLDH() && !setupNeeded() && (U('food') || KIT()));
+const mmTable = () => { const n = PUB() ? tableOf() : num((H() || {set: {}}).set.household); return n > 0 && n < 30 ? Math.round(n) : 6; };
+const mmCap = t => String(t || '').replace(/^./, c => c.toUpperCase());
+// ---- the recipe behind a ref ----
+function mmRecipe(ref){
+  const [k, a, b] = String(ref || '').split(':'), din = (APP() || {}).dinners || {};
+  if (k === 'r'){ const r = recOf(a); return r && arr(r.steps).length ? {ref, src: 'r', r, name: r.name, meal: r.meal || 'dinner', mins: r.mins, base: +r.serves || 6, goals: arr(r.goals), fits: arr(r.fits)} : null; }
+  if (k === 'h'){ const G = holUse(), s = G && G.get(a), m = s && arr(s.menu).find(x => x.id === b); return m && arr(m.steps).length ? {ref, src: 'h', set: s, m, name: m.name, meal: 'extra', mins: m.mins, base: +m.serves || +s.serves || 4, goals: [], fits: []} : null; }
+  if (k === 'g'){ const wks = din.weeks || {}; for (const w of Object.keys(wks).sort()){ const x = arr((wks[w] || {}).dinners).find(z => z && z.id === a); if (x && arr(x.steps).length) return {ref, src: 'g', wk: w, x, name: x.name, meal: 'dinner', mins: x.mins, base: +x.serves || 6, goals: arr(x.goals), fits: arr(x.fits)}; } return null; }
+  if (k === 'i'){ const x = arr(din[a])[+b]; return x && arr(x.steps).length ? {ref, src: 'i', ty: a, i: +b, x, name: x.name, meal: {breakfasts: 'breakfast', lunches: 'lunch', snacks: 'snack'}[a] || 'extra', mins: x.mins, base: +x.serves || 6, goals: arr(x.goals), fits: arr(x.fits)} : null; }
+  return null;
+}
+const mmRefOfR = r => r.pub ? 'r:' + r.id : r.wk ? 'g:' + r.id : 'i:' + r.ty + ':' + r.i;
+// The ingredient lines for N servings (each recipe scales from the size it is written for, with shared/gg-scale.js).
+function mmIngs(R, N){
+  if (R.src === 'r') return arr((window.GGScale ? GGScale.recipe(R.r, N) : R.r).ingredients);
+  if (R.src === 'h'){ const r = holUse().recipe(R.set.id, R.m.id, N); return arr(r && r.ingredients); }
+  const L = arr(R.x.ingredients), f = N / R.base; return Math.abs(f - 1) < 1e-9 || !window.GGScale ? L : L.map(l => typeof l === 'string' ? GGScale.line(l, f) : l);
+}
+// One shopping line from an ingredient line, for the Field Guide (public Tending uses GGTendPlan.shopList, the plan's own merge).
+const MM_AMT = /^((?:about\s+)?(?:\d+\s+\d+\/\d+|\d+\/\d+|\d+(?:\.\d+)?)(?:\s*(?:to|or)\s*(?:\d+\/\d+|\d+(?:\.\d+)?))?(?:\s*\([^)]*\))?(?:\s+(?:cans?|cups?|tbsp|tsp|lbs?|pounds?|oz|ounces?|cloves?|bunch(?:es)?|heads?|packages?|bags?|jars?|cartons?|pints?|quarts?|slices?|stalks?|sprigs?|handfuls?|pinch(?:es)?|containers?|blocks?|fillets?|large|medium|small|whole|dozen)\b)?)\s+(?:of\s+)?(.+)$/i;
+const MM_SEC = [['Produce', /\b(lettuce|spinach|kale|greens|cabbage|broccoli|cauliflower|carrots?|celery|onions?|garlic|ginger|peppers?|tomato(es)?|cucumbers?|zucchini|squash|potato(es)?|mushrooms?|beans? green|green beans|asparagus|avocados?|lemons?|limes?|oranges?|apples?|bananas?|berries|grapes|pears?|cilantro|parsley|basil|dill|mint|thyme|rosemary|scallions?|herbs|fruit|vegetables|clementines?|pumpkin)\b/i],
+  ['Meat and Fish', /\b(chicken|turkey|beef|pork|salmon|cod|shrimp|fish|tuna|trout|sausage|steak)\b/i], ['Eggs, Dairy, and Milks', /\b(eggs?|milk|yogurt|cheese|butter|kefir)\b/i], ['Bread and Tortillas', /\b(bread|tortillas?|buns?|pitas?|toast)\b/i], ['Frozen', /\bfrozen\b/i]];
+function mmParse(line){
+  const t = String(line || '').replace(/\s+/g, ' ').trim(); if (!t) return null; const m = MM_AMT.exec(t); let amt = '', name = t; if (m){ amt = m[1].trim(); name = m[2]; }
+  name = name.replace(/\([^)]*\)/g, '').split(/,| for | plus /)[0].replace(/^(?:fresh|plain)\s+/i, '').trim(); if (!name || /^(water|ice|hot water|cold water)$/i.test(name)) return null;
+  const sx = PUB() ? null : MM_SEC.find(([, re]) => re.test(name)); return {name: mmCap(name), amt, sec: sx ? sx[0] : PUB() ? 'Pantry' : 'Pantry'}; }
+// A holiday recipe's ingredients come written as amounts and aisles, sized the way the holiday list sizes them.
+function mmHolRows(R, N){ const G = holUse(), s = R.set, f = s.scale === false ? 1 : N / (+R.m.serves || +s.serves || N);
+  return arr(R.m.ingredients).filter(g => g && g.item).map(g => { const q = g.qty == null ? null : G.scale(+g.qty * f, 1, g.unit || ''); return {name: mmCap(g.item), amt: q == null ? (g.unit || '') : G.amt(q, g.unit || ''), sec: g.aisle || 'Other'}; }); }
+const mmKey = n => String(n).toLowerCase().replace(/[^a-z0-9 ]/g, '').split(/\s+/).filter(Boolean).map(w => w.length > 3 && /ies$/.test(w) ? w.slice(0, -3) + 'y' : w.length > 3 && /oes$/.test(w) ? w.slice(0, -2) : w.length > 3 && /[^s]s$/.test(w) ? w.slice(0, -1) : w).join(' ');
+const MM_FR = [[0.25, '1/4'], [1 / 3, '1/3'], [0.5, '1/2'], [2 / 3, '2/3'], [0.75, '3/4']];
+const mmNum = s => { let m = /^(\d+)\s+(\d+)\/(\d+)$/.exec(s); if (m) return +m[1] + m[2] / m[3]; m = /^(\d+)\/(\d+)$/.exec(s); if (m) return m[1] / m[2]; return isFinite(+s) ? +s : null; };
+const mmFmt = n => { const w = Math.floor(n + 1e-9), f = n - w, fr = MM_FR.find(([v]) => Math.abs(f - v) < 0.04); return f < 0.04 ? String(w) : fr ? (w ? w + ' ' : '') + fr[1] : String(Math.round(n * 10) / 10); };
+function mmSum(amts){ const P = amts.map(a => { const m = /^(\d+\s+\d+\/\d+|\d+\/\d+|\d+(?:\.\d+)?)\s*(.*)$/.exec(String(a || '').trim()); return m ? {q: mmNum(m[1]), u: m[2].toLowerCase().replace(/s$/, '')} : null; });
+  if (P.length > 1 && P.every(p => p && p.q != null) && new Set(P.map(p => p.u)).size === 1){ const tot = P.reduce((s, p) => s + p.q, 0), u = P[0].u; return mmFmt(tot) + (u ? ' ' + u + (tot > 1 && u && !/oz|tbsp|tsp|lb|g$/.test(u) ? 's' : '') : ''); }
+  return amts.filter(Boolean).join(' + '); }
+// Every added recipe for one list, merged into shopping lines {name, amt, sec, for}.
+function mmShopRows(entries){
+  const P = TP(), recs = [];
+  entries.forEach(e => { const R = mmRecipe(e.ref); if (!R) return; const N = Math.max(1, +e.serves || mmTable());
+    if (R.src === 'h') recs.push({name: R.name, rows: mmHolRows(R, N)});
+    else if (R.src === 'i' && !arr(R.x.ingredients).length) recs.push({name: R.name, rows: arr(R.x.shop).map(g => ({name: g.name, amt: g.amt || '', sec: g.sec || 'Other'}))});
+    else recs.push({name: R.name, ings: mmIngs(R, N)}); });
+  if (!recs.length) return [];
+  if (P && P.shopList && PUB()) return P.shopList({dinners: recs.map(r => r.rows ? {name: r.name, shop: r.rows} : {name: r.name, ingredients: r.ings})});
+  const map = new Map();
+  recs.forEach(r => (r.rows || arr(r.ings).map(mmParse).filter(Boolean)).forEach(x => { const k = mmKey(x.name), cur = map.get(k);
+    if (!cur){ map.set(k, {name: x.name, sec: x.sec, amts: [x.amt], for: [r.name]}); return; } cur.amts.push(x.amt); if (!cur.for.includes(r.name)) cur.for.push(r.name); }));
+  return [...map.values()].map(v => ({name: v.name, amt: mmSum(v.amts), sec: v.sec, for: v.for.join(', ')}));
+}
+// ---- days, weeks, and the planned meals ----
+const mmMealWeek = d => Math.max(1, d.getDay() === 0 ? foodWeek(d) : weekNo(d));
+function mmListWeek(date){ const d = parseD(date); if (!d) return Math.max(1, foodWeek(new Date())); const w = mmMealWeek(d); return ymd(shopDate(w)) <= today() ? Math.max(1, foodWeek(new Date())) : w; }
+const mmWeekDays = n => { const mon = addD(startMon(), (Math.max(1, n) - 1) * 7); return [-1, 0, 1, 2, 3, 4, 5].map(i => addD(mon, i)); };
+const mmSwapOf = (d, key) => { const k = ymd(d); return MENU().items.find(x => x.swap === key && x.date === k) || null; };
+// The planned meals of one day that Swap can change: tonight's dinner and the day's lunch.
+function mmPlanned(d){
+  const out = []; if (!H() || !U('food')) return out; const din = (APP() || {}).dinners || {};
+  const dn = dinnerFor(d); if (dn) out.push({key: 'cook:' + dn.wk + ':' + dn.id, meal: 'dinner', name: dn.name, ref: dn.leftover || dn.id === 'leftovers' ? '' : PUB() ? 'r:' + dn.id : 'g:' + dn.id, x: dn});
+  const L = arr(din.lunches); if (L.length){ const i = ((d.getDay() + 6) % 7) % L.length, x = L[i]; if (x) out.push({key: 'idea:lunches:' + i, meal: 'lunch', name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:lunches:' + i, x}); }
+  return out;
+}
+const mmDinner = d => { const dn = dinnerFor(d); return dn && mmSwapOf(d, 'cook:' + dn.wk + ':' + dn.id) ? null : dn; };
+// Plain words for matching a Guide list's items to a recipe (its lines name stores and brands, so names rarely match exactly).
+const MM_STOP = new Set('fresh wild frozen large small medium whole raw cooked chopped minced sliced diced lean low no added organic boneless skinless and or of the a an with for plus to taste cup cups tbsp tsp lb lbs oz can cans pack bag dozen x extra virgin plain unsweetened natural light dark sodium free reduced pure baby mini thin thick peeled trimmed rinsed drained cut inch pieces piece into each about dinner night lunch lunches breakfast snack week weekly batch tonight sunday monday tuesday wednesday thursday friday saturday kirkland costco block part skim style bunch head jar jars packet packets package container bottle box loaf fillets fillet'.split(' '));
+const mmWords = t => new Set(mmKey(String(t || '').replace(/\d+/g, ' ')).split(' ').filter(w => w.length > 2 && !MM_STOP.has(w)));
+const mmShare = (a, b) => { for (const w of a) if (b.has(w)) return true; return false; };
+function mmRecWords(p){ const R = p.ref ? mmRecipe(p.ref) : null, x = R ? (R.x || R.r || {}) : p.x || {}, L = arr(x.ingredients).map(l => (mmParse(l) || {}).name || '').concat(arr(x.shop).map(g => g && g.name)); const w = new Set(); L.forEach(t => mmWords(t).forEach(v => w.add(v))); return w; }
+// Week n's swapped and still planned meals: null when nothing in that week is swapped.
+function mmHoldInfo(n){
+  const out = [], keep = []; mmWeekDays(n).forEach(d => mmPlanned(d).forEach(p => (mmSwapOf(d, p.key) ? out : keep).push(p)));
+  if (!out.length) return null; const din = (APP() || {}).dinners || {};
+  ['breakfasts', 'snacks'].forEach(t => arr(din[t]).forEach((x, i) => keep.push({name: x.name, ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:' + t + ':' + i, x})));
+  return {out, keep, outN: new Set(out.map(p => p.name)), keepN: new Set(keep.map(p => p.name))};
+}
+function mmHeld(x, I){
+  if (!x || x.done || x.own || x.hol || x.mm || !/^[sw]\d+$/.test(String(x.id || ''))) return false;
+  // Public lists name each recipe in full (names can hold commas): held when only swapped meals remain once their names are taken out.
+  if (PUB() && x.for){ const f = String(x.for); if ([...I.outN].some(nm => I.keepN.has(nm) && f.includes(nm))) return false; let s = f, hit = false;
+    [...I.outN].sort((p, q) => q.length - p.length).forEach(nm => { if (s.includes(nm)){ hit = true; s = s.split(nm).join(''); } }); return hit && !/[a-z]/i.test(s); }
+  // The Guide library's lists: the item matches a swapped meal by its words, no meal still planned uses it, and its note names nothing else.
+  I.ow = I.ow || I.out.map(mmRecWords); I.kw = I.kw || I.keep.map(mmRecWords); const w = mmWords(x.name);
+  if (!w.size || !I.ow.some(o => mmShare(w, o)) || I.kw.some(k => mmShare(w, k))) return false;
+  if (!I.of){ I.of = new Set(); I.out.forEach(p => { const R = p.ref ? mmRecipe(p.ref) : null, x = R ? (R.x || R.r || {}) : p.x || {}; [p.name].concat(arr(x.ingredients)).forEach(l => mmWords(l).forEach(v => I.of.add(v))); }); }
+  const rest = mmWords(String(x.for || '').replace(/\([^)]*\)/g, '')); I.of.forEach(v => rest.delete(v)); w.forEach(v => rest.delete(v));
+  return rest.size === 0;
+}
+// Merge My Menu into week n's list: menu lines rebuilt each time (their checks kept by id), swapped items held aside or back.
+function mmMerge(L, n){
+  if (!H()) return L; n = Math.max(1, n); const adds = MENU().items.filter(e => +e.wk === n), I = mmHoldInfo(n);
+  const had = L && (arr(L.items).some(x => x && (x.mm || x.mmx)) || arr(L.mmHold).length);
+  if (!adds.length && !I && !had) return L;
+  L = L || {seed: true, items: []}; const done = {};
+  arr(L.items).forEach(x => { if (x && x.mm) done[x.id] = !!x.done; });
+  L.items = arr(L.items).filter(x => x && !x.mm).concat(arr(L.mmHold)); L.items.forEach(x => { delete x.mmx; }); L.mmHold = [];
+  if (I){ const keepI = []; L.items.forEach(x => (mmHeld(x, I) ? L.mmHold : keepI).push(x)); L.items = keepI; }
+  mmShopRows(adds).forEach((r, i) => { const k = mmKey(r.name), ex = L.items.find(x => !x.mm && !x.done && mmKey(x.name) === k);
+    if (ex){ ex.mmx = {amt: r.amt || '', for: r.for || ''}; return; }
+    const id = 'mm:' + k.replace(/\s+/g, '-'); L.items.push({id, mm: 1, store: 'grocer', sec: holSec(r.sec), name: r.name, amt: r.amt || '', price: 0, for: r.for || '', done: !!done[id], n: 700 + i}); });
+  if (!L.mmHold.length) delete L.mmHold;
+  return L;
+}
+// The list shows a merged item's amounts and names together.
+function mmAmt(x){ return x && x.mmx && x.mmx.amt ? (x.amt ? mmSum([x.amt, x.mmx.amt]) : x.mmx.amt) : String((x && x.amt) || ''); }
+function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mmx.for : x.mmx.for) : String((x && x.for) || ''); }
+// ---- Today, Week, and the Month ----
+const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
+const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
+function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
+  return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Guide Me', did: true})); }
+const mmDayList = d => mmAgenda(d).map(x => ({key: x.key, id: x.v, title: x.title, meal: x.kick, done: isDone(d, x.key), swap: !!x.mm.swap}));
+function mmPills(d){ return mmDayList(d).map(x => `<button type="button" class="hj-pill food hj-mmp" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)} <small>${esc(x.meal)}${x.done ? ', done' : ''}</small></button>`).join(''); }
+function mmToday(date){
+  const out = apiToday(date); if (!Array.isArray(out) || !mmReady() || !U('food')) return out; const d = dayOf(date), d1 = addD(d, 1), tn = dinnerFor(d1);
+  const L = out.filter(x => !(/^idea:lunches:/.test(x.key) && mmSwapOf(d, x.key)) && !(/^head:/.test(x.key) && tn && mmSwapOf(d1, 'cook:' + tn.wk + ':' + tn.id)));
+  mmAgenda(d).forEach(x => L.push({key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: 'Guide Me', done: isDone(d, x.key), tint: x.mm.meal === 'dinner' ? TINT.cook : TINT.meals, kind: x.mm.meal === 'dinner' ? 'cook' : 'meal', image: WAY(mmArt(x.mm)), menu: x.v}));
+  return L.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
+}
+function mmWeek(n){
+  const w = apiWeek(n); if (!w || !Array.isArray(w.days) || !H()) return w;
+  w.days.forEach(day => { const d = parseD(day.date); if (!d) return; const L = mmDayList(d);
+    if (day.dinner && /^cook:/.test(day.dinner.key || '') && mmSwapOf(d, day.dinner.key)) day.dinner = null;
+    const sw = L.find(x => x.swap && x.meal === 'Dinner');
+    if (!day.dinner && sw){ const nm = dinnerArtName({name: sw.title}); day.dinner = {title: sw.title, key: sw.key, mins: null, leftover: false, done: sw.done, image: WAY(nm || ITEM_ART.cook), night: nm ? WAY(nm) : null}; }
+    day.menu = L.filter(x => x !== sw); });
+  return w;
+}
+// ---- the kitchen guide for an added meal ----
+function mmOv(id){
+  const e = MENU().items.find(x => x.id === id), R = e && mmRecipe(e.ref); if (!R) return null; const N = Math.max(1, +e.serves || mmTable()), key = 'menu:' + e.id, idea = e.meal !== 'dinner';
+  let o = null;
+  if (R.src === 'r'){ const x = ideaOf(R.r); if (!x) return null; Object.assign(x, {ingredients: mmIngs(R, N), serves: undefined, meal: e.meal === 'extra' ? R.meal : e.meal});
+    o = {k: 'cook', idea, key, title: R.name, sub: (R.mins ? R.mins + ' minutes · ' : '') + 'for ' + N, data: x}; }
+  else if (R.src === 'h'){ const r = holUse().recipe(R.set.id, R.m.id, N); if (!r) return null;
+    o = {k: 'cook', idea: true, hol: R.set.id, key, title: r.name, sub: R.set.name + (r.mins ? ' · ' + r.mins + ' minutes' : '') + ' · for ' + r.serves,
+      data: {name: r.name, meal: 'holiday', art: HOL_ART.day, steps: r.steps.map(x => ({t: x.t, min: x.min})), ingredients: r.ingredients, serves: r.serves, tip: [r.makeAhead ? 'Make ahead: ' + r.makeAhead : '', r.serves !== r.baseServes ? 'The ingredients are sized for ' + r.serves + '. The steps name the amounts for ' + r.baseServes + '.' : ''].filter(Boolean).join(' ')}}; }
+  else if (R.src === 'g'){ const c = cookOv(R.wk, R.x.id); if (!c) return null; o = Object.assign(c, {key, idea, data: Object.assign({}, c.data, {ingredients: mmIngs(R, N)}), sub: (c.sub ? c.sub + ' · ' : '') + 'for ' + N}); }
+  else { const c = ideaOv(R.ty, R.i); if (!c) return null; o = Object.assign(c, {key, data: Object.assign({}, c.data, {ingredients: mmIngs(R, N)})}); }
+  o.mm = e.id; return o;
+}
+// ---- what an open kitchen guide can do: Add to My Menu, Swap, Remove ----
+function mmFindDay(key){ const t = day0(new Date()); for (const i of [...Array(35).keys(), ...[-1, -2, -3, -4, -5, -6].map(x => x)]){ const d = addD(t, i), dn = dinnerFor(d); if (dn && 'cook:' + dn.wk + ':' + dn.id === key) return d; } return t; }
+function mmOvInfo(o){
+  if (!o || o.k !== 'cook' || o.peek || !mmReady()) return null; const key = String(o.key || ''), [k, a, b] = key.split(':'), din = (APP() || {}).dinners || {};
+  if (k === 'menu'){ const e = MENU().items.find(x => x.id === a); return e ? {entry: e} : null; }
+  if (k === 'cook'){ const d = mmFindDay(key), p = mmPlanned(d).find(x => x.key === key); return {ref: p ? p.ref : '', slot: key, date: ymd(d)}; }
+  if (k === 'idea' && a === 'lunches' && U('food')){ const x = arr(din.lunches)[+b]; return {ref: x ? (PUB() ? (x.id ? 'r:' + x.id : '') : 'i:lunches:' + b) : '', slot: key, date: today()}; }
+  if (k === 'idea' && a === 'recipe'){ const r = recipesAll().find(z => z.id === b); return r ? {ref: mmRefOfR(r)} : null; }
+  if (k === 'idea'){ const x = arr(din[a])[+b]; return x ? {ref: PUB() ? (x.id ? 'r:' + x.id : '') : 'i:' + a + ':' + b} : null; }
+  if (k === 'holrec') return {ref: 'h:' + a + ':' + b};
+  return null;
+}
+const mmBtn = (a, v, l, cls) => `<button type="button" class="btn ${cls || 'btn-line'} btn-sm" data-mma="${a}" data-mmv="${esc(v)}">${esc(l)}</button>`;
+function mmOvBtns(o){ const I = mmOvInfo(o); if (!I) return ''; const b = [];
+  if (I.entry){ b.push(mmBtn('swap', 'menu:' + I.entry.id, 'Swap')); b.push(mmBtn('remove', I.entry.id, 'Remove from My Menu')); }
+  else { if (I.ref && mmRecipe(I.ref)) b.push(mmBtn('add', I.ref, 'Add to My Menu')); if (I.slot) b.push(mmBtn('swap', I.slot + '|' + I.date, 'Swap')); }
+  return b.length ? `<div class="hj-mmacts">${b.join('')}</div>` : ''; }
+const mmHolBtn = (id, mid) => mmReady() && mmRecipe('h:' + id + ':' + mid) ? `<button type="button" class="linkbtn" data-mma="add" data-mmv="${esc('h:' + id + ':' + mid)}">Add to My Menu</button>` : '';
+// ---- changes ----
+function mmSnap(){ MM.undo = JSON.stringify(MENU().items); }
+// Each list's items by id, and whether My Menu adds to it: an item leaves or arrives, or a menu amount joins or leaves one already there.
+function mmLists(weeks){ const ids = new Map(); [...new Set(weeks.filter(n => n >= 1))].forEach(n => { const L = shopList(n); arr(L && L.items).forEach(x => ids.set(n + '|' + x.id, !!x.mmx)); }); return ids; }
+function mmDiff(before, after){ let gone = 0, came = 0; before.forEach((m, k) => { if (!after.has(k) || (m && !after.get(k))) gone++; }); after.forEach((m, k) => { if (!before.has(k) || (m && !before.get(k))) came++; }); return {gone, came}; }
+const mmWeeksOf = e => e ? [+e.wk, mmMealWeek(parseD(e.date))] : [];
+function mmAdd(ref, date, meal, serves){ const R = mmRecipe(ref); if (!R || !parseD(date)) return null; mmSnap();
+  const e = {id: 'm' + uid(), date, meal: MM_NAME[meal] ? meal : 'extra', ref, name: R.name, mins: R.mins || null, serves: Math.max(1, Math.min(40, Math.round(+serves || mmTable()))), wk: mmListWeek(date), u: Date.now()};
+  const b = mmLists([e.wk]); MENU().items.push(e); mmSave(); return {e, d: mmDiff(b, mmLists([e.wk]))}; }
+function mmSwap(target, ref){
+  const R = mmRecipe(ref), M = MENU(); if (!R) return null; let e, old = '', date;
+  if (/^menu:/.test(target)){ e = M.items.find(x => x.id === target.slice(5)); if (!e) return null; date = e.date; old = e.name; }
+  else { const i = target.lastIndexOf('|'), key = target.slice(0, i); date = target.slice(i + 1); const d = parseD(date); if (!d) return null;
+    const p = mmPlanned(d).find(x => x.key === key); old = p ? p.name : ''; e = M.items.find(x => x.swap === key && x.date === date) || null;
+    if (!e){ mmSnap(); const nw = {id: 'm' + uid(), date, meal: p ? p.meal : 'dinner', ref, name: R.name, mins: R.mins || null, serves: mmTable(), wk: mmListWeek(date), swap: key, u: Date.now()};
+      const wk = mmWeeksOf(nw), b = mmLists(wk); M.items.push(nw); mmSave(); return {e: nw, old, d: mmDiff(b, mmLists(wk))}; } }
+  mmSnap(); const wk0 = mmWeeksOf(e), back = e.swap && (mmPlanned(parseD(e.date)).find(x => x.key === e.swap) || {}).ref === ref;
+  const nw = Object.assign({}, e, {ref, name: R.name, mins: R.mins || null, wk: mmListWeek(e.date), u: Date.now()}), wk = wk0.concat(mmWeeksOf(nw)), b = mmLists(wk);
+  // Swapping back to the planned recipe simply returns the day to the plan.
+  if (back) M.items.splice(M.items.indexOf(e), 1); else Object.assign(e, nw);
+  mmSave(); return {e: nw, old, back, d: mmDiff(b, mmLists(wk))};
+}
+function mmRemove(id){ const M = MENU(), e = M.items.find(x => x.id === id); if (!e) return null; mmSnap(); const wk = mmWeeksOf(e), b = mmLists(wk); M.items.splice(M.items.indexOf(e), 1); mmSave(); return {e, d: mmDiff(b, mmLists(wk))}; }
+function mmUndo(){ if (MM.undo == null) return false; try { MENU().items = JSON.parse(MM.undo); } catch(e){ return false; } MM.undo = null; mmSave(); return true; }
+// ---- the sheet: Add to My Menu, Swap, and what changed ----
+const mmDayName = s => { const d = parseD(s); if (!d) return ''; const t = today(), n = Math.round((day0(d) - day0(new Date())) / DAYMS); return s === t ? 'Today' : n === 1 ? 'Tomorrow' : DOW[d.getDay()] + ', ' + MONTHS[d.getMonth()].slice(0, 3) + ' ' + d.getDate(); };
+const mmLong = s => { const d = parseD(s); return d ? (s === today() ? 'Today, ' : '') + DOWL[d.getDay()] + ', ' + MONTHS[d.getMonth()] + ' ' + d.getDate() : ''; };
+function mmListLine(date){ const n = mmListWeek(date), sd = ymd(shopDate(n)), t = today();
+  return sd === t ? `The ingredients join today's Shopping List, Shop for Week ${letter(n)}.` : sd < t ? `The ingredients join this week's Shopping List, Shop for Week ${letter(n)}, for a quick trip.` : `The ingredients join Shop for Week ${letter(n)}, the list for ${mmLong(sd)}.`; }
+function mmOpenAdd(ref, o){ const R = mmRecipe(ref); if (!R) return false; o = o || {};
+  MM.sheet = {kind: 'add', ref, name: R.name, date: o.date && parseD(o.date) && o.date >= today() ? o.date : today(), meal: MM_NAME[o.meal] ? o.meal : R.meal, serves: Math.max(1, Math.min(40, Math.round(+o.serves || mmTable()))), other: false};
+  mmPaint(); return true; }
+function mmOpenSwap(target){
+  let cur = '', meal = 'dinner', date = '';
+  if (/^menu:/.test(target)){ const e = MENU().items.find(x => x.id === target.slice(5)); if (!e) return false; cur = e.ref; meal = e.meal; date = e.date; }
+  else { const i = target.lastIndexOf('|'), key = target.slice(0, i); date = target.slice(i + 1); const d = parseD(date), p = d && mmPlanned(d).find(x => x.key === key); if (!p) return false; meal = p.meal; cur = p.ref; }
+  const R = cur ? mmRecipe(cur) : null, cn = R ? R.name : (/^menu:/.test(target) ? '' : (mmPlanned(parseD(date)).find(x => target.indexOf(x.key + '|') === 0) || {}).name || '');
+  MM.sheet = {kind: 'swap', target, cur, curName: cn, meal, date, q: '', goals: [], fits: []}; mmPaint(); setTimeout(() => { const q = document.getElementById('hj-mmq'); if (q) try { q.focus({preventScroll: true}); } catch(e){} }, 30); return true; }
+function mmChoices(s){
+  const q = String(s.q || '').toLowerCase().split(/\s+/).filter(Boolean);
+  return recipesAll().filter(r => (s.meal === 'extra' || r.meal === s.meal) && mmRefOfR(r) !== s.cur && s.goals.every(g => r.goals.includes(g)) && s.fits.every(f => r.fits.includes(f))
+    && q.every(w => (r.name + ' ' + r.ing.join(' ')).toLowerCase().includes(w))); }
+const mmChip = (a, v, l, on) => `<button type="button" class="hj-mmc${on ? ' on' : ''}" aria-pressed="${!!on}" data-mma="${a}" data-mmv="${esc(v)}">${esc(l)}</button>`;
+const mmHead = (k, t) => `<div class="hj-mmhd"><div style="min-width:0"><div class="hj-mmk">${esc(k)}</div><h3 id="hj-mmt">${esc(t)}</h3></div><button type="button" class="hj-mmx" data-mma="close" aria-label="Close">&times;</button></div>`;
+function mmRowsHtml(s){ const L = mmChoices(s); if (!L.length) return `<p class="hj-mmsub">Clear the search or a filter to see more recipes.</p>`;
+  const ML = Object.fromEntries(R_MEALS); return L.slice(0, 80).map(r => `<button type="button" class="hj-mmrow" data-mma="pick" data-mmv="${esc(mmRefOfR(r))}"><b>${esc(r.name)}</b><small>${esc([ML[r.meal] || 'Dinner', r.mins ? r.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></button>`).join(''); }
+function mmSheetHtml(s){
+  if (s.kind === 'add'){ const t = today(), days = Array.from({length: 14}, (x, i) => ymd(addD(day0(new Date()), i))), inList = days.includes(s.date);
+    return `${mmHead('Add to My Menu', s.name)}
+      <div class="hj-mmq" id="hj-mmq1">Day</div><div class="hj-mmchips" role="group" aria-labelledby="hj-mmq1">${days.map(k => mmChip('day', k, mmDayName(k), s.date === k)).join('')}${mmChip('dayother', '', inList ? 'Another Day' : mmDayName(s.date), !inList)}</div>
+      ${s.other || !inList ? `<label class="hj-mmfld"><span>Any day on the calendar</span><input type="date" data-mmi="date" min="${esc(t)}" value="${esc(s.date)}"></label>` : ''}
+      <div class="hj-mmq" id="hj-mmq2">Meal</div><div class="hj-mmchips" role="group" aria-labelledby="hj-mmq2">${MM_MEALS.map(([k, l]) => mmChip('meal', k, l, s.meal === k)).join('')}</div>
+      <div class="hj-mmq">Servings</div><div class="hj-mmsrv"><button type="button" class="hj-mmc" data-mma="srv" data-mmv="-1" aria-label="One fewer"${s.serves <= 1 ? ' disabled' : ''}>&minus;</button><b aria-live="polite">${s.serves}</b><button type="button" class="hj-mmc" data-mma="srv" data-mmv="1" aria-label="One more"${s.serves >= 40 ? ' disabled' : ''}>+</button><span>${s.serves === mmTable() ? 'Your table' : 'Sized for ' + s.serves}</span></div>
+      <p class="hj-mmsub">${esc(mmListLine(s.date))} It shows on ${esc(mmLong(s.date))} with Guide Me.</p>
+      <div class="hj-mmbtns"><button type="button" class="hj-mmgo" data-mma="addgo">Add to My Menu</button><button type="button" class="hj-mmline" data-mma="close">Close</button></div>`; }
+  if (s.kind === 'swap'){ const all = recipesAll(), goals = R_GOALS.filter(([id]) => all.some(r => r.goals.includes(id))), fits = R_FITS.filter(([id]) => all.some(r => r.fits.includes(id)));
+    return `${mmHead('Swap ' + (MM_NAME[s.meal] || 'Meal'), mmLong(s.date))}
+      ${s.curName ? `<div class="hj-mmcur"><small>On the menu now</small><b>${esc(s.curName)}</b></div>` : ''}
+      <label class="hj-mmfld"><span>Search by name or ingredient</span><input id="hj-mmq" type="search" data-mmi="q" value="${esc(s.q)}" placeholder="Chicken, lentils, salmon..." autocomplete="off"></label>
+      ${goals.length ? `<div class="hj-mmq">Goal</div><div class="hj-mmchips" role="group" aria-label="Goal">${goals.map(([id, l]) => mmChip('mgoal', id, l, s.goals.includes(id))).join('')}</div>` : ''}
+      ${fits.length ? `<div class="hj-mmq">Fits</div><div class="hj-mmchips" role="group" aria-label="Fits">${fits.map(([id, l]) => mmChip('mfit', id, l, s.fits.includes(id))).join('')}</div>` : ''}
+      <p class="hj-mmsub">The swap is for ${esc(mmLong(s.date))}, and the Shopping List follows along.</p>
+      <div class="hj-mmlist" id="hj-mmlist">${mmRowsHtml(s)}</div>`; }
+  return `${mmHead(s.kick || 'My Menu', s.title || '')}${arr(s.lines).map(l => `<p class="hj-mmsub">${esc(l)}</p>`).join('')}
+    <div class="hj-mmbtns"><button type="button" class="hj-mmgo" data-mma="close">Done</button>${s.undo ? `<button type="button" class="hj-mmline" data-mma="undo">Undo</button>` : ''}</div>`;
+}
+function mmPaint(){
+  const s = MM.sheet; let el = document.getElementById('hj-mm');
+  if (!s){ if (el) el.remove(); return; }
+  if (!el){ el = document.createElement('div'); el.id = 'hj-mm'; document.body.appendChild(el); }
+  el.innerHTML = `<div class="hj-mmbg" data-mma="close"></div><div class="hj-mmsh" role="dialog" aria-modal="true" aria-labelledby="hj-mmt">${mmSheetHtml(s)}</div>`;
+}
+const mmCount = (n, one, many) => n + ' ' + (n === 1 ? one : many);
+function mmDone(kick, title, lines, undo){ MM.sheet = {kind: 'done', kick, title, lines, undo}; mmPaint(); rerender(true); setTimeout(() => { const b = document.querySelector('#hj-mm .hj-mmgo'); if (b) try { b.focus({preventScroll: true}); } catch(e){} }, 30); }
+function mmAct(a, v){
+  const s = MM.sheet;
+  switch (a){
+    case 'add': if (!mmOpenAdd(v, {})) toast('That recipe is on its way. Open it again in a moment.'); return;
+    case 'close': MM.sheet = null; mmPaint(); return;
+    case 'day': if (s){ s.date = v; s.other = false; mmPaint(); } return;
+    case 'dayother': if (s){ s.other = true; mmPaint(); const i = document.querySelector('#hj-mm [data-mmi="date"]'); if (i) try { i.focus(); } catch(e){} } return;
+    case 'meal': if (s){ s.meal = v; mmPaint(); } return;
+    case 'srv': if (s){ s.serves = Math.max(1, Math.min(40, s.serves + (+v || 0))); mmPaint(); } return;
+    case 'addgo': { if (!s || !parseD(s.date) || s.date < today()){ toast('Choose a day from today on.'); return; }
+      const r = mmAdd(s.ref, s.date, s.meal, s.serves); if (!r){ toast('That recipe is on its way. Open it again in a moment.'); return; }
+      const n = r.e.wk, came = r.d.came;
+      mmDone('Added to My Menu', r.e.name, [mmLong(r.e.date) + ', ' + (MM_NAME[r.e.meal] || 'Extra') + ', for ' + r.e.serves + '. It waits on Today with Guide Me.',
+        (came ? mmCount(came, 'ingredient joins', 'ingredients join') + ' Shop for Week ' + letter(n) : 'Its ingredients are on Shop for Week ' + letter(n)) + ', marked ' + r.e.name + '.'], true); return; }
+    case 'swap': if (!mmOpenSwap(v)) toast('That meal is on its way. Open it again in a moment.'); return;
+    case 'mgoal': case 'mfit': if (s){ const k = a === 'mgoal' ? 'goals' : 'fits', i = s[k].indexOf(v); if (i < 0) s[k].push(v); else s[k].splice(i, 1); mmPaint(); } return;
+    case 'pick': { if (!s || s.kind !== 'swap') return; const r = mmSwap(s.target, v); if (!r){ toast('That recipe is on its way. Open it again in a moment.'); return; }
+      if (S.ov && S.ov.k === 'cook') closeOv();
+      const ch = [r.d.gone ? mmCount(r.d.gone, 'item steps', 'items step') + ' off the list' : '', r.d.came ? mmCount(r.d.came, 'item joins', 'items join') + ' it' : ''].filter(Boolean);
+      mmDone('Swapped', r.e.name, [(r.old ? r.old + ' becomes ' : '') + r.e.name + ' for ' + mmLong(r.e.date) + '.', ch.length ? 'The Shopping List follows along: ' + ch.join(', and ') + '.' : 'The Shopping List already holds what it needs.'], true); return; }
+    case 'remove': { const r = mmRemove(v); if (!r) return; if (S.ov && S.ov.mm === v) closeOv();
+      mmDone('Removed from My Menu', r.e.name, [mmLong(r.e.date) + ' is back to the plan.', r.d.gone ? mmCount(r.d.gone, 'item steps', 'items step') + ' off the Shopping List.' : 'The Shopping List is up to date.'], true); return; }
+    case 'undo': if (mmUndo()) mmDone('My Menu', 'Back as it was', ['The menu and the Shopping List are just as they were.'], false); return;
+  }
+}
+document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-mma]'); if (!t || !D()) return; e.preventDefault(); mmAct(t.dataset.mma, t.dataset.mmv || ''); });
+document.addEventListener('input', e => { const t = e.target, s = MM.sheet; if (!t || !t.dataset || !t.dataset.mmi || !s || !t.closest || !t.closest('#hj-mm')) return;
+  if (t.dataset.mmi === 'date'){ if (parseD(t.value) && t.value >= today()){ s.date = t.value; s.other = true; const p = document.querySelector('#hj-mm .hj-mmsub'); if (p) p.textContent = mmListLine(s.date) + ' It shows on ' + mmLong(s.date) + ' with Guide Me.'; } return; }
+  if (t.dataset.mmi === 'q'){ s.q = t.value; const b = document.getElementById('hj-mmlist'); if (b) b.innerHTML = mmRowsHtml(s); } });
+document.addEventListener('change', e => { const t = e.target; if (t && t.dataset && t.dataset.mmi === 'date' && MM.sheet && t.closest && t.closest('#hj-mm')) mmPaint(); });
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && MM.sheet){ e.stopPropagation(); e.preventDefault(); MM.sheet = null; mmPaint(); } }, true);
+ACC.menu = 'a-kitchen'; SCN.menu = 'cook';
+(function(){ const s = document.createElement('style'); s.id = 'hj-mm-css'; s.textContent = `
+#hj-mm{--mmc:#FFFCF6;--mmi:#2C1810;--mms:#6B5A4D;--mml:#E6DAC4;--mmg:#8B5E1A;--mmgt:#FFFCF6;--mmon:#F3E6CC;position:fixed;inset:0;z-index:1000;display:flex;align-items:flex-end;justify-content:center;}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]) #hj-mm{--mmc:#28211A;--mmi:#F3EDE3;--mms:#C2B6A4;--mml:#3D342A;--mmg:#E3B25A;--mmgt:#1C1712;--mmon:#3A2F22;}}
+:root[data-theme="dark"] #hj-mm{--mmc:#28211A;--mmi:#F3EDE3;--mms:#C2B6A4;--mml:#3D342A;--mmg:#E3B25A;--mmgt:#1C1712;--mmon:#3A2F22;}
+#hj-mm .hj-mmbg{position:absolute;inset:0;background:rgba(20,12,6,.45);}
+#hj-mm .hj-mmsh{position:relative;box-sizing:border-box;width:100%;max-width:560px;max-height:min(88vh,760px);overflow:auto;background:var(--mmc);color:var(--mmi);border-radius:22px 22px 0 0;padding:18px 16px calc(18px + env(safe-area-inset-bottom,0px));box-shadow:0 -10px 40px rgba(0,0,0,.25);font-size:16px;line-height:1.45;}
+@media (min-width:700px){#hj-mm{align-items:center;}#hj-mm .hj-mmsh{border-radius:22px;padding:22px 24px;}}
+#hj-mm .hj-mmhd{display:flex;gap:12px;align-items:flex-start;justify-content:space-between;margin-bottom:6px;}
+#hj-mm .hj-mmk{font-size:13px;letter-spacing:.06em;text-transform:uppercase;color:var(--mmg);font-weight:700;}
+#hj-mm h3{margin:2px 0 0;font-size:21px;line-height:1.25;overflow-wrap:anywhere;color:var(--mmi);}
+#hj-mm .hj-mmx{flex:none;width:40px;height:40px;border-radius:50%;border:1px solid var(--mml);background:transparent;color:var(--mmi);font-size:24px;line-height:1;cursor:pointer;}
+#hj-mm .hj-mmq{font-weight:700;margin:14px 0 6px;font-size:15px;}
+#hj-mm .hj-mmchips{display:flex;flex-wrap:wrap;gap:6px;}
+#hj-mm .hj-mmc{border:1px solid var(--mml);background:transparent;color:var(--mmi);border-radius:999px;padding:7px 12px;font:inherit;font-size:14px;cursor:pointer;min-height:36px;}
+#hj-mm .hj-mmc.on{background:var(--mmon);border-color:var(--mmg);font-weight:700;}
+#hj-mm .hj-mmc[disabled]{opacity:.45;cursor:default;}
+#hj-mm .hj-mmsrv{display:flex;align-items:center;gap:10px;}#hj-mm .hj-mmsrv b{min-width:26px;text-align:center;font-size:19px;}#hj-mm .hj-mmsrv span{color:var(--mms);font-size:14px;}
+#hj-mm .hj-mmfld{display:grid;gap:4px;margin:10px 0 0;font-size:14px;color:var(--mms);}
+#hj-mm .hj-mmfld input{box-sizing:border-box;width:100%;min-width:0;font:inherit;font-size:16px;padding:9px 12px;border-radius:12px;border:1px solid var(--mml);background:transparent;color:var(--mmi);}
+#hj-mm .hj-mmsub{color:var(--mms);margin:12px 0 0;font-size:15px;overflow-wrap:anywhere;}
+#hj-mm .hj-mmbtns{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px;}
+#hj-mm .hj-mmgo,#hj-mm .hj-mmline{font:inherit;font-weight:700;border-radius:999px;padding:11px 20px;cursor:pointer;min-height:44px;}
+#hj-mm .hj-mmgo{background:var(--mmg);color:var(--mmgt);border:1px solid var(--mmg);}#hj-mm .hj-mmline{background:transparent;color:var(--mmi);border:1px solid var(--mml);}
+#hj-mm .hj-mmcur{border:1px dashed var(--mml);border-radius:14px;padding:10px 12px;margin:8px 0 0;}#hj-mm .hj-mmcur small{display:block;color:var(--mms);font-size:13px;}
+#hj-mm .hj-mmlist{display:grid;gap:6px;margin-top:12px;}
+#hj-mm .hj-mmrow{display:grid;text-align:left;gap:2px;border:1px solid var(--mml);background:transparent;color:var(--mmi);border-radius:14px;padding:10px 12px;font:inherit;cursor:pointer;}
+#hj-mm .hj-mmrow b{overflow-wrap:anywhere;}#hj-mm .hj-mmrow small{color:var(--mms);font-size:13px;}
+#hj-mm .hj-mmrow:hover,#hj-mm .hj-mmc:hover{border-color:var(--mmg);}
+.hj-mmacts{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 12px;}
+`; document.head.appendChild(s); })();
+Object.assign(window.GGHealth, {
+  // BLD 900, My Menu. menuOpen(ref, {serves, date, meal}) opens Add to My Menu (the public Recipes page calls it from the Home's frame);
+  // true when it opened, otherwise 'setup' (Tending is not started yet) or 'recipe' (the ref is unknown). menu() lists the added meals.
+  menuOpen(ref, o){ if (!H() || !FLDH()) return 'setup'; if (!mmReady()) return 'setup'; return mmOpenAdd(String(ref || ''), o || {}) ? true : 'recipe'; },
+  menuSwap(target){ return mmReady() ? mmOpenSwap(String(target || '')) : false; },
+  menu(){ return H() ? JSON.parse(JSON.stringify(MENU().items)) : []; },
+  // The Shopping List for food week n as it reads (n defaults to the list for today): [{id, name, amt, for, done, menu}].
+  shopItems(n){ if (!H() || !FLDH()) return []; const L = shopList(+n || foodWeek(new Date())); return arr(L && L.items).map(x => ({id: x.id, name: x.name, amt: mmAmt(x), for: mmFor(x), done: !!x.done, menu: !!(x.mm || x.mmx)})); },
+  foodWeek(date){ const d = date ? parseD(date) : new Date(); return d ? foodWeek(d) : 0; },
+  today: mmToday, week: mmWeek
 });
 })();

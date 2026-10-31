@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'b899';
+const V = 'b900';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -61,13 +61,17 @@ function artFor(ref){
   if (!MAP) return null; ref = ref || {};
   // BLD 899: a painting may name a different painting for the stage (stage: id), when its own scene has no room for a
   // person to work out (a close-up still life, water at the floor line, clutter). Cards keep their own painting.
-  const A = MAP.art || {}, one = id => id && A[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null,
-    pick = id => { let a = one(id), n = 0; while (a && a.stage && A[a.stage] && n++ < 4) a = Object.assign(one(a.stage), {card: a.card || a.id}); return a; };
+  // BLD 900: stage may also be a list, the first painting whose file is on the site wins (a painting not yet delivered,
+  // like yoga-studio, is skipped once its file fails to load); a list may name the painting itself to stand in its own room.
+  const A = MAP.art || {}, one = id => id && A[id] && !MISS[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null,
+    next = a => { const l = Array.isArray(a.stage) ? a.stage : [a.stage]; for (const id of l){ if (id === a.id) return null; if (one(id)) return id; } return null; },
+    pick = id => { let a = one(id), n = 0, to; while (a && a.stage && (to = next(a)) && n++ < 4) a = Object.assign(one(to), {card: a.card || a.id}); return a; };
+  if (ref.exact) return one(ref.art);
   return pick(ref.art) || pick((MAP.workouts || {})[ref.workout]) || pick(ref.workout) || pick((MAP.categories || {})[ref.category]) ||
     pick((MAP.fallback || {})[ref.kind || 'move']) || pick(MAP.default);
 }
 const artUrl = a => new URL((MAP.base || '') + a.src + (/\?/.test(a.src) ? '' : '?v=' + V), new URL('art-map.json', BASE)).href;
-const LUM = {};
+const LUM = {}, MISS = {};
 function lum(img){
   try { const c = document.createElement('canvas'); c.width = 48; c.height = 27; const g = c.getContext('2d'); g.drawImage(img, 0, 0, 48, 27);
     const d = g.getImageData(0, 0, 48, 27).data; let L = 0; for (let i = 0; i < d.length; i += 4) L += (.2126 * d[i] + .7152 * d[i + 1] + .0722 * d[i + 2]) / 255; return L / (d.length / 4); } catch(e){ return .6; }
@@ -75,6 +79,9 @@ function lum(img){
 
 // ---------- loading ----------
 const F = {loading: null, ready: false, failed: false, buf: null};
+// BLD 900: the art map loads on its own first (small), so the stage painting can show while the engine still loads.
+let MAPP = null;
+function mapP(){ return MAPP || (MAPP = fetch(BASE + 'art-map.json?v=' + V).then(r => r.ok ? r.json() : null).catch(() => null).then(m => { if (m) MAP = m; return m; })); }
 const E = () => (window.GGFigure3D && window.GGFigure3D.create ? window.GGFigure3D : window.GG3D && window.GG3D.create ? window.GG3D : null);
 function script(src){ return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.async = true; s.onload = res; s.onerror = () => rej(new Error('load ' + src)); document.head.appendChild(s); }); }
 function load(){
@@ -82,7 +89,7 @@ function load(){
   F.loading = Promise.all([
     E() ? Promise.resolve() : script(BASE + 'fig3d.js?v=' + V),
     fetch(BASE + 'figure.bin?v=' + V).then(r => { if (!r.ok) throw new Error('figure data'); return r.arrayBuffer(); }),
-    fetch(BASE + 'art-map.json?v=' + V).then(r => r.ok ? r.json() : null).catch(() => null)
+    mapP()
   ]).then(([, buf, map]) => { F.buf = buf; MAP = map; F.ready = !!E(); if (!F.ready) throw new Error('engine'); })
     .catch(e => { F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); });
   return F.loading;
@@ -95,7 +102,7 @@ function layer(){
   if (L.el) return L.el;
   const el = document.createElement('div'); el.className = 'g3'; el.setAttribute('aria-hidden', 'true');
   el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
-  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; kick(); }).observe(el); } catch(e){}
+  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; L.gr = null; if (L.stage) kick(); else placeArt(); }).observe(el); } catch(e){}
   L.el = el; L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
   return el;
 }
@@ -212,17 +219,26 @@ function label(g, p, t, k, side, w){
 }
 function guideOf(id){ const d = moveDef(id); return d && Array.isArray(d.form) && d.form.length ? null : GUIDES[id] || null; }
 // The move's own form guides (its form list, eased in and out by the engine at their moments), mirrored with the figure.
+// BLD 900 (phone speed): the canvas box and the boxes the words keep clear of are read every 30 frames (and after a
+// resize or a new stage), not every frame, and a frame with no guide showing, after one with none, draws nothing.
 function drawForms(){
-  const c = L.gc, g = c.getContext('2d'), r = c.getBoundingClientRect(), d = Math.min(2, window.devicePixelRatio || 1);
-  const w = Math.round(r.width * d), h = Math.round(r.height * d);
-  if (c.width !== w || c.height !== h){ c.width = w; c.height = h; }
-  g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, r.width, r.height);
+  const c = L.gc, g = c.getContext('2d'), d = Math.min(2, window.devicePixelRatio || 1);
   let list = []; try { list = (reduced() && L.stage.formsAll ? L.stage.formsAll() : L.stage.forms()) || []; } catch(e){}
+  if (!list.length && !L.gDrawn) return false;
+  if (!L.gr || L.gn-- <= 0 || L.gr.box !== L.box){
+    const r = c.getBoundingClientRect(), avoid = [];
+    // The words keep clear of the tree, the count and its chips, the side chip, and the progress line.
+    if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
+    L.gr = {w: r.width, h: r.height, avoid, box: L.box}; L.gn = 30;
+  }
+  const R = L.gr, w = Math.round(R.w * d), h = Math.round(R.h * d);
+  if (c.width !== w || c.height !== h){ c.width = w; c.height = h; }
+  g.setTransform(d, 0, 0, d, 0, 0); g.clearRect(0, 0, R.w, R.h);
+  L.gDrawn = list.length > 0;
+  if (!list.length) return false;
   if (reduced()) list.forEach(f => { f.k = 1; });
-  if (L.mir){ const m = p => p ? [r.width - p[0], p[1]] : p; list = list.map(f => Object.assign({}, f, {pts: f.pts.map(m), tick: m(f.tick), at: m(f.at), side: -(f.side || 1)})); }
-  // The words keep clear of the tree, the count and its chips, the side chip, and the progress line.
-  const avoid = []; if (L.box) L.box.querySelectorAll('.ggs-breath, .ggs-hud, .ggs-side:not([hidden]), .ggs-prog').forEach(e => { const b = e.getBoundingClientRect(); if (b.width) avoid.push({x: b.left - r.left - 4, y: b.top - r.top - 4, w: b.width + 8, h: b.height + 8}); });
-  try { E().drawForms(g, list, {dark: isDark(), avoid, w: r.width, h: r.height}); } catch(e){}
+  if (L.mir){ const m = p => p ? [R.w - p[0], p[1]] : p; list = list.map(f => Object.assign({}, f, {pts: f.pts.map(m), tick: m(f.tick), at: m(f.at), side: -(f.side || 1)})); }
+  try { E().drawForms(g, list, {dark: isDark(), avoid: R.avoid, w: R.w, h: R.h}); } catch(e){}
   return list.some(f => f.k > .5);
 }
 function guideOn(G, ph, x){
@@ -257,8 +273,12 @@ function setArt(){
   const a = artFor(L.ctx); if (!a){ L.el.classList.remove('g3-art'); return; }
   if (!L.art || L.art.id !== a.id){
     L.art = a; const img = new Image(); img.decoding = 'async'; L.artImg = null;
-    img.onload = () => { if (L.art !== a) return; L.artImg = img; if (LUM[a.id] == null) LUM[a.id] = lum(img); L.paint.style.backgroundImage = `url("${img.src}")`; L.el.classList.add('g3-art'); tone(); L.dirty = true; L.place = 0; };
+    img.onload = () => { if (L.art !== a) return; L.artImg = img; if (LUM[a.id] == null) LUM[a.id] = lum(img); L.paint.style.backgroundImage = `url("${img.src}")`; L.el.classList.add('g3-art'); tone(); L.dirty = true; L.place = 0;
+      if (!L.stage && L.box){ L.box.classList.add('g3-pre'); placeArt(); } };
+    img.onerror = () => { if (L.art !== a) return; MISS[a.id] = true; L.art = null; setArt(); };
     img.src = artUrl(a);
+  }
+  if (L.stage && L.lit !== a.id){ L.lit = a.id;
     try { L.stage.light(a.light || [-.5, .78]); } catch(e){}
     // A painting with its own mat: the figure uses it, and the drawn mat is hidden.
     try { if (L.stage.props) L.stage.props({mat: !a.mat}); } catch(e){}
@@ -278,7 +298,7 @@ function tone(){
 // and a plain painted floor band under the figure, for a painting with no room for a person.
 // The placement for the move shown, read once per move, body, and stage size (the floor under the hips at the start).
 function figGeom(W, H){
-  const st = L.stage, c = st.camera, key = [L.move, st.current(), W, H, L.mir ? 1 : 0, c.position.x.toFixed(2), c.position.y.toFixed(2), c.position.z.toFixed(2)].join('|'); if (L.geo && L.geo.key === key) return L.geo;
+  const st = L.stage, c = st.camera, key = [L.move, L.art && L.art.id, st.current(), W, H, L.mir ? 1 : 0, c.position.x.toFixed(2), c.position.y.toFixed(2), c.position.z.toFixed(2)].join('|'); if (L.geo && L.geo.key === key) return L.geo;
   const Vc = c.position.constructor, f = st.figs[st.current()], s = f.rig.scale;
   const pr = v => { const p = v.clone().project(c); const x = (p.x * .5 + .5) * W; return [L.mir ? W - x : x, (.5 - p.y * .5) * H]; };
   const r = f.bones.root.getWorldPosition(new Vc()), g = pr(new Vc(r.x, 0, r.z)), t = pr(new Vc(r.x, 1.73 * s, r.z));
@@ -286,30 +306,45 @@ function figGeom(W, H){
   let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const floor = [];
   try { for (let i = 0; i < 12; i++){ const T = st.track(i / 12); for (const k in T){ const p = pr(new Vc(T[k][0], T[k][1], T[k][2]));
     x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); if (T[k][1] < .03 * s) floor.push(pr(new Vc(T[k][0], 0, T[k][2]))); } } } catch(e){ x0 = g[0] - 60; x1 = g[0] + 60; y0 = t[1]; y1 = g[1]; }
-  return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor});
+  // The drawn mat (when shown): its four corners on the floor, for the room check (the whole mat on open floor).
+  let mat = null;
+  try { const sc = st.floor && st.floor.parent; if (sc) sc.traverse(o => { const gp = o.geometry && o.geometry.parameters; if (mat || !o.isMesh || !gp || o.geometry.type !== 'BoxGeometry' || Math.abs(gp.height - .012) > .002 || Math.abs(gp.width - .62) > .01) return;
+    let vis = true; for (let q = o; q; q = q.parent) if (q.visible === false) vis = false; if (!vis) return;
+    o.updateWorldMatrix(true, false); mat = [[-1, -1], [1, -1], [1, 1], [-1, 1]].map(([i, j]) => { const v = new Vc(i * gp.width / 2, 0, j * gp.depth / 2).applyMatrix4(o.matrixWorld); v.y = 0; return pr(v); }); }); } catch(e){ mat = null; }
+  return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor, mat});
 }
 function placeArt(){
   const img = L.artImg, a = L.art; if (!img || !a || !L.box) return;
   const bx = L.el.getBoundingClientRect(); if (!bx.width) return;
   const W = bx.width, H = bx.height, iw = img.naturalWidth, ih = img.naturalHeight, study = a.mode === 'study';
   L.el.classList.toggle('g3-study', study);
-  let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W / 2, fy: H * .86, hp: H * .6, box: [W * .3, H * .2, W * .7, H * .9], floor: []}; }
+  let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W * .45, fy: H * .835, hp: H * .72, box: [W * .3, H * .12, W * .6, H * .84], floor: []}; }
   const cover = Math.max(W / iw, H / ih) * ih * 1.02, fl = a.floor != null ? a.floor : .8, fo = (a.focal || [.5])[0];
   let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, G.hp / a.scale), pw = ph * iw / ih;
-  let ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)), oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)), dx = 0, dy = 0;
+  let ox, oy, dx = 0, dy = 0;
   if (!study){
-    // What the painting could not do, the figure does, keeping the whole move on the stage (8 px margin).
+    // BLD 900 (Chris: "on cardio videos he is often standing to the side.. how come he is not standing in the center?"): the
+    // figure always stands in the middle of the stage (its move's box centered across). The painting slides so its focal
+    // point sits under the figure; when it cannot slide far enough and still cover the stage, it grows a little instead.
     const b = G.box, m = 8, lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
-    dx = lim(ox + fo * pw - G.fx, m - b[0], W - m - b[2]); dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
-    // The floor line meets the feet exactly: the painting takes any part the figure could not.
-    oy = G.fy + dy - fl * ph; ox = Math.min(0, Math.max(W - pw, G.fx + dx - fo * pw));
-  } else { oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; }
+    dx = lim(W / 2 - (b[0] + b[2]) / 2, m - b[0], W - m - b[2]);
+    const fx = G.fx + dx, k = Math.max(1, fx / (fo * pw || 1e-6), (W - fx) / ((1 - fo) * pw || 1e-6));
+    L.pw0 = pw; L.fxs = fx / W;
+    if (k > 1){ pw *= k; ph *= k; }
+    ox = fx - fo * pw;
+    // Up and down as before: the painting's floor line meets the feet; what the painting cannot do, the figure does.
+    oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph));
+    dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
+    oy = G.fy + dy - fl * ph;
+    L.grow = k;
+  } else { ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)); oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; L.grow = 1; }
   const st = L.paint.style; st.backgroundSize = `${pw.toFixed(0)}px ${ph.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
   const tf = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
   // For the room check (tests): the painting's box, the figure's move box, and its floor points, in painting units (0 to 1).
   const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
   L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
-    box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy)};
+    box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy),
+    mat: G.mat ? G.mat.map(p => P(p[0], p[1])) : null, cx: ((G.box[0] + G.box[2]) / 2 + dx) / W, grow: L.grow || 1, vw: W / (L.pw0 || pw), fxs: L.fxs || .5};
 }
 
 // ---------- each frame ----------
@@ -349,7 +384,7 @@ function frame(){
     L.last = w.u; L.dirty = false; L.frames++;
     // The 3D move's own breath at the pose shown (from its keys; a breath pattern move, from its pattern at that point).
     try { const d = moveDef(id), q = d && Array.isArray(d.bp) && Q ? Q.find(z => w.u >= ((z.u0 % 1) + 1) % 1 && w.u < z.u1) : null; L.bph = q ? q.k : d && Array.isArray(d.bp) ? '' : st.breath().phase; } catch(e){ L.bph = ''; }
-    if (!L.box.classList.contains('g3-on')) L.box.classList.add('g3-on');
+    if (!L.box.classList.contains('g3-on')){ const b = L.box; if (b.classList.contains('g3-pre')){ L.el.classList.add('g3-settle'); setTimeout(() => { if (L.el) L.el.classList.remove('g3-settle'); }, 900); } b.classList.add('g3-on'); }
   }
   L.st.bphase = L.bph || '';
   const G = guideOf(id);
@@ -360,23 +395,34 @@ function frame(){
 }
 function kick(){ if (!L.raf && L.box) L.raf = requestAnimationFrame(frame); }
 function setInk(){ const d = isDark(); INK = d ? '#f6e4c2' : '#3a2414'; HALO = d ? 'rgba(30,22,15,.8)' : 'rgba(255,246,226,.85)'; GOLD = d ? '#f0b850' : '#b9781c'; }
-function unhide(){ if (L.box) L.box.classList.remove('g3-on', 'g3-want'); if (L.el && L.el.parentNode) L.el.remove(); L.st = {on: false}; }
-function detach(){ if (L.raf) cancelAnimationFrame(L.raf); L.raf = 0; unhide(); L.box = null; }
+function unhide(){ if (L.box) L.box.classList.remove('g3-on', 'g3-want', 'g3-pre', 'g3-wait'); if (L.el && L.el.parentNode) L.el.remove(); L.st = {on: false}; }
+function detach(){ if (L.raf) cancelAnimationFrame(L.raf); L.raf = 0; unhide(); L.box = null; L.want = false; }
+// The simple figure shows at once wherever 3D will not draw it (health.js held it back with its calm placeholder, g3-wait).
+function unwait(){ document.querySelectorAll('.hj-stagebox.g3-wait, .hj-stagebox.g3-pre').forEach(b => b.classList.remove('g3-wait', 'g3-pre')); }
+// BLD 900: while the engine loads, the layer joins the stage with the painting only (no figure yet; health.js holds a calm
+// placeholder on the stage), so the first screen goes from the painting to the 3D figure, never through the simple figure.
+function prePaint(box){
+  mapP().then(() => { if (!MAP || F.ready || F.failed || !L.want || !box.isConnected || !ok()) return;
+    const host = box.querySelector('.ggs') || box, el = layer();
+    if (el.parentNode !== host) host.insertBefore(el, host.firstChild ? host.firstChild.nextSibling : null);
+    L.box = box; setArt(); if (L.artImg){ box.classList.add('g3-pre'); placeArt(); } });
+}
 
 // The stage of the open player (the one holding a GGMoves figure), after each draw.
 function sync(ctx){
   if (ctx) L.ctx = ctx;
   const box = Array.from(document.querySelectorAll('.hj-stagebox')).find(b => b.querySelector('svg.gg-move') && b.getClientRects().length);
-  if (!box || !ok()){ detach(); return; }
-  if (!F.ready){ box.classList.add('g3-want'); load().then(() => { if (F.ready) sync(); else detach(); }); return; }
+  if (!box || !ok()){ detach(); unwait(); return; }
+  L.want = true;
+  if (!F.ready){ box.classList.add('g3-want'); prePaint(box); load().then(() => { if (!L.want) return; if (F.ready) sync(); else { detach(); unwait(); } }); return; }
   const svg = box.querySelector('svg.gg-move');
   // The canvas is placed first (the engine sizes itself from it), then the stage is made once.
   const host = box.querySelector('.ggs') || box, el = layer();
   if (el.parentNode !== host) host.insertBefore(el, host.firstChild ? host.firstChild.nextSibling : null);
-  try { makeStage(svg.getAttribute('data-move')); } catch(e){ F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); detach(); return; }
+  try { makeStage(svg.getAttribute('data-move')); } catch(e){ F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); detach(); unwait(); return; }
   // A move with no 3D form yet keeps its SVG figure, on the same taller stage so the player's size holds steady.
   const id = pick3d(svg.getAttribute('data-move'));
-  if (!has(id)){ detach(); box.classList.add('g3-want'); return; }
+  if (!has(id)){ detach(); unwait(); box.classList.add('g3-want'); return; }
   box.classList.add('g3-want');
   if (L.box !== box){ L.box = box; L.dirty = true; L.place = 0; if (L.frames) box.classList.add('g3-on'); }
   setInk(); setArt();
@@ -384,7 +430,7 @@ function sync(ctx){
   frame();
 }
 document.addEventListener('visibilitychange', () => { if (!document.hidden) kick(); });
-addEventListener('resize', () => { L.dirty = true; L.place = 0; kick(); });
+addEventListener('resize', () => { L.dirty = true; L.place = 0; L.gr = null; kick(); });
 
 // ---------- the stylesheet ----------
 const D1 = ':root[data-theme="dark"]', D2 = ':root:not([data-theme="light"])';
@@ -400,9 +446,23 @@ const CSS = `
 .g3-band{position:absolute;left:0;right:0;bottom:0;top:80%;display:none;background:linear-gradient(180deg,rgba(214,186,140,0),rgba(214,186,140,.92) 22px,#cfae7c);}
 .g3.g3-study .g3-band{display:block;}
 .g3.g3-study .g3-paint{filter:sepia(var(--g3-sepia,.4)) saturate(.7) contrast(.9) blur(5px);transform:scale(1.04);-webkit-mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);}
-.hj-stagebox.g3-on .ggs-fig{opacity:0;}
-.hj-stagebox.g3-on .ggs-sky,.hj-stagebox.g3-on .ggs-deck,.hj-stagebox.g3-on .ggs-tint,.hj-stagebox.g3-on .ggs-scrim{visibility:hidden;}
-.hj-stagebox.g3-on .ggs::after{box-shadow:none;}
+.hj-stagebox.g3-on .ggs-fig,.hj-stagebox.g3-pre .ggs-fig{opacity:0;}
+.hj-stagebox.g3-on .ggs-sky,.hj-stagebox.g3-on .ggs-deck,.hj-stagebox.g3-on .ggs-tint,.hj-stagebox.g3-on .ggs-scrim,
+.hj-stagebox.g3-pre .ggs-sky,.hj-stagebox.g3-pre .ggs-deck,.hj-stagebox.g3-pre .ggs-tint,.hj-stagebox.g3-pre .ggs-scrim{visibility:hidden;}
+.hj-stagebox.g3-on .ggs::after,.hj-stagebox.g3-pre .ggs::after{box-shadow:none;}
+.hj-stagebox:not(.g3-on) .g3-fig,.hj-stagebox:not(.g3-on) .g3-guides{opacity:0;}
+.g3-fig,.g3-guides{transition:opacity .45s ease;}
+/* BLD 900 (phone speed): while the 3D figure moves, the page around it uses plain fills in place of live blurs and filters
+   (each blur over a moving canvas is redrawn every frame). The painting behind the player holds still. */
+@media (max-width: 700px), (pointer: coarse){
+.hj-ov:has(.hj-stagebox.g3-on) .hj-paint img{animation:none;filter:none;}
+.hj-ov:has(.hj-stagebox.g3-on) .hj-ovtop{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 92%,transparent);}
+.hj-ov:has(.hj-stagebox.g3-on) .hj-ovb{-webkit-backdrop-filter:none;backdrop-filter:none;background:color-mix(in srgb,var(--bg) 94%,transparent);}
+.hj-stagebox.g3-on .ggs-breath{-webkit-backdrop-filter:none;backdrop-filter:none;}
+.hj-stagebox.g3-on .g3-paint{filter:none;}
+}
+.g3.g3-settle .g3-paint{transition:opacity .5s,background-size .7s ease,background-position .7s ease;}
+@media (prefers-reduced-motion: reduce){.g3-fig,.g3-guides,.g3-paint,.g3.g3-settle .g3-paint{transition:none;}}
 .hj-stagebox.g3-on .ggs-rest .g3-fig,.hj-stagebox.g3-on .ggs-next .g3-fig{opacity:.62;}
 ${dk('& .g3-veil{background:#120c08;}& .g3-paint{background-color:#2a2018;}& .g3-band{background:linear-gradient(180deg,rgba(58,42,28,0),rgba(58,42,28,.92) 22px,#3a2a1c);}')}
 `;
@@ -412,6 +472,6 @@ window.GGFig3D = {sync, detach, ok, able, load, artFor, has: id => F.ready && L.
   body: bodyPref, setBody(b){ if (b === 'man' || b === 'woman'){ ls.set('gg-fig-body', b); L.dirty = true; kick(); } },
   state(){ return Object.assign({ready: F.ready, failed: F.failed, frames: L.frames, lite: L.stage && L.stage.mode ? L.stage.mode().lite : null}, L.st, {fit: L.fit || null}); },
   // For tests (the room check): show this 3D pattern and this painting whatever the step is; null to go back.
-  probe(id, art){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },
+  probe(id, art, exact){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined, exact: !!(art && exact)}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },
   profileBody: null, version: V};
 })();
