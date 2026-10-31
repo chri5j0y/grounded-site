@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'b897';
+const V = 'b899';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -333,7 +333,7 @@ function frame(){
     const d = moveDef(id), loop = d ? (+d.tempo || 3) * (d.reps || (d.alt ? 2 : 1)) : 4, now = performance.now();
     let held = false; try { held = svg.animationsPaused(); } catch(e){}
     if (L.ownId !== id){ L.ownId = id; L.ownT = 0; L.ownAt = now; }
-    if (!held) L.ownT += Math.min(.25, Math.max(0, (now - L.ownAt) / 1000));
+    if (!held) L.ownT += Math.min(1, Math.max(0, (now - L.ownAt) / 1000));   // (a long gap, a hidden tab, adds at most a second)
     L.ownAt = now; dur = loop; tau = L.ownT;
     w = {u: (L.ownT / loop) % 1, phase: '', x: 0};
   } else {

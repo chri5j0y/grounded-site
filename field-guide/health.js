@@ -1473,7 +1473,7 @@ function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'
 // Chris, October 31, 2026: the 3D figure inside the painting's own room, in every player. The player keeps drawing its SVG figure
 // on the one clock (BLD 898); the 3D stage, loaded only when a player with a figure opens, follows that figure's own time, so
 // the body, the tree, and the count stay together. Without WebGL, with Save Data, or with the Simple Figure setting, the SVG shows.
-const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b897';
+const FIG3D = 'shared/fig3d/gg-fig3d.js?v=b899';
 function fig3dBody(){ const h = H(), x = h && h.set ? h.set.sex || (h.set.prevent || {}).sex : ''; return x === 'f' ? 'woman' : x === 'm' ? 'man' : ''; }
 function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 'gentle' : 'strength', steps = arr(o.steps);
   const st = o.stage === 'start' ? steps.find(s => s.t === 'ex') || steps[0] : steps[o.i] || {};
