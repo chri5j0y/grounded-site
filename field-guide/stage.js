@@ -21,6 +21,10 @@
 //         that has a mark for each rep (data-hjrep on the numeral, so the player's count updates it in place),
 //       fill: true to make the panel a backdrop that fills its positioned parent (position absolute, inset 0);
 //         the player's content then sits above it with position relative and z-index 1.
+//       med: {art, src, lg, since} (BLD 899): the meditation stage. The day's painting fills the panel, set by shared/med-stage.json
+//         (src and lg here are used until that file arrives or when it has no entry); a painted flame gets a soft flicker drawn
+//         over it, and a painting with no candle gets a painted-style candle in its foreground. The glow breathes with phases,
+//         or inhale and exhale, on the player's one clock; otherwise once each 5.5 seconds. since: when the player opened.
 //     }
 //   GGStage.update(el, opts): in place and cheap (safe every 100 ms): opts.pct moves the ring, opts.secs
 //     sets its number, opts.side changes the badge, opts.rep sets the count and its progress line (BLD 897). el is the panel or any element holding one.
@@ -221,6 +225,8 @@ function scene(state, opts){
   else if (s === 'med'){ set = dusk(id); deck = 'floor'; }
   else if (s === 'practice'){ const k = {top: mix(sky.top, SUNRISE.top, 0.45), hor: mix(sky.hor, SUNRISE.hor, 0.45), sun: sky.sun || '#FFC79C', h: sky.sun ? h : 6.4}; set = outdoors(id, k, lightA, s); deck = 'meadow'; }
   else set = outdoors(id, sky, lightA, s);
+  const ml = o.med && typeof o.med === 'object' ? medHTML(o.med, o, id, red) : '';
+  if (ml){ set = dusk(id); deck = 'floor'; if (!red) setTimeout(flKick, 30); }
   const tod = h >= 5 && h < 12 ? 'morning' : h >= 12 && h < 17 ? 'day' : h >= 17 && h < 21 ? 'evening' : 'night';
   const showRing = s === 'rest' || o.pct != null, showBreath = s === 'breathe' || o.inhale != null || (Array.isArray(o.phases) && o.phases.length > 0);
   const side = o.side === 'L' || o.side === 'R' ? `<div class="ggs-side" data-ggsside><b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span></div>` : '<div class="ggs-side" data-ggsside hidden></div>';
@@ -229,12 +235,12 @@ function scene(state, opts){
   const prog = cn ? `<div class="ggs-prog" data-ggsprog data-of="${+cn.of}"><i style="width:${r1(cr / cn.of * 100)}%"></i>${Array.from({length: Math.max(0, cn.of - 1)}, (x, k) => `<b style="left:${r1((k + 1) / cn.of * 100)}%"></b>`).join('')}</div>` : '';
   const label = o.label || cn ? `<div class="ggs-hud">${count}${o.label ? `<div class="ggs-lab">${esc(o.label)}</div>` : ''}</div>` : '';
   const fig = o.fig ? `<div class="ggs-fig${showRing && s === 'rest' ? ' small' : ''}">${o.fig}</div>` : '';
-  const mid = (showBreath ? breathHTML(o, red) : '') + (s === 'done' && !o.fig ? MEDAL : '');
+  const mid = (showBreath ? breathHTML(o, red) : '') + (s === 'done' && !o.fig && !ml ? MEDAL : '');
   const ring = showRing ? ringHTML(o, true) : '';
   const scrimOp = s === 'med' ? 0.15 : tod === 'night' ? 0.2 : 0.42;
-  return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
+  return `<div class="ggs ggs-${s} ggs-${tod} ggs-on-${deck}${o.fill ? ' ggs-fill' : ''}${red ? ' ggs-still' : ''}${ml ? ' ggs-hasml' : ''}" data-ggstage="${s}" style="--ggs-a:${lightA};--ggs-ad:${ST[s][1]};--ggs-scrim:${scrimOp};--ggs-bgl:${bgOf(s, h, false)};--ggs-bgd:${bgOf(s, h, true)}" aria-hidden="true">` +
     `<svg class="ggs-sky" viewBox="0 0 400 200" preserveAspectRatio="xMidYMax slice">${set}</svg>` +
-    `<div class="ggs-deck"></div><div class="ggs-tint"></div><div class="ggs-scrim"></div>` +
+    `<div class="ggs-deck"></div>${ml}<div class="ggs-tint"></div><div class="ggs-scrim"></div>` +
     `<div class="ggs-mid${fig ? ' hasfig' : ''}">${mid}${s === 'rest' ? ring + fig : fig + ring}</div>${side}${label}${prog}</div>`;
 }
 
@@ -251,6 +257,118 @@ function update(el, opts){
   if (o.side !== undefined && c.side && o.side !== c.sd){ c.sd = o.side;
     if (o.side === 'L' || o.side === 'R'){ c.side.hidden = false; c.side.innerHTML = `<b>${o.side}</b><span>${o.side === 'L' ? 'Left Side' : 'Right Side'}</span>`; } else c.side.hidden = true; }
 }
+
+// ---------- BLD 899: the meditation stage ----------
+// Chris, October 31, 2026, option 1: a painted candle scene with a soft flicker added by the site. The flame sways on layered
+// slow waves (no loop a person can find), the glow on the painting breathes, it pauses with the tab, and any new candle painting
+// joins by one entry in shared/med-stage.json. One light loop (about 30 frames a second) moves every flame on the page.
+const SELF = (() => { try { return (document.currentScript && document.currentScript.src) || ''; } catch (e) { return ''; } })();
+const MS = {map: null, p: null, done: false, url: ''};
+function medLoad(){
+  if (MS.p) return; let u;
+  try { u = new URL('../shared/med-stage.json', SELF || location.href); if (SELF) u.search = new URL(SELF).search; MS.url = u.href; } catch (e) { MS.done = true; return; }
+  MS.p = fetch(MS.url).then(r => r.ok ? r.json() : null).catch(() => null).then(m => { MS.map = m && m.art ? m : null; MS.done = true; medHydrate(); });
+}
+function medEntry(m){
+  medLoad(); const M = MS.map; if (!M) return null;
+  const A = M.art || {}; let k = (M.use || {})[m.art] || m.art; if (!A[k]) k = M.default; const a = A[k]; if (!a) return null;
+  let base; try { base = new URL(M.base || '', MS.url); } catch (e) { return null; }
+  const abs = f => { try { return new URL(f, base).href; } catch (e) { return ''; } };
+  return Object.assign({id: k}, a, {src: a.src ? abs(a.src) : m.src, lg: a.lg ? abs(a.lg) : a.src ? '' : m.lg});
+}
+const nb = v => Math.max(0, Math.min(1, +v || 0));
+const phOf = o => Array.isArray(o.phases) && o.phases.some(p => p && +p.d > 0) ? o.phases.filter(p => p && +p.d > 0).map(p => ({k: p.k, d: +p.d}))
+  : o.inhale != null ? [{k: 'in', d: Math.max(1, +o.inhale || 4)}, {k: 'out', d: Math.max(1, +o.exhale || +o.inhale || 6)}] : null;
+// The glow: brighter and a little wider on the in breath, settling on the out breath. With breath timing its loop carries data-dur,
+// so the player's one clock (health.js clkSync) holds it with the tree and the figure; with none, one easy breath each 5.5 seconds.
+function haloSVG(P, red, id, cls){
+  let an = '', dur = '', r0 = 34;
+  if (!red){
+    let lv = P ? (P[0].k === 'in' ? 0 : 1) : 0, t = 0; const T = P ? P.reduce((a, p) => a + p.d, 0) : 5.5, L = [lv], kt = [0];
+    (P || [{k: 'in', d: 2.4}, {k: 'out', d: 3.1}]).forEach(p => { t += p.d; lv = p.k === 'in' ? 1 : p.k === 'out' ? 0 : lv; L.push(lv); kt.push(Math.min(1, t / T)); });
+    const k4 = x => Math.round(x * 10000) / 10000, sp = kt.slice(1).map(() => '.45 0 .55 1').join(';'), w = Math.round(T * 1000) / 1000;
+    const a = (at, f) => `<animate attributeName="${at}" dur="${w}s" repeatCount="indefinite" values="${L.map(f).join(';')}" keyTimes="${kt.map(k4).join(';')}" calcMode="spline" keySplines="${sp}"/>`;
+    an = a('r', l => r1(31 + 11 * l)) + a('opacity', l => Math.round((0.68 + 0.32 * l) * 100) / 100); r0 = r1(31 + 11 * L[0]);
+    if (P) dur = ` data-dur="${w}"`;
+  }
+  return `<svg class="ggs-halo ${cls}" viewBox="0 0 100 100"${dur}><defs><radialGradient id="${id}"><stop offset="0" stop-color="#FFE7AE" stop-opacity=".8"/>` +
+    `<stop offset=".32" stop-color="#FFC772" stop-opacity=".34"/><stop offset="1" stop-color="#FFB04E" stop-opacity="0"/></radialGradient></defs><circle cx="50" cy="50" r="${r0}" fill="url(#${id})">${an}</circle></svg>`;
+}
+// A flame in a 40 by 80 box, its base (where it meets the wick) at 20, 74. A lantern's light is a soft glow behind glass.
+function flameSVG(id, k, lant){
+  if (lant) return `<svg class="ggs-fl ln" viewBox="0 0 40 80"><defs><radialGradient id="${id}"><stop offset="0" stop-color="#FFF7DA"/><stop offset=".45" stop-color="#FFD47E" stop-opacity=".75"/><stop offset="1" stop-color="#FFB24A" stop-opacity="0"/></radialGradient></defs>` +
+    `<g class="ggs-flg" data-k="${k}" data-ln="1"><ellipse cx="20" cy="50" rx="16" ry="25" fill="url(#${id})"/></g></svg>`;
+  return `<svg class="ggs-fl" viewBox="0 0 40 80"><defs><linearGradient id="${id}o" x1="0" y1="1" x2="0" y2="0"><stop offset="0" stop-color="#E8802C"/><stop offset=".42" stop-color="#F8B24A"/><stop offset="1" stop-color="#FFDC90" stop-opacity=".15"/></linearGradient>` +
+    `<radialGradient id="${id}i" cx="50%" cy="72%" r="62%"><stop offset="0" stop-color="#FFFEF4"/><stop offset="1" stop-color="#FFE6A2"/></radialGradient>` +
+    `<filter id="${id}b" x="-60%" y="-30%" width="220%" height="160%"><feGaussianBlur stdDeviation=".9"/></filter></defs>` +
+    `<g class="ggs-flg" data-k="${k}"><path d="M20 4C28 26 32 44 28 60C26 69 23 74 20 74C17 74 14 69 12 60C8 44 12 26 20 4Z" fill="url(#${id}o)" filter="url(#${id}b)" opacity=".95"/>` +
+    `<path class="ggs-flc" d="M20 30C24 42 25 54 23 64C22 69 21 71 20 71C19 71 18 69 17 64C15 54 16 42 20 30Z" fill="url(#${id}i)"/><ellipse cx="20" cy="70" rx="3.2" ry="4" fill="#9DB2E0" opacity=".35"/></g></svg>`;
+}
+// The drawn candle, for a painting with no candle of its own: a warm cream pillar on a small stone or wooden dish, softened with a
+// light paint grain, in a 100 by 160 box (the dish's foot at the bottom; the flame's base at 50, 51).
+function candleSVG(id, dish){
+  const wood = dish === 'wood', d0 = wood ? '#A06C3C' : '#A6977F', d1 = wood ? '#6E4524' : '#75674F', d2 = wood ? '#C08A55' : '#CDBC9C';
+  return `<svg class="ggs-cdl" viewBox="0 0 100 160" aria-hidden="true"><defs>` +
+    `<linearGradient id="${id}w" x1="0" y1="0" x2="1" y2="0"><stop offset="0" stop-color="#D9BF94"/><stop offset=".3" stop-color="#F6E6C6"/><stop offset=".64" stop-color="#E8D2A8"/><stop offset="1" stop-color="#B39470"/></linearGradient>` +
+    `<radialGradient id="${id}l" cx="50%" cy="0%" r="90%"><stop offset="0" stop-color="#FFE4A0" stop-opacity=".75"/><stop offset="1" stop-color="#FFE4A0" stop-opacity="0"/></radialGradient>` +
+    `<linearGradient id="${id}d" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="${d2}"/><stop offset=".5" stop-color="${d0}"/><stop offset="1" stop-color="${d1}"/></linearGradient>` +
+    `<filter id="${id}g" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency=".7 .045" numOctaves="2" seed="7" result="n"/>` +
+    `<feDisplacementMap in="SourceGraphic" in2="n" scale="2.6" xChannelSelector="R" yChannelSelector="G" result="d"/>` +
+    `<feColorMatrix in="n" type="matrix" values="0 0 0 0 .5 0 0 0 0 .34 0 0 0 0 .16 0 0 0 -.9 .5" result="t"/><feComposite in="t" in2="d" operator="in" result="u"/>` +
+    `<feMerge result="m"><feMergeNode in="d"/><feMergeNode in="u"/></feMerge><feGaussianBlur in="m" stdDeviation=".45"/></filter>` +
+    `<filter id="${id}s" x="-30%" y="-100%" width="160%" height="300%"><feGaussianBlur stdDeviation="2.4"/></filter><filter id="${id}p" x="-40%" y="-200%" width="180%" height="500%"><feGaussianBlur stdDeviation="7"/></filter></defs>` +
+    `<ellipse cx="50" cy="152" rx="70" ry="12" fill="#FFCF7E" opacity=".38" filter="url(#${id}p)"/><ellipse cx="50" cy="153" rx="44" ry="5" fill="#1E140A" opacity=".26" filter="url(#${id}s)"/>` +
+    `<g filter="url(#${id}g)"><path d="M10 142C12 152 30 156 50 156S88 152 90 142Z" fill="url(#${id}d)"/><ellipse cx="50" cy="142" rx="40" ry="7.5" fill="${d2}"/><ellipse cx="50" cy="142.5" rx="33" ry="5" fill="${d1}" opacity=".45"/>` +
+    `<path d="M30 60V138C30 142 40 145 50 145S70 142 70 138V60Z" fill="url(#${id}w)"/><path d="M30 60V138C30 142 40 145 50 145S70 142 70 138V60Z" fill="url(#${id}l)"/>` +
+    `<path d="M33 60C33 70 35 76 34 84C33 88 36 89 37 84C38 76 37 68 38 61Z" fill="#FBEFD8" opacity=".7"/>` +
+    `<ellipse cx="50" cy="60" rx="20" ry="5" fill="#F8E8C6"/><ellipse cx="50" cy="60.6" rx="15" ry="3.3" fill="#EFCB8A"/><ellipse cx="50" cy="62" rx="19" ry="8" fill="#FFD27E" opacity=".35"/></g>` +
+    `<path d="M50 59.5C50 56 51 54 50 51" stroke="#3A2C1E" stroke-width="1.7" fill="none" stroke-linecap="round"/>` +
+    `<svg x="38" y="6.6" width="24" height="48" viewBox="0 0 40 80" overflow="visible">${flameSVG(id + 'f', 9).replace(/^<svg[^>]*>|<\/svg>$/g, '')}</svg></svg>`;
+}
+let MN = 0;
+function medHTML(m, o, id, red){
+  const e = medEntry(m), wait = !e && !MS.done, a = e || {src: m.src, lg: m.lg}, f = Array.isArray(a.focal) ? a.focal.map(nb) : [0.5, 0.55];
+  const P = phOf(o), ar = +a.ar > 0 ? +a.ar : 0, lant = a.kind === 'lantern', tone = a.tone != null ? nb(a.tone) : 0.4;
+  const fl = Array.isArray(a.flames) ? a.flames.filter(Array.isArray).map(p => [nb(p[0]), nb(p[1]), +p[2] || +a.size || 0.04])
+    : Array.isArray(a.flame) ? [[nb(a.flame[0]), nb(a.flame[1]), +a.size || 0.04]] : [];
+  const lit = !!(fl.length && ar), c = Array.isArray(a.candle) ? a.candle.map(nb) : [f[0] < 0.5 ? 0.84 : 0.16, 0.94];
+  const since = +m.since || Date.now(), dl = -((Date.now() - since) / 1000).toFixed(1), q = id + 'm' + (++MN), pc = v => r1(v * 1000) / 10 + '%';
+  const srcset = a.lg && a.lg !== a.src ? ` srcset="${esc(a.src)} 600w, ${esc(a.lg)} 1100w" sizes="(max-width:699px) 100vw, 760px"` : '';
+  let h = `<div class="ggs-ml${lit ? ' lit' : ''}${wait ? ' wait' : ''}" data-ggsml="${esc(m.art || '')}" data-src="${esc(m.src || '')}" data-lg="${esc(m.lg || '')}" data-since="${since}"` +
+    ` data-ph="${P ? P.map(p => p.k + ':' + p.d).join(' ') : ''}" style="--fx:${f[0]};--fy:${f[1]};--tone:${tone};--cx:${pc(c[0])};--cy:${pc(c[1])}">` +
+    `<div class="ggs-pt"><div class="ggs-pw${ar ? ' ar' : ''}" style="${ar ? `--ar:${ar};` : ''}animation-delay:${dl}s;transform-origin:${pc(f[0])} ${pc(f[1])}">` +
+    (a.src ? `<img class="ggs-pi" src="${esc(a.src)}"${srcset} alt="" decoding="async">` : '');
+  if (lit) fl.forEach((p, k) => { const at = `left:${pc(p[0])};top:${pc(p[1])};--fh:${pc(p[2])}`;
+    h += `<div class="ggs-ph${lant ? ' ln' : ''}" style="${at}">${haloSVG(P, red, q + 'h' + k, '')}</div><div class="ggs-pf${lant ? ' ln' : ''}" style="${at}">${flameSVG(q + 'f' + k, k, lant)}</div>`; });
+  return h + `</div></div><div class="ggs-pv"></div><div class="ggs-mh">${haloSVG(P, red, q + 'hc', '')}</div><div class="ggs-mc">${candleSVG(q + 'c', a.dish)}</div></div>`;
+}
+// When med-stage.json arrives (or cannot), each stage drawn before it is redrawn in place.
+function medHydrate(){
+  document.querySelectorAll('[data-ggsml]').forEach(el => { try {
+    const ph = (el.getAttribute('data-ph') || '').split(' ').filter(Boolean).map(x => { const [k, d] = x.split(':'); return {k, d: +d}; });
+    const sc = el.closest('.ggs'), red = reduced() || !!(sc && sc.classList.contains('ggs-still'));
+    el.outerHTML = medHTML({art: el.getAttribute('data-ggsml'), src: el.getAttribute('data-src'), lg: el.getAttribute('data-lg'), since: +el.getAttribute('data-since')}, {phases: ph.length ? ph : null}, 'ggsh' + (++N), red);
+  } catch (e) {} });
+  if (!reduced()) flKick();
+}
+// A painting that cannot load leaves the dusk set and the drawn candle in the middle of the floor.
+try { document.addEventListener('error', ev => { const t = ev.target; if (t && t.classList && t.classList.contains('ggs-pi')){ const r = t.closest('.ggs-ml'); if (r) r.classList.add('fail'); } }, true); } catch (e) {}
+// The flicker: slow waves at unrelated speeds, a different blend for each flame, about 30 frames a second, only while a flame is on
+// the page and the tab is in view (a hidden tab gets no frames, so the loop rests on its own).
+const FL = {raf: 0, last: 0};
+const wave = (t, k) => 0.55 * Math.sin(t * 1.13 + k * 1.7) + 0.3 * Math.sin(t * 2.71 + k * 4.1) + 0.15 * Math.sin(t * 6.37 + k * 2.3);
+function flKick(){ if (!FL.raf && !reduced()) FL.raf = requestAnimationFrame(flTick); }
+function flTick(ts){
+  FL.raf = 0; const els = document.querySelectorAll('.ggs-flg'); if (!els.length) return;
+  if (ts - FL.last > 32){ FL.last = ts; const t = ts / 1000;
+    els.forEach((g, i) => { const k = +g.getAttribute('data-k') || i, gust = Math.max(0, Math.sin(t * 0.23 + k)) ** 6;
+      if (g.getAttribute('data-ln')){ const s = 1 + 0.06 * wave(t * 1.6, k + 3); g.setAttribute('transform', `translate(20 50) scale(${s.toFixed(3)}) translate(-20 -50)`); g.setAttribute('opacity', (0.86 + 0.14 * wave(t * 2.2, k + 9)).toFixed(3)); return; }
+      const a = (2.6 + 3 * gust) * wave(t, k) , sy = 1 + 0.06 * wave(t * 1.45, k + 3) + 0.03 * wave(t * 4.3, k + 11), sx = 1 - 0.035 * wave(t * 1.8, k + 5);
+      g.setAttribute('transform', `rotate(${a.toFixed(2)} 20 74) translate(20 74) scale(${sx.toFixed(3)} ${sy.toFixed(3)}) translate(-20 -74)`); });
+  }
+  FL.raf = requestAnimationFrame(flTick);
+}
+try { document.addEventListener('visibilitychange', () => { if (!document.hidden) flKick(); }); } catch (e) {}
 
 // ---------- the stylesheet ----------
 const D1 = ':root[data-theme="dark"]', D2 = ':root:not([data-theme="light"])';
@@ -339,6 +457,29 @@ const CSS = `
 @keyframes ggssteam{0%{opacity:0;transform:translateY(6px);}40%{opacity:.75;}100%{opacity:0;transform:translateY(-12px);}}
 @keyframes ggspulse{0%,100%{opacity:.75;}50%{opacity:1;}}
 @keyframes ggsconf{0%{opacity:0;transform:translateY(-8px);}25%{opacity:1;}100%{opacity:0;transform:translateY(26px);}}
+/* BLD 899: the meditation stage. The painting covers the panel with its focal point in view (container units keep each painted flame
+   on its wick at any panel size); a slow drift, a soft vignette, and the candle's breathing glow blended as light. */
+.ggs-ml{position:absolute;inset:0;}
+.ggs.ggs-fill .ggs-ml{bottom:auto;height:var(--H);}
+.ggs-pt{position:absolute;inset:0;overflow:hidden;container-type:size;background:#2A1E1A;}
+.ggs-pw{position:absolute;inset:0;animation:ggsmd 64s ease-in-out infinite alternate;will-change:transform;}
+.ggs-pw.ar{inset:auto;width:max(100cqw,calc(100cqh * var(--ar)));height:max(100cqh,calc(100cqw / var(--ar)));left:calc((100cqw - max(100cqw,calc(100cqh * var(--ar)))) * var(--fx));top:calc((100cqh - max(100cqh,calc(100cqw / var(--ar)))) * var(--fy));}
+.ggs-pi{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:calc(var(--fx) * 100%) calc(var(--fy) * 100%);display:block;filter:brightness(calc(1 - .16 * var(--tone))) sepia(calc(.2 * var(--tone))) saturate(1.04);}
+.ggs-ph,.ggs-pf{position:absolute;pointer-events:none;}
+.ggs-ph{height:calc(var(--fh) * 12);aspect-ratio:1;transform:translate(-50%,-56%);mix-blend-mode:screen;}
+.ggs-ph.ln{height:calc(var(--fh) * 5);transform:translate(-50%,-50%);}
+.ggs-pf{height:calc(var(--fh) * 1.143);aspect-ratio:1/2;transform:translate(-50%,-92.5%);mix-blend-mode:screen;}
+.ggs-pf.ln{height:calc(var(--fh) * 1.4);transform:translate(-50%,-62%);}
+.ggs-halo,.ggs-fl,.ggs-cdl{display:block;width:100%;height:100%;overflow:visible;}
+.ggs-pv{position:absolute;inset:0;pointer-events:none;background:radial-gradient(ellipse 85% 80% at calc(var(--fx) * 100%) 58%,transparent 48%,rgba(34,20,8,.26) 100%);}
+.ggs-mh{position:absolute;left:var(--cx);top:calc(var(--cy) - var(--ch,36%) * .79);height:calc(var(--ch,36%) * 2.6);aspect-ratio:1;transform:translate(-50%,-50%);mix-blend-mode:screen;pointer-events:none;}
+.ggs-mc{position:absolute;left:var(--cx);bottom:calc(100% - var(--cy));height:var(--ch,36%);aspect-ratio:100/160;transform:translateX(-50%);filter:drop-shadow(0 0 10px rgba(255,200,120,.25));}
+.ggs-ml.lit .ggs-mh,.ggs-ml.lit .ggs-mc,.ggs-ml.wait .ggs-mh,.ggs-ml.wait .ggs-mc{display:none;}
+.ggs-ml.fail .ggs-pt,.ggs-ml.fail .ggs-pv{display:none;}
+.ggs-ml.fail{--cx:50%!important;--cy:96%!important;}.ggs-ml.fail .ggs-mh,.ggs-ml.fail .ggs-mc{display:block;}
+.ggs-hasml .ggs-tint{opacity:.1;}
+@keyframes ggsmd{from{transform:scale(1.02) translate(0,0);}to{transform:scale(1.08) translate(-1%,-.6%);}}
+.ggs-still .ggs-pw{animation:none!important;}
 .ggs-still .ggs-rays,.ggs-still .ggs-sun,.ggs-still .ggs-cloud,.ggs-still .ggs-star,.ggs-still .ggs-steam,.ggs-still .ggs-wash,.ggs-still .ggs-deck::after,.ggs-still .ggs-conf{animation:none!important;}
 @media (prefers-reduced-motion: reduce){.ggs *,.ggs .ggs-deck::after{animation:none!important;transition:none!important;}}
 ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DEE6;--ggm-db:var(--ggs-ad);--ggm-mat:var(--ggs-ad);--ggm-mat-op:.5;--ggm-shadow:#000;--ggm-shadow-op:.4;box-shadow:0 12px 30px rgba(0,0,0,.4);}
@@ -355,9 +496,10 @@ ${dk(`& .ggs{--ggm-ink:#FFF6E8;--ggm-far:.5;--ggm-gear:#B9C4D2;--ggm-steel:#D7DE
 & .ggs-count b{color:#F2DCB4;}& .ggs-count span{color:#CCB593;}& .ggs-prog{background:rgba(242,220,180,.2);}& .ggs-prog i{background:#E7B04E;}& .ggs-prog b{background:#F2DCB4;}
 & .ggs-deck::after{background:var(--ggs-ad);}
 & .ggs::after{box-shadow:inset 0 0 0 4px var(--ggs-ad);}& .ggs-last::after{box-shadow:inset 0 0 0 6px var(--ggs-ad);}
-& .ggs-tint{background:linear-gradient(180deg,transparent 30%,var(--ggs-ad) 170%);opacity:.4;}`)}
+& .ggs-tint{background:linear-gradient(180deg,transparent 30%,var(--ggs-ad) 170%);opacity:.4;}
+& .ggs-hasml .ggs-tint{opacity:.12;}& .ggs-pi{filter:brightness(calc(.8 - .16 * var(--tone))) sepia(calc(.22 * var(--tone))) saturate(1.02);}& .ggs-pv{background:radial-gradient(ellipse 85% 80% at calc(var(--fx) * 100%) 58%,transparent 40%,rgba(10,6,3,.42) 100%);}`)}
 `;
 (function(){ try { if (document.getElementById('ggs-css')) return; const s = document.createElement('style'); s.id = 'ggs-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch (e) {} })();
 
-window.GGStage = {scene, update, colors, css: CSS, states: Object.keys(ST)};
+window.GGStage = {scene, update, colors, css: CSS, states: Object.keys(ST), med: true};
 })();

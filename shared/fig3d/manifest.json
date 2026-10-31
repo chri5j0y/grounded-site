@@ -2,7 +2,7 @@
  "version": "897.1",
  "built": "2026-10-31",
  "files": {
-  "fig3d.js": 724053,
+  "fig3d.js": 728840,
   "figure.bin": 759548,
   "figure-woman.bin": 136432,
   "figure-full.bin": 107072
@@ -168,6 +168,7 @@
   "slow-step-forward-other",
   "slow-step-side",
   "slow-step-side-other",
+  "slow-step-turn",
   "spinal-flex",
   "squat",
   "squat-press",

@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'b897';
+const V = 'b899';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
@@ -59,7 +59,10 @@ function able(){ return webgl() && !F.failed; }
 let MAP = null;
 function artFor(ref){
   if (!MAP) return null; ref = ref || {};
-  const A = MAP.art || {}, pick = id => id && A[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null;
+  // BLD 899: a painting may name a different painting for the stage (stage: id), when its own scene has no room for a
+  // person to work out (a close-up still life, water at the floor line, clutter). Cards keep their own painting.
+  const A = MAP.art || {}, one = id => id && A[id] ? Object.assign({id}, MAP.defaults || {}, A[id]) : null,
+    pick = id => { let a = one(id), n = 0; while (a && a.stage && A[a.stage] && n++ < 4) a = Object.assign(one(a.stage), {card: a.card || a.id}); return a; };
   return pick(ref.art) || pick((MAP.workouts || {})[ref.workout]) || pick(ref.workout) || pick((MAP.categories || {})[ref.category]) ||
     pick((MAP.fallback || {})[ref.kind || 'move']) || pick(MAP.default);
 }
@@ -91,9 +94,9 @@ const L = {el: null, cv: null, gc: null, paint: null, stage: null, box: null, ra
 function layer(){
   if (L.el) return L.el;
   const el = document.createElement('div'); el.className = 'g3'; el.setAttribute('aria-hidden', 'true');
-  el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
+  el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
   try { new ResizeObserver(() => { L.dirty = true; L.place = 0; kick(); }).observe(el); } catch(e){}
-  L.el = el; L.paint = el.querySelector('.g3-paint'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
+  L.el = el; L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
   return el;
 }
 function bodyPref(){
@@ -173,6 +176,9 @@ function warp(P, Q, tau, dur){
   const q = Q[(i + rot) % n], u = q.u0 + x * (q.u1 - q.u0);
   return {u: ((u % 1) + 1) % 1, phase: P[i].k, x, i};
 }
+// Own pace: a pattern marked own (walking, carries, stepping) keeps its own loop when the SVG figure is not on a counted
+// plan (no data-dur), and the walking gaits always do, whatever the plan.
+function ownPace(id, svg){ const d = moveDef(id); if (!d || !d.own) return false; return !!d.gait || !svg.hasAttribute('data-dur'); }
 // The key pose shown when the figure holds still (reduced motion, a rest): the middle of a held top, else the end of
 // the first move (the bottom of a squat or a push-up, the reach of a bird dog).
 function keyU(Q){ if (!Q) return 0; const h = Q.find(q => q.k === 'hold'); return h ? (((h.u0 + h.u1) / 2) % 1 + 1) % 1 : ((Q[0].u1 - .02) % 1 + 1) % 1; }
@@ -264,14 +270,46 @@ function tone(){
   const veil = dark ? .5 + .35 * m : Math.max(.12, Math.min(.55, (m - .35) * .9 + t * .2));
   L.el.style.setProperty('--g3-veil', veil.toFixed(3)); L.el.style.setProperty('--g3-sepia', (.25 + .35 * t).toFixed(3));
 }
+// BLD 899 (Chris: "the guy looks like a miniature in a big world", "front plank he has feet on the wall"): the painting is
+// sized so a person standing on its floor line is the figure's own height (scale: a 1.73 m person's height there, as a
+// share of the painting's height), its floor line meets the floor under the figure, and its focal point sits under the
+// figure. When the painting cannot move far enough (it must always cover the stage), the figure moves instead, as far
+// as it can while the whole move stays on the stage. mode 'study': a soft backdrop (blurred, dissolved at the edges)
+// and a plain painted floor band under the figure, for a painting with no room for a person.
+// The placement for the move shown, read once per move, body, and stage size (the floor under the hips at the start).
+function figGeom(W, H){
+  const st = L.stage, c = st.camera, key = [L.move, st.current(), W, H, L.mir ? 1 : 0, c.position.x.toFixed(2), c.position.y.toFixed(2), c.position.z.toFixed(2)].join('|'); if (L.geo && L.geo.key === key) return L.geo;
+  const Vc = c.position.constructor, f = st.figs[st.current()], s = f.rig.scale;
+  const pr = v => { const p = v.clone().project(c); const x = (p.x * .5 + .5) * W; return [L.mir ? W - x : x, (.5 - p.y * .5) * H]; };
+  const r = f.bones.root.getWorldPosition(new Vc()), g = pr(new Vc(r.x, 0, r.z)), t = pr(new Vc(r.x, 1.73 * s, r.z));
+  // The whole loop's box on the stage, and the points on the floor (under 3 cm), from 12 poses round the loop.
+  let x0 = 1e9, x1 = -1e9, y0 = 1e9, y1 = -1e9; const floor = [];
+  try { for (let i = 0; i < 12; i++){ const T = st.track(i / 12); for (const k in T){ const p = pr(new Vc(T[k][0], T[k][1], T[k][2]));
+    x0 = Math.min(x0, p[0]); x1 = Math.max(x1, p[0]); y0 = Math.min(y0, p[1]); y1 = Math.max(y1, p[1]); if (T[k][1] < .03 * s) floor.push(pr(new Vc(T[k][0], 0, T[k][2]))); } } } catch(e){ x0 = g[0] - 60; x1 = g[0] + 60; y0 = t[1]; y1 = g[1]; }
+  return (L.geo = {key, fx: g[0], fy: g[1], hp: Math.abs(g[1] - t[1]), box: [x0, y0, x1, y1 + 6], floor});
+}
 function placeArt(){
   const img = L.artImg, a = L.art; if (!img || !a || !L.box) return;
-  const box = L.el.getBoundingClientRect(); if (!box.width) return;
-  let footY = box.height * .86;
-  try { const J = L.stage.screen(['foot.L', 'foot.R']); footY = Math.max(J['foot.L'][1], J['foot.R'][1]) + 8; } catch(e){}
-  const sc = Math.max(box.width / img.naturalWidth, box.height / img.naturalHeight) * 1.12, w = img.naturalWidth * sc, h = img.naturalHeight * sc;
-  const oy = Math.min(0, Math.max(box.height - h, footY - (a.floor || .8) * h)), ox = Math.min(0, Math.max(box.width - w, box.width * .5 - (a.focal || [.5])[0] * w));
-  const st = L.paint.style; st.backgroundSize = `${w.toFixed(0)}px ${h.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
+  const bx = L.el.getBoundingClientRect(); if (!bx.width) return;
+  const W = bx.width, H = bx.height, iw = img.naturalWidth, ih = img.naturalHeight, study = a.mode === 'study';
+  L.el.classList.toggle('g3-study', study);
+  let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W / 2, fy: H * .86, hp: H * .6, box: [W * .3, H * .2, W * .7, H * .9], floor: []}; }
+  const cover = Math.max(W / iw, H / ih) * ih * 1.02, fl = a.floor != null ? a.floor : .8, fo = (a.focal || [.5])[0];
+  let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, G.hp / a.scale), pw = ph * iw / ih;
+  let ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)), oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)), dx = 0, dy = 0;
+  if (!study){
+    // What the painting could not do, the figure does, keeping the whole move on the stage (8 px margin).
+    const b = G.box, m = 8, lim = (v, lo, hi) => lo > hi ? (lo + hi) / 2 : Math.max(lo, Math.min(hi, v));
+    dx = lim(ox + fo * pw - G.fx, m - b[0], W - m - b[2]); dy = lim(oy + fl * ph - G.fy, m - b[1], H - m - b[3]);
+    // The floor line meets the feet exactly: the painting takes any part the figure could not.
+    oy = G.fy + dy - fl * ph; ox = Math.min(0, Math.max(W - pw, G.fx + dx - fo * pw));
+  } else { oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)); L.band.style.top = Math.round(G.fy - Math.min(26, H * .07)) + 'px'; }
+  const st = L.paint.style; st.backgroundSize = `${pw.toFixed(0)}px ${ph.toFixed(0)}px`; st.backgroundPosition = `${ox.toFixed(0)}px ${oy.toFixed(0)}px`;
+  const tf = `translate(${dx.toFixed(1)}px, ${dy.toFixed(1)}px)`; L.cv.style.transform = tf + (L.mir ? ' scaleX(-1)' : ''); L.gc.style.transform = tf;
+  // For the room check (tests): the painting's box, the figure's move box, and its floor points, in painting units (0 to 1).
+  const P = (x, y) => [(x + dx - ox) / pw, (y + dy - oy) / ph];
+  L.fit = {art: a.id, card: a.card || a.id, mode: a.mode || '', scale: G.hp / ph, want: a.scale || 0, dx, dy, view: [-ox / pw, -oy / ph, (W - ox) / pw, (H - oy) / ph],
+    box: P(G.box[0], G.box[1]).concat(P(G.box[2], G.box[3])), floor: G.floor.map(p => P(p[0], p[1])), feet: P(G.fx, G.fy)};
 }
 
 // ---------- each frame ----------
@@ -279,16 +317,26 @@ function master(){ const b = L.box; return b && b.isConnected ? b.querySelector(
 function frame(){
   L.raf = 0; if (!L.box || !L.box.isConnected || !L.stage || document.hidden) return;
   const svg = master(); if (!svg){ detach(); return; }
-  const sd = sided(pick3d(svg.getAttribute('data-move'))), id = sd.id, st = L.stage;
+  const sd = L.force && has(L.force) ? {id: L.force, pair: true} : sided(pick3d(svg.getAttribute('data-move'))), id = sd.id, st = L.stage;
   if (id !== L.move){ if (!has(id)){ unhide(); return; } st.move(id); L.move = id; L.dirty = true; L.place = 0; L.gk = 0; }
   const dk = isDark(); if (dk !== L.dark){ L.dark = dk; st.theme(dk); setInk(); tone(); L.dirty = true; }
   const bp = bodyPref(); if (bp !== L.body){ L.body = bp; Promise.resolve(st.body(bp)).then(() => { L.dirty = true; L.place = 0; kick(); }).catch(() => {}); }
-  L.mir = !sd.pair && svg.classList.contains('gg-flip'); L.cv.classList.toggle('g3-mir', L.mir);
+  const mir = !sd.pair && svg.classList.contains('gg-flip'); if (mir !== L.mir){ L.mir = mir; L.place = 0; L.cv.style.transform = (L.cv.style.transform || '').replace(/ ?scaleX\(-1\)/, '') + (mir ? ' scaleX(-1)' : ''); }
   const Q = probe(st, id), anim = svg.querySelector('animate');
   let dur = +svg.getAttribute('data-dur') || 0, tau = 0, w;
   L.still = !anim;
   if (!anim){ w = {u: keyU(Q), phase: 'hold', x: 0}; dur = 0; }
-  else {
+  else if (ownPace(id, svg)){
+    // BLD 899 (Chris: "he is walking way too fast"): a walk, a carry, or another move with its own pace keeps its own
+    // natural loop (the pattern's tempo times its reps), never the SVG figure's loop or the workout tempo. Its time
+    // runs while the SVG figure runs and holds while it is paused.
+    const d = moveDef(id), loop = d ? (+d.tempo || 3) * (d.reps || (d.alt ? 2 : 1)) : 4, now = performance.now();
+    let held = false; try { held = svg.animationsPaused(); } catch(e){}
+    if (L.ownId !== id){ L.ownId = id; L.ownT = 0; L.ownAt = now; }
+    if (!held) L.ownT += Math.min(1, Math.max(0, (now - L.ownAt) / 1000));   // (a long gap, a hidden tab, adds at most a second)
+    L.ownAt = now; dur = loop; tau = L.ownT;
+    w = {u: (L.ownT / loop) % 1, phase: '', x: 0};
+  } else {
     if (!dur) dur = parseFloat(anim.getAttribute('dur')) || 2.6;
     try { tau = svg.getCurrentTime(); } catch(e){ tau = 0; }
     w = warp(parsePh(svg.getAttribute('data-ph')), Q, tau, dur);
@@ -349,17 +397,21 @@ const CSS = `
 .g3-paint::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 90% at 50% 55%,rgba(255,244,222,0) 40%,rgba(80,50,20,.28));}
 .g3-veil{position:absolute;inset:0;background:#f6ead2;opacity:var(--g3-veil,.3);}
 .g3-fig,.g3-guides{position:absolute;inset:0;width:100%;height:100%;display:block;}
-.g3-fig.g3-mir{transform:scaleX(-1);}
+.g3-band{position:absolute;left:0;right:0;bottom:0;top:80%;display:none;background:linear-gradient(180deg,rgba(214,186,140,0),rgba(214,186,140,.92) 22px,#cfae7c);}
+.g3.g3-study .g3-band{display:block;}
+.g3.g3-study .g3-paint{filter:sepia(var(--g3-sepia,.4)) saturate(.7) contrast(.9) blur(5px);transform:scale(1.04);-webkit-mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);}
 .hj-stagebox.g3-on .ggs-fig{opacity:0;}
 .hj-stagebox.g3-on .ggs-sky,.hj-stagebox.g3-on .ggs-deck,.hj-stagebox.g3-on .ggs-tint,.hj-stagebox.g3-on .ggs-scrim{visibility:hidden;}
 .hj-stagebox.g3-on .ggs::after{box-shadow:none;}
 .hj-stagebox.g3-on .ggs-rest .g3-fig,.hj-stagebox.g3-on .ggs-next .g3-fig{opacity:.62;}
-${dk('& .g3-veil{background:#120c08;}& .g3-paint{background-color:#2a2018;}')}
+${dk('& .g3-veil{background:#120c08;}& .g3-paint{background-color:#2a2018;}& .g3-band{background:linear-gradient(180deg,rgba(58,42,28,0),rgba(58,42,28,.92) 22px,#3a2a1c);}')}
 `;
 (function(){ try { if (document.getElementById('g3-css')) return; const s = document.createElement('style'); s.id = 'g3-css'; s.textContent = CSS; (document.head || document.documentElement).appendChild(s); } catch(e){} })();
 
 window.GGFig3D = {sync, detach, ok, able, load, artFor, has: id => F.ready && L.stage ? has(id) : null,
   body: bodyPref, setBody(b){ if (b === 'man' || b === 'woman'){ ls.set('gg-fig-body', b); L.dirty = true; kick(); } },
-  state(){ return Object.assign({ready: F.ready, failed: F.failed, frames: L.frames, lite: L.stage && L.stage.mode ? L.stage.mode().lite : null}, L.st); },
+  state(){ return Object.assign({ready: F.ready, failed: F.failed, frames: L.frames, lite: L.stage && L.stage.mode ? L.stage.mode().lite : null}, L.st, {fit: L.fit || null}); },
+  // For tests (the room check): show this 3D pattern and this painting whatever the step is; null to go back.
+  probe(id, art){ L.force = id || null; L.ctx = Object.assign({}, L.ctx, {art: art || undefined}); L.geo = null; L.place = 0; L.dirty = true; if (L.box){ setArt(); kick(); } },
   profileBody: null, version: V};
 })();
