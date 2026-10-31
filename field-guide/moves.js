@@ -562,6 +562,9 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 
 // Keywords, in order: the first that matches wins.
 const KW = [
+  // BLD 900 (Chris, October 31, 2026): the renamed warm-ups keep their figures (Lunge and Reach was World's Greatest Stretch,
+  // Step Back and Reach Up was Reverse Lunge and Reach), ahead of every lunge, step, and reach rule.
+  [/^lunge and reach\b/, 'stretch'], [/^step back and reach up\b/, 'reverse-lunge'],
   // BLD 896 figures first: Leg Swings before the dumbbell swing, the holds before dips and pull-ups, and so on.
   [/leg swings?|swing (your|the|one) leg/, 'leg-swing'], [/^(?!.*seated).*hip (circles?|rotations?)/, 'hip-circles'], [/open ?book|book opener/, 'open-book'],
   [/hug (and|n|&) open|open (and|&) hug/, 'hug-open'], [/pull.?aparts?/, 'pull-apart'], [/pallof|anti.?rotation press/, 'pallof'],
@@ -590,7 +593,7 @@ const KW = [
   [/tricep|skull/, 'triceps'], [/curl/, 'curl'], [/calf|heel raise/, 'calf-raise'],
   [/single ?leg (romanian|rdl|deadlift|hinge)|\bsl rdl/, 'sl-hinge'], [/balance|one leg stand|stand on one/, 'balance'],
   [/romanian|\brdl|deadlift|hinge|good morning/, 'hinge'], [/bridge march|marching bridge/, 'bridge-march'], [/hip thrust/, 'hip-thrust'], [/bridge/, 'bridge'], [/swing/, 'swing'],
-  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/ankle rock|knee to wall/, 'ankle-rock'], [/^lunge and reach\b/, 'stretch'], [/reverse lunge|back lunge|step back/, 'reverse-lunge'],
+  [/goblet/, 'goblet-squat'], [/step ?up|step drive|box step/, 'step-up'], [/ankle rock|knee to wall/, 'ankle-rock'], [/reverse lunge|back lunge|step back/, 'reverse-lunge'],
   [/lunge|split squat/, 'lunge'], [/squats? to (the )?(bench|box|chair)|box squat|bench squat/, 'bench-squat'],
   [/squat|sit to stand|chair stand/, 'squat'], [/\brows?\b/, 'row'], [/\bdips?\b/, 'dip'], [/wall slide|wall angel/, 'wall-slide'], [/arms? up|reach up|sun salut/, 'arms-up'],
   [/press|overhead|jerk/, 'press'], [/suitcase|one.?arm carry|single.?arm carry/, 'suitcase'], [/carry|farmer/, 'carry'], [/march|jacks?\b|high knee/, 'march'],
