@@ -1284,14 +1284,15 @@ async function doSet(o, st){
     if (o.side) await speak(o, o.side === 'L' ? LN.left : LN.right);
     await hold(o); if (o.dead || o.skip) { if (o.skip && k < sides.length - 1 && !o.skipMove){ o.skip = false; continue; } break; }
     const lead = o.set === 1 && k === 0;
-    if (st.kind === 'time'){ await speak(o, LN.go); lg(o, {e: 'hold'}); if (lead && st.form) speak(o, st.form); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
-    else if (o.count && repN(st)){ await speak(o, LN.go); if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); }
-      // BLD 898: the breath line comes before One, so every count lands on its beat.
+    if (st.kind === 'time'){ if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } await speak(o, LN.go); lg(o, {e: 'hold'}); o.ring = true; await runTimer(o, workSecs(st) * 1000, ''); o.ring = false; }
+    else if (o.count && repN(st)){ // Chris (November 1, 2026): every instruction first, then Go, then the count.
+      if (lead && st.form){ lg(o, {e: 'form'}); await speak(o, st.form); }
       if (lead && st.breathLine){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+      await speak(o, LN.go);
       o.rep = 0; o.ring = true; await beats(o, repN(st), tempoOf(st));
       o.rep = 0; if (o.ring){ o.ring = false; rerender(true); } }
     else if (o.hands !== false) await hfSet(o, st, k === sides.length - 1, lead);
-    else { await speak(o, LN.go); if (lead && st.form) await speak(o, st.form); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
+    else { if (lead && st.form) await speak(o, st.form); await speak(o, LN.go); if (o.set === 1 && k === 0 && !repN(st)) speak(o, LN.tap); await waitTap(o); }
     if (o.skip && k < sides.length - 1 && !o.skipMove) o.skip = false;
   }
   o.side = ''; o.rep = 0;
@@ -1300,8 +1301,10 @@ async function doSet(o, st){
 // drains and the last three seconds tick. Set Done ends it early; Pause holds it.
 async function hfSet(o, st, lastSide, lead){
   const n = repN(st) || WORD_REPS, t = tempoOf(st), secs = Math.max(8, n * t), lastAt = Math.min(3, Math.floor(n / 3)) * t;
-  let saidHalf = false, saidLast = false; o.hf = true; await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = true;
-  if (lead && (st.form || st.breathLine)) (async () => { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && o.hf && !o.dead){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } })();
+  let saidHalf = false, saidLast = false; o.hf = true;
+  if (lead && st.form && !o.dead){ lg(o, {e: 'form'}); await speak(o, st.form); }
+  if (lead && st.breathLine && !o.dead){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+  await speak(o, LN.go); lg(o, {e: 'hf', secs}); o.ring = true;
   await runTimer(o, secs * 1000, '', false, left => { const s2 = left / 1000;
     if (o.ring && secs - s2 >= RING_REPS * t){ o.ring = false; rerender(true); }
     if (!saidHalf && secs >= 16 && s2 <= secs / 2 && s2 > lastAt + 2){ saidHalf = true; if (!o.spk) speak(o, LN.half[(o.hi = (o.hi || 0) + 1) % LN.half.length]); }
@@ -1356,13 +1359,12 @@ async function beats(o, n, t, keep){
   if (!o.dead && !o.skip) await wake(() => at(n + 1), 0);
   c.beat = false;
 }
-// A counted warm-up or cooldown item: Go, its form line, then each rep counted at its tempo; a per side or two way item turns at the half.
+// A counted warm-up or cooldown item: its form and breath lines, then Go, then each rep counted at its tempo; a per side or two way item turns at the half.
 async function wuCount(o, st){
   const n = wuN(st, o), turns = st.wturn ? 2 : 1; lg(o, {e: 'wcount', n, turns}); o.ring = true; if (st.wturn === 'side') o.side = 'L';
   for (let k = 0; k < turns && !o.dead && !o.skip; k++){
     if (k){ o.side = st.wturn === 'side' ? 'R' : ''; o.rep = 0; rerender(true); lg(o, {e: 'turn', w: st.wturn}); await speak(o, st.wturn === 'side' ? LN.sw : LN.way); await snooze(o, 1000); if (o.skip || o.dead) break; }
-    else { await speak(o, LN.go); if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } }
-    if (!k && st.breathLine && !o.dead && !o.skip){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); }
+    else { if (st.form){ lg(o, {e: 'form'}); await speak(o, st.form); } if (st.breathLine && !o.dead && !o.skip){ lg(o, {e: 'breath'}); await speak(o, st.breathLine); } await speak(o, LN.go); }
     await beats(o, n, st.tempo, !!st.wbreath);
   }
   o.rep = 0; o.side = ''; o.ring = false;
