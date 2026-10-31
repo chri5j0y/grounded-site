@@ -66,7 +66,7 @@
   "move-build": {
    "src": "move-build.webp",
    "focal": [
-    0.25,
+    0.23,
     0.66
    ],
    "floor": 0.7,
@@ -295,7 +295,7 @@
   "quiet-meditation": {
    "src": "quiet-meditation.webp",
    "focal": [
-    0.2,
+    0.175,
     0.68
    ],
    "floor": 0.68,
@@ -304,7 +304,7 @@
     0.7
    ],
    "tone": 0.5,
-   "scale": 0.62,
+   "scale": 0.55,
    "mat": false,
    "open": [
     0.02,
@@ -314,10 +314,10 @@
    ],
    "avoid": [
     [
-     0.345,
-     0.62,
-     0.625,
-     0.89
+     0.355,
+     0.63,
+     0.615,
+     0.88
     ],
     [
      0.655,
@@ -367,7 +367,7 @@
   "meadow-path": {
    "src": "welcome-wide.webp",
    "focal": [
-    0.6,
+    0.7,
     0.6
    ],
    "floor": 0.6,
@@ -392,7 +392,7 @@
      0.9
     ]
    ],
-   "room": "fits with floor, scale, and focal set: on the path through the meadow (stage only)"
+   "room": "fits with floor, scale, and focal set: in the meadow beside the path (stage only)"
   },
   "hilltop": {
    "src": "home-morning-wide.webp",
