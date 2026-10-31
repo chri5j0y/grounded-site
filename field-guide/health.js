@@ -1465,7 +1465,9 @@ function stageFallback(state, op){ const c = stCol(state, op.hour);
 function stagePanel(state, op){ op = Object.assign({hour: HOUR()}, op || {}); let inner = '';
   if (window.GGStage && GGStage.scene){ try { inner = GGStage.scene(state, op) || ''; } catch(e){ inner = ''; } }
   const fb = !inner; if (fb) inner = stageFallback(state, op);
-  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}" aria-hidden="true">${inner}</div>`; }
+  // BLD 900: a figure that the 3D stage will draw waits on the painting with a calm placeholder (no simple figure first).
+  const wait = !fb && /gg-move/.test(String(op.fig || '')) && fig3dWait();
+  return `<div class="hj-stagebox${fb ? ' fb' : ''}${op.small ? ' sm' : ''}${wait ? ' g3-wait' : ''}" aria-hidden="true">${inner}</div>`; }
 function stageUpd(pct, secs){ const el = document.querySelector('[data-ggstage]'); if (!el) return;
   if (window.GGStage && GGStage.update){ try { GGStage.update(el, {pct, secs}); } catch(e){} return; }
   const r = el.querySelector('.hj-ring'); if (r){ r.style.setProperty('--p', pct.toFixed(3)); const b = r.querySelector('b'); if (b && secs != null) b.textContent = secs; } }
@@ -1481,10 +1483,53 @@ function fig3dCtx(o){ const art = ovArtName(o), cat = o.prac ? 'flow' : o.med ? 
 function fig3d(){
   const o = S.ov, G = window.GGFig3D;
   if (!o || !document.querySelector('.hj-stagebox svg.gg-move')){ if (G) G.detach(); return; }
+  // BLD 900: a player that waited past about 6 s keeps the simple figure to its end (the bundle keeps loading for the next one).
+  if (o === fig3d.late){ if (G){ G.detach(); G.load(); } return; }
+  if (document.querySelector('.hj-stagebox.g3-wait')) fig3dTimer(o);
   if (G){ G.profileBody = fig3dBody; G.sync(fig3dCtx(o)); return; }
-  if (fig3d.p || /[?&]fig=svg\b/.test(location.search)) return;
-  try { if (localStorage.getItem('gg-fig3d') === 'off') return; } catch(e){}
-  fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true; el.onload = () => { res(); if (window.GGFig3D){ fig3d(); rerenderSoon(); } }; el.onerror = res; document.head.appendChild(el); });
+  if (!fig3dLikely()){ fig3dUnwait(); return; }
+  fig3dScript();
+}
+// BLD 900 (Chris, live test, Full Body Strength: "very first screen ... shows the old stick figure for about 1 sec"). The 3D
+// stage starts loading as soon as a player's start screen opens, and earlier, quietly, once the My Health view or the Home's
+// Today shows (warm). Until the 3D stage is ready, the stage shows its painting with a calm placeholder: no figure, a soft
+// light breathing on the floor. The simple figure shows only when 3D is off for this device (no WebGL, software drawing
+// without the setting, Save Data, the Simple Figure setting), when the bundle fails, or when it takes over about 6 s.
+const FIG3D_WAIT = 6000;
+function fig3dScript(){
+  if (fig3d.p) return fig3d.p;
+  return (fig3d.p = new Promise(res => { const el = document.createElement('script'); el.src = asset(FIG3D); el.async = true;
+    el.onload = () => { res(); if (window.GGFig3D){ if (S.ov) { fig3d(); rerenderSoon(); } else GGFig3D.load(); } else fig3dUnwait(); };
+    el.onerror = () => { res(); fig3d.failed = true; fig3dUnwait(); }; document.head.appendChild(el); }));
+}
+let GLP = null;
+function glProbe(){
+  if (GLP) return GLP; GLP = {gl: false, soft: false};
+  try { const c = document.createElement('canvas'), g = c.getContext('webgl2') || c.getContext('webgl');
+    if (g){ GLP.gl = true; const x = g.getExtension('WEBGL_debug_renderer_info'), r = String(x ? g.getParameter(x.UNMASKED_RENDERER_WEBGL) : g.getParameter(g.RENDERER) || '');
+      GLP.soft = /swiftshader|llvmpipe|softpipe|software|basic render/i.test(r); const lc = g.getExtension('WEBGL_lose_context'); if (lc) lc.loseContext(); } } catch(e){}
+  return GLP;
+}
+// The same choice gg-fig3d.js makes (ok()), before it has loaded.
+function fig3dLikely(){
+  const G = window.GGFig3D; if (G) return G.ok();
+  if (fig3d.failed || /[?&]fig=svg\b/.test(location.search)) return false;
+  let pf = null; try { pf = localStorage.getItem('gg-fig3d'); } catch(e){}
+  if (pf === 'off') return false;
+  try { if (navigator.connection && navigator.connection.saveData) return false; } catch(e){}
+  try { if (window.matchMedia && matchMedia('(prefers-reduced-data: reduce)').matches) return false; } catch(e){}
+  const w = glProbe(); return w.gl && (!w.soft || pf === 'on');
+}
+function fig3dWait(){ return !!S.ov && S.ov !== fig3d.late && fig3dLikely(); }
+function fig3dUnwait(){ document.querySelectorAll('.hj-stagebox.g3-wait').forEach(b => b.classList.remove('g3-wait')); }
+function fig3dTimer(o){
+  if (fig3d.tov === o) return; fig3d.tov = o;
+  setTimeout(() => { if (S.ov !== o || document.querySelector('.hj-stagebox.g3-on')) return;
+    fig3d.late = o; if (window.GGFig3D) GGFig3D.detach(); fig3dUnwait(); }, FIG3D_WAIT);
+}
+function fig3dWarm(){
+  if (fig3d.p || fig3d.warm) return; fig3d.warm = 1;
+  setTimeout(() => { const go = () => { if (!fig3d.p && fig3dLikely()) fig3dScript(); }; if (window.requestIdleCallback) requestIdleCallback(go, {timeout: 3000}); else go(); }, 1200);
 }
 // The figure chips (3D or simple, the man or the woman) appear once the 3D stage knows this device can draw it.
 // They join the open player's chips in place (no redraw, so the painting and the figure carry on undisturbed).
@@ -2416,6 +2461,7 @@ function navHtml(kind){ const ids = navIds(), cur = navCur(); if (ids.length < 2
 
 function view(){
   const lib = FLDH(); if (!lib || !H()) return '';
+  if (workOn()) fig3dWarm();
   if (VO()) VO().setKey(((C.fld && C.fld()) || {}).audio);
   const h = H(), mine = MINE(), an = S.anim; S.anim = false;
   // Keep the start date once the plan is running, so it never drifts (BLD 857b).
@@ -3727,6 +3773,7 @@ function openInline(b){
 function dayOf(date){ if (date instanceof Date && !isNaN(date)) return new Date(date); const p = parseD(date); if (p){ const n = new Date(); p.setHours(n.getHours(), n.getMinutes()); return p; } return new Date(); }
 function apiToday(date){
   const lib = FLDH(), h = H(); if (!lib || !h) return [];
+  if (workOn()) fig3dWarm();
   const t = TD();
   if (setupNeeded()) return [{key: 'setup', when: 'Today', hour: 0, title: t.intro.start, sub: t.intro.line, btn: t.intro.start, tint: TINT.meals, done: false, kind: 'setup', image: WAY(ITEM_ART.setup)}];
   const d = dayOf(date), k = ymd(d), c = (h.days[k] || {}).checks || {}, out = [];
@@ -4104,7 +4151,12 @@ const CSS = `
 .hj-st .hj-clock{color:var(--stfg,var(--ink));}.hj-st .hj-how{color:var(--stfg,var(--ink-soft));opacity:.85;}
 .hj-st .hj-prog span{background:var(--st);}.hj-st .hj-reps{color:var(--st);}.hj-st .hj-stk{color:var(--st);}
 .hj-st .hj-ovtop .hj-kick{color:var(--st);}
-.hj-stagebox{position:relative;margin:10px 0 0;}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
+.hj-stagebox{position:relative;margin:10px 0 0;}
+.hj-stagebox.g3-wait .ggs{--H:clamp(300px,92vw,440px);}
+.hj-stagebox.g3-wait:not(.g3-on) .ggs-fig{opacity:0;}
+.hj-stagebox.g3-wait:not(.g3-on)::after{content:"";position:absolute;left:50%;bottom:9%;width:min(46%,260px);height:16%;transform:translateX(-50%);border-radius:50%;pointer-events:none;z-index:2;background:radial-gradient(closest-side,rgba(255,232,180,.55),rgba(255,232,180,.18) 60%,rgba(255,232,180,0));animation:hjg3w 4.4s ease-in-out infinite;}
+@keyframes hjg3w{0%,100%{opacity:.45;transform:translateX(-50%) scale(.92);}50%{opacity:.9;transform:translateX(-50%) scale(1.04);}}
+@media (prefers-reduced-motion: reduce){.hj-stagebox.g3-wait:not(.g3-on)::after{animation:none;opacity:.7;}}.hj-stagebox.sm .ggs{--H:clamp(120px,32vw,170px);}
 .hj-stagebox.fb{height:clamp(170px,32vh,290px);border-radius:22px;overflow:hidden;background:var(--st);}
 .hj-stagebox.fb.sm{height:clamp(96px,16vh,130px);}
 .hj-stagebox.fb>*{position:absolute;inset:0;}

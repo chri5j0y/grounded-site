@@ -75,6 +75,9 @@ function lum(img){
 
 // ---------- loading ----------
 const F = {loading: null, ready: false, failed: false, buf: null};
+// BLD 900: the art map loads on its own first (small), so the stage painting can show while the engine still loads.
+let MAPP = null;
+function mapP(){ return MAPP || (MAPP = fetch(BASE + 'art-map.json?v=' + V).then(r => r.ok ? r.json() : null).catch(() => null).then(m => { if (m) MAP = m; return m; })); }
 const E = () => (window.GGFigure3D && window.GGFigure3D.create ? window.GGFigure3D : window.GG3D && window.GG3D.create ? window.GG3D : null);
 function script(src){ return new Promise((res, rej) => { const s = document.createElement('script'); s.src = src; s.async = true; s.onload = res; s.onerror = () => rej(new Error('load ' + src)); document.head.appendChild(s); }); }
 function load(){
@@ -82,7 +85,7 @@ function load(){
   F.loading = Promise.all([
     E() ? Promise.resolve() : script(BASE + 'fig3d.js?v=' + V),
     fetch(BASE + 'figure.bin?v=' + V).then(r => { if (!r.ok) throw new Error('figure data'); return r.arrayBuffer(); }),
-    fetch(BASE + 'art-map.json?v=' + V).then(r => r.ok ? r.json() : null).catch(() => null)
+    mapP()
   ]).then(([, buf, map]) => { F.buf = buf; MAP = map; F.ready = !!E(); if (!F.ready) throw new Error('engine'); })
     .catch(e => { F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); });
   return F.loading;
@@ -95,7 +98,7 @@ function layer(){
   if (L.el) return L.el;
   const el = document.createElement('div'); el.className = 'g3'; el.setAttribute('aria-hidden', 'true');
   el.innerHTML = '<div class="g3-paint"></div><div class="g3-veil"></div><div class="g3-band"></div><canvas class="g3-fig"></canvas><canvas class="g3-guides"></canvas>';
-  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; kick(); }).observe(el); } catch(e){}
+  try { new ResizeObserver(() => { L.dirty = true; L.place = 0; if (L.stage) kick(); else placeArt(); }).observe(el); } catch(e){}
   L.el = el; L.paint = el.querySelector('.g3-paint'); L.band = el.querySelector('.g3-band'); L.cv = el.querySelector('.g3-fig'); L.gc = el.querySelector('.g3-guides');
   return el;
 }
@@ -257,8 +260,11 @@ function setArt(){
   const a = artFor(L.ctx); if (!a){ L.el.classList.remove('g3-art'); return; }
   if (!L.art || L.art.id !== a.id){
     L.art = a; const img = new Image(); img.decoding = 'async'; L.artImg = null;
-    img.onload = () => { if (L.art !== a) return; L.artImg = img; if (LUM[a.id] == null) LUM[a.id] = lum(img); L.paint.style.backgroundImage = `url("${img.src}")`; L.el.classList.add('g3-art'); tone(); L.dirty = true; L.place = 0; };
+    img.onload = () => { if (L.art !== a) return; L.artImg = img; if (LUM[a.id] == null) LUM[a.id] = lum(img); L.paint.style.backgroundImage = `url("${img.src}")`; L.el.classList.add('g3-art'); tone(); L.dirty = true; L.place = 0;
+      if (!L.stage && L.box){ L.box.classList.add('g3-pre'); placeArt(); } };
     img.src = artUrl(a);
+  }
+  if (L.stage && L.lit !== a.id){ L.lit = a.id;
     try { L.stage.light(a.light || [-.5, .78]); } catch(e){}
     // A painting with its own mat: the figure uses it, and the drawn mat is hidden.
     try { if (L.stage.props) L.stage.props({mat: !a.mat}); } catch(e){}
@@ -293,7 +299,7 @@ function placeArt(){
   const bx = L.el.getBoundingClientRect(); if (!bx.width) return;
   const W = bx.width, H = bx.height, iw = img.naturalWidth, ih = img.naturalHeight, study = a.mode === 'study';
   L.el.classList.toggle('g3-study', study);
-  let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W / 2, fy: H * .86, hp: H * .6, box: [W * .3, H * .2, W * .7, H * .9], floor: []}; }
+  let G; try { G = figGeom(W, H); } catch(e){ G = {fx: W * .45, fy: H * .835, hp: H * .72, box: [W * .3, H * .12, W * .6, H * .84], floor: []}; }
   const cover = Math.max(W / iw, H / ih) * ih * 1.02, fl = a.floor != null ? a.floor : .8, fo = (a.focal || [.5])[0];
   let ph = study || !(a.scale > 0) ? cover * (study ? 1.06 : 1.12) : Math.max(cover, G.hp / a.scale), pw = ph * iw / ih;
   let ox = Math.min(0, Math.max(W - pw, G.fx - fo * pw)), oy = Math.min(0, Math.max(H - ph, G.fy - fl * ph)), dx = 0, dy = 0;
@@ -349,7 +355,7 @@ function frame(){
     L.last = w.u; L.dirty = false; L.frames++;
     // The 3D move's own breath at the pose shown (from its keys; a breath pattern move, from its pattern at that point).
     try { const d = moveDef(id), q = d && Array.isArray(d.bp) && Q ? Q.find(z => w.u >= ((z.u0 % 1) + 1) % 1 && w.u < z.u1) : null; L.bph = q ? q.k : d && Array.isArray(d.bp) ? '' : st.breath().phase; } catch(e){ L.bph = ''; }
-    if (!L.box.classList.contains('g3-on')) L.box.classList.add('g3-on');
+    if (!L.box.classList.contains('g3-on')){ const b = L.box; if (b.classList.contains('g3-pre')){ L.el.classList.add('g3-settle'); setTimeout(() => { if (L.el) L.el.classList.remove('g3-settle'); }, 900); } b.classList.add('g3-on'); }
   }
   L.st.bphase = L.bph || '';
   const G = guideOf(id);
@@ -360,23 +366,34 @@ function frame(){
 }
 function kick(){ if (!L.raf && L.box) L.raf = requestAnimationFrame(frame); }
 function setInk(){ const d = isDark(); INK = d ? '#f6e4c2' : '#3a2414'; HALO = d ? 'rgba(30,22,15,.8)' : 'rgba(255,246,226,.85)'; GOLD = d ? '#f0b850' : '#b9781c'; }
-function unhide(){ if (L.box) L.box.classList.remove('g3-on', 'g3-want'); if (L.el && L.el.parentNode) L.el.remove(); L.st = {on: false}; }
-function detach(){ if (L.raf) cancelAnimationFrame(L.raf); L.raf = 0; unhide(); L.box = null; }
+function unhide(){ if (L.box) L.box.classList.remove('g3-on', 'g3-want', 'g3-pre', 'g3-wait'); if (L.el && L.el.parentNode) L.el.remove(); L.st = {on: false}; }
+function detach(){ if (L.raf) cancelAnimationFrame(L.raf); L.raf = 0; unhide(); L.box = null; L.want = false; }
+// The simple figure shows at once wherever 3D will not draw it (health.js held it back with its calm placeholder, g3-wait).
+function unwait(){ document.querySelectorAll('.hj-stagebox.g3-wait, .hj-stagebox.g3-pre').forEach(b => b.classList.remove('g3-wait', 'g3-pre')); }
+// BLD 900: while the engine loads, the layer joins the stage with the painting only (no figure yet; health.js holds a calm
+// placeholder on the stage), so the first screen goes from the painting to the 3D figure, never through the simple figure.
+function prePaint(box){
+  mapP().then(() => { if (!MAP || F.ready || F.failed || !L.want || !box.isConnected || !ok()) return;
+    const host = box.querySelector('.ggs') || box, el = layer();
+    if (el.parentNode !== host) host.insertBefore(el, host.firstChild ? host.firstChild.nextSibling : null);
+    L.box = box; setArt(); if (L.artImg){ box.classList.add('g3-pre'); placeArt(); } });
+}
 
 // The stage of the open player (the one holding a GGMoves figure), after each draw.
 function sync(ctx){
   if (ctx) L.ctx = ctx;
   const box = Array.from(document.querySelectorAll('.hj-stagebox')).find(b => b.querySelector('svg.gg-move') && b.getClientRects().length);
-  if (!box || !ok()){ detach(); return; }
-  if (!F.ready){ box.classList.add('g3-want'); load().then(() => { if (F.ready) sync(); else detach(); }); return; }
+  if (!box || !ok()){ detach(); unwait(); return; }
+  L.want = true;
+  if (!F.ready){ box.classList.add('g3-want'); prePaint(box); load().then(() => { if (!L.want) return; if (F.ready) sync(); else { detach(); unwait(); } }); return; }
   const svg = box.querySelector('svg.gg-move');
   // The canvas is placed first (the engine sizes itself from it), then the stage is made once.
   const host = box.querySelector('.ggs') || box, el = layer();
   if (el.parentNode !== host) host.insertBefore(el, host.firstChild ? host.firstChild.nextSibling : null);
-  try { makeStage(svg.getAttribute('data-move')); } catch(e){ F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); detach(); return; }
+  try { makeStage(svg.getAttribute('data-move')); } catch(e){ F.failed = true; console.warn('GGFig3D: the simple figure stays (' + (e && e.message) + ')'); detach(); unwait(); return; }
   // A move with no 3D form yet keeps its SVG figure, on the same taller stage so the player's size holds steady.
   const id = pick3d(svg.getAttribute('data-move'));
-  if (!has(id)){ detach(); box.classList.add('g3-want'); return; }
+  if (!has(id)){ detach(); unwait(); box.classList.add('g3-want'); return; }
   box.classList.add('g3-want');
   if (L.box !== box){ L.box = box; L.dirty = true; L.place = 0; if (L.frames) box.classList.add('g3-on'); }
   setInk(); setArt();
@@ -400,9 +417,14 @@ const CSS = `
 .g3-band{position:absolute;left:0;right:0;bottom:0;top:80%;display:none;background:linear-gradient(180deg,rgba(214,186,140,0),rgba(214,186,140,.92) 22px,#cfae7c);}
 .g3.g3-study .g3-band{display:block;}
 .g3.g3-study .g3-paint{filter:sepia(var(--g3-sepia,.4)) saturate(.7) contrast(.9) blur(5px);transform:scale(1.04);-webkit-mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);mask-image:radial-gradient(120% 95% at 50% 40%,#000 45%,transparent 100%);}
-.hj-stagebox.g3-on .ggs-fig{opacity:0;}
-.hj-stagebox.g3-on .ggs-sky,.hj-stagebox.g3-on .ggs-deck,.hj-stagebox.g3-on .ggs-tint,.hj-stagebox.g3-on .ggs-scrim{visibility:hidden;}
-.hj-stagebox.g3-on .ggs::after{box-shadow:none;}
+.hj-stagebox.g3-on .ggs-fig,.hj-stagebox.g3-pre .ggs-fig{opacity:0;}
+.hj-stagebox.g3-on .ggs-sky,.hj-stagebox.g3-on .ggs-deck,.hj-stagebox.g3-on .ggs-tint,.hj-stagebox.g3-on .ggs-scrim,
+.hj-stagebox.g3-pre .ggs-sky,.hj-stagebox.g3-pre .ggs-deck,.hj-stagebox.g3-pre .ggs-tint,.hj-stagebox.g3-pre .ggs-scrim{visibility:hidden;}
+.hj-stagebox.g3-on .ggs::after,.hj-stagebox.g3-pre .ggs::after{box-shadow:none;}
+.hj-stagebox:not(.g3-on) .g3-fig,.hj-stagebox:not(.g3-on) .g3-guides{opacity:0;}
+.g3-fig,.g3-guides{transition:opacity .45s ease;}
+.g3.g3-settle .g3-paint{transition:opacity .5s,background-size .7s ease,background-position .7s ease;}
+@media (prefers-reduced-motion: reduce){.g3-fig,.g3-guides,.g3-paint,.g3.g3-settle .g3-paint{transition:none;}}
 .hj-stagebox.g3-on .ggs-rest .g3-fig,.hj-stagebox.g3-on .ggs-next .g3-fig{opacity:.62;}
 ${dk('& .g3-veil{background:#120c08;}& .g3-paint{background-color:#2a2018;}& .g3-band{background:linear-gradient(180deg,rgba(58,42,28,0),rgba(58,42,28,.92) 22px,#3a2a1c);}')}
 `;
