@@ -888,7 +888,7 @@ function vOv(){
 // every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
 // The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
 // crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
-const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
+const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'drinks', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
