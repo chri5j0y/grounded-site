@@ -3,16 +3,175 @@
  "about": "BLD 899: the meditation stage, read by field-guide/stage.js. Per painting (the name medArtFor picks, or quiet-meditation): src and lg (under base; lg is the larger file of the same picture, same framing), ar (width over height), focal [x, y] (the part of the painting kept in view and kept clear of the drawn candle), tone (0 to 1, how far the painting settles toward candlelit evening), and either flame or flames (a painting with its own light: [x, y] where the painted flame meets its wick, as a share of the painting's width and height, with size, the flame's height as a share of the painting's height, and kind 'candle' or 'lantern') or candle (a painting with no candle of its own: [x, y] where the drawn candle's dish sits, as a share of the stage panel, with dish 'stone' or 'wood'). use maps a day's painting to a different stage painting, so a new candle painting can stand in for any day by adding one line. default is the stage for a name with no entry.",
  "base": "heroes/way/",
  "default": "quiet-meditation",
- "use": {},
+ "use": {
+  "med-m1": "candle-alcove",
+  "med-m5": "candle-alcove-2"
+ },
  "art": {
-  "quiet-meditation": {"src": "quiet-meditation.webp", "ar": 1.7778, "focal": [0.62, 0.72], "tone": 0.5, "flame": [0.7016, 0.785], "size": 0.034, "kind": "candle"},
-  "med-m1": {"src": "med-m1.webp", "lg": "med-m1-lg.webp", "ar": 1, "focal": [0.5, 0.5], "tone": 0.6, "candle": [0.85, 0.97], "dish": "stone"},
-  "med-m2": {"src": "med-m2.webp", "lg": "med-m2-lg.webp", "ar": 1, "focal": [0.58, 0.5], "tone": 0.55, "candle": [0.13, 0.97], "dish": "wood"},
-  "med-m3": {"src": "med-m3.webp", "lg": "med-m3-lg.webp", "ar": 1, "focal": [0.62, 0.62], "tone": 0.3, "kind": "lantern",
-   "flames": [[0.691, 0.688, 0.034], [0.583, 0.604, 0.022], [0.513, 0.562, 0.016]]},
-  "med-m4": {"src": "med-m4.webp", "lg": "med-m4-lg.webp", "ar": 1, "focal": [0.62, 0.6], "tone": 0.6, "candle": [0.09, 0.97], "dish": "wood"},
-  "med-m5": {"src": "med-m5.webp", "lg": "med-m5-lg.webp", "ar": 1, "focal": [0.48, 0.5], "tone": 0.6, "candle": [0.85, 0.97], "dish": "stone"},
-  "med-m6": {"src": "med-m6.webp", "lg": "med-m6-lg.webp", "ar": 1, "focal": [0.62, 0.55], "tone": 0.6, "candle": [0.13, 0.97], "dish": "stone"},
-  "med-m7": {"src": "med-m7.webp", "lg": "med-m7-lg.webp", "ar": 1, "focal": [0.5, 0.62], "tone": 0.6, "candle": [0.86, 0.97], "dish": "stone"}
+  "quiet-meditation": {
+   "src": "quiet-meditation.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.62,
+    0.72
+   ],
+   "tone": 0.5,
+   "flame": [
+    0.7016,
+    0.785
+   ],
+   "size": 0.034,
+   "kind": "candle"
+  },
+  "med-m1": {
+   "src": "med-m1.webp",
+   "lg": "med-m1-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.5,
+    0.5
+   ],
+   "tone": 0.6,
+   "candle": [
+    0.85,
+    0.97
+   ],
+   "dish": "stone"
+  },
+  "med-m2": {
+   "src": "med-m2.webp",
+   "lg": "med-m2-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.58,
+    0.5
+   ],
+   "tone": 0.55,
+   "candle": [
+    0.13,
+    0.97
+   ],
+   "dish": "wood"
+  },
+  "med-m3": {
+   "src": "med-m3.webp",
+   "lg": "med-m3-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.62,
+    0.62
+   ],
+   "tone": 0.3,
+   "kind": "lantern",
+   "flames": [
+    [
+     0.691,
+     0.688,
+     0.034
+    ],
+    [
+     0.583,
+     0.604,
+     0.022
+    ],
+    [
+     0.513,
+     0.562,
+     0.016
+    ]
+   ]
+  },
+  "med-m4": {
+   "src": "med-m4.webp",
+   "lg": "med-m4-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.62,
+    0.6
+   ],
+   "tone": 0.6,
+   "candle": [
+    0.09,
+    0.97
+   ],
+   "dish": "wood"
+  },
+  "med-m5": {
+   "src": "med-m5.webp",
+   "lg": "med-m5-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.48,
+    0.5
+   ],
+   "tone": 0.6,
+   "candle": [
+    0.85,
+    0.97
+   ],
+   "dish": "stone"
+  },
+  "med-m6": {
+   "src": "med-m6.webp",
+   "lg": "med-m6-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.62,
+    0.55
+   ],
+   "tone": 0.6,
+   "candle": [
+    0.13,
+    0.97
+   ],
+   "dish": "stone"
+  },
+  "med-m7": {
+   "src": "med-m7.webp",
+   "lg": "med-m7-lg.webp",
+   "ar": 1,
+   "focal": [
+    0.5,
+    0.62
+   ],
+   "tone": 0.6,
+   "candle": [
+    0.86,
+    0.97
+   ],
+   "dish": "stone"
+  },
+  "candle-alcove": {
+   "src": "candle-alcove.webp",
+   "lg": "candle-alcove-lg.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.66,
+    0.6
+   ],
+   "tone": 0.35,
+   "flame": [
+    0.6875,
+    0.568
+   ],
+   "size": 0.07,
+   "kind": "candle"
+  },
+  "candle-alcove-2": {
+   "src": "candle-alcove-2.webp",
+   "lg": "candle-alcove-2-lg.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.6,
+    0.6
+   ],
+   "tone": 0.35,
+   "flame": [
+    0.6027,
+    0.567
+   ],
+   "size": 0.06,
+   "kind": "candle"
+  }
  }
 }
