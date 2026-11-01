@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b903';
+  var V = 'b905';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b898';
@@ -1660,7 +1660,7 @@
     var wrap = document.createElement('div'); wrap.id = 'hm-sheet'; wrap.className = 'hm-sheetwrap';
     var head = sub ? '<div class="hm-sh-hd"><button type="button" class="hm-backbtn" data-hm-me="">' + I('back') + '<span>Back</span></button><h2 class="hm-h2" id="hm-sheet-t">' + esc(SUBS.me[sub]) + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>'
       : '<div class="hm-sh-hd"><span class="hm-me big" aria-hidden="true">' + esc(initials(S.p && S.p.name)) + '</span><h2 class="hm-h2" id="hm-sheet-t">' + esc(S.p && S.p.name || 'You') + '</h2><button type="button" class="hm-x" data-hm="closeme" aria-label="Close">' + I('plus') + '</button></div>';
-    var band = '<picture class="hm-sh-band" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'home-morning-narrow.webp"><img src="' + IMG + 'home-morning-wide.webp" alt="" loading="lazy"></picture>';
+    var band = '<picture class="hm-sh-band" aria-hidden="true"><source media="(max-width:699px)" srcset="' + IMG + 'profile-band-narrow.webp"><img src="' + IMG + 'profile-band-wide.webp" alt="" loading="lazy"></picture>';
     var body = sub ? '<div class="hm-sheet-body" id="hm-sheet-body"></div>' :
       '<ul class="hm-sh-rows">' + SHEET_ROWS.map(function (r) { return '<li><button type="button" data-hm-me="' + r[0] + '"><span class="ic">' + I(r[1]) + '</span><span class="tx"><b>' + r[2] + '</b><small>' + r[3] + '</small></span>' + I('arrow') + '</button></li>'; }).join('') + '</ul>' +
       '<button type="button" class="hm-done" data-hm="closeme">Done</button>';

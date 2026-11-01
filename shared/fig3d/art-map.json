@@ -61,7 +61,11 @@
      0.86
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the open floor in front of the back wall, behind the mat"
+   "room": "fits with floor, scale, and focal set: the open floor in front of the back wall, behind the mat",
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "move-build": {
    "src": "move-build.webp",
@@ -104,7 +108,10 @@
     ]
    ],
    "room": "BLD 900: no room for a centered figure (the dumbbells, bench, and open door sit beside the mat); stage: move-strength (the card keeps the garage)",
-   "stage": "move-strength"
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "move-peak": {
    "src": "move-peak.webp",
@@ -146,7 +153,11 @@
      0.84
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the floor right of the power tower; BLD 900: open floor from the wall line (0.76) so the whole mat lies on the boards"
+   "room": "fits with floor, scale, and focal set: the floor right of the power tower; BLD 900: open floor from the wall line (0.76) so the whole mat lies on the boards",
+   "stage": [
+    "strength-room",
+    "move-peak"
+   ]
   },
   "move-cardio": {
    "src": "move-cardio.webp",
@@ -205,7 +216,10 @@
     0.72
    ],
    "tone": 0.5,
-   "stage": "move-strength",
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ],
    "room": "stage painting: move-strength (the card is a close-up of a chair and a table)"
   },
   "move-flow": {
@@ -250,6 +264,7 @@
    "mat": true,
    "stage": [
     "yoga-studio",
+    "strength-room",
     "move-strength"
    ],
    "room": "stage painting: yoga-studio when its file is on the site, else move-strength (BLD 900, Chris: \"mat is on the wall.. choose a nice open space like home studio\")"
@@ -344,7 +359,10 @@
     ]
    ],
    "room": "BLD 900: no room for a centered figure (the cushion sits mid floor); stage: move-strength (no player with a figure uses it now)",
-   "stage": "move-strength"
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "rest-day": {
    "src": "rest-day.webp",
@@ -373,8 +391,10 @@
     0.8
    ],
    "tone": 0.4,
-   "mode": "study",
-   "room": "study: a close-up still life on a counter; no room for a person (gap)"
+   "room": "study: a close-up still life on a counter; no room for a person (gap)",
+   "stage": [
+    "kitchen-room"
+   ]
   },
   "meadow-path": {
    "src": "welcome-wide.webp",
@@ -434,24 +454,115 @@
    "src": "yoga-studio.webp",
    "focal": [
     0.5,
-    0.78
+    0.8
    ],
    "floor": 0.8,
    "light": [
-    -0.3,
+    -0.4,
     0.8
    ],
    "tone": 0.5,
    "mat": false,
-   "scale": 0.5,
+   "scale": 0.65,
    "open": [
-    0.1,
-    0.72,
-    0.9,
+    0.08,
+    0.65,
+    0.92,
     1
    ],
-   "avoid": [],
-   "room": "BLD 900: waiting for the painting (an open home studio, big empty floor, no objects). Until shared/heroes/way/yoga-studio.webp is on the site, each stage list skips it. When it arrives, set floor, scale, focal, open, and avoid from the painting and run room899.mjs."
+   "avoid": [
+    [
+     0.07,
+     0.52,
+     0.19,
+     0.74
+    ],
+    [
+     0.72,
+     0.4,
+     0.84,
+     0.67
+    ],
+    [
+     0.9,
+     0.6,
+     1,
+     0.75
+    ]
+   ],
+   "room": "Chris's Yoga Studio painting (November 1, 2026): an open home studio, wide empty wooden floor, plants at the edges."
+  },
+  "strength-room": {
+   "src": "strength-room.webp",
+   "focal": [
+    0.5,
+    0.8
+   ],
+   "floor": 0.8,
+   "light": [
+    0,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.03,
+    0.64,
+    0.97,
+    1
+   ],
+   "avoid": [
+    [
+     0.14,
+     0.44,
+     0.29,
+     0.66
+    ],
+    [
+     0.76,
+     0.38,
+     0.9,
+     0.66
+    ]
+   ],
+   "room": "Chris's Strength Room painting (November 1, 2026): an open home workout room, wide empty wooden floor, dumbbell rack and rolled mat at the edges."
+  },
+  "kitchen-room": {
+   "src": "kitchen-room.webp",
+   "focal": [
+    0.5,
+    0.82
+   ],
+   "floor": 0.82,
+   "light": [
+    0,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.04,
+    0.67,
+    0.96,
+    1
+   ],
+   "avoid": [
+    [
+     0,
+     0.4,
+     0.12,
+     0.72
+    ],
+    [
+     0.8,
+     0.45,
+     1,
+     0.78
+    ]
+   ],
+   "room": "Chris's Kitchen painting (November 1, 2026): a home kitchen with a wide empty wooden floor, counters along the back."
   }
  },
  "workouts": {},
