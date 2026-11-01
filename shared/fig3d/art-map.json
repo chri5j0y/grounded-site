@@ -61,7 +61,11 @@
      0.86
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the open floor in front of the back wall, behind the mat"
+   "room": "fits with floor, scale, and focal set: the open floor in front of the back wall, behind the mat",
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "move-build": {
    "src": "move-build.webp",
@@ -104,7 +108,10 @@
     ]
    ],
    "room": "BLD 900: no room for a centered figure (the dumbbells, bench, and open door sit beside the mat); stage: move-strength (the card keeps the garage)",
-   "stage": "move-strength"
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "move-peak": {
    "src": "move-peak.webp",
@@ -146,7 +153,11 @@
      0.84
     ]
    ],
-   "room": "fits with floor, scale, and focal set: the floor right of the power tower; BLD 900: open floor from the wall line (0.76) so the whole mat lies on the boards"
+   "room": "fits with floor, scale, and focal set: the floor right of the power tower; BLD 900: open floor from the wall line (0.76) so the whole mat lies on the boards",
+   "stage": [
+    "strength-room",
+    "move-peak"
+   ]
   },
   "move-cardio": {
    "src": "move-cardio.webp",
@@ -205,7 +216,10 @@
     0.72
    ],
    "tone": 0.5,
-   "stage": "move-strength",
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ],
    "room": "stage painting: move-strength (the card is a close-up of a chair and a table)"
   },
   "move-flow": {
@@ -250,6 +264,7 @@
    "mat": true,
    "stage": [
     "yoga-studio",
+    "strength-room",
     "move-strength"
    ],
    "room": "stage painting: yoga-studio when its file is on the site, else move-strength (BLD 900, Chris: \"mat is on the wall.. choose a nice open space like home studio\")"
@@ -344,7 +359,10 @@
     ]
    ],
    "room": "BLD 900: no room for a centered figure (the cushion sits mid floor); stage: move-strength (no player with a figure uses it now)",
-   "stage": "move-strength"
+   "stage": [
+    "strength-room",
+    "move-strength"
+   ]
   },
   "rest-day": {
    "src": "rest-day.webp",
@@ -471,6 +489,42 @@
     ]
    ],
    "room": "Chris's Yoga Studio painting (November 1, 2026): an open home studio, wide empty wooden floor, plants at the edges."
+  },
+  "strength-room": {
+   "src": "strength-room.webp",
+   "focal": [
+    0.5,
+    0.8
+   ],
+   "floor": 0.8,
+   "light": [
+    0,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.03,
+    0.64,
+    0.97,
+    1
+   ],
+   "avoid": [
+    [
+     0.14,
+     0.44,
+     0.29,
+     0.66
+    ],
+    [
+     0.76,
+     0.38,
+     0.9,
+     0.66
+    ]
+   ],
+   "room": "Chris's Strength Room painting (November 1, 2026): an open home workout room, wide empty wooden floor, dumbbell rack and rolled mat at the edges."
   }
  },
  "workouts": {},
