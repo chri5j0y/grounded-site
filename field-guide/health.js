@@ -888,7 +888,7 @@ function vOv(){
 // every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
 // The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
 // crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
-const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people'};
+const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
@@ -901,7 +901,7 @@ function ovArtName(o){
   if (o.hol) return (o.data && o.data.art) || ART_KITCHEN.dinner; // BLD 896: Today's Plate, or the Weekly Batch table on a make-ahead day
   if (o.k === 'cook'){ if (o.peek) return ART_KITCHEN.head; const k = String(o.key || ''), x = o.data || {}, meal = /^idea:/.test(k) && !/^idea:recipe:/.test(k) ? k.split(':')[1] : String(x.meal || 'dinner').toLowerCase();
     if (/^lunch/.test(meal)) return ART_KITCHEN.lunch; if (/^breakfast/.test(meal)) return ART_KITCHEN.breakfast; if (/^snack/.test(meal)) return ART_KITCHEN.snack;
-    if (meal === 'party' || meal === 'drink') return ART_KITCHEN[meal];
+    if (meal === 'party' || meal === 'drink' || meal === 'sauce') return ART_KITCHEN[meal];
     return (dinnerArtName(x) || '').replace(/-sq$/, '') || ART_KITCHEN.dinner; }
   return '';
 }
@@ -2383,7 +2383,7 @@ function vKitchen(){
 // Public: GGTendPublic.recipes. The Field Guide, a moved plan, and the Family Kitchen: every week's dinners (one of each)
 // plus the breakfasts, lunches, and snacks that carry steps. A recipe opened here uses an idea key ('idea:recipe:<id>'),
 // so finishing it marks only that recipe; tonight's dinner opens as tonight's dinner.
-const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['drink', 'Drinks']];
+const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['sauce', 'Sauces and Dressings'], ['drink', 'Drinks']];
 const R_GOALS = [['heart', 'Heart'], ['energy', 'Energy'], ['strength', 'Strength'], ['weight', 'Weight'], ['well', 'Well']];
 const R_FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
 const R_ICO = {
@@ -2392,6 +2392,7 @@ const R_ICO = {
   dinner: '<circle cx="12" cy="13" r="5.5"/><circle cx="12" cy="13" r="2.8"/><path d="M3 4v4.5a1.3 1.3 0 0 0 2.6 0V4M4.3 4v16"/><path d="M20.8 4c-1.2 1.4-1.6 3.8-1.6 6h1.6v10"/>',
   snack: '<path d="M12 7.5c-1.6-1.2-5-1.4-6.4 1.4S5 16.2 7.6 18.6 11 20.2 12 19.6c1 .6 1.9 1.3 4.4-1S20 11.7 18.4 8.9 13.6 6.3 12 7.5z"/><path d="M12 7.5c0-2 .9-3.4 2.4-4"/>',
   party: '<path d="M3 13h18a9 7 0 0 1-18 0z"/><path d="M9 21h6"/><path d="M10.5 10l3-6.5 3 6.5"/>',
+  sauce: '<path d="M10 2.5h4v2.5h-4z"/><path d="M10.8 5v3C8 9 6.5 11.6 6.5 14.5V19a2 2 0 0 0 2 2h7a2 2 0 0 0 2-2v-4.5c0-2.9-1.5-5.5-4.3-6.5V5"/><path d="M6.8 15h10.4"/>',
   drink: '<path d="M6 7h10l-1.5 14h-7z"/><path d="M6.8 11.5h8.4"/><path d="M12.5 7l3-4.5h2.5"/><circle cx="17" cy="7" r="3"/>'};
 const rIco = m => `<span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${R_ICO[m] || R_ICO.dinner}</svg></span>`;
 function recipesAll(){
@@ -2406,7 +2407,7 @@ function recipesAll(){
 // BLD 902: Party Food and Celebration Drinks live in the public file (shared/tending-public.js). The Field Guide (and a moved plan)
 // loads it once, on first need, and lists those two meals beside the library's own recipes; they open in the same kitchen guide
 // (Andrew's lines are recorded in the Guide folder too) and go on My Menu as 'r:<id>'. The Family Kitchen keeps its own list.
-const PARTY_MEALS = ['party', 'drink'];
+const PARTY_MEALS = ['party', 'drink', 'sauce']; // BLD 903: Sauces and Dressings ride the same way
 function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
 function partyLoad(){
   if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
@@ -5030,7 +5031,7 @@ function mmMerge(L, n){
 function mmAmt(x){ return x && x.mmx && x.mmx.amt ? (x.amt ? mmSum([x.amt, x.mmx.amt]) : x.mmx.amt) : String((x && x.amt) || ''); }
 function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mmx.for : x.mmx.for) : String((x && x.for) || ''); }
 // ---- Today, Week, and the Month ----
-const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
+const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : m === 'sauce' ? 'prep-together-sq' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
 const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
 function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
   return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Guide Me', did: true})); }
