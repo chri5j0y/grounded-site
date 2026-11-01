@@ -170,7 +170,7 @@
   // BLD 899: the recipe opens on its meal's painting (a dinner by its main: fish, chili and stews, or Today's Plate).
   function bandHTML(r) {
     var b = BAND[r.meal] || BAND.dinner, wide = b[0], sq = b[1];
-    if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } else if (/lentil|bean|chickpea|curry|dal\b/i.test(t)) { wide = 'dinner-curry'; sq = 'dinner-curry-sq'; } }
+    if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } else if (/lentil|bean|chickpea|curry|dal\b/i.test(t)) { wide = 'dinner-curry'; sq = 'dinner-curry-sq'; } else if (/stir fry|bowl|noodle/i.test(t)) { wide = 'dinner-stirfry'; sq = 'dinner-stirfry-sq'; } }
     return '<div class="rc-dhero" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + sq + '.webp"><img src="' + W + wide + '.webp" alt="" decoding="async"></picture></div>';
   }
   function detailHTML(r) {
@@ -502,7 +502,7 @@
     /* BLD 895 (Chris: "food pics ride w guides too!"): the guide plays over a food painting, softened under a scrim in the page's
        own colors. Dinners by night (install895.py in the workshop rewrites DINNER_ART with the paintings present); other dinners
        show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
-    var DINNER_ART = ['fish', 'chili', 'curry'];
+    var DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
     var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
     var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'drinks' };
     var ONE_ART = { 'tend-people': 1 }; // one square painting serves both sizes

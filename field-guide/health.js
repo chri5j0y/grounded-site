@@ -3677,7 +3677,7 @@ const MOVE_ART = {foundation: 'move-strength-sq', build: 'move-build-sq', peak: 
 const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
 // Dinner nights by recipe type (fish, chili and soup, lentil and bean, stir fry and bowl); install895.py rewrites this line with the
 // paintings present. A dinner with no night painting yet keeps the rotation (home.js FOOD_ROT, ITEM_ART.cook).
-const DINNER_ART = ['fish', 'chili', 'curry'];
+const DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
 const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
 const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([, re]) => re.test(t)); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
 function moveKind(id, ses, lvl){
