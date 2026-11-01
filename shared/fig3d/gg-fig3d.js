@@ -27,7 +27,7 @@
 (function(){
 'use strict';
 if (window.GGFig3D) return;
-const V = 'b900';
+const V = 'b902';
 const BASE = (() => { try { const s = document.currentScript && document.currentScript.src; return s ? new URL('./', s).href : '/shared/fig3d/'; } catch(e){ return '/shared/fig3d/'; } })();
 const ls = {get(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }, set(k, v){ try { localStorage.setItem(k, v); } catch(e){} }};
 const mm = q => { try { return !!(window.matchMedia && matchMedia(q).matches); } catch(e){ return false; } };
