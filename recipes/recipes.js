@@ -66,10 +66,16 @@
     try { var m = okSize(localStorage.getItem('gg-serves')); if (m) return m; } catch (e) {}
     return 6;
   })();
-  function sized(r) { return window.GGScale && r ? GGScale.recipe(r, serves) : r; }
-  function sizeChips() {
-    var list = SIZES.indexOf(serves) < 0 ? SIZES.concat(serves).sort(function (a, b) { return a - b; }) : SIZES;
-    return list.map(function (n) { return '<button type="button" class="rc-chip rc-sz" data-sz="' + n + '" aria-pressed="' + (n === serves ? 'true' : 'false') + '" aria-label="Serves ' + n + '">' + n + '</button>'; }).join('');
+  // Chris (November 1, 2026): pitcher drinks open at their full batch (12, or 8 for infused waters); the Serves chips still
+  // make a smaller batch, for this drink only, and the table size for meals stays as it is.
+  var batchSize = {};
+  function isBatch(r) { return !!(r && r.meal === 'drink' && +r.serves > 6); }
+  function sv(r) { return isBatch(r) ? (batchSize[r.id] || +r.serves) : serves; }
+  function sized(r) { return window.GGScale && r ? GGScale.recipe(r, sv(r)) : r; }
+  function sizeChips(cur) {
+    cur = cur || serves;
+    var list = SIZES.indexOf(cur) < 0 ? SIZES.concat(cur).sort(function (a, b) { return a - b; }) : SIZES;
+    return list.map(function (n) { return '<button type="button" class="rc-chip rc-sz" data-sz="' + n + '" aria-pressed="' + (n === cur ? 'true' : 'false') + '" aria-label="Serves ' + n + '">' + n + '</button>'; }).join('');
   }
   function ingHTML(r) { return (sized(r).ingredients || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
   var fromList = false, lastId = '', listY = 0;
@@ -80,7 +86,7 @@
     var n = r.nut || {};
     return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber, ' + n1(n.sf) + ' g saturated fat, ' + n0(n.na) + ' mg sodium';
   }
-  function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? serves : r.serves); }
+  function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? sv(r) : r.serves); }
   function shortNut(r) { var n = r.nut || {}; return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber per serving'; }
   function filtering() { return st.meal !== 'all' || !!st.goal || st.fits.length > 0 || !!st.q; }
   function hay(r) { return (r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '')).toLowerCase(); }
@@ -123,7 +129,7 @@
     return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
       '<span class="rc-band"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
       '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
-      '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? serves : r.serves)) + '</span></span>' +
+      '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
       '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
   }
   function section(c, list) {
@@ -169,11 +175,11 @@
       '<div class="rc-dh"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><div><div class="eyebrow">' + esc(MEAL_NAME[r.meal] || r.meal) + '</div>' +
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
-      '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? serves : r.serves) + '</span>' + fits + goals + '</div>' +
+      '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? sv(r) : r.serves) + '</span>' + fits + goals + '</div>' +
       '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('r:' + r.id) + '<span>A calm voice guides every step, with timers.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
       '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
-      (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div>' +
-        '<p class="rc-size-note">Amounts scale to your table. The steps fit every size.</p></div>' : '') +
+      (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
+        '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
       '<ul class="rc-ing" id="rc-ing" aria-live="polite">' + ingHTML(r) + '</ul></div>' +
       '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
       '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Keeps', r.keeps) + note('For Kids', r.kid) +
@@ -297,7 +303,7 @@
   function homeHealth() { try { var P = window.parent; if (P && P !== window && P.GGHealth && typeof P.GGHealth.menuOpen === 'function') return P.GGHealth; } catch (e) {} return null; }
   function hasProfile() { try { var j = JSON.parse(localStorage.getItem('gg-profiles-v1') || 'null'); return !!(j && Array.isArray(j.list) && j.list.length); } catch (e) { return false; } }
   function menuGo(ref) {
-    var P = homeHealth(), r = P ? P.menuOpen(ref, { serves: serves }) : null;
+    var P = homeHealth(), r = P ? P.menuOpen(ref, { serves: sv(byId(String(ref).replace(/^r:/, ''))) }) : null;
     if (r === true) return;
     var box = null; document.querySelectorAll('[data-rc-mnote]').forEach(function (b) { if (b.getAttribute('data-rc-mnote') === ref) box = b; }); if (!box) return;
     var deep = '/home/#recipe-' + encodeURIComponent(/^h:/.test(ref) ? 'hol-' + ref.split(':')[1] : ref.slice(2));
@@ -345,13 +351,14 @@
 
   function setServes(n) {
     n = okSize(n); if (!n) return;
-    serves = n;
-    try { localStorage.setItem('gg-serves', String(n)); } catch (e) {}
+    var rb = byId(lastId), dt0 = $('rc-detail');
+    if (isBatch(rb) && dt0 && !dt0.hidden) { batchSize[rb.id] = n; }
+    else { serves = n; try { localStorage.setItem('gg-serves', String(n)); } catch (e) {} }
     if (/^hol-/.test(lastId) && HOL) { var hd0 = $('rc-detail'); if (hd0 && !hd0.hidden) { hd0.innerHTML = holDetail(lastId.slice(4)); var b0 = hd0.querySelector('[data-sz="' + n + '"]'); if (b0) b0.focus({ preventScroll: true }); } drawList(); return; }
     var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = document.querySelector('.rc-size .rc-row');
     if (r && ing) ing.innerHTML = ingHTML(r);
     if (tag) tag.textContent = 'Serves ' + n;
-    if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
+    if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
     drawList();
   }
 
