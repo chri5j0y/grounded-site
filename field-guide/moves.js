@@ -728,7 +728,9 @@ const OUT_FIRST = new Set(('press push-press bench-press incline-press seat-pres
   'bridge hip-thrust weighted-bridge bridge-march step-up swing cat-cow forward-fold seat-fold life-nerve spinal-flex leg-raise leg-raise-bent knee-raise reverse-crunch ' +
   'pull-apart pallof dead-bug bird-dog leg-press kneel-press hollow ' +
   // BLD 897: out on the effort, as the 3D figures breathe them.
-  'climber cross-crunch knee-hold bicycle walk-out').split(' '));
+  'climber cross-crunch knee-hold bicycle walk-out ' +
+  // BLD 904: out as the top arm threads under the body ("Breathe out as you reach under").
+  'reach-through').split(' '));
 const TWO_BR = new Set(['yt-raise']);
 function plan(pattern, opts){
   opts = opts || {}; const id = P[pattern] ? pattern : of(pattern), M = P[id], br = opts.breath;
