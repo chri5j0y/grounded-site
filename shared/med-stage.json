@@ -5,7 +5,8 @@
  "default": "quiet-meditation",
  "use": {
   "med-m1": "candle-alcove",
-  "med-m5": "candle-alcove-2"
+  "med-m5": "candle-alcove-2",
+  "med-m2": "candle-rain"
  },
  "art": {
   "quiet-meditation": {
@@ -171,6 +172,22 @@
     0.567
    ],
    "size": 0.06,
+   "kind": "candle"
+  },
+  "candle-rain": {
+   "src": "candle-rain.webp",
+   "lg": "candle-rain-lg.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.6,
+    0.5
+   ],
+   "tone": 0.3,
+   "flame": [
+    0.5815,
+    0.408
+   ],
+   "size": 0.07,
    "kind": "candle"
   }
  }
