@@ -391,8 +391,10 @@
     0.8
    ],
    "tone": 0.4,
-   "mode": "study",
-   "room": "study: a close-up still life on a counter; no room for a person (gap)"
+   "room": "study: a close-up still life on a counter; no room for a person (gap)",
+   "stage": [
+    "kitchen-room"
+   ]
   },
   "meadow-path": {
    "src": "welcome-wide.webp",
@@ -525,6 +527,42 @@
     ]
    ],
    "room": "Chris's Strength Room painting (November 1, 2026): an open home workout room, wide empty wooden floor, dumbbell rack and rolled mat at the edges."
+  },
+  "kitchen-room": {
+   "src": "kitchen-room.webp",
+   "focal": [
+    0.5,
+    0.82
+   ],
+   "floor": 0.82,
+   "light": [
+    0,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.04,
+    0.67,
+    0.96,
+    1
+   ],
+   "avoid": [
+    [
+     0,
+     0.4,
+     0.12,
+     0.72
+    ],
+    [
+     0.8,
+     0.45,
+     1,
+     0.78
+    ]
+   ],
+   "room": "Chris's Kitchen painting (November 1, 2026): a home kitchen with a wide empty wooden floor, counters along the back."
   }
  },
  "workouts": {},
