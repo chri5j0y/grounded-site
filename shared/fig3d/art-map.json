@@ -171,7 +171,10 @@
     0.82
    ],
    "tone": 0.5,
-   "stage": "move-walk",
+   "stage": [
+    "cardio-lawn",
+    "move-walk"
+   ],
    "room": "stage painting: move-walk (BLD 900: the open meadow path holds a centered figure; the card is a close-up still life of shoes and a bottle)"
   },
   "move-walk": {
@@ -281,7 +284,10 @@
     0.8
    ],
    "tone": 0.6,
-   "stage": "hilltop",
+   "stage": [
+    "balance-lawn",
+    "hilltop"
+   ],
    "room": "stage painting: hilltop (the card is a creek with stepping stones)"
   },
   "move-stretch": {
@@ -563,6 +569,78 @@
     ]
    ],
    "room": "Chris's Kitchen painting (November 1, 2026): a home kitchen with a wide empty wooden floor, counters along the back."
+  },
+  "cardio-lawn": {
+   "src": "cardio-lawn.webp",
+   "focal": [
+    0.5,
+    0.82
+   ],
+   "floor": 0.84,
+   "light": [
+    0.3,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.15,
+    0.68,
+    0.85,
+    1
+   ],
+   "avoid": [
+    [
+     0,
+     0.05,
+     0.13,
+     0.72
+    ],
+    [
+     0.82,
+     0.25,
+     1,
+     0.7
+    ]
+   ],
+   "room": "Chris's Park Lawn painting (November 1, 2026): a wide level lawn, trees at the far edges, hills beyond."
+  },
+  "balance-lawn": {
+   "src": "balance-lawn.webp",
+   "focal": [
+    0.42,
+    0.84
+   ],
+   "floor": 0.86,
+   "light": [
+    -0.3,
+    0.8
+   ],
+   "tone": 0.55,
+   "mat": false,
+   "scale": 0.65,
+   "open": [
+    0.25,
+    0.7,
+    0.78,
+    1
+   ],
+   "avoid": [
+    [
+     0,
+     0,
+     0.3,
+     0.68
+    ],
+    [
+     0.8,
+     0.6,
+     1,
+     0.95
+    ]
+   ],
+   "room": "Chris's Quiet Lawn painting (November 1, 2026): a level clearing under two trees, a path on the right, hills beyond."
   }
  },
  "workouts": {},
