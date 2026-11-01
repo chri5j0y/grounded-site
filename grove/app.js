@@ -1497,7 +1497,7 @@ function printWhat(id, ciId) {
 }
 function printCert() {
   const K = KW(), go = () => GGPrint.certificate({ tree: 'grove', name: G.name || K.name, title: W('certificate.title', 'Twelve Weeks Together'), body: W('certificate.sub', 'Twelve weeks of growing together: checking in, making a plan, and practicing side by side.'), date: today() });
-  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b887').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
+  if (window.GGPrint) go(); else loadScript('/shared/gg-print.js?v=b902').then(() => { if (window.GGPrint) go(); else toast('The certificate could not load. Check the connection.'); });
 }
 
 /* ---------- Earlier (Family) ---------- */
@@ -1523,11 +1523,11 @@ function viewHow() {
   ${window.GGTreeArt ? `<div class="card gv-howart"><h3>The Six Parts</h3>${GGTreeArt.howItWorks(null, { app: 'grove', parts: artParts(true), label: 'The grove painting with six glowing parts to tap' })}</div>` : ''}
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
-    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, <a class="text-link" href="/maple/">Maple</a> for kids, and <a class="text-link" href="/willow/">Willow</a> for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person.</p>
+    <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, <a class="text-link" href="/maple/">Maple</a> for kids, and <a class="text-link" href="/willow/">Willow</a> for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person. Each grown-up can also tend their tree inside <a class="text-link" href="/the-grounded-way.html">The Grounded Way</a>, one personal app for the whole day.</p>
     <h3>Kinds of Grove</h3>
     <p>A grove can be a Family, a Classroom, a Faith Community, a Small or Discussion Group, or a Team or Workplace. The kind sets the words, the check-in questions, and the practices. One device holds up to six groves, each with its own name, kind, and lock.</p>
     <h3>Checking In Together</h3>
-    <p>The Family Check-in (Class Check-in, Team Check-in, or Group Check-in) is read aloud together. For each question, talk it over and settle on one shared answer: Not Yet, Sometimes, Often, or Almost Always. When you don't agree, choose We See It Differently, and it becomes a Thing to Talk About. Pass skips a question. No one's own answer is ever entered, counted, or kept.</p>
+    <p>The Family Check-in (Class Check-in, Team Check-in, or Group Check-in) is read aloud together. For each question, talk it over and settle on one shared answer: Not Yet, Sometimes, Often, or Almost Always. When you don't agree, choose We See It Differently, and it becomes a Thing to Talk About. Pass skips a question. No one's own answer is ever entered, counted, or kept. The check-in and Our Growth Plan open guided, one question at a time with a calm voice, and Read It All shows the whole form.</p>
     <p>Results come in words only: Our Shared Strengths, Steady, and Our Growing Edges, with each part's marker lit on the grove painting. Each full check-in adds a ring, so you can see how the grove grows season to season.</p>
     <h3>Our Growth Plan</h3>
     <p>Built together from the check-in in about five minutes: one or two Growing Edges, two or three practices anchored to a time you are already together, one choice from the youngest in a family, and one Shared Strength kept going. Twelve weeks, with quick check-ins at weeks 4 and 8. After twelve weeks, print your Twelve Weeks Together certificate.</p>

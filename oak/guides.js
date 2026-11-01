@@ -2269,7 +2269,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "A walk outside every day, even ten minutes.",
     "A steady bedtime, with screens off early. Sleep often takes a few weeks to settle.",
     "One person you can text any hour, and a group if you want one: SMART Recovery, Refuge Recovery, or another that fits.",
-    "Counting days, if that helps you. Every one counts."
+    "Counting days on Oak's Living Sober card, if that helps you, with a morning intention and an Evening Look Back. Every one counts."
    ],
    "tell": [
     "“Today counts.”",
@@ -2468,7 +2468,8 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
     "Cold water on your face, a cold drink, or a shower.",
     "Texting or calling your person, before the wave peaks.",
     "Leaving: the party, the store aisle, the room. You can always leave.",
-    "Planning for pain and medical visits: tell your doctor and dentist you're sober, and ask about pain plans that fit."
+    "Planning for pain and medical visits: tell your doctor and dentist you're sober, and ask about pain plans that fit.",
+    "Ride the Wave, on Oak's Living Sober card: a ten minute video that rides an urge with you."
    ],
    "tell": [
     "“This is a wave. It will pass.”",

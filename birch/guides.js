@@ -1313,6 +1313,10 @@ const LC_TOPICS = [
    [
     "Minnesota Attorney General: Landlords and Tenants, Rights and Responsibilities",
     "https://ag.state.mn.us/Brochures/pubLandlordTenants.pdf"
+   ],
+   [
+    "Grounded Recipes: whole food meals sized for your table",
+    "https://growwithgrounded.com/recipes/"
    ]
   ]
  },
@@ -2387,7 +2391,7 @@ const LC_TOPICS = [
     "https://growwithgrounded.com/the-grounded-marriage.html"
    ],
    [
-    "Heartwood: See a Sample",
+    "Preview Heartwood, the Couples App",
     "https://growwithgrounded.com/heartwood/"
    ],
    [

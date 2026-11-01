@@ -669,8 +669,8 @@ body.cd-noscroll{overflow:hidden;}
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
 <script src="../shared/gg-sources.js?v=b892"></script>
-<script src="../shared/gg-learn.js?v=b898"></script>
-<script src="../shared/gg-print.js?v=b887"></script>
+<script src="../shared/gg-learn.js?v=b902"></script>
+<script src="../shared/gg-print.js?v=b902"></script>
 <script src="../shared/grove-scene.js?v=b862"></script>
 <script src="../shared/gg-grove-row.js?v=b770"></script>
 <script src="qr.js?v=b862"></script>
@@ -687,13 +687,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b887"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b898"></script>
+<script src="../shared/gg-stories.js?v=b902"></script>
 <script src="moves.js?v=b900"></script>
 <script src="stage.js?v=b899"></script>
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b896"></script>
-<script src="health.js?v=b900"></script>
+<script src="health.js?v=b902"></script>
 <script src="vault.js?v=b887"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -943,7 +943,7 @@ function lockScreen(mode, msg){
       <form id="lf"><label for="l1">Access code</label><input id="l1" type="password" autocomplete="off" autocapitalize="none" spellcheck="false" required>
       <button class="btn btn-gold" type="submit">Continue</button></form>
       <div class="lock-about" id="about"><h2>What is the Field Guide?</h2>
-      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who walk with people using Grounded's tools: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Anything you write stays encrypted on your own device.</p>
+      <p>A private workspace for chaplains, pastors, teachers, counselors, and parents who walk with people using Grounded's tools: a Guide for every tree, from Maple to Sequoia, Willow, and The Grove, with guided visits and a Take-Home Sheet; When Life Changes for every age; For Guides training with Certificates of Completion, on the way to becoming a Certified Grounded Guide, including Walking with Someone Growing Sober and Walking Someone Through The Grounded Way; the Grounded Response Plan; Support for Guides; the Hospital Guide; Skills for Every Guide; Learn videos; and Grounded Stories. Your own Tending lives in The Grounded Way. Anything you write stays encrypted on your own device.</p>
       <div class="lock-ask"><div><b>For practitioners</b><span>Chaplains and doulas: $240 a year, or $24 a month. Tell us a little about your work.</span><a class="btn btn-gold btn-sm" data-mail="individual" href="../contact.html">Request Access</a></div>
       <div><b>For organizations</b><span>Churches, schools, and teams.</span><a class="btn btn-ghost btn-sm" href="../organizations.html">Reach Out for Pricing</a></div></div></div>`,
     upgrade: `<p class="lock-sub">The Field Guide now has levels. If you were given a Founder code, enter it once here. Your notes and records stay just as they are.</p>
@@ -1704,7 +1704,7 @@ function vFieldHome(){
   ${FLD && FLD.storiesKey ? fgStoriesCard() : ''}
   ${fieldDue()}
   <div class="card" style="margin-top:14px">${w.body.map((t,i) => `<p${i ? ' style="margin-top:10px"' : ''}>${esc(t)}</p>`).join('')}
-   <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a></div></div>
+   <div class="row" style="margin-top:14px"><a class="btn btn-line btn-sm" href="../tools.html">Open Grounded tools</a><a class="btn btn-line btn-sm" href="../home/">Open The Grounded Way</a></div></div>
   <div class="card" style="margin-top:14px;border-left:4px solid var(--danger)"><div class="spread"><div><b>If someone is in danger</b> <span class="muted">Call 911. For a mental health crisis, call or text 988. When harm comes up, follow the Grounded Response Plan.</span></div><div class="row"><button class="btn btn-line btn-sm" data-act="rp-open">Response Plan</button><a class="btn btn-danger btn-sm" href="tel:911">${icon('phone')} 911</a><a class="btn btn-danger btn-sm" href="tel:988">${icon('phone')} 988</a></div></div></div>`;
 }
 
@@ -1793,7 +1793,7 @@ const FG_READ = {'orient': 1, 'orient-staff': 1, 'modules': 1, 'support': 1, 'ho
 const fgReadOn = sec => !!(FG_READ[sec] || window.FG_READ_ALL);
 // Crisis lines and helplines are never spoken (Chris, firm, October 15, 2026): Read Aloud leaves out any sentence that
 // names one, and the words stay on the page. The recording plan leaves the same sentences out (patches/bld813).
-const FG_QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522/i;
+const FG_QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522|274747|\bcrisis\b/i;
 window.fgQuiet = t => FG_QUIET.test(String(t || '')) || !!(window.GGRead && GGRead.quiet && GGRead.quiet(t));
 function fgListen(sec, lib){
   const L = lib === 's' ? LIB : FLD;
@@ -2841,7 +2841,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b887'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b902'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -9897,7 +9897,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b888', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b888', '../pine/guides.js?v=b888', '../birch/guides.js?v=b888'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b902', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b888', '../pine/guides.js?v=b888', '../birch/guides.js?v=b902'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

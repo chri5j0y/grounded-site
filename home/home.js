@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b900';
+  var V = 'b902';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b898';
@@ -391,7 +391,7 @@
   /* ---------- first visit ---------- */
   function promiseHtml() {
     return '<div class="hm-promise">' +
-      '<div class="hm-card hm-prom hm-p-leaves"><span class="hm-badge">' + I('eye') + '</span><div><h3 class="hm-h3">Private</h3><div class="hm-sub">Your Home is yours alone. Begin with just a name and a passcode.</div></div></div>' +
+      '<div class="hm-card hm-prom hm-p-leaves"><span class="hm-badge">' + I('eye') + '</span><div><h3 class="hm-h3">Private</h3><div class="hm-sub">The Grounded Way is yours alone. Begin with just a name and a passcode.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-branches"><span class="hm-badge">' + I('phone') + '</span><div><h3 class="hm-h3">On Your Device</h3><div class="hm-sub">Everything stays right here, on this phone or computer.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-trunk"><span class="hm-badge">' + I('lock') + '</span><div><h3 class="hm-h3">Locked With Your Passcode</h3><div class="hm-sub">Only your passcode, or your Root Words, opens it.</div></div></div>' +
       '<div class="hm-card hm-prom hm-p-bark"><span class="hm-badge">' + I('choice') + '</span><div><h3 class="hm-h3">Everything Optional</h3><div class="hm-sub">Use what helps you. Change it any time in Settings.</div></div></div>' +
@@ -417,7 +417,7 @@
   function welcomeHtml() {
     var back = window.GGP && hasProfiles();
     var hero = '<div class="hm-hero welcome"><picture><source media="(max-width:699px)" srcset="' + IMG + 'grounded-way-narrow.webp"><img class="art" src="' + IMG + 'grounded-way-wide.webp" alt="" width="1792" height="1008" fetchpriority="high"></picture>' +
-      '<div class="in"><div class="hm-greet">' + I('sprout') + '<span>' + (back ? 'Welcome Back' : 'Welcome to Grounded') + '</span></div><h1>Your Home</h1>' +
+      '<div class="in"><div class="hm-greet">' + I('sprout') + '<span>' + (back ? 'Welcome Back' : 'Welcome to Grounded') + '</span></div><h1>The Grounded Way</h1>' +
       '<p>See your tree, tend your day, and keep everything you use in one calm place.</p>' +
       (back ? '<div class="hm-acts tight"><button type="button" class="hm-btn light" data-hm="open">' + I('lock') + 'Open The Grounded Way</button></div>' : '<div class="hm-acts tight"><a class="hm-btn light" href="#hm-steps">' + I('sprout') + 'Begin</a></div>') +
       '</div></div>';
@@ -426,7 +426,7 @@
       var t = TREES[s[0]];
       return '<button class="hm-spc" type="button" aria-pressed="' + (W.stage === s[0]) + '" data-hm-stage="' + s[0] + '"><img src="' + mark(s[0]) + '" alt="" width="58" height="58"><b>' + esc(t.n) + '</b><small>' + esc(t.who) + '</small></button>';
     }).join('') + '</div>';
-    var who = [['me', 'user', 'Me', 'Your own tree and your own day.'], ['family', 'people', 'My Family', 'Each person\'s tree, growing together in The Grove.'], ['other', 'love', 'Someone I Love', 'Set up their Home and stay close as their helper.']];
+    var who = [['me', 'user', 'Me', 'Your own tree and your own day.'], ['family', 'people', 'My Family', 'Each person\'s tree, growing together in The Grove.'], ['other', 'love', 'Someone I Love', 'Set up their Grounded Way and stay close as their helper.']];
     var steps = '<div class="hm-steps" id="hm-steps">' +
       '<div class="hm-card hm-step hm-p-branches"><div class="hm-shd"><span class="hm-num">1</span><div><div class="hm-k">Step 1 of 3</div><h2 class="hm-h2">Who Is This For?</h2></div></div>' +
         '<div class="hm-who" role="group" aria-label="Who is this for">' + who.map(function (w) { return '<button type="button" class="hm-p-branches" aria-pressed="' + (W.who === w[0]) + '" data-hm-who="' + w[0] + '"><span class="hm-badge">' + I(w[1]) + '</span><span><b>' + w[2] + '</b><small>' + w[3] + '</small></span><span class="rd"></span></button>'; }).join('') + '</div></div>' +
@@ -434,7 +434,7 @@
         '<p class="hm-sub" style="margin:-4px 0 12px">Your stage picks your tree. Each one is built for its season of life.</p>' + sp +
         '<div class="hm-note hm-p-leaves" style="margin-top:12px">' + I('people') + '<span id="hm-stage-note">Maple and Aspen are set up with a grown-up, who keeps a key with their own passcode.</span></div></div>' +
       '<div class="hm-card hm-step hm-p-roots"><div class="hm-shd"><span class="hm-num">3</span><div><div class="hm-k">Step 3 of 3</div><h2 class="hm-h2">What Would You Like to Tend?</h2></div></div>' +
-        '<p class="hm-sub" style="margin:-4px 0 12px">Your tree check-in comes with every Home. Add any daily tending you like.</p>' + tend6Html(W.parts, 'data-hm-part') +
+        '<p class="hm-sub" style="margin:-4px 0 12px">Your tree check-in comes with The Grounded Way. Add any daily tending you like.</p>' + tend6Html(W.parts, 'data-hm-part') +
         '<div class="hm-go"><button class="hm-btn big hm-p-leaves" type="button" data-hm="create">' + I('lock') + 'Choose My Passcode</button><div class="hm-sub" style="text-align:center">Next: your passcode and 12 Root Words, then your first check-in.</div></div></div>' +
     '</div>';
     return '<div class="hm-wrap">' + hero + promiseHtml() +
@@ -442,7 +442,7 @@
       steps + '<div style="margin-top:28px" id="hm-privacy">' + privacyBrief(false) + '</div>' + helpLine() + '</div>';
   }
   function afterWelcome() {}
-  function helpLine() { return '<p class="hm-help">Need help right now? Call or text 988. In an emergency, call 911.</p>'; }
+  function helpLine() { return '<p class="hm-help">' + (S.p && isKid(S.p) ? 'If you ever feel unsafe, tell a trusted grown-up right away. You can also call or text 988, or call 911 in an emergency.' : 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.') + '</p>'; }
 
   /* Creating a profile through the real dialogs, then the Home's own choices. */
   function partsList() { return Object.keys(W.parts).filter(function (k) { return W.parts[k]; }); }
@@ -605,11 +605,11 @@
 
   /* ---------- Settings and Privacy ---------- */
   function privacyBrief(open) {
-    return '<div class="hm-lay c2"><article class="hm-card hm-priv hm-p-leaves"><div class="hm-pv-hd"><span class="hm-badge">' + I('shield') + '</span><div><div class="hm-k">' + (open ? 'Settings and Privacy' : 'How Your Privacy Works') + '</div><h2 class="hm-h2" style="font-size:34px">Your Home Stays Yours</h2></div></div>' +
+    return '<div class="hm-lay c2"><article class="hm-card hm-priv hm-p-leaves"><div class="hm-pv-hd"><span class="hm-badge">' + I('shield') + '</span><div><div class="hm-k">' + (open ? 'Settings and Privacy' : 'How Your Privacy Works') + '</div><h2 class="hm-h2" style="font-size:34px">Your Grounded Way Stays Yours</h2></div></div>' +
       '<div class="hm-set" style="margin-top:10px">' +
         '<div class="hm-row hm-p-leaves"><span class="ic2">' + I('eye') + '</span><div class="tx"><b>What is kept</b><small>Your name and picture, your check-ins and growth plan, the days you tend, your Tending plan, your Living Sober count, and any lab numbers you add.</small></div></div>' +
         '<div class="hm-row hm-p-branches"><span class="ic2">' + I('phone') + '</span><div class="tx"><b>Where it lives</b><small>Only on this device, in this browser, locked with your passcode. You hold the only key.</small></div></div>' +
-        '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open your Home again if you forget your passcode. Keep them somewhere safe.</small></div></div>' +
+        '<div class="hm-row hm-p-trunk"><span class="ic2">' + I('key') + '</span><div class="tx"><b>Root Words</b><small>Twelve plain words that open The Grounded Way again if you forget your passcode. Keep them somewhere safe.</small></div></div>' +
         '<div class="hm-row hm-p-roots"><span class="ic2">' + I('save') + '</span><div class="tx"><b>Save a Backup</b><small>One locked file you keep in your files, iCloud, or a drive. It opens with your passcode.</small></div></div>' +
         '<div class="hm-row hm-p-bark"><span class="ic2">' + I('swap') + '</span><div class="tx"><b>Move to a New Phone</b><small>Save a Backup here, then on the new phone choose Open a Backup and enter your passcode. Your tree comes with you.</small></div></div>' +
         '<div class="hm-row hm-p-fruit"><span class="ic2">' + I('gear') + '</span><div class="tx"><b>Start Fresh</b><small>Manage My Profile removes a profile and its saved days from this device for good. Save a backup first to keep anything.</small></div></div>' +
@@ -853,7 +853,7 @@
   }
   function tendSoonHtml() {
     return '<div class="hm-card hm-p-leaves"><div class="hm-k">Tending</div><h2 class="hm-h2">Tending Opens Here</h2>' +
-      '<p class="hm-sub" style="margin-top:6px">Food for your goal, movement for every level, quiet, and your own numbers, kept on this device inside your locked profile. Tending is getting ready for your Home. Your tree, check-ins, and practices are all here today.</p></div>';
+      '<p class="hm-sub" style="margin-top:6px">Food for your goal, movement for every level, quiet, and your own numbers, kept on this device inside your locked profile. Tending is getting ready for The Grounded Way. Your tree, check-ins, and practices are all here today.</p></div>';
   }
   /* Tending asks the Home to redraw (C.render) or to show itself (C.go). */
   function tendRender() {
@@ -1556,8 +1556,8 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b894';
-  var GUIDES = { oak: ['/oak/guides.js?v=b888', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b888', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b888', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b888', 'PINE_GUIDES'] };
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b902';
+  var GUIDES = { oak: ['/oak/guides.js?v=b902', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b902', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b888', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b888', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   function learnOf(tree) {
@@ -1582,7 +1582,7 @@
       { id: 'learn', name: 'Learn', count: learn ? cnt(learn.length, 'lesson', 'lessons') : '', plain: 'Guided lessons', line: 'Short guided lessons for every part of your ' + t.n + '.', cls: 'hm-sh-learn', art: IMG + 'library-learn.webp' },
       { id: 'life', name: 'When Life Changes', count: lc ? cnt(lc.length, 'guide', 'guides') : '', plain: 'Guides for big moments', line: 'Help for the big moments: loss, moves, new babies, hard seasons.', cls: 'hm-sh-life', art: HERO + 'page-hard-seasons-narrow.webp' },
       // BLD 899 (Chris: "holiday gatherings [needs no] card in library just put this in the recipes"): Holidays and Gatherings lives inside Grounded Recipes.
-      { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
+      { id: 'recipes', name: 'Grounded Recipes', count: cnt(rc, 'recipe', 'recipes'), plain: 'Every meal', line: 'Every meal, party food, celebration drinks, and the holidays, sized for your table' + (tableOf() ? ' of ' + tableOf() : '') + ', guided step by step.', cls: 'hm-sh-rec', art: IMG + 'recipes-narrow.webp' },
       { id: 'workouts', name: 'Workouts', count: cnt(num(c.workouts), 'workout', 'workouts'), plain: 'Every Workout', line: 'Every workout we have built, by category, with a coach.', cls: 'hm-sh-work', art: IMG + 'move-strength.webp' },
       { id: 'quiet', name: 'Quiet and Meditation', count: cnt(num(c.meditations), 'practice', 'practices'), plain: 'Morning and evening', line: 'Breath and stillness, and a sacred practice when you choose it.', cls: 'hm-sh-quiet', art: IMG + 'quiet-meditation.webp' }
     ];
@@ -1682,7 +1682,7 @@
     }
     if (sub === 'settings') {
       var on = {}; h.parts.forEach(function (k) { on[k] = true; });
-      b.innerHTML = '<article class="hm-card hm-p-roots"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">What Would You Like to Tend?</h3><p class="hm-sub" style="margin:6px 0 12px">Your tree check-in comes with every Home. Turn on any daily tending you like; Today shows only what you choose.</p>' + tend6Html(on, 'data-hm-setpart') +
+      b.innerHTML = '<article class="hm-card hm-p-roots"><div class="hm-k">Choose What You Use</div><h3 class="hm-h3">What Would You Like to Tend?</h3><p class="hm-sub" style="margin:6px 0 12px">Your tree check-in comes with The Grounded Way. Turn on any daily tending you like; Today shows only what you choose.</p>' + tend6Html(on, 'data-hm-setpart') +
         (h.hidden.tend ? '<div class="hm-quiet" style="margin-top:12px"><button type="button" data-hm="showtend">Show the Start Tending card again</button></div>' : '') + '</article>' +
         '<div class="hm-acts"><button type="button" class="hm-btn hm-p-leaves" data-hm-tab="today=tending">' + I('sprout') + 'Tending Setup</button></div>' +
         '<h3 class="hm-label">Tending Settings</h3><div id="hm-tend" class="hm-sec" data-sec="settings"><p class="hm-loading">Opening…</p></div>';
@@ -1773,9 +1773,9 @@
   var TOUR_V = 'b884';
   var TOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to The Grounded Way', t: 'Today', d: 'Your whole day in order: your practices, meals, movement, and quiet, with Right Now at the top.', tr: 'Tap the circle on one practice when you do it, and watch your day fill.' },
-    { k: 'week', art: 'recipes', ey: 'Tab 2 of 4', t: 'Week', d: 'Seven days at a glance: your meals, your movement, and one shopping list for the week.', tr: 'Look over the next few days and pick your shopping day.' },
-    { k: 'grow', art: 'growth', ey: 'Tab 3 of 4', t: 'Grow', d: 'Your tree, its six parts, and your growth plan, with each check-in adding to your story.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
-    { k: 'library', art: 'library', ey: 'Tab 4 of 4', t: 'Library', d: 'Lessons, guides for when life changes, recipes, workouts, and quiet, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
+    { k: 'week', art: 'recipes', ey: 'Tab 2 of 4', t: 'Week', d: 'Seven days at a glance, or the whole month: your meals, your movement, Sunday Together Prep, and one shopping list for the week.', tr: 'Look over the next few days and pick your shopping day.' },
+    { k: 'grow', art: 'growth', ey: 'Tab 3 of 4', t: 'Grow', d: 'Your tree, its six parts, your growth plan, and My Grounded Way Plan, with each check-in adding to your story.', tr: 'Open your Growth Plan and choose one practice to begin with.' },
+    { k: 'library', art: 'library', ey: 'Tab 4 of 4', t: 'Library', d: 'Lessons, guides for when life changes, Grounded Recipes with holidays and gatherings, workouts, and quiet, all in one place.', tr: 'Search one word, like sleep or calm, and see what is waiting.', note: 'Your initials, top right, open Numbers, Household, Settings, Privacy, and this tour again.' }
   ];
   var KTOUR = [
     { k: 'today', art: 'home-morning', ey: 'Welcome to Your Tree', t: 'Today', d: 'Here is your day with your tree: a fun practice to try and your own checkmarks.', tr: 'Tap the circle when you do a practice. Your tree loves it!' },
