@@ -7,7 +7,9 @@
   "med-m1": "candle-alcove",
   "med-m5": "candle-alcove-2",
   "med-m2": "candle-rain",
-  "med-m6": "candle-stones"
+  "med-m6": "candle-stones",
+  "med-m7": "candle-cabin",
+  "med-m4": "candle-cabin-2"
  },
  "art": {
   "quiet-meditation": {
@@ -206,6 +208,62 @@
    ],
    "size": 0.045,
    "kind": "candle"
+  },
+  "candle-cabin": {
+   "src": "candle-cabin.webp",
+   "lg": "candle-cabin-lg.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.42,
+    0.52
+   ],
+   "tone": 0.5,
+   "kind": "lantern",
+   "flames": [
+    [
+     0.3945,
+     0.4315,
+     0.045
+    ],
+    [
+     0.4526,
+     0.518,
+     0.04
+    ],
+    [
+     0.3616,
+     0.58,
+     0.04
+    ]
+   ]
+  },
+  "candle-cabin-2": {
+   "src": "candle-cabin-2.webp",
+   "lg": "candle-cabin-2-lg.webp",
+   "ar": 1.7778,
+   "focal": [
+    0.43,
+    0.52
+   ],
+   "tone": 0.5,
+   "kind": "lantern",
+   "flames": [
+    [
+     0.3778,
+     0.582,
+     0.04
+    ],
+    [
+     0.4263,
+     0.523,
+     0.04
+    ],
+    [
+     0.4777,
+     0.458,
+     0.045
+    ]
+   ]
   }
  }
 }
