@@ -1266,7 +1266,7 @@ function renderLC(mode) {
     </div>` : ''}
     <div id="${mode}-lc-list"></div>
     ${waiting.length ? `<p class="lc-soon"><b>More guides coming.</b> Guides for ${lcEsc(lcJoin(waiting.map(r => r.name)))} are on the way.</p>` : ''}
-    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1. For hospice, <a class="text-link" href="/willow/">Willow</a> walks with the person and the people who love them.</p>
+    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. For therapy, medical care, or legal advice, see a licensed professional. In an emergency, call 911. For a mental health crisis, call or text 988. Veterans, call 988 and press 1. For hospice, <a class="text-link" href="/willow/">Willow</a> walks with the person and the people who love them.</p>
     ${window.GGLifeKit ? GGLifeKit.linesHtml('sequoia') : ''}`;
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
@@ -1445,7 +1445,7 @@ function lcDetail(mode, t) {
     ${(t.more || []).length ? `<h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${lcEsc(u)}"${/^\/sequoia\/#/.test(u) ? '' : ' target="_blank" rel="noopener"'}>${lcEsc(n)}</a></li>`).join('')}</ul>` : ''}
     ${window.GGShelf ? GGShelf.html('sequoia', t.id) : ''}
     ${lcSourcesHtml(t)}
-    <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
+    <p class="lc-note">From When Life Changes in Sequoia&trade; by Grow With Grounded. General spiritual and emotional support. For therapy, medical care, or legal advice, see a licensed professional. Emergency: 911. Crisis: call or text 988. Veterans, call 988 and press 1. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 734): two per guide, For You and For the Helper, played by shared/gg-learn.js

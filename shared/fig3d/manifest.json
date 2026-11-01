@@ -1,8 +1,8 @@
 {
  "version": "897.1",
- "built": "2026-10-31",
+ "built": "2026-11-01",
  "files": {
-  "fig3d.js": 738690,
+  "fig3d.js": 745540,
   "figure.bin": 759548,
   "figure-woman.bin": 136432,
   "figure-full.bin": 107072
@@ -184,6 +184,7 @@
   "stand-shrug",
   "stand-twist",
   "standing",
+  "step-back-reach",
   "step-calf-raise",
   "step-tap",
   "step-up",

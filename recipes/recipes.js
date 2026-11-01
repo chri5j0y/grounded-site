@@ -24,6 +24,9 @@
    Celebration Drinks, its own section inside the page (/recipes/#drinks): the drink menu in its sections, Build Your Own
    Sparkler, and the Party Drink Station guide (GGTendPublic.party). A holiday set's page lists the recipes that name it in
    their holidays field under More for This Day (by reference; the sets stay as they are).
+   BLD 903 (Chris, November 1, 2026: a small "Sauces and Dressings" group): meal 'sauce', a Sauces and Dressings meal card and
+   a grouped section like Party Food. A sauce may carry pairs: [recipe ids]; the sauce shows a Pairs With card linking those
+   recipes, and each of those recipes shows a Pairs With card linking the sauce.
    ===================================================================== */
 (function () {
   'use strict';
@@ -34,8 +37,8 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['drink', 'Drinks', 'tend-people'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
-  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], drink: ['tend-people', 'tend-people'] };
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'tend-people'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['tend-people', 'tend-people'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1 };
   var PARTY = T.party || null;
@@ -43,7 +46,7 @@
   var PEOPLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6"/></svg>';
   var GOALS = [['heart', 'Heart', 'Heart and Cholesterol'], ['energy', 'Energy', 'Steady Energy'], ['strength', 'Strength', 'Strength'], ['weight', 'Weight', 'A Healthy Weight'], ['well', 'Well', 'Simply Eating Well']];
   var FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
-  var MEAL_NAME = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack', party: 'Party Food', drink: 'Drink' };
+  var MEAL_NAME = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack', party: 'Party Food', sauce: 'Sauce and Dressing', drink: 'Drink' };
   // Small drawn meal icons (no photos exist): a sunrise bowl, a leafy bowl, a plate with a fork, an apple.
   var ICON = {
     breakfast: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17h24a12 12 0 0 1-24 0z"/><path d="M11 28h10"/><path d="M10 12a6 6 0 0 1 12 0"/><path d="M16 3v3M7.5 6.5l2 2M24.5 6.5l-2 2"/></svg>',
@@ -52,6 +55,8 @@
     snack: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10c-3-2.5-10-2-10 6 0 6 4 12 7 12 1.5 0 2-1 3-1s1.5 1 3 1c3 0 7-6 7-12 0-8-7-8.5-10-6z"/><path d="M16 10c0-3 1-5 3-6"/><path d="M17 7c2-2 5-2 6-1-1 2-4 3-6 1z"/></svg>',
     // BLD 902: a dip bowl with a chip (Party Food) and a tall glass with a citrus wheel and a straw (Drinks).
     party: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17h24a12 9 0 0 1-24 0z"/><path d="M12 28h8"/><path d="M14 13l4-9 4 9"/><path d="M9 14c2-1.5 4-1.5 5 0"/></svg>',
+    // BLD 903: a small cruet with a stopper and a leaf (Sauces and Dressings).
+    sauce: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M13 3h6v3h-6z"/><path d="M14 6v4c-4 1.5-6 5-6 9v6a3 3 0 0 0 3 3h10a3 3 0 0 0 3-3v-6c0-4-2-7.5-6-9V6"/><path d="M9 20h14"/><path d="M19 23c0-2 1.5-3.5 3.5-3.5 0 2-1.5 3.5-3.5 3.5z"/></svg>',
     drink: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9h14l-2 19h-10z"/><path d="M9 15h12"/><path d="M17 9l4-6h4"/><circle cx="23" cy="9" r="4"/></svg>'
   };
 
@@ -66,10 +71,16 @@
     try { var m = okSize(localStorage.getItem('gg-serves')); if (m) return m; } catch (e) {}
     return 6;
   })();
-  function sized(r) { return window.GGScale && r ? GGScale.recipe(r, serves) : r; }
-  function sizeChips() {
-    var list = SIZES.indexOf(serves) < 0 ? SIZES.concat(serves).sort(function (a, b) { return a - b; }) : SIZES;
-    return list.map(function (n) { return '<button type="button" class="rc-chip rc-sz" data-sz="' + n + '" aria-pressed="' + (n === serves ? 'true' : 'false') + '" aria-label="Serves ' + n + '">' + n + '</button>'; }).join('');
+  // Chris (November 1, 2026): pitcher drinks open at their full batch (12, or 8 for infused waters); the Serves chips still
+  // make a smaller batch, for this drink only, and the table size for meals stays as it is.
+  var batchSize = {};
+  function isBatch(r) { return !!(r && r.meal === 'drink' && +r.serves > 6); }
+  function sv(r) { return isBatch(r) ? (batchSize[r.id] || +r.serves) : serves; }
+  function sized(r) { return window.GGScale && r ? GGScale.recipe(r, sv(r)) : r; }
+  function sizeChips(cur) {
+    cur = cur || serves;
+    var list = SIZES.indexOf(cur) < 0 ? SIZES.concat(cur).sort(function (a, b) { return a - b; }) : SIZES;
+    return list.map(function (n) { return '<button type="button" class="rc-chip rc-sz" data-sz="' + n + '" aria-pressed="' + (n === cur ? 'true' : 'false') + '" aria-label="Serves ' + n + '">' + n + '</button>'; }).join('');
   }
   function ingHTML(r) { return (sized(r).ingredients || []).map(function (x) { return '<li>' + esc(x) + '</li>'; }).join(''); }
   var fromList = false, lastId = '', listY = 0;
@@ -80,7 +91,7 @@
     var n = r.nut || {};
     return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber, ' + n1(n.sf) + ' g saturated fat, ' + n0(n.na) + ' mg sodium';
   }
-  function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? serves : r.serves); }
+  function timeLine(r) { return r.mins + ' min, serves ' + (window.GGScale ? sv(r) : r.serves); }
   function shortNut(r) { var n = r.nut || {}; return n0(n.cal) + ' calories, ' + n1(n.pro) + ' g protein, ' + n1(n.fib) + ' g fiber per serving'; }
   function filtering() { return st.meal !== 'all' || !!st.goal || st.fits.length > 0 || !!st.q; }
   function hay(r) { return (r.name + ' ' + (r.ingredients || []).join(' ') + ' ' + (r.protein || '')).toLowerCase(); }
@@ -123,7 +134,7 @@
     return '<button type="button" class="rc-card rc-k-' + esc(r.meal) + '" data-id="' + esc(r.id) + '">' +
       '<span class="rc-band"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><span class="rc-m">' + esc(MEAL_NAME[r.meal] || r.meal) + '</span></span>' +
       '<span class="rc-cb"><b>' + esc(r.name) + '</b>' +
-      '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? serves : r.serves)) + '</span></span>' +
+      '<span class="rc-pills"><span class="rc-pill">' + CLOCK + esc(r.mins + ' min') + '</span><span class="rc-pill">' + PEOPLE + esc('Serves ' + (window.GGScale ? sv(r) : r.serves)) + '</span></span>' +
       '<span class="rc-n" title="' + esc(nutLine(r)) + '">' + esc(shortNut(r)) + '</span></span></button>';
   }
   function section(c, list) {
@@ -145,6 +156,15 @@
 
   function byId(id) { for (var i = 0; i < ALL.length; i++) if (ALL[i].id === id) return ALL[i]; return null; }
 
+  // BLD 903: Pairs With. A sauce lists the recipes in its pairs field; a recipe lists every sauce that names it.
+  function pairsOf(r) {
+    var out = r.meal === 'sauce' ? (r.pairs || []).map(byId) : ALL.filter(function (x) { return x.meal === 'sauce' && (x.pairs || []).indexOf(r.id) >= 0; });
+    return out.filter(Boolean);
+  }
+  function pairsHTML(r) {
+    var L = pairsOf(r); if (!L.length) return '';
+    return '<div class="card rc-pairs"><h3>Pairs With</h3><ul>' + L.map(function (x) { return '<li><a href="#' + esc(x.id) + '">' + esc(x.name) + '</a></li>'; }).join('') + '</ul></div>';
+  }
   function note(title, body) { return body ? '<div class="card"><h3>' + esc(title) + '</h3><p>' + esc(body) + '</p></div>' : ''; }
 
   // BLD 899: the recipe opens on its meal's painting (a dinner by its main: fish, chili and stews, or Today's Plate).
@@ -169,14 +189,14 @@
       '<div class="rc-dh"><span class="rc-ic">' + (ICON[r.meal] || ICON.dinner) + '</span><div><div class="eyebrow">' + esc(MEAL_NAME[r.meal] || r.meal) + '</div>' +
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
-      '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? serves : r.serves) + '</span>' + fits + goals + '</div>' +
+      '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? sv(r) : r.serves) + '</span>' + fits + goals + '</div>' +
       '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('r:' + r.id) + '<span>A calm voice guides every step, with timers.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
       '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
-      (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div>' +
-        '<p class="rc-size-note">Amounts scale to your table. The steps fit every size.</p></div>' : '') +
+      (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
+        '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
       '<ul class="rc-ing" id="rc-ing" aria-live="polite">' + ingHTML(r) + '</ul></div>' +
       '<div class="card"><h3>Steps</h3><ol class="rc-steps">' + steps + '</ol></div></div>' +
-      '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Keeps', r.keeps) + note('For Kids', r.kid) +
+      '<div class="rc-notes">' + note('To Serve', r.serve) + note('Tip', r.tip) + note('Keeps', r.keeps) + note('For Kids', r.kid) + pairsHTML(r) +
       (swaps.length ? '<div class="card"><h3>Swaps</h3>' + swaps.map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('') + '</div>' : '') + '</div>' +
       '<div class="rc-low"><div class="card"><h3>Nutrition per Serving</h3><table class="rc-nut"><caption>Estimates from USDA FoodData Central.</caption><tbody>' +
       rows.map(function (x) { return '<tr><th scope="row">' + x[0] + '</th><td>' + x[1] + x[2] + '</td></tr>'; }).join('') + '</tbody></table></div>' +
@@ -297,7 +317,7 @@
   function homeHealth() { try { var P = window.parent; if (P && P !== window && P.GGHealth && typeof P.GGHealth.menuOpen === 'function') return P.GGHealth; } catch (e) {} return null; }
   function hasProfile() { try { var j = JSON.parse(localStorage.getItem('gg-profiles-v1') || 'null'); return !!(j && Array.isArray(j.list) && j.list.length); } catch (e) { return false; } }
   function menuGo(ref) {
-    var P = homeHealth(), r = P ? P.menuOpen(ref, { serves: serves }) : null;
+    var P = homeHealth(), r = P ? P.menuOpen(ref, { serves: sv(byId(String(ref).replace(/^r:/, ''))) }) : null;
     if (r === true) return;
     var box = null; document.querySelectorAll('[data-rc-mnote]').forEach(function (b) { if (b.getAttribute('data-rc-mnote') === ref) box = b; }); if (!box) return;
     var deep = '/home/#recipe-' + encodeURIComponent(/^h:/.test(ref) ? 'hol-' + ref.split(':')[1] : ref.slice(2));
@@ -345,13 +365,14 @@
 
   function setServes(n) {
     n = okSize(n); if (!n) return;
-    serves = n;
-    try { localStorage.setItem('gg-serves', String(n)); } catch (e) {}
+    var rb = byId(lastId), dt0 = $('rc-detail');
+    if (isBatch(rb) && dt0 && !dt0.hidden) { batchSize[rb.id] = n; }
+    else { serves = n; try { localStorage.setItem('gg-serves', String(n)); } catch (e) {} }
     if (/^hol-/.test(lastId) && HOL) { var hd0 = $('rc-detail'); if (hd0 && !hd0.hidden) { hd0.innerHTML = holDetail(lastId.slice(4)); var b0 = hd0.querySelector('[data-sz="' + n + '"]'); if (b0) b0.focus({ preventScroll: true }); } drawList(); return; }
     var r = byId(lastId), ing = $('rc-ing'), tag = $('rc-serves'), row = document.querySelector('.rc-size .rc-row');
     if (r && ing) ing.innerHTML = ingHTML(r);
     if (tag) tag.textContent = 'Serves ' + n;
-    if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
+    if (row) { row.innerHTML = '<span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)); var b = row.querySelector('[data-sz="' + n + '"]'); if (b) b.focus({ preventScroll: true }); }
     drawList();
   }
 
@@ -483,7 +504,7 @@
        show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
     var DINNER_ART = ['fish', 'chili'];
     var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
-    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people' };
+    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'tend-people' };
     var ONE_ART = { 'tend-people': 1 }; // one square painting serves both sizes
     function artName(r) {
       var m = String(r.meal || 'dinner').toLowerCase();
