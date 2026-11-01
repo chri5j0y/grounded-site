@@ -434,24 +434,43 @@
    "src": "yoga-studio.webp",
    "focal": [
     0.5,
-    0.78
+    0.8
    ],
    "floor": 0.8,
    "light": [
-    -0.3,
+    -0.4,
     0.8
    ],
    "tone": 0.5,
    "mat": false,
-   "scale": 0.5,
+   "scale": 0.65,
    "open": [
-    0.1,
-    0.72,
-    0.9,
+    0.08,
+    0.65,
+    0.92,
     1
    ],
-   "avoid": [],
-   "room": "BLD 900: waiting for the painting (an open home studio, big empty floor, no objects). Until shared/heroes/way/yoga-studio.webp is on the site, each stage list skips it. When it arrives, set floor, scale, focal, open, and avoid from the painting and run room899.mjs."
+   "avoid": [
+    [
+     0.07,
+     0.52,
+     0.19,
+     0.74
+    ],
+    [
+     0.72,
+     0.4,
+     0.84,
+     0.67
+    ],
+    [
+     0.9,
+     0.6,
+     1,
+     0.75
+    ]
+   ],
+   "room": "Chris's Yoga Studio painting (November 1, 2026): an open home studio, wide empty wooden floor, plants at the edges."
   }
  },
  "workouts": {},
