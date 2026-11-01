@@ -304,6 +304,9 @@ Object.assign(P, {
     k: [{ra: [6, 16], la: [6, 16]}, {t: [146, 150], rl: [80, -30, 90], ll: [80, -30, 90], ra: [92, 90], la: [92, 90]}]},
   'reverse-lunge': {v: 's', an: ['rA', 150, 206], db: 'rl',
     k: [{ra: [2, 2], la: [-2, -2]}, {rl: [86, -4, 90], ll: [-6, -84, 40], ra: [2, 2], la: [-2, -2]}]},
+  // BLD 903: Step Back and Reach Up, a reverse lunge with both arms reaching overhead (no dumbbells).
+  'step-back-reach': {v: 's', an: ['rA', 150, 206], d: 4,
+    k: [{ra: [2, 2], la: [-2, -2]}, {t: [176, 178], rl: [86, -4, 90], ll: [-6, -84, 40], ra: [172, 178], la: [168, 176]}]},
   'ankle-rock': {v: 's', an: ['rA', 150, 206], bg: G.mat, d: 2.8, pin: {lA: [0]},
     k: [{rl: [90, 0, 90], ll: [-10, -90, -90], ra: [66, 70], la: [62, 66]}, {t: [174, 178], rl: [84, -20, 90], ll: [-4, -90, -90], ra: [70, 74], la: [66, 70]}]},
   'hip-thrust': {v: 's', an: ['rA', 176, 206], db: 'r', bg: G.bench(34, 168, 62), pin: {rH: ['hip', 2, -8, 1], lH: ['hip', 2, -8, 1]},
@@ -564,8 +567,9 @@ P['hip-switch'].k.forEach(k => { k.sw = 15; k.hw = 9; });
 // Keywords, in order: the first that matches wins.
 const KW = [
   // BLD 900 (Chris, October 31, 2026): the renamed warm-ups keep their figures (Lunge and Reach was World's Greatest Stretch,
-  // Step Back and Reach Up was Reverse Lunge and Reach), ahead of every lunge, step, and reach rule.
-  [/^lunge and reach\b/, 'stretch'], [/^step back and reach up\b/, 'reverse-lunge'],
+  // Step Back and Reach Up was Reverse Lunge and Reach), ahead of every lunge, step, and reach rule. BLD 903: Step Back and
+  // Reach Up has its own figure, arms overhead.
+  [/^lunge and reach\b/, 'stretch'], [/^step back and reach up\b|^reverse lunge and reach\b/, 'step-back-reach'],
   // BLD 896 figures first: Leg Swings before the dumbbell swing, the holds before dips and pull-ups, and so on.
   [/leg swings?|swing (your|the|one) leg/, 'leg-swing'], [/^(?!.*seated).*hip (circles?|rotations?)/, 'hip-circles'], [/open ?book|book opener/, 'open-book'],
   [/hug (and|n|&) open|open (and|&) hug/, 'hug-open'], [/pull.?aparts?/, 'pull-apart'], [/pallof|anti.?rotation press/, 'pallof'],
@@ -670,7 +674,7 @@ function refine(fig, name, how){
 }
 // BLD 898: the posture of every figure, and the posture a step's words name, so the body matches the words.
 const POSE = {};
-[['stand', 'squat goblet-squat lunge step-up hinge sl-hinge press curl triceps calf-raise carry swing walk run march balance stretch arm-circles arms-up forward-fold side-bend standing bench-squat reverse-lunge push-press suitcase wall-slide skater punch knee-drive shuffle grapevine box-step in-out cross-crunch wood-chop knee-hold heel-toe quick-feet face-pull overhead-carry airplane dowel-hinge pass-through squat-press leg-swing hip-circles hug-open pull-apart pallof side-lunge-rock row stand-breath stand-twist stand-shrug stand-neck wall-push-up stand-ankle-rock'],
+[['stand', 'squat goblet-squat lunge step-up hinge sl-hinge press curl triceps calf-raise carry swing walk run march balance stretch arm-circles arms-up forward-fold side-bend standing bench-squat reverse-lunge step-back-reach push-press suitcase wall-slide skater punch knee-drive shuffle grapevine box-step in-out cross-crunch wood-chop knee-hold heel-toe quick-feet face-pull overhead-carry airplane dowel-hinge pass-through squat-press leg-swing hip-circles hug-open pull-apart pallof side-lunge-rock row stand-breath stand-twist stand-shrug stand-neck wall-push-up stand-ankle-rock'],
   ['seat', 'seat spinal-flex twist cross-seat breath shrug neck ankle-pumps bike hip-switch life-nerve seat-arms-up seat-march seat-arm-circles seat-side-bend seat-press seat-fold seat-pulldown seat-row leg-press'],
   ['kneel', 'hip-flexor half-kneel-chop half-kneel-lift kneel-press pull-down ankle-rock child-pose'],
   ['fours', 'bird-dog cat-cow thread-needle'],

@@ -258,7 +258,7 @@
       '<p class="ggs-eb">' + starSvg('gold', 16, '') + 'Living Sober</p>';
     if (!on) {
       return head + '<h3>Open Living Sober</h3>' +
-        '<p>Grounded stands for living alcohol-free and free of harmful drugs: a clear mind, a healthy body, and a life you are fully present for. Living Sober keeps guides, encouragement, and a plan for hard moments close at hand, for wherever you are.</p>' +
+        '<p>Grounded stands for living sober: a clear mind, a healthy body, and a life you are fully present for. Living Sober keeps guides, encouragement, and a plan for hard moments close at hand, for wherever you are.</p>' +
         '<div class="ggs-row"><button type="button" class="btn btn-primary btn-sm" data-ggs="on">Open Living Sober</button></div>' +
         '<p class="ggs-soft" style="margin-top:12px">Or choose where you are right now. It stays private, locked on this device.</p>' + stageButtons(tree, '') + guestHtml() + '</div>';
     }
