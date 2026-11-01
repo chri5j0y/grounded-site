@@ -37,8 +37,8 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'drinks-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
-  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'drinks-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['snack-fruit', 'snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1 };
   var PARTY = T.party || null;
