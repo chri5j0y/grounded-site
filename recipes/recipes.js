@@ -19,6 +19,11 @@
    a short nutrition line. Holidays and Gatherings is its own section inside the page (soonest first), reached by its meal
    card or /recipes/#holidays (The Grounded Way Library keeps holidays inside its Grounded Recipes shelf).
    BLD 900: Add to My Menu on every recipe and every holiday recipe (see menuGo).
+   BLD 902 (Chris: "a great guac recipe", "a party drink menu w non alcoholic beverage ideas recipes guides etc"): Party Food
+   (meal 'party') and Drinks (meal 'drink') meal cards. Party Food groups in the list like the other meals; the Drinks card opens
+   Celebration Drinks, its own section inside the page (/recipes/#drinks): the drink menu in its sections, Build Your Own
+   Sparkler, and the Party Drink Station guide (GGTendPublic.party). A holiday set's page lists the recipes that name it in
+   their holidays field under More for This Day (by reference; the sets stay as they are).
    ===================================================================== */
 (function () {
   'use strict';
@@ -29,19 +34,25 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
-  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'] };
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['drink', 'Drinks', 'tend-people'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], drink: ['tend-people', 'tend-people'] };
+  // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
+  var SHELF = { holidays: 1, drink: 1 };
+  var PARTY = T.party || null;
   var CLOCK = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg>';
   var PEOPLE = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true"><circle cx="9" cy="8" r="3.2"/><path d="M3 20c0-3.3 2.7-6 6-6s6 2.7 6 6"/><path d="M16 4.5a3 3 0 0 1 0 6M18 14c2 .8 3 3 3 6"/></svg>';
   var GOALS = [['heart', 'Heart', 'Heart and Cholesterol'], ['energy', 'Energy', 'Steady Energy'], ['strength', 'Strength', 'Strength'], ['weight', 'Weight', 'A Healthy Weight'], ['well', 'Well', 'Simply Eating Well']];
   var FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
-  var MEAL_NAME = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack' };
+  var MEAL_NAME = { breakfast: 'Breakfast', lunch: 'Lunch', dinner: 'Dinner', snack: 'Snack', party: 'Party Food', drink: 'Drink' };
   // Small drawn meal icons (no photos exist): a sunrise bowl, a leafy bowl, a plate with a fork, an apple.
   var ICON = {
     breakfast: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17h24a12 12 0 0 1-24 0z"/><path d="M11 28h10"/><path d="M10 12a6 6 0 0 1 12 0"/><path d="M16 3v3M7.5 6.5l2 2M24.5 6.5l-2 2"/></svg>',
     lunch: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 16h24a12 12 0 0 1-24 0z"/><path d="M11 28h10"/><path d="M12 16c-1-4 1-8 5-10 1 4 0 8-3 10"/><path d="M18 16c1-3 4-5 7-5-.5 2.5-2 4.5-4 5"/></svg>',
     dinner: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="18" cy="16" r="10"/><circle cx="18" cy="16" r="5.5"/><path d="M4 4v7a2 2 0 0 0 2 2v15M4 4v5M8 4v7a2 2 0 0 1-2 2"/></svg>',
-    snack: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10c-3-2.5-10-2-10 6 0 6 4 12 7 12 1.5 0 2-1 3-1s1.5 1 3 1c3 0 7-6 7-12 0-8-7-8.5-10-6z"/><path d="M16 10c0-3 1-5 3-6"/><path d="M17 7c2-2 5-2 6-1-1 2-4 3-6 1z"/></svg>'
+    snack: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M16 10c-3-2.5-10-2-10 6 0 6 4 12 7 12 1.5 0 2-1 3-1s1.5 1 3 1c3 0 7-6 7-12 0-8-7-8.5-10-6z"/><path d="M16 10c0-3 1-5 3-6"/><path d="M17 7c2-2 5-2 6-1-1 2-4 3-6 1z"/></svg>',
+    // BLD 902: a dip bowl with a chip (Party Food) and a tall glass with a citrus wheel and a straw (Drinks).
+    party: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 17h24a12 9 0 0 1-24 0z"/><path d="M12 28h8"/><path d="M14 13l4-9 4 9"/><path d="M9 14c2-1.5 4-1.5 5 0"/></svg>',
+    drink: '<svg viewBox="0 0 32 32" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 9h14l-2 19h-10z"/><path d="M9 15h12"/><path d="M17 9l4-6h4"/><circle cx="23" cy="9" r="4"/></svg>'
   };
 
   var PLAY = '<svg class="rc-play" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5z"/></svg>';
@@ -96,13 +107,14 @@
   function drawCats() {
     var box = $('rc-cats'); if (!box) return;
     box.innerHTML = CATS.map(function (c) {
-      var hol = c[0] === 'holidays';
+      var hol = c[0] === 'holidays', shelf = !!SHELF[c[0]];
       if (hol && !(HOL && (HOL.sets || []).length)) return '';
+      if (c[0] === 'drink' && !mealCount('drink')) return '';
       var n = hol ? HOL.sets.length : mealCount(c[0]), nx = hol ? holOrder()[0] : null;
       var cnt = n + (hol ? (n === 1 ? ' set' : ' sets') : (n === 1 ? ' recipe' : ' recipes'));
-      var extra = hol && nx && nx.date ? '<span class="rc-cx">Next: ' + esc(HOL.get(nx.id).name) + ', ' + esc(soonText(nx.date)) + '</span>' : '';
-      return '<button type="button" class="rc-cat rc-k-' + c[0] + '" data-cat="' + c[0] + '"' + (hol ? '' : ' aria-pressed="' + (st.meal === c[0] ? 'true' : 'false') + '"') +
-        ' aria-label="' + esc(c[1] + ', ' + cnt + (hol ? '' : (st.meal === c[0] ? ', showing now' : ''))) + '"><img src="' + W + c[2] + '.webp" alt="" decoding="async">' +
+      var extra = hol && nx && nx.date ? '<span class="rc-cx">Next: ' + esc(HOL.get(nx.id).name) + ', ' + esc(soonText(nx.date)) + '</span>' : c[0] === 'drink' ? '<span class="rc-cx">Sparkling, cozy, creamy, and pitchers for a crowd</span>' : '';
+      return '<button type="button" class="rc-cat rc-k-' + c[0] + '" data-cat="' + c[0] + '"' + (shelf ? '' : ' aria-pressed="' + (st.meal === c[0] ? 'true' : 'false') + '"') +
+        ' aria-label="' + esc(c[1] + ', ' + cnt + (shelf ? '' : (st.meal === c[0] ? ', showing now' : ''))) + '"><img src="' + W + c[2] + '.webp" alt="" decoding="async">' +
         '<span class="rc-cat-in"><b>' + esc(c[1]) + '</b><span class="rc-cn">' + esc(cnt) + '</span>' + extra + '</span></button>';
     }).join('');
   }
@@ -124,7 +136,7 @@
   function drawList() {
     var list = ALL.filter(matches);
     if (filtering()) $('rc-grid').innerHTML = list.length ? '<div class="rc-grid">' + list.map(card).join('') + '</div>' : '';
-    else $('rc-grid').innerHTML = CATS.filter(function (c) { return c[0] !== 'holidays'; }).map(function (c) { return section(c, list.filter(function (r) { return r.meal === c[0]; })); }).join('');
+    else $('rc-grid').innerHTML = CATS.filter(function (c) { return !SHELF[c[0]]; }).map(function (c) { return section(c, list.filter(function (r) { return r.meal === c[0]; })); }).join('');
     var cn = list.length === 1 ? '1 recipe' : list.length + ' recipes';
     $('rc-count').innerHTML = st.meal !== 'all' ? '<b>' + esc(CATS.filter(function (c) { return c[0] === st.meal; })[0][1]) + ':</b> ' + cn : cn;
     $('rc-empty').hidden = list.length > 0;
@@ -213,7 +225,7 @@
   }
   // On a /recipes/#holidays load, aim again once the fonts and paintings settle (the page above can change height as they arrive).
   function settleHolidays() {
-    var again = function () { if (location.hash === '#holidays' && !$('rc-list').hidden) toHolidays(false); };
+    var again = function () { if ($('rc-list').hidden) return; if (location.hash === '#holidays') toHolidays(false); else if (location.hash === '#drinks') toShelf('rc-drinks', false); };
     try { if (document.fonts && document.fonts.ready) document.fonts.ready.then(again); } catch (e) {}
     if (document.readyState === 'complete') setTimeout(again, 60); else window.addEventListener('load', function () { setTimeout(again, 60); }, { once: true });
   }
@@ -237,11 +249,44 @@
       '<article aria-labelledby="rc-dname"><div class="rc-dh"><div><div class="eyebrow">' + esc(HOL.whenText(id)) + '</div><h2 id="rc-dname" tabindex="-1">' + esc(x.name) + '</h2></div></div>' +
       '<p class="rc-hl">' + esc(x.lead) + '</p>' + (x.note ? '<p class="rc-hl">' + esc(x.note) + '</p>' : '') +
       '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips() + '</div><p class="rc-size-note">Amounts scale to your table. The steps name the amounts for ' + esc(x.serves) + '.</p></div>' +
-      '<div class="rc-hmenu">' + menu + '</div>' +
+      '<div class="rc-hmenu">' + menu + '</div>' + alsoFor(id) +
       ((x.tips || []).length ? '<div class="card"><h3>For a Calm, Healthy Day</h3><ul>' + x.tips.map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>' : '') +
       '<div class="card rc-cook"><h3>Put It on Your Calendar</h3><p>In The Grounded Way, Tending sets this up for your date and guests: the shopping on your list, the prep on the days before, and every recipe guided step by step, private on your device.</p><a class="btn btn-primary" href="/home/#week">Open The Grounded Way</a></div>' +
       (src.length ? '<p class="rc-src">Sources: ' + src.map(function (s) { return '<a href="' + esc(s.url) + '" target="_blank" rel="noopener">' + esc(s.t || s.title || s.url) + '</a>'; }).join('; ') + '</p>' : '') +
       '</article>';
+  }
+  // BLD 902: More for This Day, the Party Food and Celebration Drinks that name this set (recipe field holidays).
+  function alsoFor(id) {
+    var L = ALL.filter(function (r) { return (r.holidays || []).indexOf(id) >= 0; });
+    if (!L.length) return '';
+    return '<div class="rc-also"><h3 class="rc-hh">More for This Day</h3><p class="rc-hl">Party food and celebration drinks that suit this day, each with its own recipe and Guide Me.</p><div class="rc-grid">' + L.map(card).join('') + '</div></div>';
+  }
+  /* ---------- BLD 902: Celebration Drinks (GGTendPublic.party) ----------
+     The drink menu in its sections, Build Your Own Sparkler, and the Party Drink Station guide. Reached by the Drinks card or
+     /recipes/#drinks; each drink opens its own recipe like any other. */
+  function drinkShelf() {
+    var D = PARTY && PARTY.drinks, all = ALL.filter(function (r) { return r.meal === 'drink'; });
+    if (!all.length) return '';
+    var secs = D && (D.sections || []).length ? D.sections : [{ id: 'all', name: 'Drinks', ids: all.map(function (r) { return r.id; }) }];
+    var sp = PARTY && PARTY.sparkler, stn = PARTY && PARTY.station;
+    return '<div class="rc-sh"><img src="' + W + 'tend-people.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">' + esc((D && D.title) || 'Celebration Drinks') + '</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
+      (D && D.lead ? '<p class="rc-hl">' + esc(D.lead) + '</p>' : '') +
+      '<nav class="rc-drnav" aria-label="Drink menu">' + secs.map(function (x) { return '<a href="#drinks-' + esc(x.id) + '" data-drjump="' + esc(x.id) + '">' + esc(x.name) + '</a>'; }).join('') +
+      (sp ? '<a href="#drinks-sparkler" data-drjump="sparkler">' + esc(sp.title) + '</a>' : '') + (stn ? '<a href="#drinks-station" data-drjump="station">' + esc(stn.title) + '</a>' : '') + '</nav>' +
+      secs.map(function (x) {
+        var L = (x.ids || []).map(byId).filter(Boolean); if (!L.length) return '';
+        return '<section class="rc-drs" id="rc-dr-' + esc(x.id) + '" aria-labelledby="rc-drh-' + esc(x.id) + '"><h3 class="rc-hh" id="rc-drh-' + esc(x.id) + '">' + esc(x.name) + '</h3>' + (x.lead ? '<p class="rc-drl">' + esc(x.lead) + '</p>' : '') + '<div class="rc-grid">' + L.map(card).join('') + '</div></section>';
+      }).join('') +
+      (sp ? '<section class="rc-drs card rc-spark" id="rc-dr-sparkler" aria-labelledby="rc-drh-sparkler"><h3 class="rc-hh" id="rc-drh-sparkler">' + esc(sp.title) + '</h3><p class="rc-drl">' + esc(sp.lead) + '</p><ol class="rc-sprows">' +
+        (sp.rows || []).map(function (r) { return '<li><b>' + esc(r[0]) + '</b><span>' + esc(r[1]) + '</span></li>'; }).join('') + '</ol>' +
+        ((sp.ideas || []).length ? '<p class="rc-drl"><b>Try:</b> ' + sp.ideas.map(esc).join(' · ') + '</p>' : '') + '</section>' : '') +
+      (stn ? '<section class="rc-drs" id="rc-dr-station" aria-labelledby="rc-drh-station"><h3 class="rc-hh" id="rc-drh-station">' + esc(stn.title) + '</h3><p class="rc-drl">' + esc(stn.lead) + '</p><div class="rc-stgrid">' +
+        (stn.parts || []).map(function (pt) { return '<div class="card rc-stp"><h4>' + esc(pt.h) + '</h4><ul>' + (pt.items || []).map(function (t) { return '<li>' + esc(t) + '</li>'; }).join('') + '</ul></div>'; }).join('') + '</div></section>' : '');
+  }
+  function toShelf(id, smooth) {
+    var h = $(id); if (!h || h.hidden) return;
+    var y = h.getBoundingClientRect().top + window.scrollY - 70;
+    try { window.scrollTo({ top: Math.max(0, y), behavior: smooth ? 'smooth' : 'instant' }); } catch (e) { window.scrollTo(0, Math.max(0, y)); }
   }
   /* ---------- BLD 900: Add to My Menu ----------
      Inside The Grounded Way's frame, the add goes to the Home itself (GGHealth.menuOpen in the parent page, same site): a sheet to
@@ -272,7 +317,7 @@
       window.scrollTo(0, Math.max(0, $('recipes').getBoundingClientRect().top + window.scrollY - 70));
       var hh = $('rc-dname'); if (hh) hh.focus({ preventScroll: true }); return;
     }
-    var r = id && id !== 'holidays' ? byId(id) : null;
+    var r = id && id !== 'holidays' && id !== 'drinks' ? byId(id) : null;
     var list = $('rc-list'), det = $('rc-detail');
     if (G.on() && (!r || r.id !== G.id())) G.close(true);
     if (r) {
@@ -294,6 +339,7 @@
         var c = /^hol-/.test(lastId) ? document.querySelector('.rc-hcard[data-hol="' + ek(lastId.slice(4)) + '"]') : document.querySelector('.rc-card[data-id="' + ek(lastId) + '"]');
         if (c) c.focus({ preventScroll: true });
       } else if (id === 'holidays') toHolidays(false);
+      else if (id === 'drinks') toShelf('rc-drinks', false);
     }
   }
 
@@ -437,7 +483,8 @@
        show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
     var DINNER_ART = ['fish', 'chili'];
     var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
-    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate' };
+    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people' };
+    var ONE_ART = { 'tend-people': 1 }; // one square painting serves both sizes
     function artName(r) {
       var m = String(r.meal || 'dinner').toLowerCase();
       if (m === 'dinner') { var t = String(r.name || ''), hit = DIN_RE.filter(function (x) { return x[1].test(t); })[0]; if (hit && DINNER_ART.indexOf(hit[0]) >= 0) return 'dinner-' + hit[0]; }
@@ -445,7 +492,7 @@
     }
     function paint(r) {
       var n = artName(r), W = '/shared/heroes/way/';
-      return '<div class="rg-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + n + '-sq.webp"><img src="' + W + n + '.webp" alt="" decoding="async"></picture></div>';
+      return '<div class="rg-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + n + (ONE_ART[n] ? '' : '-sq') + '.webp"><img src="' + W + n + '.webp" alt="" decoding="async"></picture></div>';
     }
     function open(r, btn) {
       if (o) close(true);
@@ -480,12 +527,18 @@
     if (!ALL.length) { $('rc-empty').hidden = false; $('rc-empty').textContent = 'The recipes are on their way. Refresh the page in a moment.'; return; }
     $('rc-tools').hidden = false; $('rc-cats').hidden = false; $('rc-l-cats').hidden = false;
     drawChips(); drawList();
+    var ds = drinkShelf(), db = $('rc-drinks');
+    if (ds && db) { db.innerHTML = ds; db.hidden = false; db.setAttribute('aria-labelledby', 'rc-s-drinks'); db.setAttribute('role', 'region');
+      db.addEventListener('click', function (e) {
+        var j = e.target.closest('[data-drjump]'); if (j) { e.preventDefault(); toShelf('rc-dr-' + j.getAttribute('data-drjump'), true); return; }
+        var c = e.target.closest('.rc-card'); if (!c) return; fromList = true; location.hash = c.getAttribute('data-id'); }); }
     var hs = holShelf(), hb = $('rc-hol'); if (hs && hb) { hb.innerHTML = hs; hb.hidden = false; hb.setAttribute('aria-labelledby', 'rc-s-holidays'); hb.setAttribute('role', 'region');
       hb.addEventListener('click', function (e) { var c = e.target.closest('[data-hol]'); if (!c) return; fromList = true; location.hash = 'hol-' + c.getAttribute('data-hol'); }); }
     $('rc-cats').addEventListener('click', function (e) {
       var c = e.target.closest('[data-cat]'); if (!c) return;
       var k = c.getAttribute('data-cat');
       if (k === 'holidays') { if (location.hash === '#holidays') toHolidays(true); else { try { history.pushState(null, '', location.pathname + location.search + '#holidays'); } catch (x) {} toHolidays(true); } return; }
+      if (k === 'drink') { if (location.hash !== '#drinks') { try { history.pushState(null, '', location.pathname + location.search + '#drinks'); } catch (x) {} } toShelf('rc-drinks', true); return; }
       st.meal = st.meal === k ? 'all' : k;
       drawChips(); drawList();
       var again = document.querySelector('.rc-cat[data-cat="' + k + '"]'); if (again) again.focus({ preventScroll: true });
@@ -512,6 +565,7 @@
       var sz = e.target.closest('[data-sz]');
       if (sz) { setServes(+sz.getAttribute('data-sz')); return; }
       if (e.target.closest('#rc-back')) goBack();
+      else if (e.target.closest('.rc-also .rc-card')) { fromList = true; location.hash = e.target.closest('.rc-card').getAttribute('data-id'); }
       else if (e.target.closest('[data-rc-menu]')) menuGo(e.target.closest('[data-rc-menu]').getAttribute('data-rc-menu'));
       else if (e.target.closest('[data-rc-hguide]')) { var hv = e.target.closest('[data-rc-hguide]').getAttribute('data-rc-hguide').split('|'), hr = holRecipe(hv[0], hv[1]); if (hr) G.open(hr, e.target.closest('[data-rc-hguide]')); }
       else if (e.target.closest('[data-rc-guide]')) { var r = byId(lastId); if (r) G.open(sized(r), e.target.closest('[data-rc-guide]')); }
@@ -519,7 +573,7 @@
     window.addEventListener('hashchange', function () { if (!location.hash) fromList = false; show(); });
     window.addEventListener('popstate', function () { if (G.on() && !(history.state && history.state.rcGuide)) G.close(true); if (!location.hash) fromList = false; });
     if (location.hash) show();
-    if (location.hash === '#holidays') settleHolidays();
+    if (location.hash === '#holidays' || location.hash === '#drinks') settleHolidays();
   }
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init); else init();
 })();

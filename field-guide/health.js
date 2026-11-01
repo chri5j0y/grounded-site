@@ -888,7 +888,8 @@ function vOv(){
 // every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
 // The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
 // crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
-const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate'};
+const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people'};
+const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
   if (o.k === 'quiet') return 'quiet-morning';
@@ -900,12 +901,13 @@ function ovArtName(o){
   if (o.hol) return (o.data && o.data.art) || ART_KITCHEN.dinner; // BLD 896: Today's Plate, or the Weekly Batch table on a make-ahead day
   if (o.k === 'cook'){ if (o.peek) return ART_KITCHEN.head; const k = String(o.key || ''), x = o.data || {}, meal = /^idea:/.test(k) && !/^idea:recipe:/.test(k) ? k.split(':')[1] : String(x.meal || 'dinner').toLowerCase();
     if (/^lunch/.test(meal)) return ART_KITCHEN.lunch; if (/^breakfast/.test(meal)) return ART_KITCHEN.breakfast; if (/^snack/.test(meal)) return ART_KITCHEN.snack;
+    if (meal === 'party' || meal === 'drink') return ART_KITCHEN[meal];
     return (dinnerArtName(x) || '').replace(/-sq$/, '') || ART_KITCHEN.dinner; }
   return '';
 }
 function ovArt(o){
   const n = ovArtName(o); if (!n) return ''; if (!o.artT) o.artT = Date.now();
-  const med = /^med-m\d$/.test(n), wide = WAY(med ? n + '-lg' : n), sq = WAY(med ? n : n + '-sq'), d = -((Date.now() - o.artT) / 1000).toFixed(1);
+  const med = /^med-m\d$/.test(n), wide = WAY(med ? n + '-lg' : n), sq = WAY(med || ART_ONE.includes(n) ? n : n + '-sq'), d = -((Date.now() - o.artT) / 1000).toFixed(1);
   return `<div class="hj-paint" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="${esc(sq)}"><img src="${esc(wide)}" alt="" decoding="async" style="animation-delay:${d}s"></picture></div>`;
 }
 function openKey(key){
@@ -1198,6 +1200,7 @@ function allLines(){
   const sp = (app.shop || {}).weeks || {}; Object.values(sp).forEach(wk => ['sunday', 'wednesday', 'batch'].forEach(k => { const x = wk[k]; if (!x) return; add(ANDREW, LN.prepIntro({sunday: 'Sunday Together Prep', wednesday: 'Wednesday Mini Prep', batch: x.title || 'Freezer Batch'}[k]));
     arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }));
   const bt = app.batches || {}; arr(bt.batches).concat(bt.pack ? [Object.assign({name: bt.pack.title || 'Pack Lunches'}, bt.pack)] : []).forEach(x => { add(ANDREW, LN.prepIntro(x.title || x.name)); arr(x.steps).forEach(s => { const t = typeof s === 'string' ? {t: s} : s; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); });
+  if (!KIT()) arr((window.GGTendPublic || {}).recipes).filter(r => r && PARTY_MEALS.includes(r.meal)).forEach(x => { add(ANDREW, LN.cIntro(x.name)); arr(x.steps).forEach(st => { const t = typeof st === 'string' ? {t: st} : st; add(ANDREW, t.t); if (+t.min) add(ANDREW, LN.tset(+t.min)); }); }); // BLD 902
   [LN.tdone, LN.cOut, LN.prepOut].forEach(t => add(ANDREW, t));
   return [...out.values()];
 }
@@ -2380,14 +2383,16 @@ function vKitchen(){
 // Public: GGTendPublic.recipes. The Field Guide, a moved plan, and the Family Kitchen: every week's dinners (one of each)
 // plus the breakfasts, lunches, and snacks that carry steps. A recipe opened here uses an idea key ('idea:recipe:<id>'),
 // so finishing it marks only that recipe; tonight's dinner opens as tonight's dinner.
-const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack']];
+const R_MEALS = [['all', 'All'], ['breakfast', 'Breakfast'], ['lunch', 'Lunch'], ['dinner', 'Dinner'], ['snack', 'Snack'], ['party', 'Party Food'], ['drink', 'Drinks']];
 const R_GOALS = [['heart', 'Heart'], ['energy', 'Energy'], ['strength', 'Strength'], ['weight', 'Weight'], ['well', 'Well']];
 const R_FITS = [['vegan', 'Vegan'], ['vegetarian', 'Vegetarian'], ['dairyFree', 'Dairy Free'], ['glutenFree', 'Gluten Free'], ['nutFree', 'Nut Free'], ['kidFriendly', 'Kid Friendly']];
 const R_ICO = {
   breakfast: '<path d="M3 13h18a9 9 0 0 1-18 0z"/><path d="M8 10a4 4 0 0 1 8 0"/><path d="M12 3.5v2M5.8 6.3l1.3 1.3M18.2 6.3l-1.3 1.3"/>',
   lunch: '<path d="M3 10.5L12 5l9 5.5z"/><path d="M3.5 13.5c2 1.4 3.6-.8 5.6.5s3.6-.8 5.6.5 3.6-.8 5.8.3"/><path d="M3 17h18v2.5H3z"/>',
   dinner: '<circle cx="12" cy="13" r="5.5"/><circle cx="12" cy="13" r="2.8"/><path d="M3 4v4.5a1.3 1.3 0 0 0 2.6 0V4M4.3 4v16"/><path d="M20.8 4c-1.2 1.4-1.6 3.8-1.6 6h1.6v10"/>',
-  snack: '<path d="M12 7.5c-1.6-1.2-5-1.4-6.4 1.4S5 16.2 7.6 18.6 11 20.2 12 19.6c1 .6 1.9 1.3 4.4-1S20 11.7 18.4 8.9 13.6 6.3 12 7.5z"/><path d="M12 7.5c0-2 .9-3.4 2.4-4"/>'};
+  snack: '<path d="M12 7.5c-1.6-1.2-5-1.4-6.4 1.4S5 16.2 7.6 18.6 11 20.2 12 19.6c1 .6 1.9 1.3 4.4-1S20 11.7 18.4 8.9 13.6 6.3 12 7.5z"/><path d="M12 7.5c0-2 .9-3.4 2.4-4"/>',
+  party: '<path d="M3 13h18a9 7 0 0 1-18 0z"/><path d="M9 21h6"/><path d="M10.5 10l3-6.5 3 6.5"/>',
+  drink: '<path d="M6 7h10l-1.5 14h-7z"/><path d="M6.8 11.5h8.4"/><path d="M12.5 7l3-4.5h2.5"/><circle cx="17" cy="7" r="3"/>'};
 const rIco = m => `<span class="ri" aria-hidden="true"><svg viewBox="0 0 24 24" focusable="false">${R_ICO[m] || R_ICO.dinner}</svg></span>`;
 function recipesAll(){
   const out = [], seen = new Set(), add = r => { const k = String(r.name || '').trim().toLowerCase(); if (!r.id || !k || seen.has(r.id) || seen.has('n:' + k)) return; seen.add(r.id); seen.add('n:' + k); out.push(r); };
@@ -2395,7 +2400,17 @@ function recipesAll(){
   const din = (APP() || {}).dinners || {}, wks = din.weeks || {};
   Object.keys(wks).sort().forEach(wk => arr((wks[wk] || {}).dinners).forEach(x => { if (x && arr(x.steps).length) add({id: x.id, meal: 'dinner', name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients), goals: arr(x.goals), fits: arr(x.fits), wk}); }));
   [['breakfasts', 'breakfast'], ['lunches', 'lunch'], ['snacks', 'snack']].forEach(([ty, m]) => arr(din[ty]).forEach((x, i) => { if (x && arr(x.steps).length) add({id: x.id || ty + '-' + i, meal: m, name: x.name, mins: x.mins, nut: x.nut, ing: arr(x.ingredients).concat(arr(x.shop).map(g => g && g.name)), goals: arr(x.goals), fits: arr(x.fits), ty, i}); }));
+  partyRecs().forEach(r => add({id: r.id, meal: r.meal, name: r.name, mins: r.mins, nut: r.nut, ing: arr(r.ingredients), goals: arr(r.goals), fits: arr(r.fits), pub: true}));
   return out;
+}
+// BLD 902: Party Food and Celebration Drinks live in the public file (shared/tending-public.js). The Field Guide (and a moved plan)
+// loads it once, on first need, and lists those two meals beside the library's own recipes; they open in the same kitchen guide
+// (Andrew's lines are recorded in the Guide folder too) and go on My Menu as 'r:<id>'. The Family Kitchen keeps its own list.
+const PARTY_MEALS = ['party', 'drink'];
+function partyRecs(){ if (PUB() || KIT()) return []; const P = window.GGTendPublic; if (!P){ partyLoad(); return []; } return arr(P.recipes).filter(r => r && PARTY_MEALS.includes(r.meal) && arr(r.steps).length); }
+function partyLoad(){
+  if (partyLoad.p || PUB() || window.GGTendPublic) return; partyLoad.p = 1;
+  try { const el = document.createElement('script'); el.src = asset('shared/tending-public.js?v=b901'); el.async = true; el.onload = () => { try { rerender(true); } catch(e){} }; document.head.appendChild(el); } catch(e){}
 }
 function recipesShown(all){
   const m = S.rMeal || 'all', g = arr(S.rGoals), f = arr(S.rFits), q = String(S.rq || '').toLowerCase().split(/\s+/).filter(Boolean);
@@ -2800,10 +2815,10 @@ function ensurePlan(force){
   const pw = P.planWeeks(L.recipes, Object.assign({seed}, set)), meals = P.planMeals(L.recipes, Object.assign({seed}, set));
   h.plan = {seed, ids: pw.ids, meals, sig, n: 0, u: Date.now()}; PA = null; save(); return h.plan;
 }
-const recOf = id => arr((PLIB() || {}).recipes).find(r => r.id === id) || null;
+const recOf = id => arr((PLIB() || {}).recipes).find(r => r.id === id) || (PUB() ? null : partyRecs().find(r => r.id === id)) || null;
 function ideaOf(r){ if (!r) return null; const P = TP(); r = sizeUp(r);
   return {id: r.id, name: r.name, mins: r.mins, how: r.serve || '', nut: r.nut ? Object.assign({per: '1 serving'}, r.nut) : null, steps: arr(r.steps), ingredients: arr(r.ingredients),
-    serve: r.serve || '', tip: r.tip || '', keeps: r.keeps || '', kid: r.kid || '', serves: r.serves, swaps: r.swaps || null,
+    serve: r.serve || '', tip: r.tip || '', keeps: r.keeps || '', kid: r.kid || '', serves: r.serves, swaps: r.swaps || null, ...(PARTY_MEALS.includes(r.meal) ? {meal: r.meal} : {}),
     shop: P ? P.shopList({dinners: [Object.assign({}, r, {leftover: false})]}).map(x => ({name: x.name, amt: x.amt, sec: x.sec})) : []}; }
 // Workouts on the chosen days: the sessions rotate A, B, C, D across the weeks.
 const pubDays = () => DAYSETS[+H().set.days] || DAYSETS[3];
@@ -5015,7 +5030,7 @@ function mmMerge(L, n){
 function mmAmt(x){ return x && x.mmx && x.mmx.amt ? (x.amt ? mmSum([x.amt, x.mmx.amt]) : x.mmx.amt) : String((x && x.amt) || ''); }
 function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mmx.for : x.mmx.for) : String((x && x.for) || ''); }
 // ---- Today, Week, and the Month ----
-const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
+const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
 const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
 function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
   return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Guide Me', did: true})); }
@@ -5097,7 +5112,7 @@ const mmLong = s => { const d = parseD(s); return d ? (s === today() ? 'Today, '
 function mmListLine(date){ const n = mmListWeek(date), sd = ymd(shopDate(n)), t = today();
   return sd === t ? `The ingredients join today's Shopping List, Shop for Week ${letter(n)}.` : sd < t ? `The ingredients join this week's Shopping List, Shop for Week ${letter(n)}, for a quick trip.` : `The ingredients join Shop for Week ${letter(n)}, the list for ${mmLong(sd)}.`; }
 function mmOpenAdd(ref, o){ const R = mmRecipe(ref); if (!R) return false; o = o || {};
-  MM.sheet = {kind: 'add', ref, name: R.name, date: o.date && parseD(o.date) && o.date >= today() ? o.date : today(), meal: MM_NAME[o.meal] ? o.meal : R.meal, serves: Math.max(1, Math.min(40, Math.round(+o.serves || mmTable()))), other: false};
+  MM.sheet = {kind: 'add', ref, name: R.name, date: o.date && parseD(o.date) && o.date >= today() ? o.date : today(), meal: MM_NAME[o.meal] ? o.meal : MM_NAME[R.meal] ? R.meal : R.meal === 'party' ? 'snack' : 'extra', serves: Math.max(1, Math.min(40, Math.round(+o.serves || mmTable()))), other: false};
   mmPaint(); return true; }
 function mmOpenSwap(target){
   let cur = '', meal = 'dinner', date = '';

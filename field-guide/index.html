@@ -693,7 +693,7 @@ body.cd-noscroll{overflow:hidden;}
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b896"></script>
-<script src="health.js?v=b900"></script>
+<script src="health.js?v=b901"></script>
 <script src="vault.js?v=b887"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -1793,7 +1793,7 @@ const FG_READ = {'orient': 1, 'orient-staff': 1, 'modules': 1, 'support': 1, 'ho
 const fgReadOn = sec => !!(FG_READ[sec] || window.FG_READ_ALL);
 // Crisis lines and helplines are never spoken (Chris, firm, October 15, 2026): Read Aloud leaves out any sentence that
 // names one, and the words stay on the page. The recording plan leaves the same sentences out (patches/bld813).
-const FG_QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522/i;
+const FG_QUIET = /\b988\b|\b911\b|crisis text line|741741|\b1-8\d\d-|\bhot ?line\b|\bhelp ?line\b|childhelp|samhsa|poison control|\brainn\b|love is respect|\bday one\b|\bmaarc\b|eldercare locator|\bnami\b|military onesource|\b211\b|loveis|22522|274747|\bcrisis\b/i;
 window.fgQuiet = t => FG_QUIET.test(String(t || '')) || !!(window.GGRead && GGRead.quiet && GGRead.quiet(t));
 function fgListen(sec, lib){
   const L = lib === 's' ? LIB : FLD;
