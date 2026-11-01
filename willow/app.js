@@ -520,7 +520,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
-  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grow With Grounded or anyone else. Willow is not medical care or a crisis service. For anything urgent, call your hospice first, day or night.</div>
+  <div class="privacy-note" style="margin-top:22px"><strong>Your answers stay with you.</strong> Everything saved in Willow stays on this device, locked with a passcode. Nothing is sent to Grow With Grounded or anyone else. Willow offers spiritual guidance and emotional support; your hospice team holds the medical care. For anything urgent, call your hospice first, day or night.</div>
   <div class="btn-row"><button type="button" class="btn btn-primary" onclick="W.begin()">Begin with Willow</button><button type="button" class="btn btn-secondary" onclick="W.go('guides')">When Life Changes</button><button type="button" class="btn btn-secondary" onclick="W.go('readings')">Readings</button></div>`;
 function begin() {
   const a = me();
@@ -1151,7 +1151,7 @@ function guideHtml(g) {
     ${g.story ? `<h3>A Grounded story</h3><p><a class="text-link" href="${storyUrl(g.story)}" target="_blank" rel="noopener">${esc(g.story)}</a></p>` : ''}
     ${window.GGShelf ? GGShelf.html('willow', g.id) : ''}
     ${window.GGSources ? GGSources.html('willow:' + g.id) : ''}
-    <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support, not medical care, therapy, or legal advice. &copy; ${new Date().getFullYear()} Grow With Grounded LLC.</p>
+    <p class="lc-note">${esc(G.foot)} From Willow&trade; by Grow With Grounded. General spiritual and emotional support. For medical care, therapy, or legal advice, see a licensed professional. &copy; ${new Date().getFullYear()} Grow With Grounded LLC.</p>
   </article>`;
 }
 function openGuide(id) { const fromList = S.tab === 'guides' && !S.guide.open; S.guide.open = id; S.tab = 'guides'; render(); scrollTop(true); pushHash(fromList ? { wList: 1 } : null); }

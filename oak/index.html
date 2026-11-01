@@ -1151,7 +1151,7 @@ html.ts-2 main{zoom:1.25;}
 <script src="/shared/gg-qr.js"></script>
 <script src="/shared/gg-filelock.js?v=b766"></script>
 <script src="/shared/gg-practice-alias.js?v=b885"></script>
-<script src="/shared/gg-profiles.js?v=b888"></script>
+<script src="/shared/gg-profiles.js?v=b902"></script>
 <script src="/shared/gg-life.js?v=b888"></script>
 <script src="/shared/gg-life-kit.js?v=b888"></script>
 <script src="/shared/gg-sober.js?v=b894"></script>
@@ -3250,7 +3250,7 @@ function renderLC(mode) {
       ${lcSoberChip(mode, true)}${LC_RINGS.map(r => `<button class="lc-chip" style="--rc:${r.color}" data-ring="${r.key}" onclick="LCS['${mode}'].ring='${r.key}';lcRenderList('${mode}')">${lcEsc(r.name)}</button>`).join('')}${lcSoberChip(mode, false)}${lcLifeChip(mode)}
     </div>
     <div id="${mode}-lc-list"></div>
-    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. They are not therapy, medical care, or legal advice. In an emergency, call 911. For a mental health crisis, call or text 988. For guides written for children and teens, visit When Life Changes in <a class="text-link" href="https://growwithgrounded.com/maple/#life">Maple</a>, <a class="text-link" href="https://growwithgrounded.com/aspen/#life">Aspen</a>, and <a class="text-link" href="https://growwithgrounded.com/pine/#life">Pine</a>. For hospice, <a class="text-link" href="https://growwithgrounded.com/willow/">Willow</a> walks with the person and the people who love them.</p>
+    <p class="lc-note">These guides offer general spiritual and emotional support drawn from chaplaincy and trusted grief, mental health, and caregiving organizations. For therapy, medical care, or legal advice, see a licensed professional. In an emergency, call 911. For a mental health crisis, call or text 988. For guides written for children and teens, visit When Life Changes in <a class="text-link" href="https://growwithgrounded.com/maple/#life">Maple</a>, <a class="text-link" href="https://growwithgrounded.com/aspen/#life">Aspen</a>, and <a class="text-link" href="https://growwithgrounded.com/pine/#life">Pine</a>. For hospice, <a class="text-link" href="https://growwithgrounded.com/willow/">Willow</a> walks with the person and the people who love them.</p>
     ${mode === 'client' && window.GGLifeKit ? GGLifeKit.linesHtml('oak', x => lineHtml(x)) : ''}`;
   lcRenderList(mode);
   if (st.find) { const i = el.querySelector('.lc-search'); if (i) lcFind(i, mode); }
@@ -3386,7 +3386,7 @@ function lcDetail(mode, t) {
     <h3>Learn more</h3><ul>${t.more.map(([n, u]) => `<li><a class="text-link" href="${u}" target="_blank" rel="noopener">${lcEsc(n)}</a></li>`).join('')}</ul>
     ${window.GGShelf ? GGShelf.html('oak', t.id) : ''}
     ${window.GGSources ? GGSources.html('oak:' + t.id, { stories: t.story ? [t.story.title] : [] }) : ''}
-    <p class="lc-note">From When Life Changes in Oak&trade; by Grow With Grounded. General spiritual and emotional support, not therapy, medical care, or legal advice. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
+    <p class="lc-note">From When Life Changes in Oak&trade; by Grow With Grounded. General spiritual and emotional support. For therapy, medical care, or legal advice, see a licensed professional. Emergency: 911. Crisis: call or text 988. &copy; ${new Date().getFullYear()} Grow With Grounded LLC. You are welcome to print this guide for personal use and visits.</p>
   </article>`;
 }
 /* When Life Changes videos (GWG BLD 719): two per guide, For You and For the Helper, played by shared/gg-learn.js
