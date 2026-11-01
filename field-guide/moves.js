@@ -327,7 +327,7 @@ Object.assign(P, {
       {t: [100, 96], h: 96, sw: 11, hw: 8, ra: [0, 90], la: [20, -14], rl: [-76, -76, -60], ll: [-76, -76, -60], fl: 0.8}]},
   'kneel-press': {v: 's', an: ['rK', 108, 204], db: 'r', bg: G.mat,
     k: [Object.assign({ra: [14, 168], la: [26, -40]}, HALF), Object.assign({ra: [176, 180], la: [26, -40]}, HALF)]},
-  'push-press': {v: 'f', db: 'rl', d: 2.2,
+  'push-press': {v: 'f', db: 'rl', d: 2.2, br: ['in', 'out', 'out', 'in'],
     k: [{ra: [78, 178], la: [78, 178]}, {ay: 134, kz: [0.8, 1, 0.8, 1], ra: [78, 178], la: [78, 178]}, {ay: 122, ra: [168, 178], la: [168, 178], rl: [3, 0, 60], ll: [3, 0, 60]}, {ra: [170, 178], la: [170, 178]}]},
   'incline-press': {v: 's', an: ['hip', 128, 162], db: 'r', bg: G.incline(126, 170, false),
     k: [{t: [-136, -136], h: -130, rl: [80, 0, 90], ll: [80, 0, 90], ra: [14, 134], la: [14, 134]}, {t: [-136, -136], h: -130, rl: [80, 0, 90], ll: [80, 0, 90], ra: [134, 136], la: [134, 136]}]},
@@ -425,7 +425,8 @@ Object.assign(P, {
   climber: {v: 's', an: ['hip', 125, 148], bg: G.bench(146, 176, 64), d: 3, sp: 1, pin: {rH: [169, 175, -1], lH: [169, 175, -1]},
     k: [{t: [130, 130], h: 120, at: {rA: [64, 200, 1, 40], lA: [64, 200, 1, 40]}}, {t: [130, 130], h: 120, rl: [60, -40, 40], at: {lA: [64, 200, 1, 40]}},
       {t: [130, 130], h: 120, at: {rA: [64, 200, 1, 40], lA: [64, 200, 1, 40]}}, {t: [130, 130], h: 120, ll: [60, -40, 40], at: {rA: [64, 200, 1, 40]}}]},
-  bicycle: {v: 's', an: ['hip', 128, 203], bg: G.mat, d: 3.2, sp: 0, k: [BC('r', 'l'), BC('l', 'r')]},
+  // BLD 903: a key between the sides, so each count breathes out into the twist and in on the way through the middle.
+  bicycle: {v: 's', an: ['hip', 128, 203], bg: G.mat, d: 3.2, sp: 1, k: [blend(BC('r', 'l'), BC('l', 'r'), .5), BC('r', 'l'), blend(BC('l', 'r'), BC('r', 'l'), .5), BC('l', 'r')]},
   'wood-chop': {v: 'f', nm: true, an: ['hip', 120, 128], d: 2.4, sp: 0,
     k: [{ax: 120, ay: 128, sw: 11, t: [180, 172], h: 172, at: {rA: [146, 206, 1, 90], lA: [94, 206, -1, -90], rH: [170, 30, 1], lH: [168, 32, -1]}},
       {ax: 116, ay: 142, sw: 11, t: [186, 200], h: 206, at: {rA: [146, 206, 1, 60], lA: [94, 206, -1, -90], rH: [70, 170, -1], lH: [72, 168, 1]}}]},
@@ -724,11 +725,17 @@ const OUT_FIRST = new Set(('press push-press bench-press incline-press seat-pres
   'pull-apart pallof dead-bug bird-dog leg-press kneel-press hollow ' +
   // BLD 897: out on the effort, as the 3D figures breathe them.
   'climber cross-crunch knee-hold bicycle walk-out').split(' '));
+const TWO_BR = new Set(['yt-raise']);
 function plan(pattern, opts){
   opts = opts || {}; const id = P[pattern] ? pattern : of(pattern), M = P[id], br = opts.breath;
   const bm = Array.isArray(br) && +br[0] > 0 && +br[1] > 0, lp = bm ? null : loop(id, opts);
   if (!lp && !bm) return null;
   const K = M.k.length, n = K % 2 && !lp ? K * 2 : K, first = OUT_FIRST.has(id) ? 'out' : 'in', other = first === 'in' ? 'out' : 'in', segs = [];
+  // BLD 903 (Chris: "Dumbbell Push Press.. he is going twice as fast as the count and breath"): one breath a counted rep. A rep
+  // of more than two moves (a circle, a step pattern, the push press) breathes in over its first half and out over the rest,
+  // or as its own br list says (one kind per move); TWO_BR moves lift twice a rep and breathe with each lift (Y-T).
+  const kOf = (i, mv) => { if (Array.isArray(M.br) && M.br.length === K) return M.br[i % K]; const j = i % mv;
+    return mv > 2 && !(mv % 2) && !TWO_BR.has(id) ? (j < mv / 2 ? first : other) : j % 2 ? other : first; };
   if (bm){
     const d = {in: +br[0], out: +br[1]};
     for (let i = 0; i < n; i++){ const k = i % 2 ? other : first; segs.push({a: i % K, b: (i + 1) % K, d: d[k], k}); }
@@ -736,12 +743,12 @@ function plan(pattern, opts){
     const dur = lp.dur, per = lp.per, mv = K / per, top = lp.hold > 0 && M.top ? M.top : [];
     if (top.length){
       const hw = M.k.map((x, i) => top.includes((i + 1) % K) ? Math.min(0.8, lp.hold) / top.length : 0.04), mw = Math.max(0.1, 1 - hw.reduce((a, b) => a + b, 0)) / K;
-      for (let i = 0; i < K; i++){ const k = (i % mv) % 2 ? other : first;
+      for (let i = 0; i < K; i++){ const k = kOf(i, mv);
         if (hw[i] >= 0.1){ segs.push({a: i, b: (i + 1) % K, d: mw * dur, k}); segs.push({a: (i + 1) % K, b: (i + 1) % K, d: hw[i] * dur, k: 'hold'}); }
         else segs.push({a: i, b: (i + 1) % K, d: (mw + hw[i]) * dur, k}); }
     } else {
       // Two moves a rep: the lowering (breathe in) takes six tenths, the effort (breathe out) four. Other counts share evenly.
-      for (let i = 0; i < K; i++){ const j = i % mv, k = j % 2 ? other : first, w = mv === 2 ? (k === 'in' ? 0.6 : 0.4) : 1 / mv; segs.push({a: i, b: (i + 1) % K, d: w * lp.rep, k}); }
+      for (let i = 0; i < K; i++){ const j = i % mv, k = kOf(i, mv), w = mv === 2 ? (k === 'in' ? 0.6 : 0.4) : 1 / mv; segs.push({a: i, b: (i + 1) % K, d: w * lp.rep, k}); }
     }
   }
   const r3 = x => Math.round(x * 1000) / 1000, dur = r3(segs.reduce((a, s) => a + s.d, 0)), phases = [];

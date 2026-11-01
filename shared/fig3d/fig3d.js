@@ -4238,12 +4238,13 @@ G.define('heel-toe', {name: 'Heel-to-Toe Walk', own: true, steps: 2, tempo: 3, g
 // swings forward as the knee rises, the weight glides a little over the standing foot, and the chest turns a touch
 // against the lifted knee. One rep each side, on the count.
 var MUP = {x: .12, y: .36, z: .32, f: 62, pole: [.1, 0, 1]};
+// BLD 903: one breath a step (one count): in as the knee lifts, out as it lowers.
 G.define('march', {name: 'March in Place', tempo: 1.2, alt: true, rest: 0, base: 'stand', glow: {flexors: [.8, .8], quads: [.3, .3], calves: [.3, .3]}, cam: {view: 'three', turn: -6, el: 6, zoom: 1},
   form: [{when: 'always', plumb: ['head', 'root'], say: 'tall chest', at: 'neck01', side: 1}],
   k: [
     {br: 'in', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
-    {br: 'in', via: true, on: 'fL', p: [.93, -.062], px: .028, tw: -5, hy: 2, rl: MUP, ra: [-20, 18], la: [30, 78], ao: 6, e: 1, gl: [0, 1], lift: 0},
-    {br: 'out', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
+    {br: 'out', via: true, on: 'fL', p: [.93, -.062], px: .028, tw: -5, hy: 2, rl: MUP, ra: [-20, 18], la: [30, 78], ao: 6, e: 1, gl: [0, 1], lift: 0},
+    {br: 'in', via: true, on: 'fR fL', p: [.925, -.062], ra: [-2, 16], la: [-2, 16], ao: 6, lift: 0},
     {br: 'out', via: true, on: 'fR', p: [.93, -.062], px: -.028, tw: 5, hy: -2, ll: MUP, la: [-20, 18], ra: [30, 78], ao: 6, e: 1, gl: [1, 0], lift: 0}
   ], sideGlow: 'flexors'});
 

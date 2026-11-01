@@ -171,16 +171,24 @@ function probe(stage, id){
   } catch(e){ Q = null; }
   return (L.Q[key] = Q && Q.length ? Q : null);
 }
-function warp(P, Q, tau, dur){
-  const lin = dur > 0 ? ((tau % dur) + dur) % dur / dur : 0;
-  if (!P || !P.length || !Q){ return {u: lin, phase: '', x: 0, i: -1}; }
-  let t = ((tau % dur) + dur) % dur, i = 0; while (i < P.length - 1 && t >= P[i].d){ t -= P[i].d; i++; }
+// BLD 903 (Chris: "Dumbbell Push Press.. he is going twice as fast as the count and breath"): want is how many 3D loops one
+// plan loop holds (the plan's reps over the 3D move's reps a loop), and cyc which plan loop this is (a 3D move of two reps,
+// one each side, under a one rep plan shows one side a count, by turns). The phases line up only when that gives exactly
+// want; else the 3D move keeps an even pace at want, so one count is always one 3D rep. A plan whose last phase carries
+// on into its first (in, out, in) reads as one phase across the loop's end.
+function warp(P, Q, tau, dur, want, cyc){
+  want = want > 0 ? want : 1; const C = want < 1 ? Math.max(1, Math.round(1 / want)) : 1, c = ((Math.round(cyc || 0) % C) + C) % C;
+  const lin = dur > 0 ? ((tau % dur) + dur) % dur / dur : 0, even = (((c + lin) * want) % 1 + 1) % 1;
+  if (!P || !P.length || !Q){ return {u: even, phase: '', x: 0, i: -1}; }
+  let sh = 0;
+  if (P.length > 2 && P[0].k === P[P.length - 1].k){ sh = P[P.length - 1].d; P = [{k: P[0].k, d: P[0].d + sh}].concat(P.slice(1, -1)); }
+  let t = (((tau + sh) % dur) + dur) % dur, i = 0; while (i < P.length - 1 && t >= P[i].d){ t -= P[i].d; i++; }
   const x = Math.max(0, Math.min(1, t / P[i].d));
-  // Line the kinds up: the first rotation of Q whose kinds repeat along P.
-  const n = Q.length; let rot = -1;
-  if (P.length % n === 0) for (let r = 0; r < n && rot < 0; r++) if (P.every((p, j) => p.k === Q[(j + r) % n].k)) rot = r;
-  if (rot < 0) return {u: lin, phase: P[i].k, x, i};
-  const q = Q[(i + rot) % n], u = q.u0 + x * (q.u1 - q.u0);
+  // Line the kinds up: the first rotation of Q whose kinds repeat along P (over C plan loops), when P to Q is want.
+  const n = Q.length, m = P.length; let rot = -1;
+  if (Math.abs(m / n - want) < 1e-6) for (let r = 0; r < n && rot < 0; r++){ let okr = true; for (let j = 0; j < m * C && okr; j++) okr = P[j % m].k === Q[(j + r) % n].k; if (okr) rot = r; }
+  if (rot < 0) return {u: even, phase: P[i].k, x, i};
+  const q = Q[(i + m * c + rot) % n], u = q.u0 + x * (q.u1 - q.u0);
   return {u: ((u % 1) + 1) % 1, phase: P[i].k, x, i};
 }
 // Own pace: a pattern marked own (walking, carries, stepping) keeps its own loop when the SVG figure is not on a counted
@@ -374,7 +382,12 @@ function frame(){
   } else {
     if (!dur) dur = parseFloat(anim.getAttribute('dur')) || 2.6;
     try { tau = svg.getCurrentTime(); } catch(e){ tau = 0; }
-    w = warp(parsePh(svg.getAttribute('data-ph')), Q, tau, dur);
+    // BLD 903: the 3D loops a plan loop holds, and which plan loop this is (counted at each wrap or restart of the plan).
+    const d = moveDef(id), r3 = d ? (+d.reps || (d.alt ? 2 : 1)) : 1, per = +svg.getAttribute('data-per') || 0, want = per > 0 ? per / r3 : 1;
+    if (L.cycId !== id){ L.cycId = id; L.cyc = 0; L.ptau = tau; }
+    else if (tau < L.ptau - Math.min(.25, dur * .2)) L.cyc++;
+    L.ptau = tau;
+    w = warp(parsePh(svg.getAttribute('data-ph')), Q, tau, dur, want, L.cyc);
   }
   let wall = Date.now(); try { if (document.timeline && performance.timeOrigin) wall = performance.timeOrigin + document.timeline.currentTime; } catch(e){}
   L.st = {on: true, at: Date.now(), wall, move: id, tau: dur ? ((tau % dur) + dur) % dur : 0, dur, u: w.u, phase: w.phase, body: st.current(), art: L.art ? L.art.id : '', mirrored: L.mir};
