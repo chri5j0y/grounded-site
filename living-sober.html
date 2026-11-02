@@ -376,7 +376,7 @@ html{scroll-padding-top:140px;}
       <div class="eyebrow">Welcome</div>
       <p class="ls-stance">Grounded stands for living sober and free of harmful drugs: a clear mind, a healthy body, and a life you're fully present for.</p>
       <p>Wherever you are, you belong here. Thinking about a change, counting your first days, many years along, or loving someone who drinks or uses: we meet you right where you are, and we walk with you toward a sober life, one day at a time.</p>
-      <p>Chris, one of Grounded's founders, has been sober since 2008. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
+      <p>Chris, one of Grounded's founders, has been sober since April 1, 2008<span id="ls-sober-count"></span>. Friends see that life and ask how he does it. Living Sober is our answer, shared with anyone who wants it: encouragement for today, short videos, ninety days for the early days, and a private place to grow in Birch, Oak, and Sequoia.</p>
       <div class="ls-sharebar"><button type="button" class="btn btn-secondary ls-share" data-ls-share="page"><svg aria-hidden="true" width="17" height="17"><use href="#lsi-share"/></svg>Share This Page</button><span class="ls-smsg" role="status" aria-live="polite"></span></div>
     </div>
     <div class="ls-rise">
@@ -572,6 +572,7 @@ html{scroll-padding-top:140px;}
 <script src="site.js?v=b779n"></script>
 <script src="nav.js?v=b903" defer></script>
 <script src="/shared/sober-words.js?v=b851" defer></script>
+<script>(function(){var e=document.getElementById('ls-sober-count');if(!e)return;var t=new Date(),n=Math.round((Date.UTC(t.getFullYear(),t.getMonth(),t.getDate())-Date.UTC(2008,3,1))/864e5);if(n>0)e.textContent=': '+n.toLocaleString('en-US')+' days today';})();</script>
 <script src="/shared/sober-30.js?v=b903" defer></script>
 <script src="/shared/sober-more.js?v=b862" defer></script>
 <script src="/shared/gg-sharecard.js?v=b839" defer></script>
