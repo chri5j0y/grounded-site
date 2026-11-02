@@ -4,6 +4,8 @@
    shared/gg-guided.js (window.GGGuided). Questions are never copied here:
    the engine reads them live from window.WILLOW_CHECKIN (willow/checkin.js),
    so the spoken question is always Willow's own question text.
+   BLD 907: tend four, grow two. The Growth Plan walks the four parts you tend
+   (the Trunk and Fruit plan lines are retired; they grow from the tending).
 
    Willow's way: very gentle, unhurried, presence over fixing. Every line
    leaves room. Brian narrates Willow (shared/gg-learn.js VOICES.willow).
@@ -327,10 +329,6 @@
             'Roots are what grounds you. Tending them can bring comfort when the wind picks up.',
             'Whatever holds you up, faith, love, nature, your values, a small practice can keep it close.'
           ],
-          trunk: [
-            'Trunk is your story. Tending it helps the people you love carry your life forward.',
-            'One story, one thing learned, one small gift. Each one keeps your life close to the people you love.'
-          ],
           bark: [
             'Bark is peace inside. Tending it makes room for calm moments between the hard ones.',
             'A slow breath, a kind word to yourself, a worry handed to someone else. Small practices, real peace.'
@@ -342,10 +340,6 @@
           leaves: [
             'Leaves are comfort, rest, and small joys. Tending them makes each day a little softer.',
             'A favorite sound, a soft light, a taste you love. Small comforts are worth planning.'
-          ],
-          fruit: [
-            'Fruit is hope and readiness. Tending it helps you face what is ahead in your own way.',
-            'Hope changes shape near the end. A small practice can help it stay close.'
           ]
         },
         close: [

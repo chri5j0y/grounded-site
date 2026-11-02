@@ -951,7 +951,7 @@
     'video:wl-g-hanging-helper': ['byock4'],
     // Learn lessons and Support for Right Now
     'video:ok-6-roots': ['koenig'],
-    'video:ok-6-trunk': ['unknown'],
+    'video:ok-6-trunk': ['frankl46', 'unknown'],  // BLD 907: meaning grows from what you give yourself to (Frankl, adapted)
     'video:ok-6-bark': ['lieberman', 'siegel'],
     'video:ok-6-branches': ['holt'],
     'video:ok-6-leaves': ['unknown'],

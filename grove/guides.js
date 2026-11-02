@@ -10502,7 +10502,7 @@ var TOPICS = [
 var PRACTICES = [
  {
   "id": "family-night",
-  "part": "fruit",
+  "part": "branches",
   "kinds": [
    "family",
    "group"

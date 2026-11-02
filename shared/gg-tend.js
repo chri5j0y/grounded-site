@@ -20,7 +20,9 @@
    Light grows with each part tended today: the mist lifts, warmth comes
    in, and after three parts the sun sends rays. Missed days rest in soft
    morning mist. It never wilts, droops, or goes bare, and nothing is ever
-   taken away. Six small markers glow as each part is tended today.
+   taken away. A small marker glows as each of the four tended parts
+   (Roots, Bark, Leaves, Branches; shared/gg-parts.js, GWG BLD 907) is
+   tended today. Trunk and Fruit grow from that tending.
    Rest Week: one tap holds the scene still and kind for seven days (no
    mist, and Hardy rests); one tap ends it early. Never limited or counted.
 
@@ -138,6 +140,37 @@
   function tended(s, d) { var x = s.days[d]; return !!(x && ((x.d && x.d.length) || (x.a && x.a.length))); }
   // Rings: seasons finished, or (C.ringCount) the tool's own count, like Aspen's one ring per full check-in.
   function ringN(s) { return C.ringCount ? C.ringCount() : (s.rings || []).length; }
+  // The four tended parts (GWG BLD 907): the ones in this tool's parts that shared/gg-parts.js names as tended. A tool
+  // whose parts hold none of them counts all of its parts, as before.
+  var TEND4 = ['roots', 'bark', 'leaves', 'branches'];
+  function tendKeys() {
+    var T = window.GGParts && GGParts.TEND ? GGParts.TEND : TEND4, mine = (C.parts || []).map(function (pt) { return pt.key; });
+    var k = T.filter(function (x) { return mine.indexOf(x) >= 0; });
+    return k.length ? k : mine;
+  }
+  function tendOn(s, d) { var x = s.days[d], set = {}, n = 0; if (!x) return 0; (x.d || []).forEach(function (id) { set[id.split('|')[0]] = 1; }); tendKeys().forEach(function (k) { if (set[k]) n++; }); return n; }
+  var NUM = ['no', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight'];
+  function numWord(n) { return NUM[n] || String(n); }
+  // A part's name on screen: a bare tree word ('Roots') shows the paired label ('Roots: Spirit', or 'Roots: what grounds
+  // you' when the profile uses Plain wording); any other name shows as the tool gives it.
+  function partLabel(pt) {
+    var nm = pt.part || pt.name || pt.key, G = window.GGParts;
+    if (G && G.label && G.has(pt.key) && nm === G.tree(pt.key)) { var pl = false; try { pl = !!(C.plain && C.plain()); } catch (e) {} return G.label(pt.key, { plain: pl }); }
+    return nm;
+  }
+  // A marker's name: the tree word with the plain word below it (read aloud as "Roots: Spirit").
+  function markName(pt) {
+    var L = partLabel(pt), i = L.indexOf(': ');
+    return i > 0 ? esc(L.slice(0, i)) + '<span class="gt-sr">:</span><span class="gt-mark-word">' + esc(L.slice(i + 2)) + '</span>' : esc(L);
+  }
+  // Four markers sit in one row (two by two on a phone), the plain word small under the tree word.
+  function marksCss() {
+    if (document.getElementById('gt-m4-css')) return;
+    var st = document.createElement('style'); st.id = 'gt-m4-css';
+    st.textContent = '.gt-marks.gt-m4{grid-template-columns:repeat(4,minmax(0,1fr));}.gt-mark-word{display:block;font-size:12px;font-weight:400;opacity:.85;}'
+      + '@media (max-width:640px){.gt-marks.gt-m4{grid-template-columns:repeat(2,minmax(0,1fr));}}';
+    document.head.appendChild(st);
+  }
   function partsOn(s, d) { var x = s.days[d], set = {}; if (!x) return 0; (x.d || []).forEach(function (id) { set[id.split('|')[0]] = 1; }); return Object.keys(set).length; }
 
   /* ---------- season and week ---------- */
@@ -308,17 +341,19 @@
     var box = el(C.els.today); if (!box) return;
     var s = ensure();
     if (!s) { box.innerHTML = needProfile('today'); return; }
-    var d = today(), list = items(s), sc = sceneOf(s), parts = sc.parts, total = C.parts.length || 6, on = {};
+    var d = today(), list = items(s), sc = sceneOf(s), tk = tendKeys(), parts = tendOn(s, d), total = tk.length || 4, on = {};
     ((s.days[d] || {}).d || []).forEach(function (id) { on[id.split('|')[0]] = 1; });
     var seasonLine = s.start ? 'Season ' + (s.season || 1) + ', week ' + weekShown(s) + ' of 12' : 'Your season begins with your first full check-in';
     var count = Object.keys(s.days).filter(function (k) { return tended(s, k) && (!s.start || k >= s.start); }).length;
-    var marks = '<ul class="gt-marks" aria-label="Parts of your tree tended today">' + C.parts.map(function (pt) {
+    var shown = C.parts.filter(function (pt) { return tk.indexOf(pt.key) >= 0; });
+    marksCss();
+    var marks = '<ul class="gt-marks' + (shown.length === 4 ? ' gt-m4' : '') + '" aria-label="Parts of your tree tended today">' + shown.map(function (pt) {
       var lit = !!on[pt.key];
-      return '<li class="gt-mark' + (lit ? ' on' : '') + '" style="--pc:' + pt.color + '"><span class="gt-mark-dot" aria-hidden="true">' + (C.partIcon ? (C.partIcon(pt.key) || '') : '') + '</span><span class="gt-mark-name">' + esc(pt.part) + (lit ? '<span class="gt-sr">, tended today</span>' : '') + '</span></li>';
+      return '<li class="gt-mark' + (lit ? ' on' : '') + '" style="--pc:' + pt.color + '"><span class="gt-mark-dot" aria-hidden="true">' + (C.partIcon ? (C.partIcon(pt.key) || '') : '') + '</span><span class="gt-mark-name">' + markName(pt) + (lit ? '<span class="gt-sr">, tended today</span>' : '') + '</span></li>';
     }).join('') + '</ul>';
     var restBtn = list.length || sc.resting ? '<div class="gt-rest"><button type="button" class="btn btn-secondary btn-sm" aria-pressed="' + sc.resting + '" onclick="GGTend.rest()">' + (sc.resting ? 'End Rest Week' : 'Rest Week') + '</button><span class="gt-small">' + (sc.resting ? 'Come back whenever you are ready. Nothing is lost.' : 'Take a week to rest. Your tree stays warm and still.') + '</span></div>' : '';
     var html = '<div class="gt-card gt-today">' + sceneHtml(sc) + '<div class="gt-today-body">'
-      + '<div class="gt-today-top"><p class="gt-line">' + esc(sc.line) + '</p>' + (parts >= total ? '<p class="gt-small gt-count">All six parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small gt-count">' + parts + ' of ' + total + ' parts tended today.</p>' : '') + '</div>'
+      + '<div class="gt-today-top"><p class="gt-line">' + esc(sc.line) + '</p>' + (parts >= total ? '<p class="gt-small gt-count">All ' + numWord(total) + ' parts tended today. That is a full day.</p>' : parts ? '<p class="gt-small gt-count">' + parts + ' of ' + total + ' parts tended today.</p>' : '') + '</div>'
       + marks
       + '<div class="gt-today-foot"><dl class="gt-stats"><div><dt>Days Tended</dt><dd>' + count + '</dd></div><div><dt>Rings</dt><dd>' + ringN(s) + '</dd></div></dl><p class="gt-small gt-season-line">' + seasonLine + '</p></div>'
       + (restBtn || famOk() ? '<div class="gt-today-acts">' + restBtn + (famOk() ? '<div class="gt-fam-row"><button type="button" class="btn btn-secondary btn-sm" onclick="GGTend.shareFamily()">Share to Family</button></div>' : '') + '</div>' : '')
@@ -404,16 +439,16 @@
     var now = new Date(); if (!CAL) CAL = { y: now.getFullYear(), m: now.getMonth() };
     var first = new Date(CAL.y, CAL.m, 1), days = new Date(CAL.y, CAL.m + 1, 0).getDate(), lead = first.getDay();
     var name = first.toLocaleDateString(undefined, { month: 'long', year: 'numeric' });
-    var cells = '', n = 0, t = today(), anyRest = false;
+    var cells = '', n = 0, t = today(), anyRest = false, tk = tendKeys();
     for (var i = 0; i < lead; i++) cells += '<span class="gt-cal-pad"></span>';
     for (var d = 1; d <= days; d++) {
-      var k = CAL.y + '-' + pad(CAL.m + 1) + '-' + pad(d), on = tended(s, k), six = partsOn(s, k) >= 6, rest = !on && restOn(s, k);
+      var k = CAL.y + '-' + pad(CAL.m + 1) + '-' + pad(d), on = tended(s, k), six = tk.length > 0 && tendOn(s, k) >= tk.length, rest = !on && restOn(s, k);
       if (on) n++; if (rest) anyRest = true;
-      cells += '<span class="gt-cal-day' + (on ? ' on' : '') + (six ? ' six' : '') + (rest ? ' rest' : '') + (k === t ? ' today' : '') + '" aria-label="' + nice(k) + (six ? ', all six parts tended' : on ? ', tended' : rest ? ', Rest Week' : '') + '">' + d + '</span>';
+      cells += '<span class="gt-cal-day' + (on ? ' on' : '') + (six ? ' six' : '') + (rest ? ' rest' : '') + (k === t ? ' today' : '') + '" aria-label="' + nice(k) + (six ? ', all ' + numWord(tk.length) + ' parts tended' : on ? ', tended' : rest ? ', Rest Week' : '') + '">' + d + '</span>';
     }
     var wk = ['S', 'M', 'T', 'W', 'T', 'F', 'S'].map(function (x) { return '<span class="gt-cal-wd" aria-hidden="true">' + x + '</span>'; }).join('');
     return '<div class="gt-card gt-cal"><div class="gt-cal-head"><button type="button" onclick="GGTend.month(-1)" aria-label="Previous month">&lsaquo;</button><h3>' + esc(name) + '</h3><button type="button" onclick="GGTend.month(1)" aria-label="Next month">&rsaquo;</button></div>'
-      + '<div class="gt-cal-grid">' + wk + cells + '</div><p class="gt-small">' + n + ' day' + (n === 1 ? '' : 's') + ' tended this month. A filled day means you tended your tree. A ring means all six parts.' + (anyRest ? ' A soft dotted circle is a Rest Week day.' : '') + '</p></div>';
+      + '<div class="gt-cal-grid">' + wk + cells + '</div><p class="gt-small">' + n + ' day' + (n === 1 ? '' : 's') + ' tended this month. A filled day means you tended your tree. A ring means all ' + numWord(tk.length) + ' parts.' + (anyRest ? ' A soft dotted circle is a Rest Week day.' : '') + '</p></div>';
   }
 
   /* ---------- Season ---------- */
@@ -649,7 +684,7 @@
     var s = ensure(), age = libAge();
     var chips = el('gt-lib-parts');
     if (chips) chips.innerHTML = '<button type="button" class="gt-chip' + (!LIBQ.part ? ' on' : '') + '" aria-pressed="' + !LIBQ.part + '" onclick="GGTend.libPart(\'\')">All parts</button>'
-      + C.parts.map(function (pt) { var on = LIBQ.part === pt.key; return '<button type="button" class="gt-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" style="--pc:' + pt.color + '" onclick="GGTend.libPart(\'' + pt.key + '\')">' + esc(pt.part) + '</button>'; }).join('');
+      + C.parts.map(function (pt) { var on = LIBQ.part === pt.key; return '<button type="button" class="gt-chip' + (on ? ' on' : '') + '" aria-pressed="' + on + '" style="--pc:' + pt.color + '" onclick="GGTend.libPart(\'' + pt.key + '\')">' + esc(partLabel(pt)) + '</button>'; }).join('');
     var partOf = {}; C.parts.forEach(function (pt) { partOf[pt.key] = pt; });
     if (LIBQ.q && window.GGSearchLoad && LIBQ.engine !== false) { drawLibFind(box, s, age, partOf); return; }
     box.classList.remove('ggf');
@@ -712,7 +747,7 @@
     check: function (safe) {
       var s = ensure(); if (!s) return; var id = decodeURIComponent(safe), x = day(s, today(), true), i = x.d.indexOf(id), before = health(s);
       if (i >= 0) x.d.splice(i, 1); else x.d.push(id);
-      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()); if (C.onCheck) C.onCheck(true, id.split('|')[0], s, p, before); else if (p >= 6) toast('All six parts tended today.'); else if (before > 0) toast('The sun is finding your tree again.'); } else if (C.onCheck) C.onCheck(false, id.split('|')[0], s);
+      persist(); publish(s); renderToday(); if (i < 0) { perk(); var p = partsOn(s, today()), p4 = window.GGParts && GGParts.countTend ? GGParts.countTend(((s.days[today()] || {}).d || []).map(function (k) { return k.split('|')[0]; })) : p; if (C.onCheck) C.onCheck(true, id.split('|')[0], s, p, before); else if (p4 >= 4) toast('All four parts tended today.'); else if (before > 0) toast('The sun is finding your tree again.'); } else if (C.onCheck) C.onCheck(false, id.split('|')[0], s);
       renderWeek(); if (C.seasonExtra) renderSeason();
     },
     anchor: function (which) { var s = ensure(); if (!s) return; var x = day(s, today(), true), i = x.a.indexOf(which); if (i >= 0) x.a.splice(i, 1); else x.a.push(which); persist(); publish(s); renderToday(); if (i < 0) { perk(); if (C.onCheck) C.onCheck(true, '', s, partsOn(s, today()), 0); } renderWeek(); },

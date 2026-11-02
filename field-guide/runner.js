@@ -222,7 +222,7 @@ const crisisOn = (p, s) => !!((kit(p) || {}).crisis || (s && s.crisis));
 // ---------- fields: Chris's View ----------
 function chipsHTML(p, f){
   const single = f.type === 'scale' || !f.many;
-  return `<div class="fw-chips" role="group" aria-label="${esc(f.label || f.id)}">${opts(p, f).map(o => `<button type="button" class="chip" data-rka="chip" data-rkv="${esc(f.id + '|' + o.id)}"${single ? ' data-rks="1"' : ''} aria-pressed="${isOn(p, f, o.id)}"${fk('c|' + f.id + '|' + o.id)}>${esc(fill(o.t, p))}</button>`).join('')}</div>`;
+  return `<div class="fw-chips" role="group" aria-label="${esc(fill(f.label || f.id, p))}">${opts(p, f).map(o => `<button type="button" class="chip" data-rka="chip" data-rkv="${esc(f.id + '|' + o.id)}"${single ? ' data-rks="1"' : ''} aria-pressed="${isOn(p, f, o.id)}"${fk('c|' + f.id + '|' + o.id)}>${esc(fill(o.t, p))}</button>`).join('')}</div>`;
 }
 function listHTML(p, f){
   const rows = arr(p.v[f.id]);

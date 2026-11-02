@@ -126,8 +126,8 @@ const LC_TOPICS = [
   "practices": [
    "branches|Join and Go Three Times",
    "leaves|Steady Wake Time",
-   "trunk|Study Sprints",
-   "trunk|Weekly Reset",
+   "bark|Study Sprints",
+   "bark|Weekly Reset",
    "branches|Call Home",
    "bark|Speak Up About Your Mood"
   ],
@@ -221,12 +221,12 @@ const LC_TOPICS = [
   },
   "faith": "For some, faith shapes this question: work as a calling, a way to serve, or a gift to use well. Prayer, a mentor in a faith community, or quiet time can help someone listen for what's theirs to do. For others, the same question points to their values and the people they want to help. Either way, good work done with care for others carries its own dignity.",
   "practices": [
-   "trunk|Ask Someone About Their Path",
-   "trunk|Name Your Gifts",
-   "trunk|Big Choice Map",
-   "trunk|Start Strong at a New Job",
-   "trunk|Wins File",
-   "fruit|Your Own Timeline"
+   "branches|Ask Someone About Their Path",
+   "bark|Name Your Gifts",
+   "bark|Big Choice Map",
+   "bark|Start Strong at a New Job",
+   "bark|Wins File",
+   "bark|Your Own Timeline"
   ],
   "reach": [
    "Feeling stuck, hopeless, or like you have no future, for two weeks or more: talk with a doctor, a counselor, or someone you trust.",
@@ -317,11 +317,11 @@ const LC_TOPICS = [
   },
   "faith": "For some, faith speaks into a change of plans: a sense of being led, a calling that gets clearer by trying, or comfort that their worth doesn't rest on finishing one road. For others, meaning comes through values and the people they want to serve. If faith is part of your life, you might bring the decision there honestly, uncertainty and all. Either way, changing course can be part of finding what's truly yours to do.",
   "practices": [
-   "trunk|Big Choice Map",
+   "bark|Big Choice Map",
    "bark|Bounce Back From a Setback",
-   "trunk|Values Sort",
-   "trunk|Ask Someone About Their Path",
-   "fruit|Your Own Timeline",
+   "bark|Values Sort",
+   "branches|Ask Someone About Their Path",
+   "bark|Your Own Timeline",
    "leaves|Steady Wake Time"
   ],
   "reach": [
@@ -415,8 +415,8 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break",
    "bark|Slow Exhale",
    "bark|Bounce Back From a Setback",
-   "trunk|Study Sprints",
-   "trunk|Weekly Reset",
+   "bark|Study Sprints",
+   "bark|Weekly Reset",
    "leaves|Sleep"
   ],
   "reach": [
@@ -506,10 +506,10 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions teach that each person is made with purpose and their own gifts, and is loved before accomplishing anything. If faith is part of your life, that can be a steady place on a day when your brain won't cooperate. If it isn't, the same truth holds: your worth isn't measured in tasks finished, and you can stop fighting who you are.",
   "practices": [
-   "trunk|Study Sprints",
-   "trunk|Weekly Reset",
-   "fruit|Tiny Next Step",
-   "trunk|Name Your Gifts",
+   "bark|Study Sprints",
+   "bark|Weekly Reset",
+   "bark|Tiny Next Step",
+   "bark|Name Your Gifts",
    "branches|Ask for Help",
    "leaves|Movement"
   ],
@@ -603,10 +603,10 @@ const LC_TOPICS = [
   },
   "faith": "For some, this season raises calling questions: what am I made for, where am I being led, what's mine to do? Prayer, a mentor in a faith community, or quiet time can help someone listen. For others, the same question points to their values and the people they want to help. Either way, the search itself is part of how purpose grows.",
   "practices": [
-   "fruit|Your Own Timeline",
-   "trunk|Purpose Reflection",
-   "trunk|Ask Someone About Their Path",
-   "trunk|Weekly Reset",
+   "bark|Your Own Timeline",
+   "bark|Purpose Reflection",
+   "branches|Ask Someone About Their Path",
+   "bark|Weekly Reset",
    "branches|Make One Plan",
    "leaves|Steady Wake Time"
   ],
@@ -701,9 +701,9 @@ const LC_TOPICS = [
   },
   "faith": "Many people find meaning in good work and in a day of rest. If faith is part of your life, it may shape how you think about work, rest, and the people you serve on the job. Whether through faith or your own values, it's worth asking what kind of worker and person you want to be.",
   "practices": [
-   "trunk|Start Strong at a New Job",
+   "bark|Start Strong at a New Job",
    "branches|Work Friend",
-   "trunk|Wins File",
+   "bark|Wins File",
    "leaves|Steady Wake Time",
    "leaves|Shift Worker's Rest Plan",
    "bark|Bounce Back From a Setback"
@@ -798,9 +798,9 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions teach that a person's worth isn't measured by a paycheck or a title. If faith is part of your life, your community may offer practical help, connections, or simply people who will sit with you. In Plain terms: what you value and who you are stay with you between jobs.",
   "practices": [
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "leaves|Steady Wake Time",
-   "trunk|Ask Someone About Their Path",
+   "branches|Ask Someone About Their Path",
    "branches|Make One Plan",
    "bark|Bounce Back From a Setback",
    "bark|Money Check-in"
@@ -897,11 +897,11 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions speak of calling or vocation, and of discernment: listening over time for what fits. If faith is part of your life, it may help to bring this question to prayer, quiet, or a trusted guide in your community. In Plain terms: noticing what gives you energy and what drains it is a good way to listen.",
   "practices": [
-   "trunk|Values Sort",
-   "trunk|Big Choice Map",
-   "trunk|Ask Someone About Their Path",
-   "trunk|Name Your Gifts",
-   "fruit|Best Possible Self",
+   "bark|Values Sort",
+   "bark|Big Choice Map",
+   "branches|Ask Someone About Their Path",
+   "bark|Name Your Gifts",
+   "bark|Best Possible Self",
    "bark|Money Check-in"
   ],
   "reach": [
@@ -993,11 +993,11 @@ const LC_TOPICS = [
   "faith": "Many faith traditions and families teach generosity, gratitude, and contentment, and some practice giving a set share of what comes in. Whatever your values are, they can shape how you earn, save, spend, and give.",
   "practices": [
    "bark|Money Check-in",
-   "fruit|Starter Cushion",
-   "trunk|Life Skill of the Month",
-   "trunk|Values Sort",
+   "bark|Starter Cushion",
+   "bark|Life Skill of the Month",
+   "bark|Values Sort",
    "leaves|Cook on a Budget",
-   "fruit|Be Generous"
+   "branches|Be Generous"
   ],
   "reach": [
    "Scams, fake checks, or identity theft: report at reportfraud.ftc.gov, or identitytheft.gov for identity theft, and call your bank right away.",
@@ -1090,8 +1090,8 @@ const LC_TOPICS = [
   "practices": [
    "bark|Name It",
    "bark|Money Check-in",
-   "fruit|Tiny Next Step",
-   "fruit|Starter Cushion",
+   "bark|Tiny Next Step",
+   "bark|Starter Cushion",
    "bark|Worry Window",
    "branches|Ask for Help"
   ],
@@ -1190,7 +1190,7 @@ const LC_TOPICS = [
    "bark|Money Check-in",
    "bark|Phone Check",
    "bark|Slow Exhale",
-   "trunk|Values Sort"
+   "bark|Values Sort"
   ],
   "reach": [
    "Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342, any time. For people who bet, and for partners and families.",
@@ -1289,7 +1289,7 @@ const LC_TOPICS = [
   "practices": [
    "roots|What Holds Me Up",
    "leaves|Cook on a Budget",
-   "fruit|Starter Cushion",
+   "bark|Starter Cushion",
    "branches|Call Home",
    "branches|Join and Go Three Times",
    "leaves|Health Basics"
@@ -1478,10 +1478,10 @@ const LC_TOPICS = [
   },
   "faith": "For some people, a first home feels like something to be grateful for, or to bless in their own tradition's way. Whatever your values, they can shape how you treat your neighbors and your space. If faith is part of your life, it can be part of making this place home.",
   "practices": [
-   "trunk|Life Skill of the Month",
+   "bark|Life Skill of the Month",
    "bark|Money Check-in",
-   "fruit|Starter Cushion",
-   "trunk|Weekly Reset",
+   "bark|Starter Cushion",
+   "bark|Weekly Reset",
    "branches|Ask for Help",
    "bark|Before the Big Moment"
   ],
@@ -1579,12 +1579,12 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions honor both family and the step into adulthood, and some speak of returning home as a time of welcome and renewal. If faith is part of your family, it may offer shared ways to begin this chapter with grace. If it isn't, your family's own values can guide how you live together now.",
   "practices": [
-   "trunk|Big Choice Map",
-   "fruit|Your Own Timeline",
-   "fruit|Starter Cushion",
-   "fruit|Three Good Things",
+   "bark|Big Choice Map",
+   "bark|Your Own Timeline",
+   "bark|Starter Cushion",
+   "roots|Three Good Things",
    "branches|Make One Plan",
-   "trunk|Groundwork Page"
+   "bark|Groundwork Page"
   ],
   "reach": [
    "A low mood, anxiety, or substance use that came home with you, or that hasn't lifted: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays. SAMHSA National Helpline, 1-800-662-4357, any time.",
@@ -1677,7 +1677,7 @@ const LC_TOPICS = [
    "branches|Call Home",
    "branches|Make One Plan",
    "branches|Work Friend",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Loneliness or a low mood that hasn't lifted after a few months, or that keeps you from sleep, work, or school: talk with a doctor or counselor. NAMI HelpLine, 1-800-950-6264, or text NAMI to 62640, weekdays.",
@@ -1769,7 +1769,7 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "branches|Ask for Help",
    "roots|What Holds Me Up",
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "bark|My Safety Plan",
    "leaves|Health Basics"
   ],
@@ -1870,7 +1870,7 @@ const LC_TOPICS = [
    "branches|Work Friend",
    "branches|One Reach-Out a Day",
    "branches|Shared Meal",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Loneliness that has turned into weeks of low mood, or feeling like there's no point: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
@@ -1966,7 +1966,7 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break",
    "branches|Join and Go Three Times",
    "branches|Make One Plan",
-   "trunk|Serve Someone",
+   "branches|Serve Someone",
    "leaves|Morning Daylight"
   ],
   "reach": [
@@ -2065,11 +2065,11 @@ const LC_TOPICS = [
   },
   "faith": "If faith is part of your life, it may shape what you're looking for in a partner, how you date, and what pace feels right. Some people find meeting someone through a faith community or a shared practice meaningful. Some feel tension between their family's expectations and their own choices, and talking with a trusted mentor or faith leader can help. If faith isn't part of your life, your own values can guide you in the same way.",
   "practices": [
-   "trunk|Values Sort",
+   "bark|Values Sort",
    "branches|Respect Check",
    "bark|Self-Compassion Break",
    "branches|Active Listening",
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "bark|Name It"
   ],
   "reach": [
@@ -2170,7 +2170,7 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break",
    "branches|Shared Meal",
    "leaves|Movement",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Low mood, numbness, or losing interest in things for two weeks or more: talk with a doctor or counselor. The NAMI HelpLine can help you find support: call 1-800-950-6264 or text NAMI to 62640, weekdays.",
@@ -2375,7 +2375,7 @@ const LC_TOPICS = [
    "branches|Gratitude Letter",
    "branches|Active Listening",
    "branches|Friendship Repair",
-   "trunk|Values Sort",
+   "bark|Values Sort",
    "bark|Money Check-in",
    "branches|Shared Meal"
   ],
@@ -2471,8 +2471,8 @@ const LC_TOPICS = [
    "branches|Call Home",
    "branches|Active Listening",
    "branches|Gratitude Letter",
-   "trunk|Values Sort",
-   "fruit|Starter Cushion",
+   "bark|Values Sort",
+   "bark|Starter Cushion",
    "bark|Name It"
   ],
   "reach": [
@@ -2777,7 +2777,7 @@ const LC_TOPICS = [
    "leaves|Sleep",
    "leaves|Cook on a Budget",
    "bark|Self-Compassion Break",
-   "fruit|Starter Cushion"
+   "bark|Starter Cushion"
   ],
   "reach": [
    "Sadness, anxiety, or scary thoughts that last more than two weeks, for moms and dads: the National Maternal Mental Health Hotline, call or text 1-833-852-6262, any time, in English and Spanish. Or talk with your doctor.",
@@ -3176,12 +3176,12 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, honest sorrow has a long history there. Many traditions hold lament, words for feeling far away or empty, and the comfort of being carried by a community on dark days. Feeling numb doesn't mean you've failed at faith. If faith isn't part of your life, the same steadiness can come from people who keep showing up for you.",
   "practices": [
    "bark|Speak Up About Your Mood",
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "leaves|Walk or Jog",
    "leaves|Morning Daylight",
    "branches|One Reach-Out a Day",
    "bark|Self-Compassion Break",
-   "fruit|Your Own Timeline"
+   "bark|Your Own Timeline"
   ],
   "reach": [
    "Feeling low, numb, or uninterested in most things for two weeks or more: talk with a doctor, a clinic, or a counselor, and tell someone you trust.",
@@ -3561,11 +3561,11 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, caring for your body may feel like caring for a gift, and a faith community can sometimes connect you with people who know how to navigate insurance or find a clinic. If faith isn't part of your life, the same idea holds: your health is worth your time.",
   "practices": [
    "leaves|Health Basics",
-   "trunk|Life Skill of the Month",
-   "trunk|Groundwork Page",
+   "bark|Life Skill of the Month",
+   "bark|Groundwork Page",
    "bark|Money Check-in",
    "bark|Speak Up About Your Mood",
-   "trunk|Weekly Reset"
+   "bark|Weekly Reset"
   ],
   "reach": [
    "Questions about your plan, your network, or a bill: call the member services number on your insurance card.",
@@ -3664,7 +3664,7 @@ const LC_TOPICS = [
    "bark|Speak Up About Your Mood",
    "branches|Ask for Help",
    "branches|One Reach-Out a Day",
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "bark|Slow Exhale"
   ],
   "reach": [
@@ -4169,7 +4169,7 @@ const LC_TOPICS = [
   },
   "faith": "If faith is part of your life, it may hold clear values about sex and faithfulness, and it may also teach mercy, confession, and new beginnings. Notice which of those you're hearing most right now. For some people, faith is a strong support in changing a habit. For others, it adds a weight of shame that makes the cycle worse. A faith leader or group that pairs honesty with mercy can help. If faith isn't part of your life, your own values are the compass, and they're worth living by.",
   "practices": [
-   "trunk|Values Sort",
+   "bark|Values Sort",
    "bark|Phone Check",
    "leaves|Charge It Across the Room",
    "bark|Self-Compassion Break",
@@ -4266,9 +4266,9 @@ const LC_TOPICS = [
   },
   "faith": "Some service members lean on faith in military life: a chaplain, a service on base, or a practice they carry from home. Others find meaning in their unit, their oath, and the people they serve beside. Chaplains serve everyone, of any faith or none. Grounded welcomes all faith traditions and everything in-between.",
   "practices": [
-   "trunk|Values Sort",
-   "trunk|Big Choice Map",
-   "trunk|Ask Someone About Their Path",
+   "bark|Values Sort",
+   "bark|Big Choice Map",
+   "branches|Ask Someone About Their Path",
    "leaves|Shift Worker's Rest Plan",
    "bark|Money Check-in",
    "branches|Call Home"
@@ -4363,7 +4363,7 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions have rituals for warriors returning home, to honor their service and help them lay down what they carried. For some veterans, faith is a steady anchor; for others, what they saw shook it. Chaplains, including VA chaplains, serve people of any faith or none, and many are trained to help with moral injury. Grounded welcomes all faith traditions and everything in-between.",
   "practices": [
-   "trunk|Purpose Reflection",
+   "bark|Purpose Reflection",
    "branches|One Reach-Out a Day",
    "bark|Expressive Writing",
    "leaves|Walk or Jog",
@@ -4574,7 +4574,7 @@ const LC_TOPICS = [
    "roots|Spiritual Direction",
    "roots|Sabbath Hour",
    "branches|Active Listening",
-   "trunk|Journal"
+   "bark|Journal"
   ],
   "reach": [
    "Questions tangled with depression, anxiety, or past harm: a counselor who respects faith can help. NAMI HelpLine: 1-800-950-6264, or text NAMI to 62640 (weekdays; not a crisis line).",
@@ -4754,12 +4754,12 @@ const LC_TOPICS = [
   },
   "faith": "For some people, purpose has a faith side: a sense of calling, vocation, or being drawn toward something, often revealed step by step. Many traditions treat discernment as a practice, with prayer, community, and patience. For others, purpose rests in values, people, and work that matters. Both are welcome. Grounded welcomes all faith traditions and everything in-between.",
   "practices": [
-   "trunk|Purpose Reflection",
-   "trunk|Name Your Gifts",
-   "trunk|Values Sort",
-   "trunk|Serve Someone",
-   "trunk|Ask Someone About Their Path",
-   "fruit|Your Own Timeline"
+   "bark|Purpose Reflection",
+   "bark|Name Your Gifts",
+   "bark|Values Sort",
+   "branches|Serve Someone",
+   "branches|Ask Someone About Their Path",
+   "bark|Your Own Timeline"
   ],
   "reach": [
    "Feeling lost that turns into hopelessness, or low mood most days for two weeks or more: talk with a counselor or doctor. NAMI HelpLine: 1-800-950-6264, or text NAMI to 62640 (weekdays; not a crisis line).",
@@ -4846,8 +4846,8 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, a campus ministry or a congregation near school can be a place to belong, and it's fair to ask about access there too: a ramp, a sound system, a quiet place. If faith isn't part of your life, any community built around what you care about can do the same.",
   "practices": [
    "branches|Say What You Need",
-   "trunk|Study Sprints",
-   "trunk|Weekly Reset",
+   "bark|Study Sprints",
+   "bark|Weekly Reset",
    "leaves|Pacing Your Day",
    "bark|Before the Big Moment",
    "branches|Ask for Help"
@@ -4957,11 +4957,11 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, it may shape how you think about work, rest, and your worth, and some traditions teach that a person's value isn't measured by output. If faith isn't part of your life, the same truth holds: your worth doesn't depend on how much your body can do on a given day.",
   "practices": [
    "branches|Say What You Need",
-   "trunk|Start Strong at a New Job",
+   "bark|Start Strong at a New Job",
    "leaves|Pacing Your Day",
    "leaves|Rest Before You're Spent",
    "bark|Hard-Day Plan",
-   "trunk|Worth Beyond Doing"
+   "bark|Worth Beyond Doing"
   ],
   "reach": [
    "For confidential guidance on workplace accommodations: the Job Accommodation Network, at askjan.org.",
@@ -5074,8 +5074,8 @@ const LC_TOPICS = [
    "leaves|Rest Before You're Spent",
    "bark|Body Kindness Scan",
    "bark|Hard-Day Plan",
-   "trunk|Worth Beyond Doing",
-   "fruit|Something to Look Forward To"
+   "bark|Worth Beyond Doing",
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Pain or fatigue that's new, getting worse, or changing: see your doctor or clinic. Bring your notes.",
@@ -5287,9 +5287,9 @@ const LC_TOPICS = [
   "practices": [
    "bark|Quiet the Senses",
    "branches|Plan Your Answer",
-   "trunk|Weekly Reset",
+   "bark|Weekly Reset",
    "branches|Join and Go Three Times",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "branches|Say What You Need"
   ],
   "reach": [
@@ -5394,7 +5394,7 @@ const LC_TOPICS = [
    "branches|One Reach-Out a Day",
    "leaves|Rest Before You're Spent",
    "leaves|Appointment Prep",
-   "trunk|Name Your Gifts"
+   "bark|Name Your Gifts"
   ],
   "reach": [
    "For a crisis, in ASL: 988 by videophone (use ASL Now on the 988 website), or text 988, any time.",
@@ -5499,8 +5499,8 @@ const LC_TOPICS = [
    "branches|Say What You Need",
    "leaves|Appointment Prep",
    "branches|Join and Go Three Times",
-   "fruit|Savoring Walk",
-   "trunk|Name Your Gifts",
+   "bark|Savoring Walk",
+   "bark|Name Your Gifts",
    "branches|Ask for Help"
   ],
   "reach": [
@@ -5602,9 +5602,9 @@ const LC_TOPICS = [
    "branches|Say What You Need",
    "branches|Plan Your Answer",
    "branches|Respect Check",
-   "trunk|Worth Beyond Doing",
+   "bark|Worth Beyond Doing",
    "leaves|Pacing Your Day",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "If someone you're dating or with is controlling, threatening, or hurting you: Love Is Respect, call 1-866-331-9474, or text LOVEIS to 22522, any time.",
@@ -5712,9 +5712,9 @@ const LC_TOPICS = [
    "branches|A Break for the Helper",
    "branches|Ask for Help",
    "bark|Self-Compassion Break",
-   "trunk|Big Choice Map",
+   "bark|Big Choice Map",
    "leaves|Rest Before You're Spent",
-   "fruit|Your Own Timeline"
+   "bark|Your Own Timeline"
   ],
   "reach": [
    "For help with bills, food, housing, and local services: Minnesota 211, dial 211 or call 1-800-543-7709, any time.",
@@ -5949,7 +5949,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "leaves|Steady Wake Time",
    "leaves|Walk or Jog",
    "branches|One Reach-Out a Day",
-   "fruit|Celebrate a Win"
+   "bark|Celebrate a Win"
   ],
   "reach": [
    "Stopping alcohol, benzodiazepines, or other sedatives: talk with a doctor first. Shaking, sweating, seeing or hearing things, confusion, or a seizure after stopping need medical help right away. Call 911 for a seizure.",
@@ -6055,7 +6055,7 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "branches|Look Out for a Friend",
    "branches|Join and Go Three Times",
    "bark|Slow Exhale",
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "leaves|Sleep"
   ],
   "reach": [
@@ -6382,9 +6382,9 @@ window.BIRCH_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "leaves|Steady Wake Time",
    "leaves|Appointment Prep",
    "bark|Hard-Day Plan",
-   "trunk|Weekly Reset",
+   "bark|Weekly Reset",
    "branches|Ask for Help",
-   "trunk|Serve Someone"
+   "branches|Serve Someone"
   ],
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or has blue or gray lips: call 911, give naloxone if you have it, and stay with them. After treatment, tolerance is lower, so an old amount of opioids can be deadly.",

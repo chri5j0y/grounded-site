@@ -12,6 +12,7 @@
      opts.title      shown at the top (Title Case)
      opts.voice      'brian' or 'jenny' (else the script's voice, else the tree's narrator)
      opts.kid        true for the kid look (bigger, playful)
+     opts.plain      true (or a function returning true) for Plain wording: Roots reads Roots: what grounds you (GWG BLD 907)
      opts.questions  steps in order. A question: {id, part, text, say?, help?, type: 'choice'|'scale'|'multi'|'text',
                      options: [{v, label, short?, edge?}], low?, high?, noTip?, tags?}. say is what the voice reads
                      when it differs from text. A Growth Plan step: {type: 'plan', part, label?, choices: [{name, how,
@@ -67,7 +68,11 @@
   var REC = { base: 'https://audio.growwithgrounded.com/', round: 'v1' };
   var TREE_VOICE = { maple: 'jenny', aspen: 'jenny', pine: 'jenny', grove: 'jenny', birch: 'brian', oak: 'brian', sequoia: 'brian', willow: 'brian' };
   var HEROES = ['maple', 'aspen', 'pine', 'birch', 'oak', 'sequoia', 'willow', 'grove'];
-  var PARTS = { roots: 'Roots', trunk: 'Trunk', bark: 'Bark', branches: 'Branches', leaves: 'Leaves', fruit: 'Fruit' };
+  // Part labels from shared/gg-parts.js (GWG BLD 907): the tree word paired with the plain word (Roots: Spirit), or the
+  // Plain wording (Roots: what grounds you) when a run passes opts.plain. The words here stand in when it is missing.
+  var PARTS = { roots: 'Roots: Spirit', trunk: 'Trunk: Meaning', bark: 'Bark: Mind', branches: 'Branches: Relationships', leaves: 'Leaves: Body', fruit: 'Fruit: Hope' };
+  var PLAIN = false;
+  function partLabel(p) { var G = window.GGParts; if (G && G.label && G.has(p)) return G.label(p, { plain: PLAIN }); return PLAIN && p === 'roots' ? 'Roots: what grounds you' : PARTS[p]; }
   var RHY = { d: 'Daily', f: 'A Few Times a Week', w: 'Weekly', n: 'Now and Then' };
   var RESUME = ["Welcome back. We'll pick up right where you left off."];
   var QUIET = { grown: 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.',
@@ -117,7 +122,7 @@
     return K[kind] || (kind === 'plan' ? {} : K.full || K.checkin || {});
   }
   function voiceOf(o, s) { var v = o.voice || (s && s.voice) || TREE_VOICE[o.tree] || 'brian'; return /^[a-z]+$/.test(v) ? v : 'brian'; }
-  function partName(p, step) { return (step && step.label) || PARTS[p] || (p ? String(p).charAt(0).toUpperCase() + String(p).slice(1) : ''); }
+  function partName(p, step) { return (step && step.label) || partLabel(p) || (p ? String(p).charAt(0).toUpperCase() + String(p).slice(1) : ''); }
   function rhythmOf(tree, part, c) {
     var R = ((window.GG_RHYTHM || {})[tree] || {})[part + '|' + c.name] || {};
     var how = c.how != null ? c.how : R.how;
@@ -228,6 +233,7 @@
   function run(opts) {
     var o = opts || {};
     if (CUR) CUR.close(true);
+    try { PLAIN = !!(typeof o.plain === 'function' ? o.plain() : o.plain); } catch (e) { PLAIN = false; }
     ensureCss();
     var s = scriptOf(o), voice = voiceOf(o, s), kind = o.kind || 'full', K = kindOf(s, kind), KP = kindOf(s, 'plan');
     var steps = (o.questions || []).filter(Boolean), Q = steps.filter(function (q) { return q.type !== 'plan'; });

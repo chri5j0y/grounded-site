@@ -18557,7 +18557,7 @@ window.GG_LEARN_GUIDES.oak = {
        "Meaning and hope"
       ]
      ],
-     "say": "Sobriety is more than stopping. It's growing the whole tree. Your leaves, your body: sleep, real food, water, movement, and breath. Your bark, your mind: feelings that were numbed, now named and healed over. Your branches: the people who walk with you. And your trunk and fruit: meaning, and hope for what's growing.",
+     "say": "Sobriety is more than stopping. It's growing the whole tree. Your leaves, your body: sleep, real food, water, movement, and breath. Your bark, your mind: feelings that were numbed, now named and healed over. Your branches: the people who walk with you. And your trunk and fruit, meaning and hope, grow from all you tend.",
      "cue": {
       "at": [
        2,

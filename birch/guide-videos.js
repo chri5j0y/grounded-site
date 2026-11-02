@@ -8302,7 +8302,7 @@ window.GG_LEARN_GUIDES.birch = {
       "k": "card",
       "title": "In your Birch check-in",
       "body": "Open questions. Everything stays on your device, just for you.",
-      "say": "Your Birch check-in asks open questions about your six parts. Your answers stay on your device. Everything stays just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
+      "say": "Your Birch check-in asks open questions about your whole tree. Your answers stay on your device. Everything stays just for you, even with a helper you chose. So reaching out is yours to do, and these lines are ready when you are."
      },
      {
       "k": "big",

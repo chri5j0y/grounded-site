@@ -595,7 +595,7 @@ window.GG_LEARN_PAGES = {
         ],
         [
          "Tend together:",
-         "In The Grove, Plant a Seed, in Together under Fruit, keeps your family growing side by side."
+         "In The Grove, Plant a Seed, in Together under Roots, keeps your family growing side by side."
         ]
        ]
       ]

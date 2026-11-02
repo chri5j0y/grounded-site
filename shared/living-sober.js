@@ -22,11 +22,11 @@
   'use strict';
   if (window.GGLivingSober) return;
   var PAGE = 'https://growwithgrounded.com/living-sober';
-  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b906', LESSONS = '/shared/learn-lessons.js?v=b902';
+  var READ = '/read.js?v=b813', LEARN = '/shared/gg-learn.js?v=b907', LESSONS = '/shared/learn-lessons.js?v=b907';
   var ACC = '#4E7D6A';
   // Start Here: the most welcoming three of Oak's Growing a Healthy Tree (shared/learn-lessons.js, track oak-sober).
   var START = [
-    { id: 'ok-ls-tree', title: 'The Healthy Tree', mins: 6, blurb: 'The six parts of your tree, and Chris’s three kinds of tools: mind, body, and spirit.' },
+    { id: 'ok-ls-tree', title: 'The Healthy Tree', mins: 6, blurb: 'Tend the four parts of your tree, and watch meaning and hope grow, with Chris’s three kinds of tools: mind, body, and spirit.' },
     { id: 'ok-ls-morning', title: 'A First Morning Rhythm', mins: 4, blurb: 'Water, light, breath, a choice, and a short walk to start a Sober day.' },
     { id: 'ok-ls-breathe', title: 'Breathe Through It', mins: 4, blurb: 'Slow, low, and long: a breath for cravings, anger, and hard nights.' }
   ];

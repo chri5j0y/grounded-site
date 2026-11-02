@@ -2,6 +2,8 @@
    GUIDED CHECK-IN SCRIPT . THE GROVE (shared/guided/grove.js), GWG BLD 886
    The spoken guide moments for The Grove's guided Group Check-in and the
    guided Growth Plan, read by shared/gg-guided.js (window.GGGuided).
+   BLD 907: tend four, grow two. The Growth Plan walks the four parts we tend
+   (the Trunk and Fruit plan lines are retired; they grow from the tending).
    Questions are never copied here: the engine reads them live from The
    Grove (questionsFor(kind) and qList(kind, quick) in grove/app.js, which
    read window.GROVE_KINDS.questions in grove/kinds.js), so the spoken
@@ -170,17 +172,13 @@
           'Anything can be changed later. Simply choose what feels right for this season.'
         ],
         edges: [
-          'First, our Growing Edges. The suggested ones come from our check-in, and any part can be chosen.',
+          'First, our Growing Edges. The suggested ones come from our check-in, and any of the four parts we tend can be chosen.',
           'Pick one or two parts to grow this season.'
         ],
         part: {
           roots: [
             'Roots are what steady us. Growing here gives every other part something to stand on.',
             'When our roots are tended, hard seasons feel more held.'
-          ],
-          trunk: [
-            'Trunk is what we live for together. Growing here helps us keep what matters most at the center.',
-            'A shared purpose makes ordinary days feel like they count.'
           ],
           bark: [
             'Bark is how we meet big feelings. Growing here helps our time together feel calmer and safer.',
@@ -193,10 +191,6 @@
           leaves: [
             'Leaves are rest, food, movement, and play. Growing here gives everyone more energy for each other.',
             'A steadier rhythm of rest, meals, and movement lifts the whole circle.'
-          ],
-          fruit: [
-            'Fruit is what we look forward to and what we give. Growing here helps us see the good together.',
-            'Shared hope and celebration make a season feel full.'
           ]
         },
         anchor: [

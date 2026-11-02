@@ -77,7 +77,7 @@
     let ended = '';
     hush();
     GGGuided.run({
-      tree: 'maple', kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true,
+      tree: 'maple', kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain,
       questions: Q, answers: A, script: script([kind], grown, plain), isEdge, quiet: quiet(),
       onAnswer: put,
       onDone: () => {
@@ -112,7 +112,7 @@
     if (!W.started) { GGTend.act('fullCheckin'); return true; }
     let ended = '';
     GGGuided.run({
-      tree: 'maple', kind: 'week', title: "This Week's Check-in", voice: 'jenny', kid: true, questions: W.qs, answers: {},
+      tree: 'maple', kind: 'week', title: "This Week's Check-in", voice: 'jenny', kid: true, plain: isPlain, questions: W.qs, answers: {},
       script: script(['week'], S.mode === 'grown', isPlain()), isEdge, quiet: quiet(),
       onDone: r => { ended = 'done'; if (S.treeTab !== 'week') mpTab('week'); GGTend.saveWeekAns(r.answers); },
       onReadAll: ans => { ended = 'read'; weekForm(ans); }
@@ -151,7 +151,9 @@
   function planSteps(base) {
     const R = (window.GG_RHYTHM || {}).maple || {}, young = isK2(MP_KID.grade);
     const answers = (MP_KID.checkins[MP_KID.checkins.length - 1] || {}).answers || {};
-    const sug = suggestedParts(answers), order = sug.concat(PARTS.map(p => p.key).filter(k => !sug.includes(k)));
+    // The four tended parts only (GWG BLD 907): Trunk and Fruit grow from that tending and get no practices.
+    const tends = k => !window.GGParts || !GGParts.tend || GGParts.tend(k);
+    const sug = suggestedParts(answers).filter(tends), order = sug.concat(PARTS.map(p => p.key).filter(k => tends(k) && !sug.includes(k)));
     const life = mpLifeUse(MP_KID);
     return order.map(k => {
       const sel = base[k].selected;
@@ -181,7 +183,7 @@
     steps.forEach(st => { cur[st.part] = base[st.part].selected.filter(n => st.choices.some(c => c.name === n)); });
     let ended = '';
     GGGuided.run({
-      tree: 'maple', kind: 'plan', title: 'My Growth Plan', voice: 'jenny', kid: true, questions: steps, plan: cur,
+      tree: 'maple', kind: 'plan', title: 'My Growth Plan', voice: 'jenny', kid: true, plain: isPlain, questions: steps, plan: cur,
       script: script(['plan'], S.mode === 'grown', isPlain()), quiet: quiet(),
       onPlan: (part, names) => { picked[part] = names; },
       onDone: r => {

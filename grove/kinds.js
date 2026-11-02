@@ -1978,7 +1978,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "serve-together",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -1997,7 +1997,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "our-family-story",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family"
    ],
@@ -2012,7 +2012,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "weekly-look-ahead",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "family",
     "group",
@@ -2027,7 +2027,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "youngest-leads",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family"
    ],
@@ -2038,7 +2038,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "name-a-gift",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -2053,7 +2053,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "make-and-give",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -2072,7 +2072,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "share-the-work",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "faith",
@@ -2087,7 +2087,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "teach-each-other",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -2101,7 +2101,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "giving-jar",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -2114,7 +2114,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "ask-the-elders",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "faith"
@@ -2130,7 +2130,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "neighbor-map",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "family",
     "faith"
@@ -2142,7 +2142,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "stop-doing",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "family",
     "faith",
@@ -2157,7 +2157,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "class-jobs",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2168,7 +2168,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "class-promise",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2179,7 +2179,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "class-goal",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "classroom"
    ],
@@ -2190,7 +2190,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "leader-of-the-day",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2202,7 +2202,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "group-agreements",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom",
     "faith",
@@ -2220,7 +2220,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "work-were-proud-of",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "classroom",
     "team"
@@ -2232,7 +2232,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "buddy-class",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2243,7 +2243,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "class-museum",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2254,7 +2254,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "school-helpers",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -2265,7 +2265,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "why-we-gather",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "faith",
     "group"
@@ -2277,7 +2277,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "using-our-gifts",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "faith",
     "group",
@@ -2289,7 +2289,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "story-that-matters",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "faith",
     "group",
@@ -2303,7 +2303,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "study-together",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "faith",
     "group"
@@ -2324,7 +2324,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "mentor-pairs",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "faith",
     "group",
@@ -2337,7 +2337,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "purpose-check",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "group",
     "team"
@@ -2349,7 +2349,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "bless-the-neighborhood",
-   "part": "trunk",
+   "part": "roots",
    "kinds": [
     "faith",
     "group"
@@ -2369,7 +2369,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "bless-the-work",
-   "part": "trunk",
+   "part": "roots",
    "kinds": [
     "faith"
    ],
@@ -2384,7 +2384,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "how-my-part-fits",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "team"
    ],
@@ -2394,7 +2394,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "learning-from-the-day",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "group",
     "team"
@@ -2406,7 +2406,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "shadow-a-teammate",
-   "part": "trunk",
+   "part": "branches",
    "kinds": [
     "team"
    ],
@@ -2416,7 +2416,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "next-right-step",
-   "part": "trunk",
+   "part": "bark",
    "kinds": [
     "family",
     "group",
@@ -4015,7 +4015,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "gratitude-jar",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "family",
     "classroom",
@@ -4031,7 +4031,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "marking-days",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "family",
     "faith"
@@ -4048,7 +4048,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "hope-wall",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family",
     "classroom",
@@ -4062,7 +4062,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "looking-back",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family",
     "classroom",
@@ -4078,7 +4078,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "power-of-yet",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family",
     "classroom"
@@ -4094,7 +4094,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "future-letter",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family",
     "classroom",
@@ -4107,7 +4107,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "hope-board",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family"
    ],
@@ -4118,7 +4118,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "hope-in-hard-times",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "family",
     "faith",
@@ -4136,7 +4136,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "time-capsule",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "family"
    ],
@@ -4147,7 +4147,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "gratitude-visit",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "family",
     "group",
@@ -4163,7 +4163,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "laugh-together",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "family",
     "group",
@@ -4176,7 +4176,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "hope-stones",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "family",
     "classroom",
@@ -4189,7 +4189,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "celebrate-a-class-win",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -4200,7 +4200,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "ending-well",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "classroom",
     "faith",
@@ -4217,7 +4217,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "goodbye-circle",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "classroom"
    ],
@@ -4229,7 +4229,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "small-wins",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "classroom",
     "group",
@@ -4243,7 +4243,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "thank-you-wall",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "classroom"
    ],
@@ -4254,7 +4254,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "proud-moments",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "classroom"
    ],
@@ -4265,7 +4265,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "class-memory-book",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "classroom"
    ],
@@ -4276,7 +4276,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "milestone",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "faith",
     "group",
@@ -4288,7 +4288,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "remembering-circle",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "faith",
     "group",
@@ -4304,7 +4304,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "closing-thanks",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "faith",
     "group",
@@ -4317,7 +4317,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "blessing-for-the-road",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "faith",
     "group"
@@ -4333,7 +4333,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "harvest-thanks",
-   "part": "fruit",
+   "part": "roots",
    "kinds": [
     "family",
     "faith"
@@ -4345,7 +4345,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "story-night",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "faith",
     "group"
@@ -4356,7 +4356,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "celebrate-together",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "group",
     "team"
@@ -4367,7 +4367,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "next-good-thing",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "group",
     "team"
@@ -4378,7 +4378,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "year-in-review",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "team"
    ],
@@ -4388,7 +4388,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "notes-from-those-served",
-   "part": "fruit",
+   "part": "branches",
    "kinds": [
     "team"
    ],
@@ -4399,7 +4399,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "hope-for-next-season",
-   "part": "fruit",
+   "part": "bark",
    "kinds": [
     "team"
    ],

@@ -100,7 +100,7 @@ const LC_TOPICS = [
     help: ["Invite them to small, low-pressure things.", "Help with a practical task: a meal, a ride, a call.", "Help them find a doctor or counselor, and follow up."],
     you: "Supporting someone who is depressed is tiring. Keep your own supports, and share the load with others." },
   faith: "Lament is one of the oldest forms of prayer. Your tradition likely has room for sorrow that doesn't resolve quickly. Being carried by a community on dark days is itself a kind of faith.",
-  practices: ["leaves|Sleep", "leaves|Movement", "branches|Friends", "trunk|Talk With a Therapist"],
+  practices: ["leaves|Sleep", "leaves|Movement", "branches|Friends", "bark|Talk With a Therapist"],
   reach: ["Sadness lasting more than two weeks, or getting in the way of daily life.", "Thoughts of death or suicide: call or text 988 now."],
   more: [L.nami, L.lifeline], kids: "sadness" },
 
@@ -117,7 +117,7 @@ const LC_TOPICS = [
     help: ["Make a regular plan: a weekly walk or call.", "Invite them into your circles.", "Notice people who have recently lost a spouse, moved, or retired."],
     you: "You can't be someone's only connection. Help them build more than one." },
   faith: "Faith communities were built for belonging. If yours feels far, look for small groups, service teams, or a friendly chaplain who can help you find a way in.",
-  practices: ["branches|Friends", "branches|Neighbors", "branches|Clubs", "fruit|Volunteer"],
+  practices: ["branches|Friends", "branches|Neighbors", "branches|Clubs", "branches|Volunteer"],
   reach: ["Loneliness that has turned into lasting sadness or hopelessness."],
   more: [L.apa, L.gg] },
 
@@ -151,7 +151,7 @@ const LC_TOPICS = [
     help: ["Talk when things are calm.", "Name the impact kindly and clearly.", "Encourage support if anger is damaging relationships."],
     you: "Your safety comes first. If anger turns threatening, see the guide on domestic violence." },
   faith: "Many traditions honor righteous anger at injustice, and also teach that anger held too long poisons the one who carries it.",
-  practices: ["leaves|Movement", "leaves|Breathe", "fruit|Make Peace", "trunk|Journal"],
+  practices: ["leaves|Movement", "leaves|Breathe", "branches|Make Peace", "bark|Journal"],
   reach: ["Anger that leads to violence, threats, or frightened family members.", "Anger that masks deep depression or trauma."],
   more: [L.apa] },
 
@@ -168,7 +168,7 @@ const LC_TOPICS = [
     help: ["Help them think about repair.", "Stay close after they share."],
     you: "Listening to confession is holy work. Keep what you hear confidential unless someone is in danger." },
   faith: "Most traditions have paths of confession, forgiveness, and restoration. Grace doesn't erase responsibility; it makes it possible to carry.",
-  practices: ["roots|Prayer", "fruit|Make Peace", "trunk|Talk With a Therapist", "trunk|Journal"],
+  practices: ["roots|Prayer", "branches|Make Peace", "bark|Talk With a Therapist", "bark|Journal"],
   reach: ["Shame tied to trauma or abuse.", "Thoughts that you'd be better off dead: call or text 988."],
   more: [L.apa, L.gg] },
 
@@ -185,7 +185,7 @@ const LC_TOPICS = [
     help: ["Invite them into meaningful work.", "Name the strengths you see in them."],
     you: "Accompany the question without rushing the answer." },
   faith: "Many traditions speak of calling, vocation, or a path revealed step by step. Discernment is a practice, not a single moment.",
-  practices: ["trunk|Write Your Story", "trunk|Plan the Future", "fruit|Volunteer", "trunk|Keep Learning"],
+  practices: ["bark|Write Your Story", "bark|Plan the Future", "branches|Volunteer", "bark|Keep Learning"],
   reach: ["Emptiness that becomes hopelessness or depression."],
   more: [L.gg] },
 
@@ -203,7 +203,7 @@ const LC_TOPICS = [
     help: ["Call or text 988 together.", "Help remove means of harm."],
     you: "See the guide on when someone else is thinking about suicide." },
   faith: "You are loved beyond what you can feel right now. Many people who survived their darkest night describe being carried by grace, by community, and by professional care together.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist", "leaves|Breathe"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist", "leaves|Breathe"],
   reach: ["Call or text 988, the Suicide and Crisis Lifeline, any time. Veterans: call 988 and press 1.", "Call 911 if you are in immediate danger.", "Crisis Text Line: text HOME to 741741."],
   more: [L.lifeline, L.afsp] },
 
@@ -220,7 +220,7 @@ const LC_TOPICS = [
     help: ["Stay with them if they are in danger, and call 911 if needed.", "Help secure medications and firearms.", "Follow up in the days and weeks after."],
     you: "Supporting someone through this is heavy. Get support for yourself, too." },
   faith: "Presence is one of the most sacred things you can offer. Sitting with someone in the dark, and getting them to help, is holy work.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist"],
   reach: ["Call or text 988 any time, including for advice on how to help.", "Call 911 in immediate danger."],
   more: [L.lifeline, L.afsp, L.nami] },
 
@@ -237,7 +237,7 @@ const LC_TOPICS = [
     help: ["Move the conversation somewhere quieter, with fewer people watching.", "Let one person do the talking.", "Offer something concrete: water, a chair, a phone call, a clear answer to their question.", "Know your way out, and call for help early rather than late."],
     you: "Even when it goes well, your body holds the adrenaline for a while. Walk, drink water, and debrief with a coworker or friend. If it keeps happening where you work, ask for de-escalation training and a safety plan." },
   faith: "An old proverb says a gentle answer turns away wrath, and many traditions call peacemaking holy work. Sometimes the most spiritual thing you can do in a heated room is breathe slowly, lower your voice, and see the frightened person under the anger.",
-  practices: ["leaves|Breathe", "bark|Mindfulness", "fruit|Make Peace", "branches|Colleagues"],
+  practices: ["leaves|Breathe", "bark|Mindfulness", "branches|Make Peace", "branches|Colleagues"],
   reach: ["Anyone has a weapon, makes a threat, or you feel unsafe: leave and call 911.", "The person talks about hurting themselves or not wanting to be alive: stay with them if it's safe, and call or text 988.", "Blowups keep happening at home and you feel afraid: see the guide “When home isn't safe.”"],
   more: [L.apa, ["Crisis Prevention Institute", "https://www.crisisprevention.com"]], kids: "meltdown" },
 
@@ -254,7 +254,7 @@ const LC_TOPICS = [
     help: ["Share the hotline number privately.", "Offer a safe place or practical help.", "Stay in touch without judgment."],
     you: "If children are in danger, report it. Your safety matters too." },
   faith: "No tradition requires anyone to stay in danger. Many faith leaders now recognize this clearly. Your safety honors the sacredness of your life.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist"],
   reach: ["National Domestic Violence Hotline: 1-800-799-7233, or text START to 88788.", "Call 911 if you are in immediate danger."],
   more: [L.hotline], kids: "home-conflict" },
 
@@ -271,7 +271,7 @@ const LC_TOPICS = [
     help: ["Let them lead.", "Help them find trauma-informed care.", "Respect boundaries around touch and privacy."],
     you: "Hearing someone's trauma can affect you. Get support for yourself." },
   faith: "Some survivors were harmed by religious people or leaders. It is okay to heal your faith slowly, or to look for it in new places. The sacred is not the same as the people who misused it.",
-  practices: ["leaves|Breathe", "trunk|Talk With a Therapist", "bark|Mindfulness"],
+  practices: ["leaves|Breathe", "bark|Talk With a Therapist", "bark|Mindfulness"],
   reach: ["RAINN National Sexual Assault Hotline: 1-800-656-4673.", "If a child is being harmed now, call 911 or child protective services."],
   more: [L.rainn, L.nami] },
 /* ================= LOSS AND GRIEF ================= */
@@ -288,7 +288,7 @@ const LC_TOPICS = [
     help: ["Show up in month three, six, and twelve.", "Help with specific tasks: yard, car, forms.", "Say their partner's name."],
     you: "Their grief may touch your own losses. Take care of that, too." },
   faith: "Share what your tradition teaches about love and death if it comforts you, and let yourself have the questions that come too. Rituals, prayers for the dead, and remembrance days can hold what words can't.",
-  practices: ["branches|Friends", "roots|Ritual", "trunk|Write Your Story", "leaves|Sleep"],
+  practices: ["branches|Friends", "roots|Ritual", "bark|Write Your Story", "leaves|Sleep"],
   reach: ["Grief that stays intense or gets worse after many months, or keeps you from daily life.", "Thoughts of wanting to join them: call or text 988."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
@@ -305,7 +305,7 @@ const LC_TOPICS = [
     help: ["Help sort, clean, or pack.", "Bring food during the busy weeks.", "Remember the anniversary."],
     you: "If you've lost a parent, share gently, but keep the focus on them." },
   faith: "Many traditions honor parents after death through prayer, remembrance, or carrying on their values. You can choose which parts of their legacy you carry.",
-  practices: ["trunk|Write Your Story", "roots|Ritual", "branches|Family"],
+  practices: ["bark|Write Your Story", "roots|Ritual", "branches|Family"],
   reach: ["Grief that doesn't ease, or family conflict that feels unmanageable."],
   more: [L.wyg, L.dougy], kids: "family-death" },
 
@@ -322,7 +322,7 @@ const LC_TOPICS = [
     help: ["Say the child's name.", "Remember birthdays and anniversaries, for years.", "Care for surviving siblings."],
     you: "Being near this grief is hard. Stay anyway. Get support for yourself." },
   faith: "Many parents wrestle with the sacred after a child dies. Anger and silence can be prayers. Faith communities at their best simply stay, sit, and carry.",
-  practices: ["branches|Friends", "roots|Ritual", "trunk|Talk With a Therapist", "trunk|Journal"],
+  practices: ["branches|Friends", "roots|Ritual", "bark|Talk With a Therapist", "bark|Journal"],
   reach: ["The Compassionate Friends supports bereaved parents and siblings.", "Any thoughts of not wanting to live: call or text 988."],
   more: [L.tcf, L.dougy], kids: "family-death" },
 
@@ -356,7 +356,7 @@ const LC_TOPICS = [
     help: ["Check in often, especially in the first year.", "Remember hard dates.", "Watch for signs that they're struggling, and ask open questions, like how are you holding up, really?"],
     you: "This grief can stir your own fears. Get support if you need it." },
   faith: "Some families carry fear about faith and suicide. Many traditions today speak of mercy and understand suicide as the result of illness. A trusted faith leader can help.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist", "roots|Prayer"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist", "roots|Prayer"],
   reach: ["If you have thoughts of suicide: call or text 988.", "Alliance of Hope offers support for suicide loss survivors."],
   more: [L.hope, L.afsp], kids: "suicide-loss" },
 
@@ -373,7 +373,7 @@ const LC_TOPICS = [
     help: ["Bring food, handle errands, and care for pets and kids.", "Offer a few hours of company at the bedside."],
     you: "Being near a death is tender. Notice what it stirs in you." },
   faith: "Blessings, prayers, anointing, reading sacred words, or singing familiar songs can be powerful at the end of life. Invite your chaplain or faith leader in.",
-  practices: ["roots|Prayer", "branches|Family", "fruit|Provide Care", "fruit|Capture the Moment"],
+  practices: ["roots|Prayer", "branches|Family", "branches|Provide Care", "bark|Capture the Moment"],
   reach: ["Ask hospice for chaplain or social work support.", "After the death, see the guide on the first days after a death."],
   more: [L.convo, L.dougy, L.willow], kids: "dying" },
 
@@ -390,7 +390,7 @@ const LC_TOPICS = [
     help: ["Check in regularly, without needing updates."],
     you: "Be patient. This kind of grief can last a long time." },
   faith: "Lament, prayer, and community can hold unresolved grief. Many traditions honor waiting and longing as sacred.",
-  practices: ["roots|Prayer", "trunk|Journal", "branches|Friends"],
+  practices: ["roots|Prayer", "bark|Journal", "branches|Friends"],
   reach: ["Grief combined with depression or burnout."],
   more: [L.ambiguous], kids: null },
 
@@ -407,7 +407,7 @@ const LC_TOPICS = [
     help: ["Send a note, a text, or flowers on the day.", "Invite them to something low-key."],
     you: "Put the date in your calendar, for years." },
   faith: "Many traditions have days and rituals to remember the dead. They can give shape to what you're carrying.",
-  practices: ["roots|Ritual", "fruit|Capture the Moment", "branches|Friends"],
+  practices: ["roots|Ritual", "bark|Capture the Moment", "branches|Friends"],
   reach: ["Grief that seems to get heavier each year."],
   more: [L.wyg], kids: "grief-days" },
 
@@ -424,7 +424,7 @@ const LC_TOPICS = [
     help: ["Send a card or share a memory."],
     you: "Simple kindness goes a long way here." },
   faith: "A blessing of thanks for an animal's life can be a meaningful goodbye.",
-  practices: ["roots|Ritual", "fruit|Capture the Moment"],
+  practices: ["roots|Ritual", "bark|Capture the Moment"],
   reach: ["Grief that keeps you from daily life for weeks."],
   more: [L.wyg], kids: "pet-death" },
 /* ================= HEALTH AND THE END OF LIFE ================= */
@@ -458,7 +458,7 @@ const LC_TOPICS = [
     help: ["Flexible plans.", "Practical help on bad days."],
     you: "Long illness is a marathon. Pace your own support too." },
   faith: "Many traditions speak of strength in weakness and of presence in suffering. You may find new ways to pray and practice with a body that needs care.",
-  practices: ["leaves|See the Doctor Early", "leaves|Breathe", "bark|Mindfulness", "trunk|Write Your Story"],
+  practices: ["leaves|See the Doctor Early", "leaves|Breathe", "bark|Mindfulness", "bark|Write Your Story"],
   reach: ["Pain with depression or hopelessness.", "Any thoughts of suicide: call or text 988."],
   more: [L.apa, L.nami], kids: "family-illness" },
 
@@ -475,7 +475,7 @@ const LC_TOPICS = [
     help: ["Listen, and follow their lead.", "Help record stories or letters.", "Help them tie up practical and spiritual loose ends."],
     you: "Sitting with someone facing death may raise your own fears. That's holy ground. Get support." },
   faith: "Every tradition has something to say about death. Rituals, prayers, confession, blessing, and simply being accompanied can bring deep peace.",
-  practices: ["roots|Prayer", "fruit|Make Peace", "trunk|Write Your Story", "fruit|Capture the Moment"],
+  practices: ["roots|Prayer", "branches|Make Peace", "bark|Write Your Story", "bark|Capture the Moment"],
   reach: ["Ask your care team for hospice or palliative care, and for a chaplain.", "Unbearable distress: ask your team for help now; it can be eased."],
   more: [L.convo, L.caringinfo, L.willow], kids: "dying" },
 
@@ -492,7 +492,7 @@ const LC_TOPICS = [
     help: ["Offer to go through a conversation guide together."],
     you: "Model it: complete your own plan too." },
   faith: "Your values and faith can shape your plan: sacraments, rituals, who you want present, and what matters in your final days.",
-  practices: ["trunk|Plan the Future", "branches|Family"],
+  practices: ["bark|Plan the Future", "branches|Family"],
   reach: ["An estate or elder law attorney can help with legal documents like wills and powers of attorney."],
   more: [L.caringinfo, L.convo] },
 
@@ -509,7 +509,7 @@ const LC_TOPICS = [
     help: ["Bring food and coffee.", "Take care of calls and pets."],
     you: "Keeping vigil is one of the most sacred things people do. Notice what it stirs in you." },
   faith: "Many traditions have prayers, blessings, or rituals for the dying. A chaplain can help, from all faith traditions and everything in-between.",
-  practices: ["roots|Prayer", "fruit|Provide Care", "bark|Music"],
+  practices: ["roots|Prayer", "branches|Provide Care", "bark|Music"],
   reach: ["Call the hospice nurse any time you are unsure or worried, day or night.", "Ask for the hospice chaplain or social worker."],
   more: [L.convo, L.dougy, L.willow], kids: "dying" },
 
@@ -543,7 +543,7 @@ const LC_TOPICS = [
     help: ["Learn about every kind of help: doctors, treatment, medication, therapy, and peer groups.", "Support groups for families, like SMART Recovery Family and Friends.", "Set clear, loving boundaries."],
     you: "Your wellbeing matters. Families need recovery too." },
   faith: "Many recovery paths draw on surrender, a higher power, and community. Grace and accountability can go together.",
-  practices: ["branches|Friends", "roots|Prayer", "trunk|Talk With a Therapist"],
+  practices: ["branches|Friends", "roots|Prayer", "bark|Talk With a Therapist"],
   reach: ["SAMHSA National Helpline: 1-800-662-4357.", "Daily drinking, or daily sedatives like Xanax or Valium: talk with a doctor before stopping. Stopping suddenly can cause seizures.", "Overdose: call 911. Many states have laws protecting people who call for help. Naloxone (Narcan) reverses an opioid overdose and is sold without a prescription."],
   more: [L.samhsa, L.nami], kids: "addiction" },
 
@@ -560,7 +560,7 @@ const LC_TOPICS = [
     help: ["Take a regular shift.", "Bring meals, mow the lawn, run errands."],
     you: "Your help can be the thing that keeps a caregiver going." },
   faith: "Many traditions honor care for the sick as sacred work. Sacred work still needs rest.",
-  practices: ["leaves|Sleep", "branches|Friends", "fruit|Provide Care", "leaves|Breathe"],
+  practices: ["leaves|Sleep", "branches|Friends", "branches|Provide Care", "leaves|Breathe"],
   reach: ["Caregiver burnout, depression, or declining health.", "Family Caregiver Alliance and your local Area Agency on Aging can help."],
   more: [L.caregiver], kids: "family-illness" },
 
@@ -594,7 +594,7 @@ const LC_TOPICS = [
     help: ["Invite them places.", "Help with moves and practical things."],
     you: "Stay supportive without taking over their story." },
   faith: "Divorce can bring spiritual questions and sometimes community judgment. You still belong. Many traditions offer paths of healing and new beginnings.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist", "trunk|Write Your Story"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist", "bark|Write Your Story"],
   reach: ["Deep depression, or a situation that isn't safe: see the guide on when home isn't safe."],
   more: [L.apa], kids: "divorce" },
 
@@ -611,7 +611,7 @@ const LC_TOPICS = [
     help: ["Babysit so they can have a date or go to counseling."],
     you: "Support the person, and don't get pulled into the fight." },
   faith: "Many traditions see marriage as a covenant that includes hard seasons, forgiveness, and renewal. Safety always comes first.",
-  practices: ["branches|Family", "fruit|Make Peace", "trunk|Talk With a Therapist"],
+  practices: ["branches|Family", "branches|Make Peace", "bark|Talk With a Therapist"],
   reach: ["Any abuse, threats, or fear: see the guide on when home isn't safe."],
   more: [L.apa, L.gg, ["The Grounded Marriage", "https://growwithgrounded.com/the-grounded-marriage.html"]], kids: "home-conflict" },
 
@@ -628,7 +628,7 @@ const LC_TOPICS = [
     help: ["Listen, keep confidences, and help with practical needs."],
     you: "Their decision is theirs. Keep your friendship steady." },
   faith: "Many traditions hold both justice and forgiveness. Neither needs to be rushed. Anger at being wronged is a holy response.",
-  practices: ["trunk|Talk With a Therapist", "fruit|Make Peace", "leaves|Sleep"],
+  practices: ["bark|Talk With a Therapist", "branches|Make Peace", "leaves|Sleep"],
   reach: ["Depression, or thoughts of harming yourself or someone else: call or text 988."],
   more: [L.apa] },
 
@@ -645,7 +645,7 @@ const LC_TOPICS = [
     help: ["Be thoughtful about how you share your own pregnancy news."],
     you: "Your gentleness matters more than advice." },
   faith: "Many traditions include stories of longing and waiting. Bring your grief and your questions to the sacred.",
-  practices: ["roots|Prayer", "trunk|Talk With a Therapist", "branches|Friends"],
+  practices: ["roots|Prayer", "bark|Talk With a Therapist", "branches|Friends"],
   reach: ["Depression or relationship strain."],
   more: [L.resolve] },
 
@@ -662,7 +662,7 @@ const LC_TOPICS = [
     help: ["Invite them to your holidays."],
     you: "You don't need the whole story to be kind." },
   faith: "Reconciliation is a value in many traditions, and so is protecting yourself from harm. Wisdom holds both.",
-  practices: ["branches|Friends", "trunk|Talk With a Therapist", "fruit|Make Peace"],
+  practices: ["branches|Friends", "bark|Talk With a Therapist", "branches|Make Peace"],
   reach: ["Grief that becomes depression."],
   more: [L.ambiguous, L.apa] },
 
@@ -679,7 +679,7 @@ const LC_TOPICS = [
     help: ["Offer rides, visits, or research."],
     you: "The sandwich generation needs support too." },
   faith: "Many traditions call us to honor our parents, which can include honest limits and asking for help.",
-  practices: ["branches|Family", "trunk|Plan the Future", "fruit|Provide Care"],
+  practices: ["branches|Family", "bark|Plan the Future", "branches|Provide Care"],
   reach: ["Safety concerns, or caregiver burnout: see the caregiving guide."],
   more: [L.caregiver, L.convo, L.sequoia] },
 
@@ -696,7 +696,7 @@ const LC_TOPICS = [
     help: ["Invite them into new things."],
     you: "Celebrate and grieve with them." },
   faith: "Many traditions mark transitions with blessings. A new season is also a threshold.",
-  practices: ["trunk|Plan the Future", "trunk|Keep Learning", "fruit|Volunteer"],
+  practices: ["bark|Plan the Future", "bark|Keep Learning", "branches|Volunteer"],
   reach: ["Transition that becomes lasting sadness."],
   more: [L.gg] },
 
@@ -713,7 +713,7 @@ const LC_TOPICS = [
     help: ["Offer rides, meals, and a listening ear."],
     you: "Keep their child's story private." },
   faith: "Many traditions speak of steadfast love that doesn't give up. That love can include professional help and firm limits.",
-  practices: ["branches|Family", "trunk|Talk With a Therapist", "roots|Prayer"],
+  practices: ["branches|Family", "bark|Talk With a Therapist", "roots|Prayer"],
   reach: ["Your child talks about suicide: call or text 988 now.", "Safety threats: call 911."],
   more: [L.nami, L.lifeline] },
 
@@ -731,7 +731,7 @@ const LC_TOPICS = [
     help: ["Make introductions.", "Review a résumé.", "Invite them to low-cost fun."],
     you: "Practical help matters." },
   faith: "Many traditions teach that work has dignity, and that a person's worth isn't measured by a paycheck.",
-  practices: ["trunk|Plan the Future", "branches|Colleagues", "leaves|Movement"],
+  practices: ["bark|Plan the Future", "branches|Colleagues", "leaves|Movement"],
   reach: ["Depression, or money crisis: dial 211 for local help."],
   more: [L.career, L.nfcc], kids: "money" },
 
@@ -748,7 +748,7 @@ const LC_TOPICS = [
     help: ["Groceries, rides, and resources."],
     you: "Be thoughtful about lending money; gifts are often kinder." },
   faith: "Many faith communities have benevolence funds or practical help. Ask.",
-  practices: ["trunk|Plan the Future", "leaves|Sleep", "fruit|Be Generous"],
+  practices: ["bark|Plan the Future", "leaves|Sleep", "branches|Be Generous"],
   reach: ["211 for local help with food, housing, and utilities.", "A nonprofit credit counselor through the NFCC."],
   more: [L.nfcc], kids: "money" },
 
@@ -765,7 +765,7 @@ const LC_TOPICS = [
     help: ["Invite them into meaningful roles."],
     you: "Their wisdom is a gift. Ask for it." },
   faith: "Many traditions honor elders as keepers of wisdom. Retirement can be a season of blessing others.",
-  practices: ["roots|Teach", "fruit|Volunteer", "trunk|Keep Learning"],
+  practices: ["roots|Teach", "branches|Volunteer", "bark|Keep Learning"],
   reach: ["Loneliness or depression after retirement."],
   more: [L.gg, L.sequoia] },
 
@@ -782,7 +782,7 @@ const LC_TOPICS = [
     help: ["Introductions and practical support."],
     you: "Cheer them on." },
   faith: "Many traditions speak of calling. Discernment often happens by trying and listening.",
-  practices: ["trunk|Plan the Future", "trunk|Keep Learning", "roots|Prayer"],
+  practices: ["bark|Plan the Future", "bark|Keep Learning", "roots|Prayer"],
   reach: ["Anxiety or depression during the transition."],
   more: [L.career] },
 /* ================= FAITH AND MEANING ================= */
@@ -799,7 +799,7 @@ const LC_TOPICS = [
     help: ["Stay in relationship, whatever they conclude."],
     you: "A good companion walks with the questions." },
   faith: "Many traditions include deep doubt among their saints and teachers. Wrestling can be a form of faithfulness.",
-  practices: ["roots|Scripture", "trunk|Journal", "trunk|Talk With a Therapist", "roots|Prayer"],
+  practices: ["roots|Scripture", "bark|Journal", "bark|Talk With a Therapist", "roots|Prayer"],
   reach: ["Doubt tangled with depression or trauma."],
   more: [L.gg] },
 
@@ -816,7 +816,7 @@ const LC_TOPICS = [
     help: ["Stay curious and connected."],
     you: "Your love can outlast your disagreement." },
   faith: "Many people find the sacred in new places after leaving old ones. Faith journeys rarely move in straight lines.",
-  practices: ["trunk|Write Your Story", "branches|Friends", "roots|Ritual"],
+  practices: ["bark|Write Your Story", "branches|Friends", "roots|Ritual"],
   reach: ["Isolation or depression during the change."],
   more: [L.apa] },
 
@@ -833,7 +833,7 @@ const LC_TOPICS = [
     help: ["Pray with them, or simply sit in silence together."],
     you: "Companionship is the gift." },
   faith: "Many mystics describe dark nights and deserts as places of growth. The sacred may be closer than it feels.",
-  practices: ["roots|Worship", "bark|Meditation", "fruit|Volunteer", "roots|Scripture"],
+  practices: ["roots|Worship", "bark|Meditation", "branches|Volunteer", "roots|Scripture"],
   reach: ["Dryness that comes with depression: talk to a doctor too."],
   more: [L.gg] },
 
@@ -850,7 +850,7 @@ const LC_TOPICS = [
     help: ["Listen without rushing to absolve."],
     you: "Hearing these stories can affect you too." },
   faith: "Many traditions offer confession, lament, and restoration. Chaplains are trained to walk with moral injury.",
-  practices: ["roots|Prayer", "fruit|Make Peace", "trunk|Talk With a Therapist", "branches|Colleagues"],
+  practices: ["roots|Prayer", "branches|Make Peace", "bark|Talk With a Therapist", "branches|Colleagues"],
   reach: ["Veterans: call 988 and press 1.", "Thoughts of suicide: call or text 988."],
   more: [L.voa, L.lifeline] },
 
@@ -867,7 +867,7 @@ const LC_TOPICS = [
     help: ["Listen and honor the hurt."],
     you: "Let healing take its own time." },
   faith: "Forgiveness is central to many traditions. So is justice. Both matter.",
-  practices: ["fruit|Make Peace", "roots|Prayer", "trunk|Journal"],
+  practices: ["branches|Make Peace", "roots|Prayer", "bark|Journal"],
   reach: ["Forgiveness tangled with ongoing abuse: safety comes first."],
   more: [L.gg] },
 
@@ -884,7 +884,7 @@ const LC_TOPICS = [
     help: ["Respect their pace and boundaries."],
     you: "Listen more than you explain." },
   faith: "Many traditions have prophets who spoke against abuse of power. Your hurt joins a long line of truth-telling.",
-  practices: ["trunk|Talk With a Therapist", "roots|Ritual", "branches|Friends"],
+  practices: ["bark|Talk With a Therapist", "roots|Ritual", "branches|Friends"],
   reach: ["Abuse by a religious leader: report it to authorities."],
   more: [L.apa] },
 
@@ -902,7 +902,7 @@ const LC_TOPICS = [
     help: ["Model respectful listening."],
     you: "Peacemaking takes patience." },
   faith: "Many traditions call us to love our neighbors, including those we disagree with, and to pray for leaders and peace.",
-  practices: ["fruit|Make Peace", "branches|Family", "leaves|Breathe"],
+  practices: ["branches|Make Peace", "branches|Family", "leaves|Breathe"],
   reach: ["Conflict that becomes threatening or abusive."],
   more: [L.braver], kids: "politics" },
 
@@ -953,7 +953,7 @@ const LC_TOPICS = [
     help: ["Specific, practical help."],
     you: "Recovery takes months. Keep showing up." },
   faith: "Faith communities often rally after disasters with practical help and belonging.",
-  practices: ["branches|Neighbors", "fruit|Volunteer", "leaves|Sleep"],
+  practices: ["branches|Neighbors", "branches|Volunteer", "leaves|Sleep"],
   reach: ["Disaster Distress Helpline: 1-800-985-5990.", "The American Red Cross."],
   more: [L.redcross], kids: "disasters" },
 
@@ -970,7 +970,7 @@ const LC_TOPICS = [
     help: ["Invite them to act together on something."],
     you: "Protect your own attention too." },
   faith: "Prayer for the world, and acts of service, can turn helplessness into hope.",
-  practices: ["bark|Mindfulness", "fruit|Inspire Hope", "fruit|Volunteer"],
+  practices: ["bark|Mindfulness", "branches|Inspire Hope", "branches|Volunteer"],
   reach: ["Anxiety that interferes with daily life."],
   more: [L.apa], kids: "scary-news" },
 
@@ -987,7 +987,7 @@ const LC_TOPICS = [
     help: ["Speak up when you witness it."],
     you: "Listen and learn without making it about you." },
   faith: "Many traditions teach that every person bears dignity and worth. Justice is a sacred value.",
-  practices: ["branches|Friends", "trunk|Write Your Story", "fruit|Inspire Hope"],
+  practices: ["branches|Friends", "bark|Write Your Story", "branches|Inspire Hope"],
   reach: ["Harassment, threats, or workplace discrimination may need legal help."],
   more: [L.apa], kids: "prejudice" },
 { id: "trauma", ring: "inside", title: "After Something Traumatic", keys: "trauma ptsd accident assault shock flashbacks nightmares startle numb frightening event", parts: ["bark", "leaves", "roots"],
@@ -1019,7 +1019,7 @@ const LC_TOPICS = [
     help: ["Ask before helping.", "Make gatherings accessible.", "Keep inviting them. Isolation is a real risk."],
     you: "Caring for someone adjusting to disability is a big change for you too." },
   faith: "Many traditions hold that every person carries sacred worth, whatever their body can do. Some communities have learned from disabled members to slow down and make room for everyone.",
-  practices: ["bark|Self-Compassion Break", "branches|Support Group", "trunk|Values Sort", "fruit|Tiny Next Step"],
+  practices: ["bark|Self-Compassion Break", "branches|Support Group", "bark|Values Sort", "bark|Tiny Next Step"],
   reach: ["Sadness or hopelessness that doesn't lift.", "Thoughts of not wanting to live: call or text 988."],
   more: [L.disabilityhub, L.nami] },
 { id: "assault", ring: "safety", title: "After a Sexual Assault", keys: "sexual assault rape abuse violated consent attacked harassed survivor", parts: ["bark", "leaves", "branches"],
@@ -1067,7 +1067,7 @@ const LC_TOPICS = [
     help: ["Offer rides to visits or help with childcare.", "Include them. Families often get dropped from invitations.", "Help children keep a connection if it's safe."],
     you: "Supporting a family through this can be long. Pace yourself." },
   faith: "Many traditions call people to visit the prisoner and care for their families, and to hold both justice and mercy.",
-  practices: ["branches|Support Group", "branches|One Reach-Out a Day", "roots|Lament", "fruit|Tiny Next Step"],
+  practices: ["branches|Support Group", "branches|One Reach-Out a Day", "roots|Lament", "bark|Tiny Next Step"],
   reach: ["If the stress is affecting your health or your children, reach out to a counselor.", "Thoughts of suicide: call or text 988."],
   more: [L.mndoc, L.nami] },
 { id: "moving", ring: "work", title: "Moving to a New Place", keys: "move moving relocation new town new city homesick starting over no friends", parts: ["branches", "trunk", "leaves"],
@@ -1083,7 +1083,7 @@ const LC_TOPICS = [
     help: ["Invite them to something specific.", "Share local tips, like doctors and good parks.", "Introduce them to one person."],
     you: "Being a welcomer is a quiet gift to your whole community." },
   faith: "Many traditions honor the stranger and the traveler. Faith communities are often among the first places newcomers find belonging.",
-  practices: ["branches|Clubs", "branches|Neighbors", "roots|Sit Spot", "fruit|Something to Look Forward To"],
+  practices: ["branches|Clubs", "branches|Neighbors", "roots|Sit Spot", "bark|Something to Look Forward To"],
   reach: ["Loneliness or low mood that doesn't lift after several months.", "Thoughts of suicide: call or text 988."],
   more: [L.nami, L.m211] },
 { id: "military", ring: "work", title: "Coming Home From Military Service", keys: "veteran military service deployment coming home transition civilian ptsd moral injury va", parts: ["trunk", "branches", "bark"],
@@ -1099,7 +1099,7 @@ const LC_TOPICS = [
     help: ["Invite them into community.", "Help them connect with veteran services.", "Be patient. Adjustment takes time."],
     you: "Families go through the transition too. Veteran family support is available." },
   faith: "Many traditions have rituals for warriors returning home, to honor their service and help them lay down what they carried. Chaplains can help with moral injury.",
-  practices: ["trunk|Purpose Statement", "branches|Support Group", "trunk|Moral Repair Letter", "leaves|Walk or Jog"],
+  practices: ["bark|Purpose Statement", "branches|Support Group", "roots|Moral Repair Letter", "leaves|Walk or Jog"],
   reach: ["Veterans Crisis Line: call 988 and press 1, or text 838255, any time.", "Nightmares, anger, or drinking that keep growing: talk with the VA or a counselor."],
   more: [L.vcl, L.mdva, L.ptsd] },
 
@@ -1117,7 +1117,7 @@ const LC_TOPICS = [
     help: ["Stay calm and help care for wounds.", "Help them get an appointment this week.", "Secure medicines and sharp items at home, calmly.", "For parents: loop in the school counselor if school is part of the picture."],
     you: "It is frightening to love someone who hurts themselves. Get support for yourself too, from a counselor, a parent group, or a trusted friend." },
   faith: "Many traditions teach that we are held and loved in our wounds, not only after they heal. Grace comes first, before getting better.",
-  practices: ["bark|Self-Compassion Break", "bark|Slow Exhale", "branches|Ask for Help", "trunk|Talk With a Therapist"],
+  practices: ["bark|Self-Compassion Break", "bark|Slow Exhale", "branches|Ask for Help", "bark|Talk With a Therapist"],
   reach: ["Call or text 988 any time, or text HOME to 741741.", "Call 911 for a serious injury, or if someone is in danger right now.", "See a doctor or counselor this week if self-harm has happened at all."],
   more: [L.lifeline, L.nami, ['Cornell Self-Injury and Recovery Resources', 'https://selfinjury.bctr.cornell.edu']], kids: "self-harm" },
 
@@ -1134,7 +1134,7 @@ const LC_TOPICS = [
     help: ["Go with them to the doctor.", "For a child or teen, families are a key part of treatment. Ask about family-based treatment.", "Keep meals calm and together."],
     you: "Loving someone with an eating disorder is exhausting. Caregiver support groups, like ANAD’s, can help." },
   faith: "Many traditions treat the shared table as sacred and the body as a gift. Recovery can be a way of receiving that gift again.",
-  practices: ["leaves|Sleep", "bark|Self-Compassion Break", "branches|Support Group", "trunk|Talk With a Therapist"],
+  practices: ["leaves|Sleep", "bark|Self-Compassion Break", "branches|Support Group", "bark|Talk With a Therapist"],
   reach: ["See a doctor soon for weight changes, dizziness, fainting, missed periods, or making yourself throw up.", "Call 911 for fainting, chest pain, a racing or uneven heartbeat, or confusion.", "ANAD Eating Disorders Helpline: 1-888-375-7767. National Alliance for Eating Disorders Helpline: 1-866-662-1235. Thoughts of suicide: call or text 988."],
   more: [['ANAD', 'https://anad.org'], ['National Alliance for Eating Disorders', 'https://www.allianceforeatingdisorders.com'], ['The Emily Program (Minnesota)', 'https://emilyprogram.com']], kids: "food-worries" },
 
@@ -1168,7 +1168,7 @@ const LC_TOPICS = [
     help: ["Encourage counseling, and consider couples counseling when you are both ready.", "Get support for yourself, too."],
     you: "If you are the partner, see the Betrayal guide, and find someone safe to talk to." },
   faith: "Many traditions hold clear values about sex and faithfulness, and they also teach mercy, confession, and new beginnings. Both can be true at once.",
-  practices: ["roots|Prayer", "branches|Support Group", "trunk|Values Sort", "trunk|Talk With a Therapist"],
+  practices: ["roots|Prayer", "branches|Support Group", "bark|Values Sort", "bark|Talk With a Therapist"],
   reach: ["If use is harming your relationships, work, or sense of self, see a counselor.", "If you are drawn to sexual images of minors, get confidential help from Stop It Now before anyone is harmed. If you come across child sexual abuse material, report it at report.cybertip.org or 1-800-843-5678.", "Thoughts of suicide: call or text 988."],
   more: [['Stop It Now', 'https://www.stopitnow.org'], L.apa, ['The Gottman Institute', 'https://www.gottman.com']], kids: "saw-porn" },
 
@@ -1185,7 +1185,7 @@ const LC_TOPICS = [
     help: ["Make shared plans visible, like a family calendar.", "Notice what they do well."],
     you: "Living with ADHD affects partners and families too. Couples and family support can help everyone." },
   faith: "Many traditions teach that each person is made with purpose and gifts. A late diagnosis can be a chance to make peace with who you are, and to stop fighting yourself.",
-  practices: ["bark|Self-Compassion Break", "trunk|Values Sort", "leaves|Movement", "fruit|Tiny Next Step"],
+  practices: ["bark|Self-Compassion Break", "bark|Values Sort", "leaves|Movement", "bark|Tiny Next Step"],
   reach: ["See your doctor if focus, mood, or daily life feel out of control.", "Anxiety and depression often come with ADHD. Get help for those too. Thoughts of suicide: call or text 988."],
   more: [['CHADD', 'https://chadd.org'], ['Understood (for adults, too)', 'https://www.understood.org'], L.nami], kids: "attention" },
 
@@ -1202,7 +1202,7 @@ const LC_TOPICS = [
     help: ["Protect household money: separate accounts, and limits on shared cards.", "Find support for yourself, like Gam-Anon."],
     you: "You can get free counseling in Minnesota as an affected family member, even if they won’t go." },
   faith: "Many recovery paths draw on surrender, honesty, and community. Grace can meet you in the middle of the mess, and so can people who have been there.",
-  practices: ["branches|Support Group", "trunk|Talk With a Therapist", "roots|Prayer", "fruit|Tiny Next Step"],
+  practices: ["branches|Support Group", "bark|Talk With a Therapist", "roots|Prayer", "bark|Tiny Next Step"],
   reach: ["Minnesota Problem Gambling Helpline: 1-800-333-4673 (HOPE), or text HOPE to 53342. Outside Minnesota: 1-800-GAMBLER.", "Thoughts of suicide: call or text 988. Call 911 if you are in danger."],
   more: [['Minnesota Alliance on Problem Gambling', 'https://mnapg.org'], ['GetGamblingHelp.com (Minnesota)', 'https://getgamblinghelp.com'], ['National Council on Problem Gambling', 'https://www.ncpgambling.org']], kids: "addiction" }
 ];
@@ -1376,11 +1376,11 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, you may find that your calling is bigger than any one job: in how you love, notice, and show up for others. Some traditions speak of every person's gifts as needed. If faith isn't part of your life, the same holds: your worth and purpose go beyond your work.",
   "practices": [
-   "trunk|Worth Beyond Doing",
-   "trunk|Job Crafting",
+   "bark|Worth Beyond Doing",
+   "bark|Job Crafting",
    "branches|Say What You Need",
-   "trunk|Values Sort",
-   "fruit|Tiny Next Step"
+   "bark|Values Sort",
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Questions about work, benefits, and services in Minnesota: Disability Hub MN, 1-866-333-2466.",
@@ -1472,7 +1472,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "branches|Ask for Help",
    "branches|Family",
    "bark|Hard-Day Plan",
-   "fruit|Capture the Moment",
+   "bark|Capture the Moment",
    "bark|Self-Compassion Break"
   ],
   "reach": [
@@ -1559,7 +1559,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "branches|Support Group",
    "branches|Ask for Help",
    "branches|A Break for the Helper",
-   "fruit|Joy List",
+   "bark|Joy List",
    "bark|Self-Compassion Break"
   ],
   "reach": [
@@ -1740,11 +1740,11 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, you may find comfort in practices that don't depend on sight: prayer, song, sacred words read aloud or in braille or audio. Some faith communities offer large print and audio. If faith isn't part of your life, the same truth holds: much of what matters most is not seen with the eyes.",
   "practices": [
-   "trunk|Keep Learning",
+   "bark|Keep Learning",
    "branches|Ask for Help",
    "branches|Support Group",
    "bark|Self-Compassion Break",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Sudden changes in vision, flashes, a curtain over your sight, or eye pain: get medical help right away.",
@@ -1830,9 +1830,9 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "practices": [
    "bark|Quiet the Senses",
    "bark|Hard-Day Plan",
-   "trunk|Write Your Story",
+   "bark|Write Your Story",
    "branches|Say What You Need",
-   "fruit|Joy List"
+   "bark|Joy List"
   ],
   "reach": [
    "Questions about an evaluation, or about anxiety, sleep, or mood that often come with autism: talk with your doctor.",
@@ -1914,8 +1914,8 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "bark|Hard-Day Plan",
    "branches|Support Group",
    "leaves|Sleep",
-   "trunk|Talk With a Therapist",
-   "fruit|Hope Map"
+   "bark|Talk With a Therapist",
+   "bark|Hope Map"
   ],
   "reach": [
    "Thoughts of suicide, or a mental health crisis: call or text 988, any time. Text MN to 741741. In danger right now, call 911.",
@@ -2004,11 +2004,11 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, familiar prayers, songs, or sacred words can stay with a person even when other memories are hard to reach, and being present at worship can comfort without asking for words. If faith isn't part of your life, familiar music, places, and people can offer the same steadiness.",
   "practices": [
-   "trunk|Write Your Story",
+   "bark|Write Your Story",
    "leaves|Pacing Your Day",
    "bark|Micro-Rest",
    "leaves|Appointment Prep",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "New signs of a stroke, like sudden face drooping, arm weakness, or trouble speaking: call 911 right away.",
@@ -2201,8 +2201,8 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "faith": "If faith is part of your life, it may hold words for starting again: grace, a new day, being held while you change. Some find a faith community steadies them; others carry hurt from one. What matters is what gives you strength right now. If faith isn't part of your life, meaning and hope grow from your people, your values, and the life you want to build.",
   "practices": [
    "leaves|Sober Week",
-   "trunk|Values Sort",
-   "fruit|Best Possible Self",
+   "bark|Values Sort",
+   "bark|Best Possible Self",
    "bark|Name It",
    "branches|Ask for Help"
   ],
@@ -2399,10 +2399,10 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, this year may bring it new color: gratitude that feels real, a community that celebrates your milestones, a sense of grace for a fresh start. If faith isn't part of your life, wonder, gratitude, and service can give this year the same deep roots.",
   "practices": [
-   "fruit|Three Good Things",
-   "fruit|Volunteer",
+   "roots|Three Good Things",
+   "branches|Volunteer",
    "leaves|Morning Daylight",
-   "trunk|Keep Learning",
+   "bark|Keep Learning",
    "branches|Shared Meal"
   ],
   "reach": [
@@ -2593,7 +2593,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "practices": [
    "bark|Self-Compassion Break",
    "bark|Hard-Day Plan",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "branches|Ask for Help",
    "leaves|Sleep"
   ],
@@ -2691,11 +2691,11 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, healing may include lament, confession, prayer, or a sense of being loved in your hurt. Some old wounds came from faith communities; those deserve gentle care too. If faith isn't part of your life, the spirit work is still yours: naming feelings, finding meaning, and being kind to the person you were.",
   "practices": [
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "bark|Meditation",
    "bark|Body Scan",
    "leaves|Walk or Jog",
-   "trunk|Write Your Story"
+   "bark|Write Your Story"
   ],
   "reach": [
    "Old trauma, grief, or memories that keep surfacing: a therapist who works with trauma can help. Ask your doctor, or the SAMHSA National Helpline, 1-800-662-4357, for names near you.",
@@ -2788,7 +2788,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "practices": [
    "branches|Repair a Rupture",
    "branches|Forgiveness Reflection",
-   "trunk|Moral Repair Letter",
+   "roots|Moral Repair Letter",
    "branches|Active Listening",
    "bark|Self-Compassion Break"
   ],
@@ -2877,7 +2877,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "branches|Clubs",
    "branches|Shared Meal",
    "leaves|Evening Wind Down",
-   "fruit|Volunteer"
+   "branches|Volunteer"
   ],
   "reach": [
    "Cravings that spike around work or social events: talk with your person, your group, or the SAMHSA National Helpline, 1-800-662-4357.",
@@ -2971,8 +2971,8 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
    "leaves|Walk or Jog",
    "bark|Meditation",
    "leaves|Evening Wind Down",
-   "trunk|Expressive Writing",
-   "trunk|Worth Beyond Doing"
+   "bark|Expressive Writing",
+   "bark|Worth Beyond Doing"
   ],
   "reach": [
    "Eating that feels out of control, or weight changes that worry you: talk with your doctor. Eating disorders are treatable, and help is there.",
@@ -3150,7 +3150,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   "faith": "If faith is part of your life, it may hold you with lament, prayer, ritual, and a community that grieves with you. Some feel judged by their community, or wrestle with hard questions about where their loved one is now; a gentle faith leader can help. If faith isn't part of your life, love, memory, and people who understand can carry you.",
   "practices": [
    "roots|Lament",
-   "trunk|Legacy Letter",
+   "branches|Legacy Letter",
    "branches|Support Group",
    "leaves|Walk or Jog",
    "bark|Self-Compassion Break"

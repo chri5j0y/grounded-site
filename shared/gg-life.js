@@ -174,74 +174,58 @@
   };
 
   /* ---------- Living Sober growth plan ideas (GWG BLD 789) ----------
-     One idea per part of the tree for each stage, said the forward way. A tree's growth plan
+     Ideas for the four parts a person tends, for each stage, said the forward way (BLD 907: the old Trunk and Fruit ideas joined a part). A tree's growth plan
      shows the idea for a Growing Edge part (soberSteps); safe is the safety line for the stages
      where stopping may need a doctor, shown with the Leaves idea. Kids trees have their own words. */
   var SOBER_STEPS = {
     change: {
       leaves: 'Notice how your body feels after a sober evening, and write one word for it in the morning.',
-      bark: 'When the pull to drink or use comes, wait ten minutes first: drink a glass of water, take a slow walk, then decide.',
+      bark: ['When the pull to drink or use comes, wait ten minutes first: drink a glass of water, take a slow walk, then decide.', 'Write down what you want more of in your life, and one reason this change matters to you.', 'Plan one good evening this week that is sober from start to finish: a meal, a walk, a friend.'],
       branches: 'Tell one person you trust that you are thinking about a change.',
-      roots: 'Take one quiet minute each morning to ask what you want more of today.',
-      trunk: 'Write down what you want more of in your life, and one reason this change matters to you.',
-      fruit: 'Plan one good evening this week that is sober from start to finish: a meal, a walk, a friend.'
+      roots: 'Take one quiet minute each morning to ask what you want more of today.'
     },
     early: {
       leaves: 'Keep the basics close: water within reach, three real meals, and a steady bedtime. Early days run on rest.',
-      bark: 'Plan your hard hour ahead of time: a walk, a shower, a call, a cup of tea, then bed.',
+      bark: ['Plan your hard hour ahead of time: a walk, a shower, a call, a cup of tea, then bed.', 'Count every sober day as a win, and write down one thing you handled well today.', 'Plan one small sober joy for each weekend: a hike, a new recipe, coffee with a friend.'],
       branches: 'Choose one person you can text when a craving comes, and tell them today that you might.',
-      roots: 'Begin and end each day with one quiet minute, a prayer, or three slow breaths.',
-      trunk: 'Count every sober day as a win, and write down one thing you handled well today.',
-      fruit: 'Plan one small sober joy for each weekend: a hike, a new recipe, coffee with a friend.'
+      roots: 'Begin and end each day with one quiet minute, a prayer, or three slow breaths.'
     },
     growing: {
       leaves: 'Build on the healing in your body: add one kind of movement you enjoy, like walking, lifting, or swimming.',
-      bark: 'Name the feeling under a craving, and tend that feeling with a practice, like writing it out or a walk among trees.',
+      bark: ['Name the feeling under a craving, and tend that feeling with a practice, like writing it out or a walk among trees.', 'Write a sentence or two about who you are becoming, and read it on hard mornings.', 'Try one new thing your sober life has room for now: a class, a trail, a team, or a project.'],
       branches: 'Repair one relationship with a small, steady act, and let trust grow at its own pace.',
-      roots: 'Keep one practice that steadies you each day: a quiet minute, gratitude, or time outdoors.',
-      trunk: 'Write a sentence or two about who you are becoming, and read it on hard mornings.',
-      fruit: 'Try one new thing your sober life has room for now: a class, a trail, a team, or a project.'
+      roots: 'Keep one practice that steadies you each day: a quiet minute, gratitude, or time outdoors.'
     },
     long: {
       leaves: 'Keep tending the habits that carried you here: sleep, whole food, water, and movement.',
-      bark: 'Notice when an old habit tries a new shape, like work, food, spending, or screens, and tend the feeling underneath.',
+      bark: ['Notice when an old habit tries a new shape, like work, food, spending, or screens, and tend the feeling underneath.', 'Set one goal your sober years make possible, and take its first step this week.'],
       branches: 'Offer your story or your time to someone newer on the path, in whatever way fits you.',
-      roots: 'Return to the practice that first steadied you, and let it grow with you.',
-      trunk: 'Mark your sober anniversary in a way that honors how far you have come.',
-      fruit: 'Set one goal your sober years make possible, and take its first step this week.'
+      roots: ['Return to the practice that first steadied you, and let it grow with you.', 'Mark your sober anniversary in a way that honors how far you have come.']
     },
     love: {
       leaves: 'Keep your own sleep, meals, and movement steady. Tending yourself helps the person you love.',
-      bark: 'When worry rises, take three slow breaths and come back to what is yours to tend today.',
+      bark: ['When worry rises, take three slow breaths and come back to what is yours to tend today.', 'Name what gives your own life meaning in this season, and give it a little time each week.', 'Plan one good thing for yourself this week, whatever choices the person you love makes.'],
       branches: 'Find one place where people understand, like SMART Recovery Family and Friends, a family group, or a trusted friend.',
-      roots: 'Give yourself a few quiet minutes each day that are only for you.',
-      trunk: 'Name what gives your own life meaning in this season, and give it a little time each week.',
-      fruit: 'Plan one good thing for yourself this week, whatever choices the person you love makes.'
+      roots: 'Give yourself a few quiet minutes each day that are only for you.'
     },
     safe: 'If you have been drinking every day or taking sedatives or opioids, talk with a doctor before you stop, so your body stays safe.',
     maple: {
       leaves: 'Keep bedtime, meals, and water steady at home. Steady days help a child feel safe.',
-      bark: 'Practice balloon breaths together for the times home feels big or loud.',
-      branches: 'Name two safe grown-ups your child can talk to any time, and tell them together.',
-      roots: 'Share a calm, cozy minute together before bed each night.',
-      trunk: 'Say it often: it is never your fault, and your feelings make sense.',
-      fruit: 'Plan one fun, calm thing to do together each week.'
+      bark: ['Practice balloon breaths together for the times home feels big or loud.', 'Say it often: it is never your fault, and your feelings make sense.'],
+      branches: ['Name two safe grown-ups your child can talk to any time, and tell them together.', 'Plan one fun, calm thing to do together each week.'],
+      roots: 'Share a calm, cozy minute together before bed each night.'
     },
     aspen: {
       leaves: 'Keep your own sleep and meals steady, whatever the day brings at home.',
-      bark: 'When feelings get big, try slow breathing, a walk, or writing it out.',
+      bark: ['When feelings get big, try slow breathing, a walk, or writing it out.', 'Remember: it is never your fault. You can love someone and still feel upset with them.', 'Do one thing each week that is just for you and makes you glad.'],
       branches: 'Pick one safe grown-up to talk to, like a relative, a coach, or your school counselor.',
-      roots: 'Find one quiet spot that feels calm, and spend a few minutes there each day.',
-      trunk: 'Remember: it is never your fault. You can love someone and still feel upset with them.',
-      fruit: 'Do one thing each week that is just for you and makes you glad.'
+      roots: 'Find one quiet spot that feels calm, and spend a few minutes there each day.'
     },
     pineLove: {
       leaves: 'Keep your own sleep, meals, and movement steady, whatever the day brings at home.',
-      bark: 'When worry or anger rises, move it out: a run, a walk, music, or writing it down.',
+      bark: ['When worry or anger rises, move it out: a run, a walk, music, or writing it down.', 'It is never your fault, and their choices are theirs. Your own path is yours to grow.', 'Plan one thing each week that is just for you and makes you glad.'],
       branches: 'Talk with one safe adult, like a relative, a coach, or your school counselor, and look into NACoA for teens.',
-      roots: 'Give yourself a few quiet minutes each day that are only for you.',
-      trunk: 'It is never your fault, and their choices are theirs. Your own path is yours to grow.',
-      fruit: 'Plan one thing each week that is just for you and makes you glad.'
+      roots: 'Give yourself a few quiet minutes each day that are only for you.'
     }
   };
   function soberSteps(tree, part) {
@@ -251,7 +235,7 @@
     else if (tree === 'pine' && st === 'love') set = SOBER_STEPS.pineLove;
     else set = SOBER_STEPS[st || 'change'];
     var out = [];
-    if (set && set[part]) out.push(set[part]);
+    if (set && set[part]) [].concat(set[part]).forEach(function (x) { out.push(x); });   // a part may hold more than one idea (BLD 907)
     if ((st === 'change' || st === 'early' || !st) && part === 'leaves' && KIDS.indexOf(tree) < 0) out.push(SOBER_STEPS.safe);
     return out;
   }

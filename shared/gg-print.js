@@ -16,7 +16,7 @@
                                 print page leaves them blank). certified.items (plain names) still works.
    - GGPrint.poster(tree, kind) a guide poster, Letter or 11 by 17 (chosen on the page).
                                 kind 'tree': the tree's poster, "A trained Maple Guide serves here."
-                                kind 'parts': the six parts teaching poster, in that tree's voice.
+                                kind 'parts': the Tend Four, Grow Two teaching poster, in that tree's voice.
    - GGPrint.flyer(tree, kind)  a one-page flyer for anyone to print. tree 'overview' shows every tree.
                                 The Grove by kind (GWG BLD 776): GGPrint.flyer('grove', 'faith' | 'team' | 'classroom').
                                 The Classroom flyer is kept for later: nothing links to it until the attorney answers
@@ -35,33 +35,51 @@
   var SITE = 'https://growwithgrounded.com';
   var esc = function (x) { return String(x == null ? '' : x).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); };
   var A = function (p) { return ROOT + p; };
-  var PARTS = [['Roots', 'What grounds you', '#5B3A22'], ['Trunk', 'Purpose', '#8B5E1A'], ['Bark', 'Mind and feelings', '#7D6B57'], ['Branches', 'Relationships', '#9A5B34'], ['Leaves', 'Body', '#5F7D48'], ['Fruit', 'Hope', '#C07A26']];
+  // The parts (GWG BLD 907): names come from shared/gg-parts.js (tree word and plain word, Roots: Spirit), tend four
+  // (Roots, Bark, Leaves, Branches) and grow two (Trunk, Fruit). The colors are the print colors. KEY_I is each key's place
+  // in a tree's poster words (written in tree order). School trees (Maple, Aspen, Pine) print the Plain wording,
+  // Roots: what grounds you. When this file loads on a page without gg-parts.js, it asks for it, and the words in FALL
+  // stand in until it arrives.
+  var PART_COLOR = { roots: '#5B3A22', trunk: '#8B5E1A', bark: '#7D6B57', branches: '#9A5B34', leaves: '#5F7D48', fruit: '#C07A26' };
+  var KEY_I = { roots: 0, trunk: 1, bark: 2, branches: 3, leaves: 4, fruit: 5 };
+  var FALL = { roots: ['Roots', 'Spirit', 'what grounds you'], trunk: ['Trunk', 'Meaning'], bark: ['Bark', 'Mind'], branches: ['Branches', 'Relationships'], leaves: ['Leaves', 'Body'], fruit: ['Fruit', 'Hope'] };
+  var PLAIN_TREES = { maple: 1, aspen: 1, pine: 1 };
+  if (!(window.GGParts && window.GGParts.label)) { try { var gp = document.createElement('script'); gp.src = ROOT + '/shared/gg-parts.js?v=b907'; document.head.appendChild(gp); } catch (e) {} }
+  function partsOf(tr) {
+    var G = window.GGParts && window.GGParts.label ? window.GGParts : null, o = { plain: !!PLAIN_TREES[tr] }, tend = G ? G.TEND : ['roots', 'bark', 'leaves', 'branches'], grow = G ? G.GROW : ['trunk', 'fruit'];
+    return tend.concat(grow).map(function (k) {
+      var f = FALL[k];
+      return { key: k, tree: G ? G.tree(k) : f[0], word: G ? G.word(k, o) : (o.plain && f[2]) || f[1], color: PART_COLOR[k], tend: tend.indexOf(k) >= 0 };
+    });
+  }
+  var GROWS = 'Grows from your tending';
+  var PARTS_SUB = 'Tend four parts. Grow in meaning and hope.';
 
   var T = {
     house: { name: 'Grow With Grounded', color: '#8B5E1A', path: '/', scan: 'Scan to visit Grow With Grounded' },
-    maple: { name: 'Maple', color: '#C4501E', ink: '#A14219', path: '/maple/', tag: 'Bright leaves, strong roots.', sub: 'Six parts make a kid whole. Learn to tend them together.', who: 'Built for grades K to 5.', guide: 'Maple Guide',
+    maple: { name: 'Maple', color: '#C4501E', ink: '#A14219', path: '/maple/', tag: 'Bright leaves, strong roots.', sub: 'Tend four parts together, and watch hope grow.', who: 'Built for grades K to 5.', guide: 'Maple Guide',
       points: ['A gentle check-in for kids in grades K to 5, made to do together at home or at school.', 'Kids grow their own tree, practice a little each day, and watch critters come to visit.', 'Grown-ups get When Life Changes: guides for hard talks with kids, from a pet dying to scary news.'],
-      parts: { title: 'The Six Parts of My Tree', lead: 'Every kid is growing like a tree. A whole tree needs all six parts.', words: ['Feeling safe, loved, and calm inside. Family, faith, prayer, quiet time, and time outside can help.', 'Knowing you matter, and finding things you love to do and are good at.', 'Naming your feelings and finding ways to calm down.', 'Friends, family, and grown-ups you can count on.', 'Moving, resting, and eating foods that help you grow.', 'Looking forward to good things, and being kind to others.'], close: 'Which part of your tree needs a little care today?' } },
-    aspen: { name: 'Aspen', color: '#1F6F74', ink: '#1F6F74', path: '/aspen/', tag: 'Rooted together.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 6 to 8.', guide: 'Aspen Guide',
+      parts: { title: 'Tend Four, Grow Two', lead: 'Every kid is growing like a tree. Tend four parts, and watch two more grow.', words: ['Feeling safe, loved, and calm inside. Family, faith, prayer, quiet time, and time outside can help.', 'Knowing you matter, and finding things you love to do and are good at.', 'Naming your feelings and finding ways to calm down.', 'Friends, family, and grown-ups you can count on.', 'Moving, resting, and eating foods that help you grow.', 'Looking forward to good things, and being kind to others.'], close: 'Which part of your tree needs a little care today?' } },
+    aspen: { name: 'Aspen', color: '#1F6F74', ink: '#1F6F74', path: '/aspen/', tag: 'Rooted together.', sub: PARTS_SUB, who: 'Built for grades 6 to 8.', guide: 'Aspen Guide',
       points: ['A check-in for grades 6 to 8, with questions written for each grade.', 'Every check-in adds a growth ring and leaves to their tree, and daily tending happens right in Aspen.', 'Done on their own or with a grown-up.', 'Grown-ups get When Life Changes: guides for hard talks with middle schoolers, from group chats to grief.'],
-      parts: { title: 'Six Parts Make You Whole', lead: 'Every middle schooler is like an aspen: growing fast and putting down roots.', words: ['What keeps you steady: faith, family traditions, quiet, or time outside.', 'Goals, things you care about, and trying new things.', 'Naming what you feel, calming down, and asking for help.', 'Friends, family, and belonging somewhere.', 'Sleep, movement, real meals, and screen breaks.', "Hope for what's ahead, and the kindness that grows it."], close: 'Notice all six. Tend the one that needs it.' } },
-    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for adults, 26 to 60.', guide: 'Oak Guide',
+      parts: { title: 'Tend Four, Grow Two', lead: 'Every middle schooler is like an aspen: growing fast and putting down roots.', words: ['What keeps you steady: faith, family traditions, quiet, or time outside.', 'Goals, things you care about, and trying new things.', 'Naming what you feel, calming down, and asking for help.', 'Friends, family, and belonging somewhere.', 'Sleep, movement, real meals, and screen breaks.', "Hope for what's ahead, and the kindness that grows it."], close: 'Tend all four. Watch meaning and hope grow.' } },
+    oak: { name: 'Oak', color: '#3D5A73', ink: '#3D5A73', path: '/oak/', tag: 'Shelter for others. Strength for you.', sub: PARTS_SUB, who: 'Built for adults, 26 to 60.', guide: 'Oak Guide',
       points: ['A check-in for the whole person, from root to fruit.', 'A personal growth plan with step-by-step practices.', "When Life Changes: 88 guides for life's hardest seasons."],
-      parts: { title: 'Six Parts Make You Whole', lead: 'Being whole means noticing and tending all six.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
-    // Pine (GWG BLD 739, Pine Guide posters GWG BLD 741): the flyer, "A trained Pine Guide serves here.", and the six parts poster.
-    pine: { name: 'Pine', color: '#3A6B35', ink: '#3A6B35', path: '/pine/', tag: 'Stand tall through every season.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for grades 9 to 12.', guide: 'Pine Guide',
+      parts: { title: 'Tend Four, Grow Two', lead: 'Being whole means tending all four parts, and watching meaning and hope grow.', words: ['Faith, the Sacred, and the practices that steady you.', 'Meaning, calling, and what your life is for.', 'Thoughts and feelings, stress and resilience.', 'Family, friends, and community.', 'Movement, rest, and nourishment.', "Hope, gratitude, and what you're growing toward."], close: 'Shelter for others. Strength for you.' } },
+    // Pine (GWG BLD 739, Pine Guide posters GWG BLD 741): the flyer, "A trained Pine Guide serves here.", and the Tend Four, Grow Two poster.
+    pine: { name: 'Pine', color: '#3A6B35', ink: '#3A6B35', path: '/pine/', tag: 'Stand tall through every season.', sub: PARTS_SUB, who: 'Built for grades 9 to 12.', guide: 'Pine Guide',
       points: ['A check-in for grades 9 to 12, with questions written for each grade band.', 'A growth plan with practices, and a tree that grows with every day tended.', 'Next Steps: a private notebook for goals and plans after high school.', "Only the teen's own passcode opens their answers. Grown-ups see only the big picture of tending."],
-      parts: { title: 'Six Parts Make You Whole', lead: 'High school is a season of fast growth. A whole tree needs all six parts.', words: ['Peace, faith, quiet, and what holds you steady.', "What you care about and where you're headed.", 'Handling stress, mistakes, and big feelings.', 'Friends, family, and the adults in your corner.', 'Moving, resting, and eating well.', 'What you look forward to and believe is possible.'], close: 'Stand tall through every season.' } },
+      parts: { title: 'Tend Four, Grow Two', lead: 'High school is a season of fast growth. Tend all four parts, and meaning and hope grow.', words: ['Peace, faith, quiet, and what holds you steady.', "What you care about and where you're headed.", 'Handling stress, mistakes, and big feelings.', 'Friends, family, and the adults in your corner.', 'Moving, resting, and eating well.', 'What you look forward to and believe is possible.'], close: 'Stand tall through every season.' } },
     // Birch (GWG BLD 742): the flyer for young adults. Birch Guide posters come with Birch Guide.
-    birch: { name: 'Birch', color: '#7F6610', ink: '#7F6610', path: '/birch/', tag: 'New ground, deep roots.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for young adults, 18 to 26.', guide: 'Birch Guide',
+    birch: { name: 'Birch', color: '#7F6610', ink: '#7F6610', path: '/birch/', tag: 'New ground, deep roots.', sub: PARTS_SUB, who: 'Built for young adults, 18 to 26.', guide: 'Birch Guide',
       points: ['A check-in for young adults, 18 to 26, wherever life has you right now.', 'A growth plan with practices, and a tree that grows with every day tended.', 'Groundwork: a private notebook for your plans and the skills you already have.', 'Only your own passcode opens your answers. Helpers see only what you share.'],
-      parts: { title: 'Six Parts Make You Whole', lead: 'New ground brings fast change. A whole tree needs all six parts.', words: ['Faith, the Sacred, quiet, and the practices that steady you.', 'Meaning, calling, and the direction you are choosing.', 'Stress, setbacks, and the feelings that come with change.', 'Friends, family, and the people in your corner.', 'Sleep, movement, and eating well on a real schedule.', "Hope for what's ahead, and the steps that build it."], close: 'New ground, deep roots.' } },
-    sequoia: { name: 'Sequoia', color: '#7A2E1C', ink: '#7A2E1C', path: '/sequoia/', tag: 'A long life, still growing.', sub: 'Six parts make you whole. Learn to tend them all.', who: 'Built for older adults, 60 and up.', guide: 'Sequoia Guide',
+      parts: { title: 'Tend Four, Grow Two', lead: 'New ground brings fast change. Tend all four parts, and meaning and hope grow.', words: ['Faith, the Sacred, quiet, and the practices that steady you.', 'Meaning, calling, and the direction you are choosing.', 'Stress, setbacks, and the feelings that come with change.', 'Friends, family, and the people in your corner.', 'Sleep, movement, and eating well on a real schedule.', "Hope for what's ahead, and the steps that build it."], close: 'New ground, deep roots.' } },
+    sequoia: { name: 'Sequoia', color: '#7A2E1C', ink: '#7A2E1C', path: '/sequoia/', tag: 'A long life, still growing.', sub: PARTS_SUB, who: 'Built for older adults, 60 and up.', guide: 'Sequoia Guide',
       points: ['A check-in for the whole person in later life, one question at a time, in larger text.', 'A growth plan with practices that work seated, standing, or in bed.', 'A Legacy Book for the stories and lessons you want to pass on, private until you share a page.', 'When Life Changes: 59 guides for later life, with short videos for you and your helper.'],
-      parts: { title: 'Six Parts Make You Whole', lead: 'A long life is still growing in all six parts.', words: ['Faith, the Sacred, and the practices that have carried you.', 'Meaning, legacy, and what your life is for now.', 'Thoughts and feelings, worry and peace.', 'Family, friends, neighbors, and community.', 'Movement, rest, balance, and nourishment.', "Hope, gratitude, and what you're still looking forward to."], close: 'A long life, still growing.' } },
+      parts: { title: 'Tend Four, Grow Two', lead: 'A long life is still growing. Tend all four parts, and meaning and hope keep growing.', words: ['Faith, the Sacred, and the practices that have carried you.', 'Meaning, legacy, and what your life is for now.', 'Thoughts and feelings, worry and peace.', 'Family, friends, neighbors, and community.', 'Movement, rest, balance, and nourishment.', "Hope, gratitude, and what you're still looking forward to."], close: 'A long life, still growing.' } },
     willow: { name: 'Willow', color: '#5D5A6E', ink: '#5D5A6E', path: '/willow/', tag: 'Held gently, all the way home.', sub: 'A tree for the last part of the path.', who: 'For the person in hospice, and the people who love them.', guide: 'Willow Guide',
       points: ['Built for two: the person in hospice, and the people who love them.', 'Gentle check-ins that speak to the person in hospice, with faith cards for 29 traditions.', 'A page for what matters most, and Cuttings for the stories and letters they want to leave.', 'Helpers open it with their own passcode and see only what the person chooses to share.'],
-      parts: { title: 'Six Parts, All the Way Home', lead: 'At the end of life, every part of a person still matters.', words: ['Faith, tradition, and what gives peace.', 'Meaning, legacy, and the story of a life.', 'Feelings, fears, and finding calm.', 'The people who love them, and saying what matters.', 'Comfort, rest, and ease in the body.', 'Hope that changes shape: for comfort, for time together, for peace.'], close: 'Held gently, all the way home.' } },
+      parts: { title: 'Every Part, All the Way Home', lead: 'At the end of life, every part of a person still matters.', words: ['Faith, tradition, and what gives peace.', 'Meaning, legacy, and the story of a life.', 'Feelings, fears, and finding calm.', 'The people who love them, and saying what matters.', 'Comfort, rest, and ease in the body.', 'Hope that changes shape: for comfort, for time together, for peace.'], close: 'Held gently, all the way home.' } },
     // The Grove (GWG BLD 776): the kinds, the check-in together, the plan, and When Life Changes Together.
     grove: { name: 'The Grove', color: '#223829', ink: '#2F5A3C', path: '/grove/', tag: 'Where our trees grow together.', sub: 'Your tree is yours. The grove is ours.', who: 'Built for families, faith communities, small groups, and teams.',
       points: ['A Family Check-in with one shared answer, talked over together, and results in words only.', 'Our Growth Plan: small practices tied to the times you are already together.', 'When Life Changes Together: 69 guides, each with a video for the group and one for the leader, plus Do This Together videos.', 'Everyone tends their own tree in their own app, and the trees stand side by side here.'] }
@@ -299,8 +317,8 @@
     '.by{font-size:calc(10.5pt * var(--k));letter-spacing:3px;font-weight:600;color:#6B5A4D;margin-top:calc(4px * var(--k));}',
     '.tag{font-size:calc(27pt * var(--k));font-style:italic;font-weight:500;line-height:1.1;margin-top:calc(0.2in * var(--k));}',
     '.sub{font-size:calc(13pt * var(--k));line-height:1.4;color:#4A3B30;margin-top:calc(0.08in * var(--k));}',
-    '.parts{display:grid;grid-template-columns:repeat(3,1fr);gap:calc(8px * var(--k)) calc(14px * var(--k));margin-top:calc(0.22in * var(--k));}',
-    '.parts div{border-top:calc(4px * var(--k)) solid var(--p);padding-top:calc(5px * var(--k));}.parts b{display:block;font-size:calc(15pt * var(--k));font-family:"Cormorant Garamond",Georgia,serif;color:var(--p);}.parts span{font-size:calc(10pt * var(--k));color:#4A3B30;}',
+    '.parts{display:grid;grid-template-columns:repeat(4,1fr);gap:calc(8px * var(--k)) calc(14px * var(--k));margin-top:calc(0.22in * var(--k));}',
+    '.parts div{border-top:calc(4px * var(--k)) solid var(--p);padding-top:calc(5px * var(--k));}.parts b{display:block;font-size:calc(15pt * var(--k));font-family:"Cormorant Garamond",Georgia,serif;color:var(--p);}.parts span{font-size:calc(10pt * var(--k));color:#4A3B30;}.parts .pt-grow{grid-column:span 2;}',
     '.grow{flex:0;}.pad{flex:1;display:flex;flex-direction:column;justify-content:space-evenly;padding-bottom:calc(0.2in * var(--k));}.pad>*{margin-top:0 !important;}',
     '.top{flex:none;}.k1 .top img.hero{height:2.95in;object-fit:cover;}',
     '.k2 .top img.hero{height:6.2in;object-fit:cover;}',
@@ -313,7 +331,8 @@
   // band with the tree kept in view (HX: where the tree sits, side to side, as a percent of the painting's width).
   var HX = { maple: 38, aspen: 37, pine: 37, birch: 18, oak: 70, sequoia: 26, willow: 25, grove: 50 };
   function heroImg(tr) { return '<img class="hero" src="' + A('/shared/heroes/' + tr + '-wide.webp') + '" alt="" style="object-position:' + (HX[tr] == null ? 50 : HX[tr]) + '% 58%">'; }
-  function partsStrip() { return '<div class="parts">' + PARTS.map(function (p) { return '<div style="--p:' + p[2] + '"><b>' + p[0] + '</b><span>' + p[1] + '</span></div>'; }).join('') + '</div>'; }
+  // Tend four across the top row, grow two below (each spanning two columns), so the strip keeps its two rows.
+  function partsStrip(tr) { return '<div class="parts">' + partsOf(tr).map(function (p) { return '<div class="' + (p.tend ? 'pt-tend' : 'pt-grow') + '" style="--p:' + p.color + '"><b>' + esc(p.tree) + '</b><span>' + esc(p.word) + (p.tend ? '' : '. ' + GROWS) + '</span></div>'; }).join('') + '</div>'; }
   function footer(t, label, extra, to) {
     var u = to || SITE + t.path;
     return '<div class="foot"><div class="qr">' + qr(u, label) + '<div><b>' + esc(label) + '</b><span>' + esc(short(u)) + '</span></div></div>'
@@ -331,7 +350,7 @@
       if (kind === 'parts') {
         var P = t.parts;
         body = '<div class="band" style="background:' + t.color + '"><div class="id"><img src="' + A('/shared/marks/' + tr + '.svg') + '" alt=""><div><div class="pt serif">' + esc(P.title) + '</div><div class="by cond" style="color:rgba(255,248,236,.85)">' + esc(t.name.toUpperCase()) + ' BY GROW WITH GROUNDED</div></div></div><p class="lead">' + esc(P.lead) + '</p></div>'
-          + '<div class="six">' + PARTS.map(function (p, i) { return '<div class="sx" style="--p:' + p[2] + '"><b class="serif">' + p[0] + '</b><span>' + p[1] + '</span><p>' + esc(P.words[i]) + '</p></div>'; }).join('') + '</div>'
+          + '<div class="six">' + partsOf(tr).map(function (p) { return '<div class="sx" style="--p:' + p.color + '"><b class="serif">' + esc(p.tree) + '</b><span>' + esc(p.word) + (p.tend ? '' : '. ' + GROWS) + '</span><p>' + esc(P.words[KEY_I[p.key]]) + '</p></div>'; }).join('') + '</div>'
           + '<div class="grow"></div><p class="close serif">' + esc(P.close) + '</p>'
           + footer(t, 'Scan to learn about ' + t.name);
         css = SCALE + '\n.band{padding:calc(0.5in * var(--k)) calc(0.6in * var(--k)) calc(0.4in * var(--k));color:#FFF8EC;}.band .id img{background:#fff;}'
@@ -341,12 +360,12 @@
           + '.sx b{display:block;font-size:calc(26pt * var(--k));font-weight:600;color:var(--p);line-height:1;}.sx span{display:block;font-size:calc(11.5pt * var(--k));font-weight:600;margin-top:calc(3px * var(--k));}'
           + '.sx p{font-size:calc(12pt * var(--k));line-height:1.4;color:#4A3B30;margin:calc(5px * var(--k)) 0 0;}'
           + '.close{text-align:center;font-size:calc(22pt * var(--k));font-style:italic;font-weight:500;color:' + t.ink + ';margin:0 calc(0.6in * var(--k)) calc(0.1in * var(--k));}';
-        return page({ win: win, title: t.name + ' Six Parts Poster', sizes: [LETTER, TABLOID], body: body, css: css, tip: 'Pick Letter or 11 by 17 above.' });
+        return page({ win: win, title: t.name + ' Tend Four, Grow Two Poster', sizes: [LETTER, TABLOID], body: body, css: css, tip: 'Pick Letter or 11 by 17 above.' });
       }
       body = '<div class="top">' + heroImg(tr) + '</div>'
         + '<div class="pad"><div>' + head(tr, t) + '<div class="tag serif">' + esc(t.tag) + '</div><div class="sub">' + esc(t.sub) + '<br>' + esc(t.who) + '</div></div>'
-        + '<div class="here" style="--c:' + t.color + '"><span class="serif">A trained ' + esc(t.guide) + ' serves here.</span><small>Ask about ' + esc(t.name) + ', and how the six parts of a tree can help.</small></div>'
-        + partsStrip() + '</div><div class="grow"></div>' + footer(t, 'Scan to learn about ' + t.name);
+        + '<div class="here" style="--c:' + t.color + '"><span class="serif">A trained ' + esc(t.guide) + ' serves here.</span><small>Ask about ' + esc(t.name) + ', and how tending all four parts of a tree helps meaning and hope grow.</small></div>'
+        + partsStrip(tr) + '</div><div class="grow"></div>' + footer(t, 'Scan to learn about ' + t.name);
       css = SCALE + '\n.here{margin-top:calc(0.26in * var(--k));background:#F6EEDB;border-left:calc(7px * var(--k)) solid var(--c);padding:calc(0.16in * var(--k)) calc(0.2in * var(--k));}'
         + '.here span{display:block;font-size:calc(22pt * var(--k));font-weight:600;color:var(--c);line-height:1.1;}.here small{display:block;font-size:calc(11pt * var(--k));color:#4A3B30;margin-top:calc(4px * var(--k));}';
       return page({ win: win, title: t.name + ' Poster', sizes: [LETTER, TABLOID], body: body, css: css, tip: 'Pick Letter or 11 by 17 above.' });
@@ -360,9 +379,9 @@
       if (tr === 'overview' || !T[tr]) {
         var t = T.house;
         body = '<div class="ov-top"><img src="' + A('/favicon.svg') + '" alt=""><div><div class="ov-nm serif">Grow With Grounded<sup>&trade;</sup></div><div class="ov-tag serif">Tending the whole person, every age and stage, through every threshold.</div></div></div>'
-          + '<div class="pad"><p class="ov-lead">Every person is like a tree, made of six parts that make a whole. Our tools help people notice all six and tend the ones that need it, from first breath to last.</p>'
+          + '<div class="pad"><p class="ov-lead">Every person is like a tree. Tend four parts of life (mind, body, spirit, and relationships), and meaning and hope grow from your tending, from first breath to last. The Grounded Way works when you tend all four parts.</p>'
           + '<div class="ov-row">' + ROW.map(function (x) { return '<div><img src="' + A('/shared/marks/' + x[0] + '.svg') + '" alt=""><b class="serif">' + x[1] + '</b><span>' + x[2] + '</span></div>'; }).join('') + '</div>'
-          + partsStrip()
+          + partsStrip('overview')
           + '<ul class="ov-pts"><li><b>Guided check-ins</b> for every age, with a growth plan, daily practices, Learn videos, and Health and Ability for living with a disability, illness, or difference.</li><li><b>When Life Changes:</b> more than 500 guides for life&rsquo;s unexpected conversations, each with two short videos, written for every age.</li><li><b>The Grounded Way:</b> one private app for whole, healthy living, with a plan from your check-in, workouts, meditations, and Grounded Recipes.</li><li><b>Private by design:</b> everything stays on your device.</li><li><b>For professionals:</b> the Grounded Field Guide, with a Guide for every tree and For Guides training for chaplains, teachers, and caregivers.</li></ul></div>'
           + '<div class="grow"></div>' + footer(t, 'Scan to see every tree', 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.', SITE + '/tools.html');
         css = SCALE + '\n.ov-top{display:flex;align-items:center;gap:0.25in;background:#8B5E1A;color:#FFF8EC;padding:0.45in 0.6in;}.ov-top img{width:0.9in;height:auto;}'
@@ -378,7 +397,7 @@
       body = '<div class="top">' + heroImg(tr) + '</div>'
         + '<div class="pad"><div>' + head(tr, x) + (x.eyebrow ? '<div class="ey cond" style="--c:' + x.color + '">' + esc(x.eyebrow.toUpperCase()) + '</div>' : '') + '<div class="tag serif">' + esc(x.tag) + '</div><div class="sub">' + esc(x.sub) + '<br>' + esc(x.who) + '</div></div>'
         + '<ul class="pts">' + x.points.map(function (p) { return '<li style="--c:' + x.color + '">' + esc(p) + '</li>'; }).join('') + '<li style="--c:' + x.color + '">Private by design: no account, and answers stay on your device.</li></ul>'
-        + partsStrip() + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.');
+        + partsStrip(tr) + '</div><div class="grow"></div>' + footer(x, 'Scan to begin with ' + x.name, 'If you ever feel like hurting yourself, call or text 988. In danger now, call 911.');
       css = SCALE + '\n.pts{list-style:none;margin:calc(0.2in * var(--k)) 0 0;padding:0;}.pts li{position:relative;padding-left:0.24in;font-size:12.5pt;line-height:1.4;margin-bottom:6px;}'
         + '.pts li:before{content:"";position:absolute;left:0;top:0.42em;width:9px;height:9px;border-radius:50%;background:var(--c);}'
         + '.ey{font-size:12pt;letter-spacing:3px;font-weight:700;color:var(--c);margin-top:0.16in;}.ey + .tag{margin-top:0.04in;}';

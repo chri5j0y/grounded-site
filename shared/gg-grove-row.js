@@ -27,7 +27,10 @@
   if (window.GGGroveRow) return;
   var me = document.currentScript && document.currentScript.src || '/shared/gg-grove-row.js';
   var BASE = me.replace(/gg-grove-row\.js.*$/, '');
-  var PARTS = [['roots', 'Roots', '#8E5A2B'], ['trunk', 'Trunk', '#C27A1E'], ['bark', 'Bark', '#6E5BB5'], ['branches', 'Branches', '#1F8A8F'], ['leaves', 'Leaves', '#3A9B58'], ['fruit', 'Fruit', '#D9483F']];
+  // The parts' names come from shared/gg-parts.js (GWG BLD 907): the tree word paired with the plain word, Roots: Spirit.
+  // The colors stay The Grove's own dot colors.
+  var GP = window.GGParts && window.GGParts.label ? window.GGParts : null, PLBL = { roots: 'Roots: Spirit', trunk: 'Trunk: Meaning', bark: 'Bark: Mind', branches: 'Branches: Relationships', leaves: 'Leaves: Body', fruit: 'Fruit: Hope' };
+  var PARTS = [['roots', '#8E5A2B'], ['trunk', '#C27A1E'], ['bark', '#6E5BB5'], ['branches', '#1F8A8F'], ['leaves', '#3A9B58'], ['fruit', '#D9483F']].map(function (p) { return [p[0], GP ? GP.label(p[0]) : PLBL[p[0]], p[1]]; });
   var SCALE = { maple: .6, aspen: .72, pine: .84, birch: .92, adult: 1, sequoia: 1.06, willow: 1 };
   var TREE_NAME = { maple: 'Maple', aspen: 'Aspen', pine: 'Pine', birch: 'Birch', oak: 'Oak', sequoia: 'Sequoia', willow: 'Willow' };
   function esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, function (c) { return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]; }); }

@@ -96,11 +96,11 @@
   };
   var ENTER = {
     "roots": [
-      "First, Roots: what grounds you.",
-      "We will begin gently with Roots, what holds you steady."
+      "First, Roots: Spirit, your connection with God and the sacred.",
+      "We will begin gently with Roots: Spirit, what holds you steady."
     ],
     "trunk": [
-      "Next, your Trunk: purpose and meaning.",
+      "Next, your Trunk: meaning. It grows from all you tend.",
       "On to Trunk, the story your life is telling."
     ],
     "bark": [
@@ -120,6 +120,8 @@
       "Finally, Fruit, the good still growing in your life."
     ]
   };
+  var ROOTS_FAITH = ENTER.roots, ROOTS_PLAIN = ["First, Roots: what grounds you.","We will begin gently with Roots, what holds you steady."];
+  Object.defineProperty(ENTER, "roots", { enumerable: true, configurable: true, get: function () { try { return typeof gwPlainOn === "function" && gwPlainOn() ? ROOTS_PLAIN : ROOTS_FAITH; } catch (e) { return ROOTS_FAITH; } } });
   window.GG_GUIDED["sequoia"] = {
     "voice": "brian",
     "tipSkip": [],
@@ -342,19 +344,15 @@
       "plan": {
         "open": [
           [
-            "Now let us build your Growth Plan. We will go one part at a time, starting with your Growing Edge, and you will choose one to three practices for each.",
-            "Let us choose what you will tend this season. A few gentle practices are plenty, and each one can fit your body and your days.",
-            "For each part of your tree, pick what fits your life right now. A chair, a porch, or a phone call can hold a whole practice."
+            "Now let us build your Growth Plan. We will go through the four parts you tend, one at a time, starting with your Growing Edge, and you will choose one to three practices for each.",
+            "Let us choose what you will tend this season. A few gentle practices are plenty, and each one can fit your body and your days. The Grounded Way works when you tend all four parts.",
+            "For each of the four parts you tend, pick what fits your life right now. A chair, a porch, or a phone call can hold a whole practice."
           ]
         ],
         "part": {
           "roots": [
             "Your roots hold you steady. A small practice here keeps you close to what you hold sacred.",
             "Deep roots carry a tree through every season. A few quiet minutes here feed everything above."
-          ],
-          "trunk": [
-            "Your trunk is your sense of purpose. Your stories, your wisdom, and your kindness still shape the people around you.",
-            "Purpose can grow at every age. Choose a practice that brings what you value into your days."
           ],
           "bark": [
             "Your bark is how you find calm and heal over. A practice here gives you something gentle to reach for.",
@@ -367,10 +365,6 @@
           "leaves": [
             "Your leaves are your body: rest, gentle movement, and nourishment. Choose what your body welcomes.",
             "Small, steady habits that fit your body count fully, in a chair, on a walk, or at rest."
-          ],
-          "fruit": [
-            "Your fruit is hope. A practice here helps you notice the good that is still growing.",
-            "There is always something to look forward to. Choose a practice that keeps it in view."
           ]
         },
         "close": [

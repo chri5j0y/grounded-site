@@ -2,7 +2,7 @@
    GROUNDED RECIPES (GWG BLD 875, one recipe view in BLD 877): the public Recipes page, /recipes/.
    Reads window.GGTendPublic.recipes (shared/tending-public.js, public on purpose).
    A list with meal, goal, and fit chips and a search box; each recipe opens a detail view at /recipes/#<recipe id>
-   (deep links work on load, Back returns to the list). BLD 877: a gold Guide Me, Step by Step button opens a full screen
+   (deep links work on load, Back returns to the list). BLD 877: a gold Guide Me, Step by Step button (BLD 907: named Grounded Cooking) opens a full screen
    guided mode right on this page: one step at a time in the recorded kitchen voice (field-guide/coach.js, GGVoice, with the
    public clip key GGTendPublic.audio), Back and Next, timers for steps with minutes, the kitchen scene (field-guide/stage.js),
    Voice, Music, and Beeps toggles, and a finish screen. No sign-in. The spoken lines are the ones field-guide/health.js
@@ -205,7 +205,7 @@
       '<h2 id="rc-dname" tabindex="-1">' + esc(r.name) + '</h2></div></div>' +
       '<div class="rc-meta"><span class="rc-tag">' + r.mins + ' min total</span>' + (r.active && r.active !== r.mins ? '<span class="rc-tag">' + r.active + ' min hands on</span>' : '') +
       '<span class="rc-tag" id="rc-serves">Serves ' + (window.GGScale ? sv(r) : r.serves) + '</span>' + fits + goals + '</div>' +
-      '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('r:' + r.id) + '<span>A calm voice guides every step, with timers.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
+      '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' + menuBtn('r:' + r.id) + '<span>Step by step, with a voice to guide you.</span></div><div class="rc-mnote" data-rc-mnote="r:' + esc(r.id) + '" hidden></div>' +
       '<div class="rc-cols"><div class="card"><h3>Ingredients</h3>' +
       (window.GGScale ? '<div class="rc-size"><div class="rc-row" role="group" aria-labelledby="rc-l-size"><span class="rc-lab" id="rc-l-size">Serves</span>' + sizeChips(sv(r)) + '</div>' +
         '<p class="rc-size-note">' + (isBatch(r) ? 'A full pitcher. Choose a smaller batch any time; the steps fit every size.' : 'Amounts scale to your table. The steps fit every size.') + '</p></div>' : '') +
@@ -215,8 +215,8 @@
       (swaps.length ? '<div class="card"><h3>Swaps</h3>' + swaps.map(function (s) { return '<p>' + esc(s) + '</p>'; }).join('') + '</div>' : '') + '</div>' +
       '<div class="rc-low"><div class="card"><h3>Nutrition per Serving</h3><table class="rc-nut"><caption>Estimates from USDA FoodData Central.</caption><tbody>' +
       rows.map(function (x) { return '<tr><th scope="row">' + x[0] + '</th><td>' + x[1] + x[2] + '</td></tr>'; }).join('') + '</tbody></table></div>' +
-      '<div class="card rc-cook"><h3>Guide Me, Step by Step</h3><p>Your kitchen guide, right here: one step at a time, read aloud by a calm voice, with a timer for every step that takes minutes. Cook at your own pace, with Back and Next.</p>' +
-      '<button type="button" class="btn btn-primary rc-guide-btn" id="rc-cook" data-rc-guide>' + PLAY + 'Guide Me, Step by Step</button>' +
+      '<div class="card rc-cook"><h3>Grounded Cooking</h3><p>Your kitchen guide, right here: one step at a time, read aloud by a calm voice, with a timer for every step that takes minutes. Cook at your own pace, with Back and Next.</p>' +
+      '<button type="button" class="btn btn-primary rc-guide-btn" id="rc-cook" data-rc-guide>' + PLAY + 'Grounded Cooking</button>' +
       '<p class="rc-doc" style="margin-top:18px">' + esc(T.doctor || '') + '</p></div></div>' +
       '</article>';
   }
@@ -273,7 +273,7 @@
     var menu = x.menu.map(function (m) {
       var r = HOL.recipe(id, m.id, serves);
       return '<div class="card rc-hrec"><h3>' + esc(m.name) + '</h3><p class="rc-t">' + esc([m.course ? m.course.charAt(0).toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : '', 'serves ' + r.serves].filter(Boolean).join(' · ')) + '</p>' +
-        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Guide Me, Step by Step</button>' + menuBtn('h:' + id + ':' + m.id) + '</div><div class="rc-mnote" data-rc-mnote="' + esc('h:' + id + ':' + m.id) + '" hidden></div>' +
+        '<div class="rc-go"><button type="button" class="btn btn-primary rc-guide-btn" data-rc-hguide="' + esc(id + '|' + m.id) + '">' + PLAY + 'Grounded Cooking</button>' + menuBtn('h:' + id + ':' + m.id) + '</div><div class="rc-mnote" data-rc-mnote="' + esc('h:' + id + ':' + m.id) + '" hidden></div>' +
         (m.makeAhead ? '<p><b>Make ahead:</b> ' + esc(m.makeAhead) + '</p>' : '') + (m.note ? '<p>' + esc(m.note) + '</p>' : '') +
         '<ul class="rc-ing">' + r.ingredients.map(function (g) { return '<li>' + esc(g) + '</li>'; }).join('') + '</ul>' +
         '<ol class="rc-steps">' + r.steps.map(function (s) { return '<li>' + esc(s.t) + (s.min ? '<span class="rc-min">About ' + s.min + (s.min === 1 ? ' minute' : ' minutes') + '</span>' : '') + '</li>'; }).join('') + '</ol>' +
@@ -294,7 +294,7 @@
   function alsoFor(id) {
     var L = ALL.filter(function (r) { return (r.holidays || []).indexOf(id) >= 0; });
     if (!L.length) return '';
-    return '<div class="rc-also"><h3 class="rc-hh">More for This Day</h3><p class="rc-hl">Party food and celebration drinks that suit this day, each with its own recipe and Guide Me.</p><div class="rc-grid">' + L.map(card).join('') + '</div></div>';
+    return '<div class="rc-also"><h3 class="rc-hh">More for This Day</h3><p class="rc-hl">Party food and celebration drinks that suit this day, each with its own recipe and Grounded Cooking.</p><div class="rc-grid">' + L.map(card).join('') + '</div></div>';
   }
   /* ---------- BLD 902: Celebration Drinks (GGTendPublic.party) ----------
      The drink menu in its sections, Build Your Own Sparkler, and the Party Drink Station guide. Reached by the Drinks card or
@@ -375,7 +375,7 @@
     var box = null; document.querySelectorAll('[data-rc-mnote]').forEach(function (b) { if (b.getAttribute('data-rc-mnote') === ref) box = b; }); if (!box) return;
     var deep = '/home/#recipe-' + encodeURIComponent(/^h:/.test(ref) ? 'hol-' + ref.split(':')[1] : ref.slice(2));
     box.innerHTML = P ? '<p>Start Tending in The Grounded Way, and My Menu holds this recipe for any day you choose, with its ingredients on your Shopping List.</p><a class="btn btn-primary" href="/home/#today=tending" target="_top">Start Tending</a>'
-      : '<p>My Menu lives in The Grounded Way, private on this device: choose a day and a meal, the ingredients join your Shopping List, and Guide Me waits on Today.</p><a class="btn btn-primary" href="' + (hasProfile() ? deep : '/home/') + '">' + (hasProfile() ? 'Open It in The Grounded Way' : 'Open The Grounded Way') + '</a>';
+      : '<p>My Menu lives in The Grounded Way, private on this device: choose a day and a meal, the ingredients join your Shopping List, and Grounded Cooking waits on Today.</p><a class="btn btn-primary" href="' + (hasProfile() ? deep : '/home/') + '">' + (hasProfile() ? 'Open It in The Grounded Way' : 'Open The Grounded Way') + '</a>';
     box.hidden = false;
   }
   var baseTitle = document.title;

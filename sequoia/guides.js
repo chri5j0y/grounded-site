@@ -121,11 +121,11 @@ const LC_TOPICS = [
   },
   "faith": "For some people, a faith community becomes a home for a new role: teaching, welcoming, visiting, or simply belonging. Many traditions honor elders as keepers of wisdom and memory. If faith is part of your life, this can be a season to listen for what you're being called toward next. If it isn't, the same question points to your values and what you'd like to give.",
   "practices": [
-   "trunk|Find Your Role",
-   "trunk|Name Your Gifts",
-   "trunk|Keep Learning",
-   "trunk|Mentor Someone",
-   "trunk|Volunteer",
+   "branches|Find Your Role",
+   "bark|Name Your Gifts",
+   "bark|Keep Learning",
+   "branches|Mentor Someone",
+   "branches|Volunteer",
    "branches|Standing Call"
   ],
   "reach": [
@@ -214,12 +214,12 @@ const LC_TOPICS = [
   },
   "faith": "For some people, faith is where purpose has always lived: a sense of being called, of being held, of still having a part to play. Prayer, a faith community, or a spiritual director can help you listen for what's next. If faith isn't part of your life, the same listening works with your values: what has always mattered to you, and where it could live now.",
   "practices": [
-   "trunk|Reason to Get Up",
-   "trunk|Name Your Gifts",
-   "trunk|Find Your Role",
-   "trunk|Pass On a Skill",
-   "trunk|Life Review",
-   "fruit|Tiny Next Step"
+   "bark|Reason to Get Up",
+   "bark|Name Your Gifts",
+   "branches|Find Your Role",
+   "branches|Pass On a Skill",
+   "roots|Life Review",
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Low mood, poor sleep, or little interest in almost everything, lasting two weeks or more: talk with your doctor. Depression is not a normal part of aging, and it is very treatable.",
@@ -306,10 +306,10 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions teach service as a way to love your neighbor and live what you believe, and faith communities often have roles for every energy level: visiting, cooking, greeting, praying for others, mentoring. If faith isn't part of your life, serving is still a way to live your values and stay connected.",
   "practices": [
-   "trunk|Volunteer",
-   "trunk|Read with a Child",
-   "trunk|Mentor Someone",
-   "fruit|Pay It Forward",
+   "branches|Volunteer",
+   "branches|Read with a Child",
+   "branches|Mentor Someone",
+   "branches|Pay It Forward",
    "branches|One Reach-Out a Day"
   ],
   "reach": [
@@ -393,10 +393,10 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions honor work as a way to serve, and many also honor rest. If faith is part of your life, you might ask what your work is for in this season, and let your tradition's rhythm of rest, like a sabbath or a day set apart, shape your week.",
   "practices": [
-   "trunk|Name Your Gifts",
-   "trunk|Find Your Role",
-   "trunk|Keep Learning",
-   "trunk|Mentor Someone",
+   "bark|Name Your Gifts",
+   "branches|Find Your Role",
+   "bark|Keep Learning",
+   "branches|Mentor Someone",
    "leaves|Steady Wake Time"
   ],
   "reach": [
@@ -486,9 +486,9 @@ const LC_TOPICS = [
   "practices": [
    "bark|Self-Compassion Break",
    "branches|Ask for Help",
-   "trunk|Find Your Role",
-   "fruit|Blessing for Those You Love",
-   "trunk|Reason to Get Up"
+   "branches|Find Your Role",
+   "roots|Blessing for Those You Love",
+   "bark|Reason to Get Up"
   ],
   "reach": [
    "Call or text 988 any time if you think others would be better off without you, or about ending your life. Veterans: 988, then press 1.",
@@ -672,7 +672,7 @@ const LC_TOPICS = [
    "branches|Standing Call",
    "branches|Clubs",
    "branches|Friends",
-   "trunk|Record a Story"
+   "branches|Record a Story"
   ],
   "reach": [
    "Loneliness or low mood that settles in and stays for two weeks or more: talk with your doctor. It is common, and help works.",
@@ -852,10 +852,10 @@ const LC_TOPICS = [
   },
   "faith": "For many families, faith and ritual run through childhood: a song your mother sang, the words said at the table, the place of worship you grew up in. Those memories can be a comfort now, or bring up old questions, and either is welcome. Some people honor a sibling by visiting a place from childhood, or sharing a family meal in their memory.",
   "practices": [
-   "trunk|Life Review",
-   "trunk|Record a Story",
+   "roots|Life Review",
+   "branches|Record a Story",
    "bark|Grief Time",
-   "trunk|Peace with the Past",
+   "roots|Peace with the Past",
    "branches|Family"
   ],
   "reach": [
@@ -1022,11 +1022,11 @@ const LC_TOPICS = [
   },
   "faith": "Many holidays are holy days. For some, a service, a candle, or prayers known by heart bring the old days close and make the day less lonely. Many faith communities welcome people on holidays, and some offer rides. If faith isn't part of your life, any ritual of remembering or giving can give the day a shape.",
   "practices": [
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "branches|Standing Call",
    "roots|Ritual",
    "branches|Shared Meal",
-   "fruit|Pay It Forward"
+   "branches|Pay It Forward"
   ],
   "reach": [
    "Holiday sadness that lasts long after the day, or grows heavier each year: talk with your doctor or a counselor.",
@@ -1109,9 +1109,9 @@ const LC_TOPICS = [
   "practices": [
    "bark|Letter to Someone Gone",
    "roots|Ritual",
-   "trunk|Reason to Get Up",
+   "bark|Reason to Get Up",
    "leaves|Walk Your Way",
-   "fruit|Watch Something Grow"
+   "roots|Watch Something Grow"
   ],
   "reach": [
    "Grief that keeps you from eating, sleeping, or daily life for weeks: talk with your doctor or a counselor.",
@@ -1196,7 +1196,7 @@ const LC_TOPICS = [
    "bark|Name It",
    "branches|Ask for Help",
    "branches|Support Group",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Ask your doctor or clinic about a nurse, a social worker, or a chaplain who can help you understand the news and plan ahead.",
@@ -1296,7 +1296,7 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "bark|Body Scan",
    "leaves|Chair Stretch",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Pain that is new, worse, or different, or that keeps you from what matters to you: tell your doctor or nurse.",
@@ -1571,7 +1571,7 @@ const LC_TOPICS = [
    "leaves|Hearing and Vision Check",
    "leaves|Home Safety Walk-Through",
    "bark|Five Senses Pause",
-   "trunk|Record a Story",
+   "branches|Record a Story",
    "branches|Support Group"
   ],
   "reach": [
@@ -1662,8 +1662,8 @@ const LC_TOPICS = [
   "practices": [
    "branches|Ask for Help",
    "branches|Standing Call",
-   "fruit|Something to Look Forward To",
-   "trunk|Find Your Role"
+   "bark|Something to Look Forward To",
+   "branches|Find Your Role"
   ],
   "reach": [
    "To find rides and transportation near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota: Minnesota Aging Pathways, 1-800-333-2433.",
@@ -1929,7 +1929,7 @@ const LC_TOPICS = [
    "bark|Memory Helpers",
    "bark|Self-Compassion Break",
    "leaves|Hearing and Vision Check",
-   "trunk|Keep Learning",
+   "bark|Keep Learning",
    "leaves|Movement"
   ],
   "reach": [
@@ -2020,9 +2020,9 @@ const LC_TOPICS = [
   "faith": "For many people, prayers learned long ago, familiar hymns, sacred music, and rituals stay close even as memory changes. If faith is part of your life, a faith leader can visit, pray with you, and help your community keep including you. If it isn't, music, nature, and the people you love can hold the same kind of steadiness.",
   "practices": [
    "bark|Memory Helpers",
-   "fruit|Make Your Wishes Known",
-   "trunk|What I Want Remembered",
-   "trunk|Record a Story",
+   "branches|Make Your Wishes Known",
+   "branches|What I Want Remembered",
+   "branches|Record a Story",
    "branches|Support Group",
    "leaves|Walk Your Way"
   ],
@@ -2122,10 +2122,10 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, lament is one of the oldest ways people have prayed: honest words for sorrow that doesn't lift quickly. A faith leader or a community can carry you on days you can't carry yourself. If faith isn't part of your life, the same steadiness can come from people who keep showing up.",
   "practices": [
    "bark|Talk About Your Mood",
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "leaves|Morning Daylight",
    "branches|Standing Call",
-   "fruit|Three Good Things"
+   "roots|Three Good Things"
   ],
   "reach": [
    "Low mood, or lost interest in things you usually enjoy, lasting two weeks or more: talk with your doctor.",
@@ -2309,8 +2309,8 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "bark|Five Senses Pause",
    "branches|Active Listening",
-   "trunk|Peace with the Past",
-   "trunk|Moral Repair Letter",
+   "roots|Peace with the Past",
+   "roots|Moral Repair Letter",
    "branches|Support Group"
   ],
   "reach": [
@@ -2407,10 +2407,10 @@ const LC_TOPICS = [
   "practices": [
    "bark|Name It",
    "branches|Gratitude Letter",
-   "trunk|Record a Story",
+   "branches|Record a Story",
    "branches|One Reach-Out a Day",
    "leaves|Steady Wake Time",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Help planning a move, rides, meals, and services in a new area anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text), or your local Area Agency on Aging.",
@@ -2499,12 +2499,12 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions teach about holding things lightly, giving generously, and treasures that last longer than possessions. Some people find meaning in giving things to a congregation's sale, a shelter, or a family that needs them. Others feel letting go as a blessing passed on. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "trunk|What I Want Remembered",
-   "trunk|Record a Story",
-   "trunk|Pass On a Skill",
+   "branches|What I Want Remembered",
+   "branches|Record a Story",
+   "branches|Pass On a Skill",
    "branches|Ask for Help",
    "bark|Name It",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Help finding sorting help, movers, donation pickups, and services in your area anywhere in the US: Eldercare Locator, 1-800-677-1116 (call or text), or your local Area Agency on Aging.",
@@ -2593,12 +2593,12 @@ const LC_TOPICS = [
   },
   "faith": "For many people, faith is a thread of continuity through a move like this: a familiar prayer, a hymn, a visit from their faith community, worship offered in the residence, or a chaplain. Ask whether the residence offers spiritual support, and let their faith leader know about the move. For others, meaning comes through family, music, nature, or the view from a window. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "fruit|Joy List",
+   "bark|Joy List",
    "branches|Standing Call",
    "branches|Shared Meal",
    "bark|Name It",
    "roots|Prayers You Know by Heart",
-   "trunk|Find Your Role"
+   "branches|Find Your Role"
   ],
   "reach": [
    "Minnesota Office of Ombudsman for Long-Term Care, 1-800-657-3591 (weekdays, 8 to 4): help with concerns and your rights in a nursing home or assisted living. Outside Minnesota, find your state's ombudsman through the National Consumer Voice for Quality Long-Term Care.",
@@ -2887,12 +2887,12 @@ const LC_TOPICS = [
   },
   "faith": "For many people, getting affairs in order touches faith: wishes for prayers, sacraments, or rituals at the end of life, a funeral in a place of worship, or a blessing passed on. If faith is part of your life, write those wishes down and tell your faith leader. For others, the meaning is in leaving things clear and kind for the people they love. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "fruit|Make Your Wishes Known",
-   "trunk|What I Want Remembered",
-   "trunk|Life Lessons",
-   "fruit|Blessing for Those You Love",
+   "branches|Make Your Wishes Known",
+   "branches|What I Want Remembered",
+   "branches|Life Lessons",
+   "roots|Blessing for Those You Love",
    "branches|Ask for Help",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Legal help for older adults, and planning services in your area: Eldercare Locator, 1-800-677-1116 (call or text). An attorney or legal aid can help with wills and powers of attorney.",
@@ -3085,10 +3085,10 @@ const LC_TOPICS = [
   "practices": [
    "branches|Grandchildren",
    "branches|Grandparent From a Distance",
-   "trunk|Record a Story",
-   "trunk|Pass On a Skill",
-   "trunk|Read with a Child",
-   "fruit|Blessing for Those You Love",
+   "branches|Record a Story",
+   "branches|Pass On a Skill",
+   "branches|Read with a Child",
+   "roots|Blessing for Those You Love",
    "roots|Teach"
   ],
   "reach": [
@@ -3183,7 +3183,7 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break",
    "leaves|Smart Nap",
    "leaves|Easy Meals Plan",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Call 911 if a child or anyone is in danger right now.",
@@ -3285,7 +3285,7 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions treasure reconciliation, and many also teach patience, humility, and that forgiveness and reunion are not the same thing. If faith is part of your life, you might bring this grief to prayer or lament, hold your child in prayer each day, or talk with a chaplain or faith leader you trust. If it isn't, you can still hold your child in your heart, wish them well, and keep your own peace.",
   "practices": [
-   "fruit|Make Peace",
+   "branches|Make Peace",
    "roots|Hold Someone in Light",
    "roots|Lament",
    "roots|Breath Prayer",
@@ -3476,8 +3476,8 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions teach honoring your elders, and part of honoring is listening. If faith is part of your life, a faith leader or chaplain can help a family talk about hard choices with respect on all sides. If it isn't, the same respect holds: a long life earns a real say in what comes next.",
   "practices": [
-   "fruit|Make Your Wishes Known",
-   "trunk|Values Sort",
+   "branches|Make Your Wishes Known",
+   "bark|Values Sort",
    "branches|Active Listening",
    "branches|Ask for Help",
    "branches|Friends"
@@ -3577,7 +3577,7 @@ const LC_TOPICS = [
    "bark|Name It",
    "branches|Shared Meal",
    "branches|Scam Pause",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "If someone you met online or by phone asks for money, gift cards, or an investment: stop, and call the National Elder Fraud Hotline, 1-833-372-8311, weekdays. Report it to the FTC at ReportFraud.ftc.gov.",
@@ -3666,11 +3666,11 @@ const LC_TOPICS = [
   },
   "faith": "For some, divorce brings hard questions about vows, faith, and belonging in a faith community. Many faith leaders today walk gently with people through divorce, and some traditions offer prayers or rituals for endings and new beginnings. If faith is part of your life, a chaplain or faith leader can listen without judgment. If it isn't, meaning can come through friends, nature, and the life you're building next.",
   "practices": [
-   "fruit|Best Possible Year",
+   "bark|Best Possible Year",
    "bark|Slow Exhale",
    "bark|Grief Time",
    "branches|Support Group",
-   "trunk|Values Sort",
+   "bark|Values Sort",
    "leaves|Steady Wake Time"
   ],
   "reach": [
@@ -3864,7 +3864,7 @@ const LC_TOPICS = [
    "branches|Standing Call",
    "branches|Clubs",
    "branches|Neighbors",
-   "trunk|Volunteer",
+   "branches|Volunteer",
    "roots|Welcome Solitude"
   ],
   "reach": [
@@ -3965,7 +3965,7 @@ const LC_TOPICS = [
    "branches|Shared Meal",
    "branches|Gratitude Letter",
    "roots|Hold Someone in Light",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Groups, classes, senior centers, volunteer programs, and rides near you: Eldercare Locator, 1-800-677-1116 (call or text). In Minnesota, Minnesota Aging Pathways, 1-800-333-2433, weekdays.",
@@ -4057,11 +4057,11 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions honor those who served and offer ways to set down what a warrior carried: prayers, blessings, rituals of remembrance, and chaplains who know military life. If faith is part of your life, a chaplain or faith leader can listen to the hardest parts without judging. If it isn't, fellow veterans, a counselor, or a Veterans Day gathering can hold the same honor and remembering.",
   "practices": [
-   "trunk|Life Lessons",
-   "trunk|Record a Story",
+   "branches|Life Lessons",
+   "branches|Record a Story",
    "branches|Support Group",
-   "trunk|Mentor Someone",
-   "trunk|Peace with the Past",
+   "branches|Mentor Someone",
+   "roots|Peace with the Past",
    "roots|Ritual"
   ],
   "reach": [
@@ -4159,11 +4159,11 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions honor elders as carriers of wisdom and blessing, and many communities lean on older members as teachers, prayer partners, and keepers of memory. If faith is part of your life, that can be a place where you are seen and needed. If it isn't, any community that values experience can offer the same.",
   "practices": [
-   "trunk|Name Your Gifts",
-   "trunk|Mentor Someone",
-   "trunk|Pass On a Skill",
+   "bark|Name Your Gifts",
+   "branches|Mentor Someone",
+   "branches|Pass On a Skill",
    "bark|Kind Voice Letter",
-   "trunk|Find Your Role",
+   "branches|Find Your Role",
    "branches|Clubs"
   ],
   "reach": [
@@ -4345,10 +4345,10 @@ const LC_TOPICS = [
   },
   "faith": "Every tradition has something to say about death: prayers, rituals, blessing, confession, and the gift of being accompanied. If faith is part of your life, a faith leader or chaplain can help you include it in your wishes, from last rites to music to who you want nearby. If it isn't, peace can come through the people you love, nature, and knowing your life has mattered. Chaplains walk with people of every faith and none.",
   "practices": [
-   "fruit|Make Your Wishes Known",
+   "branches|Make Your Wishes Known",
    "branches|The Four Things",
-   "trunk|What I Want Remembered",
-   "fruit|Worth Living",
+   "branches|What I Want Remembered",
+   "roots|Worth Living",
    "branches|Ask for Help"
   ],
   "reach": [
@@ -4455,11 +4455,11 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions offer a path through regret: confession, repentance, making amends, a day of atonement, rituals of release, and the promise of mercy. If faith is part of your life, a faith leader or chaplain can walk with you through it. If it isn't, the same steps of honesty, repair, and kindness toward yourself are open to you, and a counselor can help.",
   "practices": [
-   "trunk|Peace with the Past",
-   "trunk|Life Review",
-   "trunk|Moral Repair Letter",
+   "roots|Peace with the Past",
+   "roots|Life Review",
+   "roots|Moral Repair Letter",
    "bark|Self-Compassion Break",
-   "fruit|Make Peace",
+   "branches|Make Peace",
    "branches|The Four Things"
   ],
   "reach": [
@@ -4548,13 +4548,13 @@ const LC_TOPICS = [
   },
   "faith": "For some people, faith is part of the legacy: a blessing, a prayer, a favorite passage, or the story of what has held them up. Many traditions have long practices of blessing the next generation and passing on values in writing. If faith is part of your life, include it in your own words. If it isn't, your values, love, and lessons carry just as much.",
   "practices": [
-   "trunk|Legacy Letter",
-   "trunk|Record a Story",
-   "trunk|What I Want Remembered",
-   "trunk|Life Lessons",
-   "trunk|Values Sort",
-   "fruit|Blessing for Those You Love",
-   "trunk|Pass On a Skill"
+   "branches|Legacy Letter",
+   "branches|Record a Story",
+   "branches|What I Want Remembered",
+   "branches|Life Lessons",
+   "bark|Values Sort",
+   "roots|Blessing for Those You Love",
+   "branches|Pass On a Skill"
   ],
   "reach": [
    "If looking back brings up more than you want to carry alone, stop and call someone you trust, or call or text 988, any time. Veterans, especially if memories from service return: 988, then press 1.",
@@ -4652,8 +4652,8 @@ const LC_TOPICS = [
    "leaves|Appointment Prep",
    "leaves|My Medicines",
    "leaves|Pacing Your Day",
-   "trunk|Values Sort",
-   "trunk|Worth Beyond Doing",
+   "bark|Values Sort",
+   "bark|Worth Beyond Doing",
    "bark|Hard-Day Plan"
   ],
   "reach": [
@@ -4753,7 +4753,7 @@ const LC_TOPICS = [
    "leaves|Pacing Your Day",
    "leaves|Rest Before You're Spent",
    "leaves|Smart Nap",
-   "fruit|Comfort Within Reach",
+   "leaves|Comfort Within Reach",
    "bark|Self-Compassion Break",
    "branches|Ask for Help"
   ],
@@ -4851,7 +4851,7 @@ const LC_TOPICS = [
   "faith": "For some people, faith has been a steady companion through a lifetime of living with a disability. For others, faith communities have been places of welcome, or of barriers: steps, sound systems, or people who prayed for a cure they never asked for. Both experiences are real. You decide what you want from a faith community, and a faith leader who listens can help make worship easier to reach. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
    "branches|Say What You Need",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "leaves|Appointment Prep",
    "bark|Quiet the Senses",
    "branches|Ask for Help",
@@ -4948,8 +4948,8 @@ const LC_TOPICS = [
   },
   "faith": "For some families, faith has been a steady support through a lifetime of caring, and a faith community can become part of the circle that surrounds your son or daughter. For others, faith communities have not always made room, and that hurt is real. If you want, a faith leader can help you think through the future, or help your congregation welcome your adult child more fully. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
-   "trunk|Legacy Letter",
-   "fruit|Make Your Wishes Known",
+   "branches|Legacy Letter",
+   "branches|Make Your Wishes Known",
    "bark|Worry Window",
    "branches|Ask for Help",
    "branches|Caregiver Pause",
@@ -5052,7 +5052,7 @@ const LC_TOPICS = [
    "leaves|Rest Before You're Spent",
    "leaves|Chair Stretch",
    "leaves|Appointment Prep",
-   "trunk|Worth Beyond Doing",
+   "bark|Worth Beyond Doing",
    "branches|Say What You Need"
   ],
   "reach": [
@@ -5151,7 +5151,7 @@ const LC_TOPICS = [
    "leaves|Pacing Your Day",
    "leaves|Appointment Prep",
    "branches|Support Group",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Chest pain, severe breathlessness, lips or fingers turning blue, or a sudden change: call 911.",
@@ -5262,11 +5262,11 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "practices": [
    "branches|Standing Call",
    "branches|One Reach-Out a Day",
-   "trunk|Reason to Get Up",
+   "bark|Reason to Get Up",
    "leaves|Walk Your Way",
    "leaves|Evening Wind Down",
    "bark|Name It",
-   "fruit|Something to Look Forward To"
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "If you drink every day and want to stop or cut back: talk with your doctor first. Stopping suddenly can cause seizures, and a doctor can make it safe.",
@@ -5594,7 +5594,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "bark|Grief Time",
    "roots|Hold Someone in Light",
    "leaves|Rest Before You're Spent",
-   "fruit|Joy List"
+   "bark|Joy List"
   ],
   "reach": [
    "A parent arrives intoxicated, a child is in danger, or someone is very hard to wake or breathing slowly: call 911.",
@@ -5706,11 +5706,11 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "faith": "For many people, faith and long sobriety grow together: gratitude each morning, a sense of grace, a community that knows their story. For some, faith became a place they hid from pain, or a source of pride, and later life is a chance to make it gentler and more honest. Both belong. If faith is part of your life, bring your honest questions to it. Sequoia welcomes all faith traditions and everything in-between.",
   "practices": [
    "bark|Name It",
-   "trunk|Write Your Story",
-   "trunk|Mentor Someone",
+   "bark|Write Your Story",
+   "branches|Mentor Someone",
    "leaves|Walk Your Way",
    "bark|Meditation",
-   "fruit|Three Good Things",
+   "roots|Three Good Things",
    "branches|Standing Call"
   ],
   "reach": [

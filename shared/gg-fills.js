@@ -40,7 +40,7 @@
     'bark|Body Scan': scan,
     'bark|Body Kindness Scan': scan,
     'branches|Loving-Kindness': { kind: 'meditation', ids: ['m3', 'Circles of Kindness', 'Warm Wishes'], only: true },
-    'fruit|Two-Week Gratitude': { kind: 'meditation', ids: ['m4', 'Gathering Gratitude', 'A Grateful Heart'], only: true },
+    'roots|Two-Week Gratitude': { kind: 'meditation', ids: ['m4', 'Gathering Gratitude', 'A Grateful Heart'], only: true },
     'leaves|Movement': { kind: 'strength', ids: [] },
     'leaves|Strength Training': { kind: 'strength', ids: [] },
     'leaves|Walk or Jog': { kind: 'cardio', ids: [] },

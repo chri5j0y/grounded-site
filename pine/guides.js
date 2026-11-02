@@ -123,8 +123,8 @@ const LC_TOPICS = [
   "practices": [
    "branches|Clubs",
    "branches|Name Your Trusted Adult",
-   "trunk|My Brain Grows",
-   "trunk|Study Sprints",
+   "bark|My Brain Grows",
+   "bark|Study Sprints",
    "leaves|Phone Outside the Bedroom",
    "bark|Before the Big Moment"
   ],
@@ -219,8 +219,8 @@ const LC_TOPICS = [
    "bark|Self-Compassion Break",
    "bark|Slow Exhale",
    "bark|Bounce Back From a Setback",
-   "trunk|Study Sprints",
-   "trunk|My Brain Grows",
+   "bark|Study Sprints",
+   "bark|My Brain Grows",
    "leaves|Sleep"
   ],
   "reach": [
@@ -309,12 +309,12 @@ const LC_TOPICS = [
   },
   "faith": "Some families find that faith speaks to this directly: each person made with their own gifts, and loved before they accomplish anything. If faith is part of your life, that can be a steady place on a hard school day. If it isn't, the same truth holds: your worth isn't measured in assignments turned in.",
   "practices": [
-   "trunk|Study Sprints",
-   "trunk|Name Your Gifts",
+   "bark|Study Sprints",
+   "bark|Name Your Gifts",
    "branches|Ask for Help",
    "leaves|Stretch Break",
    "bark|Bounce Back From a Setback",
-   "trunk|Life Skill of the Month"
+   "bark|Life Skill of the Month"
   ],
   "reach": [
    "Questions about ADHD, learning differences, or medicine: talk with your doctor. For an evaluation or a school plan, ask your school counselor or the school's special education team.",
@@ -410,7 +410,7 @@ const LC_TOPICS = [
    "bark|Bounce Back From a Setback",
    "leaves|Rest Day",
    "bark|Before the Big Moment",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "leaves|Stretch Break",
    "branches|Clubs"
   ],
@@ -498,12 +498,12 @@ const LC_TOPICS = [
   },
   "faith": "For some students, faith shapes this question deeply: what they feel called toward, or how they want to serve. Prayer, a mentor in their faith community, or quiet time can help them listen. For others, the same question points to their values and the people they want to help. Either way, the question is less “What will impress people?” and more “What is mine to do next?”",
   "practices": [
-   "trunk|Purpose Reflection",
-   "trunk|Ask Someone About Their Path",
-   "trunk|Next Steps Page",
-   "trunk|Values Sort",
-   "trunk|Name Your Gifts",
-   "fruit|Tiny Next Step"
+   "bark|Purpose Reflection",
+   "branches|Ask Someone About Their Path",
+   "bark|Next Steps Page",
+   "bark|Values Sort",
+   "bark|Name Your Gifts",
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Feeling stuck, hopeless, or like you have no future, for two weeks or more: talk with your school counselor or an adult you trust.",
@@ -593,9 +593,9 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions mark big leavings with a blessing, a prayer, or a meal together. If faith is part of your family's life, you might bless them before they go, or help them find a faith community in their new place. If it isn't, a goodbye meal, a letter, or a few words of trust can carry the same love. Either way, the message is the same: you go with our love.",
   "practices": [
-   "fruit|Future Me Letter",
+   "bark|Future Me Letter",
    "branches|Gratitude Letter",
-   "trunk|Life Skill of the Month",
+   "bark|Life Skill of the Month",
    "branches|Clubs",
    "branches|One Reach-Out a Day",
    "leaves|Steady Wake Time"
@@ -792,8 +792,8 @@ const LC_TOPICS = [
    "branches|Clubs",
    "branches|Name Your Trusted Adult",
    "branches|One Reach-Out a Day",
-   "trunk|Volunteer",
-   "fruit|Something to Look Forward To"
+   "branches|Volunteer",
+   "bark|Something to Look Forward To"
   ],
   "reach": [
    "Lonely most days for two weeks or more, or feeling down, numb, or not caring about things you used to enjoy: talk with a parent, your school counselor, or your doctor.",
@@ -994,7 +994,7 @@ const LC_TOPICS = [
   "faith": "Many families have values about dating that come from their faith, and talking about them together can be a real gift: what love looks like, how to treat each other, and why. If faith is part of your life, you might pray or reflect about what kind of person you want to be in a relationship. A youth leader or faith mentor can also be a good, calm adult to talk with. If faith isn't part of your life, your family's values and your own sense of right and wrong are just as good a place to start.",
   "practices": [
    "branches|Respect Check",
-   "trunk|What I Stand For",
+   "bark|What I Stand For",
    "branches|Easy Ways Out",
    "branches|Active Listening",
    "branches|Friends",
@@ -1095,8 +1095,8 @@ const LC_TOPICS = [
   "practices": [
    "bark|Name It",
    "bark|Self-Compassion Break",
-   "trunk|Expressive Writing",
-   "fruit|Hope Playlist",
+   "bark|Expressive Writing",
+   "bark|Hope Playlist",
    "leaves|Movement",
    "branches|Shared Meal"
   ],
@@ -1302,7 +1302,7 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "branches|Family",
    "branches|Name Your Trusted Adult",
-   "trunk|Journal",
+   "bark|Journal",
    "roots|What Holds Me Up"
   ],
   "reach": [
@@ -1400,7 +1400,7 @@ const LC_TOPICS = [
    "branches|Active Listening",
    "roots|Quiet Time",
    "branches|Friends",
-   "trunk|Journal"
+   "bark|Journal"
   ],
   "reach": [
    "Feeling low, left out, or angry most days for two weeks or more: talk with a school counselor or another adult you trust.",
@@ -1489,7 +1489,7 @@ const LC_TOPICS = [
   "practices": [
    "branches|One Reach-Out a Day",
    "branches|Clubs",
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "roots|Sit Spot",
    "branches|Name Your Trusted Adult",
    "leaves|Movement"
@@ -1584,7 +1584,7 @@ const LC_TOPICS = [
    "roots|Hold Someone in Light",
    "bark|Five Senses Pause",
    "branches|One Reach-Out a Day",
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "bark|Phone Check",
    "bark|Slow Exhale"
   ],
@@ -1783,11 +1783,11 @@ const LC_TOPICS = [
   },
   "faith": "Some families find support in a faith community, a prison chaplain, or a mentoring program run by a faith group. For others, judgment from a faith community can add to the shame. If faith is part of your life, you can bring all of it to God in prayer, the love, the anger, and the worry. If it isn't, writing it down or talking with someone who listens well can carry the same weight. No one else's choices change your worth.",
   "practices": [
-   "trunk|What I Stand For",
+   "bark|What I Stand For",
    "bark|Name It",
-   "trunk|Journal",
+   "bark|Journal",
    "branches|Name Your Trusted Adult",
-   "fruit|Future Me Letter",
+   "bark|Future Me Letter",
    "bark|Kind Voice Letter"
   ],
   "reach": [
@@ -1984,7 +1984,7 @@ const LC_TOPICS = [
    "branches|Friendship Repair",
    "branches|Active Listening",
    "branches|Name Your Trusted Adult",
-   "trunk|What I Stand For",
+   "bark|What I Stand For",
    "bark|Self-Compassion Break",
    "bark|Speak Up About Your Mood"
   ],
@@ -2083,11 +2083,11 @@ const LC_TOPICS = [
   "faith": "For some families, faith is one door through grief: prayers, a funeral or memorial, a community that keeps showing up, a sense that love goes on. Others find comfort in family traditions, nature, music, or memories. A death can also stir big questions about God, fairness, and why, and those questions belong here too. A faith leader, youth leader, or counselor can sit with them without needing quick answers.",
   "practices": [
    "bark|Name It",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "roots|Lament",
    "branches|Ask for Help",
    "leaves|Walk or Jog",
-   "fruit|Capture the Moment"
+   "bark|Capture the Moment"
   ],
   "reach": [
    "If you think about wanting to be with them, or not wanting to be alive: call or text 988, any time, or text HOME to 741741 (in Minnesota, text MN to 741741). Danger right now: 911.",
@@ -2182,7 +2182,7 @@ const LC_TOPICS = [
    "branches|Friends",
    "bark|Five Senses Pause",
    "bark|Phone Check",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "roots|Hold Someone in Light"
   ],
   "reach": [
@@ -2274,9 +2274,9 @@ const LC_TOPICS = [
   "faith": "For many families, a grandparent's faith is part of their legacy: the hymns they sang, the prayers they said, the place they worshiped. A teen may find comfort in those traditions, or simply in a quiet place outside, music, or family stories. A death can also bring up questions about God and what happens after, and those belong here too. A faith leader, youth leader, or trusted relative can explore them with your teen, with room for open questions.",
   "practices": [
    "branches|Ask an Elder",
-   "fruit|Capture the Moment",
+   "bark|Capture the Moment",
    "branches|Family",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "roots|Hold Someone in Light",
    "branches|Shared Meal"
   ],
@@ -2465,7 +2465,7 @@ const LC_TOPICS = [
    "bark|Speak Up About Your Mood",
    "branches|Name Your Trusted Adult",
    "branches|Ask for Help",
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "roots|Quiet Time"
   ],
   "reach": [
@@ -2572,7 +2572,7 @@ const LC_TOPICS = [
    "leaves|Morning Daylight",
    "leaves|Smart Nap",
    "bark|Worry Window",
-   "fruit|Three Good Things"
+   "roots|Three Good Things"
   ],
   "reach": [
    "Trouble sleeping most nights for weeks, loud snoring or gasping, or deep sleepiness even after enough sleep: talk with your doctor.",
@@ -2663,8 +2663,8 @@ const LC_TOPICS = [
    "bark|Phone Check",
    "leaves|Movement",
    "leaves|Food",
-   "fruit|Joy List",
-   "trunk|Name Your Gifts"
+   "bark|Joy List",
+   "bark|Name Your Gifts"
   ],
   "reach": [
    "If food, weight, or exercise starts to feel like rules you can't break: tell someone you trust, and see the Eating Disorders guide. ANAD Eating Disorders Helpline: 1-888-375-7767, Monday to Friday, 9 a.m. to 9 p.m. Central.",
@@ -2852,7 +2852,7 @@ const LC_TOPICS = [
    "leaves|Stretch Break",
    "bark|Five Senses Pause",
    "bark|Bounce Back From a Setback",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "branches|Clubs"
   ],
   "reach": [
@@ -2939,13 +2939,13 @@ const LC_TOPICS = [
   },
   "faith": "Living with an illness or disability can raise hard questions: why me, and what does this mean for my life. Some teens find strength in prayer, a faith community, or a felt sense that God is with them in it. Others find it in family, friends, nature, or music. Some feel angry or far from God for a while. All of these are honest. A youth leader, chaplain, or any wise adult can listen without needing to explain it away.",
   "practices": [
-   "trunk|Life Skill of the Month",
-   "trunk|Name Your Gifts",
-   "trunk|Next Steps Page",
+   "bark|Life Skill of the Month",
+   "bark|Name Your Gifts",
+   "bark|Next Steps Page",
    "leaves|Movement",
    "leaves|Rest Day",
    "bark|Self-Compassion Break",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Feeling down, numb, or anxious for two weeks or more: tell a parent, your doctor, or a school counselor. In Minnesota, at 16 you can ask for outpatient counseling on your own.",
@@ -3049,7 +3049,7 @@ const LC_TOPICS = [
    "branches|Name Your Trusted Adult",
    "bark|Name It",
    "bark|Slow Exhale",
-   "trunk|What I Stand For"
+   "bark|What I Stand For"
   ],
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
@@ -3245,7 +3245,7 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, honest sorrow has a long history there. Many traditions have words for feeling far away or empty, like the lament psalms. Some people find a youth leader or faith mentor a safe person to tell. Feeling numb doesn't mean you've failed at faith. If faith isn't part of your life, the same steadiness can come from people who keep showing up for you.",
   "practices": [
    "bark|Speak Up About Your Mood",
-   "fruit|Tiny Next Step",
+   "bark|Tiny Next Step",
    "leaves|Walk or Jog",
    "leaves|Morning Daylight",
    "branches|One Reach-Out a Day",
@@ -3445,7 +3445,7 @@ const LC_TOPICS = [
    "branches|Name Your Trusted Adult",
    "branches|Look Out for a Friend",
    "bark|Speak Up About Your Mood",
-   "fruit|Hope Playlist",
+   "bark|Hope Playlist",
    "bark|Slow Exhale"
   ],
   "reach": [
@@ -3549,8 +3549,8 @@ const LC_TOPICS = [
    "branches|Ask for Help",
    "branches|Name Your Trusted Adult",
    "bark|Name It",
-   "trunk|Journal",
-   "fruit|Tiny Next Step"
+   "bark|Journal",
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Thoughts of not wanting to be alive, or you need someone right now: call or text 988, or chat at 988lifeline.org, any time. Or text HOME to 741741 (in Minnesota, text MN to 741741). No permission needed at any age.",
@@ -3739,7 +3739,7 @@ const LC_TOPICS = [
   },
   "faith": "For many families, faith shapes how they think about sex, bodies, and relationships, and those values are worth sharing warmly. Faith at its best is a place of mercy and growth, not shame. If guilt feels heavy, a youth leader, pastor, or faith mentor you trust can help you sort out what you believe and what you want. In Plain terms: your values are yours to grow into, and a mistake or a hard habit does not define you.",
   "practices": [
-   "trunk|What I Stand For",
+   "bark|What I Stand For",
    "branches|Respect Check",
    "leaves|Phone Outside the Bedroom",
    "bark|Phone Check",
@@ -3836,7 +3836,7 @@ const LC_TOPICS = [
    "leaves|Phone Outside the Bedroom",
    "leaves|Two Hours Outdoors",
    "branches|One Reach-Out a Day",
-   "fruit|Three Good Things",
+   "roots|Three Good Things",
    "roots|Sabbath Hour"
   ],
   "reach": [
@@ -4014,8 +4014,8 @@ const LC_TOPICS = [
   "faith": "If faith is part of your life, your tradition may have something to say about money, luck, and what we chase. Shame is never the goal; many people find their faith community a place to be honest and start again. In Plain terms: what you value, and where you want your time and money to go, can guide you more than the next bet.",
   "practices": [
    "branches|Easy Ways Out",
-   "trunk|Life Skill of the Month",
-   "trunk|What I Stand For",
+   "bark|Life Skill of the Month",
+   "bark|What I Stand For",
    "bark|Phone Check",
    "bark|Slow Exhale",
    "branches|Ask for Help"
@@ -4303,11 +4303,11 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions and families honor good work and a day of rest. Whether through faith, family values, or your own sense of what matters, it's worth asking what kind of worker and person you want to be, and keeping one unhurried time each week.",
   "practices": [
-   "trunk|First Job Balance",
+   "bark|First Job Balance",
    "leaves|Sleep",
-   "trunk|Study Sprints",
-   "trunk|Life Skill of the Month",
-   "trunk|Ask Someone About Their Path",
+   "bark|Study Sprints",
+   "bark|Life Skill of the Month",
+   "branches|Ask Someone About Their Path",
    "bark|Bounce Back From a Setback"
   ],
   "reach": [
@@ -4398,11 +4398,11 @@ const LC_TOPICS = [
   },
   "faith": "Many faith traditions and families teach generosity and gratitude, and some practice giving a set share of what comes in. Whatever your values are, they can help shape how you earn, save, spend, and give.",
   "practices": [
-   "trunk|Life Skill of the Month",
-   "fruit|Tiny Next Step",
-   "trunk|Values Sort",
-   "fruit|Be Generous",
-   "trunk|Next Steps Page",
+   "bark|Life Skill of the Month",
+   "bark|Tiny Next Step",
+   "bark|Values Sort",
+   "branches|Be Generous",
+   "bark|Next Steps Page",
    "bark|Worry Window"
   ],
   "reach": [
@@ -4679,12 +4679,12 @@ const LC_TOPICS = [
   },
   "faith": "For many people, faith is a source of purpose and a call to serve: helping neighbors, welcoming strangers, caring for the earth. Many teens find real roles in a faith community, like teaching younger kids, serving meals, or joining a service project. If faith isn't part of your life, the same questions point to your values and the people you want to help.",
   "practices": [
-   "trunk|Purpose Reflection",
-   "trunk|Volunteer",
-   "trunk|Name Your Gifts",
-   "trunk|Mentor Someone",
-   "trunk|Next Steps Page",
-   "fruit|Be Generous"
+   "bark|Purpose Reflection",
+   "branches|Volunteer",
+   "bark|Name Your Gifts",
+   "branches|Mentor Someone",
+   "bark|Next Steps Page",
+   "branches|Be Generous"
   ],
   "reach": [
    "Feeling like nothing you do matters for two weeks or more, or losing interest in things you used to enjoy: talk with your school counselor or a doctor.",
@@ -4783,9 +4783,9 @@ const LC_TOPICS = [
   },
   "faith": "Growing up includes learning to look after the body and life you've been given. Some teens find that prayer, a faith community, or a sense of being held helps them carry the routine on hard days. Others find that steadiness in family, friends, music, or quiet time. If faith is part of your life, it can be one steady place in the middle of appointments and refills. If it isn't, the same need points to whatever helps you feel grounded and connected.",
   "practices": [
-   "trunk|My Own Appointment",
-   "trunk|Life Skill of the Month",
-   "trunk|Next Steps Page",
+   "leaves|My Own Appointment",
+   "bark|Life Skill of the Month",
+   "bark|Next Steps Page",
    "branches|Say What You Need",
    "branches|Name Your Trusted Adult",
    "leaves|Pacing Your Day"
@@ -4888,7 +4888,7 @@ const LC_TOPICS = [
    "bark|Slow Exhale",
    "bark|Reset on a Rough Day",
    "leaves|Rest Day",
-   "fruit|Good Day List"
+   "bark|Good Day List"
   ],
   "reach": [
    "New, severe, or different pain, or a medical emergency: call your doctor right away, or call 911.",
@@ -4986,12 +4986,12 @@ const LC_TOPICS = [
   },
   "faith": "Many traditions teach that each person is made with gifts to share, and that a community is better when everyone belongs. Some teens find that confidence in a youth group or faith community that makes room for how they learn and move. Others find it with family, mentors, or friends. If faith is part of your life, it can remind you that your worth was never measured by a test. If it isn't, the same truth holds: your worth was never measured by a test.",
   "practices": [
-   "trunk|Next Steps Page",
+   "bark|Next Steps Page",
    "branches|Say What You Need",
-   "trunk|Ask Someone About Their Path",
-   "trunk|Name Your Gifts",
-   "fruit|Hope Map",
-   "trunk|Life Skill of the Month"
+   "branches|Ask Someone About Their Path",
+   "bark|Name Your Gifts",
+   "bark|Hope Map",
+   "bark|Life Skill of the Month"
   ],
   "reach": [
    "Questions about your IEP or 504 plan: your case manager, school counselor, or principal.",
@@ -5085,7 +5085,7 @@ const LC_TOPICS = [
    "branches|Friends",
    "branches|Clubs",
    "branches|One Reach-Out a Day",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "roots|Quiet Senses"
   ],
   "reach": [
@@ -5177,9 +5177,9 @@ const LC_TOPICS = [
   "faith": "Many faith communities offer large print, braille, or audio versions of their readings, and welcome people who need a guide or a seat near the front. If faith is part of your life, you can ask for the format that lets you take part, and for prayers or songs you can learn by heart. If faith isn't part of your life, music, nature, and people who know you can be places of peace and belonging too.",
   "practices": [
    "branches|Say What You Need",
-   "trunk|Life Skill of the Month",
-   "trunk|Ask Someone About Their Path",
-   "fruit|Capture the Moment",
+   "bark|Life Skill of the Month",
+   "branches|Ask Someone About Their Path",
+   "bark|Capture the Moment",
    "branches|Clubs",
    "roots|Sacred Music"
   ],
@@ -5277,7 +5277,7 @@ const LC_TOPICS = [
    "bark|Before the Big Moment",
    "branches|Say What You Need",
    "branches|Friends",
-   "trunk|Name Your Gifts",
+   "bark|Name Your Gifts",
    "bark|Five Senses Pause"
   ],
   "reach": [
@@ -5370,12 +5370,12 @@ const LC_TOPICS = [
   },
   "faith": "Serious illness often raises the biggest questions: why this is happening, what comes next, and where to find strength. Some teens find comfort in prayer, a hospital chaplain, a faith community that shows up with meals and messages, or a sense that God is with them in it. Some feel angry or far from God for a while, and that honesty is welcome. Others find strength in family, friends, music, or nature. Faith Questions When Your Body Hurts is a guide for the bigger questions.",
   "practices": [
-   "fruit|Something to Look Forward To",
+   "bark|Something to Look Forward To",
    "branches|One Reach-Out a Day",
    "bark|Worry Window",
    "leaves|Rest Day",
-   "fruit|Good Day List",
-   "fruit|Something Funny"
+   "bark|Good Day List",
+   "bark|Something Funny"
   ],
   "reach": [
    "A medical emergency: call 911, or follow the plan your care team gave you.",
@@ -5469,7 +5469,7 @@ const LC_TOPICS = [
    "bark|Speak Up About Your Mood",
    "leaves|Steady Wake Time",
    "bark|Reset on a Rough Day",
-   "fruit|Good Day List",
+   "bark|Good Day List",
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
@@ -5568,7 +5568,7 @@ const LC_TOPICS = [
    "branches|Ask for Help",
    "leaves|Rest Day",
    "bark|Self-Compassion Break",
-   "fruit|Something Funny",
+   "bark|Something Funny",
    "branches|Name Your Trusted Adult"
   ],
   "reach": [
@@ -5767,12 +5767,12 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   },
   "faith": "If faith is part of your life, it can help to bring this question there: to pray about it, or talk with a youth leader you trust, without fear of being judged. Some teens worry that faith people will only be disappointed in them. Many will be glad you're taking an honest look. If faith isn't part of your life, your own values can do the same work: what kind of person do you want to be, and how does this fit?",
   "practices": [
-   "trunk|Values Sort",
-   "trunk|What I Stand For",
+   "bark|Values Sort",
+   "bark|What I Stand For",
    "bark|Name It",
    "branches|Easy Ways Out",
    "branches|Name Your Trusted Adult",
-   "fruit|Tiny Next Step"
+   "bark|Tiny Next Step"
   ],
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
@@ -5879,9 +5879,9 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "bark|Name It",
    "bark|Slow Exhale",
    "leaves|Walk or Jog",
-   "trunk|Journal",
+   "bark|Journal",
    "branches|Name Your Trusted Adult",
-   "fruit|Celebrate a Win"
+   "bark|Celebrate a Win"
   ],
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or there is danger right now: call 911.",
@@ -5985,8 +5985,8 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "branches|Look Out for a Friend",
    "branches|Friends",
    "bark|Before the Big Moment",
-   "trunk|What I Stand For",
-   "fruit|Celebrate a Win"
+   "bark|What I Stand For",
+   "bark|Celebrate a Win"
   ],
   "reach": [
    "Someone can't wake up, is breathing slowly or strangely, or seems very confused: call 911 right away and stay with them.",
@@ -6092,10 +6092,10 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
   "practices": [
    "branches|Name Your Trusted Adult",
    "bark|Self-Compassion Break",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "bark|My Safety Plan",
    "leaves|Two Hours Outdoors",
-   "fruit|Future Me Letter"
+   "bark|Future Me Letter"
   ],
   "reach": [
    "Someone can't wake up, isn't breathing well, or there is danger right now: call 911.",
@@ -6199,7 +6199,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "leaves|Breathe",
    "bark|Name It",
    "branches|Ask for Help",
-   "fruit|Celebrate a Win"
+   "bark|Celebrate a Win"
   ],
   "reach": [
    "Teens: text DITCHVAPE to 88709 for help quitting. In Minnesota, teens 13 to 17: text Start My Quit to 36072 (My Life, My Quit).",
@@ -6299,7 +6299,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "branches|Easy Ways Out",
    "branches|Name Your Trusted Adult",
    "bark|Before the Big Moment",
-   "trunk|What I Stand For"
+   "bark|What I Stand For"
   ],
   "reach": [
    "Someone won't wake up, is breathing slowly or not at all, or has blue or gray lips: call 911 now. Give naloxone (Narcan) if you have it. Stay with them.",
@@ -6409,7 +6409,7 @@ window.PINE_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "bark|Five Senses Pause",
    "bark|Slow Exhale",
    "branches|Name Your Trusted Adult",
-   "trunk|Expressive Writing",
+   "bark|Expressive Writing",
    "branches|Look Out for a Friend",
    "roots|Lament"
   ],

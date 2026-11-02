@@ -38,18 +38,18 @@ window.GG_GUIDED["aspen"] = {
   "start": {
    "open": [
     [
-     "Hey, welcome to your first check-in! We'll look at all six parts of your tree, one question at a time. Pick the answer that fits you best. Not sure is always a fine answer. This is yours, so take your time. Let's go.",
+     "Hey, welcome to your first check-in! We'll look at your whole tree, one question at a time. Pick the answer that fits you best. Not sure is always a fine answer. This is yours, so take your time. Let's go.",
      "Welcome to Aspen! This is where your tree begins. Each question gets its own screen. Just tap what fits. Honest answers help your tree the most. Ready when you are.",
-     "Hi, and welcome! First check-ins are kind of a big deal. There are six parts, with a few questions for each. Every answer is welcome here. Let's start."
+     "Hi, and welcome! First check-ins are kind of a big deal. Every part of your tree gets a few questions. Every answer is welcome here. Let's start."
     ]
    ],
    "enter": {
     "roots": [
-     "First up, your roots: what grounds you.",
+     "First up, your roots: your spirit, and what grounds you.",
      "Let's start with your roots."
     ],
     "trunk": [
-     "Next, your trunk: your purpose, and what you're good at.",
+     "Next, your trunk: what matters to you, and what you're good at.",
      "On to your trunk."
     ],
     "bark": [
@@ -146,6 +146,12 @@ window.GG_GUIDED["aspen"] = {
       "You matter, just for being you. Try telling a grown-up you trust how you've been feeling.",
       "Here's an idea. Ask someone in your family about a tradition that means a lot to them."
      ]
+    },
+    "enter": {
+     "roots": [
+      "First up, your roots: what grounds you.",
+      "Let's start with your roots."
+     ]
     }
    }
   },
@@ -160,11 +166,11 @@ window.GG_GUIDED["aspen"] = {
    ],
    "enter": {
     "roots": [
-     "First up, your roots: what grounds you.",
+     "First up, your roots: your spirit, and what grounds you.",
      "Let's start with your roots."
     ],
     "trunk": [
-     "Next, your trunk: your purpose, and what you're good at.",
+     "Next, your trunk: what matters to you, and what you're good at.",
      "On to your trunk."
     ],
     "bark": [
@@ -261,6 +267,12 @@ window.GG_GUIDED["aspen"] = {
       "You matter, just for being you. Try telling a grown-up you trust how you've been feeling.",
       "Here's an idea. Ask someone in your family about a tradition that means a lot to them."
      ]
+    },
+    "enter": {
+     "roots": [
+      "First up, your roots: what grounds you.",
+      "Let's start with your roots."
+     ]
     }
    }
   },
@@ -339,7 +351,7 @@ window.GG_GUIDED["aspen"] = {
   "plan": {
    "open": [
     [
-     "Now let's build your growth plan. We'll go one part at a time, starting where your tree can grow the most. Pick one to three practices for each part. Small is great.",
+     "Now let's build your growth plan. We'll go through the four parts you tend, one at a time, starting where your tree can grow the most. Pick one to three practices for each part. Small is great.",
      "Time to choose what you'll tend this season. Tap a card to see how it works, then choose the ones that fit you. Pick up to three for each part."
     ]
    ],
@@ -347,10 +359,6 @@ window.GG_GUIDED["aspen"] = {
     "roots": [
      "Roots are what hold you steady when life gets windy. Quiet, nature, family traditions, and for many people prayer or faith, all help them grow.",
      "Your roots are where calm and belonging live. Let's pick something that helps you feel grounded."
-    ],
-    "trunk": [
-     "Your trunk is who you are and what you care about. Let's pick something that helps you stand tall.",
-     "A strong trunk comes from doing what you love and finding your strengths. Let's grow yours."
     ],
     "bark": [
      "Your bark is how you handle big feelings and talk to yourself. Let's pick something that helps on hard days.",
@@ -363,10 +371,6 @@ window.GG_GUIDED["aspen"] = {
     "leaves": [
      "Your leaves are sleep, movement, food, and unplugged time. Let's pick something that helps your body feel good.",
      "Leaves soak up the light. Let's find a way to rest, move, and recharge."
-    ],
-    "fruit": [
-     "Your fruit is hope and looking forward. Let's pick something that makes the days ahead brighter.",
-     "Fruit is what grows when a tree is tended. Let's find something to look forward to."
     ]
    },
    "close": [

@@ -31,8 +31,8 @@
    The game layer (decision 14), through the gg-tend.js hooks
    - Mastery: a practice moves Tried, Building, Mine as it is checked off.
    - Tree levels: named stages as days tended grow. Days tended never go down.
-   - Milestones: first day, first ring, first full week, all six in a day, each season.
-   - Balance bonus: all six parts tended in one week (Monday to Sunday).
+   - Milestones: first day, first ring, first full week, all four in a day, each season.
+   - Balance bonus: all four tended parts (Roots, Bark, Leaves, Branches) in one week (Monday to Sunday).
    - Steady by default (the gentle tree). Hardy, which the teen can choose, shows
      trouble on a part left untended a long while, and one practice heals it.
    - No leaderboards, no random rewards, no streak shame.
@@ -119,7 +119,7 @@ function formatDate(isoDate) {
 const todayKey = () => { const d = new Date(); return d.getFullYear() + '-' + String(d.getMonth() + 1).padStart(2, '0') + '-' + String(d.getDate()).padStart(2, '0'); };
 
 // =====================================================================
-// PINE: THE SIX PARTS, in words for high school
+// PINE: THE PARTS OF THE TREE (tend four, grow two; GWG BLD 907), in words for high school
 // =====================================================================
 const CKB = window.PINE_CHECKIN || {};
 const DOMAIN_BY_KEY = {};
@@ -181,6 +181,40 @@ const PARTS = {
 const PART_ORDER = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
 PART_ORDER.forEach(k => Object.assign(DOMAIN_BY_KEY[k], { part: PARTS[k].part, icon: PARTS[k].icon }));
 const ALL_DOMAINS = PART_ORDER.map(k => DOMAIN_BY_KEY[k]);
+
+// =====================================================================
+// THE GROUNDED WAY (GWG BLD 907): tend four, grow two. Every part shows its
+// paired label from shared/gg-parts.js (Roots: Spirit, Bark: Mind), with its
+// meaning under it (Roots: what grounds you in Plain wording).
+// Roots, Bark, Leaves, and Branches get practices. Trunk: Meaning and
+// Fruit: Hope grow from your tending and keep their check-in questions.
+// d.tree keeps the bare tree word. Keys stay the same, so saved files load.
+// =====================================================================
+const GW_P = window.GGParts && window.GGParts.label ? window.GGParts : null;
+const TEND_KEYS = GW_P ? GW_P.TEND.slice() : ['roots', 'bark', 'leaves', 'branches'];
+const partTends = k => TEND_KEYS.includes(k);
+const tendCountOf = set => TEND_KEYS.filter(k => set && set[k]).length;
+function gwPlainOn() { try { return !!(isPlain()); } catch (e) { return false; } }
+ALL_DOMAINS.forEach(d => {
+  d.tree = d.tree || d.part;
+  if (!GW_P) return;
+  const o = { plain: gwPlainOn }, cap = t => String(t || '').charAt(0).toUpperCase() + String(t || '').slice(1);
+  Object.defineProperty(d, 'part', { configurable: true, enumerable: true, get: () => GW_P.label(d.key, o), set: () => {} });
+  Object.defineProperty(d, 'name', { configurable: true, enumerable: true, get: () => cap(GW_P.meaning(d.key, o)), set: () => {} });
+  Object.defineProperty(d, 'word', { configurable: true, enumerable: true, get: () => GW_P.word(d.key, o), set: () => {} });
+});
+const TEND_DOMAINS = ALL_DOMAINS.filter(d => partTends(d.key));
+// The hero strip: Roots follows this profile's wording (Plain shows Roots: what grounds you).
+function gwStripWords() {
+  const li = document.querySelector('.gg-parts [data-part="roots"]'); if (!li || !GW_P) return;
+  const b = li.querySelector('b'), sp = li.querySelector('span'), pl = gwPlainOn();
+  if (b) b.textContent = GW_P.label('roots', { plain: pl }); if (sp) sp.textContent = pl ? 'Calm, values, wonder, and gratitude' : 'Your connection with God and the sacred';
+}
+// Trunk and Fruit in the growth plan: no practices to add, just how they grow.
+function gwGrowsHtml(d) {
+  const four = TEND_DOMAINS.map(x => x.part), list = four.slice(0, -1).join(', ') + ', and ' + four[four.length - 1];
+  return `<p class="gw-grows"><strong>Grows from your tending.</strong> Every practice for ${escapeHtml(list)} helps your ${escapeHtml(String(d.word || d.tree).toLowerCase())} grow. Your check-in keeps asking about it, so you can watch it grow.</p>`;
+}
 function partLine(k) { const p = CK_PART[k] || {}; return (isPlain() && p.plainLine) || p.line || ''; }
 
 // PRACTICE GUIDES, ICONS
@@ -307,7 +341,7 @@ function artGrowthHtml(s) {
 // =====================================================================
 function renderAboutParts() {
   const el = document.getElementById('about-tree-slot'); if (!el || !window.GGTreeArt) return;
-  GGTreeArt.howItWorks(el, { app: ART_APP, parts: artParts(true), label: 'The Pine painting with six glowing parts to tap' });
+  GGTreeArt.howItWorks(el, { app: ART_APP, parts: artParts(true), label: 'The Pine painting with glowing parts to tap' });
 }
 
 // =====================================================================
@@ -629,7 +663,7 @@ function gdBegin(quick) {
   ST_QUICK = !!quick; ST_ANS = {}; ST_SENS = {};
   renderCheckin();   // the classic form waits behind the player, fresh, for Read It All
   const kind = gdKind(quick);
-  GGGuided.run({ tree: 'pine', kind, title: GD_TITLE[kind], voice: 'jenny', questions: gdQuestions(), quiet: CKB.quiet || undefined,
+  GGGuided.run({ plain: isPlain, tree: 'pine', kind, title: GD_TITLE[kind], voice: 'jenny', questions: gdQuestions(), quiet: CKB.quiet || undefined,
     isEdge: gdEdge, onAnswer: gdSet, onDone: () => calculateResults(), onReadAll: gdReadAll });
 }
 // Read It All: the classic form, with every guided answer already chosen, at the first open question.
@@ -646,7 +680,7 @@ function gdReadAll() {
 function gdRhythm(then) {
   if (window.GG_RHYTHM) { then(); return; }
   let done = false; const go = () => { if (!done) { done = true; then(); } };
-  const s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b885'; s.onload = go; s.onerror = go; document.head.appendChild(s);
+  const s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b907'; s.onload = go; s.onerror = go; document.head.appendChild(s);
 }
 function startGuidedPlan() {
   showView('client-growthplan');   // builds and fills the classic builder behind the player
@@ -658,7 +692,7 @@ function gdPlanRun() {
   const scores = window.lastClientScores || {}, unsure = window.lastClientUnsure || [], saved = (window.GGTend && GGTend.plan()) || {};
   const R = (window.GG_RHYTHM || {}).pine || {}, back = {}, start = {};
   const lvl = k => unsure.includes(k) ? 5.5 : (+scores[k] || 5);
-  const steps = ALL_DOMAINS.slice().sort((a, b) => lvl(a.key) - lvl(b.key)).map(d => {
+  const steps = TEND_DOMAINS.slice().sort((a, b) => lvl(a.key) - lvl(b.key)).map(d => {
     const k = d.key, rows = lifeOn() ? GGLife.order(d.restore, r => lifeTags(k, r[0])) : d.restore;
     const had = ((saved[k] || {}).selected || []).filter(n => rows.some(r => r[0] === n));
     const pick = rows.filter(r => had.includes(r[0])).concat(rows.filter(r => !had.includes(r[0])).slice(0, OAK_ROT_N));
@@ -668,7 +702,7 @@ function gdPlanRun() {
       return { name: nm, how: x.how, r: x.r || 'd', x: x.x, min: x.min };
     }) };
   });
-  const h = GGGuided.run({ tree: 'pine', kind: 'plan', title: 'Your Growth Plan', voice: 'jenny', questions: steps, plan: start, quiet: CKB.quiet || undefined,
+  const h = GGGuided.run({ plain: isPlain, tree: 'pine', kind: 'plan', title: 'Your Growth Plan', voice: 'jenny', questions: steps, plan: start, quiet: CKB.quiet || undefined,
     onDone: res => gdPlanSave(res.plan || {}, back, true),
     onReadAll: () => { gdPlanSave((h && h.state().plan) || {}, back, false); scrollToViewTop('client-growthplan', true, true); } });
 }
@@ -691,7 +725,14 @@ function gdPlanSave(plan, back, save) {
 function renderGrowthPlanBuilder(mode) {
   const scores = window.lastClientScores;
   if (!scores) return;
-  document.getElementById('client-growthplan-builder').innerHTML = ALL_DOMAINS.map(d => `
+  document.getElementById('client-growthplan-builder').innerHTML = ALL_DOMAINS.map(d => !partTends(d.key) ? `
+    <div class="domain-card gw-grow-card" id="cp-card-${mode}-${d.key}" style="--domain-color:${d.color};border-left-color:${d.color};">
+      <div class="domain-header">
+        <div class="card-head">${partIcon(d, 30)}<div><div class="domain-name" style="color:${d.color};">${d.part}</div><div class="card-sub">${d.name}</div></div></div>
+        <div class="domain-score-display" style="color:${d.color};">${(window.lastClientUnsure || []).includes(d.key) ? 'Not sure' : scores[d.key] + '/10'}</div>
+      </div>
+      ${gwGrowsHtml(d)}
+    </div>` : `
     <div class="domain-card" id="cp-card-${mode}-${d.key}" style="--domain-color:${d.color};border-left-color:${d.color};">
       <div class="domain-header">
         <div class="card-head">${partIcon(d, 30)}<div><div class="domain-name" style="color:${d.color};">${d.part}</div><div class="card-sub">${d.name}</div></div></div>
@@ -773,7 +814,7 @@ function generateGrowthPlanDoc(mode) {
           <div class="growth-plan-domain-score">${stLevelLine(unsure.includes(d.key) ? null : scores[d.key])}</div>
         </div>
         <div class="growth-plan-practices">
-          ${selected.length === 0 && !custom ? '<p style="font-size:14px;color:var(--ink-soft);font-style:italic;">No practices chosen yet for this part.</p>' : ''}
+          ${selected.length === 0 && !custom ? (partTends(d.key) ? '<p style="font-size:14px;color:var(--ink-soft);font-style:italic;">Ready for its first practice.</p>' : gwGrowsHtml(d)) : ''}
           ${selected.map(s => `<div class="growth-plan-practice-item" style="--domain-color:${d.color};"><strong>${escapeHtml(shownName(d.key, s))}</strong></div><div class="growth-plan-guide" style="--domain-color:${d.color};">${guideHtml(d.key, s)}</div>`).join('')}
           ${custom ? `<div class="growth-plan-practice-item" style="--domain-color:${d.color};">${escapeHtml(custom)}</div>` : ''}
         </div>
@@ -828,7 +869,7 @@ function interpretResults(scores, unsure) {
   if (!care && strong >= 4) overall = 'Your tree is strong across most parts. The work now is keeping it growing.';
   else if (care < 3) overall = 'Some parts of your tree are carrying more weight than others right now. That is normal, and you can work with it. Tending your growing edges takes pressure off the parts holding the most.';
   else overall = 'Several parts of your tree are running low right now, so the healthy parts have less to draw on. This is a good moment to be honest about where you need support, and to talk with a trusted adult, a school counselor, or a counselor alongside Pine.';
-  return `Your <strong>${strongest.part.toLowerCase()}</strong> (${strongest.name}) ${verb(strongest)} the healthiest part of your tree right now, a real strength to lean on. Your biggest growing edge is your <strong>${weakest.part.toLowerCase()}</strong> (${weakest.name}), where your next growth begins. ${overall}`;
+  return `Your <strong>${strongest.tree.toLowerCase()}</strong> (${strongest.word}) ${verb(strongest)} the healthiest part of your tree right now, a real strength to lean on. Your biggest growing edge is your <strong>${weakest.tree.toLowerCase()}</strong> (${weakest.word}), where your next growth begins. ${overall}`;
 }
 function buildPersonalSections(scores, unsure) {
   const entries = ALL_DOMAINS.filter(d => !unsure.includes(d.key)).map(d => ({ ...d, score: scores[d.key] })).sort((a, b) => b.score - a.score);
@@ -906,6 +947,7 @@ function calculateResults() {
 // =====================================================================
 const VIEW_TAB = { 'client-today': 'today', 'client-intro': 'today', 'client-week': 'week', 'client-season': 'season', 'client-assess': 'season', 'client-results': 'season', 'client-progress': 'season', 'client-growthplan': 'plan', 'client-next': 'next', 'client-life': 'guides' };
 function showView(id) {
+  gwStripWords();
   if (!document.getElementById(id)) return;
   document.querySelectorAll('.view').forEach(v => v.classList.remove('active'));
   document.getElementById(id).classList.add('active');
@@ -1240,9 +1282,9 @@ const TREE_LEVELS = [[0, 'Seed'], [1, 'Sprout'], [7, 'Seedling'], [21, 'Sapling'
 const HARDY_DAYS = 10;
 const MILES = [
   ['day1', 'First Day Tended', 'You tended your tree for the first time.'],
-  ['six', 'All Six in a Day', 'You tended every part of your tree in one day.'],
+  ['six', 'All Four in a Day', 'You tended all four parts of your tree in one day.'],
   ['week', 'First Full Week', 'You tended your tree all seven days of a week.'],
-  ['balance', 'First Balanced Week', 'You tended all six parts in one week.'],
+  ['balance', 'First Balanced Week', 'You tended all four parts in one week.'],
   ['mine', 'First Practice That\'s Yours', 'A practice moved all the way to Mine.'],
   ['ring', 'First Ring', 'You finished a whole season and added a ring.']
 ];
@@ -1259,7 +1301,7 @@ function masteryCount(s, key, name) { const id = key + '|' + name; return Object
 function masteryOf(n) { const m = MASTERY.find(x => n >= x[0]); return m ? m[1] : ''; }
 function weekPartsSet(s, mon) { const set = {}; for (let i = 0; i < 7; i++) { const x = (s.days || {})[addD(mon, i)]; if (x) (x.d || []).forEach(id => { set[id.split('|')[0]] = 1; }); } return set; }
 function weeksOf(s) { const w = {}; Object.keys(s.days || {}).forEach(k => { if (sTended(s, k)) { const m = mondayOf(k); (w[m] = w[m] || []).push(k); } }); return w; }
-function balancedWeeks(s) { return Object.keys(weeksOf(s)).filter(m => Object.keys(weekPartsSet(s, m)).length >= 6); }
+function balancedWeeks(s) { return Object.keys(weeksOf(s)).filter(m => tendCountOf(weekPartsSet(s, m)) >= TEND_KEYS.length); }
 function fullWeeks(s) { const w = weeksOf(s); return Object.keys(w).filter(m => w[m].length >= 7); }
 function partLastTended(s, key) { let last = null; Object.keys(s.days || {}).forEach(k => { if (((s.days[k] || {}).d || []).some(id => id.split('|')[0] === key) && (!last || k > last)) last = k; }); return last; }
 function planParts(s) { const p = s.plan || {}; return PART_ORDER.filter(k => { const x = p[k] || {}; return (x.selected || []).length || x.custom || (x.own || []).length || (x.lib || []).length; }); }
@@ -1275,7 +1317,7 @@ function hardyDays(s, key) {
 function milesNow(s) {
   const n = daysTended(s), out = {};
   if (n >= 1) out.day1 = 1;
-  if (Object.keys(s.days || {}).some(k => { const set = {}; ((s.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return Object.keys(set).length >= 6; })) out.six = 1;
+  if (Object.keys(s.days || {}).some(k => { const set = {}; ((s.days[k] || {}).d || []).forEach(id => { set[id.split('|')[0]] = 1; }); return tendCountOf(set) >= TEND_KEYS.length; })) out.six = 1;
   if (fullWeeks(s).length) out.week = 1;
   if (balancedWeeks(s).length) out.balance = 1;
   if (items(s).some(it => masteryCount(s, it.key, it.name) >= 15)) out.mine = 1;
@@ -1296,14 +1338,14 @@ function checkMiles(s, quiet) {
   return fresh;
 }
 function todayKindHtml(s) {
-  const n = window.GGTend ? GGTend.partsOn(todayKey()) : 0;
+  const n = tendCountOf(todaySetOf(s));
   const lineA = n ? kindWord(n) : 'One practice is enough to start. Your checkmark is waiting.';
-  const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = Object.keys(wk).length;
+  const days = daysTended(s), L = treeLevel(days), wk = weekPartsSet(s, mondayOf(todayKey())), wn = tendCountOf(wk);
   const trouble = PART_ORDER.filter(k => hardyDays(s, k));
   checkMiles(s, true);
-  return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 6 parts tended today.</p>` : ''}</div>
+  return `<div class="gt-card sq-kind"><p class="sq-kind-line">${escapeHtml(lineA)}</p>${n ? `<p class="gt-small">${n} of 4 parts tended today.</p>` : ''}</div>
     <div class="gt-card pn-game"><div class="pn-level"><span class="pn-level-k">Your tree</span><b>${escapeHtml(L.name)}</b><span class="gt-small">${days} day${days === 1 ? '' : 's'} tended${L.next ? `. ${L.next[0] - days} more to ${escapeHtml(L.next[1])}.` : '. The oldest stage of all.'}</span></div>
-    <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 6 parts tended this week">${ALL_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= 6 ? 'Balanced week. All six parts tended.' : wn + ' of 6 parts tended. All six makes a balanced week.'}</span></div>
+    <div class="pn-bal"><span class="pn-level-k">This week</span><div class="pn-dots" role="img" aria-label="${wn} of 4 parts tended this week">${TEND_DOMAINS.map(d => `<span class="pn-dot${wk[d.key] ? ' on' : ''}" style="--pc:${d.color}" title="${d.part}"></span>`).join('')}</div><span class="gt-small">${wn >= TEND_KEYS.length ? 'Balanced week. All four parts tended.' : wn + ' of 4 parts tended. All four makes a balanced week.'}</span></div>
     <p class="gt-small pn-mode-line">${pnMode(s) === 'hardy' ? 'Hardy is on: a part left untended for ' + HARDY_DAYS + ' days shows trouble until you tend it.' : 'Steady tree: gentle, and everything you grew stays.'} <button type="button" class="text-btn" onclick="GGTend.openSettings('pn-set-game')">Change</button></p>
     ${trouble.length ? `<p class="pn-trouble">${trouble.map(k => escapeHtml(DOMAIN_BY_KEY[k].part)).join(', ')} ${trouble.length === 1 ? 'needs' : 'need'} water. One practice heals it.</p>` : ''}</div>`
     + setupCardHtml() + bringOakHtml() + movingOnHtml(true);
@@ -1317,11 +1359,14 @@ function milestonesHtml(s) {
     ${nb ? `<p class="gt-small">${nb} balanced week${nb === 1 ? '' : 's'} so far.</p>` : ''}
     <p class="gt-small">Still ahead: ${MILES.filter(m => !R.miles[m[0]]).map(m => escapeHtml(m[1])).join(', ') || 'a new ring every season'}.</p></div>`;
 }
-function onCheckGame(done, key, s, parts) {
+// Which parts were tended today, as {key: 1}; tendCountOf() counts the four tended parts in it (GWG BLD 907).
+function todaySetOf(s) { const set = {}, x = ((s && s.days) || {})[todayKey()]; ((x && x.d) || []).forEach(id => { set[id.split('|')[0]] = 1; }); return set; }
+function onCheckGame(done, key, s) {
   if (!done) return;
+  const parts = tendCountOf(todaySetOf(s));
   const fresh = checkMiles(s);
-  if (fresh.length) { persistTend(); pnCheer(fresh.includes('bonus') ? 'Balanced week. All six parts tended this week.' : 'New milestone: ' + mileName(fresh.filter(x => x !== 'bonus')[0] || fresh[0]), kindWord(parts)); return; }
-  pnCheer(parts >= 6 ? 'All six parts tended today. That is a full day.' : kindWord(parts));
+  if (fresh.length) { persistTend(); pnCheer(fresh.includes('bonus') ? 'Balanced week. All four parts tended this week.' : 'New milestone: ' + mileName(fresh.filter(x => x !== 'bonus')[0] || fresh[0]), kindWord(parts)); return; }
+  pnCheer(parts >= TEND_KEYS.length ? 'All four parts tended today. That is a full day.' : kindWord(parts));
 }
 function persistTend() { return PROF && window.GGP ? GGP.save(PROF.id) : Promise.resolve(); }
 function setPnMode(m) {

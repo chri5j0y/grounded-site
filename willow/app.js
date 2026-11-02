@@ -29,9 +29,12 @@
 'use strict';
 const C = window.WILLOW_CHECKIN, F = window.WILLOW_FAITH, P = window.WILLOW_PRACTICES, G = window.WILLOW_GUIDES, RD = window.WILLOW_READINGS;
 
-/* ---------- the six parts ---------- */
+/* ---------- the parts of the tree (tend four, grow two; GWG BLD 907) ----------
+   part is the tree word, name is Willow's own gentle words. wLabel() pairs the tree word with the plain
+   word from shared/gg-parts.js (Roots: Spirit, Trunk: Meaning). Roots, Bark, Leaves, and Branches hold
+   the gentle practices; Trunk and Fruit grow from that tending and keep their check-in questions. */
 const PARTS = [
-  { key: 'roots', part: 'Roots', name: 'What grounds you', color: 'var(--p-roots)' },
+  { key: 'roots', part: 'Roots', name: 'Your connection with God and the sacred', color: 'var(--p-roots)' },
   { key: 'trunk', part: 'Trunk', name: 'A life that mattered', color: 'var(--p-trunk)' },
   { key: 'bark', part: 'Bark', name: 'Peace inside', color: 'var(--p-bark)' },
   { key: 'branches', part: 'Branches', name: 'Love said out loud', color: 'var(--p-branches)' },
@@ -39,6 +42,9 @@ const PARTS = [
   { key: 'fruit', part: 'Fruit', name: 'Hope and readiness', color: 'var(--p-fruit)' }
 ];
 const PART = {}; PARTS.forEach(p => { PART[p.key] = p; });
+const W_GW = window.GGParts && window.GGParts.label ? window.GGParts : null;
+const wTends = k => W_GW ? W_GW.tend(k) : !['trunk', 'fruit'].includes(k);
+const wLabel = p => W_GW ? W_GW.label(p.key) : p.part;
 const PART_WORDS = {
   roots: { person: `Faith, spirit, or whatever holds you up. Roots are mostly unseen, and they matter most when the wind picks up.`, helper: `What holds you up while you hold them.` },
   trunk: { person: `Your story. Knowing your life mattered, and passing on what you know.`, helper: `The meaning in the care you give.` },
@@ -163,10 +169,10 @@ const ownCheckins = r => (r && r.checkins || []).filter(c => c.by !== 'observed'
 const seenCheckins = r => (r && r.checkins || []).filter(c => c.by === 'observed');
 const ringsOf = r => ownCheckins(r).length;
 const lastOwn = r => { const l = ownCheckins(r); return l.length ? l[l.length - 1] : null; };
-function needPart(r) {
+function needPart(r, only) {
   const c = lastOwn(r); if (!c || !c.levels) return null;
   const order = { edge: 0, steady: 1, strong: 2 };
-  const ks = PARTS.map(p => p.key).filter(k => c.levels[k]).sort((a, b) => order[c.levels[a]] - order[c.levels[b]]);
+  const ks = PARTS.map(p => p.key).filter(k => c.levels[k] && (!only || only.includes(k))).sort((a, b) => order[c.levels[a]] - order[c.levels[b]]);
   return ks[0] || null;
 }
 
@@ -344,7 +350,8 @@ function existing() {
 function offer(r, role) {
   const d = (r.days || {})[today()] || {}, off = d.off || 0;
   if (role === 'helper') { const L = P.selfcare; const it = L[(dayNo() + off) % L.length]; return { part: 'leaves', it }; }
-  const need = needPart(r), order = PARTS.map(p => p.key);
+  // The four tended parts only (GWG BLD 907); Trunk and Fruit grow from that tending.
+  const order = PARTS.map(p => p.key).filter(k => wTends(k) && (P.person[k] || []).length), need = needPart(r, order);
   const part = need && off === 0 ? need : order[(dayNo() + off) % order.length];
   const L = P.person[part]; return { part, it: L[(dayNo() + off) % L.length] };
 }
@@ -402,7 +409,7 @@ function treeCard(r, id, role) {
   const self = id === (me() || {}).id, c = lastOwn(r), rings = ringsOf(r), show = sees('tree');
   const who = self ? 'your' : esc(nameOf(id)) + '\'s';
   let words = '';
-  if (c && show) words = `<ul class="w-words">${PARTS.map(p => c.levels && c.levels[p.key] ? `<li style="--pc:${p.color}"><b>${p.part}</b><span>${esc(C.words[c.levels[p.key]])}</span></li>` : '').join('')}</ul><p class="w-small">From ${self ? 'your' : 'the'} check-in on ${nice(c.date)}${c.by === 'tapped' ? ', answered with a helper tapping' : ''}.</p>`;
+  if (c && show) words = `<ul class="w-words">${PARTS.map(p => c.levels && c.levels[p.key] ? `<li style="--pc:${p.color}"><b>${esc(wLabel(p))}</b><span>${esc(C.words[c.levels[p.key]])}</span></li>` : '').join('')}</ul><p class="w-small">From ${self ? 'your' : 'the'} check-in on ${nice(c.date)}${c.by === 'tapped' ? ', answered with a helper tapping' : ''}.</p>`;
   else if (c && !show) words = `<p>${esc(nameOf(id))} keeps how their tree is doing private. That's their choice to make.</p>`;
   else words = `<p>${self ? 'Your' : esc(nameOf(id)) + '\'s'} tree is planted. A first check-in gives it words.</p>`;
   const sc = willowScene(r, self);
@@ -500,15 +507,16 @@ function rememberedHtml(t) {
     <div class="w-card"><p class="w-eyebrow">Your own tree</p><p>Grief is part of your tree now. Your check-ins keep growing it.</p><div class="btn-row"><button type="button" class="btn btn-secondary" onclick="W.view('${(me() || {}).id}')">Go to my own tree</button></div></div>`;
 }
 function aboutShort() {
-  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on six parts of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
+  return `<div class="w-card"><p class="w-eyebrow">How Willow works</p><p>Check in on every part of the tree, gently, whenever it helps. Keep what matters to you written down. Save stories and letters as Cuttings. Find words for hard conversations in When Life Changes, readings and faith cards for all faith traditions and everything in-between, what to do at the bedside, and short videos in Learn.</p><div class="btn-row"><button type="button" class="btn btn-secondary btn-sm" onclick="W.go('about')">Read more</button></div></div>`;
 }
 VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h2>A tree for the last part of the path</h2></div>
   <div data-read="Read this aloud">
   <p class="lead">A willow bends. It bends so far in a storm you'd think it should break, and it doesn't. Near the end of life, everyone in the room is bending. Willow is here so no one bends alone.</p>
   <p class="lead">${esc(P.intro)}</p>
-  <h3 class="section-title">The Six Parts</h3>
-  ${ART_ON() ? `<div class="w-art w-how">${GGTreeArt.howItWorks(null, { app: 'willow', parts: artParts(true), maxH: 420, label: 'The Willow painting with six soft lights to tap', hint: 'Tap a soft light on the tree to read what that part holds.' })}</div>`
-    : `<div class="w-parts">${PARTS.map(p => `<div class="w-part" style="--pc:${p.color}"><b>${p.part}</b><span>${esc(p.name)}</span><p>${esc(PART_WORDS[p.key].person)}</p></div>`).join('')}</div>`}
+  <h3 class="section-title">Tend Four, Grow Two</h3>
+  <p class="lead">Gentle tending for four parts, spirit, mind, body, and relationships, in whatever way the day allows. Meaning and hope grow from that tending.</p>
+  ${ART_ON() ? `<div class="w-art w-how">${GGTreeArt.howItWorks(null, { app: 'willow', parts: artParts(true), maxH: 420, label: 'The Willow painting with soft lights to tap', hint: 'Tap a soft light on the tree to read what that part holds.' })}</div>`
+    : `<div class="w-parts">${PARTS.map(p => `<div class="w-part" style="--pc:${p.color}"><b>${esc(wLabel(p))}</b><span>${esc(wTends(p.key) ? p.name : 'Grows from your tending')}</span><p>${esc(PART_WORDS[p.key].person)}</p></div>`).join('')}</div>`}
   <h3 class="section-title">Built for two</h3>
   <p class="lead">Willow is the person's own tree. It's also built for the people who love them: a family member can set it up, tap answers while their person talks, and keep a log of what helped today. Helpers open it with their own passcode, and see only what the person chooses to share. Helpers have their own tree here too, because caregivers carry this as well.</p>
   <h3 class="section-title">Every answer says who answered</h3>
@@ -516,7 +524,7 @@ VIEWS.about = () => `<div class="w-head"><p class="w-eyebrow">How it works</p><h
   <h3 class="section-title">Faith comes first</h3>
   <p class="lead">Willow asks about faith on the second screen, every time, because a chaplain always asks. Every answer is welcome, including none, and a person can choose more than one tradition. Each person answers for themselves.</p>
   <h3 class="section-title">What's inside</h3>
-  <p class="lead">Gentle guided check-ins on the six parts, one question at a time: one that speaks to the person in hospice care, and Your Caregiver Check-in for the people beside them. What Matters to Me, Cuttings for stories and letters, and help at the Bedside are here too. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and under every check-in.</p>
+  <p class="lead">Gentle guided check-ins on every part of the tree, one question at a time: one that speaks to the person in hospice care, and Your Caregiver Check-in for the people beside them. What Matters to Me, Cuttings for stories and letters, and help at the Bedside are here too. When Life Changes holds 22 guides for the hardest conversations, each with two short videos. Readings for all faith traditions and everything in-between, many with Listen to hear them read aloud, and faith cards for 29 traditions. Learn has short videos for the person and the people who love them. Your hospice's 24/7 line comes first, at the top of Today and under every check-in.</p>
   <h3 class="section-title">Who made this</h3>
   <div class="maker-card"><p>I'm Chris, a hospice chaplain. I sit with people at the end of their lives and the families around them, and I ask the same questions every day: what grounds you, what matters most, who do you want close. Willow is those questions, kept gently in one place.</p></div>
   </div>
@@ -627,10 +635,10 @@ VIEWS.checkin = () => {
   else if (st === 'quick') {
     body = `<div class="step-head"><div><div class="step-count">About 2 minutes</div><h2 class="step-title" style="--domain-color:var(--gold)">Quick Check-in</h2><div class="step-domain">One question for each part of the tree</div></div></div>
       ${ck.by === 'tapped' ? `<p class="w-small">Read each question to ${n} slowly, and tap their answer. "Not sure" is always okay.</p>` : ''}
-      <p class="q-stem">${ckStem(ck)}</p>${PARTS.map(p => `<div class="quick-part" style="--domain-color:${p.color}"><div class="quick-label" style="color:${p.color}">${p.part}</div>${qHtml(ck, p.key, 0)}</div>`).join('')}`;
+      <p class="q-stem">${ckStem(ck)}</p>${PARTS.map(p => `<div class="quick-part" style="--domain-color:${p.color}"><div class="quick-label" style="color:${p.color}">${esc(wLabel(p))}</div>${qHtml(ck, p.key, 0)}</div>`).join('')}`;
   } else if (PART[st]) {
     const p = PART[st], k = PARTS.indexOf(p);
-    body = `<div class="step-head" style="--domain-color:${p.color}"><div><div class="step-count">Part ${k + 1} of 6</div><h2 class="step-title">${p.part}</h2><div class="step-domain">${esc(p.name)}</div></div></div>
+    body = `<div class="step-head" style="--domain-color:${p.color}"><div><div class="step-count">Part ${k + 1} of 6</div><h2 class="step-title">${esc(wLabel(p))}</h2><div class="step-domain">${esc(p.name)}</div></div></div>
       <p class="w-partwords">${esc(PART_WORDS[st][ck.role])}</p>
       ${ck.by === 'tapped' && k === 0 ? `<p class="w-small">Read each question to ${n} slowly, and tap their answer. "Not sure" is always okay.</p>` : ''}
       <p class="q-stem">${ckStem(ck)}</p>${bank(ck.role)[st].map((q, i) => qHtml(ck, st, i)).join('')}`;
@@ -864,7 +872,7 @@ VIEWS.results = () => {
   const e = ck.entry, r = rec(ck.pid), n = esc(nameOf(ck.pid)), self = ck.self, seen = e.by === 'observed';
   const need = ['edge', 'steady', 'strong'].map(l => PARTS.find(p => e.levels[p.key] === l)).find(Boolean);
   const st = need && PART_STORY[need.key];
-  const words = `<ul class="w-words">${PARTS.map(p => e.levels[p.key] ? `<li style="--pc:${p.color}"><b>${p.part}</b><span>${esc(seen ? C.words[e.levels[p.key]].replace(/your tree/g, 'their tree').replace(/You don't/g, 'They don\'t') : C.words[e.levels[p.key]])}</span></li>` : `<li style="--pc:${p.color}"><b>${p.part}</b><span>Not sure today. That's okay.</span></li>`).join('')}</ul>`;
+  const words = `<ul class="w-words">${PARTS.map(p => e.levels[p.key] ? `<li style="--pc:${p.color}"><b>${esc(wLabel(p))}</b><span>${esc(seen ? C.words[e.levels[p.key]].replace(/your tree/g, 'their tree').replace(/You don't/g, 'They don\'t') : C.words[e.levels[p.key]])}</span></li>` : `<li style="--pc:${p.color}"><b>${esc(wLabel(p))}</b><span>Not sure today. That's okay.</span></li>`).join('')}</ul>`;
   const flags = (e.flags || []).filter(f => !seen && C.flags[f] && C.flags[f].note).map(f => `<p class="w-flagnote"><b>${esc(C.flags[f].title)}.</b> ${esc(C.flags[f].note)}${GUIDE_FOR_FLAG[f] ? ` <button type="button" class="text-btn" onclick="W.guide('${GUIDE_FOR_FLAG[f]}')">A guide for this</button>` : ''}</p>`).join('');
   return `<div class="w-head"><p class="w-eyebrow">${seen ? 'What you\'ve seen' : self ? 'Your tree today' : n + '\'s tree today'}</p><h2>${seen ? 'From what you see' : 'Here\'s how the tree is doing'}</h2>
     <p class="lead">${seen ? 'This is kept apart from ' + n + '\'s own answers, and doesn\'t add a ring. It helps their helpers and their hospice team notice what\'s changing.' : 'These are gentle words, not grades. Every part of a tree has seasons.'}</p></div>

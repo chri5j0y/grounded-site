@@ -32,8 +32,11 @@
      app       'oak', 'pine', 'birch', 'sequoia', or any app in POS
      parts     [{key, name, tag, text}] in the order to show (key is one of
                roots, trunk, bark, branches, leaves, fruit; name 'Roots';
-               tag the meaning, 'What grounds you'; text the card's words).
-               Defaults to the six parts with Oak's meanings and no text.
+               tag the meaning; text the card's words). Defaults to the six
+               parts from shared/gg-parts.js (name 'Roots: Spirit', tag
+               'Your connection with God and the sacred') with no text. A
+               name that is the bare tree word shows the paired label.
+     plain     true: Plain wording (Roots: what grounds you)
      gentle    true: softer, larger markers (the kids' apps)
      label     the painting's description for screen readers
    howItWorks
@@ -95,11 +98,17 @@
     }
   };
   var PART_KEYS = ['roots', 'trunk', 'bark', 'branches', 'leaves', 'fruit'];
-  var DEF_PARTS = [
-    { key: 'roots', name: 'Roots', tag: 'What grounds you' }, { key: 'trunk', name: 'Trunk', tag: 'Purpose' },
-    { key: 'bark', name: 'Bark', tag: 'Mind and feelings' }, { key: 'branches', name: 'Branches', tag: 'Relationships' },
-    { key: 'leaves', name: 'Leaves', tag: 'Body' }, { key: 'fruit', name: 'Fruit', tag: 'Hope' }
-  ];
+  // The six parts' names and meanings come from shared/gg-parts.js (GWG BLD 907): the tree word paired with the plain
+  // word (Roots: Spirit), and the meaning as the tag. Load gg-parts.js before this file; the words below stand in only
+  // when it is missing.
+  var FALL = { roots: ['Roots: Spirit', 'Your connection with God and the sacred'], trunk: ['Trunk: Meaning', 'Your meaning and purpose'],
+    bark: ['Bark: Mind', 'Your thoughts, feelings, and focus'], branches: ['Branches: Relationships', 'The people you love, face to face'],
+    leaves: ['Leaves: Body', 'Food, movement, rest, and a healthy body'], fruit: ['Fruit: Hope', 'Your hope'] };
+  function cap1(s) { s = String(s || ''); return s.charAt(0).toUpperCase() + s.slice(1); }
+  function defParts(plain) {
+    var G = window.GGParts && window.GGParts.label ? window.GGParts : null, o = { plain: plain };
+    return PART_KEYS.map(function (k) { return G ? { key: k, name: G.label(k, o), tag: cap1(G.meaning(k, o)), tree: G.tree(k) } : { key: k, name: FALL[k][0], tag: FALL[k][1], tree: FALL[k][0].split(':')[0] }; });
+  }
   var WORDS = { s: 'Strong', t: 'Steady', g: 'Growing Edge', u: 'Not sure yet' };
   var RANK = { g: 0, t: 1, s: 2 };
   var MONTHS = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
@@ -111,9 +120,13 @@
     var v = phone() ? 'phone' : 'wide', p = a[v] || a.wide;
     return { app: app, v: v, size: p.size, crop: p.crop, at: p.at, src: p.src || (app + '-' + (a[v] ? v : 'wide') + '.webp') };
   }
+  // A part named with the bare tree word ('Roots') shows the paired label ('Roots: Spirit'); any other name shows as given.
   function parts(o) {
-    var list = o.parts && o.parts.length ? o.parts : DEF_PARTS;
-    return list.map(function (p) { var d = DEF_PARTS.filter(function (x) { return x.key === p.key; })[0] || {}; return { key: p.key, name: p.name || d.name || p.key, tag: p.tag || d.tag || '', text: p.text || '' }; });
+    var DEF = defParts(o.plain), list = o.parts && o.parts.length ? o.parts : DEF;
+    return list.map(function (p) {
+      var d = DEF.filter(function (x) { return x.key === p.key; })[0] || {}, nm = p.name && p.name !== d.tree ? p.name : d.name || p.name || p.key;
+      return { key: p.key, name: nm, tag: p.tag || d.tag || '', text: p.text || '' };
+    });
   }
   function nice(k) {
     var m = /^(\d{4})-(\d{2})-(\d{2})/.exec(String(k || '')); if (!m) return String(k || '');
@@ -249,7 +262,7 @@
     if (o.card !== false) {
       body = '<div class="gta-grid"><div>' + body.replace('class="gta-art gta-glow"', 'class="gta-art gta-glow" role="group" aria-label="' + esc(label) + '"') + '</div><div class="gta-side">'
         + '<div class="gta-card" aria-live="polite"><p class="gta-k">' + esc(cur.tag) + '</p><h3 class="gta-name">' + esc(cur.name) + '</h3>' + (cur.text ? '<p>' + esc(cur.text) + '</p>' : '') + '</div>'
-        + '<div class="gta-chips" role="group" aria-label="The six parts">' + ps.map(function (p) { return '<button type="button" class="gta-chip' + (p.key === o.sel ? ' on' : '') + '" data-gta="' + id + '" data-pick="' + p.key + '" aria-pressed="' + (p.key === o.sel) + '">' + esc(p.name) + '</button>'; }).join('') + '</div>'
+        + '<div class="gta-chips" role="group" aria-label="Tend four, grow two">' + ps.map(function (p) { return '<button type="button" class="gta-chip' + (p.key === o.sel ? ' on' : '') + '" data-gta="' + id + '" data-pick="' + p.key + '" aria-pressed="' + (p.key === o.sel) + '">' + esc(p.name) + '</button>'; }).join('') + '</div>'
         + '<p class="gta-hint">' + esc(o.hint || 'Tap a glowing part of the tree to learn what it holds.') + '</p></div></div>';
     } else body = body.replace('class="gta-art gta-glow"', 'class="gta-art gta-glow" role="group" aria-label="' + esc(label) + '"');
     return out(el, root(id, o, body));
@@ -275,7 +288,7 @@
       return '<li>' + (live ? '<button type="button" class="gta-row" data-gta="' + id + '" data-pick="' + p.key + '">' + inner + '</button>' : '<div class="gta-row">' + inner + '</div>') + '</li>';
     }).join('');
     var legend = o.legend === false ? '' : '<p class="gta-legend"><span><b>' + esc(w.s) + '</b>: a full warm glow.</span><span><b>' + esc(w.t) + '</b>: a soft glow.</span><span><b>' + esc(w.g) + '</b>: a new green light, where growth is starting.</span></p>';
-    var body = '<div class="gta-grid"><div>' + pic + '</div><div class="gta-side"><ul class="gta-list gta-card" aria-label="Your six parts">' + rows + '</ul>' + legend + (o.note ? '<p class="gta-hint">' + esc(o.note) + '</p>' : '') + '</div></div>';
+    var body = '<div class="gta-grid"><div>' + pic + '</div><div class="gta-side"><ul class="gta-list gta-card" aria-label="Your tree, part by part">' + rows + '</ul>' + legend + (o.note ? '<p class="gta-hint">' + esc(o.note) + '</p>' : '') + '</div></div>';
     return out(el, root(id, o, body));
   }
 
