@@ -304,6 +304,7 @@
    "tone": 0.5,
    "mat": true,
    "stage": [
+    "stretch-room",
     "yoga-studio",
     "move-flow"
    ],
@@ -498,6 +499,48 @@
    ],
    "room": "Chris's Yoga Studio painting (November 1, 2026): an open home studio, wide empty wooden floor, plants at the edges."
   },
+  "stretch-room": {
+   "src": "stretch-room.webp",
+   "focal": [
+    0.52,
+    0.76
+   ],
+   "floor": 0.76,
+   "light": [
+    -0.5,
+    0.8
+   ],
+   "tone": 0.5,
+   "mat": true,
+   "scale": 0.65,
+   "open": [
+    0.05,
+    0.6,
+    0.97,
+    1
+   ],
+   "avoid": [
+    [
+     0,
+     0.38,
+     0.2,
+     0.64
+    ],
+    [
+     0.38,
+     0.25,
+     0.48,
+     0.52
+    ],
+    [
+     0.85,
+     0.33,
+     1,
+     0.59
+    ]
+   ],
+   "room": "Chris's Stretch Room painting (November 2, 2026): a sunlit home room, a green mat on a wide wooden floor, plants and a side table at the edges."
+  },
   "strength-room": {
    "src": "strength-room.webp",
    "focal": [
@@ -610,9 +653,9 @@
    "src": "balance-lawn.webp",
    "focal": [
     0.42,
-    0.84
+    0.82
    ],
-   "floor": 0.86,
+   "floor": 0.84,
    "light": [
     -0.3,
     0.8
@@ -621,9 +664,9 @@
    "mat": false,
    "scale": 0.65,
    "open": [
-    0.25,
+    0.1,
     0.7,
-    0.78,
+    0.8,
     1
    ],
    "avoid": [
@@ -640,7 +683,7 @@
      0.95
     ]
    ],
-   "room": "Chris's Quiet Lawn painting (November 1, 2026): a level clearing under two trees, a path on the right, hills beyond."
+   "room": "Chris's Quiet Lawn painting (November 1, 2026): a level clearing under two trees, a path on the right, hills beyond. BLD 905: open floor widened to the left lawn and the floor line raised a little, so the mat stays on the grass."
   }
  },
  "workouts": {},

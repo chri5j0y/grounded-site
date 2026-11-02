@@ -45,7 +45,7 @@
 (function () {
   'use strict';
   if (window.GGHome) return;
-  var V = 'b905';
+  var V = 'b906';
   var TEND_SRC = ['/field-guide/moves.js?v=' + V, '/field-guide/stage.js?v=' + V, '/field-guide/coach.js?v=' + V, '/field-guide/health.js?v=' + V, '/shared/gg-scale.js?v=' + V, '/shared/gg-tend-plan.js?v=' + V, '/shared/tending-public.js?v=' + V];
   var WORDS_SRC = '/shared/sober-words.js?v=b851';
   var GGN_SRC = '/shared/ggn.js?v=b898';
@@ -215,6 +215,63 @@
     for (var m = 1; m <= 11; m++) out.push({ k: 'm' + m, name: NUMW[m] + (m === 1 ? ' Month' : ' Months'), at: addMonths(date, m) });
     for (var y = 1; y <= 60; y++) out.push({ k: 'y' + y, name: (y <= 11 ? NUMW[y] : String(y)) + (y === 1 ? ' Year' : ' Years'), at: addMonths(date, 12 * y) });
     return out;
+  }
+  /* BLD 906 MILESTONE DAYS START: the day shown on the card (N) is noticed when its digits step forward (123, 6789),
+     repeat (111, 7777), land on a round number (100, 500, every thousand), or the day is a sober anniversary (years,
+     from the medallions). soberMile(n, years) gives {kind, line, count, text} or null; years is the anniversary
+     reached today (0 when none). The card shows line; the share card shows count large and text below it. Never the date. */
+  var MILE_ONES = ['', 'one', 'two', 'three', 'four', 'five', 'six', 'seven', 'eight', 'nine', 'ten', 'eleven', 'twelve', 'thirteen', 'fourteen', 'fifteen', 'sixteen', 'seventeen', 'eighteen', 'nineteen'];
+  var MILE_TENS = ['', '', 'twenty', 'thirty', 'forty', 'fifty', 'sixty', 'seventy', 'eighty', 'ninety'];
+  var MILE_DIGIT = ['zeros', 'ones', 'twos', 'threes', 'fours', 'fives', 'sixes', 'sevens', 'eights', 'nines'];
+  function mileWord(n) { return n < 20 ? MILE_ONES[n] : MILE_TENS[Math.floor(n / 10)] + (n % 10 ? ' ' + MILE_ONES[n % 10] : ''); }
+  function mileComma(n) { return String(n).replace(/\B(?=(\d{3})+(?!\d))/g, ','); }
+  function mileKind(n) {
+    var s = String(n), i, up = s.length >= 3, same = s.length >= 3;
+    for (i = 1; i < s.length; i++) { if (+s[i] !== +s[i - 1] + 1) up = false; if (s[i] !== s[0]) same = false; }
+    if (up) return 'forward';
+    if (same) return 'repeating';
+    if (n === 100 || n === 500 || (n >= 1000 && n % 1000 === 0)) return 'round';
+    return '';
+  }
+  function soberMile(n, years) {
+    var c = mileComma(n), cap = function (t) { return t.charAt(0).toUpperCase() + t.slice(1); };
+    if (years > 0) {
+      var yw = years === 1 ? '1 year' : years + ' years';
+      return { kind: 'anniversary', line: yw + ' today, one day at a time. Congratulations!', count: yw, text: 'One day at a time, all the way here. Congratulations!' };
+    }
+    var k = mileKind(n), rest = '';
+    if (k === 'forward') rest = 'every digit stepping forward';
+    else if (k === 'repeating') rest = 'all ' + MILE_DIGIT[+String(n)[0]];
+    else if (k === 'round') {
+      var th = n / 1000, word = n === 100 ? 'one hundred' : n === 500 ? 'five hundred' : th === 1 ? 'a thousand' : th < 100 ? mileWord(th) + ' thousand' : '';
+      rest = word ? cap(word) + ' todays' : 'Every one of them a today';
+    } else return null;
+    var sep = k === 'round' ? '. ' : ', ';
+    return { kind: k, line: c + ' days' + sep + rest + '. Congratulations!', count: c + ' days', text: cap(rest) + '. Congratulations!' };
+  }
+  /* BLD 906 MILESTONE DAYS END */
+  /* The anniversary in years reached on today (0 when none), from the same medallions the card counts toward. */
+  function soberYearsToday(date) {
+    var nowS = today(), y = 0;
+    medallions(date).forEach(function (m) { if (m.at === nowS && m.k.charAt(0) === 'y') y = +m.k.slice(1); });
+    return y;
+  }
+  /* Once per card open on a milestone day: the ring warms to gold with a soft glow and a few sparkles (about 2 seconds),
+     then rests gold. Under reduced motion the ring is simply gold. */
+  function mileGlow(scope) {
+    (scope || document).querySelectorAll('.hm-sober[data-hm-mile] [data-hm-ring]').forEach(function (el) {
+      if (el.getAttribute('data-hm-glow')) return;
+      var still = false; try { still = matchMedia('(prefers-reduced-motion: reduce)').matches; } catch (e) {}
+      el.setAttribute('data-hm-glow', still ? 'rest' : 'on');
+      el.classList.add('hm-mgold');
+      if (still) return;
+      var sp = document.createElement('div'); sp.className = 'hm-msparks'; sp.setAttribute('aria-hidden', 'true');
+      var at = [[50, -4, 0], [92, 22, .25], [102, 64, .55], [74, 98, .8], [26, 100, .4], [-2, 66, .95], [6, 20, .65], [48, 50, 1.15]];
+      sp.innerHTML = at.map(function (a) { return '<i style="left:' + a[0] + '%;top:' + a[1] + '%;animation-delay:' + a[2] + 's"></i>'; }).join('');
+      el.appendChild(sp);
+      el.classList.add('hm-mglow');
+      setTimeout(function () { el.classList.remove('hm-mglow'); el.setAttribute('data-hm-glow', 'rest'); if (sp.parentNode) sp.parentNode.removeChild(sp); }, 2300);
+    });
   }
 
   /* ---------- For You Today: Get Grounded Now videos matched to a part ---------- */
@@ -515,11 +572,12 @@
     var ms = medallions(date), nowS = today(), prev = null, next = null;
     ms.forEach(function (m) { if (m.at <= nowS) prev = m; else if (!next) next = m; });
     var from = prev ? prev.at : date, span = Math.max(1, between(from, next.at)), into = between(from, nowS), left = between(nowS, next.at);
-    return '<article class="hm-card hm-sober hm-a-sober o4" id="hm-sober"><div class="row">' + ring(108, 10, into, span, '<b>' + (c.days + 1) + '</b><small>' + (c.days === 0 ? 'day' : 'days') + '</small>') +
-      '<div style="min-width:0"><div class="dn">Living Sober</div><h3 class="hm-h3" style="font-size:28px">' + (c.days === 0 ? 'Day One' : 'Day ' + (c.days + 1)) + '</h3><div class="hm-sub">Next medallion: ' + esc(next.name) + ', in ' + left + (left === 1 ? ' day' : ' days') + '.</div></div></div>' +
+    var mile = c.days > 0 ? soberMile(c.days + 1, soberYearsToday(date)) : null; S.mile = mile;
+    return '<article class="hm-card hm-sober hm-a-sober o4" id="hm-sober"' + (mile ? ' data-hm-mile="' + mile.kind + '"' : '') + '><div class="row">' + ring(108, 10, into, span, '<b>' + (c.days + 1) + '</b><small>' + (c.days === 0 ? 'day' : 'days') + '</small>') +
+      '<div style="min-width:0"><div class="dn">Living Sober</div><h3 class="hm-h3" style="font-size:28px">' + (c.days === 0 ? 'Day One' : 'Day ' + (c.days + 1)) + '</h3>' + (mile ? '<p class="hm-mline">' + I('star') + '<span>' + esc(mile.line) + '</span></p>' : '') + '<div class="hm-sub">Next medallion: ' + esc(next.name) + ', in ' + left + (left === 1 ? ' day' : ' days') + '.</div></div></div>' +
       '<div class="hm-sk">Today\'s Encouragement</div><p class="words" id="hm-words">Every day counts. Today is one more.</p>' +
       '<div class="hm-smantra"><span class="hm-sk">Mantra</span><b class="hm-mtext">One day at a time.</b></div>' +
-      '<div class="hm-acts tight hm-shares"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="daily">' + I('open') + 'Share Today\'s Words</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="mantra">' + I('open') + 'Share the Mantra</button></div>' +
+      '<div class="hm-acts tight hm-shares"><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="daily">' + I('open') + 'Share Today\'s Words</button><button type="button" class="hm-btn sm line hm-a-sober" data-hm-share="mantra">' + I('open') + 'Share the Mantra</button>' + (mile ? '<button type="button" class="hm-btn sm hm-a-sober hm-mshare" data-hm-share="mile">' + I('open') + 'Share My Milestone</button>' : '') + '</div>' +
       '<div class="hm-acts"><a class="hm-btn sm hm-a-sober" href="/living-sober.html#today">' + I('sunrise') + 'Today\'s Intention</a><a class="hm-btn sm line hm-a-sober" href="/living-sober.html#wave">' + I('wind') + 'Ride the Wave</a></div></article>';
   }
   function soberInviteHtml() {
@@ -537,6 +595,11 @@
     });
   }
   function shareCard(kind) {
+    if (kind === 'mile') {
+      var m = S.mile; if (!m) return;
+      load('/shared/gg-sharecard.js?v=b839').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: 'milestone', star: 'gold', count: m.count, text: m.text }); else toast('Sharing opens on Living Sober.'); });
+      return;
+    }
     var text = kind === 'mantra' ? (S.mantra || '') : ((document.getElementById('hm-words') || {}).textContent || '');
     if (!text) return;
     load('/shared/gg-sharecard.js?v=b839').then(function () { if (window.GGShareCard) window.GGShareCard.share({ kind: kind, text: text }); else toast('Sharing opens on Living Sober.'); });
@@ -817,8 +880,8 @@
     if (!tendReady() || S.tendInit !== S.id) loadTending().then(function () { if (S.id && app() && S.paintedFor !== S.id + ':' + S.view) { S.paintedFor = S.id + ':' + S.view; refreshPane(); } });
   }
   function afterTab(tab) {
-    if (tab === 'today') { paintRings(app()); fillAlso(); fillWords(); fillMantra(); }
-    else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); fillFruit(); }
+    if (tab === 'today') { paintRings(app()); mileGlow(app()); fillAlso(); fillWords(); fillMantra(); }
+    else if (tab === 'grow') { fillWords(); fillMantra(); paintRings(app()); mileGlow(app()); fillFruit(); }
     else if (tab === 'library') fillLibrary();
     else if (tab === 'week') { var wb = document.querySelector('#hm-pane #hm-tend[data-sec="week"]'); if (wb) paintSection(wb, 'week'); var mb = document.querySelector('#hm-pane #hm-tend[data-sec="month"]'); if (mb) paintSection(mb, 'month'); }
   }
@@ -1542,7 +1605,7 @@
       if (a != null && b != null) trend = a - b >= 0.3 ? ' Growing since your last check-in.' : b - a >= 0.3 ? ' A little lower than last time: your Growing Edge shows where to tend.' : ' Holding steady since your last check-in.';
     }
     var rings = arr(tend.rings).length;
-    var season = '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'home-morning-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
+    var season = '<article class="hm-card edge lift hm-p-branches hm-gcard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'this-season-narrow.webp" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">This Season</div><h3 class="hm-h3">' + (wk ? 'Season ' + (tend.season || 1) + ', Week ' + Math.min(12, wk) + ' of 12' : 'Your First Season') + '</h3><p class="hm-sub">' +
       (ck ? ck.count + ' check-in' + (ck.count === 1 ? '' : 's') + ' since ' + esc(niceDate(ck.first)) + '.' : 'Your season begins with your first full check-in.') + (rings ? ' ' + rings + (rings === 1 ? ' ring' : ' rings') + ' on your tree.' : '') + esc(trend) + '</p>' +
       (ck ? '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-tree="history">' + I('clock') + 'History</button></div>' : '') + '</div></div></article>';
     var pc = planList(S.id, S.tree).length;
@@ -2394,7 +2457,7 @@
   function planDoorGrow() {
     if (!planOK()) return '';
     var w = wayRec(), s = w.saved;
-    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + ART2.plan + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My Grounded Way Plan</div>' +
+    return '<article class="hm-card edge lift hm-p-leaves hm-gcard hm-waycard"><div class="hm-pc"><div class="scene"><img src="' + IMG + 'way-plan-sq.webp' + '" alt="" loading="lazy"></div><div style="min-width:0"><div class="hm-time">My Grounded Way Plan</div>' +
       '<h3 class="hm-h3">' + (s ? 'Your Plan' : 'One Plan for Your Whole Self') + '</h3><p class="hm-sub">' + (s ? 'Body, mind, spirit, and your table, in one plan since ' + esc(niceDate(s)) + '. Every choice can change anytime.' : 'Body, mind, spirit, and your table, shaped by your latest check-in. About five minutes.') + '</p>' +
       '<div class="hm-acts tight"><button type="button" class="hm-btn sm hm-pill" data-hm-wpopen="1">' + I('sprout') + (s ? 'Change My Plan' : 'Build My Grounded Way Plan') + '</button></div></div></div></article>';
   }
