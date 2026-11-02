@@ -37,8 +37,8 @@
 
   // BLD 899: the painted meal cards. The painting names live in /shared/heroes/way/.
   var W = '/shared/heroes/way/';
-  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'tend-fruit'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'tend-people'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
-  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['kitchen-headstart', 'tend-fruit'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['tend-people', 'tend-people'] };
+  var CATS = [['breakfast', 'Breakfast', 'weekly-batch-sq'], ['lunch', 'Lunch', 'meal-lunch-sq'], ['dinner', 'Dinner', 'dinner-fish-sq'], ['snack', 'Snacks', 'snack-fruit-sq'], ['party', 'Party Food', 'kitchen-headstart-sq'], ['sauce', 'Sauces and Dressings', 'prep-together-sq'], ['drink', 'Drinks', 'drinks-sq'], ['holidays', 'Holidays and Gatherings', 'dinner-chili-sq']];
+  var BAND = { breakfast: ['weekly-batch', 'weekly-batch-sq'], lunch: ['meal-lunch', 'meal-lunch-sq'], dinner: ['todays-plate', 'todays-plate-sq'], snack: ['snack-fruit', 'snack-fruit-sq'], party: ['kitchen-headstart', 'kitchen-headstart-sq'], sauce: ['prep-together', 'prep-together-sq'], drink: ['drinks', 'drinks-sq'] };
   // BLD 902: the Drinks card, like Holidays and Gatherings, opens its own section (Celebration Drinks) instead of filtering the list.
   var SHELF = { holidays: 1, drink: 1 };
   var PARTY = T.party || null;
@@ -170,7 +170,7 @@
   // BLD 899: the recipe opens on its meal's painting (a dinner by its main: fish, chili and stews, or Today's Plate).
   function bandHTML(r) {
     var b = BAND[r.meal] || BAND.dinner, wide = b[0], sq = b[1];
-    if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } }
+    if (r.meal === 'dinner') { var t = String(r.name || ''); if (/salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i.test(t)) { wide = 'dinner-fish'; sq = 'dinner-fish-sq'; } else if (/chili|soup|stew/i.test(t)) { wide = 'dinner-chili'; sq = 'dinner-chili-sq'; } else if (/lentil|bean|chickpea|curry|dal\b/i.test(t)) { wide = 'dinner-curry'; sq = 'dinner-curry-sq'; } else if (/stir fry|bowl|noodle/i.test(t)) { wide = 'dinner-stirfry'; sq = 'dinner-stirfry-sq'; } }
     return '<div class="rc-dhero" aria-hidden="true"><picture><source media="(max-width:699px)" srcset="' + W + sq + '.webp"><img src="' + W + wide + '.webp" alt="" decoding="async"></picture></div>';
   }
   function detailHTML(r) {
@@ -289,7 +289,7 @@
     if (!all.length) return '';
     var secs = D && (D.sections || []).length ? D.sections : [{ id: 'all', name: 'Drinks', ids: all.map(function (r) { return r.id; }) }];
     var sp = PARTY && PARTY.sparkler, stn = PARTY && PARTY.station;
-    return '<div class="rc-sh"><img src="' + W + 'tend-people.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">' + esc((D && D.title) || 'Celebration Drinks') + '</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
+    return '<div class="rc-sh"><img src="' + W + 'drinks-sq.webp" alt="" loading="lazy" decoding="async"><h2 id="rc-s-drinks">' + esc((D && D.title) || 'Celebration Drinks') + '</h2><span class="rc-shn">' + all.length + ' recipes</span></div>' +
       (D && D.lead ? '<p class="rc-hl">' + esc(D.lead) + '</p>' : '') +
       '<nav class="rc-drnav" aria-label="Drink menu">' + secs.map(function (x) { return '<a href="#drinks-' + esc(x.id) + '" data-drjump="' + esc(x.id) + '">' + esc(x.name) + '</a>'; }).join('') +
       (sp ? '<a href="#drinks-sparkler" data-drjump="sparkler">' + esc(sp.title) + '</a>' : '') + (stn ? '<a href="#drinks-station" data-drjump="station">' + esc(stn.title) + '</a>' : '') + '</nav>' +
@@ -502,9 +502,9 @@
     /* BLD 895 (Chris: "food pics ride w guides too!"): the guide plays over a food painting, softened under a scrim in the page's
        own colors. Dinners by night (install895.py in the workshop rewrites DINNER_ART with the paintings present); other dinners
        show Today's Plate. Breakfasts and snacks show the Weekly Batch table, lunches the lunch painting. */
-    var DINNER_ART = ['fish', 'chili'];
+    var DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
     var DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
-    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'tend-people' };
+    var MEAL_ART = { breakfast: 'weekly-batch', snack: 'weekly-batch', lunch: 'meal-lunch', dinner: 'todays-plate', party: 'kitchen-headstart', sauce: 'prep-together', drink: 'drinks' };
     var ONE_ART = { 'tend-people': 1 }; // one square painting serves both sizes
     function artName(r) {
       var m = String(r.meal || 'dinner').toLowerCase();

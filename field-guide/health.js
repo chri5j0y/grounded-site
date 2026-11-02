@@ -888,7 +888,7 @@ function vOv(){
 // every player plays over its own painting, softened under a scrim in the page's own colors so the figure, timers, and words read.
 // The stage's sky stays as the card around the figure; a player with no painting keeps the scene as before. On a phone the square
 // crop (-sq), on a wide screen the wide one. The drift continues across redraws (its delay counts from when the player opened).
-const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'tend-people', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
+const ART_KITCHEN = {lunch: 'meal-lunch', breakfast: 'weekly-batch', snack: 'weekly-batch', batch: 'weekly-batch', prep: 'prep-together', head: 'kitchen-headstart', dinner: 'todays-plate', party: 'kitchen-headstart', drink: 'drinks', sauce: 'prep-together'}; // BLD 903: Sauces and Dressings
 const ART_ONE = ['tend-people']; // BLD 902: one square painting serves both sizes
 function ovArtName(o){
   if (!o) return '';
@@ -3677,7 +3677,7 @@ const MOVE_ART = {foundation: 'move-strength-sq', build: 'move-build-sq', peak: 
 const MED_ART = ['m1', 'm2', 'm3', 'm4', 'm5', 'm6', 'm7'];
 // Dinner nights by recipe type (fish, chili and soup, lentil and bean, stir fry and bowl); install895.py rewrites this line with the
 // paintings present. A dinner with no night painting yet keeps the rotation (home.js FOOD_ROT, ITEM_ART.cook).
-const DINNER_ART = ['fish', 'chili'];
+const DINNER_ART = ['fish', 'chili', 'curry', 'stirfry'];
 const DIN_RE = [['fish', /salmon|\bcod\b|fish|shrimp|tuna|trout|sardine|halibut|tilapia/i], ['chili', /chili|soup|stew/i], ['curry', /lentil|bean|chickpea|curry|dal\b/i], ['stirfry', /stir fry|bowl|noodle/i]];
 const dinnerArtName = dn => { const t = String((dn && (dn.name || dn.title)) || ''), m = DIN_RE.find(([, re]) => re.test(t)); return m && DINNER_ART.includes(m[0]) ? 'dinner-' + m[0] + '-sq' : ''; };
 function moveKind(id, ses, lvl){
