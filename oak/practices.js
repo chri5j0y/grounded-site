@@ -396,7 +396,7 @@
       'Scripture': ['L', '15 min', 'T', SRC.lectio], 'Awe Walk': ['N', '15 min', 'E', SRC.awe], 'Breath Prayer': ['C', '2 min', 'T', ''],
       'Lament': ['W', '10 min', 'T', ''], 'Ritual': ['C', '10 min', 'T', ''], 'Worship': ['C', 'Varies', 'T', ''],
       'Sabbath Hour': ['Z', '60 min', 'T', ''], 'Sit Spot': ['N', '10 min', 'T', ''], 'Mealtime Blessing': ['C', '2 min', 'T', ''],
-      'Spiritual Direction': ['R', '60 min', 'T', ''], 'Teach': ['S', 'Varies', 'T', ''], 'Tithe': ['S', 'Varies', 'T', ''], 'Moral Repair Letter': ['W', '20+ min', 'E', '']
+      'Spiritual Direction': ['R', '60 min', 'T', ''], 'Teach': ['S', 'Varies', 'T', ''], 'Tithe': ['S', 'Varies', 'T', ''], 'Moral Repair Letter': ['W', '20+ min', 'E', ''], 'Three Good Things': ['W', '5 min', 'S', SRC.tgt]
     },
     trunk: {},
     bark: {
@@ -404,7 +404,7 @@
       'Mindfulness': ['B', '5 min', 'W', ''], 'Reading': ['L', '20+ min', 'E', ''], 'Thinking': ['W', '10 min', 'E', ''],
       'Self-Compassion Break': ['C', '5 min', 'S', SRC.sc], 'Soothing Touch': ['B', '2 min', 'E', SRC.sc], 'Slow Exhale': ['B', '2 min', 'S', ''],
       'Body Scan': ['B', '10 min', 'S', ''], 'Leaves on a Stream': ['C', '5 min', 'S', SRC.act], 'Worry Window': ['W', '15 min', 'E', ''],
-      'Kind Voice Letter': ['W', '10 min', 'S', SRC.sc], 'Name It': ['B', '2 min', 'E', ''], 'Micro-Rest': ['Z', '2 min', 'E', SRC.proqol], 'Journal': ['W', '10 min', 'S', ''], 'Create Something': ['W', '20+ min', 'E', ''], 'Plan the Future': ['W', '15 min', 'S', SRC.bps], 'Talk With a Therapist': ['R', '60 min', 'W', ''], 'Keep Learning': ['L', '20+ min', 'E', ''], 'Write Your Story': ['W', '20+ min', 'E', ''], 'Values Sort': ['W', '15 min', 'S', SRC.val], 'Purpose Statement': ['W', '15 min', 'E', SRC.meaning], 'Job Crafting': ['L', '10 min', 'E', ''], 'Stand-For Card': ['W', '10 min', 'E', SRC.act], 'Meaning Walk': ['N', '20+ min', 'E', ''], 'Expressive Writing': ['W', '20+ min', 'S', SRC.ew], 'Capture the Moment': ['W', '5 min', 'E', ''], 'Three Good Things': ['W', '5 min', 'S', SRC.tgt], 'Best Possible Self': ['W', '20+ min', 'S', SRC.bps], 'Hope Map': ['W', '15 min', 'E', ''], 'Savoring Walk': ['N', '10 min', 'E', ''], 'Joy List': ['W', '5 min', 'E', ''], 'Tiny Next Step': ['W', '5 min', 'E', ''], 'Growth Reflection': ['W', '15 min', 'E', ''], 'Something to Look Forward To': ['Z', '5 min', 'E', '']
+      'Kind Voice Letter': ['W', '10 min', 'S', SRC.sc], 'Name It': ['B', '2 min', 'E', ''], 'Micro-Rest': ['Z', '2 min', 'E', SRC.proqol], 'Journal': ['W', '10 min', 'S', ''], 'Create Something': ['W', '20+ min', 'E', ''], 'Plan the Future': ['W', '15 min', 'S', SRC.bps], 'Talk With a Therapist': ['R', '60 min', 'W', ''], 'Keep Learning': ['L', '20+ min', 'E', ''], 'Write Your Story': ['W', '20+ min', 'E', ''], 'Values Sort': ['W', '15 min', 'S', SRC.val], 'Purpose Statement': ['W', '15 min', 'E', SRC.meaning], 'Job Crafting': ['L', '10 min', 'E', ''], 'Stand-For Card': ['W', '10 min', 'E', SRC.act], 'Meaning Walk': ['N', '20+ min', 'E', ''], 'Expressive Writing': ['W', '20+ min', 'S', SRC.ew], 'Capture the Moment': ['W', '5 min', 'E', ''], 'Best Possible Self': ['W', '20+ min', 'S', SRC.bps], 'Hope Map': ['W', '15 min', 'E', ''], 'Savoring Walk': ['N', '10 min', 'E', ''], 'Joy List': ['W', '5 min', 'E', ''], 'Tiny Next Step': ['W', '5 min', 'E', ''], 'Growth Reflection': ['W', '15 min', 'E', ''], 'Something to Look Forward To': ['Z', '5 min', 'E', '']
     },
     branches: {
       'Family': ['R', 'Varies', 'W', SRC.conn], 'Friends': ['R', 'Varies', 'W', SRC.conn], 'Neighbors': ['R', 'Varies', 'S', ''],
@@ -433,7 +433,8 @@
       ['Sit Spot', 'Return to the same outdoor spot and simply notice what changes.'],
       ['Mealtime Blessing', 'Pause before eating to give thanks for the food and the hands behind it.'],
       ['Spiritual Direction', 'Meet with a spiritual director or chaplain to listen for the sacred in your life.'],
-      ['Moral Repair Letter', 'Write about something that still weighs on your conscience, ideally with a counselor or chaplain.']
+      ['Moral Repair Letter', 'Write about something that still weighs on your conscience, ideally with a counselor or chaplain.'],
+      ['Three Good Things', 'Each night, write three things that went well and why.']
     ],
     trunk: [],
     bark: [
@@ -459,7 +460,6 @@
       ['Stand-For Card', 'Write what you stand for on a small card and keep it with you.'],
       ['Meaning Walk', 'Walk with one question: what am I living for right now?'],
       ['Expressive Writing', 'Write your deepest thoughts about a hard experience, 15 minutes a day for a few days.'],
-      ['Three Good Things', 'Each night, write three things that went well and why.'],
       ['Best Possible Self', 'Write about your life going as well as it realistically could.'],
       ['Hope Map', 'Map a goal, a few paths to it, the obstacles, and what gives you energy.'],
       ['Savoring Walk', 'A walk where you slow down and soak in every good thing you notice.'],
@@ -546,7 +546,7 @@
     'leaves|Evening Wind Down': { why: 'Screens before bed make it harder to fall asleep, and a calmer evening supports rest.', today: 'Put screens away an hour before bed. Read, talk, or stretch instead.', build: 'Charge your phone outside the bedroom.', hard: 'If an hour feels impossible, start with 20 minutes.' },
     'leaves|Sober Week': { why: 'A sober week shows you how alcohol affects your sleep, mood, and stress.', today: 'Choose a week to go sober, and plan something good for the times you usually drink: a walk, a call, sparkling water, or tea.', build: 'Notice how you sleep and feel. Let that guide your next choice.', hard: 'If stopping is harder than expected, that\'s important to know. The SAMHSA Helpline, 1-800-662-4357, is free and confidential.' },
     'leaves|Morning Daylight': { why: 'Morning light helps set your body\'s clock, which supports sleep and energy.', today: 'Spend ten minutes in morning daylight, outside or by a bright window.', build: 'Make it part of your morning routine.', hard: 'In dark Minnesota winters, the brightest window you have still helps.' },
-    'bark|Three Good Things': { why: 'Writing down three good things and why they happened is one of the most tested gratitude practices.', today: 'Tonight, write three things that went well today and why.', build: 'Keep it up for a week, then see how you feel.', hard: 'On hard days, the good things can be tiny: a warm drink, a kind word.' },
+    'roots|Three Good Things': { why: 'Writing down three good things and why they happened is one of the most tested gratitude practices.', today: 'Tonight, write three things that went well today and why.', build: 'Keep it up for a week, then see how you feel.', hard: 'On hard days, the good things can be tiny: a warm drink, a kind word.' },
     'bark|Best Possible Self': { why: 'Imagining a future where things go well lifts mood and optimism, with small but real effects in research.', today: 'Write for 15 minutes about your life a few years from now, going as well as it realistically could.', build: 'Return to it every few weeks and let it guide one small step.', hard: 'If it makes your present feel worse, write about a best possible next month instead.' },
     'bark|Hope Map': { why: 'Hope grows from having a goal, paths toward it, and the energy to keep going.', today: 'Write one goal. Draw three paths to it, one obstacle for each, and one thing that gives you energy.', build: 'Update your map as paths open or close.', hard: 'If every path feels blocked, ask someone to brainstorm with you.' },
     'bark|Savoring Walk': { why: 'Slowing down to notice good things strengthens positive feelings.', today: 'Take a ten-minute walk and notice as many good things as you can: a smell, a color, a sound.', build: 'Try it weekly, in different places.', hard: 'If nothing feels good, notice what is neutral and calm.' },

@@ -2125,7 +2125,7 @@ const LC_TOPICS = [
    "bark|Tiny Next Step",
    "leaves|Morning Daylight",
    "branches|Standing Call",
-   "bark|Three Good Things"
+   "roots|Three Good Things"
   ],
   "reach": [
    "Low mood, or lost interest in things you usually enjoy, lasting two weeks or more: talk with your doctor.",
@@ -5710,7 +5710,7 @@ window.SEQUOIA_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS };
    "branches|Mentor Someone",
    "leaves|Walk Your Way",
    "bark|Meditation",
-   "bark|Three Good Things",
+   "roots|Three Good Things",
    "branches|Standing Call"
   ],
   "reach": [

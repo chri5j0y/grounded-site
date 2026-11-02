@@ -4015,7 +4015,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "gratitude-jar",
-   "part": "bark",
+   "part": "roots",
    "kinds": [
     "family",
     "classroom",
@@ -4147,7 +4147,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "gratitude-visit",
-   "part": "branches",
+   "part": "roots",
    "kinds": [
     "family",
     "group",
@@ -4217,7 +4217,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "goodbye-circle",
-   "part": "bark",
+   "part": "roots",
    "kinds": [
     "classroom"
    ],
@@ -4243,7 +4243,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "thank-you-wall",
-   "part": "branches",
+   "part": "roots",
    "kinds": [
     "classroom"
    ],
@@ -4304,7 +4304,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "closing-thanks",
-   "part": "bark",
+   "part": "roots",
    "kinds": [
     "faith",
     "group",
@@ -4333,7 +4333,7 @@ window.GROVE_KINDS = {
   },
   {
    "id": "harvest-thanks",
-   "part": "branches",
+   "part": "roots",
    "kinds": [
     "family",
     "faith"

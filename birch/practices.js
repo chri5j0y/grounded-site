@@ -679,7 +679,7 @@
       hard: "No insurance, or not sure? Call a clinic and ask about sliding scale fees. Campus health centers and community health centers can help. Poison Help: 1-800-222-1222, any time." } },
 
   // ---------------- ONCE FRUIT (Hope): Fruit grows from tending since BLD 907, so each row here is filed under the part in its p ----------------
-  { p: 'bark', n: 'Three Good Things', d: "Each night, write three things that went well and why.",
+  { p: 'roots', n: 'Three Good Things', d: "Each night, write three things that went well and why.",
     m: ['W', '5 min', 'W', SRC.tgt], f: {}, s: ['seligman'],
     g: { why: "Writing down good things trains your brain to notice them. In a well-known study, adults who did this each night for a week were happier and less depressed for months afterward.",
       today: "Before bed, write three things that went well today, big or small, and why each one happened.",

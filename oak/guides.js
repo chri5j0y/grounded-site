@@ -2399,7 +2399,7 @@ window.OAK_GUIDES = { rings: LC_RINGS, links: L, topics: LC_TOPICS, maple: SAP }
   },
   "faith": "If faith is part of your life, this year may bring it new color: gratitude that feels real, a community that celebrates your milestones, a sense of grace for a fresh start. If faith isn't part of your life, wonder, gratitude, and service can give this year the same deep roots.",
   "practices": [
-   "bark|Three Good Things",
+   "roots|Three Good Things",
    "branches|Volunteer",
    "leaves|Morning Daylight",
    "bark|Keep Learning",

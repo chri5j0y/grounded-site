@@ -1582,7 +1582,7 @@ const LC_TOPICS = [
    "bark|Big Choice Map",
    "bark|Your Own Timeline",
    "bark|Starter Cushion",
-   "bark|Three Good Things",
+   "roots|Three Good Things",
    "branches|Make One Plan",
    "bark|Groundwork Page"
   ],

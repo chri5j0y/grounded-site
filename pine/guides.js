@@ -2572,7 +2572,7 @@ const LC_TOPICS = [
    "leaves|Morning Daylight",
    "leaves|Smart Nap",
    "bark|Worry Window",
-   "bark|Three Good Things"
+   "roots|Three Good Things"
   ],
   "reach": [
    "Trouble sleeping most nights for weeks, loud snoring or gasping, or deep sleepiness even after enough sleep: talk with your doctor.",
@@ -3836,7 +3836,7 @@ const LC_TOPICS = [
    "leaves|Phone Outside the Bedroom",
    "leaves|Two Hours Outdoors",
    "branches|One Reach-Out a Day",
-   "bark|Three Good Things",
+   "roots|Three Good Things",
    "roots|Sabbath Hour"
   ],
   "reach": [

@@ -665,7 +665,7 @@
       hard: "Too tired, upset, or offered a ride from someone who's been drinking or using? Don't drive, and don't get in. Call a parent or trusted adult for a ride." } },
 
   // ---------------- ONCE FRUIT (Hope): Fruit grows from tending since BLD 907, so each row here is filed under the part in its p ----------------
-  { p: 'bark', n: 'Three Good Things', d: "Each night, write three things that went well and why.",
+  { p: 'roots', n: 'Three Good Things', d: "Each night, write three things that went well and why.",
     m: ['W', '5 min', 'W', SRC.tgt], f: {},
     g: { why: "Writing down good things trains your brain to notice them. Studies with young people found that counting good things lifted mood and gratitude.",
       today: "Before bed, write three things that went well today, big or small, and why each one happened.",
