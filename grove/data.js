@@ -1,21 +1,24 @@
 /* =====================================================================
    THE GROVE . CONTENT
-   Everything people read lives here: the six parts of the tree, the
+   Everything people read lives here: the parts of the tree, the
    planting quiz, the teen weekly check-in, the practices, and the twelve
    weeks. Edit words here, not in index.html.
    ===================================================================== */
 
-// ---------- THE SIX PARTS ----------
-// The same six parts as every Grounded check-in tool. Leaves holds three
+// ---------- THE PARTS OF THE TREE (tend four, grow two; GWG BLD 907) ----------
+// The same parts as every Grounded check-in tool, with the plain word from
+// shared/gg-parts.js as sub (Roots: Spirit; plainSub for Plain wording).
+// Roots, Bark, Leaves, and Branches are tended; Trunk and Fruit grow from that
+// tending (grows: true) and keep their check-in questions. Leaves holds three
 // strands (Move, Rest, Nourish) so The Grove can aim at the one that needs it.
 const PARTS = [
- { id:"roots", name:"Roots", sub:"What grounds you", color:"#8E5A2B", strands:["roots"],
+ { id:"roots", name:"Roots", sub:"Spirit", plainSub:"What grounds you", color:"#8E5A2B", strands:["roots"],
    blurb:"What's sacred to you, and what holds you up. All faith traditions and everything in-between.",
    kid:"Quiet, wonder, and feeling thankful." },
- { id:"trunk", name:"Trunk", sub:"Purpose", color:"#C27A1E", strands:["trunk"],
+ { id:"trunk", name:"Trunk", sub:"Meaning", grows:true, color:"#C27A1E", strands:["trunk"],
    blurb:"What you live for, and the things you make along the way.",
    kid:"Making, building, and what you love to do." },
- { id:"bark", name:"Bark", sub:"Mind and feelings", color:"#6E5BB5", strands:["bark"],
+ { id:"bark", name:"Bark", sub:"Mind", color:"#6E5BB5", strands:["bark"],
    blurb:"Settling your thoughts and caring for your emotional health.",
    kid:"Big feelings, calm breaths, and kind thoughts." },
  { id:"branches", name:"Branches", sub:"Relationships", color:"#1F8A8F", strands:["branches"],
@@ -24,7 +27,7 @@ const PARTS = [
  { id:"leaves", name:"Leaves", sub:"Body", color:"#3A9B58", strands:["move","rest","nourish"],
    blurb:"Moving, resting, and eating in ways that care for your body.",
    kid:"Moving, sleeping, and good food." },
- { id:"fruit", name:"Fruit", sub:"Hope", color:"#D9483F", strands:["fruit"],
+ { id:"fruit", name:"Fruit", sub:"Hope", grows:true, color:"#D9483F", strands:["fruit"],
    blurb:"Looking forward, noticing the good, and growing toward it.",
    kid:"Happy moments, kind acts, and looking forward." }
 ];

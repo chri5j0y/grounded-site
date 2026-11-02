@@ -4,7 +4,12 @@
    so both always ask the same thing. Edit questions here, not in index.html.
 
    Willow follows the Grounded tree standard, fitted to the end of life:
-   - Six parts: roots, trunk, bark, branches, leaves, fruit.
+   - Six parts: roots, trunk, bark, branches, leaves, fruit. Labels pair the
+     tree word with the plain word from shared/gg-parts.js (GWG BLD 907):
+     Roots: Spirit, Trunk: Meaning, Bark: Mind, Branches: Relationships,
+     Leaves: Body, Fruit: Hope. Tend four (Roots, Bark, Leaves, Branches hold
+     the gentle practices); Trunk and Fruit keep their questions here and
+     grow from that tending.
    - Three questions per part. Question 1 of each part is the quick check-in.
    - Two anchors backed by validation research: roots 1 (strength and comfort)
      and bark 1 (at peace). Helpers' anchor is bark 1 (prepared).

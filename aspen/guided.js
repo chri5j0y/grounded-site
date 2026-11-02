@@ -72,7 +72,7 @@
     let ended = '';
     hush();
     GGGuided.run({
-      tree: 'aspen', kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true,
+      tree: 'aspen', kind, title: kind === 'start' ? 'My First Check-in' : 'My Check-in', voice: 'jenny', kid: true, plain: () => isPlain(),
       questions: questions(d, wd), answers: A, script: script([kind], d.mode === 'grown', wd === 'plain'), isEdge, quiet: quiet(),
       onAnswer: (id, v) => {
         const st = me(), dd = st && st.draft; if (!dd) return;
@@ -108,7 +108,7 @@
     });
     const last = s.rings[s.rings.length - 1];
     GGGuided.run({
-      tree: 'aspen', kind: 'week', title: "This Week's Check-in", voice: 'jenny', kid: true, questions: Q, answers: {},
+      tree: 'aspen', kind: 'week', title: "This Week's Check-in", voice: 'jenny', kid: true, plain: () => isPlain(), questions: Q, answers: {},
       script: script(['week'], !!(last && last.mode === 'grown'), isPlain(s)), isEdge, quiet: quiet(),
       onDone: r => { if (ASP_TAB !== 'week') aspTab('week'); GGTend.saveWeekAns(r.answers); },
       onReadAll: ans => weekForm(ans)
@@ -142,8 +142,10 @@
   /* ---------- the Guided Growth Plan (kind plan) ---------- */
   function planSteps(s, picks) {
     const g = s.grade, R = (window.GG_RHYTHM || {}).aspen || {}, plain = isPlain(s);
-    const last = s.rings[s.rings.length - 1], sug = last ? lowestTwo(last) : [];
-    const order = sug.concat(PARTS.map(p => p.key).filter(k => !sug.includes(k)));
+    // The four tended parts only (GWG BLD 907): Trunk and Fruit grow from that tending and get no practices.
+    const last = s.rings[s.rings.length - 1], sug = last ? (typeof lowestTend === 'function' ? lowestTend(last) : lowestTwo(last)) : [];
+    const tends = k => !window.GGParts || !GGParts.tend || GGParts.tend(k);
+    const order = sug.concat(PARTS.map(p => p.key).filter(k => tends(k) && !sug.includes(k)));
     asLifeUse(s);
     return order.map(k => {
       const all = ((PRACTICES[g] || {})[k] || []).map((pr, i) => i);
@@ -176,7 +178,7 @@
     steps.forEach(st => { cur[st.part] = st.choices.filter(c => picks.some(p => !p.own && p.part === st.part && p.grade === s.grade && p.idx === c.idx)).map(c => c.name); });
     const last = s.rings[s.rings.length - 1];
     GGGuided.run({
-      tree: 'aspen', kind: 'plan', title: 'My Growth Plan', voice: 'jenny', kid: true, questions: steps, plan: cur,
+      tree: 'aspen', kind: 'plan', title: 'My Growth Plan', voice: 'jenny', kid: true, plain: () => isPlain(), questions: steps, plan: cur,
       script: script(['plan'], !!(last && last.mode === 'grown'), isPlain(s)), quiet: quiet(),
       onPlan: (part, names) => { picked[part] = names; },
       onDone: r => {

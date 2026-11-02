@@ -98,14 +98,23 @@ const { stageOf, skyNow } = window.GGScene;
 const $ = s => document.querySelector(s);
 const esc = s => String(s == null ? '' : s).replace(/[&<>"']/g, c => ({ '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[c]));
 const T = window.GROVE_TOGETHER || { practices: [], featured: [], themes: [] };
+// The parts of the tree (GWG BLD 907): tend four, grow two. name is the tree word, sub the plain word from
+// shared/gg-parts.js (Spirit, Meaning, Mind). In Plain wording (plainMode), Roots reads What grounds us.
+// Roots, Bark, Leaves, and Branches get practices; Trunk and Fruit grow from that tending.
 const PARTS6 = [
-  { key:'roots', name:'Roots', sub:'What grounds us', color:'#8E5A2B' },
-  { key:'trunk', name:'Trunk', sub:'Purpose', color:'#C27A1E' },
-  { key:'bark', name:'Bark', sub:'Mind and feelings', color:'#6E5BB5' },
+  { key:'roots', name:'Roots', sub:'Spirit', color:'#8E5A2B' },
+  { key:'trunk', name:'Trunk', sub:'Meaning', color:'#C27A1E' },
+  { key:'bark', name:'Bark', sub:'Mind', color:'#6E5BB5' },
   { key:'branches', name:'Branches', sub:'Relationships', color:'#1F8A8F' },
   { key:'leaves', name:'Leaves', sub:'Body', color:'#3A9B58' },
   { key:'fruit', name:'Fruit', sub:'Hope', color:'#D9483F' }];
 const PNAME = Object.fromEntries(PARTS6.map(p => [p.key, p.name]));
+const GV_GW = window.GGParts && window.GGParts.label ? window.GGParts : null;
+const gvTends = k => GV_GW ? GV_GW.tend(k) : !['trunk', 'fruit'].includes(k);
+const TEND6 = PARTS6.filter(p => gvTends(p.key));
+// A part's paired label on screen (Roots: Spirit, or Roots: What grounds us in Plain wording).
+const gvLabel = p => { const k = p && p.key ? p.key : p, x = PARTS6.find(y => y.key === k); return x ? x.name + ': ' + x.sub : String(k || ''); };
+Object.defineProperty(PARTS6[0], 'sub', { configurable: true, enumerable: true, get: () => { try { return plainMode() ? 'What grounds us' : 'Spirit'; } catch (e) { return 'Spirit'; } }, set: () => {} });
 const TOOL = { adult:{ name:'Oak', href:'/oak/' }, pine:{ name:'Pine', href:'/pine/' }, birch:{ name:'Birch', href:'/birch/' }, aspen:{ name:'Aspen', href:'/aspen/' }, maple:{ name:'Maple', href:'/maple/' }, sequoia:{ name:'Sequoia', href:'/sequoia/' } };
 const ADULT_TREES = ['sequoia', 'birch'];
 const adultTree = p => { if (!p || p.age !== 'adult') return ''; if (ADULT_TREES.includes(p.tree)) return p.tree; const t = ((p.shared || {}).tree || {}).tool; return ADULT_TREES.includes(t) ? t : ''; };
@@ -522,7 +531,14 @@ function renderTabs() {
   $('#tabs').innerHTML = t.map(([id, label, ic]) => `<button class="tab" role="tab" aria-selected="${S.tab === id}" data-tab="${id}">${icon(ic)}${esc(label)}</button>`).join('');
 }
 let LAST_SCENE = '';
+// The hero strip follows this grove's wording: Plain shows Roots: What grounds us (GWG BLD 907).
+function gvStripWords() {
+  const li = document.querySelector('.gg-parts [data-part="roots"]'); if (!li) return;
+  const b = li.querySelector('b'), sp = li.querySelector('span'), plain = (() => { try { return !!G && plainMode(); } catch (e) { return false; } })();
+  if (b) b.textContent = plain ? 'Roots: What grounds us' : 'Roots: Spirit'; if (sp) sp.textContent = plain ? 'Calm, values, wonder, and gratitude' : 'Your connection with God and the sacred';
+}
 function render() {
+  gvStripWords();
   renderTabs();
   const v = $('#view');
   window.GROVE_PLAIN = plainMode();
@@ -631,7 +647,7 @@ function groveTodayHtml() {
   if (!window.GGLiving) return '';
   const sc = groveToday(); GV_DONE = sc.done;
   return `<div class="card gv-today">${GGLiving.html({ app: 'grove', light: sc.light, label: sc.line })}
-    <div class="gv-today-strip"><ul class="gv-marks" aria-label="Parts tended today">${PARTS6.map(p => `<li class="${sc.parts.includes(p.key) ? 'on' : ''}" style="--pc:${p.color}"><span aria-hidden="true"></span>${p.name}<b class="sr-only">${sc.parts.includes(p.key) ? ', tended today' : ''}</b></li>`).join('')}</ul>
+    <div class="gv-today-strip"><ul class="gv-marks" aria-label="Parts tended today">${TEND6.map(p => `<li class="${sc.parts.includes(p.key) ? 'on' : ''}" style="--pc:${p.color}"><span aria-hidden="true"></span>${p.name}<b class="sr-only">${sc.parts.includes(p.key) ? ', tended today' : ''}</b></li>`).join('')}</ul>
     <p class="gv-today-line">${esc(sc.line)}</p></div></div>`;
 }
 function viewGrove() {
@@ -707,7 +723,7 @@ const MILES = [
   ['checkin1', 'First Check-in Together', '{We} checked in together for the first time.'],
   ['plan1', 'Our First Growth Plan', '{We} made a growth plan together.'],
   ['grow7', 'A Week of Growing Together', 'Seven days of the grove growing.'],
-  ['sixparts', 'All Six Parts in One Week', 'Together, every part of the tree was tended in one week.'],
+  ['sixparts', 'All Four Parts in One Week', 'Together, all four parts of the tree were tended in one week.'],
   ['alltrees', 'Every Tree Tended in One Week', 'Every tree in the grove was tended in the same week.'],
   ['together10', 'Ten Practices Together', 'Ten practices done side by side.'],
   ['ring1', 'A First Ring in the Grove', 'A tree in the grove finished a season and added a ring.'],
@@ -733,7 +749,7 @@ function famTotals(days) {
   let together = 0, togetherWk = 0;
   Object.keys(G.done || {}).forEach(d => { const n = Object.keys(G.done[d] || {}).length; together += n; if (d >= w0 && d <= w1) { togetherWk += n; Object.keys(G.done[d] || {}).forEach(id => { const pr = TP[id]; if (pr) parts.add(pr.part); }); } });
   const v = V();
-  return { days, weekDays, allDays, rings, shown, tendedWk, parts: parts.size, together, togetherWk,
+  return { days, weekDays, allDays, rings, shown, tendedWk, parts: TEND6.filter(p => parts.has(p.key)).length, together, togetherWk,
     checkins: v ? v.checkins.length : 0, plans: v ? (v.plans.length + (v.plan ? 1 : 0)) : 0, season: v ? ([v.plan].concat(v.plans).some(p => p && planWeek(p) > 12)) : false };
 }
 function famMilesNow(T) {
@@ -745,7 +761,7 @@ function famMilesNow(T) {
   if (T.together >= 1) out.together1 = 1;
   if (T.together >= 10) out.together10 = 1;
   if (T.together >= 50) out.together50 = 1;
-  if (T.parts >= 6) out.sixparts = 1;
+  if (T.parts >= TEND6.length) out.sixparts = 1;
   if (T.shown >= 2 && T.tendedWk === T.shown) out.alltrees = 1;
   if (T.rings >= 1) out.ring1 = 1;
   if (T.checkins >= 1) out.checkin1 = 1;
@@ -768,7 +784,7 @@ function togetherHtml(days) {
   const got = list.filter(m => G.miles && G.miles[m[0]]), ahead = list.filter(m => !(G.miles && G.miles[m[0]]));
   const mt = s => fill(s, { We: K.We, we: K.we });
   let h = `<div class="card gv-totals"><h3>Growing Together</h3><p class="muted">${isFamily() ? "The whole family's growth, added together. Never a contest: every day anyone tends counts for all of you." : 'Everything done together, added up. Never a contest, and no one is counted on their own.'}</p>`;
-  if (hasTrees()) h += `<dl class="gv-stats gv-stats-wrap"><div><dt>Days Tended This Week</dt><dd>${T.weekDays}</dd></div><div><dt>Practices Together This Week</dt><dd>${T.togetherWk}</dd></div><div><dt>Parts Tended This Week</dt><dd>${T.parts} of 6</dd></div></dl>
+  if (hasTrees()) h += `<dl class="gv-stats gv-stats-wrap"><div><dt>Days Tended This Week</dt><dd>${T.weekDays}</dd></div><div><dt>Practices Together This Week</dt><dd>${T.togetherWk}</dd></div><div><dt>Parts Tended This Week</dt><dd>${T.parts} of ${TEND6.length}</dd></div></dl>
     <dl class="gv-stats gv-stats-wrap"><div><dt>Days Tended in All</dt><dd>${T.allDays}</dd></div><div><dt>Practices Together</dt><dd>${T.together}</dd></div><div><dt>Rings in the Grove</dt><dd>${T.rings}</dd></div></dl>
     <p class="muted">${T.shown ? `Counting ${famN(T.shown, 'tree', 'trees')} whose growth is shown here, and the practices you do together.` : 'Trees count here when their "Show my growth on The Grove" switch is on, and so do the practices you do together.'}</p>`;
   else h += `<dl class="gv-stats gv-stats-wrap"><div><dt>Practices Together This Week</dt><dd>${T.togetherWk}</dd></div><div><dt>Practices Together</dt><dd>${T.together}</dd></div><div><dt>Days Growing Together</dt><dd>${T.days}</dd></div></dl>`;
@@ -875,12 +891,12 @@ function viewTogether() {
   if (planItems.length) h += `<p class="gv-kicker">From ${esc(K.plan)}</p>` + planItems.map(p => { const it = plan.items.find(x => x.pid === p.id) || {}; return practiceCard(p, true, it.anchor ? `<p class="muted">When: ${esc(it.anchor)}</p>` : ''); }).join('');
   else if (feat) h += `<p class="gv-kicker">This week's theme: ${esc(T.themes[w] || '')}</p>` + practiceCard(feat, true);
   if (G.lockOn && !vaultOpen()) h += `<p class="muted">${icon('lock', 'gv-ic-inline')} Unlock the grove to see your plan's practices first. <button class="text-btn" data-act="unlock">Unlock</button></p>`;
-  h += `<div class="gv-chips"><button type="button" class="chip${!S.part ? ' on' : ''}" aria-pressed="${!S.part}" data-act="part" data-id="">All parts</button>${PARTS6.map(p => `<button type="button" class="chip${S.part === p.key ? ' on' : ''}" aria-pressed="${S.part === p.key}" data-act="part" data-id="${p.key}">${p.name}</button>`).join('')}</div>`;
+  h += `<div class="gv-chips"><button type="button" class="chip${!S.part ? ' on' : ''}" aria-pressed="${!S.part}" data-act="part" data-id="">All parts</button>${TEND6.map(p => `<button type="button" class="chip${S.part === p.key ? ' on' : ''}" aria-pressed="${S.part === p.key}" data-act="part" data-id="${p.key}">${p.name}</button>`).join('')}</div>`;
   h += switchHtml('joinfirst', G.joinFirst, 'Show Ways Everyone Can Join First', G.joinFirst ? 'On. Seated and gentle ways come first, with a way for everyone to join.' : 'Off. Turn it on to put seated and gentle ways first.');
   if (circleTags()) h += `<p class="muted">Practices that fit Who's in Our Circle come first, marked Fits Our Circle.</p>`;
-  PARTS6.filter(p => !S.part || S.part === p.key).forEach(p => {
+  TEND6.filter(p => !S.part || S.part === p.key).forEach(p => {
     const list = joinOrder(kindPractices(p.key)); if (!list.length) return;
-    h += `<section class="gv-partsec" style="--pc:${p.color}"><h3>${icon(p.key)}${p.name} <small>${p.sub}</small></h3>${list.map(x => practiceCard(x, false)).join('')}</section>`;
+    h += `<section class="gv-partsec" style="--pc:${p.color}"><h3>${icon(p.key)}${esc(gvLabel(p))}</h3>${list.map(x => practiceCard(x, false)).join('')}</section>`;
   });
   return h;
 }
@@ -1237,11 +1253,11 @@ const ART_WORDS = { s: 'Shared Strength', t: 'Steady', g: 'Growing Edge', u: 'Pa
 const ART_TEXT = { roots: 'What grounds us, and what holds us up when the storms come.', trunk: 'What we live for together, and what we build along the way.',
   bark: 'How we settle our thoughts and meet big feelings, together.', branches: 'How we reach toward each other, and toward the people around us.',
   leaves: 'Rest, food, movement, and play: how our bodies are doing.', fruit: 'What we look forward to, and what we give.' };
-function artParts(withText) { return PARTS6.map(p => ({ key: p.key, name: p.name, tag: p.sub, text: withText ? ART_TEXT[p.key] : '' })); }
+function artParts(withText) { return PARTS6.map(p => ({ key: p.key, name: gvLabel(p), tag: '', text: withText ? ART_TEXT[p.key] : '' })); }
 function artLevels(L) { const o = {}; PARTS6.forEach(p => { o[p.key] = ART_LV[(L || {})[p.key]] || 'u'; }); return o; }
 function resultScene(L) {
   if (!window.GGTreeArt) return '';
-  return `<div class="gv-rscene">${GGTreeArt.results(null, { app: 'grove', parts: artParts(), levels: artLevels(L), words: ART_WORDS, label: 'The grove painting, each part in light' })}</div>`;
+  return `<div class="gv-rscene">${GGTreeArt.results(null, { app: 'grove', plain: plainMode(), parts: artParts(), levels: artLevels(L), words: ART_WORDS, label: 'The grove painting, each part in light' })}</div>`;
 }
 function ideasHtml(part) {
   const list = joinOrder(kindPractices(part)).slice(0, 3); if (!list.length) return '';
@@ -1255,7 +1271,7 @@ function seasonsHtml() {
   const ring = W('seasons.ringLine', '{part} grew from {from} to {to}'), now = W('seasons.nowLine', '{part} is {level} this season');
   let h = `<div class="card gv-seasons"><h3>Our Seasons</h3>`;
   // Then and Now on the grove painting, with a growth ring for each full check-in (tap one to compare).
-  if (full.length && window.GGTreeArt) h += `<div class="gv-grow">${GGTreeArt.growth(null, { app: 'grove', parts: artParts(), words: ART_WORDS,
+  if (full.length && window.GGTreeArt) h += `<div class="gv-grow">${GGTreeArt.growth(null, { app: 'grove', plain: plainMode(), parts: artParts(), words: ART_WORDS,
     history: full.map(c => ({ date: String(c.date).slice(0, 10), levels: artLevels(levelsOf(c)) })),
     grewLine: 'Our {parts} grew since {date}.', steadyLine: 'Our grove held its shape since {date}.',
     oneLine: 'Our first ring is here. The next full check-in shows Then and Now.' })}</div>`;
@@ -1276,10 +1292,10 @@ const planWeek = p => p && p.start ? Math.floor(Math.max(0, between(p.start, tod
 function latestCheckin(full) { const v = V(); return v ? v.checkins.filter(c => !full || !c.quick).sort((a, b) => String(b.date).localeCompare(String(a.date)) || String(b.at).localeCompare(String(a.at)))[0] : null; }
 function startPlan(from) {
   const ci = latestCheckin(), L = ci ? levelsOf(ci) : {};
-  const edges = PARTS6.filter(p => L[p.key] === 'edge').map(p => p.key).slice(0, 2);
+  const edges = TEND6.filter(p => L[p.key] === 'edge').map(p => p.key).slice(0, 2);
   S.pd = from ? JSON.parse(JSON.stringify(from)) : { edges, items: [], youngest: '', strength: '', words: '', own: '', from: ci ? ci.id : '' };
-  S.pd.suggest = PARTS6.filter(p => L[p.key] === 'edge').map(p => p.key);
-  S.pd.strong = PARTS6.filter(p => L[p.key] === 'strength').map(p => p.key);
+  S.pd.suggest = TEND6.filter(p => L[p.key] === 'edge').map(p => p.key);
+  S.pd.strong = TEND6.filter(p => L[p.key] === 'strength').map(p => p.key);
   S.tab = 'plan'; render();
 }
 function viewPlan() {
@@ -1298,12 +1314,13 @@ function builderHtml() {
   const K = KW(), pd = S.pd, L2 = LEVERS();
   const step = (n, t, sub) => `<h3 class="gv-step"><span>${n}</span>${esc(t)}</h3>${sub ? `<p class="muted">${esc(sub)}</p>` : ''}`;
   let h = `<div class="section-head"><h2>${esc(K.plan)}</h2><p>${esc(W('plan.intro', 'About five minutes, together.'))}</p></div><div class="card gv-builder">`;
-  h += step(1, 'Pick One or Two Growing Edges', W('plan.stepEdges', '') + (pd.suggest.length ? ' Suggested from your check-in; any part can be chosen.' : ' Any part can be chosen.'));
-  h += `<div class="gv-chips">${PARTS6.map(p => `<button type="button" class="chip${pd.edges.includes(p.key) ? ' on' : ''}" aria-pressed="${pd.edges.includes(p.key)}" data-act="pdedge" data-id="${p.key}">${p.name}${pd.suggest.includes(p.key) ? ' (Suggested)' : ''}</button>`).join('')}</div>`;
+  h += step(1, 'Pick One or Two Growing Edges', W('plan.stepEdges', '') + (pd.suggest.length ? ' Suggested from your check-in; any of the four can be chosen.' : ' Any of the four can be chosen.'));
+  h += `<div class="gv-chips">${TEND6.map(p => `<button type="button" class="chip${pd.edges.includes(p.key) ? ' on' : ''}" aria-pressed="${pd.edges.includes(p.key)}" data-act="pdedge" data-id="${p.key}">${esc(gvLabel(p))}${pd.suggest.includes(p.key) ? ' (Suggested)' : ''}</button>`).join('')}</div>`;
+  h += `<p class="muted gv-grows">${esc(PARTS6.filter(p => !gvTends(p.key)).map(p => gvLabel(p)).join(' and '))}: grows from your tending. The check-in keeps asking about them.</p>`;
   h += step(2, 'Pick Two or Three Practices', W('plan.stepPractices', 'One that lightens the load, one that adds support, or one that looks at things a new way all help.'));
   if (!pd.edges.length) h += `<p class="muted">Pick a Growing Edge first.</p>`;
   pd.edges.forEach(k => { const p = PARTS6.find(x => x.key === k), list = joinOrder(kindPractices(k));
-    h += `<p class="lbl" style="--pc:${p.color}">${p.name}</p><div class="gv-picklist">${list.map(x => { const on = pd.items.some(i => i.pid === x.id), y = pv(x);
+    h += `<p class="lbl" style="--pc:${p.color}">${esc(gvLabel(p))}</p><div class="gv-picklist">${list.map(x => { const on = pd.items.some(i => i.pid === x.id), y = pv(x);
       return `<button type="button" class="gv-pickp${on ? ' on' : ''}" aria-pressed="${on}" data-act="pdprac" data-id="${esc(x.id)}"><b>${esc(y.name)}</b><span>${esc(y.text)}</span>${x.lever ? `<small>${esc(L2[x.lever] || '')}</small>` : ''}${fitsCircle(x) ? '<small>Fits Our Circle</small>' : ''}</button>`; }).join('')}</div>`; });
   if (pd.items.length) {
     h += step(3, 'Anchor Each Practice', W('plan.stepAnchor', 'Anchor each practice to a time you are already together. This is how routines stick.'));
@@ -1350,7 +1367,7 @@ function planHtml(p) {
   const K = KW(), wk = planWeek(p), v = V();
   const after = d => v.checkins.filter(c => c.date >= addDays(p.start, d));
   let h = `<div class="section-head"><h2>${esc(K.plan)}</h2><p>Started ${esc(longDate(p.start))}. Week ${Math.min(12, wk)} of 12.</p></div><div class="card gv-plan">`;
-  h += `<p><b>Growing:</b> ${p.edges.map(k => `<span class="gv-part" style="--pc:${(PARTS6.find(x => x.key === k) || {}).color}">${PNAME[k]}</span>`).join(' ')}</p>`;
+  h += `<p><b>Growing:</b> ${p.edges.map(k => `<span class="gv-part" style="--pc:${(PARTS6.find(x => x.key === k) || {}).color}">${esc(gvLabel(k))}</span>`).join(' ')}</p>`;
   const rows = p.items.map(it => ({ x: TP[it.pid], anchor: it.anchor, tag: '' })).filter(r => r.x);
   if (p.youngest && TP[p.youngest]) rows.push({ x: TP[p.youngest], anchor: '', tag: 'The Youngest’s Choice' });
   if (p.strength && TP[p.strength]) rows.push({ x: TP[p.strength], anchor: '', tag: 'Keeping a Shared Strength Going' });
@@ -1520,7 +1537,7 @@ function viewEarlier() {
 /* ---------- How it works ---------- */
 function viewHow() {
   return `<div class="section-head"><h2>How The Grove works</h2><p>Where our trees grow together.</p></div>
-  ${window.GGTreeArt ? `<div class="card gv-howart"><h3>The Six Parts</h3>${GGTreeArt.howItWorks(null, { app: 'grove', parts: artParts(true), label: 'The grove painting with six glowing parts to tap' })}</div>` : ''}
+  ${window.GGTreeArt ? `<div class="card gv-howart"><h3>Tend Four, Grow Two</h3><p class="muted">Together we tend four parts: ${esc(TEND6.map(p => gvLabel(p)).join(', '))}. Meaning and hope grow from that tending. ${GV_GW ? esc(GV_GW.PROMISE) : ''}</p>${GGTreeArt.howItWorks(null, { app: 'grove', plain: plainMode(), parts: artParts(true), label: 'The grove painting with glowing parts to tap' })}</div>` : ''}
   <div class="card gv-how">
     <h3>Your tree is yours. The grove is ours.</h3>
     <p>Everyone tends their own tree in their own app: <a class="text-link" href="/oak/">Oak</a> for grown-ups, <a class="text-link" href="/birch/">Birch</a> for young adults, <a class="text-link" href="/sequoia/">Sequoia</a> for older adults, <a class="text-link" href="/pine/">Pine</a> for high schoolers, <a class="text-link" href="/aspen/">Aspen</a> for middle schoolers, <a class="text-link" href="/maple/">Maple</a> for kids, and <a class="text-link" href="/willow/">Willow</a> for the person in hospice and the people who love them. Personal check-ins, practices, and journals live there, private to each person. Each grown-up can also tend their tree inside <a class="text-link" href="/the-grounded-way.html">The Grounded Way</a>, one personal app for the whole day.</p>
@@ -1546,7 +1563,7 @@ function viewHow() {
     <h3>When Life Changes Together</h3>
     <p>Guides for the changes a family, class, faith community, group, or team goes through together: a new baby or a move, illness and hospice, a loss, scary news, a hard day at school, a leader leaving, a hard season at work. Each has a view For the Group and a view For the Leader, two short videos, Together practices, and links to the guides in each person's own tree app. Picked for Us puts first the guides that fit what your grove shared in its check-in and What's Changed Lately.</p>
     <h3>Learn Together</h3>
-    <p>Learn has short videos for every grove: Start Here, Using The Grove, The Six Parts, Together, and Leading a Grove for the people who lead one. Finishing Using The Grove, The Six Parts, Together, or Leading a Grove brings a Certificate of Completion. Do This Together has practices to do side by side, For Families, For Classes, For Faith Communities and Groups, and For Teams. A Faith version plays only in a grove that chose Faith words.</p>
+    <p>Learn has short videos for every grove: Start Here, Using The Grove, Tend Four, Grow Two, Together, and Leading a Grove for the people who lead one. Finishing Using The Grove, Tend Four, Grow Two, Together, or Leading a Grove brings a Certificate of Completion. Do This Together has practices to do side by side, For Families, For Classes, For Faith Communities and Groups, and For Teams. A Faith version plays only in a grove that chose Faith words.</p>
     <h3>Coming later</h3>
     <p>Groves that stay in step across phones on their own, after careful review.</p>
   </div>`;
@@ -1871,7 +1888,7 @@ function gvPlan(from) {
   const edgesQ = { id: 'edges', type: 'multi', aside: true, label: 'Growing Edges', eb: 'Step 1', part: '', text: 'Pick one or two Growing Edges.', say: false, lead: KP.edges || null, min: 1, max: 2,
     minMsg: 'Pick one Growing Edge to go on.', maxMsg: 'One or two is plenty. Tap one to change it.',
     help: pd.suggest.length ? 'Suggested from our check-in: ' + pd.suggest.map(k => PNAME[k]).join(', ') + '. Any part can be chosen.' : 'Any part can be chosen.',
-    options: PARTS6.map(p => ({ v: p.key, label: p.name + (pd.suggest.includes(p.key) ? ' (Suggested)' : inPlan.includes(p.key) ? ' (In Our Plan)' : ''), sub: p.sub })) };
+    options: TEND6.map(p => ({ v: p.key, label: p.name + (pd.suggest.includes(p.key) ? ' (Suggested)' : inPlan.includes(p.key) ? ' (In Our Plan)' : ''), sub: p.sub })) };
   let done = false;
   const toClassic = (edges, r) => { if (S.pd !== pd) return; if (edges) { pd.edges = edges.slice(0, 2); pd.items = pd.items.filter(x => TP[x.pid] && pd.edges.includes(TP[x.pid].part)); } if (r) applyPlan(pd, r); S.tab = 'plan'; render(); const a = $('#app'); if (a) a.scrollIntoView(); };
   // stage one: the edges (the plan's open lines lead in)

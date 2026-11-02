@@ -5,9 +5,13 @@
    Edit questions here, not in index.html.
 
    The Grounded tree standard, version 1:
-   - Six parts in one order: Roots (What grounds you), Trunk (Purpose),
-     Bark (Mind and feelings), Branches (Relationships), Leaves (Body),
-     Fruit (Hope). Code names match the tree part: roots, trunk, bark,
+   - Six parts in one order, each label pairing the tree word with the
+     plain word from shared/gg-parts.js (GWG BLD 907): Roots: Spirit (Roots:
+     what grounds you in Plain wording), Trunk: Meaning, Bark: Mind,
+     Branches: Relationships, Leaves: Body, Fruit: Hope. Tend four, grow
+     two: Roots, Bark, Leaves, and Branches get practices; Trunk and Fruit
+     keep their questions here and grow from that tending. Code names
+     match the tree part: roots, trunk, bark,
      branches, leaves, fruit.
    - The number of questions per part fits the stage: Maple 4, Aspen 6,
      Oak 8, written for each grade or life stage. Aspen asks 6.

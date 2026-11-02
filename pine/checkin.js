@@ -6,9 +6,13 @@
 
    Pine is the tree for high schoolers, grades 9 to 12. It follows the
    Grounded tree standard, version 1, the same as Oak and Sequoia:
-   - Six parts in one order: Roots (What grounds you), Trunk (Purpose),
-     Bark (Mind and feelings), Branches (Relationships), Leaves (Body),
-     Fruit (Hope). Code names match the tree part: roots, trunk, bark,
+   - Six parts in one order, each label pairing the tree word with the
+     plain word from shared/gg-parts.js (GWG BLD 907): Roots: Spirit (Roots:
+     what grounds you in Plain wording), Trunk: Meaning, Bark: Mind,
+     Branches: Relationships, Leaves: Body, Fruit: Hope. Tend four, grow
+     two: Roots, Bark, Leaves, and Branches get practices; Trunk and Fruit
+     keep their questions here and grow from that tending. Code names
+     match the tree part: roots, trunk, bark,
      branches, leaves, fruit. PARTS holds Pine's own words for each.
    - Seven questions per part, 42 in all (Aspen asks 6, Oak 8).
    - Every question has a tip for the person sitting with the teen (a
@@ -121,12 +125,13 @@ const STEMS = {
   standard: 'In the past two weeks, how often have you...'
 };
 
-// Pine's own words for the six parts. line is the teen's one-line meaning;
+// Pine's own words for the parts of the tree. sub is the plain word from
+// shared/gg-parts.js (plainSub under Plain wording, GWG BLD 907). line is the teen's one-line meaning;
 // plainLine replaces it under Plain wording where it differs.
 const PARTS = [
-  { key: 'roots', name: 'Roots', sub: 'What grounds you', line: 'Peace, faith, and what holds you steady', plainLine: 'Peace, values, and what holds you steady' },
-  { key: 'trunk', name: 'Trunk', sub: 'Purpose', line: 'What you care about and where you are headed' },
-  { key: 'bark', name: 'Bark', sub: 'Mind and feelings', line: 'Handling stress, mistakes, and big feelings' },
+  { key: 'roots', name: 'Roots', sub: 'Spirit', plainSub: 'What grounds you', line: 'Peace, faith, and what holds you steady', plainLine: 'Peace, values, and what holds you steady' },
+  { key: 'trunk', name: 'Trunk', sub: 'Meaning', line: 'What you care about and where you are headed' },
+  { key: 'bark', name: 'Bark', sub: 'Mind', line: 'Handling stress, mistakes, and big feelings' },
   { key: 'branches', name: 'Branches', sub: 'Relationships', line: 'Friends, family, and the adults in your corner' },
   { key: 'leaves', name: 'Leaves', sub: 'Body', line: 'Move, Rest, and Nourish' },
   { key: 'fruit', name: 'Fruit', sub: 'Hope', line: 'What you look forward to and believe is possible' }

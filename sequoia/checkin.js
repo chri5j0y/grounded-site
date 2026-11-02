@@ -6,9 +6,13 @@
    Sequoia is the tree for older adults: built for 60 and up, and anyone
    55 or older may choose it. It follows the Grounded tree standard,
    version 1, the same as Oak:
-   - Six parts in one order: Roots (What grounds you), Trunk (Purpose),
-     Bark (Mind and feelings), Branches (Relationships), Leaves (Body),
-     Fruit (Hope). Code names match the tree part: roots, trunk, bark,
+   - Six parts in one order, each label pairing the tree word with the
+     plain word from shared/gg-parts.js (GWG BLD 907): Roots: Spirit (Roots:
+     what grounds you in Plain wording), Trunk: Meaning, Bark: Mind,
+     Branches: Relationships, Leaves: Body, Fruit: Hope. Tend four, grow
+     two: Roots, Bark, Leaves, and Branches get practices; Trunk and Fruit
+     keep their questions here and grow from that tending. Code names
+     match the tree part: roots, trunk, bark,
      branches, leaves, fruit.
    - Eight questions per part, the same count as Oak.
    - Every question has a tip for the guide and a short "why" line a
