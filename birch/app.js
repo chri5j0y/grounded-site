@@ -650,7 +650,7 @@ function gdReadAll() {
 function gdRhythm(then) {
   if (window.GG_RHYTHM) { then(); return; }
   let done = false; const go = () => { if (!done) { done = true; then(); } };
-  const s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b885'; s.onload = go; s.onerror = go; document.head.appendChild(s);
+  const s = document.createElement('script'); s.src = '/shared/practice-rhythm.js?v=b907'; s.onload = go; s.onerror = go; document.head.appendChild(s);
 }
 function startGuidedPlan() {
   showView('client-growthplan');   // builds and fills the classic builder behind the player

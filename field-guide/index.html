@@ -662,18 +662,18 @@ body.cd-noscroll{overflow:hidden;}
 </div>
 <div id="runner" class="runner hide" role="dialog" aria-modal="true" aria-label="Session"></div>
 <div id="print-root" aria-hidden="true"></div>
-<script src="../shared/gg-app.js?v=b898"></script>
+<script src="../shared/gg-app.js?v=b907"></script>
 <script src="../shared/gg-backup.js?v=b782"></script>
 <script src="../shared/gg-filelock.js?v=b766"></script>
 <script src="../shared/gg-pdf.js?v=b803"></script>
 <script src="../shared/gg-bridge.js?v=b782"></script>
 <script src="../read.js?v=b813"></script>
-<script src="../shared/gg-sources.js?v=b906"></script>
-<script src="../shared/gg-learn.js?v=b906"></script>
+<script src="../shared/gg-sources.js?v=b907"></script>
+<script src="../shared/gg-learn.js?v=b907"></script>
 <script src="../shared/gg-parts.js?v=b907"></script>
-<script src="../shared/gg-print.js?v=b902"></script>
-<script src="../shared/grove-scene.js?v=b862"></script>
-<script src="../shared/gg-grove-row.js?v=b770"></script>
+<script src="../shared/gg-print.js?v=b907"></script>
+<script src="../shared/grove-scene.js?v=b907"></script>
+<script src="../shared/gg-grove-row.js?v=b907"></script>
 <script src="qr.js?v=b862"></script>
 <script src="share.js?v=b887"></script>
 <script src="../shared/gg-listen.js?v=b817"></script>
@@ -688,13 +688,13 @@ body.cd-noscroll{overflow:hidden;}
 <script src="runner.js?v=b836"></script>
 <script src="grovevisit.js?v=b887"></script>
 <script src="heartwood.js?v=b788"></script>
-<script src="../shared/gg-stories.js?v=b906"></script>
+<script src="../shared/gg-stories.js?v=b907"></script>
 <script src="moves.js?v=b903"></script>
 <script src="stage.js?v=b899"></script>
 <script src="coach.js?v=b898"></script>
 <script src="../shared/gg-scale.js?v=b889"></script>
 <script src="../shared/gg-holidays.js?v=b896"></script>
-<script src="health.js?v=b906"></script>
+<script src="health.js?v=b907"></script>
 <script src="vault.js?v=b887"></script>
 <script src="offline.js?v=b798"></script>
 <script>
@@ -2842,7 +2842,7 @@ function certAct(a, v){
   return false;
 }
 // Certificates, guide posters, and flyers (shared/gg-print.js), loaded the first time one is asked for.
-function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b902'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
+function fgPrint(){ return new Promise(ok => { if (window.GGPrint) return ok(); const s = document.createElement('script'); s.src = '../shared/gg-print.js?v=b907'; s.onload = s.onerror = () => ok(); document.head.appendChild(s); }); }
 // The certificate and two posters for a finished Guide training. tree: maple, aspen, pine, birch, oak, sequoia, willow.
 // GWG BLD 797: printed through the Certificates list, in the Certified Grounded Guide wording.
 function fgGuideCert(tree, st, signed, M, guide){
@@ -8590,7 +8590,7 @@ let WC = null, WC_WAIT = null, WC_FAIL = false;
 function wlLoad(){
   if (WC || WC_WAIT) return;
   WC_FAIL = false;
-  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b890', '../willow/practices.js?v=b862'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  WC_WAIT = Promise.all(['../willow/checkin.js', '../willow/faith.js?v=b890', '../willow/practices.js?v=b907'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const C = run(a).WILLOW_CHECKIN, F = run(b).WILLOW_FAITH, P = run(c).WILLOW_PRACTICES;
@@ -9898,7 +9898,7 @@ let HD = null, HD_WAIT = null, HD_FAIL = false;
 function htLoad(){
   if (HD || HD_WAIT) return;
   HD_FAIL = false;
-  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b902', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b888', '../pine/guides.js?v=b888', '../birch/guides.js?v=b902'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
+  HD_WAIT = Promise.all(['../maple/guides.js?v=b888', '../aspen/guides.js?v=b888', '../oak/guides.js?v=b907', '../willow/guides.js?v=b887', '../sequoia/guides.js?v=b907', '../pine/guides.js?v=b907', '../birch/guides.js?v=b907'].map(u => fetch(u, {cache:'no-cache'}).then(r => { if (!r.ok) throw 0; return r.text(); })))
     .then(([a, b, c, d, e, f, g]) => {
       const run = src => { const w = {}; new Function('window', src)(w); return w; };
       const sp = run(a).MAPLE_GUIDES, sa = run(b).ASPEN_GUIDES, st = run(c).OAK_GUIDES;

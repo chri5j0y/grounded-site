@@ -371,7 +371,7 @@
     });
   }
   /* The tree's own growth plan library, for one quiet line under For You Today. */
-  var PRAC = { oak: ['/oak/practices.js?v=b885', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b888', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b885', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b888', 'PINE_PRACTICES'] };
+  var PRAC = { oak: ['/oak/practices.js?v=b907', 'OAK_PRACTICES'], birch: ['/birch/practices.js?v=b907', 'BIRCH_PRACTICES'], sequoia: ['/sequoia/practices.js?v=b907', 'SEQUOIA_PRACTICES'], pine: ['/pine/practices.js?v=b907', 'PINE_PRACTICES'] };
   var PRAC_SKIP = /^(Prayer|Worship|Tithe|Scripture|Faith|Faith Community|Chakras|Medicine|See the Doctor Early|My Medicines|Get Counseling|Talk With a Therapist)$/i;
 
   /* ---------- state ---------- */
@@ -1754,8 +1754,8 @@
   function fillFruit() { var el = document.getElementById('hm-fruit'); if (!el || el.firstChild) return; try { window.GGHealth.render(el, 'fruit', { bare: true }); } catch (e) { el.remove(); } }
 
   /* ---------- Library: search and the shelves, with real counts ---------- */
-  var LEARN_SRC = '/shared/learn-lessons.js?v=b902';
-  var GUIDES = { oak: ['/oak/guides.js?v=b902', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b902', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b888', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b888', 'PINE_GUIDES'] };
+  var LEARN_SRC = '/shared/learn-lessons.js?v=b907';
+  var GUIDES = { oak: ['/oak/guides.js?v=b907', 'OAK_GUIDES'], birch: ['/birch/guides.js?v=b907', 'BIRCH_GUIDES'], sequoia: ['/sequoia/guides.js?v=b907', 'SEQUOIA_GUIDES'], pine: ['/pine/guides.js?v=b907', 'PINE_GUIDES'] };
   var LIB = { load: null, guidesFor: null };
   function guidesOf(tree) { var g = GUIDES[tree]; return g && window[g[1]] && Array.isArray(window[g[1]].topics) ? window[g[1]].topics : null; }
   function learnOf(tree) {
