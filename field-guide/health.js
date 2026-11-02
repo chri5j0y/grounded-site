@@ -712,7 +712,7 @@ function playLib(){
     + block('Play Any Meditation', md.map(x => row('medid:' + x.id, x.title, (x.day || '') + (x.focus ? '. ' + x.focus : ''))));
 }
 function ideasBlk(t, list, key){ return arr(list).length ? `<details class="hj-doc"${S.open['id:' + key] ? ' open' : ''} data-hjd="id:${key}"><summary><span>${esc(t)}</span></summary><div class="hj-body"><ul class="hj-ideas">${arr(list).map((x, i) => `<li><b>${esc(x.name)}</b>${x.mins ? ` <small>${esc(x.mins)} min</small>` : ''}<br><span>${esc(x.how || '')}</span>${nOk(x.nut) ? `<span class="hj-gi hj-nl">${nLine(x.nut)}${x.nut.per ? ' (' + esc(x.nut.per) + ')' : ''}</span>` : ''}
-    ${arr(x.shop).length ? `<span class="hj-gi">Buy: ${arr(x.shop).map(g => esc(g.name) + (g.amt ? ' (' + esc(g.amt) + ')' : '')).join(', ')}</span>` : ''}${x.from ? `<span class="hj-gi">From prep: ${esc(x.from)}</span>` : ''}${x.pack ? `<span class="hj-gi">Pack it: ${esc(x.pack)}</span>` : ''}${arr(x.steps).length ? `<button type="button" class="btn btn-line btn-sm hj-ideago" data-hja="idea" data-hjv="${key}|${i}">Guide Me</button>` : ''}
+    ${arr(x.shop).length ? `<span class="hj-gi">Buy: ${arr(x.shop).map(g => esc(g.name) + (g.amt ? ' (' + esc(g.amt) + ')' : '')).join(', ')}</span>` : ''}${x.from ? `<span class="hj-gi">From prep: ${esc(x.from)}</span>` : ''}${x.pack ? `<span class="hj-gi">Pack it: ${esc(x.pack)}</span>` : ''}${arr(x.steps).length ? `<button type="button" class="btn btn-line btn-sm hj-ideago" data-hja="idea" data-hjv="${key}|${i}">Grounded Cooking</button>` : ''}
     ${arr(x.shop).length ? `<button type="button" class="btn btn-line btn-sm hj-ggadd" data-hja="ggadd" data-hjv="${key}|${i}">Add to Shopping List</button>` : ''}</li>`).join('')}</ul></div></details>` : ''; }
 function vWeek(){
   if (S.wkView === 'month') return ownViewTabs('month') + vMonth();   // BLD 896: the Month beside the Week
@@ -870,7 +870,7 @@ function vOv(){
   } else if (o.k === 'cook' || o.k === 'prep'){
     const x = o.data, steps = arr(x.steps), dn = o.dn = o.dn || {}, tdone = o.tdone || {};
     const nDone = steps.filter((s, i) => dn[i]).length, pct = steps.length ? Math.round(100 * nDone / steps.length) : 0;
-    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Guide Me, Step by Step</button>${mmOvBtns(o)}
+    body = `${top(o.title, o.sub, pct)}${stagePanel('cook', {fig: window.GGStage ? '' : POT, small: true})}<div class="hj-ovb hj-left"><button type="button" class="btn btn-gold hj-go" data-hja="guide" style="margin-bottom:12px">Grounded Cooking</button>${mmOvBtns(o)}
       ${x.prepped ? `<p class="hj-note"><b>Prepped:</b> ${esc(x.prepped)}</p>` : ''}${o.base ? servesRow(o) : ''}
       ${o.k === 'cook' && nOk(x.nut) ? `<details class="hj-doc"><summary><span>Nutrition per Serving</span></summary><div class="hj-body">${nTable(x.nut, x.nutHeart)}</div></details>` : ''}
       ${arr(x.ingredients).length ? `<details class="hj-doc" open><summary><span>Ingredients</span></summary><div class="hj-body"><ul class="hj-ing">${arr(x.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul></div></details>` : ''}
@@ -2317,7 +2317,7 @@ function vTodayT(lib){
   // Body: movement, Today's Plate, tonight's dinner, prep and shopping, supplements, daily checks.
   const body = [], mind = [], spirit = [], people = [];
   const cardFor = x => { tally(partOf(x), x.done); const mark = x.k === 'mark';
-    return planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: x.kick, title: x.title, sub: x.sub, btn: mark ? '' : x.k === 'cook' ? 'Guide Me' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, mark ? x.btn : x.k === 'cook' ? 'Cooked' : 'Done')}); };
+    return planCard({cls: ACC[x.k], done: x.done, scene: SCN[x.k], hour: x.hour, time: x.kick, title: x.title, sub: x.sub, btn: mark ? '' : x.k === 'cook' ? 'Grounded Cooking' : x.btn, bv: x.key, ck: tck('toggle', x.key, x.done, mark ? x.btn : x.k === 'cook' ? 'Cooked' : 'Done')}); };
   if (U('move')){ const mv = ag.filter(x => partOf(x) === 'move'); mv.forEach(x => body.push(cardFor(x)));
     if (!mv.length && !kit){ tally('move', c.move); body.push(`<div class="tn-card tn-edge a-move"><div class="tn-hd">${badge('move')}<div><div class="tn-k">Movement</div><div class="tn-sub">A rest day on the plan. Move in a way that feels good.</div></div></div><div class="tn-list">${tck('check', 'move', c.move, 'Moved with purpose', PUB() ? 'A walk, a stretch, fresh air' : 'A walk, the dog, fresh air')}</div></div>`); } }
   if (U('food')){ const pl = vPlate('today'); if (pl){ tally('food', arr(day.eat).length); body.push(pl); }
@@ -2371,8 +2371,8 @@ function vKitchen(){
   const d = new Date(), fw = foodWeek(d), L = letter(fw), din = (APP() || {}).dinners || {}, w = (din.weeks || {})[L] || {}, tn = dinnerFor(d), log = H().log[today()] || {};
   const nut = x => nOk(x.nutHeart) && !KIT() ? nSf(x.nutHeart) + ' on the heart-health plate' : nSf(x.nut);
   const feat = tn ? (() => { const key = 'cook:' + tn.wk + ':' + tn.id, on = !!log[key];
-    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene">${scene('cook', Math.max(17.8, new Date().getHours()), 400, 200)}</div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn), 'Guided step by step'].filter(Boolean).map(esc).join(' · ')}</div>
-      ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Guide Me</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
+    return `<article class="tn-card tn-feature a-kitchen${on ? ' done' : ''}"><div class="tn-fscene">${scene('cook', Math.max(17.8, new Date().getHours()), 400, 200)}</div><div class="body"><div class="tn-time">Tonight${tn.mins ? ' · ' + esc(tn.mins) + ' min' : ''}</div><h3>${esc(tn.name)}</h3><div class="tn-meta">${[nut(tn)].filter(Boolean).map(esc).join(' · ')}</div>
+      ${tn.prepped ? `<p class="tn-sub">${esc(tn.prepped)}</p>` : ''}<p class="tn-sub">Step by step, with a voice to guide you.</p><div class="tn-acts"><button type="button" class="tn-btn sm" data-hja="go" data-hjv="${esc(key)}">${ic('play')}Grounded Cooking</button>${tck('toggle', key, on, 'Cooked')}</div></div></article>`; })() : '';
   const rest = arr(w.dinners).filter(x => !tn || x.id !== tn.id);
   return `<div class="tn-sec a-kitchen">${secHead('kitchen', 'a-kitchen', 'Kitchen', `Food Week ${esc(L)}. Dinners guided step by step.`)}${kitTabs('kitchen')}
     <div class="tn-kgrid">${feat}${rest.map(x => `<button type="button" class="tn-card tn-lift tn-kc" data-hja="cook" data-hjv="${esc(L + '|' + x.id)}"><span class="ill">${scene('bowl', 12, 96, 96)}</span><span class="tx"><span class="tn-time">${esc(DOWL[DOW.indexOf(x.day)] || x.day || '')}${x.mins ? ' · ' + esc(x.mins) + ' min' : ''}</span><span class="h3">${esc(x.name)}</span><span class="tn-meta">${esc(nut(x))}</span></span></button>`).join('')}</div>
@@ -3468,7 +3468,7 @@ function vMonth(){
   if (sx.move) det.push(line('m-move', 'Move', sx.move.title + (sx.move.done ? ', done' : ''), go(sx.move.key, 'Start')));
   if (sx.med) det.push(line('m-move', 'Meditation', sx.med.title + (sx.med.done ? ', done' : ''), go(sx.med.key, 'Begin')));
   if (sx.dinner) det.push(line('m-food', 'Dinner', sx.dinner.title + (sx.dinner.done ? ', cooked' : ''), go(sx.dinner.key, 'Cook It')));
-  arr(sx.menu).forEach(m => det.push(line('m-food', m.meal + ' · My Menu', m.title + (m.done ? ', done' : ''), go(m.key, 'Guide Me'))));
+  arr(sx.menu).forEach(m => det.push(line('m-food', m.meal + ' · My Menu', m.title + (m.done ? ', done' : ''), go(m.key, 'Grounded Cooking'))));
   sx.prep.forEach(p => det.push(line('m-prep', 'Prep', p.title, go(p.key, 'Open'))));
   sx.hol.filter(h => h.prep).forEach(h => det.push(line('m-prep', 'Holiday prep', h.title, go(h.key, 'Open'))));
   if (sx.shop) det.push(line('m-shop', 'Shopping', sx.shop.title + ' · ' + sx.shop.n + (sx.shop.n === 1 ? ' item' : ' items') + (sx.shop.own ? ', ' + sx.shop.own + ' of your own' : ''), go(sx.shop.key, 'Open the List')));
@@ -4748,7 +4748,7 @@ function holAgenda(d){
     if (G.buyDate(id, p.date) === k) out.push({key: 'hol:' + id + ':shop', k: 'hol', v: id, hour: 9.5, kick: 'Shopping day', title: 'Shop for ' + s.name, sub: 'Everything for ' + s.name + ' is on your Shopping List, marked ' + s.name + '.', btn: 'Open the List', hol: id});
     G.tasks(id, p.date, p.pick).forEach(t => { if (t.date !== k) return;
       out.push({key: 'hol:' + id + ':' + t.i, k: 'hol', v: id, hour: t.daysBefore ? 16 : 9 + t.i / 100, kick: t.daysBefore ? s.name + ' prep' : s.name, title: t.title,
-        sub: (t.mins ? 'About ' + t.mins + ' minutes. ' : '') + (t.steps.length ? 'A calm voice guides each step.' : ''), btn: t.steps.length ? 'Guide Me' : 'Done', hol: id}); }); });
+        sub: (t.mins ? 'About ' + t.mins + ' minutes. ' : '') + (t.steps.length ? 'A calm voice guides each step.' : ''), btn: t.steps.length ? 'Grounded Cooking' : 'Done', hol: id}); }); });
   return out;
 }
 function holWeekDay(d){ return holAgenda(d).map(x => ({key: x.key, title: x.title, set: (holGet(x.v) || {}).name || '', shop: /:shop$/.test(x.key), done: isDone(d, x.key)})); }
@@ -4827,13 +4827,13 @@ function vHolSet(G, s){
   const tasks = planned ? G.tasks(id, p.date, p.pick) : [], buy = planned ? G.buyDate(id, p.date) : '';
   const plan = planned ? `<div class="tn-card a-kitchen hj-holplan"><div class="tn-k">Set for ${esc(holDay(p.date))} · for ${N}${s.choose && p.pick ? ' · ' + esc((s.menu.find(m => m.id === p.pick) || {}).name || '') : ''}</div><p class="tn-sub">${esc(s.name + ' is ' + G.away(p.date, today()) + '.')}</p>
     <ol class="hj-holtl">${[{date: buy, i: -1}].concat(tasks).sort((x, y) => x.date < y.date ? -1 : x.date > y.date ? 1 : x.i - y.i).map(t => t.i < 0 ? `<li><b>${esc(holShort(buy))}</b><span>Shop: ${G.shop(id, p.guests, p.pick).length} items join Shop for Week ${letter(holWeek(buy))}, marked ${esc(s.name)}.</span><button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:shop">Open the List</button></li>`
-      : `<li><b>${esc(holShort(t.date))}</b><span>${esc(t.title)}${t.mins ? ' · about ' + t.mins + ' min' : ''}</span>${t.steps.length ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:${t.i}">Guide Me</button>` : ''}</li>`).join('')}</ol>
+      : `<li><b>${esc(holShort(t.date))}</b><span>${esc(t.title)}${t.mins ? ' · about ' + t.mins + ' min' : ''}</span>${t.steps.length ? `<button type="button" class="linkbtn" data-hja="go" data-hjv="hol:${esc(id)}:${t.i}">Grounded Cooking</button>` : ''}</li>`).join('')}</ol>
     <div class="tn-acts"><button type="button" class="tn-btn sm line" data-hja="holedit" data-hjv="${esc(id)}">${ic('clock')}Change the Day or Guests</button><button type="button" class="linkbtn" data-hja="holclear" data-hjv="${esc(id)}">${S.holSure === id ? 'Tap Again to Take It Off My Calendar' : 'Take It Off My Calendar'}</button></div></div>` : '';
   const menu = `<div class="tn-card a-kitchen"><div class="tn-k">The Menu</div><div class="hj-holmenu">${s.menu.map(m => { const r = G.recipe(id, m.id, N);
     return `<details class="hj-doc"${S.open['hol:' + id + ':' + m.id] ? ' open' : ''} data-hjd="hol:${esc(id)}:${esc(m.id)}"><summary><span>${esc(m.name)}<small>${esc([m.course ? m.course[0].toUpperCase() + m.course.slice(1) : '', m.mins ? m.mins + ' min' : ''].filter(Boolean).join(' · '))}</small></span></summary><div class="hj-body">
       ${m.makeAhead ? `<p class="hj-sub"><b>Make ahead:</b> ${esc(m.makeAhead)}</p>` : ''}${m.card ? `<div class="hj-holcard"><b>Reheat Card</b><p>${esc(m.card)}</p><div class="row"><button type="button" class="btn btn-line btn-sm" data-hja="holcard" data-hjv="${esc(id + '|' + m.id)}">Share the Card</button><button type="button" class="btn btn-line btn-sm" data-hja="holcardprint" data-hjv="${esc(id + '|' + m.id)}">Print the Card</button></div></div>` : ''}${m.note ? `<p class="hj-sub">${esc(m.note)}</p>` : ''}<ul class="hj-ing">${arr(r && r.ingredients).map(g => `<li>${esc(g)}</li>`).join('')}</ul>
       <ol class="hj-steps hj-holsteps">${arr(m.steps).map(x => `<li><div>${esc(x.say)}</div></li>`).join('')}</ol></div></details>
-      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Guide Me: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}</div>`; }).join('')}</div></div>`;
+      <div class="tn-acts hj-holgo"><button type="button" class="tn-btn sm line" data-hja="go" data-hjv="holrec:${esc(id)}:${esc(m.id)}">${ic('play')}Grounded Cooking: ${esc(m.name)}</button>${mmHolBtn(id, m.id)}</div>`; }).join('')}</div></div>`;
   const tips = arr(s.tips).length ? `<div class="tn-card"><div class="tn-k">For a Calm, Healthy Day</div><ul class="hj-ing">${s.tips.map(x => `<li>${esc(x)}</li>`).join('')}</ul></div>` : '';
   return `<div class="row" style="margin:0 0 12px"><button type="button" class="btn btn-line btn-sm" data-hja="holall">Every Holiday Set</button></div>
     <div class="tn-card a-kitchen hj-holtop"><div class="tn-k">${esc(G.whenText(id))}</div><h3>${esc(s.name)}</h3><p class="tn-sub">${esc(s.lead)}</p>${s.note ? `<p class="tn-sub">${esc(s.note)}</p>` : ''}</div>
@@ -5034,13 +5034,13 @@ function mmFor(x){ return x && x.mmx && x.mmx.for ? (x.for ? x.for + ', ' + x.mm
 const mmArt = e => { const m = e.meal === 'extra' ? ((mmRecipe(e.ref) || {}).meal || 'extra') : e.meal; return m === 'lunch' ? 'meal-lunch-sq' : m === 'breakfast' || m === 'snack' ? 'weekly-batch-sq' : m === 'party' ? 'kitchen-headstart-sq' : m === 'drink' ? 'tend-people' : m === 'sauce' ? 'prep-together-sq' : dinnerArtName({name: e.name}) || 'todays-plate-sq'; };
 const mmSub = e => (e.swap ? 'Swapped in for this day' : 'From My Menu') + (e.mins ? ', ' + e.mins + ' minutes' : '') + ', for ' + e.serves + '.';
 function mmAgenda(d){ if (!H() || !U('food')) return []; const k = ymd(d);
-  return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Guide Me', did: true})); }
+  return MENU().items.filter(e => e.date === k).map(e => ({key: 'menu:' + e.id, k: 'menu', v: e.id, mm: e, hour: MM_HOUR[e.meal] || 15.5, kick: MM_NAME[e.meal] || 'Extra', title: e.name, sub: mmSub(e), btn: 'Grounded Cooking', did: true})); }
 const mmDayList = d => mmAgenda(d).map(x => ({key: x.key, id: x.v, title: x.title, meal: x.kick, done: isDone(d, x.key), swap: !!x.mm.swap}));
 function mmPills(d){ return mmDayList(d).map(x => `<button type="button" class="hj-pill food hj-mmp" data-hja="go" data-hjv="${esc(x.key)}">${esc(x.title)} <small>${esc(x.meal)}${x.done ? ', done' : ''}</small></button>`).join(''); }
 function mmToday(date){
   const out = apiToday(date); if (!Array.isArray(out) || !mmReady() || !U('food')) return out; const d = dayOf(date), d1 = addD(d, 1), tn = dinnerFor(d1);
   const L = out.filter(x => !(/^idea:lunches:/.test(x.key) && mmSwapOf(d, x.key)) && !(/^head:/.test(x.key) && tn && mmSwapOf(d1, 'cook:' + tn.wk + ':' + tn.id)));
-  mmAgenda(d).forEach(x => L.push({key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: 'Guide Me', done: isDone(d, x.key), tint: x.mm.meal === 'dinner' ? TINT.cook : TINT.meals, kind: x.mm.meal === 'dinner' ? 'cook' : 'meal', image: WAY(mmArt(x.mm)), menu: x.v}));
+  mmAgenda(d).forEach(x => L.push({key: x.key, when: x.kick, hour: x.hour, title: x.title, sub: x.sub, btn: 'Grounded Cooking', done: isDone(d, x.key), tint: x.mm.meal === 'dinner' ? TINT.cook : TINT.meals, kind: x.mm.meal === 'dinner' ? 'cook' : 'meal', image: WAY(mmArt(x.mm)), menu: x.v}));
   return L.map((x, i) => [x, i]).sort((a, b) => (a[0].hour - b[0].hour) || (a[1] - b[1])).map(x => x[0]);
 }
 function mmWeek(n){
@@ -5136,7 +5136,7 @@ function mmSheetHtml(s){
       ${s.other || !inList ? `<label class="hj-mmfld"><span>Any day on the calendar</span><input type="date" data-mmi="date" min="${esc(t)}" value="${esc(s.date)}"></label>` : ''}
       <div class="hj-mmq" id="hj-mmq2">Meal</div><div class="hj-mmchips" role="group" aria-labelledby="hj-mmq2">${MM_MEALS.map(([k, l]) => mmChip('meal', k, l, s.meal === k)).join('')}</div>
       <div class="hj-mmq">Servings</div><div class="hj-mmsrv"><button type="button" class="hj-mmc" data-mma="srv" data-mmv="-1" aria-label="One fewer"${s.serves <= 1 ? ' disabled' : ''}>&minus;</button><b aria-live="polite">${s.serves}</b><button type="button" class="hj-mmc" data-mma="srv" data-mmv="1" aria-label="One more"${s.serves >= 40 ? ' disabled' : ''}>+</button><span>${s.serves === mmTable() ? 'Your table' : 'Sized for ' + s.serves}</span></div>
-      <p class="hj-mmsub">${esc(mmListLine(s.date))} It shows on ${esc(mmLong(s.date))} with Guide Me.</p>
+      <p class="hj-mmsub">${esc(mmListLine(s.date))} It shows on ${esc(mmLong(s.date))} with Grounded Cooking.</p>
       <div class="hj-mmbtns"><button type="button" class="hj-mmgo" data-mma="addgo">Add to My Menu</button><button type="button" class="hj-mmline" data-mma="close">Close</button></div>`; }
   if (s.kind === 'swap'){ const all = recipesAll(), goals = R_GOALS.filter(([id]) => all.some(r => r.goals.includes(id))), fits = R_FITS.filter(([id]) => all.some(r => r.fits.includes(id)));
     return `${mmHead('Swap ' + (MM_NAME[s.meal] || 'Meal'), mmLong(s.date))}
@@ -5169,7 +5169,7 @@ function mmAct(a, v){
     case 'addgo': { if (!s || !parseD(s.date) || s.date < today()){ toast('Choose a day from today on.'); return; }
       const r = mmAdd(s.ref, s.date, s.meal, s.serves); if (!r){ toast('That recipe is on its way. Open it again in a moment.'); return; }
       const n = r.e.wk, came = r.d.came;
-      mmDone('Added to My Menu', r.e.name, [mmLong(r.e.date) + ', ' + (MM_NAME[r.e.meal] || 'Extra') + ', for ' + r.e.serves + '. It waits on Today with Guide Me.',
+      mmDone('Added to My Menu', r.e.name, [mmLong(r.e.date) + ', ' + (MM_NAME[r.e.meal] || 'Extra') + ', for ' + r.e.serves + '. It waits on Today with Grounded Cooking.',
         (came ? mmCount(came, 'ingredient joins', 'ingredients join') + ' Shop for Week ' + letter(n) : 'Its ingredients are on Shop for Week ' + letter(n)) + ', marked ' + r.e.name + '.'], true); return; }
     case 'swap': if (!mmOpenSwap(v)) toast('That meal is on its way. Open it again in a moment.'); return;
     case 'mgoal': case 'mfit': if (s){ const k = a === 'mgoal' ? 'goals' : 'fits', i = s[k].indexOf(v); if (i < 0) s[k].push(v); else s[k].splice(i, 1); mmPaint(); } return;
@@ -5184,7 +5184,7 @@ function mmAct(a, v){
 }
 document.addEventListener('click', e => { const t = e.target.closest && e.target.closest('[data-mma]'); if (!t || !D()) return; e.preventDefault(); mmAct(t.dataset.mma, t.dataset.mmv || ''); });
 document.addEventListener('input', e => { const t = e.target, s = MM.sheet; if (!t || !t.dataset || !t.dataset.mmi || !s || !t.closest || !t.closest('#hj-mm')) return;
-  if (t.dataset.mmi === 'date'){ if (parseD(t.value) && t.value >= today()){ s.date = t.value; s.other = true; const p = document.querySelector('#hj-mm .hj-mmsub'); if (p) p.textContent = mmListLine(s.date) + ' It shows on ' + mmLong(s.date) + ' with Guide Me.'; } return; }
+  if (t.dataset.mmi === 'date'){ if (parseD(t.value) && t.value >= today()){ s.date = t.value; s.other = true; const p = document.querySelector('#hj-mm .hj-mmsub'); if (p) p.textContent = mmListLine(s.date) + ' It shows on ' + mmLong(s.date) + ' with Grounded Cooking.'; } return; }
   if (t.dataset.mmi === 'q'){ s.q = t.value; const b = document.getElementById('hj-mmlist'); if (b) b.innerHTML = mmRowsHtml(s); } });
 document.addEventListener('change', e => { const t = e.target; if (t && t.dataset && t.dataset.mmi === 'date' && MM.sheet && t.closest && t.closest('#hj-mm')) mmPaint(); });
 document.addEventListener('keydown', e => { if (e.key === 'Escape' && MM.sheet){ e.stopPropagation(); e.preventDefault(); MM.sheet = null; mmPaint(); } }, true);

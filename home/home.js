@@ -1482,7 +1482,7 @@
   function doneBtn(x, label) {
     return '<button class="hm-ck" type="button" aria-pressed="' + !!(x.pressed != null ? x.pressed : x.done) + '" data-hm-done="' + esc(x.key) + '" aria-label="' + esc(x.title) + (x.done ? ', done. Tap to undo' : ', mark done') + '">' + CKSVG + '<span class="lb" aria-hidden="true">' + esc(label || 'Done') + '</span></button>';
   }
-  var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Guide Me': 'play', Done: 'check' };
+  var GO_ICON = { How: 'book', Begin: 'play', Start: 'play', 'Check In': 'check', Another: 'swap', Open: 'arrow', Log: 'plus', 'Grounded Cooking': 'play', Done: 'check' };
   function itemHtml(x) {
     if (x.src === 'plan') return pracCardHtml(x, { dt: 1 });
     if (x.src === 'spirit') return pracCardHtml(x, { plain: true, dt: 1 });
