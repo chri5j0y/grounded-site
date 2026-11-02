@@ -91,6 +91,10 @@
     "helms-rir-2016": ["Application of the Repetitions in Reserve Based Rating of Perceived Exertion Scale for Resistance Training (2016), Helms and others, Strength and Conditioning Journal", "https://doi.org/10.1519/SSC.0000000000000218"],
     "tend-usda-fdc": ["FoodData Central, U.S. Department of Agriculture", "https://fdc.nal.usda.gov/"],
     "tend-usda-temps": ["Safe Minimum Internal Temperature Chart, U.S. Department of Agriculture, Food Safety and Inspection Service", "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/safe-temperature-chart"],
+    // Bulk Foods in Grounded Recipes (GWG BLD 905): storage times and putting up methods.
+    "bulk-nchfp": ["National Center for Home Food Preservation, University of Georgia", "https://nchfp.uga.edu/"],
+    "bulk-foodkeeper": ["FoodKeeper App, FoodSafety.gov, U.S. Department of Agriculture", "https://www.foodsafety.gov/keep-food-safe/foodkeeper-app"],
+    "bulk-fsis-freeze": ["Freezing and Food Safety, U.S. Department of Agriculture, Food Safety and Inspection Service", "https://www.fsis.usda.gov/food-safety/safe-food-handling-and-preparation/food-safety-basics/freezing-and-food-safety"],
     "way-aha-fish": ["Fish and Omega-3 Fatty Acids, American Heart Association", "https://www.heart.org/en/healthy-living/healthy-eating/eat-smart/fats/fish-and-omega-3-fatty-acids"],
     "tend-prevent": ["Development and Validation of the American Heart Association PREVENT Equations, Khan SS and others, Circulation, 2024", "https://doi.org/10.1161/CIRCULATIONAHA.123.067626"],
 /* BLD866 sources end */
